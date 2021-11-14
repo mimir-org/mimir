@@ -1,9 +1,13 @@
 import * as THREE from "three";
 import { Color } from "../../../compLibrary";
 import { Node } from "../../../models";
+import { GetAttributeMap, GetSize } from "../helpers";
 
-const CreateCube = (scene: THREE.Scene, width: number, height: number, depth: number): THREE.Mesh => {
-  const cubeGeometry = new THREE.BoxGeometry(width, height, depth);
+const CreateCube = (scene: THREE.Scene, node: Node): THREE.Object3D[] => {
+  const map = GetAttributeMap(node);
+  const size = GetSize(map);
+
+  const cubeGeometry = new THREE.BoxGeometry(size.width, size.height, size.depth);
 
   const mesh = new THREE.Mesh(
     cubeGeometry,
@@ -25,14 +29,24 @@ const CreateCube = (scene: THREE.Scene, width: number, height: number, depth: nu
     })
   );
 
+  mesh.userData.nodeId = node.id;
+  line.userData.nodeId = node.id;
+
   scene.current.add(mesh);
   scene.current.add(line);
-  return mesh;
+
+  const elements = [] as THREE.Object3D[];
+  elements.push(mesh);
+  elements.push(line);
+  return elements;
 };
 
-const CreateCubes = (scene: THREE.Scene, parent: Node, children: Node[]): THREE.Mesh[] => {
-  const cubeGeometries = [] as THREE.Mesh[];
-  cubeGeometries.push(CreateCube(scene, parent?.width, parent?.height, parent?.length));
+const CreateCubes = (scene: THREE.Scene, nodes: Node[]): THREE.Object3D[] => {
+  let cubeGeometries = [] as THREE.Object3D[];
+
+  nodes?.forEach(x => {
+    cubeGeometries = cubeGeometries.concat(CreateCube(scene, x));
+  })
   return cubeGeometries;
 };
 

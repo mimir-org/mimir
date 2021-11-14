@@ -1269,7 +1269,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position", "Admin" ]
   },
   {
     "entity": "Relative East",
@@ -1283,7 +1284,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position", "Admin" ]
   },
   {
     "entity": "Relative Elevation",
@@ -1297,7 +1299,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position", "Admin" ]
   },
   {
     "entity": "Absolute Elevation",
@@ -1311,7 +1314,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position" ]
   },
   {
     "entity": "Size box Width",
@@ -1325,7 +1329,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Size", "Admin" ]
   },
   {
     "entity": "Size box Height",
@@ -1339,7 +1344,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Size", "Admin" ]
   },
   {
     "entity": "Size box Length",
@@ -1353,7 +1359,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Size", "Admin" ]
   },
   {
     "entity": "Depth BSL (subsea only)",
@@ -1366,7 +1373,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position" ]
   },
   {
     "entity": "UTM Zone",
@@ -1379,7 +1387,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position" ]
   },
   {
     "entity": "UTM North",
@@ -1392,7 +1401,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position" ]
   },
   {
     "entity": "UTM East",
@@ -1405,7 +1415,8 @@
     "aspect": "Location",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2",
     "selectType": "None",
-    "discipline": "Process"
+    "discipline": "Process",
+    "tags": [ "Position" ]
   },
   {
     "entity": "Insulation",

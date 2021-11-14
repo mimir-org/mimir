@@ -40,6 +40,7 @@ export interface AttributeAm {
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
+  tags: Set<string>;
 }
 export interface ConnectorAm {
   id: string;
@@ -181,6 +182,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
       discipline: attribute.discipline,
+      tags: attribute.tags
     } as AttributeAm;
 
     converted.push(a);

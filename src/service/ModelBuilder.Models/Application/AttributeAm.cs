@@ -17,6 +17,7 @@ namespace Mb.Models.Application
         public string SourceId { get; set; }
         public string ConditionId { get; set; }
         public string FormatId { get; set; }
+        public virtual HashSet<string> Tags { get; set; }
         public string TerminalId { get; set; }
         public string NodeId { get; set; }
         public string TransportId { get; set; }

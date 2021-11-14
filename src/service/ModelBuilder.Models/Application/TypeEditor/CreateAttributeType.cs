@@ -37,6 +37,8 @@ namespace Mb.Models.Application.TypeEditor
         [Required]
         public string FormatId { get; set; }
 
+        public HashSet<string> Tags { get; set; }
+
         [JsonIgnore]
         public string Key => $"{Entity}-{Aspect}-{QualifierId}-{SourceId}-{ConditionId}";
 

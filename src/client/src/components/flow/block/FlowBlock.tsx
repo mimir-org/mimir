@@ -27,6 +27,7 @@ import {
   animatedEdgeSelector,
   location3DSelector,
 } from "../../../redux/store";
+import { GetChildren } from "../helpers/GetChildren";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -158,7 +159,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
         )}
       </div>
-      <LocationModule visible={showLocation3D && IsLocation(node)} selectedNode={node} />
+      <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />
     </ReactFlowProvider>
   );
 };

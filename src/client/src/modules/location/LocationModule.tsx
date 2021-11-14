@@ -3,14 +3,15 @@ import { OnRender, OnWindowResize } from "./handlers";
 import { CreateCamera, CreateControls, CreateCubes, CreateLights, CreateRenderer, CreateScene } from "./creators";
 import { LocationModuleBox } from "./styled";
 import { Node } from "../../models";
-import { RenderCube } from "./helpers";
+import { RenderCubes } from "./helpers";
 
 interface Props {
   visible: boolean;
-  selectedNode: Node;
+  rootNode: Node;
+  nodes: Node[];
 }
 
-const LocationModule = ({ visible, selectedNode }: Props) => {
+const LocationModule = ({ visible, rootNode, nodes }: Props) => {
   const mountRef = useRef(null);
   const camera = useRef(null);
   const scene = useRef(null);
@@ -23,7 +24,7 @@ const LocationModule = ({ visible, selectedNode }: Props) => {
     scene.current = CreateScene();
     renderer.current = CreateRenderer();
     controls.current = CreateControls(renderer, camera);
-    cubes.current = CreateCubes(scene, selectedNode, []);
+    cubes.current = CreateCubes(scene, nodes.concat(rootNode));
     CreateLights(scene);
     mountRef.current?.appendChild(renderer.current.domElement);
     controls.current.addEventListener("change", () => OnRender(renderer, scene, camera));
@@ -32,8 +33,8 @@ const LocationModule = ({ visible, selectedNode }: Props) => {
   }, [visible]);
 
   useEffect(() => {
-    RenderCube(selectedNode, cubes, renderer, scene, camera);
-  }, [selectedNode, visible]);
+    RenderCubes(rootNode?.id, nodes?.concat(rootNode), cubes, renderer, scene, camera);
+  }, [rootNode, nodes, visible]);
 
   return (
     visible && (
