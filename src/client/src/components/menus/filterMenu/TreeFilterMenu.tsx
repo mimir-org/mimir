@@ -1,14 +1,14 @@
-import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { Connector } from "../../../../models";
-import { FilterMenuBox } from "../styled";
-import { MenuColumn } from "../../styled";
-import { FilterDropdown } from "../dropdown";
-import { TextResources } from "../../../../assets/text";
-import { OnAnimationChange, OnChange, OnAllTransportsChange } from "../handlers";
-import { GetEdges, GetNodes, PopulateFilterLists } from "../helpers";
-import { FilterElement } from "..";
-import { IsLibrary } from "../../../../helpers";
-import { IsTransport } from "../../../flow/helpers";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { Connector } from "../../../models";
+import { FilterMenuBox } from "./styled";
+import { MenuColumn } from "../styled";
+import { FilterDropdown } from "./dropdown";
+import { TextResources } from "../../../assets/text";
+import { OnAnimationChange, OnChange, OnAllTransportsChange } from "./handlers";
+import { GetEdges, GetNodes, PopulateFilterLists } from "./helpers";
+import { FilterElement } from "./";
+import { IsLibrary } from "../../../helpers";
+import { IsTransport } from "../../flow/helpers";
 
 interface Props {
   elements: any[];

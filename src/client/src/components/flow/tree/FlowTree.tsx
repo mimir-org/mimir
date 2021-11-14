@@ -6,7 +6,7 @@ import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-render
 import { useState, useRef, useEffect, useCallback } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { TreeFilterMenu } from "../../menus/filterMenu/tree";
+import { TreeFilterMenu } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";

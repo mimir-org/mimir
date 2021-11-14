@@ -7,7 +7,7 @@ import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { GetBlockNodeTypes, GetParent } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { BlockFilterMenu } from "../../menus/filterMenu/block";
+import { BlockFilterMenu } from "../../menus/filterMenu/";
 import { BlockConnectionLine } from "./edges";
 import { IsOffPage, GetSelectedNode, SetDarkModeColor } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
