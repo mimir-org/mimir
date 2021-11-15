@@ -25,8 +25,8 @@ namespace Mb.Models.Application.TypeEditor
         [Required]
         public string RdsId { get; set; }
 
-        [Required]
-        public string StatusId { get; set; }
+        [Required] 
+        public string StatusId { get; set; } = "4590637F39B6BA6F39C74293BE9138DF";
 
         [Required]
         public string Purpose { get; set; }
