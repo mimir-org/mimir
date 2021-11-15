@@ -33,6 +33,7 @@ const ProjectComponent = () => {
             label={node.label}
             indent={indent}
             expanded={!closedNodes.has(node.id)}
+            project={project}
             isLeaf={!HasChildren(node, project)}
             elements={elements}
             secondaryNode={secondaryNode}
