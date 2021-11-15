@@ -1,27 +1,39 @@
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
-import { AspectColorType, Node } from "../../../models";
-import { IsBlockView, IsAspectNode, GetAspectIcon, GetSelectedNode, GetAspectColor } from "../../../helpers";
+import { AspectColorType, Node, Project } from "../../../models";
+import { IsBlockView, IsAspectNode, GetAspectIcon, GetAspectColor } from "../../../helpers";
 import { AspectBox, ExplorerLine } from "./styled";
 import { Elements } from "react-flow-renderer";
 import { CheckboxExplorer } from "../../../compLibrary/input/checkbox/explorer";
-import { ChangeNodeDisplay, IsMiniCheckbox } from "../helpers";
-import { OnBlockChange } from "../handlers";
+import { IsMiniCheckbox } from "../helpers";
+import { OnBlockChange, OnTreeChange } from "../handlers";
 import { useAppDispatch } from "../../../redux/store";
 import { IsChecked } from "../../explorer/helpers";
 
 interface Props {
   node: Node;
+  selectedNode: Node;
+  secondaryNode: Node;
+  project: Project;
   label: string;
   indent: number;
   isLeaf: boolean;
   expanded: boolean;
   elements: Elements<any>;
-  secondaryNode: Node;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
 }
-export const AspectComponent = ({ node, label, expanded, indent, isLeaf, elements, secondaryNode, onElementExpanded }: Props) => {
+export const AspectComponent = ({
+  node,
+  selectedNode,
+  secondaryNode,
+  project,
+  label,
+  expanded,
+  indent,
+  isLeaf,
+  elements,
+  onElementExpanded,
+}: Props) => {
   const dispatch = useAppDispatch();
-  const selectedNode = GetSelectedNode();
   const blockView = IsBlockView();
 
   return (
@@ -34,7 +46,7 @@ export const AspectComponent = ({ node, label, expanded, indent, isLeaf, element
             color={GetAspectColor(node, AspectColorType.Selected)}
             isChecked={blockView ? IsChecked(elements, node) : !node?.isHidden ?? false}
             isMiniCheckbox={blockView ? IsMiniCheckbox(node, selectedNode, secondaryNode) : false}
-            onChange={() => (blockView ? OnBlockChange(node, secondaryNode, dispatch) : ChangeNodeDisplay(node))}
+            onChange={() => (blockView ? OnBlockChange(node, secondaryNode, dispatch) : OnTreeChange(node, project, dispatch))}
           />
         </div>
 
