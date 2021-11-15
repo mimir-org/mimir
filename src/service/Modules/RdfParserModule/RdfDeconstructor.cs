@@ -492,7 +492,7 @@ namespace RdfParserModule
             var fromNodes = GetSubjects(Resources.hasOutputTerminal, inTerminal.FromConnectorIri);
             if (fromNodes is null || fromNodes.Count != 1)
             {
-                throw new Exception("A connector can only belong to one, 1, aspect object");
+                throw new Exception($"A connector can only belong to one, 1, aspect object | {inTerminal}");
             }
 
             var fromNode = fromNodes.First().ToString();
