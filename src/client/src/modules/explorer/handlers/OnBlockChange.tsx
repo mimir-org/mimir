@@ -27,7 +27,6 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 
   // Set selectNode
   if (!selectedNode) {
-    dispatch(setNodeVisibility(node, false));
     dispatch(setActiveNode(node?.id, !node.isSelected));
     dispatch(setActiveBlockNode(node?.id));
     return;
@@ -39,7 +38,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
       dispatch(setActiveNode(node?.id, !node.isSelected));
       dispatch(setActiveBlockNode(node?.id));
     }
-    if (IsProduct(node)) dispatch(setNodeVisibility(node, false));
+    if (IsProduct(node) && node.id !== selectedNode.id) dispatch(setNodeVisibility(node, false));
     if (node === selectedNode) dispatch(setActiveNode(null, false));
     return;
   }
@@ -52,7 +51,6 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 
   // Toggle off selectedNode
   if (node === selectedNode && selectedNode && !secondaryNode) {
-    console.log("off");
     dispatch(setActiveNode(null, false));
     return;
   }
