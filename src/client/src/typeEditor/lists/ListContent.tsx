@@ -1,4 +1,4 @@
-import { ListElementsContainer } from "../../compLibrary";
+import { ListElementsContainer } from "../../compLibrary/list";
 import { ListType } from "../TypeEditorList";
 import { useMemo } from "react";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../types";

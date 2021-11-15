@@ -11,7 +11,7 @@ const ProjectComponent = () => {
   const elements = useAppSelector(blockElementsSelector);
   const project = useAppSelector(projectSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
@@ -19,6 +19,8 @@ const ProjectComponent = () => {
   };
 
   const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes, project);
+
+  if (!project || !nodes) return null;
 
   return (
     <>

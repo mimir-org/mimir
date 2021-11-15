@@ -3,10 +3,11 @@ import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Input, Label, Size } from "../../../../../compLibrary";
+import { Size } from "../../../../../compLibrary/size";
 import { Button } from "../../../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { Input, Label } from "../../../../../compLibrary/input/text";
 
 export const ExportLibraryFileMenu = () => {
   const dispatch = useAppDispatch();

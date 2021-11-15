@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
+import { FontSize, FontType } from "../../../compLibrary/font";
 
 interface Props {
   disabled?: boolean;

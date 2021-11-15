@@ -4,7 +4,7 @@ import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
 import { Connector, Edge, Node } from "../../../../models";
 import { IsPartOf } from "../../../flow/helpers";
 import { GetFilterColor, GetPartOfName } from "../helpers";
-import { Checkbox } from "../../../../compLibrary/checkbox/common";
+import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 
 interface Props {
   terminals: Connector[];

@@ -1,4 +1,4 @@
-import { Size } from "../../compLibrary";
+import { Size } from "../../compLibrary/size";
 import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
 import { OnToggleClick } from "./handlers";
 import { FullScreenButton } from "./styled";

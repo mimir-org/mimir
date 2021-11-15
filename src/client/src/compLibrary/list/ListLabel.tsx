@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize, FontType, FontWeight } from "../";
+import { Color } from "../colors";
+import { FontType, FontSize, FontWeight } from "../font";
 
 interface Props {
   removeBorderBottom?: boolean;

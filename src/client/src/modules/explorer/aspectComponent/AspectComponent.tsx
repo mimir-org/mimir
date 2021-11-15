@@ -3,7 +3,7 @@ import { AspectColorType, Node } from "../../../models";
 import { IsBlockView, IsAspectNode, GetAspectIcon, GetSelectedNode, GetAspectColor } from "../../../helpers";
 import { AspectBox, ExplorerLine } from "./styled";
 import { Elements } from "react-flow-renderer";
-import { CheckboxExplorer } from "../../../compLibrary/checkbox/explorer";
+import { CheckboxExplorer } from "../../../compLibrary/input/checkbox/explorer";
 import { ChangeNodeDisplay, IsMiniCheckbox } from "../helpers";
 import { OnBlockChange } from "../handlers";
 import { useAppDispatch } from "../../../redux/store";

@@ -1,4 +1,4 @@
-import { Checkbox } from "../../../../compLibrary/checkbox/common";
+import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 import { MenuListItem } from "./styled";
 
 interface Props {

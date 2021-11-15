@@ -1,5 +1,5 @@
 import { TabColumn } from "../../styled";
-import { Input } from "../../../../compLibrary";
+import { Input } from "../../../../compLibrary/input/text";
 import { Edge } from "../../../../models";
 import { GetRelationName } from "../../helpers";
 import { TextResources } from "../../../../assets/text";
@@ -17,12 +17,7 @@ const EdgeAdminContent = ({ edge }: Props) => (
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Relation}</div>
-        <Input
-          readOnly={true}
-          value={GetRelationName(edge.fromConnector?.relationType)}
-          onChange={() => null}
-          inputType=""
-        />
+        <Input readOnly={true} value={GetRelationName(edge.fromConnector?.relationType)} onChange={() => null} inputType="" />
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Template}</div>
@@ -32,11 +27,7 @@ const EdgeAdminContent = ({ edge }: Props) => (
     <TabColumn>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Source}</div>
-        <Input
-          value={(edge.fromNode.label ?? edge.fromNode.name) + " - " + edge.fromNodeId}
-          onChange={() => null}
-          inputType=""
-        />
+        <Input value={(edge.fromNode.label ?? edge.fromNode.name) + " - " + edge.fromNodeId} onChange={() => null} inputType="" />
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Target}</div>

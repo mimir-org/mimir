@@ -1,7 +1,7 @@
 import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
 import { ListType } from "../TypeEditorList";
 import { ObjectBlock } from "./ObjectBlock";
-import { ListLabel, ListWrapper } from "../../compLibrary";
+import { ListLabel, ListWrapper } from "../../compLibrary/list";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
 import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";

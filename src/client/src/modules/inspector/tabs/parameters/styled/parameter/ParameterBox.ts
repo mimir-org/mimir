@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { FontSize, Color } from "../../../../../../compLibrary";
+import { Color } from "../../../../../../compLibrary/colors";
+import { FontSize } from "../../../../../../compLibrary/font";
 
 const ParameterBox = styled.div`
   position: relative;

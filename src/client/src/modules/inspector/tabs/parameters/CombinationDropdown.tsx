@@ -3,7 +3,7 @@ import { TextResources } from "../../../../assets/text";
 import { ExpandWhiteIcon, CollapseWhiteIcon } from "../../../../assets/icons/chevron";
 import { CombinedAttribute } from "../../../../models";
 import { MenuWrapper, MenuHeader, MenuList, MenuListItem, ToolTip } from "./styled/dropdown/combination";
-import { Checkbox } from "../../../../compLibrary/checkbox/common";
+import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 
 const MENU_ITEM_TOOLTIP_BASE_OFFSET: number = 6;
 

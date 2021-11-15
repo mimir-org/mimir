@@ -5,7 +5,7 @@ import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
 import { CloseIcon } from "../../assets/icons/close";
 import { OnCloseElementClick } from "./handlers";
-import { LibCategory, LibCategoryElement, LibElement, LibElementClose, LibElementIcon } from "../../compLibrary/box/library";
+import { LibCategory, LibCategoryElement, LibElement, LibElementClose, LibElementIcon } from "./styled";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
 
 interface Props {

@@ -1,6 +1,6 @@
 import { ValuesListWrapper, ValuesListItem } from "../../../styled";
-import { Checkbox } from "../../../../compLibrary/checkbox/common";
-import { RadioButton } from "../../../../compLibrary/radioButton";
+import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
+import { RadioButton } from "../../../../compLibrary/input/radiobutton";
 import { AttributeName } from "../../../inputs/styled";
 import { OnMultipleValuesChange, OnSingleValueChange } from ".";
 import { PredefinedAttribute } from "../../../../models";

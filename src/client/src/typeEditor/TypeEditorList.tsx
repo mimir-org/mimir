@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ListWrapper } from "../compLibrary";
+import { ListWrapper } from "../compLibrary/list";
 import { ListContent, ListSearch } from "./lists/";
 import { GetListLabel, GetWidth } from "./helpers";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
