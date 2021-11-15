@@ -1,4 +1,4 @@
-import { Size } from "../../compLibrary";
+import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView, GetSelectedNode } from "../../helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";

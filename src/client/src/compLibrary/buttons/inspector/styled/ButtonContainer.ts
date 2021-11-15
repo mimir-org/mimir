@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color, FontSize } from "../../..";
+import { Color } from "../../../colors";
+import { FontSize } from "../../../font";
 
 interface Props {
   width: number;

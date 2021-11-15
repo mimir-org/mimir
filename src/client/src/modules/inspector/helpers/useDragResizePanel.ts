@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { Action, Dispatch } from "redux";
-import { Size } from "../../../compLibrary";
+import { Size } from "../../../compLibrary/size";
 
 const BORDER_SIZE = 44;
 const MIN_HEIGHT = Size.ModuleClosed;
@@ -99,8 +99,7 @@ const onMouseUp = (
   document.removeEventListener("mousemove", resizeCallback);
 };
 
-const getComputedHeight = (ref: React.MutableRefObject<HTMLDivElement>) =>
-  parseInt(getComputedStyle(ref.current).height);
+const getComputedHeight = (ref: React.MutableRefObject<HTMLDivElement>) => parseInt(getComputedStyle(ref.current).height);
 
 const setHeightProperty = (ref: React.MutableRefObject<HTMLDivElement>, height: number) => {
   ref.current.style.height = height + "px";

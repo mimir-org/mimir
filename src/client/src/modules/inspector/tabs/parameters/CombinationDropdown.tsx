@@ -2,14 +2,8 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { TextResources } from "../../../../assets/text";
 import { ExpandWhiteIcon, CollapseWhiteIcon } from "../../../../assets/icons/chevron";
 import { CombinedAttribute } from "../../../../models";
-import {
-  MenuWrapper,
-  MenuHeader,
-  MenuList,
-  MenuListItem,
-  CheckboxWrapper,
-  ToolTip,
-} from "./styled/dropdown/combination";
+import { MenuWrapper, MenuHeader, MenuList, MenuListItem, ToolTip } from "./styled/dropdown/combination";
+import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 
 const MENU_ITEM_TOOLTIP_BASE_OFFSET: number = 6;
 
@@ -94,12 +88,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
           <div className="label" onMouseEnter={() => resetToolTip()}>
             {TextResources.Inspector_Params_Combinations_Select_All}
           </div>
-          <CheckboxWrapper>
-            <label className={"checkbox-block"}>
-              <input type="checkbox" checked={areAllItemsSelected} readOnly={true} />
-              <span className="checkmark-block"></span>
-            </label>
-          </CheckboxWrapper>
+          <Checkbox isChecked={areAllItemsSelected} onChange={() => null} readOnly={true} />
         </MenuListItem>
       </div>
     );
@@ -112,12 +101,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
           <div className="label" onMouseEnter={() => onMouseEnter(item)} ref={(ele) => refCallback(ele, item)}>
             {item.combined}
           </div>
-          <CheckboxWrapper>
-            <label className={"checkbox-block"}>
-              <input type="checkbox" checked={IsItemSelected(item)} readOnly={true} />
-              <span className="checkmark-block"></span>
-            </label>
-          </CheckboxWrapper>
+          <Checkbox isChecked={IsItemSelected(item)} onChange={() => null} readOnly={true} />
         </MenuListItem>
       </div>
     );

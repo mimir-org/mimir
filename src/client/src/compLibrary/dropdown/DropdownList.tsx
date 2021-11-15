@@ -5,7 +5,7 @@ const DropdownList = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${Color.White};
-  border: 1px solid #272738; //{Color.BlueMagenta};
+  border: 1px solid ${Color.BlueMagenta};
   border-radius: 5px;
   padding: 1px;
   font-size: 11px;
@@ -18,7 +18,6 @@ const DropdownList = styled.div`
 
   .dropdown_listitem {
     border-bottom: 1px solid ${Color.DarkGrey};
-    background-color: ${Color.White};
     background-color: ${Color.White};
     padding: 2px 5px;
   }

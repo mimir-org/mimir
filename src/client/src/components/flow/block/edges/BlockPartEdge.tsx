@@ -1,5 +1,5 @@
 import { getSmoothStepPath } from "react-flow-renderer";
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 
 /**
  * Component for a PartOfEdge in BlockView used only by Product Nodes.

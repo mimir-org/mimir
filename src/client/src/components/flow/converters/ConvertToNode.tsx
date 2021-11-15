@@ -1,6 +1,6 @@
 import { CreateId, GetDateNowUtc } from "../helpers";
 import { BlobData, Connector, LibItem, Node, User } from "../../../models";
-import { Size } from "../../../compLibrary";
+import { Size } from "../../../compLibrary/size";
 
 /**
  * Function to convert data to a Mimir Node.

@@ -14,6 +14,7 @@ export interface AttributeType {
   formatId: string;
   format: EnumBase;
   units: EnumBase[];
+  tags: Set<string>;
   description: string;
   selectValues: string[];
   selectType: SelectType;

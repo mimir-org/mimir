@@ -1,2 +1,2 @@
-export { default as SquareCheckbox } from "./SquareCheckbox";
-export { default as RoundCheckbox } from "./RoundCheckbox";
+export { default as CheckboxContainer } from "./CheckboxContainer";
+export { default as RadioButtonContainer } from "./RadioButtonContainer";

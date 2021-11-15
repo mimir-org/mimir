@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
-import {
-  SearchDropDownItem,
-  SearchBarWrapper,
-  SearchBarContainer,
-  SearchBar,
-  SearchBarList,
-  SearchBarListItem,
-} from "..";
+import { AttributeType } from "../../models";
+import { SearchBarWrapper, SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "..";
 
 interface Props {
   value?: string;
   placeHolder?: string;
   onChange: Function;
   list: SearchDropDownItem[];
+}
+
+export interface SearchDropDownItem {
+  id: string;
+  name: string;
+  attributes: AttributeType[];
 }
 
 const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {

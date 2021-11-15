@@ -7,14 +7,14 @@ import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters, OnIsCreateLi
 import { ParameterRow } from "./";
 import { useEffect, useMemo, useState } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
+import { GetAttributes } from "./helpers/GetAttributes";
+import { IsCreateLibraryType } from "../../helpers/IsType";
 import {
   useAppDispatch,
   useUniqueParametricAppSelector,
   makeFilterSelector,
   makeSelectedFilterSelector,
 } from "../../../../redux/store";
-import { GetAttributes } from "./helpers/GetAttributes";
-import { IsCreateLibraryType } from "../../helpers/IsType";
 
 interface Props {
   parametersElement: InspectorParametersElement;

@@ -1,9 +1,9 @@
 import { ObjectType } from "../models";
 import { TextResources } from "../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../assets/icons/type";
-import { TypeEditorBox, TypeEditorBoxContent } from "../compLibrary/box";
 import { useAppDispatch } from "../redux/store";
 import { OnOpenTypeEditor } from "./handlers";
+import { TypeEditorBox, TypeEditorBoxContent } from "./styled";
 
 interface Props {
   selectedElement: string;
@@ -12,7 +12,7 @@ interface Props {
 }
 /**
  * Component for opening Type Editor window
- * @param param0
+ * @param interface
  * @returns buttons to add or edit a type in library module
  */
 export const TypeEditorModule = ({ selectedElement, selectedElementType, onChange }: Props) => {

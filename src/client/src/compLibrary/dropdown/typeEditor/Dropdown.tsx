@@ -63,7 +63,6 @@ const Dropdown = <T extends unknown>({
     if (defaultValue) {
       const _selectedItem = findSelectedItem();
       setSelectedItem(_selectedItem);
-      return;
     }
   }, [defaultValue, findSelectedItem, categories]);
 
@@ -95,35 +94,29 @@ const Dropdown = <T extends unknown>({
   };
 
   return (
-    <>
-      <DropdownMenuWrapper disabled={disabled}>
-        <label htmlFor={label} />
-        <div className="dropdown-label">{label}</div>
-        <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-          <DropdownMenuHeader>
-            {
-              <>
-                {selectedItem && selectedItem.image && <Symbol base64={selectedItem.image} text={selectedItem.description} />}
-                <p>{selectedItem?.description ?? placeholder}</p>
-                <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-              </>
-            }
-          </DropdownMenuHeader>
-        </div>
-        {isListOpen && (
-          <DropdownMenuList>
-            {categories?.map((category) => {
-              return (
-                <div key={category.name}>
-                  {hasCategory && getCategory(category)}
-                  {getItems(category.items)}
-                </div>
-              );
-            })}
-          </DropdownMenuList>
-        )}
-      </DropdownMenuWrapper>
-    </>
+    <DropdownMenuWrapper disabled={disabled}>
+      <label htmlFor={label} />
+      <div className="dropdown-label">{label}</div>
+      <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
+        <DropdownMenuHeader>
+          {selectedItem && selectedItem.image && <Symbol base64={selectedItem.image} text={selectedItem.description} />}
+          <p>{selectedItem?.description ?? placeholder}</p>
+          <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+        </DropdownMenuHeader>
+      </div>
+      {isListOpen && (
+        <DropdownMenuList>
+          {categories?.map((category) => {
+            return (
+              <div key={category.name}>
+                {hasCategory && getCategory(category)}
+                {getItems(category.items)}
+              </div>
+            );
+          })}
+        </DropdownMenuList>
+      )}
+    </DropdownMenuWrapper>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Color } from "../compLibrary";
+import { Color } from "../compLibrary/colors";
 
 const SetDarkModeColor = (dark: boolean) => {
   let mainColor: string;

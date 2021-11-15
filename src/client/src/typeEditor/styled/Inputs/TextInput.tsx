@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
+import { FontSize } from "../../../compLibrary/font";
 
 const TextInput = styled.input`
   border: 1.5px solid ${Color.Black};

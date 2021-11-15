@@ -1,8 +1,12 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary";
+import { Color } from "../../../../../compLibrary/colors";
 
-const Entity = styled.div`
-  width: ${(props: { width: number }) => props.width}px;
+interface Props {
+  width: number;
+}
+
+const Entity = styled.div<Props>`
+  width: ${(props) => props.width}px;
   height: inherit;
   border-right: 1px solid ${Color.DarkGrey};
   border-bottom: 1px solid ${Color.DarkGrey};

@@ -1,12 +1,6 @@
 import { PredefinedAttribute } from "../../../../models";
 
-const OnSingleValueChange = (
-  e,
-  name: string,
-  attributes: PredefinedAttribute[],
-  isMultiSelect: boolean,
-  onChange: Function
-) => {
+const OnSingleValueChange = (e, name: string, attributes: PredefinedAttribute[], isMultiSelect: boolean, onChange: Function) => {
   const targetKey = e.target.value;
   let attribute = attributes.find((a) => a.key === name);
 

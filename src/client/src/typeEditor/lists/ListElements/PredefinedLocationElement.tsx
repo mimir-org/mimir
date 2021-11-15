@@ -1,19 +1,10 @@
 import { useState } from "react";
 import { PredefinedAttribute } from "../../../models";
-import { SquareCheckbox } from "../../inputs";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
-import { OnMultipleValuesChange, OnSingleValueChange } from "./helpers";
-import { Label } from "../../inputs/SquareCheckbox";
+import { CheckboxContainer } from "../../inputs";
+import { LocationValueHeader, LocationValue } from "./helpers";
+import { Label } from "../../inputs/CheckboxContainer";
 import { OnPropertyChangeFunction } from "../../types";
-import {
-  TerminalListElement,
-  TerminalCategoryWrapper,
-  SelectValue,
-  ValueHeader,
-  ValuesListWrapper,
-  ValuesListItem,
-  SquareBox,
-} from "../../styled";
+import { TerminalListElement, TerminalCategoryWrapper, SelectValue } from "../../styled";
 
 interface Props {
   attributeName: string;
@@ -48,88 +39,38 @@ export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect
     if (isSelected) {
       attribute = defaultValue.find((a) => a.key === attributeName);
       return attribute.values;
-    } else {
-      return values;
     }
-  };
-
-  const onSingleValueCheckboxChange = (e) => {
-    OnSingleValueChange(e, attributeName, defaultValue, isMultiSelect, onChange);
-  };
-
-  const onMultipleValuesCheckboxChange = ([param_key, param_value]) => {
-    OnMultipleValuesChange([param_key, param_value], attributeName, defaultValue, isMultiSelect, onChange);
+    return values;
   };
 
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper isSelected={isSelected}>
-        <SquareBox>
-          <SquareCheckbox
-            id={attributeName}
-            name={attributeName}
-            label={Label.Terminals}
-            defaultValue={defaultValue}
-            onChange={onCheckboxChange}
-          />
-        </SquareBox>
+        <CheckboxContainer
+          id={attributeName}
+          name={attributeName}
+          label={Label.Terminals}
+          defaultValue={defaultValue}
+          onChange={onCheckboxChange}
+        />
       </TerminalCategoryWrapper>
+
       {isSelected && (
         <SelectValue isSelected={isSelected}>
-          <ValueHeader onClick={() => setExpandList(!expandList)} multiSelect={isMultiSelect}>
-            <p className="selectedValues">
-              {Object.entries(getValues())
-                .filter(([_key, value]) => value === true)
-                .map(([key, _value]) => {
-                  return (
-                    <span key={key}>
-                      {key}
-                      {isMultiSelect ? ", " : null}
-                    </span>
-                  );
-                })}
-            </p>
-            <img
-              src={expandList ? ExpandIcon : CollapseIcon}
-              alt="expand-icon"
-              onClick={() => setExpandList(!expandList)}
-              className="icon"
-            />
-          </ValueHeader>
+          <LocationValueHeader
+            isMultiSelect={isMultiSelect}
+            expandList={expandList}
+            setExpandList={setExpandList}
+            getValues={getValues}
+          />
           {expandList && (
-            <ValuesListWrapper>
-              {Object.entries(getValues()).map(([key, value]) => {
-                return (
-                  <ValuesListItem key={key}>
-                    <SquareBox>
-                      <label className={"squarecheckbox"}>
-                        {isMultiSelect ? (
-                          <input
-                            type="checkbox"
-                            defaultChecked={value}
-                            id={key}
-                            onChange={() => onMultipleValuesCheckboxChange([key, value])}
-                          />
-                        ) : (
-                          <input
-                            type="radio"
-                            defaultChecked={value}
-                            name="attribute"
-                            value={key}
-                            id={key}
-                            onChange={onSingleValueCheckboxChange}
-                          />
-                        )}
-                        <span className="scheckmark"></span>
-                        <label className="label" htmlFor={key}>
-                          {key}
-                        </label>
-                      </label>
-                    </SquareBox>
-                  </ValuesListItem>
-                );
-              })}
-            </ValuesListWrapper>
+            <LocationValue
+              getValues={getValues}
+              isMultiSelect={isMultiSelect}
+              onChange={onChange}
+              attributeName={attributeName}
+              defaultValue={defaultValue}
+            />
           )}
         </SelectValue>
       )}

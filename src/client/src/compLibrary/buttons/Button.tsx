@@ -1,5 +1,5 @@
-import { ButtonContainer } from ".";
-import { GetButtonIcon } from "./";
+import { ButtonContainer } from "./styled";
+import { GetButtonIcon } from "./helpers";
 
 interface Props {
   onClick: () => void;
@@ -7,8 +7,8 @@ interface Props {
 }
 
 /**
- * Component for a generic button.
- * @param param0
+ * Component for a generic button in Mimir.
+ * @param params
  * @returns a button with an icon and text to be used in Mimir.
  */
 const Button = ({ onClick, type }: Props) => (

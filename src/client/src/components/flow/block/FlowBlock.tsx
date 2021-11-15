@@ -1,18 +1,19 @@
 import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { FullScreenComponent } from "../../../compLibrary/controls";
+import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { GetBlockNodeTypes, GetParent } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { BlockFilterMenu } from "../../menus/filterMenu/block";
-import { Node } from "../../../models";
+import { BlockFilterMenu } from "../../menus/filterMenu/";
 import { BlockConnectionLine } from "./edges";
-import { IsOffPage, GetSelectedNode, SetDarkModeColor } from "../../../helpers";
+import { IsOffPage, SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
+import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
+import { GetChildren } from "../helpers/GetChildren";
 import {
   iconSelector,
   darkModeSelector,
@@ -23,6 +24,7 @@ import {
   blockFilterSelector,
   nodeSizeSelector,
   animatedEdgeSelector,
+  location3DSelector,
 } from "../../../redux/store";
 
 interface Props {
@@ -40,13 +42,15 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
+  const showLocation3D = useAppSelector(location3DSelector);
+
   const node = GetSelectedNode();
   const parent = GetParent(node);
 
@@ -131,36 +135,39 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   return (
-    <div className="reactflow-wrapper" ref={flowWrapper}>
-      <ReactFlow
-        elements={elements}
-        nodeTypes={GetBlockNodeTypes}
-        edgeTypes={GetBlockEdgeTypes}
-        onConnect={OnConnect}
-        // onConnectStart={OnConnectStart}
-        // onConnectStop={OnConnectStop}
-        onElementsRemove={OnElementsRemove}
-        onLoad={OnLoad}
-        onDrop={OnDrop}
-        onDragOver={OnDragOver}
-        onNodeDragStop={OnNodeDragStop}
-        zoomOnScroll={true}
-        paneMoveable={true}
-        zoomOnDoubleClick={false}
-        defaultZoom={0.9}
-        defaultPosition={[450, 80]}
-        onlyRenderVisibleElements={true}
-        multiSelectionKeyCode={"Control"}
-        connectionLineComponent={BlockConnectionLine}
-        onSelectionChange={(e) => onSelectionChange(e)}
-      >
-        <FullScreenComponent inspectorRef={inspectorRef} />
-      </ReactFlow>
+    <>
+      <div className="reactflow-wrapper" ref={flowWrapper}>
+        <ReactFlow
+          elements={elements}
+          nodeTypes={GetBlockNodeTypes}
+          edgeTypes={GetBlockEdgeTypes}
+          onConnect={OnConnect}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
+          onElementsRemove={OnElementsRemove}
+          onLoad={OnLoad}
+          onDrop={OnDrop}
+          onDragOver={OnDragOver}
+          onNodeDragStop={OnNodeDragStop}
+          zoomOnScroll={true}
+          paneMoveable={true}
+          zoomOnDoubleClick={false}
+          defaultZoom={0.9}
+          defaultPosition={[450, 80]}
+          onlyRenderVisibleElements={true}
+          multiSelectionKeyCode={"Control"}
+          connectionLineComponent={BlockConnectionLine}
+          onSelectionChange={(e) => onSelectionChange(e)}
+        >
+          <FullScreenComponent inspectorRef={inspectorRef} />
+        </ReactFlow>
 
-      {blockFilter && (
-        <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
-      )}
-    </div>
+        {blockFilter && (
+          <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+        )}
+      </div>
+      <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />
+    </>
   );
 };
 
