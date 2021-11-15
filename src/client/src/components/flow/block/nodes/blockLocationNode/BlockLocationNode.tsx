@@ -41,7 +41,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     <NodeBox
       id={"BlockLocationNode-" + node.id}
       width={node.width}
-      length={node.length}
+      height={node.height}
       product={false}
       visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
@@ -67,7 +67,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
       <HandleComponent
         nodes={nodes}
-        length={node.length}
+        height={node.height}
         width={node.width}
         terminals={terminals}
         parent={false}

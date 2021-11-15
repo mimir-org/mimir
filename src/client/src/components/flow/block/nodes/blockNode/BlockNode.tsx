@@ -24,7 +24,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [terminalBox, showTerminalBox] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const [width, setWidth] = useState(Size.Node_Width);
-  const [length, setLength] = useState(Size.Node_Length);
+  const [height, setHeight] = useState(Size.Node_Height);
 
   const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
@@ -41,7 +41,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     const size = SetNodeSize(terminals, electro);
     setWidth(size.width);
-    setLength(size.length);
+    setHeight(size.height);
   }, [electro, terminals]);
 
   useEffect(() => {
@@ -51,14 +51,14 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   if (!node) return null;
 
   node.width = width;
-  node.length = length;
+  node.height = height;
 
   return (
     <NodeBox
       id={type + node.id}
       product={IsProduct(node)}
       width={node.width}
-      length={node.length}
+      height={node.height}
       visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
@@ -82,7 +82,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         nodes={nodes}
-        length={node.length}
+        height={node.height}
         width={node.width}
         terminals={terminals}
         parent={false}

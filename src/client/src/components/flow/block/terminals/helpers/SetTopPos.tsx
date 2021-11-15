@@ -10,26 +10,26 @@ import { SetTerminalYPos } from "./";
  * @param electro
  * @param parent
  * @param order
- * @param nodeLength
+ * @param nodeHeight
  * @returns a number used by the styled component HandleBox.
  */
-const SetTopPos = (conn: Connector, pos: Position, electro: boolean, parent: boolean, order: number, nodeLength: number) => {
+const SetTopPos = (conn: Connector, pos: Position, electro: boolean, parent: boolean, order: number, nodeHeight: number) => {
   const marginY = 17;
   const marginYSmall = 5;
 
   if (electro) {
-    if (IsPartOf(conn)) return nodeLength / 2 - marginYSmall;
+    if (IsPartOf(conn)) return nodeHeight / 2 - marginYSmall;
     if (pos === Position.Top) return -marginY;
-    return nodeLength + marginYSmall;
+    return nodeHeight + marginYSmall;
   }
 
   if (IsPartOf(conn)) {
     if (pos === Position.Top) return -marginY;
-    return nodeLength;
+    return nodeHeight;
   }
 
-  if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return nodeLength / 2 - marginYSmall;
-  return SetTerminalYPos(order, parent, nodeLength);
+  if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return nodeHeight / 2 - marginYSmall;
+  return SetTerminalYPos(order, parent, nodeHeight);
 };
 
 export default SetTopPos;

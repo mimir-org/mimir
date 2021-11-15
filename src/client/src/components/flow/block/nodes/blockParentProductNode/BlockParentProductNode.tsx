@@ -39,7 +39,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   if (!node) return null;
 
   node.blockWidth = parentNodeSize?.width;
-  node.blockLength = parentNodeSize?.length;
+  node.blockHeight = parentNodeSize?.height;
 
   return (
     <>
@@ -49,7 +49,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
         width={parentNodeSize?.width}
-        height={parentNodeSize?.length}
+        height={parentNodeSize?.height}
         hasChildren={terminals.length > 0}
       />
 
@@ -68,7 +68,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         parent={true}
         nodes={nodes}
-        length={node.blockLength}
+        height={node.blockHeight}
         width={node.blockWidth}
         terminals={terminals}
         electro={electro}

@@ -1,10 +1,15 @@
 const GetUserInititals = (userName: string) => {
-  const userNameSplit = userName.split(" ");
+  const userNameSplit = userName?.split(" ");
+  let initials = "";
 
-  const firstInitial = userNameSplit[0].substring(0, 1);
-  const lastInitial = userNameSplit[1].substring(0, 1);
+  if (userNameSplit) {
+    const firstInitial = userNameSplit[0]?.substring(0, 1);
+    if (firstInitial) initials += firstInitial;
+    const lastInitial = userNameSplit[1]?.substring(0, 1);
+    if (lastInitial) initials += lastInitial;
+  }
 
-  return firstInitial + lastInitial;
+  return initials;
 };
 
 export default GetUserInititals;
