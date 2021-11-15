@@ -10,7 +10,6 @@ const CheckboxWrapper = styled.label<Props>`
   position: absolute;
   left: 7px;
   padding-bottom: 15px;
-  /* bottom: 5px; */
 
   input {
     position: absolute;

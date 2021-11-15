@@ -2,9 +2,9 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { AspectColorType, Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
-import { FilterTerminals, GetNodeByDataId } from "../../helpers";
+import { FilterTerminals } from "../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { BlockLogoComponent } from "../../logo";
@@ -23,22 +23,13 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const node = nodes.find((x) => x.id === data?.id);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
-
-  // Enforce size change of node
-  useEffect(() => {
-    const locationNode = GetNodeByDataId(node?.id);
-    if (locationNode) {
-      locationNode.style.width = `${node?.width}px`;
-      locationNode.style.height = `${node?.length}px`;
-    }
-  }, [node]);
 
   useEffect(() => {
     updateNodeInternals(node?.id);
