@@ -19,6 +19,7 @@ const ProjectComponent = () => {
   };
 
   const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes, project);
+  if (!project || !nodes) return null;
 
   return (
     <>
