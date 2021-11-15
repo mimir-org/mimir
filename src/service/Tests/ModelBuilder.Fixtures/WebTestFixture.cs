@@ -1,20 +1,21 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using System;
+﻿using System;
 using System.Dynamic;
 using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using WebMotions.Fake.Authentication.JwtBearer;
 
-namespace ModelBuilder.Api.Tests.Fixture
+namespace ModelBuilder.Fixtures
 {
     public class WebTestFixture<T> : IDisposable where T : TestStartup
     {
-        protected readonly IHost server;
-        protected readonly HttpClient client;
+        protected readonly IHost Server;
+        protected readonly HttpClient Client;
+        public IServiceProvider ServiceProvider;
 
         public WebTestFixture()
         {
@@ -26,7 +27,6 @@ namespace ModelBuilder.Api.Tests.Fixture
             {
                 configure
                     .UseTestServer()
-                    //.UseEnvironment("Local")
                     .UseConfiguration(configuration)
                     .UseStartup<T>()
                     .ConfigureTestServices(collection =>
@@ -35,21 +35,22 @@ namespace ModelBuilder.Api.Tests.Fixture
                     });
             });
 
-            server = hostBuilder.Start();
-            client = server.GetTestClient();
+            Server = hostBuilder.Start();
+            Client = Server.GetTestClient();
 
             dynamic data = new ExpandoObject();
             data.sub = Guid.NewGuid();
-            data.role = new[] { "sub_role", "admin" };
-            
+            data.role = new[] { "Contributor", "Administrator", "Reader" };
 
-            client.SetFakeBearerToken((object)data);
+
+            Client.SetFakeBearerToken((object) data);
+            ServiceProvider = Server.Services;
         }
 
         public void Dispose()
         {
-            client.Dispose();
-            server.Dispose();
+            Client.Dispose();
+            Server.Dispose();
         }
     }
 }

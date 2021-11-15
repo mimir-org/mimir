@@ -15,6 +15,8 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Attribute");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
+            builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.Key).HasColumnName("Key").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);

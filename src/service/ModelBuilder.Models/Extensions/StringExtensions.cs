@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Exceptions;
+using Mb.Models.Properties;
 
 namespace Mb.Models.Extensions
 {
@@ -80,10 +82,37 @@ namespace Mb.Models.Extensions
 
         public static string ResolveDomain(this string id)
         {
-            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
-            return idSplit.Length != 2 ? string.Empty : idSplit[0];
+            var idSplit = id?.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            return idSplit?.Length != 2 ? null : idSplit[0];
         }
 
+        public static string ResolveIri(this string id)
+        {
+            if (id == null)
+                return null;
+
+            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            const string prefixMimir = @"https://rdf.equinor.com/sor/mimir#";
+            var iri = $"{prefixMimir}/ID#{idSplit[^1]}";
+            return iri;
+        }
+
+        public static string ResolveIdFromIriAndDomain(this string iri, string domain)
+        {
+            if (string.IsNullOrEmpty(domain))
+                return null;
+
+            var hashSplit = iri.Split('#', StringSplitOptions.RemoveEmptyEntries);
+            if (hashSplit.Length == 2)
+            {
+                return $"{domain.Trim()}_{hashSplit[1].Trim()}";
+            }
+
+            var idSplit = iri.Split("/", StringSplitOptions.RemoveEmptyEntries);
+            return idSplit.Length <= 0 ? 
+                string.Empty : 
+                $"{domain.Trim()}_{hashSplit[^1].Trim()}";
+        }
 
         #region Private
 

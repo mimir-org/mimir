@@ -5,6 +5,8 @@ export const NODE_KIND: string = "Node";
 
 class Node {
   id: string;
+  iri: string;
+  domain: string;
   rds: string;
   contractor: string;
   description: string;

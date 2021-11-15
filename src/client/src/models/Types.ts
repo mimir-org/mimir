@@ -66,6 +66,8 @@ export interface LibrarySubProjectItem {
 
 export interface ProjectSimple {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   description: string;
   projectOwner: string;

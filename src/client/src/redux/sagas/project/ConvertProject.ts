@@ -24,6 +24,8 @@ export interface UnitAm {
 }
 export interface AttributeAm {
   id: string;
+  iri: string;
+  domain: string;
   key: string;
   value: string;
   selectedUnitId: string;
@@ -44,6 +46,8 @@ export interface AttributeAm {
 }
 export interface ConnectorAm {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   type: ConnectorType;
   semanticReference: string;
@@ -61,6 +65,8 @@ export interface ConnectorAm {
 }
 export interface NodeAm {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   version: string;
   label: string;
@@ -92,6 +98,8 @@ export interface NodeAm {
 
 export interface EdgeAm {
   id: string;
+  iri: string;
+  domain: string;
   fromConnectorId: string;
   toConnectorId: string;
   fromNodeId: string;
@@ -104,6 +112,8 @@ export interface EdgeAm {
 
 export interface ProjectAm {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   isSubProject: boolean;
   version: string;
@@ -167,6 +177,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
   attributes.forEach((attribute) => {
     const a = {
       id: attribute.id,
+      iri: attribute.iri,
+      domain: attribute.domain,
       key: attribute.key,
       value: attribute.value,
       selectedUnitId: attribute.selectedUnitId,
@@ -199,6 +211,8 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
   connectors.forEach((connector) => {
     const a = {
       id: connector.id,
+      iri: connector.iri,
+      domain: connector.domain,
       name: connector.name,
       type: connector.type,
       semanticReference: connector.semanticReference,
@@ -221,6 +235,8 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
   if (!connector) return {} as ConnectorAm;
   return {
     id: connector.id,
+    iri: connector.iri,
+    domain: connector.domain,
     name: connector.name,
     type: connector.type,
     semanticReference: connector.semanticReference,
@@ -290,6 +306,8 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
   nodes.forEach((node) => {
     const n = {
       id: node.id,
+      iri: node.iri,
+      domain: node.domain,
       name: node.name,
       version: node.version,
       label: node.label,
@@ -335,6 +353,8 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
   edges.forEach((edge) => {
     const e = {
       id: edge.id,
+      iri: edge.iri,
+      domain: edge.domain,
       fromConnectorId: edge.fromConnectorId,
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,
@@ -354,6 +374,8 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
 const ConvertProject = (project: Project): ProjectAm => {
   return {
     id: project.id,
+    iri: project.iri,
+    domain: project.domain,
     name: project.name,
     isSubProject: project.isSubProject,
     version: project.version,
