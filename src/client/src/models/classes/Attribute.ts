@@ -4,6 +4,8 @@ export const ATTRIBUTE_KIND = "Attribute";
 
 class Attribute {
   id: string;
+  iri: string;
+  domain: string;
   key: string;
   value: string;
   isLocked: boolean;
@@ -27,6 +29,7 @@ class Attribute {
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
+  tags: Set<string>;
 
   kind: string = ATTRIBUTE_KIND;
 

@@ -1,4 +1,4 @@
-import { Size } from "../../../compLibrary";
+import { Size } from "../../../compLibrary/size";
 import { Edge, Node, Project } from "../../../models";
 import { MODULE_TYPE } from "../../../models/project";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";

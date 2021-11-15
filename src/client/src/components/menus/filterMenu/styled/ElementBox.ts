@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FontSize } from "../../../../compLibrary";
 
 const ElementBox = styled.div`
   position: relative;
@@ -7,14 +6,10 @@ const ElementBox = styled.div`
   flex-direction: column;
   flex: 1;
   margin-left: 5px;
-  margin-bottom: 30px;
+  margin-bottom: 12px;
 
-  .text {
-    position: relative;
-    margin-left: 22px;
-    bottom: 1px;
-    font-size: ${FontSize.Standard};
-    width: 220px;
+  &:hover {
+    cursor: pointer;
   }
 `;
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TERMINALS_COLUMN_HORIZONTAL_PADDING, TERMINALS_COLUMN_WIDTH } from ".";
-import { Color } from "../../../../../compLibrary";
+import { Color } from "../../../../../compLibrary/colors";
 
 const TERMINALS_WIDTH_OFFSET: number = TERMINALS_COLUMN_WIDTH + 2 * TERMINALS_COLUMN_HORIZONTAL_PADDING;
 

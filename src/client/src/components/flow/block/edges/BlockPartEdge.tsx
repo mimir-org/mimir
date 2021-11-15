@@ -1,5 +1,5 @@
 import { getSmoothStepPath } from "react-flow-renderer";
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 
 /**
  * Component for a PartOfEdge in BlockView used only by Product Nodes.
@@ -25,7 +25,7 @@ function GetPartEdgeStyle(visible: boolean) {
   return {
     stroke: Color.ProductHeader,
     strokeWidth: "2px",
-    opacity: visible ? 0.4 : 0,
+    opacity: visible ? 0.7 : 0,
     transition: "opacity 250ms",
   };
 }

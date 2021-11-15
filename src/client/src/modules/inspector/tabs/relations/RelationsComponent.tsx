@@ -7,6 +7,7 @@ import { GetRelations } from "./helpers/GetRelations";
 import { InspectorElement } from "../../types";
 import { IsEdge, IsNode } from "../../helpers/IsType";
 import { useMemo } from "react";
+import { useSelectFlowElements } from "../../../../helpers";
 import {
   GetTransports,
   GetConnectors,
@@ -18,7 +19,6 @@ import {
   GetActiveRelationColor,
   GetListItemColor,
 } from "./helpers";
-import { useSelectFlowElements } from "../../../../helpers";
 
 interface Props {
   element: InspectorElement;

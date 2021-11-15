@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { Size } from "../../../compLibrary";
+import { Size } from "../../../compLibrary/size";
 import { SetPanelHeight } from "../helpers";
 
 /**

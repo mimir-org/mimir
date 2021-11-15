@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../";
+import { Color } from "../../colors";
 
 const DropdownMenuList = styled.div`
   display: flex;
@@ -16,8 +16,9 @@ const DropdownMenuList = styled.div`
   width: 99%;
   max-height: 250px;
   overflow-y: auto;
+
   .listitem {
-    background-color: white;
+    background-color: ${Color.White};
     display: flex;
     flex-direction: column;
   }

@@ -1,12 +1,12 @@
 import { memo, FC, useState, useEffect } from "react";
 import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Color } from "../../../../../compLibrary";
+import { Color } from "../../../../../compLibrary/colors";
 import { SetParentNodeSize } from "./helpers";
 import { OnConnectorClick } from "./handlers";
 import { ParentContainerComponent } from "../parentContainer";
 import { FilterTerminals } from "../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { GetAspectColor, IsLocation } from "../../../../../helpers";
@@ -23,7 +23,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
@@ -40,7 +40,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   if (!node) return null;
 
   node.blockWidth = parentNodeSize?.width;
-  node.blockLength = parentNodeSize?.length;
+  node.blockHeight = parentNodeSize?.height;
 
   return (
     <>
@@ -50,7 +50,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
         width={parentNodeSize?.width}
-        height={parentNodeSize?.length}
+        height={parentNodeSize?.height}
         hasChildren={terminals.length > 0}
       />
 
@@ -69,7 +69,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         parent={true}
         nodes={nodes}
-        length={node.blockLength}
+        height={node.blockHeight}
         width={node.blockWidth}
         terminals={terminals}
         electro={electro}

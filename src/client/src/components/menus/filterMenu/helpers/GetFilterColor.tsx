@@ -1,4 +1,4 @@
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
 import { IsProductTerminal, IsLocationTerminal, IsPartOf } from "../../../flow/helpers";

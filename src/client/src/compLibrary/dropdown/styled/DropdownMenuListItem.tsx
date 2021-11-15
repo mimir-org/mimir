@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, FontSize } from "../../";
+import { Color } from "../../colors";
+import { FontSize } from "../../font";
 
 interface Props {
   hasCategory: boolean;
@@ -17,15 +18,18 @@ const DropdownMenuListItem = styled.div<Props>`
   background-color: ${Color.White};
   cursor: pointer;
   z-index: 1;
+
   p {
     padding: 5px;
     margin-left: ${(props) => props.hasCategory && "10px"};
   }
+
   img {
     margin-left: 5px;
     margin-right: 10px;
     height: 14px;
   }
+
   :hover {
     background-color: ${Color.LightBlue};
     p {

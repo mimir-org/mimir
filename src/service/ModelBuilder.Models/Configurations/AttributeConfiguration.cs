@@ -1,4 +1,5 @@
-﻿using Mb.Models.Data;
+﻿using Mb.Models.Configurations.Converters;
+using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,9 +9,14 @@ namespace Mb.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Attribute> builder)
         {
+            var stringComparer = new StringHashSetValueComparer();
+            var stringConverter = new StringHashSetValueConverter();
+
             builder.HasKey(x => x.Id);
             builder.ToTable("Attribute");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
+            builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.Key).HasColumnName("Key").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
@@ -26,6 +32,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
             builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
             builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Tags).HasColumnName("Tags").IsRequired(false).HasConversion(stringConverter, stringComparer);
 
             builder.HasOne(x => x.Terminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);

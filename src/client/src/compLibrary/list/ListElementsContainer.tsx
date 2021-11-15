@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../compLibrary";
+import { Color } from "../../compLibrary/colors";
 
 interface Props {
   background: boolean;
@@ -10,7 +10,7 @@ interface Props {
 const ListElementsContainer = styled.div<Props>`
   position: relative;
   height: calc(100% - 45px);
-  border-bottom: black 1px solid;
+  border-bottom: 1px solid ${Color.Black};
   overflow-x: hidden;
   overflow-y: scroll;
   overflow-y: overlay;

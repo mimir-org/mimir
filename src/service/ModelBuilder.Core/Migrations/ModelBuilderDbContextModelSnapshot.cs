@@ -16,7 +16,7 @@ namespace Mb.Core.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AttributeType_Unit", b =>
@@ -85,11 +85,21 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Discipline");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InterfaceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
@@ -130,6 +140,10 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Tags");
 
                     b.Property<string>("TerminalId")
                         .HasColumnType("nvarchar(450)")
@@ -206,6 +220,16 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -265,6 +289,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<string>("FromConnectorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
@@ -278,6 +307,11 @@ namespace Mb.Core.Migrations
                     b.Property<string>("InterfaceId")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("InterfaceId");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsTemplateEdge")
                         .HasColumnType("bit")
@@ -412,10 +446,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Aspect");
 
-                    b.Property<string>("Contractor")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Contractor");
-
                     b.Property<decimal?>("Cost")
                         .HasColumnType("decimal(10,4)")
                         .HasColumnName("Cost");
@@ -432,9 +462,19 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<decimal?>("Height")
                         .HasColumnType("decimal(5,2)")
                         .HasColumnName("Height");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
@@ -511,10 +551,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Symbol");
 
-                    b.Property<string>("TagNumber")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TagNumber");
-
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
                         .HasColumnName("Updated");
@@ -570,6 +606,16 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsSubProject")
                         .HasColumnType("bit")
@@ -679,6 +725,10 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Tags");
 
                     b.HasKey("Id");
 

@@ -1,8 +1,8 @@
 import { ProjectComponent } from "./";
 import { MODULE_TYPE } from "../../models/project";
-import { AnimatedModule, Size } from "../../compLibrary";
-import { IsBlockView } from "../../helpers";
-import { ModuleHead, ModuleBody } from "../../compLibrary/box/modules";
+import { AnimatedModule } from "../../compLibrary/animated";
+import { Size } from "../../compLibrary/size";
+import { ModuleHeader, ModuleBody } from "./styled";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
@@ -23,11 +23,11 @@ export const ExplorerModule = () => {
 
   return (
     <AnimatedModule type={type} start={start} stop={stop} run={animate} id="ExplorerModule">
-      <ModuleHead explorer visible={isOpen}>
+      <ModuleHeader visible={isOpen}>
         <img className="icon" src={ExplorerIcon} alt="toggle" onClick={() => OnToggleClick(dispatch, isOpen, type)} />
         <p className="text">{type}</p>
-      </ModuleHead>
-      <ModuleBody visible={isOpen} explorer isBlockView={IsBlockView()}>
+      </ModuleHeader>
+      <ModuleBody visible={isOpen}>
         <ProjectComponent />
       </ModuleBody>
     </AnimatedModule>

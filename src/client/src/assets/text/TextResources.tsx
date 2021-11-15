@@ -92,9 +92,6 @@ const TextResources = {
   Inspector_Admin_Created_Date: "Date created",
   Inspector_Admin_Local_Description: "Long Local Description",
   Inspector_Admin_Type: "Type name",
-  Inspector_Admin_Width: "Width (m)",
-  Inspector_Admin_Height: "Height (m)",
-  Inspector_Admin_Length: "Length (m)",
 
   Inspector_Inherited_Pressure: "Saturation Pressure",
   Inspector_Inherited_Temp: "Saturation Temperature",
@@ -211,6 +208,7 @@ const TextResources = {
   Account_Save_Library: "SaveLibrary",
   Account_Import_Project: "ImportProject",
   Account_Logout: "Logout",
+  Account_Project: "Project",
 
   // Error
   Error_Tile: "Oops, something went wrong",
@@ -246,6 +244,15 @@ const TextResources = {
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
   Filter_Show_Transport: "Show all transport edges",
   Filter_Edge_Animation: "Edge animation",
+
+  // User Menu
+  UserMenu_Settings: "User Settings",
+  UserMenu_Notifications: "Show all Notifications",
+  UserMenu_DarkMode: "Dark Mode",
+  UserMenu_DarkModeOn: "On",
+  UserMenu_DarkModeOff: "Off",
+  UserMenu_LogOut: "Log out",
+  UserMenu_User: "User",
 };
 
 export default TextResources;

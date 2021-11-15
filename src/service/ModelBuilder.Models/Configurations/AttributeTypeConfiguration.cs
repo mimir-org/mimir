@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Mb.Models.Configurations.Converters;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,11 @@ namespace Mb.Models.Configurations
 {
     public class AttributeTypeConfiguration : IEntityTypeConfiguration<AttributeType>
     {
-       
         public void Configure(EntityTypeBuilder<AttributeType> builder)
         {
+            var stringComparer = new StringHashSetValueComparer();
+            var stringConverter = new StringHashSetValueConverter();
+
             builder.HasKey(x => x.Id);
             builder.ToTable("AttributeType");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
@@ -19,6 +22,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
             builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
             builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Tags).HasColumnName("Tags").IsRequired(false).HasConversion(stringConverter, stringComparer);
 
             builder.HasOne(x => x.Condition).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.ConditionId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Qualifier).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.QualifierId).OnDelete(DeleteBehavior.NoAction);

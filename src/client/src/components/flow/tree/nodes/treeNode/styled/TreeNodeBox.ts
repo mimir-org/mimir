@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Size } from "../../../../../../compLibrary";
+import { Size } from "../../../../../../compLibrary/size";
 
 interface Props {
   colorMain: string;
@@ -11,7 +11,7 @@ interface Props {
 const TreeNodeBox = styled.div<Props>`
   border-radius: 10px;
   width: ${Size.Node_Width}px;
-  height: ${Size.Node_Length}px;
+  height: ${Size.Node_Height}px;
   font-size: 11px;
   text-align: center;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
