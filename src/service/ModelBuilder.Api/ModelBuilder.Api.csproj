@@ -45,6 +45,7 @@
     <ProjectReference Include="..\ModelBuilder.Core\ModelBuilder.Core.csproj" />
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
     <ProjectReference Include="..\ModelBuilder.TypeEditor.Core\ModelBuilder.TypeEditor.Core.csproj" />
+    <ProjectReference Include="..\Modules\ApplicationInsightsLoggingModule\ApplicationInsightsLoggingModule.csproj" />
     <ProjectReference Include="..\Modules\AzureActiveDirectory\AzureActiveDirectoryModule.csproj" />
     <ProjectReference Include="..\Modules\DefaultParserModule\DefaultParserModule.csproj" />
     <ProjectReference Include="..\Modules\FamModule\EventHubModule.csproj" />
