@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Size } from "../../../../../../compLibrary";
+import { Size } from "../../../../../../compLibrary/size";
 
 interface Props {
   colorMain: string;

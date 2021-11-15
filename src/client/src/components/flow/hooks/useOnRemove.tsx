@@ -1,5 +1,5 @@
 import { removeElements } from "react-flow-renderer";
-import { Size } from "../../../compLibrary";
+import { Size } from "../../../compLibrary/size";
 import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode } from "../../../helpers";
 import { EDGE_KIND } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";

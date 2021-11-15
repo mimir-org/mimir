@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
 
 const ListContainer = styled.div`
   border: solid 2px ${Color.DarkerGrey};

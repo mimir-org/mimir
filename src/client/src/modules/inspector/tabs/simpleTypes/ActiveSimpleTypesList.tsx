@@ -1,4 +1,4 @@
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 import { CompositeLikeItem } from "../../types";
 import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "../terminals/styled/activeTerminalList";
 

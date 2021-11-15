@@ -16,7 +16,7 @@ namespace Mb.Core.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AttributeType_Unit", b =>
@@ -130,6 +130,10 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Tags");
 
                     b.Property<string>("TerminalId")
                         .HasColumnType("nvarchar(450)")
@@ -679,6 +683,10 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Tags");
 
                     b.HasKey("Id");
 

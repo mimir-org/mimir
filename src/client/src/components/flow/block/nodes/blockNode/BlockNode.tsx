@@ -1,14 +1,14 @@
 import * as Click from "./handlers";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
-import { AspectColorType, Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector } from "../../../../../models";
 import { NodeBox } from "../../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
 import { SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { Size } from "../../../../../compLibrary";
+import { Size } from "../../../../../compLibrary/size";
 import { BlockLogoComponent } from "../../logo";
 import { GetAspectColor, GetSelectedBlockNode, IsFunction, IsProduct } from "../../../../../helpers";
 
@@ -29,7 +29,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
   const node = nodes?.find((x) => x.id === data.id);

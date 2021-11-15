@@ -246,6 +246,15 @@ const TextResources = {
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
   Filter_Show_Transport: "Show all transport edges",
   Filter_Edge_Animation: "Edge animation",
+
+  // User Menu
+  UserMenu_Settings: "User Settings",
+  UserMenu_Notifications: "Show all Notifications",
+  UserMenu_DarkMode: "Dark Mode",
+  UserMenu_DarkModeOn: "On",
+  UserMenu_DarkModeOff: "Off",
+  UserMenu_LogOut: "Log out",
+  UserMenu_User: "User",
 };
 
 export default TextResources;

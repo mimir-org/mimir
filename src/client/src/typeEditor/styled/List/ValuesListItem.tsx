@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary";
+import { Color } from "../../../compLibrary/colors";
 
 const ValuesListItem = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const ValuesListItem = styled.div`
   border-style: solid;
   border-radius: 2px;
   height: 20px;
-  padding: 2px;
+  padding: 2px 2px 2px 7px;
 
   label::first-letter {
     text-transform: uppercase;
@@ -18,6 +18,7 @@ const ValuesListItem = styled.div`
 
   :hover {
     background-color: ${Color.LightBlue};
+    text-decoration: underline;
   }
 `;
 

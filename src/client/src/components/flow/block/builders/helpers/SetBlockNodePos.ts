@@ -1,4 +1,4 @@
-import { Size } from "../../../../../compLibrary";
+import { Size } from "../../../../../compLibrary/size";
 import { BlockNodeSize } from "../../../../../models/project";
 
 /**

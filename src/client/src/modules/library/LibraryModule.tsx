@@ -2,10 +2,10 @@ import { TextResources } from "../../assets/text";
 import { LegendModule } from "../../modules/legend";
 import { LibraryComponent } from "./index";
 import { useMemo, useState } from "react";
-import { AnimatedModule, Size } from "../../compLibrary";
+import { AnimatedModule } from "../../compLibrary/animated";
+import { Size } from "../../compLibrary/size";
 import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
-import { ModuleBody, ModuleHead } from "../../compLibrary/box/modules";
-import { LegendIcons } from "../../compLibrary/box/library";
+import { ModuleBody, ModuleHeader, LegendHeader } from "./styled";
 import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
@@ -42,10 +42,10 @@ const LibraryModule = () => {
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
-      <ModuleHead library visible={libOpen}>
+      <ModuleHeader visible={libOpen}>
         <img className="icon" src={LibraryIcon} alt="toggle" onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)} />
         <p className="text">{TextResources.Module_Library}</p>
-      </ModuleHead>
+      </ModuleHeader>
       <ModuleBody visible={libOpen}>
         <LibraryComponent
           categories={filteredCategories}
@@ -56,12 +56,12 @@ const LibraryModule = () => {
       </ModuleBody>
 
       <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">
-        <ModuleHead legend>
-          <LegendIcons open={legendOpen} onClick={() => OnLegendClick(dispatch, legendOpen, legend)}>
-            <img src={LegendIcon} alt="legend" className="icon" />
-            <p className="text">{TextResources.Module_Legend}</p>
-          </LegendIcons>
-        </ModuleHead>
+        <ModuleHeader legend>
+          <LegendHeader open={legendOpen} onClick={() => OnLegendClick(dispatch, legendOpen, legend)}>
+            <img src={LegendIcon} alt="legend" className="legend-icon" />
+            <p className="legend-text">{TextResources.Module_Legend}</p>
+          </LegendHeader>
+        </ModuleHeader>
         <LegendModule visible={true} project={project} />
       </AnimatedModule>
     </AnimatedModule>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LibrarySubProjectItem } from "../../models";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
-import { LibCategory, LibCategoryElement, LibElement } from "../../compLibrary/box/library";
+import { LibCategory, LibCategoryElement, LibElement } from "./styled";
 
 interface Props {
   dispatch: any;

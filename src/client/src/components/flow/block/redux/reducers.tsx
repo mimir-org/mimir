@@ -1,5 +1,5 @@
 import { SET_BLOCKNODE_SIZE, BlockNodeSizeActionTypes } from "./types";
-import { Size } from "../../../../compLibrary";
+import { Size } from "../../../../compLibrary/size";
 import { BlockNodeSize } from "../../../../models/project";
 
 const initialState = {

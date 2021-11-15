@@ -1,12 +1,12 @@
 import * as Helpers from "./helpers/";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
-import { FullScreenComponent } from "../../../compLibrary/controls";
+import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
 import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { TreeFilterMenu } from "../../menus/filterMenu/tree";
+import { TreeFilterMenu } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
