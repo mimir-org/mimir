@@ -35,6 +35,8 @@ export const AspectComponent = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const blockView = IsBlockView();
+  const isChecked = blockView ? IsChecked(elements, node) : !node?.isHidden;
+  const isMiniCheckbox = blockView ? IsMiniCheckbox(node, selectedNode, secondaryNode) : false;
 
   return (
     <>
@@ -44,9 +46,11 @@ export const AspectComponent = ({
           <CheckboxExplorer
             label={label}
             color={GetAspectColor(node, AspectColorType.Selected)}
-            isChecked={blockView ? IsChecked(elements, node) : !node?.isHidden ?? false}
-            isMiniCheckbox={blockView ? IsMiniCheckbox(node, selectedNode, secondaryNode) : false}
-            onChange={() => (blockView ? OnBlockChange(node, secondaryNode, dispatch) : OnTreeChange(node, project, dispatch))}
+            isChecked={isChecked}
+            isMiniCheckbox={isMiniCheckbox}
+            onChange={() =>
+              blockView ? OnBlockChange(node, selectedNode, secondaryNode, dispatch) : OnTreeChange(node, project, dispatch)
+            }
           />
         </div>
 
