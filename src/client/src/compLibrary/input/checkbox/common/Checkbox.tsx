@@ -8,6 +8,7 @@ interface Props {
   readOnly?: boolean;
   id?: string;
 }
+
 /**
  * A generic checkbox for Mimir.
  * @param interface
