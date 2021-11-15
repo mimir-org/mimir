@@ -24,7 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModelBuilder.Api\ModelBuilder.Api.csproj" />
+    <ProjectReference Include="..\..\ModelBuilder.Api\ModelBuilder.Api.csproj" />
+    <ProjectReference Include="..\..\Tests\ModelBuilder.Fixtures\ModelBuilder.Fixtures.csproj" />
   </ItemGroup>
 
 </Project>

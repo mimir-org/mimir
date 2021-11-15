@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application
@@ -6,6 +7,8 @@ namespace Mb.Models.Application
     public class ConnectorAm
     {
         public string Id { get; set; }
+        public string Iri { get; set; }
+        public string Domain { get; set; }
         public string Name { get; set; }
         public ConnectorType Type { get; set; }
         public string SemanticReference { get; set; }

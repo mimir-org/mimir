@@ -31,6 +31,8 @@ namespace Mb.Core.Profiles
 
             CreateMap<AttributeType, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
+                .ForMember(dest => dest.Iri, opt => opt.Ignore())
+                .ForMember(dest => dest.Domain, opt => opt.Ignore())
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Entity))
                 .ForMember(dest => dest.Value, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.Ignore())
@@ -55,6 +57,8 @@ namespace Mb.Core.Profiles
 
             CreateMap<AttributeAm, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
@@ -85,6 +89,8 @@ namespace Mb.Core.Profiles
 
             CreateMap<Attribute, AttributeAm>()
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+               .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+               .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))

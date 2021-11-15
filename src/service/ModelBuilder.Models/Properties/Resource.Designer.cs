@@ -61,11 +61,11 @@ namespace Mb.Models.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:.
+        ///   Looks up a localized string similar to https://rdf.equinor.com/sor/mimir#.
         /// </summary>
-        internal static string mimirPrefix {
+        internal static string PrefixMimirIri {
             get {
-                return ResourceManager.GetString("mimirPrefix", resourceCulture);
+                return ResourceManager.GetString("PrefixMimirIri", resourceCulture);
             }
         }
     }

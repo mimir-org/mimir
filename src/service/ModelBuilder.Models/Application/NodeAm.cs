@@ -9,8 +9,9 @@ namespace Mb.Models.Application
 {
     public class NodeAm
     {
-        [Required]
         public string Id { get; set; }
+        public string Iri { get; set; }
+        public string Domain { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -49,7 +50,6 @@ namespace Mb.Models.Application
         public decimal? Height { get; set; }
         
         [ValidatePositiveDecimal]
-        //[ProductAspectRequiredDecimal]
         public decimal? Cost { get; set; }
 
         [Required]

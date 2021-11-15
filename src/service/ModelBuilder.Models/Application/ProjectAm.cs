@@ -7,18 +7,14 @@ namespace Mb.Models.Application
     public class ProjectAm
     {
         public string Id { get; set; }
+        public string Iri { get; set; }
+        public string Domain { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [Required]
         public bool IsSubProject { get; set; }
-
-        [Required]
-        public string Domain { get; set; }
-
-        [Required]
-        public string Iri { get; set; }
 
         public string Version { get; set; }
         public string Description { get; set; }
@@ -29,16 +25,5 @@ namespace Mb.Models.Application
         public ICollection<NodeAm> Nodes { get; set; }
 
         public ICollection<EdgeAm> Edges { get; set; }
-
-        public ProjectAm()
-        {
-
-        }
-
-        public ProjectAm(string iri, string domain)
-        {
-            //if(!string.IsNullOrEmpty(iri))
-
-        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using Mb.Models.Application.TypeEditor;
@@ -81,14 +82,25 @@ namespace Mb.Models.Extensions
 
         public static string ResolveDomain(this string id)
         {
-            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
-            return idSplit.Length != 2 ? string.Empty : idSplit[0];
+            var idSplit = id?.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            return idSplit?.Length != 2 ? null : idSplit[0];
         }
-        
+
+        public static string ResolveIri(this string id)
+        {
+            if (id == null)
+                return null;
+
+            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            const string prefixMimir = @"https://rdf.equinor.com/sor/mimir#";
+            var iri = $"{prefixMimir}/ID#{idSplit[^1]}";
+            return iri;
+        }
+
         public static string ResolveIdFromIriAndDomain(this string iri, string domain)
         {
             if (string.IsNullOrEmpty(domain))
-                return string.Empty;
+                return null;
 
             var hashSplit = iri.Split('#', StringSplitOptions.RemoveEmptyEntries);
             if (hashSplit.Length == 2)

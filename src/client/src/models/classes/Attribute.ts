@@ -4,6 +4,8 @@ export const ATTRIBUTE_KIND = "Attribute";
 
 class Attribute {
   id: string;
+  iri: string;
+  domain: string;
   key: string;
   value: string;
   isLocked: boolean;
