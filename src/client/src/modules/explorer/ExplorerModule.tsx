@@ -23,8 +23,8 @@ export const ExplorerModule = () => {
 
   return (
     <AnimatedModule type={type} start={start} stop={stop} run={animate} id="ExplorerModule">
-      <ModuleHeader visible={isOpen}>
-        <img className="icon" src={ExplorerIcon} alt="toggle" onClick={() => OnToggleClick(dispatch, isOpen, type)} />
+      <ModuleHeader isOpen={isOpen} onClick={() => OnToggleClick(dispatch, isOpen, type)}>
+        <img className="icon" src={ExplorerIcon} alt="toggle" />
         <p className="text">{type}</p>
       </ModuleHeader>
       <ModuleBody visible={isOpen}>

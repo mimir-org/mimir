@@ -79,7 +79,6 @@ export interface NodeAm {
   positionY: number;
   positionBlockX: number;
   positionBlockY: number;
-  length: number;
   width: number;
   height: number;
   cost: number;
@@ -195,7 +194,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
       discipline: attribute.discipline,
-      tags: attribute.tags
+      tags: attribute.tags,
     } as AttributeAm;
 
     converted.push(a);
@@ -321,7 +320,6 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       positionY: node.positionY,
       positionBlockX: node.positionBlockX,
       positionBlockY: node.positionBlockY,
-      length: node.length,
       width: node.width,
       height: node.height,
       cost: node.cost,

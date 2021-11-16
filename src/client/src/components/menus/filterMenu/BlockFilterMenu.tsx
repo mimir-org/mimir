@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
-import { FilterMenuBox } from "./styled";
+import { FilterMenuBox, Header } from "./styled";
 import { MenuColumn } from "../styled";
 import { FilterElement } from ".";
 import { FilterDropdown, FilterTerminalDropdown } from "./dropdown";
 import { TextResources } from "../../../assets/text";
-import { OnAnimationChange, OnAllTransportsChange, OnChange } from "./handlers";
+import { OnEdgeAnimationChange, OnAllTransportsChange, OnChange } from "./handlers";
 import { GetActiveTerminals, GetAllTerminals, GetEdges, GetInactiveTerminals, GetNodes, PopulateFilterLists } from "./helpers";
 import { IsLibrary } from "../../../helpers";
 import { IsTransport } from "../../flow/helpers";
@@ -37,10 +37,11 @@ const BlockFilterMenu = ({ elements, edgeAnimation }: Props) => {
 
   return (
     <FilterMenuBox libraryOpen={libOpen}>
+      <Header>{TextResources.Filter_Heading}</Header>
       <MenuColumn>
         <FilterElement
           label={TextResources.Filter_Edge_Animation}
-          onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
+          onChange={() => OnEdgeAnimationChange(edges, dispatch, edgeAnimation)}
           isChecked={edgeAnimation}
           visible={!!transportItems.length}
         />

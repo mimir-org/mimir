@@ -6,6 +6,7 @@ import { CompanyLogoBox, ProjectBox, UserBox, HeaderBox, LogoBox } from "./style
 import { GetCompanyLogoForHeader } from "../../helpers";
 import { GetUserInitials } from "../menus/userMenu/helpers";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../assets/icons/toogle";
+import { TextResources } from "../../assets/text";
 import {
   projectMenuSelector,
   electroSelector,
@@ -50,7 +51,7 @@ const Header = () => {
           <img src={GetCompanyLogoForHeader(company)} alt="logo" />
         </CompanyLogoBox>
         <ProjectBox isOpen={projectMenuOpen} onClick={() => Click.OnProject(dispatch, projectMenuOpen)}>
-          <p className="project-name">{project && project.name}</p>
+          <p className="project-name">{project?.name ?? TextResources.Account_Project}</p>
           <img
             src={projectMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
             alt="icon"

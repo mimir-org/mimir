@@ -40,8 +40,14 @@ const CheckboxWrapper = styled.label<Props>`
     position: relative;
     bottom: 19px;
     left: 30px;
-    max-width: 240px;
+    margin-right: 20px;
+    padding-right: 2em;
     font-size: ${FontSize.Standard};
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
   }
 `;
 

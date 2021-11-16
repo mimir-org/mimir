@@ -3,7 +3,7 @@ import { Color } from "../../../compLibrary/colors";
 import { FontType, FontSize } from "../../../compLibrary/font";
 
 interface Props {
-  visible?: boolean;
+  isOpen?: boolean;
   legend?: boolean;
 }
 
@@ -11,29 +11,23 @@ const ModuleHeader = styled.div<Props>`
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   text-align: center;
-  padding-top: ${(props) => (props.legend ? 15 : 5)}px;
-  height: ${(props) => (props.legend ? 60 : 25)}px;
-  border-top: ${(props) => props.legend && "1px solid" + Color.Grey};
   position: relative;
-  margin-left: ${(props) => !props.legend && "7px"};
+  cursor: pointer;
+  padding-top: ${(props) => (props.legend ? 15 : 5)}px;
+  border-top: ${(props) => props.legend && "1px solid" + Color.Grey};
   margin-top: ${(props) => !props.legend && "22px"};
-  width: initial;
 
   .text {
     position: relative;
-    opacity: ${(props) => (props.visible ? 1 : 0)};
-    right: ${(props) => !props.legend && "140px"};
-    float: ${(props) => !props.legend && "right"};
+    opacity: ${(props) => (props.isOpen ? 1 : 0)};
     bottom: 18px;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease-in-out;
   }
 
   .icon {
-    position: ${(props) => !props.visible && "absolute"};
-    cursor: ${(props) => !props.legend && "pointer"};
-    float: left;
-    left: ${(props) => !props.legend && "5px"};
-    float: ${(props) => !props.legend && "left"};
+    position: absolute;
+    left: ${(props) => (props.isOpen ? 97 : 10)}px;
+    transition: left 0.2s ease-in-out;
   }
 `;
 

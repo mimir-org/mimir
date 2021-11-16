@@ -20,7 +20,7 @@ const SetBlockNodePos = (
   const xMin = parentX;
   const xMax = parentX + parentNodeSize?.width - Size.Node_Width;
   const yMin = parentY + margin;
-  const yMax = parentY + parentNodeSize?.length - Size.Node_Length;
+  const yMax = parentY + parentNodeSize?.height - Size.Node_Height;
 
   let nodeY = nodePos.y;
   let nodeX = nodePos.x;
