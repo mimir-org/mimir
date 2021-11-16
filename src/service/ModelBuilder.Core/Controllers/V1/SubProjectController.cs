@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Data;
@@ -61,6 +62,18 @@ namespace Mb.Core.Controllers.V1
             {
                 var createdSubProject = await _projectService.CreateProject(subProjectAm);
                 return StatusCode(201, createdSubProject);
+            }
+            catch (ModelBuilderBadRequestException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+
+                foreach (var error in e.Errors().ToList())
+                {
+                    ModelState.Remove(error.Key);
+                    ModelState.TryAddModelError(error.Key, error.Error);
+                }
+
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {

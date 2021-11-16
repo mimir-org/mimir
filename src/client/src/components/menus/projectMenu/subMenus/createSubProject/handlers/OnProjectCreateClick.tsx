@@ -2,8 +2,14 @@ import { changeActiveMenu, setProjectMenuVisibility } from "../../../../projectM
 import { createSubProject } from "../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 
-const OnSubProjectCreateClick = (projectName: string, nodeIds: string[], edgeIds: string[], dispatch: Dispatch) => {
-  dispatch(createSubProject(projectName, projectName, nodeIds, edgeIds));
+const OnSubProjectCreateClick = (
+  fromProjectId: string,
+  projectName: string,
+  nodeIds: string[],
+  edgeIds: string[],
+  dispatch: Dispatch
+) => {
+  dispatch(createSubProject(fromProjectId, projectName, projectName, nodeIds, edgeIds));
   dispatch(changeActiveMenu(null));
   dispatch(setProjectMenuVisibility(false));
 };

@@ -35,6 +35,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.IsRoot).HasColumnName("IsRoot").IsRequired();
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
+            builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
             builder.Property(p => p.Length).HasColumnName("Length").IsRequired(false).HasColumnType("decimal(5,2)");
             builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false).HasColumnType("decimal(5,2)");
             builder.Property(p => p.Height).HasColumnName("Height").IsRequired(false).HasColumnType("decimal(5,2)");
@@ -43,8 +44,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.PurposeString).HasColumnName("PurposeString").IsRequired(false);
 
             builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
-
-            builder.HasOne(x => x.MasterProject).WithMany().HasForeignKey(x => x.MasterProjectId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -30,8 +30,7 @@ namespace Mb.Models.Configurations
             builder.HasOne(x => x.Interface).WithMany(y => y.Edges).HasForeignKey(x => x.InterfaceId).OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
-            builder.Property(p => p.IsTemplateEdge).HasColumnName("IsTemplateEdge").IsRequired();
-            builder.HasOne(x => x.MasterProject).WithMany().HasForeignKey(x => x.MasterProjectId).OnDelete(DeleteBehavior.NoAction);
+            builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
         }
     }
 }

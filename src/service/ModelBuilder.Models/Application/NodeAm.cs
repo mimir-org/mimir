@@ -57,6 +57,8 @@ namespace Mb.Models.Application
 
         [Required]
         public string MasterProjectId { get; set; }
+        
+        public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
 

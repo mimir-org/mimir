@@ -45,9 +45,18 @@ namespace Mb.Models.Data
         public Interface Interface { get; set; }
 
         [Required]
-        public string MasterProjectId { get; set; }
-        public virtual Project MasterProject { get; set; }
-        public bool IsTemplateEdge { get; set; }
+        public string MasterProjectId
+        {
+            get => _masterProjectId;
+            set => SetMasterProjectId(value);
+        }
+
+        public string MasterProjectIri
+        {
+            get => _masterProjectIri;
+            set => SetMasterProjectIri(value);
+        }
+
         public virtual ICollection<Project> Projects { get; set; }
 
         #region Private methods
@@ -85,6 +94,26 @@ namespace Mb.Models.Data
                 _id = _iri.ResolveIdFromIriAndDomain(domain);
         }
 
+        private void SetMasterProjectId(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return;
+
+            _masterProjectId = id;
+            if (string.IsNullOrEmpty(_masterProjectIri))
+                _masterProjectIri = _masterProjectId.ResolveIri();
+        }
+
+        private void SetMasterProjectIri(string iri)
+        {
+            if (string.IsNullOrEmpty(iri))
+                return;
+
+            _masterProjectIri = iri;
+            if (string.IsNullOrEmpty(_masterProjectId))
+                _masterProjectId = _masterProjectIri.ResolveIdFromIriAndDomain(_domain);
+        }
+
         #endregion
 
         #region Private members
@@ -92,6 +121,8 @@ namespace Mb.Models.Data
         private string _id;
         private string _iri;
         private string _domain;
+        private string _masterProjectId;
+        private string _masterProjectIri;
 
         #endregion
     }
