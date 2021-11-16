@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
-import { FilterMenuBox } from "./styled";
+import { FilterMenuBox, Header } from "./styled";
 import { MenuColumn } from "../styled";
 import { FilterElement } from ".";
 import { FilterDropdown, FilterTerminalDropdown } from "./dropdown";
@@ -37,6 +37,7 @@ const BlockFilterMenu = ({ elements, edgeAnimation }: Props) => {
 
   return (
     <FilterMenuBox libraryOpen={libOpen}>
+      <Header>{TextResources.Filter_Heading}</Header>
       <MenuColumn>
         <FilterElement
           label={TextResources.Filter_Edge_Animation}
