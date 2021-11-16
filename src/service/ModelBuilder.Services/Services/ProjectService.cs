@@ -14,6 +14,7 @@ using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
+using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
@@ -125,7 +126,10 @@ namespace Mb.Services.Services
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
 
-            if (project?.Nodes != null)
+            if (project == null)
+                return null;
+
+            if (project.Nodes != null)
             {
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
                 foreach (var node in project.Nodes)
@@ -292,41 +296,22 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
+            string newCreatedProject = null;
+
             try
             {
                 if (subProjectAm == null)
-                    throw new ModelBuilderInvalidOperationException("Object is 'null'");
+                    throw new ModelBuilderInvalidOperationException("Sub-project is null");
 
-                if (subProjectAm.Nodes == null || !subProjectAm.Nodes.Any())
-                    throw new ModelBuilderInvalidOperationException("No nodes selected");
+                var validation = subProjectAm.ValidateObject();
+                if (!validation.IsValid)
+                    throw new ModelBuilderBadRequestException($"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
-                if (subProjectAm.Nodes.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                    throw new ModelBuilderInvalidOperationException("Duplicate node id's detected");
+                var actualProject = await GetProject(subProjectAm.FromProjectId, true);
+                if (actualProject == null)
+                    throw new ModelBuilderInvalidOperationException("The original project does not exist");
 
-                foreach (var nodeId in subProjectAm.Nodes)
-                {
-                    if (string.IsNullOrWhiteSpace(nodeId))
-                        throw new ModelBuilderInvalidOperationException($"Node id can't be null or empty");
-
-                    if (!_nodeRepository.GetAll().Any(x => x.Id == nodeId))
-                        throw new ModelBuilderInvalidOperationException($"Node {nodeId} not found");
-                }
-
-                if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
-                {
-                    if (subProjectAm.Edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                        throw new ModelBuilderInvalidOperationException("Duplicate edge id's detected");
-
-                    foreach (var edgeId in subProjectAm.Edges)
-                    {
-                        if (string.IsNullOrWhiteSpace(edgeId))
-                            throw new ModelBuilderInvalidOperationException($"Edge id can't be null or empty");
-
-                        if (!_edgeRepository.GetAll().Any(x => x.Id == edgeId))
-                            throw new ModelBuilderInvalidOperationException($"Edge {edgeId} not found");
-                    }
-                }
-
+                // Create a new initial project
                 var subProjectToCreate = new CreateProject
                 {
                     Name = subProjectAm.Name,
@@ -334,33 +319,43 @@ namespace Mb.Services.Services
                 };
 
                 var initSubProjectCreated = CreateInitProject(subProjectToCreate, true);
-
                 await _projectRepository.CreateAsync(initSubProjectCreated);
                 await _projectRepository.SaveAsync();
+                newCreatedProject = initSubProjectCreated.Id;
 
-                _projectRepository.Detach(initSubProjectCreated);
+                // Remap and remove top nodes, edges
+                RemapSubProject(initSubProjectCreated, actualProject, subProjectAm);
 
-                foreach (var node in initSubProjectCreated.Nodes)
-                    _nodeRepository.Detach(node);
-
-                foreach (var nodeId in subProjectAm.Nodes)
-                    initSubProjectCreated.Nodes.Add(new Node {Id = nodeId});
-
-                if (subProjectAm.Edges != null && subProjectAm.Edges.Any())
-                {
-                    initSubProjectCreated.Edges ??= new List<Edge>();
-
-                    foreach (var edgeId in subProjectAm.Edges)
-                        initSubProjectCreated.Edges.Add(new Edge {Id = edgeId});
-                }
-
+                // Map and save the new project
                 var projectAm = _mapper.Map<ProjectAm>(initSubProjectCreated);
-                var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm, _modelBuilderConfiguration.Domain);
+
+                // Clean the change tracker
                 ClearAllChangeTracker();
+                
+                var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm, _modelBuilderConfiguration.Domain);
+
+                // Clean the change tracker
+                ClearAllChangeTracker();
+                
                 return subProjectCreated;
             }
             catch (Exception e)
             {
+                try
+                {
+                    // Project is already created, delete the project from db
+                    if (!string.IsNullOrEmpty(newCreatedProject))
+                    {
+                        ClearAllChangeTracker();
+                        await DeleteProject(newCreatedProject);
+                        await _projectRepository.SaveAsync();
+                    }
+                }
+                catch
+                {
+                    // ignored
+                }
+
                 _logger.LogError($"Can not create sub project with name: {subProjectAm?.Name}. Error: {e.Message}");
                 throw;
             }
@@ -416,24 +411,24 @@ namespace Mb.Services.Services
                 // Remap and create new id's
                 Remap(projectAm);
 
-            // Edges
-            var existingEdges = originalProject.Edges.ToList();
-            var deleteEdges = existingEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
-            var subDeleteEdges = (await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id, invokedByDomain)).ToList();
+                // Edges
+                var existingEdges = originalProject.Edges.ToList();
+                var deleteEdges = existingEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
+                var subDeleteEdges = (await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id, invokedByDomain)).ToList();
 
-            // Nodes
-            var existingNodes = originalProject.Nodes.ToList();
-            var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
-            var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain)).ToList();
+                // Nodes
+                var existingNodes = originalProject.Nodes.ToList();
+                var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
+                var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain)).ToList();
 
-            //Determine if project version should be incremented
-            SetProjectVersion(originalProject, projectAm);
-            
-            // Map new data
-            _mapper.Map(projectAm, originalProject);
-            
-            var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
-            var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
+                //Determine if project version should be incremented
+                SetProjectVersion(originalProject, projectAm);
+
+                // Map new data
+                _mapper.Map(projectAm, originalProject);
+
+                var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
+                var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
 
                 ResolveLevelAndOrder(originalProject);
 
@@ -456,57 +451,6 @@ namespace Mb.Services.Services
 
             // Return project from database
             return await GetProject(id);
-        }
-
-        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
-        {
-            try
-            {
-                if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
-                    return;
-
-                var originalProject = await _projectRepository
-                    .FindBy(x => x.Id == projectId, false)
-                    .Include(x => x.Edges)
-                    .Include(x => x.Nodes)
-                    .Include("Nodes.Attributes")
-                    .Include("Nodes.Connectors")
-                    .Include("Nodes.Connectors.Attributes")
-                    .AsSplitQuery()
-                    .OrderByDescending(x => x.Name)
-                    .FirstOrDefaultAsync();
-
-                foreach (var subNode in subNodes)
-                {
-                    originalProject.Nodes.Add(subNode);
-                    _nodeRepository.Attach(subNode, EntityState.Unchanged);
-                }
-
-                foreach (var subEdge in subEdges)
-                {
-                    originalProject.Edges.Add(subEdge);
-                    _edgeRepository.Attach(subEdge, EntityState.Unchanged);
-                }
-
-                originalProject.Nodes =
-                    originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
-                originalProject.Edges =
-                    originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
-
-                _projectRepository.Update(originalProject);
-                await _projectRepository.SaveAsync();
-                _projectRepository.Detach(originalProject);
-                ClearAllChangeTracker();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Can not resolve sub projects for project with id: {projectId}. Error: {e.Message}");
-                throw;
-            }
-            finally
-            {
-                ClearAllChangeTracker();
-            }
         }
 
         /// <summary>
@@ -744,6 +688,57 @@ namespace Mb.Services.Services
         }
 
         #region Private methods
+
+        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
+        {
+            try
+            {
+                if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
+                    return;
+
+                var originalProject = await _projectRepository
+                    .FindBy(x => x.Id == projectId, false)
+                    .Include(x => x.Edges)
+                    .Include(x => x.Nodes)
+                    .Include("Nodes.Attributes")
+                    .Include("Nodes.Connectors")
+                    .Include("Nodes.Connectors.Attributes")
+                    .AsSplitQuery()
+                    .OrderByDescending(x => x.Name)
+                    .FirstOrDefaultAsync();
+
+                foreach (var subNode in subNodes)
+                {
+                    originalProject.Nodes.Add(subNode);
+                    _nodeRepository.Attach(subNode, EntityState.Unchanged);
+                }
+
+                foreach (var subEdge in subEdges)
+                {
+                    originalProject.Edges.Add(subEdge);
+                    _edgeRepository.Attach(subEdge, EntityState.Unchanged);
+                }
+
+                originalProject.Nodes =
+                    originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
+                originalProject.Edges =
+                    originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
+
+                _projectRepository.Update(originalProject);
+                await _projectRepository.SaveAsync();
+                _projectRepository.Detach(originalProject);
+                ClearAllChangeTracker();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Can not resolve sub projects for project with id: {projectId}. Error: {e.Message}");
+                throw;
+            }
+            finally
+            {
+                ClearAllChangeTracker();
+            }
+        }
 
         private void LockUnlockNodesAndAttributesRecursive(
             Node parentNode,
@@ -1147,6 +1142,65 @@ namespace Mb.Services.Services
             _edgeRepository?.Context?.ChangeTracker?.Clear();
             _connectorRepository?.Context?.ChangeTracker?.Clear();
             _attributeRepository?.Context?.ChangeTracker?.Clear();
+        }
+
+        private void RemapSubProject(Project newProject, Project oldProject, SubProjectAm subProjectAm)
+        {
+            // Get all node and edge data for the new sub project
+            var nodeList = oldProject.Nodes.Where(x => subProjectAm.Nodes.Any(y => y == x.Id)).Concat(newProject.Nodes).ToList();
+            var edgeList = oldProject.Edges.Where(x => subProjectAm.Edges.Any(y => y == x.Id)).ToList();
+
+            // Remove top-nodes and edges
+            var oldTopNodes = oldProject.Nodes.Where(x => x.IsRoot).ToList();
+            var edgesConnectedToOldTopNodes = oldProject.Edges.Where(x => oldTopNodes.Any(y => y.Id == x.FromNodeId)).ToList();
+
+            nodeList = nodeList.Where(x => oldTopNodes.All(y => y.Id != x.Id)).ToList();
+            edgeList = edgeList.Where(x => edgesConnectedToOldTopNodes.All(y => y.Id != x.Id)).ToList();
+
+            // Initial list if null
+            newProject.Nodes = new List<Node>();
+            newProject.Edges = new List<Edge>();
+
+            // Add the nodes to list, needed for creating many to many relation
+            foreach (var node in nodeList)
+            {
+                newProject.Nodes.Add(new Node { Id = node.Id });
+
+                // There should only be one input PartOf relation
+                var toRelation = node.Connectors.FirstOrDefault(x => x is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Input });
+                if (toRelation == null)
+                    continue;
+
+                if (edgeList.Any(x => x.ToConnectorId == toRelation.Id))
+                    continue;
+
+                var fromNode = nodeList.FirstOrDefault(x => x.IsRoot && x.MasterProjectId == newProject.Id && x.Aspect == node.Aspect);
+                var fromRelation = fromNode?.Connectors.FirstOrDefault(x => x is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Output });
+                if (fromRelation == null)
+                    continue;
+
+                // Create edge for node with missing PartOf relation
+                var edge = new Edge
+                {
+                    Id = _commonRepository.CreateUniqueId(),
+                    FromConnector = fromRelation,
+                    ToConnector = toRelation,
+                    FromConnectorId = fromRelation.Id,
+                    ToConnectorId = toRelation.Id,
+                    FromNode = fromNode,
+                    ToNode = node,
+                    FromNodeId = fromNode.Id,
+                    ToNodeId = node.Id,
+                    MasterProjectId = newProject.Id
+                };
+
+                newProject.Edges.Add(edge);
+            }
+
+            foreach (var edge in edgeList)
+            {
+                newProject.Edges.Add(new Edge { Id = edge.Id });
+            }
         }
 
         #endregion

@@ -34,6 +34,7 @@ class Node {
   aspect: Aspect;
   isRoot: boolean | false;
   masterProjectId: string;
+  masterProjectIri: string;
   symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
