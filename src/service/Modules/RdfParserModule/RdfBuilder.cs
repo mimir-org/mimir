@@ -23,14 +23,8 @@ namespace RdfParserModule
     {
         public Project Project;
         public IGraph Graph;        
-        public Dictionary<string, IUriNode> Roots;
-        
-        // Namespaces
-        private string Owl;
-        private string Rdf;
-        private string Rdfs;
-        private string Xsd;
-        private string Xml;
+        public Dictionary<string, INode> Roots;
+        private Dictionary<string, string> _namespaces;
 
         //private IDictionary<string>
 
@@ -43,7 +37,7 @@ namespace RdfParserModule
             // /Data/ontologies.owl is used to define the base graph with all the prefixes and namespaces you might wish to use
             var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/ontologies.owl";
             ontology.LoadFromFile(filePath, new TurtleParser());
-            ontology.BaseUri = null;
+            ontology.BaseUri = new Uri(uri);
 
             return ontology;
         }
@@ -81,22 +75,32 @@ namespace RdfParserModule
         }
 
 
-        private void InitaliseNamespaces()
+        private void InitaliseNamespaces(IDictionary<string, string> namespaces = null)
         {
-            Owl = "http://www.w3.org/2002/07/owl#";
-            Rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-            Rdfs = "http://www.w3.org/2000/01/rdf-schema#";
-            Xsd = "http://www.w3.org/2001/XMLSchema#";
-            Xml = "http://www.w3.org/XML/1998/namespace";
+            _namespaces = new Dictionary<string, string>
+            {
+                {"owl", "http://www.w3.org/2002/07/owl#"},
+                {"rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"},
+                {"rdfs", "http://www.w3.org/2000/01/rdf-schema#"},
+                {"xml", "http://www.w3.org/XML/1998/namespace"},
+                {"xsd", "http://www.w3.org/2001/XMLSchema#"},
+                {"imf", "http://example.com/imf#"}
+            };
+
+            if (namespaces is not null)
+            {
+                AddNamespaces(namespaces);
+            }
         }
 
-        private string BuildIri(string ns, string id)
+        private static string BuildIri(string ns, string id)
         {
             return $"{ns}{id}";
         }
 
         private void AddNamespace(string prefix, string iri)
         {
+            _namespaces.Add(prefix, iri);
             Graph.NamespaceMap.AddNamespace(prefix, new Uri(iri));
         }
 
@@ -111,29 +115,29 @@ namespace RdfParserModule
 
         public void BuildProject(Project project)
         {
-            InitaliseNamespaces();
-            Project = project;
-            Graph = BaseGraph("http://rdf.equinor.com/");
-
             var namespaces = new Dictionary<string, string>
             {
-                {"mimir", "http://rdf.equinor.com/sor/mimir/"},
-                {"eq", "http://rdf.equinor.com/"}
+                {"sor", "https://rdf.equinor.com/sor/mimir/"},
+                {"eq", "https://rdf.equinor.com/"}
             };
-            AddNamespaces(namespaces);
+            
+            Project = project;
+            Graph = BaseGraph("http://rdf.equinor.com/");
+            InitaliseNamespaces(namespaces);
 
-            Roots = new Dictionary<string, IUriNode>();
 
-            var id = Project.Id;
+            Roots = new Dictionary<string, INode>();
+
+            var iri = Project.Iri;
             var name = Project.Name;
             var version = Project.Version;
 
    
             // Node for the project (named after its ID)
-            var projectNode = GetOrCreateUriNode(MimirIdToIri(Resources.mimirPrefix, id));
+            var projectNode = GetOrCreateUriNode(iri);
             var label = GetOrCreateUriNode(Resources.label);
 
-            var isVersion = GetOrCreateUriNode(BuildIri(Owl, "versionInfo"));
+            var isVersion = GetOrCreateUriNode(BuildIri(_namespaces["owl"], "versionInfo"));
             var projectName = Graph.CreateLiteralNode(name);
             var projectVersion = Graph.CreateLiteralNode(version);
 
@@ -153,41 +157,63 @@ namespace RdfParserModule
             BuildEdges();
         }
 
-        private INode GetOrCreateUriNode(string iri)
+        private INode GetOrCreateUriNode(string iri, IGraph g = null)
         {
+            g ??= Graph;
+
             var isHttpRegex = new Regex(@"http(s)*");
 
-            if (!isHttpRegex.IsMatch(iri)) return Graph.GetUriNode(iri) ?? Graph.CreateUriNode(iri);
+            if (!isHttpRegex.IsMatch(iri)) return g.GetUriNode(iri) ?? g.CreateUriNode(iri);
 
             var uri = new Uri(iri);
-            return Graph.GetUriNode(uri) ?? Graph.CreateUriNode(uri);
+            return g.GetUriNode(uri) ?? g.CreateUriNode(uri);
+        }
+
+        private void AddPositionData(Node node, IGraph g = null)
+        {
+            g ??= Graph;
+
+            var rdfNode = GetOrCreateUriNode(node.Iri);
+
+            var data = new Dictionary<INode, decimal>
+            {
+                {GetOrCreateUriNode("mimir:hasPosX", g), node.PositionX},
+                {GetOrCreateUriNode("mimir:hasPosY", g), node.PositionY},
+                {GetOrCreateUriNode("mimir:hasBlockPosX", g), node.PositionBlockX},
+                {GetOrCreateUriNode("mimir:hasBlockPosY", g), node.PositionBlockY},
+            };
+
+            foreach (var (predicate, value) in data)
+            {
+                g.Assert(new Triple(rdfNode, predicate, g.CreateLiteralNode($"{value}", new Uri(BuildIri(_namespaces["xsd"], "float")))));
+            }
         }
 
         private void BuildAttributes(INode node, IEnumerable<Attribute> attributes)
         {
-            var label = Graph.CreateUriNode(Resources.label);
-            var type = Graph.CreateUriNode(Resources.type);
+            var label = GetOrCreateUriNode(Resources.label);
+            var type = GetOrCreateUriNode(Resources.type);
 
-            var hasPhysicalQuantity = Graph.CreateUriNode("lis:hasPhysicalQuantity");
-            var physicalQuantity = Graph.CreateUriNode("lis:PhysicalQuantity");
+            var hasPhysicalQuantity = GetOrCreateUriNode("lis:hasPhysicalQuantity");
+            var physicalQuantity = GetOrCreateUriNode("lis:PhysicalQuantity");
 
-            var qualityQuantifiedAs = Graph.CreateUriNode("lis:qualityQuantifiedAs");
+            var qualityQuantifiedAs = GetOrCreateUriNode("lis:qualityQuantifiedAs");
 
-            var quantityDatum = Graph.CreateUriNode("lis:QuantityDatum");
-            var datumUOM = Graph.CreateUriNode("lis:datumUOM");
-            var datumValue = Graph.CreateUriNode("lis:datumValue");
+            var quantityDatum = GetOrCreateUriNode("lis:QuantityDatum");
+            var datumUom = GetOrCreateUriNode("lis:datumUOM");
+            var datumValue = GetOrCreateUriNode("lis:datumValue");
 
-            var unitOfMeasure = Graph.CreateUriNode("lis:UnitOfMeasure");
+            var unitOfMeasure = GetOrCreateUriNode("lis:UnitOfMeasure");
 
 
             foreach (var attribute in attributes)
             {
                 var value = attribute.Value;
 
-                var attributeType = Graph.CreateUriNode(MimirIdToIri(Resources.equinorPrefix, attribute.AttributeTypeId));
+                var attributeType = GetOrCreateUriNode(MimirIdToIri(_namespaces["eq"], attribute.AttributeTypeId));
                 Graph.Assert(new Triple(attributeType, label, Graph.CreateLiteralNode(attribute.Key)));
 
-                var attributeNode = Graph.CreateUriNode(MimirIdToIri(Resources.equinorPrefix, attribute.Id));
+                var attributeNode = GetOrCreateUriNode(attribute.Iri);
                 Graph.Assert(new Triple(attributeNode, label, Graph.CreateLiteralNode(attribute.Key)));
                 Graph.Assert(new Triple(attributeNode, type, physicalQuantity));
                 Graph.Assert(new Triple(attributeNode, type, attributeType));
@@ -195,11 +221,24 @@ namespace RdfParserModule
                 Graph.Assert(new Triple(node, hasPhysicalQuantity, attributeNode));
 
 
-                var datum = Graph.CreateUriNode(MimirIdToIri(Resources.equinorPrefix, attribute.Id, "datum"));
+                var datum = GetOrCreateUriNode(attribute.Iri + "-datum");
 
                 if (value is not null)
                 {
-                    Graph.Assert(new Triple(datum, datumValue, Graph.CreateLiteralNode(value)));
+                    ILiteralNode literal;
+                    if (double.TryParse(value, out var v))
+                    {
+                        literal = Graph.CreateLiteralNode(value, new Uri(BuildIri(_namespaces["xsd"], "float")));
+                    }
+                    else if (int.TryParse(value, out var i))
+                    {
+                        literal = Graph.CreateLiteralNode(value, new Uri(BuildIri(_namespaces["xsd"], "int")));
+                    }
+                    else
+                    {
+                        literal = Graph.CreateLiteralNode(value);
+                    }
+                    Graph.Assert(new Triple(datum, datumValue, literal));
                 }
 
                 Graph.Assert(new Triple(datum, type, quantityDatum));
@@ -210,7 +249,7 @@ namespace RdfParserModule
 
                 // units.count can be 0 even if there is a value
                 // uncertain how to handle this if this should actually be allowed
-                if (units.Count == 0)
+                if (units?.Count == 0)
                 {
                     continue;
                 }
@@ -219,35 +258,37 @@ namespace RdfParserModule
 
                 if (attribute.SelectedUnitId == null) continue;
 
-                foreach (var unit in units.Where(unit => unit.Id == attribute.SelectedUnitId))
-                {
-                    unitName = unit.Name;
-                }
-                var unitNode = Graph.CreateUriNode(MimirIdToIri(Resources.equinorPrefix, attribute.SelectedUnitId));
+                if (units != null)
+                    foreach (var unit in units.Where(unit => unit.Id == attribute.SelectedUnitId))
+                    {
+                        unitName = unit.Name;
+                    }
+
+                var unitNode = GetOrCreateUriNode(MimirIdToIri(_namespaces["eq"], attribute.SelectedUnitId));
                 Graph.Assert(new Triple(unitNode, type, unitOfMeasure));
                 Graph.Assert(new Triple(unitNode, label, Graph.CreateLiteralNode(unitName)));
-                Graph.Assert(new Triple(datum, datumUOM, unitNode));
+                Graph.Assert(new Triple(datum, datumUom, unitNode));
 
             }
         }
 
         private void BuildNodes()
         {
-            var label = Graph.CreateUriNode(Resources.label);
-            var type = Graph.CreateUriNode(Resources.type);
-            var hasAspect = Graph.CreateUriNode(Resources.hasAspect);
-            var comment = Graph.CreateUriNode(Resources.desc);
+            var label = GetOrCreateUriNode(Resources.label);
+            var type = GetOrCreateUriNode(Resources.type);
+            var hasAspect = GetOrCreateUriNode(Resources.hasAspect);
+            var comment = GetOrCreateUriNode(Resources.desc);
 
-            var hasInTerminal = Graph.CreateUriNode("imf:hasInTerminal");
-            var hasOutTerminal = Graph.CreateUriNode("imf:hasOutTerminal");
+            var hasInTerminal = GetOrCreateUriNode("imf:hasInTerminal");
+            var hasOutTerminal = GetOrCreateUriNode("imf:hasOutTerminal");
 
-            var inTerminal = Graph.CreateUriNode("imf:InTerminal");
-            var outTerminal = Graph.CreateUriNode("imf:OutTerminal");
+            var inTerminal = GetOrCreateUriNode("imf:InTerminal");
+            var outTerminal = GetOrCreateUriNode("imf:OutTerminal");
 
 
             foreach (var node in Project.Nodes)
             {
-                var nodeId = Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, node.Id));
+                var nodeId = GetOrCreateUriNode(node.Iri);
                 if (node.Description is not null)
                 {
                     Graph.Assert(new Triple(nodeId, comment, Graph.CreateLiteralNode(node.Description)));
@@ -256,19 +297,22 @@ namespace RdfParserModule
                 var rds = GetOrCreateUriNode("imf:rds");
                 var rdsString = Graph.CreateLiteralNode(RdsString(node));
                 Graph.Assert(new Triple(nodeId, rds, rdsString));
+
+                AddPositionData(node);
              
                 if (node.IsRoot)
                 {
-                    Graph.Assert(new Triple(nodeId, Graph.CreateUriNode(Resources.isAspectOf),
-                        Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, node.MasterProjectId))));
+                    var masterProject = node.MasterProject ?? Project;
+                    Graph.Assert(new Triple(nodeId, GetOrCreateUriNode(Resources.isAspectOf), GetOrCreateUriNode(masterProject.Iri)));
                     
                     Roots.Add(node.Aspect.ToString(), nodeId);
                     
                     Graph.Assert(new Triple(nodeId, label, Graph.CreateLiteralNode(Project.Name + " " + node.Aspect)));
+                    Graph.Assert(new Triple(nodeId, hasAspect, GetOrCreateUriNode("imf:" + node.Aspect)));
                     continue;
                 }
 
-                Graph.Assert(new Triple(nodeId, type, Graph.CreateUriNode(Resources.FSB)));
+                Graph.Assert(new Triple(nodeId, type, GetOrCreateUriNode(Resources.FSB)));
                 Graph.Assert(new Triple(nodeId, label, Graph.CreateLiteralNode(node.Rds + " " +node.Label)));
                 
 
@@ -283,13 +327,13 @@ namespace RdfParserModule
                     switch (connector)
                     {
                         case Terminal terminal:
-                            var nodeTerminal = Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, terminal.Id));
-                            var terminalIri = $"{Resources.equinorPrefix}Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}";
+                            var nodeTerminal = GetOrCreateUriNode(terminal.Iri);
+                            var terminalIri = $"{_namespaces["eq"]}Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}";
                             
 
-                            var transmitter = Graph.CreateUriNode(terminalIri);
+                            var transmitter = GetOrCreateUriNode(terminalIri);
                             Graph.Assert(new Triple(nodeTerminal, type, transmitter));
-                            Graph.Assert(new Triple(transmitter, type, Graph.CreateUriNode("imf:Transmitter")));
+                            Graph.Assert(new Triple(transmitter, type, GetOrCreateUriNode("imf:Transmitter")));
 
                             switch (terminal.Type)
                             {
@@ -306,7 +350,7 @@ namespace RdfParserModule
                             var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
                             Graph.Assert(new Triple(nodeTerminal, label, terminalLabel));
 
-                            Graph.Assert(new Triple(nodeTerminal, type, Graph.CreateUriNode(Resources.FSBTerminal)));
+                            Graph.Assert(new Triple(nodeTerminal, type, GetOrCreateUriNode(Resources.FSBTerminal)));
                             
                             if (terminal.Attributes.Count > 0)
                             {
@@ -316,13 +360,13 @@ namespace RdfParserModule
                     }
                 }
 
-                var nodeAspect = Graph.CreateUriNode(Resources.imfPrefix + node.Aspect);
+                var nodeAspect = GetOrCreateUriNode(_namespaces["imf"] + node.Aspect);
                 Graph.Assert(new Triple(nodeId, hasAspect, nodeAspect));
 
                 if (!string.IsNullOrEmpty(node.Rds))
                 {
                     var qname = $"og{node.Rds.Length}:{node.Aspect}{node.Rds}";
-                    var nodeRds = Graph.CreateUriNode(qname);
+                    var nodeRds = GetOrCreateUriNode(qname);
 
                     Graph.Assert(new Triple(nodeId, type, nodeRds));
                 }
@@ -335,25 +379,25 @@ namespace RdfParserModule
         private void BuildEdges()
         {
             var edges = Project.Edges;
-            var type = Graph.CreateUriNode(Resources.type);
-            var hasParent = Graph.CreateUriNode(Resources.hasParent);
-            var label = Graph.CreateUriNode(Resources.label);
-            var connectedTo = Graph.CreateUriNode(Resources.connectedTo);
-            var transport = Graph.CreateUriNode(Resources.Transport);
-            var inTerminal = Graph.CreateUriNode(Resources.InputTerminal);
-            var hasInTerminal = Graph.CreateUriNode(Resources.hasInputTerminal);
-            var hasOutTerminal = Graph.CreateUriNode(Resources.hasOutputTerminal);
-            var outTerminal = Graph.CreateUriNode(Resources.OutputTerminal);
-            var hasAspect = Graph.CreateUriNode(Resources.hasAspect);
+            var type = GetOrCreateUriNode(Resources.type);
+            var hasParent = GetOrCreateUriNode(Resources.hasParent);
+            var label = GetOrCreateUriNode(Resources.label);
+            var connectedTo = GetOrCreateUriNode(Resources.connectedTo);
+            var transport = GetOrCreateUriNode(Resources.Transport);
+            var inTerminal = GetOrCreateUriNode(Resources.InputTerminal);
+            var hasInTerminal = GetOrCreateUriNode(Resources.hasInputTerminal);
+            var hasOutTerminal = GetOrCreateUriNode(Resources.hasOutputTerminal);
+            var outTerminal = GetOrCreateUriNode(Resources.OutputTerminal);
+            var hasAspect = GetOrCreateUriNode(Resources.hasAspect);
 
             foreach (var edge in edges)
             {
-                var fromNode = Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.FromNodeId));
-                var toNode = Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.ToNodeId));
+                var fromNode = GetOrCreateUriNode(edge.FromNode.Iri);
+                var toNode = GetOrCreateUriNode(edge.ToNode.Iri);
 
                 if (edge.Transport != null)
                 {
-                    var transportNode = Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.TransportId));
+                    var transportNode = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], edge.TransportId));
                     Graph.Assert(new Triple(transportNode, type, transport));
 
                     Graph.Assert(new Triple(transportNode, label, Graph.CreateLiteralNode(edge.Transport.Name)));
@@ -364,21 +408,19 @@ namespace RdfParserModule
                     }
                     Graph.Assert(new Triple(transportNode, hasParent, rootNode));
 
-                    var aspect = Graph.CreateUriNode($"imf:{edge.FromNode.Aspect}");
+                    var aspect = GetOrCreateUriNode($"imf:{edge.FromNode.Aspect}");
                     Graph.Assert(new Triple(transportNode, hasAspect, aspect));
 
                     if (edge.Transport.InputTerminal != null)
                     {
                         var terminal = edge.Transport.InputTerminal;
-                        var transportIn =
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.Transport.InputTerminalId));
+                        var transportIn = GetOrCreateUriNode(edge.Transport.InputTerminal.Iri);
                         Graph.Assert(new Triple(transportIn, type, inTerminal));
 
                         Graph.Assert(new Triple(transportNode, hasInTerminal, transportIn));
 
 
-                        Graph.Assert(new Triple(transportIn, connectedTo,
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.FromConnectorId))));
+                        Graph.Assert(new Triple(transportIn, connectedTo, GetOrCreateUriNode((edge.FromConnector.Iri))));
 
                         var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
                         Graph.Assert(new Triple(transportIn, label, terminalLabel));
@@ -387,14 +429,12 @@ namespace RdfParserModule
                     if (edge.Transport.OutputTerminal != null)
                     {
                         var terminal = edge.Transport.OutputTerminal;
-                        var transportOut =
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.Transport.OutputTerminalId));
+                        var transportOut = GetOrCreateUriNode(edge.Transport.OutputTerminal.Iri);
                         Graph.Assert(new Triple(transportOut, type, outTerminal));
 
                         Graph.Assert(new Triple(transportNode, hasOutTerminal, transportOut));
 
-                        Graph.Assert(new Triple(transportOut, connectedTo,
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.ToConnectorId))));
+                        Graph.Assert(new Triple(transportOut, connectedTo, GetOrCreateUriNode(edge.ToConnector.Iri)));
 
                         var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
                         Graph.Assert(new Triple(transportOut, label, terminalLabel));
@@ -408,8 +448,8 @@ namespace RdfParserModule
 
                 if (edge.Interface != null)
                 {
-                    var interfaceNode = Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.InterfaceId));
-                    Graph.Assert(new Triple(interfaceNode, type, Graph.CreateUriNode(Resources.Interface)));
+                    var interfaceNode = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], edge.InterfaceId));
+                    Graph.Assert(new Triple(interfaceNode, type, GetOrCreateUriNode(Resources.Interface)));
                     
                     if (!Roots.TryGetValue(edge.FromNode.Aspect.ToString(), out var rootNode))
                     {
@@ -417,7 +457,7 @@ namespace RdfParserModule
                     }
                     Graph.Assert(new Triple(interfaceNode, hasParent, rootNode));
 
-                    var aspect = Graph.CreateUriNode($"imf:{edge.FromNode.Aspect}");
+                    var aspect = GetOrCreateUriNode($"imf:{edge.FromNode.Aspect}");
                     Graph.Assert(new Triple(interfaceNode, hasAspect, aspect));
 
 
@@ -427,15 +467,13 @@ namespace RdfParserModule
                     if (edge.Interface.InputTerminal != null)
                     {
                         var inter = edge.Interface.InputTerminal;
-                        var interIn =
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.Interface.InputTerminalId));
+                        var interIn = GetOrCreateUriNode(edge.Interface.InputTerminal.Iri);
                         Graph.Assert(new Triple(interIn, type, inTerminal));
 
                         Graph.Assert(new Triple(interfaceNode, hasInTerminal, interIn));
 
 
-                        Graph.Assert(new Triple(interIn, connectedTo,
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.FromConnectorId))));
+                        Graph.Assert(new Triple(interIn, connectedTo, GetOrCreateUriNode(edge.FromConnector.Iri)));
 
                         var interfaceLabel = Graph.CreateLiteralNode(inter.Name + " " + inter.Type);
                         Graph.Assert(new Triple(interIn, label, interfaceLabel));
@@ -444,15 +482,13 @@ namespace RdfParserModule
                     if (edge.Interface.OutputTerminal != null)
                     {
                         var inter = edge.Interface.OutputTerminal;
-                        var interOut =
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.Interface.OutputTerminalId));
+                        var interOut = GetOrCreateUriNode(edge.Interface.OutputTerminal.Iri);
                         Graph.Assert(new Triple(interOut, type, outTerminal));
 
                         Graph.Assert(new Triple(interfaceNode, hasOutTerminal, interOut));
 
 
-                        Graph.Assert(new Triple(interOut, connectedTo,
-                            Graph.CreateUriNode(MimirIdToIri(Resources.mimirPrefix, edge.ToConnectorId))));
+                        Graph.Assert(new Triple(interOut, connectedTo, GetOrCreateUriNode(edge.ToConnector.Iri)));
 
                         var interfaceLabel = Graph.CreateLiteralNode(inter.Name + " " + inter.Type);
                         Graph.Assert(new Triple(interOut, label, interfaceLabel));
@@ -463,39 +499,17 @@ namespace RdfParserModule
                     }
                 }
 
-
-                switch (edge.FromConnector)
+                if (edge.FromConnector is Relation { RelationType: not RelationType.PartOf } fromRelation)
                 {
-                    case Relation relation:
-                        var relationString = relation.RelationType.ToString();
-
-                        //TODO Breaks if it should be a hasChild relation. We only explicitly state hasParent .
-                        if (relationString.ToLower().Contains("partof"))
-                        {
-                            break;
-                        }
-                        var relationFromNode = Graph.CreateUriNode("imf:" + relationString);
-                        Graph.Assert(new Triple(fromNode, relationFromNode, toNode));
-                        break;
+                    var relationFromNode = GetOrCreateUriNode("imf:" + fromRelation.RelationType);
+                    Graph.Assert(new Triple(fromNode, relationFromNode, toNode));
                 }
 
-                switch (edge.ToConnector)
-                {
-                    case Relation relation:
-                        var relationString = relation.RelationType.ToString();
+                if (edge.ToConnector is not Relation { RelationType: not RelationType.PartOf } toRelation) continue;
 
-                        //TODO Can be removed when Mimir has correct IMF relation names
-                        if (relationString.ToLower().Contains("partof"))
-                        {
-                            relationString = "hasParent";
-                        }
-                        relationString = relationString.Substring(0, 1).ToLower() + relationString.Substring(1);
-
-
-                        var relationToNode = Graph.CreateUriNode("imf:" + relationString);
-                        Graph.Assert(new Triple(toNode, relationToNode, fromNode));
-                        break;
-                }
+                var relationString = toRelation.ToString()?[..1].ToLower() + toRelation.ToString()?[1..];
+                var relationToNode = GetOrCreateUriNode("imf:" + relationString);
+                Graph.Assert(new Triple(toNode, relationToNode, fromNode));
             }
         }
 

@@ -475,6 +475,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sor:.
+        /// </summary>
+        internal static string sorPrefix {
+            get {
+                return ResourceManager.GetString("sorPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:StreamTerminal.
         /// </summary>
         internal static string StreamTerminal {

@@ -255,6 +255,9 @@
   <data name="selectedUnit" xml:space="preserve">
     <value>imf:selectedUnit</value>
   </data>
+  <data name="sorPrefix" xml:space="preserve">
+    <value>sor:</value>
+  </data>
   <data name="StreamTerminal" xml:space="preserve">
     <value>imf:StreamTerminal</value>
   </data>

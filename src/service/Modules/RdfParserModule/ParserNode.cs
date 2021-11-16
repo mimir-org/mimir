@@ -27,6 +27,11 @@ namespace RdfParserModule
         public ParserNode HasLocation { get; set; }
         public ParserNode FulfilledBy { get; set; }
 
+        public decimal PositionX { get; set; }
+        public decimal PositionY { get; set; }
+        public decimal PositionBlockX { get; set; }
+        public decimal PositionBlockY { get; set; }
+
         public override string ToString()
         {
             return Label ?? Id;

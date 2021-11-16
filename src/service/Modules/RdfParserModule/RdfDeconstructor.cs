@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using AutoMapper;
 using Mb.Models.Application;
+using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using RdfParserModule.Properties;
@@ -83,6 +84,7 @@ namespace RdfParserModule
             ParserEdges.AddRange(GetTransports());
 
             ResolvePartOfRelation(ParserNodes);
+            ResolvePositions(ParserNodes);
 
             Graph.Nodes = ParserNodes;
             Graph.Edges = ParserEdges;
@@ -526,6 +528,63 @@ namespace RdfParserModule
             }
 
             throw new Exception("A label has to be a string");
+        }
+
+        private void ResolvePositions(List<ParserNode> nodes)
+        {
+            foreach (var node in nodes)
+            {
+                var rdfNode = RdfGraph.GetUriNode(new Uri(node.Iri));
+                (node.PositionX, node.PositionY, node.PositionBlockX, node.PositionBlockY) = GetPosition(rdfNode);
+            }
+        }
+
+        private (decimal, decimal, decimal, decimal) GetPosition(INode node)
+        {
+            var posX = GetPositionX(node);
+            var posY = GetPositionY(node);
+            var posBlockX = GetBlockPositionX(node);
+            var posBlockY = GetBlockPositionY(node);
+
+            return (posX, posY, posBlockX, posBlockY);
+        }
+
+        private decimal GetPositionX(INode node)
+        {
+            return GenericGetPosition(node, "X");
+        }
+        private decimal GetPositionY(INode node)
+        {
+            return GenericGetPosition(node, "Y");
+        }
+        private decimal GetBlockPositionX(INode node)
+        {
+            return GenericGetPosition(node, "X", true);
+        }
+        private decimal GetBlockPositionY(INode node)
+        {
+            return GenericGetPosition(node, "Y", true);
+        }
+
+        private decimal GenericGetPosition(INode node, string axis, bool block = false)
+        {
+            axis = axis.ToUpper();
+            
+            var predicate = GetOrCreateUriNode(block ? $"https://example.com/mimir#hasBlockPos{axis}" : $"https://example.com/mimir#hasPos{axis}");
+
+            var pos = Store.GetTriplesWithSubjectPredicate(node, predicate).Single().Object;
+
+            var errorPos = block ? $"Block Position {axis}" : $"Position {axis}";
+
+            if (pos is not ILiteralNode literal) throw new Exception($"Could not find any {errorPos} on node {node}");
+            try
+            {
+                return decimal.Parse(literal.Value);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Could not parse {errorPos} to decimal | {e}");
+            }
         }
 
         private Aspect GetAspect(string iri)

@@ -10,7 +10,6 @@ namespace RdfParserModule
         public RdfProfile()
         {
                CreateMap<ParserNode, NodeAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Id)))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
