@@ -11,7 +11,7 @@ const ModuleBody = styled.div<Props>`
   transition: opacity 0.2s ease-in-out;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 89%;
+  height: 89%;
 `;
 
 export default ModuleBody;
