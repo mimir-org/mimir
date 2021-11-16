@@ -238,6 +238,7 @@ const TextResources = {
   RDS_Location: "++",
 
   // Visual Filter
+  Filter_Heading: "Visual Filter",
   Filter_Terminals: "Terminals",
   Filter_Show_Terminals: "Show all terminals",
   Filter_Show_Active_Terminals: "Show all active terminals",
