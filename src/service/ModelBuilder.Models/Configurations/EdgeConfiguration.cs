@@ -11,6 +11,8 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Edge");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
+            builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.FromConnectorId).HasColumnName("FromConnectorId").IsRequired();
             builder.Property(p => p.ToConnectorId).HasColumnName("ToConnectorId").IsRequired();
             builder.Property(p => p.FromNodeId).HasColumnName("FromNodeId").IsRequired();

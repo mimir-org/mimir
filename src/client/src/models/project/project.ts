@@ -74,5 +74,5 @@ export interface EdgeEvent {
 
 export interface BlockNodeSize {
   width: number;
-  length: number;
+  height: number;
 }

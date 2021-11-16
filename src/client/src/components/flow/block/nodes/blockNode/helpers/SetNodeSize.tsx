@@ -14,7 +14,7 @@ const SetNodeSize = (terminals: Connector[], electro: boolean) => {
 
   let inTerminals = 0;
   let outTerminals = 0;
-  let length = Size.Node_Length;
+  let height = Size.Node_Height;
   let width = Size.Node_Width;
 
   terminals.forEach((t) => {
@@ -26,11 +26,11 @@ const SetNodeSize = (terminals: Connector[], electro: boolean) => {
     if (inTerminals > maximum) width = inTerminals * increaseX;
     if (outTerminals > maximum) width = outTerminals * increaseX;
   } else {
-    if (inTerminals > maximum) length = inTerminals * increaseY;
-    if (outTerminals > maximum) length = outTerminals * increaseY;
+    if (inTerminals > maximum) height = inTerminals * increaseY;
+    if (outTerminals > maximum) height = outTerminals * increaseY;
   }
 
-  return { width: width, length: length };
+  return { width: width, height: height };
 };
 
 export default SetNodeSize;

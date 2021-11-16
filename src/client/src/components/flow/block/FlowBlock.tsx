@@ -4,7 +4,7 @@ import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
-import { GetBlockNodeTypes, GetParent } from "../helpers";
+import { GetBlockNodeTypes, GetParent, IsTransport } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/";
@@ -14,6 +14,7 @@ import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
+import { setEdgeAnimation } from "../../../redux/store/project/actions";
 import {
   iconSelector,
   darkModeSelector,
@@ -121,6 +122,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   useEffect(() => {
     SetDarkModeColor(darkMode);
   }, [darkMode]);
+
+  useEffect(() => {
+    project?.edges.forEach((e) => {
+      if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, true));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {

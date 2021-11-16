@@ -3,18 +3,18 @@ import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
 import { setLocation3D } from "../../location/redux/actions";
-import { IsFamily, IsDirectChild, IsProduct, GetSelectedNode } from "../../../helpers";
+import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
  * Currently two parentNodes can be displayed at the same time - selectedNode and secondaryNode
  * Two parentNodes of the same Aspect can be displayed, unless it is a direct parent/child relation.
  * @param node
+ * @param selectedNode
  * @param secondaryNode
  * @param dispatch
  */
-export const OnBlockChange = (node: Node, secondaryNode: Node, dispatch: any) => {
-  const selectedNode = GetSelectedNode();
+export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
   dispatch(setLocation3D(false));
 
   if (selectedNode && secondaryNode) {
@@ -25,12 +25,20 @@ export const OnBlockChange = (node: Node, secondaryNode: Node, dispatch: any) =>
     }
   }
 
+  // Set selectNode
+  if (!selectedNode) {
+    dispatch(setActiveNode(node?.id, !node.isSelected));
+    dispatch(setActiveBlockNode(node?.id));
+    return;
+  }
+
   // Handling Product
   if (IsProduct(selectedNode)) {
     if (!IsProduct(node)) {
       dispatch(setActiveNode(node?.id, !node.isSelected));
       dispatch(setActiveBlockNode(node?.id));
     }
+    if (IsProduct(node) && node.id !== selectedNode.id) dispatch(setNodeVisibility(node, false));
     if (node === selectedNode) dispatch(setActiveNode(null, false));
     return;
   }
@@ -44,13 +52,6 @@ export const OnBlockChange = (node: Node, secondaryNode: Node, dispatch: any) =>
   // Toggle off selectedNode
   if (node === selectedNode && selectedNode && !secondaryNode) {
     dispatch(setActiveNode(null, false));
-    return;
-  }
-
-  // Set selectNode
-  if (!selectedNode) {
-    dispatch(setActiveNode(node?.id, !node.isSelected));
-    dispatch(setActiveBlockNode(node?.id));
     return;
   }
 

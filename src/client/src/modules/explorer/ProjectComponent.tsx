@@ -3,7 +3,7 @@ import { AspectComponent } from "./aspectComponent/AspectComponent";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
-import { IsOffPage } from "../../helpers";
+import { GetSelectedNode, IsOffPage } from "../../helpers";
 import { blockElementsSelector, projectSelector, secondaryNodeSelector, useAppSelector } from "../../redux/store";
 
 const ProjectComponent = () => {
@@ -11,6 +11,7 @@ const ProjectComponent = () => {
   const elements = useAppSelector(blockElementsSelector);
   const project = useAppSelector(projectSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
+  const selectedNode = GetSelectedNode();
   const secondaryNode = useAppSelector(secondaryNodeSelector);
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
@@ -19,6 +20,7 @@ const ProjectComponent = () => {
   };
 
   const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes, project);
+  if (!project || !nodes) return null;
 
   if (!project || !nodes) return null;
 
@@ -29,13 +31,15 @@ const ProjectComponent = () => {
         return (
           <AspectComponent
             key={node.id}
+            selectedNode={selectedNode}
+            secondaryNode={secondaryNode}
+            project={project}
             node={node}
             label={node.label}
             indent={indent}
             expanded={!closedNodes.has(node.id)}
             isLeaf={!HasChildren(node, project)}
             elements={elements}
-            secondaryNode={secondaryNode}
             onElementExpanded={onExpandElement}
           />
         );

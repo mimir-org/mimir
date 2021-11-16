@@ -2,13 +2,14 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { NodeBox } from "../../../styled";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { AspectColorType, Connector, Node } from "../../../../../models";
+import { AspectColorType, Connector } from "../../../../../models";
 import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
-import { FilterTerminals, GetNodeByDataId } from "../../helpers";
+import { FilterTerminals } from "../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { BlockLogoComponent } from "../../logo";
 import { GetAspectColor, GetSelectedBlockNode } from "../../../../../helpers";
+import { Size } from "../../../../../compLibrary/size";
 
 /**
  * Component for a Location Node in BlockView.
@@ -23,7 +24,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector) as Node;
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const node = nodes.find((x) => x.id === data?.id);
 
@@ -31,26 +32,20 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
-  // Enforce size change of node
-  useEffect(() => {
-    const locationNode = GetNodeByDataId(node?.id);
-    if (locationNode) {
-      locationNode.style.width = `${node?.width}px`;
-      locationNode.style.height = `${node?.length}px`;
-    }
-  }, [node]);
-
   useEffect(() => {
     updateNodeInternals(node?.id);
   });
 
   if (!node) return null;
 
+  node.width = Size.Node_Width;
+  node.height = Size.Node_Height;
+
   return (
     <NodeBox
       id={"BlockLocationNode-" + node.id}
       width={node.width}
-      length={node.length}
+      height={node.height}
       product={false}
       visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
@@ -76,7 +71,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
 
       <HandleComponent
         nodes={nodes}
-        length={node.length}
+        height={node.height}
         width={node.width}
         terminals={terminals}
         parent={false}

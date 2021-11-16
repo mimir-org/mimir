@@ -15,7 +15,7 @@ const SetOffPageNodePos = (
   const parentX = parentPos.x;
   const parentY = parentPos.y;
 
-  const yMax = parentY + parentNodeSize?.length - 50;
+  const yMax = parentY + parentNodeSize?.height - 50;
   const yMin = parentY + 50;
   const xPos = parentX + parentNodeSize?.width + 3;
 

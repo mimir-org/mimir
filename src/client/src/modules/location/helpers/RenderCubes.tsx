@@ -13,7 +13,7 @@ const changeNode = (node: Node, cube: THREE.Object3D, isRoot: boolean) => {
 
   cube.position.x = pos.relativeX;
   cube.position.y = pos.relativeY;
-  cube.position.z = pos.relativeY;
+  cube.position.z = pos.relativeZ;
 };
 
 const RenderCubes = (

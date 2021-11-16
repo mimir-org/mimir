@@ -5,10 +5,10 @@ import { TabColumn } from "../../styled";
 import { Input, TextArea } from "../../../../compLibrary/input/text";
 import { FontSize } from "../../../../compLibrary/font";
 import { EnumBase, Node, Project } from "../../../../models";
-import { changeNodeValue, setLocationNodeSize } from "../../../../redux/store/project/actions";
+import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
-import { IsAspectNode, IsLocation, IsProduct, GetRdsId, GetReferenceDesignation, IsBlockView } from "../../../../helpers";
+import { IsAspectNode, IsProduct, GetRdsId, GetReferenceDesignation } from "../../../../helpers";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -21,7 +21,6 @@ interface Props {
 const AdminContent = ({ node, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
   const onChange = (key: string, value: any) => dispatch(changeNodeValue(node.id, key, value));
-  const onSizeChange = (key: string, value: number) => dispatch(setLocationNodeSize(node.id, key, value));
 
   return (
     <>
@@ -96,30 +95,6 @@ const AdminContent = ({ node, project, statuses }: Props) => {
             inputType=""
           />
         </div>
-        {IsLocation(node) && IsBlockView() && (
-          <div>
-            <div>{TextResources.Inspector_Admin_Width}</div>
-            <Input
-              fontSize={FontSize.Standard}
-              readOnly={IsAspectNode(node)}
-              value={node.width ?? ""}
-              onChange={(e: Event) => onSizeChange("width", Number(e.target.value))}
-              inputType=""
-            />
-          </div>
-        )}
-        {IsLocation(node) && IsBlockView() && (
-          <div>
-            <div>{TextResources.Inspector_Admin_Height}</div>
-            <Input
-              fontSize={FontSize.Standard}
-              value={node.height ?? ""}
-              onChange={(e: Event) => onSizeChange("height", Number(e.target.value))}
-              inputType=""
-              readOnly={IsAspectNode(node)}
-            />
-          </div>
-        )}
       </TabColumn>
       <TabColumn width={125}>
         <div className="statusDropdown">
@@ -148,19 +123,6 @@ const AdminContent = ({ node, project, statuses }: Props) => {
               readOnly={IsAspectNode(node)}
               value={node.cost ?? ""}
               onChange={(e: Event) => onChange("cost", e.target.value)}
-              inputType=""
-            />
-          </div>
-        )}
-
-        {IsLocation(node) && IsBlockView() && (
-          <div>
-            <div>{TextResources.Inspector_Admin_Length}</div>
-            <Input
-              fontSize={FontSize.Standard}
-              readOnly={IsAspectNode(node)}
-              value={node.length ?? ""}
-              onChange={(e: Event) => onSizeChange("length", Number(e.target.value))}
               inputType=""
             />
           </div>

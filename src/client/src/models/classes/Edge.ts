@@ -5,6 +5,8 @@ export const EDGE_KIND: string = "Edge";
 
 class Edge {
   id: string;
+  iri: string;
+  domain: string;
   fromConnectorId: string;
   fromConnector: Connector;
 

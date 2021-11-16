@@ -5,12 +5,11 @@ interface Props {
   color: string;
 }
 
-const CheckboxWrapper = styled.div<Props>`
+const CheckboxWrapper = styled.label<Props>`
   cursor: pointer;
   position: absolute;
   left: 7px;
   padding-bottom: 15px;
-  /* bottom: 5px; */
 
   input {
     position: absolute;

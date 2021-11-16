@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ModelBuilder.Api.Tests.Fixture
+namespace ModelBuilder.Fixtures
 {
     public class TestStartup : Startup
     {
+        public ServiceProvider ServiceProvider;
+
         public TestStartup(IConfiguration configuration): base(configuration)
         {
 
