@@ -72,10 +72,10 @@ namespace RdfParserModule
                 Edges = new List<ParserEdge>()
             };
             GetProjectInformation();
-            
+
+            ParserNodes.AddRange(GetRootNodes());
             ParserNodes.AddRange(GetAllFunctionObjectsWithTerminals());
             ParserNodes.AddRange(GetAllLocationObjects());
-            ParserNodes.AddRange(GetRootNodes());
 
             AddAspectRelation("Part Of");
             AddAspectRelation("Has Location");
@@ -147,12 +147,14 @@ namespace RdfParserModule
         public void GetProjectInformation()
         {
             var integratedObject = RdfGraph.CreateUriNode("imf:IntegratedObject");
-            var projectId = Store.GetTriplesWithObject(integratedObject).Select(t => t.Subject).ToList().First();
+            var type = RdfGraph.CreateUriNode(Resources.type);
+            var projectId = Store.GetTriplesWithPredicateObject(type, integratedObject).Select(t => t.Subject).SingleOrDefault();
+            
             
             var label = GetLabel(projectId.ToString());
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
 
-            Graph.Id = $"import.rdf_{Guid.NewGuid()}"; //projectId.ToString() + Guid.NewGuid();
+            Graph.Id = projectId.ToString();
             Graph.Iri = Graph.Id;
             Graph.Label = label;
             Graph.Name = label;
@@ -481,7 +483,7 @@ namespace RdfParserModule
             var fromConnectors = GetObjects(inTerminal.Iri, Resources.connectedTo);
             if (fromConnectors is null || fromConnectors.Count != 1)
             {
-                throw new Exception("A terminal can only be connected to one, 1, other terminal");
+                throw new Exception($"A terminal can only be connected to one, 1, other terminal | {inTerminal}");
             }
 
             var fromConnector = fromConnectors.First().ToString();
@@ -693,25 +695,6 @@ namespace RdfParserModule
             var fsb = GetOrCreateUriNode(Resources.FSB);
 
             return Store.GetTriplesWithPredicateObject(type, fsb).Select(t => t.Subject).ToList();
-
-
-            //var hasAspect = RdfGraph.CreateUriNode(Resources.hasAspect);
-            //var function = RdfGraph.CreateUriNode(Resources.Function);
-
-            //var ds = new InMemoryDataset(RdfGraph);
-            //var processor = new LeviathanQueryProcessor(ds);
-            //var parser = new SparqlQueryParser();
-            //var query = parser.ParseFromString(@"
-            //            PREFIX imf: <http://example.com/imf#>
-            //            SELECT ?node WHERE {
-            //                ?node imf:hasAspect imf:Function .
-            //                FILTER NOT EXISTS{ ?node a imf:Terminal . }
-            //                FILTER NOT EXISTS{ ?node a imf:Transport . }                             
-            //            }
-            //");
-
-            //var result = processor.ProcessQuery(query) as SparqlResultSet;
-            //return result.Results.Select(r => r["node"]).ToList();
         }
 
         public List<ParserNode> GetAllFunctionObjectsWithTerminals()

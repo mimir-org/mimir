@@ -238,6 +238,12 @@ namespace RdfParserModule
             var hasAspect = Graph.CreateUriNode(Resources.hasAspect);
             var comment = Graph.CreateUriNode(Resources.desc);
 
+            var hasInTerminal = Graph.CreateUriNode("imf:hasInTerminal");
+            var hasOutTerminal = Graph.CreateUriNode("imf:hasOutTerminal");
+
+            var inTerminal = Graph.CreateUriNode("imf:InTerminal");
+            var outTerminal = Graph.CreateUriNode("imf:OutTerminal");
+
 
             foreach (var node in Project.Nodes)
             {
@@ -285,14 +291,17 @@ namespace RdfParserModule
                             Graph.Assert(new Triple(nodeTerminal, type, transmitter));
                             Graph.Assert(new Triple(transmitter, type, Graph.CreateUriNode("imf:Transmitter")));
 
-                            var hasTerminal = Graph.CreateUriNode("imf:has" + terminal.Type + "Terminal");
-
-
-                            var terminalType = terminal.Type.ToString().Contains("In") ? "In" : "Out";
-
-                            var terminalKey = Graph.CreateUriNode("imf:" + terminalType + "Terminal");
-                            Graph.Assert(new Triple(nodeId, hasTerminal, nodeTerminal));
-                            Graph.Assert(new Triple(nodeTerminal, type, terminalKey));
+                            switch (terminal.Type)
+                            {
+                                case ConnectorType.Input:
+                                    Graph.Assert(new Triple(nodeId, hasInTerminal, nodeTerminal));
+                                    Graph.Assert(new Triple(nodeTerminal, type, inTerminal));
+                                    break;
+                                case ConnectorType.Output:
+                                    Graph.Assert(new Triple(nodeId, hasOutTerminal, nodeTerminal));
+                                    Graph.Assert(new Triple(nodeTerminal, type, outTerminal));
+                                    break;
+                            }
 
                             var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
                             Graph.Assert(new Triple(nodeTerminal, label, terminalLabel));

@@ -28,7 +28,8 @@ namespace RdfParserModule
                 .ForMember(dest => dest.FromNodeId, opt => opt.MapFrom(src => NormaliseID(src.FromNodeId)))
                 .ForMember(dest => dest.ToNodeId, opt => opt.MapFrom(src => NormaliseID(src.ToNodeId)))
                 .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
-                .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface));
+                .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
+                .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => NormaliseID(src.MasterProjectId)));
 
             CreateMap<ParserTransport, TransportAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Id)))
