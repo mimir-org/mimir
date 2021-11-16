@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { TextResources } from "../../assets/text";
 import { LibraryCategory } from "../../models/project";
 import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary/input/text";
 import { LibraryCategoryComponent, LibrarySubPageComponent } from ".";
-import { useState } from "react";
 import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
-import { LibBody, SearchIconBox } from "./styled";
+import { LibBody, SearchBox } from "./styled";
 import { TypeEditorModule } from "../../typeEditor";
 import { Dispatch } from "redux";
 import { LibrarySubProjectItem } from "../../models";
@@ -32,10 +32,10 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
 
   return (
     <>
-      <SearchIconBox>
-        <img src={SearchIcon} alt="search" />
-      </SearchIconBox>
-      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
+      <SearchBox>
+        <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />{" "}
+        <img src={SearchIcon} alt="search" className="search-icon" />
+      </SearchBox>
       <LibBody legend={legendOpen}>
         {categories?.map((category) => {
           return (

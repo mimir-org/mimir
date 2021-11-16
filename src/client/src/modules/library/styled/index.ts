@@ -5,7 +5,7 @@ export { default as LibBody } from "./LibBody";
 export { default as LibCategory } from "./LibCategory";
 export { default as LibCategoryElement } from "./LibCategoryElement";
 export { default as LibElementIcon } from "./LibElementIcon";
-export { default as SearchIconBox } from "./SearcIconBox";
+export { default as SearchBox } from "./SearchBox";
 
 export { default as ModuleBody } from "./ModuleBody";
 export { default as ModuleHeader } from "./ModuleHeader";

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import FontType from "../font/FontType";
+import { FontType } from "../font";
 
 const SearchBarContainer = styled.div`
   display: flex;
