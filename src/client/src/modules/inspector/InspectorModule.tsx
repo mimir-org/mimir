@@ -45,7 +45,6 @@ const InspectorModule = ({ inspectorRef }: Props) => {
   const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
   const resizePanelRef = useRef(null);
-
   const element: InspectorElement = node || edge;
 
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);

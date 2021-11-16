@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { MenuWrapper, MenuHeader, MenuList } from "./styled";
+import { MenuWrapper, MenuHeader, MenuListBox } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
 import { Connector } from "../../../../models";
 import { TextResources } from "../../../../assets/text";
-import { OnActiveTerminalChange } from "../handlers";
+import { OnActiveTerminalChange, OnInactiveTerminalChange } from "../handlers";
 import { FilterTerminalElement } from ".";
 
 interface Props {
@@ -22,6 +22,7 @@ interface Props {
 const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inActiveTerminals, label, dispatch }: Props) => {
   const [listOpen, setListOpen] = useState(false);
   const activeTerminalsChecked = activeTerminals.some((c) => c?.visible);
+  const inActiveTerminalsChecked = false;
 
   return (
     <MenuWrapper>
@@ -31,7 +32,7 @@ const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inActiveTermina
       </MenuHeader>
 
       {listOpen && (
-        <MenuList>
+        <MenuListBox>
           {/* <FilterTerminalElement
             checked={terminalsChecked}
             label={TextResources.Filter_Show_Terminals}
@@ -44,12 +45,12 @@ const FilterTerminalDropdown = ({ allTerminals, activeTerminals, inActiveTermina
             onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
           />
 
-          {/* <FilterTerminalElement
+          <FilterTerminalElement
             checked={inActiveTerminalsChecked}
             label={TextResources.Filter_Show_Inactive_Terminals}
             onChange={() => OnInactiveTerminalChange(inActiveTerminals, dispatch, activeTerminalsChecked)}
-          /> */}
-        </MenuList>
+          />
+        </MenuListBox>
       )}
     </MenuWrapper>
   );
