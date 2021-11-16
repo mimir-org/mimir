@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks
 import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
 import { BlockLogoComponent } from "../../logo";
 import { GetAspectColor, GetSelectedBlockNode } from "../../../../../helpers";
+import { Size } from "../../../../../compLibrary/size";
 
 /**
  * Component for a Location Node in BlockView.
@@ -36,6 +37,9 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
   });
 
   if (!node) return null;
+
+  node.width = Size.Node_Width;
+  node.height = Size.Node_Height;
 
   return (
     <NodeBox
