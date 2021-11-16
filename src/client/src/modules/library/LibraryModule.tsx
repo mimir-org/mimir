@@ -42,8 +42,8 @@ const LibraryModule = () => {
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
-      <ModuleHeader visible={libOpen}>
-        <img className="icon" src={LibraryIcon} alt="toggle" onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)} />
+      <ModuleHeader isOpen={libOpen} onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)}>
+        <img className="icon" src={LibraryIcon} alt="toggle" />
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHeader>
       <ModuleBody visible={libOpen}>
