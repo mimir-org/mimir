@@ -1,13 +1,15 @@
+import { useState } from "react";
 import { CloseIcon } from "../../assets/icons/close";
+import { AddIcon } from "../../assets/icons/type";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
 import { AspectColorType, LibItem, ObjectType } from "../../models";
 import { LibraryCategory } from "../../models/project";
-import { OnRemoveElementClick } from "./handlers";
+import { OnRemoveFavoriteClick, OnAddFavoriteClick } from "./handlers";
 import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
 import { AddFavoriteBox, LibElement, LibElementIcon, RemoveFavoriteBox } from "./styled";
 
 interface Props {
-  node: LibItem;
+  item: LibItem;
   customCategory: LibraryCategory;
   selectedElement: string;
   setSelectedElement: any;
@@ -16,8 +18,13 @@ interface Props {
   dispatch: any;
 }
 
+/**
+ * Component for an element in a LibraryCategory drop-down menu.
+ * @param interface
+ * @returns a draggable element.
+ */
 const LibraryCategoryElement = ({
-  node,
+  item,
   customCategory,
   selectedElement,
   setSelectedElement,
@@ -25,32 +32,41 @@ const LibraryCategoryElement = ({
   isCustomCategory,
   dispatch,
 }: Props) => {
-  const onDragStart = (event, item) => {
-    event.dataTransfer.setData("application/reactflow", item);
+  const [showAddButton, setShowAddButton] = useState(false);
+
+  const onDragStart = (event, node) => {
+    event.dataTransfer.setData("application/reactflow", node);
     event.dataTransfer.effectAllowed = "move";
   };
 
   return (
     <LibElement
-      active={selectedElement === node.id}
+      onMouseEnter={() => setShowAddButton(true)}
+      onMouseLeave={() => setShowAddButton(false)}
+      active={selectedElement === item.id}
       onClick={() => {
-        SetNewSelectedElement(node, customCategory, dispatch, setSelectedElement);
-        SetNewSelectedElementType(node.libraryType, setSelectedElementType);
+        SetNewSelectedElement(item, setSelectedElement);
+        SetNewSelectedElementType(item.libraryType, setSelectedElementType);
       }}
-      draggable={node.libraryType === ObjectType.ObjectBlock}
-      onDragStart={(event) => node.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(node))}
-      key={node.id}
+      draggable={item.libraryType === ObjectType.ObjectBlock}
+      onDragStart={(event) => item.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(item))}
+      key={item.id}
     >
-      {node.name}
-      <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveElementClick(dispatch, node)}>
-        <img src={CloseIcon} alt="close" />
+      {item.name}
+      <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
+        <img src={CloseIcon} alt="remove" />
       </RemoveFavoriteBox>
-      <AddFavoriteBox visible={!isCustomCategory} onClick={() => OnRemoveElementClick(dispatch, node)}>
-        <img src={CloseIcon} alt="close" />
+
+      <AddFavoriteBox
+        visible={!isCustomCategory && showAddButton}
+        onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}
+      >
+        <img src={AddIcon} alt="add" />
       </AddFavoriteBox>
-      <LibElementIcon color={GetAspectColor(node, AspectColorType.Main, false)}>
-        {(node.libraryType === ObjectType.Interface || node.libraryType === ObjectType.Transport) && (
-          <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
+
+      <LibElementIcon color={GetAspectColor(item, AspectColorType.Main, false)}>
+        {(item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport) && (
+          <img src={GetObjectIcon(item)} alt="aspect-icon" className="icon" draggable="false"></img>
         )}
       </LibElementIcon>
     </LibElement>

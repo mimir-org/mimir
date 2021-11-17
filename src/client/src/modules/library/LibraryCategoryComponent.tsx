@@ -13,6 +13,11 @@ interface Props {
   dispatch: any;
 }
 
+/**
+ * Component for a Category in the Library in Mimir.
+ * @param interface
+ * @returns a drop-down menu of a given Category.
+ */
 const LibraryCategoryComponent = ({
   category,
   customCategory,
@@ -32,10 +37,11 @@ const LibraryCategoryComponent = ({
         <img className="expandIcon" src={expandIcon} alt="expand-icon"></img>
       </LibCategory>
       {expanded &&
-        category?.nodes.map((node) => {
+        category?.nodes.map((item) => {
           return (
             <LibraryCategoryElement
-              node={node}
+              key={item.id}
+              item={item}
               customCategory={customCategory}
               selectedElement={selectedElement}
               setSelectedElement={setSelectedElement}

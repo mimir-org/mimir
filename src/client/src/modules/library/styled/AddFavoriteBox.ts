@@ -7,7 +7,10 @@ interface Props {
 const AddFavoriteBox = styled.div<Props>`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   position: absolute;
-  right: 58px;
+  right: 32px;
+  width: 25px;
+  height: 20px;
+  text-align: center;
 
   &:hover {
     cursor: pointer;
