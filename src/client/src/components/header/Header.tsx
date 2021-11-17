@@ -2,7 +2,7 @@ import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { ToolBar } from "./";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import { CompanyLogoBox, ProjectBox, UserBox, HeaderBox, LogoBox } from "./styled";
+import { CompanyLogoBox, ProjectBox, AvatarBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader } from "../../helpers";
 import { GetUserInitials } from "../menus/userMenu/helpers";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../assets/icons/toogle";
@@ -37,16 +37,21 @@ const Header = () => {
   return (
     <>
       <HeaderBox id="Header">
-        <UserBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
-          <img src={Icons.UserBackground} alt="icon" className="icon" onClick={() => Click.OnUser(dispatch, userMenuOpen)} />
+        <AvatarBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
           <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
+          <img
+            src={Icons.UserBackground}
+            alt="profile"
+            className="profile"
+            onClick={() => Click.OnUser(dispatch, userMenuOpen)}
+          />
           <img
             src={userMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
             alt="icon"
             className="toggle-icon"
             onClick={() => Click.OnUser(dispatch, userMenuOpen)}
           />
-        </UserBox>
+        </AvatarBox>
         <CompanyLogoBox>
           <img src={GetCompanyLogoForHeader(company)} alt="logo" />
         </CompanyLogoBox>
