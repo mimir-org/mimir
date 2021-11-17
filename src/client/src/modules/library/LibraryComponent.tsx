@@ -5,7 +5,7 @@ import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary/input/text";
 import { LibraryCategoryComponent, LibrarySubPageComponent } from ".";
 import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
-import { FavoritesBox, LibBody, SearchIconBox } from "./styled";
+import { FavoritesBox, LibBody, SearchBox } from "./styled";
 import { TypeEditorModule } from "../../typeEditor";
 import { Dispatch } from "redux";
 import { LibrarySubProjectItem } from "../../models";
@@ -32,9 +32,9 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
 
   return (
     <>
-      <SearchIconBox>
+      <SearchBox>
         <img src={SearchIcon} alt="search" />
-      </SearchIconBox>
+      </SearchBox>
       <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
       <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
       <FavoritesBox>
