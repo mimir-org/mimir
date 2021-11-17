@@ -1,14 +1,13 @@
 import { VisibleOnIcon, VisibleOffIcon } from "../../../assets/icons/visible";
 import { ExplorerIconLine } from "../aspectComponent/styled";
-import { Node, Project } from "../../../models";
+import { Node } from "../../../models";
 import { ChangeNodeDisplay } from "../helpers";
 
 interface Props {
   node: Node;
-  project: Project;
 }
 
-export const VisibleComponent = ({ node, project }: Props) => {
+export const VisibleComponent = ({ node }: Props) => {
   const isHidden: boolean = node?.isHidden;
   return (
     <ExplorerIconLine isHidden={isHidden}>
@@ -16,7 +15,7 @@ export const VisibleComponent = ({ node, project }: Props) => {
         src={isHidden ? VisibleOffIcon : VisibleOnIcon}
         alt="visible-icon"
         className="visible-icon"
-        onClick={ChangeNodeDisplay(node, project)}
+        onClick={ChangeNodeDisplay(node)}
       />
     </ExplorerIconLine>
   );

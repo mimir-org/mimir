@@ -30,10 +30,10 @@ const ProjectComponent = () => {
           <AspectComponent
             key={node.id}
             node={node}
+            nodes={nodes}
             label={node.label}
             indent={indent}
             expanded={!closedNodes.has(node.id)}
-            project={project}
             isLeaf={!HasChildren(node, project)}
             elements={elements}
             secondaryNode={secondaryNode}

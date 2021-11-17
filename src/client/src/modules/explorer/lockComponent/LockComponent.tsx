@@ -1,23 +1,17 @@
 import { LockOpen, LockClosed } from "../../../assets/icons/lock";
 import { ExplorerIconLine } from "../aspectComponent/styled";
-import { Node, Project } from "../../../models";
+import { Node } from "../../../models";
 import { OnLockNode } from "../handlers";
 
 interface Props {
   node: Node;
-  project: Project;
 }
 
-export const LockComponent = ({ node, project }: Props) => {
+export const LockComponent = ({ node }: Props) => {
   const isLocked: boolean = node?.isLocked;
   return (
     <ExplorerIconLine isLocked={isLocked}>
-      <img
-        src={isLocked ? LockClosed : LockOpen}
-        alt="lock-icon"
-        className="lock-icon"
-        onClick={OnLockNode(node, project, !isLocked)}
-      />
+      <img src={isLocked ? LockClosed : LockOpen} alt="lock-icon" className="lock-icon" onClick={OnLockNode(node)} />
     </ExplorerIconLine>
   );
 };
