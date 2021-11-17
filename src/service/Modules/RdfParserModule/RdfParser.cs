@@ -43,7 +43,7 @@ namespace RdfParserModule
             var builder = new RdfBuilder();
             builder.BuildProject(project);
 
-            var bytes = builder.GetBytes<NTriplesWriter>();
+            var bytes = builder.GetBytes<CompressingTurtleWriter>();
 
             return Task.FromResult(bytes);
         }

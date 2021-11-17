@@ -14,7 +14,7 @@ namespace RdfParserModule
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => "4590637F39B6BA6F39C74293BE9138DF"))
-                .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => NormaliseID(src.MasterProjectId)))
+                .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
@@ -28,7 +28,7 @@ namespace RdfParserModule
                 .ForMember(dest => dest.ToNodeId, opt => opt.MapFrom(src => NormaliseID(src.ToNodeId)))
                 .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
                 .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
-                .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => NormaliseID(src.MasterProjectId)));
+                .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src =>src.MasterProjectIri));
 
             CreateMap<ParserTransport, TransportAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Id)))

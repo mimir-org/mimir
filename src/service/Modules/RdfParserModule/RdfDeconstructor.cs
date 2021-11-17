@@ -24,7 +24,6 @@ namespace RdfParserModule
         public TripleStore Store { get; set; }
         public ProjectAm Project { get; set; }
 
-
         public List<ParserNode> ParserNodes;
         public List<ParserEdge> ParserEdges;
 
