@@ -1,8 +1,8 @@
 export { default as LegendHeader } from "./LegendHeader";
 export { default as LibElement } from "./LibElement";
 export { default as LibBody } from "./LibBody";
-export { default as LibCategory } from "./LibCategory";
-export { default as LibCategoryElement } from "./LibCategoryElement";
+export { default as LibCategoryBox } from "./LibCategoryBox";
+export { default as LibCategoryHeader } from "./LibCategoryHeader";
 export { default as LibElementIcon } from "./LibElementIcon";
 
 export { default as RemoveFavoriteBox } from "./RemoveFavoriteBox";
