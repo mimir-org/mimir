@@ -21,6 +21,14 @@ const LibElement = styled.div<Props>`
   font-size: ${FontSize.SubHeader};
   padding-left: 10px;
   cursor: grab;
+
+  .type-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
 `;
 
 export default LibElement;
