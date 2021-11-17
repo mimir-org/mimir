@@ -10,7 +10,7 @@
         public string NormalToConnectorId { get; set; }
         public string FromNodeId { get; set; }
         public string ToNodeId { get; set; }
-        public string MasterProjectId { get; set; }
+        public string MasterProjectIri { get; set; }
         public ParserNode Transport { get; set; }
         public ParserNode Interface { get; set; }
         public ParserConnector InputTerminal { get; set; }

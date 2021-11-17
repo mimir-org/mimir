@@ -6,15 +6,12 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using AutoMapper;
 using Mb.Models.Application;
-using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
-using VDS.RDF.Query;
-using VDS.RDF.Query.Datasets;
 using VDS.RDF.Query.Inference;
 using INode = VDS.RDF.INode;
 
@@ -136,7 +133,7 @@ namespace RdfParserModule
                     ToConnectorId = toConnector.Id,
                     FromNodeId = parent.Id,
                     ToNodeId = node.Id,
-                    MasterProjectId = Graph.Id,
+                    MasterProjectIri = Graph.Iri,
                     InputTerminal = fromConnector,
                     OutputTerminal = toConnector
                 };
@@ -194,7 +191,7 @@ namespace RdfParserModule
                 Id = node.ToString(),
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                MasterProjectId = Graph.Id,
+                MasterProjectIri = Graph.Iri,
                 Terminals = new List<ParserConnector>()
 
             }).ToList();
@@ -677,7 +674,7 @@ namespace RdfParserModule
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
                 Terminals = new List<ParserConnector>(),
-                MasterProjectId = Graph.Id
+                MasterProjectIri = Graph.Iri
             }).ToList();
 
 
@@ -705,7 +702,7 @@ namespace RdfParserModule
                     OutputTerminalId = outTerminal.Iri,
                     InputTerminal = inTerminal,
                     InputTerminalId = inTerminal.Iri,
-                    MasterProjectId = Graph.Id,
+                    MasterProjectIri = Graph.Iri,
                     Transport = transport,
                     ToNodeId = outTerminal.NodeId,
                     FromNodeId = inTerminal.NodeId
@@ -734,7 +731,7 @@ namespace RdfParserModule
                 IsRoot = false,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                MasterProjectId = Graph.Id
+                MasterProjectIri = Graph.Iri
 
             }).ToList();
 
@@ -775,7 +772,7 @@ namespace RdfParserModule
                 Terminals = new List<ParserConnector>(),
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                MasterProjectId = Graph.Id
+                MasterProjectIri = Graph.Iri
 
             }).ToList();
             

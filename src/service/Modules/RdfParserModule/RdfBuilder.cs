@@ -25,6 +25,7 @@ namespace RdfParserModule
         public IGraph Graph;        
         public Dictionary<string, INode> Roots;
         private Dictionary<string, string> _namespaces;
+        private string _domain;
 
         //private IDictionary<string>
 
@@ -125,6 +126,7 @@ namespace RdfParserModule
             Graph = BaseGraph("http://rdf.equinor.com/");
             InitaliseNamespaces(namespaces);
 
+            _domain = project.Domain;
 
             Roots = new Dictionary<string, INode>();
 
@@ -302,8 +304,7 @@ namespace RdfParserModule
              
                 if (node.IsRoot)
                 {
-                    var masterProject = node.MasterProject ?? Project;
-                    Graph.Assert(new Triple(nodeId, GetOrCreateUriNode(Resources.isAspectOf), GetOrCreateUriNode(masterProject.Iri)));
+                    Graph.Assert(new Triple(nodeId, GetOrCreateUriNode(Resources.isAspectOf), GetOrCreateUriNode(node.MasterProjectIri)));
                     
                     Roots.Add(node.Aspect.ToString(), nodeId);
                     
