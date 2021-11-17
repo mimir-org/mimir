@@ -3,12 +3,12 @@ import { Color } from "../../colors";
 import { FontSize, FontWeight } from "../../font";
 
 const SearchInput = styled.input`
-  width: 100%;
-  height: 36px;
+  width: 287px;
+  height: 30px;
   font-style: ${FontWeight.Italic};
   font-size: ${FontSize.Standard};
   padding-left: 8px;
-  margin: 0px 0px 10px 15px;
+  margin: 0px 0px 5px 15px;
   border: 0;
   position: relative;
 
@@ -18,6 +18,10 @@ const SearchInput = styled.input`
 
   &:focus {
     border: 1px solid ${Color.Black};
+  }
+
+  &:hover {
+    background-color: ${Color.LightBlue};
   }
 `;
 
