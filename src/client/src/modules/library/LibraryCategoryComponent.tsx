@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { LibraryCategory } from "../../models/project";
-import { AspectColorType, ObjectType } from "../../models";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
-import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
-import { CloseIcon } from "../../assets/icons/close";
-import { OnCloseElementClick } from "./handlers";
-import { LibCategory, LibCategoryElement, LibElement, LibElementClose, LibElementIcon } from "./styled";
-import { GetAspectColor, GetObjectIcon } from "../../helpers";
+import { LibCategory, LibCategoryElement } from "./styled";
+import { LibraryCategoryElement } from ".";
 
 interface Props {
   customCategory: LibraryCategory;
@@ -17,6 +13,11 @@ interface Props {
   dispatch: any;
 }
 
+/**
+ * Component for a Category in the Library in Mimir.
+ * @param interface
+ * @returns a drop-down menu of a given Category.
+ */
 const LibraryCategoryComponent = ({
   category,
   customCategory,
@@ -27,11 +28,7 @@ const LibraryCategoryComponent = ({
 }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const expandIcon = expanded ? ExpandIcon : CollapseIcon;
-
-  const onDragStart = (event, node) => {
-    event.dataTransfer.setData("application/reactflow", node);
-    event.dataTransfer.effectAllowed = "move";
-  };
+  const isCustomCategory = category.name === "Favorites";
 
   return (
     <>
@@ -40,28 +37,18 @@ const LibraryCategoryComponent = ({
         <img className="expandIcon" src={expandIcon} alt="expand-icon"></img>
       </LibCategory>
       {expanded &&
-        category?.nodes.map((node) => {
+        category?.nodes.map((item) => {
           return (
-            <LibElement
-              active={selectedElement === node.id}
-              onClick={() => {
-                SetNewSelectedElement(node, customCategory, dispatch, setSelectedElement);
-                SetNewSelectedElementType(node.libraryType, setSelectedElementType);
-              }}
-              draggable={node.libraryType === ObjectType.ObjectBlock}
-              onDragStart={(event) => node.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(node))}
-              key={node.id}
-            >
-              {node.name}
-              <LibElementIcon color={GetAspectColor(node, AspectColorType.Main, false)}>
-                {(node.libraryType === ObjectType.Interface || node.libraryType === ObjectType.Transport) && (
-                  <img src={GetObjectIcon(node)} alt="aspect-icon" className="icon" draggable="false"></img>
-                )}
-              </LibElementIcon>
-              <LibElementClose visible={customCategory.nodes.includes(node)} onClick={() => OnCloseElementClick(dispatch, node)}>
-                <img src={CloseIcon} alt="close" />
-              </LibElementClose>
-            </LibElement>
+            <LibraryCategoryElement
+              key={item.id}
+              item={item}
+              customCategory={customCategory}
+              selectedElement={selectedElement}
+              setSelectedElement={setSelectedElement}
+              setSelectedElementType={setSelectedElementType}
+              isCustomCategory={isCustomCategory}
+              dispatch={dispatch}
+            />
           );
         })}
     </>

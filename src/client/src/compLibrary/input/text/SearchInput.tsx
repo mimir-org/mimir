@@ -7,8 +7,8 @@ const SearchInput = styled.input`
   height: 36px;
   font-style: ${FontWeight.Italic};
   font-size: ${FontSize.Standard};
-  padding-left: 10px;
-  margin: 0px -4px 8px 15px;
+  padding-left: 8px;
+  margin: 0px 0px 10px 15px;
   border: 0;
   position: relative;
 

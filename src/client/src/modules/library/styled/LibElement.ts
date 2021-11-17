@@ -16,12 +16,19 @@ const LibElement = styled.div<Props>`
   background-color: ${Color.White};
   margin: 0px 0px 5px 0px;
   display: flex;
-  vertical-align: middle;
   align-items: center;
   justify-content: space-between;
   font-size: ${FontSize.SubHeader};
   padding-left: 10px;
   cursor: grab;
+
+  .type-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
 `;
 
 export default LibElement;
