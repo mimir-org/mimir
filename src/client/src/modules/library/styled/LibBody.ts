@@ -12,26 +12,26 @@ const LibraryBody = styled.div<Props>`
   overflow-y: scroll;
   overflow-x: hidden;
   padding-right: 10px;
-  max-height: ${(props) => (props.legend ? 60 : 80)}%;
+  max-height: ${(props) => (props.legend ? 60 : 76)}%;
 
   @media screen and (max-height: 1100px) {
-    max-height: ${(props) => (props.legend ? 50 : 75)}%;
+    max-height: ${(props) => (props.legend ? 50 : 70)}%;
   }
 
   @media screen and (max-height: 1000px) {
-    max-height: ${(props) => (props.legend ? 40 : 70)}%;
+    max-height: ${(props) => (props.legend ? 40 : 65)}%;
   }
 
   @media screen and (max-height: 900px) {
-    max-height: ${(props) => (props.legend ? 30 : 65)}%;
+    max-height: ${(props) => (props.legend ? 30 : 60)}%;
   }
 
   @media screen and (max-height: 700px) {
-    max-height: ${(props) => (props.legend ? 20 : 55)}%;
+    max-height: ${(props) => (props.legend ? 20 : 50)}%;
   }
 
   @media screen and (max-height: 550px) {
-    max-height: ${(props) => (props.legend ? 10 : 40)}%;
+    max-height: ${(props) => (props.legend ? 10 : 35)}%;
   }
 
   @media screen and (max-height: 400px) {

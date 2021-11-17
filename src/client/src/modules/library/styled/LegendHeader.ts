@@ -3,6 +3,7 @@ import styled from "styled-components";
 interface Props {
   open: boolean;
 }
+
 const LegendHeader = styled.div<Props>`
   display: inline-flex;
   align-items: flex-end;

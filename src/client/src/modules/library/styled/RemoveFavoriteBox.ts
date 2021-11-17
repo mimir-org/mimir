@@ -4,14 +4,14 @@ interface Props {
   visible: boolean;
 }
 
-const LibElementClose = styled.div<Props>`
+const RemoveFavoriteBox = styled.div<Props>`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   position: absolute;
-  right: 45px;
+  right: 58px;
 
   &:hover {
     cursor: pointer;
   }
 `;
 
-export default LibElementClose;
+export default RemoveFavoriteBox;
