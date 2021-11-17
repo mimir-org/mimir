@@ -52,18 +52,16 @@ const LibraryCategoryElement = ({
       onDragStart={(event) => item.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(item))}
       key={item.id}
     >
-      {item.name}
+      <p className="type-name"> {item.name}</p>
       <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
         <img src={CloseIcon} alt="remove" />
       </RemoveFavoriteBox>
-
       <AddFavoriteBox
         visible={!isCustomCategory && showAddButton}
         onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}
       >
         <img src={AddIcon} alt="add" />
       </AddFavoriteBox>
-
       <LibElementIcon color={GetAspectColor(item, AspectColorType.Main, false)}>
         {(item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport) && (
           <img src={GetObjectIcon(item)} alt="aspect-icon" className="icon" draggable="false"></img>
