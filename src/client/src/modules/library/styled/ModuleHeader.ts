@@ -8,19 +8,20 @@ interface Props {
 }
 
 const ModuleHeader = styled.div<Props>`
+  position: relative;
+  text-align: center;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
-  text-align: center;
-  position: relative;
   cursor: pointer;
-  padding-top: ${(props) => (props.legend ? 15 : 5)}px;
+  padding-top: ${(props) => props.legend && "15px"};
   border-top: ${(props) => props.legend && "1px solid" + Color.Grey};
-  margin-top: ${(props) => !props.legend && "22px"};
+  margin-top: ${(props) => !props.legend && "30px"};
+  margin-bottom: ${(props) => !props.legend && "30px"};
 
   .text {
     position: relative;
+    display: inline;
     opacity: ${(props) => (props.isOpen ? 1 : 0)};
-    bottom: 18px;
     transition: opacity 0.2s ease-in-out;
   }
 
