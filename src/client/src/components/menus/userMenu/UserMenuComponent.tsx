@@ -1,7 +1,7 @@
 import { DarkMode, Notifications, OffIcon, OnIcon, Settings, UserBackground, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
+import { UserMenuElement, UserMenuBox, UserNameBox, AvatarBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
 import { darkModeSelector, userStateSelector } from "../../../redux/store";
 import { GetUserInitials } from "./helpers";
@@ -19,8 +19,10 @@ const UserMenuComponent = () => {
   return (
     <UserMenuBox id={MENU_TYPE.PROJECT_MENU}>
       <UserNameBox>
-        <img src={UserBackground} alt="user" className="user-icon" />
-        <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
+        <AvatarBox>
+          <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
+          <img src={UserBackground} alt="profile" className="profile" />
+        </AvatarBox>
         <p>{userState.user && userState?.user?.name}</p>
         <p className="user-title">{TextResources.UserMenu_User}</p>
       </UserNameBox>
