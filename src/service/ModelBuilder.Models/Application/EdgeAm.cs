@@ -12,6 +12,7 @@ namespace Mb.Models.Application
         public string FromNodeId { get; set; }
         public string ToNodeId { get; set; }
         public string MasterProjectId { get; set; }
+        public string MasterProjectIri { get; set; }
         public bool IsTemplateEdge { get; set; }
         public TransportAm Transport { get; set; }
         public InterfaceAm Interface { get; set; }

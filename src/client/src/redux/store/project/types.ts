@@ -459,6 +459,7 @@ export interface ChangeNodeUpdated {
 export interface CreateSubProject {
   type: typeof CREATING_SUB_PROJECT;
   payload: {
+    fromProjectId: string;
     name: string;
     description: string;
     nodes: string[];

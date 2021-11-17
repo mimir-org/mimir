@@ -24,7 +24,7 @@ namespace Mb.Models.Data
             set => SetIri(value);
         }
 
-       public string Domain
+        public string Domain
         {
             get => _domain;
             set => SetDomain(value);
@@ -87,9 +87,17 @@ namespace Mb.Models.Data
         public bool IsRoot { get; set; }
 
         [Required]
-        public string MasterProjectId { get; set; }
+        public string MasterProjectId
+        {
+            get => _masterProjectId;
+            set => SetMasterProjectId(value);
+        }
 
-        public virtual Project MasterProject { get; set; }
+        public string MasterProjectIri
+        {
+            get => _masterProjectIri;
+            set => SetMasterProjectIri(value);
+        }
 
         public string Symbol { get; set; }
 
@@ -101,7 +109,7 @@ namespace Mb.Models.Data
         public virtual ICollection<Connector> Connectors { get; set; }
 
         public virtual ICollection<Attribute> Attributes { get; set; }
-        
+
         public virtual ICollection<Composite> Composites { get; set; }
 
         [JsonIgnore]
@@ -170,6 +178,26 @@ namespace Mb.Models.Data
                 _id = _iri.ResolveIdFromIriAndDomain(domain);
         }
 
+        private void SetMasterProjectId(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return;
+
+            _masterProjectId = id;
+            if (string.IsNullOrEmpty(_masterProjectIri))
+                _masterProjectIri = _masterProjectId.ResolveIri();
+        }
+
+        private void SetMasterProjectIri(string iri)
+        {
+            if (string.IsNullOrEmpty(iri))
+                return;
+
+            _masterProjectIri = iri;
+            if (string.IsNullOrEmpty(_masterProjectId))
+                _masterProjectId = _masterProjectIri.ResolveIdFromIriAndDomain(_domain);
+        }
+
         #endregion
 
         #region Private members
@@ -177,6 +205,8 @@ namespace Mb.Models.Data
         private string _id;
         private string _iri;
         private string _domain;
+        private string _masterProjectId;
+        private string _masterProjectIri;
 
         #endregion
     }

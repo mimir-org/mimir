@@ -84,6 +84,7 @@ export interface NodeAm {
   cost: number;
   statusId: string;
   masterProjectId: string;
+  masterProjectIri: string;
   symbol: string;
   connectors: ConnectorAm[];
   attributes: AttributeAm[];
@@ -104,7 +105,7 @@ export interface EdgeAm {
   fromNodeId: string;
   toNodeId: string;
   masterProjectId: string;
-  isTemplateEdge: boolean;
+  masterProjectIri: string;
   transport: TransportAm;
   interface: InterfaceAm;
 }
@@ -324,6 +325,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       cost: node.cost,
       statusId: node.statusId,
       masterProjectId: node.masterProjectId,
+      masterProjectIri: node.masterProjectIri,
       symbol: node.symbol,
       connectors: ConvertConnectors(node.connectors),
       attributes: ConvertAttributes(node.attributes),
@@ -358,7 +360,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       toConnectorId: edge.toConnectorId,
       toNodeId: edge.toNodeId,
       masterProjectId: edge.masterProjectId,
-      isTemplateEdge: edge.isTemplateEdge,
+      masterProjectIri: edge.masterProjectIri,
       transport: ConvertTransport(edge.transport),
       interface: ConvertInterface(edge.interface),
     } as EdgeAm;

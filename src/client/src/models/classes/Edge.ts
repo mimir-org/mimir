@@ -29,7 +29,7 @@ class Edge {
   isLockedBy: string;
   isHidden: boolean | false;
   masterProjectId: string;
-  isTemplateEdge: boolean;
+  masterProjectIri: string;
   isSelected: boolean;
 
   kind: string = EDGE_KIND;

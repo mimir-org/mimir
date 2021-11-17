@@ -63,7 +63,7 @@ const ProjectMenuComponent = () => {
         parsers={commonState.parsers}
         projectId={projectState?.project?.id}
       />
-      <CreateSubProjectMenu nodeIds={selectedNodeIds} edgeIds={selectedEdgeIds} />
+      <CreateSubProjectMenu fromProjectId={projectState?.project?.id} nodeIds={selectedNodeIds} edgeIds={selectedEdgeIds} />
     </>
   );
 };
