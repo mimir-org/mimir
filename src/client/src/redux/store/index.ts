@@ -15,7 +15,6 @@ import { secondaryReducer } from "./secondaryNode/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
-import { resizeReducer } from "./resize/reducers";
 import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "../store/customCategory/reducers";
@@ -37,12 +36,11 @@ const rootReducers = combineReducers({
   modules: moduleReducer,
   menu: menuReducer,
   flow: flowReducer,
-  secondaryReducer: secondaryReducer,
+  secondaryNode: secondaryReducer,
   electro: electroViewReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
   parametersReducer: parametersReducer,
-  resizing: resizeReducer,
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,

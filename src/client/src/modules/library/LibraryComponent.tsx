@@ -5,7 +5,7 @@ import { SearchInput } from "../../compLibrary/input/text";
 import { LibraryCategoryComponent, LibrarySubPageComponent } from ".";
 import { useState } from "react";
 import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
-import { LibBody, SearchIconBox } from "./styled";
+import { FavoritesBox, LibBody, SearchIconBox } from "./styled";
 import { TypeEditorModule } from "../../typeEditor";
 import { Dispatch } from "redux";
 import { LibrarySubProjectItem } from "../../models";
@@ -36,6 +36,19 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
         <img src={SearchIcon} alt="search" />
       </SearchIconBox>
       <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
+      <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
+      <FavoritesBox>
+        <LibraryCategoryComponent
+          selectedElement={selectedElement}
+          setSelectedElement={setSelectedElement}
+          setSelectedElementType={setSelectedElementType}
+          key={customCategory.name}
+          category={customCategory}
+          customCategory={customCategory}
+          dispatch={dispatch}
+        />
+      </FavoritesBox>
+
       <LibBody legend={legendOpen}>
         {categories?.map((category) => {
           return (
@@ -50,17 +63,7 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
             />
           );
         })}
-        <LibraryCategoryComponent
-          selectedElement={selectedElement}
-          setSelectedElement={setSelectedElement}
-          setSelectedElementType={setSelectedElementType}
-          key={customCategory.name}
-          category={customCategory}
-          customCategory={customCategory}
-          dispatch={dispatch}
-        />
         <LibrarySubPageComponent dispatch={dispatch} subProjects={subProjects} />
-        <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
       </LibBody>
     </>
   );

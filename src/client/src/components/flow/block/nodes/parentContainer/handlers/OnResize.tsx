@@ -1,7 +1,6 @@
-import { startResize, stopResize } from "../../../../../../redux/store/resize/actions";
 import { GetNodeByDataId } from "../../../helpers";
 
-const OnResize = (id: string, dispatch: any) => {
+const OnResize = (id: string) => {
   const MIN_HEIGHT = 200;
   const box = document.getElementById("function-block-" + id);
   const flowBox = GetNodeByDataId(id);
@@ -16,7 +15,6 @@ const OnResize = (id: string, dispatch: any) => {
     if (height - dy > MIN_HEIGHT) {
       box.style.height = height - dy + "px";
       flowBox.style.height = height - dy + "px";
-      dispatch(startResize());
     }
   };
 
@@ -27,8 +25,6 @@ const OnResize = (id: string, dispatch: any) => {
     });
 
     document.addEventListener("mouseup", () => {
-      dispatch(stopResize());
-
       document.removeEventListener("mousemove", resize);
       panel.removeEventListener("mousedown", resize);
     });

@@ -16,7 +16,6 @@ const LibElement = styled.div<Props>`
   background-color: ${Color.White};
   margin: 0px 0px 5px 0px;
   display: flex;
-  vertical-align: middle;
   align-items: center;
   justify-content: space-between;
   font-size: ${FontSize.SubHeader};
