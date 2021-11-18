@@ -2,7 +2,9 @@ import { Node } from "../../../../../models";
 import { Banner, Block, Header, LogoBox } from "./styled";
 import { OnResize } from "./handlers";
 import { useEffect } from "react";
-import { GetCompanyLogoForNode } from "../../../../../helpers";
+import { GetCompanyLogoForNode, IsLocation } from "../../../../../helpers";
+import { Background, BackgroundVariant } from "react-flow-renderer";
+import { Color } from "../../../../../compLibrary/colors";
 
 interface Props {
   dispatch: any;
@@ -26,8 +28,6 @@ const ParentContainerComponent = ({ node, color, selected, dispatch, width, heig
     OnResize(node?.id);
   }, [node]);
 
-  console.log("test: ", width);
-
   return (
     <Block id={"function-block-" + node?.id} selected={selected} width={width} height={height}>
       <Banner color={color}>
@@ -41,6 +41,8 @@ const ParentContainerComponent = ({ node, color, selected, dispatch, width, heig
       {/* <ResizeButton id="ResizeParent">
         <img src={ResizeIcon} alt="resize" className="icon" />
       </ResizeButton> */}
+      {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
+      {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
     </Block>
   );
 };

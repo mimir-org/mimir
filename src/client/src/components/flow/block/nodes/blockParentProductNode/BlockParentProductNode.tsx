@@ -1,11 +1,9 @@
 import { memo, FC, useState, useEffect } from "react";
-import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Color } from "../../../../../compLibrary/colors";
-import { SetParentProductNodeSize } from "./helpers";
-import { OnConnectorClick } from "./handlers";
+import { OnConnectorClick, ResizeHandler } from "../handlers";
 import { ParentContainerComponent } from "../parentContainer";
-import { FilterTerminals } from "../../helpers";
+import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { AspectColorType, Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector } from "../../../../../redux/store";
@@ -21,6 +19,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const electro = useAppSelector(electroSelector);
@@ -29,14 +28,17 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, null));
-  }, [node?.connectors]);
-
-  useEffect(() => {
-    SetParentProductNodeSize(node, dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    ResizeHandler(setScreenWidth);
+  }, [node?.connectors, screenWidth]);
 
   if (!node) return null;
+
+  // Update the Flow parentNode
+  const parentNode = GetNodeByDataId(node?.id);
+  if (parentNode) {
+    parentNode.style.width = `${screenWidth}px`;
+    parentNode.style.height = `${1290}px`;
+  }
 
   node.blockWidth = parentNodeSize?.width;
   node.blockHeight = parentNodeSize?.height;
@@ -48,7 +50,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
-        width={parentNodeSize?.width}
+        width={screenWidth}
         height={parentNodeSize?.height}
         hasChildren={terminals.length > 0}
       />
@@ -69,11 +71,10 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         parent={true}
         nodes={nodes}
         height={node.blockHeight}
-        width={node.blockWidth}
+        width={screenWidth}
         terminals={terminals}
         electro={electro}
       />
-      <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />
     </>
   );
 };

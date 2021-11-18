@@ -1,15 +1,13 @@
 import { memo, FC, useState, useEffect } from "react";
-import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Color } from "../../../../../compLibrary/colors";
-import { SetParentNodeSize } from "./helpers";
-import { OnConnectorClick } from "./handlers";
+import { OnConnectorClick, ResizeHandler } from "../handlers";
 import { ParentContainerComponent } from "../parentContainer";
-import { FilterTerminals } from "../../helpers";
+import { FilterTerminals, GetNodeByDataId } from "../../helpers";
 import { AspectColorType, Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { GetAspectColor, IsLocation } from "../../../../../helpers";
+import { GetAspectColor } from "../../../../../helpers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -21,33 +19,30 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const [screenWidth, setScreenWidth] = useState(parentNodeSize.width);
-
-  const resizeHandler = () => {
-    const width = window.innerWidth;
-    setScreenWidth(width);
-  };
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
-    window.onresize = resizeHandler;
+    ResizeHandler(setScreenWidth);
   }, [secondaryNode, node?.connectors, screenWidth]);
-
-  useEffect(() => {
-    SetParentNodeSize(node, secondaryNode, dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secondaryNode]);
 
   if (!node) return null;
 
-  node.blockWidth = parentNodeSize?.width;
-  node.blockHeight = parentNodeSize?.height;
+  // Update the Flow parentNode
+  const parentNode = GetNodeByDataId(node?.id);
+  if (parentNode) {
+    parentNode.style.width = `${screenWidth}px`;
+    parentNode.style.height = `${1290}px`;
+  }
+
+  node.blockWidth = screenWidth;
+  node.blockHeight = 1290;
 
   return (
     <>
@@ -77,12 +72,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         parent={true}
         nodes={nodes}
         height={node.blockHeight}
-        width={node.blockWidth}
+        width={screenWidth}
         terminals={terminals}
         electro={electro}
       />
-      {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
-      {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
     </>
   );
 };

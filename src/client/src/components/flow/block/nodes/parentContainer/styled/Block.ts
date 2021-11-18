@@ -10,14 +10,14 @@ interface Props {
 const Block = styled.div<Props>`
   position: absolute;
   cursor: ${(props) => (props.selected ? "grab" : "pointer")};
-  width: ${(props) => props.width}px;
+  width: ${(props) => props.width - 450}px;
   height: ${(props) => props.height}px;
+  min-width: 1000px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};
   box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
   z-index: 1 !important;
-  transition: width 0.2s ease-in-out max-width 0.2s ease-in-out;
 `;
 
 export default Block;
