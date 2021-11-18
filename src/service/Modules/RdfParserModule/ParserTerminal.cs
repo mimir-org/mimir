@@ -5,6 +5,7 @@ namespace RdfParserModule
     public class ParserConnector
     {
         public string Id { get; set; }
+        public string Domain { get; set; }
         public string Iri { get; set; }
         public string Name { get; set; }
         public ConnectorType Type { get; set; }

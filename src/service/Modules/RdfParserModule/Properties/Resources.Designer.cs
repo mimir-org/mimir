@@ -133,6 +133,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:domain.
+        /// </summary>
+        internal static string domain {
+            get {
+                return ResourceManager.GetString("domain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eq:.
         /// </summary>
         internal static string equinorPrefix {

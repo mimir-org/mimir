@@ -141,6 +141,9 @@
   <data name="desc" xml:space="preserve">
     <value>rdfs:comment</value>
   </data>
+  <data name="domain" xml:space="preserve">
+    <value>mimir:domain</value>
+  </data>
   <data name="equinorPrefix" xml:space="preserve">
     <value>eq:</value>
   </data>

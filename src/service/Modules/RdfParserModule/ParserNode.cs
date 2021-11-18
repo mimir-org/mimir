@@ -6,8 +6,8 @@ namespace RdfParserModule
     public class ParserNode
     {
         public string Prefix { get; set; }
-        public string Id { get; set; }
         public string Iri { get; set; }
+        public string Domain { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
         public string Label { get; set; }
@@ -22,6 +22,7 @@ namespace RdfParserModule
         public decimal Width { get; set; }
         public bool IsTransport { get; set; }
         public ICollection<ParserConnector> Terminals { get; set; }
+        public ICollection<ParserAttribute> Attributes { get; set; }
         public ICollection<ParserEdge> Edges { get; set; }
         public string parentId { get; set; }
         public ParserNode HasLocation { get; set; }
@@ -34,7 +35,7 @@ namespace RdfParserModule
 
         public override string ToString()
         {
-            return Label ?? Id;
+            return Label ?? Iri;
         }
     }
 
@@ -42,7 +43,7 @@ namespace RdfParserModule
     {
         public ParserTerminal InputTerminal { get; set; }
         public ParserTerminal OutputTerminal { get; set; }
-        public string InputTerminalId { get; set; }
-        public string OutputTerminalId { get; set; }
+        public string InputTerminalIri { get; set; }
+        public string OutputTerminalIri { get; set; }
     }
 }
