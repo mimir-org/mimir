@@ -1,8 +1,8 @@
 import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { projectSelector, useAppSelector } from "../../../../../redux/store";
-import { OffPageRequired } from "../../../../../assets/icons/offpage";
-import { HandleComponent } from "../../terminals";
+import { projectSelector, useAppSelector } from "../../../../redux/store";
+import { OffPageRequired } from "../../../../assets/icons/offpage";
+import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {

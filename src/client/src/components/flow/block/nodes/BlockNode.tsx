@@ -1,17 +1,16 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
-import { AspectColorType, Connector } from "../../../../../models";
-import { NodeBox } from "../../../styled";
-import { TerminalsContainerComponent, HandleComponent } from "../../terminals";
+import { AspectColorType, Connector } from "../../../../models";
+import { NodeBox } from "../../styled";
+import { TerminalsContainerComponent, HandleComponent } from "../terminals";
 import { SetNodeSize } from "./helpers";
-import { FilterTerminals } from "../../helpers";
-import { OnHover, OnMouseOut } from "../handlers";
-import { OnTerminalClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { Size } from "../../../../../compLibrary/size";
-import { BlockLogoComponent } from "../../logo";
-import { GetAspectColor, GetSelectedBlockNode, IsFunction, IsProduct } from "../../../../../helpers";
+import { FilterTerminals } from "../helpers";
+import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
+import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
+import { Size } from "../../../../compLibrary/size";
+import { BlockLogoComponent } from "../logo";
+import { GetAspectColor, GetSelectedBlockNode, IsFunction, IsProduct } from "../../../../helpers";
 
 /**
  * Component for a Function or Product Node in BlockView.

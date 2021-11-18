@@ -1,20 +1,20 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { OnConnectorClick, ResizeHandler } from "../handlers";
-import { ParentContainerComponent } from "../parentContainer";
-import { FilterTerminals, GetNodeByDataId } from "../../helpers";
-import { AspectColorType, Connector } from "../../../../../models";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { GetAspectColor } from "../../../../../helpers";
+import { HandleComponent, TerminalsContainerComponent } from "../terminals";
+import { OnConnectorClick, ResizeHandler } from "./handlers";
+import { ParentContainerComponent } from "./parentContainer";
+import { FilterTerminals, GetNodeByDataId } from "../helpers";
+import { AspectColorType, Connector } from "../../../../models";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
+import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector } from "../../../../redux/store";
+import { GetAspectColor } from "../../../../helpers";
 
 /**
- * Component for the large parent block in BlockView.
+ * Component for a parent Product Node in BlockView.
  * @param data the data for the node.
  * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
-const BlockParentNode: FC<NodeProps> = ({ data }) => {
+const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
@@ -22,15 +22,14 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node?.connectors, secondaryNode));
+    setTerminals(FilterTerminals(node?.connectors, null));
     ResizeHandler(setScreenWidth);
-  }, [secondaryNode, node?.connectors, screenWidth]);
+  }, [node?.connectors, screenWidth]);
 
   if (!node) return null;
 
@@ -41,13 +40,12 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     parentNode.style.height = `${1290}px`;
   }
 
-  node.blockWidth = screenWidth;
-  node.blockHeight = 1290;
+  node.blockWidth = parentNodeSize?.width;
+  node.blockHeight = parentNodeSize?.height;
 
   return (
     <>
       <ParentContainerComponent
-        dispatch={dispatch}
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
@@ -80,4 +78,4 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   );
 };
 
-export default memo(BlockParentNode);
+export default memo(BlockParentProductNode);

@@ -1,6 +1,6 @@
-import { Node } from "../../../../../../models";
-import { GetNodeByDataId } from "../../../helpers";
-import { setBlockNodeSize } from "../../../redux/actions";
+import { Node } from "../../../../../models";
+import { GetNodeByDataId } from "../../helpers";
+import { setBlockNodeSize } from "../../redux/actions";
 
 /**
  * Function to update the Product ParentNode's size.
