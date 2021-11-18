@@ -17,6 +17,7 @@ const Block = styled.div<Props>`
   border-color: ${Color.DarkGrey};
   box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
   z-index: 1 !important;
+  transition: width 0.2s ease-in-out max-width 0.2s ease-in-out;
 `;
 
 export default Block;

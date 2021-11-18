@@ -14,7 +14,6 @@ function SetParentNodeSize(node: Node, secondaryNode: Node, dispatch: any) {
   const screenHeight = window.screen.height;
   const marginX = screenWidth / 5;
   const marginY = 250;
-
   const width = secondaryNode ? screenWidth - marginX * 3 : screenWidth - marginX;
   const height = screenHeight - marginY;
 

@@ -28,9 +28,17 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
+  const [size, setSize] = useState(parentNodeSize.width);
+
+  const resizeHandler = () => {
+    const width = window.innerWidth;
+    setSize(width);
+  };
+
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
-  }, [secondaryNode, node?.connectors]);
+    window.onresize = resizeHandler;
+  }, [secondaryNode, node?.connectors, size]);
 
   useEffect(() => {
     SetParentNodeSize(node, secondaryNode, dispatch);
@@ -49,7 +57,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
-        width={parentNodeSize?.width}
+        width={size}
         height={parentNodeSize?.height}
         hasChildren={terminals.length > 0}
       />

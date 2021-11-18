@@ -26,6 +26,8 @@ const ParentContainerComponent = ({ node, color, selected, dispatch, width, heig
     OnResize(node?.id);
   }, [node]);
 
+  console.log("test: ", width);
+
   return (
     <Block id={"function-block-" + node?.id} selected={selected} width={width} height={height}>
       <Banner color={color}>
