@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../compLibrary/font";
 
-const MenuListItem = styled.div`
+const MenuListItemBox = styled.div`
   display: flex;
   height: 31px;
   align-items: center;
@@ -42,4 +42,4 @@ const MenuListItem = styled.div`
   }
 `;
 
-export default MenuListItem;
+export default MenuListItemBox;

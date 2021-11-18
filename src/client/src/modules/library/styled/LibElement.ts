@@ -33,6 +33,7 @@ const LibElement = styled.div<Props>`
 
   &:hover {
     background-color: ${Color.LightBlue};
+    text-decoration: underline;
   }
 `;
 
