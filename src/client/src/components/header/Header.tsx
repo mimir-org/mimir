@@ -40,7 +40,7 @@ const Header = () => {
         <AvatarBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
           <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
           <img
-            src={Icons.UserBackground}
+            src={Icons.AvatarBackground}
             alt="profile"
             className="profile"
             onClick={() => Click.OnUser(dispatch, userMenuOpen)}

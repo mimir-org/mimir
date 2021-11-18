@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { Color } from "../../../../compLibrary/colors";
+import { FontSize } from "../../../../compLibrary/font";
 
-const MenuElement = styled.div`
-  padding: 10px 20px 5px 20px;
+const UserMenuElement = styled.div`
+  padding: 10px 20px 10px 20px;
   color: ${Color.BlueMagenta};
   cursor: pointer;
 
   .text {
     position: relative;
-    bottom: 1px;
-    margin-left: 10px;
     display: inline;
+    top: 2px;
+    margin-left: 10px;
+    font-size: ${FontSize.Standard};
     vertical-align: super;
 
     &:hover {
@@ -18,26 +20,17 @@ const MenuElement = styled.div`
     }
   }
 
-  .darkmode-text {
-    position: relative;
-    bottom: 2px;
-    margin-left: 25px;
-    display: inline;
-    vertical-align: super;
-    color: ${Color.TextSecondary};
-    font-size: 12px;
-  }
-
   .icon {
-    height: 24px;
     position: relative;
+    height: 18px;
+    width: 18px;
     bottom: 0px;
     left: 0px;
   }
 
   .toggle {
-    height: 24px;
     position: relative;
+    height: 24px;
     bottom: 0px;
     left: 2px;
   }
@@ -47,10 +40,10 @@ const MenuElement = styled.div`
   }
 
   &:last-child {
-    margin-top: 40px;
-    border-top: 1px solid #d7d8da;
+    margin-top: 30px;
+    border-top: 1px solid ${Color.Grey};
     border-radius: 0px 0px 10px 10px;
   }
 `;
 
-export default MenuElement;
+export default UserMenuElement;

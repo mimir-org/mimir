@@ -8,7 +8,7 @@ interface Props {
 const ProjectBox = styled.div<Props>`
   position: absolute;
   display: flex;
-  right: 382px;
+  right: 362px;
   top: 3px;
   width: 290px;
   color: ${Color.White};
