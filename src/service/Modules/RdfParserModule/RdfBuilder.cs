@@ -301,6 +301,16 @@ namespace RdfParserModule
             Graph.Assert(new Triple(rdfNode, predicate, domain));
         }
 
+        private void BuildParent(Node node)
+        {
+            var parent = node.GetParent(Project);
+            if (parent is null) return;
+
+            var childNode = GetOrCreateUriNode(node.Iri);
+            var parentNode = GetOrCreateUriNode(parent.Iri);
+            Graph.Assert(new Triple(childNode, GetOrCreateUriNode("imf:hasParent"), parentNode));
+        }
+
         private void BuildNodes()
         {
             var label = GetOrCreateUriNode(Resources.label);
@@ -318,6 +328,7 @@ namespace RdfParserModule
             foreach (var node in Project.Nodes)
             {
                 var nodeId = GetOrCreateUriNode(node.Iri);
+                BuildParent(node);
 
                 if (node.Description is not null)
                 {
@@ -559,15 +570,6 @@ namespace RdfParserModule
                 if (edge.Interface != null)
                 {
                     BuildInterface(edge);
-                }
-
-                if (edge.FromConnector.IsPartOf() && edge.FromConnector.IsConnected(Project))
-                {
-                    //TODO fix
-                    var parent = edge.FromConnector.GetParentConnector(Project).Node;
-                    var connectedNode = GetOrCreateUriNode(edge.FromConnector.ConnectedTo(Project).Node.Iri);
-
-                    Graph.Assert(new Triple(fromNode, GetOrCreateUriNode("imf:hasParent"),connectedNode));
                 }
 
                 if (edge.FromConnector is Relation { RelationType: not RelationType.PartOf } fromRelation)
