@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Color from "../colors/Color";
+import { Color } from "../colors";
 
 const SearchBarListItem = styled.div`
   height: 18px;

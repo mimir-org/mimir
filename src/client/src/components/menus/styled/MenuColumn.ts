@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
 
 const MenuColumn = styled.div`
-  padding: 15px 0px 5px 15px;
-  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px 0px 5px 15px;
   color: ${Color.Black};
-  width: auto;
 `;
 
 export default MenuColumn;

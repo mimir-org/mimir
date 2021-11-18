@@ -199,7 +199,7 @@ export const projectSelector = createAppSelector(
 );
 
 export const secondaryNodeSelector = createAppSelector(
-  (state) => state.secondaryReducer.node,
+  (state) => state.secondaryNode.node,
   (node) => node as Node
 );
 

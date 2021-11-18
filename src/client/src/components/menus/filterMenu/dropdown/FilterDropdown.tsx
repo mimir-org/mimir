@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MenuWrapper, MenuHeader, MenuList, MenuListItem, ColorBar } from "./styled";
+import { MenuWrapper, MenuHeader, MenuListBox, MenuListItemBox, ColorBar } from "./styled";
 import { ExpandIcon, CollapseIcon } from "../../../../assets/icons/chevron";
 import { Connector, Edge, Node } from "../../../../models";
 import { IsPartOf } from "../../../flow/helpers";
@@ -31,21 +31,21 @@ const FilterDropdown = ({ terminals, label, nodes, edges, onChange, visible }: P
           <img src={listOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
         </MenuHeader>
         {listOpen && (
-          <MenuList>
+          <MenuListBox>
             {terminals.map((conn) => {
               const edge = edges.find((x) => x.fromConnectorId === conn.id);
               const node = nodes.find((n) => n.id === conn.nodeId);
               const name = IsPartOf(conn) ? GetPartOfName(conn, node) : conn.name;
 
               return (
-                <MenuListItem key={conn.id} onClick={() => onChange(edge)}>
+                <MenuListItemBox key={conn.id} onClick={() => onChange(edge)}>
                   <Checkbox isChecked={!edge.isHidden} onChange={() => onChange(edge)} id={conn.id} />
                   <ColorBar color={conn.color ?? GetFilterColor(conn, node)} />
                   <p>{name}</p>
-                </MenuListItem>
+                </MenuListItemBox>
               );
             })}
-          </MenuList>
+          </MenuListBox>
         )}
       </MenuWrapper>
     )

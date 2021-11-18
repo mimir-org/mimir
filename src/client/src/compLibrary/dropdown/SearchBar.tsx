@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import FontSize from "../font/FontSize";
-import Color from "../colors/Color";
+import { Color } from "../colors";
+import { FontSize } from "../font";
 
 const SearchBar = styled.div`
   display: flex;

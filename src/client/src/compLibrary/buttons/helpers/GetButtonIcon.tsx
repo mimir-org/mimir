@@ -4,6 +4,7 @@ import { ValidateIcon } from "../../../assets/icons/common";
 import { RightArrowIcon } from "../../../assets/icons/arrow";
 import { CloseIcon } from "../../../assets/icons/close";
 import { LogoutIcon } from "../../../assets/icons/header/";
+import { EditTypeIcon, NewTypeIcon } from "../../../assets/icons/type";
 
 const GetButtonIcon = (type: string) => {
   if (type === TextResources.Account_Logout) return LogoutIcon;
@@ -18,6 +19,9 @@ const GetButtonIcon = (type: string) => {
   if (type === TextResources.Account_Import_Library_File) return ProjectIcons.ImportLibrary;
   if (type === TextResources.Account_Commit_Button) return ProjectIcons.CommitProject;
   if (type === TextResources.Account_SubProject_Create) return ProjectIcons.CreateSubProject;
+  if (type === TextResources.TypeEditor_New_Type) return NewTypeIcon;
+  if (type === TextResources.TypeEditor_Edit_Type) return EditTypeIcon;
+  return null;
 };
 
 export default GetButtonIcon;

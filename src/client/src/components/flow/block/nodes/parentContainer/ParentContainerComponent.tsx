@@ -23,8 +23,8 @@ const ParentContainerComponent = ({ node, color, selected, dispatch, width, heig
   const company = process.env.REACT_APP_COMPANY;
 
   useEffect(() => {
-    OnResize(node?.id, dispatch);
-  }, [node, dispatch]);
+    OnResize(node?.id);
+  }, [node]);
 
   return (
     <Block id={"function-block-" + node?.id} selected={selected} width={width} height={height}>

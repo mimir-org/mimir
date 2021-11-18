@@ -10,7 +10,6 @@ interface Props {
 
 const AspectBox = styled.div<Props>`
   display: flex;
-  cursor: pointer;
   max-height: 30px;
   padding-left: ${(props) => (props.node.isRoot ? 5 : UseIndentLevel(props.indent))}px;
   background-color: ${(props) => (props.node.isRoot ? Color.LightGrey : GetAspectColor(props.node, AspectColorType.Main, true))};
@@ -18,6 +17,10 @@ const AspectBox = styled.div<Props>`
 
   &:hover {
     background-color: ${Color.LightBlue};
+  }
+
+  &:first-child {
+    margin-top: 0px;
   }
 
   .expandIcon {

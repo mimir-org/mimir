@@ -34,9 +34,9 @@ const CheckboxWrapper = styled.label<Props>`
     content: "";
     position: absolute;
     left: 3px;
-    top: -1px;
+    top: -0.5px;
     width: 3px;
-    height: 8px;
+    height: 7px;
     border: solid ${Color.White};
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);

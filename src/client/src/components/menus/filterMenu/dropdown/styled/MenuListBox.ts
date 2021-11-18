@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors";
 
-const MenuList = styled.div`
+const MenuListBox = styled.div`
   display: flex;
   flex-direction: column;
   border-width: 1px;
@@ -18,4 +18,4 @@ const MenuList = styled.div`
   z-index: 1;
 `;
 
-export default MenuList;
+export default MenuListBox;
