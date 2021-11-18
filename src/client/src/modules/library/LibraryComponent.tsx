@@ -33,9 +33,9 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
   return (
     <>
       <SearchBox>
-        <img src={SearchIcon} alt="search" />
+        <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
+        <img src={SearchIcon} alt="search" className="search-icon" />
       </SearchBox>
-      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
       <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
       <FavoritesBox>
         <LibraryCategoryComponent

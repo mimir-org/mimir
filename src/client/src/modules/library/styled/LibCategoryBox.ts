@@ -3,9 +3,9 @@ import { Color } from "../../../compLibrary/colors";
 import { FontSize } from "../../../compLibrary/font";
 
 const LibCategoryBox = styled.div`
-  width: 284px;
+  width: 286px;
   height: 30px;
-  border: 2px solid ${Color.Black};
+  border: 1px solid ${Color.BlueMagenta};
   border-radius: 3px;
   background-color: ${Color.White};
   margin: 5px 0px 5px 0px;
@@ -19,6 +19,11 @@ const LibCategoryBox = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  .expandIcon {
+    position: relative;
+    left: 3px;
+  }
 `;
 
 export default LibCategoryBox;

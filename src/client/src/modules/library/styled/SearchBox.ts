@@ -6,7 +6,7 @@ const SearchBox = styled.div`
   .search-icon {
     position: relative;
     bottom: 4px;
-    right: 30px;
+    right: 28px;
   }
 `;
 

@@ -3,25 +3,23 @@ import { Color } from "../../colors";
 import { FontSize, FontWeight } from "../../font";
 
 const SearchInput = styled.input`
-  width: 287px;
-  height: 30px;
+  position: relative;
+  width: 286px;
+  height: 28px;
   font-style: ${FontWeight.Italic};
   font-size: ${FontSize.Standard};
   padding-left: 8px;
   margin: 0px 0px 5px 15px;
-  border: 0;
-  position: relative;
+  border: 1px solid;
+  border-color: ${Color.White};
+  border-radius: 3px;
 
   &:hover {
     background-color: ${Color.LightBlue};
   }
 
   &:focus {
-    border: 1px solid ${Color.Black};
-  }
-
-  &:hover {
-    background-color: ${Color.LightBlue};
+    border-color: ${Color.BlueMagenta};
   }
 `;
 

@@ -43,6 +43,7 @@ const CheckboxWrapper = styled.label<Props>`
     margin-right: 20px;
     padding-right: 2em;
     font-size: ${FontSize.Standard};
+    cursor: pointer;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
