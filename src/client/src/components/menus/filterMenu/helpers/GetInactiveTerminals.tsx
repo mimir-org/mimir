@@ -1,5 +1,10 @@
 import { Node } from "../../../../models";
 
+/**
+ * Method to find a node's inactive terminals - terminals that are not connected to an Edge.
+ * @param nodes
+ * @returns a list of inactive terminals.
+ */
 const GetInactiveTerminals = (nodes: Node[]) => {
   const terminals = [];
 
