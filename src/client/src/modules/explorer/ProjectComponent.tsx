@@ -8,17 +8,29 @@ import { blockElementsSelector, projectSelector, secondaryNodeSelector, useAppSe
 
 const ProjectComponent = () => {
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
+  const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
   const elements = useAppSelector(blockElementsSelector);
   const project = useAppSelector(projectSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const secondaryNode = useAppSelector(secondaryNodeSelector);
+
+  console.log(invisibleNodes);
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
     setClosedNodes((_) => new Set(closedNodes));
   };
 
+  const onSetVisibleElement = (_visible: boolean, nodeId: string) => {
+    console.log(_visible, nodeId);
+
+    _visible ? invisibleNodes.delete(nodeId) : invisibleNodes.add(nodeId);
+    setInvisibleNodes((_) => new Set(invisibleNodes));
+  };
+
   const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes, project);
+  const areAncestorsVisible = (elem: Node): boolean => !IsAncestorInSet(elem, invisibleNodes, project);
+  const isVisible = (elem: Node): boolean => !invisibleNodes.has(elem.id);
 
   if (!project || !nodes) return null;
 
@@ -37,7 +49,10 @@ const ProjectComponent = () => {
             isLeaf={!HasChildren(node, project)}
             elements={elements}
             secondaryNode={secondaryNode}
+            isAncestorVisible={areAncestorsVisible(node)}
+            isVisible={isVisible(node)}
             onElementExpanded={onExpandElement}
+            onSetVisibleElement={onSetVisibleElement}
           />
         );
       })}

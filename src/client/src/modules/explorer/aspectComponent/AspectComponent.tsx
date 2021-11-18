@@ -1,13 +1,4 @@
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
-import {
-  IsBlockView,
-  IsAspectNode,
-  GetAspectIcon,
-  GetSelectedNode,
-  GetAspectColor,
-  UseSetSelectNodes,
-  useSelectedNodes,
-} from "../../../helpers";
 import { AspectBox, ExplorerAspectLine } from "./styled";
 import { VisibleComponent } from "../visibleComponent";
 import { LockComponent } from "../lockComponent";
@@ -18,6 +9,15 @@ import { IsCheckedTree, IsMiniCheckbox } from "../helpers";
 import { OnBlockChange, OnSelectActiveNode } from "../handlers";
 import { useAppDispatch } from "../../../redux/store";
 import { IsChecked } from "../../explorer/helpers";
+import {
+  IsBlockView,
+  IsAspectNode,
+  GetAspectIcon,
+  GetSelectedNode,
+  GetAspectColor,
+  UseSetSelectNodes,
+  useSelectedNodes,
+} from "../../../helpers";
 
 interface Props {
   node: Node;
@@ -28,7 +28,10 @@ interface Props {
   expanded: boolean;
   elements: Elements<any>;
   secondaryNode: Node;
+  isAncestorVisible: boolean;
+  isVisible: boolean;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
+  onSetVisibleElement: (visible: boolean, nodeId: string) => void;
 }
 export const AspectComponent = ({
   node,
@@ -39,7 +42,10 @@ export const AspectComponent = ({
   isLeaf,
   elements,
   secondaryNode,
+  isAncestorVisible,
+  isVisible,
   onElementExpanded,
+  onSetVisibleElement,
 }: Props) => {
   const dispatch = useAppDispatch();
   const selectedNode = GetSelectedNode();
@@ -51,7 +57,14 @@ export const AspectComponent = ({
     <>
       <AspectBox indent={indent} node={node}>
         <div className="container">
-          {!IsBlockView() && <VisibleComponent node={node} />}
+          {!IsBlockView() && (
+            <VisibleComponent
+              node={node}
+              isAncestorVisible={isAncestorVisible}
+              isVisible={isVisible}
+              onSetVisibleElement={onSetVisibleElement}
+            />
+          )}
           <LockComponent node={node} />
           {IsAspectNode(node) ? (
             <>
@@ -79,7 +92,6 @@ export const AspectComponent = ({
             onClick={() => onElementExpanded(!expanded, node.id)}
           ></img>
         )}
-        {/* {selectedNodes && console.log(selectedNodes)} */}
       </AspectBox>
       <ExplorerAspectLine node={node} />
     </>

@@ -1,19 +1,13 @@
-import { useCallback } from "react";
 import { setNodeVisibility } from "../../../redux/store/project/actions";
-import { Node } from "../../../models";
-import { projectSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { Node, Project } from "../../../models";
+import { Dispatch } from "redux";
 
-export const ChangeNodeDisplay = (node: Node) => {
-  const dispatch = useAppDispatch();
-  const project = useAppSelector(projectSelector);
-
+export const ChangeNodeDisplay = (node: Node, project: Project, dispatch: Dispatch) => {
   let isParent = false;
   const edge = project.edges?.find((x) => x.fromNodeId === node.id);
   if (edge) isParent = true;
 
-  return useCallback(() => {
-    dispatch(setNodeVisibility(node, isParent));
-  }, [dispatch, node, isParent]);
+  return dispatch(setNodeVisibility(node, isParent));
 };
 
 export default ChangeNodeDisplay;
