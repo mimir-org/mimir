@@ -1,5 +1,6 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
+import { MimirLogo } from "../../assets/icons/mimir/";
 import { ToolBar } from "./";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { CompanyLogoBox, ProjectBox, AvatarBox, HeaderBox, LogoBox } from "./styled";
@@ -65,7 +66,7 @@ const Header = () => {
           />
         </ProjectBox>
         <LogoBox>
-          <img src={Icons.Mimir} alt="mimir-icon" />
+          <img src={MimirLogo} alt="mimir-logo" />
         </LogoBox>
       </HeaderBox>
 

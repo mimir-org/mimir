@@ -27,18 +27,17 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(electroSelector);
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
-
-  const [size, setSize] = useState(parentNodeSize.width);
+  const [screenWidth, setScreenWidth] = useState(parentNodeSize.width);
 
   const resizeHandler = () => {
     const width = window.innerWidth;
-    setSize(width);
+    setScreenWidth(width);
   };
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
     window.onresize = resizeHandler;
-  }, [secondaryNode, node?.connectors, size]);
+  }, [secondaryNode, node?.connectors, screenWidth]);
 
   useEffect(() => {
     SetParentNodeSize(node, secondaryNode, dispatch);
@@ -57,7 +56,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
-        width={size}
+        width={screenWidth}
         height={parentNodeSize?.height}
         hasChildren={terminals.length > 0}
       />
