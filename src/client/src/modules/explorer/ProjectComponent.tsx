@@ -14,16 +14,12 @@ const ProjectComponent = () => {
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const secondaryNode = useAppSelector(secondaryNodeSelector);
 
-  console.log(invisibleNodes);
-
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
     setClosedNodes((_) => new Set(closedNodes));
   };
 
   const onSetVisibleElement = (_visible: boolean, nodeId: string) => {
-    console.log(_visible, nodeId);
-
     _visible ? invisibleNodes.delete(nodeId) : invisibleNodes.add(nodeId);
     setInvisibleNodes((_) => new Set(invisibleNodes));
   };
