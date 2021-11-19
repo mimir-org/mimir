@@ -10,9 +10,9 @@ interface Props {
 const Block = styled.div<Props>`
   position: absolute;
   cursor: ${(props) => (props.selected ? "grab" : "pointer")};
-  width: ${(props) => props.width - 450}px;
+  width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-  min-width: 1000px;
+  min-width: 500px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};

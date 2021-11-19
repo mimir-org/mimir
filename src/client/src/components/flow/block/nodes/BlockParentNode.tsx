@@ -3,11 +3,13 @@ import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
 import { ParentContainerComponent } from "./parentContainer";
-import { FilterTerminals, GetNodeByDataId } from "../helpers";
+import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { GetAspectColor } from "../../../../helpers";
+import { setBlockNodeSize } from "../redux/actions";
+import { Size } from "../../../../compLibrary/size";
 
 /**
  * Component for the large parent block in BlockView.
@@ -19,30 +21,28 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const parentBlockSize = useAppSelector(nodeSizeSelector);
+
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
+  // Set size
+  useEffect(() => {
+    const margin = secondaryNode ? 250 : Size.BlockMarginX;
+    const width = secondaryNode ? Size.BlockSmallWidth : Size.BlockWidth;
+    dispatch(setBlockNodeSize(width - margin, Size.BlockHeight));
+  }, [dispatch, secondaryNode]);
+
+  // Resize
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
-    ResizeHandler(setScreenWidth);
-  }, [secondaryNode, node?.connectors, screenWidth]);
+    ResizeHandler(node, secondaryNode, parentBlockSize, dispatch);
+  }, [node, secondaryNode, parentBlockSize, dispatch]);
 
   if (!node) return null;
-
-  // Update the Flow parentNode
-  const parentNode = GetNodeByDataId(node?.id);
-  if (parentNode) {
-    parentNode.style.width = `${screenWidth}px`;
-    parentNode.style.height = `${1290}px`;
-  }
-
-  node.blockWidth = screenWidth;
-  node.blockHeight = 1290;
 
   return (
     <>
@@ -50,8 +50,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
-        width={screenWidth}
-        height={parentNodeSize?.height}
+        width={parentBlockSize.width}
+        height={parentBlockSize.height}
         hasChildren={terminals.length > 0}
       />
 
@@ -70,8 +70,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         parent={true}
         nodes={nodes}
-        height={node.blockHeight}
-        width={screenWidth}
+        height={parentBlockSize.height}
+        width={parentBlockSize.width}
         terminals={terminals}
         electro={electro}
       />

@@ -22,7 +22,7 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
   const company = process.env.REACT_APP_COMPANY;
 
   return (
-    <Block id={"function-block-" + node?.id} selected={selected} width={width} height={height}>
+    <Block id={"block-" + node?.id} selected={selected} width={width} height={height}>
       <Banner color={color}>
         <Header>
           <p className="text">={node?.label ?? node?.name}</p>
