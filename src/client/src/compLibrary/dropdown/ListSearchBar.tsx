@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import FontSize from "../font/FontSize";
-import Color from "../colors/Color";
-import FontType from "../font/FontType";
-import FontWeight from "../font/FontWeight";
+import { Color } from "../colors";
+import { FontSize, FontType, FontWeight } from "../font";
 
 const ListSearchBar = styled.div`
   display: flex;
@@ -13,17 +11,20 @@ const ListSearchBar = styled.div`
   border-bottom-width: 2px;
   border-style: solid;
   border-color: ${Color.BlueMagenta};
+
   input:focus,
   textarea:focus,
   select:focus {
     outline: none;
   }
+
   input[type="text"] {
     width: 100%;
     height: 12px;
     font-size: ${FontSize.Medium};
     border: 0px;
   }
+
   input[type="text"]::placeholder {
     font-family: ${FontType.Standard};
     font-size: ${FontSize.Standard};
@@ -31,6 +32,7 @@ const ListSearchBar = styled.div`
     font-style: italic;
     color: ${Color.BlueMagenta};
   }
+
   .icon {
     margin-left: auto;
     width: 17px;

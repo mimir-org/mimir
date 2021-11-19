@@ -136,13 +136,6 @@ namespace Mb.Data.Repositories
                 return;
             }
             
-            //Contractor
-                if (originalNode.Contractor != node.Contractor)
-            {
-                node.Version = originalNode.Version.IncrementMinorVersion();
-                return;
-            }
-
             //Description
             if (originalNode.Description != node.Description)
             {
@@ -152,13 +145,6 @@ namespace Mb.Data.Repositories
 
             //SemanticReference
             if (originalNode.SemanticReference != node.SemanticReference)
-            {
-                node.Version = originalNode.Version.IncrementMinorVersion();
-                return;
-            }
-
-            //TagNumber
-            if (originalNode.TagNumber != node.TagNumber)
             {
                 node.Version = originalNode.Version.IncrementMinorVersion();
                 return;

@@ -3,37 +3,32 @@ import { Color } from "../../../compLibrary/colors";
 import { FontType, FontSize } from "../../../compLibrary/font";
 
 interface Props {
-  visible?: boolean;
+  isOpen?: boolean;
   legend?: boolean;
 }
 
 const ModuleHeader = styled.div<Props>`
+  position: relative;
+  text-align: center;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
-  text-align: center;
-  padding-top: ${(props) => (props.legend ? 15 : 5)}px;
-  height: ${(props) => (props.legend ? 60 : 25)}px;
+  cursor: pointer;
+  padding-top: ${(props) => props.legend && "15px"};
   border-top: ${(props) => props.legend && "1px solid" + Color.Grey};
-  position: relative;
-  margin-left: ${(props) => !props.legend && "7px"};
-  margin-top: ${(props) => !props.legend && "22px"};
-  width: initial;
+  margin-top: ${(props) => !props.legend && "30px"};
+  margin-bottom: ${(props) => !props.legend && "30px"};
 
   .text {
     position: relative;
-    opacity: ${(props) => (props.visible ? 1 : 0)};
-    right: ${(props) => !props.legend && "140px"};
-    float: ${(props) => !props.legend && "right"};
-    bottom: 18px;
-    transition: opacity 0.2s ease;
+    display: inline;
+    opacity: ${(props) => (props.isOpen ? 1 : 0)};
+    transition: opacity 0.2s ease-in-out;
   }
 
   .icon {
-    position: ${(props) => !props.visible && "absolute"};
-    cursor: ${(props) => !props.legend && "pointer"};
-    float: left;
-    left: ${(props) => !props.legend && "5px"};
-    float: ${(props) => !props.legend && "left"};
+    position: absolute;
+    left: ${(props) => (props.isOpen ? 97 : 10)}px;
+    transition: left 0.2s ease-in-out;
   }
 `;
 

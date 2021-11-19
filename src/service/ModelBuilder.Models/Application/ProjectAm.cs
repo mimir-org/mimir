@@ -7,6 +7,8 @@ namespace Mb.Models.Application
     public class ProjectAm
     {
         public string Id { get; set; }
+        public string Iri { get; set; }
+        public string Domain { get; set; }
 
         [Required]
         public string Name { get; set; }

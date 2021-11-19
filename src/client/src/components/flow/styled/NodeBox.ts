@@ -4,7 +4,7 @@ import { Color } from "../../../compLibrary/colors";
 interface Props {
   product: boolean;
   width: number;
-  length: number;
+  height: number;
   colorMain: string;
   colorSelected: string;
   isSelected: boolean;
@@ -14,7 +14,7 @@ interface Props {
 const NodeBox = styled.div<Props>`
   position: relative;
   opacity: ${(props) => (props.visible ? 1 : 0)};
-  height: ${(props) => props.length}px;
+  height: ${(props) => props.height}px;
   width: ${(props) => props.width}px;
   max-height: inherit;
   border-radius: 10px;

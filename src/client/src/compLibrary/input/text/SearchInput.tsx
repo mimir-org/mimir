@@ -1,20 +1,25 @@
 import styled from "styled-components";
-import FontSize from "../../font/FontSize";
-import FontWeight from "../../font/FontWeight";
-import Color from "../../colors/Color";
+import { Color } from "../../colors";
+import { FontSize, FontWeight } from "../../font";
 
 const SearchInput = styled.input`
-  width: 287px;
-  height: 36px;
-  font-style: ${FontWeight.Italic};
-  font-size: ${FontSize.SubHeader};
-  padding-left: 8px;
-  margin: 0px 0px 10px 15px;
-  border: 0;
   position: relative;
+  width: 286px;
+  height: 28px;
+  font-style: ${FontWeight.Italic};
+  font-size: ${FontSize.Standard};
+  padding-left: 8px;
+  margin: 0px 0px 5px 15px;
+  border: 1px solid;
+  border-color: ${Color.White};
+  border-radius: 3px;
+
+  &:hover {
+    background-color: ${Color.LightBlue};
+  }
 
   &:focus {
-    border: 1px solid ${Color.Black};
+    border-color: ${Color.BlueMagenta};
   }
 `;
 

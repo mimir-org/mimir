@@ -18,7 +18,7 @@ const Color = {
 
   // Text
   TextSecondary: "#8C8C8C",
-  TextIcon: "#272838",
+  TextAvatar: "#272838",
 
   // DarkMode
   DarkModeMain: "#888",

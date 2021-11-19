@@ -3,31 +3,25 @@ import { AspectBox, ExplorerAspectLine } from "./styled";
 import { VisibleComponent } from "../visibleComponent";
 import { LockComponent } from "../lockComponent";
 import { Elements } from "react-flow-renderer";
-import { AspectColorType, Node } from "../../../models";
+import { AspectColorType, Node, Project } from "../../../models";
 import { CheckboxExplorer } from "../../../compLibrary/input/checkbox/explorer";
 import { IsCheckedTree, IsMiniCheckbox } from "../helpers";
 import { OnBlockChange, OnSelectActiveNode } from "../handlers";
 import { useAppDispatch } from "../../../redux/store";
 import { IsChecked } from "../../explorer/helpers";
-import {
-  IsBlockView,
-  IsAspectNode,
-  GetAspectIcon,
-  GetSelectedNode,
-  GetAspectColor,
-  UseSetSelectNodes,
-  useSelectedNodes,
-} from "../../../helpers";
+import { IsBlockView, IsAspectNode, GetAspectIcon, GetAspectColor, UseSetSelectNodes, useSelectedNodes } from "../../../helpers";
 
 interface Props {
   node: Node;
   nodes: Node[];
+  selectedNode: Node;
+  secondaryNode: Node;
+  project: Project;
   label: string;
   indent: number;
   isLeaf: boolean;
   expanded: boolean;
   elements: Elements<any>;
-  secondaryNode: Node;
   isAncestorVisible: boolean;
   isVisible: boolean;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
@@ -36,22 +30,24 @@ interface Props {
 export const AspectComponent = ({
   node,
   nodes,
+  selectedNode,
+  secondaryNode,
+  project,
   label,
   expanded,
   indent,
   isLeaf,
   elements,
-  secondaryNode,
   isAncestorVisible,
   isVisible,
-  onElementExpanded,
   onSetVisibleElement,
+  onElementExpanded,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const selectedNode = GetSelectedNode();
   const blockView = IsBlockView();
   const [selectedNodes] = useSelectedNodes();
   const [setActiveNodeElement] = UseSetSelectNodes();
+  const isMiniCheckbox = blockView ? IsMiniCheckbox(node, selectedNode, secondaryNode) : false;
 
   return (
     <>
@@ -75,10 +71,10 @@ export const AspectComponent = ({
               label={label}
               color={GetAspectColor(node, AspectColorType.Selected)}
               isChecked={blockView ? IsChecked(elements, node) : IsCheckedTree(node, selectedNodes) ?? false}
-              isMiniCheckbox={blockView ? IsMiniCheckbox(node, selectedNode, secondaryNode) : false}
+              isMiniCheckbox={isMiniCheckbox}
               onChange={() =>
                 blockView
-                  ? OnBlockChange(node, secondaryNode, dispatch)
+                  ? OnBlockChange(node, selectedNode, secondaryNode, dispatch)
                   : OnSelectActiveNode(node, nodes, selectedNodes, setActiveNodeElement)
               }
             />

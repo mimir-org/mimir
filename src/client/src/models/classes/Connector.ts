@@ -4,6 +4,8 @@ export const CONNECTOR_KIND: string = "Connector";
 
 class Connector {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   type: ConnectorType;
   semanticReference: string;

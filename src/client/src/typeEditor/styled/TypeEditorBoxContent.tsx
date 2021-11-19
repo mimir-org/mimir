@@ -12,8 +12,7 @@ const TypeEditorBoxContent = styled.div<Props>`
   justify-content: space-evenly;
   align-items: center;
   width: 110px;
-  height: 32px;
-  margin: 0px 9px 0px 2px;
+  height: 30px;
   padding: 0px 10px;
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;

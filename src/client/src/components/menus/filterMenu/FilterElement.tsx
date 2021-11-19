@@ -1,6 +1,6 @@
 import { Checkbox } from "../../../compLibrary/input/checkbox/common";
 import { CreateId } from "../../flow/helpers";
-import { ElementBox } from "./styled";
+import { ElementBox, ElementLabel } from "./styled";
 
 interface Props {
   onChange: () => void;
@@ -16,9 +16,8 @@ interface Props {
 const FilterElement = ({ onChange, isChecked, visible, label }: Props) =>
   visible && (
     <ElementBox>
-      <Checkbox isChecked={isChecked} onChange={() => onChange()} id={CreateId()} />
-      <div className="text">{label}</div>
+      <Checkbox isChecked={isChecked} onChange={onChange} id={CreateId()} />
+      <ElementLabel onClick={onChange}>{label}</ElementLabel>
     </ElementBox>
   );
-
 export default FilterElement;

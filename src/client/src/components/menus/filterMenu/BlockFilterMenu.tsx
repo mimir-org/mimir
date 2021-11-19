@@ -1,12 +1,12 @@
+import * as Helpers from "./helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
-import { FilterMenuBox } from "./styled";
+import { FilterMenuBox, Header } from "./styled";
 import { MenuColumn } from "../styled";
 import { FilterElement } from ".";
 import { FilterDropdown, FilterTerminalDropdown } from "./dropdown";
 import { TextResources } from "../../../assets/text";
-import { OnAnimationChange, OnAllTransportsChange, OnChange } from "./handlers";
-import { GetActiveTerminals, GetAllTerminals, GetEdges, GetInactiveTerminals, GetNodes, PopulateFilterLists } from "./helpers";
+import { OnEdgeAnimationChange, OnAllTransportsChange, OnChange } from "./handlers";
 import { IsLibrary } from "../../../helpers";
 import { IsTransport } from "../../flow/helpers";
 
@@ -22,25 +22,26 @@ interface Props {
 const BlockFilterMenu = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const edges = GetEdges(elements);
-  const nodes = GetNodes(elements);
+  const edges = Helpers.GetEdges(elements);
+  const nodes = Helpers.GetNodes(elements);
 
   const transportItems = [] as Connector[];
   const relationItems = [] as Connector[];
   const partOfItems = [] as Connector[];
 
-  const activeTerminals = GetActiveTerminals(elements, nodes);
-  const inActiveTerminals = GetInactiveTerminals(nodes);
-  const allTerminals = GetAllTerminals(elements);
+  const activeTerminals = Helpers.GetActiveTerminals(elements, nodes);
+  const inactiveTerminals = Helpers.GetInactiveTerminals(nodes);
+  const allTerminals = Helpers.GetAllTerminals(elements);
 
-  PopulateFilterLists(edges, transportItems, relationItems, partOfItems);
+  Helpers.PopulateFilterLists(edges, transportItems, relationItems, partOfItems);
 
   return (
     <FilterMenuBox libraryOpen={libOpen}>
+      <Header>{TextResources.Filter_Heading}</Header>
       <MenuColumn>
         <FilterElement
           label={TextResources.Filter_Edge_Animation}
-          onChange={() => OnAnimationChange(edges, dispatch, edgeAnimation)}
+          onChange={() => OnEdgeAnimationChange(edges, dispatch, edgeAnimation)}
           isChecked={edgeAnimation}
           visible={!!transportItems.length}
         />
@@ -75,9 +76,10 @@ const BlockFilterMenu = ({ elements, edgeAnimation }: Props) => {
           visible={!!partOfItems.length}
         />
         <FilterTerminalDropdown
+          nodes={nodes}
           allTerminals={allTerminals}
           activeTerminals={activeTerminals}
-          inActiveTerminals={inActiveTerminals}
+          inactiveTerminals={inactiveTerminals}
           label={TextResources.Filter_Terminals}
           dispatch={dispatch}
         />

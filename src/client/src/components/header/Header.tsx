@@ -1,11 +1,13 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
+import { MimirLogo } from "../../assets/icons/mimir/";
 import { ToolBar } from "./";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import { CompanyLogoBox, ProjectBox, UserBox, HeaderBox, LogoBox } from "./styled";
+import { CompanyLogoBox, ProjectBox, AvatarBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader } from "../../helpers";
 import { GetUserInitials } from "../menus/userMenu/helpers";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../assets/icons/toogle";
+import { TextResources } from "../../assets/text";
 import {
   projectMenuSelector,
   electroSelector,
@@ -36,21 +38,26 @@ const Header = () => {
   return (
     <>
       <HeaderBox id="Header">
-        <UserBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
-          <img src={Icons.UserBackground} alt="icon" className="icon" onClick={() => Click.OnUser(dispatch, userMenuOpen)} />
+        <AvatarBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
           <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
+          <img
+            src={Icons.AvatarBackground}
+            alt="profile"
+            className="profile"
+            onClick={() => Click.OnUser(dispatch, userMenuOpen)}
+          />
           <img
             src={userMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
             alt="icon"
             className="toggle-icon"
             onClick={() => Click.OnUser(dispatch, userMenuOpen)}
           />
-        </UserBox>
+        </AvatarBox>
         <CompanyLogoBox>
           <img src={GetCompanyLogoForHeader(company)} alt="logo" />
         </CompanyLogoBox>
         <ProjectBox isOpen={projectMenuOpen} onClick={() => Click.OnProject(dispatch, projectMenuOpen)}>
-          <p className="project-name">{project && project.name}</p>
+          <p className="project-name">{project?.name ?? TextResources.Account_Project}</p>
           <img
             src={projectMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
             alt="icon"
@@ -59,7 +66,7 @@ const Header = () => {
           />
         </ProjectBox>
         <LogoBox>
-          <img src={Icons.Mimir} alt="mimir-icon" />
+          <img src={MimirLogo} alt="mimir-logo" />
         </LogoBox>
       </HeaderBox>
 

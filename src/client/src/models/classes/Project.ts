@@ -3,6 +3,8 @@ import Node from "./Node";
 
 class Project {
   id: string;
+  iri: string;
+  domain: string;
   version: string;
   name: string;
   isSubProject: boolean;
@@ -15,7 +17,7 @@ class Project {
 
   // Constructor
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor() { }
 }
 
 export default Project;

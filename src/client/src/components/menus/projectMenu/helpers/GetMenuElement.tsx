@@ -1,4 +1,4 @@
-import { MenuElement } from "../../styled";
+import { ProjectMenuElement } from "../../styled";
 import { GetText, GetIcon } from "./";
 
 interface Props {
@@ -7,10 +7,10 @@ interface Props {
 }
 
 const GetMenuElement = ({ type, onClick }: Props) => (
-  <MenuElement onClick={onClick}>
+  <ProjectMenuElement onClick={onClick}>
     <div className="icon">{GetIcon(type)}</div>
     <p className="text">{GetText(type)}</p>
-  </MenuElement>
+  </ProjectMenuElement>
 );
 
 export default GetMenuElement;

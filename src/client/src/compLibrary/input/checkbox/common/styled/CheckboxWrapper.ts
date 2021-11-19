@@ -5,12 +5,11 @@ interface Props {
   color: string;
 }
 
-const CheckboxWrapper = styled.div<Props>`
+const CheckboxWrapper = styled.label<Props>`
   cursor: pointer;
   position: absolute;
   left: 7px;
   padding-bottom: 15px;
-  /* bottom: 5px; */
 
   input {
     position: absolute;
@@ -35,9 +34,9 @@ const CheckboxWrapper = styled.div<Props>`
     content: "";
     position: absolute;
     left: 3px;
-    top: -1px;
+    top: -0.5px;
     width: 3px;
-    height: 8px;
+    height: 7px;
     border: solid ${Color.White};
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);

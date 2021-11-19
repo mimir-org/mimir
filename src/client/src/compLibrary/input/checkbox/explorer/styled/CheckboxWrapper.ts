@@ -16,7 +16,7 @@ const CheckboxWrapper = styled.label<Props>`
     cursor: pointer;
     height: 20px;
     width: 20px;
-    border: 2px solid ${Color.BlueMagenta};
+    border: 2px solid ${Color.GreyHeader};
     background-color: ${Color.White};
     border-radius: 3px;
   }
@@ -42,6 +42,12 @@ const CheckboxWrapper = styled.label<Props>`
     left: 14px;
     max-width: 240px;
     font-size: ${FontSize.Standard};
+    cursor: pointer;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
   }
 
   .label:hover {

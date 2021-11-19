@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FontSize } from "../../../../compLibrary/font";
 
 const ElementBox = styled.div`
   position: relative;
@@ -9,12 +8,8 @@ const ElementBox = styled.div`
   margin-left: 5px;
   margin-bottom: 12px;
 
-  .text {
-    position: relative;
-    margin-left: 30px;
-    bottom: 1px;
-    font-size: ${FontSize.Standard};
-    width: 220px;
+  &:hover {
+    cursor: pointer;
   }
 `;
 

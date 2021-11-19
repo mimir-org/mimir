@@ -1,16 +1,12 @@
-import { BlockParentNode } from "../nodes/blockParentNode";
-import { BlockParentProductNode } from "../nodes/blockParentProductNode";
-import { BlockNode } from "../nodes/blockNode";
-import { BlockLocationNode } from "../nodes/blockLocationNode";
-import { BlockOffPageNode } from "../nodes/blockOffPageNode";
+import * as Nodes from "../nodes";
 
 const GetBlockNodeTypes = {
-  BlockParentNode: BlockParentNode,
-  BlockParentProductNode: BlockParentProductNode,
-  BlockFunctionNode: BlockNode,
-  BlockProductNode: BlockNode,
-  BlockLocationNode: BlockLocationNode,
-  BlockOffPageNode: BlockOffPageNode,
+  BlockParentNode: Nodes.BlockParentNode,
+  BlockParentProductNode: Nodes.BlockParentProductNode,
+  BlockFunctionNode: Nodes.BlockNode,
+  BlockProductNode: Nodes.BlockNode,
+  BlockLocationNode: Nodes.BlockLocationNode,
+  BlockOffPageNode: Nodes.BlockOffPageNode,
 };
 
 export default GetBlockNodeTypes;

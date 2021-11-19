@@ -18,4 +18,5 @@ const CheckboxExplorer = ({ label, onChange, isChecked, isMiniCheckbox, color }:
     <div className="label">{label}</div>
   </CheckboxWrapper>
 );
+
 export default CheckboxExplorer;

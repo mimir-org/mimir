@@ -1,4 +1,4 @@
-import { IsFunction, IsLocation, IsProduct, IsDirectChild } from "../../../helpers";
+import { IsFunction, IsLocation, IsProduct, IsDirectChild, IsAspectNode } from "../../../helpers";
 import { Node, Connector } from "../../../models";
 import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPartOf } from "../helpers";
 
@@ -7,16 +7,29 @@ import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPar
  * @param selectedNode
  * @param secondaryNode
  * @param fromNode
+ * @param toNode
  * @param source
  * @param target
  * @returns a boolean value.
  */
-const ValidateBlockEdge = (selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) => {
-  if (!secondaryNode) return validEdge(selectedNode, fromNode, source, target);
+const ValidateBlockEdge = (
+  selectedNode: Node,
+  secondaryNode: Node,
+  fromNode: Node,
+  toNode: Node,
+  source: Connector,
+  target: Connector
+) => {
+  if (!secondaryNode) return validEdge(selectedNode, fromNode, toNode, source, target);
   if (secondaryNode) return validSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
 };
 
-function validEdge(selectedNode: Node, fromNode: Node, source: Connector, target: Connector) {
+function validEdge(selectedNode: Node, fromNode: Node, toNode: Node, source: Connector, target: Connector) {
+  if (IsProduct(selectedNode) && IsProduct(toNode)) {
+    if (IsPartOf(source)) if (IsAspectNode(fromNode) || IsAspectNode(toNode) || selectedNode.id === fromNode.id) return false;
+    return true;
+  }
+
   if (!IsDirectChild(fromNode, selectedNode)) return false;
   if (IsProduct(selectedNode)) return (IsTransportConnection(source, target) || IsPartOf(source)) && IsProduct(fromNode);
   if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsLocation(fromNode);

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../../../../compLibrary/colors";
+import { FontSize } from "../../../../compLibrary/font";
 
 const UserNameBox = styled.div`
   position: relative;
   top: 0px;
-  font-size: 16px;
+  font-size: ${FontSize.SubHeader};
   font-weight: bold;
   margin-left: 20px;
 
@@ -14,21 +15,6 @@ const UserNameBox = styled.div`
     font-size: 13px;
     font-weight: normal;
     color: ${Color.TextSecondary};
-  }
-
-  .initials {
-    position: absolute;
-    right: 23px;
-    bottom: 16px;
-    color: ${Color.TextIcon};
-    font-size: 14px;
-    font-weight: normal;
-  }
-
-  .user-icon {
-    position: absolute;
-    right: 16px;
-    bottom: 20px;
   }
 `;
 

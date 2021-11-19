@@ -10,11 +10,12 @@ import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 
 interface Props {
+  fromProjectId: string;
   nodeIds: string[];
   edgeIds: string[];
 }
 
-export const CreateSubProjectMenu = ({ nodeIds, edgeIds }: Props) => {
+export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId }: Props) => {
   const dispatch = useAppDispatch();
   const [projectName, setProjectName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU);
@@ -40,7 +41,7 @@ export const CreateSubProjectMenu = ({ nodeIds, edgeIds }: Props) => {
           {projectName && (
             <ButtonBox>
               <Button
-                onClick={() => Handlers.OnSubProjectCreateClick(projectName, nodeIds, edgeIds, dispatch)}
+                onClick={() => Handlers.OnSubProjectCreateClick(fromProjectId, projectName, nodeIds, edgeIds, dispatch)}
                 type={TextResources.Account_SubProject_Create}
               />
             </ButtonBox>
