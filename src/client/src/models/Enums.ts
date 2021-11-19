@@ -62,3 +62,10 @@ export enum AspectColorType {
   Header = 2,
   Tab = 3,
 }
+
+export enum WebSocketEvent {
+  None = 0,
+  Create = 1,
+  Update = 2,
+  Delete = 3
+}

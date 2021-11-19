@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Mb.Models.Application;
+using Mb.Models.Const;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Mb.Services.Hubs;
@@ -88,7 +93,9 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                await _hubContext.Clients.All.SendAsync("ReceiveNode", new Node {Id = "Tester"});
+                var roles = User?.Claims.Where(x => x.Type == ClaimsIdentity.DefaultRoleClaimType);
+                await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveNodeData, WebSocketEvent.Update, new Node {Id = "Tester"});
+                await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveEdgeData, WebSocketEvent.Update, new Edge {Id = "Tester edge"});
                 return NoContent();
             }
             catch (ModelBuilderNotFoundException e)

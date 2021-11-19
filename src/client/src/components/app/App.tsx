@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import { Home } from "../home/";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { GlobalStyle } from "../../compLibrary";
-import { useAppSelector, isFetchingSelector } from "../../redux/store";
+import { useAppSelector, isFetchingSelector, projectStateSelector } from "../../redux/store";
 import { LoginBox, AppBox } from "./styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text";
@@ -25,6 +25,7 @@ const App = ({ pca }: AppProps) => {
   const navigationClient = new ModelBuilderNavigationClient(history);
   pca.setNavigationClient(navigationClient);
   const isFetching = useAppSelector(isFetchingSelector);
+  const projectState = useAppSelector(projectStateSelector);
 
   const login = () => {
     msalInstance.loginRedirect();
@@ -34,6 +35,7 @@ const App = ({ pca }: AppProps) => {
   const websocket = new WebSocket();
   const dispatch = useDispatch();
   websocket.setDispatcher(dispatch);
+  websocket.setProjectState(projectState);
   websocket.start();
 
   return (

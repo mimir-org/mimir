@@ -86,12 +86,14 @@ namespace Mb.Core.Extensions
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ICompositeRepository, CompositeRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
+            services.AddScoped<IEventLogRepository, EventLogRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<INodeService, NodeService>();
             services.AddScoped<IVersionService, VersionService>();
+            services.AddScoped<IEventLogService, EventLogService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -121,6 +123,7 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new InterfaceProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new EventLogProfile());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);
@@ -165,7 +168,7 @@ namespace Mb.Core.Extensions
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ModelBuilderHub>("/mimir");
+                endpoints.MapHub<ModelBuilderHub>("/hub/modelbuilder");
             });
 
             return app;
