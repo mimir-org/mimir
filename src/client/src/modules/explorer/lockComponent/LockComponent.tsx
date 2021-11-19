@@ -7,12 +7,10 @@ interface Props {
   node: Node;
 }
 
-export const LockComponent = ({ node }: Props) => {
-  const isLocked: boolean = node?.isLocked;
-  return (
-    <ExplorerIconLine isLocked={isLocked}>
-      <img src={isLocked ? LockClosed : LockOpen} alt="lock-icon" className="lock-icon" onClick={OnLockNode(node)} />
-    </ExplorerIconLine>
-  );
-};
+export const LockComponent = ({ node }: Props) => (
+  <ExplorerIconLine isLocked={node?.isLocked}>
+    <img src={node?.isLocked ? LockClosed : LockOpen} alt="lock-icon" className="lock-icon" onClick={OnLockNode(node)} />
+  </ExplorerIconLine>
+);
+
 export default LockComponent;

@@ -40,7 +40,6 @@ const ProjectComponent = () => {
             key={node.id}
             selectedNode={selectedNode}
             secondaryNode={secondaryNode}
-            project={project}
             node={node}
             nodes={nodes}
             label={node.label}
