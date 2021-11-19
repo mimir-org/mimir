@@ -1,6 +1,6 @@
-import { Size } from "../../../../../../compLibrary/size";
-import { Connector } from "../../../../../../models";
-import { IsInputTerminal } from "../../../../helpers";
+import { Size } from "../../../../../compLibrary/size";
+import { Connector } from "../../../../../models";
+import { IsInputTerminal } from "../../../helpers";
 
 /**
  * Component to resize a Node based on the amount of active terminals.

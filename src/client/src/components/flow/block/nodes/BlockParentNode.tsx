@@ -1,15 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
-import { Background, BackgroundVariant, NodeProps } from "react-flow-renderer";
-import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { Color } from "../../../../../compLibrary/colors";
-import { SetParentNodeSize } from "./helpers";
-import { OnConnectorClick } from "./handlers";
-import { ParentContainerComponent } from "../parentContainer";
-import { FilterTerminals } from "../../helpers";
-import { AspectColorType, Connector } from "../../../../../models";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { GetAspectColor, IsLocation } from "../../../../../helpers";
+import { NodeProps } from "react-flow-renderer";
+import { HandleComponent, TerminalsContainerComponent } from "../terminals";
+import { OnConnectorClick, ResizeHandler } from "./handlers";
+import { ParentContainerComponent } from "./parentContainer";
+import { FilterTerminals } from "../helpers";
+import { AspectColorType, Connector } from "../../../../models";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
+import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
+import { GetAspectColor } from "../../../../helpers";
+import { setBlockNodeSize } from "../redux/actions";
+import { Size } from "../../../../compLibrary/size";
 
 /**
  * Component for the large parent block in BlockView.
@@ -21,36 +21,37 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
+  const parentBlockSize = useAppSelector(nodeSizeSelector);
+
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
+  // Set size
+  useEffect(() => {
+    const margin = secondaryNode ? 250 : Size.BlockMarginX;
+    const width = secondaryNode ? Size.BlockSmallWidth : Size.BlockWidth;
+    dispatch(setBlockNodeSize(width - margin, Size.BlockHeight));
+  }, [dispatch, secondaryNode]);
+
+  // Resize
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
-  }, [secondaryNode, node?.connectors]);
-
-  useEffect(() => {
-    SetParentNodeSize(node, secondaryNode, dispatch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secondaryNode]);
+    ResizeHandler(node, secondaryNode, parentBlockSize, dispatch);
+  }, [node, secondaryNode, parentBlockSize, dispatch]);
 
   if (!node) return null;
-
-  node.blockWidth = parentNodeSize?.width;
-  node.blockHeight = parentNodeSize?.height;
 
   return (
     <>
       <ParentContainerComponent
-        dispatch={dispatch}
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
         selected={node.isBlockSelected}
-        width={parentNodeSize?.width}
-        height={parentNodeSize?.height}
+        width={parentBlockSize.width}
+        height={parentBlockSize.height}
         hasChildren={terminals.length > 0}
       />
 
@@ -69,13 +70,11 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         parent={true}
         nodes={nodes}
-        height={node.blockHeight}
-        width={node.blockWidth}
+        height={parentBlockSize.height}
+        width={parentBlockSize.width}
         terminals={terminals}
         electro={electro}
       />
-      {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
-      {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
     </>
   );
 };

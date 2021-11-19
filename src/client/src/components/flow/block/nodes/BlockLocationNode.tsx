@@ -1,15 +1,15 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
-import { NodeBox } from "../../../styled";
-import { HandleComponent, TerminalsContainerComponent } from "../../terminals";
-import { AspectColorType, Connector } from "../../../../../models";
-import { OnHover, OnMouseOut, OnConnectorClick } from "./handlers";
-import { FilterTerminals } from "../../helpers";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store/hooks";
-import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";
-import { BlockLogoComponent } from "../../logo";
-import { GetAspectColor, GetSelectedBlockNode } from "../../../../../helpers";
-import { Size } from "../../../../../compLibrary/size";
+import { NodeBox } from "../../styled";
+import { HandleComponent, TerminalsContainerComponent } from "../terminals";
+import { AspectColorType, Connector } from "../../../../models";
+import { OnHover, OnMouseOut, OnLocationConnectorClick } from "./handlers";
+import { FilterTerminals } from "../helpers";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
+import { electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
+import { BlockLogoComponent } from "../logo";
+import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { Size } from "../../../../compLibrary/size";
 
 /**
  * Component for a Location Node in BlockView.
@@ -63,7 +63,7 @@ const BlockLocationNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         parent={false}
         electro={electro}
-        onClick={(conn) => OnConnectorClick(conn, node, dispatch)}
+        onClick={(conn) => OnLocationConnectorClick(conn, node, dispatch)}
         showMenuBox={terminalBox}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}

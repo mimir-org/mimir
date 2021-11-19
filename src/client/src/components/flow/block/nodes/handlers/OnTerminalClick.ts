@@ -1,5 +1,5 @@
-import { Connector, Edge, Node } from "../../../../../../models";
-import { changeActiveConnector, removeEdge } from "../../../../../../redux/store/project/actions";
+import { Connector, Edge, Node } from "../../../../../models";
+import { changeActiveConnector, removeEdge } from "../../../../../redux/store/project/actions";
 
 const OnTerminalClick = (conn: Connector, node: Node, dispatch: any, edges: Edge[]) => {
   dispatch(changeActiveConnector(node.id, conn.id, !conn.visible, conn.inputOrder, conn.outputOrder));
