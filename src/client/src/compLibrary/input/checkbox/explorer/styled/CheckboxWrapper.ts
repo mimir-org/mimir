@@ -16,6 +16,7 @@ const CheckboxWrapper = styled.label<Props>`
     cursor: pointer;
     height: 20px;
     width: 20px;
+    left: -8px;
     border: 2px solid ${Color.GreyHeader};
     background-color: ${Color.White};
     border-radius: 3px;
@@ -38,8 +39,8 @@ const CheckboxWrapper = styled.label<Props>`
 
   .label {
     position: relative;
-    bottom: 25px;
-    left: 14px;
+    bottom: 19px;
+    left: 10px;
     max-width: 240px;
     font-size: ${FontSize.Standard};
     cursor: pointer;
