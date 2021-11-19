@@ -2,7 +2,7 @@ import { addNode, createEdge, setActiveNode } from "../../../redux/store/project
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Composite, Connector, Attribute } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsBlockView, IsFamily } from "../../../helpers";
+import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import {
@@ -69,6 +69,11 @@ const handleNodeDrop = (
   targetNode.composites?.forEach((composite) => initComposite(composite, targetNode));
   targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
   targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
+
+  if (!sourceNode) {
+    const parentAspectNode = project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, targetNode));
+    handleCreatePartOfEdge(parentAspectNode, targetNode, project, library, dispatch);
+  }
 
   if (sourceNode && IsFamily(sourceNode, targetNode)) handleCreatePartOfEdge(sourceNode, targetNode, project, library, dispatch);
 
