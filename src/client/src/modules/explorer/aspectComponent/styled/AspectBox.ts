@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../../../../compLibrary/colors";
 import { FontSize } from "../../../../compLibrary/font";
-import { UseIndentLevel, GetAspectColor } from "../../../../helpers";
+import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Node } from "../../../../models";
 
 interface Props {
   node: Node;
-  indent: number;
 }
 
 const AspectBox = styled.div<Props>`
@@ -22,8 +21,7 @@ const AspectBox = styled.div<Props>`
   }
 
   .label {
-    padding-bottom: ${(props) => (props.node.isRoot ? 4 : 5)}px;
-    padding-left: ${(props) => (props.node.isRoot ? 10 : 10)}px;
+    padding-left: ${(props) => (props.node.isRoot ? 10 : 15)}px;
   }
 
   .expand-icon {
@@ -36,14 +34,6 @@ const AspectBox = styled.div<Props>`
     top: -3px;
     left: 6px;
     pointer-events: none;
-  }
-
-  .container {
-    display: flex;
-    input,
-    .label {
-      margin-left: ${(props) => UseIndentLevel(props.indent)}px;
-    }
   }
 `;
 

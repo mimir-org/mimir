@@ -7,18 +7,21 @@ export const OnSelectActiveNode = (
   setActiveFlowElement: (element: any) => void
 ) => {
   let tempArray: Node[] = [];
-  selectedNodes &&
-    selectedNodes.forEach((n) => {
-      let selectedNode = nodes.find((x) => x.id === n);
-      tempArray.push(selectedNode);
-    });
+
+  selectedNodes?.forEach((n) => {
+    let selectedNode = nodes.find((x) => x.id === n);
+    tempArray.push(selectedNode);
+  });
+
   const isInArray = tempArray.includes(node);
+
   if (isInArray) {
     tempArray = tempArray.filter((n) => n !== node);
   } else {
     let selectedNode = nodes.find((n) => n.id === node.id);
     tempArray.push(selectedNode);
   }
+
   setActiveFlowElement(tempArray);
 };
 

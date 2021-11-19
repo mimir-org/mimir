@@ -14,8 +14,7 @@ interface Props {
 export const VisibleComponent = ({ node, isAncestorVisible, isVisible, onSetVisibleElement }: Props) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
-
-  const isHidden: boolean = node?.isHidden;
+  const isHidden = node?.isHidden;
 
   return (
     <ExplorerIconLine isHidden={isHidden}>
