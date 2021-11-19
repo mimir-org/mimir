@@ -7,7 +7,6 @@ import { FETCHING_USER_SUCCESS_OR_ERROR, UserActionTypes } from "./../../store/u
 export function* getUser(action: UserActionTypes) {
   try {
     const account = msalInstance?.getActiveAccount();
-
     const user: User = {
       username: account.username,
       name: account.name,
