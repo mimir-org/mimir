@@ -17,7 +17,6 @@ export function userReducer(state = initialState, action: UserActionTypes): User
       };
 
     case FETCHING_USER_SUCCESS_OR_ERROR:
-      console.log(action.payload);
       return {
         ...state,
         fetching: false,
