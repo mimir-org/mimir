@@ -43,6 +43,11 @@ const CheckboxWrapper = styled.label<Props>`
     max-width: 240px;
     font-size: ${FontSize.Standard};
   }
+
+  .label:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 export default CheckboxWrapper;
