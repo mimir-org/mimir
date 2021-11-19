@@ -1,7 +1,6 @@
 import * as types from "../../store/project/types";
 import { put } from "redux-saga/effects";
 import { msalInstance } from "../../..";
-import { TextResources } from "../../../assets/text";
 import { GetDateNowUtc } from "../../../components/flow/helpers";
 import { User } from "../../../models";
 
@@ -14,7 +13,6 @@ export function* changeNodeUpdated(action) {
   const user: User = {
     username: account.username,
     name: account.name,
-    role: TextResources.UserMenu_User,
   };
 
   yield put({

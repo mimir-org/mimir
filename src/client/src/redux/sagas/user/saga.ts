@@ -3,17 +3,13 @@ import { User } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 import { msalInstance } from "../../../index";
 import { FETCHING_USER_SUCCESS_OR_ERROR, UserActionTypes } from "./../../store/user/types";
-import { TextResources } from "../../../assets/text";
 
 export function* getUser(action: UserActionTypes) {
   try {
     const account = msalInstance?.getActiveAccount();
-    console.log({ account });
-
     const user: User = {
       username: account.username,
       name: account.name,
-      role: TextResources.UserMenu_User,
     };
 
     const payload = {

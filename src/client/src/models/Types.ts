@@ -143,7 +143,6 @@ export interface LocationType {
 export interface User {
   username: string;
   name: string;
-  role: string;
 }
 
 export interface FileData {
