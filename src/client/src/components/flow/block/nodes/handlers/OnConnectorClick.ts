@@ -1,5 +1,5 @@
-import { Connector, Edge, Node } from "../../../../../../models";
-import { changeActiveConnector, removeEdge } from "../../../../../../redux/store/project/actions";
+import { Connector, Edge, Node } from "../../../../../models";
+import { changeActiveConnector, removeEdge } from "../../../../../redux/store/project/actions";
 
 const OnConnectorClick = (conn: Connector, dispatch: any, edges: Edge[], nodes: Node[]) => {
   const actualNode = nodes.find((x) => x.id === conn.nodeId);
