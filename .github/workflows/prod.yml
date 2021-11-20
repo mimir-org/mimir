@@ -59,6 +59,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
+          echo "Created tag ${{ steps.release.outputs.tag_name }}"
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:prod
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ steps.release.outputs.tag_name }}
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
