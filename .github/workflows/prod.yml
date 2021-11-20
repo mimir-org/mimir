@@ -6,7 +6,7 @@ on:
       - prod
 
 jobs:
-  release-on-push:
+  create-release:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -17,9 +17,48 @@ jobs:
           use_github_release_notes: true
           bump_version_scheme: minor
           tag_prefix: "v"
-          release_name: "Mimir Release"
 
       - name: Check Output Parameters
         run: |
-          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
+          echo "Created tag ${{ steps.release.outputs.tag_name }}"
           echo "Got release version ${{ steps.release.outputs.version }}"
+          
+  # Build and deploy the Mimir Client
+  build-client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/client
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_SERVER_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}          
+      - run: |
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:production --build-arg ENVIR=production
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ steps.release.outputs.tag_name }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest
+    
+  # Build the server
+  build-server:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/service
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_SERVER_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}          
+      - run: |
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:prod
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ steps.release.outputs.tag_name }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
