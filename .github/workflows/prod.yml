@@ -41,8 +41,8 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest --build-arg ENVIR=production
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.steps.release.outputs.tag_name }} --build-arg ENVIR=production
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.steps.release.outputs.tag_name }}          
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.release.outputs.tag_name }} --build-arg ENVIR=production
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.release.outputs.tag_name }}          
     
   # Build the server
   build-server:
@@ -64,6 +64,6 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.steps.release.outputs.tag_name }}
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.steps.release.outputs.tag_name }}
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.release.outputs.tag_name }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.release.outputs.tag_name }}
           
