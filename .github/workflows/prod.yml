@@ -12,27 +12,20 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Set output
+          id: vars
+          run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        - name: Check output
+          env:
+            RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+          run: |
+            echo $RELEASE_VERSION
+            echo ${{ steps.vars.outputs.tag }}
   
-  # This workflow contains a single job called "build"
-  build-client:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src/client
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.REGISTRY_SERVER_URL }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}          
-      - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:production --build-arg ENVIR=production          
-    
   # This workflow contains a single job called "build"
   build-server:
     # The type of runner that the job will run on
@@ -49,12 +42,6 @@ jobs:
           login-server: ${{ secrets.REGISTRY_SERVER_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-      - name: Check output
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
       - run: |
           echo $RELEASE_VERSION
           echo ${{ steps.vars.outputs.tag }}
