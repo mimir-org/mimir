@@ -38,9 +38,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:production --build-arg ENVIR=production
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ steps.release.outputs.tag_name }}
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest --build-arg ENVIR=production
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ steps.release.outputs.tag_name }} --build-arg ENVIR=production
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ steps.release.outputs.tag_name }}          
     
   # Build the server
   build-server:
@@ -59,7 +60,8 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          echo "Created tag ${{ steps.release.outputs.tag_name }}"
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:prod
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ steps.release.outputs.tag_name }}
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ steps.release.outputs.tag_name }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ steps.release.outputs.tag_name }}
+          
