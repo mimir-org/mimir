@@ -2,16 +2,36 @@ name: CI - PROD
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for tags
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    tags:
-      - '*.*.*'
+    branches: [ prod ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  
+  # This workflow contains a single job called "build"
+  build-client:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/client
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_SERVER_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}          
+      - run: |
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:production --build-arg ENVIR=production          
+    
   # This workflow contains a single job called "build"
   build-server:
     # The type of runner that the job will run on
@@ -22,19 +42,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: build
       - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_SERVER_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          echo $SOURCE_NAME
-          echo $SOURCE_BRANCH
-          echo $SOURCE_TAG
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:prod
-          
-      
-      
-          
