@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      output1: ${{ steps.release.outputs.tag_name }}
     steps:
       - id: release
         uses: rymndhng/release-on-push-action@master
@@ -17,7 +19,6 @@ jobs:
           use_github_release_notes: true
           bump_version_scheme: minor
           tag_prefix: "v"
-
       - name: Check Output Parameters
         run: |
           echo "Created tag ${{ steps.release.outputs.tag_name }}"
@@ -62,7 +63,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          echo "TAG ${{ needs.create-release.release.outputs.tag_name }}"
+          echo "TAG ${{ needs.create-release.outputs.output1 }}"
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.release.outputs.tag_name }}
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.release.outputs.tag_name }}
           
