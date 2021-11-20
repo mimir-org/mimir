@@ -27,51 +27,37 @@ const FieldValidator = (state: TypeEditorState, input: string) => {
 
   switch (input) {
     case "objectType":
-      if (!validAspect) {
-        return true;
-      }
+      if (!validAspect) return true;
       break;
+
     case "typeName":
-      if (!validObjectType && !validLocationType) {
-        return true;
-      }
+      if (!validObjectType && !validLocationType) return true;
       break;
+
     case "symbol":
-      if ((!validObjectType && !validLocationType) || !validName) {
-        return true;
-      }
+      if ((!validObjectType && !validLocationType) || !validName) return true;
       break;
+
     case "rds":
-      if ((!validObjectType && !validLocationType) || !validName || !validSymbol) {
-        return true;
-      }
+      if ((!validObjectType && !validLocationType) || !validName || !validSymbol) return true;
       break;
+
     case "terminals":
-      if ((!validObjectType && !validLocationType) || !validName || !validSymbol || !validRds) {
-        return true;
-      }
+      if ((!validObjectType && !validLocationType) || !validName || !validSymbol || !validRds) return true;
       break;
+
     case "add":
-      if (!validAspect || (!validObjectType && !validLocationType)) {
-        return true;
-      }
-      if (IsFunction(aspect) && IsObjectBlock(objectType)) {
+      if (!validAspect || (!validObjectType && !validLocationType)) return true;
+      if (IsFunction(aspect) && IsObjectBlock(objectType))
         return !(validName && validSymbol && validRds && validTerminals && validAttributes);
-      } else if (IsFunction(aspect) && IsTransport(objectType)) {
+      else if (IsFunction(aspect) && IsTransport(objectType))
         return !(validName && validSymbol && validRds && validTerminalTypeId && validAttributes);
-      } else if (IsFunction(aspect) && IsInterface(objectType)) {
+      else if (IsFunction(aspect) && IsInterface(objectType))
         return !(validName && validSymbol && validRds && validTerminalTypeId);
-      } else if (IsLocation(aspect)) {
-        return !(
-          validLocationType &&
-          validName &&
-          validSymbol &&
-          validRds &&
-          validPredefinedAttributes &&
-          validAttributes
-        );
-      }
+      else if (IsLocation(aspect))
+        return !(validLocationType && validName && validSymbol && validRds && validPredefinedAttributes && validAttributes);
       break;
+
     default:
       return true;
   }

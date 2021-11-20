@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { BuildBlockNode } from "../";
+import { BuildBlockNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Node, Edge } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
