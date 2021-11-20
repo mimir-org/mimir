@@ -3,7 +3,7 @@ import { TextResources } from "../../../assets/text";
 import { ValidateIcon } from "../../../assets/icons/common";
 import { RightArrowIcon } from "../../../assets/icons/arrow";
 import { CloseIcon } from "../../../assets/icons/close";
-import { LogoutIcon } from "../../../assets/icons/header/";
+import { LogoutIcon } from "../../../assets/icons/header";
 import { EditTypeIcon, NewTypeIcon } from "../../../assets/icons/type";
 
 const GetButtonIcon = (type: string) => {

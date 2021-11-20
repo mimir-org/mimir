@@ -13,7 +13,7 @@ import {
   IsPartOf,
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
-} from "./../helpers";
+} from "../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
