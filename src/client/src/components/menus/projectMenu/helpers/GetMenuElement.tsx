@@ -1,5 +1,5 @@
 import { ProjectMenuElement } from "../../styled";
-import { GetText, GetIcon } from "./";
+import { GetText, GetIcon } from ".";
 
 interface Props {
   type: string;
