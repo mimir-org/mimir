@@ -23,8 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - uses: actions/upload-artifact@v2
-      - name: Create tag artifact       
+      - name: Create tag artifact
+        uses: actions/upload-artifact@v2             
         with:
           name: ${{github.ref_name}}
           path: Release
