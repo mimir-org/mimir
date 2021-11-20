@@ -1,3 +1,5 @@
+name: CI - PROD
+
 on:
   push:
     branches:
@@ -15,12 +17,7 @@ jobs:
           use_github_release_notes: true
           bump_version_scheme: minor
           tag_prefix: "v"
-          release_name: "Mimir ${{ steps.release.outputs.version }}"
-
-      - name: Check Output Parameters
-        run: |
-          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
-          echo "Got release version ${{ steps.release.outputs.version }}"
+          release_name: "Mimir Release"
 
       - name: Check Output Parameters
         run: |
