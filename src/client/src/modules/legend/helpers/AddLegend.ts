@@ -1,5 +1,5 @@
 import { Connector, Edge, Node } from "../../../models";
-import { GetLegendInfo } from "./";
+import { GetLegendInfo } from ".";
 import { IsBlockView } from "../../../helpers";
 import { IsPartOf, Legend } from "../../../components/flow/helpers";
 
