@@ -18,11 +18,7 @@ jobs:
         with:
           use_github_release_notes: true
           bump_version_scheme: minor
-          tag_prefix: "v"
-      - name: Check Output Parameters
-        run: |
-          echo "Created tag ${{ steps.release.outputs.tag_name }}"
-          echo "Got release version ${{ steps.release.outputs.version }}"
+          tag_prefix: "v"     
           
   # Build and deploy the Mimir Client
   build-client:
@@ -42,8 +38,8 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest --build-arg ENVIR=production
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.release.outputs.tag_name }} --build-arg ENVIR=production
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.release.outputs.tag_name }}          
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.outputs.output1 }} --build-arg ENVIR=production
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.outputs.output1 }}         
     
   # Build the server
   build-server:
@@ -63,7 +59,8 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          echo "TAG ${{ needs.create-release.outputs.output1 }}"
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.release.outputs.tag_name }}
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.release.outputs.tag_name }}
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.outputs.output1 }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.outputs.output1 }}
           
