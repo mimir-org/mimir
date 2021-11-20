@@ -23,6 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - uses: actions/upload-artifact@v2
+      - name: Create tag artifact       
+        with:
+          name: ${{github.ref_name}}
+          path: Release
+        
+      
       - uses: actions/checkout@v2
       - name: Set env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
@@ -30,6 +37,7 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ env.RELEASE_VERSION }}
+          echo ${{github.ref_name}}          
       
       - uses: azure/docker-login@v1
         with:
