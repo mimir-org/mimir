@@ -23,13 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-tag
-        if: ${{ steps.release-label.outputs.level != null }}
-        with:
-          semver_only: true
-      - run: |
-          echo  TAG
+      - uses: actions/checkout@v2
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Test
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ env.RELEASE_VERSION }}
       
       - uses: azure/docker-login@v1
         with:
