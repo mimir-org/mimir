@@ -2,9 +2,10 @@ name: CI - PROD
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push or pull request events but only for tags
   push:
-    branches: [ prod ]
+    tags:
+      - 'v*.*.*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -47,8 +48,16 @@ jobs:
         with:
           login-server: ${{ secrets.REGISTRY_SERVER_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}          
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check output
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
       - run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:prod
           
       
