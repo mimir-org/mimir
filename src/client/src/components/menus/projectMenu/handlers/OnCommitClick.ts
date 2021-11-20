@@ -1,4 +1,4 @@
-import { changeActiveMenu } from "../../../menus/projectMenu/subMenus/redux/actions";
+import { changeActiveMenu } from "../subMenus/redux/actions";
 import { MENU_TYPE } from "../../../../models/project";
 
 const OnCommitClick = (dispatch: any) => {
