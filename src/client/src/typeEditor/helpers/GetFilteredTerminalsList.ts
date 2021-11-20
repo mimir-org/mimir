@@ -16,6 +16,7 @@ const GetFilteredTerminalsList = (terminals: TerminalTypeDict): TerminalCategory
       id: terminalCategory?.value[0].terminalCategoryId,
       items: [],
     } as TerminalCategory;
+
     terminalCategory?.value.forEach((element) => {
       cat.items.push({
         id: element.id,

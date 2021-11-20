@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontWeight } from "../../compLibrary/font";
+import { FontWeight } from "../font";
 
 interface Props {
   isSelected: boolean;
