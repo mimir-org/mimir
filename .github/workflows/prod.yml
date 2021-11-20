@@ -1,4 +1,4 @@
-on: 
+on:
   push:
     branches:
       - prod
@@ -12,9 +12,16 @@ jobs:
       - id: release
         uses: rymndhng/release-on-push-action@master
         with:
+          use_github_release_notes: true
           bump_version_scheme: minor
-          tag_prefix: v
-          
+          tag_prefix: "v"
+          release_name: "Release ${{ steps.release.outputs.version }}"
+
+      - name: Check Output Parameters
+        run: |
+          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
+          echo "Got release version ${{ steps.release.outputs.version }}"
+
       - name: Check Output Parameters
         run: |
           echo "Got tag name ${{ steps.release.outputs.tag_name }}"
