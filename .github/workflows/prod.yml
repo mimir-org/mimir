@@ -41,10 +41,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest --build-arg ENVIR=production
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:latest
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.outputs.tag }} --build-arg ENVIR=production
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:${{ needs.create-release.outputs.tag }}         
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:latest --build-arg ENVIR=production
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:latest
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ needs.create-release.outputs.tag }} --build-arg ENVIR=production
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ needs.create-release.outputs.tag }}         
     
   # Build the server
   build-server:
@@ -65,10 +65,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:latest
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.outputs.tag }}
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:${{ needs.create-release.outputs.tag }}
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:latest
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:latest
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:${{ needs.create-release.outputs.tag }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:${{ needs.create-release.outputs.tag }}
           
       
       
