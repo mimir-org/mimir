@@ -15,7 +15,7 @@ jobs:
           use_github_release_notes: true
           bump_version_scheme: minor
           tag_prefix: "v"
-          release_name: "Release ${{ steps.release.outputs.version }}"
+          release_name: "Mimir ${{ steps.release.outputs.version }}"
 
       - name: Check Output Parameters
         run: |
