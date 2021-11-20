@@ -23,11 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Create tag artifact
-        uses: actions/upload-artifact@v2             
+      - uses: actions/checkout@v2.2.0
         with:
-          name: ${{github.ref_name}}
-          path: Release
+          fetch-depth: 0 # Required due to the weg Git works, without it this action won't be able to find any or the correct tags
+      - name: 'Get Previous tag'
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
         
       
       - uses: actions/checkout@v2
@@ -37,7 +40,7 @@ jobs:
         run: |
           echo $RELEASE_VERSION
           echo ${{ env.RELEASE_VERSION }}
-          echo ${{github.ref_name}}          
+          echo ${{previoustag}}          
       
       - uses: azure/docker-login@v1
         with:
