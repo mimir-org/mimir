@@ -12,7 +12,7 @@ const AspectHeader = styled.div`
   .icon {
     position: relative;
     top: 6px;
-    left: 7px;
+    left: 6px;
     pointer-events: none;
   }
 `;
