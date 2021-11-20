@@ -1,20 +1,18 @@
-name: CI - PROD
-
 on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-      - '*.*.*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: Create Release
 
 jobs:
-  deploy:    
+  build:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: NameOfYourArtifact
-      
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -23,18 +21,24 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: TODO
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
           draft: true
           prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset 
+      - name: Upload release asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: NameOfYourArtifact.exe
-          asset_name: NameOfYourArtifact.exe
-          asset_content_type: application/octet-stream        
-    
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./path/to/asset.zip
+          asset_name: asset.zip
+          asset_content_type: application/zip
+      - name: Publish release
+        uses: StuYarrow/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          id: ${{ steps.create_release.outputs.id }}
