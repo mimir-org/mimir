@@ -1,4 +1,5 @@
 import { FlowElement } from "react-flow-renderer";
+import { IsAspectNode } from "../../../helpers";
 import { Node } from "../../../models";
 import { GetNodeType } from "../helpers";
 
@@ -19,7 +20,7 @@ const ConvertNodeToFlow = (node: Node) => {
     isHidden: false, // Opacity is controlled by the styled component
     isSelected: node.isSelected,
     draggable: true,
-    selectable: true,
+    selectable: !IsAspectNode(node),
     connectable: true,
   } as FlowElement;
 };

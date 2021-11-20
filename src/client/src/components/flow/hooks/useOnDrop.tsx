@@ -2,7 +2,7 @@ import { addNode, createEdge, setActiveNode } from "../../../redux/store/project
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Composite, Connector, Attribute } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsBlockView, IsFamily } from "../../../helpers";
+import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import {
@@ -56,21 +56,17 @@ const handleSubProjectDrop = (event: React.DragEvent<HTMLDivElement>, project: P
   })();
 };
 
-const handleNodeDrop = (
-  { event, project, user, icons, library, reactFlowInstance, reactFlowWrapper, setElements, dispatch }: OnDropParameters,
-  sourceNode: Node
-) => {
-  const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-
+const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) => {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  const position = calculateTargetNodePosition(event, reactFlowInstance, reactFlowBounds);
+  const parentNode = getParentNode(sourceNode, project, data);
+
+  const position = { x: parentNode.positionX, y: parentNode.positionY + 200 }; // TODO: fix when implementing auto-position
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
   targetNode.composites?.forEach((composite) => initComposite(composite, targetNode));
   targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
   targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
-
-  if (sourceNode && IsFamily(sourceNode, targetNode)) handleCreatePartOfEdge(sourceNode, targetNode, project, library, dispatch);
+  if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
   if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
@@ -114,20 +110,12 @@ const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
   attribute.id = CreateId();
 };
 
-const calculateTargetNodePosition = (
-  event: React.DragEvent<HTMLDivElement>,
-  reactFlowInstance: OnLoadParams,
-  reactFlowBounds: DOMRect
-): { x: number; y: number } => {
-  if (!reactFlowInstance) return { x: event.clientX, y: event.clientY };
-  else
-    return reactFlowInstance?.project({
-      x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
-    });
-};
-
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
+
+const getParentNode = (sourceNode: Node, project: Project, data: any) => {
+  if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
+  return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
+};
 
 export default useOnDrop;
