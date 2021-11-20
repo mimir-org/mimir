@@ -3,23 +3,23 @@ import { TextResources } from "../../../../assets/text";
 
 const GetIcon = (type: string) => {
   switch (type) {
-    case TextResources.Account_Save:
+    case TextResources.Project_Save:
       return <img src={Icons.Save} alt="save database" />;
-    case TextResources.Account_Save_File:
+    case TextResources.Project_Save_File:
       return <img src={Icons.ExportProject} alt="save file" />;
-    case TextResources.Account_Commit:
+    case TextResources.Project_Commit:
       return <img src={Icons.CommitProject} alt="commit project" />;
-    case TextResources.Account_Open:
+    case TextResources.Project_Open:
       return <img src={Icons.OpenProject} alt="open" />;
-    case TextResources.Account_Create:
+    case TextResources.Project_Create:
       return <img src={Icons.CreateProject} alt="create" />;
-    case TextResources.Account_Save_Library:
+    case TextResources.Project_Save_Library:
       return <img src={Icons.ExportLibrary} alt="save library" />;
-    case TextResources.Account_Import_Project:
+    case TextResources.Project_Import_Project:
       return <img src={Icons.ImportProject} alt="import project" />;
-    case TextResources.Account_Import_Lib_Label:
+    case TextResources.Project_Import_Lib_Label:
       return <img src={Icons.ImportLibrary} alt="import library" />;
-    case TextResources.Account_SubProject_Create:
+    case TextResources.Project_SubProject_Create:
       return <img src={Icons.CreateSubProject} alt="import library" />;
     default:
       return null;

@@ -37,15 +37,15 @@ const ProjectMenuComponent = () => {
   return (
     <>
       <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU}>
-        <GetMenuElement type={TextResources.Account_Open} onClick={() => Click.OnOpenClick(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Create} onClick={() => Click.OnCreate(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
-        <GetMenuElement type={TextResources.Account_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Commit} onClick={() => Click.OnCommit(dispatch)} />
-        <GetMenuElement type={TextResources.Account_SubProject_Create} onClick={() => Click.OnCreateSubprojectClick(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Open} onClick={() => Click.OnOpenClick(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Create} onClick={() => Click.OnCreate(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
+        <GetMenuElement type={TextResources.Project_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Commit} onClick={() => Click.OnCommit(dispatch)} />
+        <GetMenuElement type={TextResources.Project_SubProject_Create} onClick={() => Click.OnCreateSubprojectClick(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
       </ProjectMenuBox>
 
       <OpenProjectMenu projectState={projectState} dispatch={dispatch} />

@@ -57,7 +57,7 @@ const Header = () => {
           <img src={GetCompanyLogoForHeader(company)} alt="logo" />
         </CompanyLogoBox>
         <ProjectBox isOpen={projectMenuOpen} onClick={() => Click.OnProject(dispatch, projectMenuOpen)}>
-          <p className="project-name">{project?.name ?? TextResources.Account_Project}</p>
+          <p className="project-name">{project?.name ?? TextResources.Project}</p>
           <img
             src={projectMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
             alt="icon"

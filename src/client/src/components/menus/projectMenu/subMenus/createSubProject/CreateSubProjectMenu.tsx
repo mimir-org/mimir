@@ -26,23 +26,23 @@ export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId }: Props)
         <ProjectBody>
           <HeaderBox>
             <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-            {TextResources.Account_SubProject_Create_Label}
+            {TextResources.Project_SubProject_Create_Label}
           </HeaderBox>
-          <Label>{TextResources.Account_Name_Project_Label}</Label>
+          <Label>{TextResources.Project_Name_Project_Label}</Label>
           <Input
             onChange={(e: any) => setProjectName(e.target.value)}
             inputType="text"
-            placeholder={TextResources.Account_Name_Project_Placeholder}
+            placeholder={TextResources.Project_Name_Project_Placeholder}
             value={projectName}
           />
           <ButtonBox left>
-            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
           </ButtonBox>
           {projectName && (
             <ButtonBox>
               <Button
                 onClick={() => Handlers.OnSubProjectCreateClick(fromProjectId, projectName, nodeIds, edgeIds, dispatch)}
-                type={TextResources.Account_SubProject_Create}
+                type={TextResources.Project_SubProject_Create}
               />
             </ButtonBox>
           )}
