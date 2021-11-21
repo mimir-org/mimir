@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../../../../compLibrary/colors";
+import { FontSize } from "../../../../compLibrary/font";
 
 const UserNameBox = styled.div`
   position: relative;
   top: 0px;
-  font-size: 16px;
+  font-size: ${FontSize.SubHeader};
   font-weight: bold;
   margin-left: 20px;
 

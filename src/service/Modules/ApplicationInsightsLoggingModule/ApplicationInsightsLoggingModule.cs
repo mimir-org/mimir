@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace ApplicationInsightsLoggingModule
 {
@@ -17,7 +18,22 @@ namespace ApplicationInsightsLoggingModule
             builder.AddJsonFile("appsettings.local.json", true);
             builder.AddEnvironmentVariables();
 
-            var aiOptions = new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions();
+            var config = builder.Build();
+
+            var insightConfig = new ApplicationInsights();
+            var insightConfiguration = config.GetSection("ApplicationInsights");
+            insightConfiguration.Bind(insightConfig);
+
+            var aiOptions = new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions
+            {
+                InstrumentationKey = insightConfig.InstrumentationKey, 
+                ConnectionString = insightConfig.ConnectionString,
+                EndpointAddress = insightConfig.EndpointAddress,
+                EnableAdaptiveSampling = insightConfig.EnableAdaptiveSampling,
+                EnableQuickPulseMetricStream = insightConfig.EnablePerformanceCounterCollectionModule,
+                DeveloperMode = insightConfig.DeveloperMode
+
+            };
 
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ApplicationInsights_InstrumentationKey")))
             {
@@ -93,6 +109,8 @@ namespace ApplicationInsightsLoggingModule
             {
                 services.AddApplicationInsightsTelemetry(aiOptions);
             }
+
+            services.AddSingleton(Options.Create(insightConfig));
 
             return services;
         }

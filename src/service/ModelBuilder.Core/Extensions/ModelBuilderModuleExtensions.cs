@@ -87,6 +87,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<ICompositeRepository, CompositeRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
             services.AddScoped<IEventLogRepository, EventLogRepository>();
+            services.AddScoped<IProjectLinkRepository, ProjectLinkRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();

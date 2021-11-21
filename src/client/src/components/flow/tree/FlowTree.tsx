@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as Helpers from "./helpers/";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
@@ -44,7 +45,10 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const treeFilter = useAppSelector(treeFilterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
 
-  const OnDragOver = (event: any) => event.preventDefault();
+  const OnDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
@@ -56,7 +60,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
       setElements(BuildTreeElements(project, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, animatedEdge]
+    [project, animatedEdge, dispatch]
   );
 
   const OnConnect = (params) => {
@@ -105,7 +109,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
     project?.edges.forEach((e) => {
       if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, false));
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -122,7 +125,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         nodeTypes={Helpers.GetNodeTypes}
         edgeTypes={Helpers.GetEdgeTypes}
         defaultZoom={0.7}
-        defaultPosition={[800, 100]}
+        defaultPosition={[800, 0]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => onSelectionChange(e)}
