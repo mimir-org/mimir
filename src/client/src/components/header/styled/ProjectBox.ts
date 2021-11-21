@@ -17,7 +17,6 @@ const ProjectBox = styled.div<Props>`
 
   .toggle-icon {
     position: relative;
-    display: flex;
     width: 8px;
     left: 18px;
   }

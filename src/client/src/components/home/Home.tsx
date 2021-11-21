@@ -1,4 +1,3 @@
-import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
 import { useEffect, useRef } from "react";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
@@ -14,6 +13,7 @@ import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary
 import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
+import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
 
 /**
  * The main component for Mimir
