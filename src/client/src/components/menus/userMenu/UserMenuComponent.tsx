@@ -3,7 +3,7 @@ import { MENU_TYPE } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
-import { darkModeSelector, userStateSelector } from "../../../redux/store";
+import { darkModeSelector, userStateSelector, userRoleSelector } from "../../../redux/store";
 import { TextResources } from "../../../assets/text";
 
 /**
@@ -14,12 +14,13 @@ const UserMenuComponent = () => {
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector(darkModeSelector);
   const userState = useAppSelector(userStateSelector);
+  const userRole = useAppSelector(userRoleSelector);
 
   return (
     <UserMenuBox id={MENU_TYPE.PROJECT_MENU}>
       <UserNameBox>
         <p>{userState.user && userState?.user?.name}</p>
-        <p className="user-title">{TextResources.UserMenu_User}</p>
+        <p className="user-title">{userRole ?? TextResources.UserMenu_User}</p>
       </UserNameBox>
 
       <UserMenuElement onClick={() => null}>

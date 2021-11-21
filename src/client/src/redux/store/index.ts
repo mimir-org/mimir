@@ -21,6 +21,7 @@ import { customCategoryReducer } from "../store/customCategory/reducers";
 import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
 import { location3DReducer } from "../../modules/location/redux/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
+import { userRoleReducer } from "../store/userRoles/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -46,6 +47,7 @@ const rootReducers = combineReducers({
   edgeAnimation: edgeAnimationReducer,
   location3D: location3DReducer,
   blockElements: blockElementsReducer,
+  userRoles: userRoleReducer,
 });
 
 const persistConfig = {

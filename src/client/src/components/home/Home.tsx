@@ -14,6 +14,7 @@ import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
+import { getUserRole } from "../../redux/store/userRoles/actions";
 
 /**
  * The main component for Mimir
@@ -38,6 +39,7 @@ const Home = () => {
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
     dispatch(getBlobData());
+    dispatch(getUserRole());
   }, [dispatch]);
 
   return (
