@@ -8,8 +8,7 @@ interface Props {
   color: string;
 }
 
-/** Styled component that displays the drop-down menu for a nodes' terminals. */
-const TerminalsMenu = styled.div<Props>`
+const TerminalsMenuBox = styled.div<Props>`
   border: 1px solid;
   border-color: ${(props) => props.color};
   background-color: ${Color.White};
@@ -21,6 +20,7 @@ const TerminalsMenu = styled.div<Props>`
   left: ${(props) => (!props.input ? props.xPos + "px" : "unset")};
   right: ${(props) => (props.input ? props.xPos + "px" : "unset")};
   transition: right 250ms ease-in-out, left 250ms ease-in-out, top 250ms ease-in-out;
+  z-index: 6;
 `;
 
-export default TerminalsMenu;
+export default TerminalsMenuBox;
