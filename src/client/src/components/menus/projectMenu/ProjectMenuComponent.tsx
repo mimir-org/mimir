@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { CommitProjectMenu } from "../projectMenu/subMenus/commitProject";
 import { CreateSubProjectMenu } from "../projectMenu/subMenus/createSubProject";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
-import { ProjectNameBox } from "./styled";
 import { ProjectMenuBox } from "../styled";
 
 /**
@@ -37,10 +36,7 @@ const ProjectMenuComponent = () => {
 
   return (
     <>
-      <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} isProject={true}>
-        <ProjectNameBox>
-          <p>{projectState?.project?.name}</p>
-        </ProjectNameBox>
+      <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU}>
         <GetMenuElement type={TextResources.Account_Open} onClick={() => Click.OnOpenClick(dispatch)} />
         <GetMenuElement type={TextResources.Account_Create} onClick={() => Click.OnCreate(dispatch)} />
         <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />

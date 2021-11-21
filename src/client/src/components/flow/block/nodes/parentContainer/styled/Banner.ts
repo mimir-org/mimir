@@ -7,6 +7,7 @@ const Header = styled.div`
   width: 100%;
   border-radius: 10px 10px 0px 0px;
   background-color: ${(props: { color: string }) => props.color};
+  z-index: 1;
 `;
 
 export default Header;

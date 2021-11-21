@@ -12,6 +12,7 @@ const Block = styled.div<Props>`
   cursor: ${(props) => (props.selected ? "grab" : "pointer")};
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
+  min-width: 500px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.DarkGrey};

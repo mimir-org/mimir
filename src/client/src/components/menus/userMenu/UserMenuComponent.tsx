@@ -1,10 +1,9 @@
-import { DarkMode, Notifications, OffIcon, OnIcon, Settings, UserBackground, LogoutIcon } from "../../../assets/icons/header";
+import { DarkMode, LightMode, Notifications, Settings, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { UserMenuElement, UserMenuBox, UserNameBox, AvatarBox } from "./styled";
+import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
 import { darkModeSelector, userStateSelector } from "../../../redux/store";
-import { GetUserInitials } from "./helpers";
 import { TextResources } from "../../../assets/text";
 
 /**
@@ -19,10 +18,6 @@ const UserMenuComponent = () => {
   return (
     <UserMenuBox id={MENU_TYPE.PROJECT_MENU}>
       <UserNameBox>
-        <AvatarBox>
-          <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
-          <img src={UserBackground} alt="profile" className="profile" />
-        </AvatarBox>
         <p>{userState.user && userState?.user?.name}</p>
         <p className="user-title">{TextResources.UserMenu_User}</p>
       </UserNameBox>
@@ -38,10 +33,8 @@ const UserMenuComponent = () => {
       </UserMenuElement>
 
       <UserMenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
-        <img src={DarkMode} className="icon" alt="darkmode" />
-        <p className="text">{TextResources.UserMenu_DarkMode}</p>
-        <p className="darkmode-text">{darkMode ? TextResources.UserMenu_DarkModeOn : TextResources.UserMenu_DarkModeOff}</p>
-        <img src={darkMode ? OnIcon : OffIcon} className="toggle" alt="toggle" />
+        <img src={darkMode ? LightMode : DarkMode} className="icon" alt="darkmode" />
+        <p className="text">{darkMode ? TextResources.UserMenu_LightMode : TextResources.UserMenu_DarkMode}</p>
       </UserMenuElement>
 
       <UserMenuElement onClick={() => OnLogOut()}>
