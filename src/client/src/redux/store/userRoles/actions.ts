@@ -1,8 +1,8 @@
-import { FETCHING_USER_ROLE } from "./types";
+import { FETCHING_USER } from "./types";
 
-export function getUserRole() {
+export function getUser() {
   return {
-    type: FETCHING_USER_ROLE,
+    type: FETCHING_USER,
     payload: null,
   };
 }
