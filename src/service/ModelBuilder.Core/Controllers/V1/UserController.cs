@@ -43,12 +43,13 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var roles = User.Claims.Where(x => x.Type == ClaimsIdentity.DefaultRoleClaimType);
-                var user = new UserData
+                var role = User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType)?.Value.ResolveNameFromRoleClaim();
+                var name = User.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
+                var user = new User
                 {
-                    Name = User.Identity?.Name,
-                    Email = string.Empty,
-                    Roles = roles.Select(x => x.Value.ResolveNameFromRoleClaim()).ToList()
+                    Name = name,
+                    Email = User.Identity?.Name,
+                    Role = role
                 };
 
                 return Ok(user);
