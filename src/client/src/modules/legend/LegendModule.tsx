@@ -3,15 +3,14 @@ import { LegendComponent } from "./";
 import { Project } from "../../models";
 
 interface Props {
-  visible: boolean;
   project: Project;
 }
 
-const LegendModule = ({ visible, project }: Props) => {
+const LegendModule = ({ project }: Props) => {
   const legends = LegendComponent(project);
 
   return (
-    <LegendBody visible={visible}>
+    <LegendBody>
       {legends?.map((legend) => {
         return (
           <LegendElement key={legend.key}>
