@@ -17,13 +17,13 @@ const OptionsElement = styled.div<Props>`
   }
 
   &:first-child {
-    background-color: ${(props) => props.treeView && "#6F6F6F"};
+    background-color: ${(props) => props.treeView && Color.GreyToolBarSelected};
     border-left: 1px solid ${Color.Grey};
     border-right: 1px solid ${Color.Grey};
   }
 
   &:nth-child(2) {
-    background-color: ${(props) => !props.treeView && "#6F6F6F"};
+    background-color: ${(props) => !props.treeView && Color.GreyToolBarSelected};
   }
 
   &:last-child {
