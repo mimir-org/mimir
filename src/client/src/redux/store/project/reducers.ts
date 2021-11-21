@@ -798,7 +798,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
               ? {
                   ...x,
                   updated: action.payload.updated,
-                  updatedBy: action.payload.user.name,
+                  updatedBy: action.payload.userName,
                 }
               : x
           ),

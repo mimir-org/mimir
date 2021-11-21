@@ -9,7 +9,7 @@ const UserNameBox = styled.div`
   font-weight: bold;
   margin-left: 20px;
 
-  .user-title {
+  .user-role {
     position: relative;
     top: -13px;
     font-size: 13px;
