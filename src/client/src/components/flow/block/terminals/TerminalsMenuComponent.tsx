@@ -4,6 +4,7 @@ import { GetTerminalColor, SetMenuXPos } from "./helpers";
 import { TerminalsMenuBox, TerminalsElement, ColorBar } from "./styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 import { Color } from "../../../../compLibrary/colors";
+import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
   node: Node;
@@ -14,6 +15,7 @@ interface Props {
   electro: boolean;
   onClick: (conn: Connector) => void;
   onBlur: () => void;
+  parentBlockSize: BlockNodeSize;
 }
 
 /**
@@ -21,7 +23,17 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur, electro }: Props) => {
+const TerminalsMenuComponent = ({
+  node,
+  parent,
+  input,
+  terminals,
+  visible,
+  onClick,
+  onBlur,
+  electro,
+  parentBlockSize,
+}: Props) => {
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   return (
@@ -32,7 +44,7 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onCli
         input={input}
         onBlur={onBlur}
         color={GetAspectColor(node, AspectColorType.Selected)}
-        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node)}
+        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node, parentBlockSize)}
       >
         {terminals.map((conn) => (
           <TerminalsElement key={conn.id}>

@@ -20,7 +20,8 @@ const TerminalsMenuBox = styled.div<Props>`
   left: ${(props) => (!props.input ? props.xPos + "px" : "unset")};
   right: ${(props) => (props.input ? props.xPos + "px" : "unset")};
   transition: right 250ms ease-in-out, left 250ms ease-in-out, top 250ms ease-in-out;
-  z-index: 6;
+  pointer-events: all;
+  z-index: 7;
 `;
 
 export default TerminalsMenuBox;
