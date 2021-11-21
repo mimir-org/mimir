@@ -11,8 +11,9 @@ export function* changeNodeUpdated(action) {
   const account = msalInstance?.getActiveAccount();
 
   const user: User = {
-    username: account.username,
     name: account.name,
+    email: "",
+    role: "",
   };
 
   yield put({

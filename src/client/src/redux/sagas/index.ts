@@ -3,7 +3,7 @@ import { FETCHING_USER } from "./../store/user/types";
 import { commonSaga } from "./common";
 import { nodeSaga } from "./node";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
-import { getUser, getUserRole } from "./user/saga";
+import { getUserRole } from "./user/saga";
 import { FETCHING_INITIAL_DATA, SAVE_LIBRARY_TYPE, FETCHING_BLOB_DATA, FETCHING_TYPE } from "../../typeEditor/redux/types";
 import { FETCHING_USER_ROLE } from "../store/userRoles/types";
 import {
@@ -61,7 +61,7 @@ import {
 function* sagas() {
   yield all([
     takeEvery(FETCHING_LIBRARY, searchLibrary),
-    takeEvery(FETCHING_USER, getUser),
+    // takeEvery(FETCHING_USER, getUser),
     takeEvery(FETCHING_USER_ROLE, getUserRole),
     takeEvery(CREATING_PROJECT, createProject),
     takeEvery(CREATING_SUB_PROJECT, createSubProject),
