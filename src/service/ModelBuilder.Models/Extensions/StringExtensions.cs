@@ -6,7 +6,6 @@ using System.Text;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Exceptions;
-using Mb.Models.Properties;
 
 namespace Mb.Models.Extensions
 {
@@ -52,7 +51,6 @@ namespace Mb.Models.Extensions
                 Id = terminalCategoryId
             };
 
-            //category.Id = category.Key.CreateMd5();
             var createTerminalType = new CreateTerminalType
             {
                 Name = terminalName,

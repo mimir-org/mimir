@@ -13,41 +13,44 @@ interface Props {
   fromProjectId: string;
   nodeIds: string[];
   edgeIds: string[];
+  disabled: boolean;
 }
 
-export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId }: Props) => {
+export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled }: Props) => {
   const dispatch = useAppDispatch();
   const [projectName, setProjectName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU);
 
   return (
     <>
-      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
-        <ProjectBody>
-          <HeaderBox>
-            <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-            {TextResources.Project_SubProject_Create_Label}
-          </HeaderBox>
-          <Label>{TextResources.Project_Name_Project_Label}</Label>
-          <Input
-            onChange={(e: any) => setProjectName(e.target.value)}
-            inputType="text"
-            placeholder={TextResources.Project_Name_Project_Placeholder}
-            value={projectName}
-          />
-          <ButtonBox left>
-            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
-          </ButtonBox>
-          {projectName && (
-            <ButtonBox>
-              <Button
-                onClick={() => Handlers.OnSubProjectCreateClick(fromProjectId, projectName, nodeIds, edgeIds, dispatch)}
-                type={TextResources.Project_SubProject_Create}
-              />
+      {!disabled && (
+        <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+          <ProjectBody>
+            <HeaderBox>
+              <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
+              {TextResources.Project_SubProject_Create_Label}
+            </HeaderBox>
+            <Label>{TextResources.Project_Name_Project_Label}</Label>
+            <Input
+              onChange={(e: any) => setProjectName(e.target.value)}
+              inputType="text"
+              placeholder={TextResources.Project_Name_Project_Placeholder}
+              value={projectName}
+            />
+            <ButtonBox left>
+              <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
             </ButtonBox>
-          )}
-        </ProjectBody>
-      </ProjectBox>
+            {projectName && (
+              <ButtonBox>
+                <Button
+                  onClick={() => Handlers.OnSubProjectCreateClick(fromProjectId, projectName, nodeIds, edgeIds, dispatch)}
+                  type={TextResources.Project_SubProject_Create}
+                />
+              </ButtonBox>
+            )}
+          </ProjectBody>
+        </ProjectBox>
+      )}
     </>
   );
 };

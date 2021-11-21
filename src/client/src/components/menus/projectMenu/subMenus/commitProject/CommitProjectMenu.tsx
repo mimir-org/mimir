@@ -15,9 +15,10 @@ interface Props {
   contractors: Contractor[];
   parsers: ModuleDescription[];
   projectId: string;
+  disabled: boolean;
 }
 
-export const CommitProjectMenu = ({ contractors, parsers, projectId }: Props) => {
+export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }: Props) => {
   const dispatch = useAppDispatch();
   const [contractor, setContractor] = useState(contractors[0]);
   const [parser, setParser] = useState(parsers[0]);

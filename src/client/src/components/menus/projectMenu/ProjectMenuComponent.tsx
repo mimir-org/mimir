@@ -42,8 +42,17 @@ const ProjectMenuComponent = () => {
         <GetMenuElement type={TextResources.Project_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
         <GetMenuElement type={TextResources.Project_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
         <GetMenuElement type={TextResources.Project_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
-        <GetMenuElement type={TextResources.Project_Commit} onClick={() => Click.OnCommit(dispatch)} />
-        <GetMenuElement type={TextResources.Project_SubProject_Create} onClick={() => Click.OnCreateSubprojectClick(dispatch)} />
+        <GetMenuElement
+          type={TextResources.Project_Commit}
+          onClick={() => Click.OnCommit(dispatch)}
+          disabled={!projectState?.project?.isSubProject}
+        />
+        <GetMenuElement
+          type={TextResources.Project_SubProject_Create}
+          onClick={() => Click.OnCreateSubprojectClick(dispatch)}
+          disabled={!selectedNodeIds}
+        />
+
         <GetMenuElement type={TextResources.Project_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
         <GetMenuElement type={TextResources.Project_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
       </ProjectMenuBox>
@@ -58,8 +67,14 @@ const ProjectMenuComponent = () => {
         contractors={commonState.contractors}
         parsers={commonState.parsers}
         projectId={projectState?.project?.id}
+        disabled={!projectState?.project?.isSubProject}
       />
-      <CreateSubProjectMenu fromProjectId={projectState?.project?.id} nodeIds={selectedNodeIds} edgeIds={selectedEdgeIds} />
+      <CreateSubProjectMenu
+        fromProjectId={projectState?.project?.id}
+        nodeIds={selectedNodeIds}
+        edgeIds={selectedEdgeIds}
+        disabled={!selectedNodeIds}
+      />
     </>
   );
 };
