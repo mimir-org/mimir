@@ -25,42 +25,40 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.COMMIT_PROJECT);
 
   return (
-    <>
-      {!disabled && (
-        <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
-          <ProjectBody removeHeight={true}>
-            <HeaderBox marginBottom={10}>
-              <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-              {TextResources.Account_Commit_Label}
-            </HeaderBox>
+    !disabled && (
+      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+        <ProjectBody removeHeight={true}>
+          <HeaderBox marginBottom={10}>
+            <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
+            {TextResources.Project_Commit_Label}
+          </HeaderBox>
 
-            <Label>{TextResources.Account_Commit_Contractor_Label}</Label>
-            <Dropdown
-              label="Contractor"
-              valueProp="name"
-              items={contractors}
-              keyProp="id"
-              onChange={(e: any) => setContractor(e)}
-            />
+          <Label>{TextResources.Project_Commit_Contractor_Label}</Label>
+          <Dropdown
+            label="Contractor"
+            valueProp="name"
+            items={contractors}
+            keyProp="id"
+            onChange={(e: any) => setContractor(e)}
+          />
 
-            <Label>{TextResources.Account_Commit_Parser_Label}</Label>
-            <Dropdown label="Contractor" valueProp="name" items={parsers} keyProp="id" onChange={(e: any) => setParser(e)} />
+          <Label>{TextResources.Project_Commit_Parser_Label}</Label>
+          <Dropdown label="Contractor" valueProp="name" items={parsers} keyProp="id" onChange={(e: any) => setParser(e)} />
 
-            <ButtonBox left>
-              <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
+          <ButtonBox left>
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+          </ButtonBox>
+          {contractor && parser && projectId && (
+            <ButtonBox>
+              <Button
+                onClick={() => Handlers.OnCommitProjectClick(dispatch, projectId, parser.id, contractor.domain)}
+                type={TextResources.Project_Commit_Button}
+              />
             </ButtonBox>
-            {contractor && parser && projectId && (
-              <ButtonBox>
-                <Button
-                  onClick={() => Handlers.OnCommitProjectClick(dispatch, projectId, parser.id, contractor.domain)}
-                  type={TextResources.Account_Commit_Button}
-                />
-              </ButtonBox>
-            )}
-          </ProjectBody>
-        </ProjectBox>
-      )}
-    </>
+          )}
+        </ProjectBody>
+      </ProjectBox>
+    )
   );
 };
 
