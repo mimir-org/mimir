@@ -28,23 +28,22 @@ const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, ele
   return (
     <ToolBarBox id="ToolBar" libOpen={libOpen} explorerOpen={explorerOpen}>
       <OptionsBox>
-        <OptionsElement
-          treeView={treeView}
-          onClick={() => Click.OnFilter(dispatch, treeView ? treeFilter : blockFilter, treeView)}
-        >
-          <img src={Icons.Filter} alt="visual-filter" className="logo" />
+        <OptionsElement treeView={treeView} onClick={() => Click.OnView(VIEW_TYPE.TREEVIEW as ViewType, dispatch)}>
+          <img src={treeView ? Icons.TreeViewActive : Icons.TreeView} alt={VIEW_TYPE.TREEVIEW} className="logo" />
+        </OptionsElement>
+        <OptionsElement treeView={treeView} onClick={() => Click.OnView(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}>
+          <img src={treeView ? Icons.BlockView : Icons.BlockViewActive} alt={VIEW_TYPE.BLOCKVIEW} className="logo" />
         </OptionsElement>
         {!treeView && (
           <OptionsElement treeView={treeView} onClick={() => Click.OnElectro(dispatch, electro)}>
             <img src={electro ? Icons.Vertical : Icons.Horizontal} alt="electro" className="logo" />
           </OptionsElement>
         )}
-        <OptionsElement treeView={treeView} onClick={() => Click.OnView(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}>
-          <img src={treeView ? Icons.BlockView : Icons.BlockViewActive} alt={VIEW_TYPE.BLOCKVIEW} className="logo" />
-        </OptionsElement>
-
-        <OptionsElement treeView={treeView} onClick={() => Click.OnView(VIEW_TYPE.TREEVIEW as ViewType, dispatch)}>
-          <img src={treeView ? Icons.TreeViewActive : Icons.TreeView} alt={VIEW_TYPE.TREEVIEW} className="logo" />
+        <OptionsElement
+          treeView={treeView}
+          onClick={() => Click.OnFilter(dispatch, treeView ? treeFilter : blockFilter, treeView)}
+        >
+          <img src={Icons.Filter} alt="visual-filter" className="logo" />
         </OptionsElement>
       </OptionsBox>
       {IsBlockView() && IsLocation(selectedNode) && (
