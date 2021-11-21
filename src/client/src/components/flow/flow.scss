@@ -1,12 +1,14 @@
 .dndflow {
   height: 100%;
   display: flex;
+  z-index: 1 !important;
 }
 
 .dndflow .reactflow-wrapper {
   flex: 1;
   height: 100%;
   width: 100%;
+  z-index: 1 !important;
 }
 
 .react-flow__nodes {

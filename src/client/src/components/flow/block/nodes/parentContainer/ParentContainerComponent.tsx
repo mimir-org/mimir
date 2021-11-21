@@ -11,29 +11,27 @@ interface Props {
   width: number;
   height: number;
   hasChildren: boolean;
+  company: string;
 }
 
 /**
- * Component for the parent node block in BlockView
+ * Component for the parent node block in BlockView.
  * @param interface
- * @returns a container that sits on top of a Flow node
+ * @returns a container that sits on top of a Flow node.
  */
-const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren }: Props) => {
-  const company = process.env.REACT_APP_COMPANY;
+const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren, company }: Props) => (
+  <Block id={"block-" + node?.id} selected={selected} width={width} height={height}>
+    <Banner color={color}>
+      <Header>
+        <p className="text">={node?.label ?? node?.name}</p>
+      </Header>
+      <LogoBox hasChildren={hasChildren}>
+        <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
+      </LogoBox>
+    </Banner>
+    {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
+    {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
+  </Block>
+);
 
-  return (
-    <Block id={"block-" + node?.id} selected={selected} width={width} height={height}>
-      <Banner color={color}>
-        <Header>
-          <p className="text">={node?.label ?? node?.name}</p>
-        </Header>
-        <LogoBox hasChildren={hasChildren}>
-          <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
-        </LogoBox>
-      </Banner>
-      {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
-      {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
-    </Block>
-  );
-};
 export default ParentContainerComponent;

@@ -53,8 +53,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={parentBlockSize.width}
         height={parentBlockSize.height}
         hasChildren={terminals.length > 0}
+        company={process.env.REACT_APP_COMPANY}
       />
-
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
