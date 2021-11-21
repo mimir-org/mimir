@@ -13,7 +13,7 @@ import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
-import { getUser } from "../../redux/store/userRoles/actions";
+import { getUser } from "../../redux/store/user/actions";
 
 /**
  * The main component for Mimir
