@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
@@ -7,6 +8,7 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 
 namespace Mb.Services.Hubs
 {
@@ -21,8 +23,18 @@ namespace Mb.Services.Hubs
             _eventLogService = eventLogService;
         }
 
-        public async Task SendNodeData(WebSocketEvent eventType, Node node)
+        public async Task SendNodeData(WorkerStatus eventType, string node)
         {
+            var obj = JsonConvert.DeserializeObject<Node>(node, DefaultSettings.SerializerSettings);
+            if(obj == null)
+                return;
+
+            var fromId = obj.Id;
+            var toId = _commonRepository.CreateUniqueId();
+
+            node = node.Replace(fromId, toId);
+
+
             //if (eventType == WebSocketEvent.Create)
             //{
             //    var logs = _eventLogService.ReadLog(EventLogDataType.Node, eventType).ToList();
@@ -30,8 +42,16 @@ namespace Mb.Services.Hubs
             //        return;
             //}
 
-            //var log = new EventLogAm(node) {WebSocketEvent = eventType};
+            //var log = new EventLogAm(node) { WebSocketEvent = eventType };
             //await _eventLogService.CreateLog(log);
+
+            
+
+            //foreach (var connector in node.Connectors)
+            //{
+            //    if (connector is Relation)
+            //        connector = connector as Relation;
+            //}
 
             await Clients.Others.SendAsync(WebSocketReceiver.ReceiveNodeData, eventType, node);
 
@@ -46,7 +66,7 @@ namespace Mb.Services.Hubs
 
         }
 
-        public async Task SendEdgeData(WebSocketEvent eventType, Edge edge)
+        public async Task SendEdgeData(WorkerStatus eventType, string edge)
         {
             await Clients.Others.SendAsync(WebSocketReceiver.ReceiveEdgeData, eventType, edge);
         }

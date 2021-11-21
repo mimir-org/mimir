@@ -22,7 +22,7 @@ namespace Mb.Models.Application
         public EventLogDataType EventLogDataType { get; set; }
 
         [Required]
-        public WebSocketEvent WebSocketEvent { get; set; }
+        public WorkerStatus WebSocketEvent { get; set; }
 
         public EventLogAm()
         {

@@ -135,12 +135,12 @@ namespace Mb.Core.Extensions
             // Add modules
             services.CreateModules(provider, configuration, modules);
 
-            services.AddSignalR()
-                .AddNewtonsoftJsonProtocol(o =>
-                {
-                    o.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    o.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
+            services.AddSignalR();
+                //.AddNewtonsoftJsonProtocol(o =>
+                //{
+                //    o.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                //    o.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                //});
 
             return services;
         }

@@ -78,7 +78,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="webSocketEvent"></param>
         /// <returns></returns>
-        public IEnumerable<EventLog> ReadLog(WebSocketEvent webSocketEvent)
+        public IEnumerable<EventLog> ReadLog(WorkerStatus webSocketEvent)
         {
             return _eventLogRepository.GetAll()
                 .Where(x => x.WebSocketEvent == webSocketEvent)
@@ -92,7 +92,7 @@ namespace Mb.Services.Services
         /// <param name="eventLogDataType"></param>
         /// <param name="webSocketEvent"></param>
         /// <returns></returns>
-        public IEnumerable<EventLog> ReadLog(EventLogDataType eventLogDataType, WebSocketEvent webSocketEvent)
+        public IEnumerable<EventLog> ReadLog(EventLogDataType eventLogDataType, WorkerStatus webSocketEvent)
         {
             return _eventLogRepository.GetAll()
                 .Where(x => x.WebSocketEvent == webSocketEvent && 

@@ -1,6 +1,6 @@
 ﻿namespace Mb.Models.Enums
 {
-    public enum WebSocketEvent
+    public enum WorkerStatus
     {
         None = 0,
         Create = 1,

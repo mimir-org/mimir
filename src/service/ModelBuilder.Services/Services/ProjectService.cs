@@ -15,6 +15,7 @@ using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
+using Mb.Models.Workers;
 using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
@@ -413,6 +414,9 @@ namespace Mb.Services.Services
                 // Remap and create new id's
                 Remap(projectAm);
 
+                // Creating a project worker
+                var projectWorker = new ProjectWorker { ProjectId = projectAm.Id };
+
                 // Edges
                 var existingEdges = originalProject.Edges.ToList();
                 var deleteEdges = existingEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
@@ -421,7 +425,7 @@ namespace Mb.Services.Services
                 // Nodes
                 var existingNodes = originalProject.Nodes.ToList();
                 var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
-                var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain)).ToList();
+                await _nodeRepository.DeleteNodes(projectWorker, deleteNodes, projectAm.Id, invokedByDomain);
 
                 //Determine if project version should be incremented
                 SetProjectVersion(originalProject, projectAm);
@@ -429,7 +433,7 @@ namespace Mb.Services.Services
                 // Map new data
                 _mapper.Map(projectAm, originalProject);
 
-                var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
+                _nodeRepository.UpdateInsert(projectWorker, existingNodes, originalProject, invokedByDomain);
                 var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
 
                 ResolveLevelAndOrder(originalProject);
@@ -439,7 +443,9 @@ namespace Mb.Services.Services
                 ClearAllChangeTracker();
 
                 // Resolve
-                await ResolveSubProjects(subNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
+                var subProjectNodes = projectWorker.Nodes.Where(x => x.IsSubProjectNode && x.WorkerStatus == WorkerStatus.Create).Select(x => x.Node).ToList();
+                var subDeleteNodes = projectWorker.Nodes.Where(x => x.IsSubProjectNode && x.WorkerStatus == WorkerStatus.Delete).Select(x => x.Node).ToList();
+                await ResolveSubProjects(subProjectNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
             }
             catch (Exception e)
             {
@@ -476,9 +482,10 @@ namespace Mb.Services.Services
 
             var nodesToDelete = existingProject.Nodes.Where(x => x.MasterProjectId == projectId).ToList();
             var edgesToDelete = existingProject.Edges.Where(x => x.MasterProjectId == projectId).ToList();
+            var projectWorker = new ProjectWorker {ProjectId = projectId};
 
             await _edgeRepository.DeleteEdges(edgesToDelete, projectId, _modelBuilderConfiguration.Domain);
-            await _nodeRepository.DeleteNodes(nodesToDelete, projectId, _modelBuilderConfiguration.Domain);
+            await _nodeRepository.DeleteNodes(projectWorker, nodesToDelete, projectId, _modelBuilderConfiguration.Domain);
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();
         }

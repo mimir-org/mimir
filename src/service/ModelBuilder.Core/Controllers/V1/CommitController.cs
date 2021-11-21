@@ -94,8 +94,8 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var roles = User?.Claims.Where(x => x.Type == ClaimsIdentity.DefaultRoleClaimType);
-                await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveNodeData, WebSocketEvent.Update, new Node {Id = "Tester"});
-                await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveEdgeData, WebSocketEvent.Update, new Edge {Id = "Tester edge"});
+                await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveNodeData, WorkerStatus.Update, new Node {Id = "Tester"});
+                await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveEdgeData, WorkerStatus.Update, new Edge {Id = "Tester edge"});
                 return NoContent();
             }
             catch (ModelBuilderNotFoundException e)

@@ -5,7 +5,9 @@ using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mb.Models.Workers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -27,10 +29,10 @@ namespace Mb.Data.Repositories
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public IEnumerable<Node> UpdateInsert(ICollection<Node> original, Project project, string invokedByDomain)
+        public void UpdateInsert(ProjectWorker projectWorker, ICollection<Node> original, Project project, string invokedByDomain)
         {
             if (project?.Nodes == null || !project.Nodes.Any())
-                yield break;
+                return;
 
             var newNodes = original != null
                 ? project.Nodes.Where(x => original.All(y => y.Id != x.Id)).ToList()
@@ -43,7 +45,7 @@ namespace Mb.Data.Repositories
                     if (node.MasterProjectId != project.Id)
                     {
                         Attach(node, EntityState.Unchanged);
-                        yield return node;
+                        projectWorker.Nodes.Add(new NodeWorker { Node = node, WorkerStatus = WorkerStatus.Create, IsSubProjectNode = true });
                         continue;
                     }
 
@@ -59,6 +61,7 @@ namespace Mb.Data.Repositories
                     node.Version = _modelBuilderConfiguration.Domain != node.Domain ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version : "1.0";
                     _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Added);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
+                    projectWorker.Nodes.Add(new NodeWorker { Node = node, WorkerStatus = WorkerStatus.Create });
                     Attach(node, EntityState.Added);
                 }
                 else
@@ -86,20 +89,19 @@ namespace Mb.Data.Repositories
 
                     _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Modified);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
+                    projectWorker.Nodes.Add(new NodeWorker { Node = node, WorkerStatus = WorkerStatus.Update });
                     Attach(node, EntityState.Modified);
                 }
             }
         }
 
-        public async Task<IEnumerable<Node>> DeleteNodes(ICollection<Node> delete, string projectId, string invokedByDomain)
+        public async Task DeleteNodes(ProjectWorker projectWorker, ICollection<Node> delete, string projectId, string invokedByDomain)
         {
-            var subNodes = new List<Node>();
-
             foreach (var node in delete)
             {
                 if (node.MasterProjectId != projectId)
                 {
-                    subNodes.Add(node);
+                    projectWorker.Nodes.Add(new NodeWorker { Node = node, WorkerStatus = WorkerStatus.Delete, IsSubProjectNode = true });
                     continue;
                 }
 
@@ -115,9 +117,8 @@ namespace Mb.Data.Repositories
                 _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
 
                 await Delete(node.Id);
+                projectWorker.Nodes.Add(new NodeWorker { Node = node, WorkerStatus = WorkerStatus.Delete });
             }
-
-            return subNodes;
         }
 
         #region Private

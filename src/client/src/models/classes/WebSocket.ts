@@ -1,7 +1,7 @@
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
 import { Dispatch } from "react";
 import { WebSocketEvent, Node, Edge } from "..";
-import { cooperateAddNode } from "../../modules/cooperate";
+import { addNode, createEdge } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 
 let instance = null;
@@ -40,11 +40,11 @@ class WebSocket {
           if (this._projectState?.project?.id)
             this._connection.send("JoinGroup", this._projectState?.project?.id);
 
-          this._connection.on("ReceiveNodeData", (eventType: WebSocketEvent, data: Node) => {
+          this._connection.on("ReceiveNodeData", (eventType: WebSocketEvent, data: string) => {
             if (eventType === WebSocketEvent.Create) {
-              console.log("Connector:", data.connectors);
-              console.log("Connector type:", typeof (data.connectors));
-              this._dispatch(cooperateAddNode(data));
+              const jsonObject = JSON.parse(data);
+              const node = new Node(jsonObject);
+              this._dispatch(addNode(node));
             }
 
             // switch (eventType) {
@@ -58,8 +58,12 @@ class WebSocket {
             // }
           });
 
-          this._connection.on("ReceiveEdgeData", (eventType: WebSocketEvent, data: Edge) => {
-            console.log(eventType, data);
+          this._connection.on("ReceiveEdgeData", (eventType: WebSocketEvent, data: string) => {
+            if (eventType === WebSocketEvent.Create) {
+              const jsonObject = JSON.parse(data);
+              const edge = new Edge(jsonObject);
+              this._dispatch(createEdge(edge));
+            }
           });
         })
         .catch((e: any) => { });

@@ -1,21 +1,26 @@
+import { CooperateActionTypes } from "..";
 import { WebSocket, WebSocketEvent } from "../../../models";
 
 /**
- * Triggers when a node is changed
+ * Triggers when a node is added
  */
 // eslint-disable-next-line require-yield
-export function* nodeAdded(action) {
+export function* nodeAdded(action: CooperateActionTypes) {
   const webSocket = new WebSocket();
   if (webSocket.isRunning()) {
-    console.log("FIRE WEBSOCKET");
-    webSocket.getConnection().send("SendNodeData", WebSocketEvent.Create, action.payload);
+    const nodeAsString = JSON.stringify(action.payload);
+    webSocket.getConnection().send("SendNodeData", WebSocketEvent.Create, nodeAsString);
   }
 }
 
 /**
- * Triggers when an edge is changed
+ * Triggers when an edge is added
  */
 // eslint-disable-next-line require-yield
-export function* edgeChanged(action) {
-
+export function* edgeAdded(action: CooperateActionTypes) {
+  const webSocket = new WebSocket();
+  if (webSocket.isRunning()) {
+    const edgeAsString = JSON.stringify(action.payload);
+    webSocket.getConnection().send("SendEdgeData", WebSocketEvent.Create, edgeAsString);
+  }
 }

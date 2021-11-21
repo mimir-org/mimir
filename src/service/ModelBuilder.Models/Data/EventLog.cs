@@ -10,6 +10,6 @@ namespace Mb.Models.Data
         public DateTime DateTime { get; set; }
         public string Data { get; set; }
         public EventLogDataType EventLogDataType { get; set; }
-        public WebSocketEvent WebSocketEvent { get; set; }
+        public WorkerStatus WebSocketEvent { get; set; }
     }
 }

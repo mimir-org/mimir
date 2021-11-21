@@ -11,8 +11,8 @@ namespace Mb.Services.Contracts
         Task<EventLog> CreateLog(EventLogAm eventLog);
         IEnumerable<EventLog> ReadLog();
         IEnumerable<EventLog> ReadLog(EventLogDataType eventLogDataType);
-        IEnumerable<EventLog> ReadLog(WebSocketEvent webSocketEvent);
-        IEnumerable<EventLog> ReadLog(EventLogDataType eventLogDataType, WebSocketEvent webSocketEvent);
+        IEnumerable<EventLog> ReadLog(WorkerStatus webSocketEvent);
+        IEnumerable<EventLog> ReadLog(EventLogDataType eventLogDataType, WorkerStatus webSocketEvent);
         Task Delete(int id);
         Task DeleteAll();
         Task<EventLog> Get(int id);
