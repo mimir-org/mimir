@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
 import { FontSize } from "../../../compLibrary/font";
 
-const ProjectMenuElement = styled.div`
+interface Props {
+  disabled: boolean;
+}
+
+const ProjectMenuElement = styled.div<Props>`
   padding: 0px 20px;
   display: flex;
   flex-direction: row;
@@ -16,6 +20,8 @@ const ProjectMenuElement = styled.div`
     margin-left: 10px;
     vertical-align: super;
     font-size: ${FontSize.Standard};
+    font-weight: ${(props) => props.disabled && 300};
+    font-style: ${(props) => props.disabled && "italic"};
   }
 
   .icon {
@@ -28,8 +34,8 @@ const ProjectMenuElement = styled.div`
   }
 
   &:hover {
-    background-color: ${Color.LightBlue};
-    text-decoration: underline;
+    background-color: ${(props) => !props.disabled && Color.LightBlue};
+    text-decoration: ${(props) => !props.disabled && "underline"};
   }
 
   &:last-child {

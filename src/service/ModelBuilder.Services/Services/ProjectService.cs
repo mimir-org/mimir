@@ -39,11 +39,12 @@ namespace Mb.Services.Services
         private readonly IAttributeRepository _attributeRepository;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
         private readonly ILogger<ProjectService> _logger;
+        private readonly ModelBuilderDbContext _modelBuilderDbContext;
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger)
+            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, ModelBuilderDbContext modelBuilderDbContext)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -55,6 +56,7 @@ namespace Mb.Services.Services
             _moduleService = moduleService;
             _attributeRepository = attributeRepository;
             _logger = logger;
+            _modelBuilderDbContext = modelBuilderDbContext;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -331,12 +333,12 @@ namespace Mb.Services.Services
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
-                
+
                 var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm, _modelBuilderConfiguration.Domain);
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
-                
+
                 return subProjectCreated;
             }
             catch (Exception e)
@@ -740,12 +742,7 @@ namespace Mb.Services.Services
             }
         }
 
-        private void LockUnlockNodesAndAttributesRecursive(
-            Node parentNode,
-            IQueryable<Node> allNodesInProject,
-            IQueryable<Attribute> allAttributesInProject,
-            IQueryable<Edge> allEdgesInProject,
-            string userName)
+        private void LockUnlockNodesAndAttributesRecursive(Node parentNode, IQueryable<Node> allNodesInProject, IQueryable<Attribute> allAttributesInProject, IQueryable<Edge> allEdgesInProject, string userName)
         {
             if (parentNode?.Id == null)
                 return;
@@ -1144,6 +1141,13 @@ namespace Mb.Services.Services
             _attributeRepository?.Context?.ChangeTracker?.Clear();
         }
 
+        /// <summary>
+        /// When creating a sub-project, this method removes incoming top aspect nodes and connected edges.
+        /// For all nodes that don't have a parent, it connects the nodes to the root node.
+        /// </summary>
+        /// <param name="newProject"></param>
+        /// <param name="oldProject"></param>
+        /// <param name="subProjectAm"></param>
         private void RemapSubProject(Project newProject, Project oldProject, SubProjectAm subProjectAm)
         {
             // Get all node and edge data for the new sub project
