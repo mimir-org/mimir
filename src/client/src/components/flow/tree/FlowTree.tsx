@@ -1,15 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as Helpers from "./helpers/";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
-import { FullScreenComponent } from "../../../compLibrary/controls";
+import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
 import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { updatePosition } from "../../../redux/store/project/actions";
+import { setEdgeAnimation, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { TreeFilterMenu } from "../../menus/filterMenu/tree";
-import { ExplorerModule } from "../../../modules/explorer";
+import { TreeFilterMenu } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
-import { GetSelectedNode, SetDarkModeColor } from "../../../helpers";
+import { SetDarkModeColor } from "../../../helpers";
+import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
+import { IsTransport } from "../helpers";
 import {
   animatedEdgeSelector,
   darkModeSelector,
@@ -20,7 +22,6 @@ import {
   treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
-import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -43,9 +44,11 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const inspectorOpen = useAppSelector(inspectorSelector);
   const treeFilter = useAppSelector(treeFilterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
-  const node = GetSelectedNode();
 
-  const OnDragOver = (event: any) => event.preventDefault();
+  const OnDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
@@ -57,7 +60,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
       setElements(BuildTreeElements(project, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, animatedEdge]
+    [project, animatedEdge, dispatch]
   );
 
   const OnConnect = (params) => {
@@ -95,9 +98,18 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   // Rerender
   useEffect(() => {
-    SetDarkModeColor(darkMode);
     OnLoad(flowInstance);
-  }, [OnLoad, flowInstance, darkMode]);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    SetDarkModeColor(darkMode);
+  }, [darkMode]);
+
+  useEffect(() => {
+    project?.edges.forEach((e) => {
+      if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, false));
+    });
+  }, []);
 
   return (
     <>
@@ -113,7 +125,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         nodeTypes={Helpers.GetNodeTypes}
         edgeTypes={Helpers.GetEdgeTypes}
         defaultZoom={0.7}
-        defaultPosition={[800, 100]}
+        defaultPosition={[800, 0]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => onSelectionChange(e)}
@@ -122,7 +134,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-      <ExplorerModule elements={elements} selectedNode={node} secondaryNode={null} />
+
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );

@@ -5,6 +5,8 @@ export const EDGE_KIND: string = "Edge";
 
 class Edge {
   id: string;
+  iri: string;
+  domain: string;
   fromConnectorId: string;
   fromConnector: Connector;
 
@@ -27,7 +29,7 @@ class Edge {
   isLockedBy: string;
   isHidden: boolean | false;
   masterProjectId: string;
-  isTemplateEdge: boolean;
+  masterProjectIri: string;
   isSelected: boolean;
 
   kind: string = EDGE_KIND;

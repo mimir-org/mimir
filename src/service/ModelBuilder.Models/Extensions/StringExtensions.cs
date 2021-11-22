@@ -51,7 +51,6 @@ namespace Mb.Models.Extensions
                 Id = terminalCategoryId
             };
 
-            //category.Id = category.Key.CreateMd5();
             var createTerminalType = new CreateTerminalType
             {
                 Name = terminalName,
@@ -80,10 +79,49 @@ namespace Mb.Models.Extensions
 
         public static string ResolveDomain(this string id)
         {
-            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
-            return idSplit.Length != 2 ? string.Empty : idSplit[0];
+            var idSplit = id?.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            return idSplit?.Length != 2 ? null : idSplit[0];
         }
 
+        public static string ResolveIri(this string id)
+        {
+            if (id == null)
+                return null;
+
+            var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            const string prefixMimir = @"https://rdf.equinor.com/sor/mimir#";
+            var iri = $"{prefixMimir}/ID#{idSplit[^1]}";
+            return iri;
+        }
+
+        public static string ResolveIdFromIriAndDomain(this string iri, string domain)
+        {
+            if (string.IsNullOrEmpty(domain))
+                return null;
+
+            var hashSplit = iri.Split('#', StringSplitOptions.RemoveEmptyEntries);
+            if (hashSplit.Length == 2)
+            {
+                return $"{domain.Trim()}_{hashSplit[1].Trim()}";
+            }
+
+            var idSplit = iri.Split("/", StringSplitOptions.RemoveEmptyEntries);
+            return idSplit.Length <= 0 ? 
+                string.Empty : 
+                $"{domain.Trim()}_{hashSplit[^1].Trim()}";
+        }
+
+        public static string ResolveNameFromRoleClaim(this string role)
+        {
+            if (string.IsNullOrEmpty(role))
+                return string.Empty;
+
+            var name = role.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            if (name.Length != 2)
+                throw new ModelBuilderInvalidOperationException("The role name contains fail format.");
+
+            return name[^1];
+        }
 
         #region Private
 

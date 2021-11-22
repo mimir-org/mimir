@@ -24,6 +24,8 @@ export interface UnitAm {
 }
 export interface AttributeAm {
   id: string;
+  iri: string;
+  domain: string;
   key: string;
   value: string;
   selectedUnitId: string;
@@ -40,9 +42,12 @@ export interface AttributeAm {
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
+  tags: Set<string>;
 }
 export interface ConnectorAm {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   type: ConnectorType;
   semanticReference: string;
@@ -60,6 +65,8 @@ export interface ConnectorAm {
 }
 export interface NodeAm {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   version: string;
   label: string;
@@ -72,12 +79,12 @@ export interface NodeAm {
   positionY: number;
   positionBlockX: number;
   positionBlockY: number;
-  length: number;
   width: number;
   height: number;
   cost: number;
   statusId: string;
   masterProjectId: string;
+  masterProjectIri: string;
   symbol: string;
   connectors: ConnectorAm[];
   attributes: AttributeAm[];
@@ -93,18 +100,22 @@ export interface NodeAm {
 
 export interface EdgeAm {
   id: string;
+  iri: string;
+  domain: string;
   fromConnectorId: string;
   toConnectorId: string;
   fromNodeId: string;
   toNodeId: string;
   masterProjectId: string;
-  isTemplateEdge: boolean;
+  masterProjectIri: string;
   transport: TransportAm;
   interface: InterfaceAm;
 }
 
 export interface ProjectAm {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   isSubProject: boolean;
   version: string;
@@ -189,6 +200,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
   attributes.forEach((attribute) => {
     const a = {
       id: attribute.id,
+      iri: attribute.iri,
+      domain: attribute.domain,
       key: attribute.key,
       value: attribute.value,
       selectedUnitId: attribute.selectedUnitId,
@@ -204,6 +217,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
       discipline: attribute.discipline,
+      tags: attribute.tags,
     } as AttributeAm;
 
     converted.push(a);
@@ -220,6 +234,8 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
   connectors.forEach((connector) => {
     const a = {
       id: connector.id,
+      iri: connector.iri,
+      domain: connector.domain,
       name: connector.name,
       type: connector.type,
       semanticReference: connector.semanticReference,
@@ -242,6 +258,8 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
   if (!connector) return {} as ConnectorAm;
   return {
     id: connector.id,
+    iri: connector.iri,
+    domain: connector.domain,
     name: connector.name,
     type: connector.type,
     semanticReference: connector.semanticReference,
@@ -332,6 +350,8 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
   nodes.forEach((node) => {
     const n = {
       id: node.id,
+      iri: node.iri,
+      domain: node.domain,
       name: node.name,
       version: node.version,
       label: node.label,
@@ -344,12 +364,12 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       positionY: node.positionY,
       positionBlockX: node.positionBlockX,
       positionBlockY: node.positionBlockY,
-      length: node.length,
       width: node.width,
       height: node.height,
       cost: node.cost,
       statusId: node.statusId,
       masterProjectId: node.masterProjectId,
+      masterProjectIri: node.masterProjectIri,
       symbol: node.symbol,
       connectors: ConvertConnectors(node.connectors),
       attributes: ConvertAttributes(node.attributes),
@@ -378,12 +398,14 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
   edges.forEach((edge) => {
     const e = {
       id: edge.id,
+      iri: edge.iri,
+      domain: edge.domain,
       fromConnectorId: edge.fromConnectorId,
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,
       toNodeId: edge.toNodeId,
       masterProjectId: edge.masterProjectId,
-      isTemplateEdge: edge.isTemplateEdge,
+      masterProjectIri: edge.masterProjectIri,
       transport: ConvertTransport(edge.transport),
       interface: ConvertInterface(edge.interface),
     } as EdgeAm;
@@ -397,6 +419,8 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
 const ConvertProject = (project: Project): ProjectAm => {
   return {
     id: project.id,
+    iri: project.iri,
+    domain: project.domain,
     name: project.name,
     isSubProject: project.isSubProject,
     version: project.version,

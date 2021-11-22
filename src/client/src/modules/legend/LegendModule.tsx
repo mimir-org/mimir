@@ -1,18 +1,16 @@
-import { ModuleBody } from "../../compLibrary/box/modules";
-import { LegendElement, LegendColor } from "../../compLibrary/box/library";
+import { LegendBody, LegendElement, LegendColor } from "./styled";
 import { LegendComponent } from "./";
 import { Project } from "../../models";
 
 interface Props {
-  visible: boolean;
   project: Project;
 }
 
-const LegendModule = ({ visible, project }: Props) => {
+const LegendModule = ({ project }: Props) => {
   const legends = LegendComponent(project);
 
   return (
-    <ModuleBody visible={visible} legend>
+    <LegendBody>
       {legends?.map((legend) => {
         return (
           <LegendElement key={legend.key}>
@@ -21,7 +19,7 @@ const LegendModule = ({ visible, project }: Props) => {
           </LegendElement>
         );
       })}
-    </ModuleBody>
+    </LegendBody>
   );
 };
 export default LegendModule;

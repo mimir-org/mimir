@@ -1,62 +1,81 @@
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
-import { Node, Project } from "../../../models";
-import { AspectBox } from "../../../compLibrary/box/aspect";
-import { CheckboxTree, CheckboxBlock } from "../checkboxComponent";
-import { IsBlockView, IsAspectNode, GetAspectIcon } from "../../../helpers";
-import { ExplorerLine } from "./styled";
+import { AspectBox, ElementBox, ExplorerAspectLine } from "./styled";
+import { VisibleComponent } from "../visibleComponent";
+import { LockComponent } from "../lockComponent";
+import { Elements } from "react-flow-renderer";
+import { Node } from "../../../models";
+import { useAppDispatch } from "../../../redux/store";
+import { IsBlockView } from "../../../helpers";
+import { AspectElement } from ".";
 
 interface Props {
   node: Node;
-  label: string;
-  indent: number;
-  project: Project;
-  isLeaf: boolean;
-  expanded: boolean;
-  elements: any[];
+  nodes: Node[];
   selectedNode: Node;
   secondaryNode: Node;
+  label: string;
+  indent: number;
+  isLeaf: boolean;
+  expanded: boolean;
+  elements: Elements<any>;
+  isAncestorVisible: boolean;
+  isVisible: boolean;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
+  onSetVisibleElement: (visible: boolean, nodeId: string) => void;
 }
 export const AspectComponent = ({
   node,
+  nodes,
+  selectedNode,
+  secondaryNode,
   label,
-  project,
   expanded,
   indent,
   isLeaf,
   elements,
-  selectedNode,
-  secondaryNode,
+  isAncestorVisible,
+  isVisible,
+  onSetVisibleElement,
   onElementExpanded,
-}: Props) => (
-  <>
-    <AspectBox indent={indent} node={node}>
-      {IsAspectNode(node) && <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon"></img>}
-      <div className="container">
-        {!IsBlockView() ? (
-          <CheckboxTree node={node} project={project} inputLabel={label} />
-        ) : (
-          <CheckboxBlock
-            elements={elements}
+}: Props) => {
+  const dispatch = useAppDispatch();
+  const blockView = IsBlockView();
+
+  return (
+    <>
+      <AspectBox node={node}>
+        <ElementBox indent={indent}>
+          {!blockView && (
+            <VisibleComponent
+              node={node}
+              isAncestorVisible={isAncestorVisible}
+              isVisible={isVisible}
+              onSetVisibleElement={onSetVisibleElement}
+            />
+          )}
+          <LockComponent node={node} />
+          <AspectElement
             node={node}
-            inputLabel={label}
             selectedNode={selectedNode}
             secondaryNode={secondaryNode}
+            nodes={nodes}
+            elements={elements}
+            label={label}
+            dispatch={dispatch}
           />
+        </ElementBox>
+        {!isLeaf && (
+          <img
+            className="expand-icon"
+            src={expanded ? ExpandIcon : CollapseIcon}
+            alt="expand-icon"
+            onClick={() => onElementExpanded(!expanded, node.id)}
+          ></img>
         )}
-      </div>
-
-      {!isLeaf && (
-        <img
-          className="expandIcon"
-          src={expanded ? ExpandIcon : CollapseIcon}
-          alt="expand-icon"
-          onClick={() => onElementExpanded(!expanded, node.id)}
-        ></img>
-      )}
-    </AspectBox>
-    <ExplorerLine node={node} />
-  </>
-);
+      </AspectBox>
+      <ExplorerAspectLine node={node} />
+    </>
+  );
+};
 
 export default AspectComponent;

@@ -1,9 +1,8 @@
-import { Size } from "../../compLibrary";
+import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
-import { IsBlockView } from "../../helpers";
+import { IsBlockView, GetSelectedNode } from "../../helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
-import { GetSelectedNode } from "../../helpers";
 import { InspectorElement } from "./types";
 import { useDragResizePanel } from "./helpers/useDragResizePanel";
 import { changeInspectorHeight } from "./redux/height/actions";
@@ -46,7 +45,6 @@ const InspectorModule = ({ inspectorRef }: Props) => {
   const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
 
   const resizePanelRef = useRef(null);
-
   const element: InspectorElement = node || edge;
 
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);

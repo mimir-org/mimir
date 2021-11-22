@@ -15,7 +15,7 @@ const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {
  * @param nodes Nodes to sort.
  */
 const InitialSortNodes = (nodes: Node[]): void => {
-  nodes.sort((a, b) => (a.aspect === b.aspect ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
+  nodes?.sort((a, b) => (a.aspect === b.aspect ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
 };
 
 /**

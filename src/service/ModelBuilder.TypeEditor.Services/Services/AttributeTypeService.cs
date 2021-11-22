@@ -40,10 +40,11 @@ namespace Mb.TypeEditor.Services.Services
                 .Include(x => x.Source)
                 .Include(x => x.Condition)
                 .Include(x => x.Format)
-                .Include(x => x.Units);
-                
+                .Include(x => x.Units)
+                .ToList();
+
             return aspect == Aspect.NotSet ?
-                all.ToList() :
+                all :
                 all.Where(x => x.Aspect.HasFlag(aspect)).ToList();
         }
 

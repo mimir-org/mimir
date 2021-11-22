@@ -41,10 +41,17 @@ export function create(name: string, description: string): Types.ProjectActionTy
   };
 }
 
-export function createSubProject(name: string, description: string, nodes: string[], edges: string[]): Types.CreateSubProject {
+export function createSubProject(
+  fromProjectId: string,
+  name: string,
+  description: string,
+  nodes: string[],
+  edges: string[]
+): Types.CreateSubProject {
   return {
     type: Types.CREATING_SUB_PROJECT,
     payload: {
+      fromProjectId,
       name,
       description,
       nodes,

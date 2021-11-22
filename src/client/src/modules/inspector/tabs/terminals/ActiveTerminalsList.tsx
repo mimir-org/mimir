@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Color } from "../../../../compLibrary";
+import { Color } from "../../../../compLibrary/colors";
 import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { ConnectorType, TerminalType } from "../../../../models";
 import { ActiveTerminalsTypeList } from "./";
@@ -85,13 +85,7 @@ function ActiveTerminalsList({
                   selectedTerminal: selectedTerminal,
                   selectedTerminalIdentifier: selectedTerminalIdentifier,
                   onTypeClick: (type: TerminalType, connectorType: ConnectorType) =>
-                    OnTypeClick(
-                      type,
-                      connectorType,
-                      isTypeExpanded(type, connectorType),
-                      selectedTypesIds,
-                      setSelectedTypesIds
-                    ),
+                    OnTypeClick(type, connectorType, isTypeExpanded(type, connectorType), selectedTypesIds, setSelectedTypesIds),
                   onSelectTerminal,
                 };
 

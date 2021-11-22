@@ -5,7 +5,7 @@ import { Menu } from "./styled";
 import { InspectorTabs } from ".";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { Action, Dispatch } from "redux";
-import InspectorButtonRow from "./InspectorButtonRow";
+import { InspectorButtonRow } from "./";
 
 interface Props {
   project: Project;

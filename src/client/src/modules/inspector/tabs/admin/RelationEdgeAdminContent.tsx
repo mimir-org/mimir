@@ -1,5 +1,5 @@
 import { TabColumn } from "../../styled";
-import { Input } from "../../../../compLibrary";
+import { Input } from "../../../../compLibrary/input/text";
 import { Edge } from "../../../../models";
 import { GetRelationName } from "../../helpers";
 import { TextResources } from "../../../../assets/text";

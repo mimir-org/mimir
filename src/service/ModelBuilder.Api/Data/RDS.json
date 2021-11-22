@@ -112,21 +112,21 @@
     "SemanticReference": null
   },
   {
-    "Code": "JD",
+    "Code": "JE",
     "Name": "Electrical power transport/distribution system",
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",
     "SemanticReference": null
   },
   {
-    "Code": "JF",
+    "Code": "JG",
     "Name": "Thermal energy transport/distribution system",
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",
     "SemanticReference": null
   },
   {
-    "Code": "JE",
+    "Code": "JF",
     "Name": "Mechanical energy transport/distribution system",
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",
@@ -532,6 +532,13 @@
     "SemanticReference": null
   },
   {
+    "Code": "RAC",
+    "Name": "Electrical resistor",
+    "Aspect": "Function, Product, Location",
+    "RdsCategoryId": "D5253F4F8DE05B301F3598001252C082",
+    "SemanticReference": null
+  },
+  {
     "Code": "RMA",
     "Name": "Non-return valve, fluid one-way barrier",
     "Aspect": "Function, Product, Location",
@@ -548,6 +555,20 @@
   {
     "Code": "RQC",
     "Name": "Noise barrier",
+    "Aspect": "Function, Product, Location",
+    "RdsCategoryId": "D5253F4F8DE05B301F3598001252C082",
+    "SemanticReference": null
+  },
+  {
+    "Code": "ULQ",
+    "Name": "Skid, Package foundation",
+    "Aspect": "Function, Product, Location",
+    "RdsCategoryId": "D5253F4F8DE05B301F3598001252C082",
+    "SemanticReference": null
+  },
+  {
+    "Code": "XEE",
+    "Name": "Earth connection",
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "D5253F4F8DE05B301F3598001252C082",
     "SemanticReference": null

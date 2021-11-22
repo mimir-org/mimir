@@ -23,6 +23,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SourceId, opt => opt.MapFrom(src => src.SourceId))
                 .ForMember(dest => dest.ConditionId, opt => opt.MapFrom(src => src.ConditionId))
                 .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.ConvertToObject))
@@ -30,6 +31,8 @@ namespace Mb.Core.Profiles
 
             CreateMap<AttributeType, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
+                .ForMember(dest => dest.Iri, opt => opt.Ignore())
+                .ForMember(dest => dest.Domain, opt => opt.Ignore())
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Entity))
                 .ForMember(dest => dest.Value, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.Ignore())
@@ -49,10 +52,13 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
-                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString));
+                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags));
 
             CreateMap<AttributeAm, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
@@ -78,10 +84,13 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
                 .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
                 .ForMember(dest => dest.CompositeId, opt => opt.MapFrom(src => src.CompositeId))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
             CreateMap<Attribute, AttributeAm>()
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+               .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+               .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
@@ -99,6 +108,7 @@ namespace Mb.Core.Profiles
                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
+               .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
 
             CreateMap<UnitAm, Unit>()

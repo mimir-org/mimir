@@ -1,10 +1,8 @@
 import * as Click from "./handlers";
-import { TerminalsMenuComponent } from ".";
+import { TerminalsMenuBox, TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
-import { GetMenuIcon } from "./helpers";
-import { TerminalsBox } from "./styled";
-import { IsInputTerminal } from "../../helpers";
-import { IsAspectNode } from "../../../../helpers";
+import { IsInputTerminal, IsPartOf } from "../../helpers";
+import { nodeSizeSelector, useAppSelector } from "../../../../redux/store";
 
 interface Props {
   node: Node;
@@ -36,27 +34,28 @@ const TerminalsContainerComponent = ({
   showOutTerminalMenu,
   onClick,
 }: Props) => {
-  const inTerminals = terminals.filter((t) => IsInputTerminal(t));
-  const outTerminals = terminals.filter((t) => !IsInputTerminal(t));
+  const inTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
+  const outTerminals = terminals.filter((t) => !IsInputTerminal(t) && !IsPartOf(t));
+  const parentBlockSize = useAppSelector(nodeSizeSelector);
 
   return (
     <>
-      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && !!inTerminals.length} parent={parent} input={true}>
-        <img
-          src={GetMenuIcon(node, parent, true)}
-          alt="menu"
-          onClick={() => Click.OnInputMenu(showInTerminalMenu, inputMenuOpen)}
-        />
-      </TerminalsBox>
-
-      <TerminalsBox visible={showMenuBox && !IsAspectNode(node) && !!outTerminals.length} parent={parent} input={false}>
-        <img
-          src={GetMenuIcon(node, parent, false)}
-          alt="menu"
-          onClick={() => Click.OnOutputMenu(showOutTerminalMenu, outputMenuOpen)}
-        />
-      </TerminalsBox>
-
+      <TerminalsMenuBox
+        node={node}
+        isParent={parent}
+        isInput={true}
+        showMenuBox={showMenuBox}
+        terminals={inTerminals}
+        onClick={() => Click.OnInputMenu(showInTerminalMenu, inputMenuOpen)}
+      />
+      <TerminalsMenuBox
+        node={node}
+        isParent={parent}
+        isInput={false}
+        showMenuBox={showMenuBox}
+        terminals={outTerminals}
+        onClick={() => Click.OnOutputMenu(showOutTerminalMenu, outputMenuOpen)}
+      />
       {inputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
@@ -67,6 +66,7 @@ const TerminalsContainerComponent = ({
           electro={electro}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showInTerminalMenu, inputMenuOpen)}
+          parentBlockSize={parentBlockSize}
         />
       )}
       {outputMenuOpen && (
@@ -79,6 +79,7 @@ const TerminalsContainerComponent = ({
           terminals={outTerminals}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showOutTerminalMenu, outputMenuOpen)}
+          parentBlockSize={parentBlockSize}
         />
       )}
     </>

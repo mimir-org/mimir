@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application
@@ -6,6 +7,8 @@ namespace Mb.Models.Application
     public class AttributeAm
     {
         public string Id { get; set; }
+        public string Iri { get; set; }
+        public string Domain { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }
@@ -17,6 +20,7 @@ namespace Mb.Models.Application
         public string SourceId { get; set; }
         public string ConditionId { get; set; }
         public string FormatId { get; set; }
+        public virtual HashSet<string> Tags { get; set; }
         public string TerminalId { get; set; }
         public string NodeId { get; set; }
         public string TransportId { get; set; }

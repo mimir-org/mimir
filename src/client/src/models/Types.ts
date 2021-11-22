@@ -14,6 +14,7 @@ export interface AttributeType {
   formatId: string;
   format: EnumBase;
   units: EnumBase[];
+  tags: Set<string>;
   description: string;
   selectValues: string[];
   selectType: SelectType;
@@ -72,6 +73,8 @@ export interface LibrarySubProjectItem {
 
 export interface ProjectSimple {
   id: string;
+  iri: string;
+  domain: string;
   name: string;
   description: string;
   projectOwner: string;
@@ -145,8 +148,9 @@ export interface LocationType {
 }
 
 export interface User {
-  username: string;
   name: string;
+  email: string;
+  role: string;
 }
 
 export interface FileData {

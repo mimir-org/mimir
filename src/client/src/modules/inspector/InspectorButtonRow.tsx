@@ -1,5 +1,5 @@
-import { Action, Dispatch } from "redux";
 import * as Click from "./handlers";
+import { Action, Dispatch } from "redux";
 import { DownIcon, UpIcon } from "../../assets/icons/toogle";
 import { TextResources } from "../../assets/text";
 import { InspectorButton } from "../../compLibrary/buttons";
@@ -9,8 +9,7 @@ import { IsCreateLibraryType, IsNode } from "./helpers/IsType";
 import { ButtonWrapper, Title, ToggleBox } from "./styled";
 import { InspectorElement } from "./types";
 import { useState } from "react";
-import { IsBlockView, IsAspectNode } from "../../helpers";
-import { GetSelectedNode } from "../../helpers";
+import { IsBlockView, IsAspectNode, GetSelectedNode } from "../../helpers";
 
 interface Props {
   project: Project;

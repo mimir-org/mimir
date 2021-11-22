@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { ModuleBox } from "../box/modules";
+import { ModuleBox } from ".";
 import { MODULE_TYPE } from "../../models/project";
 
 interface Props {
@@ -19,7 +19,7 @@ ${!run ? (start = stop) : null}
   }  
 `;
 
-const AnimatedModule = styled(ModuleBox)`
+const AnimatedModule = styled((props) => <ModuleBox {...props} />)`
   animation: ${Animation} 0.2s ease-in-out;
 `;
 

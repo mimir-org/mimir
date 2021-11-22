@@ -1,9 +1,8 @@
-import { accountMenuSelector, flowViewSelector, useAppDispatch, useAppSelector } from "../../redux/store";
 import { useEffect, useRef } from "react";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
-import { AccountMenu } from "../menus/accountMenu";
-import { getUser } from "../../redux/store/user/actions";
+import { ProjectMenuComponent } from "../menus/projectMenu";
+import { UserMenuComponent } from "../menus/userMenu";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
@@ -11,6 +10,10 @@ import { TypeEditorComponent } from "../../typeEditor";
 import { getContractors, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { getBlobData } from "../../typeEditor/redux/actions";
+import { Header } from "../header";
+import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
+import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
+import { getUser } from "../../redux/store/user/actions";
 
 /**
  * The main component for Mimir
@@ -18,7 +21,9 @@ import { getBlobData } from "../../typeEditor/redux/actions";
  */
 const Home = () => {
   const dispatch = useAppDispatch();
-  const accountMenuOpen = useAppSelector(accountMenuSelector);
+  const projectMenuOpen = useAppSelector(projectMenuSelector);
+  const userMenuOpen = useAppSelector(userMenuSelector);
+
   const flowView = useAppSelector(flowViewSelector);
   const inspectorRef = useRef(null);
 
@@ -33,11 +38,15 @@ const Home = () => {
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
     dispatch(getBlobData());
+    dispatch(getUser());
   }, [dispatch]);
 
   return (
     <>
-      {accountMenuOpen && <AccountMenu />}
+      <Header />
+      {projectMenuOpen && <ProjectMenuComponent />}
+      {userMenuOpen && <UserMenuComponent />}
+      <ExplorerModule />
       <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
       <InspectorModule inspectorRef={inspectorRef} />
       <LibraryModule />

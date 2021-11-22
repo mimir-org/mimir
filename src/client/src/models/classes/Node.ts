@@ -5,6 +5,8 @@ export const NODE_KIND: string = "Node";
 
 class Node {
   id: string;
+  iri: string;
+  domain: string;
   rds: string;
   contractor: string;
   description: string;
@@ -33,14 +35,13 @@ class Node {
   aspect: Aspect;
   isRoot: boolean | false;
   masterProjectId: string;
+  masterProjectIri: string;
   symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
   composites: Composite[];
-
-  length: number;
   width: number;
-  height: number; // Only for location aspect
+  height: number;
 
   // Required only for product aspect
   cost: number;
@@ -49,15 +50,8 @@ class Node {
   isSelected: boolean | false;
   isBlockSelected: boolean | false;
   isHidden: boolean | false;
-  blockWidth: number;
-  blockLength: number;
 
   kind: string = NODE_KIND;
-
-  area(): number {
-    if (!this.length || !this.width) return 0;
-    return this.length * this.width;
-  }
 
   constructor(node: Node) {
     Object.assign(this, node);
