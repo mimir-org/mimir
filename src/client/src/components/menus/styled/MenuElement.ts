@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
 
 interface Props {
+  disabled: boolean;
   logOut?: boolean;
 }
 
@@ -15,6 +16,8 @@ const MenuElement = styled.div<Props>`
     margin-left: 12px;
     display: inline;
     vertical-align: super;
+    font-weight: ${(props) => props.disabled && 300};
+    font-style: ${(props) => props.disabled && "italic"};
   }
 
   .icon {
@@ -24,8 +27,8 @@ const MenuElement = styled.div<Props>`
   }
 
   &:hover {
-    background-color: ${(props) => !props.logOut && Color.LightBlue};
-    text-decoration: ${(props) => !props.logOut && "underline"};
+    background-color: ${(props) => !props.logOut && !props.disabled && Color.LightBlue};
+    text-decoration: ${(props) => !props.logOut && !props.disabled && "underline"};
   }
 `;
 

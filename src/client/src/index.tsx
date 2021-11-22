@@ -1,4 +1,3 @@
-import "./index.scss";
 import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";

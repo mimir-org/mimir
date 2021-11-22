@@ -12,11 +12,11 @@ const TerminalsBox = styled.div<Props>`
   position: absolute;
   top: 6px;
   cursor: pointer;
-  z-index: 5;
   transition: opacity 250ms ease-in-out;
-
+  pointer-events: all;
   left: ${(props) => (props.input && props.parent ? "9px" : props.input && !props.parent ? "-1px" : "unset")};
   right: ${(props) => (!props.input && props.parent ? "7px" : !props.input && !props.parent ? "-1px" : "unset")};
+  z-index: 6;
 `;
 
 export default TerminalsBox;

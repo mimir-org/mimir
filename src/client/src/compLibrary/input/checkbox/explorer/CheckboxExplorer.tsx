@@ -14,7 +14,7 @@ interface Props {
  */
 const CheckboxExplorer = ({ label, onChange, isChecked, isMiniCheckbox, color }: Props) => (
   <CheckboxWrapper color={color} miniCheckBox={isMiniCheckbox}>
-    <input type="checkbox" checked={isChecked} onChange={() => onChange()} />
+    <input type="checkbox" checked={isChecked ?? false} onChange={() => onChange()} />
     <div className="label">{label}</div>
   </CheckboxWrapper>
 );

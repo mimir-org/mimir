@@ -5,6 +5,7 @@ const Color = {
   GreyHeader: "#4F4F4F",
   GreyInspector: "#FAFAFA",
   GreyInspectorDisabled: "#C5C5C5",
+  GreyToolBarSelected: "#6F6F6F",
   Grey: "#d9d9d9",
   DarkGrey: "#c4c4c4",
   DarkerGrey: "#898787",

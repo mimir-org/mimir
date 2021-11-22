@@ -6,7 +6,6 @@ using System.Text;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Exceptions;
-using Mb.Models.Properties;
 
 namespace Mb.Models.Extensions
 {
@@ -52,7 +51,6 @@ namespace Mb.Models.Extensions
                 Id = terminalCategoryId
             };
 
-            //category.Id = category.Key.CreateMd5();
             var createTerminalType = new CreateTerminalType
             {
                 Name = terminalName,
@@ -111,6 +109,18 @@ namespace Mb.Models.Extensions
             return idSplit.Length <= 0 ? 
                 string.Empty : 
                 $"{domain.Trim()}_{hashSplit[^1].Trim()}";
+        }
+
+        public static string ResolveNameFromRoleClaim(this string role)
+        {
+            if (string.IsNullOrEmpty(role))
+                return string.Empty;
+
+            var name = role.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            if (name.Length != 2)
+                throw new ModelBuilderInvalidOperationException("The role name contains fail format.");
+
+            return name[^1];
         }
 
         #region Private

@@ -1,16 +1,17 @@
-import { MenuElement } from "../../styled";
-import { GetText, GetIcon } from "./";
+import { ProjectMenuElement } from "../../styled";
+import { GetText, GetIcon } from ".";
 
 interface Props {
   type: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-const GetMenuElement = ({ type, onClick }: Props) => (
-  <MenuElement onClick={onClick}>
+const GetMenuElement = ({ type, onClick, disabled }: Props) => (
+  <ProjectMenuElement onClick={onClick} disabled={disabled}>
     <div className="icon">{GetIcon(type)}</div>
     <p className="text">{GetText(type)}</p>
-  </MenuElement>
+  </ProjectMenuElement>
 );
 
 export default GetMenuElement;

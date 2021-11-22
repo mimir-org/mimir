@@ -4,7 +4,7 @@ name: CI - TEST
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ feature/sprint3 ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,10 +30,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:test --build-arg ENVIR=test
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:test
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:testaibel --build-arg ENVIR=testaibel
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:testaibel
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:test --build-arg ENVIR=test
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:test
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:testaibel --build-arg ENVIR=testaibel
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:testaibel
     
   # This workflow contains a single job called "build"
   build-server:
@@ -52,8 +52,8 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:test
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:test
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:test
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:test
       
       
           

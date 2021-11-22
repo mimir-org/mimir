@@ -29,7 +29,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
         <ProjectBody>
           <HeaderBox>
             <img src={CloseIcon} alt="icon" onClick={() => Click.OnReturn(dispatch)} className="icon" />
-            {TextResources.Account_Open_Label}
+            {TextResources.Project_Open_Label}
           </HeaderBox>
           <SearchBar />
           <ProjectList projectList={projects} />
@@ -42,7 +42,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
           handleNoSave={() => Click.OnNoSave(dispatch, projectId, setConfirm)}
           showConfirm={confirm}
           setConfirm={setConfirm}
-          text={TextResources.Account_Confirm_Save}
+          text={TextResources.Project_Confirm_Save}
         />
       )}
     </>

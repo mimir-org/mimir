@@ -2,9 +2,22 @@ import { createGlobalStyle } from "styled-components";
 import { FontType } from "./font";
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: ${FontType.Standard}
+  html, body {
+    font-family: ${FontType.Standard};
+    width: 100%;
+    margin: 0px;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
   };
+
+  #root {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    --avatar-size: 2rem;
+  }
 
   ::-webkit-scrollbar {
     width: 14px;

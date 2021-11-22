@@ -26,3 +26,5 @@ export { default as SetIndentLevel } from "./SetIndentLevel";
 export { default as UseIndentLevel } from "./UseIndentLevel";
 export * from "./UseSelectFlowElements";
 export * from "./UseSelectedFlowElements";
+export * from "./useSelectedNodes";
+export * from "./UseSetSelectNodes";

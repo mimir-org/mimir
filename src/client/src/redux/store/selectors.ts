@@ -77,6 +77,11 @@ export const isOpenSelector = createAppSelector(
   (types) => !!types.find((m) => m.visible)
 );
 
+// export const userRoleSelector = createAppSelector(
+//   (state) => state.userRoles?.user?.role,
+//   (role) => role as User
+// );
+
 export const libOpenSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.LIBRARY).visible

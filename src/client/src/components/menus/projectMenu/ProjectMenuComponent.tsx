@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { CommitProjectMenu } from "../projectMenu/subMenus/commitProject";
 import { CreateSubProjectMenu } from "../projectMenu/subMenus/createSubProject";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
-import { ProjectNameBox } from "./styled";
 import { ProjectMenuBox } from "../styled";
 
 /**
@@ -37,19 +36,25 @@ const ProjectMenuComponent = () => {
 
   return (
     <>
-      <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} isProject={true}>
-        <ProjectNameBox>
-          <p>{projectState?.project?.name}</p>
-        </ProjectNameBox>
-        <GetMenuElement type={TextResources.Account_Open} onClick={() => Click.OnOpenClick(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Create} onClick={() => Click.OnCreate(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
-        <GetMenuElement type={TextResources.Account_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Commit} onClick={() => Click.OnCommit(dispatch)} />
-        <GetMenuElement type={TextResources.Account_SubProject_Create} onClick={() => Click.OnCreateSubprojectClick(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
-        <GetMenuElement type={TextResources.Account_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
+      <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU}>
+        <GetMenuElement type={TextResources.Project_Open} onClick={() => Click.OnOpenClick(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Create} onClick={() => Click.OnCreate(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Save} onClick={() => Click.OnSave(dispatch, projectState)} />
+        <GetMenuElement type={TextResources.Project_Save_Library} onClick={() => Click.OnSaveLibrary(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Save_File} onClick={() => Click.OnSaveFile(dispatch)} />
+        <GetMenuElement
+          type={TextResources.Project_Commit}
+          onClick={() => Click.OnCommit(dispatch)}
+          disabled={!projectState?.project?.isSubProject}
+        />
+        <GetMenuElement
+          type={TextResources.Project_SubProject_Create}
+          onClick={() => Click.OnCreateSubprojectClick(dispatch)}
+          disabled={!selectedNodeIds}
+        />
+
+        <GetMenuElement type={TextResources.Project_Import_Project} onClick={() => Click.OnImportProject(dispatch)} />
+        <GetMenuElement type={TextResources.Project_Import_Lib_Label} onClick={() => Click.OnImportLibrary(dispatch)} />
       </ProjectMenuBox>
 
       <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
@@ -62,8 +67,14 @@ const ProjectMenuComponent = () => {
         contractors={commonState.contractors}
         parsers={commonState.parsers}
         projectId={projectState?.project?.id}
+        disabled={!projectState?.project?.isSubProject}
       />
-      <CreateSubProjectMenu fromProjectId={projectState?.project?.id} nodeIds={selectedNodeIds} edgeIds={selectedEdgeIds} />
+      <CreateSubProjectMenu
+        fromProjectId={projectState?.project?.id}
+        nodeIds={selectedNodeIds}
+        edgeIds={selectedEdgeIds}
+        disabled={!selectedNodeIds}
+      />
     </>
   );
 };

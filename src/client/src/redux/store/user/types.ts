@@ -11,13 +11,12 @@ export interface UserState {
   user: User | null;
   apiError: ApiError[];
 }
-
-// Action types
-interface FetchUserAction {
+interface FetchingUserAction {
   type: typeof FETCHING_USER;
   payload: null;
 }
-interface FetchUserActionFinished {
+
+interface FetchingUserActionFinished {
   type: typeof FETCHING_USER_SUCCESS_OR_ERROR;
   payload: {
     user: User;
@@ -32,4 +31,4 @@ interface DeleteUserErrorAction {
   };
 }
 
-export type UserActionTypes = FetchUserAction | FetchUserActionFinished | DeleteUserErrorAction;
+export type UserActionTypes = FetchingUserAction | FetchingUserActionFinished | DeleteUserErrorAction;

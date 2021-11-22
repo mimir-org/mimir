@@ -1,10 +1,8 @@
-import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
 import { useEffect, useRef } from "react";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
 import { ProjectMenuComponent } from "../menus/projectMenu";
 import { UserMenuComponent } from "../menus/userMenu";
-import { getUser } from "../../redux/store/user/actions";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
@@ -14,6 +12,8 @@ import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary
 import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
+import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
+import { getUser } from "../../redux/store/user/actions";
 
 /**
  * The main component for Mimir
@@ -38,6 +38,7 @@ const Home = () => {
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
     dispatch(getBlobData());
+    dispatch(getUser());
   }, [dispatch]);
 
   return (
