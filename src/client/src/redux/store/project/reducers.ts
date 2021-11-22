@@ -270,6 +270,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       const nodeId = action.payload.nodeId;
       const allNodes = state.project.nodes;
       const active = action.payload.isActive;
+
       return {
         ...state,
         project: {

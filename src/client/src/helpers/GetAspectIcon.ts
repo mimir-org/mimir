@@ -1,10 +1,11 @@
 import * as Icons from "../assets/icons/aspects";
-import { Aspect, Node } from "../models";
+import { IsFunction, IsLocation, IsProduct } from ".";
+import { Node } from "../models";
 
 const GetAspectIcon = (node: Node): string => {
-  if (node.aspect === Aspect.Function) return Icons.Function;
-  if (node.aspect === Aspect.Product) return Icons.Product;
-  if (node.aspect === Aspect.Location) return Icons.Location;
+  if (IsFunction(node)) return Icons.Function;
+  if (IsProduct(node)) return Icons.Product;
+  if (IsLocation(node)) return Icons.Location;
   return null;
 };
 

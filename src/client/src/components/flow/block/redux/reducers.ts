@@ -4,8 +4,8 @@ import { Size } from "../../../../compLibrary/size";
 
 const initialState = {
   size: {
-    width: Size.BlockWidth - Size.BlockMarginX,
-    height: Size.BlockHeight - Size.BlockMarginY,
+    width: window.innerWidth - Size.BlockMarginX,
+    height: window.innerHeight - Size.BlockMarginY,
   } as BlockNodeSize,
 };
 

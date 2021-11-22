@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
-import { GetBlockNodeTypes, GetParent, IsTransport } from "../helpers";
+import { GetBlockNodeTypes, IsTransport } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { BlockFilterMenu } from "../../menus/filterMenu/";
@@ -40,7 +41,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
-  const [elements, setElements] = useState<Elements>();
+  const [elements, setElements] = useState<Elements>([]);
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
@@ -51,16 +52,14 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const parentNodeSize = useAppSelector(nodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
   const showLocation3D = useAppSelector(location3DSelector);
-
   const node = GetSelectedNode();
-  const parent = GetParent(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize, animatedEdge));
+      setElements(BuildBlockElements(project, node, secondaryNode, parentNodeSize, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, parent, parentNodeSize, animatedEdge]
+    [project, node, secondaryNode, parentNodeSize, animatedEdge]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -127,7 +126,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     project?.edges.forEach((e) => {
       if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, true));
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSelectionChange = (selectedElements: Elements) => {

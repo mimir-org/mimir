@@ -8,6 +8,7 @@ const Size = {
   BlockHeight: window.innerHeight,
   BlockSmallWidth: window.innerWidth / 2,
   BlockMarginX: 450,
+  BlockSecondaryMarginX: 250,
   BlockMarginY: 100,
 
   // Terminals

@@ -31,8 +31,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   // Set size
   useEffect(() => {
-    const margin = secondaryNode ? 250 : Size.BlockMarginX;
-    const width = secondaryNode ? Size.BlockSmallWidth : Size.BlockWidth;
+    const width = secondaryNode ? window.innerWidth / 2 : window.innerWidth;
+    const margin = secondaryNode ? Size.BlockSecondaryMarginX : Size.BlockMarginX;
     dispatch(setBlockNodeSize(width - margin, Size.BlockHeight));
   }, [dispatch, secondaryNode]);
 
