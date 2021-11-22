@@ -34,6 +34,7 @@ const InspectorButtonRow = ({
 }: Props) => {
   const [validated, setValidated] = useState(false);
   const deleteDisabled = IsNode(element) && (IsAspectNode(element) || (IsBlockView() && element === GetSelectedNode()));
+
   return (
     <ButtonWrapper visible={!!element}>
       {!IsCreateLibraryType(element) && (

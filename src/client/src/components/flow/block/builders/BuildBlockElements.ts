@@ -31,7 +31,7 @@ const BuildBlockElements = (
     const parentProduct = BuildParentProductNode(selectedNode);
     parentProduct && elements.push(parentProduct);
 
-    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge);
+    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, parentNodeSize);
     return elements;
   }
 

@@ -11,11 +11,10 @@ import { SetConnectorOrder } from "./helpers";
  */
 const BuildParentProductNode = (node: Node) => {
   if (!node) return null;
-
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentProductNode;
-  const position = { x: -125, y: -40 };
+  const position = { x: -125, y: -40 }; // TODO: fix hard-coded position
 
   return {
     key: CreateId(),
