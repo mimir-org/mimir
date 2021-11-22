@@ -43,6 +43,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         height={parentBlockSize.height}
         hasChildren={terminals.length > 0}
         company={process.env.REACT_APP_COMPANY}
+        dispatch={dispatch}
       />
 
       <TerminalsContainerComponent
