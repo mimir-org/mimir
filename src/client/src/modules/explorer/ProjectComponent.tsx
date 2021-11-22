@@ -44,9 +44,9 @@ const ProjectComponent = () => {
           return (
             <BlockAspectComponent
               key={node.id}
+              node={node}
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
-              node={node}
               label={node.label}
               indent={indent}
               expanded={!closedNodes.has(node.id)}

@@ -4,6 +4,7 @@ import { LockComponent } from "../lockComponent";
 import { Elements } from "react-flow-renderer";
 import { Node } from "../../../models";
 import { BlockAspectElement } from ".";
+import { SetBlockNodeIndent } from "./helpers";
 
 interface Props {
   node: Node;
@@ -31,7 +32,7 @@ export const BlockAspectComponent = ({
 }: Props) => (
   <>
     <AspectBox node={node}>
-      <ElementBox indent={indent}>
+      <ElementBox indent={SetBlockNodeIndent(node, indent)}>
         <LockComponent node={node} />
         <BlockAspectElement
           node={node}

@@ -31,6 +31,8 @@ const TreeAspectElement = ({ node, nodes, label }: Props) => {
       color={GetAspectColor(node, AspectColorType.Selected)}
       isChecked={IsCheckedTree(node, selectedNodes)}
       isMiniCheckbox={false}
+      isBlockView={false}
+      isAspectNode={IsAspectNode(node)}
       onChange={() => OnSelectActiveNode(node, nodes, selectedNodes, setActiveNodeElement)}
     />
   );

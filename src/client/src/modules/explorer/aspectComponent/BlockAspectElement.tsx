@@ -25,7 +25,7 @@ const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, label
     <>
       {IsAspectNode(node) && (
         <AspectHeader>
-          <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon" />
+          <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon-block" />
         </AspectHeader>
       )}
       <CheckboxExplorer
@@ -33,6 +33,8 @@ const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, label
         color={GetAspectColor(node, AspectColorType.Selected)}
         isChecked={IsChecked(elements, node)}
         isMiniCheckbox={IsMiniCheckbox(node, selectedNode, secondaryNode)}
+        isBlockView={true}
+        isAspectNode={IsAspectNode(node)}
         onChange={() => OnBlockChange(node, selectedNode, secondaryNode, dispatch)}
       />
     </>
