@@ -61,7 +61,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:development": "env-cmd -f .env.development react-scripts build",
+    "build:dev": "env-cmd -f .env.dev react-scripts build",
     "build:test": "env-cmd -f .env.test react-scripts build",
     "build:testaibel": "env-cmd -f .env.testaibel react-scripts build",
     "build:prod": "env-cmd -f .env.prod react-scripts build",

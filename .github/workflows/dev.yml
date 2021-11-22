@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev --build-arg ENVIR=development
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev --build-arg ENVIR=dev
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev
     
   # This workflow contains a single job called "build"
