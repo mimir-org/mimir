@@ -19,6 +19,7 @@ import {
   SaveButton,
   TypeEditorInspectorWrapper,
 } from "./styled";
+import { GetPropertiesHeight } from "./helpers/GetPropertiesHeight";
 
 /**
  * Component for adding or editing a type
@@ -49,7 +50,7 @@ export const TypeEditorComponent = () => {
             locationTypes={state?.locationTypes}
             purposes={state?.purposes}
           />
-          <ChooseProperties ref={typeEditorPropertiesRef}>
+          <ChooseProperties ref={typeEditorPropertiesRef} height={GetPropertiesHeight(true)}>
             <TypeEditorList
               items={state?.rdsList}
               createLibraryType={state?.createLibraryType}
