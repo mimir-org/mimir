@@ -14,7 +14,7 @@ import { setBlockNodeSize } from "../../redux/actions";
 const ResizeHandler = (node: Node, secondaryNode: Node, size: BlockNodeSize, dispatch: any) => {
   const updateScreenSize = () => {
     const width = secondaryNode ? window.innerWidth / 2 : window.innerWidth;
-    const marginX = secondaryNode ? 250 : Size.BlockMarginX;
+    const marginX = secondaryNode ? Size.BlockSecondaryMarginX : Size.BlockMarginX;
 
     dispatch(setBlockNodeSize(width - marginX, Size.BlockHeight));
   };
