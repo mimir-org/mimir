@@ -405,13 +405,13 @@ namespace RdfParserModule
                 var nodeAspect = GetOrCreateUriNode(_namespaces["imf"] + node.Aspect);
                 Graph.Assert(new Triple(nodeId, hasAspect, nodeAspect));
 
-                if (!string.IsNullOrEmpty(node.Rds))
-                {
-                    var qname = $"og{node.Rds.Length}:{node.Aspect}{node.Rds}";
-                    var nodeRds = GetOrCreateUriNode(qname);
+                if (string.IsNullOrEmpty(node.Rds)) continue;
 
-                    Graph.Assert(new Triple(nodeId, type, nodeRds));
-                }
+                var strippedRds = node.StrippedRds();
+                var qname = $"og{strippedRds.Length}:{node.Aspect}{strippedRds}";
+                var nodeRds = GetOrCreateUriNode(qname);
+
+                Graph.Assert(new Triple(nodeId, type, nodeRds));
 
 
             }
