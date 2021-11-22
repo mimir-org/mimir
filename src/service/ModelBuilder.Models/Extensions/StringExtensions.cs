@@ -113,6 +113,18 @@ namespace Mb.Models.Extensions
                 $"{domain.Trim()}_{hashSplit[^1].Trim()}";
         }
 
+        public static string ResolveNameFromRoleClaim(this string role)
+        {
+            if (string.IsNullOrEmpty(role))
+                return string.Empty;
+
+            var name = role.Split('_', StringSplitOptions.RemoveEmptyEntries);
+            if (name.Length != 2)
+                throw new ModelBuilderInvalidOperationException("The role name contains fail format.");
+
+            return name[^1];
+        }
+
         #region Private
 
         private static string IncrementVersion(string version, bool incrementMajor, bool incrementMinor, bool incrementCommit)

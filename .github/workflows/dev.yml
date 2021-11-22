@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI - DEV
 
 # Controls when the action will run. 
@@ -32,8 +30,8 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev --build-arg ENVIR=dev
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-client:dev
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:dev --build-arg ENVIR=dev
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:dev
     
   # This workflow contains a single job called "build"
   build-server:
@@ -52,5 +50,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:dev
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/modelbuilder-service:dev
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:dev
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:dev

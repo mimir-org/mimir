@@ -6,10 +6,10 @@ interface Props {
   node: Node;
 }
 
-const ExplorerLine = styled.div<Props>`
+const ExplorerAspectLine = styled.div<Props>`
   visibility: ${(props) => !props.node.isRoot && "hidden"};
   height: ${(props) => props.node.isRoot && 2}px;
   background-color: ${(props) => GetAspectColor(props.node, AspectColorType.Selected)};
 `;
 
-export default ExplorerLine;
+export default ExplorerAspectLine;

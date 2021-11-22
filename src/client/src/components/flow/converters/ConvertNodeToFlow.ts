@@ -1,6 +1,8 @@
 import { FlowElement } from "react-flow-renderer";
+import { IsAspectNode } from "../../../helpers";
 import { Node } from "../../../models";
-import { GetNodeType } from "../helpers";
+import { GetNodeType, GetParent } from "../helpers";
+import { SetTreeNodePosition } from "../tree/helpers";
 
 /**
  * Component to convert a Mimir Node to a FlowElement that interacts with the Flow library.
@@ -9,7 +11,7 @@ import { GetNodeType } from "../helpers";
  */
 const ConvertNodeToFlow = (node: Node) => {
   if (!node) return null;
-  const position = { x: node.positionX, y: node.positionY };
+  const position = SetTreeNodePosition(node, GetParent(node));
 
   return {
     id: node.id,
@@ -19,7 +21,7 @@ const ConvertNodeToFlow = (node: Node) => {
     isHidden: false, // Opacity is controlled by the styled component
     isSelected: node.isSelected,
     draggable: true,
-    selectable: true,
+    selectable: !IsAspectNode(node),
     connectable: true,
   } as FlowElement;
 };
