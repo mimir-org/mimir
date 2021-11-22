@@ -19,6 +19,8 @@ namespace RdfParserModule
         // For ParserEdge
         public string FromConnectorId { get; set; }
         public string ToConnectorId { get; set; }
+        public ParserConnector FromConnector { get; set; }
+        public ParserConnector ToConnector { get; set; }
         public string FromConnectorIri { get; set; }
         public string ToConnectorIri { get; set; }
         

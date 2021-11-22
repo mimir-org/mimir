@@ -6,8 +6,8 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
 
 # IMF specific
-@prefix imf: <https://example.com/imf#>.
-@prefix mimir: <https://example.com/mimir#> .
+@prefix imf: <http://example.com/imf#>.
+@prefix mimir: <http://example.com/mimir#> .
 @prefix lis: <http://standards.iso.org/iso/15926/part14/> .
 
 # Industry specific

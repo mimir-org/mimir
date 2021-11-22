@@ -6,8 +6,12 @@
         public string Domain { get; set; }
         public string FromConnectorId { get; set; }
         public string ToConnectorId { get; set; }
+        public ParserConnector FromConnector { get; set; }
+        public ParserConnector ToConnector { get; set; }
         public string FromNodeId { get; set; }
         public string ToNodeId { get; set; }
+        public ParserNode FromNode { get; set; }
+        public ParserNode ToNode { get; set; }
         public string MasterProjectIri { get; set; }
         public ParserNode Transport { get; set; }
         public ParserNode Interface { get; set; }

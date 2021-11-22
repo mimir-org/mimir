@@ -27,6 +27,8 @@ namespace RdfParserModule
         public List<ParserNode> ParserNodes;
         public List<ParserEdge> ParserEdges;
 
+        private Dictionary<string, string> _namespaces;
+
         private readonly IMapper _mapper;
 
         public RdfDeconstructor(IMapper mapper)
@@ -58,6 +60,7 @@ namespace RdfParserModule
         
         public void MakeProject(string valueAsString)
         {
+            InitaliseNamespaces();
             LoadGraph(valueAsString);
 
             Graph = new ParserGraph
@@ -95,6 +98,22 @@ namespace RdfParserModule
 
             throw new Exception($"Found no node with iri {iri}");
         }
+        private ParserConnector GetConnector(string iri)
+        {
+            var c = 
+                (from node in ParserNodes
+                from connector in node.Terminals
+                where connector.Iri == iri
+                select connector).ToList();
+
+            if (c.Count != 1)
+            {
+                throw new Exception($"Found no connector with iri {iri}");
+            }
+
+            return c.FirstOrDefault();
+
+        }
 
         private void ResolvePartOfRelation(List<ParserNode> nodes)
         {
@@ -128,8 +147,12 @@ namespace RdfParserModule
                 {
                     FromConnectorId = fromConnector.Id,
                     ToConnectorId = toConnector.Id,
+                    FromConnector = fromConnector,
+                    ToConnector = toConnector,
                     FromNodeId = parent.Iri,
+                    FromNode = parent,
                     ToNodeId = node.Iri,
+                    ToNode = node,
                     MasterProjectIri = Graph.Iri,
                     InputTerminal = fromConnector,
                     OutputTerminal = toConnector
@@ -145,7 +168,6 @@ namespace RdfParserModule
             var integratedObject = RdfGraph.CreateUriNode("imf:IntegratedObject");
             var type = RdfGraph.CreateUriNode(Resources.type);
             var projectId = Store.GetTriplesWithPredicateObject(type, integratedObject).Select(t => t.Subject).SingleOrDefault();
-            
             
             var label = GetLabel(projectId.ToString());
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
@@ -505,7 +527,7 @@ namespace RdfParserModule
 
             if (labels.Count < 1)
             {
-                throw new Exception("There should always be at least one, 1, label");
+                throw new Exception($"There should always be at least one, 1, label | Iri: {iri}");
             }
 
             var label = labels.First();
@@ -708,6 +730,8 @@ namespace RdfParserModule
                 {
                     FromConnectorId = inTerminal.FromConnectorId,
                     ToConnectorId = outTerminal.ToConnectorId,
+                    FromConnector = GetConnector(inTerminal.FromConnectorIri),
+                    ToConnector = GetConnector(outTerminal.ToConnectorIri),
                     OutputTerminal = outTerminal,
                     OutputTerminalIri = outTerminal.Iri,
                     InputTerminal = inTerminal,
@@ -715,7 +739,9 @@ namespace RdfParserModule
                     MasterProjectIri = Graph.Iri,
                     Transport = transport,
                     ToNodeId = outTerminal.NodeId,
-                    FromNodeId = inTerminal.NodeId
+                    FromNodeId = inTerminal.NodeId,
+                    FromNode = inTerminal.Node,
+                    ToNode = outTerminal.Node
                 };
 
                 edges.Add(edge);
@@ -766,8 +792,96 @@ namespace RdfParserModule
 
         public List<ParserAttribute> GetAttributesOnNode(string iri)
         {
-            //TODO
-            return new List<ParserAttribute>();
+            var node = GetOrCreateUriNode(iri);
+            var domain = GetDomain(iri);
+
+            var hasPhysicalQuantity = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "hasPhysicalQuantity"));
+            var physicalQuantities = Store.GetTriplesWithSubjectPredicate(node, hasPhysicalQuantity)
+                .Select(t => t.Object).ToList();
+
+
+
+            var attributes = physicalQuantities.Select(attribute => new ParserAttribute
+            {
+                Iri = attribute.ToString(),
+                Domain = domain,
+                Key = GetLabel(attribute.ToString()),
+                NodeIri = iri,
+                Units = new List<ParserUnit>()
+            }).ToList();
+
+
+            foreach (var attribute in attributes)
+            {
+                var attributeTypeId = GetAttributeTypeId(attribute.Iri);
+                var datum = GetDatum(attribute.Iri);
+                var label = GetLabel(attributeTypeId);
+                
+                var unit = new ParserUnit
+                {
+                    Iri = datum,
+                    Name = label,
+                    Description = label
+                };
+                
+                var selectedUnitId = GetDatumUnit(datum)?.Split("ID")[1];
+                if (selectedUnitId is not null) attribute.SelectedUnitId = selectedUnitId;
+                
+                var datumValue = GetDatumValue(datum);
+                if (datumValue is not null) attribute.Value = datumValue;                
+                
+                attribute.AttributeTypeId = attributeTypeId.Replace("ID", string.Empty);
+                attribute.Units.Add(unit);
+            }
+
+            return attributes;
+        }
+
+        private string GetAttributeTypeId(string iri)
+        {
+            var node = GetOrCreateUriNode(iri);
+            var type = GetOrCreateUriNode(BuildIri(_namespaces["rdf"], "type"));
+            var types = Store.GetTriplesWithSubjectPredicate(node, type).Select(t => t.Object).ToList();
+            if (types.Count != 2)
+            {
+                throw new Exception(
+                    $"An attribute should always have two, 2, types. lis:PhysicalQuantity and an attribute type | Iri: {iri}");
+            }
+            foreach (var t in types.Where(t => !t.ToString().Contains("PhysicalQuantity")))
+            {
+                return t.ToString();
+            }
+
+            throw new Exception($"Did not manage to find the AttributeType | Iri: {iri}");
+        }
+
+        private string GetDatum(string iri)
+        {
+            var node = GetOrCreateUriNode(iri);
+            var qualityQuantifiedAs = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "qualityQuantifiedAs"));
+            return Store.GetTriplesWithSubjectPredicate(node, qualityQuantifiedAs).FirstOrDefault()?.Object.ToString();
+        }
+
+        public string GetDatumValue(string iri)
+        {
+            var node = GetOrCreateUriNode(iri);
+            var datumValue = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "datumValue"));
+            var value = Store.GetTriplesWithSubjectPredicate(node, datumValue).FirstOrDefault()?.Object;
+
+            if (value is LiteralNode l)
+            {
+                return l.Value;
+            }
+            return null;
+        }
+
+        public string GetDatumUnit(string iri)
+        {
+            var node = GetOrCreateUriNode(iri);
+            var datumUom = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "datumUOM"));
+            var unit = Store.GetTriplesWithSubjectPredicate(node, datumUom).FirstOrDefault()?.Object;
+
+            return unit?.ToString();
         }
 
         public List<ParserNode> GetAllFunctionObjectsWithTerminals()
@@ -795,6 +909,43 @@ namespace RdfParserModule
 
             return nodes;
         }
+
+        private void InitaliseNamespaces(IDictionary<string, string> namespaces = null)
+        {
+            _namespaces = new Dictionary<string, string>
+            {
+                {"owl", "http://www.w3.org/2002/07/owl#"},
+                {"rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"},
+                {"rdfs", "http://www.w3.org/2000/01/rdf-schema#"},
+                {"xml", "http://www.w3.org/XML/1998/namespace"},
+                {"xsd", "http://www.w3.org/2001/XMLSchema#"},
+                {"imf", "http://example.com/imf#"},
+                {"lis", "http://standards.iso.org/iso/15926/part14/"}
+            };
+
+            if (namespaces is not null)
+            {
+                AddNamespaces(namespaces);
+            }
+        }
+
+        private static string BuildIri(string ns, string id)
+        {
+            return $"{ns}{id}";
+        }
+
+        private void AddNamespace(string prefix, string iri)
+        {
+            _namespaces.Add(prefix, iri);
+            RdfGraph.NamespaceMap.AddNamespace(prefix, new Uri(iri));
+        }
+
+        private void AddNamespaces(IDictionary<string, string> dictionary)
+        {
+            foreach (var (prefix, iri) in dictionary)
+            {
+                AddNamespace(prefix, iri);
+            }
+        }
     }
-    
 }

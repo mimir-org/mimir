@@ -25,10 +25,10 @@ namespace RdfParserModule
 
             CreateMap<ParserEdge, EdgeAm>()
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => NormaliseID(src.Id)))
-                .ForMember(dest => dest.FromConnectorId, opt => opt.MapFrom(src => NormaliseID(src.FromConnectorId)))
-                .ForMember(dest => dest.ToConnectorId, opt => opt.MapFrom(src => NormaliseID(src.ToConnectorId)))
-                .ForMember(dest => dest.FromNodeId, opt => opt.MapFrom(src => NormaliseID(src.FromNodeId)))
-                .ForMember(dest => dest.ToNodeId, opt => opt.MapFrom(src => NormaliseID(src.ToNodeId)))
+                .ForMember(dest => dest.FromConnectorId, opt => opt.MapFrom(src => src.FromConnector.Iri))
+                .ForMember(dest => dest.ToConnectorId, opt => opt.MapFrom(src => src.ToConnector.Iri))
+                .ForMember(dest => dest.FromNodeId, opt => opt.MapFrom(src => src.FromNode.Iri))
+                .ForMember(dest => dest.ToNodeId, opt => opt.MapFrom(src => src.ToNode.Iri))
                 .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
                 .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src =>src.MasterProjectIri));
@@ -57,9 +57,26 @@ namespace RdfParserModule
 
             CreateMap<ParserRelation, RelationAm>()
                 .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => src.Relation))
-                .IncludeBase<ParserConnector, ConnectorAm>(); ;
+                .IncludeBase<ParserConnector, ConnectorAm>();
+
+            CreateMap<ParserAttribute, AttributeAm>()
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
+                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+                .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
+                .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseID(src.NodeIri)))
+                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
+
+            CreateMap<ParserUnit, UnitAm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Iri)))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
+
 
             CreateMap<ParserGraph, ProjectAm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Iri)))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))

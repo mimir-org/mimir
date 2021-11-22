@@ -107,24 +107,22 @@ namespace RdfParserModule
 
         public void BuildProject(Project project)
         {
+            Roots = new Dictionary<string, INode>();
+
             var namespaces = new Dictionary<string, string>
             {
                 {"sor", "https://rdf.equinor.com/sor/mimir/"},
-                {"eq", "https://rdf.equinor.com/"}
+                {"eq", "https://rdf.equinor.com/raw/mimir/"}
             };
             
             Project = project;
-            Graph = BaseGraph("http://rdf.equinor.com/");
+            Graph = BaseGraph(Project.Iri);
             InitaliseNamespaces(namespaces);
-            
-            Roots = new Dictionary<string, INode>();
 
             var iri = Project.Iri;
             var name = Project.Name;
             var version = Project.Version;
-
-   
-            // Node for the project (named after its ID)
+            
             var projectNode = GetOrCreateUriNode(iri);
             var label = GetOrCreateUriNode(Resources.label);
 
