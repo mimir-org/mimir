@@ -11,7 +11,6 @@ import { IsPartOf } from "../../../helpers";
  * @param allNodes
  * @param selectedNode
  * @param elements
- * @param parentNode
  * @param parentNodeSize
  */
 const DrawChildNodes = (
@@ -19,13 +18,12 @@ const DrawChildNodes = (
   allNodes: Node[],
   selectedNode: Node,
   elements: Elements<any>,
-  parentNode: Node,
   parentNodeSize: BlockNodeSize
 ) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(BuildBlockNode(toNode, parentNode, parentNodeSize));
+      if (toNode) elements.push(BuildBlockNode(toNode, parentNodeSize));
     }
   });
 };

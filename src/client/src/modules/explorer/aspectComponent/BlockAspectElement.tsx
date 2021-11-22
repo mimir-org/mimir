@@ -20,25 +20,23 @@ interface Props {
  * @param interface
  * @returns an element with either an Aspect header or a checkbox.
  */
-const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, label, dispatch }: Props) => {
-  return (
-    <>
-      {IsAspectNode(node) && (
-        <AspectHeader>
-          <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon-block" />
-        </AspectHeader>
-      )}
-      <CheckboxExplorer
-        label={label}
-        color={GetAspectColor(node, AspectColorType.Selected)}
-        isChecked={IsChecked(elements, node)}
-        isMiniCheckbox={IsMiniCheckbox(node, selectedNode, secondaryNode)}
-        isBlockView={true}
-        isAspectNode={IsAspectNode(node)}
-        onChange={() => OnBlockChange(node, selectedNode, secondaryNode, dispatch)}
-      />
-    </>
-  );
-};
+const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, label, dispatch }: Props) => (
+  <>
+    {IsAspectNode(node) && (
+      <AspectHeader>
+        <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon-block" />
+      </AspectHeader>
+    )}
+    <CheckboxExplorer
+      label={label}
+      color={GetAspectColor(node, AspectColorType.Selected)}
+      isChecked={IsChecked(elements, node)}
+      isMiniCheckbox={IsMiniCheckbox(node, selectedNode, secondaryNode)}
+      isBlockView={true}
+      isAspectNode={IsAspectNode(node)}
+      onChange={() => OnBlockChange(node, selectedNode, secondaryNode, dispatch)}
+    />
+  </>
+);
 
 export default BlockAspectElement;

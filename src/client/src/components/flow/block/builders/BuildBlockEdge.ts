@@ -5,6 +5,8 @@ import { GetSelectedNode } from "../../../../helpers";
 import { ValidateBlockEdge } from "../../validators";
 
 export const BuildBlockEdge = (nodes: Node[], edge: Edge, edgeType: EdgeType, secondaryNode: Node, animated: boolean) => {
+  console.log("childedge: ", edge);
+
   const sourceNode = nodes.find((node) => node.id === edge.fromNodeId);
   const targetNode = nodes.find((node) => node.id === edge.toNodeId);
   const selectedNode = GetSelectedNode();
