@@ -16,12 +16,14 @@ const ExplorerIconLine = styled.div<Props>`
     width: 18px;
     height: 14px;
     opacity: ${(props) => (props.isHidden ? 0.5 : 1)};
+    cursor: pointer;
   }
 
   .lock-icon {
     width: 12px;
     height: 14px;
     opacity: ${(props) => (props.isLocked ? 0.5 : 1)};
+    cursor: pointer;
   }
 
   .visible-icon:hover,
