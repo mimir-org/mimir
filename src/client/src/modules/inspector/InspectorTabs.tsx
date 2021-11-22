@@ -14,6 +14,7 @@ interface Props {
   terminalLikeItems?: TerminalLikeItem[];
   compositeLikeItems?: CompositeLikeItem[];
   changeInspectorTabAction?: (index: number) => Action;
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
 const InspectorTabs = ({
@@ -24,6 +25,7 @@ const InspectorTabs = ({
   terminalLikeItems,
   compositeLikeItems,
   changeInspectorTabAction = changeInspectorTab,
+  inspectorRef,
 }: Props) => {
   const [shouldShowAdmin, ...shouldShowTabs] = ShouldShowTabs(element);
 
@@ -56,6 +58,7 @@ const InspectorTabs = ({
                   index={i + 1}
                   activeTabIndex={activeTabIndex}
                   changeInspectorTabAction={changeInspectorTabAction}
+                  inspectorRef={inspectorRef}
                 >
                   {tab}
                 </InspectorTabWrapper>
