@@ -12,7 +12,6 @@ export enum ListType {
   ObjectAttributes = 3,
   LocationAttributes = 4,
   SimpleTypes = 5,
-  Preview = 6,
 }
 
 export interface TypeEditorListProps {

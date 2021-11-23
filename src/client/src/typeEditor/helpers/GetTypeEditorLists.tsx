@@ -12,12 +12,12 @@ import Validation from "../validation/Validation";
  * @param dispatch General dispatch function for the application
  */
 export function GetTypeEditorLists(state: TypeEditorState, dispatch: Dispatch<any>) {
-  return Object.values(ListType).map((type) => {
+  return Object.values(ListType).map((type, key) => {
     let listTypeEnum = ListType[type as keyof typeof ListType];
     let listDescriptor = GetTypeEditorListDescriptor(listTypeEnum, state, dispatch);
 
     return (listDescriptor.isVisible &&
-      <Validation
+      <Validation key={key}
         flex={GetFlexForListType(listDescriptor.listType)}
         visible={listDescriptor.validation.visible}
         message={listDescriptor.validation.message}>
