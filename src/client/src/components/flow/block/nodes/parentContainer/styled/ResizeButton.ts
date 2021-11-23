@@ -17,7 +17,7 @@ const ResizeButton = styled.div`
   }
 
   &:hover {
-    cursor: n-resize;
+    cursor: nesw-resize;
   }
 `;
 

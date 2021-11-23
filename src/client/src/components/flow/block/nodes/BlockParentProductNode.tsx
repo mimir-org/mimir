@@ -1,7 +1,7 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
-import { OnConnectorClick, ResizeHandler } from "./handlers";
+import { OnConnectorClick } from "./handlers";
 import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
@@ -28,8 +28,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, null));
-    ResizeHandler(node, null, parentBlockSize, dispatch);
-  }, [node, parentBlockSize, dispatch]);
+  }, [node]);
 
   if (!node) return null;
 

@@ -7,7 +7,7 @@ const parent = {
   aspect: Aspect.NotSet,
   size: {
     width: window.innerWidth - Size.BlockMarginX,
-    height: window.innerWidth - Size.BlockMarginX,
+    height: window.innerHeight - Size.BlockMarginY,
   } as BlockNodeSize,
 };
 
@@ -15,7 +15,7 @@ const parentProduct = {
   aspect: Aspect.Product,
   size: {
     width: window.innerWidth - Size.BlockMarginX,
-    height: window.innerWidth - Size.BlockMarginX,
+    height: window.innerHeight - Size.BlockMarginY,
   } as BlockNodeSize,
 };
 

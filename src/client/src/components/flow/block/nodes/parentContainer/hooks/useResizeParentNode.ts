@@ -2,16 +2,20 @@
 import { useCallback, useEffect, useRef } from "react";
 import { productNodeSizeSelector, useAppSelector } from "../../../../../../redux/store";
 import { GetFlowNodeByDataId } from "../../../helpers";
-import { setBlockProductNodeHeight } from "../../../redux/actions";
+import { setBlockProductNodeHeight, setBlockProductNodeWidth } from "../../../redux/actions";
 
 const MIN_HEIGHT = 700;
+const MIN_WIDTH = 700;
 
 const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: any) => {
   const parentProductNodeRef = useRef(null);
   const parentProductNodeFlowRef = useRef(null);
   const parentProductNodeSize = useAppSelector(productNodeSizeSelector);
   const nodeHeightRef = useRef(parentProductNodeSize.height);
+  const nodeWidthRef = useRef(parentProductNodeSize.width);
+
   const prevYRef = useRef(nodeHeightRef.current);
+  const prevXRef = useRef(nodeWidthRef.current);
 
   useEffect(() => {
     parentProductNodeRef.current = document.getElementById("block-" + id);
@@ -19,13 +23,14 @@ const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<
   }, []);
 
   const onResizeCallback = useCallback(
-    (e: MouseEvent) => onResize(e, prevYRef, parentProductNodeRef, parentProductNodeFlowRef, nodeHeightRef),
-    [prevYRef, parentProductNodeRef, parentProductNodeFlowRef, nodeHeightRef]
+    (e: MouseEvent) =>
+      onResize(e, prevXRef, prevYRef, nodeWidthRef, nodeHeightRef, parentProductNodeRef, parentProductNodeFlowRef),
+    [prevXRef, prevYRef, nodeWidthRef, nodeHeightRef, parentProductNodeRef, parentProductNodeFlowRef]
   );
 
   const onMouseUpCallback = useCallback(
-    () => onMouseUp(nodeHeightRef, dispatch, onResizeCallback),
-    [nodeHeightRef, dispatch, onResizeCallback]
+    () => onMouseUp(nodeHeightRef, nodeWidthRef, dispatch, onResizeCallback),
+    [nodeHeightRef, nodeWidthRef, dispatch, onResizeCallback]
   );
 
   const onMouseDownCallback = useCallback(
@@ -43,18 +48,28 @@ export default useResizeParentNode;
 
 const onResize = (
   e: MouseEvent,
+  prevX: React.MutableRefObject<number>,
   prevY: React.MutableRefObject<number>,
+  nodeWidthRef: React.MutableRefObject<number>,
+  nodeHeightRef: React.MutableRefObject<number>,
   parentRef: React.MutableRefObject<HTMLElement>,
-  parentNodeFlowRef: React.MutableRefObject<HTMLElement>,
-  nodeHeightRef: React.MutableRefObject<number>
+  parentNodeFlowRef: React.MutableRefObject<HTMLElement>
 ) => {
   const dy = prevY.current - e.clientY;
+  const dx = prevX.current - e.clientX;
   prevY.current = e.clientY;
+  prevX.current = e.clientX;
+
   nodeHeightRef.current = parseInt(getComputedStyle(parentRef.current).height) - dy;
+  nodeWidthRef.current = parseInt(getComputedStyle(parentRef.current).width) - dx;
 
   if (nodeHeightRef.current > MIN_HEIGHT) {
     parentRef.current.style.height = nodeHeightRef.current + "px";
     parentNodeFlowRef.current.style.height = nodeHeightRef.current + "px";
+  }
+  if (nodeWidthRef.current > MIN_WIDTH) {
+    parentRef.current.style.width = nodeWidthRef.current + "px";
+    parentNodeFlowRef.current.style.width = nodeWidthRef.current + "px";
   }
 };
 
@@ -69,7 +84,14 @@ const onMouseDown = (
   document.addEventListener("mouseup", onMouseUpCallback, { once: true });
 };
 
-const onMouseUp = (nodeHeightRef: React.MutableRefObject<number>, dispatch: any, resizeCallback: (e: MouseEvent) => void) => {
+const onMouseUp = (
+  nodeHeightRef: React.MutableRefObject<number>,
+  nodeWidthRef: React.MutableRefObject<number>,
+  dispatch: any,
+  resizeCallback: (e: MouseEvent) => void
+) => {
   if (nodeHeightRef.current > MIN_HEIGHT) dispatch(setBlockProductNodeHeight(nodeHeightRef.current));
+  if (nodeWidthRef.current > MIN_WIDTH) dispatch(setBlockProductNodeWidth(nodeWidthRef.current));
+
   document.removeEventListener("mousemove", resizeCallback);
 };
