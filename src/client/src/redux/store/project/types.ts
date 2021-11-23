@@ -29,6 +29,8 @@ export const SET_LOCATION_NODE_SIZE = "SET_LOCATION_NODE_SIZE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
+export const CHANGE_TRANSPORT_PROP_VALUE = "CHANGE_TRANSPORT_PROP_VALUE";
+export const CHANGE_INTERFACE_PROP_VALUE = "CHANGE_INTERFACE_PROP_VALUE";
 export const CHANGE_NODE_ATTRIBUTE_VALUE = "CHANGE_NODE_ATTRIBUTE_VALUE";
 export const CHANGE_TRANSPORT_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_ATTRIBUTE_VALUE";
 export const CHANGE_INTERFACE_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_ATTRIBUTE_VALUE";
@@ -223,7 +225,7 @@ interface ChangeAllNodes {
   };
 }
 
-interface ChangeNodePropValue {
+export interface ChangeNodePropValue {
   type: typeof CHANGE_NODE_PROP_VALUE;
   payload: {
     nodeId: string;
@@ -241,6 +243,16 @@ export interface ChangeNodeAttributeValue {
     nodeId: string;
   };
 }
+
+export interface ChangeTransportPropValue {
+  type: typeof CHANGE_TRANSPORT_PROP_VALUE;
+  payload: {
+    edgeId: string;
+    propName: string;
+    propValue: any;
+  };
+}
+
 export interface ChangeTransportAttributeValue {
   type: typeof CHANGE_TRANSPORT_ATTRIBUTE_VALUE;
   payload: {
@@ -248,6 +260,15 @@ export interface ChangeTransportAttributeValue {
     value: string;
     unitId: string;
     edgeId: string;
+  };
+}
+
+export interface ChangeInterfacePropValue {
+  type: typeof CHANGE_INTERFACE_PROP_VALUE;
+  payload: {
+    edgeId: string;
+    propName: string;
+    propValue: any;
   };
 }
 export interface ChangeInterfaceAttributeValue {
@@ -509,7 +530,9 @@ export type ProjectActionTypes =
   | ChangeAllNodes
   | ChangeNodePropValue
   | ChangeNodeAttributeValue
+  | ChangeTransportPropValue
   | ChangeTransportAttributeValue
+  | ChangeInterfacePropValue
   | ChangeInterfaceAttributeValue
   | ChangeNodeTerminalAttributeValue
   | ChangeTransportTerminalAttributeValue

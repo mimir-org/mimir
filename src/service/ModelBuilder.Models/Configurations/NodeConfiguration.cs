@@ -29,8 +29,9 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.StatusId).HasColumnName("StatusId").IsRequired();
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
-            builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired(false);
-            builder.Property(p => p.Created).HasColumnName("Created").IsRequired(false);
+            builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired(false).HasDefaultValue(null); ;
+            builder.Property(p => p.Created).HasColumnName("Created").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired(false).HasDefaultValue(null);
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.IsRoot).HasColumnName("IsRoot").IsRequired();

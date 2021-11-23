@@ -27,9 +27,10 @@ const InspectorTabs = ({
   changeInspectorTabAction = changeInspectorTab,
   inspectorRef,
 }: Props) => {
-  const [shouldShowAdmin, ...shouldShowTabs] = ShouldShowTabs(element);
+  const shouldShowTabs = ShouldShowTabs(element);
 
   const tabs = [
+    <AdminComponent element={element} project={project} />,
     <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
     <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
     <RelationsComponent element={element} />,
@@ -38,34 +39,22 @@ const InspectorTabs = ({
 
   return (
     <>
-      {element && (
-        <>
-          {shouldShowAdmin && (
-            <AdminComponent
-              element={element}
-              project={project}
-              index={0}
-              activeTabIndex={activeTabIndex}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {tabs.map(
-            (tab, i) =>
-              shouldShowTabs[i] && (
-                <InspectorTabWrapper
-                  key={i}
-                  element={element}
-                  index={i + 1}
-                  activeTabIndex={activeTabIndex}
-                  changeInspectorTabAction={changeInspectorTabAction}
-                  inspectorRef={inspectorRef}
-                >
-                  {tab}
-                </InspectorTabWrapper>
-              )
-          )}
-        </>
-      )}
+      {element &&
+        tabs.map(
+          (tab, i) =>
+            shouldShowTabs[i] && (
+              <InspectorTabWrapper
+                key={i}
+                element={element}
+                index={i}
+                activeTabIndex={activeTabIndex}
+                changeInspectorTabAction={changeInspectorTabAction}
+                inspectorRef={inspectorRef}
+              >
+                {tab}
+              </InspectorTabWrapper>
+            )
+        )}
     </>
   );
 };
