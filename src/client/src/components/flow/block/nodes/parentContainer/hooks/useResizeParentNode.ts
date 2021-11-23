@@ -7,6 +7,12 @@ import { setBlockProductNodeHeight, setBlockProductNodeWidth } from "../../../re
 const MIN_HEIGHT = 700;
 const MIN_WIDTH = 700;
 
+/**
+ * Hook to resize Product parentNode in BlockView.
+ * @param id
+ * @param resizePanelRef
+ * @param dispatch
+ */
 const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: any) => {
   const parentProductNodeRef = useRef(null);
   const parentProductNodeFlowRef = useRef(null);
