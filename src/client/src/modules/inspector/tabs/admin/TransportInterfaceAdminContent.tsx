@@ -4,41 +4,53 @@ import { TextResources } from "../../../../assets/text";
 import { TabColumn } from "../../styled";
 import { Input, TextArea } from "../../../../compLibrary/input/text";
 import { FontSize } from "../../../../compLibrary/font";
-import { EnumBase, Node, Project } from "../../../../models";
-import { changeNodeValue } from "../../../../redux/store/project/actions";
+import { Edge, EnumBase, Interface, Project, Transport } from "../../../../models";
+import { changeInterfaceValue, changeTransportValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
-import { IsAspectNode, IsProduct, GetRdsId, GetReferenceDesignation } from "../../../../helpers";
+import { GetRdsIdEdge } from "../../../../helpers";
+import { GetReferenceDesignationEdge } from "../../../../helpers/GetReferenceDesignation";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
 interface Props {
-  node: Node;
+  edge: Edge;
   project: Project;
   statuses: EnumBase[];
 }
 
-const NodeAdminContent = ({ node, project, statuses }: Props) => {
+type Element = Transport | Interface;
+
+const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
-  const onChange = <K extends keyof Node>(key: K, value: Node[K]) => dispatch(changeNodeValue(node.id, key, value));
+  const onChange = <K extends keyof Element>(key: K, value: Element[K]) =>
+    !!edge.transport ? dispatch(changeTransportValue(edge.id, key, value)) : dispatch(changeInterfaceValue(edge.id, key, value));
+
+  const element = edge.transport ?? edge.interface;
 
   return (
     <>
       <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={edge.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            readOnly={true}
+            value={GetRdsIdEdge(edge) ?? ""}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
           <Input
             fontSize={FontSize.Standard}
             readOnly={true}
-            value={node.semanticReference ?? ""}
+            value={element.semanticReference ?? ""}
             onChange={() => null}
             inputType=""
           />
@@ -49,19 +61,24 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             fontSize={FontSize.Standard}
-            readOnly={IsAspectNode(node)}
-            value={node.label ?? ""}
+            value={element.label ?? ""}
             onChange={(e: Event) => onChange("label", e.target.value)}
             inputType=""
           />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.name} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={element.name} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
+          <Input
+            fontSize={FontSize.Standard}
+            readOnly={true}
+            value={element.updatedBy ?? ""}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
       </TabColumn>
       <TabColumn width={125}>
@@ -70,7 +87,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <Input
             fontSize={FontSize.Standard}
             readOnly={true}
-            value={moment(node.updated).format("DD/MM/YYYY") ?? ""}
+            value={moment(element.updated).format("DD/MM/YYYY") ?? ""}
             onChange={() => null}
             inputType=""
           />
@@ -82,7 +99,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
             readOnly={true}
             onChange={() => null}
             inputType=""
-            value={moment(node.created).format("DD/MM/YYYY") ?? ""}
+            value={moment(element.created).format("DD/MM/YYYY") ?? ""}
           />
         </div>
         <div>
@@ -90,7 +107,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <Input
             fontSize={FontSize.Standard}
             readOnly={true}
-            value={GetReferenceDesignation(node, project) ?? ""}
+            value={GetReferenceDesignationEdge(edge, project) ?? ""}
             onChange={() => null}
             inputType=""
           />
@@ -103,38 +120,24 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
             label=""
             items={statuses}
             keyProp={"id"}
-            defaultValue={node?.statusId}
+            defaultValue={element?.statusId}
             valueProp={null}
             onChange={(value: any) => onChange("statusId", value.id)}
             listTop={31}
             borderRadius={5}
-            disabled={IsAspectNode(node)}
           ></Dropdown>
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.version ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.Standard} readOnly={true} value={element.version ?? ""} onChange={() => null} inputType="" />
         </div>
-        {IsProduct(node) && (
-          <div>
-            <div>{TextResources.Inspector_Admin_Cost}</div>
-            <Input
-              fontSize={FontSize.Standard}
-              readOnly={IsAspectNode(node)}
-              value={node.cost ?? ""}
-              onChange={(e: Event) => onChange("cost", Number(e.target.value))}
-              inputType=""
-            />
-          </div>
-        )}
       </TabColumn>
       <TabColumn width={465}>
         <div>
           <div>{TextResources.Inspector_Admin_Description}</div>
           <TextArea
             height={200}
-            value={node.description ?? ""}
-            readOnly={IsAspectNode(node)}
+            value={element.description ?? ""}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
           ></TextArea>
         </div>
@@ -143,4 +146,4 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
   );
 };
 
-export default NodeAdminContent;
+export default TransportInterfaceAdminContent;
