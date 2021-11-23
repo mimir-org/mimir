@@ -1,10 +1,14 @@
-import { AdminContent } from ".";
+import { NodeAdminContent, TransportInterfaceAdminContent } from ".";
 import { EnumBase, Project } from "../../../../models";
 import { IsEdge, IsNode } from "../../helpers/IsType";
 import { InspectorElement } from "../../types";
-import EdgeAdminContent from "./EdgeAdminContent";
+import RelationEdgeAdminContent from "./RelationEdgeAdminContent";
 
 export const GetAdminContent = (element: InspectorElement, project: Project, statuses: EnumBase[]) => {
-  if (IsNode(element)) return <AdminContent node={element} project={project} statuses={statuses} />;
-  if (IsEdge(element)) return <EdgeAdminContent edge={element} />;
+  if (IsNode(element)) return <NodeAdminContent node={element} project={project} statuses={statuses} />;
+  if (IsEdge(element)) {
+    if (element.transport || element.interface)
+      return <TransportInterfaceAdminContent edge={element} project={project} statuses={statuses} />;
+    else return <RelationEdgeAdminContent edge={element} />;
+  }
 };

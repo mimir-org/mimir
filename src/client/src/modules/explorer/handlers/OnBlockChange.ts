@@ -17,19 +17,19 @@ import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
 export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
   dispatch(setLocation3D(false));
 
+  // Set selectNode
+  if (!selectedNode) {
+    dispatch(setActiveNode(node?.id, !node.isSelected));
+    dispatch(setActiveBlockNode(node?.id));
+    return;
+  }
+
   if (selectedNode && secondaryNode) {
     if (node === selectedNode && node !== secondaryNode) {
       dispatch(setActiveNode(secondaryNode.id, true));
       dispatch(removeSecondaryNode());
       return;
     }
-  }
-
-  // Set selectNode
-  if (!selectedNode) {
-    dispatch(setActiveNode(node?.id, !node.isSelected));
-    dispatch(setActiveBlockNode(node?.id));
-    return;
   }
 
   // Handling Product

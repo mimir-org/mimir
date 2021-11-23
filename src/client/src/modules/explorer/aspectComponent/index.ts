@@ -1,2 +1,4 @@
-export { default as AspectComponent } from "./AspectComponent";
-export { default as AspectElement } from "./AspectElement";
+export { default as TreeAspectComponent } from "./TreeAspectComponent";
+export { default as TreeAspectElement } from "./TreeAspectElement";
+export { default as BlockAspectComponent } from "./BlockAspectComponent";
+export { default as BlockAspectElement } from "./BlockAspectElement";

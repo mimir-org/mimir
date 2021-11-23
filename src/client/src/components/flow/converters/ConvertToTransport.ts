@@ -40,13 +40,23 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
 
     return {
       id: transportId,
+      version: currentTransport.version,
+      rds: currentTransport.rds,
       name: currentTransport.name,
+      label: currentTransport.label,
+      description: currentTransport.description,
+      statusId: currentTransport.statusId,
       semanticReference: currentTransport.semanticReference,
       inputTerminalId: inputTerminal.id,
       inputTerminal: inputTerminal,
       outputTerminalId: outputTerminal.id,
       outputTerminal: outputTerminal,
       attributes: currentTransport.attributes,
+      updatedBy: currentTransport.updatedBy,
+      updated: currentTransport.updated,
+      createdBy: currentTransport.createdBy,
+      created: currentTransport.created,
+      libraryTypeId: currentTransport.libraryTypeId,
     } as Transport;
   }
 

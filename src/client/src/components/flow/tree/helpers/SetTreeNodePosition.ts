@@ -13,7 +13,7 @@ function calculateX(node: Node) {
 }
 
 function calculateY(node: Node) {
-  const distanceY = 200;
+  const distanceY = 250;
   return node?.level * distanceY;
 }
 

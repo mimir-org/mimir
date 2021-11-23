@@ -50,6 +50,7 @@ const InspectorHeader = ({
         terminalLikeItems={terminalLikeItems}
         compositeLikeItems={compositeLikeItems}
         changeInspectorTabAction={changeInspectorTabAction}
+        inspectorRef={inspectorRef}
       />
 
       {GetInspectorHeaderText(element, icons)}

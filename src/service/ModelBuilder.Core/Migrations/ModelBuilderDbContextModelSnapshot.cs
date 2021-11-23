@@ -406,10 +406,36 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<DateTime?>("Created")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
+                        .HasColumnName("Created");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
+
                     b.Property<string>("InputTerminalId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("InputTerminalId");
+
+                    b.Property<string>("Label")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Label");
+
+                    b.Property<string>("LibraryTypeId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LibraryTypeId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -421,15 +447,48 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("OutputTerminalId");
 
+                    b.Property<string>("Rds")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Rds");
+
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
+
+                    b.Property<string>("StatusId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
+                        .HasColumnName("StatusId");
+
+                    b.Property<DateTime>("Updated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
+                        .HasColumnName("Updated");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("1.0")
+                        .HasColumnName("Version");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InputTerminalId");
 
                     b.HasIndex("OutputTerminalId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Interface");
                 });
@@ -498,6 +557,10 @@ namespace Mb.Core.Migrations
                     b.Property<int>("Level")
                         .HasColumnType("int")
                         .HasColumnName("Level");
+
+                    b.Property<string>("LibraryTypeId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LibraryTypeId");
 
                     b.Property<string>("MasterProjectId")
                         .IsRequired()
@@ -658,10 +721,36 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<DateTime?>("Created")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
+                        .HasColumnName("Created");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
+
                     b.Property<string>("InputTerminalId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("InputTerminalId");
+
+                    b.Property<string>("Label")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Label");
+
+                    b.Property<string>("LibraryTypeId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("LibraryTypeId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -673,15 +762,48 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("OutputTerminalId");
 
+                    b.Property<string>("Rds")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Rds");
+
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
+
+                    b.Property<string>("StatusId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
+                        .HasColumnName("StatusId");
+
+                    b.Property<DateTime>("Updated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
+                        .HasColumnName("Updated");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("1.0")
+                        .HasColumnName("Version");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InputTerminalId");
 
                     b.HasIndex("OutputTerminalId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Transport");
                 });
@@ -713,6 +835,9 @@ namespace Mb.Core.Migrations
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("InterfaceTypeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("QualifierId")
                         .HasColumnType("nvarchar(450)");
 
@@ -737,6 +862,8 @@ namespace Mb.Core.Migrations
                     b.HasIndex("ConditionId");
 
                     b.HasIndex("FormatId");
+
+                    b.HasIndex("InterfaceTypeId");
 
                     b.HasIndex("QualifierId");
 
@@ -800,6 +927,23 @@ namespace Mb.Core.Migrations
                     b.Property<int>("Aspect")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
+                        .HasColumnName("Created");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
+
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -820,10 +964,25 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
 
+                    b.Property<string>("StatusId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)")
+                        .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
+                        .HasColumnName("StatusId");
+
                     b.Property<string>("TypeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TypeId");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("Updated");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("UpdatedBy");
 
                     b.Property<string>("Version")
                         .IsRequired()
@@ -835,6 +994,8 @@ namespace Mb.Core.Migrations
                     b.HasIndex("PurposeId");
 
                     b.HasIndex("RdsId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("LibraryType");
 
@@ -1413,9 +1574,17 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
+                        .WithMany("Interfaces")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("InputTerminal");
 
                     b.Navigation("OutputTerminal");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
@@ -1443,9 +1612,17 @@ namespace Mb.Core.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
+                        .WithMany("Transports")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("InputTerminal");
 
                     b.Navigation("OutputTerminal");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.AttributeType", b =>
@@ -1459,6 +1636,10 @@ namespace Mb.Core.Migrations
                         .WithMany("AttributeTypes")
                         .HasForeignKey("FormatId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Mb.Models.Data.TypeEditor.InterfaceType", null)
+                        .WithMany("AttributeTypes")
+                        .HasForeignKey("InterfaceTypeId");
 
                     b.HasOne("Mb.Models.Data.Enums.AttributeQualifier", "Qualifier")
                         .WithMany("AttributeTypes")
@@ -1491,9 +1672,17 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("RdsId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
+                        .WithMany("LibraryTypes")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Purpose");
 
                     b.Navigation("Rds");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.NodeTypeTerminalType", b =>
@@ -1740,7 +1929,13 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Enums.BuildStatus", b =>
                 {
+                    b.Navigation("Interfaces");
+
+                    b.Navigation("LibraryTypes");
+
                     b.Navigation("Nodes");
+
+                    b.Navigation("Transports");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
@@ -1758,6 +1953,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("Terminals");
 
                     b.Navigation("TerminalTypes");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.TypeEditor.InterfaceType", b =>
+                {
+                    b.Navigation("AttributeTypes");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.NodeType", b =>

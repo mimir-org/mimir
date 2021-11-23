@@ -1,4 +1,4 @@
-import { addNode, createEdge, setActiveNode } from "../../../redux/store/project/actions";
+import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Composite, Connector, Attribute } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
@@ -69,7 +69,6 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
-  if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
 };
 
 const handleCreatePartOfEdge = (
