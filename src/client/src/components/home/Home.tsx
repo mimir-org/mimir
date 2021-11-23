@@ -49,8 +49,8 @@ const Home = () => {
       <ExplorerModule />
       <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
       <InspectorModule inspectorRef={inspectorRef} />
-      {/* <LibraryModule /> */}
-      {/* <TypeEditorComponent /> */}
+      <LibraryModule />
+      <TypeEditorComponent />
       <ErrorModule />
     </>
   );

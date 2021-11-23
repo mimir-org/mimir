@@ -28,63 +28,63 @@ interface Props {
  * @returns a container that sits on top of a Flow node.
  */
 const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren, company, dispatch }: Props) => {
-  // const [direction, setDirection] = useState("");
-  // const [mouseDown, setMouseDown] = useState(false);
+  const [direction, setDirection] = useState("");
+  const [mouseDown, setMouseDown] = useState(false);
 
-  // const MIN_HEIGHT = 800;
-  // const parentNode = document.getElementById("block-" + node.id);
-  // const parentNodeFlow = GetFlowNodeByDataId(node.id);
-  // const parentNodeSize = useAppSelector(nodeSizeSelector);
+  const MIN_HEIGHT = 800;
+  const parentNode = document.getElementById("block-" + node.id);
+  const parentNodeFlow = GetFlowNodeByDataId(node.id);
+  const parentNodeSize = useAppSelector(nodeSizeSelector);
 
-  // let nodeHeight = parentNodeSize.height;
-  // const prevY = useRef(nodeHeight);
+  let nodeHeight = useRef(parentNodeSize.height);
+  const prevY = useRef(nodeHeight.current);
 
-  // const onResize = useCallback(
-  //   (e) => {
-  //     const dy = prevY.current - e.clientY;
-  //     prevY.current = e.clientY;
+  const onResize = useCallback(
+    (e) => {
+      const dy = prevY.current - e.clientY;
+      prevY.current = e.clientY;
 
-  //     nodeHeight = parseInt(getComputedStyle(parentNode, "").height) - dy;
+      nodeHeight.current = parseInt(getComputedStyle(parentNode, "").height) - dy;
 
-  //     if (nodeHeight > MIN_HEIGHT) {
-  //       parentNode.style.height = nodeHeight + "px";
-  //       parentNodeFlow.style.height = nodeHeight + "px";
-  //     }
-  //   },
-  //   [parentNode, parentNodeFlow]
-  // );
+      if (nodeHeight.current > MIN_HEIGHT) {
+        parentNode.style.height = nodeHeight.current + "px";
+        parentNodeFlow.style.height = nodeHeight.current + "px";
+      }
+    },
+    [parentNode, parentNodeFlow]
+  );
 
-  // useEffect(() => {
-  //   const handleMouseMove = (e) => {
-  //     if (!direction) return;
-  //     onResize(e);
-  //   };
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!direction) return;
+      onResize(e);
+    };
 
-  //   if (mouseDown) window.addEventListener("mousemove", handleMouseMove);
+    if (mouseDown) window.addEventListener("mousemove", handleMouseMove);
 
-  //   return () => {
-  //     window.removeEventListener("mousemove", handleMouseMove);
-  //   };
-  // }, [mouseDown, direction, onResize]);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [mouseDown, direction, onResize]);
 
-  // useEffect(() => {
-  //   const handleMouseUp = () => setMouseDown(false);
-  //   window.addEventListener("mouseup", handleMouseUp);
+  useEffect(() => {
+    const handleMouseUp = () => setMouseDown(false);
+    window.addEventListener("mouseup", handleMouseUp);
 
-  //   if (nodeHeight >= MIN_HEIGHT) {
-  //     console.log("her");
-  //     dispatch(setBlockNodeHeight(nodeHeight));
-  //   }
+    if (nodeHeight.current >= MIN_HEIGHT) {
+      console.log("her");
+      dispatch(setBlockNodeHeight(nodeHeight.current));
+    }
 
-  //   return () => {
-  //     window.removeEventListener("mouseup", handleMouseUp);
-  //   };
-  // }, [dispatch, nodeHeight]);
+    return () => {
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [dispatch, nodeHeight]);
 
-  // const handleMouseDown = (dir) => () => {
-  //   setDirection(dir);
-  //   setMouseDown(true);
-  // };
+  const handleMouseDown = (dir) => () => {
+    setDirection(dir);
+    setMouseDown(true);
+  };
 
   // const HandleResize = () => {
   //   useOnResize(node.id);
@@ -100,9 +100,9 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
           <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
         </LogoBox>
       </Banner>
-      {/* <ResizeButton id="ResizeParentNode" onMouseDown={handleMouseDown(Direction.Bottom)}>
+      <ResizeButton id="ResizeParentNode" onMouseDown={handleMouseDown(Direction.Bottom)}>
         <img src={ResizeIcon} alt="resize" className="icon" />
-      </ResizeButton> */}
+      </ResizeButton>
       {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
       {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
     </Block>
