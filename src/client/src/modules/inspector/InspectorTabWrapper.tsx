@@ -1,7 +1,12 @@
 import { useCallback } from "react";
 import { Action } from "redux";
+import { Size } from "../../compLibrary/size";
+import { IsBlockView } from "../../helpers";
+import { MODULE_TYPE } from "../../models/project";
 import { useAppDispatch } from "../../redux/store";
-import { GetTabsColor, GetInspectorText, GetTabId } from "./helpers";
+import { setModuleVisibility } from "../../redux/store/modules/actions";
+import { GetTabsColor, GetInspectorText, GetTabId, SetPanelHeight } from "./helpers";
+import { changeInspectorHeight } from "./redux/height/actions";
 import { TabHeader, TabTitle, TabBody } from "./styled";
 import { InspectorElement } from "./types";
 
@@ -10,6 +15,7 @@ interface Props {
   index: number;
   activeTabIndex: number;
   changeInspectorTabAction?: (index: number) => Action;
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
 const InspectorTabWrapper = ({
@@ -18,13 +24,19 @@ const InspectorTabWrapper = ({
   activeTabIndex,
   changeInspectorTabAction,
   children,
+  inspectorRef,
 }: React.PropsWithChildren<Props>) => {
   const dispatch = useAppDispatch();
   const isTabOpen = activeTabIndex === index;
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
-  }, [dispatch, changeInspectorTabAction, index]);
+    if (IsBlockView()) {
+      dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+      dispatch(changeInspectorHeight(Size.ModuleOpen));
+      SetPanelHeight(inspectorRef, Size.ModuleOpen);
+    }
+  }, [dispatch, changeInspectorTabAction, index, inspectorRef]);
 
   return (
     <>
