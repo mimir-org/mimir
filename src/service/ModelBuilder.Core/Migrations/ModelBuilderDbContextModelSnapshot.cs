@@ -400,56 +400,6 @@ namespace Mb.Core.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("EnumBase");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.EventLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Data");
-
-                    b.Property<string>("DataId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("DataId");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DateTime");
-
-                    b.Property<string>("EventLogDataType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("EventLogDataType");
-
-                    b.Property<string>("ProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
-
-                    b.Property<string>("WorkerStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("WorkerStatus");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DataId");
-
-                    b.HasIndex("EventLogDataType");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("WorkerStatus");
-
-                    b.ToTable("EventLog");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Interface", b =>
                 {
                     b.Property<string>("Id")
