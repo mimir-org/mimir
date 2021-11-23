@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace Mb.TypeEditor.Services.Extensions
+namespace Mb.Models.Application.TypeEditor
 {
     public static class HttpContextAccessorExtensions
     {

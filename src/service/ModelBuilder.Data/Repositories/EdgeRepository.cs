@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -18,18 +20,20 @@ namespace Mb.Data.Repositories
         private readonly ITransportRepository _transportRepository;
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly IHttpContextAccessor _contextAccessor;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, IHttpContextAccessor contextAccessor) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
             _connectorRepository = connectorRepository;
+            _contextAccessor = contextAccessor;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain, string contextAccessor)
+        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
         {
             if (project?.Edges == null || !project.Edges.Any() || original == null)
                 yield break;
@@ -49,7 +53,7 @@ namespace Mb.Data.Repositories
                         continue;
                     }
 
-                    SetEdgeProperties(edge, true, contextAccessor);
+                    SetEdgeProperties(edge, true);
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Added);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Added);
@@ -68,7 +72,7 @@ namespace Mb.Data.Repositories
                         continue;
                     }
 
-                    SetEdgeProperties(edge, false, contextAccessor);
+                    SetEdgeProperties(edge, false);
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
@@ -169,12 +173,13 @@ namespace Mb.Data.Repositories
             edge.ToNode = null;
         }
 
-        private void SetEdgeProperties(Edge edge, bool isNewEdge, string contextAccessor)
+        private void SetEdgeProperties(Edge edge, bool isNewEdge)
         {
             var dateTimeNow = DateTime.Now.ToUniversalTime();
+            var contextAccessorName = _contextAccessor.GetName();
 
-            if(!string.IsNullOrWhiteSpace(edge?.Transport?.UpdatedBy))
-                edge.Transport.UpdatedBy = contextAccessor;
+            if (!string.IsNullOrWhiteSpace(edge?.Transport?.UpdatedBy))
+                edge.Transport.UpdatedBy = contextAccessorName;
 
             if (edge?.Transport?.Updated != null)
                 edge.Transport.Updated = dateTimeNow;
@@ -186,7 +191,7 @@ namespace Mb.Data.Repositories
             }
 
             if (!string.IsNullOrWhiteSpace(edge?.Interface?.UpdatedBy))
-                edge.Interface.UpdatedBy = contextAccessor;
+                edge.Interface.UpdatedBy = contextAccessorName;
 
             if (edge?.Interface?.Updated != null)
                 edge.Interface.Updated = dateTimeNow;
@@ -208,7 +213,7 @@ namespace Mb.Data.Repositories
                 edge.Transport.Version = version;
 
             if (!string.IsNullOrWhiteSpace(edge?.Transport?.CreatedBy))
-                edge.Transport.CreatedBy = contextAccessor;
+                edge.Transport.CreatedBy = contextAccessorName;
 
             if (edge?.Transport?.Created != null)
                 edge.Transport.Created = dateTimeNow;
@@ -217,7 +222,7 @@ namespace Mb.Data.Repositories
                 edge.Interface.Version = version;
 
             if (!string.IsNullOrWhiteSpace(edge?.Interface?.CreatedBy))
-                edge.Interface.CreatedBy = contextAccessor;
+                edge.Interface.CreatedBy = contextAccessorName;
 
             if (edge?.Interface?.Created != null)
                 edge.Interface.Created = dateTimeNow;

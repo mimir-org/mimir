@@ -432,7 +432,7 @@ namespace Mb.Services.Services
             _mapper.Map(projectAm, originalProject);
 
             var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
-            var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain, _contextAccessor.GetName()).ToList();
+            var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
 
                 ResolveLevelAndOrder(originalProject);
 
