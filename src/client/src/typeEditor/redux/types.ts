@@ -47,12 +47,14 @@ export const DELETE_TYPE_EDITOR_ERROR = "DELETE_TYPE_EDITOR_ERROR";
 export const CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT = "CHANGE_TYPE_EDITOR_INSPECTOR_HEIGHT";
 export const CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY = "CHANGE_TYPE_EDITOR_INSPECTOR_VISIBILITY";
 export const CHANGE_TYPE_EDITOR_INSPECTOR_TAB = "CHANGE_TYPE_EDITOR_INSPECTOR_TAB";
+export const CHANGE_TYPE_EDITOR_VALIDATION_VISIBILITY = "CHANGE_TYPE_EDITOR_VALIDATION_VISIBILITY";
 
 // State types
 export interface TypeEditorState {
   visible: boolean;
   fetching: boolean;
   creating: boolean;
+  validationVisibility: boolean;
   createLibraryType: CreateLibraryType;
   purposes: Purpose[];
   rdsList: Rds[];
@@ -272,6 +274,13 @@ interface ChangeTypeEditorInspectorTab {
   };
 }
 
+interface ChangeTypeEditorValidationVisibility {
+  type: typeof CHANGE_TYPE_EDITOR_VALIDATION_VISIBILITY;
+  payload: {
+    visibility: boolean;
+  }
+}
+
 export type TypeEditorActionTypes =
   | FetchingInitialDataAction
   | FetchingInitialDataActionFinished
@@ -304,4 +313,5 @@ export type TypeEditorActionTypes =
   | DeleteTypeEditorErrorAction
   | ChangeTypeEditorInspectorHeight
   | ChangeTypeEditorInspectorVisibility
-  | ChangeTypeEditorInspectorTab;
+  | ChangeTypeEditorInspectorTab
+  | ChangeTypeEditorValidationVisibility;

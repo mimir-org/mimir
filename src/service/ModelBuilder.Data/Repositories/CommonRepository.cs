@@ -16,7 +16,7 @@ namespace Mb.Data.Repositories
 
         public string CreateUniqueId()
         {
-            return $"{_modelBuilderConfiguration.Domain}_{Guid.NewGuid()}";
+            return $"{_modelBuilderConfiguration.Domain}_{Guid.NewGuid().ToString().ToLower()}";
         }
 
         public string GetDomain()
