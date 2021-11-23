@@ -93,7 +93,11 @@ namespace Mb.Models.Extensions
             if (string.IsNullOrEmpty(idSegment))
                 return false;
 
-            return id.Equals(idSegment);
+            var idToCheck = id.Split('_');
+            if (idToCheck.Length != 2)
+                return false;
+
+            return idToCheck[^1].Equals(idSegment);
         }
 
         public static string ResolveDomain(this string id)
