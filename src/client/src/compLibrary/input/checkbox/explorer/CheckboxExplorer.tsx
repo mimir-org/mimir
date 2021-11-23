@@ -5,6 +5,8 @@ interface Props {
   onChange: () => void;
   isChecked: boolean;
   isMiniCheckbox?: boolean | false;
+  isBlockView: boolean;
+  isAspectNode: boolean;
   color: string;
 }
 /**
@@ -12,9 +14,9 @@ interface Props {
  * @param interface
  * @returns a checkbox.
  */
-const CheckboxExplorer = ({ label, onChange, isChecked, isMiniCheckbox, color }: Props) => (
-  <CheckboxWrapper color={color} miniCheckBox={isMiniCheckbox}>
-    <input type="checkbox" checked={isChecked} onChange={() => onChange()} />
+const CheckboxExplorer = ({ label, onChange, isChecked, isMiniCheckbox, isBlockView, isAspectNode, color }: Props) => (
+  <CheckboxWrapper color={color} miniCheckBox={isMiniCheckbox} isBlockView={isBlockView} isAspectNode={isAspectNode}>
+    <input type="checkbox" checked={isChecked ?? false} onChange={() => onChange()} />
     <div className="label">{label}</div>
   </CheckboxWrapper>
 );

@@ -15,6 +15,13 @@ const AspectHeader = styled.div`
     left: 6px;
     pointer-events: none;
   }
+
+  .icon-block {
+    position: relative;
+    top: 5px;
+    left: 36px;
+    pointer-events: none;
+  }
 `;
 
 export default AspectHeader;

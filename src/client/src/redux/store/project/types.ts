@@ -1,4 +1,4 @@
-import { Project, Node, Edge, CommitPackage, User } from "../../../models";
+import { Project, Node, Edge, CommitPackage } from "../../../models";
 import { ProjectAm } from "../../sagas/project/ConvertProject";
 import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
@@ -454,7 +454,7 @@ export interface ChangeNodeUpdated {
   payload: {
     nodeId: string;
     updated: Date;
-    user: User;
+    userName: string;
   };
 }
 

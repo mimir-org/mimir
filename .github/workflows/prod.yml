@@ -41,9 +41,9 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:latest --build-arg ENVIR=production
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:latest --build-arg ENVIR=prod
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:latest
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ needs.create-release.outputs.tag }} --build-arg ENVIR=production
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ needs.create-release.outputs.tag }} --build-arg ENVIR=prod
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ needs.create-release.outputs.tag }}         
     
   # Build the server

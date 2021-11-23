@@ -19,7 +19,7 @@ const UserMenuComponent = () => {
     <UserMenuBox id={MENU_TYPE.PROJECT_MENU}>
       <UserNameBox>
         <p>{userState.user && userState?.user?.name}</p>
-        <p className="user-title">{TextResources.UserMenu_User}</p>
+        <p className="user-role">{userState?.user?.role ?? TextResources.UserMenu_User}</p>
       </UserNameBox>
 
       <UserMenuElement onClick={() => null}>

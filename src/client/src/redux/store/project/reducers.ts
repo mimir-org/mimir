@@ -270,6 +270,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       const nodeId = action.payload.nodeId;
       const allNodes = state.project.nodes;
       const active = action.payload.isActive;
+
       return {
         ...state,
         project: {
@@ -798,7 +799,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
               ? {
                 ...x,
                 updated: action.payload.updated,
-                updatedBy: action.payload.user.name,
+                updatedBy: action.payload.userName,
               }
               : x
           ),

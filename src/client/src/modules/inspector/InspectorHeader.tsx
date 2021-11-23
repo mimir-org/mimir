@@ -5,7 +5,7 @@ import { Menu } from "./styled";
 import { InspectorTabs } from ".";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { Action, Dispatch } from "redux";
-import InspectorButtonRow from "./InspectorButtonRow";
+import { InspectorButtonRow } from "./";
 
 interface Props {
   project: Project;
@@ -50,6 +50,7 @@ const InspectorHeader = ({
         terminalLikeItems={terminalLikeItems}
         compositeLikeItems={compositeLikeItems}
         changeInspectorTabAction={changeInspectorTabAction}
+        inspectorRef={inspectorRef}
       />
 
       {GetInspectorHeaderText(element, icons)}

@@ -20,6 +20,10 @@ const AspectBox = styled.div<Props>`
     background-color: ${Color.LightBlue};
   }
 
+  &:first-child {
+    margin-top: 5px;
+  }
+
   .label {
     padding-left: ${(props) => (props.node.isRoot ? 10 : 15)}px;
   }
@@ -31,7 +35,7 @@ const AspectBox = styled.div<Props>`
 
   .icon {
     position: relative;
-    top: -3px;
+    top: 6px;
     left: 6px;
     pointer-events: none;
   }

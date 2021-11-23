@@ -107,7 +107,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   useEffect(() => {
     project?.edges.forEach((e) => {
-      if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, false));
+      IsTransport(e.fromConnector) && dispatch(setEdgeAnimation(e, false));
     });
   }, []);
 
@@ -134,7 +134,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );
