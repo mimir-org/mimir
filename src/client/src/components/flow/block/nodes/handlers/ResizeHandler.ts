@@ -1,7 +1,7 @@
 import { Size } from "../../../../../compLibrary/size";
 import { Node } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
-import { GetNodeByDataId } from "../../helpers";
+import { GetFlowNodeByDataId } from "../../helpers";
 import { setBlockNodeSize } from "../../redux/actions";
 
 /**
@@ -22,7 +22,7 @@ const ResizeHandler = (node: Node, secondaryNode: Node, size: BlockNodeSize, dis
   window.onresize = updateScreenSize;
 
   // Update the Flow parentNode
-  const parentNode = GetNodeByDataId(node?.id);
+  const parentNode = GetFlowNodeByDataId(node?.id);
   if (parentNode) {
     parentNode.style.width = `${size.width}px`;
     parentNode.style.height = `${size.height}px`;
