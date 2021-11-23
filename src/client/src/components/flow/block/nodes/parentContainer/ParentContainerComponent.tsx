@@ -4,12 +4,8 @@ import { GetCompanyLogoForNode, IsLocation } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
-import { useOnResize } from "./handlers";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { GetFlowNodeByDataId } from "../../helpers";
-import { Direction } from "./helpers/constants";
-import { setBlockNodeHeight } from "../../redux/actions";
-import { nodeSizeSelector, useAppSelector } from "../../../../../redux/store";
+import { useRef } from "react";
+import { useResizeParentNode } from "./hooks";
 
 interface Props {
   node: Node;
@@ -28,67 +24,9 @@ interface Props {
  * @returns a container that sits on top of a Flow node.
  */
 const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren, company, dispatch }: Props) => {
-  const [direction, setDirection] = useState("");
-  const [mouseDown, setMouseDown] = useState(false);
+  const resizePanelRef = useRef(null);
 
-  const MIN_HEIGHT = 800;
-  const parentNode = document.getElementById("block-" + node.id);
-  const parentNodeFlow = GetFlowNodeByDataId(node.id);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
-
-  let nodeHeight = useRef(parentNodeSize.height);
-  const prevY = useRef(nodeHeight.current);
-
-  const onResize = useCallback(
-    (e) => {
-      const dy = prevY.current - e.clientY;
-      prevY.current = e.clientY;
-
-      nodeHeight.current = parseInt(getComputedStyle(parentNode, "").height) - dy;
-
-      if (nodeHeight.current > MIN_HEIGHT) {
-        parentNode.style.height = nodeHeight.current + "px";
-        parentNodeFlow.style.height = nodeHeight.current + "px";
-      }
-    },
-    [parentNode, parentNodeFlow]
-  );
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!direction) return;
-      onResize(e);
-    };
-
-    if (mouseDown) window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [mouseDown, direction, onResize]);
-
-  useEffect(() => {
-    const handleMouseUp = () => setMouseDown(false);
-    window.addEventListener("mouseup", handleMouseUp);
-
-    if (nodeHeight.current >= MIN_HEIGHT) {
-      console.log("her");
-      dispatch(setBlockNodeHeight(nodeHeight.current));
-    }
-
-    return () => {
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [dispatch, nodeHeight]);
-
-  const handleMouseDown = (dir) => () => {
-    setDirection(dir);
-    setMouseDown(true);
-  };
-
-  // const HandleResize = () => {
-  //   useOnResize(node.id);
-  // };
+  useResizeParentNode(node.id, resizePanelRef, dispatch);
 
   return (
     <Block id={"block-" + node?.id} selected={selected} width={width} height={height}>
@@ -100,7 +38,7 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
           <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
         </LogoBox>
       </Banner>
-      <ResizeButton id="ResizeParentNode" onMouseDown={handleMouseDown(Direction.Bottom)}>
+      <ResizeButton id="ResizeParentNode" ref={resizePanelRef}>
         <img src={ResizeIcon} alt="resize" className="icon" />
       </ResizeButton>
       {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
