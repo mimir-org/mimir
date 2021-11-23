@@ -4,6 +4,7 @@ import { Color } from "../../../../compLibrary/colors";
 interface Props {
   isHidden?: boolean;
   isLocked?: boolean;
+  isVisible?: boolean;
 }
 
 const ExplorerIconLine = styled.div<Props>`

@@ -1,7 +1,10 @@
 import { VisibleOnIcon, VisibleOffIcon, VisibleSubOffIcon } from "../../../assets/icons/visible";
 
-const GetIcon = (isAncestorVisible: boolean, isVisible: boolean) => {
-  return !isVisible ? VisibleOffIcon : !isAncestorVisible ? VisibleSubOffIcon : VisibleOnIcon;
+const GetIcon = (isHidden: boolean, isAncestorVisible: boolean, isVisible: boolean) => {
+  if (isVisible && !isHidden) return VisibleOnIcon;
+  if (!isVisible && isHidden) return VisibleOffIcon;
+  if (isVisible && !isAncestorVisible) return VisibleSubOffIcon;
+  return VisibleOnIcon;
 };
 
 export default GetIcon;

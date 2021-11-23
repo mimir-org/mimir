@@ -17,9 +17,9 @@ export const VisibleComponent = ({ node, isAncestorVisible, isVisible, onSetVisi
   const isHidden = node?.isHidden;
 
   return (
-    <ExplorerIconLine isHidden={isHidden}>
+    <ExplorerIconLine isHidden={isHidden} isVisible={isVisible}>
       <img
-        src={GetIcon(isAncestorVisible, isVisible)}
+        src={GetIcon(isHidden, isAncestorVisible, isVisible)}
         alt="visible-icon"
         className="visible-icon"
         onClick={() => {
