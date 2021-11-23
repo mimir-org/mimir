@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20211123075729_NodeInterfaceTransportLibrary")]
-    partial class NodeInterfaceTransportLibrary
+    [Migration("20211123103904_LibraryTypeNodeTransportInterface")]
+    partial class LibraryTypeNodeTransportInterface
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -511,12 +511,10 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Cost");
 
                     b.Property<DateTime?>("Created")
-                        .IsRequired()
                         .HasColumnType("datetime2")
                         .HasColumnName("Created");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CreatedBy");
 
