@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ListWrapper } from "../compLibrary/list";
 import { ListContent, ListSearch } from "./lists/";
-import { GetListLabel, GetWidth } from "./helpers";
+import { GetListLabel, GetFlexForListType } from "./helpers";
+import { AttributeType, CompositeType, CreateLibraryType, PredefinedAttribute, Rds, TerminalTypeDict } from "../models";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
-import { CreateLibraryType, Rds, PredefinedAttribute, AttributeType, CompositeType, TerminalTypeDict } from "../models";
 
 export enum ListType {
   Rds = 0,
@@ -14,7 +14,8 @@ export enum ListType {
   SimpleTypes = 5,
   Preview = 6,
 }
-interface Props {
+
+export interface TypeEditorListProps {
   createLibraryType: CreateLibraryType;
   items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
   disabled?: boolean;
@@ -22,6 +23,7 @@ interface Props {
   onPropertyChange?: OnPropertyChangeFunction;
   onTerminalCategoryChange?: OnTerminalCategoryChangeFunction;
 }
+
 /**
  * A generic list-component in Type editor
  * @returns a visual Type Editor list
@@ -33,10 +35,10 @@ export const TypeEditorList = ({
   listType,
   onPropertyChange,
   onTerminalCategoryChange,
-}: Props) => {
+}: TypeEditorListProps) => {
   const [filteredListItems, setListItems] = useState(items);
   return (
-    <ListWrapper wide={GetWidth(listType)} disabled={disabled}>
+    <ListWrapper flex={GetFlexForListType(listType)} disabled={disabled} minHeight={'100%'}>
       <ListSearch
         listType={listType}
         placeHolder={GetListLabel(listType, createLibraryType)}

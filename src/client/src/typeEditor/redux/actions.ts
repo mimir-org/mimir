@@ -176,3 +176,10 @@ export function changeTypeEditorInspectorTab(index: number) {
     payload: { index },
   };
 }
+
+export function changeTypeEditorValidationVisibility(visibility: boolean) {
+  return {
+    type: Types.CHANGE_TYPE_EDITOR_VALIDATION_VISIBILITY,
+    payload: { visibility },
+  };
+}

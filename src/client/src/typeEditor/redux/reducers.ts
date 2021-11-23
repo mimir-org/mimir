@@ -6,6 +6,7 @@ const initialState: Types.TypeEditorState = {
   visible: false,
   fetching: false,
   creating: false,
+  validationVisibility: false,
   createLibraryType: new CreateLibraryType({
     id: null,
     name: "",
@@ -347,6 +348,11 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           ...state.inspector,
           activeTabIndex: action.payload.index,
         },
+      };
+    case Types.CHANGE_TYPE_EDITOR_VALIDATION_VISIBILITY:
+      return {
+        ...state,
+        validationVisibility: action.payload.visibility
       };
     default:
       return state;

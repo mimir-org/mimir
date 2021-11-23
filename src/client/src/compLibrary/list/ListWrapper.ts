@@ -1,11 +1,11 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Color } from "../colors";
 import { FontType, FontSize, FontWeight } from "../font";
 
 interface Props {
-  wide?: number;
-  height?: number;
-  right?: number;
+  flex?: string | number;
+  height?: string;
+  minHeight?: string;
   disabled?: boolean;
   hideOverflow?: boolean;
 }
@@ -13,18 +13,15 @@ interface Props {
 const ListWrapper = styled.div<Props>`
   display: flex;
   flex-direction: column;
+  flex: ${(props) => (props.flex === undefined ? 1 : props.flex)};
   color: ${Color.Black};
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Small};
   font-weight: ${FontWeight.Normal};
-  flex: ${(props) => (props.wide === undefined ? 1 : props.wide)};
-  margin-right: ${(props) => (props.right === undefined ? 15 : props.right)}px;
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
-  ${(props) =>
-    props.hideOverflow &&
-    css`
-      overflow: hidden;
-    `}
+  height: ${(props) => (props.height === undefined ? 'auto' : props.height)};
+  min-height: ${(props) => (props.minHeight === undefined ? 'auto' : props.minHeight)};
+  overflow: ${(props) => (props.hideOverflow ? 'hidden' : 'revert')};
 `;
 
 export default ListWrapper;
