@@ -25,72 +25,78 @@ export function blockNodeSizeReducer(state = initialState, action: Type.BlockNod
   if (action.type === Type.SET_BLOCK_NODE_SIZE)
     return {
       ...state,
-      blockNodes: state.blockParents.map(
-        (x) =>
-          x.aspect !== Aspect.Product && {
-            ...x,
-            size: { width: action.payload.width, height: action.payload.height - Size.BlockMarginY },
-          }
+      blockParents: state.blockParents.map((x) =>
+        x.aspect !== Aspect.Product
+          ? {
+              ...x,
+              size: { width: action.payload.width, height: action.payload.height - Size.BlockMarginY },
+            }
+          : { ...x }
       ),
     };
 
   if (action.type === Type.SET_BLOCK_NODE_WIDTH)
     return {
       ...state,
-      blockNodes: state.blockParents.map(
-        (x) =>
-          x.aspect !== Aspect.Product && {
-            ...x,
-            size: { width: action.payload.width, height: state.blockParents[0].size.height },
-          }
+      blockParents: state.blockParents.map((x) =>
+        x.aspect !== Aspect.Product
+          ? {
+              ...x,
+              size: { width: action.payload.width, height: state.blockParents[0].size.height },
+            }
+          : { ...x }
       ),
     };
 
   if (action.type === Type.SET_BLOCK_NODE_HEIGHT)
     return {
       ...state,
-      blockNodes: state.blockParents.map(
-        (x) =>
-          x.aspect !== Aspect.Product && {
-            ...x,
-            size: { width: state.blockParents[0].size.width, height: action.payload.height },
-          }
+      blockParents: state.blockParents.map((x) =>
+        x.aspect !== Aspect.Product
+          ? {
+              ...x,
+              size: { width: state.blockParents[0].size.width, height: action.payload.height },
+            }
+          : { ...x }
       ),
     };
 
   if (action.type === Type.SET_BLOCK_PRODUCT_NODE_SIZE)
     return {
       ...state,
-      blockNodes: state.blockParents.map(
-        (x) =>
-          x.aspect === Aspect.Product && {
-            ...x,
-            size: { width: action.payload.width, height: action.payload.height - Size.BlockMarginY },
-          }
+      blockParents: state.blockParents.map((x) =>
+        x.aspect === Aspect.Product
+          ? {
+              ...x,
+              size: { width: action.payload.width, height: action.payload.height - Size.BlockMarginY },
+            }
+          : { ...x }
       ),
     };
 
   if (action.type === Type.SET_BLOCK_PRODUCT_NODE_WIDTH)
     return {
       ...state,
-      blockNodes: state.blockParents.map(
-        (x) =>
-          x.aspect === Aspect.Product && {
-            ...x,
-            size: { width: action.payload.width, height: state.blockParents[0].size.height },
-          }
+      blockParents: state.blockParents.map((x) =>
+        x.aspect === Aspect.Product
+          ? {
+              ...x,
+              size: { width: action.payload.width, height: state.blockParents[1].size.height },
+            }
+          : { ...x }
       ),
     };
 
   if (action.type === Type.SET_BLOCK_PRODUCT_NODE_HEIGHT)
     return {
       ...state,
-      blockNodes: state.blockParents.map(
-        (x) =>
-          x.aspect === Aspect.Product && {
-            ...x,
-            size: { width: state.blockParents[0].size.width, height: action.payload.height },
-          }
+      blockParents: state.blockParents.map((x) =>
+        x.aspect === Aspect.Product
+          ? {
+              ...x,
+              size: { width: state.blockParents[1].size.width, height: action.payload.height },
+            }
+          : { ...x }
       ),
     };
 

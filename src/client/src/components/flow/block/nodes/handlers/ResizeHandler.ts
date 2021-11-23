@@ -1,8 +1,9 @@
 import { Size } from "../../../../../compLibrary/size";
+import { IsProduct } from "../../../../../helpers";
 import { Node } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
 import { GetFlowNodeByDataId } from "../../helpers";
-import { setBlockNodeSize } from "../../redux/actions";
+import { setBlockNodeSize, setBlockProductNodeWidth } from "../../redux/actions";
 
 /**
  * Component to handle responsive size of a ParentNode in BlockView.
@@ -16,7 +17,9 @@ const ResizeHandler = (node: Node, secondaryNode: Node, size: BlockNodeSize, dis
     const width = secondaryNode ? window.innerWidth / 2 : window.innerWidth;
     const marginX = secondaryNode ? Size.BlockSecondaryMarginX : Size.BlockMarginX;
 
-    dispatch(setBlockNodeSize(width - marginX, Size.BlockHeight));
+    IsProduct(node)
+      ? dispatch(setBlockProductNodeWidth(width - marginX))
+      : dispatch(setBlockNodeSize(width - marginX, Size.BlockHeight));
   };
 
   window.onresize = updateScreenSize;
