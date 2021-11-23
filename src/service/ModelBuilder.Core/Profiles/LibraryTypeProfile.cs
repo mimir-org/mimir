@@ -283,7 +283,7 @@ namespace Mb.Core.Profiles
         {
             var relation = new Relation
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid().ToString().ToLower(),
                 Name = name,
                 Type = connectorType,
                 RelationType = relationType,
