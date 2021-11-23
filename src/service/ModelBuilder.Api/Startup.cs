@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
@@ -44,8 +46,12 @@ namespace Mb.Api
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.WithOrigins(origins)
-                        .AllowAnyHeader()
+                    if (NoOriginsAreProvided(origins))
+                        builder.AllowAnyOrigin();
+                    else
+                        builder.WithOrigins(origins);
+                    
+                    builder.AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
@@ -88,6 +94,11 @@ namespace Mb.Api
             //        endpoints.MapControllers();
             //    });
             
+        }
+
+        private static bool NoOriginsAreProvided(string[] origins)
+        {
+            return origins is null || origins.Length is 0 || string.IsNullOrWhiteSpace(origins.FirstOrDefault());
         }
     }
 }
