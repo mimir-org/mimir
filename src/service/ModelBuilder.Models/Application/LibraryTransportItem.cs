@@ -23,7 +23,7 @@ namespace Mb.Models.Application
         public ObjectType LibraryType => ObjectType.Transport;
         public Purpose Purpose { get; set; }
         public string UpdatedBy { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime? Updated { get; set; }
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }
     }

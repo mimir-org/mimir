@@ -978,17 +978,12 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TypeId");
 
-                    b.Property<DateTime>("Updated")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("Updated");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("Unknown")
                         .HasColumnName("UpdatedBy");
 
                     b.Property<string>("Version")

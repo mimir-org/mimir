@@ -363,8 +363,6 @@ namespace Mb.TypeEditor.Services.Services
                     createLibraryType.Version = "1.0";
                     createLibraryType.Created = dateTimeNow;
                     createLibraryType.CreatedBy = currentUser;
-                    createLibraryType.Updated = dateTimeNow;
-                    createLibraryType.UpdatedBy = currentUser;
                 }
                 else
                 {

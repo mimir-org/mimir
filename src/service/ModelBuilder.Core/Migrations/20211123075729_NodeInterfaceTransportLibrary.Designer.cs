@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20211112125258_NodeInterfaceTransportLibrary")]
+    [Migration("20211123075729_NodeInterfaceTransportLibrary")]
     partial class NodeInterfaceTransportLibrary
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,11 +87,21 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Discipline");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InterfaceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
@@ -132,6 +142,10 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Tags");
 
                     b.Property<string>("TerminalId")
                         .HasColumnType("nvarchar(450)")
@@ -208,6 +222,16 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -267,6 +291,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<string>("FromConnectorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
@@ -281,14 +310,20 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("InterfaceId");
 
-                    b.Property<bool>("IsTemplateEdge")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsTemplateEdge");
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<string>("MasterProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("MasterProjectId");
+
+                    b.Property<string>("MasterProjectIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MasterProjectIri");
 
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
@@ -311,8 +346,6 @@ namespace Mb.Core.Migrations
                     b.HasIndex("FromNodeId");
 
                     b.HasIndex("InterfaceId");
-
-                    b.HasIndex("MasterProjectId");
 
                     b.HasIndex("ToConnectorId");
 
@@ -473,10 +506,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Aspect");
 
-                    b.Property<string>("Contractor")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Contractor");
-
                     b.Property<decimal?>("Cost")
                         .HasColumnType("decimal(10,4)")
                         .HasColumnName("Cost");
@@ -495,9 +524,19 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<decimal?>("Height")
                         .HasColumnType("decimal(5,2)")
                         .HasColumnName("Height");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit")
@@ -529,8 +568,13 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("MasterProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("MasterProjectId");
+
+                    b.Property<string>("MasterProjectIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MasterProjectIri");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -578,10 +622,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Symbol");
 
-                    b.Property<string>("TagNumber")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TagNumber");
-
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
                         .HasColumnName("Updated");
@@ -601,8 +641,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Width");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MasterProjectId");
 
                     b.HasIndex("StatusId");
 
@@ -637,6 +675,16 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
 
                     b.Property<bool>("IsSubProject")
                         .HasColumnType("bit")
@@ -809,6 +857,10 @@ namespace Mb.Core.Migrations
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Tags")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Tags");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ConditionId");
@@ -928,17 +980,12 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TypeId");
 
-                    b.Property<DateTime>("Updated")
-                        .ValueGeneratedOnAdd()
+                    b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("Updated");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("Unknown")
                         .HasColumnName("UpdatedBy");
 
                     b.Property<string>("Version")
@@ -1477,12 +1524,6 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("InterfaceId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.Project", "MasterProject")
-                        .WithMany()
-                        .HasForeignKey("MasterProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Mb.Models.Data.Connector", "ToConnector")
                         .WithMany("ToEdges")
                         .HasForeignKey("ToConnectorId")
@@ -1505,8 +1546,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("FromNode");
 
                     b.Navigation("Interface");
-
-                    b.Navigation("MasterProject");
 
                     b.Navigation("ToConnector");
 
@@ -1554,19 +1593,11 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Project", "MasterProject")
-                        .WithMany()
-                        .HasForeignKey("MasterProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
                         .WithMany("Nodes")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("MasterProject");
 
                     b.Navigation("Status");
                 });

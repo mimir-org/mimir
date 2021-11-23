@@ -130,15 +130,13 @@ namespace Mb.Core.Migrations
                 name: "Updated",
                 table: "LibraryType",
                 type: "datetime2",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+                nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "UpdatedBy",
                 table: "LibraryType",
                 type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "Unknown");
+                nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "Created",
