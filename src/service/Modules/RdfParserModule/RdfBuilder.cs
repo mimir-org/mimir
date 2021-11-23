@@ -85,13 +85,35 @@ namespace RdfParserModule
             }
         }
 
-        private static string BuildIri(string ns, string id)
+        private string BuildIri(string ns, string id)
         {
-            return $"{ns}{id}";
+            if (_namespaces.TryGetValue(ns, out var fullNamespace))
+            {
+                return $"{fullNamespace}{id}";
+            }
+
+            if (ns[^1] == char.Parse(":"))
+            {
+                return $"{ns}{id}";
+            }
+
+            return $"{ns}:{id}";
+        }
+
+        private static bool ValidEndIri(string iri)
+        {
+            var validEnd = "#/".ToCharArray();
+            return validEnd.Contains(iri[^1]);
         }
 
         private void AddNamespace(string prefix, string iri)
         {
+            prefix = prefix.ToLower();
+            if (!ValidEndIri(iri))
+            {
+                iri = $"{iri}/";
+            }
+
             _namespaces.Add(prefix, iri);
             Graph.NamespaceMap.AddNamespace(prefix, new Uri(iri));
         }
@@ -126,7 +148,7 @@ namespace RdfParserModule
             var projectNode = GetOrCreateUriNode(iri);
             var label = GetOrCreateUriNode(Resources.label);
 
-            var isVersion = GetOrCreateUriNode(BuildIri(_namespaces["owl"], "versionInfo"));
+            var isVersion = GetOrCreateUriNode(BuildIri("owl", "versionInfo"));
             var projectName = Graph.CreateLiteralNode(name);
             var projectVersion = Graph.CreateLiteralNode(version);
 
@@ -167,15 +189,15 @@ namespace RdfParserModule
 
             var data = new Dictionary<INode, decimal>
             {
-                {GetOrCreateUriNode("mimir:hasPosX", g), node.PositionX},
-                {GetOrCreateUriNode("mimir:hasPosY", g), node.PositionY},
-                {GetOrCreateUriNode("mimir:hasBlockPosX", g), node.PositionBlockX},
-                {GetOrCreateUriNode("mimir:hasBlockPosY", g), node.PositionBlockY},
+                {GetOrCreateUriNode(BuildIri("mimir", "hasPosX"), g), node.PositionX},
+                {GetOrCreateUriNode(BuildIri("mimir", "hasPosY"), g), node.PositionY},
+                {GetOrCreateUriNode(BuildIri("mimir", "hasBlockPosX"), g), node.PositionBlockX},
+                {GetOrCreateUriNode(BuildIri("mimir", "hasBlockPosY"), g), node.PositionBlockY},
             };
 
             foreach (var (predicate, value) in data)
             {
-                g.Assert(new Triple(rdfNode, predicate, g.CreateLiteralNode($"{value}", new Uri(BuildIri(_namespaces["xsd"], "float")))));
+                g.Assert(new Triple(rdfNode, predicate, g.CreateLiteralNode($"{value}", new Uri(BuildIri("xsd", "float")))));
             }
         }
 
@@ -184,15 +206,15 @@ namespace RdfParserModule
             var label = GetOrCreateUriNode(Resources.label);
             var type = GetOrCreateUriNode(Resources.type);
 
-            var hasPhysicalQuantity = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "hasPhysicalQuantity"));
+            var hasPhysicalQuantity = GetOrCreateUriNode(BuildIri("lis", "hasPhysicalQuantity"));
 
-            var physicalQuantity = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "PhysicalQuantity"));
-            var qualityQuantifiedAs = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "qualityQuantifiedAs"));
+            var physicalQuantity = GetOrCreateUriNode(BuildIri("lis", "PhysicalQuantity"));
+            var qualityQuantifiedAs = GetOrCreateUriNode(BuildIri("lis", "qualityQuantifiedAs"));
 
-            var quantityDatum = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "ScalarQuantityDatum"));
-            var datumUom = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "datumUOM"));
-            var datumValue = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "datumValue"));
-            var unitOfMeasure = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "Scale"));
+            var quantityDatum = GetOrCreateUriNode(BuildIri("lis", "ScalarQuantityDatum"));
+            var datumUom = GetOrCreateUriNode(BuildIri("lis", "datumUOM"));
+            var datumValue = GetOrCreateUriNode(BuildIri("lis", "datumValue"));
+            var unitOfMeasure = GetOrCreateUriNode(BuildIri("lis", "Scale"));
 
 
             foreach (var attribute in attributes)
@@ -217,13 +239,13 @@ namespace RdfParserModule
                 if (value is not null)
                 {
                     ILiteralNode literal;
-                    if (double.TryParse(value, out var v))
+                    if (int.TryParse(value, out var v))
                     {
-                        literal = Graph.CreateLiteralNode(value, new Uri(BuildIri(_namespaces["xsd"], "float")));
+                        literal = Graph.CreateLiteralNode(value, new Uri(BuildIri("xsd", "int")));
                     }
-                    else if (int.TryParse(value, out var i))
+                    else if (double.TryParse(value, out var i))
                     {
-                        literal = Graph.CreateLiteralNode(value, new Uri(BuildIri(_namespaces["xsd"], "int")));
+                        literal = Graph.CreateLiteralNode(value, new Uri(BuildIri("xsd", "float")));
                     }
                     else
                     {
@@ -369,7 +391,7 @@ namespace RdfParserModule
                     {
                         case Terminal terminal:
                             var nodeTerminal = GetOrCreateUriNode(terminal.Iri);
-                            var transmitterIri = $"{_namespaces["eq"]}Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}";
+                            var transmitterIri = BuildIri("eq", $"Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}");
 
 
                             var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
@@ -402,7 +424,7 @@ namespace RdfParserModule
                     }
                 }
 
-                var nodeAspect = GetOrCreateUriNode(_namespaces["imf"] + node.Aspect);
+                var nodeAspect = GetOrCreateUriNode(BuildIri("imf", node.Aspect.ToString()));
                 Graph.Assert(new Triple(nodeId, hasAspect, nodeAspect));
 
                 if (string.IsNullOrEmpty(node.Rds)) continue;
@@ -572,16 +594,24 @@ namespace RdfParserModule
 
                 if (edge.FromConnector is Relation { RelationType: not RelationType.PartOf } fromRelation)
                 {
-                    var relationFromNode = GetOrCreateUriNode("imf:" + fromRelation.RelationType);
+                    var relationString = LowerCaseFirstCharacter(fromRelation.RelationType.ToString());
+                    var relationFromNode = GetOrCreateUriNode(BuildIri("imf", relationString));
                     Graph.Assert(new Triple(fromNode, relationFromNode, toNode));
                 }
 
-                if (edge.ToConnector is not Relation { RelationType: not RelationType.PartOf } toRelation) continue;
+                if (edge.ToConnector is Relation { RelationType: not RelationType.PartOf } toRelation)
+                {
+                    var relationString = LowerCaseFirstCharacter(toRelation.RelationType.ToString());
+                    var relationToNode = GetOrCreateUriNode(BuildIri("imf", relationString));
+                    Graph.Assert(new Triple(toNode, relationToNode, fromNode));
+                }
 
-                var relationString = toRelation.ToString()?[..1].ToLower() + toRelation.ToString()?[1..];
-                var relationToNode = GetOrCreateUriNode("imf:" + relationString);
-                Graph.Assert(new Triple(toNode, relationToNode, fromNode));
             }
+        }
+
+        private static string LowerCaseFirstCharacter(string input)
+        {
+            return input[..1].ToLower() + input[1..];
         }
 
         public string RdfToString<T>() where T : IRdfWriter, new()
