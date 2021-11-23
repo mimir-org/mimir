@@ -95,6 +95,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<INodeService, NodeService>();
             services.AddScoped<IVersionService, VersionService>();
             services.AddScoped<IEventLogService, EventLogService>();
+            services.AddScoped<ICooperateService, CooperateService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();

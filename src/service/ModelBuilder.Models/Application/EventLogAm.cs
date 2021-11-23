@@ -10,6 +10,9 @@ namespace Mb.Models.Application
     public class EventLogAm
     {
         [Required]
+        public string ProjectId { get; set; }
+
+        [Required]
         public string DataId { get; set; }
 
         [Required]
@@ -22,7 +25,7 @@ namespace Mb.Models.Application
         public EventLogDataType EventLogDataType { get; set; }
 
         [Required]
-        public WorkerStatus WebSocketEvent { get; set; }
+        public WorkerStatus WorkerStatus { get; set; }
 
         public EventLogAm()
         {

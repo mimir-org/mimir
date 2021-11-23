@@ -11,11 +11,17 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("EventLog");
             builder.Property(p => p.Id).HasColumnName("Id").ValueGeneratedOnAdd().IsRequired();
+            builder.Property(p => p.ProjectId).HasColumnName("ProjectId").IsRequired();
             builder.Property(p => p.DataId).HasColumnName("DataId").IsRequired();
             builder.Property(p => p.DateTime).HasColumnName("DateTime").IsRequired();
             builder.Property(p => p.Data).HasColumnName("Data").IsRequired();
             builder.Property(p => p.EventLogDataType).HasColumnName("EventLogDataType").IsRequired().HasConversion<string>();
-            builder.Property(p => p.WebSocketEvent).HasColumnName("WebSocketEvent").IsRequired().HasConversion<string>();
+            builder.Property(p => p.WorkerStatus).HasColumnName("WorkerStatus").IsRequired().HasConversion<string>();
+
+            builder.HasIndex(x => x.DataId);
+            builder.HasIndex(x => x.ProjectId);
+            builder.HasIndex(x => x.EventLogDataType);
+            builder.HasIndex(x => x.WorkerStatus);
         }
     }
 }

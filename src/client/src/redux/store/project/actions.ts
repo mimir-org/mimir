@@ -463,3 +463,17 @@ export function setIsLockedCompositeAttribute(
     },
   };
 }
+
+export function updateNode(node: Node): Types.UpdateNodeAction {
+  return {
+    type: Types.UPDATE_NODE,
+    payload: node,
+  };
+}
+
+export function updateEdge(edge: Edge): Types.UpdateEdgeAction {
+  return {
+    type: Types.UPDATE_EDGE,
+    payload: edge,
+  };
+}

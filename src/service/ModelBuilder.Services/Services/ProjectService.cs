@@ -40,12 +40,13 @@ namespace Mb.Services.Services
         private readonly IAttributeRepository _attributeRepository;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
         private readonly ILogger<ProjectService> _logger;
-        private readonly ModelBuilderDbContext _modelBuilderDbContext;
+        private readonly ICooperateService _cooperateService;
+        
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, ModelBuilderDbContext modelBuilderDbContext)
+            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, ICooperateService cooperateService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -57,7 +58,7 @@ namespace Mb.Services.Services
             _moduleService = moduleService;
             _attributeRepository = attributeRepository;
             _logger = logger;
-            _modelBuilderDbContext = modelBuilderDbContext;
+            _cooperateService = cooperateService;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -420,7 +421,7 @@ namespace Mb.Services.Services
                 // Edges
                 var existingEdges = originalProject.Edges.ToList();
                 var deleteEdges = existingEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
-                var subDeleteEdges = (await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id, invokedByDomain)).ToList();
+                await _edgeRepository.DeleteEdges(projectWorker, deleteEdges, projectAm.Id, invokedByDomain);
 
                 // Nodes
                 var existingNodes = originalProject.Nodes.ToList();
@@ -433,8 +434,8 @@ namespace Mb.Services.Services
                 // Map new data
                 _mapper.Map(projectAm, originalProject);
 
-                _nodeRepository.UpdateInsert(projectWorker, existingNodes, originalProject, invokedByDomain);
-                var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
+                await _nodeRepository.UpdateInsert(projectWorker, existingNodes, originalProject, invokedByDomain);
+                await _edgeRepository.UpdateInsert(projectWorker, existingEdges, originalProject, invokedByDomain);
 
                 ResolveLevelAndOrder(originalProject);
 
@@ -445,7 +446,14 @@ namespace Mb.Services.Services
                 // Resolve
                 var subProjectNodes = projectWorker.Nodes.Where(x => x.IsSubProjectNode && x.WorkerStatus == WorkerStatus.Create).Select(x => x.Node).ToList();
                 var subDeleteNodes = projectWorker.Nodes.Where(x => x.IsSubProjectNode && x.WorkerStatus == WorkerStatus.Delete).Select(x => x.Node).ToList();
+
+                var subEdges = projectWorker.Edges.Where(x => x.IsSubProjectEdge && x.WorkerStatus == WorkerStatus.Create).Select(x => x.Edge).ToList();
+                var subDeleteEdges = projectWorker.Edges.Where(x => x.IsSubProjectEdge && x.WorkerStatus == WorkerStatus.Delete).Select(x => x.Edge).ToList();
+
                 await ResolveSubProjects(subProjectNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
+
+                ClearAllChangeTracker();
+                await _cooperateService.SendUpdates(projectWorker);
             }
             catch (Exception e)
             {
@@ -484,7 +492,7 @@ namespace Mb.Services.Services
             var edgesToDelete = existingProject.Edges.Where(x => x.MasterProjectId == projectId).ToList();
             var projectWorker = new ProjectWorker {ProjectId = projectId};
 
-            await _edgeRepository.DeleteEdges(edgesToDelete, projectId, _modelBuilderConfiguration.Domain);
+            await _edgeRepository.DeleteEdges(projectWorker, edgesToDelete, projectId, _modelBuilderConfiguration.Domain);
             await _nodeRepository.DeleteNodes(projectWorker, nodesToDelete, projectId, _modelBuilderConfiguration.Domain);
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();

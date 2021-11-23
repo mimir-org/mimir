@@ -4,14 +4,16 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211122095533_EventLogChanged")]
+    partial class EventLogChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -415,7 +417,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("DataId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("DataId");
 
                     b.Property<DateTime>("DateTime")
@@ -424,28 +426,20 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("EventLogDataType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("EventLogDataType");
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("ProjectId");
 
                     b.Property<string>("WorkerStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("WorkerStatus");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DataId");
-
-                    b.HasIndex("EventLogDataType");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("WorkerStatus");
 
                     b.ToTable("EventLog");
                 });

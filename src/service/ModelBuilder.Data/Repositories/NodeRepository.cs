@@ -29,10 +29,10 @@ namespace Mb.Data.Repositories
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public void UpdateInsert(ProjectWorker projectWorker, ICollection<Node> original, Project project, string invokedByDomain)
+        public Task UpdateInsert(ProjectWorker projectWorker, ICollection<Node> original, Project project, string invokedByDomain)
         {
             if (project?.Nodes == null || !project.Nodes.Any())
-                return;
+                return Task.CompletedTask;
 
             var newNodes = original != null
                 ? project.Nodes.Where(x => original.All(y => y.Id != x.Id)).ToList()
@@ -67,7 +67,10 @@ namespace Mb.Data.Repositories
                 else
                 {
                     if (node.MasterProjectId != project.Id)
+                    {
+                        Attach(node, EntityState.Unchanged);
                         continue;
+                    }
 
                     // Parties is not allowed changed our node
                     if (_modelBuilderConfiguration.Domain == node.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
@@ -93,10 +96,14 @@ namespace Mb.Data.Repositories
                     Attach(node, EntityState.Modified);
                 }
             }
+            return Task.CompletedTask;
         }
 
         public async Task DeleteNodes(ProjectWorker projectWorker, ICollection<Node> delete, string projectId, string invokedByDomain)
         {
+            if (delete == null || projectId == null || !delete.Any())
+                return;
+
             foreach (var node in delete)
             {
                 if (node.MasterProjectId != projectId)

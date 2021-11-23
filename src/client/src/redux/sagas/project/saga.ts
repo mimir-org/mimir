@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { Project } from "../../../models";
+import { Project, WebSocket } from "../../../models";
 import { ConvertProject, InitializeProject } from ".";
 import { saveAs } from "file-saver";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
@@ -24,6 +24,9 @@ import {
 
 export function* getProject(action) {
   try {
+    const webSocket = new WebSocket();
+    webSocket.setGroup(action.payload);
+
     const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
     const response = yield call(get, url);
 

@@ -14,7 +14,6 @@ import {
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
 } from "../helpers";
-import { cooperateAddEdge, cooperateAddNode } from "../../../modules/cooperate";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -70,7 +69,6 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
-  dispatch(cooperateAddNode(targetNode));
   if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
 };
 
@@ -88,7 +86,6 @@ const handleCreatePartOfEdge = (
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
   dispatch(createEdge(partofEdge));
-  dispatch(cooperateAddEdge(partofEdge));
 };
 
 const initComposite = (composite: Composite, targetNode: Node) => {

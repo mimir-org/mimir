@@ -8,7 +8,10 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
+using Mb.Models.Workers;
 using Mb.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Mb.Services.Services
 {
@@ -28,6 +31,29 @@ namespace Mb.Services.Services
         #endregion
 
         #region Public methods
+
+        public async Task<IEnumerable<EventLog>> CreateLogs(ProjectWorker worker)
+        {
+            var logs = new List<EventLog>();
+
+            if (worker == null)
+                return logs;
+
+            foreach (var obj in worker.Nodes.Select(n => new EventLogAm(n.Node) {WorkerStatus = n.WorkerStatus, ProjectId = worker.ProjectId }).Select(log => _mapper.Map<EventLog>(log)))
+            {
+                await _eventLogRepository.CreateAsync(obj);
+                logs.Add(obj);
+            }
+
+            foreach (var obj in worker.Edges.Select(n => new EventLogAm(n.Edge) { WorkerStatus = n.WorkerStatus, ProjectId = worker.ProjectId }).Select(log => _mapper.Map<EventLog>(log)))
+            {
+                await _eventLogRepository.CreateAsync(obj);
+                logs.Add(obj);
+            }
+
+            await _eventLogRepository.SaveAsync();
+            return logs;
+        }
 
         /// <summary>
         /// Create a new log event used for websocket
@@ -76,12 +102,12 @@ namespace Mb.Services.Services
         /// <summary>
         /// Get all logs for event
         /// </summary>
-        /// <param name="webSocketEvent"></param>
+        /// <param name="workerStatus"></param>
         /// <returns></returns>
-        public IEnumerable<EventLog> ReadLog(WorkerStatus webSocketEvent)
+        public IEnumerable<EventLog> ReadLog(WorkerStatus workerStatus)
         {
             return _eventLogRepository.GetAll()
-                .Where(x => x.WebSocketEvent == webSocketEvent)
+                .Where(x => x.WorkerStatus == workerStatus)
                 .OrderBy(x => x.DateTime)
                 .ToList();
         }
@@ -90,12 +116,12 @@ namespace Mb.Services.Services
         /// Get all logs for type and event
         /// </summary>
         /// <param name="eventLogDataType"></param>
-        /// <param name="webSocketEvent"></param>
+        /// <param name="workerStatus"></param>
         /// <returns></returns>
-        public IEnumerable<EventLog> ReadLog(EventLogDataType eventLogDataType, WorkerStatus webSocketEvent)
+        public IEnumerable<EventLog> ReadLog(EventLogDataType eventLogDataType, WorkerStatus workerStatus)
         {
             return _eventLogRepository.GetAll()
-                .Where(x => x.WebSocketEvent == webSocketEvent && 
+                .Where(x => x.WorkerStatus == workerStatus && 
                             x.EventLogDataType == eventLogDataType)
                 .OrderBy(x => x.DateTime)
                 .ToList();
@@ -109,6 +135,25 @@ namespace Mb.Services.Services
         public async Task Delete(int id)
         {
             await _eventLogRepository.Delete(id);
+            await _eventLogRepository.SaveAsync();
+        }
+
+        /// <summary>
+        /// Delete all duplicate log entries.
+        /// Keep only the latest entry.
+        /// </summary>
+        /// <returns></returns>
+        public async Task DeleteDuplicates()
+        {
+            _eventLogRepository.Context?.ChangeTracker?.Clear();
+            var logEntries = ReadLog().OrderBy(x => x.Id).GroupBy(x => x.DataId).ToList();
+            foreach (var entry in logEntries)
+            {
+                SetCleanupStatus(WorkerStatus.Update, entry);
+                SetCleanupStatus(WorkerStatus.Delete, entry);
+                SetCleanupStatus(WorkerStatus.Create, entry);
+            }
+
             await _eventLogRepository.SaveAsync();
         }
 
@@ -136,6 +181,25 @@ namespace Mb.Services.Services
         public async Task<EventLog> Get(int id)
         {
             return await _eventLogRepository.GetAsync(id);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void SetCleanupStatus(WorkerStatus status, IEnumerable<EventLog> events)
+        {
+            var items = events.Where(x => x.WorkerStatus == status).ToList();
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                var entityState = EntityState.Deleted;
+
+                if (i == items.Count - 1)
+                    entityState = EntityState.Unchanged;
+
+                _eventLogRepository.Attach(items.ElementAt(i), entityState);    
+            }
         }
 
         #endregion

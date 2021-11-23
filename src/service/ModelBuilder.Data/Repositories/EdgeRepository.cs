@@ -5,6 +5,8 @@ using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Enums;
+using Mb.Models.Workers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -27,10 +29,10 @@ namespace Mb.Data.Repositories
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public IEnumerable<Edge> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
+        public Task UpdateInsert(ProjectWorker projectWorker, ICollection<Edge> original, Project project, string invokedByDomain)
         {
             if (project?.Edges == null || !project.Edges.Any() || original == null)
-                yield break;
+                return Task.CompletedTask;
 
             var newEdges = project.Edges.Where(x => original.All(y => y.Id != x.Id)).ToList();
 
@@ -43,18 +45,22 @@ namespace Mb.Data.Repositories
                     if (edge.MasterProjectId != project.Id)
                     {
                         Attach(edge, EntityState.Unchanged);
-                        yield return edge;
+                        projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Create, IsSubProjectEdge = true });
                         continue;
                     }
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Added);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Added);
+                    projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Create });
                     Attach(edge, EntityState.Added);
                 }
                 else
                 {
                     if (edge.MasterProjectId != project.Id)
+                    {
+                        Attach(edge, EntityState.Unchanged);
                         continue;
+                    }
 
                     // Parties is not allowed changed our edge
                     if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
@@ -65,23 +71,24 @@ namespace Mb.Data.Repositories
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
+                    projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Update });
                     Attach(edge, EntityState.Modified);
                 }
             }
+
+            return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<Edge>> DeleteEdges(ICollection<Edge> delete, string projectId, string invokedByDomain)
+        public async Task DeleteEdges(ProjectWorker projectWorker, ICollection<Edge> delete, string projectId, string invokedByDomain)
         {
-            var subEdges = new List<Edge>();
-
             if (delete == null || projectId == null || !delete.Any())
-                return subEdges;
+                return;
 
             foreach (var edge in delete)
             {
                 if (edge.MasterProjectId != null && edge.MasterProjectId != projectId)
                 {
-                    subEdges.Add(edge);
+                    projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete, IsSubProjectEdge = true });
                     continue;
                 }
 
@@ -148,9 +155,10 @@ namespace Mb.Data.Repositories
                 //Terminal - Interface output (delete)
                 if (edge.Interface?.OutputTerminalId != null)
                     await _connectorRepository.Delete(edge.Interface.OutputTerminalId);
-            }
 
-            return subEdges;
+                projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete });
+
+            }
         }
 
         private void ResetEdgeBeforeSave(Edge edge)
