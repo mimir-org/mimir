@@ -27,6 +27,7 @@ class Node {
   statusId: string;
   status: EnumBase;
   createdBy: string;
+  libraryTypeId: string;
   created: Date;
   updatedBy: string;
   updated: Date;

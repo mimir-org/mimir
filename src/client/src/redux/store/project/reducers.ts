@@ -374,6 +374,25 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.CHANGE_TRANSPORT_PROP_VALUE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((x) =>
+            x.id === action.payload.edgeId
+              ? {
+                  ...x,
+                  transport: {
+                    ...x.transport,
+                    [action.payload.propName]: action.payload.propValue,
+                  },
+                }
+              : x
+          ),
+        },
+      };
+
     case Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE: {
       const { id, edgeId, value, unitId } = action.payload;
 
@@ -403,6 +422,26 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
     }
+
+    case Types.CHANGE_INTERFACE_PROP_VALUE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((x) =>
+            x.id === action.payload.edgeId
+              ? {
+                  ...x,
+                  interface: {
+                    ...x.interface,
+                    [action.payload.propName]: action.payload.propValue,
+                  },
+                }
+              : x
+          ),
+        },
+      };
+
     case Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE: {
       const { id, edgeId, unitId, value } = action.payload;
 

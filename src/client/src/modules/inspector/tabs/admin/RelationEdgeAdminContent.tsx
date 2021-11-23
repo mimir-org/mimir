@@ -8,7 +8,7 @@ interface Props {
   edge: Edge;
 }
 
-const EdgeAdminContent = ({ edge }: Props) => (
+const RelationEdgeAdminContent = ({ edge }: Props) => (
   <>
     <TabColumn>
       <div>
@@ -45,4 +45,4 @@ const EdgeAdminContent = ({ edge }: Props) => (
     </TabColumn>
   </>
 );
-export default EdgeAdminContent;
+export default RelationEdgeAdminContent;
