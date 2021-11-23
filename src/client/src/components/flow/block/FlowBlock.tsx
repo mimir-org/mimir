@@ -25,6 +25,7 @@ import {
   userStateSelector,
   blockFilterSelector,
   nodeSizeSelector,
+  productNodeSizeSelector,
   animatedEdgeSelector,
   location3DSelector,
 } from "../../../redux/store";
@@ -49,17 +50,18 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const lib = useAppSelector(librarySelector);
   const userState = useAppSelector(userStateSelector);
   const blockFilter = useAppSelector(blockFilterSelector);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
+  const parentSize = useAppSelector(nodeSizeSelector);
+  const parentProductSize = useAppSelector(productNodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
   const showLocation3D = useAppSelector(location3DSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, parentNodeSize, animatedEdge));
+      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, parentNodeSize, animatedEdge]
+    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
