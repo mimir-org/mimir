@@ -509,12 +509,10 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Cost");
 
                     b.Property<DateTime?>("Created")
-                        .IsRequired()
                         .HasColumnType("datetime2")
                         .HasColumnName("Created");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CreatedBy");
 
