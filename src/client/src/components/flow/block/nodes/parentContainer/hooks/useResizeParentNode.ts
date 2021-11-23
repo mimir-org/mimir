@@ -34,8 +34,8 @@ const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<
   );
 
   const onMouseDownCallback = useCallback(
-    (e: MouseEvent) => onMouseDown(e, prevYRef, onResizeCallback, onMouseUpCallback),
-    [prevYRef, onResizeCallback, onMouseUpCallback]
+    (e: MouseEvent) => onMouseDown(e, prevXRef, prevYRef, onResizeCallback, onMouseUpCallback),
+    [prevXRef, prevYRef, onResizeCallback, onMouseUpCallback]
   );
 
   useEffect(() => {
@@ -75,10 +75,12 @@ const onResize = (
 
 const onMouseDown = (
   e: MouseEvent,
+  prevXRef: React.MutableRefObject<number>,
   prevYRef: React.MutableRefObject<number>,
   resizeCallback: (e: MouseEvent) => void,
   onMouseUpCallback: () => void
 ) => {
+  prevXRef.current = e.clientX;
   prevYRef.current = e.clientY;
   document.addEventListener("mousemove", resizeCallback);
   document.addEventListener("mouseup", onMouseUpCallback, { once: true });
