@@ -113,6 +113,7 @@ namespace Mb.Services.Services
                 .Include("Edges.Transport.OutputTerminal")
                 .Include("Edges.Transport.OutputTerminal.Attributes")
                 .Include("Edges.Interface")
+                .Include("Edges.Interface.Attributes")
                 .Include("Edges.Interface.InputTerminal")
                 .Include("Edges.Interface.InputTerminal.Attributes")
                 .Include("Edges.Interface.OutputTerminal")
@@ -392,6 +393,7 @@ namespace Mb.Services.Services
                     .Include("Edges.Transport.OutputTerminal")
                     .Include("Edges.Transport.OutputTerminal.Attributes")
                     .Include("Edges.Interface")
+                    .Include("Edges.Interface.Attributes")
                     .Include("Edges.Interface.InputTerminal")
                     .Include("Edges.Interface.InputTerminal.Attributes")
                     .Include("Edges.Interface.OutputTerminal")
@@ -428,11 +430,11 @@ namespace Mb.Services.Services
                 var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
                 await _nodeRepository.DeleteNodes(projectWorker, deleteNodes, projectAm.Id, invokedByDomain);
 
-                //Determine if project version should be incremented
-                SetProjectVersion(originalProject, projectAm);
+            //Determine if project version should be incremented
+            SetProjectVersion(originalProject, projectAm);
 
-                // Map new data
-                _mapper.Map(projectAm, originalProject);
+            // Map new data
+            _mapper.Map(projectAm, originalProject);
 
                 await _nodeRepository.UpdateInsert(projectWorker, existingNodes, originalProject, invokedByDomain);
                 await _edgeRepository.UpdateInsert(projectWorker, existingEdges, originalProject, invokedByDomain);
@@ -870,7 +872,8 @@ namespace Mb.Services.Services
                 Height = null,
                 Cost = null,
                 Created = DateTime.Now.ToUniversalTime(),
-                CreatedBy = _contextAccessor.GetName()
+                CreatedBy = _contextAccessor.GetName(),
+                LibraryTypeId = null
             };
 
             var connector = new Relation

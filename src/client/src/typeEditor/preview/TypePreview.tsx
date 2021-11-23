@@ -1,11 +1,11 @@
 import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
-import { ListType } from "../TypeEditorList";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../compLibrary/list";
 import { PreviewArea, InfoWrapper } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
+import { TextResources } from "../../assets/text";
 import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";
-import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface, GetListLabel, GetWidth } from "../helpers";
+import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface } from "../helpers";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -44,8 +44,8 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
   };
 
   return (
-    <ListWrapper hideOverflow wide={GetWidth(ListType.Preview)} right={0}>
-      <ListLabel preview={true}>{GetListLabel(ListType.Preview, createLibraryType)}</ListLabel>
+    <ListWrapper flex={1.5}>
+      <ListLabel preview={true}>{TextResources.TypeEditor_New_Type_Preview}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (
@@ -55,10 +55,10 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
           </InfoWrapper>
         )}
         {(IsFunction(aspect) || IsProduct(aspect)) && IsTransport(objectType) && (
-          <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}></TransportIcon>
+          <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
         )}
         {(IsFunction(aspect) || IsProduct(aspect)) && IsInterface(objectType) && (
-          <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}></InterfaceIcon>
+          <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
         )}
       </PreviewArea>
     </ListWrapper>

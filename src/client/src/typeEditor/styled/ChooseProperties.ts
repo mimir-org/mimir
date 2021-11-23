@@ -8,7 +8,8 @@ const ChooseProperties = styled.div<Props>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0px 20px;
+  padding: 0 20px;
+  gap: 15px;
   position: relative;
   height: ${(props) => props.height}px;
 `;

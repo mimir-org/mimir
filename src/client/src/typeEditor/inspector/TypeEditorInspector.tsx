@@ -7,8 +7,7 @@ import { InspectorHeader } from "../../modules/inspector";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
 import { useDragResizePanel } from "../../modules/inspector/helpers/useDragResizePanel";
 import { AnimatedInspector, ResizePanel } from "../../modules/inspector/styled";
-import { GetFilteredTerminalTypeExtendedList } from "../helpers";
-import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
+import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../helpers";
 import {
   changeTypeEditorInspectorHeight,
   changeTypeEditorInspectorTab,

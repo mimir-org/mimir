@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Workers;
+using Mb.Models.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -18,14 +22,16 @@ namespace Mb.Data.Repositories
         private readonly ITransportRepository _transportRepository;
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly IHttpContextAccessor _contextAccessor;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, IHttpContextAccessor contextAccessor) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
             _connectorRepository = connectorRepository;
+            _contextAccessor = contextAccessor;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -49,6 +55,8 @@ namespace Mb.Data.Repositories
                         continue;
                     }
 
+                    SetEdgeProperties(edge, true);
+
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Added);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Added);
                     projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Create });
@@ -68,6 +76,8 @@ namespace Mb.Data.Repositories
                         Detach(edge);
                         continue;
                     }
+
+                    SetEdgeProperties(edge, false);
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
@@ -167,6 +177,61 @@ namespace Mb.Data.Repositories
             edge.ToConnector = null;
             edge.FromNode = null;
             edge.ToNode = null;
+        }
+
+        private void SetEdgeProperties(Edge edge, bool isNewEdge)
+        {
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
+            var contextAccessorName = _contextAccessor.GetName();
+
+            if (!string.IsNullOrWhiteSpace(edge?.Transport?.UpdatedBy))
+                edge.Transport.UpdatedBy = contextAccessorName;
+
+            if (edge?.Transport?.Updated != null)
+                edge.Transport.Updated = dateTimeNow;
+
+            if (string.IsNullOrWhiteSpace(edge?.Transport?.StatusId))
+            {
+                if(edge?.Transport != null)
+                    edge.Transport.StatusId = ObjectType.NotSet.ToString();
+            }
+
+            if (!string.IsNullOrWhiteSpace(edge?.Interface?.UpdatedBy))
+                edge.Interface.UpdatedBy = contextAccessorName;
+
+            if (edge?.Interface?.Updated != null)
+                edge.Interface.Updated = dateTimeNow;
+
+            if (string.IsNullOrWhiteSpace(edge?.Interface?.StatusId))
+            {
+                if (edge?.Interface != null)
+                    edge.Interface.StatusId = ObjectType.NotSet.ToString();
+            }
+
+            if (!isNewEdge)
+                return;
+
+            //TODO: Versioning
+
+            const string version = "1.0";
+
+            if(!string.IsNullOrWhiteSpace(edge?.Transport?.Version))
+                edge.Transport.Version = version;
+
+            if (!string.IsNullOrWhiteSpace(edge?.Transport?.CreatedBy))
+                edge.Transport.CreatedBy = contextAccessorName;
+
+            if (edge?.Transport?.Created != null)
+                edge.Transport.Created = dateTimeNow;
+
+            if (!string.IsNullOrWhiteSpace(edge?.Interface?.Version))
+                edge.Interface.Version = version;
+
+            if (!string.IsNullOrWhiteSpace(edge?.Interface?.CreatedBy))
+                edge.Interface.CreatedBy = contextAccessorName;
+
+            if (edge?.Interface?.Created != null)
+                edge.Interface.Created = dateTimeNow;
         }
     }
 }

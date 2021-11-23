@@ -1,8 +1,8 @@
-import { VisibleOnIcon, VisibleOffIcon, VisibleSubOffIcon } from "../../../assets/icons/visible";
 import { ExplorerIconLine } from "../aspectComponent/styled";
 import { Node } from "../../../models";
 import { useAppDispatch, useAppSelector, projectSelector } from "../../../redux/store";
 import { OnTreeChange } from "../handlers";
+import { GetIcon } from "../helpers";
 
 interface Props {
   node: Node;
@@ -17,9 +17,9 @@ export const VisibleComponent = ({ node, isAncestorVisible, isVisible, onSetVisi
   const isHidden = node?.isHidden;
 
   return (
-    <ExplorerIconLine isHidden={isHidden}>
+    <ExplorerIconLine isHidden={isHidden} isVisible={isVisible}>
       <img
-        src={!isVisible ? VisibleOffIcon : !isAncestorVisible ? VisibleSubOffIcon : VisibleOnIcon}
+        src={GetIcon(isHidden, isAncestorVisible, isVisible)}
         alt="visible-icon"
         className="visible-icon"
         onClick={() => {

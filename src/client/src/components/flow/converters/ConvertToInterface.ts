@@ -31,12 +31,23 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
 
     return {
       id: CreateId(),
+      version: currentInterface.version,
+      rds: currentInterface.rds,
       name: currentInterface.name,
+      label: currentInterface.label,
+      description: currentInterface.description,
+      statusId: currentInterface.statusId,
       semanticReference: currentInterface.semanticReference,
+      attributes: currentInterface.attributes,
       inputTerminalId: inputTerminal.id,
       inputTerminal: inputTerminal,
       outputTerminalId: outputTerminal.id,
       outputTerminal: outputTerminal,
+      updatedBy: currentInterface.updatedBy,
+      updated: currentInterface.updated,
+      createdBy: currentInterface.createdBy,
+      created: currentInterface.created,
+      libraryTypeId: currentInterface.libraryTypeId,
     } as Interface;
   }
   return null;

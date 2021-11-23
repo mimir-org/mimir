@@ -71,12 +71,13 @@ namespace Mb.Models.Data
 
         public string UpdatedBy { get; set; }
 
-        [Required]
         public DateTime Updated { get; set; }
 
         public DateTime? Created { get; set; }
 
         public string CreatedBy { get; set; }
+
+        public string LibraryTypeId { get; set; }
 
         [Required]
         public string Version { get; set; }
@@ -154,13 +155,13 @@ namespace Mb.Models.Data
             if (string.IsNullOrEmpty(_domain))
                 _domain = id.ResolveDomain();
 
-            if (string.IsNullOrEmpty(_iri))
+            if (string.IsNullOrEmpty(_iri) || !_id.HasValidIri(_iri))
                 _iri = id.ResolveIri();
         }
 
         private void SetIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _iri = iri;
@@ -190,7 +191,7 @@ namespace Mb.Models.Data
 
         private void SetMasterProjectIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _masterProjectIri = iri;

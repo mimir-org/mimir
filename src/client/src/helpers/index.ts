@@ -12,7 +12,7 @@ export { default as IsExplorer } from "./IsExplorer";
 export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
 export { default as GetAspectColor } from "./GetAspectColor";
-export { default as GetRdsId } from "./GetRdsId";
+export { GetRdsId, GetRdsIdEdge } from "./GetRdsId";
 export { default as GetReferenceDesignation } from "./GetReferenceDesignation";
 export { default as GetObjectIcon } from "./GetObjectIcon";
 export { default as GetAspectIcon } from "./GetAspectIcon";

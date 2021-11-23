@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.11" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.11" />
@@ -15,18 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
