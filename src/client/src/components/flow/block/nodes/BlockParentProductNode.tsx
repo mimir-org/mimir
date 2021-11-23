@@ -6,7 +6,7 @@ import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector } from "../../../../redux/store";
+import { productNodeSizeSelector, edgeSelector, electroSelector, nodeSelector } from "../../../../redux/store";
 import { GetAspectColor } from "../../../../helpers";
 
 /**
@@ -19,7 +19,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const parentBlockSize = useAppSelector(nodeSizeSelector);
+  const parentBlockSize = useAppSelector(productNodeSizeSelector);
 
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);

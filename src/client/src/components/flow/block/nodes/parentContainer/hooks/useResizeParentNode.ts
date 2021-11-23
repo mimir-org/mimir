@@ -1,26 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef } from "react";
-import { nodeSizeSelector, useAppSelector } from "../../../../../../redux/store";
+import { productNodeSizeSelector, useAppSelector } from "../../../../../../redux/store";
 import { GetFlowNodeByDataId } from "../../../helpers";
-import { setBlockNodeHeight } from "../../../redux/actions";
+import { setBlockProductNodeHeight } from "../../../redux/actions";
 
 const MIN_HEIGHT = 700;
 
 const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: any) => {
-  const parentNodeRef = useRef(null);
-  const parentNodeFlowRef = useRef(null);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
-  const nodeHeightRef = useRef(parentNodeSize.height);
+  const parentProductNodeRef = useRef(null);
+  const parentProductNodeFlowRef = useRef(null);
+  const parentProductNodeSize = useAppSelector(productNodeSizeSelector);
+  const nodeHeightRef = useRef(parentProductNodeSize.height);
   const prevYRef = useRef(nodeHeightRef.current);
 
   useEffect(() => {
-    parentNodeRef.current = document.getElementById("block-" + id);
-    parentNodeFlowRef.current = GetFlowNodeByDataId(id);
+    parentProductNodeRef.current = document.getElementById("block-" + id);
+    parentProductNodeFlowRef.current = GetFlowNodeByDataId(id);
   }, []);
 
   const onResizeCallback = useCallback(
-    (e: MouseEvent) => onResize(e, prevYRef, parentNodeRef, parentNodeFlowRef, nodeHeightRef),
-    [prevYRef, parentNodeRef, parentNodeFlowRef, nodeHeightRef]
+    (e: MouseEvent) => onResize(e, prevYRef, parentProductNodeRef, parentProductNodeFlowRef, nodeHeightRef),
+    [prevYRef, parentProductNodeRef, parentProductNodeFlowRef, nodeHeightRef]
   );
 
   const onMouseUpCallback = useCallback(
@@ -36,7 +36,7 @@ const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<
   useEffect(() => {
     if (resizePanelRef.current) resizePanelRef.current.addEventListener("mousedown", onMouseDownCallback);
     return () => document.removeEventListener("mousemove", onResizeCallback);
-  }, [parentNodeRef, resizePanelRef, dispatch, onResizeCallback, onMouseDownCallback, onMouseUpCallback]);
+  }, [parentProductNodeRef, resizePanelRef, dispatch, onResizeCallback, onMouseDownCallback, onMouseUpCallback]);
 };
 
 export default useResizeParentNode;
@@ -70,6 +70,6 @@ const onMouseDown = (
 };
 
 const onMouseUp = (nodeHeightRef: React.MutableRefObject<number>, dispatch: any, resizeCallback: (e: MouseEvent) => void) => {
-  if (nodeHeightRef.current > MIN_HEIGHT) dispatch(setBlockNodeHeight(nodeHeightRef.current));
+  if (nodeHeightRef.current > MIN_HEIGHT) dispatch(setBlockProductNodeHeight(nodeHeightRef.current));
   document.removeEventListener("mousemove", resizeCallback);
 };

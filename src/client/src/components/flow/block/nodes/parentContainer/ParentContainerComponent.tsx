@@ -1,6 +1,6 @@
 import { Node } from "../../../../../models";
 import { Banner, Block, Header, LogoBox, ResizeButton } from "./styled";
-import { GetCompanyLogoForNode, IsLocation } from "../../../../../helpers";
+import { GetCompanyLogoForNode, IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
@@ -38,9 +38,11 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
           <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
         </LogoBox>
       </Banner>
-      <ResizeButton id="ResizeParentNode" ref={resizePanelRef}>
-        <img src={ResizeIcon} alt="resize" className="icon" />
-      </ResizeButton>
+      {IsProduct(node) && (
+        <ResizeButton id="ResizeParentNode" ref={resizePanelRef}>
+          <img src={ResizeIcon} alt="resize" className="icon" />
+        </ResizeButton>
+      )}
       {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
       {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
     </Block>
