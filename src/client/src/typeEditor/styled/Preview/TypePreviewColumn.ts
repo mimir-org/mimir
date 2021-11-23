@@ -1,12 +1,14 @@
 import styled from "styled-components";
+
 interface Props {
-  wide?: number;
+  flex?: string | number;
 }
 
 const TypePreviewColumn = styled.div<Props>`
   display: flex;
-  flex: ${(props) => (props.wide === undefined ? 1 : props.wide)};
+  flex: ${(props) => (props.flex === undefined ? 1 : props.flex)};
   flex-direction: column;
+  max-height: inherit;
 `;
 
 export default TypePreviewColumn;
