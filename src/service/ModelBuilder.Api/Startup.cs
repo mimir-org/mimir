@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
@@ -36,21 +38,20 @@ namespace Mb.Api
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
 
-            var origins = new List<string>()
-            {
-                "http://localhost:3000",
-                "https://modelbuilder-dev-client.azurewebsites.net",
-                "https://modelbuilder-test-client.azurewebsites.net"
-            };
-
-
             // Add Cors policy
+            var origins = Configuration.GetSection("CorsConfiguration")?
+                .GetValue<string>("ValidOrigins")?.Split(",");
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.WithOrigins(origins.ToArray())
-                        .AllowAnyHeader()
+                    if (NoOriginsAreProvided(origins))
+                        builder.AllowAnyOrigin();
+                    else
+                        builder.WithOrigins(origins);
+                    
+                    builder.AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
@@ -93,6 +94,11 @@ namespace Mb.Api
             //        endpoints.MapControllers();
             //    });
             
+        }
+
+        private static bool NoOriginsAreProvided(string[] origins)
+        {
+            return origins is null || origins.Length is 0 || string.IsNullOrWhiteSpace(origins.FirstOrDefault());
         }
     }
 }
