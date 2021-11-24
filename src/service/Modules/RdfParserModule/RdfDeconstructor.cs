@@ -12,7 +12,6 @@ using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
-using VDS.RDF.Query.Inference;
 using INode = VDS.RDF.INode;
 
 namespace RdfParserModule
@@ -20,7 +19,7 @@ namespace RdfParserModule
     public class RdfDeconstructor
     {
         public IGraph RdfGraph { get; set; }
-        public ParserGraph Graph { get; set; }
+        public ParserGraph ParserGraph { get; set; }
         public TripleStore Store { get; set; }
         public ProjectAm Project { get; set; }
 
@@ -37,33 +36,14 @@ namespace RdfParserModule
             ParserNodes = new List<ParserNode>();
             ParserEdges = new List<ParserEdge>();
         }
-
-        public void LoadGraph(string valueAsString)
-        {
-
-            RdfGraph = new OntologyGraph();
-            var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/ontologies.owl";
-            RdfGraph.LoadFromFile(filePath, new TurtleParser());
-
-            IGraph graph = new Graph();
-            graph.LoadFromString(valueAsString);
-
-            RdfGraph.Merge(graph);
-
-            Store = new TripleStore();
-            Store.Add(RdfGraph);
-
-            Store.AddInferenceEngine(new RdfsReasoner());
-
-            Project = new ProjectAm();
-        }
-        
         public void MakeProject(string valueAsString)
         {
+            Project = new ProjectAm();
+
             InitaliseNamespaces();
             LoadGraph(valueAsString);
 
-            Graph = new ParserGraph
+            ParserGraph = new ParserGraph
             {
                 IsSubProject = true,
                 Nodes = new List<ParserNode>(),
@@ -83,11 +63,31 @@ namespace RdfParserModule
             ResolvePartOfRelation(ParserNodes);
             ResolvePositions(ParserNodes);
 
-            Graph.Nodes = ParserNodes;
-            Graph.Edges = ParserEdges;
+            ParserGraph.Nodes = ParserNodes;
+            ParserGraph.Edges = ParserEdges;
 
-            Project = _mapper.Map<ProjectAm>(Graph);
+            Project = _mapper.Map<ProjectAm>(ParserGraph);
         }
+
+        public void LoadGraph(string valueAsString)
+        {
+            RdfGraph = new OntologyGraph();
+            var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/ontologies.owl";
+            RdfGraph.LoadFromFile(filePath, new TurtleParser());
+
+            IGraph graph = new Graph();
+            graph.LoadFromString(valueAsString);
+
+            RdfGraph.Merge(graph);
+
+            Store = new TripleStore();
+            Store.Add(RdfGraph);
+
+            //Store.AddInferenceEngine(new RdfsReasoner());
+
+        }
+        
+
 
         private ParserNode GetNode(string iri)
         {
@@ -153,7 +153,7 @@ namespace RdfParserModule
                     FromNode = parent,
                     ToNodeId = node.Iri,
                     ToNode = node,
-                    MasterProjectIri = Graph.Iri,
+                    MasterProjectIri = ParserGraph.Iri,
                     InputTerminal = fromConnector,
                     OutputTerminal = toConnector
                 };
@@ -168,16 +168,20 @@ namespace RdfParserModule
             var integratedObject = RdfGraph.CreateUriNode("imf:IntegratedObject");
             var type = RdfGraph.CreateUriNode(Resources.type);
             var projectId = Store.GetTriplesWithPredicateObject(type, integratedObject).Select(t => t.Subject).SingleOrDefault();
-            
+            if (projectId is null)
+            {
+                throw new Exception("Cannot find the Project Id");
+            }
+
             var label = GetLabel(projectId.ToString());
             var version = GetObjects(projectId.ToString(), "owl:versionInfo").First();
             var domain = GetDomain(projectId.ToString());
 
-            Graph.Iri = projectId.ToString();
-            Graph.Label = label;
-            Graph.Name = label;
-            Graph.Version = version.ToString();
-            Graph.Domain = domain;
+            ParserGraph.Iri = projectId.ToString();
+            ParserGraph.Label = label;
+            ParserGraph.Name = label;
+            ParserGraph.Version = version.ToString();
+            ParserGraph.Domain = domain;
         }
 
         public INode GetParent(string nodeId)
@@ -212,7 +216,7 @@ namespace RdfParserModule
                 Iri = node.ToString(),
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                MasterProjectIri = Graph.Iri,
+                MasterProjectIri = ParserGraph.Iri,
                 Domain = GetDomain(node.ToString()),
                 Terminals = new List<ParserConnector>()
 
@@ -324,10 +328,10 @@ namespace RdfParserModule
                 try
                 {
                     var s = triple.Subject;
-                    var sNode = Graph.GetNode(s.ToString());
+                    var sNode = ParserGraph.GetNode(s.ToString());
 
                     var o = triple.Object;
-                    var oNode = Graph.GetNode(o.ToString());
+                    var oNode = ParserGraph.GetNode(o.ToString());
 
                     switch (relation)
                     {
@@ -536,7 +540,7 @@ namespace RdfParserModule
                 return l.Value;
             }
 
-            throw new Exception("A label has to be a string");
+            throw new Exception("A label has to be a Literal");
         }
 
         private string GetDomain(string iri)
@@ -706,7 +710,7 @@ namespace RdfParserModule
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
                 Terminals = new List<ParserConnector>(),
-                MasterProjectIri = Graph.Iri
+                MasterProjectIri = ParserGraph.Iri
             }).ToList();
 
 
@@ -736,7 +740,7 @@ namespace RdfParserModule
                     OutputTerminalIri = outTerminal.Iri,
                     InputTerminal = inTerminal,
                     InputTerminalIri = inTerminal.Iri,
-                    MasterProjectIri = Graph.Iri,
+                    MasterProjectIri = ParserGraph.Iri,
                     Transport = transport,
                     ToNodeId = outTerminal.NodeId,
                     FromNodeId = inTerminal.NodeId,
@@ -767,7 +771,7 @@ namespace RdfParserModule
                 IsRoot = false,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                MasterProjectIri = Graph.Iri,
+                MasterProjectIri = ParserGraph.Iri,
                 Domain = GetDomain(node.ToString())
 
             }).ToList();
@@ -897,7 +901,7 @@ namespace RdfParserModule
                 IsRoot = false,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
-                MasterProjectIri = Graph.Iri,
+                MasterProjectIri = ParserGraph.Iri,
                 Domain = GetDomain(node.ToString()),
                 Label = GetLabel(node.ToString()),
                 Name = GetLabel(node.ToString()),
@@ -929,13 +933,35 @@ namespace RdfParserModule
             }
         }
 
-        private static string BuildIri(string ns, string id)
+        private string BuildIri(string ns, string id)
         {
-            return $"{ns}{id}";
+            if (_namespaces.TryGetValue(ns, out var fullNamespace))
+            {
+                return $"{fullNamespace}{id}";
+            }
+
+            if (ns[^1] == char.Parse(":"))
+            {
+                return $"{ns}{id}";
+            }
+
+            return $"{ns}:{id}";
+        }
+
+        private static bool ValidNamespace(string iri)
+        {
+            var validEnd = "#/".ToCharArray();
+            return validEnd.Contains(iri[^1]);
         }
 
         private void AddNamespace(string prefix, string iri)
         {
+            prefix = prefix.ToLower();
+            if (!ValidNamespace(iri))
+            {
+                iri = $"{iri}/";
+            }
+
             _namespaces.Add(prefix, iri);
             RdfGraph.NamespaceMap.AddNamespace(prefix, new Uri(iri));
         }
@@ -947,5 +973,6 @@ namespace RdfParserModule
                 AddNamespace(prefix, iri);
             }
         }
+
     }
 }

@@ -100,7 +100,7 @@ namespace RdfParserModule
             return $"{ns}:{id}";
         }
 
-        private static bool ValidEndIri(string iri)
+        private static bool ValidNamespace(string iri)
         {
             var validEnd = "#/".ToCharArray();
             return validEnd.Contains(iri[^1]);
@@ -109,7 +109,7 @@ namespace RdfParserModule
         private void AddNamespace(string prefix, string iri)
         {
             prefix = prefix.ToLower();
-            if (!ValidEndIri(iri))
+            if (!ValidNamespace(iri))
             {
                 iri = $"{iri}/";
             }
@@ -671,7 +671,7 @@ namespace RdfParserModule
 
         public static Connector GetParentConnector(this Connector c, Project project)
         {
-            if (c.IsChildConnector(project) && c.IsConnected(project))
+            if (c.IsChildConnector() && c.IsConnected(project))
             {
                 return (from edge in project.Edges where edge.ToConnectorId == c.Id select edge.FromConnector).FirstOrDefault();
             }
@@ -679,18 +679,18 @@ namespace RdfParserModule
             return null;
         }
 
-        public static bool IsChildConnector(this Connector c, Project project)
+        public static bool IsChildConnector(this Connector c)
         {
             return c is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Input };
         }
-        public static bool IsParentConnector(this Connector c, Project project)
+        public static bool IsParentConnector(this Connector c)
         {
             return c is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Output };
         }
 
         public static Connector ConnectedTo(this Connector c, Project project)
         {
-            return (from edge in project.Edges where (edge.FromConnectorId == c.Id || edge.ToConnectorId == c.Id) select edge.ToConnector).FirstOrDefault();
+            return (from edge in project.Edges where edge.FromConnectorId == c.Id select edge.ToConnector).FirstOrDefault();
         }
         public static bool IsConnected(this Connector c, Project project)
         {

@@ -24,7 +24,7 @@ namespace RdfParserModule
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => new List<AttributeAm>()));
 
             CreateMap<ParserEdge, EdgeAm>()
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => NormaliseID(src.Id)))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => NormaliseId(src.Id)))
                 .ForMember(dest => dest.FromConnectorId, opt => opt.MapFrom(src => src.FromConnector.Iri))
                 .ForMember(dest => dest.ToConnectorId, opt => opt.MapFrom(src => src.ToConnector.Iri))
                 .ForMember(dest => dest.FromNodeId, opt => opt.MapFrom(src => src.FromNode.Iri))
@@ -34,10 +34,10 @@ namespace RdfParserModule
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src =>src.MasterProjectIri));
 
             CreateMap<ParserTransport, TransportAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Iri)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseId(src.Iri)))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.InputTerminalId, opt => opt.MapFrom(src => NormaliseID(src.InputTerminalIri)))
-                .ForMember(dest => dest.OutputTerminalId, opt => opt.MapFrom(src => NormaliseID(src.OutputTerminalIri)))
+                .ForMember(dest => dest.InputTerminalId, opt => opt.MapFrom(src => NormaliseId(src.InputTerminalIri)))
+                .ForMember(dest => dest.OutputTerminalId, opt => opt.MapFrom(src => NormaliseId(src.OutputTerminalIri)))
                 .ForMember(dest => dest.InputTerminal, opt => opt.MapFrom(src => src.InputTerminal))
                 .ForMember(dest => dest.OutputTerminal, opt => opt.MapFrom(src => src.OutputTerminal))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => new List<AttributeAm>()));
@@ -66,17 +66,17 @@ namespace RdfParserModule
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseID(src.NodeIri)))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseId(src.NodeIri)))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
 
             CreateMap<ParserUnit, UnitAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Iri)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseId(src.Iri)))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
 
             CreateMap<ParserGraph, ProjectAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseID(src.Iri)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseId(src.Iri)))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))
@@ -87,10 +87,10 @@ namespace RdfParserModule
 
         }
 
-        public string NormaliseID(string id)
+        public string NormaliseId(string id)
         {
             id = Regex.Replace(id, @"http(s)?:\/\/(www)?", "");
-            id = id.Replace("#", "");
+            id = id.Replace("#", "_");
             id = id.Replace("/", "_");
             return id;
         }
