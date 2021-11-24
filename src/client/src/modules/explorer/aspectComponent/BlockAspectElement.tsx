@@ -11,7 +11,6 @@ interface Props {
   selectedNode: Node;
   secondaryNode: Node;
   elements: Elements<any>;
-  label: string;
   dispatch: any;
 }
 
@@ -20,7 +19,7 @@ interface Props {
  * @param interface
  * @returns an element with either an Aspect header or a checkbox.
  */
-const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, label, dispatch }: Props) => (
+const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, dispatch }: Props) => (
   <>
     {IsAspectNode(node) && (
       <AspectHeader>
@@ -28,7 +27,7 @@ const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, label
       </AspectHeader>
     )}
     <CheckboxExplorer
-      label={label}
+      label={node.label}
       color={GetAspectColor(node, AspectColorType.Selected)}
       isChecked={IsChecked(elements, node)}
       isMiniCheckbox={IsMiniCheckbox(node, selectedNode, secondaryNode)}

@@ -46,7 +46,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     updateNodeInternals(node?.id);
-  });
+  }, [node, updateNodeInternals]);
 
   if (!node) return null;
 

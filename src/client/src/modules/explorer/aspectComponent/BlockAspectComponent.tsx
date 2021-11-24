@@ -10,7 +10,6 @@ interface Props {
   node: Node;
   selectedNode: Node;
   secondaryNode: Node;
-  label: string;
   indent: number;
   isLeaf: boolean;
   expanded: boolean;
@@ -22,7 +21,6 @@ export const BlockAspectComponent = ({
   node,
   selectedNode,
   secondaryNode,
-  label,
   expanded,
   indent,
   isLeaf,
@@ -39,7 +37,6 @@ export const BlockAspectComponent = ({
           selectedNode={selectedNode}
           secondaryNode={secondaryNode}
           elements={elements}
-          label={label}
           dispatch={dispatch}
         />
       </ElementBox>

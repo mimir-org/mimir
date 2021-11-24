@@ -4,7 +4,7 @@ import { GetCompanyLogoForNode, IsLocation, IsProduct } from "../../../../../hel
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import { useResizeParentNode } from "./hooks";
 
 interface Props {
@@ -25,7 +25,6 @@ interface Props {
  */
 const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren, company, dispatch }: Props) => {
   const resizePanelRef = useRef(null);
-
   useResizeParentNode(node.id, resizePanelRef, dispatch);
 
   return (
@@ -49,4 +48,4 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
   );
 };
 
-export default ParentContainerComponent;
+export default memo(ParentContainerComponent);
