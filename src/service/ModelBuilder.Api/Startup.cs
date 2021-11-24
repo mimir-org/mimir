@@ -39,8 +39,10 @@ namespace Mb.Api
             });
 
             // Add Cors policy
-            var origins = Configuration.GetSection("CorsConfiguration")?
-                .GetValue<string>("ValidOrigins")?.Split(",");
+            /*var origins = Configuration.GetSection("CorsConfiguration")?
+                .GetValue<string>("ValidOrigins")?.Split(",");*/
+
+            string[] origins = null;
             
             services.AddCors(options =>
             {
@@ -49,11 +51,11 @@ namespace Mb.Api
                     if (NoOriginsAreProvided(origins))
                         builder.AllowAnyOrigin();
                     else
-                        builder.WithOrigins(origins);
+                        builder.WithOrigins(origins)
+                            .AllowCredentials();
                     
                     builder.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
                 });
             });
