@@ -75,6 +75,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={parentBlockSize.width}
         terminals={terminals}
         electro={electro}
+        dispatch={dispatch}
       />
     </>
   );

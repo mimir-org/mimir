@@ -14,6 +14,7 @@ interface Props {
   terminals: Connector[];
   parent: boolean;
   electro: boolean;
+  dispatch: any;
 }
 
 /**
@@ -21,7 +22,7 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ nodes, height, width, terminals, parent, electro }: Props) => (
+const HandleComponent = ({ nodes, height, width, terminals, parent, electro, dispatch }: Props) => (
   <>
     {terminals.map((conn) => {
       const [type, pos] = GetBlockHandleType(conn, electro);
@@ -42,7 +43,7 @@ const HandleComponent = ({ nodes, height, width, terminals, parent, electro }: P
             position={pos}
             id={conn.id}
             className={"react-flow__handle-block"}
-            isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
+            isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals, dispatch)}
           />
         </HandleBox>
       );

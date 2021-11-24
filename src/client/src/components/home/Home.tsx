@@ -6,6 +6,7 @@ import { UserMenuComponent } from "../menus/userMenu";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
+import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
 import { getContractors, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
@@ -52,6 +53,7 @@ const Home = () => {
       <LibraryModule />
       <TypeEditorComponent />
       <ErrorModule />
+      <ValidationModule />
     </>
   );
 };
