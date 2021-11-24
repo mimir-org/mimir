@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-const TreeNodeNameBox = styled.div`
-  padding: 8px 5px 0px 5px;
-  height: 26px;
+const TreeNodeNameBox = styled.p`
+  margin: 0;
+  padding: 0 5px;
   font-weight: bold;
   display: -webkit-box;
   -webkit-line-clamp: 2;
