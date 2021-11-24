@@ -1,4 +1,4 @@
-import { LogoBox, SymbolBox, TreeNodeNameBox } from "./styled";
+import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./styled";
 import { Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { GetCompanyLogoForNode } from "../../../../helpers";
@@ -16,15 +16,15 @@ const TreeLogoComponent = ({ node }: Props) => {
   const company = process.env.REACT_APP_COMPANY;
 
   return (
-    <>
+    <TreeLogoWrapper>
       <TreeNodeNameBox>{node.label ?? node.name}</TreeNodeNameBox>
       <LogoBox>
-        <img src={GetCompanyLogoForNode(company, node, false)} alt="logo" className="logo" />
+        <img src={GetCompanyLogoForNode(company, node, false)} alt="logo" />
       </LogoBox>
       <SymbolBox>
         <Symbol base64={node.symbol} text={node.name} />
       </SymbolBox>
-    </>
+    </TreeLogoWrapper>
   );
 };
 
