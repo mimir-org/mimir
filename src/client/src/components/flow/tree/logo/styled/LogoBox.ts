@@ -3,12 +3,12 @@ import styled from "styled-components";
 const LogoBox = styled.div`
   pointer-events: none;
   position: relative;
-  top: 5px;
+  top: 3px;
   display: flex;
   align-items: center;
   height: 25px;
   width: 60px;
-  left: 53px;
+  left: 60px;
 
   .logo {
     position: relative;
