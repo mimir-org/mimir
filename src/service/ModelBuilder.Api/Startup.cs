@@ -39,11 +39,8 @@ namespace Mb.Api
             });
 
             // Add Cors policy
-            /*var origins = Configuration.GetSection("CorsConfiguration")?
-                .GetValue<string>("ValidOrigins")?.Split(",");*/
-
-            string[] origins = null;
-            
+            var origins = Configuration.GetSection("CorsConfiguration")?
+                .GetValue<string>("ValidOrigins")?.Split(",");
             
             services.AddCors(options =>
             {
