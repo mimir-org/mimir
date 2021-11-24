@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as Helpers from "./helpers/";
+import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
-import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { setEdgeAnimation, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -22,7 +22,6 @@ import {
   treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
-import { NotificationsBox } from "../../../compLibrary/box";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -136,7 +135,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
-      {/* <NotificationsBox text={"You can not make a connection between these terminals"} onClick={() => null} warning /> */}
     </>
   );
 };

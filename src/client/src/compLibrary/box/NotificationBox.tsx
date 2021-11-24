@@ -10,7 +10,7 @@ interface Props {
   onClick: () => void;
 }
 
-const NotificationsBox = ({ text, warning, onClick }: Props) => {
+const NotificationBox = ({ text, warning, onClick }: Props) => {
   const color = warning ? Color.WarningRed : Color.Black;
 
   return (
@@ -24,4 +24,4 @@ const NotificationsBox = ({ text, warning, onClick }: Props) => {
   );
 };
 
-export default NotificationsBox;
+export default NotificationBox;

@@ -28,23 +28,25 @@ const HandleComponent = ({ nodes, height, width, terminals, parent, electro }: P
       const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
 
       return (
-        <HandleBox
-          visible={conn.visible && !IsPartOf(conn)}
-          id={"handle-" + conn.id}
-          top={SetTopPos(conn, pos, electro, parent, order, height)}
-          left={SetLeftPos(conn, pos, electro, parent, order, width)}
-          key={CreateId()}
-        >
-          <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
-          <Handle
-            type={type}
-            style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
-            position={pos}
-            id={conn.id}
-            className={"react-flow__handle-block"}
-            isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
-          />
-        </HandleBox>
+        <>
+          <HandleBox
+            visible={conn.visible && !IsPartOf(conn)}
+            id={"handle-" + conn.id}
+            top={SetTopPos(conn, pos, electro, parent, order, height)}
+            left={SetLeftPos(conn, pos, electro, parent, order, width)}
+            key={CreateId()}
+          >
+            <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
+            <Handle
+              type={type}
+              style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
+              position={pos}
+              id={conn.id}
+              className={"react-flow__handle-block"}
+              isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals)}
+            />
+          </HandleBox>
+        </>
       );
     })}
   </>
