@@ -11,6 +11,7 @@ const AvatarBox = styled.div<Props>`
   flex-direction: column;
   align-items: center;
   right: 28px;
+  width: 40px;
   color: ${Color.White};
   font-weight: ${(props) => props.isOpen && "bold"};
   cursor: pointer;
@@ -34,7 +35,7 @@ const AvatarBox = styled.div<Props>`
   .toggle-icon {
     position: absolute;
     top: 25px;
-    left: 35px;
+    left: 45px;
   }
 `;
 
