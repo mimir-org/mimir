@@ -11,7 +11,6 @@ interface Props {
   parent: boolean;
   input: boolean;
   terminals: Connector[];
-  visible: boolean;
   electro: boolean;
   onClick: (conn: Connector) => void;
   onBlur: () => void;
@@ -23,40 +22,28 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenuComponent = ({
-  node,
-  parent,
-  input,
-  terminals,
-  visible,
-  onClick,
-  onBlur,
-  electro,
-  parentBlockSize,
-}: Props) => {
+const TerminalsMenuComponent = ({ node, parent, input, terminals, onClick, onBlur, electro, parentBlockSize }: Props) => {
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   return (
-    visible && (
-      <TerminalsBox
-        tabIndex={0}
-        parent={parent}
-        input={input}
-        onBlur={onBlur}
-        color={GetAspectColor(node, AspectColorType.Selected)}
-        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node, parentBlockSize)}
-      >
-        {terminals.map((conn) => (
-          <TerminalsElement key={conn.id}>
-            <ColorBar color={GetTerminalColor(conn)} />
-            <div className="text" onClick={() => onClick(conn)}>
-              {conn.name}
-            </div>
-            <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.DarkGrey} id={conn.id} />
-          </TerminalsElement>
-        ))}
-      </TerminalsBox>
-    )
+    <TerminalsBox
+      tabIndex={0}
+      parent={parent}
+      input={input}
+      onBlur={onBlur}
+      color={GetAspectColor(node, AspectColorType.Selected)}
+      xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node, parentBlockSize)}
+    >
+      {terminals.map((conn) => (
+        <TerminalsElement key={conn.id}>
+          <ColorBar color={GetTerminalColor(conn)} />
+          <div className="text" onClick={() => onClick(conn)}>
+            {conn.name}
+          </div>
+          <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.DarkGrey} id={conn.id} />
+        </TerminalsElement>
+      ))}
+    </TerminalsBox>
   );
 };
 

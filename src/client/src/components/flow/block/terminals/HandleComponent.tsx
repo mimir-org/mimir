@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Node, Connector } from "../../../../models";
 import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
@@ -49,4 +50,4 @@ const HandleComponent = ({ nodes, height, width, terminals, parent, electro }: P
   </>
 );
 
-export default HandleComponent;
+export default memo(HandleComponent);

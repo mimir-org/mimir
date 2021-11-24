@@ -47,7 +47,6 @@ const ProjectComponent = () => {
               node={node}
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
-              label={node.label}
               indent={indent}
               expanded={!closedNodes.has(node.id)}
               isLeaf={!HasChildren(node, project)}
@@ -62,7 +61,6 @@ const ProjectComponent = () => {
             key={node.id}
             node={node}
             nodes={nodes}
-            label={node.label}
             indent={indent}
             expanded={!closedNodes.has(node.id)}
             isLeaf={!HasChildren(node, project)}
