@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Node, Connector } from "../../../../models";
 import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { IsValidConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./helpers";
+import { IsValidBlockConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./helpers";
 import { HandleBox } from "./styled";
 import { CreateId, IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
@@ -43,7 +43,7 @@ const HandleComponent = ({ nodes, height, width, terminals, parent, electro, dis
             position={pos}
             id={conn.id}
             className={"react-flow__handle-block"}
-            isValidConnection={(connection) => IsValidConnection(connection, nodes, terminals, dispatch)}
+            isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, terminals, dispatch)}
           />
         </HandleBox>
       );

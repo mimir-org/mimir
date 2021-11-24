@@ -258,6 +258,7 @@ const TextResources = {
 
   // Validation
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
+  Validation_Aspect: "A connection can only be made between two nodes of the same Aspect.",
   Validation_Cancel: "Cancel",
 };
 
