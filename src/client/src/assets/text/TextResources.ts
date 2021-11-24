@@ -255,6 +255,10 @@ const TextResources = {
   UserMenu_LightMode: "Turn on Light mode",
   UserMenu_LogOut: "Log out",
   UserMenu_User: "User",
+
+  // Validation
+  Validation_Terminals: "A connection can only be made between two terminals of the same type.",
+  Validation_Cancel: "Cancel",
 };
 
 export default TextResources;

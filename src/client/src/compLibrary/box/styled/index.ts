@@ -1,2 +1,3 @@
 export { default as Box } from "./Box";
-export { default as WarningBox } from "./WarningBox ";
+export { default as ButtonBox } from "./ButtonBox";
+export { default as WarningBox } from "./WarningBox";

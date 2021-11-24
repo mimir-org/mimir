@@ -6,7 +6,7 @@ interface Props {
   color: string;
 }
 
-const Box = styled.div`
+const Box = styled.div<Props>`
   display: flex;
   justify-content: center;
   position: absolute;

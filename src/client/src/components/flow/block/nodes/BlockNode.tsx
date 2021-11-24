@@ -87,6 +87,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         parent={false}
         electro={electro}
+        dispatch={dispatch}
       />
     </NodeBox>
   );
