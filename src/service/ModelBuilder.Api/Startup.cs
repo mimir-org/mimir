@@ -42,6 +42,7 @@ namespace Mb.Api
             var origins = Configuration.GetSection("CorsConfiguration")?
                 .GetValue<string>("ValidOrigins")?.Split(",");
             
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -49,11 +50,11 @@ namespace Mb.Api
                     if (NoOriginsAreProvided(origins))
                         builder.AllowAnyOrigin();
                     else
-                        builder.WithOrigins(origins);
+                        builder.WithOrigins(origins)
+                            .AllowCredentials();
                     
                     builder.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
                 });
             });
