@@ -9,7 +9,7 @@ interface Props {
 
 const ListElementsContainer = styled.div<Props>`
   position: relative;
-  height: calc(100% - 45px);
+  height: 100%;
   border-bottom: 1px solid ${Color.Black};
   overflow-x: hidden;
   overflow-y: scroll;
