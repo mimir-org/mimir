@@ -22,6 +22,7 @@ import {
   treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
+import { NotificationsBox } from "../../../compLibrary/box";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -135,6 +136,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
+      {/* <NotificationsBox text={"You can not make a connection between these terminals"} onClick={() => null} warning /> */}
     </>
   );
 };

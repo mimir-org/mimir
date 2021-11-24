@@ -15,7 +15,7 @@ const Color = {
   Black: "#000",
   LightCyan: "#CFDADB",
   LightPurple: "#D8D8EC",
-  Red: "rgb(255,0,0)",
+  WarningRed: "#FF708A",
 
   // Text
   TextSecondary: "#8C8C8C",
