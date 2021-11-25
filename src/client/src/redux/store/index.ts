@@ -16,6 +16,7 @@ import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
 import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
+import { validationReducer } from "../store/validation/reducers";
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "../store/customCategory/reducers";
 import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
@@ -46,6 +47,7 @@ const rootReducers = combineReducers({
   edgeAnimation: edgeAnimationReducer,
   location3D: location3DReducer,
   blockElements: blockElementsReducer,
+  validation: validationReducer,
 });
 
 const persistConfig = {

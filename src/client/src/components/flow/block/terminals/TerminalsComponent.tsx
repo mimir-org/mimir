@@ -64,7 +64,6 @@ const TerminalsContainerComponent = ({
           parent={parent}
           input={true}
           terminals={inTerminals}
-          visible={inputMenuOpen}
           electro={electro}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showInTerminalMenu, inputMenuOpen)}
@@ -76,7 +75,6 @@ const TerminalsContainerComponent = ({
           node={node}
           parent={parent}
           input={false}
-          visible={outputMenuOpen}
           electro={electro}
           terminals={outTerminals}
           onClick={onClick}

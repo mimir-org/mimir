@@ -8,7 +8,7 @@ const LogoBox = styled.div`
   align-items: center;
   height: 25px;
   width: 60px;
-  left: 50%;
+  left: 53%;
   transform: translateX(-50%);
 
   .logo {

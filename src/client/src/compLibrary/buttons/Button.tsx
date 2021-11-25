@@ -8,13 +8,13 @@ interface Props {
 
 /**
  * Component for a generic button in Mimir.
- * @param params
- * @returns a button with an icon and text to be used in Mimir.
+ * @param interface
+ * @returns a button with an icon and text.
  */
 const Button = ({ onClick, type }: Props) => (
   <ButtonContainer onClick={() => onClick()}>
     <img src={GetButtonIcon(type)} alt={type} />
-    <div className="text">{type}</div>
+    <div className="button-text">{type}</div>
   </ButtonContainer>
 );
 

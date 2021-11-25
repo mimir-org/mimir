@@ -4,7 +4,7 @@ import { FontSize } from "../../../compLibrary/font";
 
 const ValidationMessage = styled.span`
   margin-top: 5px;
-  color: ${Color.Red};
+  color: ${Color.WarningRed};
   font-size: ${FontSize.Standard};
 
   :empty:before {

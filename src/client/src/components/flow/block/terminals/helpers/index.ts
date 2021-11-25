@@ -1,5 +1,5 @@
 export { default as GetMenuIcon } from "./GetMenuIcon";
-export { default as IsValidConnection } from "./IsValidConnection";
+export { default as IsValidBlockConnection } from "./IsValidBlockConnection";
 export { default as SetTerminalXPos } from "./SetTerminalXPos";
 export { default as SetTerminalYPos } from "./SetTerminalYPos";
 export { default as SetTopPos } from "./SetTopPos";

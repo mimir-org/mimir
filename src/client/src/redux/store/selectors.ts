@@ -122,6 +122,11 @@ export const flowViewSelector = createAppSelector(
   (view) => view
 );
 
+export const validationSelector = createAppSelector(
+  (state) => state.validation,
+  (validation) => validation
+);
+
 export const treeFilterSelector = createAppSelector(
   (state) => state.menu.treeFilterMenuVisibility,
   (filterMenuVisibility) => filterMenuVisibility
@@ -250,7 +255,7 @@ export const typeEditorInspectorActiveTabSelector = createAppSelector(
 
 export const nodeSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
-  (nodes) => (nodes ?? []) as Node[]
+  (nodes) => nodes ?? []
 );
 
 export const makeFilterSelector = () =>

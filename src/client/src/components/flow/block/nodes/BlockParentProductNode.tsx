@@ -64,6 +64,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         height={parentBlockSize.height}
         terminals={terminals}
         electro={electro}
+        dispatch={dispatch}
       />
     </>
   );
