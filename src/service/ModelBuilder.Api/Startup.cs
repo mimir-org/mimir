@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -37,23 +38,38 @@ namespace Mb.Api
                 //o.SerializerSettings.Converters.Add(new StringEnumConverter());
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
+            
+            var startupLogger = services.BuildServiceProvider().GetRequiredService<ILogger<Startup>>();
 
             // Add Cors policy
             var origins = Configuration.GetSection("CorsConfiguration")?
                 .GetValue<string>("ValidOrigins")?.Split(",");
+            
+            if (NoOriginsAreProvided(origins))
+            {
+                startupLogger.LogInformation("No Cors origins provided in config file. Reading from environment");
+                
+                origins = Environment.GetEnvironmentVariable("CorsConfiguration_ValidOrigins")?.Split(",");
+            }
             
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
                     if (NoOriginsAreProvided(origins))
+                    {
+                        startupLogger.LogInformation("No Cors origins provided. Allowing any origin");
                         builder.AllowAnyOrigin();
+                    }
                     else
-                        builder.WithOrigins(origins);
+                    {
+                        startupLogger.LogInformation($"Cors origins provided: {string.Join(",", origins)}. Restricting origins, enforcing credentials");
+                        builder.WithOrigins(origins)
+                            .AllowCredentials();
+                    }
                     
                     builder.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
                 });
             });
