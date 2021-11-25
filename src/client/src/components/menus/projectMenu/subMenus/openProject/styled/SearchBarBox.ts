@@ -5,6 +5,7 @@ const SearchBarBox = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid ${Color.BlueMagenta};
+  margin: 7px 0px;
 
   input:focus,
   textarea:focus,

@@ -15,9 +15,9 @@ const ProjectBox = styled.div<Props>`
   bottom: 25%;
   left: 25%;
   right: 25%;
-  width: ${(props) => (props.small ? 308 : props.width)}px;
-  height: ${(props) => (props.small ? 281 : props.height)}px;
-  max-width: 730px;
+  width: ${(props) => (props.small ? 318 : props.width)}px;
+  height: ${(props) => (props.small ? 291 : props.height)}px;
+  max-width: 630px;
   max-height: 500px;
   margin: auto;
   border: 2px solid ${Color.BlueMagenta};
@@ -26,7 +26,7 @@ const ProjectBox = styled.div<Props>`
   border-radius: 10px;
   font-weight: bold;
   font-size: ${FontSize.Header};
-  padding: 20px;
+  padding: 12px;
   visibility: ${(props) => !props.visible && "hidden"};
   z-index: 6;
 `;

@@ -19,11 +19,11 @@ export const ProjectDataComponent = ({ projects, projectId, projectName, project
 
   return (
     <ProjectDataBox onClick={onClick} isSelected={isSelected}>
-      <p className="name">{projectName}</p>
-      <p className="owner">{projectOwner}</p>
-      <p className="edited">
+      <div className="name">{projectName}</div>
+      <div className="owner">{projectOwner}</div>
+      <div className="edited">
         <Moment format="DD/MM/YY h:mm A">{updated}</Moment>
-      </p>
+      </div>
     </ProjectDataBox>
   );
 };

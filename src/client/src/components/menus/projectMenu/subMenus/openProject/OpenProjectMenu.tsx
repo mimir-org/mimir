@@ -11,6 +11,7 @@ import { ProjectSimple } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
+import { ProjectListLabels } from "./styled";
 
 interface Props {
   projectState: ProjectState;
@@ -33,6 +34,12 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
             {TextResources.Project_Open_Project}
           </HeaderBox>
           <SearchBar />
+          <div className="subheader">{TextResources.Project_Recent}</div>
+          <ProjectListLabels>
+            <div className="name">{TextResources.Project_Recent_Name}</div>
+            <div className="owner">{TextResources.Project_Recent_Owner}</div>
+            <div className="edited">{TextResources.Project_Recent_Edited}</div>
+          </ProjectListLabels>
           <ProjectList projectList={projects} />
           <ButtonBox>
             {projectId && <Button onClick={() => Click.OnOpen(dispatch, setConfirm)} text="Open" icon={RightArrowIcon} />}

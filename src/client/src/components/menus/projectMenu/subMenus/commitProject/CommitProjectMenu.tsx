@@ -29,7 +29,7 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
     !disabled && (
       <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
         <ProjectBody removeHeight={true}>
-          <HeaderBox marginBottom={10}>
+          <HeaderBox>
             <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
             {TextResources.Project_Commit_Project}
           </HeaderBox>

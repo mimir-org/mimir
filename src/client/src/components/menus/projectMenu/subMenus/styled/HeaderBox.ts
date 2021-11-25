@@ -1,18 +1,14 @@
 import styled from "styled-components";
 
-interface Props {
-  marginBottom?: number;
-}
-
-const HeaderBox = styled.div<Props>`
-  margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom : 40)}px;
-  display: inline-flex;
+const HeaderBox = styled.div`
+  display: flex;
   align-items: center;
+  margin: 9px 0px 15px 0px;
 
   .icon {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 12px;
+    top: 12px;
     cursor: pointer;
   }
 `;
