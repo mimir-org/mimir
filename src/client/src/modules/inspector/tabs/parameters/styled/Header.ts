@@ -16,7 +16,7 @@ const Header = styled.div`
     margin-top: 10px;
     width: 100%;
     margin-bottom: 0px;
-    color: ${Color.DarkGrey};
+    color: ${Color.GreyDark};
     border-style: solid;
     border-width: 1px 0px 0px 0px;
   }

@@ -13,7 +13,7 @@ const ButtonContainer = styled.button<Props>`
   justify-content: center;
   min-width: 94px;
   height: 34px;
-  background: ${Color.LighterGrey};
+  background: ${Color.GreyLight};
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
   margin: 10px 0px;

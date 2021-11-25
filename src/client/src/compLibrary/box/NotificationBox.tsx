@@ -16,7 +16,7 @@ interface Props {
  * @returns a box with a message and a close button.
  */
 const NotificationBox = ({ message, warning, onClick }: Props) => (
-  <Box color={warning ? Color.WarningRed : Color.Black}>
+  <Box color={warning ? Color.RedWarning : Color.Black}>
     <WarningBox visible={warning}>
       <img src={WarningIcon} alt="warning-icon" />
     </WarningBox>

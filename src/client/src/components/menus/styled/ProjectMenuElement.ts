@@ -34,7 +34,7 @@ const ProjectMenuElement = styled.div<Props>`
   }
 
   &:hover {
-    background-color: ${(props) => !props.disabled && Color.LightBlue};
+    background-color: ${(props) => !props.disabled && Color.BlueLight};
     text-decoration: ${(props) => !props.disabled && "underline"};
   }
 

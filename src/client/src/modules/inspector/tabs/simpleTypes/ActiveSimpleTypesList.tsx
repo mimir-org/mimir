@@ -18,7 +18,7 @@ function ActiveSimpleTypesList({ simpleTypes, selectedSimpleTypeId, onSelect }: 
               radius={0}
               isSelected={selectedSimpleTypeId === type.id}
               onClick={() => onSelect(type)}
-              color={i % 2 ? undefined : Color.LightPurple}
+              color={i % 2 ? undefined : Color.PurpleLight}
             >
               {type.name}
             </TerminalsCategoryListElement>

@@ -3,7 +3,7 @@ import { Color } from "../colors";
 
 const SearchBarListItem = styled.div`
   height: 18px;
-  border-bottom: 1px solid ${Color.DarkGrey};
+  border-bottom: 1px solid ${Color.GreyDark};
   background-color: ${Color.White};
 
   p {
@@ -11,7 +11,7 @@ const SearchBarListItem = styled.div`
   }
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     text-decoration: underline;
     cursor: pointer;
   }

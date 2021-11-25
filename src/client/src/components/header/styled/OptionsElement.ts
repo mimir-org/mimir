@@ -13,7 +13,7 @@ const OptionsElement = styled.div<Props>`
   cursor: pointer;
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
   }
 
   &:first-child {

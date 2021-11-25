@@ -18,7 +18,7 @@ const TabBody = styled.div`
 
   & > hr {
     margin: 16px 0 0;
-    color: ${Color.DarkGrey};
+    color: ${Color.GreyDark};
     border-style: solid;
     border-width: 1px 0 0 0;
   }

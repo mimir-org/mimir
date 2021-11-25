@@ -39,11 +39,11 @@ const ProjectDataBox = styled.div<Props>`
   }
 
   &:hover {
-    background: ${Color.LightBlue};
+    background: ${Color.BlueLight};
   }
 
   &:nth-of-type(even) {
-    background: ${Color.LightPurple};
+    background: ${Color.PurpleLight};
   }
 `;
 
