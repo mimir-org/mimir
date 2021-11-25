@@ -26,7 +26,7 @@ export interface AttributeAm {
   id: string;
   iri: string;
   domain: string;
-  key: string;
+  entity: string;
   value: string;
   selectedUnitId: string;
   qualifierId: string;
@@ -202,7 +202,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       id: attribute.id,
       iri: attribute.iri,
       domain: attribute.domain,
-      key: attribute.key,
+      entity: attribute.entity,
       value: attribute.value,
       selectedUnitId: attribute.selectedUnitId,
       qualifierId: attribute.qualifierId,

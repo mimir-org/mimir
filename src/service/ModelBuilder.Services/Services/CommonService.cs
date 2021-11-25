@@ -35,10 +35,10 @@ namespace Mb.Services.Services
                 .Include(x => x.Qualifier)
                 .Include(x => x.Source)
                 .Include(x => x.Condition)
-                .Select(x => new {x.Key, x.Qualifier, x.Source, x.Condition}).Distinct()
+                .Select(x => new {x.Entity, x.Qualifier, x.Source, x.Condition}).Distinct()
                 .ToList();
 
-            var groups = allFilteredAttributes.GroupBy(x => x.Key).Select(x => x.ToList());
+            var groups = allFilteredAttributes.GroupBy(x => x.Entity).Select(x => x.ToList());
             foreach (var group in groups)
             {
                 if(!group.Any())
@@ -56,7 +56,7 @@ namespace Mb.Services.Services
 
                 yield return new CombinedAttributeFilter
                 {
-                    Name = group[0].Key,
+                    Name = group[0].Entity,
                     CombinedAttributes = combinedAttributes
                 };
             }

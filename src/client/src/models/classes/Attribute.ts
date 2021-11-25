@@ -6,7 +6,7 @@ class Attribute {
   id: string;
   iri: string;
   domain: string;
-  key: string;
+  entity: string;
   value: string;
   isLocked: boolean;
   isLockedBy: string;
