@@ -1,7 +1,7 @@
 import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../compLibrary/list";
-import { PreviewArea, InfoWrapper } from "../styled";
+import { PreviewArea, InfoWrapper, InfoText } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
 import { TextResources } from "../../assets/text";
 import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";
@@ -49,16 +49,16 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (
-          <InfoWrapper namepadding={IsTransport(objectType)}>
-            <p className="rdsName">{rdsLabel}</p>
-            <p className="typeName">{createLibraryType?.name}</p>
+          <InfoWrapper>
+            <InfoText>{rdsLabel}</InfoText>
+            <InfoText>{createLibraryType?.name}</InfoText>
+            {(IsFunction(aspect) || IsProduct(aspect)) && IsTransport(objectType) && (
+              <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
+            )}
+            {(IsFunction(aspect) || IsProduct(aspect)) && IsInterface(objectType) && (
+              <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
+            )}
           </InfoWrapper>
-        )}
-        {(IsFunction(aspect) || IsProduct(aspect)) && IsTransport(objectType) && (
-          <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
-        )}
-        {(IsFunction(aspect) || IsProduct(aspect)) && IsInterface(objectType) && (
-          <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
         )}
       </PreviewArea>
     </ListWrapper>
