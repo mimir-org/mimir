@@ -29,7 +29,7 @@ export const ImportProjectFileMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return TextResources.Project_Import_File;
+    if (plainFiles?.length < 1) return TextResources.Project_Import;
     return plainFiles[0].name;
   };
 
@@ -50,7 +50,7 @@ export const ImportProjectFileMenu = () => {
           <ButtonBox>
             <Button
               onClick={() => OnProjectSaveClick(dispatch, data)}
-              text={TextResources.Project_Import_Label_File_Button}
+              text={TextResources.Project_Import}
               icon={ImportProjectIcon}
             />
           </ButtonBox>

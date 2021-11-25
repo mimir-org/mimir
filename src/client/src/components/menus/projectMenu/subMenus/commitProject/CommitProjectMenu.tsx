@@ -31,10 +31,10 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
         <ProjectBody removeHeight={true}>
           <HeaderBox marginBottom={10}>
             <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-            {TextResources.Project_Commit_Label}
+            {TextResources.Project_Commit_Project}
           </HeaderBox>
 
-          <Label>{TextResources.Project_Commit_Contractor_Label}</Label>
+          <Label>{TextResources.Project_Commit_Contractor}</Label>
           <Dropdown
             label="Contractor"
             valueProp="name"
@@ -43,7 +43,7 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
             onChange={(e: any) => setContractor(e)}
           />
 
-          <Label>{TextResources.Project_Commit_Parser_Label}</Label>
+          <Label>{TextResources.Project_Commit_Parser}</Label>
           <Dropdown label="Contractor" valueProp="name" items={parsers} keyProp="id" onChange={(e: any) => setParser(e)} />
 
           <ButtonBox left>
@@ -53,7 +53,7 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
             <ButtonBox>
               <Button
                 onClick={() => Handlers.OnCommitProjectClick(dispatch, projectId, parser.id, contractor.domain)}
-                text={TextResources.Project_Commit_Button}
+                text={TextResources.Project_Commit}
                 icon={CommitProjectIcon}
               />
             </ButtonBox>

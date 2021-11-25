@@ -28,13 +28,13 @@ export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled
         <ProjectBody>
           <HeaderBox>
             <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-            {TextResources.Project_SubProject_Create_Label}
+            {TextResources.Project_SubProject_Save}
           </HeaderBox>
-          <Label>{TextResources.Project_Name_Project_Label}</Label>
+          <Label>{TextResources.Project_Name}</Label>
           <Input
             onChange={(e: any) => setProjectName(e.target.value)}
             inputType="text"
-            placeholder={TextResources.Project_Name_Project_Placeholder}
+            placeholder={TextResources.Project_Name_Placeholder}
             value={projectName}
           />
           <ButtonBox left>
@@ -44,7 +44,7 @@ export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled
             <ButtonBox>
               <Button
                 onClick={() => Handlers.OnSubProjectCreateClick(fromProjectId, projectName, nodeIds, edgeIds, dispatch)}
-                text={TextResources.Project_SubProject_Create}
+                text={TextResources.Project_SubProject}
                 icon={CreateSubProjectIcon}
               />
             </ButtonBox>

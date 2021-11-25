@@ -29,7 +29,7 @@ export const ImportFileLibraryMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return TextResources.Project_Import_Library_File;
+    if (plainFiles?.length < 1) return TextResources.Project_Import_Library;
     return plainFiles[0].name;
   };
 
@@ -38,7 +38,7 @@ export const ImportFileLibraryMenu = () => {
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_Import_Library_File}
+          {TextResources.Project_Import_ProjectLibrary}
         </HeaderBox>
         <ButtonBox>
           <Button onClick={() => openFileSelector()} text={buttonBrowseText()} icon={ImportLibraryIcon} />
@@ -50,7 +50,7 @@ export const ImportFileLibraryMenu = () => {
           <ButtonBox>
             <Button
               onClick={() => OnSaveClick(dispatch, data)}
-              text={TextResources.Project_Import_Lib_Label}
+              text={TextResources.Project_Import_Library}
               icon={ImportLibraryIcon}
             />
           </ButtonBox>

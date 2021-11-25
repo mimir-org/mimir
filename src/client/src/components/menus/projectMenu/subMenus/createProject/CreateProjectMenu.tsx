@@ -16,35 +16,33 @@ export const CreateProjectMenu = () => {
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
 
   return (
-    <>
-      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
-        <ProjectBody>
-          <HeaderBox>
-            <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-            {TextResources.Project_Create_Label}
-          </HeaderBox>
-          <Label>{TextResources.Project_Name_Project_Label}</Label>
-          <Input
-            onChange={(e: any) => setProjectName(e.target.value)}
-            inputType="text"
-            placeholder={TextResources.Project_Name_Project_Placeholder}
-            value={projectName}
-          />
-          <ButtonBox left>
-            <Button onClick={() => Handlers.OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
+    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+      <ProjectBody>
+        <HeaderBox>
+          <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
+          {TextResources.Project_Create_Label}
+        </HeaderBox>
+        <Label>{TextResources.Project_Name}</Label>
+        <Input
+          onChange={(e: any) => setProjectName(e.target.value)}
+          inputType="text"
+          placeholder={TextResources.Project_Name_Placeholder}
+          value={projectName}
+        />
+        <ButtonBox left>
+          <Button onClick={() => Handlers.OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
+        </ButtonBox>
+        {projectName && (
+          <ButtonBox>
+            <Button
+              onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)}
+              text={TextResources.Project_Create}
+              icon={CreateProjectIcon}
+            />
           </ButtonBox>
-          {projectName && (
-            <ButtonBox>
-              <Button
-                onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)}
-                text={TextResources.Project_Create}
-                icon={CreateProjectIcon}
-              />
-            </ButtonBox>
-          )}
-        </ProjectBody>
-      </ProjectBox>
-    </>
+        )}
+      </ProjectBody>
+    </ProjectBox>
   );
 };
 

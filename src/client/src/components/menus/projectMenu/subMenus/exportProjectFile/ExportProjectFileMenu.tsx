@@ -25,13 +25,13 @@ export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_Save_Label_File}
+          {TextResources.Project_Export_ProjectFile}
         </HeaderBox>
-        <Label>{TextResources.Project_Save_Label_File_Name}</Label>
+        <Label>{TextResources.Project_File_Name}</Label>
         <Input
           onChange={(e: any) => setFileName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.Project_Save_Label_File_Name}
+          placeholder={TextResources.Project_File_Name}
           value={fileName}
         />
         <ButtonBox left>
@@ -41,7 +41,7 @@ export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
           <ButtonBox>
             <Button
               onClick={() => OnSaveClick(dispatch, projectState, fileName)}
-              text={TextResources.Project_Export_File_Label}
+              text={TextResources.Project_Export_File}
               icon={ExportProjectIcon}
             />
           </ButtonBox>
