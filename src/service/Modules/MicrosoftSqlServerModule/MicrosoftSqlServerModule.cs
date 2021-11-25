@@ -50,7 +50,7 @@ namespace MicrosoftSqlServerModule
 
             services.AddSingleton(Options.Create(dbConfig));
 
-            var connectionString = $@"Data Source={dbConfig.DataSource},{dbConfig.Port};Initial Catalog={dbConfig.InitialCatalog};Integrated Security=False;User ID={dbConfig.DbUser};Password='{dbConfig.Password}';MultipleActiveResultSets=True";
+            var connectionString = $@"Data Source={dbConfig.DataSource},{dbConfig.Port};Initial Catalog={dbConfig.InitialCatalog};Integrated Security=False;User ID={dbConfig.DbUser};Password='{dbConfig.Password}';TrustServerCertificate=True;MultipleActiveResultSets=True";
 
             services.AddDbContext<ModelBuilderDbContext>(options =>
             {

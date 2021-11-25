@@ -17,11 +17,10 @@ const TabBody = styled.div`
   }
 
   & > hr {
-    margin-top: 70px;
-    margin-bottom: 0px;
+    margin: 16px 0 0;
     color: ${Color.DarkGrey};
     border-style: solid;
-    border-width: 1px 0px 0px 0px;
+    border-width: 1px 0 0 0;
   }
 
   &:hover {

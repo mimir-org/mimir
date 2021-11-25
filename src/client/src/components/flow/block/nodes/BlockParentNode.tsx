@@ -6,10 +6,10 @@ import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { GetAspectColor } from "../../../../helpers";
 import { setBlockNodeSize } from "../redux/actions";
 import { Size } from "../../../../compLibrary/size";
+import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -75,6 +75,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={parentBlockSize.width}
         terminals={terminals}
         electro={electro}
+        dispatch={dispatch}
       />
     </>
   );

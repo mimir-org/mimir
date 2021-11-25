@@ -5,6 +5,8 @@ import { TreeHandleBox, TreeNodeBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
 import { TreeLogoComponent } from "../../logo";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
+import { IsValidTreeConnection } from "./helpers";
+import { nodeSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
 
 /**
  * Component to display a node in TreeView.
@@ -12,8 +14,10 @@ import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
  * @returns a Mimir Node in the FlowTree context.
  */
 const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
+  const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
+  const nodes = useAppSelector(nodeSelector);
 
   useEffect(() => {
     if (timer) {
@@ -49,7 +53,13 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
             visible={IsPartOf(conn) && isHover}
             position={positionHandler}
           >
-            <Handle type={typeHandler} position={positionHandler} id={conn.id} className="function-treeview-handler" />
+            <Handle
+              type={typeHandler}
+              position={positionHandler}
+              id={conn.id}
+              className="function-treeview-handler"
+              isValidConnection={(connection) => IsValidTreeConnection(data, connection, nodes, dispatch)}
+            />
           </TreeHandleBox>
         );
       })}

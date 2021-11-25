@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
@@ -9,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -35,24 +39,37 @@ namespace Mb.Api
                 //o.SerializerSettings.Converters.Add(new StringEnumConverter());
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
-
-            var origins = new List<string>()
-            {
-                "http://localhost:3000",
-                "https://modelbuilder-dev-client.azurewebsites.net",
-                "https://modelbuilder-test-client.azurewebsites.net"
-            };
-
-
+            var startupLogger = services.BuildServiceProvider().GetRequiredService<ILogger<Startup>>();
+            
             // Add Cors policy
+            var origins = Configuration.GetSection("CorsConfiguration")?
+                .GetValue<string>("ValidOrigins")?.Split(",");
+            
+            if (NoOriginsAreProvided(origins))
+            {
+                startupLogger.LogInformation("No Cors origins provided in config file. Reading from environment");
+                
+                origins = Environment.GetEnvironmentVariable("CorsConfiguration_ValidOrigins")?.Split(",");
+            }
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.WithOrigins(origins.ToArray())
-                        .AllowAnyHeader()
+                    if (NoOriginsAreProvided(origins))
+                    {
+                        startupLogger.LogInformation("No Cors origins provided. Allowing any origin");
+                        builder.AllowAnyOrigin();
+                    }
+                    else
+                    {
+                        startupLogger.LogInformation($"Cors origins provided: {string.Join(",", origins)}. Restricting origins, enforcing credentials");
+                        builder.WithOrigins(origins)
+                            .AllowCredentials();
+                    }
+                    
+                    builder.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
                 });
             });
@@ -93,6 +110,11 @@ namespace Mb.Api
             //        endpoints.MapControllers();
             //    });
             
+        }
+
+        private static bool NoOriginsAreProvided(string[] origins)
+        {
+            return origins is null || origins.Length is 0 || string.IsNullOrWhiteSpace(origins.FirstOrDefault());
         }
     }
 }

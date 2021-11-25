@@ -8,7 +8,6 @@ import { TreeAspectElement } from ".";
 interface Props {
   node: Node;
   nodes: Node[];
-  label: string;
   indent: number;
   isLeaf: boolean;
   expanded: boolean;
@@ -20,7 +19,6 @@ interface Props {
 export const TreeAspectComponent = ({
   node,
   nodes,
-  label,
   expanded,
   indent,
   isLeaf,
@@ -39,7 +37,7 @@ export const TreeAspectComponent = ({
           onSetVisibleElement={onSetVisibleElement}
         />
         <LockComponent node={node} />
-        <TreeAspectElement node={node} nodes={nodes} label={label} />
+        <TreeAspectElement node={node} nodes={nodes} />
       </ElementBox>
       {!isLeaf && (
         <img

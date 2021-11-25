@@ -8,7 +8,6 @@ import { AspectHeader } from "./styled";
 interface Props {
   node: Node;
   nodes: Node[];
-  label: string;
 }
 
 /**
@@ -16,18 +15,18 @@ interface Props {
  * @param interface
  * @returns an element with either an Aspect header or a checkbox.
  */
-const TreeAspectElement = ({ node, nodes, label }: Props) => {
+const TreeAspectElement = ({ node, nodes }: Props) => {
   const [selectedNodes] = useSelectedNodes();
   const [setActiveNodeElement] = UseSetSelectNodes();
 
   return IsAspectNode(node) ? (
     <AspectHeader>
       <img src={GetAspectIcon(node)} alt="aspect-icon" className="icon" />
-      <span className="label">{label}</span>
+      <span className="label">{node.label}</span>
     </AspectHeader>
   ) : (
     <CheckboxExplorer
-      label={label}
+      label={node.label}
       color={GetAspectColor(node, AspectColorType.Selected)}
       isChecked={IsCheckedTree(node, selectedNodes)}
       isMiniCheckbox={false}

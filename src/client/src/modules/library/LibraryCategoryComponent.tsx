@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { LibraryCategory } from "../../models/project";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { LibCategoryBox, LibCategoryHeader } from "./styled";
@@ -55,4 +55,4 @@ const LibraryCategoryComponent = ({
   );
 };
 
-export default LibraryCategoryComponent;
+export default memo(LibraryCategoryComponent);

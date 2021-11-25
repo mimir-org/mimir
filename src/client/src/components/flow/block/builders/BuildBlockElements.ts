@@ -2,24 +2,26 @@ import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentBlockNode, BuildParentSecondaryNode, BuildParentProductNode } from ".";
 import { DrawChildNodes, DrawProductChildren, DrawBlockEdges, DrawSecondaryChildren } from "./helpers";
-import { BlockNodeSize } from "../../../../models/project";
 import { IsProduct } from "../../../../helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to draw all nodes and edges in BlockView.
  * @param project
  * @param selectedNode
  * @param secondaryNode
- * @param parentNodeSize
  * @param animatedEdge
+ * @param parentSize
+ * @param parentProductSize
  * @returns all Elements.
  */
 const BuildBlockElements = (
   project: Project,
   selectedNode: Node,
   secondaryNode: Node,
-  parentNodeSize: BlockNodeSize,
-  animatedEdge: boolean
+  animatedEdge: boolean,
+  parentSize: BlockNodeSize,
+  parentProductSize: BlockNodeSize
 ) => {
   if (!project) return;
   const elements: Elements = [];
@@ -31,7 +33,7 @@ const BuildBlockElements = (
     const parentProduct = BuildParentProductNode(selectedNode);
     parentProduct && elements.push(parentProduct);
 
-    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, parentNodeSize);
+    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, parentProductSize);
     return elements;
   }
 
@@ -40,12 +42,12 @@ const BuildBlockElements = (
 
   if (secondaryNode) {
     const secondary = nodes.find((x) => x.id === secondaryNode.id);
-    const parentSecondaryBlock = BuildParentSecondaryNode(selectedNode, secondary, parentNodeSize);
+    const parentSecondaryBlock = BuildParentSecondaryNode(selectedNode, secondary, parentSize);
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(edges, nodes, selectedNode, elements, parentNodeSize);
-  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentNodeSize);
+  DrawChildNodes(edges, nodes, selectedNode, elements, parentSize);
+  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentSize);
   DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 
   return elements;

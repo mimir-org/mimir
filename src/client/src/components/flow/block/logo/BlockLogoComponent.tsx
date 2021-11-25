@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { LogoBox, SymbolBox, BlockNodeNameBox } from "./styled";
 import { Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
@@ -29,4 +30,4 @@ const BlockLogoComponent = ({ node, parent }: Props) => {
   );
 };
 
-export default BlockLogoComponent;
+export default memo(BlockLogoComponent);

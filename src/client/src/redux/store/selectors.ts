@@ -1,5 +1,5 @@
 import { Edge, Node, Project } from "../../models";
-import { BlockNodeSize, MODULE_TYPE, VIEW_TYPE } from "../../models/project";
+import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
@@ -77,11 +77,6 @@ export const isOpenSelector = createAppSelector(
   (types) => !!types.find((m) => m.visible)
 );
 
-// export const userRoleSelector = createAppSelector(
-//   (state) => state.userRoles?.user?.role,
-//   (role) => role as User
-// );
-
 export const libOpenSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => types.find((m) => m.type === MODULE_TYPE.LIBRARY).visible
@@ -125,6 +120,11 @@ export const treeSelector = createAppSelector(
 export const flowViewSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view
+);
+
+export const validationSelector = createAppSelector(
+  (state) => state.validation,
+  (validation) => validation
 );
 
 export const treeFilterSelector = createAppSelector(
@@ -184,8 +184,13 @@ export const heightSelector = createAppSelector(
 );
 
 export const nodeSizeSelector = createAppSelector(
-  (state) => state.blockNodeSize.size,
-  (size) => size as BlockNodeSize
+  (state) => state.blockNodeSize.blockParents[0].size,
+  (size) => size
+);
+
+export const productNodeSizeSelector = createAppSelector(
+  (state) => state.blockNodeSize.blockParents[1].size,
+  (size) => size
 );
 
 export const darkModeSelector = createAppSelector(
@@ -250,7 +255,7 @@ export const typeEditorInspectorActiveTabSelector = createAppSelector(
 
 export const nodeSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
-  (nodes) => (nodes ?? []) as Node[]
+  (nodes) => nodes ?? []
 );
 
 export const makeFilterSelector = () =>
