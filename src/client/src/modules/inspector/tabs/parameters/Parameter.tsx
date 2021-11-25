@@ -9,7 +9,7 @@ import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { AttributeLikeItem } from "../../types";
-import { GetAttributeLikeItemKey, IsAttribute } from "../../helpers/IsType";
+import { IsAttribute } from "../../helpers/IsType";
 import { FontSize } from "../../../../compLibrary/font";
 
 export const PARAMETER_ENTITY_WIDTH: number = 255;
@@ -32,7 +32,6 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
   );
 
   const isAttribute = IsAttribute(attribute);
-  const attributeKey = GetAttributeLikeItemKey(attribute);
 
   const isDisabled = () => (IsAttribute(attribute) ? isNodeLocked || attribute.isLocked : false);
 
@@ -44,7 +43,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
 
-          <div className="parameterHeader">{attribute?.[attributeKey]}</div>
+          <div className="parameterHeader">{attribute?.entity}</div>
           <div className="icons">
             <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />
             {isAttribute && (
