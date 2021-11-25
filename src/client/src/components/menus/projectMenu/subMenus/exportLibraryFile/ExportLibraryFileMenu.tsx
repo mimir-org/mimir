@@ -8,6 +8,7 @@ import { Button } from "../../../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { Input, Label } from "../../../../../compLibrary/input/text";
+import { ExportLibraryIcon } from "../../../../../assets/icons/project";
 
 export const ExportLibraryFileMenu = () => {
   const dispatch = useAppDispatch();
@@ -29,11 +30,15 @@ export const ExportLibraryFileMenu = () => {
           value={fileName}
         />
         <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
         {fileName && (
           <ButtonBox>
-            <Button onClick={() => OnSaveClick(dispatch, fileName)} type={TextResources.Project_Export_File_Library_Label} />
+            <Button
+              onClick={() => OnSaveClick(dispatch, fileName)}
+              text={TextResources.Project_Export_File_Library_Label}
+              icon={ExportLibraryIcon}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

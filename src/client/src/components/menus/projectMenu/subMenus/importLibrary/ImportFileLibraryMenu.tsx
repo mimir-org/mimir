@@ -8,6 +8,7 @@ import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ImportLibraryIcon } from "../../../../../assets/icons/project";
 
 export const ImportFileLibraryMenu = () => {
   const dispatch = useAppDispatch();
@@ -40,14 +41,18 @@ export const ImportFileLibraryMenu = () => {
           {TextResources.Project_Import_Library_File}
         </HeaderBox>
         <ButtonBox>
-          <Button onClick={() => openFileSelector()} type={buttonBrowseText()} />
+          <Button onClick={() => openFileSelector()} text={buttonBrowseText()} icon={ImportLibraryIcon} />
         </ButtonBox>
         <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <Button onClick={() => OnSaveClick(dispatch, data)} type={TextResources.Project_Import_Lib_Label} />
+            <Button
+              onClick={() => OnSaveClick(dispatch, data)}
+              text={TextResources.Project_Import_Lib_Label}
+              icon={ImportLibraryIcon}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

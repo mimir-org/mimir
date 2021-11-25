@@ -25,11 +25,12 @@ const ProjectDataBox = styled.div<Props>`
 
   .name {
     width: 45%;
+    margin-left: 2px;
   }
 
   .owner {
     width: 35%;
-    margin-left: 10px;
+    margin-left: 8px;
   }
 
   .edited {

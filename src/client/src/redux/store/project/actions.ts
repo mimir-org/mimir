@@ -110,66 +110,66 @@ export function updateBlockPosition(nodeId: string, x: number, y: number): Types
   };
 }
 
-export function setNodeVisibility(node: Node, isParent: boolean) {
+export function setNodeVisibility(node: Node, isParent: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_NODE_VISIBILITY,
     payload: { node, isParent },
   };
 }
 
-export function setEdgeVisibility(edge: Edge, isHidden: boolean) {
+export function setEdgeVisibility(edge: Edge, isHidden: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_EDGE_VISIBILITY,
     payload: { edge, isHidden },
   };
 }
 
-export function setEdgeAnimation(edge: Edge, animated: boolean) {
+export function setEdgeAnimation(edge: Edge, animated: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_EDGE_ANIMATION,
     payload: { edge, animated },
   };
 }
 
-export function setLocationNodeSize(nodeId: string, key: string, value: number) {
+export function setLocationNodeSize(nodeId: string, key: string, value: number): Types.ProjectActionTypes {
   return {
     type: Types.SET_LOCATION_NODE_SIZE,
     payload: { nodeId, key, value },
   };
 }
 
-export function setActiveNode(nodeId: string, isActive: boolean) {
+export function setActiveNode(nodeId: string, isActive: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_ACTIVE_NODE,
     payload: { nodeId, isActive },
   };
 }
 
-export function setActiveBlockNode(nodeId: string) {
+export function setActiveBlockNode(nodeId: string): Types.ProjectActionTypes {
   return {
     type: Types.SET_ACTIVE_BLOCKNODE,
     payload: { nodeId },
   };
 }
 
-export function setActiveEdge(edgeId: string, isActive: boolean) {
+export function setActiveEdge(edgeId: string, isActive: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_ACTIVE_EDGE,
     payload: { edgeId, isActive },
   };
 }
 
-export function changeSelectedProject(projectId: string) {
+export function changeSelectedProject(projectId: string): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_SELECTED_PROJECT,
     payload: { projectId },
   };
 }
 
-export function changeAllNodes(visible: boolean) {
+export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ALL_NODES,
-    payload: visible,
+    payload: { visible },
   };
 }
 
@@ -342,7 +342,7 @@ export function changeActiveConnector(
   visible: boolean,
   inputOrder: number,
   outputOrder: number
-) {
+): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {
@@ -355,7 +355,7 @@ export function changeActiveConnector(
   };
 }
 
-export function exportProjectToFile(project: Project, fileName: string, isSubProject: boolean) {
+export function exportProjectToFile(project: Project, fileName: string, isSubProject: boolean): Types.ProjectActionTypes {
   return {
     type: Types.EXPORT_PROJECT_TO_FILE,
     payload: {
@@ -366,7 +366,7 @@ export function exportProjectToFile(project: Project, fileName: string, isSubPro
   };
 }
 
-export function importProjectAction(project: ProjectAm) {
+export function importProjectAction(project: ProjectAm): Types.ProjectActionTypes {
   return {
     type: Types.IMPORT_PROJECT,
     payload: project,

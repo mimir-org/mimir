@@ -9,6 +9,7 @@ import { Input, Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ExportProjectIcon } from "../../../../../assets/icons/project";
 
 interface Props {
   projectState: ProjectState;
@@ -34,13 +35,14 @@ export const ExportProjectFileMenu = ({ projectState, dispatch }: Props) => {
           value={fileName}
         />
         <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
         {fileName && (
           <ButtonBox>
             <Button
               onClick={() => OnSaveClick(dispatch, projectState, fileName)}
-              type={TextResources.Project_Export_File_Label}
+              text={TextResources.Project_Export_File_Label}
+              icon={ExportProjectIcon}
             />
           </ButtonBox>
         )}

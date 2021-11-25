@@ -10,6 +10,7 @@ import { MessageComponent } from "../../../../message";
 import { ProjectSimple } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { RightArrowIcon } from "../../../../../assets/icons/arrow";
 
 interface Props {
   projectState: ProjectState;
@@ -33,7 +34,9 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
           </HeaderBox>
           <SearchBar />
           <ProjectList projectList={projects} />
-          <ButtonBox>{projectId && <Button onClick={() => Click.OnOpen(dispatch, setConfirm)} type="Open" />}</ButtonBox>
+          <ButtonBox>
+            {projectId && <Button onClick={() => Click.OnOpen(dispatch, setConfirm)} text="Open" icon={RightArrowIcon} />}
+          </ButtonBox>
         </ProjectBody>
       </ProjectBox>
       {confirm && (

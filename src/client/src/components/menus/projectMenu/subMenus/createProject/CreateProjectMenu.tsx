@@ -8,6 +8,7 @@ import { Size } from "../../../../../compLibrary/size";
 import { Input, Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { CreateProjectIcon } from "../../../../../assets/icons/project";
 
 export const CreateProjectMenu = () => {
   const dispatch = useAppDispatch();
@@ -30,11 +31,15 @@ export const CreateProjectMenu = () => {
             value={projectName}
           />
           <ButtonBox left>
-            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
           </ButtonBox>
           {projectName && (
             <ButtonBox>
-              <Button onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)} type={TextResources.Project_Create} />
+              <Button
+                onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)}
+                text={TextResources.Project_Create}
+                icon={CreateProjectIcon}
+              />
             </ButtonBox>
           )}
         </ProjectBody>

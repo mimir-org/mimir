@@ -9,6 +9,7 @@ import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnProjectSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ImportProjectIcon } from "../../../../../assets/icons/project";
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
@@ -40,14 +41,18 @@ export const ImportProjectFileMenu = () => {
           {TextResources.Project_Import_File}
         </HeaderBox>
         <ButtonBox>
-          <Button onClick={() => openFileSelector()} type={buttonBrowseText()} />
+          <Button onClick={() => openFileSelector()} text={buttonBrowseText()} icon={ImportProjectIcon} />
         </ButtonBox>
         <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <Button onClick={() => OnProjectSaveClick(dispatch, data)} type={TextResources.Project_Import_Label_File_Button} />
+            <Button
+              onClick={() => OnProjectSaveClick(dispatch, data)}
+              text={TextResources.Project_Import_Label_File_Button}
+              icon={ImportProjectIcon}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

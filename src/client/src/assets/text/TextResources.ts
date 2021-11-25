@@ -222,10 +222,6 @@ const TextResources = {
   Error_Forbidden: "Access denied",
   Error_Server: "Internal server error",
 
-  // BlockView
-  ConnectMenu_Select_All: "Select all",
-  ConnectMenu_Clear: "Clear all",
-
   // Type
   Type_BlockLocation: "BlockLocationNode",
   Type_BlockFunction: "BlockFunctionNode",
@@ -258,7 +254,7 @@ const TextResources = {
 
   // Validation
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
-  Validation_Aspect: "A connection can only be made between two nodes of the same Aspect.",
+  Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
   Validation_Cancel: "Cancel",
 };
 

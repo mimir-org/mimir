@@ -2,6 +2,7 @@ import { TextResources } from "../../assets/text";
 import { Button } from "../../compLibrary/buttons";
 import { ButtonWrap, MessageBox } from "./styled";
 import { CloseIcon } from "../../assets/icons/close";
+import { ValidateIcon } from "../../assets/icons/common";
 
 interface Props {
   handleSave: () => void;
@@ -18,8 +19,8 @@ const MessageComponent = ({ handleSave, handleNoSave, showConfirm, setConfirm, t
       <p className="message">{text}</p>
       <img src={CloseIcon} alt="icon" onClick={() => setConfirm(!showConfirm)} className="icon" />
       <ButtonWrap>
-        <Button onClick={handleNoSave} type={TextResources.Project_NoSave_Button} />
-        <Button onClick={handleSave} type={TextResources.Project_Save_Button} />
+        <Button onClick={handleNoSave} text={TextResources.Project_NoSave_Button} />
+        <Button onClick={handleSave} text={TextResources.Project_Save_Button} icon={ValidateIcon} />
       </ButtonWrap>
     </MessageBox>
   );

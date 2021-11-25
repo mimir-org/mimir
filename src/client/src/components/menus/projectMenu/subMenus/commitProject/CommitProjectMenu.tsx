@@ -10,6 +10,7 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { Contractor, ModuleDescription } from "../../../../../models";
 import { Size } from "../../../../../compLibrary/size";
+import { CommitProjectIcon } from "../../../../../assets/icons/project";
 
 interface Props {
   contractors: Contractor[];
@@ -46,13 +47,14 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
           <Dropdown label="Contractor" valueProp="name" items={parsers} keyProp="id" onChange={(e: any) => setParser(e)} />
 
           <ButtonBox left>
-            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
           </ButtonBox>
           {contractor && parser && projectId && (
             <ButtonBox>
               <Button
                 onClick={() => Handlers.OnCommitProjectClick(dispatch, projectId, parser.id, contractor.domain)}
-                type={TextResources.Project_Commit_Button}
+                text={TextResources.Project_Commit_Button}
+                icon={CommitProjectIcon}
               />
             </ButtonBox>
           )}

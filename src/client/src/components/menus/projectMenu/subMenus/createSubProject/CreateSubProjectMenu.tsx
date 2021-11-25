@@ -8,6 +8,7 @@ import { Size } from "../../../../../compLibrary/size";
 import { Input, Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { CreateSubProjectIcon } from "../../../../../assets/icons/project";
 
 interface Props {
   fromProjectId: string;
@@ -37,13 +38,14 @@ export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled
             value={projectName}
           />
           <ButtonBox left>
-            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
           </ButtonBox>
           {projectName && (
             <ButtonBox>
               <Button
                 onClick={() => Handlers.OnSubProjectCreateClick(fromProjectId, projectName, nodeIds, edgeIds, dispatch)}
-                type={TextResources.Project_SubProject_Create}
+                text={TextResources.Project_SubProject_Create}
+                icon={CreateSubProjectIcon}
               />
             </ButtonBox>
           )}
