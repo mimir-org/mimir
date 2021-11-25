@@ -32,7 +32,7 @@ namespace Mb.Models.Data
             set => SetDomain(value);
         }
 
-        public string Key { get; set; }
+        public string Entity { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }
         public string AttributeTypeId { get; set; }
