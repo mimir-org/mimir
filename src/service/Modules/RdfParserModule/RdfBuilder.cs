@@ -223,7 +223,7 @@ namespace RdfParserModule
 
                 var value = attribute.Value;
 
-                var attributeType = GetOrCreateUriNode(MimirIdToIri(_namespaces["eq"], attribute.AttributeTypeId));
+                var attributeType = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.AttributeTypeId));
                 Graph.Assert(new Triple(attributeType, label, Graph.CreateLiteralNode(attribute.Key)));
 
                 var attributeNode = GetOrCreateUriNode(attribute.Iri);
@@ -233,6 +233,8 @@ namespace RdfParserModule
 
                 Graph.Assert(new Triple(node, hasPhysicalQuantity, attributeNode));
 
+
+                if (value is null) continue;
 
                 var datum = GetOrCreateUriNode(attribute.Iri + "-datum");
 
@@ -257,7 +259,8 @@ namespace RdfParserModule
                 Graph.Assert(new Triple(datum, type, quantityDatum));
 
                 Graph.Assert(new Triple(attributeNode, qualityQuantifiedAs, datum));
-
+                
+                if (attribute.UnitString is null) continue;
                 var units = JsonConvert.DeserializeObject<List<Unit>>(attribute.UnitString);
 
                 // units.count can be 0 even if there is a value
@@ -516,7 +519,7 @@ namespace RdfParserModule
             if (transportObject.OutputTerminal != null)
             {
                 var terminal = transportObject.OutputTerminal;
-                BuildStreamTerminal(rdfNode, terminal, edge.FromConnector, terminal.Type);
+                BuildStreamTerminal(rdfNode, terminal, edge.ToConnector, terminal.Type);
             }
         }
         private void BuildStreamTerminals(Interface interfaceObject, Edge edge)
@@ -535,7 +538,7 @@ namespace RdfParserModule
             }
         }
 
-        private void BuildStreamTerminal(INode transportNode, Terminal terminal, Connector connection, ConnectorType connectorType)
+        private void BuildStreamTerminal(INode transportNode, Connector terminal, Connector connection, ConnectorType connectorType)
         {
             var type = GetOrCreateUriNode(Resources.type);
             var streamTerminalType = GetOrCreateUriNode(Resources.StreamTerminal);
