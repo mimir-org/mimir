@@ -418,7 +418,7 @@ namespace Mb.Services.Services
                 Remap(projectAm);
 
                 // Creating a project worker
-                var projectWorker = new ProjectWorker { ProjectId = projectAm.Id };
+                var projectWorker = new ProjectWorker { ProjectId = projectAm.Id, IsSubProject = projectAm.IsSubProject };
 
                 // Edges
                 var existingEdges = originalProject.Edges.ToList();
@@ -492,7 +492,7 @@ namespace Mb.Services.Services
 
             var nodesToDelete = existingProject.Nodes.Where(x => x.MasterProjectId == projectId).ToList();
             var edgesToDelete = existingProject.Edges.Where(x => x.MasterProjectId == projectId).ToList();
-            var projectWorker = new ProjectWorker {ProjectId = projectId};
+            var projectWorker = new ProjectWorker {ProjectId = projectId, IsSubProject = existingProject.IsSubProject };
 
             await _edgeRepository.DeleteEdges(projectWorker, edgesToDelete, projectId, _modelBuilderConfiguration.Domain);
             await _nodeRepository.DeleteNodes(projectWorker, nodesToDelete, projectId, _modelBuilderConfiguration.Domain);

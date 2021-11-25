@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Configurations;
@@ -16,7 +17,7 @@ namespace Mb.Data.Repositories
             _modelBuilderDbContext = modelBuilderDbContext;
         }
 
-        public async Task<int> AddProjectNode(ProjectNode projectNode)
+        public async Task<int> AddProjectNode(ProjectNodeItem projectNode)
         {
             var count = await _modelBuilderDbContext.Database.ExecuteSqlRawAsync("[dbo].[AddNodeToProject] @ProjectId, @NodeId", projectNode.CreateParameters());
             return count;
@@ -28,7 +29,7 @@ namespace Mb.Data.Repositories
             return count;
         }
 
-        public async Task<int> AddProjectNodes(List<ProjectNode> projectNodes)
+        public async Task<int> AddProjectNodes(List<ProjectNodeItem> projectNodes)
         {
             var counter = 0;
             foreach (var projectNode in projectNodes)
@@ -50,6 +51,12 @@ namespace Mb.Data.Repositories
             }
 
             return counter;
+        }
+
+        public IEnumerable<ProjectNodeItem> GetProjectNodes()
+        {
+            var items = _modelBuilderDbContext.ProjectNodeItems.ToList();
+            return items;
         }
     }
 }

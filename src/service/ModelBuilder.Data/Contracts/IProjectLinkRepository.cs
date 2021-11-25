@@ -6,9 +6,10 @@ namespace Mb.Data.Contracts
 {
     public interface IProjectLinkRepository
     {
-        Task<int> AddProjectNode(ProjectNode projectNode);
+        Task<int> AddProjectNode(ProjectNodeItem projectNode);
         Task<int> AddProjectEdge(ProjectEdge projectEdge);
-        Task<int> AddProjectNodes(List<ProjectNode> projectNodes);
+        Task<int> AddProjectNodes(List<ProjectNodeItem> projectNodes);
         Task<int> AddProjectEdges(List<ProjectEdge> projectEdges);
+        IEnumerable<ProjectNodeItem> GetProjectNodes();
     }
 }

@@ -41,6 +41,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Interface> Interfaces { get; set; }
         public virtual DbSet<Composite> Composites { get; set; }
         public virtual DbSet<EventLog> EventLogs { get; set; }
+        public virtual DbSet<ProjectNodeItem> ProjectNodeItems { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -75,6 +76,9 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new PurposeConfiguration());
             modelBuilder.ApplyConfiguration(new VersionConfiguration());
             modelBuilder.ApplyConfiguration(new EventLogConfiguration());
+
+            modelBuilder.Entity<ProjectNodeItem>().ToView(nameof(ProjectNodeItem)).HasKey(x => new { x.ProjectId, x.NodeId});
+
         }
     }
 }

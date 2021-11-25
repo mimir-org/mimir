@@ -5,6 +5,7 @@ namespace Mb.Models.Workers
     public class ProjectWorker
     {
         public string ProjectId { get; set; }
+        public bool IsSubProject { get; set; }
         public List<NodeWorker> Nodes { get; set; }
         public List<EdgeWorker> Edges { get; set; }
 
