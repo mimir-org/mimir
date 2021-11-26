@@ -85,7 +85,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         height={node.height}
         width={node.width}
         terminals={terminals}
-        parent={false}
+        isParent={false}
         electro={electro}
         dispatch={dispatch}
       />

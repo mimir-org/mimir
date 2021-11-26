@@ -69,7 +69,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
-        parent={true}
+        isParent={true}
         nodes={nodes}
         height={parentBlockSize.height}
         width={parentBlockSize.width}

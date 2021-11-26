@@ -12,7 +12,7 @@ interface Props {
   height: number;
   width: number;
   terminals: Connector[];
-  parent: boolean;
+  isParent: boolean;
   electro: boolean;
   dispatch: any;
 }
@@ -22,7 +22,7 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ nodes, height, width, terminals, parent, electro, dispatch }: Props) => (
+const HandleComponent = ({ nodes, height, width, terminals, isParent, electro, dispatch }: Props) => (
   <>
     {terminals.map((conn) => {
       const [type, pos] = GetBlockHandleType(conn, electro);
@@ -32,8 +32,8 @@ const HandleComponent = ({ nodes, height, width, terminals, parent, electro, dis
         <HandleBox
           visible={conn.visible && !IsPartOf(conn)}
           id={"handle-" + conn.id}
-          top={SetTopPos(conn, pos, electro, parent, order, height)}
-          left={SetLeftPos(conn, pos, electro, parent, order, width)}
+          top={SetTopPos(conn, pos, electro, isParent, order, height)}
+          left={SetLeftPos(conn, pos, electro, isParent, order, width)}
           key={CreateId()}
         >
           <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
@@ -43,7 +43,7 @@ const HandleComponent = ({ nodes, height, width, terminals, parent, electro, dis
             position={pos}
             id={conn.id}
             className={"react-flow__handle-block"}
-            isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, terminals, dispatch)}
+            isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, dispatch)}
           />
         </HandleBox>
       );
