@@ -1,6 +1,6 @@
 import { Node } from "../../../../../models";
 import { Banner, Block, Header, LogoBox, ResizeButton } from "./styled";
-import { GetCompanyLogoForNode, IsLocation, IsProduct } from "../../../../../helpers";
+import { GetCompanyLogoForNode, GetRdsPrefix, IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
@@ -26,12 +26,16 @@ interface Props {
 const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren, company, dispatch }: Props) => {
   const resizePanelRef = useRef(null);
   useResizeParentNode(node.id, resizePanelRef, dispatch);
+  const prefix = GetRdsPrefix(node);
 
   return (
     <Block id={"block-" + node?.id} selected={selected} width={width} height={height}>
       <Banner color={color}>
         <Header>
-          <p className="text">={node?.label ?? node?.name}</p>
+          <p className="text">
+            {prefix}
+            {node?.label ?? node?.name}
+          </p>
         </Header>
         {!node.isRoot && (
           <LogoBox hasChildren={hasChildren}>
