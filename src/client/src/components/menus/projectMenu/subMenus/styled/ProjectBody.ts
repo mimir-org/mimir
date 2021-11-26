@@ -17,7 +17,7 @@ const ProjectBody = styled.div<Props>`
     font-weight: ${FontWeight.Bold};
     font-size: ${FontSize.SubHeader};
     color: ${Color.BlueMagenta};
-    margin: 14px 0px;
+    margin: 15px 0px 10px 0px;
   }
 `;
 
