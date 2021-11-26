@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { MENU_TYPE } from "../../../../models/project";
-import { changeActiveMenu } from "../../projectMenu/subMenus/redux/actions";
+import { changeActiveMenu } from "../subMenus/redux/actions";
 
-export const OnCreateSubprojectClick = (dispatch: Dispatch) => {
+export const OnCreateSubProject = (dispatch: Dispatch) => {
   dispatch(changeActiveMenu(MENU_TYPE.CREATE_SUB_PROJECT_MENU));
 };

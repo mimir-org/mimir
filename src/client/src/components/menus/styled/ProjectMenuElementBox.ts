@@ -6,7 +6,7 @@ interface Props {
   disabled: boolean;
 }
 
-const ProjectMenuElement = styled.div<Props>`
+const ProjectMenuElementBox = styled.div<Props>`
   padding: 0px 20px;
   display: flex;
   flex-direction: row;
@@ -34,7 +34,7 @@ const ProjectMenuElement = styled.div<Props>`
   }
 
   &:hover {
-    background-color: ${(props) => !props.disabled && Color.LightBlue};
+    background-color: ${(props) => !props.disabled && Color.BlueLight};
     text-decoration: ${(props) => !props.disabled && "underline"};
   }
 
@@ -43,4 +43,4 @@ const ProjectMenuElement = styled.div<Props>`
   }
 `;
 
-export default ProjectMenuElement;
+export default ProjectMenuElementBox;

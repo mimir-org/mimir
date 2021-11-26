@@ -4,7 +4,7 @@ import { GetEdgeRelationStyle } from "../../helpers";
 /**
  * Component for RelationEdges in TreeView.
  * @param params
- * @returns an horizontal hasLocation/fulfilledBy edge.
+ * @returns a horizontal hasLocation/fulfilledBy edge.
  */
 const TreeRelationEdge = ({
   id,

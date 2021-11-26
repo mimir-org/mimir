@@ -4,11 +4,11 @@ import { FileData } from "../../../../../models";
 import { ProjectAm } from "../../../../../redux/sagas/project/ConvertProject";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Size } from "../../../../../compLibrary/size";
 import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnProjectSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ImportProjectIcon } from "../../../../../assets/icons/project";
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
@@ -28,26 +28,30 @@ export const ImportProjectFileMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return TextResources.Project_Import_File;
+    if (plainFiles?.length < 1) return TextResources.Project_Import;
     return plainFiles[0].name;
   };
 
   return (
-    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+    <ProjectBox visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
           {TextResources.Project_Import_File}
         </HeaderBox>
         <ButtonBox>
-          <Button onClick={() => openFileSelector()} type={buttonBrowseText()} />
+          <Button onClick={() => openFileSelector()} text={buttonBrowseText()} icon={ImportProjectIcon} />
         </ButtonBox>
         <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Project_Cancel} />
+          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <Button onClick={() => OnProjectSaveClick(dispatch, data)} type={TextResources.Project_Import_Label_File_Button} />
+            <Button
+              onClick={() => OnProjectSaveClick(dispatch, data)}
+              text={TextResources.Project_Import}
+              icon={ImportProjectIcon}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

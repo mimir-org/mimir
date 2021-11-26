@@ -34,7 +34,7 @@ const DropdownMenuListItem = styled.div<Props>`
   }
 
   :hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
 
     p {
       text-decoration: underline;

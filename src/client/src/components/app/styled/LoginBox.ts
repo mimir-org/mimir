@@ -8,7 +8,7 @@ const LoginBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${Color.LightGrey};
+  background: ${Color.GreyLighter};
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
   padding: 15px 25px;

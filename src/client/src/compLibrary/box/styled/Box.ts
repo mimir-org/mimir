@@ -17,7 +17,7 @@ const Box = styled.div<Props>`
   right: 25%;
   width: 285px;
   height: 172px;
-  border: 1px solid ${(props) => props.color};
+  border: 1.5px solid ${(props) => props.color};
   border-radius: 10px;
   z-index: 10;
   background-color: ${Color.White};

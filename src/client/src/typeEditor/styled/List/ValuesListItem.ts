@@ -6,7 +6,7 @@ const ValuesListItem = styled.div`
   flex-direction: row;
   align-items: center;
   border-width: 1px 0px 0px 0px;
-  border-color: ${Color.DarkerGrey};
+  border-color: ${Color.GreyDarker};
   border-style: solid;
   border-radius: 2px;
   height: 20px;
@@ -17,7 +17,7 @@ const ValuesListItem = styled.div`
   }
 
   :hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     text-decoration: underline;
   }
 `;

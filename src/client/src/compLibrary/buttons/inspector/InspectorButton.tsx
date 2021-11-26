@@ -20,12 +20,11 @@ export enum InspectorButtonType {
 
 /**
  * Component for buttons in the Inspector Module.
- * @param param0
+ * @param interface
  * @returns a button to be used in the Inspector Header.
  */
 const InspectorButton = ({ onClick, type, visible, disabled }: Props) => {
   const [active, setActive] = useState(false);
-
   const icon = GetButtonIcon(type);
   const activeIcon = GetActiveButtonIcon(type);
 

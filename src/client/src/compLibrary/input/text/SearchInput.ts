@@ -15,7 +15,7 @@ const SearchInput = styled.input`
   border-radius: 3px;
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
   }
 
   &:focus {

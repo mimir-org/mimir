@@ -18,8 +18,8 @@ const MessageComponent = ({ handleSave, handleNoSave, showConfirm, setConfirm, t
       <p className="message">{text}</p>
       <img src={CloseIcon} alt="icon" onClick={() => setConfirm(!showConfirm)} className="icon" />
       <ButtonWrap>
-        <Button onClick={handleNoSave} type={TextResources.Project_NoSave_Button} />
-        <Button onClick={handleSave} type={TextResources.Project_Save_Button} />
+        <Button onClick={handleNoSave} text={TextResources.Project_NoSave_Button} />
+        <Button onClick={handleSave} text={TextResources.Project_Save_Button} />
       </ButtonWrap>
     </MessageBox>
   );

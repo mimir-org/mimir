@@ -14,7 +14,7 @@ const RdsListElement = styled.div<Props>`
   padding-left: 7px;
 
   &:hover {
-    background-color: ${Color.LightBlue} !important;
+    background-color: ${Color.BlueLight} !important;
   }
 
   label:hover {
