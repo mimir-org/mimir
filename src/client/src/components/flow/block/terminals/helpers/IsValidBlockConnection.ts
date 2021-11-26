@@ -17,6 +17,14 @@ const IsValidBlockConnection = (conn: Connection, nodes: Node[], dispatch: any) 
   const targetNode = nodes.find((x) => x.id === conn.target);
   const targetTerminal = targetNode?.connectors.find((x) => x.id === conn.targetHandle);
 
+  console.log({ conn });
+  console.log({ sourceNode });
+  console.log({ targetNode });
+  console.log({ sourceTerminal });
+  console.log({ targetTerminal });
+  console.log(sourceTerminal?.terminalTypeId);
+  console.log(targetTerminal?.terminalTypeId);
+
   const isValidType = sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
   if (!isValidType) dispatch(setValidation(false, TextResources.Validation_Terminals));
 
