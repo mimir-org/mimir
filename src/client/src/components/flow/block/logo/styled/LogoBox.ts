@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const LogoBox = styled.div`
-  min-height: 20px;
-  max-height: 20px;
+  height: 20px;
+  width: 50px;
   align-self: flex-start;
   pointer-events: none;
 
