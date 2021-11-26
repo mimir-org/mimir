@@ -60,12 +60,12 @@ const ProjectMenuComponent = () => {
           onClick={() => Click.OnCommit(dispatch)}
           disabled={!projectState?.project?.isSubProject}
         />
-        <MenuElement
+        {/* <MenuElement
           text={TextResources.Project_SubProject_Save}
           icon={Icons.CreateSubProjectIcon}
           onClick={() => Click.OnCreateSubProject(dispatch)}
           disabled={!selectedNodeIds}
-        />
+        /> */}
         <MenuElement
           text={TextResources.Project_Import_File}
           icon={Icons.ImportProjectIcon}
