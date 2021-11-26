@@ -26,6 +26,9 @@ namespace Mb.Models.Application
         public TerminalAm OutputTerminal { get; set; }
         public ICollection<AttributeAm> Attributes { get; set; }
 
+        public bool IsLocked { get; set; }
+        public string IsLockedStatusBy { get; set; }
+
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }

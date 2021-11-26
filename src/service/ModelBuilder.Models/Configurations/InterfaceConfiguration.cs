@@ -21,6 +21,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.OutputTerminalId).HasColumnName("OutputTerminalId").IsRequired();
             builder.Property(p => p.InputTerminalId).HasColumnName("InputTerminalId").IsRequired();
+            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasDefaultValue(null);
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired().HasDefaultValue("Unknown");
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired().HasDefaultValue(DateTime.MinValue.ToUniversalTime());
             builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired().HasDefaultValue("Unknown");

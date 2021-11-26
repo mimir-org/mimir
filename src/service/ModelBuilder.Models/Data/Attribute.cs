@@ -37,7 +37,7 @@ namespace Mb.Models.Data
         public string SemanticReference { get; set; }
         public string AttributeTypeId { get; set; }
         public bool IsLocked {  get; set; }
-        public string IsLockedBy {  get; set; }
+        public string IsLockedStatusBy {  get; set; }
         
         public string SelectedUnitId { get; set; }
         
@@ -74,6 +74,7 @@ namespace Mb.Models.Data
         public virtual string TerminalId { get; set; }
         public virtual string NodeId { get; set; }
         public virtual string TransportId { get; set; }
+        public virtual string InterfaceId { get; set; }
         public virtual string CompositeId { get; set; }
 
         [JsonIgnore]
@@ -87,6 +88,9 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual Transport Transport { get; set; }
+
+        [JsonIgnore]
+        public virtual Interface Interface { get; set; }
 
         #endregion
 

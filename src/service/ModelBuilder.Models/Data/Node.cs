@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mb.Models.Abstract;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
@@ -10,7 +11,7 @@ using Newtonsoft.Json;
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Node
+    public class Node : ILockUnlock
     {
         public string Id
         {
@@ -47,10 +48,9 @@ namespace Mb.Models.Data
         [Required]
         public decimal PositionY { get; set; }
 
-        [Required]
         public bool IsLocked { get; set; }
 
-        public string IsLockedBy { get; set; }
+        public string IsLockedStatusBy { get; set; }
 
         [Required]
         public decimal PositionBlockX { get; set; }

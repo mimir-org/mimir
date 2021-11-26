@@ -15,7 +15,7 @@ namespace Mb.Models.Application
         public string SelectedUnitId { get; set; }
         public string AttributeTypeId { get; set; }
         public bool IsLocked {  get; set; }
-        public string IsLockedBy {  get; set; }
+        public string IsLockedStatusBy {  get; set; }
         public string QualifierId { get; set; }
         public string SourceId { get; set; }
         public string ConditionId { get; set; }
@@ -24,6 +24,7 @@ namespace Mb.Models.Application
         public string TerminalId { get; set; }
         public string NodeId { get; set; }
         public string TransportId { get; set; }
+        public string InterfaceId { get; set; }
         public string CompositeId { get; set; }
         public virtual ICollection<UnitAm> Units { get; set; }
         public ICollection<string> SelectValues { get; set; }

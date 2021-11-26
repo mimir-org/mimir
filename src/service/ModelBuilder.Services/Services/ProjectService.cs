@@ -34,6 +34,8 @@ namespace Mb.Services.Services
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
+        private readonly ITransportRepository _transportRepository;
+        private readonly IInterfaceRepository _interfaceRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IModuleService _moduleService;
@@ -46,7 +48,7 @@ namespace Mb.Services.Services
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, ICooperateService cooperateService)
+            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -59,6 +61,8 @@ namespace Mb.Services.Services
             _attributeRepository = attributeRepository;
             _logger = logger;
             _cooperateService = cooperateService;
+            _transportRepository = transportRepository;
+            _interfaceRepository = interfaceRepository;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -558,13 +562,48 @@ namespace Mb.Services.Services
 
             var userName = _contextAccessor.GetName();
 
-            if (attribute.IsLocked && attribute.IsLockedBy != userName)
-                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + attribute.IsLockedBy);
-
             attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
-            attribute.IsLockedBy = attribute.IsLocked ? userName : null;
+            attribute.IsLockedStatusBy = userName;
 
             await _attributeRepository.SaveAsync();
+        }
+
+        public async Task LockUnlockEdge(LockUnlockEdgeAm lockUnlockEdgeAm)
+        {
+            if (lockUnlockEdgeAm?.Id == null)
+                return;
+
+            var edge = _edgeRepository.FindBy(x => x.Id == lockUnlockEdgeAm.Id)?.First();
+
+            if (edge != null && !string.IsNullOrWhiteSpace(edge.TransportId))
+            {
+                var transportObject = _transportRepository.FindBy(x => x.Id == edge.TransportId)?.First();
+
+                if (transportObject != null)
+                {
+                    if (transportObject.IsLocked != lockUnlockEdgeAm.IsLocked)
+                    {
+                        transportObject.IsLocked = lockUnlockEdgeAm.IsLocked;
+                        transportObject.IsLockedStatusBy = _contextAccessor.GetName();
+                        await _transportRepository.SaveAsync();
+                    }
+                }
+            }
+
+            if (edge != null && !string.IsNullOrWhiteSpace(edge.InterfaceId))
+            {
+                var interfaceObject = _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId)?.First();
+
+                if (interfaceObject != null)
+                {
+                    if (interfaceObject.IsLocked != lockUnlockEdgeAm.IsLocked)
+                    {
+                        interfaceObject.IsLocked = lockUnlockEdgeAm.IsLocked;
+                        interfaceObject.IsLockedStatusBy = _contextAccessor.GetName();
+                        await _interfaceRepository.SaveAsync();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -580,10 +619,26 @@ namespace Mb.Services.Services
 
             var userName = _contextAccessor.GetName();
 
-            var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
-            var allAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.Node != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
             var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ToNodeId != null && x.ToNode.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            
+            var allTransportAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.TransportId != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            var allInterfaceAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.InterfaceId != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            
+            var allEdgesWithTransports = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.TransportId));
+            var allEdgesWithInterfaces = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.InterfaceId));
+            
+            var allTransportsInProject = new List<Transport>();
 
+            foreach (var edge in allEdgesWithTransports)
+                allTransportsInProject.Add(_transportRepository.FindBy(x => x.Id == edge.TransportId)?.First());
+
+            var allInterfacesInProject = new List<Interface>();
+
+            foreach (var edge in allEdgesWithInterfaces)
+                allInterfacesInProject.Add(_interfaceRepository.FindBy(x => x.Id == edge.TransportId)?.First());
+
+            var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            var allNodeAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.Node != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
             var node = allNodesInProject.FirstOrDefault(x => x.Id == lockUnlockNodeAm.Id && x.MasterProjectId == lockUnlockNodeAm.ProjectId);
 
             if (node?.Id == null)
@@ -592,16 +647,16 @@ namespace Mb.Services.Services
             if (node.IsLocked == lockUnlockNodeAm.IsLocked)
                 return;
 
-            if (node.IsLocked && userName != node.IsLockedBy)
-                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + node.IsLockedBy);
-
             node.IsLocked = lockUnlockNodeAm.IsLocked;
-            node.IsLockedBy = node.IsLocked ? userName : null;
+            node.IsLockedStatusBy = userName;
 
-            var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == node.Id);
+            var nodeAttributes = allNodeAttributesInProject.Where(x => x.NodeId == node.Id).ToList();
 
             LockUnlockAttributes(nodeAttributes, node, userName);
-            LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+
+            LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allNodeAttributesInProject, allEdgesInProject, 
+                allTransportsInProject.AsQueryable(), allTransportAttributesInProject.AsQueryable(),
+                allInterfacesInProject.AsQueryable(), allInterfaceAttributesInProject.AsQueryable(), userName);
 
             await _nodeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
@@ -634,6 +689,43 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Returns a list of all locked edges id's
+        /// If param 'projectId' is null all locked edges in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked edges id></returns>
+        public IEnumerable<string> GetLockedEdges(string projectId)
+        {
+            var edgesWithTransportOrInterface = _edgeRepository.GetAll().Where(x => !string.IsNullOrWhiteSpace(x.TransportId) || !string.IsNullOrWhiteSpace(x.InterfaceId));
+            var lockedEdges = new List<string>();
+
+            foreach (var edge in edgesWithTransportOrInterface)
+            {
+                if (!string.IsNullOrWhiteSpace(edge.TransportId))
+                {
+                    var transportObject = string.IsNullOrWhiteSpace(projectId) ? 
+                        _transportRepository.FindBy(x => x.Id == edge.TransportId)?.First() :
+                        _transportRepository.FindBy(x => x.Id == edge.TransportId && edge.MasterProjectId == projectId)?.First();
+
+                    if (transportObject is { IsLocked: true })
+                        lockedEdges.Add(edge.Id);
+                }
+
+                if (string.IsNullOrWhiteSpace(edge.InterfaceId)) 
+                    continue;
+
+                var interfaceObject = string.IsNullOrWhiteSpace(projectId) ?
+                    _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId)?.First() :
+                    _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId && edge.MasterProjectId == projectId)?.First();
+
+                if (interfaceObject is { IsLocked: true })
+                    lockedEdges.Add(edge.Id);
+            }
+
+            return lockedEdges;
+        }
+
+        /// <summary>
         /// Resolve commit package
         /// </summary>
         /// <param name="package"></param>
@@ -663,7 +755,7 @@ namespace Mb.Services.Services
             foreach (var node in project.Nodes)
             {
                 node.IsLocked = true;
-                node.IsLockedBy = currentUserName;
+                node.IsLockedStatusBy = currentUserName;
             }
 
             var data = await parser.SerializeProject(project);
@@ -726,6 +818,9 @@ namespace Mb.Services.Services
                     .OrderByDescending(x => x.Name)
                     .FirstOrDefaultAsync();
 
+                if (originalProject == null)
+                    throw new ModelBuilderBadRequestException($"Project with id {projectId} not found");
+
                 foreach (var subNode in subNodes)
                 {
                     originalProject.Nodes.Add(subNode);
@@ -738,10 +833,8 @@ namespace Mb.Services.Services
                     _edgeRepository.Attach(subEdge, EntityState.Unchanged);
                 }
 
-                originalProject.Nodes =
-                    originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
-                originalProject.Edges =
-                    originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
+                originalProject.Nodes = originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
+                originalProject.Edges = originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
 
                 _projectRepository.Update(originalProject);
                 await _projectRepository.SaveAsync();
@@ -759,7 +852,9 @@ namespace Mb.Services.Services
             }
         }
 
-        private void LockUnlockNodesAndAttributesRecursive(Node parentNode, IQueryable<Node> allNodesInProject, IQueryable<Attribute> allAttributesInProject, IQueryable<Edge> allEdgesInProject, string userName)
+        private void LockUnlockNodesAndAttributesRecursive(Node parentNode, IQueryable<Node> allNodesInProject, IQueryable<Attribute> allNodeAttributesInProject, 
+            IQueryable<Edge> allEdgesInProject, IQueryable<Transport> allTransportsInProject, IQueryable<Attribute> allTransportAttributesInProject,
+            IQueryable<Interface> allInterfacesInProject, IQueryable<Attribute> allInterfaceAttributesInProject, string userName)
         {
             if (parentNode?.Id == null)
                 return;
@@ -782,23 +877,46 @@ namespace Mb.Services.Services
                 if (childNode.IsLocked == parentNode.IsLocked)
                     continue;
 
-                if (childNode.IsLocked && userName != childNode.IsLockedBy)
-                    continue;
-
                 if (childNode.Level > parentNode.Level)
                 {
-                    childNode.IsLocked = parentNode.IsLocked;
-                    childNode.IsLockedBy = childNode.IsLocked ? userName : null;
+                    //Transport Lock/Unlock including all attributes
+                    var transportObject = allTransportsInProject.FirstOrDefault(x => x.Id == edge.TransportId);
 
-                    var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == childNode.Id);
+                    if (transportObject != null && transportObject.IsLocked != parentNode.IsLocked)
+                    {
+                        transportObject.IsLocked = parentNode.IsLocked;
+                        transportObject.IsLockedStatusBy = userName;
+
+                        var transportAttributes = allTransportAttributesInProject.Where(x => x.TransportId == transportObject.Id).ToList();
+                        LockUnlockAttributes(transportAttributes, transportObject, userName);
+                    }
+
+                    //Interface Lock/Unlock including all attributes
+                    var interfaceObject = allInterfacesInProject.FirstOrDefault(x => x.Id == edge.InterfaceId);
+
+                    if (interfaceObject != null && interfaceObject.IsLocked != parentNode.IsLocked)
+                    {
+                        interfaceObject.IsLocked = parentNode.IsLocked;
+                        interfaceObject.IsLockedStatusBy = userName;
+
+                        var interfaceAttributes = allInterfaceAttributesInProject.Where(x => x.InterfaceId == interfaceObject.Id).ToList();
+                        LockUnlockAttributes(interfaceAttributes, interfaceObject, userName);
+                    }
+
+                    //Node Lock/Unlock including all attributes
+                    childNode.IsLocked = parentNode.IsLocked;
+                    childNode.IsLockedStatusBy = userName;
+
+                    var nodeAttributes = allNodeAttributesInProject.Where(x => x.NodeId == childNode.Id).ToList();
                     LockUnlockAttributes(nodeAttributes, childNode, userName);
                 }
 
-                LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+                LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allNodeAttributesInProject, allEdgesInProject, 
+                    allTransportsInProject, allNodeAttributesInProject, allInterfacesInProject, allInterfaceAttributesInProject, userName);
             }
         }
 
-        private void LockUnlockAttributes(IQueryable<Attribute> attributes, Node node, string userName)
+        private void LockUnlockAttributes<T>(ICollection<Attribute> attributes, T obj, string userName) where T : ILockUnlock
         {
             if (!attributes.Any())
                 return;
@@ -808,14 +926,11 @@ namespace Mb.Services.Services
                 if (nodeAttribute == null)
                     continue;
 
-                if (nodeAttribute.IsLocked == node.IsLocked)
+                if (nodeAttribute.IsLocked == obj.IsLocked)
                     continue;
 
-                if (nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
-                    continue;
-
-                nodeAttribute.IsLocked = node.IsLocked;
-                nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
+                nodeAttribute.IsLocked = obj.IsLocked;
+                nodeAttribute.IsLockedStatusBy = userName;
             }
         }
 
@@ -1133,7 +1248,6 @@ namespace Mb.Services.Services
             if (originalProject.Edges?.Count != projectAm.Edges?.Count)
             {
                 originalProject.IncrementMinorVersion();
-                return;
             }
 
         }
@@ -1152,11 +1266,11 @@ namespace Mb.Services.Services
 
         private void ClearAllChangeTracker()
         {
-            _projectRepository?.Context?.ChangeTracker?.Clear();
-            _nodeRepository?.Context?.ChangeTracker?.Clear();
-            _edgeRepository?.Context?.ChangeTracker?.Clear();
-            _connectorRepository?.Context?.ChangeTracker?.Clear();
-            _attributeRepository?.Context?.ChangeTracker?.Clear();
+            _projectRepository?.Context?.ChangeTracker.Clear();
+            _nodeRepository?.Context?.ChangeTracker.Clear();
+            _edgeRepository?.Context?.ChangeTracker.Clear();
+            _connectorRepository?.Context?.ChangeTracker.Clear();
+            _attributeRepository?.Context?.ChangeTracker.Clear();
         }
 
         /// <summary>
