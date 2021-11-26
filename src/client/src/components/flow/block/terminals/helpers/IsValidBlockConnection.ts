@@ -11,7 +11,7 @@ import { setValidation } from "../../../../../redux/store/validation/actions";
  * @param dispatch
  * @returns a boolean value.
  */
-const IsValidBlockConnection = (conn: Connection, nodes: Node[], terminals: Connector[], dispatch) => {
+const IsValidBlockConnection = (conn: Connection, nodes: Node[], terminals: Connector[], dispatch: any) => {
   const targetNode = nodes.find((x) => x.id === conn.target);
   const sourceTerminal = terminals.find((x) => x.id === conn.sourceHandle);
   const targetTerminal = targetNode?.connectors.find((x) => x.id === conn.targetHandle);

@@ -229,7 +229,7 @@ const TextResources = {
   // RDS
   RDS_Function: "=",
   RDS_Product: "-",
-  RDS_Location: "++",
+  RDS_Location: "+",
 
   // Visual Filter
   Filter_Heading: "Visual Filter",
