@@ -17,7 +17,7 @@ const DropdownList = styled.div`
   z-index: 1;
 
   .dropdown_listitem {
-    border-bottom: 1px solid ${Color.DarkGrey};
+    border-bottom: 1px solid ${Color.GreyDark};
     background-color: ${Color.White};
     padding: 2px 5px;
   }

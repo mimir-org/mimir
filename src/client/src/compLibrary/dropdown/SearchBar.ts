@@ -26,7 +26,7 @@ const SearchBar = styled.div`
   }
 
   input[type="text"]::placeholder {
-    color: ${Color.DarkerGrey};
+    color: ${Color.GreyDarker};
     font-size: ${FontSize.Medium};
     font-style: italic;
     opacity: 0.5;

@@ -66,17 +66,17 @@ export interface ProjectState {
 }
 
 // Action types
-interface FetchingProjectAction {
+export interface FetchingProjectAction {
   type: typeof FETCHING_PROJECT;
   payload: string;
 }
 
-interface SearchProjectAction {
+export interface SearchProjectAction {
   type: typeof SEARCH_PROJECT;
   payload: string;
 }
 
-interface SearchProjectActionFinished {
+export interface SearchProjectActionFinished {
   type: typeof SEARCH_PROJECT_SUCCESS_OR_ERROR;
   payload: {
     projectList: [];
@@ -84,7 +84,7 @@ interface SearchProjectActionFinished {
   };
 }
 
-interface FetchingProjectActionFinished {
+export interface FetchingProjectActionFinished {
   type: typeof FETCHING_PROJECT_SUCCESS_OR_ERROR;
   payload: {
     project: Project;
@@ -92,12 +92,12 @@ interface FetchingProjectActionFinished {
   };
 }
 
-interface CreatingProjectAction {
+export interface CreatingProjectAction {
   type: typeof CREATING_PROJECT;
   payload: object;
 }
 
-interface CreatingProjectActionFinished {
+export interface CreatingProjectActionFinished {
   type: typeof CREATING_PROJECT_SUCCESS_OR_ERROR;
   payload: {
     project: Project;
@@ -105,27 +105,27 @@ interface CreatingProjectActionFinished {
   };
 }
 
-interface AddNodeAction {
+export interface AddNodeAction {
   type: typeof ADD_NODE;
   payload: Node;
 }
 
-interface RemoveNodeAction {
+export interface RemoveNodeAction {
   type: typeof REMOVE_NODE;
   payload: string;
 }
 
-interface AddEdgeAction {
+export interface AddEdgeAction {
   type: typeof ADD_EDGE;
   payload: Edge;
 }
 
-interface RemoveEdgeAction {
+export interface RemoveEdgeAction {
   type: typeof REMOVE_EDGE;
   payload: string;
 }
 
-interface UpdatePositionAction {
+export interface UpdatePositionAction {
   type: typeof UPDATE_POSITION;
   payload: {
     nodeId: string;
@@ -133,7 +133,7 @@ interface UpdatePositionAction {
     y: number;
   };
 }
-interface UpdateBlockPositionAction {
+export interface UpdateBlockPositionAction {
   type: typeof UPDATE_BLOCK_POSITION;
   payload: {
     nodeId: string;
@@ -142,7 +142,7 @@ interface UpdateBlockPositionAction {
   };
 }
 
-interface SetNodeVisibility {
+export interface SetNodeVisibility {
   type: typeof SET_NODE_VISIBILITY;
   payload: {
     node: Node;
@@ -150,7 +150,7 @@ interface SetNodeVisibility {
   };
 }
 
-interface SetEdgeVisibility {
+export interface SetEdgeVisibility {
   type: typeof SET_EDGE_VISIBILITY;
   payload: {
     edge: Edge;
@@ -158,7 +158,7 @@ interface SetEdgeVisibility {
   };
 }
 
-interface SetEdgeAnimation {
+export interface SetEdgeAnimation {
   type: typeof SET_EDGE_ANIMATION;
   payload: {
     edge: Edge;
@@ -166,7 +166,7 @@ interface SetEdgeAnimation {
   };
 }
 
-interface SetLocationNodeSize {
+export interface SetLocationNodeSize {
   type: typeof SET_LOCATION_NODE_SIZE;
   payload: {
     nodeId: string;
@@ -175,7 +175,7 @@ interface SetLocationNodeSize {
   };
 }
 
-interface SetActiveNode {
+export interface SetActiveNode {
   type: typeof SET_ACTIVE_NODE;
   payload: {
     nodeId: string;
@@ -183,7 +183,7 @@ interface SetActiveNode {
   };
 }
 
-interface SetActiveEdge {
+export interface SetActiveEdge {
   type: typeof SET_ACTIVE_EDGE;
   payload: {
     edgeId: string;
@@ -191,19 +191,19 @@ interface SetActiveEdge {
   };
 }
 
-interface SetActiveBlockNode {
+export interface SetActiveBlockNode {
   type: typeof SET_ACTIVE_BLOCKNODE;
   payload: {
     nodeId: string;
   };
 }
 
-interface SaveProjectAction {
+export interface SaveProjectAction {
   type: typeof SAVE_PROJECT;
   payload: Project;
 }
 
-interface SaveProjectActionFinished {
+export interface SaveProjectActionFinished {
   type: typeof SAVE_PROJECT_SUCCESS_OR_ERROR;
   payload: {
     project: Project;
@@ -211,14 +211,14 @@ interface SaveProjectActionFinished {
   };
 }
 
-interface ChangeSelectedProject {
+export interface ChangeSelectedProject {
   type: typeof CHANGE_SELECTED_PROJECT;
   payload: {
     projectId: string;
   };
 }
 
-interface ChangeAllNodes {
+export interface ChangeAllNodes {
   type: typeof CHANGE_ALL_NODES;
   payload: {
     visible: boolean;
@@ -323,14 +323,14 @@ export interface ChangeCompositeAttributeValue {
   };
 }
 
-interface DeleteProjectErrorAction {
+export interface DeleteProjectErrorAction {
   type: typeof DELETE_PROJECT_ERROR;
   payload: {
     key: string;
   };
 }
 
-interface ChangeActiveConnector {
+export interface ChangeActiveConnector {
   type: typeof CHANGE_ACTIVE_CONNECTOR;
   payload: {
     nodeId: string;

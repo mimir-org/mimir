@@ -14,7 +14,7 @@ const ValidationModule = () => {
     dispatch(setValidation(true, ""));
   };
 
-  return !validation.valid && <NotificationBox onClick={onClick} text={validation.message} warning />;
+  return !validation.valid && <NotificationBox onClick={onClick} message={validation.message} warning />;
 };
 
 export default ValidationModule;

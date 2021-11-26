@@ -40,7 +40,7 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, onClick, onBlu
           <div className="text" onClick={() => onClick(conn)}>
             {conn.name}
           </div>
-          <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.DarkGrey} id={conn.id} />
+          <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
         </TerminalsElement>
       ))}
     </TerminalsBox>

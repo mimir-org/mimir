@@ -36,7 +36,7 @@ const UserMenuElement = styled.div`
   }
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
   }
 
   &:last-child {

@@ -12,7 +12,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
   flex-direction: row;
   align-items: center;
   min-height: 30px;
-  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.DarkGrey : 0)};
+  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.GreyDark : 0)};
 
   .terminal-name {
     font-weight: ${(props) => props.expanded && FontWeight.Bold};

@@ -1,21 +1,24 @@
 const Color = {
   // Common
+  White: "#fff",
+  Black: "#000",
+
   BlueMagenta: "#272738",
-  LightBlue: "#D9E6FF",
+  BlueLight: "#D9E6FF",
+
+  Grey: "#d9d9d9",
+  GreyDark: "#c4c4c4",
+  GreyDarker: "#898787",
+  GreyLighter: "#FBFBFF",
+  GreyLight: "#F2F2F2",
   GreyHeader: "#4F4F4F",
   GreyInspector: "#FAFAFA",
   GreyInspectorDisabled: "#C5C5C5",
   GreyToolBarSelected: "#6F6F6F",
-  Grey: "#d9d9d9",
-  DarkGrey: "#c4c4c4",
-  DarkerGrey: "#898787",
-  LightGrey: "#FBFBFF",
-  LighterGrey: "#F2F2F2",
-  White: "#fff",
-  Black: "#000",
-  LightCyan: "#CFDADB",
-  LightPurple: "#D8D8EC",
-  WarningRed: "#FF708A",
+
+  CyanLight: "#CFDADB",
+  PurpleLight: "#D8D8EC",
+  RedWarning: "#FF708A",
 
   // Text
   TextSecondary: "#8C8C8C",

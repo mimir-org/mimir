@@ -9,7 +9,7 @@ import { OnChangeParameterValue, OnChangeFilterChoice, OnLockParameter, OnChange
 import { useMemo } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import { GetAttributes } from "./helpers/GetAttributes";
-import { GetAttributeLikeItemKey, IsCreateLibraryType } from "../../helpers/IsType";
+import { IsCreateLibraryType } from "../../helpers/IsType";
 
 const FILTER_ENTITY_WIDTH: number = 191;
 
@@ -43,8 +43,6 @@ function ParameterRow({
   dispatch,
 }: Props) {
   const attributes = attributeLikeItems ?? GetAttributes(element);
-  const attributeKey = GetAttributeLikeItemKey(attributes?.[0]);
-
   const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
   const bodyWidth = useMemo(
@@ -82,9 +80,7 @@ function ParameterRow({
         {selectedCombinations.map((combination) => (
           <Parameter
             key={combination.combined}
-            attribute={attributes.find(
-              (attr) => attr[attributeKey] === filterName && DoesCombinationMatchAttribute(combination, attr)
-            )}
+            attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(combination, attr))}
             combination={combination}
             isNodeLocked={elementIsLocked}
             headerColor={headerColor}

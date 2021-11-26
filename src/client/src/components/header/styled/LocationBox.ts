@@ -17,7 +17,7 @@ const LocationBox = styled.div<Props>`
 
   &:hover {
     cursor: pointer;
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
   }
 
   .logo {
