@@ -37,9 +37,11 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
             {node?.label ?? node?.name}
           </p>
         </Header>
-        <LogoBox hasChildren={hasChildren}>
-          <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
-        </LogoBox>
+        {!node.isRoot && (
+          <LogoBox hasChildren={hasChildren}>
+            <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
+          </LogoBox>
+        )}
       </Banner>
       {IsProduct(node) && (
         <ResizeButton id="ResizeParentNode" ref={resizePanelRef}>
