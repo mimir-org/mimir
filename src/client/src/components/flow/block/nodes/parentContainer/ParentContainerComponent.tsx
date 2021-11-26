@@ -34,7 +34,7 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
           <p className="text">={node?.label ?? node?.name}</p>
         </Header>
         <LogoBox hasChildren={hasChildren}>
-          <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
+          <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
         </LogoBox>
       </Banner>
       {IsProduct(node) && (

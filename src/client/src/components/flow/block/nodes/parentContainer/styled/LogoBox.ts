@@ -10,8 +10,9 @@ const LogoBox = styled.div<Props>`
   left: ${(props) => (props.hasChildren ? 35 : 15)}px;
   width: 53px;
 
-  .logo {
+  img {
     width: inherit;
+    filter: saturate(0%);
   }
 `;
 
