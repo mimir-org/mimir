@@ -6,7 +6,7 @@ interface Props {
 
 const ButtonBox = styled.div<Props>`
   position: absolute;
-  bottom: 16px;
+  bottom: 8px;
   right: ${(props) => !props.left && "30px"};
   left: ${(props) => props.left && "30px"};
 `;

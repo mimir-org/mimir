@@ -9,7 +9,6 @@ import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { Contractor, ModuleDescription } from "../../../../../models";
-import { Size } from "../../../../../compLibrary/size";
 import { CommitProjectIcon } from "../../../../../assets/icons/project";
 
 interface Props {
@@ -27,8 +26,8 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
 
   return (
     !disabled && (
-      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
-        <ProjectBody removeHeight={true}>
+      <ProjectBox visible={isOpen}>
+        <ProjectBody>
           <HeaderBox>
             <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
             {TextResources.Project_Commit_Project}
@@ -42,7 +41,6 @@ export const CommitProjectMenu = ({ contractors, parsers, projectId, disabled }:
             keyProp="id"
             onChange={(e: any) => setContractor(e)}
           />
-
           <Label>{TextResources.Project_Commit_Parser}</Label>
           <Dropdown label="Contractor" valueProp="name" items={parsers} keyProp="id" onChange={(e: any) => setParser(e)} />
 

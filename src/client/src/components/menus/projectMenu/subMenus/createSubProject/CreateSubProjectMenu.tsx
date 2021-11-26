@@ -4,7 +4,6 @@ import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Size } from "../../../../../compLibrary/size";
 import { Input, Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
@@ -24,7 +23,7 @@ export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled
 
   return (
     !disabled && (
-      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+      <ProjectBox visible={isOpen}>
         <ProjectBody>
           <HeaderBox>
             <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />

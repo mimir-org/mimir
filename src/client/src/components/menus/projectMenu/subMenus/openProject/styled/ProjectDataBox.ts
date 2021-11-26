@@ -9,8 +9,8 @@ interface Props {
 const ProjectDataBox = styled.div<Props>`
   display: flex;
   align-items: center;
-  height: 35px;
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
+  height: 33px;
+  font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
   text-decoration: ${(props) => props.isSelected && "underline"};
   font-size: ${FontSize.Medium};
   line-height: 1.5;
@@ -44,7 +44,6 @@ const ProjectDataBox = styled.div<Props>`
 
   &:hover {
     background: ${Color.BlueLight};
-    font-weight: ${FontWeight.Bold};
   }
 
   &:nth-of-type(even) {

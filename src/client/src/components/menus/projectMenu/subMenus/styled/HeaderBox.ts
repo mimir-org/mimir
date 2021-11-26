@@ -3,7 +3,7 @@ import styled from "styled-components";
 const HeaderBox = styled.div`
   display: flex;
   align-items: center;
-  margin: 9px 0px 15px 0px;
+  margin: 9px 0px 10px 0px;
 
   .icon {
     position: absolute;

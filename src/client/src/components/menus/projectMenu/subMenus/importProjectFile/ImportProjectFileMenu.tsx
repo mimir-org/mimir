@@ -4,7 +4,6 @@ import { FileData } from "../../../../../models";
 import { ProjectAm } from "../../../../../redux/sagas/project/ConvertProject";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Size } from "../../../../../compLibrary/size";
 import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnProjectSaveClick } from "./handlers";
@@ -34,7 +33,7 @@ export const ImportProjectFileMenu = () => {
   };
 
   return (
-    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+    <ProjectBox visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
