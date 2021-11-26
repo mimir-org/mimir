@@ -12,12 +12,13 @@ const ResizeButton = styled.div`
   .icon {
     pointer-events: none;
     position: relative;
-    top: 45px;
-    left: 45px;
+    height: 15px;
+    top: 58px;
+    left: 58px;
   }
 
   &:hover {
-    cursor: nwse-resize;
+    cursor: all-scroll;
   }
 `;
 

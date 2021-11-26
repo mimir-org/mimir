@@ -5,6 +5,11 @@ import { OffPageRequired } from "../../../../assets/icons/offpage";
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 
+/**
+ * Component for an offpage node in BlockView
+ * @param params
+ * @returns an offpage node that can be connected to other nodes.
+ */
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
