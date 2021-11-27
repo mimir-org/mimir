@@ -1,6 +1,6 @@
 import { IsAspectNode } from "../../../../helpers";
-import { GetMenuIcon } from "./helpers";
-import { TerminalsButton } from "./styled";
+import { GetMenuIcon, SetButtonXPos } from "./helpers";
+import { TerminalsButtonBox } from "./styled";
 import { Connector, Node } from "../../../../models";
 
 interface Props {
@@ -18,9 +18,14 @@ interface Props {
  * @returns a clickable box.
  */
 const TerminalsMenuBox = ({ node, isParent, isInput, showMenuBox, terminals, onClick }: Props) => (
-  <TerminalsButton visible={showMenuBox && !IsAspectNode(node) && !!terminals.length} parent={isParent} input={isInput}>
-    <img src={GetMenuIcon(node, isParent, isInput)} alt="menu" onClick={() => onClick()} />
-  </TerminalsButton>
+  <TerminalsButtonBox
+    visible={showMenuBox && !IsAspectNode(node) && !!terminals.length}
+    left={SetButtonXPos(isParent, isInput, false)}
+    right={SetButtonXPos(isParent, isInput, true)}
+    onClick={() => onClick()}
+  >
+    <img src={GetMenuIcon(node, isParent, isInput)} className="menu-icon" alt="menu" />
+  </TerminalsButtonBox>
 );
 
 export default TerminalsMenuBox;

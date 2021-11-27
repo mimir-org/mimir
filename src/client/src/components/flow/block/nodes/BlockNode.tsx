@@ -73,7 +73,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
-        parent={false}
+        isParent={false}
         electro={electro}
         onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
         showMenuBox={terminalBox}

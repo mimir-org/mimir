@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Node, Connector } from "../../../../models";
 import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { IsValidBlockConnection, SetTopPos, SetLeftPos, GetTerminalColor } from "./helpers";
+import { IsValidBlockConnection, SetTerminalYPos, SetTerminalXPos, GetTerminalColor } from "./helpers";
 import { HandleBox } from "./styled";
 import { CreateId, IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
@@ -32,8 +32,8 @@ const HandleComponent = ({ nodes, height, width, terminals, isParent, electro, d
         <HandleBox
           visible={conn.visible && !IsPartOf(conn)}
           id={"handle-" + conn.id}
-          top={SetTopPos(conn, pos, electro, isParent, order, height)}
-          left={SetLeftPos(conn, pos, electro, isParent, order, width)}
+          top={SetTerminalYPos(conn, pos, electro, isParent, order, height)}
+          left={SetTerminalXPos(conn, pos, electro, isParent, order, width)}
           key={CreateId()}
         >
           <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />

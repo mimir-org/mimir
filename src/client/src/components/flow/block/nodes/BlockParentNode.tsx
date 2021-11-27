@@ -60,7 +60,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        parent={true}
+        isParent={true}
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
