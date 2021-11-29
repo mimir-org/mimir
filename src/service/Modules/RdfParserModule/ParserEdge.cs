@@ -13,6 +13,7 @@
         public ParserNode FromNode { get; set; }
         public ParserNode ToNode { get; set; }
         public string MasterProjectIri { get; set; }
+        public string MasterProjectId => MasterProjectIri;
         public ParserNode Transport { get; set; }
         public ParserNode Interface { get; set; }
         public ParserConnector InputTerminal { get; set; }

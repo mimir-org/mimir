@@ -16,6 +16,7 @@ namespace RdfParserModule
         public bool IsLocked { get; set; }
         public string StatusId { get; set; }
         public string MasterProjectIri { get; set; }
+        public string MasterProjectId => MasterProjectIri;
         public Aspect Aspect { get; set; }
         public bool IsRoot { get; set; }
         public decimal Length { get; set; }

@@ -126,7 +126,7 @@ namespace RdfParserModule
 
                 var toConnector = new ParserRelation
                 {
-                    Id = $"{Project.Domain}_{Guid.NewGuid()}",
+                    Id = $"{ParserGraph.Domain}_{Guid.NewGuid()}",
                     Name = "Part of Relationship",
                     Relation = RelationType.PartOf,
                     Type = ConnectorType.Input
@@ -135,7 +135,7 @@ namespace RdfParserModule
 
                 var fromConnector = new ParserRelation
                 {
-                    Id = $"{Project.Domain}_{Guid.NewGuid()}",
+                    Id = $"{ParserGraph.Domain}_{Guid.NewGuid()}",
                     Name = "Part of Relationship",
                     Relation = RelationType.PartOf,
                     Type = ConnectorType.Output
@@ -603,12 +603,19 @@ namespace RdfParserModule
         private decimal GenericGetPosition(INode node, string axis, bool block = false)
         {
             axis = axis.ToUpper();
-            
-            var predicate = GetOrCreateUriNode(block ? $"https://example.com/mimir#hasBlockPos{axis}" : $"https://example.com/mimir#hasPos{axis}");
-
-            var pos = Store.GetTriplesWithSubjectPredicate(node, predicate).Single().Object;
-
             var errorPos = block ? $"Block Position {axis}" : $"Position {axis}";
+
+            var predicate = GetOrCreateUriNode(block ? $"http://example.com/mimir#hasBlockPos{axis}" : $"http://example.com/mimir#hasPos{axis}");
+            INode pos;
+            try
+            {
+                pos = Store.GetTriplesWithSubjectPredicate(node, predicate).Single().Object;
+            }
+            catch
+            {
+                throw new Exception($"Found no {errorPos} on node {node}.");
+            }
+
 
             if (pos is not ILiteralNode literal) throw new Exception($"Could not find any {errorPos} on node {node}");
             try
