@@ -293,8 +293,8 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                if (!file.ValidateJsonFile())
-                    return BadRequest("Invalid file extension. The file must be a json file");
+                if (!(file.ValidateJsonFile() || file.ValidateNtFile()))
+                    return BadRequest("Invalid file extension. The file must be json or nt");
 
                 var createdProject = await _projectService.CreateFromFile(file, cancellationToken, new Guid(parser));
                 return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
