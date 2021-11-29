@@ -148,10 +148,10 @@
     <value>eq:</value>
   </data>
   <data name="FSB" xml:space="preserve">
-    <value>imf:FunctionalSystemBlock</value>
+    <value>http://example.com/imf#FunctionalSystemBlock</value>
   </data>
   <data name="FSBTerminal" xml:space="preserve">
-    <value>imf:FunctionalSystemBlockTerminal</value>
+    <value>http://example.com/imf#FunctionalSystemBlockTerminal</value>
   </data>
   <data name="fulfilledBy" xml:space="preserve">
     <value>imf:fulfilledBy</value>

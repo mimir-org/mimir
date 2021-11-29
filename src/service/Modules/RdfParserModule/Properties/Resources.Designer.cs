@@ -151,7 +151,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:FunctionalSystemBlock.
+        ///   Looks up a localized string similar to http://example.com/imf#FunctionalSystemBlock.
         /// </summary>
         internal static string FSB {
             get {
@@ -160,7 +160,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:FunctionalSystemBlockTerminal.
+        ///   Looks up a localized string similar to http://example.com/imf#FunctionalSystemBlockTerminal.
         /// </summary>
         internal static string FSBTerminal {
             get {

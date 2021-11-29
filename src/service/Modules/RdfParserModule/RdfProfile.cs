@@ -20,13 +20,17 @@ namespace RdfParserModule
              .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
              .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
              .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
-             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => new List<AttributeAm>()));
+             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
             CreateMap<ParserEdge, EdgeAm>()
-                //.ForMember(dest => dest.FromConnectorIri, opt => opt.MapFrom(src => src.FromConnector.Iri))
-                //.ForMember(dest => dest.ToConnectorIri, opt => opt.MapFrom(src => src.ToConnector.Iri))
-                //.ForMember(dest => dest.FromNodeIri, opt => opt.MapFrom(src => src.FromNode.Iri))
-                //.ForMember(dest => dest.ToNodeIri, opt => opt.MapFrom(src => src.ToNode.Iri))
+                .ForMember(dest => dest.FromConnectorIri, opt => opt.MapFrom(src => src.FromConnector.Iri))
+                .ForMember(dest => dest.ToConnectorIri, opt => opt.MapFrom(src => src.ToConnector.Iri))
+                .ForMember(dest => dest.FromNodeIri, opt => opt.MapFrom(src => src.FromNode.Iri))
+                .ForMember(dest => dest.ToNodeIri, opt => opt.MapFrom(src => src.ToNode.Iri))
+                .ForMember(dest => dest.FromConnectorDomain, opt => opt.MapFrom(src => src.FromConnector.Domain))
+                .ForMember(dest => dest.ToConnectorDomain, opt => opt.MapFrom(src => src.ToConnector.Domain))
+                .ForMember(dest => dest.FromNodeDomain, opt => opt.MapFrom(src => src.FromNode.Domain))
+                .ForMember(dest => dest.ToNodeDomain, opt => opt.MapFrom(src => src.ToNode.Domain))
                 .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
                 .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri));
@@ -34,19 +38,20 @@ namespace RdfParserModule
             CreateMap<ParserTransport, TransportAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseId(src.Iri)))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.InputTerminalId, opt => opt.MapFrom(src => NormaliseId(src.InputTerminalIri)))
-                .ForMember(dest => dest.OutputTerminalId, opt => opt.MapFrom(src => NormaliseId(src.OutputTerminalIri)))
+                .ForMember(dest => dest.InputTerminalIri, opt => opt.MapFrom(src => src.InputTerminal.Iri))
+                .ForMember(dest => dest.OutputTerminalIri, opt => opt.MapFrom(src => src.OutputTerminal.Iri))
                 .ForMember(dest => dest.InputTerminal, opt => opt.MapFrom(src => src.InputTerminal))
                 .ForMember(dest => dest.OutputTerminal, opt => opt.MapFrom(src => src.OutputTerminal))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => new List<AttributeAm>()));
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
             CreateMap<ParserConnector, ConnectorAm>()
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.Node.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain));
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.Node.Iri))
+                .ForMember(dest => dest.NodeDomain, opt => opt.MapFrom(src => src.Node.Domain));
 
             CreateMap<ParserTerminal, TerminalAm>()
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
@@ -64,7 +69,8 @@ namespace RdfParserModule
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseId(src.NodeIri)))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.Node.Iri))
+                .ForMember(dest => dest.NodeDomain, opt => opt.MapFrom(src => src.Node.Domain))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
 
             CreateMap<ParserUnit, UnitAm>()
@@ -74,7 +80,6 @@ namespace RdfParserModule
 
 
             CreateMap<ParserGraph, ProjectAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseId(src.Iri)))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))
