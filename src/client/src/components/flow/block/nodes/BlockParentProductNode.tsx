@@ -39,7 +39,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
         size={parentBlockSize}
-        hasChildren={terminals.length > 0}
+        hasTerminals={terminals.length > 0}
         onParentClick={() => OnParentClick(dispatch, node)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}

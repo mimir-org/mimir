@@ -1,6 +1,6 @@
 import { Node } from "../../../../../models";
 import { ParentBox, ResizeButton } from "./styled";
-import { GetRdsPrefix, IsLocation, IsProduct } from "../../../../../helpers";
+import { IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
@@ -13,7 +13,7 @@ interface Props {
   node: Node;
   color: string;
   size: BlockNodeSize;
-  hasChildren: boolean;
+  hasTerminals: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
   dispatch: any;
@@ -24,9 +24,8 @@ interface Props {
  * @param interface
  * @returns a container that sits on top of a Flow node.
  */
-const ParentContainerComponent = ({ node, color, size, hasChildren, onParentClick, onChildClick, dispatch }: Props) => {
+const ParentContainerComponent = ({ node, color, size, hasTerminals, onParentClick, onChildClick, dispatch }: Props) => {
   const resizePanelRef = useRef(null);
-  const company = process.env.REACT_APP_COMPANY;
   useResizeParentNode(node.id, resizePanelRef, dispatch);
 
   return (
@@ -34,9 +33,7 @@ const ParentContainerComponent = ({ node, color, size, hasChildren, onParentClic
       <ParentBannerComponent
         node={node}
         color={color}
-        hasChildren={hasChildren}
-        company={company}
-        prefix={GetRdsPrefix(node)}
+        hasTerminals={hasTerminals}
         onParentClick={onParentClick}
         onChildClick={onChildClick}
       />

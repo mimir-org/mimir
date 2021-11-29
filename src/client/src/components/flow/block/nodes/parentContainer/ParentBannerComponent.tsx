@@ -1,14 +1,13 @@
-import { ArrowDown, ArrowUp } from "../../../../../assets/icons/arrow";
-import { GetCompanyLogoForNode, IsAspectNode } from "../../../../../helpers";
+import { GetCompanyLogoForNode, GetRdsPrefix, IsAspectNode } from "../../../../../helpers";
 import { Node } from "../../../../../models";
 import { Banner, Header, LogoBox, Navigation } from "./styled";
+import { ArrowDownIcon, ArrowDownInactiveIcon, ArrowUpIcon, ArrowUpInactiveIcon } from "../../../../../assets/icons/arrow";
+import { HasChildren } from "../../../helpers";
 
 interface Props {
   node: Node;
   color: string;
-  hasChildren: boolean;
-  company: string;
-  prefix: string;
+  hasTerminals: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
 }
@@ -18,24 +17,31 @@ interface Props {
  * @param interface
  * @returns a menu banner with logo, name and arrows for navigation.
  */
-const ParentBannerComponent = ({ node, color, hasChildren, company, prefix, onParentClick, onChildClick }: Props) => (
-  <Banner id={"parent-banner-" + node.id} color={color}>
-    <Header id={"node-name-" + node.id}>
-      {prefix}
-      {node.label ?? node.name}
-    </Header>
-    <Navigation id="navigate-up" onClick={() => onParentClick()}>
-      {!IsAspectNode(node) && <img src={ArrowUp} alt="navigate-up" className="img" />}
-    </Navigation>
-    <Navigation id="navigate-down" onClick={() => onChildClick()}>
-      <img src={ArrowDown} alt="navigate-down" className="img" />
-    </Navigation>
-    {!node.isRoot && (
-      <LogoBox hasChildren={hasChildren}>
-        <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
-      </LogoBox>
-    )}
-  </Banner>
-);
+const ParentBannerComponent = ({ node, color, hasTerminals, onParentClick, onChildClick }: Props) => {
+  const showArrowDown = HasChildren(node);
+  const showArrowUp = !IsAspectNode(node);
+  const prefix = GetRdsPrefix(node);
+  const company = process.env.REACT_APP_COMPANY;
+
+  return (
+    <Banner id={"parent-banner-" + node.id} color={color}>
+      <Header id={"node-name-" + node.id}>
+        {prefix}
+        {node.label ?? node.name}
+      </Header>
+      <Navigation isActive={showArrowUp} onClick={showArrowUp ? onParentClick : null}>
+        <img src={showArrowUp ? ArrowUpIcon : ArrowUpInactiveIcon} alt="navigate-up" className="img" />
+      </Navigation>
+      <Navigation isActive={showArrowDown} onClick={showArrowDown ? onChildClick : null}>
+        <img src={showArrowDown ? ArrowDownIcon : ArrowDownInactiveIcon} alt="navigate-down" className="img" />
+      </Navigation>
+      {!node.isRoot && (
+        <LogoBox hasTerminals={hasTerminals}>
+          <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
+        </LogoBox>
+      )}
+    </Banner>
+  );
+};
 
 export default ParentBannerComponent;

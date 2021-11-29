@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
-const Navigation = styled.div`
+interface Props {
+  isActive: boolean;
+}
+
+const Navigation = styled.div<Props>`
   display: flex;
   position: relative;
   justify-content: center;
   padding: 10px 4px 10px 0px;
-  cursor: pointer;
+  cursor: ${(props) => (props.isActive ? "pointer" : "default")};
   pointer-events: all;
 
   .img {
