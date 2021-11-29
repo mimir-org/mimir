@@ -7,12 +7,12 @@
  */
 const SetButtonXPos = (isParent: boolean, isInput: boolean, isRightPos: boolean) => {
   if (isRightPos) {
-    if (!isInput && isParent) return "7px";
+    if (!isInput && isParent) return "10px";
     if (!isInput && !isParent) return "-1px";
     return "unset";
   }
 
-  if (isInput && isParent) return "9px";
+  if (isInput && isParent) return "10px";
   if (isInput && !isParent) return "-1px";
   return "unset";
 };

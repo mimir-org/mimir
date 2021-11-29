@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 const Navigation = styled.div`
-  display: inline-flex;
+  display: flex;
   position: relative;
-  padding-right: 4px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  justify-content: center;
+  padding: 10px 4px 10px 0px;
+  z-index: 20 !important;
+  cursor: pointer;
 `;
 
 export default Navigation;

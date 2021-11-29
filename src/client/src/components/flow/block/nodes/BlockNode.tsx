@@ -57,8 +57,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     <NodeBox
       id={type + node.id}
       product={IsProduct(node)}
-      width={node.width}
-      height={node.height}
+      size={{ width: node.width, height: node.height }}
       visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
@@ -73,7 +72,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
-        isParent={false}
         electro={electro}
         onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
         showMenuBox={terminalBox}
@@ -82,10 +80,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         nodes={nodes}
-        height={node.height}
-        width={node.width}
+        size={{ width: node.width, height: node.height }}
         terminals={terminals}
-        isParent={false}
         electro={electro}
         dispatch={dispatch}
       />

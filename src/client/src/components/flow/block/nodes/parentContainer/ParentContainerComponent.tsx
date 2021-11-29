@@ -1,42 +1,46 @@
 import { Node } from "../../../../../models";
-import { Banner, Block, Header, LogoBox, ResizeButton } from "./styled";
-import { GetCompanyLogoForNode, GetRdsPrefix, IsLocation, IsProduct } from "../../../../../helpers";
+import { Banner, ParentBox, Header, LogoBox, Navigation, ResizeButton } from "./styled";
+import { GetCompanyLogoForNode, GetRdsPrefix, IsAspectNode, IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
 import { memo, useRef } from "react";
 import { useResizeParentNode } from "./hooks";
+import { BlockNodeSize } from "../../../../../models/project";
+import { ArrowDown, ArrowUp } from "../../../../../assets/icons/arrow";
 
 interface Props {
   node: Node;
   color: string;
-  selected: boolean;
-  width: number;
-  height: number;
+  size: BlockNodeSize;
   hasChildren: boolean;
-  company: string;
+  onParentClick: () => void;
+  onChildClick: () => void;
   dispatch: any;
 }
 
 /**
- * Component for the parent node block in BlockView.
+ * Component for the parent block node in BlockView.
  * @param interface
  * @returns a container that sits on top of a Flow node.
  */
-const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren, company, dispatch }: Props) => {
+const ParentContainerComponent = ({ node, color, size, hasChildren, onParentClick, onChildClick, dispatch }: Props) => {
   const resizePanelRef = useRef(null);
-  useResizeParentNode(node.id, resizePanelRef, dispatch);
   const prefix = GetRdsPrefix(node);
+  const company = process.env.REACT_APP_COMPANY;
+  useResizeParentNode(node.id, resizePanelRef, dispatch);
 
   return (
-    <Block id={"block-" + node?.id} selected={selected} width={width} height={height}>
+    <ParentBox id={"block-" + node?.id} selected={node.isBlockSelected} size={size}>
       <Banner color={color}>
         <Header>
-          <p className="text">
-            {prefix}
-            {node?.label ?? node?.name}
-          </p>
+          {prefix}
+          {node?.label ?? node?.name}
         </Header>
+        <Navigation>{!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}</Navigation>
+        <Navigation>
+          <img src={ArrowDown} alt="down" onClick={() => onChildClick()} />
+        </Navigation>
         {!node.isRoot && (
           <LogoBox hasChildren={hasChildren}>
             <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
@@ -48,9 +52,8 @@ const ParentContainerComponent = ({ node, color, selected, width, height, hasChi
           <img src={ResizeIcon} alt="resize" className="icon" />
         </ResizeButton>
       )}
-      {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
-      {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
-    </Block>
+      <Background variant={IsLocation(node) ? BackgroundVariant.Lines : BackgroundVariant.Dots} color={Color.Grey} gap={20} />
+    </ParentBox>
   );
 };
 

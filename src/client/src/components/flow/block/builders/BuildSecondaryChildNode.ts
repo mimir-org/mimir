@@ -17,7 +17,7 @@ const BuildSecondaryChildNode = (node: Node, parent: Node, parentNodeSize: Block
   // Force node to fit Block
   const position = !IsOffPage(node)
     ? SetBlockNodePos(nodePos, parentPos, parentNodeSize)
-    : SetOffPageNodePos(nodePos, parentPos, parentNodeSize);
+    : SetOffPageNodePos(nodePos, parentNodeSize);
 
   return {
     key: CreateId(),

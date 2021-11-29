@@ -22,11 +22,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
       <HandleComponent
         nodes={nodes}
-        height={data?.height}
-        width={data?.width}
+        size={{ width: data?.width, height: data?.height }}
         terminals={data.connectors}
-        isParent={false}
-        electro={false}
         dispatch={dispatch}
       />
     </OffPageBox>

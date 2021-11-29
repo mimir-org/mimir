@@ -10,6 +10,7 @@ import { GetAspectColor } from "../../../../helpers";
 import { setBlockNodeSize } from "../redux/actions";
 import { Size } from "../../../../compLibrary/size";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
+import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -49,11 +50,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <ParentContainerComponent
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
-        selected={node.isBlockSelected}
-        width={parentBlockSize.width}
-        height={parentBlockSize.height}
+        size={parentBlockSize}
         hasChildren={terminals.length > 0}
-        company={process.env.REACT_APP_COMPANY}
+        onParentClick={() => OnParentClick(dispatch, node)}
+        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
       />
       <TerminalsContainerComponent
@@ -71,8 +71,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         isParent={true}
         nodes={nodes}
-        height={parentBlockSize.height}
-        width={parentBlockSize.width}
+        size={parentBlockSize}
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
