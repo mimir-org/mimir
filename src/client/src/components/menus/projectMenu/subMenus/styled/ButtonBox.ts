@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 interface Props {
   left?: boolean;
+  large?: boolean;
 }
 
 const ButtonBox = styled.div<Props>`
-  margin-bottom: 30px;
   position: absolute;
-  bottom: 0;
+  bottom: ${(props) => (props.large ? 20 : 8)}px;
   right: ${(props) => !props.left && "30px"};
   left: ${(props) => props.left && "30px"};
 `;

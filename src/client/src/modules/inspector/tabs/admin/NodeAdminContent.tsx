@@ -18,9 +18,9 @@ interface Props {
   statuses: EnumBase[];
 }
 
-const AdminContent = ({ node, project, statuses }: Props) => {
+const NodeAdminContent = ({ node, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
-  const onChange = (key: string, value: any) => dispatch(changeNodeValue(node.id, key, value));
+  const onChange = <K extends keyof Node>(key: K, value: Node[K]) => dispatch(changeNodeValue(node.id, key, value));
 
   return (
     <>
@@ -122,7 +122,7 @@ const AdminContent = ({ node, project, statuses }: Props) => {
               fontSize={FontSize.Standard}
               readOnly={IsAspectNode(node)}
               value={node.cost ?? ""}
-              onChange={(e: Event) => onChange("cost", e.target.value)}
+              onChange={(e: Event) => onChange("cost", Number(e.target.value))}
               inputType=""
             />
           </div>
@@ -143,4 +143,4 @@ const AdminContent = ({ node, project, statuses }: Props) => {
   );
 };
 
-export default AdminContent;
+export default NodeAdminContent;

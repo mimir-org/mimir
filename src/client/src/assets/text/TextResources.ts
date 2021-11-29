@@ -29,19 +29,6 @@ const TextResources = {
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 
-  // Project options
-  Project_Heading: "Projects",
-  Project_New: "Create project",
-  Project_Open: "Open project",
-  Project_Recent: "Recent projects",
-  Project_Recent_Name: "Project name",
-  Project_Recent_Owner: "Project owner",
-  Project_Recent_Edited: "Last edited",
-  Project_Recent_Open: "Open project",
-
-  // ExplorerModule
-  Split_View: "Split View",
-
   // InspectorModule
   Inspector_AdminInfo: "Admin info",
   Inspector_Object: "Object",
@@ -161,54 +148,65 @@ const TextResources = {
   TypeEditor_Purpose_Placeholder: "Select object purpose",
   TypeEditor_Symbol_Placeholder: "Select object symbol",
   TypeEditor_Search: "Search or Select Terminal Media Type",
-  TypeEditor_Error_Name: "Please add a name for the type.",
-  TypeEditor_Error_RDS: "Please select RDS for the type.",
-  TypeEditor_Error_Status: "Please select a status for the type",
-  TypeEditor_Error_Attributes: "Please add one or more attributes.",
-  TypeEditor_Error_Location_Attributes: "Please add one or more location attributes.",
-  TypeEditor_Error_Terminals: "Please select one or more terminals.",
-  TypeEditor_Error_TerminalsType: "You can only select two of each terminal, one must be input, the other must be output.",
-  TypeEditor_Error_Terminals_Interface: "Please select a terminal type.",
+  TypeEditor_Error_Name: "*Please add a name for the type.",
+  TypeEditor_Error_Aspect: "*Please select an aspect type.",
+  TypeEditor_Error_Object_Type: "*Please select an object type.",
+  TypeEditor_Error_Purpose: "*Please select a purpose.",
+  TypeEditor_Error_Symbol: "*Please select a symbol.",
+  TypeEditor_Error_Location_Type: "*Please select a location type.",
+  TypeEditor_Error_RDS: "*Please select RDS for the type.",
+  TypeEditor_Error_Status: "*Please select a status for the type",
+  TypeEditor_Error_Attributes: "*Please add one or more attributes.",
+  TypeEditor_Error_Location_Attributes: "*Please add one or more location attributes.",
+  TypeEditor_Error_Terminals: "*Please select one or more terminals.",
+  TypeEditor_Error_TerminalsType: "*You can only select two of each terminal, one must be input, the other must be output.",
+  TypeEditor_Error_Terminals_Interface: "*Please select a terminal type.",
+  TypeEditor_Error_Simple_Types: "*Please select simple types.",
 
-  // AccountModule
-  Account_Save_Label: "Save project to database",
-  Account_Save_Label_File: "Export project file",
-  Account_Export_Library_File: "Export project library",
-  Account_Import_File: "Import project file",
-  Account_Import_Library_File: "Import project library",
-  Account_Import_Library: "ImportLibrary",
-  Account_Import_Lib_Label: "Import library",
-  Account_Commit_Label: "Commit project",
-  Account_Commit: "CommitProject",
-  Account_Commit_Contractor_Label: "Send to contractor",
-  Account_Commit_Parser_Label: "Data type",
-  Account_Commit_Button: "Commit",
-  Account_Logout_Label: "Log out",
-  Account_Open_Label: "Open a project",
-  Account_Create_Label: "Create a project",
-  Account_Create_Button_Label: "Create project",
-  Account_SubProject_Create_Label: "Save selection as sub-project",
-  Account_SubProject_Create_Button_Label: "Save selection as sub-project",
-  Account_Name_Project_Label: "Name project",
-  Account_Name_Project_Placeholder: "New project name...",
-  Account_Confirm_Save: " Save this project before opening/starting another?",
-  Account_Save_Button: "Yes",
-  Account_NoSave_Button: "No",
-  Account_Save_Label_File_Name: "File name",
-  Account_Export_File_Label: "Export file",
-  Account_Import_Browse: "Browse file",
-  Account_Import_Label_File_Button: "Import project",
-  Account_Export_File_Library_Label: "Export library",
-  Account_Save: "Save",
-  Account_Save_File: "SaveFile",
-  Account_Open: "Open",
-  Account_Create: "Create",
-  Account_SubProject_Create: "Save Sub-project",
-  Account_Cancel: "Cancel",
-  Account_Save_Library: "SaveLibrary",
-  Account_Import_Project: "ImportProject",
-  Account_Logout: "Logout",
-  Account_Project: "Project",
+  // ProjectMenu
+  Project: "Project",
+  Project_Heading: "Projects",
+  Project_OpenProject: "Open project",
+  Project_Recent: "Recent projects",
+  Project_Recent_Name: "Project name",
+  Project_Recent_Owner: "Project owner",
+  Project_Recent_Edited: "Last edited",
+  Project_Recent_Open: "Open project",
+  Project_Save_Label: "Save project to database",
+
+  Project_Import: "Import project",
+  Project_Import_File: "Import project file",
+  Project_Import_ProjectLibrary: "Import project library",
+  Project_Import_Library: "Import library",
+  Project_Browse: "Browse file",
+
+  Project_Export_File: "Export file",
+  Project_Export_ProjectFile: "Export project file",
+  Project_Export_Library: "Export library",
+  Project_Export_ProjectLibrary: "Export project library",
+
+  Project_Commit_Project: "Commit project",
+  Project_Commit_Contractor: "Send to contractor",
+  Project_Commit_Parser: "Data type",
+  Project_Commit: "Commit",
+
+  Project_Logout: "Log out",
+  Project_Open_Project: "Open a project",
+  Project_Create_Label: "Create a project",
+  Project_CreateProject: "Create project",
+  Project_SubProject_Save: "Save selection as sub-project",
+  Project_Name: "Project name",
+  Project_Name_Placeholder: "New project name...",
+  Project_Confirm_Save: " Save this project before opening/starting another?",
+  Project_Save_Button: "Yes",
+  Project_NoSave_Button: "No",
+  Project_File_Name: "File name",
+
+  Project_Save: "Save",
+  Project_Open: "Open",
+  Project_Create: "Create",
+  Project_SubProject: "Save Sub-project",
+  Project_Cancel: "Cancel",
 
   // Error
   Error_Tile: "Oops, something went wrong",
@@ -219,10 +217,6 @@ const TextResources = {
   Error_NoActiveAccount: "No active account. Verify a user has been signed in and setActiveAccount has been called",
   Error_Forbidden: "Access denied",
   Error_Server: "Internal server error",
-
-  // BlockView
-  ConnectMenu_Select_All: "Select all",
-  ConnectMenu_Clear: "Clear all",
 
   // Type
   Type_BlockLocation: "BlockLocationNode",
@@ -235,7 +229,7 @@ const TextResources = {
   // RDS
   RDS_Function: "=",
   RDS_Product: "-",
-  RDS_Location: "++",
+  RDS_Location: "+",
 
   // Visual Filter
   Filter_Heading: "Visual Filter",
@@ -253,6 +247,11 @@ const TextResources = {
   UserMenu_LightMode: "Turn on Light mode",
   UserMenu_LogOut: "Log out",
   UserMenu_User: "User",
+
+  // Validation
+  Validation_Terminals: "A connection can only be made between two terminals of the same type.",
+  Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
+  Validation_Cancel: "Cancel",
 };
 
 export default TextResources;

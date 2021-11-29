@@ -10,7 +10,7 @@ const ErrorBox = styled.div<Props>`
   width: 400px;
   height: 70%;
   margin: auto;
-  border: 2px solid ${Color.Red};
+  border: 2px solid ${Color.RedWarning};
   background-color: ${Color.White};
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
   border-radius: 5px;

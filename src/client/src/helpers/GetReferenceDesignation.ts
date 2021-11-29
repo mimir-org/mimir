@@ -1,5 +1,5 @@
 import { GetRdsId } from ".";
-import { Node, Project } from "../models";
+import { Edge, Node, Project } from "../models";
 import { IsAspectNode } from "../helpers";
 import { FindParentEdge } from "../modules/explorer/helpers/ParentNode";
 
@@ -22,6 +22,12 @@ const GetReferenceDesignation = (node: Node, project: Project): string => {
   refs.push(`<${project.name.toUpperCase()}>`);
 
   return refs.reverse().join("");
+};
+
+export const GetReferenceDesignationEdge = (edge: Edge, project: Project) => {
+  const rds = edge.transport?.rds ?? edge.interface?.rds ?? "";
+
+  return GetReferenceDesignation(edge.fromNode, project) + rds;
 };
 
 export default GetReferenceDesignation;

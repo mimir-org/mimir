@@ -60,6 +60,7 @@ namespace Mb.TypeEditor.Data.Repositories
         {
 
             var interfaceTypes = await _interfaceTypeRepository.GetAll()
+                .Include(x => x.AttributeTypes)
                 .Include(x => x.Rds)
                 .Include("Rds.RdsCategory")
                 .Include(x => x.Purpose)
@@ -131,6 +132,7 @@ namespace Mb.TypeEditor.Data.Repositories
             if (typeof(LibraryInterfaceItem).IsAssignableFrom(typeof(T)))
             {
                 var interfaceType = await _interfaceTypeRepository.FindBy(x => x.Id == id)
+                    .Include(x => x.AttributeTypes)
                     .Include(x => x.Rds)
                     .Include("Rds.RdsCategory")
                     .Include(x => x.Purpose)

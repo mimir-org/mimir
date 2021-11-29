@@ -10,8 +10,8 @@ const AvatarBox = styled.div<Props>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 0px;
-  right: 20px;
+  right: 28px;
+  width: 40px;
   color: ${Color.White};
   font-weight: ${(props) => props.isOpen && "bold"};
   cursor: pointer;
@@ -27,16 +27,15 @@ const AvatarBox = styled.div<Props>`
     line-height: 1;
   }
 
-  .profile {
-    position: relative;
-    display: flex;
-    bottom: 38px;
+  .avatar {
+    position: absolute;
+    top: 10px;
   }
 
   .toggle-icon {
-    position: relative;
-    left: 28px;
-    bottom: 56px;
+    position: absolute;
+    top: 25px;
+    left: 45px;
   }
 `;
 

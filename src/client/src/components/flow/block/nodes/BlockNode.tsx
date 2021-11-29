@@ -3,19 +3,19 @@ import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../terminals";
-import { SetNodeSize } from "./helpers";
+import { GetBlockNodeType, SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode, IsFunction, IsProduct } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode, IsProduct } from "../../../../helpers";
 
 /**
- * Component for a Function or Product Node in BlockView.
+ * Component for a child Node in BlockView.
  * @param data the data for the node.
- * @returns a Function or Product Node of the Flow node type with Mimir styling and functionality.
+ * @returns a child Node of the Flow node type with Mimir styling and functionality.
  */
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
-  const type = IsFunction(data) ? "BlockFunctionNode-" : "BlockProductNode-";
+  const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
 
   useEffect(() => {
@@ -66,14 +66,14 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       onMouseOver={() => OnHover(showTerminalBox)}
       onMouseOut={() => OnMouseOut(showTerminalBox)}
     >
-      <BlockLogoComponent node={node} parent={false} />
+      <BlockLogoComponent node={node} />
 
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
-        parent={false}
+        isParent={false}
         electro={electro}
         onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
         showMenuBox={terminalBox}
@@ -85,8 +85,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         height={node.height}
         width={node.width}
         terminals={terminals}
-        parent={false}
+        isParent={false}
         electro={electro}
+        dispatch={dispatch}
       />
     </NodeBox>
   );

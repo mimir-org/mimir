@@ -1,6 +1,5 @@
 import { Edge, Node, Project } from "../../models";
-import { BlockNodeSize, MODULE_TYPE, VIEW_TYPE } from "../../models/project";
-import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
+import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
 import { ProjectState } from "./project/types";
@@ -122,6 +121,11 @@ export const flowViewSelector = createAppSelector(
   (view) => view
 );
 
+export const validationSelector = createAppSelector(
+  (state) => state.validation,
+  (validation) => validation
+);
+
 export const treeFilterSelector = createAppSelector(
   (state) => state.menu.treeFilterMenuVisibility,
   (filterMenuVisibility) => filterMenuVisibility
@@ -179,8 +183,13 @@ export const heightSelector = createAppSelector(
 );
 
 export const nodeSizeSelector = createAppSelector(
-  (state) => state.blockNodeSize.size,
-  (size) => size as BlockNodeSize
+  (state) => state.blockNodeSize.blockParents[0].size,
+  (size) => size
+);
+
+export const productNodeSizeSelector = createAppSelector(
+  (state) => state.blockNodeSize.blockParents[1].size,
+  (size) => size
 );
 
 export const darkModeSelector = createAppSelector(
@@ -245,22 +254,14 @@ export const typeEditorInspectorActiveTabSelector = createAppSelector(
 
 export const nodeSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
-  (nodes) => (nodes ?? []) as Node[]
+  (nodes) => nodes ?? []
 );
 
 export const makeFilterSelector = () =>
   createParametricAppSelector(
     (state) => state.commonState.filters,
     (_, attributes: AttributeLikeItem[]) => attributes,
-    (filters, attributes) => {
-      if (!attributes?.length || attributes.length === 0) {
-        return [];
-      }
-
-      const key = GetAttributeLikeItemKey(attributes[0]);
-
-      return filters.filter((x) => attributes.find((att) => att[key] === x.name)) ?? [];
-    }
+    (filters, attributes) => filters.filter((x) => attributes.find((att) => att.entity === x.name)) ?? []
   );
 export const makeSelectedFilterSelector = () =>
   createParametricAppSelector(

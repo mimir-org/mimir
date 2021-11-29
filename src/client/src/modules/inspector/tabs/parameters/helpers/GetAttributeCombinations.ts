@@ -1,5 +1,4 @@
 import { CombinedAttribute, CombinedAttributeFilter } from "../../../../../models";
-import { GetAttributeLikeItemKey } from "../../../helpers/IsType";
 import { AttributeLikeItem, CombinedAttributeDict } from "../../../types";
 
 /**
@@ -11,15 +10,9 @@ const GetAttributeCombinations = (
 ): CombinedAttributeDict => {
   const combinations: CombinedAttributeDict = {};
 
-  if (!attributes?.length || attributes.length === 0) {
-    return combinations;
-  }
-
-  const key = GetAttributeLikeItemKey(attributes[0]);
-
   for (let filter of attributeFilters) {
     combinations[filter.name] = filter.combinedAttributes.filter((combination) =>
-      attributes.find((attr) => attr[key] === filter.name && DoesCombinationMatchAttribute(combination, attr))
+      attributes.find((attr) => attr.entity === filter.name && DoesCombinationMatchAttribute(combination, attr))
     );
   }
 

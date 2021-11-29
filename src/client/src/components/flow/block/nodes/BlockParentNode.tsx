@@ -6,10 +6,10 @@ import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { GetAspectColor } from "../../../../helpers";
 import { setBlockNodeSize } from "../redux/actions";
 import { Size } from "../../../../compLibrary/size";
+import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -31,8 +31,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   // Set size
   useEffect(() => {
-    const margin = secondaryNode ? 250 : Size.BlockMarginX;
-    const width = secondaryNode ? Size.BlockSmallWidth : Size.BlockWidth;
+    const width = secondaryNode ? window.innerWidth / 2 : window.innerWidth;
+    const margin = secondaryNode ? Size.BlockSecondaryMarginX : Size.BlockMarginX;
     dispatch(setBlockNodeSize(width - margin, Size.BlockHeight));
   }, [dispatch, secondaryNode]);
 
@@ -53,13 +53,14 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         width={parentBlockSize.width}
         height={parentBlockSize.height}
         hasChildren={terminals.length > 0}
+        company={process.env.REACT_APP_COMPANY}
+        dispatch={dispatch}
       />
-
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        parent={true}
+        isParent={true}
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
@@ -68,12 +69,13 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
-        parent={true}
+        isParent={true}
         nodes={nodes}
         height={parentBlockSize.height}
         width={parentBlockSize.width}
         terminals={terminals}
         electro={electro}
+        dispatch={dispatch}
       />
     </>
   );

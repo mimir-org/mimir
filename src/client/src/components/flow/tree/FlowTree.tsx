@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as Helpers from "./helpers/";
+import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
-import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { setEdgeAnimation, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -49,6 +49,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
+
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
@@ -107,7 +108,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   useEffect(() => {
     project?.edges.forEach((e) => {
-      if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, false));
+      IsTransport(e.fromConnector) && dispatch(setEdgeAnimation(e, false));
     });
   }, []);
 
@@ -134,7 +135,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-
       {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );

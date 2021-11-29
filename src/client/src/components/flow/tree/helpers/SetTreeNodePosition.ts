@@ -9,12 +9,12 @@ const SetTreeNodePosition = (node: Node, parentNode: Node) => {
 };
 
 function calculateX(node: Node) {
-  return node.positionX;
+  return node?.positionX;
 }
 
 function calculateY(node: Node) {
-  const distanceY = 200;
-  return node.level * distanceY;
+  const distanceY = 250;
+  return node?.level * distanceY;
 }
 
 export default SetTreeNodePosition;

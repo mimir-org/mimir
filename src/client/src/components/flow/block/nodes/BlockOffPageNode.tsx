@@ -1,11 +1,12 @@
 import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { projectSelector, useAppSelector } from "../../../../redux/store";
+import { projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { OffPageRequired } from "../../../../assets/icons/offpage";
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
+  const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const nodes = project?.nodes;
   const type = "BlockOffPageNode-";
@@ -19,8 +20,9 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
         height={data?.height}
         width={data?.width}
         terminals={data.connectors}
-        parent={false}
+        isParent={false}
         electro={false}
+        dispatch={dispatch}
       />
     </OffPageBox>
   );

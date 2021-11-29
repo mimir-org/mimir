@@ -1,31 +1,27 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../compLibrary/colors";
+import { FontSize, FontWeight } from "../../../../../../compLibrary/font";
 
 const ProjectListLabels = styled.div`
   display: flex;
-  font-weight: normal;
-  font-size: 14px;
+  font-weight: ${FontWeight.Normal};
+  font-size: ${FontSize.Standard};
   color: ${Color.Black};
-  margin: -10px 0px 0px 0px;
-  border-bottom: 1px solid ${Color.BlueMagenta};
+  border-bottom: 2px solid ${Color.BlueMagenta};
   height: auto;
-
-  p {
-    margin: 0px;
-  }
+  margin-bottom: -5px;
 
   .name {
-    width: 45%;
+    width: 270px;
+    margin-bottom: 3px;
   }
 
   .owner {
-    width: 35%;
-    margin-left: 10px;
+    width: 210px;
   }
 
   .edited {
-    width: 15%;
-    margin-left: 10px;
+    width: 120px;
   }
 `;
 

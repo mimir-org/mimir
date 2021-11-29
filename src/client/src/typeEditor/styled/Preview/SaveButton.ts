@@ -22,7 +22,6 @@ const SaveButton = styled.button<Props>`
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
-  margin-bottom: 18px;
 
   .icon {
     padding: 0px 6px;

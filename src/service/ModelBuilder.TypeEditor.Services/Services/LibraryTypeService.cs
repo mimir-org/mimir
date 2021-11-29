@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.TypeEditor.Services.Services
@@ -22,13 +24,15 @@ namespace Mb.TypeEditor.Services.Services
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ICompositeTypeRepository _compositeTypeRepository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public LibraryTypeService(INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ILibraryRepository libraryRepository, ILibraryTypeRepository libraryTypeComponentRepository, IAttributeTypeRepository attributeTypeRepository, ICompositeTypeRepository compositeTypeRepository, IMapper mapper)
+        public LibraryTypeService(INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ILibraryRepository libraryRepository, ILibraryTypeRepository libraryTypeComponentRepository, IAttributeTypeRepository attributeTypeRepository, ICompositeTypeRepository compositeTypeRepository, IMapper mapper, IHttpContextAccessor contextAccessor)
         {
             _nodeTypeTerminalTypeRepository = nodeTypeTerminalTypeRepository;
             _libraryRepository = libraryRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _mapper = mapper;
+            _contextAccessor = contextAccessor;
             _attributeTypeRepository = attributeTypeRepository;
             _compositeTypeRepository = compositeTypeRepository;
         }
@@ -348,10 +352,22 @@ namespace Mb.TypeEditor.Services.Services
             if (createLibraryTypes == null || !createLibraryTypes.Any())
                 return createdLibraryTypes;
 
+            var currentUser = _contextAccessor.GetName();
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
+
             foreach (var createLibraryType in createLibraryTypes)
             {
                 if (!createNewFromExistingVersion)
+                {
                     createLibraryType.Version = "1.0";
+                    createLibraryType.Created = dateTimeNow;
+                    createLibraryType.CreatedBy = currentUser;
+                }
+                else
+                {
+                    createLibraryType.Updated = dateTimeNow;
+                    createLibraryType.UpdatedBy = currentUser;
+                }
 
                 if (createLibraryType.Aspect == Aspect.Location)
                     createLibraryType.ObjectType = ObjectType.ObjectBlock;
@@ -412,8 +428,26 @@ namespace Mb.TypeEditor.Services.Services
                         }
 
                     case InterfaceType it:
+
+                        if (it.AttributeTypes != null && it.AttributeTypes.Any())
+                        {
+                            foreach (var attributeType in it.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                            }
+                        }
+
                         await _libraryTypeComponentRepository.CreateAsync(it);
                         await _libraryTypeComponentRepository.SaveAsync();
+
+                        if (it.AttributeTypes != null && it.AttributeTypes.Any())
+                        {
+                            foreach (var attributeType in it.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Detach(attributeType);
+                            }
+                        }
+
                         createdLibraryTypes.Add(it);
                         continue;
 

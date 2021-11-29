@@ -1,6 +1,6 @@
-import { FETCHING_USER, DELETE_USER_ERROR, UserActionTypes } from "./types";
+import { FETCHING_USER, DELETE_USER_ERROR } from "./types";
 
-export function getUser(): UserActionTypes {
+export function getUser() {
   return {
     type: FETCHING_USER,
     payload: null,

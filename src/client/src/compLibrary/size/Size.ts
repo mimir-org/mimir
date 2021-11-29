@@ -8,6 +8,7 @@ const Size = {
   BlockHeight: window.innerHeight,
   BlockSmallWidth: window.innerWidth / 2,
   BlockMarginX: 450,
+  BlockSecondaryMarginX: 250,
   BlockMarginY: 100,
 
   // Terminals
@@ -20,13 +21,13 @@ const Size = {
 
   //TypeEditor
   TypeEditorInspectorOpen: 355,
-  TypeEditorPropertiesFull_BASELINE: -322,
-  TypeEditorPropertiesShrunk_BASELINE: -632,
+  TypeEditorPropertiesFull_BASELINE: -362,
+  TypeEditorPropertiesShrunk_BASELINE: -672,
 
   // Menus
   TopMenu_Height: 56,
   MenuSmall_Width: 330,
-  MenuSmall_Height: 220,
+  MenuSmall_Height: 200,
 };
 
 export default Size;

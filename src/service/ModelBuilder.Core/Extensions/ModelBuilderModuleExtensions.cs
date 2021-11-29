@@ -86,6 +86,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ICompositeRepository, CompositeRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
+            services.AddScoped<IProjectLinkRepository, ProjectLinkRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
@@ -117,8 +118,8 @@ namespace Mb.Core.Extensions
             cfg.AddProfile<CommonProfile>();
             cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new TransportProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new InterfaceProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
 

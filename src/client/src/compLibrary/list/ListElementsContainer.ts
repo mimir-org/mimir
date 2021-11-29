@@ -9,24 +9,24 @@ interface Props {
 
 const ListElementsContainer = styled.div<Props>`
   position: relative;
-  height: calc(100% - 45px);
+  height: 100%;
   border-bottom: 1px solid ${Color.Black};
   overflow-x: hidden;
   overflow-y: scroll;
   overflow-y: overlay;
 
   div:nth-child(odd) {
-    background-color: ${(props) => props.background && Color.LightPurple};
+    background-color: ${(props) => props.background && Color.PurpleLight};
     background-color: ${(props) => props.switchBackground && Color.White};
   }
 
   div:nth-child(even) {
     background-color: ${(props) => props.background && Color.White};
-    background-color: ${(props) => props.switchBackground && Color.LightPurple};
+    background-color: ${(props) => props.switchBackground && Color.PurpleLight};
   }
 
   div:nth-child(n):hover {
-    background-color: ${(props) => !props.hover && Color.LightBlue};
+    background-color: ${(props) => !props.hover && Color.BlueLight};
   }
 
   :before {

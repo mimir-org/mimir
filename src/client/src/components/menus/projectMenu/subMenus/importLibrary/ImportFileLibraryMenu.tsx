@@ -3,11 +3,11 @@ import { MENU_TYPE } from "../../../../../models/project";
 import { FileData, CreateLibraryType } from "../../../../../models";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Size } from "../../../../../compLibrary/size";
 import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ImportLibraryIcon } from "../../../../../assets/icons/project";
 
 export const ImportFileLibraryMenu = () => {
   const dispatch = useAppDispatch();
@@ -28,26 +28,30 @@ export const ImportFileLibraryMenu = () => {
   };
 
   const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return TextResources.Account_Import_Library_File;
+    if (plainFiles?.length < 1) return TextResources.Project_Import_Library;
     return plainFiles[0].name;
   };
 
   return (
-    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+    <ProjectBox visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Account_Import_Library_File}
+          {TextResources.Project_Import_ProjectLibrary}
         </HeaderBox>
         <ButtonBox>
-          <Button onClick={() => openFileSelector()} type={buttonBrowseText()} />
+          <Button onClick={() => openFileSelector()} text={buttonBrowseText()} icon={ImportLibraryIcon} />
         </ButtonBox>
         <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
+          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
-            <Button onClick={() => OnSaveClick(dispatch, data)} type={TextResources.Account_Import_Lib_Label} />
+            <Button
+              onClick={() => OnSaveClick(dispatch, data)}
+              text={TextResources.Project_Import_Library}
+              icon={ImportLibraryIcon}
+            />
           </ButtonBox>
         )}
       </ProjectBody>
