@@ -11,8 +11,7 @@ interface Props {
   libOpen: boolean;
   explorerOpen: boolean;
   treeView: boolean;
-  treeFilter: boolean;
-  blockFilter: boolean;
+  visualFilter: boolean;
   electro: boolean;
 }
 
@@ -21,7 +20,7 @@ interface Props {
  * @param interface
  * @returns a menu with icons for different features.
  */
-const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, electro }: Props) => {
+const ToolBar = ({ libOpen, explorerOpen, treeView, visualFilter, electro }: Props) => {
   const dispatch = useAppDispatch();
   const location3DActive = useAppSelector(location3DSelector);
   const selectedNode = GetSelectedNode();
@@ -53,7 +52,7 @@ const ToolBar = ({ libOpen, explorerOpen, treeView, treeFilter, blockFilter, ele
           treeView={treeView}
           label={"visual-filter"}
           icon={Icons.Filter}
-          onClick={() => Click.OnFilter(dispatch, treeView ? treeFilter : blockFilter, treeView)}
+          onClick={() => Click.OnFilter(dispatch, visualFilter)}
         />
       </OptionsBox>
       {IsBlockView() && IsLocation(selectedNode) && (

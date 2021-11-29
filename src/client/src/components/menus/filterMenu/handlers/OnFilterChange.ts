@@ -4,7 +4,7 @@ import { GetConnectorNode } from "../helpers";
 import { IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../../../flow/helpers";
 import { IsFamily } from "../../../../helpers";
 
-const OnChange = (actualEdge: Edge, edges: Edge[], dispatch: any) => {
+const OnFilterChange = (actualEdge: Edge, edges: Edge[], dispatch: any) => {
   const partOf = IsPartOf(actualEdge.fromConnector);
   const location = IsLocationTerminal(actualEdge.fromConnector);
   const fulfilledBy = IsProductTerminal(actualEdge.fromConnector);
@@ -30,4 +30,4 @@ const OnChange = (actualEdge: Edge, edges: Edge[], dispatch: any) => {
   });
 };
 
-export default OnChange;
+export default OnFilterChange;

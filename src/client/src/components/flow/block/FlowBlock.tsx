@@ -4,11 +4,11 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
-import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop, useOnConnectStart, useOnConnectStop } from "../hooks";
+import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
 import { GetBlockNodeTypes, IsTransport } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { BlockFilterMenu } from "../../menus/filterMenu/";
+import { FilterMenuComponent } from "../../menus/filterMenu/";
 import { BlockConnectionLine } from "./edges";
 import { IsOffPage, SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
@@ -23,7 +23,7 @@ import {
   projectSelector,
   secondaryNodeSelector,
   userStateSelector,
-  blockFilterSelector,
+  filterSelector,
   nodeSizeSelector,
   productNodeSizeSelector,
   animatedEdgeSelector,
@@ -49,7 +49,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const userState = useAppSelector(userStateSelector);
-  const blockFilter = useAppSelector(blockFilterSelector);
+  const visualFilter = useAppSelector(filterSelector);
   const parentSize = useAppSelector(nodeSizeSelector);
   const parentProductSize = useAppSelector(productNodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
@@ -76,13 +76,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
+  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
+  // };
 
-  const OnConnectStop = (e) => {
-    return useOnConnectStop(e, project, dispatch);
-  };
+  // const OnConnectStop = (e) => {
+  //   return useOnConnectStop(e, project, dispatch);
+  // };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -150,8 +150,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onConnect={OnConnect}
-          onConnectStart={OnConnectStart}
-          onConnectStop={OnConnectStop}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
           onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}
@@ -170,8 +170,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
 
-        {blockFilter && (
-          <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+        {visualFilter && (
+          <FilterMenuComponent elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
         )}
       </div>
       <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />

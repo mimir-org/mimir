@@ -7,19 +7,19 @@ import { BuildTreeElements } from "../tree/builders";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { setEdgeAnimation, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { TreeFilterMenu } from "../../menus/filterMenu";
+import { FilterMenuComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
-import { SetDarkModeColor } from "../../../helpers";
+import { IsOffPage, SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { IsTransport } from "../helpers";
 import {
   animatedEdgeSelector,
+  filterSelector,
   darkModeSelector,
   iconSelector,
   inspectorSelector,
   librarySelector,
   projectSelector,
-  treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
 
@@ -42,7 +42,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
-  const treeFilter = useAppSelector(treeFilterSelector);
+  const visualFilter = useAppSelector(filterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
 
   const OnDragOver = (event) => {
@@ -135,7 +135,9 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-      {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
+      {visualFilter && (
+        <FilterMenuComponent elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+      )}
     </>
   );
 };
