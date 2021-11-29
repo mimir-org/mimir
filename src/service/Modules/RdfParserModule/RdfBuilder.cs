@@ -395,16 +395,12 @@ namespace RdfParserModule
                     {
                         case Terminal terminal:
                             var nodeTerminal = GetOrCreateUriNode(terminal.Iri);
-                            var transmitterIri = BuildIri("eq", $"Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}");
-
+                            GetAndAssertTransmitter(nodeTerminal, terminal);
 
                             var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
                             Graph.Assert(new Triple(nodeTerminal, type, GetOrCreateUriNode(Resources.FSBTerminal)));
                             Graph.Assert(new Triple(nodeTerminal, label, terminalLabel));
 
-                            var transmitter = GetOrCreateUriNode(transmitterIri);
-                            Graph.Assert(new Triple(nodeTerminal, type, transmitter));
-                            Graph.Assert(new Triple(transmitter, type, GetOrCreateUriNode("imf:Transmitter")));
 
                             switch (terminal.Type)
                             {
@@ -441,6 +437,16 @@ namespace RdfParserModule
 
 
             }
+        }
+
+        private void GetAndAssertTransmitter(INode nodeTerminal, Terminal terminal)
+        {
+            var type = GetOrCreateUriNode(Resources.type);
+            var subclass = GetOrCreateUriNode(Resources.subClassOf);
+            var transmitterIri = BuildIri("eq", $"Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}");
+            var transmitter = GetOrCreateUriNode(transmitterIri);
+            Graph.Assert(new Triple(transmitter, subclass, GetOrCreateUriNode("mimir:Transmitter")));
+            Graph.Assert(new Triple(nodeTerminal, type, transmitter));
         }
 
         private void FindAndAssertPurpose(Node node)
@@ -555,6 +561,9 @@ namespace RdfParserModule
             var streamTerminalType = GetOrCreateUriNode(Resources.StreamTerminal);
             var label = GetOrCreateUriNode(Resources.label);
             var connectedTo = GetOrCreateUriNode(Resources.connectedTo);
+
+            var terminalNode = GetOrCreateUriNode(terminal.Iri);
+            GetAndAssertTransmitter(terminalNode, (Terminal)terminal);
 
             INode hasTerminal;
             INode terminalType;

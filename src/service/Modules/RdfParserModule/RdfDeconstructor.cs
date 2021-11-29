@@ -145,13 +145,9 @@ namespace RdfParserModule
 
                 var edge = new ParserEdge
                 {
-                    FromConnectorId = fromConnector.Id,
-                    ToConnectorId = toConnector.Id,
                     FromConnector = fromConnector,
                     ToConnector = toConnector,
-                    FromNodeId = parent.Iri,
                     FromNode = parent,
-                    ToNodeId = node.Iri,
                     ToNode = node,
                     MasterProjectIri = ParserGraph.Iri,
                     InputTerminal = fromConnector,
@@ -739,8 +735,6 @@ namespace RdfParserModule
 
                 var edge = new ParserEdge
                 {
-                    FromConnectorId = inTerminal.FromConnectorId,
-                    ToConnectorId = outTerminal.ToConnectorId,
                     FromConnector = GetConnector(inTerminal.FromConnectorIri),
                     ToConnector = GetConnector(outTerminal.ToConnectorIri),
                     OutputTerminal = outTerminal,
@@ -749,8 +743,6 @@ namespace RdfParserModule
                     InputTerminalIri = inTerminal.Iri,
                     MasterProjectIri = ParserGraph.Iri,
                     Transport = transport,
-                    ToNodeId = outTerminal.NodeId,
-                    FromNodeId = inTerminal.NodeId,
                     FromNode = inTerminal.Node,
                     ToNode = outTerminal.Node
                 };

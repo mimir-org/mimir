@@ -9,29 +9,27 @@ namespace RdfParserModule
     {
         public RdfProfile()
         {
-               CreateMap<ParserNode, NodeAm>()
-                   .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
-                .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => "4590637F39B6BA6F39C74293BE9138DF"))
-                .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
-                .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals))
-                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
-                .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
-                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => new List<AttributeAm>()));
+            CreateMap<ParserNode, NodeAm>()
+             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+             .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+             .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+             .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
+             .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => "4590637F39B6BA6F39C74293BE9138DF"))
+             .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
+             .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Terminals))
+             .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+             .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
+             .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
+             .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => new List<AttributeAm>()));
 
             CreateMap<ParserEdge, EdgeAm>()
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => NormaliseId(src.Id)))
-                //.ForMember(dest => dest.FromConnectorId, opt => opt.MapFrom(src => src.FromConnector.Iri))
-                //.ForMember(dest => dest.ToConnectorId, opt => opt.MapFrom(src => src.ToConnector.Iri))
-                .ForMember(dest => dest.FromNodeId, opt => opt.MapFrom(src => src.FromNode.Iri))
-                .ForMember(dest => dest.ToNodeId, opt => opt.MapFrom(src => src.ToNode.Iri))
+                //.ForMember(dest => dest.FromConnectorIri, opt => opt.MapFrom(src => src.FromConnector.Iri))
+                //.ForMember(dest => dest.ToConnectorIri, opt => opt.MapFrom(src => src.ToConnector.Iri))
+                //.ForMember(dest => dest.FromNodeIri, opt => opt.MapFrom(src => src.FromNode.Iri))
+                //.ForMember(dest => dest.ToNodeIri, opt => opt.MapFrom(src => src.ToNode.Iri))
                 .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
                 .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
-                .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src =>src.MasterProjectIri));
+                .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri));
 
             CreateMap<ParserTransport, TransportAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => NormaliseId(src.Iri)))
@@ -90,7 +88,7 @@ namespace RdfParserModule
         public string NormaliseId(string id)
         {
             id = Regex.Replace(id, @"http(s)?:\/\/(www)?", "");
-            id = id.Replace("#", "_");
+            id = id.Replace("#", "");
             id = id.Replace("/", "_");
             return id;
         }
