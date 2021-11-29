@@ -18,12 +18,12 @@ const TreeLogoComponent = ({ node }: Props) => {
   return (
     <TreeLogoWrapper>
       <TreeNodeNameBox>{node.label ?? node.name}</TreeNodeNameBox>
-      <LogoBox>
-        <img src={GetCompanyLogoForNode(company, node, false)} alt="logo" />
-      </LogoBox>
       <SymbolBox>
         <Symbol base64={node.symbol} text={node.name} />
       </SymbolBox>
+      <LogoBox>
+        <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
+      </LogoBox>
     </TreeLogoWrapper>
   );
 };

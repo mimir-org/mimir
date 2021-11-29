@@ -1,7 +1,7 @@
 import { Node, LibItem, Aspect, CreateLibraryType } from "../models";
 
-const IsProduct = (node: Node | LibItem | CreateLibraryType) => {
-  return node?.aspect === Aspect.Product;
+const IsProduct = (item: Node | LibItem | CreateLibraryType) => {
+  return item?.aspect === Aspect.Product;
 };
 
 export default IsProduct;
