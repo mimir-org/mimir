@@ -2,19 +2,17 @@ import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../compLibrary/font";
 
-/** Styled component that displays an element in the drop-down menu for the TerminalsMenu. */
 const TerminalsElement = styled.div`
+  display: flex;
+  height: 20px;
+  padding: 5px 30px 0px 0px;
   border-bottom: 1px solid;
   border-color: ${Color.GreyDark};
-  padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Tiny};
   color: ${Color.Black};
-  padding: 5px 30px 0px 0px;
-  height: 20px;
-  display: flex;
   z-index: 4;
 
-  .text {
+  .terminal-name {
     margin-left: 40px;
     height: 16px;
     text-align: left;

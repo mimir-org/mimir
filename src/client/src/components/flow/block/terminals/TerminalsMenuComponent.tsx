@@ -27,6 +27,7 @@ const TerminalsMenuComponent = ({ node, isParent, IsInput, terminals, onClick, o
 
   return (
     <TerminalsBox
+      id={"terminals-dropdown-" + node.id}
       tabIndex={0}
       isParent={isParent}
       isInput={IsInput}
@@ -37,7 +38,7 @@ const TerminalsMenuComponent = ({ node, isParent, IsInput, terminals, onClick, o
       {terminals.map((conn) => (
         <TerminalsElement key={conn.id}>
           <ColorBar color={GetTerminalColor(conn)} />
-          <div className="text" onClick={() => onClick(conn)}>
+          <div className="terminal-name" onClick={() => onClick(conn)}>
             {conn.name}
           </div>
           <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />

@@ -5,16 +5,15 @@ interface Props {
 }
 
 const Banner = styled.div<Props>`
-  position: absolute;
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 30px;
   width: 100%;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
   background-color: ${(props) => props.color};
-  /* z-index: 15 !important; */
 `;
 
 export default Banner;
