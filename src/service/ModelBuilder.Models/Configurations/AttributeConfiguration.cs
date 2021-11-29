@@ -31,6 +31,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.CompositeId).HasColumnName("CompositeId").IsRequired(false);
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
             builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false).HasDefaultValue(null);
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
             builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
             builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();

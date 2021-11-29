@@ -512,6 +512,11 @@ namespace Mb.Services.Services
             await _attributeRepository.SaveAsync();
         }
 
+        /// <summary>
+        /// Lock or unlock an edge
+        /// </summary>
+        /// <param name="lockUnlockEdgeAm"></param>
+        /// <returns>Status204NoContent</returns>
         public async Task LockUnlockEdge(LockUnlockEdgeAm lockUnlockEdgeAm)
         {
             if (lockUnlockEdgeAm?.Id == null)
@@ -519,34 +524,12 @@ namespace Mb.Services.Services
 
             var edge = _edgeRepository.FindBy(x => x.Id == lockUnlockEdgeAm.Id)?.First();
 
-            if (edge != null && !string.IsNullOrWhiteSpace(edge.TransportId))
+            if (edge != null && lockUnlockEdgeAm.IsLocked != edge.IsLocked)
             {
-                var transportObject = _transportRepository.FindBy(x => x.Id == edge.TransportId)?.First();
-
-                if (transportObject != null)
-                {
-                    if (transportObject.IsLocked != lockUnlockEdgeAm.IsLocked)
-                    {
-                        transportObject.IsLocked = lockUnlockEdgeAm.IsLocked;
-                        transportObject.IsLockedStatusBy = _contextAccessor.GetName();
-                        await _transportRepository.SaveAsync();
-                    }
-                }
-            }
-
-            if (edge != null && !string.IsNullOrWhiteSpace(edge.InterfaceId))
-            {
-                var interfaceObject = _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId)?.First();
-
-                if (interfaceObject != null)
-                {
-                    if (interfaceObject.IsLocked != lockUnlockEdgeAm.IsLocked)
-                    {
-                        interfaceObject.IsLocked = lockUnlockEdgeAm.IsLocked;
-                        interfaceObject.IsLockedStatusBy = _contextAccessor.GetName();
-                        await _interfaceRepository.SaveAsync();
-                    }
-                }
+                edge.IsLocked = lockUnlockEdgeAm.IsLocked;
+                edge.IsLockedStatusBy = _contextAccessor.GetName();
+                edge.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+                await _edgeRepository.SaveAsync();
             }
         }
 
@@ -562,7 +545,16 @@ namespace Mb.Services.Services
                 return;
 
             var userName = _contextAccessor.GetName();
+            
             var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ToNodeId != null && x.ToNode.MasterProjectId == lockUnlockNodeAm.ProjectId);
+
+            var allEdgesWithTransports = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.TransportId));
+            var allTransportsInProject = _transportRepository.GetAll().Where(x => allEdgesWithTransports.Any(y => y.TransportId == x.Id));
+
+            var allEdgesWithInterfaces = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.InterfaceId));
+            var allInterfacesInProject = _interfaceRepository.GetAll().Where(x => allEdgesWithInterfaces.Any(y => y.InterfaceId == x.Id));
+            
+            var allAttributes = _attributeRepository.GetAll(false);
 
             //Node lock/unlock
             var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
@@ -577,52 +569,63 @@ namespace Mb.Services.Services
             node.IsLocked = lockUnlockNodeAm.IsLocked;
             node.IsLockedStatusBy = userName;
 
-            var allNodeAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.Node != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
-            var nodeAttributes = allNodeAttributesInProject.Where(x => x.NodeId == node.Id);
-            LockUnlockAttributes(nodeAttributes, node, userName);
-
-            //Transport lock/unlock
-            var allTransportAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.TransportId != null);
-            var allEdgesWithTransports = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.TransportId));
-            var allTransportsInProject = _transportRepository.GetAll(false).Where(x => allEdgesWithTransports.Any(y => y.TransportId == x.Id));
-            var nodeEdgesWithTransport = allEdgesInProject.Where(x => x.FromNodeId == node.Id && !string.IsNullOrWhiteSpace(x.TransportId));
-            var nodeTransports = allTransportsInProject.Where(x => nodeEdgesWithTransport.Any(y => y.TransportId == x.Id));
-            
-            foreach (var t in nodeTransports)
+            //Node attributes lock/unlock
+            foreach (var attribute in allAttributes.Where(x => x.NodeId == node.Id))
             {
-                if (t.IsLocked == node.IsLocked) 
+                if (attribute.IsLocked == node.IsLocked) 
                     continue;
 
-                t.IsLocked = node.IsLocked;
-                t.IsLockedStatusBy = node.IsLockedStatusBy;
-                LockUnlockAttributes(allTransportAttributesInProject.Where(x => x.TransportId == t.Id), node, userName);
+                attribute.IsLocked = node.IsLocked;
+                attribute.IsLockedStatusBy = userName;
+                attribute.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
             }
 
-            //Interface lock/unlock
-            var allInterfaceAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.InterfaceId != null);
-            var allEdgesWithInterfaces = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.InterfaceId));
-            var allInterfacesInProject = _interfaceRepository.GetAll(false).Where(x => allEdgesWithInterfaces.Any(y => y.InterfaceId == x.Id));
-            var nodeEdgesWithInterface = allEdgesInProject.Where(x => x.FromNodeId == node.Id && !string.IsNullOrWhiteSpace(x.InterfaceId));
-            var nodeInterfaces = allInterfacesInProject.Where(x => nodeEdgesWithInterface.Any(y => y.InterfaceId == x.Id));
-            
-            foreach (var i in nodeInterfaces)
+            var attributeTerminalIds = new List<string>();
+
+            //Transport attributes
+            var edgesInProjectWithTransports = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.TransportId) && x.IsLocked != node.IsLocked);
+            var transportsInProject = _transportRepository.GetAll().Where(x => edgesInProjectWithTransports.Any(y => y.TransportId == x.Id));
+
+            foreach (var t in transportsInProject)
             {
-                if (i.IsLocked == node.IsLocked)
+                attributeTerminalIds.Add(t.InputTerminalId);
+                attributeTerminalIds.Add(t.OutputTerminalId);
+            }
+
+            var edgesInProjectWithInterfaces = allEdgesInProject.Where(x => !string.IsNullOrWhiteSpace(x.InterfaceId) && x.IsLocked != node.IsLocked);
+            var interfacesInProject = _interfaceRepository.GetAll().Where(x => edgesInProjectWithInterfaces.Any(y => y.InterfaceId == x.Id));
+
+            //Interface attributes
+            foreach (var i in interfacesInProject)
+            {
+                attributeTerminalIds.Add(i.InputTerminalId);
+                attributeTerminalIds.Add(i.OutputTerminalId);
+            }
+
+            //Lock/unlock transport/interface attributes
+            foreach (var attributeTerminalId in attributeTerminalIds)
+            {
+                var attributes = allAttributes.Where(x => x.TerminalId == attributeTerminalId);
+                
+                if (!attributes.Any()) 
                     continue;
 
-                i.IsLocked = node.IsLocked;
-                i.IsLockedStatusBy = node.IsLockedStatusBy;
-                LockUnlockAttributes(allInterfaceAttributesInProject.Where(x => x.InterfaceId == i.Id), node, userName);
+                foreach (var a in attributes)    
+                {
+                    if (a.IsLocked == node.IsLocked)
+                        continue;
+
+                    a.IsLocked = node.IsLocked;
+                    a.IsLockedStatusBy = userName;
+                    a.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+                }
             }
 
-            //Recursive lock/unlock for all node/transport/interface children
-            LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allNodeAttributesInProject, allEdgesInProject, 
-                allTransportsInProject, allTransportAttributesInProject, allInterfacesInProject, allInterfaceAttributesInProject, userName);
+            LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributes, allEdgesInProject, allTransportsInProject, allInterfacesInProject, userName);
 
             await _nodeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
-            await _transportRepository.SaveAsync();
-            await _interfaceRepository.SaveAsync();
+            await _edgeRepository.SaveAsync();
         }
 
         /// <summary>
@@ -659,33 +662,9 @@ namespace Mb.Services.Services
         /// <returns>List of locked edges id></returns>
         public IEnumerable<string> GetLockedEdges(string projectId)
         {
-            var edgesWithTransportOrInterface = _edgeRepository.GetAll().Where(x => !string.IsNullOrWhiteSpace(x.TransportId) || !string.IsNullOrWhiteSpace(x.InterfaceId));
-            var lockedEdges = new List<string>();
-
-            foreach (var edge in edgesWithTransportOrInterface)
-            {
-                if (!string.IsNullOrWhiteSpace(edge.TransportId))
-                {
-                    var transportObject = string.IsNullOrWhiteSpace(projectId) ? 
-                        _transportRepository.FindBy(x => x.Id == edge.TransportId)?.First() :
-                        _transportRepository.FindBy(x => x.Id == edge.TransportId && edge.MasterProjectId == projectId)?.First();
-
-                    if (transportObject is { IsLocked: true })
-                        lockedEdges.Add(edge.Id);
-                }
-
-                if (string.IsNullOrWhiteSpace(edge.InterfaceId)) 
-                    continue;
-
-                var interfaceObject = string.IsNullOrWhiteSpace(projectId) ?
-                    _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId)?.First() :
-                    _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId && edge.MasterProjectId == projectId)?.First();
-
-                if (interfaceObject is { IsLocked: true })
-                    lockedEdges.Add(edge.Id);
-            }
-
-            return lockedEdges;
+            return string.IsNullOrWhiteSpace(projectId) 
+                    ? _edgeRepository.GetAll().Where(x => x.IsLocked).Select(y => y.Id).ToList()
+                    : _edgeRepository.GetAll().Where(x => x.IsLocked && x.MasterProjectId == projectId).Select(y => y.Id).ToList();
         }
 
         /// <summary>
@@ -852,9 +831,9 @@ namespace Mb.Services.Services
             }
         }
 
-        private void LockUnlockNodesAndAttributesRecursive(Node parentNode, IQueryable<Node> allNodesInProject, IQueryable<Attribute> allNodeAttributesInProject, 
-            IQueryable<Edge> allEdgesInProject, IQueryable<Transport> allTransportsInProject, IQueryable<Attribute> allTransportAttributesInProject,
-            IQueryable<Interface> allInterfacesInProject, IQueryable<Attribute> allInterfaceAttributesInProject, string userName)
+        private void LockUnlockNodesAndAttributesRecursive(Node parentNode, IQueryable<Node> allNodesInProject, 
+            IQueryable<Attribute> allAttributes, IQueryable<Edge> allEdgesInProject, 
+            IQueryable<Transport> allTransportsInProject, IQueryable<Interface> allInterfacesInProject, string userName)
         {
             if (parentNode?.Id == null)
                 return;
@@ -880,63 +859,68 @@ namespace Mb.Services.Services
 
                 if (childNode.Level > parentNode.Level)
                 {
-                    //Transport Lock/Unlock including all attributes
-                    var transportEdge = allEdgesInProject.FirstOrDefault(x => x.ToNodeId == childNode.Id && x.TransportId != null);
-
-                    if (transportEdge != null)
-                    {
-                        var transportObject = allTransportsInProject.FirstOrDefault(x => x.Id == transportEdge.TransportId);
-
-                        if (transportObject != null && transportObject.IsLocked != parentNode.IsLocked)
-                        {
-                            transportObject.IsLocked = parentNode.IsLocked;
-                            transportObject.IsLockedStatusBy = userName;
-
-                            var transportAttributes = allTransportAttributesInProject.Where(x => x.TransportId == transportObject.Id);
-                            LockUnlockAttributes(transportAttributes, transportObject, userName);
-                        }
-                    }
-
-                    //Interface Lock/Unlock including all attributes
-                    var interfaceObject = allInterfacesInProject.FirstOrDefault(x => x.Id == edge.InterfaceId);
-
-                    if (interfaceObject != null && interfaceObject.IsLocked != parentNode.IsLocked)
-                    {
-                        interfaceObject.IsLocked = parentNode.IsLocked;
-                        interfaceObject.IsLockedStatusBy = userName;
-
-                        var interfaceAttributes = allInterfaceAttributesInProject.Where(x => x.InterfaceId == interfaceObject.Id);
-                        LockUnlockAttributes(interfaceAttributes, interfaceObject, userName);
-                    }
-
-                    //Node Lock/Unlock including all attributes
+                    //Node lock/unlock including attributes
                     childNode.IsLocked = parentNode.IsLocked;
                     childNode.IsLockedStatusBy = userName;
 
-                    var nodeAttributes = allNodeAttributesInProject.Where(x => x.NodeId == childNode.Id);
-                    LockUnlockAttributes(nodeAttributes, childNode, userName);
+                    var nodeAttributes = allAttributes.Where(x => x.NodeId == childNode.Id);
+                    
+                    foreach (var attribute in nodeAttributes)
+                    {
+                        if (attribute.IsLocked == parentNode.IsLocked) 
+                            continue;
+
+                        attribute.IsLocked = parentNode.IsLocked;
+                        attribute.IsLockedStatusBy = userName;
+                        attribute.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+                    }
+                    
+                    //Edge Lock
+                    if (edge.IsLocked != parentNode.IsLocked)
+                    {
+                        edge.IsLocked = parentNode.IsLocked;
+                        edge.IsLockedStatusBy = userName;
+                        edge.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+                    }
+
+                    var attributeTerminalIds = new List<string>();
+
+                    //Transport attributes
+                    foreach (var t in allTransportsInProject)
+                    {
+                        attributeTerminalIds.Add(t.InputTerminalId);
+                        attributeTerminalIds.Add(t.OutputTerminalId);
+                    }
+
+                    //Interface attributes
+                    foreach (var i in allInterfacesInProject)
+                    {
+                        attributeTerminalIds.Add(i.InputTerminalId);
+                        attributeTerminalIds.Add(i.OutputTerminalId);
+                    }
+
+                    //Lock/unlock transport/interface attributes
+                    foreach (var attributeTerminalId in attributeTerminalIds)
+                    {
+                        var attributes = allAttributes.Where(x => x.TerminalId == attributeTerminalId);
+
+                        if (!attributes.Any())
+                            continue;
+
+                        foreach (var a in attributes)
+                        {
+                            if (a.IsLocked == parentNode.IsLocked)
+                                continue;
+
+                            a.IsLocked = parentNode.IsLocked;
+                            a.IsLockedStatusBy = userName;
+                            a.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+                        }
+                    }
                 }
 
-                LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allNodeAttributesInProject, allEdgesInProject, 
-                    allTransportsInProject, allNodeAttributesInProject, allInterfacesInProject, allInterfaceAttributesInProject, userName);
-            }
-        }
-
-        private void LockUnlockAttributes<T>(IQueryable<Attribute> attributes, T obj, string userName) where T : ILockUnlock
-        {
-            if (!attributes.Any())
-                return;
-
-            foreach (var nodeAttribute in attributes)
-            {
-                if (nodeAttribute == null)
-                    continue;
-
-                if (nodeAttribute.IsLocked == obj.IsLocked)
-                    continue;
-
-                nodeAttribute.IsLocked = obj.IsLocked;
-                nodeAttribute.IsLockedStatusBy = userName;
+                LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allAttributes, 
+                    allEdgesInProject, allTransportsInProject, allInterfacesInProject, userName);
             }
         }
 

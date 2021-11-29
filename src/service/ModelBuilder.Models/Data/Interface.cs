@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Abstract;
 using Mb.Models.Data.Enums;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
-    public class Interface : ILockUnlock
+    public class Interface
     {
         public string Id { get; set; }
         public string Version { get; set; }
@@ -29,8 +28,6 @@ namespace Mb.Models.Data
         public virtual Terminal InputTerminal { get; set; }
         public string OutputTerminalId { get; set; }
         public virtual Terminal OutputTerminal { get; set; }
-        public bool IsLocked { get; set; }
-        public string IsLockedStatusBy { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime Updated { get; set; }
         public DateTime? Created { get; set; }

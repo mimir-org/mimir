@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application
@@ -16,6 +16,7 @@ namespace Mb.Models.Application
         public string AttributeTypeId { get; set; }
         public bool IsLocked {  get; set; }
         public string IsLockedStatusBy {  get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
         public string QualifierId { get; set; }
         public string SourceId { get; set; }
         public string ConditionId { get; set; }

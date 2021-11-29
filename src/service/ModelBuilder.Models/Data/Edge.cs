@@ -44,6 +44,10 @@ namespace Mb.Models.Data
         public string InterfaceId { get; set; }
         public Interface Interface { get; set; }
 
+        public bool IsLocked { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
+
         [Required]
         public string MasterProjectId
         {

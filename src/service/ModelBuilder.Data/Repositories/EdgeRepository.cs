@@ -9,7 +9,6 @@ using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Workers;
-using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

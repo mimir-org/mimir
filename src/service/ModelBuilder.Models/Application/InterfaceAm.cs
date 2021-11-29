@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using AutoMapper.Configuration.Annotations;
 using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Application
@@ -27,8 +26,7 @@ namespace Mb.Models.Application
         public string OutputTerminalId { get; set; }
         public TerminalAm OutputTerminal { get; set; }
         public ICollection<Attribute> Attributes { get; set; }
-        public bool IsLocked { get; set; }
-        public string IsLockedStatusBy { get; set; }
+        
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }

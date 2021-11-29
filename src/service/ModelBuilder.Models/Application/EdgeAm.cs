@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace Mb.Models.Application
 {
@@ -16,5 +16,8 @@ namespace Mb.Models.Application
         public bool IsTemplateEdge { get; set; }
         public TransportAm Transport { get; set; }
         public InterfaceAm Interface { get; set; }
+        public bool IsLocked { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
     }
 }

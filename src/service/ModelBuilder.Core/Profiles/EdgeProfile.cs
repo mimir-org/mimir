@@ -27,7 +27,10 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
-                .ForMember(dest => dest.Projects, opt => opt.Ignore());
+                .ForMember(dest => dest.Projects, opt => opt.Ignore())
+                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate));
 
             CreateMap<Edge, EdgeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
@@ -40,7 +43,10 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
                 .ForMember(dest => dest.Transport, opt => opt.MapFrom(src => src.Transport))
-                .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface));
+                .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
+                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate));
         }
     }
 }

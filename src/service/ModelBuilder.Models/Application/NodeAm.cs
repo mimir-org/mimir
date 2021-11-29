@@ -34,6 +34,7 @@ namespace Mb.Models.Application
         public bool IsLocked { get; set; }
 
         public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
 
         public decimal PositionBlockX { get; set; }
 
