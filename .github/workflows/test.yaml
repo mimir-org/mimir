@@ -32,8 +32,6 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:test --build-arg ENVIR=test
           docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:test
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:testaibel --build-arg ENVIR=testaibel
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:testaibel
     
   # This workflow contains a single job called "build"
   build-server:
