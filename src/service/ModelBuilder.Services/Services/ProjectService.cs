@@ -103,37 +103,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
         {
-            var project = await _projectRepository
-                .FindBy(x => x.Id == id)
-                .Include(x => x.Edges)
-                .Include("Edges.FromNode")
-                .Include("Edges.ToNode")
-                .Include("Edges.FromConnector")
-                .Include("Edges.ToConnector")
-                .Include("Edges.Transport")
-                .Include("Edges.Transport.Attributes")
-                .Include("Edges.Transport.InputTerminal")
-                .Include("Edges.Transport.InputTerminal.Attributes")
-                .Include("Edges.Transport.OutputTerminal")
-                .Include("Edges.Transport.OutputTerminal.Attributes")
-                .Include("Edges.Interface")
-                .Include("Edges.Interface.Attributes")
-                .Include("Edges.Interface.InputTerminal")
-                .Include("Edges.Interface.InputTerminal.Attributes")
-                .Include("Edges.Interface.OutputTerminal")
-                .Include("Edges.Interface.OutputTerminal.Attributes")
-                .Include(x => x.Nodes)
-                .Include("Nodes.Attributes")
-                .Include("Nodes.Connectors")
-                .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Composites")
-                .Include("Nodes.Composites.Attributes")
-                .AsSplitQuery()
-                .OrderByDescending(x => x.Name)
-                .FirstOrDefaultAsync();
-
-            if (!ignoreNotFound && project == null)
-                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
+            var project = await GetProjectComplete(id, ignoreNotFound);
 
             if (project == null)
                 return null;
@@ -387,33 +357,7 @@ namespace Mb.Services.Services
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try
             {
-                var originalProject = await _projectRepository
-                    .FindBy(x => x.Id == id)
-                    .Include(x => x.Edges)
-                    .Include("Edges.Transport")
-                    .Include("Edges.Transport.Attributes")
-                    .Include("Edges.Transport.InputTerminal")
-                    .Include("Edges.Transport.InputTerminal.Attributes")
-                    .Include("Edges.Transport.OutputTerminal")
-                    .Include("Edges.Transport.OutputTerminal.Attributes")
-                    .Include("Edges.Interface")
-                    .Include("Edges.Interface.Attributes")
-                    .Include("Edges.Interface.InputTerminal")
-                    .Include("Edges.Interface.InputTerminal.Attributes")
-                    .Include("Edges.Interface.OutputTerminal")
-                    .Include("Edges.Interface.OutputTerminal.Attributes")
-                    .Include(x => x.Nodes)
-                    .Include("Nodes.Attributes")
-                    .Include("Nodes.Connectors")
-                    .Include("Nodes.Connectors.Attributes")
-                    .Include("Nodes.Composites")
-                    .Include("Nodes.Composites.Attributes")
-                    .AsSplitQuery()
-                    .OrderByDescending(x => x.Name)
-                    .FirstOrDefaultAsync();
-
-                if (originalProject == null)
-                    throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
+                var originalProject = await GetProjectComplete(id, false);
 
                 // Cast connectors
                 CastConnectors(projectAm);
@@ -817,7 +761,44 @@ namespace Mb.Services.Services
             return true;
         }
 
-        #region Private methods
+        #region Private
+
+        private async Task<Project> GetProjectComplete(string id, bool ignoreNotFound)
+        {
+            var project = await _projectRepository
+                .FindBy(x => x.Id == id)
+                .Include(x => x.Edges)
+                .Include("Edges.FromNode")
+                .Include("Edges.ToNode")
+                .Include("Edges.FromConnector")
+                .Include("Edges.ToConnector")
+                .Include("Edges.Transport")
+                .Include("Edges.Transport.Attributes")
+                .Include("Edges.Transport.InputTerminal")
+                .Include("Edges.Transport.InputTerminal.Attributes")
+                .Include("Edges.Transport.OutputTerminal")
+                .Include("Edges.Transport.OutputTerminal.Attributes")
+                .Include("Edges.Interface")
+                .Include("Edges.Interface.Attributes")
+                .Include("Edges.Interface.InputTerminal")
+                .Include("Edges.Interface.InputTerminal.Attributes")
+                .Include("Edges.Interface.OutputTerminal")
+                .Include("Edges.Interface.OutputTerminal.Attributes")
+                .Include(x => x.Nodes)
+                .Include("Nodes.Attributes")
+                .Include("Nodes.Connectors")
+                .Include("Nodes.Connectors.Attributes")
+                .Include("Nodes.Composites")
+                .Include("Nodes.Composites.Attributes")
+                .AsSplitQuery()
+                .OrderByDescending(x => x.Name)
+                .FirstOrDefaultAsync();
+
+            if (!ignoreNotFound && project == null)
+                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
+
+            return project;
+        }
 
         private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
         {
@@ -1364,6 +1345,6 @@ namespace Mb.Services.Services
             }
         }
 
-        #endregion
+        #endregion Private
     }
 }
