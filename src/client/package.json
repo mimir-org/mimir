@@ -62,7 +62,9 @@
     "build": "react-scripts build",
     "build:dev": "env-cmd -f .env.dev react-scripts build",
     "build:test": "env-cmd -f .env.test react-scripts build",
-    "build:testaibel": "env-cmd -f .env.testaibel react-scripts build",
+    "build:demo": "env-cmd -f .env.demo react-scripts build",
+    "build:demoaibel": "env-cmd -f .env.demoaibel react-scripts build",
+    "build:stage": "env-cmd -f .env.stage react-scripts build",
     "build:prod": "env-cmd -f .env.prod react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
