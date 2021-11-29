@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mb.Core.Migrations
 {
-    public partial class edgelock : Migration
+    public partial class EdgeLockUnlock : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,19 +19,6 @@ namespace Mb.Core.Migrations
                 table: "Attribute",
                 newName: "IsLockedStatusBy");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "IsLocked",
-                table: "Transport",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
-
-            migrationBuilder.AddColumn<string>(
-                name: "IsLockedStatusBy",
-                table: "Transport",
-                type: "nvarchar(max)",
-                nullable: true);
-
             migrationBuilder.AlterColumn<bool>(
                 name: "IsLocked",
                 table: "Node",
@@ -41,17 +28,29 @@ namespace Mb.Core.Migrations
                 oldClrType: typeof(bool),
                 oldType: "bit");
 
+            migrationBuilder.AddColumn<DateTime>(
+                name: "IsLockedStatusDate",
+                table: "Node",
+                type: "datetime2",
+                nullable: true);
+
             migrationBuilder.AddColumn<bool>(
                 name: "IsLocked",
-                table: "Interface",
+                table: "Edge",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
 
             migrationBuilder.AddColumn<string>(
                 name: "IsLockedStatusBy",
-                table: "Interface",
+                table: "Edge",
                 type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "IsLockedStatusDate",
+                table: "Edge",
+                type: "datetime2",
                 nullable: true);
 
             migrationBuilder.AlterColumn<bool>(
@@ -62,6 +61,12 @@ namespace Mb.Core.Migrations
                 defaultValue: false,
                 oldClrType: typeof(bool),
                 oldType: "bit");
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "IsLockedStatusDate",
+                table: "Attribute",
+                type: "datetime2",
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "EventLog",
@@ -108,20 +113,24 @@ namespace Mb.Core.Migrations
                 name: "EventLog");
 
             migrationBuilder.DropColumn(
-                name: "IsLocked",
-                table: "Transport");
-
-            migrationBuilder.DropColumn(
-                name: "IsLockedStatusBy",
-                table: "Transport");
+                name: "IsLockedStatusDate",
+                table: "Node");
 
             migrationBuilder.DropColumn(
                 name: "IsLocked",
-                table: "Interface");
+                table: "Edge");
 
             migrationBuilder.DropColumn(
                 name: "IsLockedStatusBy",
-                table: "Interface");
+                table: "Edge");
+
+            migrationBuilder.DropColumn(
+                name: "IsLockedStatusDate",
+                table: "Edge");
+
+            migrationBuilder.DropColumn(
+                name: "IsLockedStatusDate",
+                table: "Attribute");
 
             migrationBuilder.RenameColumn(
                 name: "IsLockedStatusBy",

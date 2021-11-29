@@ -116,6 +116,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("IsLockedStatusBy");
 
+                    b.Property<DateTime?>("IsLockedStatusDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("IsLockedStatusDate");
+
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -320,6 +324,20 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Iri");
 
+                    b.Property<bool>("IsLocked")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsLocked");
+
+                    b.Property<string>("IsLockedStatusBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IsLockedStatusBy");
+
+                    b.Property<DateTime?>("IsLockedStatusDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("IsLockedStatusDate");
+
                     b.Property<string>("MasterProjectId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -487,16 +505,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("InputTerminalId");
 
-                    b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedStatusBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Label");
@@ -611,6 +619,10 @@ namespace Mb.Core.Migrations
                     b.Property<string>("IsLockedStatusBy")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("IsLockedStatusBy");
+
+                    b.Property<DateTime?>("IsLockedStatusDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("IsLockedStatusDate");
 
                     b.Property<bool>("IsRoot")
                         .HasColumnType("bit")
@@ -826,16 +838,6 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("InputTerminalId");
-
-                    b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedStatusBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
 
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)")
