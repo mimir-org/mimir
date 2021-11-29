@@ -6,6 +6,8 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const currentTransport = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   const transportId = CreateId();
 
+  console.log(currentTransport);
+
   if (currentTransport) {
     if (currentTransport.attributes) {
       currentTransport.attributes.forEach((x) => {
@@ -43,7 +45,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
       version: currentTransport.version,
       rds: currentTransport.rds,
       name: currentTransport.name,
-      label: currentTransport.label,
+      label: currentTransport.label ?? currentTransport.name,
       description: currentTransport.description,
       statusId: currentTransport.statusId,
       semanticReference: currentTransport.semanticReference,
