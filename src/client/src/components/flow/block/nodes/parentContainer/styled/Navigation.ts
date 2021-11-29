@@ -5,7 +5,7 @@ const Navigation = styled.div`
   position: relative;
   justify-content: center;
   padding: 10px 4px 10px 0px;
-  z-index: 20 !important;
+  z-index: 15 !important;
   cursor: pointer;
 `;
 

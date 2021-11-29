@@ -11,11 +11,11 @@ interface Props {
   outputMenuOpen: boolean;
   terminals: Connector[];
   electro: boolean;
-  showMenuBox: boolean;
   showInTerminalMenu: any;
   showOutTerminalMenu: any;
   onClick: (conn: Connector) => void;
   isParent?: boolean;
+  showMenuBox?: boolean;
 }
 
 /**
@@ -29,11 +29,11 @@ const TerminalsContainerComponent = ({
   outputMenuOpen,
   terminals,
   electro,
-  showMenuBox,
   showInTerminalMenu,
   showOutTerminalMenu,
   onClick,
   isParent = false,
+  showMenuBox = true,
 }: Props) => {
   const inTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
   const outTerminals = terminals.filter((t) => !IsInputTerminal(t) && !IsPartOf(t));

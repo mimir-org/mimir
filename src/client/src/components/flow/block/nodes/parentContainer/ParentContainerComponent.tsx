@@ -35,7 +35,7 @@ const ParentContainerComponent = ({ node, color, size, hasChildren, onParentClic
       <Banner color={color}>
         <Header>
           {prefix}
-          {node?.label ?? node?.name}
+          {node.label ?? node.name}
         </Header>
         <Navigation>{!IsAspectNode(node) && <img src={ArrowUp} alt="up" onClick={() => onParentClick()} />}</Navigation>
         <Navigation>
