@@ -5,6 +5,7 @@ namespace RdfParserModule
     public class ParserConnector
     {
         public string Id { get; set; }
+        public string Domain { get; set; }
         public string Iri { get; set; }
         public string Name { get; set; }
         public ConnectorType Type { get; set; }
@@ -18,6 +19,8 @@ namespace RdfParserModule
         // For ParserEdge
         public string FromConnectorId { get; set; }
         public string ToConnectorId { get; set; }
+        public ParserConnector FromConnector { get; set; }
+        public ParserConnector ToConnector { get; set; }
         public string FromConnectorIri { get; set; }
         public string ToConnectorIri { get; set; }
         
