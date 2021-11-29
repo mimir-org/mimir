@@ -52,8 +52,8 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-demo:test
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-demo:test
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:demo
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:demo
       
       
           
