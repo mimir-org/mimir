@@ -20,7 +20,6 @@ const RelationFilter = ({ edges, relationItems, dispatch }: Props) => (
     <SubHeader>{TextResources.Filter_Relations}</SubHeader>
     {relationItems.map((conn) => {
       const edge = edges.find((x) => x.fromConnectorId === conn.id);
-
       return (
         <FilterElement
           key={conn.id}

@@ -5,7 +5,7 @@ import { MenuColumn } from "../styled";
 import { AnimationFilter, MaterialFluidFilter, PartOfFilter, RelationFilter, TerminalsFilter } from ".";
 import { TextResources } from "../../../assets/text";
 import { IsBlockView, IsLibrary } from "../../../helpers";
-import { GetActiveTerminals, GetAllTerminals, GetEdges, GetInactiveTerminals, GetNodes, PopulateFilterLists } from "./helpers";
+import { GetActiveTerminals, GetAllTerminals, GetEdges, GetNodes, PopulateFilterLists } from "./helpers";
 
 interface Props {
   elements: any[];
@@ -28,7 +28,6 @@ const FilterMenuComponent = ({ elements, edgeAnimation }: Props) => {
   const fluidItems = [] as Connector[];
 
   const activeTerminals = GetActiveTerminals(elements, nodes);
-  const inactiveTerminals = GetInactiveTerminals(nodes);
   const allTerminals = GetAllTerminals(elements);
 
   PopulateFilterLists(edges, fluidItems, transportItems, relationItems, partOfItems);
@@ -42,7 +41,7 @@ const FilterMenuComponent = ({ elements, edgeAnimation }: Props) => {
         <RelationFilter edges={edges} relationItems={relationItems} dispatch={dispatch} />
         <MaterialFluidFilter edges={edges} fluidItems={fluidItems} dispatch={dispatch} />
 
-        {IsBlockView() && <TerminalsFilter activeTerminals={activeTerminals} dispatch={dispatch} />}
+        {IsBlockView() && <TerminalsFilter activeTerminals={activeTerminals} allTerminals={allTerminals} dispatch={dispatch} />}
       </MenuColumn>
     </FilterMenuBox>
   );
