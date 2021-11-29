@@ -66,14 +66,14 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       onMouseOver={() => OnHover(showTerminalBox)}
       onMouseOut={() => OnMouseOut(showTerminalBox)}
     >
-      <BlockLogoComponent node={node} parent={false} />
+      <BlockLogoComponent node={node} />
 
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
-        parent={false}
+        isParent={false}
         electro={electro}
         onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
         showMenuBox={terminalBox}
@@ -85,7 +85,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         height={node.height}
         width={node.width}
         terminals={terminals}
-        parent={false}
+        isParent={false}
         electro={electro}
         dispatch={dispatch}
       />

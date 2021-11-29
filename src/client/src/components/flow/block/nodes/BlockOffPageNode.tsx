@@ -25,7 +25,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
         height={data?.height}
         width={data?.width}
         terminals={data.connectors}
-        parent={false}
+        isParent={false}
         electro={false}
         dispatch={dispatch}
       />

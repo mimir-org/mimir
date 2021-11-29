@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const TreeLogoWrapper = styled.div`
+const BlockLogoWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -10,4 +10,4 @@ const TreeLogoWrapper = styled.div`
 `;
 
 
-export default TreeLogoWrapper;
+export default BlockLogoWrapper;

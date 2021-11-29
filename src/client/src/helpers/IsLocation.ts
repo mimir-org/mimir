@@ -1,7 +1,7 @@
 import { Aspect, CreateLibraryType, LibItem, Node } from "../models";
 
-const IsLocation = (node: Node | LibItem | CreateLibraryType) => {
-  return node?.aspect === Aspect.Location;
+const IsLocation = (item: Node | LibItem | CreateLibraryType) => {
+  return item?.aspect === Aspect.Location;
 };
 
 export default IsLocation;
