@@ -26,15 +26,15 @@ interface Props {
 }
 
 function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
-  const [value, setValue] = useState(IsAttribute(attribute) ? attribute.value ?? "" : "");
+  const isAttribute = IsAttribute(attribute);
+  const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
   const [unit, setUnit] = useState<EnumBase>(
-    IsAttribute(attribute) ? attribute.unit || attribute.units?.[0] : attribute?.units?.[0]
+    isAttribute
+      ? attribute.units.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]
+      : attribute?.units?.[0]
   );
 
-  const isAttribute = IsAttribute(attribute);
-
-  const isDisabled = () => (IsAttribute(attribute) ? isNodeLocked || attribute.isLocked : false);
-
+  const isDisabled = () => (isAttribute ? isNodeLocked || attribute.isLocked : false);
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterBox>
@@ -52,12 +52,12 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
                   <LockClosedParameterComponent
                     className="parameterIcon lockIcon"
                     fill={headerColor}
-                    onClick={() => IsAttribute(attribute) && onLock(attribute, !attribute.isLocked)}
+                    onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
                   />
                 ) : (
                   <LockOpenComponent
                     className="parameterIcon lockIcon"
-                    onClick={() => IsAttribute(attribute) && onLock(attribute, !attribute.isLocked)}
+                    onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
                   />
                 )}
 
@@ -86,12 +86,13 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               valueProp="value"
               onChange={(_unit) => {
                 isAttribute && setUnit(_unit);
-                onChange(attribute.id, value, unit);
+                onChange(attribute.id, value, _unit);
               }}
               borderRadius={2}
               borderColor={Color.InspectorGreyBorder}
               fontSize={FontSize.Small}
               height={22}
+              defaultValue={unit.id}
             />
           </div>
         </div>
