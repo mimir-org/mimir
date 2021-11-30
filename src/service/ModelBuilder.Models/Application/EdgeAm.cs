@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Mb.Models.Application
+﻿namespace Mb.Models.Application
 {
     public class EdgeAm
     {

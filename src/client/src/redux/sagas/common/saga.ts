@@ -1,30 +1,30 @@
 import { call, put } from "redux-saga/effects";
-import { CombinedAttributeFilter, EnumBase, Contractor, ModuleDescription } from "../../../models";
+import { CombinedAttributeFilter, EnumBase, CollaborationPartner, ModuleDescription } from "../../../models";
 import { get, GetBadRequestPayload, GetErrorResponsePayload } from "../../../models/webclient";
 import * as types from "../../store/common/types";
 
 /**
- * Get all registered contractors
+ * Get all registered collaboration partners
  */
-export function* getContractors() {
+export function* getCollaborationPartners() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "common/contractors";
+    const url = process.env.REACT_APP_API_BASE_URL + "common/collaboration-partner";
     const response = yield call(get, url);
 
     if (response.status === 400) {
-      yield put(GetBadRequestPayload(response, types.FETCHING_CONTRACTORS_SUCCESS_OR_ERROR));
+      yield put(GetBadRequestPayload(response, types.FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR));
       return;
     }
 
     yield put({
-      type: types.FETCHING_CONTRACTORS_SUCCESS_OR_ERROR,
+      type: types.FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR,
       payload: {
-        contractors: response.data as Contractor[],
+        collaborationPartners: response.data as CollaborationPartner[],
         apiError: null
       }
     });
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, types.FETCHING_CONTRACTORS_SUCCESS_OR_ERROR, { contractors: [] as Contractor[] }))
+    yield put(GetErrorResponsePayload(error, types.FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR, { collaborationPartners: [] as CollaborationPartner[] }))
   }
 }
 

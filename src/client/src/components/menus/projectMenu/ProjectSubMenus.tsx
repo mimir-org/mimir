@@ -31,7 +31,7 @@ const ProjectSubMenus = ({ projectState, commonState, selectedNodeIds, selectedE
     <ExportLibraryFileMenu />
     <ImportFileLibraryMenu />
     <CommitProjectMenu
-      contractors={commonState.contractors}
+      collaborationPartners={commonState.collaborationPartners}
       parsers={commonState.parsers}
       projectId={projectState?.project?.id}
       disabled={!projectState?.project?.isSubProject}

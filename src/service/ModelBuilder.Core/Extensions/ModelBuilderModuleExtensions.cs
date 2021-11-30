@@ -81,7 +81,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IEdgeRepository, EdgeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
-            services.AddScoped<IContractorRepository, ContractorRepository>();
+            services.AddScoped<ICollaborationPartnerRepository, CollaborationPartnerRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ICompositeRepository, CompositeRepository>();
@@ -116,6 +116,7 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
+            cfg.AddProfile<CollaborationPartnerProfile>();
             cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));

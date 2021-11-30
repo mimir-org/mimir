@@ -8,7 +8,6 @@ class Node {
   iri: string;
   domain: string;
   rds: string;
-  contractor: string;
   description: string;
   semanticReference: string;
   tagNumber: string;

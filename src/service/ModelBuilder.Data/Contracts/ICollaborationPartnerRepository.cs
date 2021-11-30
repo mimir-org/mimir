@@ -4,7 +4,7 @@ using Mb.Models.Data;
 
 namespace Mb.Data.Contracts
 {
-    public interface IContractorRepository : IGenericRepository<ModelBuilderDbContext, Contractor>
+    public interface ICollaborationPartnerRepository : IGenericRepository<ModelBuilderDbContext, CollaborationPartner>
     {
     }
 }
