@@ -636,9 +636,12 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
               ? {
                   ...x,
                   isLocked: action.payload.isLocked,
-                  attributes: x.attributes.map((attribute) => {
-                    return { ...attribute, isLocked: action.payload.isLocked };
-                  }),
+                  isLockedBy: action.payload.isLockedBy,
+                  attributes: x.attributes.map((attribute) => ({
+                    ...attribute,
+                    isLocked: action.payload.isLocked,
+                    isLockedBy: action.payload.isLockedBy,
+                  })),
                 }
               : x
           ),

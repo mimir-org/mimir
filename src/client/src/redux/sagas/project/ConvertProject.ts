@@ -96,6 +96,8 @@ export interface NodeAm {
   updated: Date;
   updatedBy: string;
   libraryTypeId: string;
+  isLocked: boolean;
+  IsLockedBy: string;
 }
 
 export interface EdgeAm {
@@ -382,6 +384,8 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       updated: node.updated,
       updatedBy: node.updatedBy,
       libraryTypeId: node.libraryTypeId,
+      isLocked: node.isLocked,
+      IsLockedBy: node.isLockedBy,
     } as NodeAm;
 
     convertedNodes.push(n);

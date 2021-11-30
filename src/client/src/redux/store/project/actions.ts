@@ -373,13 +373,14 @@ export function importProjectAction(project: ProjectAm): Types.ProjectActionType
   };
 }
 
-export function setIsLockedNode(node: Node, project: Project, isLocked: boolean): Types.LockUnlockNode {
+export function setIsLockedNode(node: Node, project: Project, isLocked: boolean, isLockedBy: string): Types.LockUnlockNode {
   return {
     type: Types.LOCK_UNLOCK_NODE,
     payload: {
       id: node.id,
       projectId: project.id,
       isLocked,
+      isLockedBy,
     },
   };
 }

@@ -384,6 +384,7 @@ export interface LockUnlockNode {
     id: string;
     projectId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 

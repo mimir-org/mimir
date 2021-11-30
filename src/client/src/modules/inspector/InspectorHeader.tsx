@@ -10,6 +10,7 @@ import { InspectorButtonRow } from "./";
 interface Props {
   project: Project;
   element: InspectorElement;
+  username: string;
   dispatch: Dispatch;
   open: boolean;
   activeTabIndex: number;
@@ -27,6 +28,7 @@ interface Props {
 const InspectorHeader = ({
   project,
   element,
+  username,
   dispatch,
   open,
   activeTabIndex,
@@ -58,6 +60,7 @@ const InspectorHeader = ({
       <InspectorButtonRow
         project={project}
         element={element}
+        username={username}
         open={open}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
