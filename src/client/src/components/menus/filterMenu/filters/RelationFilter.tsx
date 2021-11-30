@@ -1,8 +1,8 @@
-import { FilterElement } from ".";
-import { TextResources } from "../../../assets/text";
-import { Connector, Edge } from "../../../models";
-import { OnAllRelationsChange, OnFilterChange } from "./handlers";
-import { AllRelationsChecked } from "./helpers/IsChecked";
+import { FilterElement } from "../";
+import { TextResources } from "../../../../assets/text";
+import { Connector, Edge } from "../../../../models";
+import { OnAllRelationsChange, OnFilterChange } from "../handlers";
+import { AllRelationsChecked } from "../helpers/IsChecked";
 interface Props {
   edges: Edge[];
   items: Connector[];

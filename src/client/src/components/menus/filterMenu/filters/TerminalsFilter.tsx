@@ -1,7 +1,8 @@
-import { FilterElement } from ".";
-import { TextResources } from "../../../assets/text";
-import { Connector } from "../../../models";
-import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";
+import { FilterElement } from "../";
+import { TextResources } from "../../../../assets/text";
+import { Connector } from "../../../../models";
+import { OnActiveTerminalChange, OnAllTerminalsChange } from "../handlers";
+
 interface Props {
   activeTerminals: Connector[];
   allTerminals: Connector[];

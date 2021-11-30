@@ -236,6 +236,7 @@ const TextResources = {
   Filter_Show_All: "Show all",
   Filter_Terminals: "Terminals",
   Filter_MaterialFluid: "Material Fluid",
+  Filter_EnergyElectrical: "Energy Electrical",
   Filter_Show_Terminals: "Show all terminals",
   Filter_Show_Active_Terminals: "Show all active terminals",
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
@@ -253,6 +254,14 @@ const TextResources = {
 
   Filter_Transports: "Transports",
   Filter_Relations: "Relations",
+
+  Filter_Category_EnergyElectrical: "Energy electrical",
+  Filter_Category_EnergyMechanical: "Energy mechanical",
+  Filter_Category_EnergyThermal: "Energy termal",
+  Filter_Category_MaterialFluid: "Material fluid",
+  Filter_Category_MaterialGranulate: "Material granulate",
+  Filter_Category_Force: "Force",
+  Filter_Category_Information: "Information",
 
   // User Menu
   UserMenu_Settings: "User Settings",

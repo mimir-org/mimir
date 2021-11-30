@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
 import { FilterMenuBox, Header } from "./styled";
 import { MenuColumn } from "../styled";
-import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from ".";
+import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./filters";
 import { TextResources } from "../../../assets/text";
 import { IsLibrary } from "../../../helpers";
 import { GetFilterEdges, GetFilterNodes, PopulateFilterLists } from "./helpers";
@@ -25,9 +25,8 @@ const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
   const transportItems = [] as Connector[];
   const relationItems = [] as Connector[];
   const partOfItems = [] as Connector[];
-  const fluidItems = [] as Connector[];
 
-  PopulateFilterLists(edges, fluidItems, transportItems, relationItems, partOfItems);
+  PopulateFilterLists(edges, transportItems, relationItems, partOfItems);
 
   return (
     <FilterMenuBox libraryOpen={libOpen}>
@@ -36,7 +35,7 @@ const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
         <AnimationFilter edges={edges} edgeAnimation={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter edges={edges} nodes={nodes} items={partOfItems} dispatch={dispatch} visible={!!partOfItems.length} />
         <RelationFilter edges={edges} items={relationItems} dispatch={dispatch} visible={!!relationItems.length} />
-        <TransportFilter edges={edges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
+        <TransportFilter edges={edges} transportItems={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
 
         {/* {IsBlockView() && <TerminalsFilter activeTerminals={activeTerminals} allTerminals={allTerminals} dispatch={dispatch} />} */}
       </MenuColumn>

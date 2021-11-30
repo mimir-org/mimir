@@ -13,22 +13,18 @@ export const AllTransportsChecked = (edges: Edge[]) => {
   return !edges.some((x) => x.isHidden && IsTransport(x.fromConnector));
 };
 
-export const IsFluidChecked = (edges: Edge[], fluidId: string) => {
-  const FLUID_TERMINAL_CATEGORY_ID = "7AF97A80D52C7CE139AE278A712C6A37"; // TODO: Remove
-
+export const IsTerminalTypeChecked = (edges: Edge[], terminalCategoryId: string, terminalTypeId: string) => {
   return !edges.some(
     (x) =>
       x.isHidden &&
-      x.fromConnector.terminalCategoryId === FLUID_TERMINAL_CATEGORY_ID &&
-      x.fromConnector.terminalTypeId === fluidId &&
+      x.fromConnector.terminalCategoryId === terminalCategoryId &&
+      x.fromConnector.terminalTypeId === terminalTypeId &&
       IsTransport(x.fromConnector)
   );
 };
 
-export const AllFluidsChecked = (edges: Edge[]) => {
-  const FLUID_TERMINAL_CATEGORY_ID = "7AF97A80D52C7CE139AE278A712C6A37"; // TODO: Remove
-
+export const IsTerminalCategoryChecked = (edges: Edge[], terminalCategoryId: string) => {
   return !edges.some(
-    (x) => x.isHidden && x.fromConnector.terminalCategoryId === FLUID_TERMINAL_CATEGORY_ID && IsTransport(x.fromConnector)
+    (x) => x.isHidden && x.fromConnector.terminalCategoryId === terminalCategoryId && IsTransport(x.fromConnector)
   );
 };
