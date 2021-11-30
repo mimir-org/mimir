@@ -8,16 +8,17 @@ interface Props {
   visible: boolean;
   label: string;
   isHeader?: boolean;
+  indent?: number;
 }
 /**
  * Component for a single element in the Visual Filter.
  * @param interface
  * @returns an element with a checkbox.
  */
-const FilterElement = ({ onChange, isChecked, visible, label, isHeader = false }: Props) =>
+const FilterElement = ({ onChange, isChecked, visible, label, isHeader = false, indent = 1 }: Props) =>
   visible && (
-    <ElementBox isHeader={isHeader}>
-      <Checkbox isChecked={isChecked} onChange={onChange} id={CreateId()} leftPos={20} />
+    <ElementBox isHeader={isHeader} indent={indent}>
+      <Checkbox isChecked={isChecked} onChange={onChange} id={CreateId()} leftPos={indent * 20} />
       <ElementLabel isHeader={isHeader} onClick={onChange}>
         {label}
       </ElementLabel>

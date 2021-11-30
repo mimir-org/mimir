@@ -240,7 +240,7 @@ const TextResources = {
   Filter_Show_Active_Terminals: "Show all active terminals",
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
   Filter_Show_Transport: "Show all transport edges",
-  Filter_Edge_Animation: "Edge animation",
+  Filter_Edge_Animation: "Transport animation",
 
   Filter_Show_Oil: "Show all oil transports",
   Filter_Show_HotWater: "Show all hot water transports",

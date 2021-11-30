@@ -22,8 +22,8 @@ const RelationFilter = ({ edges, items, dispatch, visible }: Props) =>
         label={TextResources.Filter_Relations}
         onChange={() => OnAllRelationsChange(edges, dispatch)}
         isChecked={AllRelationsChecked(edges)}
-        isHeader={true}
         visible={visible}
+        isHeader
       />
       {items.map((conn) => {
         const edge = edges.find((x) => x.fromConnectorId === conn.id);
@@ -33,7 +33,8 @@ const RelationFilter = ({ edges, items, dispatch, visible }: Props) =>
             label={conn.name}
             onChange={() => OnFilterChange(edge, edges, dispatch)}
             isChecked={!edge.isHidden}
-            visible={true}
+            indent={2}
+            visible
           />
         );
       })}

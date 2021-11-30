@@ -1,7 +1,8 @@
 import { FilterElement } from ".";
+import { TextResources } from "../../../assets/text";
 import { Connector, Edge } from "../../../models";
-import { OnMaterialFluidChange } from "./handlers";
-import { IsFluidChecked } from "./helpers";
+import { OnAllFluidsChange, OnMaterialFluidChange } from "./handlers";
+import { AllFluidsChecked, IsFluidChecked } from "./helpers";
 interface Props {
   edges: Edge[];
   items: Connector[];
@@ -15,19 +16,18 @@ interface Props {
  * @returns checkboxes to toggle Material fluids that exist in Mimir.
  */
 const MaterialFluidFilter = ({ edges, items, dispatch, visible }: Props) => {
-  // const categoryId = items[0]?.terminalCategoryId;
+  const categoryId = items[0]?.terminalCategoryId;
 
   return (
     visible && (
       <>
-        {/* <FilterElement
+        <FilterElement
           label={TextResources.Filter_MaterialFluid}
           onChange={() => OnAllFluidsChange(edges, categoryId, AllFluidsChecked(edges), dispatch)}
           isChecked={AllFluidsChecked(edges)}
           visible={visible}
-          isHeader={true}
-          indent={true}
-        /> */}
+          indent={2}
+        />
 
         {items.map((conn) => {
           return (
@@ -39,6 +39,7 @@ const MaterialFluidFilter = ({ edges, items, dispatch, visible }: Props) => {
               }
               isChecked={IsFluidChecked(edges, conn.terminalTypeId)}
               visible={visible}
+              indent={3}
             />
           );
         })}

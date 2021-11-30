@@ -24,8 +24,8 @@ const PartOfFilter = ({ edges, nodes, items, dispatch, visible }: Props) =>
         label={TextResources.Filter_PartOf}
         onChange={() => OnAllPartOfChange(edges, dispatch)}
         isChecked={AllPartOfChecked(edges)}
-        isHeader={true}
         visible={visible}
+        isHeader
       />
       {items.map((conn) => {
         const edge = edges.find((x) => x.fromConnectorId === conn.id);
@@ -38,7 +38,8 @@ const PartOfFilter = ({ edges, nodes, items, dispatch, visible }: Props) =>
             label={name}
             onChange={() => OnFilterChange(edge, edges, dispatch)}
             isChecked={!edge.isHidden}
-            visible={true}
+            indent={2}
+            visible
           />
         );
       })}

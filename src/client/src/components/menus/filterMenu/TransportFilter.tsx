@@ -23,25 +23,11 @@ const TransportFilter = ({ edges, items, dispatch, visible }: Props) =>
         label={TextResources.Filter_Transports}
         onChange={() => OnAllTransportChange(edges, dispatch)}
         isChecked={AllTransportsChecked(edges)}
-        isHeader={true}
         visible={visible}
+        isHeader
       />
 
       <MaterialFluidFilter edges={edges} items={items} dispatch={dispatch} visible={!!items.length} />
-
-      {/* {items.map((conn) => {
-        const edge = edges.find((x) => x.fromConnectorId === conn.id);
-
-        return (
-          <FilterElement
-            key={conn.id}
-            label={conn.name}
-            onChange={() => OnFilterChange(edge, edges, dispatch)}
-            isChecked={!edge.isHidden}
-            visible={visible}
-          />
-        );
-      })} */}
     </>
   );
 

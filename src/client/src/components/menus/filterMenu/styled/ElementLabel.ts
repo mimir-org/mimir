@@ -7,7 +7,7 @@ interface Props {
 
 const ElementLabel = styled.div<Props>`
   position: relative;
-  margin-left: 45px;
+  margin-left: 25px;
   bottom: 0.5px;
   font-size: ${FontSize.Standard};
   font-weight: ${(props) => props.isHeader && FontWeight.Bold};
