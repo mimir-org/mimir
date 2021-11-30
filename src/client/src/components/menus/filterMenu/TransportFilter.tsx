@@ -1,6 +1,8 @@
 import { FilterElement, MaterialFluidFilter } from ".";
 import { TextResources } from "../../../assets/text";
 import { Connector, Edge } from "../../../models";
+import { OnAllTransportChange } from "./handlers";
+import { AllTransportsChecked } from "./helpers/IsChecked";
 
 interface Props {
   edges: Edge[];
@@ -19,8 +21,8 @@ const TransportFilter = ({ edges, items, dispatch, visible }: Props) =>
     <>
       <FilterElement
         label={TextResources.Filter_Transports}
-        onChange={() => null}
-        isChecked={true}
+        onChange={() => OnAllTransportChange(edges, dispatch)}
+        isChecked={AllTransportsChecked(edges)}
         isHeader={true}
         visible={visible}
       />

@@ -1,8 +1,8 @@
 import { FilterElement } from ".";
 import { TextResources } from "../../../assets/text";
 import { Connector, Edge, Node } from "../../../models";
-import { OnFilterChange } from "./handlers";
-import { GetPartOfName } from "./helpers";
+import { OnAllPartOfChange, OnFilterChange } from "./handlers";
+import { AllPartOfChecked, GetPartOfName } from "./helpers";
 
 interface Props {
   edges: Edge[];
@@ -22,8 +22,8 @@ const PartOfFilter = ({ edges, nodes, items, dispatch, visible }: Props) =>
     <>
       <FilterElement
         label={TextResources.Filter_PartOf}
-        onChange={() => null}
-        isChecked={true}
+        onChange={() => OnAllPartOfChange(edges, dispatch)}
+        isChecked={AllPartOfChecked(edges)}
         isHeader={true}
         visible={visible}
       />

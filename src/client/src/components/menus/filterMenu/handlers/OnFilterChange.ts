@@ -4,6 +4,12 @@ import { GetConnectorNode } from "../helpers";
 import { IsProductTerminal, IsLocationTerminal, IsPartOf, IsTransport } from "../../../flow/helpers";
 import { IsFamily } from "../../../../helpers";
 
+/**
+ * Component to toggle a specific element on/off in Visual Filter.
+ * @param actualEdge
+ * @param edges
+ * @param dispatch
+ */
 const OnFilterChange = (actualEdge: Edge, edges: Edge[], dispatch: any) => {
   const partOf = IsPartOf(actualEdge.fromConnector);
   const location = IsLocationTerminal(actualEdge.fromConnector);

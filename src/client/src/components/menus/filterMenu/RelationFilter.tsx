@@ -1,7 +1,8 @@
 import { FilterElement } from ".";
 import { TextResources } from "../../../assets/text";
 import { Connector, Edge } from "../../../models";
-import { OnFilterChange } from "./handlers";
+import { OnAllRelationsChange, OnFilterChange } from "./handlers";
+import { AllRelationsChecked } from "./helpers/IsChecked";
 interface Props {
   edges: Edge[];
   items: Connector[];
@@ -19,8 +20,8 @@ const RelationFilter = ({ edges, items, dispatch, visible }: Props) =>
     <>
       <FilterElement
         label={TextResources.Filter_Relations}
-        onChange={() => null}
-        isChecked={true}
+        onChange={() => OnAllRelationsChange(edges, dispatch)}
+        isChecked={AllRelationsChecked(edges)}
         isHeader={true}
         visible={visible}
       />
