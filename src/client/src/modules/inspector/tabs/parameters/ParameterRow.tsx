@@ -22,6 +22,7 @@ interface Props {
   selectedCombinations: CombinedAttribute[];
   attributeLikeItems?: AttributeLikeItem[];
   maxNumSelectedCombinations: number;
+  username: string;
   filterName: string;
   headerColor: string;
   bodyColor: string;
@@ -37,6 +38,7 @@ function ParameterRow({
   selectedCombinations,
   attributeLikeItems,
   maxNumSelectedCombinations,
+  username,
   filterName,
   headerColor,
   bodyColor,
@@ -95,6 +97,7 @@ function ParameterRow({
                 terminalParentElement,
                 attribute,
                 isLocked,
+                username,
                 elementIsLocked,
                 dispatch
               )
