@@ -32,7 +32,7 @@ export const OnAllTerminalsChange = (terminals: Connector[], dispatch: any, visi
   });
 };
 
-export const OnAllFluidsChange = (edges: Edge[], terminalCategoryId: string, isChecked: boolean, dispatch: any) => {
+export const OnTerminalCategoryChange = (edges: Edge[], terminalCategoryId: string, isChecked: boolean, dispatch: any) => {
   edges?.forEach((edge) => {
     if (IsTransport(edge.fromConnector)) {
       if (edge.fromConnector.terminalCategoryId === terminalCategoryId) dispatch(setEdgeVisibility(edge, isChecked));
