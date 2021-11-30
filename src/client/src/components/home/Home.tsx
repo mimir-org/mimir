@@ -35,7 +35,6 @@ import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
  * @returns a JSX Element containing all the modules and components.
  */
 const Home = () => {
-  const [show, setShow] = useState(false);
   const dispatch = useAppDispatch();
   // const isFetching = useAppSelector(isFetchingSelector);
   const projectState = useAppSelector(projectStateSelector);
@@ -61,14 +60,13 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    dispatch(changeActiveMenu(null));
     const timeout = setTimeout(() => {
-      setShow(true);
-    }, 4300);
-    if (show) {
       dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
-    }
+    }, 4300);
     return () => clearTimeout(timeout);
-  }, [dispatch, show]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -78,7 +76,7 @@ const Home = () => {
       {flowView === (VIEW_TYPE.STARTPAGE as ViewType) && (
         <>
           <StartPage />
-          {openProjectOpen && show ? <OpenProjectMenu projectState={projectState} dispatch={dispatch} /> : null}
+          {openProjectOpen ? <OpenProjectMenu projectState={projectState} dispatch={dispatch} /> : null}
         </>
       )}
       {flowView !== VIEW_TYPE.STARTPAGE && (
