@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../compLibrary/colors";
+import { FontSize } from "../../../../../../compLibrary/font";
 
 interface Props {
   isSelected: boolean;
@@ -7,42 +8,45 @@ interface Props {
 
 const ProjectDataBox = styled.div<Props>`
   display: flex;
-  height: auto;
   flex-direction: row;
+  align-items: center;
+  height: 30px;
+  padding: 0px 10px 0px 8px;
   font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
-  font-size: 12px;
+  text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
+  font-size: ${FontSize.Small};
   color: ${Color.Black};
   cursor: pointer;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  border-color: ${Color.BlueMagenta};
-  border: ${(props) => (props.isSelected ? 1 : 0)}px solid;
 
   p {
-    margin: 0px;
     white-space: nowrap;
   }
 
   .name {
-    width: 45%;
+    padding-left: 22px;
+    width: 31%;
   }
 
   .owner {
-    width: 35%;
-    margin-left: 10px;
+    width: 29%;
+  }
+
+  .version {
+    text-align: center;
+    width: 28%;
   }
 
   .edited {
-    width: 15%;
-    margin-left: 10px;
+    text-align: right;
+    width: 12%;
+  }
+
+  &:nth-of-type(odd) {
+    background: ${Color.LightPurple};
   }
 
   &:hover {
     background: ${Color.LightBlue};
-  }
-
-  &:nth-of-type(even) {
-    background: ${Color.LightPurple};
   }
 `;
 
