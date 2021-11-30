@@ -18,25 +18,26 @@ const OnLockParameter = (
   terminalParentElement: InspectorTerminalsElement,
   attribute: Attribute,
   isLocked: boolean,
+  isLockedBy: string,
   isTopElementLocked: boolean,
   dispatch: Dispatch<any>
 ) => {
   if (isTopElementLocked) return;
 
   if (IsNode(element)) {
-    dispatch(setIsLockedNodeAttribute(attribute, element.id, isLocked));
+    dispatch(setIsLockedNodeAttribute(attribute, element.id, isLocked, isLockedBy));
   } else if (IsTransport(element) && IsEdge(inspectorParentElement)) {
-    dispatch(setIsLockedTransportAttribute(attribute, inspectorParentElement, isLocked));
+    dispatch(setIsLockedTransportAttribute(attribute, inspectorParentElement, isLocked, isLockedBy));
   } else if (IsInterface(element) && IsEdge(inspectorParentElement)) {
-    dispatch(setIsLockedInterfaceAttribute(attribute, inspectorParentElement, isLocked));
+    dispatch(setIsLockedInterfaceAttribute(attribute, inspectorParentElement, isLocked, isLockedBy));
   } else if (IsConnector(element) && IsNode(terminalParentElement)) {
-    dispatch(setIsLockedNodeTerminalAttribute(attribute, element.id, terminalParentElement, isLocked));
+    dispatch(setIsLockedNodeTerminalAttribute(attribute, element.id, terminalParentElement, isLocked, isLockedBy));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsTransport(terminalParentElement)) {
-    dispatch(setIsLockedTransportTerminalAttribute(attribute, element.id, inspectorParentElement, isLocked));
+    dispatch(setIsLockedTransportTerminalAttribute(attribute, element.id, inspectorParentElement, isLocked, isLockedBy));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsInterface(terminalParentElement)) {
-    dispatch(setIsLockedInterfaceTerminalAttribute(attribute, element.id, inspectorParentElement, isLocked));
+    dispatch(setIsLockedInterfaceTerminalAttribute(attribute, element.id, inspectorParentElement, isLocked, isLockedBy));
   } else if (IsComposite(element) && IsNode(inspectorParentElement)) {
-    dispatch(setIsLockedCompositeAttribute(attribute, element.id, inspectorParentElement, isLocked));
+    dispatch(setIsLockedCompositeAttribute(attribute, element.id, inspectorParentElement, isLocked, isLockedBy));
   }
 };
 

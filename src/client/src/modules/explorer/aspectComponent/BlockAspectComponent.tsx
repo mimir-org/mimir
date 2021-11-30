@@ -2,11 +2,14 @@ import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { AspectBox, ElementBox, ExplorerAspectLine } from "./styled";
 import { LockComponent } from "../lockComponent";
 import { Elements } from "react-flow-renderer";
-import { Node } from "../../../models";
+import { Node, Project } from "../../../models";
 import { BlockAspectElement } from ".";
 import { SetBlockNodeIndent } from "./helpers";
+import { Dispatch } from "redux";
 
 interface Props {
+  project: Project;
+  username: string;
   node: Node;
   selectedNode: Node;
   secondaryNode: Node;
@@ -14,10 +17,12 @@ interface Props {
   isLeaf: boolean;
   expanded: boolean;
   elements: Elements<any>;
-  dispatch: any;
   onElementExpanded: (expanded: boolean, nodeId: string) => void;
+  dispatch: Dispatch;
 }
 export const BlockAspectComponent = ({
+  project,
+  username,
   node,
   selectedNode,
   secondaryNode,
@@ -31,7 +36,7 @@ export const BlockAspectComponent = ({
   <>
     <AspectBox node={node}>
       <ElementBox indent={SetBlockNodeIndent(node, indent)}>
-        <LockComponent node={node} />
+        <LockComponent node={node} project={project} username={username} dispatch={dispatch} />
         <BlockAspectElement
           node={node}
           selectedNode={selectedNode}

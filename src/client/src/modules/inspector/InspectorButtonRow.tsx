@@ -14,6 +14,7 @@ import { IsBlockView, IsAspectNode, GetSelectedNode } from "../../helpers";
 interface Props {
   project: Project;
   element: InspectorElement;
+  username: string;
   open: boolean;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: (visibility: boolean) => Action;
@@ -25,6 +26,7 @@ interface Props {
 const InspectorButtonRow = ({
   project,
   element,
+  username,
   open,
   inspectorRef,
   changeInspectorVisibilityAction,
@@ -45,7 +47,7 @@ const InspectorButtonRow = ({
             visible={true}
           />
           <InspectorButton
-            onClick={() => Click.OnLock(element, project, !element.isLocked, dispatch)}
+            onClick={() => Click.OnLock(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
             visible={true}
           />
