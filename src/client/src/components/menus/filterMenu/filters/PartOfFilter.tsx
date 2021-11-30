@@ -3,7 +3,6 @@ import { TextResources } from "../../../../assets/text";
 import { Connector, Edge, Node } from "../../../../models";
 import { OnAllPartOfChange, OnFilterChange } from "../handlers";
 import { AllPartOfChecked, GetPartOfName } from "../helpers";
-
 interface Props {
   edges: Edge[];
   nodes: Node[];

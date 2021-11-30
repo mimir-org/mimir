@@ -2,7 +2,6 @@ import { FilterElement } from "..";
 import { Connector, Edge } from "../../../../models";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "../handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "../helpers";
-
 interface Props {
   terminalCategoryId: string;
   edges: Edge[];

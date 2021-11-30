@@ -2,7 +2,6 @@ import { FilterElement } from "../";
 import { TextResources } from "../../../../assets/text";
 import { Edge } from "../../../../models";
 import { OnEdgeAnimationChange } from "../handlers";
-
 interface Props {
   edges: Edge[];
   edgeAnimation: boolean;

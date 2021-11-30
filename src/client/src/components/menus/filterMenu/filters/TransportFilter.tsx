@@ -1,10 +1,10 @@
 import { TerminalCategoryFilter } from ".";
 import { FilterElement } from "..";
 import { TextResources } from "../../../../assets/text";
-import { Connector, Edge, TERMINAL_CATEGORY_ID } from "../../../../models";
+import { Connector, Edge, TERMINAL_CATEGORIES } from "../../../../models";
 import { OnAllTransportsChange } from "../handlers";
+import { GetCategoryName } from "../helpers";
 import { AllTransportsChecked } from "../helpers/IsChecked";
-
 interface Props {
   edges: Edge[];
   transportItems: Connector[];
@@ -29,14 +29,19 @@ const TransportFilter = ({ edges, transportItems, dispatch, visible }: Props) =>
         isHeader
       />
 
-      <TerminalCategoryFilter
-        terminalCategoryId={TERMINAL_CATEGORY_ID.MATERIAL_FLUID}
-        edges={edges}
-        items={transportItems.filter((item) => item.terminalCategoryId === TERMINAL_CATEGORY_ID.MATERIAL_FLUID)}
-        label={TextResources.Filter_Category_MaterialFluid}
-        dispatch={dispatch}
-        visible={true}
-      />
+      {TERMINAL_CATEGORIES.map((_, index) => {
+        const items = transportItems.filter((item) => item.terminalCategoryId === TERMINAL_CATEGORIES[index]);
+        return (
+          <TerminalCategoryFilter
+            terminalCategoryId={TERMINAL_CATEGORIES[index]}
+            edges={edges}
+            items={items}
+            label={GetCategoryName(TERMINAL_CATEGORIES[index])}
+            dispatch={dispatch}
+            visible={!!items.length}
+          />
+        );
+      })}
     </>
   );
 

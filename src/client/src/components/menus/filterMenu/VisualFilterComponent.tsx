@@ -6,7 +6,6 @@ import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "
 import { TextResources } from "../../../assets/text";
 import { IsLibrary } from "../../../helpers";
 import { GetFilterEdges, GetFilterNodes, PopulateFilterLists } from "./helpers";
-
 interface Props {
   elements: any[];
   edgeAnimation: boolean;

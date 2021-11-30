@@ -2,7 +2,6 @@ import { FilterElement } from "../";
 import { TextResources } from "../../../../assets/text";
 import { Connector } from "../../../../models";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "../handlers";
-
 interface Props {
   activeTerminals: Connector[];
   allTerminals: Connector[];
@@ -10,7 +9,7 @@ interface Props {
 }
 
 /**
- * Component for terminals.
+ * Component for terminals in Visual Filter.
  * @param interface
  * @returns checkboxes to toggle terminals that exist in Mimir.
  */
