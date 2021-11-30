@@ -4,21 +4,31 @@ import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { GetSelectedNode, IsBlockView, IsOffPage } from "../../helpers";
-import { blockElementsSelector, projectSelector, secondaryNodeSelector, useAppDispatch, useAppSelector } from "../../redux/store";
+import {
+  blockElementsSelector,
+  projectSelector,
+  secondaryNodeSelector,
+  useAppDispatch,
+  useAppSelector,
+  usernameSelector,
+} from "../../redux/store";
 
 /**
  * Component for a singe Project in Mimir, displayed in the Explorer Module.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
 const ProjectComponent = () => {
-  const [closedNodes, setClosedNodes] = useState(new Set<string>());
-  const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
+  const dispatch = useAppDispatch();
+
   const elements = useAppSelector(blockElementsSelector);
   const project = useAppSelector(projectSelector);
-  const dispatch = useAppDispatch();
+  const username = useAppSelector(usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedNode = GetSelectedNode();
   const secondaryNode = useAppSelector(secondaryNodeSelector);
+
+  const [closedNodes, setClosedNodes] = useState(new Set<string>());
+  const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
@@ -44,6 +54,8 @@ const ProjectComponent = () => {
           return (
             <BlockAspectComponent
               key={node.id}
+              project={project}
+              username={username}
               node={node}
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
@@ -51,14 +63,16 @@ const ProjectComponent = () => {
               expanded={!closedNodes.has(node.id)}
               isLeaf={!HasChildren(node, project)}
               elements={elements}
-              dispatch={dispatch}
               onElementExpanded={onExpandElement}
+              dispatch={dispatch}
             />
           );
         }
         return (
           <TreeAspectComponent
             key={node.id}
+            project={project}
+            username={username}
             node={node}
             nodes={nodes}
             indent={indent}
@@ -68,6 +82,7 @@ const ProjectComponent = () => {
             isVisible={isVisible(node)}
             onElementExpanded={onExpandElement}
             onSetVisibleElement={onSetVisibleElement}
+            dispatch={dispatch}
           />
         );
       })}

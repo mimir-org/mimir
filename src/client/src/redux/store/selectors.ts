@@ -51,6 +51,11 @@ export const userStateSelector = createAppSelector(
   (userState) => userState
 );
 
+export const usernameSelector = createAppSelector(
+  (state) => state.userState.user?.name,
+  (username) => username
+);
+
 export const commonStateSelector = createAppSelector(
   (state) => state.commonState,
   (commonState) => commonState

@@ -43,6 +43,8 @@ export interface AttributeAm {
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
+  isLocked: boolean;
+  isLockedBy: string;
 }
 export interface ConnectorAm {
   id: string;
@@ -96,6 +98,8 @@ export interface NodeAm {
   updated: Date;
   updatedBy: string;
   libraryTypeId: string;
+  isLocked: boolean;
+  IsLockedBy: string;
 }
 
 export interface EdgeAm {
@@ -218,6 +222,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       selectType: attribute.selectType,
       discipline: attribute.discipline,
       tags: attribute.tags,
+      isLocked: attribute.isLocked,
+      isLockedBy: attribute.isLockedBy,
     } as AttributeAm;
 
     converted.push(a);
@@ -382,6 +388,8 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       updated: node.updated,
       updatedBy: node.updatedBy,
       libraryTypeId: node.libraryTypeId,
+      isLocked: node.isLocked,
+      IsLockedBy: node.isLockedBy,
     } as NodeAm;
 
     convertedNodes.push(n);

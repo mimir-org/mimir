@@ -425,14 +425,14 @@ namespace Mb.Services.Services
                 var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
                 var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain)).ToList();
 
-            //Determine if project version should be incremented
-            SetProjectVersion(originalProject, projectAm);
+                //Determine if project version should be incremented
+                SetProjectVersion(originalProject, projectAm);
 
-            // Map new data
-            _mapper.Map(projectAm, originalProject);
+                // Map new data
+                _mapper.Map(projectAm, originalProject);
 
-            var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
-            var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
+                var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
+                var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
 
                 ResolveLevelAndOrder(originalProject);
 
