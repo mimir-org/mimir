@@ -401,6 +401,7 @@ export interface LockUnlockNodeAttribute {
     id: string;
     nodeId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 
@@ -410,6 +411,7 @@ export interface LockUnlockTransportAttribute {
     id: string;
     edgeId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 
@@ -419,6 +421,7 @@ export interface LockUnlockInterfaceAttribute {
     id: string;
     edgeId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 
@@ -429,6 +432,7 @@ export interface LockUnlockNodeTerminalAttribute {
     terminalId: string;
     nodeId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 
@@ -439,6 +443,7 @@ export interface LockUnlockTransportTerminalAttribute {
     terminalId: string;
     edgeId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 
@@ -449,6 +454,7 @@ export interface LockUnlockInterfaceTerminalAttribute {
     terminalId: string;
     edgeId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 
@@ -459,6 +465,7 @@ export interface LockUnlockCompositeAttribute {
     compositeId: string;
     nodeId: string;
     isLocked: boolean;
+    isLockedBy: string;
   };
 }
 

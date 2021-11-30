@@ -43,6 +43,8 @@ export interface AttributeAm {
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
+  isLocked: boolean;
+  isLockedBy: string;
 }
 export interface ConnectorAm {
   id: string;
@@ -220,6 +222,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       selectType: attribute.selectType,
       discipline: attribute.discipline,
       tags: attribute.tags,
+      isLocked: attribute.isLocked,
+      isLockedBy: attribute.isLockedBy,
     } as AttributeAm;
 
     converted.push(a);
