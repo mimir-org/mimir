@@ -17,7 +17,7 @@ const RadioButtonWrapper = styled.label`
     height: 12px;
     width: 12px;
     background-color: ${Color.White} !important;
-    border: 1px solid ${Color.GreyHeader};
+    border: 1px solid ${Color.BlueMagenta};
     border-radius: 10px;
   }
 
@@ -29,12 +29,12 @@ const RadioButtonWrapper = styled.label`
     position: absolute;
     display: flex;
     content: "";
-    top: 2.7px;
+    top: 2.5px;
     left: 2.2px;
-    height: 5.5px;
-    width: 5.5px;
-    background-color: ${Color.GreyHeader};
-    border: 1px solid ${Color.GreyHeader};
+    height: 5.7px;
+    width: 5.7px;
+    background-color: ${Color.BlueMagenta};
+    border: 1px solid ${Color.BlueMagenta};
     border-radius: 10px;
   }
 `;

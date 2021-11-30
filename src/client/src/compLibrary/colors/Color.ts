@@ -1,6 +1,7 @@
 const Color = {
   // Common
   BlueMagenta: "#272738",
+  DarkBlue: "#1D2635",
   LightBlue: "#D9E6FF",
   GreyHeader: "#4F4F4F",
   GreyInspector: "#FAFAFA",

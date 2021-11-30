@@ -8,6 +8,7 @@ import { EditTypeIcon, NewTypeIcon } from "../../../assets/icons/type";
 
 const GetButtonIcon = (type: string) => {
   if (type === TextResources.Project_Logout) return LogoutIcon;
+  if (type === TextResources.Project_Start_Label) return ProjectIcons.CreateProject;
   if (type === TextResources.Project_Open) return RightArrowIcon;
   if (type === TextResources.Project_Create) return ProjectIcons.CreateProject;
   if (type === TextResources.Project_Cancel) return CloseIcon;

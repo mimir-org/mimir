@@ -167,12 +167,18 @@ const TextResources = {
   Project: "Project",
   Project_Heading: "Projects",
   Project_New: "Create project",
+  Project_Search_Placeholder: "Search Projects",
   Project_OpenProject: "Open project",
   Project_Recent: "Recent projects",
-  Project_Recent_Name: "Project name",
-  Project_Recent_Owner: "Project owner",
-  Project_Recent_Edited: "Last edited",
+  Project_Recent_Name: "Project Name",
+  Project_Recent_Owner: "Project Owner",
+  Project_Recent_Version: "Project Version",
+  Project_Recent_Edited: "Last Edited",
   Project_Recent_Open: "Open project",
+  Project_Description_About: "About the project",
+  Project_Description_Libraries: "Libraries",
+  Project_Description_SubProj: "Sub-projects",
+  Project_Description_Temps: "Templates",
 
   Project_Save_Label: "Save project to database",
   Project_Save_Label_File: "Export project file",
@@ -187,7 +193,8 @@ const TextResources = {
   Project_Commit_Parser_Label: "Data type",
   Project_Commit_Button: "Commit",
   Project_Logout_Label: "Log out",
-  Project_Open_Label: "Open a project",
+  Project_Open_Label: "Open or start a new project",
+  Project_Start_Label: "Start a new project",
   Project_Create_Label: "Create a project",
   Project_Create_Button_Label: "Create project",
   Project_SubProject_Create_Label: "Save selection as sub-project",
@@ -255,6 +262,9 @@ const TextResources = {
   UserMenu_LightMode: "Turn on Light mode",
   UserMenu_LogOut: "Log out",
   UserMenu_User: "User",
+
+  // Version
+  Mimir_Version: "Version 0.1",
 };
 
 export default TextResources;
