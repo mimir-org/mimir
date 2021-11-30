@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
 
