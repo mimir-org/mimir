@@ -1,7 +1,7 @@
-import { FilterElement } from ".";
+import { FilterElement, MaterialFluidFilter } from ".";
 import { TextResources } from "../../../assets/text";
 import { Connector, Edge } from "../../../models";
-import { OnFilterChange } from "./handlers";
+
 interface Props {
   edges: Edge[];
   items: Connector[];
@@ -10,33 +10,37 @@ interface Props {
 }
 
 /**
- * Component for relations filter.
+ * Component for transport edges filter.
  * @param interface
- * @returns checkboxes to toggle relations that exist in Mimir.
+ * @returns checkboxes to toggle transport edges that exist in Mimir.
  */
-const RelationFilter = ({ edges, items, dispatch, visible }: Props) =>
+const TransportFilter = ({ edges, items, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement
-        label={TextResources.Filter_Relations}
+        label={TextResources.Filter_Transports}
         onChange={() => null}
         isChecked={true}
         isHeader={true}
         visible={visible}
       />
-      {items.map((conn) => {
+
+      <MaterialFluidFilter edges={edges} items={items} dispatch={dispatch} visible={!!items.length} />
+
+      {/* {items.map((conn) => {
         const edge = edges.find((x) => x.fromConnectorId === conn.id);
+
         return (
           <FilterElement
             key={conn.id}
             label={conn.name}
             onChange={() => OnFilterChange(edge, edges, dispatch)}
             isChecked={!edge.isHidden}
-            visible={true}
+            visible={visible}
           />
         );
-      })}
+      })} */}
     </>
   );
 
-export default RelationFilter;
+export default TransportFilter;

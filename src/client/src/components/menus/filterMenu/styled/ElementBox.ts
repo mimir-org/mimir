@@ -1,15 +1,22 @@
 import styled from "styled-components";
+import { Color } from "../../../../compLibrary/colors";
+interface Props {
+  isHeader: boolean;
+}
 
-const ElementBox = styled.div`
+const ElementBox = styled.div<Props>`
   position: relative;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   flex: 1;
-  margin-left: 5px;
-  margin-bottom: 12px;
+  margin-top: ${(props) => props.isHeader && "12px"};
+  height: 30px;
+  background-color: ${(props) => (props.isHeader ? Color.GreyLight : Color.White)};
 
   &:hover {
     cursor: pointer;
+    background-color: ${Color.BlueLight};
+    text-decoration: underline;
   }
 `;
 

@@ -251,6 +251,7 @@ const TextResources = {
   Filter_PartOf_Location: "Show part of Location",
   Filter_PartOf_Product: "Show part of Product",
 
+  Filter_Transports: "Transports",
   Filter_Relations: "Relations",
 
   // User Menu
