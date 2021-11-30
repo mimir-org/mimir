@@ -5,7 +5,7 @@ import { MenuColumn } from "../styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TerminalsFilter, TransportFilter } from ".";
 import { TextResources } from "../../../assets/text";
 import { IsBlockView, IsLibrary } from "../../../helpers";
-import { GetActiveTerminals, GetAllTerminals, GetEdges, GetNodes, PopulateFilterLists } from "./helpers";
+import { GetActiveTerminals, GetAllTerminals, GetFilterEdges, GetFilterNodes, PopulateFilterLists } from "./helpers";
 
 interface Props {
   elements: any[];
@@ -19,8 +19,8 @@ interface Props {
 const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const edges = GetEdges(elements);
-  const nodes = GetNodes(elements);
+  const edges = GetFilterEdges(elements);
+  const nodes = GetFilterNodes(elements);
 
   const transportItems = [] as Connector[];
   const relationItems = [] as Connector[];
