@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Mb.Services.Hubs
+namespace Mb.Models.Data.Hubs
 {
     public class ModelBuilderHub : Hub
     {

@@ -1,5 +1,5 @@
 import { CooperateActionTypes } from "..";
-import { WebSocket, WebSocketEvent } from "../../../models";
+import { WebSocket, WorkerStatus } from "../../../models";
 
 /**
  * Triggers when a node is added
@@ -9,7 +9,7 @@ export function* nodeAdded(action: CooperateActionTypes) {
   const webSocket = new WebSocket();
   if (webSocket.isRunning()) {
     const nodeAsString = JSON.stringify(action.payload);
-    webSocket.getConnection().send("SendNodeData", WebSocketEvent.Create, nodeAsString);
+    webSocket.getConnection().send("SendNodeData", WorkerStatus.Create, nodeAsString);
   }
 }
 
@@ -21,6 +21,6 @@ export function* edgeAdded(action: CooperateActionTypes) {
   const webSocket = new WebSocket();
   if (webSocket.isRunning()) {
     const edgeAsString = JSON.stringify(action.payload);
-    webSocket.getConnection().send("SendEdgeData", WebSocketEvent.Create, edgeAsString);
+    webSocket.getConnection().send("SendEdgeData", WorkerStatus.Create, edgeAsString);
   }
 }

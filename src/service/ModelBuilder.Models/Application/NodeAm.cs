@@ -12,6 +12,9 @@ namespace Mb.Models.Application
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain { get; set; }
+        
+        [Required]
+        public string ProjectId { get; set; }
 
         [Required]
         public string Name { get; set; }

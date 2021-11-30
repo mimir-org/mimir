@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data;
+using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
-using Mb.Services.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

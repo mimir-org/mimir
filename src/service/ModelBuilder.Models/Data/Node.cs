@@ -113,8 +113,11 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Composite> Composites { get; set; }
 
+        [Required]
+        public virtual string ProjectId { get; set; }
+
         [JsonIgnore]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual Project Project { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Edge> FromEdges { get; set; }

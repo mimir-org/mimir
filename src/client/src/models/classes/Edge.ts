@@ -7,6 +7,7 @@ class Edge {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   fromConnectorId: string;
   fromConnector: Connector;
 

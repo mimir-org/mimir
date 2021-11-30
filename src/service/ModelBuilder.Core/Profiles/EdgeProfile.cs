@@ -27,8 +27,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Interface, opt => opt.MapFrom(src => src.Interface))
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
-                .ForMember(dest => dest.Projects, opt => opt.Ignore());
-
+                .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
+                .ForMember(dest => dest.Project, opt => opt.Ignore());
             CreateMap<Edge, EdgeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))

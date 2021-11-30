@@ -7,6 +7,7 @@ class Node {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   rds: string;
   contractor: string;
   description: string;
