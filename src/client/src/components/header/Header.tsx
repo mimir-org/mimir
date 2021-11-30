@@ -14,7 +14,9 @@ import {
   projectSelector,
   userMenuSelector,
   userStateSelector,
+  flowViewSelector,
 } from "../../redux/store";
+import { VIEW_TYPE } from "../../models/project";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +30,7 @@ const Header = () => {
   const treeView = useAppSelector(treeSelector);
   const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
+  const flowView = useAppSelector(flowViewSelector);
   const company = process.env.REACT_APP_COMPANY;
 
   return (
@@ -42,15 +45,16 @@ const Header = () => {
           <img src={MimirLogo} alt="mimir-logo" />
         </LogoBox>
       </HeaderBox>
-
-      <ToolBar
-        libOpen={libOpen}
-        explorerOpen={explorerOpen}
-        treeView={treeView}
-        treeFilter={treeFilterOpen}
-        blockFilter={blockFilteOpen}
-        electro={electro}
-      />
+      {flowView !== VIEW_TYPE.STARTPAGE && (
+        <ToolBar
+          libOpen={libOpen}
+          explorerOpen={explorerOpen}
+          treeView={treeView}
+          treeFilter={treeFilterOpen}
+          blockFilter={blockFilteOpen}
+          electro={electro}
+        />
+      )}
     </>
   );
 };
