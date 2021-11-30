@@ -7,8 +7,9 @@ namespace Mb.Services.Contracts
 {
     public interface ICommonService
     {
-        IEnumerable<Contractor> GetAllContractors();
+        IEnumerable<CollaborationPartner> GetAllCollaborationPartners();
         IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters();
-        Task CreateContractorsAsync(IEnumerable<Contractor> contractors);
+        Task CreateCollaborationPartnersAsync(IEnumerable<CollaborationPartnerAm> collaborationPartners);
+        Task<CollaborationPartner> CreateCollaborationPartnerAsync(CollaborationPartnerAm collaborationPartner);
     }
 }

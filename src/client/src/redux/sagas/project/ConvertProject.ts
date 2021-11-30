@@ -73,7 +73,6 @@ export interface NodeAm {
   version: string;
   label: string;
   rds: string;
-  contractor: string;
   semanticReference: string;
   tagNumber: string;
   description: string;
@@ -362,7 +361,6 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       version: node.version,
       label: node.label,
       rds: node.rds,
-      contractor: node.contractor,
       semanticReference: node.semanticReference,
       tagNumber: node.tagNumber,
       description: node.description,

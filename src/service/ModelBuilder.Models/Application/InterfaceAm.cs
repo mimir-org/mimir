@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using AutoMapper.Configuration.Annotations;
 using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Application

@@ -74,7 +74,7 @@ const TextResources = {
   Inspector_Admin_Long_Description: "Long Description",
   Inspector_Admin_Interface: "Interface",
   Inspector_Admin_Updated_By: "Updated by",
-  Inspector_Admin_Contractor: "Contractor",
+  Inspector_Admin_Collaboration_Partner: "Collaboration partner",
   Inspector_Admin_Updated_Date: "Last updated",
   Inspector_Admin_Created_Date: "Date created",
   Inspector_Admin_Local_Description: "Long Local Description",
@@ -186,7 +186,7 @@ const TextResources = {
   Project_Export_ProjectLibrary: "Export project library",
 
   Project_Commit_Project: "Commit project",
-  Project_Commit_Contractor: "Send to contractor",
+  Project_Commit_Collaboration_Partner: "Send to collaboration partner",
   Project_Commit_Parser: "Data type",
   Project_Commit: "Commit",
 
