@@ -1,7 +1,7 @@
 import { FilterElement } from "..";
 import { Connector, Edge } from "../../../../models";
-import { OnTerminalTypeChange } from "../handlers";
-import { IsTerminalTypeChecked } from "../helpers";
+import { OnTerminalCategoryChange, OnTerminalTypeChange } from "../handlers";
+import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "../helpers";
 
 interface Props {
   terminalCategoryId: string;
@@ -10,8 +10,6 @@ interface Props {
   label: string;
   dispatch: any;
   visible: boolean;
-  isChecked: boolean;
-  onChange: () => void;
 }
 
 /**
@@ -21,32 +19,36 @@ interface Props {
  * @param interface
  * @returns a parent checkbox and a checkbox for each child.
  */
-const TerminalCategoryFilter = ({ terminalCategoryId, edges, items, label, dispatch, visible, isChecked, onChange }: Props) =>
-  visible && (
-    <>
-      <FilterElement label={label} onChange={() => onChange()} isChecked={isChecked} visible={visible} indent={2} />
+const TerminalCategoryFilter = ({ terminalCategoryId, edges, items, label, dispatch, visible }: Props) => {
+  const isCategoryChecked = IsTerminalCategoryChecked(edges, terminalCategoryId);
 
-      {items.map((conn) => {
-        return (
-          <FilterElement
-            key={conn.id}
-            label={conn.name}
-            onChange={() =>
-              OnTerminalTypeChange(
-                edges,
-                terminalCategoryId,
-                conn.terminalTypeId,
-                IsTerminalTypeChecked(edges, terminalCategoryId, conn.terminalTypeId),
-                dispatch
-              )
-            }
-            isChecked={IsTerminalTypeChecked(edges, terminalCategoryId, conn.terminalTypeId)}
-            visible={visible}
-            indent={3}
-          />
-        );
-      })}
-    </>
+  return (
+    visible && (
+      <>
+        <FilterElement
+          label={label}
+          onChange={() => OnTerminalCategoryChange(edges, terminalCategoryId, isCategoryChecked, dispatch)}
+          isChecked={isCategoryChecked}
+          visible={visible}
+          indent={2}
+        />
+
+        {items.map((conn) => {
+          const isChecked = IsTerminalTypeChecked(edges, terminalCategoryId, conn.terminalTypeId);
+          return (
+            <FilterElement
+              key={conn.id}
+              label={conn.name}
+              onChange={() => OnTerminalTypeChange(edges, terminalCategoryId, conn.terminalTypeId, isChecked, dispatch)}
+              isChecked={isChecked}
+              visible={visible}
+              indent={3}
+            />
+          );
+        })}
+      </>
+    )
   );
+};
 
 export default TerminalCategoryFilter;

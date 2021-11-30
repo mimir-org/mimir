@@ -2,9 +2,8 @@ import { TerminalCategoryFilter } from ".";
 import { FilterElement } from "..";
 import { TextResources } from "../../../../assets/text";
 import { Connector, Edge, TERMINAL_CATEGORY_ID } from "../../../../models";
-import { OnTerminalCategoryChange, OnAllTransportsChange } from "../handlers";
+import { OnAllTransportsChange } from "../handlers";
 import { AllTransportsChecked } from "../helpers/IsChecked";
-import { IsTerminalCategoryChecked } from "../helpers";
 
 interface Props {
   edges: Edge[];
@@ -37,10 +36,6 @@ const TransportFilter = ({ edges, transportItems, dispatch, visible }: Props) =>
         label={TextResources.Filter_Category_MaterialFluid}
         dispatch={dispatch}
         visible={true}
-        isChecked={IsTerminalCategoryChecked(edges, TERMINAL_CATEGORY_ID.MATERIAL_FLUID)}
-        onChange={() =>
-          OnTerminalCategoryChange(edges, "", IsTerminalCategoryChecked(edges, TERMINAL_CATEGORY_ID.MATERIAL_FLUID), dispatch)
-        }
       />
     </>
   );
