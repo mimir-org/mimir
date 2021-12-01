@@ -131,13 +131,8 @@ export const validationSelector = createAppSelector(
   (validation) => validation
 );
 
-export const treeFilterSelector = createAppSelector(
-  (state) => state.menu.treeFilterMenuVisibility,
-  (filterMenuVisibility) => filterMenuVisibility
-);
-
-export const blockFilterSelector = createAppSelector(
-  (state) => state.menu.blockFilterMenuVisibility,
+export const filterSelector = createAppSelector(
+  (state) => state.menu.filterMenuVisibility,
   (filterMenuVisibility) => filterMenuVisibility
 );
 

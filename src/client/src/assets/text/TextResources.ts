@@ -233,12 +233,28 @@ const TextResources = {
 
   // Visual Filter
   Filter_Heading: "Visual Filter",
+  Filter_Show_All: "Show all",
   Filter_Terminals: "Terminals",
+  Filter_MaterialFluid: "Material Fluid",
+  Filter_EnergyElectrical: "Energy Electrical",
   Filter_Show_Terminals: "Show all terminals",
   Filter_Show_Active_Terminals: "Show all active terminals",
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
   Filter_Show_Transport: "Show all transport edges",
-  Filter_Edge_Animation: "Edge animation",
+  Filter_Edge_Animation: "Transport animation",
+
+  Filter_Show_Oil: "Show all oil transports",
+  Filter_Show_HotWater: "Show all hot water transports",
+  Filter_Show_Multiphase: "Show all multiphase transports",
+
+  Filter_PartOf: "Part of relationship",
+  Filter_PartOf_Function: "Show part of Function",
+  Filter_PartOf_Location: "Show part of Location",
+  Filter_PartOf_Product: "Show part of Product",
+
+  Filter_Transports: "Transports",
+  Filter_Relations: "Relations",
+  Filter_Category: "Category",
 
   // User Menu
   UserMenu_Settings: "User Settings",
@@ -251,6 +267,7 @@ const TextResources = {
   // Validation
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
+  Validation_BlockView: "Please selct a node before opening Block View.",
   Validation_Cancel: "Cancel",
 };
 

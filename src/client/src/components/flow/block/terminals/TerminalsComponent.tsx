@@ -10,12 +10,12 @@ interface Props {
   inputMenuOpen: boolean;
   outputMenuOpen: boolean;
   terminals: Connector[];
-  isParent: boolean;
   electro: boolean;
-  showMenuBox: boolean;
   showInTerminalMenu: any;
   showOutTerminalMenu: any;
   onClick: (conn: Connector) => void;
+  isParent?: boolean;
+  showMenuBox?: boolean;
 }
 
 /**
@@ -28,12 +28,12 @@ const TerminalsContainerComponent = ({
   inputMenuOpen,
   outputMenuOpen,
   terminals,
-  isParent,
   electro,
-  showMenuBox,
   showInTerminalMenu,
   showOutTerminalMenu,
   onClick,
+  isParent = false,
+  showMenuBox = true,
 }: Props) => {
   const inTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
   const outTerminals = terminals.filter((t) => !IsInputTerminal(t) && !IsPartOf(t));
