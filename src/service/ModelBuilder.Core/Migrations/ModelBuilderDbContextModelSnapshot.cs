@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -78,8 +78,7 @@ namespace Mb.Core.Migrations
                         .HasColumnName("AttributeTypeId");
 
                     b.Property<string>("CompositeId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("CompositeId");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
@@ -98,8 +97,7 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InterfaceId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("InterfaceId");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Iri")
                         .IsRequired()
@@ -107,18 +105,12 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IsLocked");
 
-                    b.Property<string>("IsLockedStatusBy")
+                    b.Property<string>("IsLockedBy")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
+                        .HasColumnName("IsLockedBy");
 
                     b.Property<string>("Key")
                         .IsRequired()
@@ -324,20 +316,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Iri");
 
-                    b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedStatusBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
-
                     b.Property<string>("MasterProjectId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -423,57 +401,6 @@ namespace Mb.Core.Migrations
                     b.ToTable("Enum", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("EnumBase");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.EventLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Data");
-
-                    b.Property<string>("DataId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("DataId");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DateTime");
-
-                    b.Property<string>("EventLogDataType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("EventLogDataType");
-
-                    b.Property<string>("ProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
-
-                    b.Property<string>("WorkerStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("WorkerStatus");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DataId");
-
-                    b.HasIndex("EventLogDataType");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("WorkerStatus");
-
-                    b.ToTable("EventLog", (string)null);
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Interface", b =>
@@ -611,18 +538,12 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IsLocked");
 
-                    b.Property<string>("IsLockedStatusBy")
+                    b.Property<string>("IsLockedBy")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
+                        .HasColumnName("IsLockedBy");
 
                     b.Property<bool>("IsRoot")
                         .HasColumnType("bit")
@@ -795,19 +716,6 @@ namespace Mb.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Project", (string)null);
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.ProjectNodeItem", b =>
-                {
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("NodeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProjectId", "NodeId");
-
-                    b.ToView("ProjectNodeItem");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Transport", b =>
@@ -1530,10 +1438,9 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("FormatId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.Interface", "Interface")
+                    b.HasOne("Mb.Models.Data.Interface", null)
                         .WithMany("Attributes")
-                        .HasForeignKey("InterfaceId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("InterfaceId");
 
                     b.HasOne("Mb.Models.Data.Node", "Node")
                         .WithMany("Attributes")
@@ -1565,8 +1472,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Condition");
 
                     b.Navigation("Format");
-
-                    b.Navigation("Interface");
 
                     b.Navigation("Node");
 
