@@ -541,15 +541,19 @@ namespace Mb.Services.Services
             if (lockUnlockEdgeAm?.Id == null)
                 return;
 
-            var edge = _edgeRepository.FindBy(x => x.Id == lockUnlockEdgeAm.Id)?.First();
+            var edge = await _edgeRepository.GetAsync(lockUnlockEdgeAm.Id);
 
-            if (edge != null && lockUnlockEdgeAm.IsLocked != edge.IsLocked)
-            {
-                edge.IsLocked = lockUnlockEdgeAm.IsLocked;
-                edge.IsLockedStatusBy = _contextAccessor.GetName();
-                edge.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
-                await _edgeRepository.SaveAsync();
-            }
+            if (edge == null || lockUnlockEdgeAm.IsLocked == edge.IsLocked)
+                return;
+
+            var allAttributes = _attributeRepository.GetAll(false);
+            var allTransports = _transportRepository.GetAll();
+            var allInterfaces = _interfaceRepository.GetAll();
+
+            EdgeTransportsInterfacesAttributesLockUnlock(edge, lockUnlockEdgeAm.IsLocked, _contextAccessor.GetName(), DateTime.Now.ToUniversalTime(), allTransports, allAttributes, allInterfaces);
+
+            await _edgeRepository.SaveAsync();
+            await _attributeRepository.SaveAsync();
         }
 
         /// <summary>
@@ -786,48 +790,7 @@ namespace Mb.Services.Services
             //Edge lock/unlock
             foreach (var edge in allEdges.Where(x => x.FromNodeId == node.Id))
             {
-                if(edge.IsLocked == lockUnlock)
-                    continue;
-
-                edge.IsLocked = lockUnlock;
-                edge.IsLockedStatusBy = userName;
-                edge.IsLockedStatusDate = dateTimeNow;
-
-                //Transport
-                if (!string.IsNullOrWhiteSpace(edge.TransportId))
-                {
-                    var transportObject = allTransports.FirstOrDefault(x => x.Id == edge.TransportId);
-                 
-                    //Transport attributes lock/unlock
-                    var transportAttributes = allAttributes.Where(x => x.TerminalId == transportObject.OutputTerminalId || x.TerminalId == transportObject.InputTerminalId);
-                    foreach (var attribute in transportAttributes)
-                    {
-                        if(attribute.IsLocked == lockUnlock)
-                            continue;
-
-                        attribute.IsLocked = lockUnlock;
-                        attribute.IsLockedStatusBy = userName;
-                        attribute.IsLockedStatusDate = dateTimeNow;
-                    }
-                }
-
-                //Interface
-                if (!string.IsNullOrWhiteSpace(edge.InterfaceId))
-                {
-                    var interfaceObject = allInterfaces.FirstOrDefault(x => x.Id == edge.InterfaceId);
-
-                    //Interface attributes lock/unlock
-                    var interfaceAttributes = allAttributes.Where(x => x.TerminalId == interfaceObject.OutputTerminalId || x.TerminalId == interfaceObject.InputTerminalId);
-                    foreach (var attribute in interfaceAttributes)
-                    {
-                        if (attribute.IsLocked == lockUnlock)
-                            continue;
-
-                        attribute.IsLocked = lockUnlock;
-                        attribute.IsLockedStatusBy = userName;
-                        attribute.IsLockedStatusDate = dateTimeNow;
-                    }
-                }
+                EdgeTransportsInterfacesAttributesLockUnlock(edge, lockUnlock, userName, dateTimeNow, allTransports, allAttributes, allInterfaces);
 
                 var childNode = allNodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
 
@@ -836,6 +799,53 @@ namespace Mb.Services.Services
                     return;
 
                 LockUnlockNodesRecursive(node.IsLocked, childNode, allNodes, allEdges, allAttributes, allTransports, allInterfaces, userName, dateTimeNow);
+            }
+        }
+
+        private void EdgeTransportsInterfacesAttributesLockUnlock(Edge edge, bool lockUnlock, string userName, 
+            DateTime dateTimeNow, IQueryable<Transport> allTransports, IQueryable<Attribute> allAttributes, IQueryable<Interface> allInterfaces)
+        {
+            if (edge.IsLocked == lockUnlock)
+                return;
+
+            edge.IsLocked = lockUnlock;
+            edge.IsLockedStatusBy = userName;
+            edge.IsLockedStatusDate = dateTimeNow;
+
+            //Transport
+            if (!string.IsNullOrWhiteSpace(edge.TransportId))
+            {
+                var transportObject = allTransports.FirstOrDefault(x => x.Id == edge.TransportId);
+
+                //Transport attributes lock/unlock
+                var transportAttributes = allAttributes.Where(x => x.TerminalId == transportObject.OutputTerminalId || x.TerminalId == transportObject.InputTerminalId);
+                foreach (var attribute in transportAttributes)
+                {
+                    if (attribute.IsLocked == lockUnlock)
+                        continue;
+
+                    attribute.IsLocked = lockUnlock;
+                    attribute.IsLockedStatusBy = userName;
+                    attribute.IsLockedStatusDate = dateTimeNow;
+                }
+            }
+
+            //Interface
+            if (!string.IsNullOrWhiteSpace(edge.InterfaceId))
+            {
+                var interfaceObject = allInterfaces.FirstOrDefault(x => x.Id == edge.InterfaceId);
+
+                //Interface attributes lock/unlock
+                var interfaceAttributes = allAttributes.Where(x => x.TerminalId == interfaceObject.OutputTerminalId || x.TerminalId == interfaceObject.InputTerminalId);
+                foreach (var attribute in interfaceAttributes)
+                {
+                    if (attribute.IsLocked == lockUnlock)
+                        continue;
+
+                    attribute.IsLocked = lockUnlock;
+                    attribute.IsLockedStatusBy = userName;
+                    attribute.IsLockedStatusDate = dateTimeNow;
+                }
             }
         }
 
