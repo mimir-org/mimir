@@ -62,7 +62,9 @@ const Home = () => {
   useEffect(() => {
     dispatch(changeActiveMenu(null));
     const timeout = setTimeout(() => {
-      dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
+      if (flowView === (VIEW_TYPE.STARTPAGE as ViewType)) {
+        dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
+      }
     }, 4300);
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +78,7 @@ const Home = () => {
       {flowView === (VIEW_TYPE.STARTPAGE as ViewType) && (
         <>
           <StartPage />
-          {openProjectOpen ? <OpenProjectMenu projectState={projectState} dispatch={dispatch} /> : null}
+          {openProjectOpen && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
         </>
       )}
       {flowView !== VIEW_TYPE.STARTPAGE && (
