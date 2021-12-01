@@ -1,11 +1,16 @@
 import styled from "styled-components";
-import { FontSize } from "../../../../compLibrary/font";
+import { FontSize, FontWeight } from "../../../../compLibrary/font";
 
-const ElementLabel = styled.div`
+interface Props {
+  isHeader: boolean;
+}
+
+const ElementLabel = styled.div<Props>`
   position: relative;
   margin-left: 30px;
-  bottom: 1px;
+  bottom: 0.5px;
   font-size: ${FontSize.Standard};
+  font-weight: ${(props) => props.isHeader && FontWeight.Bold};
   width: 220px;
 `;
 

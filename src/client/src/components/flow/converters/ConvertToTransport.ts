@@ -6,8 +6,6 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const currentTransport = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   const transportId = CreateId();
 
-  console.log(currentTransport);
-
   if (currentTransport) {
     if (currentTransport.attributes) {
       currentTransport.attributes.forEach((x) => {
