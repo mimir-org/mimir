@@ -175,7 +175,7 @@
     <value>imf:hasChild</value>
   </data>
   <data name="hasInputTerminal" xml:space="preserve">
-    <value>imf:hasInTerminal</value>
+    <value>http://example.com/imf#hasInTerminal</value>
   </data>
   <data name="hasLocation" xml:space="preserve">
     <value>imf:hasLocation</value>
@@ -184,7 +184,7 @@
     <value>mimir:hasMasterProject</value>
   </data>
   <data name="hasOutputTerminal" xml:space="preserve">
-    <value>imf:hasOutTerminal</value>
+    <value>http://example.com/imf#hasOutTerminal</value>
   </data>
   <data name="hasParent" xml:space="preserve">
     <value>imf:hasParent</value>
@@ -262,16 +262,16 @@
     <value>sor:</value>
   </data>
   <data name="StreamTerminal" xml:space="preserve">
-    <value>imf:StreamTerminal</value>
+    <value>http://example.com/imf#StreamTerminal</value>
   </data>
   <data name="subClassOf" xml:space="preserve">
     <value>rdfs:subClassOf</value>
   </data>
   <data name="Terminal" xml:space="preserve">
-    <value>imf:Terminal</value>
+    <value>http://example.com/imf#Terminal</value>
   </data>
   <data name="Transport" xml:space="preserve">
-    <value>imf:Transport</value>
+    <value>http://example.com/imf#Transport</value>
   </data>
   <data name="type" xml:space="preserve">
     <value>rdf:type</value>

@@ -232,7 +232,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasInTerminal.
+        ///   Looks up a localized string similar to http://example.com/imf#hasInTerminal.
         /// </summary>
         internal static string hasInputTerminal {
             get {
@@ -259,7 +259,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasOutTerminal.
+        ///   Looks up a localized string similar to http://example.com/imf#hasOutTerminal.
         /// </summary>
         internal static string hasOutputTerminal {
             get {
@@ -493,7 +493,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:StreamTerminal.
+        ///   Looks up a localized string similar to http://example.com/imf#StreamTerminal.
         /// </summary>
         internal static string StreamTerminal {
             get {
@@ -511,7 +511,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:Terminal.
+        ///   Looks up a localized string similar to http://example.com/imf#Terminal.
         /// </summary>
         internal static string Terminal {
             get {
@@ -520,7 +520,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:Transport.
+        ///   Looks up a localized string similar to http://example.com/imf#Transport.
         /// </summary>
         internal static string Transport {
             get {

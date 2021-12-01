@@ -371,7 +371,7 @@ namespace RdfParserModule
 
             if (inputTerminalNodes is not null)
             {
-                var inputTerminals = GetObjects(nodeId, Resources.hasInputTerminal).Select(obj => new ParserTerminal
+                var inputTerminals = inputTerminalNodes.Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -385,7 +385,7 @@ namespace RdfParserModule
             }
             if (outputTerminalNodes is not null)
             {
-                var outputTerminals = GetObjects(nodeId, Resources.hasOutputTerminal).Select(obj => new ParserTerminal
+                var outputTerminals = outputTerminalNodes.Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -839,27 +839,24 @@ namespace RdfParserModule
             {
                 var attributeTypeId = GetAttributeTypeId(attribute.Iri);
                 var datum = GetDatum(attribute.Iri);
-                if (datum is null)
-                {
-                    continue;
-                }
                 var label = GetLabel(attributeTypeId);
-                
+                attribute.AttributeTypeId = GetLastPartOfIri(attributeTypeId).Replace("ID", string.Empty);
+
+                if (datum is null) continue;
+
                 var unit = new ParserUnit
                 {
                     Iri = datum,
                     Name = label,
                     Description = label
                 };
-                
+                attribute.Units.Add(unit);
+
+                var datumValue = GetDatumValue(datum);
+                if (datumValue is not null) attribute.Value = datumValue;
                 var selectedUnitId = GetDatumUnit(datum)?.Split("ID")[1];
                 if (selectedUnitId is not null) attribute.SelectedUnitId = selectedUnitId;
-                
-                var datumValue = GetDatumValue(datum);
-                if (datumValue is not null) attribute.Value = datumValue;                
-                
-                attribute.AttributeTypeId = GetLastPartOfIri(attributeTypeId).Replace("ID", string.Empty);
-                attribute.Units.Add(unit);
+
             }
 
             return attributes;
@@ -951,7 +948,14 @@ namespace RdfParserModule
 
         private string GetRds(string iri)
         {
-            return string.Empty;
+            var subject = GetOrCreateUriNode(iri);
+            var predicate = GetOrCreateUriNode(BuildIri("imf", "rds"));
+            var result = Store.GetTriplesWithSubjectPredicate(subject, predicate).SingleOrDefault()?.Object;
+
+            var lastPart = GetLastPartOfIri(result.ToString());
+
+
+            return lastPart;
         }
 
         private void InitaliseNamespaces(IDictionary<string, string> namespaces = null)
