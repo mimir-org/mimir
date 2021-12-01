@@ -34,7 +34,7 @@ const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
         <AnimationFilter edges={edges} edgeAnimation={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter edges={edges} nodes={nodes} items={partOfItems} dispatch={dispatch} visible={!!partOfItems.length} />
         <RelationFilter edges={edges} items={relationItems} dispatch={dispatch} visible={!!relationItems.length} />
-        <TransportFilter edges={edges} transportItems={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
+        <TransportFilter edges={edges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
 
         {/* {IsBlockView() && <TerminalsFilter activeTerminals={activeTerminals} allTerminals={allTerminals} dispatch={dispatch} />} */}
       </MenuColumn>

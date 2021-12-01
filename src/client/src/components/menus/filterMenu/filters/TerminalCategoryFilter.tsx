@@ -2,11 +2,11 @@ import { FilterElement } from "..";
 import { Connector, Edge } from "../../../../models";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "../handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "../helpers";
+import { TerminalCategory } from "./TransportFilter";
 interface Props {
-  terminalCategoryId: string;
+  category: TerminalCategory;
   edges: Edge[];
   items: Connector[];
-  label: string;
   dispatch: any;
   visible: boolean;
 }
@@ -18,27 +18,27 @@ interface Props {
  * @param interface
  * @returns a parent checkbox and a checkbox for each child.
  */
-const TerminalCategoryFilter = ({ terminalCategoryId, edges, items, label, dispatch, visible }: Props) => {
-  const isCategoryChecked = IsTerminalCategoryChecked(edges, terminalCategoryId);
+const TerminalCategoryFilter = ({ category, edges, items, dispatch, visible }: Props) => {
+  const isCategoryChecked = IsTerminalCategoryChecked(edges, category.id);
 
   return (
     visible && (
       <>
         <FilterElement
-          label={label}
-          onChange={() => OnTerminalCategoryChange(edges, terminalCategoryId, isCategoryChecked, dispatch)}
+          label={category.name}
+          onChange={() => OnTerminalCategoryChange(edges, category.id, isCategoryChecked, dispatch)}
           isChecked={isCategoryChecked}
           visible={visible}
           indent={2}
         />
 
         {items.map((conn) => {
-          const isChecked = IsTerminalTypeChecked(edges, terminalCategoryId, conn.terminalTypeId);
+          const isChecked = IsTerminalTypeChecked(edges, category.id, conn.terminalTypeId);
           return (
             <FilterElement
               key={conn.id}
               label={conn.name}
-              onChange={() => OnTerminalTypeChange(edges, terminalCategoryId, conn.terminalTypeId, isChecked, dispatch)}
+              onChange={() => OnTerminalTypeChange(edges, category.id, conn.terminalTypeId, isChecked, dispatch)}
               isChecked={isChecked}
               visible={visible}
               indent={3}

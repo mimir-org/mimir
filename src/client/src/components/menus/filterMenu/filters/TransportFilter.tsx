@@ -5,13 +5,13 @@ import { Connector, Edge } from "../../../../models";
 import { OnAllTransportsChange } from "../handlers";
 import { AllTransportsChecked } from "../helpers/IsChecked";
 
-interface Category {
+export interface TerminalCategory {
   id: string;
   name: string;
 }
 interface Props {
   edges: Edge[];
-  transportItems: Connector[];
+  items: Connector[];
   dispatch: any;
   visible: boolean;
 }
@@ -22,11 +22,11 @@ interface Props {
  * @param interface
  * @returns one parent checkbox, and one checkbox for each child.
  */
-const TransportFilter = ({ edges, transportItems, dispatch, visible }: Props) => {
-  const categories = [] as Category[];
+const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
+  const categories = [] as TerminalCategory[];
 
-  transportItems.forEach((item) => {
-    if (!categories.some((x: Category) => x.id === item.terminalCategory.id || x.name === item.terminalCategory.name))
+  items.forEach((item) => {
+    if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory.name))
       categories.push({ id: item.terminalCategoryId, name: item.terminalCategory.name });
   });
 
@@ -41,17 +41,16 @@ const TransportFilter = ({ edges, transportItems, dispatch, visible }: Props) =>
           isHeader
         />
 
-        {categories.map((category, index) => {
-          const items = transportItems.filter((item) => item.terminalCategoryId === category.id);
+        {categories.map((category) => {
+          const categoryItems = items.filter((item) => item.terminalCategoryId === category.id);
           return (
             <TerminalCategoryFilter
               key={category.id}
-              terminalCategoryId={category.id}
+              category={category}
               edges={edges}
-              items={items}
-              label={category.name}
+              items={categoryItems}
               dispatch={dispatch}
-              visible={!!items.length}
+              visible={!!categoryItems.length}
             />
           );
         })}
