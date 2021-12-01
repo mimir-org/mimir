@@ -871,6 +871,8 @@ namespace Mb.Services.Services
                     break;
             }
 
+            var userName = _contextAccessor.GetName();
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
 
             var node = new Node
             {
@@ -880,8 +882,6 @@ namespace Mb.Services.Services
                 PositionX = positionX,
                 PositionY = positionY,
                 Connectors = new List<Connector>(),
-                UpdatedBy = _contextAccessor.GetName(),
-                Updated = DateTime.Now.ToUniversalTime(),
                 Version = version,
                 Rds = string.Empty,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
@@ -891,10 +891,12 @@ namespace Mb.Services.Services
                 Length = null,
                 Height = null,
                 Cost = null,
-                Created = DateTime.Now.ToUniversalTime(),
-                CreatedBy = _contextAccessor.GetName(),
-                LibraryTypeId = null
-            };
+                Created = dateTimeNow,
+                CreatedBy = userName,
+                Updated = dateTimeNow,
+                UpdatedBy = userName,
+                LibraryTypeId = name
+        };
 
             var connector = new Relation
             {
@@ -958,10 +960,10 @@ namespace Mb.Services.Services
                 Version = version,
                 Name = createProject.Name,
                 Description = createProject.Description,
+                UpdatedBy = _contextAccessor.GetName(),
+                Updated = DateTime.Now.ToUniversalTime(),
                 IsSubProject = isSubProject,
                 ProjectOwner = _contextAccessor.GetName(),
-                Updated = DateTime.Now.ToUniversalTime(),
-                UpdatedBy = _contextAccessor.GetName(),
                 Nodes = new List<Node>
                 {
                     CreateInitAspectNode(Aspect.Function, pid),
