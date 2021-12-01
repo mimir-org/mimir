@@ -68,6 +68,10 @@ namespace RdfParserModule
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
+                .ForMember(dest => dest.QualifierId, opt => opt.MapFrom(src => src.QualifierId))
+                .ForMember(dest => dest.SourceId, opt => opt.MapFrom(src => src.SourceId))
+                .ForMember(dest => dest.ConditionId, opt => opt.MapFrom(src => src.ConditionId))
+                .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseId(src.NodeIri)))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units));
 

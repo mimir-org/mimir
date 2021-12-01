@@ -230,6 +230,7 @@ namespace RdfParserModule
 
             foreach (var attribute in attributes)
             {
+                var attributeNode = GetOrCreateUriNode(attribute.Iri);
                 FindAndAssertDomain(attribute);
 
                 var value = attribute.Value;
@@ -237,7 +238,22 @@ namespace RdfParserModule
                 var attributeType = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.AttributeTypeId));
                 Graph.Assert(new Triple(attributeType, label, Graph.CreateLiteralNode(attribute.Entity)));
 
-                var attributeNode = GetOrCreateUriNode(attribute.Iri);
+                var qualifier = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.QualifierId));
+                var source = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.SourceId));
+                var condition = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.ConditionId));
+                var format = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.FormatId));
+
+                var qPred = GetOrCreateUriNode(BuildIri("mimir", "qualifier"));
+                var sPred = GetOrCreateUriNode(BuildIri("mimir", "source"));
+                var cPred = GetOrCreateUriNode(BuildIri("mimir", "condition"));
+                var fPred = GetOrCreateUriNode(BuildIri("mimir", "format"));
+
+                Graph.Assert(new Triple(attributeNode, qPred, qualifier));
+                Graph.Assert(new Triple(attributeNode, sPred, source));
+                Graph.Assert(new Triple(attributeNode, cPred, condition));
+                Graph.Assert(new Triple(attributeNode, fPred, format));
+
+
                 Graph.Assert(new Triple(attributeNode, label, Graph.CreateLiteralNode(attribute.Entity)));
                 Graph.Assert(new Triple(attributeNode, type, physicalQuantity));
                 Graph.Assert(new Triple(attributeNode, type, attributeType));

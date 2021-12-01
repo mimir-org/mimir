@@ -371,7 +371,7 @@ namespace RdfParserModule
 
             if (inputTerminalNodes is not null)
             {
-                var inputTerminals = GetObjects(nodeId, Resources.hasInputTerminal).Select(obj => new ParserTerminal
+                var inputTerminals = inputTerminalNodes.Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -385,7 +385,7 @@ namespace RdfParserModule
             }
             if (outputTerminalNodes is not null)
             {
-                var outputTerminals = GetObjects(nodeId, Resources.hasOutputTerminal).Select(obj => new ParserTerminal
+                var outputTerminals = outputTerminalNodes.Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -831,35 +831,36 @@ namespace RdfParserModule
                 Domain = domain,
                 Key = GetLabel(attribute.ToString()),
                 NodeIri = iri,
-                Units = new List<ParserUnit>()
+                Units = new List<ParserUnit>(),
+                QualifierId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "qualifier")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
+                SourceId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "source")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
+                ConditionId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "condition")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
+                FormatId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "format")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
             }).ToList();
 
-
+            
             foreach (var attribute in attributes)
             {
                 var attributeTypeId = GetAttributeTypeId(attribute.Iri);
                 var datum = GetDatum(attribute.Iri);
-                if (datum is null)
-                {
-                    continue;
-                }
                 var label = GetLabel(attributeTypeId);
-                
+                attribute.AttributeTypeId = GetLastPartOfIri(attributeTypeId).Replace("ID", string.Empty);
+
+                if (datum is null) continue;
+
                 var unit = new ParserUnit
                 {
                     Iri = datum,
                     Name = label,
                     Description = label
                 };
-                
+                attribute.Units.Add(unit);
+
+                var datumValue = GetDatumValue(datum);
+                if (datumValue is not null) attribute.Value = datumValue;
                 var selectedUnitId = GetDatumUnit(datum)?.Split("ID")[1];
                 if (selectedUnitId is not null) attribute.SelectedUnitId = selectedUnitId;
-                
-                var datumValue = GetDatumValue(datum);
-                if (datumValue is not null) attribute.Value = datumValue;                
-                
-                attribute.AttributeTypeId = GetLastPartOfIri(attributeTypeId).Replace("ID", string.Empty);
-                attribute.Units.Add(unit);
+
             }
 
             return attributes;
@@ -951,7 +952,14 @@ namespace RdfParserModule
 
         private string GetRds(string iri)
         {
-            return string.Empty;
+            var subject = GetOrCreateUriNode(iri);
+            var predicate = GetOrCreateUriNode(BuildIri("imf", "rds"));
+            var result = Store.GetTriplesWithSubjectPredicate(subject, predicate).SingleOrDefault()?.Object;
+
+            var lastPart = GetLastPartOfIri(result.ToString());
+
+
+            return lastPart;
         }
 
         private void InitaliseNamespaces(IDictionary<string, string> namespaces = null)
@@ -964,6 +972,7 @@ namespace RdfParserModule
                 {"xml", "http://www.w3.org/XML/1998/namespace"},
                 {"xsd", "http://www.w3.org/2001/XMLSchema#"},
                 {"imf", "http://example.com/imf#"},
+                {"mimir", "http://example.com/mimir#"},
                 {"lis", "http://standards.iso.org/iso/15926/part14/"}
             };
 
