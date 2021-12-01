@@ -26,7 +26,7 @@ const SetTerminalXPos = (
   const marginXSmall = 5;
 
   if (offPage) {
-    if (position === Position.Right) return 30;
+    if (position === Position.Right) return 35;
     return -12;
   }
 

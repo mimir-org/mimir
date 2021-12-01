@@ -8,9 +8,10 @@ const OffPageBox = styled.div`
 
   .logo {
     display: flex;
-    width: 30px;
+    height: 35px;
+    width: 35px;
     position: relative;
-    top: 10px;
+    top: 12px;
     left: 1px;
     pointer-events: none;
   }
