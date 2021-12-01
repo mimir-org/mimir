@@ -1,7 +1,6 @@
 import { FlowElement } from "react-flow-renderer";
 import { Node } from "../../../models";
-import { GetNodeType, GetParent } from "../helpers";
-import { SetTreeNodePosition } from "../tree/helpers";
+import { GetNodeType } from "../helpers";
 
 /**
  * Component to convert a Mimir Node to a FlowElement that interacts with the Flow library.
@@ -10,7 +9,7 @@ import { SetTreeNodePosition } from "../tree/helpers";
  */
 const ConvertNodeToFlow = (node: Node) => {
   if (!node) return null;
-  const position = SetTreeNodePosition(node, GetParent(node));
+  const position = { x: node.positionX, y: node.positionY };
 
   return {
     id: node.id,
