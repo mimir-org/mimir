@@ -5,6 +5,7 @@ import { CreateOffPageNode } from "../block/helpers";
 import { CreateOffPageData } from "../block/helpers/CreateOffPageNode";
 import { Project } from "../../../models";
 import { IsOffPage } from "../../../helpers";
+import { Size } from "../../../compLibrary/size";
 
 const useOnConnectStop = (e, project: Project, dispatch: any, parentSize: BlockNodeSize) => {
   e.preventDefault();
@@ -13,7 +14,13 @@ const useOnConnectStop = (e, project: Project, dispatch: any, parentSize: BlockN
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
 
-    if (!IsOffPage(sourceNode)) {
+    // Calculate the boundaries for OffPage dropzone
+    const marginOffPageX = parentSize.width / 10;
+    const leftBound = parentSize.width + Size.BlockMarginX - marginOffPageX;
+    const rightBound = parentSize.width + Size.BlockMarginX - marginOffPageX + 200;
+    const validDrop = !IsOffPage(sourceNode) && e.clientX > leftBound && e.clientX < rightBound;
+
+    if (validDrop) {
       const offPageData = {
         sourceNodeId: edgeEvent.nodeId,
         sourceConnectorId: edgeEvent.sourceId,

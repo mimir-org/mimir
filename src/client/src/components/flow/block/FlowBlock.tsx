@@ -28,6 +28,7 @@ import {
   animatedEdgeSelector,
   location3DSelector,
 } from "../../../redux/store";
+import { Size } from "../../../compLibrary/size";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -154,7 +155,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           paneMoveable={true}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
-          defaultPosition={[450, 80]}
+          defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
           onlyRenderVisibleElements={true}
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}

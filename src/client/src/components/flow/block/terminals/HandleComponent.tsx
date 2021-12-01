@@ -41,30 +41,35 @@ const HandleComponent = ({
   return (
     <>
       {terminals.map((conn) => {
-        const [type, pos] = GetBlockHandleType(conn, electro);
-        const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
+        if (conn.visible) {
+          const [type, pos] = GetBlockHandleType(conn, electro);
+          const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
+          const topPos = SetTerminalYPos(conn, pos, electro, isParent, order, size.height);
+          const leftPos = SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width);
 
-        return (
-          <HandleBox
-            visible={visible && conn.visible && !IsPartOf(conn)}
-            id={"handle-" + conn.id}
-            top={SetTerminalYPos(conn, pos, electro, isParent, order, size.height)}
-            left={SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width)}
-            key={conn.id}
-            onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
-            onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
-          >
-            <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
-            <Handle
-              type={type}
-              style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
-              position={pos}
-              id={conn.id}
-              className={className}
-              isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, dispatch)}
-            />
-          </HandleBox>
-        );
+          return (
+            <HandleBox
+              visible={visible && conn.visible && !IsPartOf(conn)}
+              id={"handle-" + conn.id}
+              top={topPos}
+              left={leftPos}
+              key={conn.id}
+              onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
+              onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
+            >
+              <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
+              <Handle
+                type={type}
+                style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
+                position={pos}
+                id={conn.id}
+                className={className}
+                isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, dispatch)}
+              />
+            </HandleBox>
+          );
+        }
+        return null;
       })}
     </>
   );
