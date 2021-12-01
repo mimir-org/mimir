@@ -883,6 +883,23 @@ namespace Mb.Services.Services
                         edge.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
                     }
 
+                    //Edge (transport/interface) out from child lock/unlock
+                    if (childNode.ToEdges != null && childNode.ToEdges.Any())
+                    {
+                        foreach (var toEdge in childNode.ToEdges)
+                        {
+                            if(string.IsNullOrEmpty(toEdge.TransportId) && string.IsNullOrWhiteSpace(toEdge.InterfaceId))
+                                continue;
+
+                            if(toEdge.IsLocked == parentNode.IsLocked)
+                                continue;
+
+                            toEdge.IsLocked = parentNode.IsLocked;
+                            toEdge.IsLockedStatusBy = userName;
+                            toEdge.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+                        }
+                    }
+
                     var attributeTerminalIds = new List<string>();
 
                     //Transport attributes
