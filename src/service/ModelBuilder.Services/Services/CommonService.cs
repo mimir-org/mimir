@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,18 +13,20 @@ namespace Mb.Services.Services
 {
     public class CommonService : ICommonService
     {
-        private readonly IContractorRepository _contractorRepository;
+        private readonly ICollaborationPartnerRepository _collaborationPartnerRepository;
         private readonly IAttributeRepository _attributeRepository;
+        private readonly IMapper _mapper;
 
-        public CommonService(IContractorRepository contractorRepository, IAttributeRepository attributeRepository)
+        public CommonService(ICollaborationPartnerRepository collaborationPartnerRepository, IAttributeRepository attributeRepository, IMapper mapper)
         {
-            _contractorRepository = contractorRepository;
+            _collaborationPartnerRepository = collaborationPartnerRepository;
             _attributeRepository = attributeRepository;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Contractor> GetAllContractors()
+        public IEnumerable<CollaborationPartner> GetAllCollaborationPartners()
         {
-            return _contractorRepository.GetAll().OrderBy(x => x.Name).ToList();
+            return _collaborationPartnerRepository.GetAll().OrderBy(x => x.Name).ToList();
         }
 
         /// <summary>
@@ -63,23 +67,43 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Create contractors
+        /// Create collaboration partners
         /// </summary>
-        /// <param name="contractors"></param>
+        /// <param name="collaborationPartners"></param>
         /// <returns></returns>
-        public async Task CreateContractorsAsync(IEnumerable<Contractor> contractors)
+        public async Task CreateCollaborationPartnersAsync(IEnumerable<CollaborationPartnerAm> collaborationPartners)
         {
-            var existingTypes = _contractorRepository.GetAll().ToList();
-            var notExistingTypes = contractors.Where(x => existingTypes.All(y => y.Id != x.Id)).ToList();
+            var existingTypes = _collaborationPartnerRepository.GetAll().ToList();
+            var notExistingTypes = collaborationPartners.Where(x => existingTypes.All(y => y.Name != x.Name && y.Domain != x.Domain)).ToList();
+            
             if (!notExistingTypes.Any())
-                return;
+                throw new ModelBuilderDuplicateException("There is already registered a collaboration partners with names or domains");
 
             foreach (var item in notExistingTypes)
             {
-                await _contractorRepository.CreateAsync(item);
+                var cp = _mapper.Map<CollaborationPartner>(item);
+                await _collaborationPartnerRepository.CreateAsync(cp);
             }
 
-            await _contractorRepository.SaveAsync();
+            await _collaborationPartnerRepository.SaveAsync();
+        }
+
+        /// <summary>
+        /// Create a collaboration partner
+        /// </summary>
+        /// <param name="collaborationPartner"></param>
+        /// <returns></returns>
+        /// <exception cref="ModelBuilderDuplicateException"></exception>
+        public async Task<CollaborationPartner> CreateCollaborationPartnerAsync(CollaborationPartnerAm collaborationPartner)
+        {
+            var existingType = await _collaborationPartnerRepository.FindBy(x => x.Name == collaborationPartner.Name || x.Domain == collaborationPartner.Domain).FirstOrDefaultAsync();
+            if (existingType != null)
+                throw new ModelBuilderDuplicateException("There is already registered a collaboration partner with name or domain");
+
+            var cp = _mapper.Map<CollaborationPartner>(collaborationPartner);
+            await _collaborationPartnerRepository.CreateAsync(cp);
+            await _collaborationPartnerRepository.SaveAsync();
+            return cp;
         }
     }
 }

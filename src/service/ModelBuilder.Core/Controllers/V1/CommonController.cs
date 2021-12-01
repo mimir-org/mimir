@@ -4,6 +4,7 @@ using System.Linq;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -36,20 +37,48 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all contractors
+        /// Get all collaboration-partners
         /// </summary>
         /// <returns></returns>
-        [HttpGet("contractors")]
-        [ProducesResponseType(typeof(ICollection<Contractor>), StatusCodes.Status200OK)]
+        [HttpGet("collaboration-partner")]
+        [ProducesResponseType(typeof(ICollection<CollaborationPartner>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetContractors()
+        public IActionResult GetCollaborationPartners()
         {
             try
             {
-                var data = _commonService.GetAllContractors().ToList();
+                var data = _commonService.GetAllCollaborationPartners().ToList();
                 return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Create a collaboration partner
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("collaboration-partner")]
+        [ProducesResponseType(typeof(CollaborationPartner), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Admin")]
+        public IActionResult CreateCollaborationPartner(CollaborationPartnerAm collaborationPartner)
+        {
+            try
+            {
+                var data = _commonService.CreateCollaborationPartnerAsync(collaborationPartner);
+                return StatusCode(StatusCodes.Status201Created, data);
+            }
+            catch (ModelBuilderDuplicateException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, e.Message);
             }
             catch (Exception e)
             {

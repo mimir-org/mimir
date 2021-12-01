@@ -25,6 +25,7 @@ import {
   animatedModuleSelector,
   simpleTypeSelector,
   typeEditorInspectorActiveTabSelector,
+  usernameSelector,
 } from "../../redux/store";
 
 interface Props {
@@ -37,6 +38,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
 
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
+  const username = useAppSelector(usernameSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
   const inspectorOpen = useAppSelector(isTypeEditorInspectorOpen);
   const activeTabIndex = useAppSelector(typeEditorInspectorActiveTabSelector);
@@ -113,6 +115,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       <InspectorHeader
         project={project}
         element={createLibraryType}
+        username={username}
         dispatch={dispatch}
         open={inspectorOpen}
         activeTabIndex={activeTabIndex}

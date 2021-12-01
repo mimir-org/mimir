@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 
