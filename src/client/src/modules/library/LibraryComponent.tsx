@@ -3,7 +3,7 @@ import { TextResources } from "../../assets/text";
 import { LibraryCategory } from "../../models/project";
 import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary/input/text";
-import { LibraryCategoryComponent, LibrarySubPageComponent } from ".";
+import { LibraryCategoryComponent } from ".";
 import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
 import { FavoritesBox, LibBody, SearchBox } from "./styled";
 import { TypeEditorModule } from "../../typeEditor";
@@ -63,7 +63,7 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
             />
           );
         })}
-        <LibrarySubPageComponent dispatch={dispatch} subProjects={subProjects} />
+        {/* <LibrarySubPageComponent dispatch={dispatch} subProjects={subProjects} /> */}
       </LibBody>
     </>
   );

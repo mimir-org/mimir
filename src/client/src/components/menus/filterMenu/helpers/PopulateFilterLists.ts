@@ -3,7 +3,7 @@ import { Connector, Edge } from "../../../../models";
 import { IsLocationTerminal, IsPartOf, IsTransport, IsProductTerminal } from "../../../flow/helpers";
 
 /**
- * Method to add content to the drop-down menus in FilterMenu.
+ * Method to add content to the different categories in the Visual Filter.
  * @param edges
  * @param transportItems
  * @param relationItems

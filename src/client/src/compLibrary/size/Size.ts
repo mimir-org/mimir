@@ -27,7 +27,7 @@ const Size = {
   // Menus
   TopMenu_Height: 56,
   MenuSmall_Width: 330,
-  MenuSmall_Height: 220,
+  MenuSmall_Height: 200,
 };
 
 export default Size;

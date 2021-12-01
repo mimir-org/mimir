@@ -9,7 +9,7 @@ const SelectValue = styled.div<Props>`
   display: flex;
   flex-direction: column;
   position: relative;
-  border-top: ${(props) => (props.isSelected ? "dashed 1px" + Color.DarkGrey : 0)};
+  border-top: ${(props) => (props.isSelected ? "dashed 1px" + Color.GreyDark : 0)};
 `;
 
 export default SelectValue;

@@ -1,6 +1,6 @@
 import { ProjectData } from "./";
-import { TextResources } from "../../../../../assets/text";
 import { ProjectSimple } from "../../../../../models";
+import { TextResources } from "../../../../../assets/text";
 import { ProjectListBox, ProjectDataContainer, ProjectListLabels } from "./styled";
 
 interface Props {

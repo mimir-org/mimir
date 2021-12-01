@@ -12,6 +12,7 @@ import { IPublicClientApplication } from "@azure/msal-browser";
 import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
 import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
+import { Button } from "../../compLibrary/buttons";
 
 // Props
 type AppProps = {
@@ -40,9 +41,8 @@ const App = ({ pca }: AppProps) => {
         <Home />
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <LoginBox onClick={login}>
-          <img src={LogoutIcon} alt="icon" className="icon" />
-          <p>{TextResources.Login_Label}</p>
+        <LoginBox>
+          <Button text={TextResources.Login_Label} onClick={login} icon={LogoutIcon} />
         </LoginBox>
       </UnauthenticatedTemplate>
     </MsalProvider>

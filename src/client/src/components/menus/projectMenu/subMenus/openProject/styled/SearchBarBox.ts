@@ -22,7 +22,7 @@ const SearchBarBox = styled.div`
   }
 
   input[type="text"]::placeholder {
-    color: ${Color.DarkerGrey};
+    color: ${Color.GreyDarker};
     font-style: italic;
     opacity: 0.5;
   }

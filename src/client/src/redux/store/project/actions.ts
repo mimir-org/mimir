@@ -110,66 +110,66 @@ export function updateBlockPosition(nodeId: string, x: number, y: number): Types
   };
 }
 
-export function setNodeVisibility(node: Node, isParent: boolean) {
+export function setNodeVisibility(node: Node, isParent: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_NODE_VISIBILITY,
     payload: { node, isParent },
   };
 }
 
-export function setEdgeVisibility(edge: Edge, isHidden: boolean) {
+export function setEdgeVisibility(edge: Edge, isHidden: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_EDGE_VISIBILITY,
     payload: { edge, isHidden },
   };
 }
 
-export function setEdgeAnimation(edge: Edge, animated: boolean) {
+export function setEdgeAnimation(edge: Edge, animated: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_EDGE_ANIMATION,
     payload: { edge, animated },
   };
 }
 
-export function setLocationNodeSize(nodeId: string, key: string, value: number) {
+export function setLocationNodeSize(nodeId: string, key: string, value: number): Types.ProjectActionTypes {
   return {
     type: Types.SET_LOCATION_NODE_SIZE,
     payload: { nodeId, key, value },
   };
 }
 
-export function setActiveNode(nodeId: string, isActive: boolean) {
+export function setActiveNode(nodeId: string, isActive: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_ACTIVE_NODE,
     payload: { nodeId, isActive },
   };
 }
 
-export function setActiveBlockNode(nodeId: string) {
+export function setActiveBlockNode(nodeId: string): Types.ProjectActionTypes {
   return {
     type: Types.SET_ACTIVE_BLOCKNODE,
     payload: { nodeId },
   };
 }
 
-export function setActiveEdge(edgeId: string, isActive: boolean) {
+export function setActiveEdge(edgeId: string, isActive: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_ACTIVE_EDGE,
     payload: { edgeId, isActive },
   };
 }
 
-export function changeSelectedProject(projectId: string) {
+export function changeSelectedProject(projectId: string): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_SELECTED_PROJECT,
     payload: { projectId },
   };
 }
 
-export function changeAllNodes(visible: boolean) {
+export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ALL_NODES,
-    payload: visible,
+    payload: { visible },
   };
 }
 
@@ -342,7 +342,7 @@ export function changeActiveConnector(
   visible: boolean,
   inputOrder: number,
   outputOrder: number
-) {
+): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {
@@ -355,7 +355,7 @@ export function changeActiveConnector(
   };
 }
 
-export function exportProjectToFile(project: Project, fileName: string, isSubProject: boolean) {
+export function exportProjectToFile(project: Project, fileName: string, isSubProject: boolean): Types.ProjectActionTypes {
   return {
     type: Types.EXPORT_PROJECT_TO_FILE,
     payload: {
@@ -366,31 +366,38 @@ export function exportProjectToFile(project: Project, fileName: string, isSubPro
   };
 }
 
-export function importProjectAction(project: ProjectAm) {
+export function importProjectAction(project: ProjectAm): Types.ProjectActionTypes {
   return {
     type: Types.IMPORT_PROJECT,
     payload: project,
   };
 }
 
-export function setIsLockedNode(node: Node, project: Project, isLocked: boolean): Types.LockUnlockNode {
+export function setIsLockedNode(node: Node, project: Project, isLocked: boolean, isLockedBy: string): Types.LockUnlockNode {
   return {
     type: Types.LOCK_UNLOCK_NODE,
     payload: {
       id: node.id,
       projectId: project.id,
       isLocked,
+      isLockedBy,
     },
   };
 }
 
-export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, isLocked: boolean): Types.LockUnlockNodeAttribute {
+export function setIsLockedNodeAttribute(
+  attribute: Attribute,
+  nodeId: string,
+  isLocked: boolean,
+  isLockedBy: string
+): Types.LockUnlockNodeAttribute {
   return {
     type: Types.LOCK_UNLOCK_NODE_ATTRIBUTE,
     payload: {
       id: attribute.id,
       nodeId,
       isLocked,
+      isLockedBy,
     },
   };
 }
@@ -398,7 +405,8 @@ export function setIsLockedNodeAttribute(attribute: Attribute, nodeId: string, i
 export function setIsLockedTransportAttribute(
   attribute: Attribute,
   edge: Edge,
-  isLocked: boolean
+  isLocked: boolean,
+  isLockedBy: string
 ): Types.LockUnlockTransportAttribute {
   return {
     type: Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
@@ -406,6 +414,7 @@ export function setIsLockedTransportAttribute(
       id: attribute.id,
       edgeId: edge.id,
       isLocked,
+      isLockedBy,
     },
   };
 }
@@ -413,7 +422,8 @@ export function setIsLockedTransportAttribute(
 export function setIsLockedInterfaceAttribute(
   attribute: Attribute,
   edge: Edge,
-  isLocked: boolean
+  isLocked: boolean,
+  isLockedBy: string
 ): Types.LockUnlockInterfaceAttribute {
   return {
     type: Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
@@ -421,6 +431,7 @@ export function setIsLockedInterfaceAttribute(
       id: attribute.id,
       edgeId: edge.id,
       isLocked,
+      isLockedBy,
     },
   };
 }
@@ -429,7 +440,8 @@ export function setIsLockedNodeTerminalAttribute(
   attribute: Attribute,
   terminalId: string,
   node: Node,
-  isLocked: boolean
+  isLocked: boolean,
+  isLockedBy: string
 ): Types.LockUnlockNodeTerminalAttribute {
   return {
     type: Types.LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE,
@@ -438,6 +450,7 @@ export function setIsLockedNodeTerminalAttribute(
       terminalId,
       nodeId: node.id,
       isLocked,
+      isLockedBy,
     },
   };
 }
@@ -445,7 +458,8 @@ export function setIsLockedTransportTerminalAttribute(
   attribute: Attribute,
   terminalId: string,
   edge: Edge,
-  isLocked: boolean
+  isLocked: boolean,
+  isLockedBy: string
 ): Types.LockUnlockTransportTerminalAttribute {
   return {
     type: Types.LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
@@ -454,6 +468,7 @@ export function setIsLockedTransportTerminalAttribute(
       terminalId,
       edgeId: edge.id,
       isLocked,
+      isLockedBy,
     },
   };
 }
@@ -461,7 +476,8 @@ export function setIsLockedInterfaceTerminalAttribute(
   attribute: Attribute,
   terminalId: string,
   edge: Edge,
-  isLocked: boolean
+  isLocked: boolean,
+  isLockedBy: string
 ): Types.LockUnlockInterfaceTerminalAttribute {
   return {
     type: Types.LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
@@ -469,6 +485,7 @@ export function setIsLockedInterfaceTerminalAttribute(
       id: attribute.id,
       terminalId,
       isLocked,
+      isLockedBy,
       edgeId: edge.id,
     },
   };
@@ -478,7 +495,8 @@ export function setIsLockedCompositeAttribute(
   attribute: Attribute,
   compositeId: string,
   node: Node,
-  isLocked: boolean
+  isLocked: boolean,
+  isLockedBy: string
 ): Types.LockUnlockCompositeAttribute {
   return {
     type: Types.LOCK_UNLOCK_COMPOSITE_ATTRIBUTE,
@@ -487,6 +505,7 @@ export function setIsLockedCompositeAttribute(
       compositeId,
       nodeId: node.id,
       isLocked,
+      isLockedBy,
     },
   };
 }

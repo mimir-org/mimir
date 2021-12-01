@@ -46,7 +46,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     updateNodeInternals(node?.id);
-  }, [node, updateNodeInternals]);
+  });
 
   if (!node) return null;
 
@@ -57,8 +57,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     <NodeBox
       id={type + node.id}
       product={IsProduct(node)}
-      width={node.width}
-      height={node.height}
+      size={{ width: node.width, height: node.height }}
       visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
@@ -66,14 +65,13 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       onMouseOver={() => OnHover(showTerminalBox)}
       onMouseOut={() => OnMouseOut(showTerminalBox)}
     >
-      <BlockLogoComponent node={node} parent={false} />
+      <BlockLogoComponent node={node} />
 
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
-        parent={false}
         electro={electro}
         onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
         showMenuBox={terminalBox}
@@ -82,11 +80,10 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         nodes={nodes}
-        height={node.height}
-        width={node.width}
+        size={{ width: node.width, height: node.height }}
         terminals={terminals}
-        parent={false}
         electro={electro}
+        dispatch={dispatch}
       />
     </NodeBox>
   );

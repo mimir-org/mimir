@@ -1,25 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as Helpers from "./helpers/";
+import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
-import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { setEdgeAnimation, updatePosition } from "../../../redux/store/project/actions";
+import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { TreeFilterMenu } from "../../menus/filterMenu";
+import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
-import { SetDarkModeColor } from "../../../helpers";
+import { IsOffPage, SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
-import { IsTransport } from "../helpers";
 import {
   animatedEdgeSelector,
+  filterSelector,
   darkModeSelector,
   iconSelector,
   inspectorSelector,
   librarySelector,
   projectSelector,
-  treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
 
@@ -42,13 +41,14 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
-  const treeFilter = useAppSelector(treeFilterSelector);
+  const visualFilter = useAppSelector(filterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
 
   const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
+
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
@@ -105,12 +105,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
     SetDarkModeColor(darkMode);
   }, [darkMode]);
 
-  useEffect(() => {
-    project?.edges.forEach((e) => {
-      IsTransport(e.fromConnector) && dispatch(setEdgeAnimation(e, false));
-    });
-  }, []);
-
   return (
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}></div>
@@ -134,7 +128,9 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-      {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
+      {visualFilter && (
+        <VisualFilterComponent elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
+      )}
     </>
   );
 };

@@ -11,6 +11,14 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
   };
 
+  img, picture, video, canvas, svg {
+    max-width: 100%;
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+
   #root {
     margin: 0;
     height: 100%;

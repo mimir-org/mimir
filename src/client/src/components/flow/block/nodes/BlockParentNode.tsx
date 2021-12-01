@@ -10,6 +10,7 @@ import { GetAspectColor } from "../../../../helpers";
 import { setBlockNodeSize } from "../redux/actions";
 import { Size } from "../../../../compLibrary/size";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
+import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 
 /**
  * Component for the large parent block in BlockView.
@@ -49,32 +50,31 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <ParentContainerComponent
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
-        selected={node.isBlockSelected}
-        width={parentBlockSize.width}
-        height={parentBlockSize.height}
-        hasChildren={terminals.length > 0}
-        company={process.env.REACT_APP_COMPANY}
+        size={parentBlockSize}
+        hasTerminals={terminals.length > 0}
+        isSecondaryNode={node.id === secondaryNode?.id}
+        onParentClick={() => OnParentClick(dispatch, node)}
+        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
       />
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        parent={true}
+        isParent={true}
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        showMenuBox={true}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
-        parent={true}
+        isParent={true}
         nodes={nodes}
-        height={parentBlockSize.height}
-        width={parentBlockSize.width}
+        size={parentBlockSize}
         terminals={terminals}
         electro={electro}
+        dispatch={dispatch}
       />
     </>
   );

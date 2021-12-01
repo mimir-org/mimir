@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../compLibrary/colors";
-import { FontSize } from "../../../../../../compLibrary/font";
+import { FontSize, FontWeight } from "../../../../../../compLibrary/font";
 
 interface Props {
   isSelected: boolean;
@@ -12,8 +12,8 @@ const ProjectDataBox = styled.div<Props>`
   align-items: center;
   height: 30px;
   padding: 0px 10px 0px 8px;
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
-  text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
+  font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
+  text-decoration: ${(props) => props.isSelected && "underline"};
   font-size: ${FontSize.Small};
   color: ${Color.Black};
   cursor: pointer;
@@ -42,12 +42,22 @@ const ProjectDataBox = styled.div<Props>`
   }
 
   &:nth-of-type(odd) {
-    background: ${Color.LightPurple};
+    background: ${Color.PurpleLight};
   }
 
   &:hover {
-    background: ${Color.LightBlue};
+    background: ${Color.BlueLight};
   }
+
+  /* .owner,
+  .name,
+  .edited {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+  } */
 `;
 
 export default ProjectDataBox;

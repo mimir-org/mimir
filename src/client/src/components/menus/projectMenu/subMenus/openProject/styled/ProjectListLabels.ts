@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../compLibrary/colors";
-import { FontSize } from "../../../../../../compLibrary/font";
+import { FontSize, FontWeight } from "../../../../../../compLibrary/font";
 
 const ProjectListLabels = styled.div`
   display: flex;
   justify-content: space-between;
-  font-weight: normal;
+  font-weight: ${FontWeight.Normal};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   border-bottom: 2px solid ${Color.BlueMagenta};

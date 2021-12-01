@@ -7,8 +7,9 @@ import { UserMenuComponent } from "../menus/userMenu";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
+import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
-import { getContractors, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
+import { getCollaborationPartners, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
@@ -51,7 +52,7 @@ const Home = () => {
     dispatch(search(""));
     dispatch(searchLibrary(""));
     dispatch(getUser());
-    dispatch(getContractors());
+    dispatch(getCollaborationPartners());
     dispatch(getParsers());
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
@@ -92,6 +93,7 @@ const Home = () => {
       )}
       {createProjectOpen && <CreateProjectMenu />}
       <ErrorModule />
+      <ValidationModule />
     </>
   );
 };

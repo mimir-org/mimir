@@ -10,7 +10,7 @@ const LibElement = styled.div<Props>`
   width: 286px;
   height: 30px;
   border: 1px solid;
-  border-color: ${(props) => (props.active ? Color.Black : Color.DarkerGrey)};
+  border-color: ${(props) => (props.active ? Color.Black : Color.GreyDarker)};
   border-style: ${(props) => (props.active ? "dashed" : "default")};
   border-radius: 3px;
   background-color: ${Color.White};
@@ -32,7 +32,7 @@ const LibElement = styled.div<Props>`
   }
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     text-decoration: underline;
   }
 `;

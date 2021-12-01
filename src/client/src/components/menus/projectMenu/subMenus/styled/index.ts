@@ -8,3 +8,4 @@ export { default as RightContainer } from "./RightContainer";
 export { default as OpenButton } from "./OpenButton";
 export { default as ButtonBox } from "./ButtonBox";
 export { default as ButtonsContainer } from "./ButtonsContainer";
+export { default as InputBox } from "./InputBox";

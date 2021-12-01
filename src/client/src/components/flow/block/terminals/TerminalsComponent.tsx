@@ -10,12 +10,12 @@ interface Props {
   inputMenuOpen: boolean;
   outputMenuOpen: boolean;
   terminals: Connector[];
-  parent: boolean;
   electro: boolean;
-  showMenuBox: boolean;
   showInTerminalMenu: any;
   showOutTerminalMenu: any;
   onClick: (conn: Connector) => void;
+  isParent?: boolean;
+  showMenuBox?: boolean;
 }
 
 /**
@@ -28,12 +28,12 @@ const TerminalsContainerComponent = ({
   inputMenuOpen,
   outputMenuOpen,
   terminals,
-  parent,
   electro,
-  showMenuBox,
   showInTerminalMenu,
   showOutTerminalMenu,
   onClick,
+  isParent = false,
+  showMenuBox = true,
 }: Props) => {
   const inTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
   const outTerminals = terminals.filter((t) => !IsInputTerminal(t) && !IsPartOf(t));
@@ -44,7 +44,7 @@ const TerminalsContainerComponent = ({
     <>
       <TerminalsMenuBox
         node={node}
-        isParent={parent}
+        isParent={isParent}
         isInput={true}
         showMenuBox={showMenuBox}
         terminals={inTerminals}
@@ -52,7 +52,7 @@ const TerminalsContainerComponent = ({
       />
       <TerminalsMenuBox
         node={node}
-        isParent={parent}
+        isParent={isParent}
         isInput={false}
         showMenuBox={showMenuBox}
         terminals={outTerminals}
@@ -61,8 +61,8 @@ const TerminalsContainerComponent = ({
       {inputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
-          parent={parent}
-          input={true}
+          isParent={isParent}
+          IsInput={true}
           terminals={inTerminals}
           electro={electro}
           onClick={onClick}
@@ -73,8 +73,8 @@ const TerminalsContainerComponent = ({
       {outputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
-          parent={parent}
-          input={false}
+          isParent={isParent}
+          IsInput={false}
           electro={electro}
           terminals={outTerminals}
           onClick={onClick}

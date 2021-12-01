@@ -34,7 +34,7 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
       version: currentInterface.version,
       rds: currentInterface.rds,
       name: currentInterface.name,
-      label: currentInterface.label,
+      label: currentInterface.label ?? currentInterface.name,
       description: currentInterface.description,
       statusId: currentInterface.statusId,
       semanticReference: currentInterface.semanticReference,

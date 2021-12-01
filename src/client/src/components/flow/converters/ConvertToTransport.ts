@@ -43,7 +43,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
       version: currentTransport.version,
       rds: currentTransport.rds,
       name: currentTransport.name,
-      label: currentTransport.label,
+      label: currentTransport.label ?? currentTransport.name,
       description: currentTransport.description,
       statusId: currentTransport.statusId,
       semanticReference: currentTransport.semanticReference,

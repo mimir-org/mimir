@@ -7,8 +7,7 @@ import {
   projectMenuSelector,
   electroSelector,
   explorerSelector,
-  treeFilterSelector,
-  blockFilterSelector,
+  filterSelector,
   libOpenSelector,
   treeSelector,
   projectSelector,
@@ -21,8 +20,7 @@ import { VIEW_TYPE } from "../../models/project";
 const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
-  const treeFilterOpen = useAppSelector(treeFilterSelector);
-  const blockFilteOpen = useAppSelector(blockFilterSelector);
+  const filterOpen = useAppSelector(filterSelector);
   const projectMenuOpen = useAppSelector(projectMenuSelector);
   const userMenuOpen = useAppSelector(userMenuSelector);
   const libOpen = useAppSelector(libOpenSelector);
@@ -46,14 +44,7 @@ const Header = () => {
         </LogoBox>
       </HeaderBox>
       {flowView !== VIEW_TYPE.STARTPAGE && (
-        <ToolBar
-          libOpen={libOpen}
-          explorerOpen={explorerOpen}
-          treeView={treeView}
-          treeFilter={treeFilterOpen}
-          blockFilter={blockFilteOpen}
-          electro={electro}
-        />
+        <ToolBar libOpen={libOpen} explorerOpen={explorerOpen} treeView={treeView} visualFilter={filterOpen} electro={electro} />
       )}
     </>
   );

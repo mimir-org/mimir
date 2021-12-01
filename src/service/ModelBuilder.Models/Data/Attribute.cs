@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
@@ -32,7 +31,7 @@ namespace Mb.Models.Data
             set => SetDomain(value);
         }
 
-        public string Key { get; set; }
+        public string Entity { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }
         public string AttributeTypeId { get; set; }

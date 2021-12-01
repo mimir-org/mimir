@@ -1,11 +1,17 @@
 import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { projectSelector, useAppSelector } from "../../../../redux/store";
+import { projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { OffPageRequired } from "../../../../assets/icons/offpage";
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 
+/**
+ * Component for an offpage node in BlockView
+ * @param params
+ * @returns an offpage node that can be connected to other nodes.
+ */
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
+  const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const nodes = project?.nodes;
   const type = "BlockOffPageNode-";
@@ -16,11 +22,9 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
       <HandleComponent
         nodes={nodes}
-        height={data?.height}
-        width={data?.width}
+        size={{ width: data?.width, height: data?.height }}
         terminals={data.connectors}
-        parent={false}
-        electro={false}
+        dispatch={dispatch}
       />
     </OffPageBox>
   );
