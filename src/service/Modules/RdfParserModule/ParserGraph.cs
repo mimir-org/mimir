@@ -4,9 +4,9 @@ namespace RdfParserModule
 {
     public class ParserGraph
     {
-        public string Id { get; set; }
         public string Iri { get; set; }
         public string Name { get; set; }
+        public string Domain { get; set; }
         public string Label { get; set; }
         public bool IsSubProject { get; set; }
         public string Version { get; set; }
@@ -17,7 +17,7 @@ namespace RdfParserModule
         {
             foreach (var node in Nodes)
             {
-                if (node.Id == nodeIri)
+                if (node.Iri == nodeIri)
                 {
                     return node;
                 }
@@ -28,7 +28,7 @@ namespace RdfParserModule
 
         public override string ToString()
         {
-            return "Project_" + Id;
+            return "Project_" + Iri;
         }
     }
 }

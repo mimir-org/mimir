@@ -49,6 +49,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
+
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {

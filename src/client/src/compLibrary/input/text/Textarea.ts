@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Textarea = styled.textarea<Props>`
-  border: 1px solid ${Color.DarkerGrey};
+  border: 1px solid ${Color.GreyDarker};
   box-sizing: border-box;
   border-radius: 5px;
   margin-bottom: 10px;

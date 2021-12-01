@@ -21,7 +21,7 @@ const LocationSubType = styled.div`
   }
 
   :hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     p {
       text-decoration: underline;
     }

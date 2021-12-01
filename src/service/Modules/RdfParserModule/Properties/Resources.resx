@@ -141,6 +141,9 @@
   <data name="desc" xml:space="preserve">
     <value>rdfs:comment</value>
   </data>
+  <data name="domain" xml:space="preserve">
+    <value>mimir:domain</value>
+  </data>
   <data name="equinorPrefix" xml:space="preserve">
     <value>eq:</value>
   </data>
@@ -254,6 +257,9 @@
   </data>
   <data name="selectedUnit" xml:space="preserve">
     <value>imf:selectedUnit</value>
+  </data>
+  <data name="sorPrefix" xml:space="preserve">
+    <value>sor:</value>
   </data>
   <data name="StreamTerminal" xml:space="preserve">
     <value>imf:StreamTerminal</value>

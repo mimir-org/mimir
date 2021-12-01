@@ -10,7 +10,6 @@ import {
   IsTerminalTypesSelectionInvalid,
   IsAttributeTypesSelectionInvalid,
   IsPredefinedAttributesSelectionInvalid,
-  IsCompositeTypesSelectionInvalid
 } from "../validators";
 
 export function IsTypeEditorSubmissionValid(createLibraryType: CreateLibraryType): boolean {
@@ -25,7 +24,6 @@ export function IsTypeEditorSubmissionValid(createLibraryType: CreateLibraryType
     IsTerminalTypesSelectionInvalid,
     IsAttributeTypesSelectionInvalid,
     IsPredefinedAttributesSelectionInvalid,
-    IsCompositeTypesSelectionInvalid
   ].every(func => func(createLibraryType) === false)
 }
 

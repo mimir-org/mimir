@@ -1,6 +1,5 @@
 import { Edge, Node, Project } from "../../models";
 import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
-import { GetAttributeLikeItemKey } from "../../modules/inspector/helpers/IsType";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
 import { ProjectState } from "./project/types";
@@ -50,6 +49,11 @@ export const projectStateSelector = createAppSelector(
 export const userStateSelector = createAppSelector(
   (state) => state.userState,
   (userState) => userState
+);
+
+export const usernameSelector = createAppSelector(
+  (state) => state.userState.user?.name,
+  (username) => username
 );
 
 export const commonStateSelector = createAppSelector(
@@ -262,15 +266,7 @@ export const makeFilterSelector = () =>
   createParametricAppSelector(
     (state) => state.commonState.filters,
     (_, attributes: AttributeLikeItem[]) => attributes,
-    (filters, attributes) => {
-      if (!attributes?.length || attributes.length === 0) {
-        return [];
-      }
-
-      const key = GetAttributeLikeItemKey(attributes[0]);
-
-      return filters.filter((x) => attributes.find((att) => att[key] === x.name)) ?? [];
-    }
+    (filters, attributes) => filters.filter((x) => attributes.find((att) => att.entity === x.name)) ?? []
   );
 export const makeSelectedFilterSelector = () =>
   createParametricAppSelector(

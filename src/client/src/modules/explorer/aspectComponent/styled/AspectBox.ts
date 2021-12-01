@@ -12,12 +12,13 @@ const AspectBox = styled.div<Props>`
   display: flex;
   max-height: 30px;
   padding-left: 5px;
-  background-color: ${(props) => (props.node.isRoot ? Color.LightGrey : GetAspectColor(props.node, AspectColorType.Main, true))};
+  background-color: ${(props) =>
+    props.node.isRoot ? Color.GreyLighter : GetAspectColor(props.node, AspectColorType.Main, true)};
   margin-top: ${(props) => props.node.isRoot && "15px"};
   font-size: ${FontSize.Standard};
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
   }
 
   &:first-child {

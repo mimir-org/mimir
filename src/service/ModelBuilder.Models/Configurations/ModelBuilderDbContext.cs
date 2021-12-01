@@ -17,7 +17,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Rds> Rds { get; set; }
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
         public virtual DbSet<LibraryType> LibraryTypes { get; set; }
-        public virtual DbSet<Contractor> Contractors { get; set; }
+        public virtual DbSet<CollaborationPartner> CollaborationPartners { get; set; }
         public virtual DbSet<TerminalType> TerminalTypes { get; set; }
         public virtual DbSet<EnumBase> Enums { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
@@ -57,7 +57,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new RdsConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeTypeConfiguration());
             modelBuilder.ApplyConfiguration(new LibraryTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ContractorConfiguration());
+            modelBuilder.ApplyConfiguration(new CollaborationPartnerConfiguration());
             modelBuilder.ApplyConfiguration(new TerminalTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EnumBaseConfiguration());
             modelBuilder.ApplyConfiguration(new RelationConfiguration());

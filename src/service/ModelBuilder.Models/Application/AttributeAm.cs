@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 
 namespace Mb.Models.Application
@@ -9,7 +8,7 @@ namespace Mb.Models.Application
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain { get; set; }
-        public string Key { get; set; }
+        public string Entity { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }
         public string SelectedUnitId { get; set; }

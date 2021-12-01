@@ -168,7 +168,7 @@ export function* createProject(action) {
     project.edges = [];
 
     const payload = {
-      project: project,
+      project: InitializeProject(project),
       apiError: null,
     };
 

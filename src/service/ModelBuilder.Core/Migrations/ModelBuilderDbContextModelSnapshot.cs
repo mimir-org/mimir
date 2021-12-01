@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.11")
+                .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -93,6 +93,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Domain");
 
+                    b.Property<string>("Entity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Entity");
+
                     b.Property<string>("FormatId")
                         .HasColumnType("nvarchar(450)");
 
@@ -111,11 +116,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("IsLockedBy")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("IsLockedBy");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Key");
 
                     b.Property<string>("NodeId")
                         .HasColumnType("nvarchar(450)")
@@ -185,6 +185,37 @@ namespace Mb.Core.Migrations
                     b.HasIndex("TransportId");
 
                     b.ToTable("Attribute", (string)null);
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.CollaborationPartner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Current")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
+                    b.Property<string>("Iris")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iris");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CollaborationPartner", (string)null);
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Composite", b =>
@@ -263,27 +294,6 @@ namespace Mb.Core.Migrations
                     b.ToTable("Connector", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Connector");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Contractor", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Domain")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Domain");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contractor", (string)null);
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Edge", b =>

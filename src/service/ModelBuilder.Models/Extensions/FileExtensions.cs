@@ -37,6 +37,12 @@ namespace Mb.Models.Extensions
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
             return (extension.ToLower() == ".json");
         }
-           
+
+        public static bool ValidateNtFile(this IFormFile file)
+        {
+            var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+            return (extension.ToLower() == ".nt");
+        }
+
     }
 }

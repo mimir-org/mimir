@@ -16,6 +16,7 @@ import {
   inspectorSelector,
   libOpenSelector,
   projectSelector,
+  usernameSelector,
 } from "../../redux/store";
 
 interface Props {
@@ -30,6 +31,7 @@ const InspectorModule = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
+  const username = useAppSelector(usernameSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
   const activeTabIndex = useAppSelector(inspectorActiveTabSelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
@@ -67,6 +69,7 @@ const InspectorModule = ({ inspectorRef }: Props) => {
       <InspectorHeader
         project={project}
         element={element}
+        username={username}
         dispatch={dispatch}
         open={inspectorOpen}
         activeTabIndex={activeTabIndex}

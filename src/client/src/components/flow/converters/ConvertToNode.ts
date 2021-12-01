@@ -14,7 +14,7 @@ import { Size } from "../../../compLibrary/size";
 const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User) => {
   const now = GetDateNowUtc();
 
-  return new Node({
+  const node = new Node({
     id: CreateId(),
     rds: data.rds,
     projectId: projectId,
@@ -43,6 +43,36 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     updatedBy: user?.name,
     libraryTypeId: data.id,
   } as Node);
+
+  if (node.connectors) {
+    node.connectors.forEach(x => {
+      x.id = CreateId();
+      if (x.attributes) {
+        x.attributes.forEach(y => {
+          y.id = CreateId();
+        });
+      }
+    })
+  }
+
+  if (node.attributes) {
+    node.attributes.forEach(x => {
+      x.id = CreateId();
+    })
+  }
+
+  if (node.composites) {
+    node.composites.forEach(x => {
+      x.id = CreateId();
+      if (x.attributes) {
+        x.attributes.forEach(y => {
+          y.id = CreateId();
+        })
+      }
+    })
+  }
+
+  return node;
 };
 
 export default ConvertToNode;
