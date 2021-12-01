@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
@@ -61,8 +61,12 @@ namespace Mb.Models.Data
             set => SetMasterProjectIri(value);
         }
 
-        public virtual ICollection<Project> Projects { get; set; }
+        [Required]
+        public virtual string ProjectId { get; set; }
 
+        [JsonIgnore]
+        public virtual Project Project { get; set; }
+        
         #region Private methods
 
         private void SetId(string id)

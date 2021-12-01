@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
 const LogoBox = styled.div`
-  display: flex;
-  justify-content: center;
-  max-height: 24px;
+  height: 20px;
+  width: 50px;
+  align-self: flex-start;
   pointer-events: none;
-  flex: 1;
+
+  img {
+    min-height: 100%;
+    filter: brightness(0%);
+  }
 `;
 
 export default LogoBox;

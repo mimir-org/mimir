@@ -50,6 +50,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.PurposeString, opt => opt.MapFrom(src => SerializePurpose(src)));
 
             CreateMap<Node, NodeAm>()

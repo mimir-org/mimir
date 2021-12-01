@@ -1,9 +1,8 @@
 import { BlobData, CreateLibraryType, TerminalType } from "../../models";
 import { GetBlockColor, GetBlockHeight } from "./helpers";
-import { PreviewObjectBlock, InfoWrapper, InputOutputTerminals, Terminals } from "../styled";
+import { PreviewObjectBlock, InfoWrapper, InfoText, InfoSymbolWrapper, InputOutputTerminals, Terminals } from "../styled";
 import { ConnectorIcon } from "../../assets/icons/connectors";
 import { Symbol } from "../../compLibrary/symbol";
-import { IsTransport } from "../helpers";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -36,15 +35,19 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
   };
 
   return (
-    <PreviewObjectBlock blockHeight={GetBlockHeight(inputCount, outputCount)} blockColor={GetBlockColor(aspect)}>
+    <PreviewObjectBlock minHeight={GetBlockHeight(inputCount, outputCount)} color={GetBlockColor(aspect)}>
       <InputOutputTerminals>
         {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
         {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
-      <InfoWrapper namepadding={IsTransport(createLibraryType?.objectType)}>
-        <p>{rdsLabel}</p>
-        <p>{createLibraryType.name}</p>
-        {symbol && <Symbol base64={symbol.data} text={symbol.name} />}
+      <InfoWrapper height={'100%'}>
+        <InfoText>{rdsLabel}</InfoText>
+        <InfoText>{createLibraryType.name}</InfoText>
+        {symbol &&
+          <InfoSymbolWrapper>
+            <Symbol base64={symbol.data} text={symbol.name} />
+          </InfoSymbolWrapper>
+        }
       </InfoWrapper>
     </PreviewObjectBlock>
   );

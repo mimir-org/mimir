@@ -5,7 +5,7 @@ import { FontSize } from "../../../../../compLibrary/font";
 /** Styled component that displays an element in the drop-down menu for the TerminalsMenu. */
 const TerminalsElement = styled.div`
   border-bottom: 1px solid;
-  border-color: ${Color.DarkGrey};
+  border-color: ${Color.GreyDark};
   padding: 5px 34px 5px 5px;
   font-size: ${FontSize.Tiny};
   color: ${Color.Black};
@@ -27,7 +27,7 @@ const TerminalsElement = styled.div`
   }
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     cursor: pointer;
 
     :first-child {

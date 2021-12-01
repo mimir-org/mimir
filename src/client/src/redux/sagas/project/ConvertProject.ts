@@ -26,7 +26,7 @@ export interface AttributeAm {
   id: string;
   iri: string;
   domain: string;
-  key: string;
+  entity: string;
   value: string;
   selectedUnitId: string;
   qualifierId: string;
@@ -43,6 +43,8 @@ export interface AttributeAm {
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
+  isLocked: boolean;
+  isLockedBy: string;
 }
 export interface ConnectorAm {
   id: string;
@@ -67,11 +69,11 @@ export interface NodeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   name: string;
   version: string;
   label: string;
   rds: string;
-  contractor: string;
   semanticReference: string;
   tagNumber: string;
   description: string;
@@ -96,12 +98,15 @@ export interface NodeAm {
   updated: Date;
   updatedBy: string;
   libraryTypeId: string;
+  isLocked: boolean;
+  IsLockedBy: string;
 }
 
 export interface EdgeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   fromConnectorId: string;
   toConnectorId: string;
   fromNodeId: string;
@@ -202,7 +207,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       id: attribute.id,
       iri: attribute.iri,
       domain: attribute.domain,
-      key: attribute.key,
+      entity: attribute.entity,
       value: attribute.value,
       selectedUnitId: attribute.selectedUnitId,
       qualifierId: attribute.qualifierId,
@@ -218,6 +223,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       selectType: attribute.selectType,
       discipline: attribute.discipline,
       tags: attribute.tags,
+      isLocked: attribute.isLocked,
+      isLockedBy: attribute.isLockedBy,
     } as AttributeAm;
 
     converted.push(a);
@@ -352,11 +359,11 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       id: node.id,
       iri: node.iri,
       domain: node.domain,
+      projectId: node.projectId,
       name: node.name,
       version: node.version,
       label: node.label,
       rds: node.rds,
-      contractor: node.contractor,
       semanticReference: node.semanticReference,
       tagNumber: node.tagNumber,
       description: node.description,
@@ -382,6 +389,8 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       updated: node.updated,
       updatedBy: node.updatedBy,
       libraryTypeId: node.libraryTypeId,
+      isLocked: node.isLocked,
+      IsLockedBy: node.isLockedBy,
     } as NodeAm;
 
     convertedNodes.push(n);
@@ -400,6 +409,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       id: edge.id,
       iri: edge.iri,
       domain: edge.domain,
+      projectId: edge.projectId,
       fromConnectorId: edge.fromConnectorId,
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,

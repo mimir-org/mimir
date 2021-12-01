@@ -8,8 +8,8 @@ import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
   node: Node;
-  parent: boolean;
-  input: boolean;
+  isParent: boolean;
+  IsInput: boolean;
   terminals: Connector[];
   electro: boolean;
   onClick: (conn: Connector) => void;
@@ -22,17 +22,17 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenuComponent = ({ node, parent, input, terminals, onClick, onBlur, electro, parentBlockSize }: Props) => {
+const TerminalsMenuComponent = ({ node, isParent, IsInput, terminals, onClick, onBlur, electro, parentBlockSize }: Props) => {
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   return (
     <TerminalsBox
       tabIndex={0}
-      parent={parent}
-      input={input}
+      isParent={isParent}
+      isInput={IsInput}
       onBlur={onBlur}
       color={GetAspectColor(node, AspectColorType.Selected)}
-      xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node, parentBlockSize)}
+      xPos={SetMenuXPos(isParent, electro, hasActiveTerminals, node, parentBlockSize)}
     >
       {terminals.map((conn) => (
         <TerminalsElement key={conn.id}>
@@ -40,7 +40,7 @@ const TerminalsMenuComponent = ({ node, parent, input, terminals, onClick, onBlu
           <div className="text" onClick={() => onClick(conn)}>
             {conn.name}
           </div>
-          <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.DarkGrey} id={conn.id} />
+          <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
         </TerminalsElement>
       ))}
     </TerminalsBox>

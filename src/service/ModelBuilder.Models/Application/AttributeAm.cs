@@ -9,13 +9,13 @@ namespace Mb.Models.Application
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain { get; set; }
-        public string Key { get; set; }
+        public string Entity { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }
         public string SelectedUnitId { get; set; }
         public string AttributeTypeId { get; set; }
-        public bool IsLocked {  get; set; }
-        public string IsLockedStatusBy {  get; set; }
+        public bool IsLocked { get; set; }
+        public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
         public string QualifierId { get; set; }
         public string SourceId { get; set; }

@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
-using Mb.Models.Workers;
+using Mb.Models.Enums;
 
 namespace Mb.Data.Contracts
 {
     public interface INodeRepository : IGenericRepository<ModelBuilderDbContext, Node>
     {
-        Task UpdateInsert(ProjectWorker projectWorker, ICollection<Node> original, Project project, string invokedByDomain);
-        Task DeleteNodes(ProjectWorker projectWorker, ICollection<Node> delete, string projectId, string invokedByDomain);
+        IEnumerable<(Node node, WorkerStatus status)> UpdateInsert(ICollection<Node> original, Project project, string invokedByDomain);
+        IEnumerable<(Node node, WorkerStatus status)> DeleteNodes(ICollection<Node> delete, string projectId, string invokedByDomain);
     }
 }

@@ -63,7 +63,7 @@ export enum AspectColorType {
   Tab = 3,
 }
 
-export enum WebSocketEvent {
+export enum WorkerStatus {
   None = 0,
   Create = 1,
   Update = 2,

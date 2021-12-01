@@ -21,6 +21,7 @@ const ConvertToEdge = (
 ) => {
   return new Edge({
     id: id,
+    projectId: projectId,
     fromConnectorId: sourceConn.id,
     fromConnector: sourceConn,
     toConnectorId: targetConn.id,

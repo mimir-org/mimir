@@ -7,19 +7,28 @@ import { setValidation } from "../../../../../redux/store/validation/actions";
  * Function to check if a connection/edge in BlockView is valid.
  * @param conn
  * @param nodes
- * @param terminals
  * @param dispatch
  * @returns a boolean value.
  */
-const IsValidBlockConnection = (conn: Connection, nodes: Node[], terminals: Connector[], dispatch) => {
+const IsValidBlockConnection = (conn: Connection, nodes: Node[], dispatch: any) => {
+  const sourceNode = nodes.find((x) => x.id === conn.source);
+  const sourceTerminal = sourceNode.connectors.find((x) => x.id === conn.sourceHandle);
+
   const targetNode = nodes.find((x) => x.id === conn.target);
-  const sourceTerminal = terminals.find((x) => x.id === conn.sourceHandle);
   const targetTerminal = targetNode?.connectors.find((x) => x.id === conn.targetHandle);
 
-  const isValid = sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
-  if (!isValid) dispatch(setValidation(false, TextResources.Validation_Terminals));
+  const isValidType = sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
 
-  return isValid;
+  document.addEventListener("mouseup", () => onMouseUp(sourceTerminal, targetTerminal, isValidType, dispatch), {
+    once: true,
+  });
+
+  return isValidType;
 };
 
 export default IsValidBlockConnection;
+
+const onMouseUp = (sourceTerminal: Connector, targetTerminal: Connector, isValidType: boolean, dispatch: any) => {
+  if (sourceTerminal && targetTerminal && !isValidType) dispatch(setValidation(false, TextResources.Validation_Terminals));
+  return document.removeEventListener("mouseup", () => onMouseUp(sourceTerminal, targetTerminal, isValidType, dispatch));
+};

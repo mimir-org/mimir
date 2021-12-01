@@ -12,9 +12,9 @@ using Mb.Data.Repositories;
 using Mb.Models.Abstract;
 using Mb.Models.Attributes;
 using Mb.Models.Configurations;
+using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
 using Mb.Services.Contracts;
-using Mb.Services.Hubs;
 using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -26,8 +26,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Module = Mb.Models.Application.Module;
 
@@ -81,20 +79,18 @@ namespace Mb.Core.Extensions
             services.AddScoped<IEdgeRepository, EdgeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
-            services.AddScoped<IContractorRepository, ContractorRepository>();
+            services.AddScoped<ICollaborationPartnerRepository, CollaborationPartnerRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ICompositeRepository, CompositeRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
-            services.AddScoped<IEventLogRepository, EventLogRepository>();
-            services.AddScoped<IProjectLinkRepository, ProjectLinkRepository>();
+            services.AddScoped<IWebSocketRepository, WebSocketRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
             services.AddScoped<ICommonService, CommonService>();
-            services.AddScoped<INodeService, NodeService>();
+            services.AddScoped<ICloneService, CloneService>();
             services.AddScoped<IVersionService, VersionService>();
-            services.AddScoped<IEventLogService, EventLogService>();
             services.AddScoped<ICooperateService, CooperateService>();
 
             services.AddHttpContextAccessor();
@@ -119,13 +115,13 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
+            cfg.AddProfile<CollaborationPartnerProfile>();
             cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new EventLogProfile());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);

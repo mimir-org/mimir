@@ -17,7 +17,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
-            builder.Property(p => p.Key).HasColumnName("Key").IsRequired();
+            builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.SelectedUnitId).HasColumnName("SelectedUnitId");
@@ -30,8 +30,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.InterfaceId).HasColumnName("InterfaceId").IsRequired(false);
             builder.Property(p => p.CompositeId).HasColumnName("CompositeId").IsRequired(false);
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
-            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasDefaultValue(null);
-            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
+            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
             builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
             builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();

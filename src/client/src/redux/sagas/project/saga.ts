@@ -25,7 +25,8 @@ import {
 export function* getProject(action) {
   try {
     const webSocket = new WebSocket();
-    webSocket.setGroup(action.payload);
+    if (webSocket.isRunning())
+      webSocket.setGroup(action.payload);
 
     const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
     const response = yield call(get, url);
@@ -167,7 +168,7 @@ export function* createProject(action) {
     project.edges = [];
 
     const payload = {
-      project: project,
+      project: InitializeProject(project),
       apiError: null,
     };
 

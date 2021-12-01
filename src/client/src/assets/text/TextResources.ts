@@ -74,7 +74,7 @@ const TextResources = {
   Inspector_Admin_Long_Description: "Long Description",
   Inspector_Admin_Interface: "Interface",
   Inspector_Admin_Updated_By: "Updated by",
-  Inspector_Admin_Contractor: "Contractor",
+  Inspector_Admin_Collaboration_Partner: "Collaboration partner",
   Inspector_Admin_Updated_Date: "Last updated",
   Inspector_Admin_Created_Date: "Date created",
   Inspector_Admin_Local_Description: "Long Local Description",
@@ -166,51 +166,47 @@ const TextResources = {
   // ProjectMenu
   Project: "Project",
   Project_Heading: "Projects",
-  Project_New: "Create project",
   Project_OpenProject: "Open project",
   Project_Recent: "Recent projects",
   Project_Recent_Name: "Project name",
   Project_Recent_Owner: "Project owner",
   Project_Recent_Edited: "Last edited",
   Project_Recent_Open: "Open project",
-
   Project_Save_Label: "Save project to database",
-  Project_Save_Label_File: "Export project file",
-  Project_Export_Library_File: "Export project library",
+
+  Project_Import: "Import project",
   Project_Import_File: "Import project file",
-  Project_Import_Library_File: "Import project library",
-  Project_Import_Library: "ImportLibrary",
-  Project_Import_Lib_Label: "Import library",
-  Project_Commit_Label: "Commit project",
-  Project_Commit: "CommitProject",
-  Project_Commit_Contractor_Label: "Send to contractor",
-  Project_Commit_Parser_Label: "Data type",
-  Project_Commit_Button: "Commit",
-  Project_Logout_Label: "Log out",
-  Project_Open_Label: "Open a project",
+  Project_Import_ProjectLibrary: "Import project library",
+  Project_Import_Library: "Import library",
+  Project_Browse: "Browse file",
+
+  Project_Export_File: "Export file",
+  Project_Export_ProjectFile: "Export project file",
+  Project_Export_Library: "Export library",
+  Project_Export_ProjectLibrary: "Export project library",
+
+  Project_Commit_Project: "Commit project",
+  Project_Commit_Collaboration_Partner: "Send to collaboration partner",
+  Project_Commit_Parser: "Data type",
+  Project_Commit: "Commit",
+
+  Project_Logout: "Log out",
+  Project_Open_Project: "Open a project",
   Project_Create_Label: "Create a project",
-  Project_Create_Button_Label: "Create project",
-  Project_SubProject_Create_Label: "Save selection as sub-project",
-  Project_SubProject_Create_Button_Label: "Save selection as sub-project",
-  Project_Name_Project_Label: "Name project",
-  Project_Name_Project_Placeholder: "New project name...",
+  Project_CreateProject: "Create project",
+  Project_SubProject_Save: "Save selection as sub-project",
+  Project_Name: "Project name",
+  Project_Name_Placeholder: "New project name...",
   Project_Confirm_Save: " Save this project before opening/starting another?",
   Project_Save_Button: "Yes",
   Project_NoSave_Button: "No",
-  Project_Save_Label_File_Name: "File name",
-  Project_Export_File_Label: "Export file",
-  Project_Import_Browse: "Browse file",
-  Project_Import_Label_File_Button: "Import project",
-  Project_Export_File_Library_Label: "Export library",
+  Project_File_Name: "File name",
+
   Project_Save: "Save",
-  Project_Save_File: "SaveFile",
   Project_Open: "Open",
   Project_Create: "Create",
-  Project_SubProject_Create: "Save Sub-project",
+  Project_SubProject: "Save Sub-project",
   Project_Cancel: "Cancel",
-  Project_Save_Library: "SaveLibrary",
-  Project_Import_Project: "ImportProject",
-  Project_Logout: "Logout",
 
   // Error
   Error_Tile: "Oops, something went wrong",
@@ -221,10 +217,6 @@ const TextResources = {
   Error_NoActiveAccount: "No active account. Verify a user has been signed in and setActiveAccount has been called",
   Error_Forbidden: "Access denied",
   Error_Server: "Internal server error",
-
-  // BlockView
-  ConnectMenu_Select_All: "Select all",
-  ConnectMenu_Clear: "Clear all",
 
   // Type
   Type_BlockLocation: "BlockLocationNode",
@@ -237,7 +229,7 @@ const TextResources = {
   // RDS
   RDS_Function: "=",
   RDS_Product: "-",
-  RDS_Location: "++",
+  RDS_Location: "+",
 
   // Visual Filter
   Filter_Heading: "Visual Filter",
@@ -258,7 +250,7 @@ const TextResources = {
 
   // Validation
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
-  Validation_Aspect: "A connection can only be made between two nodes of the same Aspect.",
+  Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
   Validation_Cancel: "Cancel",
 };
 

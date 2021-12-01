@@ -6,7 +6,6 @@ import { OnPropertyChange, OnTerminalCategoryChange } from "../handlers";
 import { IsLocation, IsProduct } from "./index";
 import {
   IsAttributeTypesSelectionInvalid,
-  IsCompositeTypesSelectionInvalid,
   IsPredefinedAttributesSelectionInvalid,
   IsRdsSelectionInvalid,
   IsTerminalTypesSelectionInvalid
@@ -98,8 +97,8 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         createLibraryType: state?.createLibraryType,
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
-          visible: state?.validationVisibility && IsCompositeTypesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Simple_Types
+          visible: false,
+          message: ''
         }
       };
     default:

@@ -17,7 +17,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Rds> Rds { get; set; }
         public virtual DbSet<AttributeType> AttributeTypes { get; set; }
         public virtual DbSet<LibraryType> LibraryTypes { get; set; }
-        public virtual DbSet<Contractor> Contractors { get; set; }
+        public virtual DbSet<CollaborationPartner> CollaborationPartners { get; set; }
         public virtual DbSet<TerminalType> TerminalTypes { get; set; }
         public virtual DbSet<EnumBase> Enums { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
@@ -40,8 +40,6 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Transport> Transports { get; set; }
         public virtual DbSet<Interface> Interfaces { get; set; }
         public virtual DbSet<Composite> Composites { get; set; }
-        public virtual DbSet<EventLog> EventLogs { get; set; }
-        public virtual DbSet<ProjectNodeItem> ProjectNodeItems { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -59,7 +57,7 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new RdsConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeTypeConfiguration());
             modelBuilder.ApplyConfiguration(new LibraryTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ContractorConfiguration());
+            modelBuilder.ApplyConfiguration(new CollaborationPartnerConfiguration());
             modelBuilder.ApplyConfiguration(new TerminalTypeConfiguration());
             modelBuilder.ApplyConfiguration(new EnumBaseConfiguration());
             modelBuilder.ApplyConfiguration(new RelationConfiguration());
@@ -75,10 +73,6 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new CompositeConfiguration());
             modelBuilder.ApplyConfiguration(new PurposeConfiguration());
             modelBuilder.ApplyConfiguration(new VersionConfiguration());
-            modelBuilder.ApplyConfiguration(new EventLogConfiguration());
-
-            modelBuilder.Entity<ProjectNodeItem>().ToView(nameof(ProjectNodeItem)).HasKey(x => new { x.ProjectId, x.NodeId});
-
         }
     }
 }

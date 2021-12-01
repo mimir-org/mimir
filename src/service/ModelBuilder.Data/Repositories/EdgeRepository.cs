@@ -8,7 +8,6 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Workers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -34,10 +33,10 @@ namespace Mb.Data.Repositories
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
-        public Task UpdateInsert(ProjectWorker projectWorker, ICollection<Edge> original, Project project, string invokedByDomain)
+        public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
         {
             if (project?.Edges == null || !project.Edges.Any() || original == null)
-                return Task.CompletedTask;
+                yield break;
 
             var newEdges = project.Edges.Where(x => original.All(y => y.Id != x.Id)).ToList();
 
@@ -47,28 +46,15 @@ namespace Mb.Data.Repositories
                 
                 if (newEdges.Any(x => x.Id == edge.Id))
                 {
-                    if (edge.MasterProjectId != project.Id)
-                    {
-                        Attach(edge, EntityState.Unchanged);
-                        projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Create, IsSubProjectEdge = true });
-                        continue;
-                    }
-
                     SetEdgeProperties(edge, true);
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Added);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Added);
-                    projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Create });
                     Attach(edge, EntityState.Added);
+                    yield return (edge, WorkerStatus.Create);
                 }
                 else
                 {
-                    if (edge.MasterProjectId != project.Id)
-                    {
-                        Attach(edge, EntityState.Unchanged);
-                        continue;
-                    }
-
                     // Parties is not allowed changed our edge
                     if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
                     {
@@ -80,27 +66,21 @@ namespace Mb.Data.Repositories
 
                     _transportRepository.UpdateInsert(edge.Transport, EntityState.Modified);
                     _interfaceRepository.UpdateInsert(edge.Interface, EntityState.Modified);
-                    projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Update });
                     Attach(edge, EntityState.Modified);
+                    yield return (edge, WorkerStatus.Update);
                 }
             }
-
-            return Task.CompletedTask;
         }
 
-        public async Task DeleteEdges(ProjectWorker projectWorker, ICollection<Edge> delete, string projectId, string invokedByDomain)
+        public async Task<IEnumerable<(Edge edge, WorkerStatus status)>> DeleteEdges(ICollection<Edge> delete, string projectId, string invokedByDomain)
         {
+            var returnValues = new List<(Edge edge, WorkerStatus status)>();
+
             if (delete == null || projectId == null || !delete.Any())
-                return;
+                return returnValues;
 
             foreach (var edge in delete)
             {
-                if (edge.MasterProjectId != null && edge.MasterProjectId != projectId)
-                {
-                    projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete, IsSubProjectEdge = true });
-                    continue;
-                }
-
                 // Parties is not allowed delete our edge
                 if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
                 {
@@ -165,9 +145,12 @@ namespace Mb.Data.Repositories
                 if (edge.Interface?.OutputTerminalId != null)
                     await _connectorRepository.Delete(edge.Interface.OutputTerminalId);
 
-                projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete });
+                //projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete });
+                returnValues.Add((edge, WorkerStatus.Delete));
 
             }
+
+            return returnValues;
         }
 
         private void ResetEdgeBeforeSave(Edge edge)

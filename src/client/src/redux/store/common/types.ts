@@ -1,8 +1,8 @@
-import { CombinedAttributeFilter, Contractor, EnumBase, ModuleDescription } from "../../../models";
+import { CombinedAttributeFilter, CollaborationPartner, EnumBase, ModuleDescription } from "../../../models";
 import { ApiError } from "../../../models/webclient";
-export const FETCHING_CONTRACTORS = "FETCHING_CONTRACTORS";
+export const FETCHING_COLLABORATION_PARTNERS = "FETCHING_COLLABORATION_PARTNERS";
 export const DELETE_COMMON_ERROR = "DELETE_COMMON_ERROR";
-export const FETCHING_CONTRACTORS_SUCCESS_OR_ERROR = "FETCHING_CONTRACTORS_SUCCESS_OR_ERROR";
+export const FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR = "FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR";
 export const FETCHING_STATUSES = "FETCHING_STATUSES";
 export const FETCHING_STATUSES_SUCCESS_OR_ERROR = "FETCHING_STATUSES_SUCCESS_OR_ERROR";
 export const FETCHING_COMBINED_ATTRIBUTE_FILTERS = "FETCHING_COMBINED_ATTRIBUTE_FILTERS";
@@ -13,7 +13,7 @@ export const FETCHING_PARSERS_SUCCESS_OR_ERROR = "FETCHING_PARSERS_SUCCESS_OR_ER
 // State types
 export interface CommonState {
   fetching: boolean;
-  contractors: Contractor[] | null;
+  collaborationPartners: CollaborationPartner[] | null;
   parsers: ModuleDescription[] | null;
   filters: CombinedAttributeFilter[] | null;
   statuses: EnumBase[] | null;
@@ -21,15 +21,15 @@ export interface CommonState {
 }
 
 // Action types
-interface FetchingContractorsAction {
-  type: typeof FETCHING_CONTRACTORS;
+interface FetchingCollaboratorPartnersAction {
+  type: typeof FETCHING_COLLABORATION_PARTNERS;
   payload: null;
 }
 
-interface FetchingContractorsSuccessOrErrorAction {
-  type: typeof FETCHING_CONTRACTORS_SUCCESS_OR_ERROR;
+interface FetchingCollaboratorPartnersSuccessOrErrorAction {
+  type: typeof FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR;
   payload: {
-    contractors: Contractor[];
+    collaborationPartners: CollaborationPartner[];
     apiError: ApiError;
   };
 }
@@ -78,8 +78,8 @@ interface FetchingParsersSuccessOrErrorAction {
 }
 
 export type CommonActionTypes =
-  | FetchingContractorsAction
-  | FetchingContractorsSuccessOrErrorAction
+  | FetchingCollaboratorPartnersAction
+  | FetchingCollaboratorPartnersSuccessOrErrorAction
   | DeleteCommonErrorAction
   | FetchingStatusesAction
   | FetchingStatusesSuccessOrErrorAction

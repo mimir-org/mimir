@@ -14,6 +14,8 @@ import {
   useUniqueParametricAppSelector,
   makeFilterSelector,
   makeSelectedFilterSelector,
+  useAppSelector,
+  usernameSelector,
 } from "../../../../redux/store";
 
 interface Props {
@@ -36,6 +38,7 @@ const ParametersContent = ({
   const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
   const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
+  const username = useAppSelector(usernameSelector);
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
@@ -100,6 +103,7 @@ const ParametersContent = ({
                 selectedCombinations={selectedCombinations}
                 attributeLikeItems={attributeLikeItems}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
+                username={username}
                 filterName={filterName}
                 headerColor={headerColor}
                 bodyColor={bodyColor}

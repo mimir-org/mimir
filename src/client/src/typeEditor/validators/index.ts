@@ -13,4 +13,3 @@ export { default as IsRdsSelectionInvalid } from "./IsRdsSelectionInvalid";
 export { default as IsTerminalTypesSelectionInvalid } from "./IsTerminalTypesSelectionInvalid";
 export { default as IsAttributeTypesSelectionInvalid } from "./IsAttributeTypesSelectionInvalid";
 export { default as IsPredefinedAttributesSelectionInvalid } from "./IsPredefinedAttributesSelectionInvalid";
-export { default as IsCompositeTypesSelectionInvalid } from "./IsCompositeTypesSelectionInvalid";

@@ -1,6 +1,6 @@
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
 import { Dispatch } from "react";
-import { WebSocketEvent, Node, Edge } from "..";
+import { WorkerStatus, Node, Edge } from "..";
 import { addNode, createEdge, removeEdge, removeNode, updateNode, updateEdge } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 
@@ -38,6 +38,8 @@ class WebSocket {
           // Start websocket connection
           this._running = true;
 
+          console.log('Websocket connection ok')
+
           // Joins the project group if any
           if (this._projectState?.project?.id) {
             this._connection.send("JoinGroup", this._projectState.project.id);
@@ -45,11 +47,11 @@ class WebSocket {
           }
 
           // Receive information of node changes
-          this._connection.on("ReceiveNodeData", (eventType: WebSocketEvent, data: string) => {
+          this._connection.on("ReceiveNodeData", (eventType: WorkerStatus, data: string) => {
             const jsonObject = JSON.parse(data);
             const node = new Node(jsonObject);
 
-            if (eventType === WebSocketEvent.Create) {
+            if (eventType === WorkerStatus.Create) {
               if (this._projectState?.project.nodes.some(x => x.id === node.id))
                 return;
 
@@ -59,19 +61,19 @@ class WebSocket {
             if (!this._projectState?.project.nodes.some(x => x.id === node.id))
               return;
 
-            if (eventType === WebSocketEvent.Delete)
+            if (eventType === WorkerStatus.Delete)
               this._dispatch(removeNode(node.id));
 
-            if (eventType === WebSocketEvent.Update)
+            if (eventType === WorkerStatus.Update)
               this._dispatch(updateNode(node));
           });
 
           // Receive information of edge changes
-          this._connection.on("ReceiveEdgeData", (eventType: WebSocketEvent, data: string) => {
+          this._connection.on("ReceiveEdgeData", (eventType: WorkerStatus, data: string) => {
             const jsonObject = JSON.parse(data);
             const edge = new Edge(jsonObject);
 
-            if (eventType === WebSocketEvent.Create) {
+            if (eventType === WorkerStatus.Create) {
               if (this._projectState?.project.edges.some(x => x.id === edge.id))
                 return;
 
@@ -81,10 +83,10 @@ class WebSocket {
             if (!this._projectState?.project.edges.some(x => x.id === edge.id))
               return;
 
-            if (eventType === WebSocketEvent.Delete)
+            if (eventType === WorkerStatus.Delete)
               this._dispatch(removeEdge(edge.id));
 
-            if (eventType === WebSocketEvent.Update)
+            if (eventType === WorkerStatus.Update)
               this._dispatch(updateEdge(edge));
           });
         })

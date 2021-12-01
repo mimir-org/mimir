@@ -1,12 +1,10 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../compLibrary/colors";
 
 const ProjectListBox = styled.div`
-  .text {
-    font-weight: bold;
-    font-size: 16px;
-    color: ${Color.BlueMagenta};
-  }
+  margin-top: 5px;
+  max-height: 270px;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 export default ProjectListBox;

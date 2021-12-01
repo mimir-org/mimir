@@ -8,7 +8,7 @@ const MenuListItem = styled.div`
   align-items: center;
   border-width: 1px 0px 0px 0px;
   border-style: solid;
-  border-color: ${Color.DarkGrey};
+  border-color: ${Color.GreyDark};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   background-color: ${Color.White};
@@ -27,7 +27,7 @@ const MenuListItem = styled.div`
   }
 
   :hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     p {
       text-decoration: underline;
     }
