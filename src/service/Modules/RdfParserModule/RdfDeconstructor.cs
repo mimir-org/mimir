@@ -819,7 +819,7 @@ namespace RdfParserModule
             var node = GetOrCreateUriNode(iri);
             var domain = GetDomain(iri);
 
-            var hasPhysicalQuantity = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "hasPhysicalQuantity"));
+            var hasPhysicalQuantity = GetOrCreateUriNode(BuildIri("lis", "hasPhysicalQuantity"));
             var physicalQuantities = Store.GetTriplesWithSubjectPredicate(node, hasPhysicalQuantity)
                 .Select(t => t.Object).ToList();
 
@@ -839,6 +839,10 @@ namespace RdfParserModule
             {
                 var attributeTypeId = GetAttributeTypeId(attribute.Iri);
                 var datum = GetDatum(attribute.Iri);
+                if (datum is null)
+                {
+                    continue;
+                }
                 var label = GetLabel(attributeTypeId);
                 
                 var unit = new ParserUnit
@@ -854,7 +858,7 @@ namespace RdfParserModule
                 var datumValue = GetDatumValue(datum);
                 if (datumValue is not null) attribute.Value = datumValue;                
                 
-                attribute.AttributeTypeId = attributeTypeId.Replace("ID", string.Empty);
+                attribute.AttributeTypeId = GetLastPartOfIri(attributeTypeId).Replace("ID", string.Empty);
                 attribute.Units.Add(unit);
             }
 
@@ -864,7 +868,7 @@ namespace RdfParserModule
         private string GetAttributeTypeId(string iri)
         {
             var node = GetOrCreateUriNode(iri);
-            var type = GetOrCreateUriNode(BuildIri(_namespaces["rdf"], "type"));
+            var type = GetOrCreateUriNode(BuildIri("rdf", "type"));
             var types = Store.GetTriplesWithSubjectPredicate(node, type).Select(t => t.Object).ToList();
             if (types.Count != 2)
             {
@@ -879,17 +883,28 @@ namespace RdfParserModule
             throw new Exception($"Did not manage to find the AttributeType | Iri: {iri}");
         }
 
+        private string GetLastPartOfIri(string iri)
+        {
+            var lastSlash = new Regex(@"(?:.(?!\/))+$");
+            var lastHash = new Regex(@"(?:.(?!#))+$");
+            var a = lastSlash.Match(iri).ToString();
+            var b = lastHash.Match(a).ToString();
+
+            return b.Substring(1, b.Length - 1);
+        }
+
+
         private string GetDatum(string iri)
         {
             var node = GetOrCreateUriNode(iri);
-            var qualityQuantifiedAs = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "qualityQuantifiedAs"));
+            var qualityQuantifiedAs = GetOrCreateUriNode(BuildIri("lis", "qualityQuantifiedAs"));
             return Store.GetTriplesWithSubjectPredicate(node, qualityQuantifiedAs).FirstOrDefault()?.Object.ToString();
         }
 
         public string GetDatumValue(string iri)
         {
             var node = GetOrCreateUriNode(iri);
-            var datumValue = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "datumValue"));
+            var datumValue = GetOrCreateUriNode(BuildIri("lis", "datumValue"));
             var value = Store.GetTriplesWithSubjectPredicate(node, datumValue).FirstOrDefault()?.Object;
 
             if (value is LiteralNode l)
@@ -902,7 +917,7 @@ namespace RdfParserModule
         public string GetDatumUnit(string iri)
         {
             var node = GetOrCreateUriNode(iri);
-            var datumUom = GetOrCreateUriNode(BuildIri(_namespaces["lis"], "datumUOM"));
+            var datumUom = GetOrCreateUriNode(BuildIri("lis", "datumUOM"));
             var unit = Store.GetTriplesWithSubjectPredicate(node, datumUom).FirstOrDefault()?.Object;
 
             return unit?.ToString();
@@ -927,11 +942,16 @@ namespace RdfParserModule
                 Name = GetLabel(node.ToString()),
                 parentId = GetParent(node.ToString())?.ToString(),
                 Terminals = GetTerminalsOnNode(node.ToString()),
-                Attributes = GetAttributesOnNode(node.ToString())
+                Attributes = GetAttributesOnNode(node.ToString()),
 
             }).ToList();
 
             return nodes;
+        }
+
+        private string GetRds(string iri)
+        {
+            return string.Empty;
         }
 
         private void InitaliseNamespaces(IDictionary<string, string> namespaces = null)
@@ -953,22 +973,32 @@ namespace RdfParserModule
             }
         }
 
-        private string BuildIri(string ns, string id)
+        private string BuildIri(string prefix, string suffix, string midfix = "")
         {
-            if (_namespaces.TryGetValue(ns, out var fullNamespace))
+            if (_namespaces.TryGetValue(prefix, out var fullNamespace))
             {
-                return $"{fullNamespace}{id}";
+                return $"{fullNamespace}{midfix}{suffix}";
             }
 
-            if (ns[^1] == char.Parse(":"))
+            if (ValidPrefix(prefix))
             {
-                return $"{ns}{id}";
+                return $"{prefix}{midfix}{suffix}";
             }
 
-            return $"{ns}:{id}";
+            if (!ValidNamespace(prefix))
+            {
+                return $"{prefix}/{midfix}{suffix}";
+            }
+
+            return $"{prefix}{midfix}{suffix}";
         }
 
-        private static bool ValidNamespace(string iri)
+        private bool ValidPrefix(string prefix)
+        {
+            return prefix[^1] == char.Parse(":") && RdfGraph.NamespaceMap.HasNamespace(prefix);
+        }
+
+        private bool ValidNamespace(string iri)
         {
             var validEnd = "#/".ToCharArray();
             return validEnd.Contains(iri[^1]);
