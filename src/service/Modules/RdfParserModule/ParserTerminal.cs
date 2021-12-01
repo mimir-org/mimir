@@ -1,4 +1,5 @@
-﻿using Mb.Models.Enums;
+﻿using System.Collections.Generic;
+using Mb.Models.Enums;
 
 namespace RdfParserModule
 {
@@ -23,7 +24,9 @@ namespace RdfParserModule
         public ParserConnector ToConnector { get; set; }
         public string FromConnectorIri { get; set; }
         public string ToConnectorIri { get; set; }
-        
+
+        public List<ParserAttribute> Attributes { get; set; }
+
 
         public string Label { get; set; }
         public override string ToString()
