@@ -1,2 +1,2 @@
-export { default as OffPage } from "./offpage.svg";
-export { default as OffPageRequired } from "./offpageRequired.svg";
+export { ReactComponent as OffPageIcon } from "./offpage.svg";
+export { ReactComponent as OffPageRequiredIcon } from "./offpageRequired.svg";

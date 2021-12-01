@@ -48,6 +48,8 @@ export default SetTerminalYPos;
  * @returns a number used by the styled component HandleBox.
  */
 function CalculateY(count: number, parent: boolean, nodeHeight: number) {
+  if (count === undefined) count = 0;
+
   const interval = parent ? 30 : 22; // Default vertical distance between each terminal
   const base = parent ? 290 : nodeHeight / 2 - 7; // Middle Position
 

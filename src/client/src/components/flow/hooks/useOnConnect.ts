@@ -2,10 +2,11 @@ import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 import { CreateId, IsPartOf, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge } from "react-flow-renderer";
-import { createEdge } from "../../../redux/store/project/actions";
+import { createEdge, setOffPageStatus } from "../../../redux/store/project/actions";
 import { Connector, Edge, Project } from "../../../models";
 import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
+import { IsOffPage } from "../../../helpers";
 
 const useOnConnect = (
   params: any,
@@ -47,6 +48,7 @@ const useOnConnect = (
   } else currentEdge = existingEdge;
 
   if (IsPartOf(currentEdge.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
+  if (IsOffPage(sourceNode)) dispatch(setOffPageStatus(sourceNode.id, false));
 
   return setElements((els) => {
     return addEdge(

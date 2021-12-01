@@ -509,3 +509,13 @@ export function setIsLockedCompositeAttribute(
     },
   };
 }
+
+export function setOffPageStatus(id: string, required: boolean): Types.ProjectActionTypes {
+  return {
+    type: Types.SET_OFFPAGE_STATUS,
+    payload: {
+      id: id,
+      required: required,
+    },
+  };
+}
