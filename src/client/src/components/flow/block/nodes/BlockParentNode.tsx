@@ -52,6 +52,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         color={GetAspectColor(node, AspectColorType.Header)}
         size={parentBlockSize}
         hasTerminals={terminals.length > 0}
+        isSecondaryNode={node.id === secondaryNode?.id}
         onParentClick={() => OnParentClick(dispatch, node)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}

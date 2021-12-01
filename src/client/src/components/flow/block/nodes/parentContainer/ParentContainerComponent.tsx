@@ -14,6 +14,7 @@ interface Props {
   color: string;
   size: BlockNodeSize;
   hasTerminals: boolean;
+  isSecondaryNode: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
   dispatch: any;
@@ -24,7 +25,16 @@ interface Props {
  * @param interface
  * @returns a container that sits on top of a Flow node.
  */
-const ParentContainerComponent = ({ node, color, size, hasTerminals, onParentClick, onChildClick, dispatch }: Props) => {
+const ParentContainerComponent = ({
+  node,
+  color,
+  size,
+  hasTerminals,
+  isSecondaryNode,
+  onParentClick,
+  onChildClick,
+  dispatch,
+}: Props) => {
   const resizePanelRef = useRef(null);
   useResizeParentNode(node.id, resizePanelRef, dispatch);
 
@@ -34,6 +44,7 @@ const ParentContainerComponent = ({ node, color, size, hasTerminals, onParentCli
         node={node}
         color={color}
         hasTerminals={hasTerminals}
+        isSecondaryNode={isSecondaryNode}
         onParentClick={onParentClick}
         onChildClick={onChildClick}
       />
@@ -42,7 +53,12 @@ const ParentContainerComponent = ({ node, color, size, hasTerminals, onParentCli
           <img src={ResizeIcon} alt="resize" className="icon" />
         </ResizeButton>
       )}
-      <Background variant={IsLocation(node) ? BackgroundVariant.Lines : BackgroundVariant.Dots} color={Color.Grey} gap={20} />
+      <Background
+        variant={IsLocation(node) ? BackgroundVariant.Lines : BackgroundVariant.Dots}
+        color={Color.Grey}
+        gap={20}
+        style={{ zIndex: 0 }}
+      />
     </ParentBox>
   );
 };

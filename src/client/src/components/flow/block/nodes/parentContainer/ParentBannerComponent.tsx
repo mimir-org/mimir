@@ -8,6 +8,7 @@ interface Props {
   node: Node;
   color: string;
   hasTerminals: boolean;
+  isSecondaryNode: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
 }
@@ -17,7 +18,7 @@ interface Props {
  * @param interface
  * @returns a menu banner with logo, name and arrows for navigation.
  */
-const ParentBannerComponent = ({ node, color, hasTerminals, onParentClick, onChildClick }: Props) => {
+const ParentBannerComponent = ({ node, color, hasTerminals, isSecondaryNode, onParentClick, onChildClick }: Props) => {
   const showArrowDown = HasChildren(node);
   const showArrowUp = !IsAspectNode(node);
   const prefix = GetRdsPrefix(node);
@@ -29,12 +30,16 @@ const ParentBannerComponent = ({ node, color, hasTerminals, onParentClick, onChi
         {prefix}
         {node.label ?? node.name}
       </Header>
-      <Navigation isActive={showArrowUp} onClick={showArrowUp ? onParentClick : null}>
-        <img src={showArrowUp ? ArrowUpIcon : ArrowUpInactiveIcon} alt="navigate-up" className="img" />
-      </Navigation>
-      <Navigation isActive={showArrowDown} onClick={showArrowDown ? onChildClick : null}>
-        <img src={showArrowDown ? ArrowDownIcon : ArrowDownInactiveIcon} alt="navigate-down" className="img" />
-      </Navigation>
+      {!isSecondaryNode && (
+        <>
+          <Navigation isActive={showArrowUp} onClick={showArrowUp ? onParentClick : null}>
+            <img src={showArrowUp ? ArrowUpIcon : ArrowUpInactiveIcon} alt="navigate-up" className="img" />
+          </Navigation>
+          <Navigation isActive={showArrowDown} onClick={showArrowDown ? onChildClick : null}>
+            <img src={showArrowDown ? ArrowDownIcon : ArrowDownInactiveIcon} alt="navigate-down" className="img" />
+          </Navigation>
+        </>
+      )}
       {!node.isRoot && (
         <LogoBox hasTerminals={hasTerminals}>
           <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
