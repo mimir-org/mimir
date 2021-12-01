@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -326,10 +326,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("MasterProjectIri");
 
-                    b.Property<string>("ProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
@@ -351,8 +347,6 @@ namespace Mb.Core.Migrations
                     b.HasIndex("FromNodeId");
 
                     b.HasIndex("InterfaceId");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("ToConnectorId");
 
@@ -606,10 +600,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
 
-                    b.Property<string>("ProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("PurposeString")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("PurposeString");
@@ -650,8 +640,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Width");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("StatusId");
 
@@ -1175,6 +1163,36 @@ namespace Mb.Core.Migrations
                     b.ToTable("NodeType_AttributeType", (string)null);
                 });
 
+            modelBuilder.Entity("Project_Edge", b =>
+                {
+                    b.Property<string>("EdgeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EdgeId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Project_Edge", (string)null);
+                });
+
+            modelBuilder.Entity("Project_Node", b =>
+                {
+                    b.Property<string>("NodeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("NodeId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Project_Node", (string)null);
+                });
+
             modelBuilder.Entity("TerminalType_AttributeType", b =>
                 {
                     b.Property<string>("AttributeTypeId")
@@ -1506,12 +1524,6 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("InterfaceId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.Project", "Project")
-                        .WithMany("Edges")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Mb.Models.Data.Connector", "ToConnector")
                         .WithMany("ToEdges")
                         .HasForeignKey("ToConnectorId")
@@ -1534,8 +1546,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("FromNode");
 
                     b.Navigation("Interface");
-
-                    b.Navigation("Project");
 
                     b.Navigation("ToConnector");
 
@@ -1583,19 +1593,11 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Project", "Project")
-                        .WithMany("Nodes")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
                         .WithMany("Nodes")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Project");
 
                     b.Navigation("Status");
                 });
@@ -1739,6 +1741,36 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Project_Edge", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Edge", null)
+                        .WithMany()
+                        .HasForeignKey("EdgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Project_Node", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Node", null)
+                        .WithMany()
+                        .HasForeignKey("NodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TerminalType_AttributeType", b =>
                 {
                     b.HasOne("Mb.Models.Data.TypeEditor.AttributeType", null)
@@ -1835,13 +1867,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("FromEdges");
 
                     b.Navigation("ToEdges");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Project", b =>
-                {
-                    b.Navigation("Edges");
-
-                    b.Navigation("Nodes");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Transport", b =>
