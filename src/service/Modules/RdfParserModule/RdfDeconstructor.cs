@@ -25,6 +25,7 @@ namespace RdfParserModule
 
         public List<ParserNode> ParserNodes;
         public List<ParserEdge> ParserEdges;
+        public List<ParserConnector> ParserConnectors;
 
         private Dictionary<string, string> _namespaces;
 
@@ -35,6 +36,7 @@ namespace RdfParserModule
             _mapper = mapper;
             ParserNodes = new List<ParserNode>();
             ParserEdges = new List<ParserEdge>();
+            ParserConnectors = new List<ParserConnector>();
         }
         public void MakeProject(string valueAsString)
         {
@@ -101,8 +103,7 @@ namespace RdfParserModule
         private ParserConnector GetConnector(string iri)
         {
             var c = 
-                (from node in ParserNodes
-                from connector in node.Terminals
+                (from connector in ParserConnectors
                 where connector.Iri == iri
                 select connector).ToList();
 
@@ -124,23 +125,30 @@ namespace RdfParserModule
                 // The parent should always be present if there is a parentId
                 var parent = GetNode(node.parentId);
 
+                var fromGuid = Guid.NewGuid();
                 var toConnector = new ParserRelation
                 {
-                    Id = $"{ParserGraph.Domain}_{Guid.NewGuid()}",
+                    Id = $"{ParserGraph.Domain}_{fromGuid}",
+                    Iri = $"{ParserGraph.Domain}/{fromGuid}",
                     Name = "Part of Relationship",
                     Relation = RelationType.PartOf,
                     Type = ConnectorType.Input
                 };
                 node.Terminals.Add(toConnector);
 
+                var toGuid = Guid.NewGuid();
                 var fromConnector = new ParserRelation
                 {
-                    Id = $"{ParserGraph.Domain}_{Guid.NewGuid()}",
+                    Id = $"{ParserGraph.Domain}_{toGuid}",
+                    Iri = $"{ParserGraph.Domain}/{toGuid}",
                     Name = "Part of Relationship",
                     Relation = RelationType.PartOf,
                     Type = ConnectorType.Output
                 };
                 parent.Terminals.Add(fromConnector);
+
+                ParserConnectors.Add(toConnector);
+                ParserConnectors.Add(fromConnector);
 
 
                 var edge = new ParserEdge
@@ -186,7 +194,7 @@ namespace RdfParserModule
             var hasParent = RdfGraph.CreateUriNode(Resources.hasParent);
 
             // There should always only be one parent, so we can just get the first element via Single
-            var parent = Store.GetTriplesWithSubjectPredicate(node, hasParent).Single().Object;
+            var parent = Store.GetTriplesWithSubjectPredicate(node, hasParent).FirstOrDefault()?.Object;
 
             return parent;
         }
@@ -366,9 +374,11 @@ namespace RdfParserModule
                 var inputTerminals = GetObjects(nodeId, Resources.hasInputTerminal).Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
+                    Iri = obj.ToString(),
                     Type = ConnectorType.Input,
                     NodeId = nodeId,
-                    Domain = GetDomain(obj.ToString())
+                    Domain = GetDomain(obj.ToString()),
+                    Attributes = GetAttributesOnNode(obj.ToString())
                 }).ToList();
 
                 connectors.AddRange(inputTerminals);
@@ -378,13 +388,17 @@ namespace RdfParserModule
                 var outputTerminals = GetObjects(nodeId, Resources.hasOutputTerminal).Select(obj => new ParserTerminal
                 {
                     Id = obj.ToString(),
+                    Iri = obj.ToString(),
                     Type = ConnectorType.Output,
                     NodeId = nodeId,
-                    Domain = GetDomain(obj.ToString())
+                    Domain = GetDomain(obj.ToString()),
+                    Attributes = GetAttributesOnNode(obj.ToString())
                 }).ToList();
 
                 connectors.AddRange(outputTerminals);
             }
+
+            ParserConnectors.AddRange(connectors);
 
             if (connectors.Count is 0)
             {
@@ -482,6 +496,8 @@ namespace RdfParserModule
                 Type = ConnectorType.Input
             };
 
+            ParserConnectors.Add(inTerminal);
+
             var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(inTerminal);
 
             if (termCatId is not null || termTypeId is not null)
@@ -509,7 +525,8 @@ namespace RdfParserModule
             }
 
             var fromNode = fromNodes.First().ToString();
-            inTerminal.NodeId = fromNode;
+            inTerminal.Node = GetNode(fromNode);
+            //inTerminal.NodeId = fromNode;
 
             var inputTerminalLabel = GetLabel(inTerminal.Iri);
             inTerminal.Name = inputTerminalLabel;
@@ -639,10 +656,11 @@ namespace RdfParserModule
 
             var aspectNode = aspects.First();
 
-            if (aspectNode is not ILiteralNode literal) return Aspect.NotSet;
+            var aspectString = aspectNode.ToString().Split("#")[^1];
+            
             try
             {
-                return Enum.Parse<Aspect>(literal.Value);
+                return Enum.Parse<Aspect>(aspectString);
             }
             catch
             {
@@ -667,6 +685,8 @@ namespace RdfParserModule
                 Iri = outputTerminal.ToString(),
                 Type = ConnectorType.Output
             };
+
+            ParserConnectors.Add(outTerminal);
 
             var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(outTerminal);
 
@@ -693,7 +713,8 @@ namespace RdfParserModule
             }
 
             var toNode = toNodes.First().ToString();
-            outTerminal.NodeId = toNode;
+            //outTerminal.NodeId = toNode;
+            outTerminal.Node = GetNode(toNode);
 
             var outputTerminalLabel = GetLabel(outTerminal.Iri);
             outTerminal.Name = outputTerminalLabel;
@@ -894,7 +915,7 @@ namespace RdfParserModule
             var nodes = subs.Select(node => new ParserNode
             {
                 Prefix = "",
-                Aspect = Aspect.Function,
+                Aspect = GetAspect(node.ToString()),
                 Iri = node.ToString(),
                 SemanticReference = node.ToString(),
                 IsRoot = false,
@@ -904,7 +925,7 @@ namespace RdfParserModule
                 Domain = GetDomain(node.ToString()),
                 Label = GetLabel(node.ToString()),
                 Name = GetLabel(node.ToString()),
-                parentId = GetParent(node.ToString()).ToString(),
+                parentId = GetParent(node.ToString())?.ToString(),
                 Terminals = GetTerminalsOnNode(node.ToString()),
                 Attributes = GetAttributesOnNode(node.ToString())
 
