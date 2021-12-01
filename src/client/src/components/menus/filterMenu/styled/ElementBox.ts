@@ -11,7 +11,7 @@ const ElementBox = styled.div<Props>`
   align-items: center;
   height: 30px;
   margin-top: ${(props) => props.isHeader && "10px"};
-  padding-left: ${(props) => props.indent * 20}px;
+  padding-left: ${(props) => props.indent * 12}px;
   background-color: ${(props) => (props.isHeader ? Color.GreyLight : Color.White)};
 
   &:hover {

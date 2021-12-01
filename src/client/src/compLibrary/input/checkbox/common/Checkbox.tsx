@@ -7,7 +7,7 @@ interface Props {
   color?: string;
   readOnly?: boolean | false;
   id?: string;
-  leftPos?: number;
+  marginLeft?: number;
 }
 
 /**
@@ -15,8 +15,8 @@ interface Props {
  * @param interface
  * @returns a checkbox.
  */
-const Checkbox = ({ isChecked, onChange, color = Color.GreyHeader, readOnly, id, leftPos = 7 }: Props) => (
-  <CheckboxWrapper color={color} leftPos={leftPos}>
+const Checkbox = ({ isChecked, onChange, color = Color.GreyHeader, readOnly, id, marginLeft = 0 }: Props) => (
+  <CheckboxWrapper color={color} marginLeft={marginLeft}>
     <input type="checkbox" readOnly={readOnly} key={id} checked={isChecked} onChange={() => onChange()} />
     <div className="checkmark"></div>
   </CheckboxWrapper>
