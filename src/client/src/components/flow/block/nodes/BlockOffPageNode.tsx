@@ -25,6 +25,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
         size={{ width: data?.width, height: data?.height }}
         terminals={data.connectors}
         dispatch={dispatch}
+        offPage
       />
     </OffPageBox>
   );
