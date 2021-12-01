@@ -25,9 +25,9 @@ interface Props {
 const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
   const categories = [] as TerminalCategory[];
 
-  items.forEach((item) => {
-    if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory.name))
-      categories.push({ id: item.terminalCategoryId, name: item.terminalCategory.name });
+  items?.forEach((item) => {
+    if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory?.name))
+      categories.push({ id: item.terminalCategoryId, name: item.terminalCategory?.name });
   });
 
   return (
