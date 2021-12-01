@@ -49,7 +49,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props): JSX.Element 
           <ButtonsContainer>
             <Button onClick={() => OnReturn(dispatch)} type={TextResources.Project_Cancel} />
             <OpenButton hasProject={hasProject}>
-              <Button onClick={hasProject ? () => OnOpen(dispatch) : () => null} type={TextResources.Project_Open} />
+              <Button onClick={hasProject ? () => OnOpen(projectId, dispatch) : () => null} type={TextResources.Project_Open} />
             </OpenButton>
           </ButtonsContainer>
         </ProjectBody>
