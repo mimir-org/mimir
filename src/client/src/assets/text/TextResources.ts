@@ -255,14 +255,6 @@ const TextResources = {
   Filter_Transports: "Transports",
   Filter_Relations: "Relations",
 
-  Filter_Category_EnergyElectrical: "Energy electrical",
-  Filter_Category_EnergyMechanical: "Energy mechanical",
-  Filter_Category_EnergyThermal: "Energy termal",
-  Filter_Category_MaterialFluid: "Material fluid",
-  Filter_Category_MaterialGranulate: "Material granulate",
-  Filter_Category_Force: "Force",
-  Filter_Category_Information: "Information",
-
   // User Menu
   UserMenu_Settings: "User Settings",
   UserMenu_Notifications: "Show all Notifications",

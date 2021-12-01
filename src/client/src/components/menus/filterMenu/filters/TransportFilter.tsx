@@ -1,10 +1,14 @@
 import { TerminalCategoryFilter } from ".";
 import { FilterElement } from "..";
 import { TextResources } from "../../../../assets/text";
-import { Connector, Edge, TERMINAL_CATEGORIES } from "../../../../models";
+import { Connector, Edge } from "../../../../models";
 import { OnAllTransportsChange } from "../handlers";
-import { GetCategoryName } from "../helpers";
 import { AllTransportsChecked } from "../helpers/IsChecked";
+
+interface Category {
+  id: string;
+  name: string;
+}
 interface Props {
   edges: Edge[];
   transportItems: Connector[];
@@ -18,31 +22,42 @@ interface Props {
  * @param interface
  * @returns one parent checkbox, and one checkbox for each child.
  */
-const TransportFilter = ({ edges, transportItems, dispatch, visible }: Props) =>
-  visible && (
-    <>
-      <FilterElement
-        label={TextResources.Filter_Transports}
-        onChange={() => OnAllTransportsChange(edges, dispatch)}
-        isChecked={AllTransportsChecked(edges)}
-        visible={visible}
-        isHeader
-      />
+const TransportFilter = ({ edges, transportItems, dispatch, visible }: Props) => {
+  const categories = [] as Category[];
 
-      {TERMINAL_CATEGORIES.map((_, index) => {
-        const items = transportItems.filter((item) => item.terminalCategoryId === TERMINAL_CATEGORIES[index]);
-        return (
-          <TerminalCategoryFilter
-            terminalCategoryId={TERMINAL_CATEGORIES[index]}
-            edges={edges}
-            items={items}
-            label={GetCategoryName(TERMINAL_CATEGORIES[index])}
-            dispatch={dispatch}
-            visible={!!items.length}
-          />
-        );
-      })}
-    </>
+  transportItems.forEach((item) => {
+    if (!categories.some((x: Category) => x.id === item.terminalCategory.id || x.name === item.terminalCategory.name))
+      categories.push({ id: item.terminalCategoryId, name: item.terminalCategory.name });
+  });
+
+  return (
+    visible && (
+      <>
+        <FilterElement
+          label={TextResources.Filter_Transports}
+          onChange={() => OnAllTransportsChange(edges, dispatch)}
+          isChecked={AllTransportsChecked(edges)}
+          visible={visible}
+          isHeader
+        />
+
+        {categories.map((category, index) => {
+          const items = transportItems.filter((item) => item.terminalCategoryId === category.id);
+          return (
+            <TerminalCategoryFilter
+              key={category.id}
+              terminalCategoryId={category.id}
+              edges={edges}
+              items={items}
+              label={category.name}
+              dispatch={dispatch}
+              visible={!!items.length}
+            />
+          );
+        })}
+      </>
+    )
   );
+};
 
 export default TransportFilter;
