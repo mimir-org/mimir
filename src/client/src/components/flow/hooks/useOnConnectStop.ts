@@ -9,12 +9,11 @@ import { IsOffPage } from "../../../helpers";
 const useOnConnectStop = (e, project: Project, dispatch: any, parentSize: BlockNodeSize) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
-  const marginX = 300;
 
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
 
-    if (!IsOffPage(sourceNode) && e.clientX > parentSize.width + marginX) {
+    if (!IsOffPage(sourceNode)) {
       const offPageData = {
         sourceNodeId: edgeEvent.nodeId,
         sourceConnectorId: edgeEvent.sourceId,

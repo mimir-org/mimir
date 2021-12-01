@@ -17,31 +17,34 @@ export interface CreateOffPageData {
  * Component to create an OffPageNode.
  * @param project
  * @param data
- * @returns the data type OffPageNodeCreator
+ * @returns the data type OffPageNodeCreator.
  */
 const CreateOffPageNode = (sourceNode: Node, data: CreateOffPageData) => {
   const sourceConnector = sourceNode?.connectors.find((x) => x.id === data.sourceConnectorId);
   const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
+  const marginY = 150;
 
   const offPageNode = {
     id: CreateId(),
-    name: "OffPage",
-    label: "OffPage",
+    name: "OffPage-" + sourceNode.name,
+    label: "OffPage-" + sourceNode.label,
     aspect: Aspect.None,
     positionBlockX: data.x,
-    positionBlockY: data.y - 150,
+    positionBlockY: data.y - marginY,
     connectors: [],
     attributes: [],
     isHidden: false,
+    connectionRequired: true,
   } as Node;
 
   const inputConnector = {
     id: CreateId(),
-    name: "OffpageInConnector",
+    name: "OffPageInput",
     type: ConnectorType.Input,
     nodeId: offPageNode.id,
     terminalCategory: sourceConnector.terminalCategory,
     terminalCategoryId: sourceConnector.terminalCategoryId,
+    terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
     inputOrder: 0,
@@ -53,11 +56,12 @@ const CreateOffPageNode = (sourceNode: Node, data: CreateOffPageData) => {
 
   const outputConnector = {
     id: CreateId(),
-    name: "OffpageOutConnector",
+    name: "OffPageOutput",
     type: ConnectorType.Output,
     nodeId: offPageNode.id,
     terminalCategory: sourceConnector.terminalCategory,
     terminalCategoryId: sourceConnector.terminalCategoryId,
+    terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
     inputOrder: 0,
@@ -69,7 +73,7 @@ const CreateOffPageNode = (sourceNode: Node, data: CreateOffPageData) => {
 
   const partOfConnector = {
     id: CreateId(),
-    name: "PartOfConnector",
+    name: "OffPagePartOf",
     type: ConnectorType.Input,
     relationType: RelationType.PartOf,
     nodeId: offPageNode.id,

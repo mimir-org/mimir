@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Node, Connector } from "../../../../models";
 import { Handle } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
@@ -7,6 +7,7 @@ import { HandleBox } from "./styled";
 import { IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { BlockNodeSize } from "../../../../models/project";
+import { OnMouseEnter, OnMouseLeave } from "./handlers";
 
 interface Props {
   nodes: Node[];
@@ -16,6 +17,7 @@ interface Props {
   isParent?: boolean;
   electro?: boolean;
   offPage?: boolean;
+  isVisible?: boolean;
 }
 
 /**
@@ -23,33 +25,49 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ nodes, size, terminals, dispatch, isParent = false, electro = false, offPage = false }: Props) => (
-  <>
-    {terminals.map((conn) => {
-      const [type, pos] = GetBlockHandleType(conn, electro);
-      const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
+const HandleComponent = ({
+  nodes,
+  size,
+  terminals,
+  dispatch,
+  isParent = false,
+  electro = false,
+  offPage = false,
+  isVisible = true,
+}: Props) => {
+  const [visible, setVisible] = useState(isVisible);
+  const className = "react-flow__handle-block";
 
-      return (
-        <HandleBox
-          visible={conn.visible && !IsPartOf(conn)}
-          id={"handle-" + conn.id}
-          top={SetTerminalYPos(conn, pos, electro, isParent, order, size.height)}
-          left={SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width)}
-          key={conn.id}
-        >
-          <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={"react-flow__handle-block"} />
-          <Handle
-            type={type}
-            style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
-            position={pos}
-            id={conn.id}
-            className={"react-flow__handle-block"}
-            isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, dispatch)}
-          />
-        </HandleBox>
-      );
-    })}
-  </>
-);
+  return (
+    <>
+      {terminals.map((conn) => {
+        const [type, pos] = GetBlockHandleType(conn, electro);
+        const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
+
+        return (
+          <HandleBox
+            visible={visible && conn.visible && !IsPartOf(conn)}
+            id={"handle-" + conn.id}
+            top={SetTerminalYPos(conn, pos, electro, isParent, order, size.height)}
+            left={SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width)}
+            key={conn.id}
+            onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
+            onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
+          >
+            <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
+            <Handle
+              type={type}
+              style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
+              position={pos}
+              id={conn.id}
+              className={className}
+              isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, dispatch)}
+            />
+          </HandleBox>
+        );
+      })}
+    </>
+  );
+};
 
 export default memo(HandleComponent);

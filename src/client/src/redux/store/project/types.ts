@@ -55,6 +55,7 @@ export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_T
 export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
+export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
 
 // State types
 export interface ProjectState {
@@ -495,11 +496,18 @@ export interface CreateSubProject {
     edges: string[];
   };
 }
-
 export interface CreateSubProjectFinished {
   type: typeof CREATING_SUB_PROJECT_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
+  };
+}
+
+export interface SetOffPageStatus {
+  type: typeof SET_OFFPAGE_STATUS;
+  payload: {
+    id: string;
+    required: boolean;
   };
 }
 
@@ -566,4 +574,5 @@ export type ProjectActionTypes =
   | CommitProjectFinished
   | ChangeNodeUpdated
   | CreateSubProject
-  | CreateSubProjectFinished;
+  | CreateSubProjectFinished
+  | SetOffPageStatus;
