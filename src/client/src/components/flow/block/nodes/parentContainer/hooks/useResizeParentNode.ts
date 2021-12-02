@@ -24,7 +24,7 @@ const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<
   const prevXRef = useRef(nodeWidthRef.current);
 
   useEffect(() => {
-    parentProductNodeRef.current = document.getElementById("block-" + id);
+    parentProductNodeRef.current = document.getElementById("parent-block-" + id);
     parentProductNodeFlowRef.current = GetFlowNodeByDataId(id);
   }, []);
 

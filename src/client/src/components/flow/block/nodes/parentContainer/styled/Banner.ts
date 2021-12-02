@@ -1,13 +1,19 @@
 import styled from "styled-components";
 
-const Banner = styled.div`
-  position: absolute;
-  top: 0.3px;
+interface Props {
+  color: string;
+}
+
+const Banner = styled.div<Props>`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 30px;
   width: 100%;
-  border-radius: 10px 10px 0px 0px;
-  background-color: ${(props: { color: string }) => props.color};
-  z-index: 5;
+  border-radius: 8px 8px 0px 0px;
+  background-color: ${(props) => props.color};
 `;
 
 export default Banner;

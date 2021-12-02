@@ -39,7 +39,7 @@ namespace Mb.Services.Services
         private readonly IConnectorRepository _connectorRepository;
         private readonly ICommonRepository _commonRepository;
         private readonly IModuleService _moduleService;
-        private readonly ICloneService _cloneService;
+        private readonly IRemapService _remapService;
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
@@ -48,7 +48,7 @@ namespace Mb.Services.Services
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, ICloneService cloneService, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
+            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, IRemapService remapService, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -60,7 +60,7 @@ namespace Mb.Services.Services
             _moduleService = moduleService;
             _attributeRepository = attributeRepository;
             _logger = logger;
-            _cloneService = cloneService;
+            _remapService = remapService;
             _cooperateService = cooperateService;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
@@ -311,25 +311,25 @@ namespace Mb.Services.Services
                 var oldEdges = actualProject.Edges.Where(x => subProjectAm.Edges.Any(y => y == x.Id)).ToList();
 
                 // Create new nodes from old nodes
-                var clonedData = _cloneService.MakeClones(initSubProjectCreated.Id, oldNodes, oldEdges);
-                
+                var remapData = _remapService.CreateRemap(initSubProjectCreated.Id, oldNodes, oldEdges, false);
+
                 // Remove old root nodes
-                clonedData.nodes = clonedData.nodes.Where(x => !x.IsRoot).ToList();
+                remapData.nodes = remapData.nodes.Where(x => !x.IsRoot).ToList();
 
                 // Remove edges that point to old root nodes
-                clonedData.edges = clonedData.edges.Where(edge => clonedData.nodes.Any(x => x.Id == edge.FromNodeId)).ToList();
+                remapData.edges = remapData.edges.Where(edge => remapData.nodes.Any(x => x.Id == edge.FromNodeId)).ToList();
 
                 // Initial list of edges and nodes if null
                 initSubProjectCreated.Nodes ??= new List<Node>();
                 initSubProjectCreated.Edges ??= new List<Edge>();
 
                 // Add edges and nodes to new sub project
-                foreach (var clonedDataNode in clonedData.nodes)
+                foreach (var clonedDataNode in remapData.nodes)
                 {
                     initSubProjectCreated.Nodes.Add(clonedDataNode);
                 }
 
-                foreach (var clonedDataEdge in clonedData.edges)
+                foreach (var clonedDataEdge in remapData.edges)
                 {
                     initSubProjectCreated.Edges.Add(clonedDataEdge);
                 }

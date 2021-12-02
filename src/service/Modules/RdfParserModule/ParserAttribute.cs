@@ -10,6 +10,10 @@ namespace RdfParserModule
         public string Value { get; set; }
         public string SelectedUnitId { get; set; }
         public string AttributeTypeId { get; set; }
+        public string QualifierId { get; set; }
+        public string SourceId { get; set; }
+        public string ConditionId { get; set; }
+        public string FormatId { get; set; }
         public string AttributeTypeIri { get; set; }
         public string ConnectorIri { get; set; }
         public string NodeIri { get; set; }
