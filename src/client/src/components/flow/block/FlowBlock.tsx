@@ -127,9 +127,9 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch, true);
     } else if (selectedElements.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], false, inspectorRef, dispatch, true);
+      handleNodeSelect(selectedElements[0], dispatch, true);
     } else if (selectedElements.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], false, inspectorRef, dispatch, true);
+      handleEdgeSelect(selectedElements[0], dispatch, true);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch, true);
     }
