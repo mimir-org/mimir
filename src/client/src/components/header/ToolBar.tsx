@@ -6,8 +6,9 @@ import { location3DSelector, useAppDispatch, useAppSelector } from "../../redux/
 import { GetSelectedNode, IsBlockView, IsLocation } from "../../helpers";
 import { OptionsBox, ToolBarBox, LocationBox } from "./styled";
 import { ToolBarElement } from ".";
-
+import { Project } from "../../models";
 interface Props {
+  project: Project;
   libOpen: boolean;
   explorerOpen: boolean;
   treeView: boolean;
@@ -20,7 +21,7 @@ interface Props {
  * @param interface
  * @returns a menu with icons for different features.
  */
-const ToolBar = ({ libOpen, explorerOpen, treeView, visualFilter, electro }: Props) => {
+const ToolBar = ({ project, libOpen, explorerOpen, treeView, visualFilter, electro }: Props) => {
   const dispatch = useAppDispatch();
   const location3DActive = useAppSelector(location3DSelector);
   const selectedNode = GetSelectedNode();
@@ -32,13 +33,13 @@ const ToolBar = ({ libOpen, explorerOpen, treeView, visualFilter, electro }: Pro
           treeView={treeView}
           label={VIEW_TYPE.TREEVIEW}
           icon={treeView ? Icons.TreeViewActive : Icons.TreeView}
-          onClick={() => Click.OnView(VIEW_TYPE.TREEVIEW as ViewType, dispatch)}
+          onClick={() => Click.OnView(project, VIEW_TYPE.TREEVIEW as ViewType, dispatch)}
         />
         <ToolBarElement
           treeView={treeView}
           label={VIEW_TYPE.BLOCKVIEW}
           icon={treeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => Click.OnView(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}
+          onClick={() => Click.OnView(project, VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}
         />
         {!treeView && (
           <ToolBarElement

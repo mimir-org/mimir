@@ -171,7 +171,7 @@ const TextResources = {
   Project_Recent_Name: "Project name",
   Project_Recent_Owner: "Project owner",
   Project_Recent_Edited: "Last edited",
-  Project_Save_Label: "Save project to database",
+  Project_Save_Label: "Save project",
 
   Project_Import: "Import project",
   Project_Import_File: "Import project file",
