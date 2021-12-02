@@ -16,7 +16,6 @@ import {
   filterSelector,
   darkModeSelector,
   iconSelector,
-  inspectorSelector,
   librarySelector,
   projectSelector,
   userStateSelector,
@@ -39,7 +38,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const userState = useAppSelector(userStateSelector);
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
-  const inspectorOpen = useAppSelector(inspectorSelector);
   const visualFilter = useAppSelector(filterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
 
@@ -87,9 +85,9 @@ const FlowTree = ({ inspectorRef }: Props) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch);
     } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+      handleNodeSelect(selectedElements[0], dispatch);
     } else if (selectedElements.length === 1 && Helpers.GetEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+      handleEdgeSelect(selectedElements[0], dispatch);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch);
     }

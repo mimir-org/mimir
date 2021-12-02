@@ -23,28 +23,16 @@ export const handleNoSelect = (
   CloseInspector(inspectorRef, dispatch);
 };
 
-export const handleNodeSelect = (
-  element: FlowElement,
-  inspectorOpen: boolean,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  dispatch: Dispatch,
-  isBlock = false
-) => {
+export const handleNodeSelect = (element: FlowElement, dispatch: Dispatch, isBlock = false) => {
   dispatch(setActiveEdge(null, false));
   isBlock ? dispatch(setActiveBlockNode(element.id)) : dispatch(setActiveNode(element.id, true));
-  OpenInspector(inspectorOpen, inspectorRef, isBlock, dispatch);
+  OpenInspector(dispatch);
 };
 
-export const handleEdgeSelect = (
-  element: FlowElement,
-  inspectorOpen: boolean,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  dispatch: Dispatch,
-  isBlock = false
-) => {
+export const handleEdgeSelect = (element: FlowElement, dispatch: Dispatch, isBlock = false) => {
   dispatch(setActiveEdge(element?.id, true));
   isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
-  OpenInspector(inspectorOpen, inspectorRef, isBlock, dispatch);
+  OpenInspector(dispatch);
 };
 
 export const handleMultiSelect = (dispatch: Dispatch, isBlock = false) => {
@@ -52,22 +40,8 @@ export const handleMultiSelect = (dispatch: Dispatch, isBlock = false) => {
   dispatch(setActiveEdge(null, false));
 };
 
-export const OpenInspector = (
-  inspectorOpen: boolean,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  isBlock: boolean,
-  dispatch: Dispatch
-) => {
+export const OpenInspector = (dispatch: Dispatch) => {
   dispatch(changeInspectorTab(0));
-
-  if (!isBlock) {
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-
-    if (!inspectorOpen) {
-      dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(inspectorRef, Size.ModuleOpen);
-    }
-  }
 };
 
 export const CloseInspector = (inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
