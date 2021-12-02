@@ -754,17 +754,10 @@ namespace Mb.Services.Services
             return project;
         }
 
-        private void LockUnlockNodesRecursive(
-            bool lockUnlock,
-            Node node, 
-            IQueryable<Node> allNodes,  
-            IQueryable<Edge> allEdges,
-            IQueryable<Attribute> allAttributes,
-            IQueryable<Transport> allTransports,
-            IQueryable<Interface> allInterfaces,
-            string userName,
-            DateTime dateTimeNow)
+        private void LockUnlockNodesRecursive(bool lockUnlock, Node node, IQueryable<Node> allNodes, IQueryable<Edge> allEdges, IQueryable<Attribute> allAttributes,
+            IQueryable<Transport> allTransports, IQueryable<Interface> allInterfaces, string userName, DateTime dateTimeNow, int infiniteLoopGuardStart = 1, int infiniteLoopGuardMax = 100000)
         {
+            //Exit recursion
             if(node == null)
                 return;
 
@@ -794,11 +787,18 @@ namespace Mb.Services.Services
 
                 var childNode = allNodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
 
-                //Exit
+                //Exit recursion
                 if (childNode == null || childNode.Level < node.Level)
                     return;
 
-                LockUnlockNodesRecursive(node.IsLocked, childNode, allNodes, allEdges, allAttributes, allTransports, allInterfaces, userName, dateTimeNow);
+                infiniteLoopGuardStart++;
+
+                //Exit recursion (safe guard)
+                if (infiniteLoopGuardStart >= infiniteLoopGuardMax)
+                    throw new ModelBuilderInvalidOperationException($"Error in lock/unlock nodes: Infinite recursion loop detected after {infiniteLoopGuardMax} iterations.");
+
+                LockUnlockNodesRecursive(node.IsLocked, childNode, allNodes, allEdges, allAttributes, allTransports, 
+                    allInterfaces, userName, dateTimeNow, infiniteLoopGuardStart, infiniteLoopGuardMax);
             }
         }
 
