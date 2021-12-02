@@ -5,7 +5,7 @@ import { TreeHandleBox, TreeNodeBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
 import { TreeLogoComponent } from "../../logo";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
-import { IsValidTreeConnection } from "./helpers";
+import { IsValidTreeConnection, SetTopPos } from "./helpers";
 import { nodeSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
 
 /**
@@ -52,6 +52,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
             key={"handle-treeview-" + conn.id}
             visible={IsPartOf(conn) && isHover}
             position={positionHandler}
+            topPos={SetTopPos(positionHandler)}
           >
             <Handle
               type={typeHandler}
