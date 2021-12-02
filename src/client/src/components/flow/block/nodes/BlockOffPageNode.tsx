@@ -15,7 +15,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const nodes = project?.nodes;
-  const node = nodes.find((n) => n.id === data.id);
+  const node = nodes?.find((n) => n.id === data.id);
   const type = "BlockOffPageNode-";
 
   if (!node) return null;
