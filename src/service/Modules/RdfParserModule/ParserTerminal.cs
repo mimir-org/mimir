@@ -13,7 +13,7 @@ namespace RdfParserModule
         public string SemanticReference { get; set; }
 
         public bool Visible => true;
-        public string NodeId { get; set; }
+        public string NodeIri { get; set; }
         public ParserNode Node { get; set; }
 
 
