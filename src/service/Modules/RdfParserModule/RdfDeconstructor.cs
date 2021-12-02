@@ -12,6 +12,7 @@ using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
+using VDS.RDF.Writing;
 using INode = VDS.RDF.INode;
 
 namespace RdfParserModule
@@ -261,7 +262,7 @@ namespace RdfParserModule
 
             if (resultList.Count < 1)
             {
-                return null;
+                throw new Exception("There needs to be at least one object.");
             }
 
             return resultList;
@@ -362,6 +363,38 @@ namespace RdfParserModule
             }
         }
 
+        public string GetLiteralValue(string subject, string predicate)
+        {
+            var node = GetObjects(subject, predicate).FirstOrDefault();
+            if (node is null) throw new Exception($"Found nothing for subject= {subject}, predicate= {predicate}");
+            if (node is LiteralNode literal) return literal.Value;
+            throw new Exception("This is not a literal");
+        }
+
+        public (string, string) GetColorAndVisiblity(string iri)
+        {
+            var node = GetOrCreateUriNode(iri);
+            var colorPred = GetOrCreateUriNode(BuildIri("mimir", "color"));
+            var visPred = GetOrCreateUriNode(BuildIri("mimir", "visible"));
+
+            var color = Store.GetTriplesWithSubjectPredicate(node, colorPred).Select(t => t.Object).SingleOrDefault();
+            var visible = Store.GetTriplesWithPredicateObject(node, visPred).Select(t => t.Object).SingleOrDefault();
+
+            if (color is LiteralNode colorLit && visible is LiteralNode visLit)
+            {
+                return (colorLit.Value, visLit.Value);
+            }
+
+            throw new Exception($"Found no color and/or visibility for the connector {iri}");
+        }
+
+        public string GetConnectorColor(string iri)
+        {
+            var node = GetOrCreateUriNode(iri);
+            var colorPred = GetOrCreateUriNode(BuildIri("mimir", "color"));
+            return null;
+        }
+
         public List<ParserConnector> GetTerminalsOnNode(string nodeId)
         {
             var connectors = new List<ParserConnector>();
@@ -376,7 +409,7 @@ namespace RdfParserModule
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
                     Type = ConnectorType.Input,
-                    NodeId = nodeId,
+                    NodeIri = nodeId,
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString())
                 }).ToList();
@@ -390,7 +423,7 @@ namespace RdfParserModule
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
                     Type = ConnectorType.Output,
-                    NodeId = nodeId,
+                    NodeIri = nodeId,
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString())
                 }).ToList();
@@ -447,7 +480,7 @@ namespace RdfParserModule
 
         private (string termCatId, string termTypeId) GetTerminalCategoryIdAndTerminalTypeId(ParserTerminal terminal)
         {
-            var terminalTypes = GetObjects(terminal.Id, Resources.type);
+            var terminalTypes = GetObjects(terminal.Iri, Resources.type);
 
             if (terminalTypes is null) return (null, null);
 
@@ -457,7 +490,6 @@ namespace RdfParserModule
                 var terminalCategoryId = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
                 var terminalTypeName = transmitter.ToString().Split("Transmitter-").Last().Split("-").Last()
                     .Replace("%20", " ");
-
 
                 return terminalTypeName.Trim().CreateCategoryIdAndTerminalTypeId(terminalCategoryId);
             }
@@ -478,62 +510,7 @@ namespace RdfParserModule
             return node;
         }
 
-        private ParserTerminal GetTransportInTerminal(string transportIri)
-        {
-            var inTerminals = GetObjects(transportIri, Resources.hasInputTerminal);
-
-            if (inTerminals.Count != 1)
-            {
-                throw new Exception("A transport should only ever have one, 1, input terminal");
-            }
-
-            var inputTerminal = inTerminals.First();
-
-            var inTerminal = new ParserTerminal
-            {
-                Id = inputTerminal.ToString(),
-                Iri = inputTerminal.ToString(),
-                Type = ConnectorType.Input
-            };
-
-            ParserConnectors.Add(inTerminal);
-
-            var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(inTerminal);
-
-            if (termCatId is not null || termTypeId is not null)
-            {
-                inTerminal.TerminalCategoryId = termCatId;
-                inTerminal.TerminalTypeId = termTypeId;
-            }
-
-
-            var fromConnectors = GetObjects(inTerminal.Iri, Resources.connectedTo);
-            if (fromConnectors is null || fromConnectors.Count != 1)
-            {
-                throw new Exception($"A terminal can only be connected to one, 1, other terminal | {inTerminal}");
-            }
-
-            var fromConnector = fromConnectors.First().ToString();
-            inTerminal.FromConnectorIri = fromConnector;
-            inTerminal.FromConnectorId = fromConnector;
-
-
-            var fromNodes = GetSubjects(Resources.hasOutputTerminal, inTerminal.FromConnectorIri);
-            if (fromNodes is null || fromNodes.Count != 1)
-            {
-                throw new Exception($"A connector can only belong to one, 1, aspect object | {inTerminal}");
-            }
-
-            var fromNode = fromNodes.First().ToString();
-            inTerminal.Node = GetNode(fromNode);
-            //inTerminal.NodeId = fromNode;
-
-            var inputTerminalLabel = GetLabel(inTerminal.Iri);
-            inTerminal.Name = inputTerminalLabel;
-            
-
-            return inTerminal;
-        }
+        
 
         private string GetLabel(string iri)
         {
@@ -668,25 +645,70 @@ namespace RdfParserModule
             }
         }
 
+        private ParserTerminal GetTransportInTerminal(string transportIri)
+        {
+            var inTerminals = GetObjects(transportIri, Resources.hasInputTerminal);
+
+            if (inTerminals is null) throw new Exception("All transports need one, 1, input terminal");
+            if (inTerminals.Count != 1) throw new Exception("A transport should only ever have one, 1, input terminal");
+
+            var inputTerminal = inTerminals.First();
+
+            var inTerminal = new ParserTerminal
+            {
+                Id = inputTerminal.ToString(),
+                Iri = inputTerminal.ToString(),
+                Type = ConnectorType.Input
+            };
+
+
+
+            var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(inTerminal);
+
+            if (termCatId is not null && termTypeId is not null)
+            {
+                inTerminal.TerminalCategoryId = termCatId;
+                inTerminal.TerminalTypeId = termTypeId;
+            }
+
+
+            var fromConnectors = GetObjects(inTerminal.Iri, Resources.connectedTo);
+            if (fromConnectors is null || fromConnectors.Count != 1) throw new Exception($"A terminal can only be connected to one, 1, other terminal | {inTerminal}");
+
+            var fromConnector = fromConnectors.First().ToString();
+            inTerminal.FromConnectorIri = fromConnector;
+            inTerminal.FromConnectorId = fromConnector;
+
+
+            var fromNodes = GetSubjects(Resources.hasOutputTerminal, inTerminal.FromConnectorIri);
+            if (fromNodes is null || fromNodes.Count != 1) throw new Exception($"A connector can only belong to one, 1, aspect object | {inTerminal}");
+
+            var fromNode = fromNodes.First().ToString();
+            inTerminal.Node = GetNode(fromNode);
+            inTerminal.Name = GetLabel(inTerminal.Iri);
+
+            inTerminal.Attributes = GetAttributesOnNode(inTerminal.Iri);
+
+            ParserConnectors.Add(inTerminal);
+            return inTerminal;
+        }
+
         private ParserTerminal GetTransportOutTerminal(string transportIri)
         {
             var outTerminals = GetObjects(transportIri, Resources.hasOutputTerminal);
 
-            if (outTerminals.Count != 1)
-            {
-                throw new Exception("A transport should only ever have one, 1, output terminal");
-            }
+
+            if (outTerminals is null) throw new Exception("All transports need one, 1, output terminal");
+            if (outTerminals.Count != 1) throw new Exception("A transport should only ever have one, 1, output terminal");
 
             var outputTerminal = outTerminals.First();
 
             var outTerminal = new ParserTerminal
             {
-                Id = outputTerminal.ToString(),
                 Iri = outputTerminal.ToString(),
                 Type = ConnectorType.Output
             };
 
-            ParserConnectors.Add(outTerminal);
 
             var (termCatId, termTypeId) = GetTerminalCategoryIdAndTerminalTypeId(outTerminal);
 
@@ -697,28 +719,23 @@ namespace RdfParserModule
             }
 
             var toConnectors = GetObjects(outTerminal.Iri, Resources.connectedTo);
-            if (toConnectors.Count != 1)
-            {
-                throw new Exception("A terminal can only be connected to one, 1, other terminal");
-            }
+            if (toConnectors is null) throw new Exception("A transport should always be connected to something");
+            if (toConnectors.Count != 1) throw new Exception("A terminal can only be connected to one, 1, other terminal");
 
             var toConnector = toConnectors.First().ToString();
             outTerminal.ToConnectorIri= toConnector;
-            outTerminal.ToConnectorId = toConnector;
 
             var toNodes = GetSubjects(Resources.hasInputTerminal, outTerminal.ToConnectorIri);
-            if (toNodes.Count != 1)
-            {
-                throw new Exception("A connector can only belong to one, 1, aspect object");
-            }
+            if (toNodes.Count != 1) throw new Exception("A connector can only belong to one, 1, aspect object");
 
             var toNode = toNodes.First().ToString();
-            //outTerminal.NodeId = toNode;
             outTerminal.Node = GetNode(toNode);
 
-            var outputTerminalLabel = GetLabel(outTerminal.Iri);
-            outTerminal.Name = outputTerminalLabel;
+            outTerminal.Name = GetLabel(outTerminal.Iri);
 
+            outTerminal.Attributes = GetAttributesOnNode(outTerminal.Iri);
+
+            ParserConnectors.Add(outTerminal);
             return outTerminal;
         }
 
@@ -823,8 +840,6 @@ namespace RdfParserModule
             var physicalQuantities = Store.GetTriplesWithSubjectPredicate(node, hasPhysicalQuantity)
                 .Select(t => t.Object).ToList();
 
-
-
             var attributes = physicalQuantities.Select(attribute => new ParserAttribute
             {
                 Iri = attribute.ToString(),
@@ -832,10 +847,7 @@ namespace RdfParserModule
                 Key = GetLabel(attribute.ToString()),
                 NodeIri = iri,
                 Units = new List<ParserUnit>(),
-                QualifierId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "qualifier")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
-                SourceId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "source")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
-                ConditionId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "condition")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
-                FormatId = GetLastPartOfIri(GetObjects(attribute.ToString(), BuildIri("mimir", "format")).FirstOrDefault()?.ToString()).Replace("ID", string.Empty),
+
             }).ToList();
 
             
@@ -845,6 +857,9 @@ namespace RdfParserModule
                 var datum = GetDatum(attribute.Iri);
                 var label = GetLabel(attributeTypeId);
                 attribute.AttributeTypeId = GetLastPartOfIri(attributeTypeId).Replace("ID", string.Empty);
+
+                (attribute.QualifierId, attribute.SourceId, attribute.ConditionId, attribute.FormatId) =
+                    GetQualifierSourceConditionFormatOnAttribute(datum);
 
                 if (datum is null) continue;
 
@@ -866,6 +881,22 @@ namespace RdfParserModule
             return attributes;
         }
 
+        private (string, string, string, string) GetQualifierSourceConditionFormatOnAttribute(string iri)
+        {
+            var qualifierId =
+                GetLastPartOfIri(GetObjects(iri, BuildIri("mimir", "qualifier")).FirstOrDefault()?.ToString())
+                    .Replace("Qualifier", string.Empty);
+            var sourceId = GetLastPartOfIri(GetObjects(iri, BuildIri("mimir", "source")).FirstOrDefault()?.ToString())
+                .Replace("Source", string.Empty);
+            var conditionId =
+                GetLastPartOfIri(GetObjects(iri, BuildIri("mimir", "condition")).FirstOrDefault()?.ToString())
+                    .Replace("Condition", string.Empty);
+            var formatId = GetLastPartOfIri(GetObjects(iri, BuildIri("mimir", "format")).FirstOrDefault()?.ToString())
+                .Replace("Format", string.Empty);
+
+            return (qualifierId, sourceId, conditionId, formatId);
+        }
+
         private string GetAttributeTypeId(string iri)
         {
             var node = GetOrCreateUriNode(iri);
@@ -884,14 +915,10 @@ namespace RdfParserModule
             throw new Exception($"Did not manage to find the AttributeType | Iri: {iri}");
         }
 
-        private string GetLastPartOfIri(string iri)
+        private static string GetLastPartOfIri(string iri)
         {
-            var lastSlash = new Regex(@"(?:.(?!\/))+$");
-            var lastHash = new Regex(@"(?:.(?!#))+$");
-            var a = lastSlash.Match(iri).ToString();
-            var b = lastHash.Match(a).ToString();
-
-            return b.Substring(1, b.Length - 1);
+            var parsedIri = new Uri(iri);
+            return string.IsNullOrEmpty(parsedIri.Fragment) ? parsedIri.Segments.Last() : parsedIri.Fragment[1..];
         }
 
 
