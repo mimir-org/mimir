@@ -78,8 +78,7 @@ namespace Mb.Core.Migrations
                         .HasColumnName("AttributeTypeId");
 
                     b.Property<string>("CompositeId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("CompositeId");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
@@ -103,8 +102,7 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InterfaceId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("InterfaceId");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Iri")
                         .IsRequired()
@@ -112,18 +110,12 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IsLocked");
 
-                    b.Property<string>("IsLockedStatusBy")
+                    b.Property<string>("IsLockedBy")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
+                        .HasColumnName("IsLockedBy");
 
                     b.Property<string>("NodeId")
                         .HasColumnType("nvarchar(450)")
@@ -334,20 +326,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Iri");
 
-                    b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsLocked");
-
-                    b.Property<string>("IsLockedStatusBy")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
-
                     b.Property<string>("MasterProjectId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -357,10 +335,6 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("MasterProjectIri");
-
-                    b.Property<string>("ProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
@@ -383,8 +357,6 @@ namespace Mb.Core.Migrations
                     b.HasIndex("FromNodeId");
 
                     b.HasIndex("InterfaceId");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("ToConnectorId");
 
@@ -449,12 +421,16 @@ namespace Mb.Core.Migrations
 
                     b.Property<DateTime?>("Created")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("Created");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
                         .HasColumnName("CreatedBy");
 
                     b.Property<string>("Description")
@@ -471,7 +447,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Label");
 
                     b.Property<string>("LibraryTypeId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("LibraryTypeId");
 
@@ -500,12 +475,17 @@ namespace Mb.Core.Migrations
                         .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
                         .HasColumnName("StatusId");
 
-                    b.Property<DateTime?>("Updated")
+                    b.Property<DateTime>("Updated")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("Updated");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
                         .HasColumnName("UpdatedBy");
 
                     b.Property<string>("Version")
@@ -542,12 +522,10 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Cost");
 
                     b.Property<DateTime?>("Created")
-                        .IsRequired()
                         .HasColumnType("datetime2")
                         .HasColumnName("Created");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CreatedBy");
 
@@ -570,18 +548,12 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Iri");
 
                     b.Property<bool>("IsLocked")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("IsLocked");
 
-                    b.Property<string>("IsLockedStatusBy")
+                    b.Property<string>("IsLockedBy")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("IsLockedStatusBy");
-
-                    b.Property<DateTime?>("IsLockedStatusDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("IsLockedStatusDate");
+                        .HasColumnName("IsLockedBy");
 
                     b.Property<bool>("IsRoot")
                         .HasColumnType("bit")
@@ -600,7 +572,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Level");
 
                     b.Property<string>("LibraryTypeId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("LibraryTypeId");
 
@@ -638,10 +609,6 @@ namespace Mb.Core.Migrations
                     b.Property<decimal>("PositionY")
                         .HasColumnType("decimal(18,4)")
                         .HasColumnName("PositionY");
-
-                    b.Property<string>("ProjectId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PurposeString")
                         .HasColumnType("nvarchar(max)")
@@ -683,8 +650,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Width");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("StatusId");
 
@@ -771,12 +736,16 @@ namespace Mb.Core.Migrations
 
                     b.Property<DateTime?>("Created")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("Created");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
                         .HasColumnName("CreatedBy");
 
                     b.Property<string>("Description")
@@ -793,7 +762,6 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Label");
 
                     b.Property<string>("LibraryTypeId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("LibraryTypeId");
 
@@ -822,12 +790,17 @@ namespace Mb.Core.Migrations
                         .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
                         .HasColumnName("StatusId");
 
-                    b.Property<DateTime?>("Updated")
+                    b.Property<DateTime>("Updated")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc))
                         .HasColumnName("Updated");
 
                     b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Unknown")
                         .HasColumnName("UpdatedBy");
 
                     b.Property<string>("Version")
@@ -1200,6 +1173,36 @@ namespace Mb.Core.Migrations
                     b.ToTable("NodeType_AttributeType", (string)null);
                 });
 
+            modelBuilder.Entity("Project_Edge", b =>
+                {
+                    b.Property<string>("EdgeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EdgeId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Project_Edge", (string)null);
+                });
+
+            modelBuilder.Entity("Project_Node", b =>
+                {
+                    b.Property<string>("NodeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProjectId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("NodeId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Project_Node", (string)null);
+                });
+
             modelBuilder.Entity("TerminalType_AttributeType", b =>
                 {
                     b.Property<string>("AttributeTypeId")
@@ -1445,10 +1448,9 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("FormatId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.Interface", "Interface")
+                    b.HasOne("Mb.Models.Data.Interface", null)
                         .WithMany("Attributes")
-                        .HasForeignKey("InterfaceId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("InterfaceId");
 
                     b.HasOne("Mb.Models.Data.Node", "Node")
                         .WithMany("Attributes")
@@ -1480,8 +1482,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("Condition");
 
                     b.Navigation("Format");
-
-                    b.Navigation("Interface");
 
                     b.Navigation("Node");
 
@@ -1534,12 +1534,6 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("InterfaceId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Mb.Models.Data.Project", "Project")
-                        .WithMany("Edges")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Mb.Models.Data.Connector", "ToConnector")
                         .WithMany("ToEdges")
                         .HasForeignKey("ToConnectorId")
@@ -1562,8 +1556,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("FromNode");
 
                     b.Navigation("Interface");
-
-                    b.Navigation("Project");
 
                     b.Navigation("ToConnector");
 
@@ -1611,19 +1603,11 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.Node", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Project", "Project")
-                        .WithMany("Nodes")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
                         .WithMany("Nodes")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Project");
 
                     b.Navigation("Status");
                 });
@@ -1767,6 +1751,36 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Project_Edge", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Edge", null)
+                        .WithMany()
+                        .HasForeignKey("EdgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Project_Node", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Node", null)
+                        .WithMany()
+                        .HasForeignKey("NodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TerminalType_AttributeType", b =>
                 {
                     b.HasOne("Mb.Models.Data.TypeEditor.AttributeType", null)
@@ -1863,13 +1877,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("FromEdges");
 
                     b.Navigation("ToEdges");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Project", b =>
-                {
-                    b.Navigation("Edges");
-
-                    b.Navigation("Nodes");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Transport", b =>
