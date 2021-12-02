@@ -35,6 +35,8 @@ const CreateOffPageNode = (sourceNode: Node, data: CreateOffPageData) => {
     attributes: [],
     isHidden: false,
     connectionRequired: true,
+    masterProjectId: sourceNode.masterProjectId,
+    statusId: sourceNode.statusId,
   } as Node;
 
   const inputConnector = {
