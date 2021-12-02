@@ -9,7 +9,7 @@ import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
-import { IsOffPage, SetDarkModeColor } from "../../../helpers";
+import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import {
   animatedEdgeSelector,
@@ -21,7 +21,6 @@ import {
   projectSelector,
   userStateSelector,
 } from "../../../redux/store";
-
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
@@ -128,9 +127,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-      {visualFilter && (
-        <VisualFilterComponent elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
-      )}
+      {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );
 };
