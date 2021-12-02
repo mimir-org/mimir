@@ -53,7 +53,7 @@ const rootReducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["typeEditor", "inspectorHeight", "projectState"],
+  blacklist: ["typeEditor", "inspectorHeight"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
