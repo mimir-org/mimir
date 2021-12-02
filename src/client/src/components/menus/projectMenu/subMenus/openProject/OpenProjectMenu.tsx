@@ -8,7 +8,7 @@ import { ProjectSimple } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
 import { OnOpen, OnReturn } from "./handlers";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
-import { ProjectListLabels } from "./styled";
+import { CreateProjectIcon } from "../../../../../assets/icons/project";
 import {
   ProjectBody,
   ProjectBox,
@@ -43,7 +43,12 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
             <ProjectList projectList={projects} />
           </SearchProject>
           <RightContainer>
-            <Button onClick={() => Click.OnCreate(dispatch)} text={TextResources.Project_Start_Label} />
+            <Button
+              onClick={() => Click.OnCreate(dispatch)}
+              text={TextResources.Project_Start_Label}
+              icon={CreateProjectIcon}
+              iconOnLeft={true}
+            />
             <ProjectDescription description={projectDescription} />
           </RightContainer>
         </ProjectDetails>

@@ -6,10 +6,6 @@ const ButtonsContainer = styled.div`
   justify-content: space-between;
   padding-top: 15px;
 
-  img {
-    display: none;
-  }
-
   button {
     width: 83px;
     height: 34px;

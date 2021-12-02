@@ -9,7 +9,7 @@ const StartPageBackground = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: ${Color.DarkBlue};
+  background-color: ${Color.BlueDark};
 
   @keyframes slideup {
     from {
@@ -22,9 +22,9 @@ const StartPageBackground = styled.div`
 
   .slider {
     position: relative;
-    animation: slideup 2s;
+    animation: slideup 1s;
     animation-timing-function: ease-in-out;
-    animation-delay: 1.8s;
+    animation-delay: 1s;
     animation-fill-mode: forwards;
     animation-iteration-count: 1;
   }

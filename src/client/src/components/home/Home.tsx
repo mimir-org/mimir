@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
@@ -66,7 +66,7 @@ const Home = () => {
       if (flowView === (VIEW_TYPE.STARTPAGE as ViewType)) {
         dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
       }
-    }, 4300);
+    }, 2500);
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
