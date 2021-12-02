@@ -1,13 +1,13 @@
 import { CreateId, IsInputTerminal, IsPartOf } from "../../helpers";
-import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, Node, RelationType } from "../../../../models";
+import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, EDGE_KIND, Node, RelationType } from "../../../../models";
 
-export interface OffPageNodeCreator {
+export interface OffPageObject {
   node: Node;
   partOfEdge: Edge;
   transportEdge: Edge;
 }
 
-export interface CreateOffPageData {
+export interface OffPageData {
   sourceNodeId: string;
   sourceConnectorId: string;
   x: number;
@@ -17,9 +17,9 @@ export interface CreateOffPageData {
  * Component to create an OffPageNode.
  * @param project
  * @param data
- * @returns the data type OffPageNodeCreator.
+ * @returns the data type OffPageObject.
  */
-const CreateOffPageNode = (sourceNode: Node, data: CreateOffPageData) => {
+const CreateOffPageNode = (sourceNode: Node, data: OffPageData) => {
   const sourceConnector = sourceNode?.connectors.find((x) => x.id === data.sourceConnectorId);
   const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const marginY = 150;
@@ -98,6 +98,7 @@ const CreateOffPageNode = (sourceNode: Node, data: CreateOffPageData) => {
     toNode: offPageNode,
     toNodeId: offPageNode.id,
     isHidden: false,
+    kind: EDGE_KIND,
   } as Edge;
 
   const transportEdge = {
@@ -111,13 +112,14 @@ const CreateOffPageNode = (sourceNode: Node, data: CreateOffPageData) => {
     toNode: offPageNode,
     toNodeId: offPageNode.id,
     isHidden: false,
+    kind: EDGE_KIND,
   } as Edge;
 
   return {
     node: offPageNode,
     partOfEdge: partofEdge,
     transportEdge: transportEdge,
-  } as OffPageNodeCreator;
+  } as OffPageObject;
 };
 
 export default CreateOffPageNode;
