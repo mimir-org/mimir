@@ -265,7 +265,9 @@ const TextResources = {
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
   Validation_BlockView: "Please selct a node before opening Block View.",
+  Validation_BlockView_Project: "Please selct a project before opening Block View.",
   Validation_Cancel: "Cancel",
+  Validation_Ok: "Ok",
 };
 
 export default TextResources;
