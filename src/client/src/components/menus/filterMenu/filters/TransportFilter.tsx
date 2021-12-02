@@ -3,6 +3,7 @@ import { FilterElement } from "..";
 import { TextResources } from "../../../../assets/text";
 import { Connector, Edge } from "../../../../models";
 import { OnAllTransportsChange } from "../handlers";
+import { PopulateTerminalCategories } from "../helpers";
 import { AllTransportsChecked } from "../helpers/IsChecked";
 
 export interface TerminalCategory {
@@ -23,12 +24,7 @@ interface Props {
  * @returns one parent checkbox, and one checkbox for each child.
  */
 const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
-  const categories = [] as TerminalCategory[];
-
-  items.forEach((item) => {
-    if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory.name))
-      categories.push({ id: item.terminalCategoryId, name: item.terminalCategory.name });
-  });
+  const categories = PopulateTerminalCategories(items);
 
   return (
     visible && (
@@ -41,7 +37,7 @@ const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
           isHeader
         />
 
-        {categories.map((category) => {
+        {categories?.map((category) => {
           const categoryItems = items.filter((item) => item.terminalCategoryId === category.id);
           return (
             <TerminalCategoryFilter

@@ -264,6 +264,7 @@ const TextResources = {
 
   Filter_Transports: "Transports",
   Filter_Relations: "Relations",
+  Filter_Category: "Category",
 
   // User Menu
   UserMenu_Settings: "User Settings",

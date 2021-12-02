@@ -30,6 +30,7 @@ const TerminalCategoryFilter = ({ category, edges, items, dispatch, visible }: P
           isChecked={isCategoryChecked}
           visible={visible}
           indent={2}
+          isSubHeader
         />
 
         {items.map((conn) => {

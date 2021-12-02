@@ -11,10 +11,10 @@ import { BlockNodeSize, Position } from "../../../../../models/project";
 const SetOffPageNodePos = (offPageNodePos: Position, parentNodeSize: BlockNodeSize) => {
   const marginY = 50;
 
-  const yMin = parentNodeSize.height - parentNodeSize.height + marginY;
+  const yMin = marginY * 3;
   const xMax = parentNodeSize?.width;
 
-  let offPageY = offPageNodePos.y + marginY;
+  let offPageY = offPageNodePos.y;
   let offPageX = offPageNodePos.x;
 
   if (offPageNodePos.x < xMax) offPageX = xMax;

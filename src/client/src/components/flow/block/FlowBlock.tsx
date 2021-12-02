@@ -4,13 +4,14 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
-import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
+import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop, useOnConnectStart, useOnConnectStop } from "../hooks";
 import { GetBlockNodeTypes } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/";
 import { BlockConnectionLine } from "./edges";
-import { IsOffPage, SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
+import { Size } from "../../../compLibrary/size";
+import { SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
@@ -28,7 +29,6 @@ import {
   animatedEdgeSelector,
   location3DSelector,
 } from "../../../redux/store";
-
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
@@ -75,13 +75,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
   };
 
-  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
-  // };
+  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+    return useOnConnectStart(e, { nodeId, handleType, handleId });
+  };
 
-  // const OnConnectStop = (e) => {
-  //   return useOnConnectStop(e, project, dispatch);
-  // };
+  const OnConnectStop = (e) => {
+    return useOnConnectStop(e, project, dispatch, parentSize);
+  };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -143,8 +143,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onConnect={OnConnect}
-          // onConnectStart={OnConnectStart}
-          // onConnectStop={OnConnectStop}
+          onConnectStart={OnConnectStart}
+          onConnectStop={OnConnectStop}
           onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}
@@ -154,7 +154,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           paneMoveable={true}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
-          defaultPosition={[450, 80]}
+          defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
           onlyRenderVisibleElements={true}
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
@@ -163,9 +163,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
 
-        {visualFilter && (
-          <VisualFilterComponent elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
-        )}
+        {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
       </div>
       <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />
     </>
