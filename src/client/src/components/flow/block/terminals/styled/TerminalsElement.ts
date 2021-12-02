@@ -31,6 +31,7 @@ const TerminalsElement = styled.div`
 
   &:hover {
     background-color: ${Color.BlueLight};
+    text-decoration: underline;
     cursor: pointer;
 
     :first-child {
