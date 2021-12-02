@@ -171,7 +171,6 @@ const TextResources = {
   Project_Recent_Name: "Project name",
   Project_Recent_Owner: "Project owner",
   Project_Recent_Edited: "Last edited",
-  Project_Recent_Open: "Open project",
   Project_Save_Label: "Save project to database",
 
   Project_Import: "Import project",
@@ -191,8 +190,6 @@ const TextResources = {
   Project_Commit: "Commit",
 
   Project_Logout: "Log out",
-  Project_Open_Project: "Open a project",
-  Project_Create_Label: "Create a project",
   Project_CreateProject: "Create project",
   Project_SubProject_Save: "Save selection as sub-project",
   Project_Name: "Project name",
