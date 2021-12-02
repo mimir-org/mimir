@@ -44,7 +44,14 @@ const Header = () => {
         </LogoBox>
       </HeaderBox>
       {flowView !== VIEW_TYPE.STARTPAGE && (
-        <ToolBar libOpen={libOpen} explorerOpen={explorerOpen} treeView={treeView} visualFilter={filterOpen} electro={electro} />
+        <ToolBar
+          project={project}
+          libOpen={libOpen}
+          explorerOpen={explorerOpen}
+          treeView={treeView}
+          visualFilter={filterOpen}
+          electro={electro}
+        />
       )}
     </>
   );

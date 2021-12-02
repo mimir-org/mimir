@@ -170,16 +170,17 @@ const TextResources = {
   Project_Search_Placeholder: "Search Projects",
   Project_OpenProject: "Open project",
   Project_Recent: "Recent projects",
-  Project_Recent_Name: "Project Name",
-  Project_Recent_Owner: "Project Owner",
+  Project_Recent_Name: "Project name",
+  Project_Recent_Owner: "Project owner",
   Project_Recent_Version: "Project Version",
-  Project_Recent_Edited: "Last Edited",
-  Project_Recent_Open: "Open project",
+  Project_Recent_Edited: "Last edited",
+
+  Project_Save_Label: "Save project",
   Project_Description_About: "About the project",
   Project_Description_Libraries: "Libraries",
   Project_Description_SubProj: "Sub-projects",
   Project_Description_Temps: "Templates",
-  Project_Save_Label: "Save project to database",
+
   Project_Import: "Import project",
   Project_Import_File: "Import project file",
   Project_Open_Label: "Open or start a new project",
@@ -199,9 +200,6 @@ const TextResources = {
   Project_Commit: "Commit",
 
   Project_Logout: "Log out",
-  Project_Open_Project: "Open a project",
-
-  Project_Create_Label: "Create a project",
   Project_Start_Label: "Start a new project",
   Project_CreateProject: "Create project",
   Project_SubProject_Save: "Save selection as sub-project",
@@ -278,10 +276,13 @@ const TextResources = {
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
   Validation_BlockView: "Please selct a node before opening Block View.",
+  Validation_BlockView_Project: "Please selct a project before opening Block View.",
   Validation_Cancel: "Cancel",
 
   // Version
   Mimir_Version: "Version 0.1",
+
+  Validation_Ok: "Ok",
 };
 
 export default TextResources;

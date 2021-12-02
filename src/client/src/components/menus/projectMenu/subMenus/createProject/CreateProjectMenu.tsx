@@ -19,7 +19,7 @@ export const CreateProjectMenu = () => {
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_Create_Label}
+          {TextResources.Project_CreateProject}
         </HeaderBox>
         <InputBox>
           <div className="label">{TextResources.Project_Name}</div>
