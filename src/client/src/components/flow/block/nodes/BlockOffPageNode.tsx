@@ -22,7 +22,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   const required = node.connectionRequired;
   const terminal = node.connectors.find((c) => IsInputTerminal(c) && IsTransport(c));
-  const iconColor = terminal.color;
+  const iconColor = terminal?.color;
 
   return (
     <OffPageBox id={type + node.id}>
