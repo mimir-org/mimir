@@ -30,12 +30,12 @@ const ProjectMenuComponent = () => {
     <>
       <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU}>
         <MenuElement
-          text={TextResources.Project_Open_Project}
+          text={TextResources.Project_OpenProject}
           icon={Icons.OpenProjectIcon}
           onClick={() => Click.OnOpenClick(dispatch)}
         />
         <MenuElement
-          text={TextResources.Project_Create_Label}
+          text={TextResources.Project_CreateProject}
           icon={Icons.CreateProjectIcon}
           onClick={() => Click.OnCreate(dispatch)}
         />
