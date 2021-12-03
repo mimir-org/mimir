@@ -35,6 +35,7 @@ namespace Mb.Models.Data
         public bool Visible { get; set; }
         public virtual string NodeId { get; set; }
         public virtual string NodeIri { get; set; }
+        public bool IsRequired { get; set; }
 
         [JsonIgnore]
         public virtual Node Node { get; set; }

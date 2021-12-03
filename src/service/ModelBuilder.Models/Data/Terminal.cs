@@ -24,7 +24,5 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public ICollection<Interface> OutputInterfaces { get; set; }
-
-
     }
 }

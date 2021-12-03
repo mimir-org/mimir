@@ -12,6 +12,7 @@ class Connector {
   nodeId: string;
   nodeIri: string;
   visible: boolean;
+  isRequired: boolean;
 
   // Terminal
   color: string;
