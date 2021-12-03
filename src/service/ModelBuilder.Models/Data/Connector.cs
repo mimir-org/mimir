@@ -34,6 +34,7 @@ namespace Mb.Models.Data
         public string SemanticReference { get; set; }
         public bool Visible { get; set; }
         public virtual string NodeId { get; set; }
+        public virtual string NodeIri { get; set; }
 
         [JsonIgnore]
         public virtual Node Node { get; set; }

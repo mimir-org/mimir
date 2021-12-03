@@ -24,6 +24,7 @@ class Attribute {
   attributeTypeId: string;
   terminalId: string;
   nodeId: string;
+  nodeIri: string;
   transportId: string;
   compositeId: string;
   selectValues: string[];
