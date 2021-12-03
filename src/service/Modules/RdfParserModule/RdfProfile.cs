@@ -49,7 +49,7 @@ namespace RdfParserModule
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseId(src.Node.Iri)));
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseId(src.NodeIri)));
 
             CreateMap<ParserTerminal, TerminalAm>()
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))

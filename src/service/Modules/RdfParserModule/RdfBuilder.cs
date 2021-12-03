@@ -238,20 +238,7 @@ namespace RdfParserModule
                 var attributeType = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.AttributeTypeId));
                 Graph.Assert(new Triple(attributeType, label, Graph.CreateLiteralNode(attribute.Entity)));
 
-                var qualifier = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.QualifierId));
-                var source = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.SourceId));
-                var condition = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.ConditionId));
-                var format = GetOrCreateUriNode(MimirIdToIri(_namespaces["sor"], attribute.FormatId));
-
-                var qPred = GetOrCreateUriNode(BuildIri("mimir", "qualifier"));
-                var sPred = GetOrCreateUriNode(BuildIri("mimir", "source"));
-                var cPred = GetOrCreateUriNode(BuildIri("mimir", "condition"));
-                var fPred = GetOrCreateUriNode(BuildIri("mimir", "format"));
-
-                Graph.Assert(new Triple(attributeNode, qPred, qualifier));
-                Graph.Assert(new Triple(attributeNode, sPred, source));
-                Graph.Assert(new Triple(attributeNode, cPred, condition));
-                Graph.Assert(new Triple(attributeNode, fPred, format));
+ 
 
 
                 Graph.Assert(new Triple(attributeNode, label, Graph.CreateLiteralNode(attribute.Entity)));
@@ -261,9 +248,23 @@ namespace RdfParserModule
                 Graph.Assert(new Triple(node, hasPhysicalQuantity, attributeNode));
 
 
-                if (value is null) continue;
 
                 var datum = GetOrCreateUriNode(attribute.Iri + "-datum");
+
+                var qualifier = GetOrCreateUriNode(MimirIdToIri(_namespaces["mimir"], "Qualifier" + attribute.QualifierId, string.Empty));
+                var source = GetOrCreateUriNode(MimirIdToIri(_namespaces["mimir"], "Source" + attribute.SourceId, string.Empty));
+                var condition = GetOrCreateUriNode(MimirIdToIri(_namespaces["mimir"], "Condition" + attribute.ConditionId, string.Empty));
+                var format = GetOrCreateUriNode(MimirIdToIri(_namespaces["mimir"], "Format" + attribute.FormatId, string.Empty));
+
+                var qPred = GetOrCreateUriNode(BuildIri("mimir", "qualifier"));
+                var sPred = GetOrCreateUriNode(BuildIri("mimir", "source"));
+                var cPred = GetOrCreateUriNode(BuildIri("mimir", "condition"));
+                var fPred = GetOrCreateUriNode(BuildIri("mimir", "format"));
+
+                Graph.Assert(new Triple(datum, qPred, qualifier));
+                Graph.Assert(new Triple(datum, sPred, source));
+                Graph.Assert(new Triple(datum, cPred, condition));
+                Graph.Assert(new Triple(datum, fPred, format));
 
                 if (value is not null)
                 {
@@ -426,6 +427,9 @@ namespace RdfParserModule
                             var terminalLabel = Graph.CreateLiteralNode(terminal.Name + " " + terminal.Type);
                             Graph.Assert(new Triple(nodeTerminal, type, GetOrCreateUriNode(Resources.FSBTerminal)));
                             Graph.Assert(new Triple(nodeTerminal, label, terminalLabel));
+
+                            Graph.Assert(new Triple(nodeTerminal, GetOrCreateUriNode(BuildIri("mimir", "color")), Graph.CreateLiteralNode(terminal.Color)));
+                            Graph.Assert(new Triple(nodeTerminal, GetOrCreateUriNode(BuildIri("mimir", "visible")), Graph.CreateLiteralNode(terminal.Visible.ToString())));
 
 
                             switch (terminal.Type)

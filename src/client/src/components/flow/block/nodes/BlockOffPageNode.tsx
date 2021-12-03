@@ -5,6 +5,7 @@ import { OffPageIcon, OffPageRequiredIcon } from "../../../../assets/icons/offpa
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 import { IsInputTerminal, IsTransport } from "../../helpers";
+import { IsLocation } from "../../../../helpers";
 
 /**
  * Component for an offpage node in BlockView
@@ -38,6 +39,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
         terminals={node.connectors}
         dispatch={dispatch}
         isVisible={false}
+        isLocation={IsLocation(node)}
         offPage
       />
     </OffPageBox>

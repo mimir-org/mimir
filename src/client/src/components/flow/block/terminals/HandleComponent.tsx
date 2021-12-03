@@ -13,6 +13,7 @@ interface Props {
   size: BlockNodeSize;
   terminals: Connector[];
   dispatch: any;
+  isLocation: boolean;
   isParent?: boolean;
   electro?: boolean;
   offPage?: boolean;
@@ -29,6 +30,7 @@ const HandleComponent = ({
   size,
   terminals,
   dispatch,
+  isLocation,
   isParent = false,
   electro = false,
   offPage = false,
@@ -59,7 +61,7 @@ const HandleComponent = ({
               <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
               <Handle
                 type={type}
-                style={electro ? { marginLeft: "7px" } : { marginTop: "7px" }}
+                style={electro ? { marginLeft: "7px" } : { marginTop: "9px" }}
                 position={pos}
                 id={conn.id}
                 className={className}

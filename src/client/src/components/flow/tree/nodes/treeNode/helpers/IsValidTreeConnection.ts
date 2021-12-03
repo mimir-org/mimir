@@ -14,11 +14,18 @@ import { setValidation } from "../../../../../../redux/store/validation/actions"
  */
 const IsValidTreeConnection = (node: Node, conn: Connection, nodes: Node[], dispatch: any) => {
   const parentNode = nodes.find((x) => x.id === conn.source);
-  const isValid = IsFamily(node, parentNode);
+  const isValidAspect = IsFamily(node, parentNode);
 
-  if (!isValid) dispatch(setValidation(false, TextResources.Validation_Aspect));
+  document.addEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch), {
+    once: true,
+  });
 
-  return isValid;
+  return isValidAspect;
 };
 
 export default IsValidTreeConnection;
+
+const onMouseUp = (isValidAspect: boolean, dispatch: any) => {
+  if (!isValidAspect) dispatch(setValidation(false, TextResources.Validation_Aspect));
+  return document.removeEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch));
+};

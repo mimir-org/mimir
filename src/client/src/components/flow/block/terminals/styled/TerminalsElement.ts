@@ -5,7 +5,7 @@ import { FontSize } from "../../../../../compLibrary/font";
 const TerminalsElement = styled.div`
   display: flex;
   height: 20px;
-  padding: 5px 30px 0px 0px;
+  padding: 5px 2px 0px 0px;
   border-bottom: 1px solid;
   border-color: ${Color.GreyDark};
   font-size: ${FontSize.Tiny};
@@ -13,11 +13,16 @@ const TerminalsElement = styled.div`
   z-index: 4;
 
   .terminal-name {
-    margin-left: 40px;
-    height: 16px;
+    height: 17px;
     text-align: left;
-    width: 100%;
-    padding-top: 2px;
+    width: 130px;
+    padding: 0px 3px 0px 40px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden !important;
+    z-index: 5;
   }
 
   :last-child {
@@ -26,6 +31,7 @@ const TerminalsElement = styled.div`
 
   &:hover {
     background-color: ${Color.BlueLight};
+    text-decoration: underline;
     cursor: pointer;
 
     :first-child {

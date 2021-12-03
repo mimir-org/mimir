@@ -19,7 +19,7 @@ export const ExportLibraryFileMenu = () => {
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_Export_ProjectLibrary}
+          {TextResources.Project_Export_LibraryTypes}
         </HeaderBox>
         <InputBox>
           <div className="label">{TextResources.Project_File_Name}</div>
