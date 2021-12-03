@@ -45,7 +45,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
 
           <div className="parameterHeader">{attribute?.entity}</div>
           <div className="icons">
-            <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />
+            {false && <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />}
             {isAttribute && (
               <>
                 {isDisabled() ? (
