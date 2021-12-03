@@ -76,19 +76,18 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
   }, [activeToolTipRef, listRef]);
 
   const renderSelectAll = () => {
+    const onClick = () =>
+      items
+        .filter((item) => selectedItems.includes(item) === areAllItemsSelected)
+        .forEach((item) => onChange(item, areAllItemsSelected));
+
     return (
-      <div
-        onClick={() =>
-          items
-            .filter((item) => selectedItems.includes(item) === areAllItemsSelected)
-            .forEach((item) => onChange(item, areAllItemsSelected))
-        }
-      >
+      <div>
         <MenuListItem color={bodyColor}>
-          <div className="label" onMouseEnter={() => resetToolTip()}>
+          <div className="label" onClick={onClick} onMouseEnter={() => resetToolTip()}>
             {TextResources.Inspector_Params_Combinations_Select_All}
           </div>
-          <Checkbox isChecked={areAllItemsSelected} onChange={() => null} readOnly={true} />
+          <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly={true} />
         </MenuListItem>
       </div>
     );
@@ -96,12 +95,18 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
 
   const renderListItem = (item: CombinedAttribute) => {
     return (
-      <div onClick={() => onChange(item, IsItemSelected(item))} key={item[keyProp]}>
+      <div key={item[keyProp]}>
         <MenuListItem color={bodyColor}>
-          <div className="label" onMouseEnter={() => onMouseEnter(item)} ref={(ele) => refCallback(ele, item)}>
+          <div
+            className="label"
+            onClick={() => onChange(item, IsItemSelected(item))}
+            onMouseEnter={() => onMouseEnter(item)}
+            ref={(ele) => refCallback(ele, item)}
+          >
             {item.combined}
           </div>
-          <Checkbox isChecked={IsItemSelected(item)} onChange={() => null} readOnly={true} />
+          <div></div>
+          <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
         </MenuListItem>
       </div>
     );
