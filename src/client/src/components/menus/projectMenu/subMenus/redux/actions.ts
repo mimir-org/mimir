@@ -1,10 +1,4 @@
-import {
-  CHANGE_ACTIVE_MENU,
-  SET_PROJECT_MENU_VISIBILITY,
-  SET_USER_MENU_VISIBILITY,
-  SET_TREE_FILTER_MENU_VISIBILITY,
-  SET_BLOCK_FILTER_MENU_VISIBILITY,
-} from "./types";
+import { CHANGE_ACTIVE_MENU, SET_PROJECT_MENU_VISIBILITY, SET_USER_MENU_VISIBILITY, SET_FILTER_MENU_VISIBILITY } from "./types";
 
 export function setProjectMenuVisibility(visibility: boolean) {
   return {
@@ -24,18 +18,9 @@ export function setUserMenuVisibility(visibility: boolean) {
   };
 }
 
-export function setTreeFilterMenuVisibility(visibility: boolean) {
+export function setFilterMenuVisibility(visibility: boolean) {
   return {
-    type: SET_TREE_FILTER_MENU_VISIBILITY,
-    payload: {
-      visibility,
-    },
-  };
-}
-
-export function setBlockFilterMenuVisibility(visibility: boolean) {
-  return {
-    type: SET_BLOCK_FILTER_MENU_VISIBILITY,
+    type: SET_FILTER_MENU_VISIBILITY,
     payload: {
       visibility,
     },

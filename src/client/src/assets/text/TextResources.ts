@@ -166,24 +166,31 @@ const TextResources = {
   // ProjectMenu
   Project: "Project",
   Project_Heading: "Projects",
+  Project_New: "Create project",
+  Project_Search_Placeholder: "Search Projects",
   Project_OpenProject: "Open project",
   Project_Recent: "Recent projects",
   Project_Recent_Name: "Project name",
   Project_Recent_Owner: "Project owner",
+  Project_Recent_Version: "Project Version",
   Project_Recent_Edited: "Last edited",
-  Project_Recent_Open: "Open project",
-  Project_Save_Label: "Save project to database",
+
+  Project_Open_Label: "Open or start a new project",
+  Project_Save_Label: "Save project",
+  Project_Description_About: "About the project",
+  Project_Description_Libraries: "Libraries",
+  Project_Description_SubProj: "Sub-projects",
+  Project_Description_Temps: "Templates",
 
   Project_Import: "Import project",
-  Project_Import_File: "Import project file",
-  Project_Import_ProjectLibrary: "Import project library",
+  Project_Import_LibraryTypes: "Import library types",
   Project_Import_Library: "Import library",
   Project_Browse: "Browse file",
 
   Project_Export_File: "Export file",
-  Project_Export_ProjectFile: "Export project file",
+  Project_Export: "Export project",
   Project_Export_Library: "Export library",
-  Project_Export_ProjectLibrary: "Export project library",
+  Project_Export_LibraryTypes: "Export library types",
 
   Project_Commit_Project: "Commit project",
   Project_Commit_Collaboration_Partner: "Send to collaboration partner",
@@ -191,8 +198,7 @@ const TextResources = {
   Project_Commit: "Commit",
 
   Project_Logout: "Log out",
-  Project_Open_Project: "Open a project",
-  Project_Create_Label: "Create a project",
+  Project_Start_Label: "Start a new project",
   Project_CreateProject: "Create project",
   Project_SubProject_Save: "Save selection as sub-project",
   Project_Name: "Project name",
@@ -209,7 +215,7 @@ const TextResources = {
   Project_Cancel: "Cancel",
 
   // Error
-  Error_Tile: "Oops, something went wrong",
+  Error_Tile: "Something went wrong",
   Error_ExportProject: "Can not export a project that does not exist",
   Error_GetFileData: "Could not create nodes and edges from file",
   Error_SaveUpdateProject: "Could not create or update project",
@@ -233,12 +239,28 @@ const TextResources = {
 
   // Visual Filter
   Filter_Heading: "Visual Filter",
+  Filter_Show_All: "Show all",
   Filter_Terminals: "Terminals",
+  Filter_MaterialFluid: "Material Fluid",
+  Filter_EnergyElectrical: "Energy Electrical",
   Filter_Show_Terminals: "Show all terminals",
   Filter_Show_Active_Terminals: "Show all active terminals",
   Filter_Show_Inactive_Terminals: "Show all inactive terminals",
   Filter_Show_Transport: "Show all transport edges",
-  Filter_Edge_Animation: "Edge animation",
+  Filter_Edge_Animation: "Transport animation",
+
+  Filter_Show_Oil: "Show all oil transports",
+  Filter_Show_HotWater: "Show all hot water transports",
+  Filter_Show_Multiphase: "Show all multiphase transports",
+
+  Filter_PartOf: "Part of relationship",
+  Filter_PartOf_Function: "Show part of Function",
+  Filter_PartOf_Location: "Show part of Location",
+  Filter_PartOf_Product: "Show part of Product",
+
+  Filter_Transports: "Transports",
+  Filter_Relations: "Relations",
+  Filter_Category: "Category",
 
   // User Menu
   UserMenu_Settings: "User Settings",
@@ -251,7 +273,14 @@ const TextResources = {
   // Validation
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
+  Validation_BlockView: "Please selct a node before opening Block View.",
+  Validation_BlockView_Project: "Please selct a project before opening Block View.",
   Validation_Cancel: "Cancel",
+
+  // Version
+  Mimir_Version: "Version 0.1",
+
+  Validation_Ok: "Ok",
 };
 
 export default TextResources;

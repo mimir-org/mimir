@@ -1,12 +1,18 @@
 import styled from "styled-components";
 
 const OffPageBox = styled.div`
-  width: 19px;
-  height: 13px;
-  background-color: transparent;
+  display: flex;
+  position: relative;
+  align-items: center;
   z-index: 5 !important;
 
   .logo {
+    display: flex;
+    height: 35px;
+    width: 35px;
+    position: relative;
+    top: 11px;
+    left: 1px;
     pointer-events: none;
   }
 `;

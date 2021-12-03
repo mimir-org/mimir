@@ -5,24 +5,21 @@ import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { setEdgeAnimation, updatePosition } from "../../../redux/store/project/actions";
+import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { TreeFilterMenu } from "../../menus/filterMenu";
+import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
-import { IsTransport } from "../helpers";
 import {
   animatedEdgeSelector,
+  filterSelector,
   darkModeSelector,
   iconSelector,
-  inspectorSelector,
   librarySelector,
   projectSelector,
-  treeFilterSelector,
   userStateSelector,
 } from "../../../redux/store";
-
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
@@ -41,8 +38,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const userState = useAppSelector(userStateSelector);
   const icons = useAppSelector(iconSelector);
   const library = useAppSelector(librarySelector);
-  const inspectorOpen = useAppSelector(inspectorSelector);
-  const treeFilter = useAppSelector(treeFilterSelector);
+  const visualFilter = useAppSelector(filterSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
 
   const OnDragOver = (event) => {
@@ -89,9 +85,9 @@ const FlowTree = ({ inspectorRef }: Props) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch);
     } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+      handleNodeSelect(selectedElements[0], dispatch);
     } else if (selectedElements.length === 1 && Helpers.GetEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+      handleEdgeSelect(selectedElements[0], dispatch);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch);
     }
@@ -105,12 +101,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     SetDarkModeColor(darkMode);
   }, [darkMode]);
-
-  useEffect(() => {
-    project?.edges.forEach((e) => {
-      IsTransport(e.fromConnector) && dispatch(setEdgeAnimation(e, false));
-    });
-  }, []);
 
   return (
     <>
@@ -135,7 +125,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-      {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
+      {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );
 };

@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { Action } from "redux";
 import { Size } from "../../compLibrary/size";
-import { IsBlockView } from "../../helpers";
 import { MODULE_TYPE } from "../../models/project";
 import { useAppDispatch } from "../../redux/store";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
@@ -31,11 +30,9 @@ const InspectorTabWrapper = ({
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
-    if (IsBlockView()) {
-      dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-      dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(inspectorRef, Size.ModuleOpen);
-    }
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+    dispatch(changeInspectorHeight(Size.ModuleOpen));
+    SetPanelHeight(inspectorRef, Size.ModuleOpen);
   }, [dispatch, changeInspectorTabAction, index, inspectorRef]);
 
   return (

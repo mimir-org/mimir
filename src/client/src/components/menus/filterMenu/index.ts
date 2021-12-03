@@ -1,3 +1,2 @@
-export { default as BlockFilterMenu } from "./BlockFilterMenu";
-export { default as TreeFilterMenu } from "./TreeFilterMenu";
+export { default as VisualFilterComponent } from "./VisualFilterComponent";
 export { default as FilterElement } from "./FilterElement";

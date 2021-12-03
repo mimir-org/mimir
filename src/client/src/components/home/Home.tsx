@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
 import { ProjectMenuComponent } from "../menus/projectMenu";
@@ -13,8 +14,22 @@ import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary
 import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
-import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
+import {
+  projectMenuSelector,
+  flowViewSelector,
+  useAppDispatch,
+  useAppSelector,
+  userMenuSelector,
+  // isFetchingSelector,
+  projectStateSelector,
+  useParametricAppSelector,
+  isActiveMenuSelector,
+} from "../../redux/store";
 import { getUser } from "../../redux/store/user/actions";
+import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
+import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
+import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
+import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
 
 /**
  * The main component for Mimir
@@ -22,11 +37,14 @@ import { getUser } from "../../redux/store/user/actions";
  */
 const Home = () => {
   const dispatch = useAppDispatch();
+  // const isFetching = useAppSelector(isFetchingSelector);
+  const projectState = useAppSelector(projectStateSelector);
   const projectMenuOpen = useAppSelector(projectMenuSelector);
   const userMenuOpen = useAppSelector(userMenuSelector);
-
   const flowView = useAppSelector(flowViewSelector);
   const inspectorRef = useRef(null);
+  const createProjectOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
+  const openProjectOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());
@@ -42,16 +60,38 @@ const Home = () => {
     dispatch(getUser());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(changeActiveMenu(null));
+    const timeout = setTimeout(() => {
+      if (flowView === (VIEW_TYPE.STARTPAGE as ViewType)) {
+        dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
+      }
+    }, 2500);
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Header />
       {projectMenuOpen && <ProjectMenuComponent />}
       {userMenuOpen && <UserMenuComponent />}
-      <ExplorerModule />
-      <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
-      <InspectorModule inspectorRef={inspectorRef} />
-      <LibraryModule />
-      <TypeEditorComponent />
+      {flowView === (VIEW_TYPE.STARTPAGE as ViewType) && (
+        <>
+          <StartPage />
+          {openProjectOpen && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
+        </>
+      )}
+      {flowView !== VIEW_TYPE.STARTPAGE && (
+        <>
+          <ExplorerModule />
+          <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
+          <InspectorModule inspectorRef={inspectorRef} />
+          <LibraryModule />
+          <TypeEditorComponent />
+        </>
+      )}
+      {createProjectOpen && <CreateProjectMenu />}
       <ErrorModule />
       <ValidationModule />
     </>

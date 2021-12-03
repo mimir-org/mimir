@@ -25,6 +25,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
             
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
+            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
             builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
             builder.Property(p => p.TransportId).HasColumnName("TransportId").IsRequired(false);
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired();

@@ -121,6 +121,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("NodeId");
 
+                    b.Property<string>("NodeIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NodeIri");
+
                     b.Property<string>("QualifierId")
                         .HasColumnType("nvarchar(450)");
 
@@ -273,6 +277,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("NodeId");
 
+                    b.Property<string>("NodeIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NodeIri");
+
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
@@ -312,10 +320,20 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FromConnectorId");
 
+                    b.Property<string>("FromConnectorIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FromConnectorIri");
+
                     b.Property<string>("FromNodeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("FromNodeId");
+
+                    b.Property<string>("FromNodeIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FromNodeIri");
 
                     b.Property<string>("InterfaceId")
                         .HasColumnType("nvarchar(450)")
@@ -341,10 +359,20 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("ToConnectorId");
 
+                    b.Property<string>("ToConnectorIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ToConnectorIri");
+
                     b.Property<string>("ToNodeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("ToNodeId");
+
+                    b.Property<string>("ToNodeIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ToNodeIri");
 
                     b.Property<string>("TransportId")
                         .HasColumnType("nvarchar(450)")

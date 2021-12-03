@@ -22,7 +22,7 @@ const NotificationBox = ({ message, warning, onClick }: Props) => (
     </WarningBox>
     <p className="text">{message}</p>
     <ButtonBox>
-      <Button onClick={() => onClick()} text={TextResources.Validation_Cancel} />
+      <Button onClick={() => onClick()} text={TextResources.Validation_Ok} />
     </ButtonBox>
   </Box>
 );

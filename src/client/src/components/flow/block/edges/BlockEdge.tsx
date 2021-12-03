@@ -10,10 +10,10 @@ import { GetEdgeStyle, GetEdgeRelationStyle, IsLocationTerminal, IsProductTermin
  */
 const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
-  const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge.fromConnectorId) as Connector;
+  const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
   const isTransport = !IsLocationTerminal(sourceConn) && !IsProductTerminal(sourceConn);
   const electro = useAppSelector(electroSelector);
-  const visible = !data?.edge.isHidden;
+  const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
 

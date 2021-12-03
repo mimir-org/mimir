@@ -19,6 +19,7 @@ interface Props {
  */
 const TerminalsMenuBox = ({ node, isParent, isInput, showMenuBox, terminals, onClick }: Props) => (
   <TerminalsButtonBox
+    id={"terminals-menu-button-" + node.id}
     visible={showMenuBox && !IsAspectNode(node) && !!terminals.length}
     left={SetButtonXPos(isParent, isInput, false)}
     right={SetButtonXPos(isParent, isInput, true)}

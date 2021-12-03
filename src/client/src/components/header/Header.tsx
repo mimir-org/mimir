@@ -7,20 +7,20 @@ import {
   projectMenuSelector,
   electroSelector,
   explorerSelector,
-  treeFilterSelector,
-  blockFilterSelector,
+  filterSelector,
   libOpenSelector,
   treeSelector,
   projectSelector,
   userMenuSelector,
   userStateSelector,
+  flowViewSelector,
 } from "../../redux/store";
+import { VIEW_TYPE } from "../../models/project";
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
-  const treeFilterOpen = useAppSelector(treeFilterSelector);
-  const blockFilteOpen = useAppSelector(blockFilterSelector);
+  const filterOpen = useAppSelector(filterSelector);
   const projectMenuOpen = useAppSelector(projectMenuSelector);
   const userMenuOpen = useAppSelector(userMenuSelector);
   const libOpen = useAppSelector(libOpenSelector);
@@ -28,6 +28,7 @@ const Header = () => {
   const treeView = useAppSelector(treeSelector);
   const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
+  const flowView = useAppSelector(flowViewSelector);
   const company = process.env.REACT_APP_COMPANY;
 
   return (
@@ -42,15 +43,16 @@ const Header = () => {
           <img src={MimirLogo} alt="mimir-logo" />
         </LogoBox>
       </HeaderBox>
-
-      <ToolBar
-        libOpen={libOpen}
-        explorerOpen={explorerOpen}
-        treeView={treeView}
-        treeFilter={treeFilterOpen}
-        blockFilter={blockFilteOpen}
-        electro={electro}
-      />
+      {flowView !== VIEW_TYPE.STARTPAGE && (
+        <ToolBar
+          project={project}
+          libOpen={libOpen}
+          explorerOpen={explorerOpen}
+          treeView={treeView}
+          visualFilter={filterOpen}
+          electro={electro}
+        />
+      )}
     </>
   );
 };

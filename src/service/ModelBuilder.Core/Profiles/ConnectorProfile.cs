@@ -17,7 +17,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId));
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.NodeId, src.NodeIri)))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.NodeId, src.NodeIri)));
 
             CreateMap<TerminalAm, Terminal>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
@@ -63,7 +64,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId));
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri));
 
             CreateMap<Terminal, TerminalAm>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))

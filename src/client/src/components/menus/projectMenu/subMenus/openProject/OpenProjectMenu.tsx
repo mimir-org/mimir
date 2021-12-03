@@ -1,47 +1,48 @@
-import * as Click from "./handlers";
-import { SearchBar, ProjectList } from "./";
+import { Dispatch } from "redux";
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
-import { CloseIcon } from "../../../../../assets/icons/close";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
 import { ProjectSimple } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { OnOpen, OnReturn } from "./handlers";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
-import { ProjectListLabels } from "./styled";
+import { ProjectDetails } from ".";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonsContainer, OpenButton } from "../styled";
 
 interface Props {
   projectState: ProjectState;
-  dispatch: any;
+  dispatch: Dispatch;
 }
+
+/**
+ * Open project menu component
+ * @returns a menu for selecting a project or create a new one.
+ */
 
 export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
   const projects = projectState.projectList as ProjectSimple[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
+  const projectDescription = project?.description;
+  const hasProject = projectId && projectId !== "";
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   return (
     <ProjectBox large visible={isOpen}>
       <ProjectBody large>
-        <HeaderBox>
-          <img src={CloseIcon} alt="icon" onClick={() => Click.OnReturn(dispatch)} className="icon" />
-          {TextResources.Project_Open_Project}
-        </HeaderBox>
-        <SearchBar />
-        <div className="subheader">{TextResources.Project_Recent}</div>
-        <ProjectListLabels>
-          <div className="name">{TextResources.Project_Recent_Name}</div>
-          <div className="owner">{TextResources.Project_Recent_Owner}</div>
-          <div className="edited">{TextResources.Project_Recent_Edited}</div>
-        </ProjectListLabels>
-        <ProjectList projectList={projects} />
-        <ButtonBox large>
-          {projectId && (
-            <Button onClick={() => Click.OnNoSave(dispatch, projectId)} text={TextResources.Project_Open} icon={RightArrowIcon} />
-          )}
-        </ButtonBox>
+        <HeaderBox>{TextResources.Project_Open_Label}</HeaderBox>
+        <ProjectDetails projects={projects} projectDescription={projectDescription} dispatch={dispatch} />
+        <ButtonsContainer>
+          <Button onClick={() => OnReturn(dispatch)} text={TextResources.Project_Cancel} />
+          <OpenButton hasProject={hasProject}>
+            <Button
+              onClick={hasProject ? () => OnOpen(projectId, dispatch) : () => null}
+              text={TextResources.Project_Open}
+              icon={RightArrowIcon}
+            />
+          </OpenButton>
+        </ButtonsContainer>
       </ProjectBody>
     </ProjectBox>
   );

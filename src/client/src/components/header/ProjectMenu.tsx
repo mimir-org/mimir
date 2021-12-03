@@ -18,7 +18,7 @@ const ProjectMenu = ({ projectMenuOpen, project, dispatch }: Props) => (
   <ProjectBox isOpen={projectMenuOpen} onClick={() => OnProject(dispatch, projectMenuOpen)}>
     <p className="project-name">{project?.name ?? TextResources.Project}</p>
     <img
-      src={projectMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
+      src={projectMenuOpen ? ExpandWhiteIcon : CollapseWhiteIcon}
       alt="icon"
       className="toggle-icon"
       onClick={() => OnProject(dispatch, projectMenuOpen)}

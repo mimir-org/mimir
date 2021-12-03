@@ -7,7 +7,8 @@ import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { productNodeSizeSelector, edgeSelector, electroSelector, nodeSelector } from "../../../../redux/store";
-import { GetAspectColor } from "../../../../helpers";
+import { GetAspectColor, IsLocation } from "../../../../helpers";
+import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -37,11 +38,11 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
       <ParentContainerComponent
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
-        selected={node.isBlockSelected}
-        width={parentBlockSize.width}
-        height={parentBlockSize.height}
-        hasChildren={terminals.length > 0}
-        company={process.env.REACT_APP_COMPANY}
+        size={parentBlockSize}
+        hasTerminals={terminals.length > 0}
+        isSecondaryNode={false}
+        onParentClick={() => OnParentClick(dispatch, node)}
+        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
       />
 
@@ -53,18 +54,17 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        showMenuBox={true}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
         isParent={true}
         nodes={nodes}
-        width={parentBlockSize.width}
-        height={parentBlockSize.height}
+        size={parentBlockSize}
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
+        isLocation={IsLocation(node)}
       />
     </>
   );

@@ -18,6 +18,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Visible).HasColumnName("Visible").IsRequired().HasConversion<string>();
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
+            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
 
             builder.HasOne(x => x.Node).WithMany(y => y.Connectors).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.Cascade);
         }
