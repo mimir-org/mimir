@@ -2,7 +2,7 @@
 
 namespace Mb.Models.Application
 {
-    public class ProjectSimple
+    public class ProjectItemCm
     {
         public string Id { get; set; }
         public string Iri { get; set; }

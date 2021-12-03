@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { Edge, Node, ProjectSimple } from "../../../models";
+import { Edge, Node, ProjectItemCm } from "../../../models";
 import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree } from "./helpers/";
 import { IsAspectNode, IsFamily } from "../../../helpers";
 import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
@@ -309,7 +309,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.CHANGE_SELECTED_PROJECT:
       const projectId = action.payload.projectId;
-      const projects = state.projectList as ProjectSimple[];
+      const projects = state.projectList as ProjectItemCm[];
 
       return {
         ...state,

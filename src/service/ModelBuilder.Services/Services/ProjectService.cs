@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
@@ -75,23 +74,9 @@ namespace Mb.Services.Services
         /// <param name="from"></param>
         /// <param name="number"></param>
         /// <returns></returns>
-        public IEnumerable<ProjectSimple> GetProjectList(string name, int from, int number)
+        public IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number)
         {
-            if (string.IsNullOrEmpty(name))
-                return _projectRepository.GetAll()
-                    .OrderByDescending(x => x.Updated)
-                    .Skip(from)
-                    .Take(number)
-                    .ProjectTo<ProjectSimple>(_mapper.ConfigurationProvider)
-                    .ToList();
-
-            return _projectRepository.GetAll()
-                .Where(x => x.Name.ToLower().StartsWith(name.ToLower()))
-                .OrderByDescending(x => x.Updated)
-                .Skip(from)
-                .Take(number)
-                .ProjectTo<ProjectSimple>(_mapper.ConfigurationProvider)
-                .ToList();
+            return _projectRepository.GetProjectList(name, from, number);
         }
 
         /// <summary>
@@ -104,7 +89,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
         {
-            var project = await GetProjectComplete(id, ignoreNotFound);
+            var project = await _projectRepository.GetAsyncComplete(id);
 
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
@@ -358,7 +343,7 @@ namespace Mb.Services.Services
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try
             {
-                var originalProject = await GetProjectComplete(id, false);
+                var originalProject = await _projectRepository.GetAsyncComplete(id);
 
                 if (originalProject == null)
                     throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
@@ -649,43 +634,6 @@ namespace Mb.Services.Services
         }
 
         #region Private
-
-        private async Task<Project> GetProjectComplete(string id, bool ignoreNotFound)
-        {
-            var project = await _projectRepository
-                .FindBy(x => x.Id == id)
-                .Include(x => x.Edges)
-                .Include("Edges.FromNode")
-                .Include("Edges.ToNode")
-                .Include("Edges.FromConnector")
-                .Include("Edges.ToConnector")
-                .Include("Edges.Transport")
-                .Include("Edges.Transport.Attributes")
-                .Include("Edges.Transport.InputTerminal")
-                .Include("Edges.Transport.InputTerminal.Attributes")
-                .Include("Edges.Transport.OutputTerminal")
-                .Include("Edges.Transport.OutputTerminal.Attributes")
-                .Include("Edges.Interface")
-                .Include("Edges.Interface.Attributes")
-                .Include("Edges.Interface.InputTerminal")
-                .Include("Edges.Interface.InputTerminal.Attributes")
-                .Include("Edges.Interface.OutputTerminal")
-                .Include("Edges.Interface.OutputTerminal.Attributes")
-                .Include(x => x.Nodes)
-                .Include("Nodes.Attributes")
-                .Include("Nodes.Connectors")
-                .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Composites")
-                .Include("Nodes.Composites.Attributes")
-                .AsSplitQuery()
-                .OrderByDescending(x => x.Name)
-                .FirstOrDefaultAsync();
-
-            if (!ignoreNotFound && project == null)
-                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
-
-            return project;
-        }
 
         private void LockUnlockNodesRecursive(bool lockUnlock, Node node, IQueryable<Node> allNodes, IQueryable<Edge> allEdges, IQueryable<Attribute> allAttributes,
             IQueryable<Transport> allTransports, IQueryable<Interface> allInterfaces, string userName, DateTime dateTimeNow, int infiniteLoopGuardStart = 1, int infiniteLoopGuardMax = 100000)

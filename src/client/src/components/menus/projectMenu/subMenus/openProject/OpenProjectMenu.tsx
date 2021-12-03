@@ -5,7 +5,7 @@ import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
-  const projects = projectState.projectList as ProjectSimple[];
+  const projects = projectState.projectList as ProjectItemCm[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);

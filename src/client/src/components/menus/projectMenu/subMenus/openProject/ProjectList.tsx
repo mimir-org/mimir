@@ -1,9 +1,9 @@
 import { ProjectData } from "./";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { ProjectListBox } from "./styled";
 
 interface Props {
-  projectList: ProjectSimple[];
+  projectList: ProjectItemCm[];
 }
 
 export const ProjectList = ({ projectList }: Props) => (

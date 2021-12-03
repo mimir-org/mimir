@@ -71,7 +71,7 @@ export interface LibrarySubProjectItem {
   updatedBy: string;
 }
 
-export interface ProjectSimple {
+export interface ProjectItemCm {
   id: string;
   iri: string;
   domain: string;

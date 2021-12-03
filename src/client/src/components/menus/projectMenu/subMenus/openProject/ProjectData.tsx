@@ -1,11 +1,11 @@
 import Moment from "react-moment";
 import { changeSelectedProject } from "../../../../../redux/store/project/actions";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { useAppDispatch } from "../../../../../redux/store";
 import { ProjectDataBox } from "./styled";
 
 interface Props {
-  projects: ProjectSimple[];
+  projects: ProjectItemCm[];
   projectId: string;
   projectName: string;
   projectOwner: string;
