@@ -5,14 +5,14 @@ import { FontSize, FontWeight } from "../../../../../compLibrary/font";
 const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 400px;
+  min-width: 356px;
+  min-height: 506px;
   margin-left: 20px;
 
   button {
-    min-width: 200px;
     max-width: 223px;
-    height: 34px;
-    margin-top: 5px;
+    max-height: 34px;
+    margin-top: 20px;
     background: ${Color.White};
     font-weight: ${FontWeight.Bold};
   }
@@ -21,11 +21,10 @@ const RightContainer = styled.div`
     padding: 10px;
   }
 
-  .text {
+  .button-text {
     white-space: nowrap;
     font-weight: ${FontWeight.Bold};
     font-size: ${FontSize.Header};
-    padding-right: 12px;
   }
 `;
 

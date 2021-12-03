@@ -10,7 +10,7 @@ interface Props {
 export const ProjectList = ({ projectList }: Props) => (
   <ProjectListBox>
     <ProjectListLabels>
-      <p className="name">{TextResources.Project_Recent_Name}</p>
+      <p className="name">{TextResources.Project}</p>
       <p className="owner">{TextResources.Project_Recent_Owner}</p>
       <p className="version">{TextResources.Project_Recent_Version}</p>
       <p className="edited">{TextResources.Project_Recent_Edited}</p>
