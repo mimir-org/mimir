@@ -21,6 +21,7 @@ namespace RdfParserModule
              .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
              .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
              .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
+                .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
              .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
             CreateMap<ParserEdge, EdgeAm>()
@@ -54,6 +55,7 @@ namespace RdfParserModule
             CreateMap<ParserTerminal, TerminalAm>()
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
                 .IncludeBase<ParserConnector, ConnectorAm>();
 
             CreateMap<ParserRelation, RelationAm>()
