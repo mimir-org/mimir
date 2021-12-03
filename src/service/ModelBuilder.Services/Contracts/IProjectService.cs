@@ -22,8 +22,10 @@ namespace Mb.Services.Contracts
         Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, Guid id);
         Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm);
         Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm);
+        Task LockUnlockEdge(LockUnlockEdgeAm lockUnlockEdgeAm);
         IEnumerable<string> GetLockedNodes(string projectId);
         IEnumerable<string> GetLockedAttributes(string projectId);
+        IEnumerable<string> GetLockedEdges(string projectId);
         Task CommitProject(CommitPackage package);
         Task<bool> ProjectExist(string projectId);
     }

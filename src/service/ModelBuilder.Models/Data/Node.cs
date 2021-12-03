@@ -47,10 +47,9 @@ namespace Mb.Models.Data
         [Required]
         public decimal PositionY { get; set; }
 
-        [Required]
         public bool IsLocked { get; set; }
-
-        public string IsLockedBy { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
 
         [Required]
         public decimal PositionBlockX { get; set; }
@@ -79,7 +78,6 @@ namespace Mb.Models.Data
 
         public string LibraryTypeId { get; set; }
 
-        [Required]
         public string Version { get; set; }
 
         public Aspect Aspect { get; set; }
