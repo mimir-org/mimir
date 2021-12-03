@@ -57,6 +57,7 @@ export interface ConnectorAm {
   visible: boolean;
   nodeId: string;
   nodeIri: string;
+  isRequired: boolean;
 
   // Relation
   relationType: RelationType;
@@ -259,6 +260,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
+      isRequired: connector.isRequired
     } as ConnectorAm;
 
     converted.push(a);

@@ -18,7 +18,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.NodeId, src.NodeIri)))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.NodeId, src.NodeIri)));
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.NodeId, src.NodeIri)))
+                .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired));
 
             CreateMap<TerminalAm, Terminal>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
@@ -40,6 +41,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
+                .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired))
                 .ForMember(dest => dest.RelationType, opt => opt.MapFrom(src => src.RelationType));
 
             CreateMap<ConnectorAm, TerminalAm>()
@@ -54,6 +56,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
                 .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
             CreateMap<Connector, ConnectorAm>()
@@ -65,7 +68,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri));
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
+                .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired));
 
             CreateMap<Terminal, TerminalAm>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
