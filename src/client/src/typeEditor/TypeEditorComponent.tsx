@@ -16,7 +16,7 @@ import {
   TypeEditorHeader,
   TypeEditorInspectorWrapper,
   TypeEditorWrapper,
-  TypePreviewColumn
+  TypePreviewColumn,
 } from "./styled";
 
 /**
@@ -77,14 +77,14 @@ export const TypeEditorComponent = () => {
             </TypePreviewColumn>
           </ChooseProperties>
 
-          <TypeEditorInspectorWrapper>
+          {/* <TypeEditorInspectorWrapper>
             {!!state.createLibraryType.aspect && (
               <TypeEditorInspector
                 createLibraryType={state.createLibraryType}
                 typeEditorPropertiesRef={typeEditorPropertiesRef}
               />
             )}
-          </TypeEditorInspectorWrapper>
+          </TypeEditorInspectorWrapper> */}
         </TypeEditorContent>
       </TypeEditorWrapper>
     )
