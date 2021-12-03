@@ -74,6 +74,7 @@ const InspectorModule = ({ inspectorRef }: Props) => {
         open={inspectorOpen}
         activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
+        isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeight}
       />

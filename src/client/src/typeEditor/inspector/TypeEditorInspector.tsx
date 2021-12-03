@@ -124,6 +124,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         terminalLikeItems={terminalLikeItems}
         compositeLikeItems={compositeLikeItems}
         inspectorRef={inspectorRef}
+        isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
         changeInspectorHeightAction={changeTypeEditorInspectorHeight}
         changeInspectorTabAction={changeTypeEditorInspectorTab}
