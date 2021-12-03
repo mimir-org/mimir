@@ -30,7 +30,7 @@ const TextResources = {
   MainHeader_VisualFilter: "Visual Filter",
 
   // InspectorModule
-  Inspector_AdminInfo: "Admin info",
+  Inspector_AdminInfo: "Admin",
   Inspector_Object: "Object",
   Inspector_Parameters: "Parameters",
   Inspector_Relations: "Relations",
