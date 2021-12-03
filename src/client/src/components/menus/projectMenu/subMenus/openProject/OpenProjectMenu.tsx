@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { MENU_TYPE } from "../../../../../models/project";
+import { flowViewSelector, isActiveMenuSelector, useAppSelector, useParametricAppSelector } from "../../../../../redux/store";
+import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../../../../models/project";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
 import { ProjectSimple } from "../../../../../models";
@@ -27,9 +27,11 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
   const projectDescription = project?.description;
   const hasProject = projectId && projectId !== "";
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
+  const flowView = useAppSelector(flowViewSelector);
+  const startPageOpen = flowView === (VIEW_TYPE.STARTPAGE as ViewType);
 
   return (
-    <ProjectBox large visible={isOpen}>
+    <ProjectBox large visible={isOpen} startPage={startPageOpen}>
       <ProjectBody large>
         <HeaderBox>{TextResources.Project_Open_Label}</HeaderBox>
         <ProjectDetails projects={projects} projectDescription={projectDescription} dispatch={dispatch} />

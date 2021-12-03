@@ -15,6 +15,7 @@ interface Props {
   activeTabIndex: number;
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  isInspectorOpen: boolean;
 }
 
 const InspectorTabWrapper = ({
@@ -24,16 +25,19 @@ const InspectorTabWrapper = ({
   changeInspectorTabAction,
   children,
   inspectorRef,
+  isInspectorOpen,
 }: React.PropsWithChildren<Props>) => {
   const dispatch = useAppDispatch();
   const isTabOpen = activeTabIndex === index;
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
-    dispatch(changeInspectorHeight(Size.ModuleOpen));
-    SetPanelHeight(inspectorRef, Size.ModuleOpen);
-  }, [dispatch, changeInspectorTabAction, index, inspectorRef]);
+    if (!isInspectorOpen) {
+      dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+      dispatch(changeInspectorHeight(Size.ModuleOpen));
+      SetPanelHeight(inspectorRef, Size.ModuleOpen);
+    }
+  }, [dispatch, changeInspectorTabAction, index, isInspectorOpen, inspectorRef]);
 
   return (
     <>

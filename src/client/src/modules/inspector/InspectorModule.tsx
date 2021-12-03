@@ -65,7 +65,7 @@ const InspectorModule = ({ inspectorRef }: Props) => {
       zIndex={5}
       forwardRef={inspectorRef}
     >
-      <ResizePanel id="ResizePanel" ref={resizePanelRef} />
+      <ResizePanel id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       <InspectorHeader
         project={project}
         element={element}
@@ -74,6 +74,7 @@ const InspectorModule = ({ inspectorRef }: Props) => {
         open={inspectorOpen}
         activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
+        isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeight}
       />

@@ -30,7 +30,7 @@ const TextResources = {
   MainHeader_VisualFilter: "Visual Filter",
 
   // InspectorModule
-  Inspector_AdminInfo: "Admin info",
+  Inspector_AdminInfo: "Admin",
   Inspector_Object: "Object",
   Inspector_Parameters: "Parameters",
   Inspector_Relations: "Relations",
@@ -170,14 +170,14 @@ const TextResources = {
   Project_Search_Placeholder: "Search Projects",
   Project_OpenProject: "Open project",
   Project_Recent: "Recent projects",
-  Project_Recent_Name: "Project name",
-  Project_Recent_Owner: "Project owner",
-  Project_Recent_Version: "Project Version",
+  Project_Recent_Owner: "Owner",
+  Project_Recent_Version: "Version",
   Project_Recent_Edited: "Last edited",
 
   Project_Open_Label: "Open or start a new project",
   Project_Save_Label: "Save project",
   Project_Description_About: "About the project",
+  Project_Description_Na: "No information currently available",
   Project_Description_Libraries: "Libraries",
   Project_Description_SubProj: "Sub-projects",
   Project_Description_Temps: "Templates",

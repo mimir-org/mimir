@@ -4,6 +4,7 @@ const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 0px 7px 0px 0px;
   padding-top: 15px;
 
   button {

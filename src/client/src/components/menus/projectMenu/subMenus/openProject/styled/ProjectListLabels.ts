@@ -17,21 +17,22 @@ const ProjectListLabels = styled.div`
   }
 
   .name {
-    width: 34%;
+    width: 40%;
   }
 
   .owner {
-    width: 26%;
+    padding-left: 4px;
+    width: 20%;
   }
 
   .version {
     text-align: center;
-    width: 22%;
+    width: 25%;
   }
 
   .edited {
     text-align: right;
-    width: 18%;
+    width: 15%;
   }
 `;
 

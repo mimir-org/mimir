@@ -15,6 +15,7 @@ interface Props {
   open: boolean;
   activeTabIndex: number;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  isInspectorOpen: boolean;
   changeInspectorVisibilityAction: (visibility: boolean) => Action;
   changeInspectorHeightAction: (height: number) => Action;
   changeInspectorTabAction?: (index: number) => Action;
@@ -33,6 +34,7 @@ const InspectorHeader = ({
   open,
   activeTabIndex,
   inspectorRef,
+  isInspectorOpen,
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
   changeInspectorTabAction,
@@ -53,6 +55,7 @@ const InspectorHeader = ({
         compositeLikeItems={compositeLikeItems}
         changeInspectorTabAction={changeInspectorTabAction}
         inspectorRef={inspectorRef}
+        isInspectorOpen={isInspectorOpen}
       />
 
       {GetInspectorHeaderText(element, icons)}

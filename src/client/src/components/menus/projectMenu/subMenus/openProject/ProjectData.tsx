@@ -3,7 +3,6 @@ import { changeSelectedProject } from "../../../../../redux/store/project/action
 import { ProjectSimple } from "../../../../../models";
 import { useAppDispatch } from "../../../../../redux/store";
 import { ProjectDataBox } from "./styled";
-import { RadioButton } from "../../../../../compLibrary/input/radiobutton";
 
 interface Props {
   projects: ProjectSimple[];
@@ -21,7 +20,6 @@ export const ProjectDataComponent = ({ projects, projectId, projectName, project
 
   return (
     <ProjectDataBox onClick={onClick} isSelected={isSelected}>
-      <RadioButton isChecked={isSelected} onChange={onClick} id={projectId} />
       <p className="name">{projectName}</p>
       <p className="owner">{projectOwner}</p>
       <p className="version">{projectVersion}</p>

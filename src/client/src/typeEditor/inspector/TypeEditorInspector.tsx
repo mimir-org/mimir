@@ -111,7 +111,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       zIndex={110}
       forwardRef={inspectorRef}
     >
-      <ResizePanel ref={resizePanelRef} />
+      <ResizePanel ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       <InspectorHeader
         project={project}
         element={createLibraryType}
@@ -124,6 +124,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         terminalLikeItems={terminalLikeItems}
         compositeLikeItems={compositeLikeItems}
         inspectorRef={inspectorRef}
+        isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
         changeInspectorHeightAction={changeTypeEditorInspectorHeight}
         changeInspectorTabAction={changeTypeEditorInspectorTab}
