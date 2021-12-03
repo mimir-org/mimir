@@ -121,6 +121,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => onSelectionChange(e)}
         connectionLineComponent={TreeConnectionLine}
+        deleteKeyCode={"Delete"}
       >
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
