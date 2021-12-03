@@ -1,5 +1,4 @@
-import * as Click from "../../handlers";
-import { SearchBar, ProjectList, ProjectDescription } from "./";
+import { Dispatch } from "redux";
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { Button } from "../../../../../compLibrary/buttons";
@@ -8,21 +7,12 @@ import { ProjectSimple } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
 import { OnOpen, OnReturn } from "./handlers";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
-import { CreateProjectIcon } from "../../../../../assets/icons/project";
-import {
-  ProjectBody,
-  ProjectBox,
-  HeaderBox,
-  ProjectDetails,
-  SearchProject,
-  RightContainer,
-  ButtonsContainer,
-  OpenButton,
-} from "../styled";
+import { ProjectDetails } from ".";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonsContainer, OpenButton } from "../styled";
 
 interface Props {
   projectState: ProjectState;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
@@ -37,21 +27,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
     <ProjectBox large visible={isOpen}>
       <ProjectBody large>
         <HeaderBox>{TextResources.Project_Open_Label}</HeaderBox>
-        <ProjectDetails>
-          <SearchProject>
-            <SearchBar />
-            <ProjectList projectList={projects} />
-          </SearchProject>
-          <RightContainer>
-            <Button
-              onClick={() => Click.OnCreate(dispatch)}
-              text={TextResources.Project_Start_Label}
-              icon={CreateProjectIcon}
-              iconOnLeft={true}
-            />
-            <ProjectDescription description={projectDescription} />
-          </RightContainer>
-        </ProjectDetails>
+        <ProjectDetails projects={projects} projectDescription={projectDescription} dispatch={dispatch} />
         <ButtonsContainer>
           <Button onClick={() => OnReturn(dispatch)} text={TextResources.Project_Cancel} />
           <OpenButton hasProject={hasProject}>
