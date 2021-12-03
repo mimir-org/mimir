@@ -72,6 +72,11 @@ namespace RdfParserModule
             Project = _mapper.Map<ProjectAm>(ParserGraph);
         }
 
+        private string GetSymbol(string iri)
+        {
+            return GetLiteralValue(iri, BuildIri("mimir", "symbol"));
+        }
+
         public void LoadGraph(string valueAsString)
         {
             RdfGraph = new OntologyGraph();
@@ -260,12 +265,7 @@ namespace RdfParserModule
             var predicateNode = GetOrCreateUriNode(predicate);
             var resultList = Store.GetTriplesWithSubjectPredicate(subjectNode, predicateNode).Select(triple => triple.Object).ToList();
 
-            if (resultList.Count < 1)
-            {
-                throw new Exception("There needs to be at least one object.");
-            }
-
-            return resultList;
+            return resultList.Count == 0 ? null : resultList;
         }
 
         public List<INode> GetObjects(string subject, string[] predicates)
@@ -365,34 +365,10 @@ namespace RdfParserModule
 
         public string GetLiteralValue(string subject, string predicate)
         {
-            var node = GetObjects(subject, predicate).FirstOrDefault();
-            if (node is null) throw new Exception($"Found nothing for subject= {subject}, predicate= {predicate}");
-            if (node is LiteralNode literal) return literal.Value;
+            var node = GetObjects(subject, predicate);
+            if (node is null) return null;// throw new Exception($"Found nothing for subject= {subject}, predicate= {predicate}");
+            if (node.Count == 1 && node.First() is LiteralNode literal) return literal.Value;
             throw new Exception("This is not a literal");
-        }
-
-        public (string, string) GetColorAndVisiblity(string iri)
-        {
-            var node = GetOrCreateUriNode(iri);
-            var colorPred = GetOrCreateUriNode(BuildIri("mimir", "color"));
-            var visPred = GetOrCreateUriNode(BuildIri("mimir", "visible"));
-
-            var color = Store.GetTriplesWithSubjectPredicate(node, colorPred).Select(t => t.Object).SingleOrDefault();
-            var visible = Store.GetTriplesWithPredicateObject(node, visPred).Select(t => t.Object).SingleOrDefault();
-
-            if (color is LiteralNode colorLit && visible is LiteralNode visLit)
-            {
-                return (colorLit.Value, visLit.Value);
-            }
-
-            throw new Exception($"Found no color and/or visibility for the connector {iri}");
-        }
-
-        public string GetConnectorColor(string iri)
-        {
-            var node = GetOrCreateUriNode(iri);
-            var colorPred = GetOrCreateUriNode(BuildIri("mimir", "color"));
-            return null;
         }
 
         public List<ParserConnector> GetTerminalsOnNode(string nodeId)
@@ -411,7 +387,9 @@ namespace RdfParserModule
                     Type = ConnectorType.Input,
                     NodeIri = nodeId,
                     Domain = GetDomain(obj.ToString()),
-                    Attributes = GetAttributesOnNode(obj.ToString())
+                    Attributes = GetAttributesOnNode(obj.ToString()),
+                    Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
+                    Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible")))
                 }).ToList();
 
                 connectors.AddRange(inputTerminals);
@@ -425,7 +403,9 @@ namespace RdfParserModule
                     Type = ConnectorType.Output,
                     NodeIri = nodeId,
                     Domain = GetDomain(obj.ToString()),
-                    Attributes = GetAttributesOnNode(obj.ToString())
+                    Attributes = GetAttributesOnNode(obj.ToString()),
+                    Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
+                    Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible")))
                 }).ToList();
 
                 connectors.AddRange(outputTerminals);
@@ -809,7 +789,8 @@ namespace RdfParserModule
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 Version = "0.0",
                 MasterProjectIri = ParserGraph.Iri,
-                Domain = GetDomain(node.ToString())
+                Domain = GetDomain(node.ToString()),
+                Symbol = GetSymbol(node.ToString())
 
             }).ToList();
 
@@ -971,6 +952,7 @@ namespace RdfParserModule
                 parentId = GetParent(node.ToString())?.ToString(),
                 Terminals = GetTerminalsOnNode(node.ToString()),
                 Attributes = GetAttributesOnNode(node.ToString()),
+                Symbol = GetSymbol(node.ToString())
 
             }).ToList();
 
