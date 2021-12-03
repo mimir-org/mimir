@@ -19,7 +19,7 @@ interface Props {
 export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, headerColor, bodyColor }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [activeToolTip, setActiveToolTip] = useState<CombinedAttribute>(null);
-  const [activeToolTipRef, setActiveToolTipRef] = useState<HTMLDivElement>(null);
+  const [activeToolTipRef, setActiveToolTipRef] = useState<HTMLLabelElement>(null);
   const [activeToolTipTimeOutId, setActiveToolTipTimeOutId] = useState<NodeJS.Timeout>(null);
   const [shouldShowToolTip, setShouldShowToolTip] = useState<boolean>(false);
 
@@ -35,7 +35,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     [items, selectedItems, IsItemSelected]
   );
 
-  const refCallback = (element: HTMLDivElement, item: CombinedAttribute) => {
+  const refCallback = (element: HTMLLabelElement, item: CombinedAttribute) => {
     if (item.combined === activeToolTip?.combined) {
       setActiveToolTipRef(element);
     }
@@ -84,10 +84,10 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     return (
       <div>
         <MenuListItem color={bodyColor}>
-          <div className="label" onClick={onClick} onMouseEnter={() => resetToolTip()}>
+          <label className="label" onMouseEnter={() => resetToolTip()}>
             {TextResources.Inspector_Params_Combinations_Select_All}
-          </div>
-          <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly={true} />
+            <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly={true} />
+          </label>
         </MenuListItem>
       </div>
     );
@@ -97,16 +97,10 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     return (
       <div key={item[keyProp]}>
         <MenuListItem color={bodyColor}>
-          <div
-            className="label"
-            onClick={() => onChange(item, IsItemSelected(item))}
-            onMouseEnter={() => onMouseEnter(item)}
-            ref={(ele) => refCallback(ele, item)}
-          >
+          <label className="label" onMouseEnter={() => onMouseEnter(item)} ref={(ele) => refCallback(ele, item)}>
             {item.combined}
-          </div>
-          <div></div>
-          <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
+            <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
+          </label>
         </MenuListItem>
       </div>
     );
@@ -124,7 +118,6 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
         <>
           <MenuList color={headerColor} onScroll={() => resetToolTip()}>
             {items.length > 1 && renderSelectAll()}
-
             {items?.map((item) => renderListItem(item))}
           </MenuList>
           {shouldShowToolTip && activeToolTip && (
