@@ -30,7 +30,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
   const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
   const [unit, setUnit] = useState<EnumBase>(
     isAttribute
-      ? attribute.units.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]
+      ? attribute.units?.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]
       : attribute?.units?.[0]
   );
 
@@ -92,7 +92,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               borderColor={Color.InspectorGreyBorder}
               fontSize={FontSize.Small}
               height={22}
-              defaultValue={unit.id}
+              defaultValue={unit?.id}
             />
           </div>
         </div>
