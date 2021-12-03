@@ -20,7 +20,7 @@ const Avatar = ({ userMenuOpen, userState, dispatch }: Props) => (
     <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
     <img src={AvatarBackground} alt="avatar" className="avatar" onClick={() => OnUser(dispatch, userMenuOpen)} />
     <img
-      src={userMenuOpen ? ExpandWhiteIcon : CollapseWhiteIcon}
+      src={userMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
       alt="icon"
       className="toggle-icon"
       onClick={() => OnUser(dispatch, userMenuOpen)}

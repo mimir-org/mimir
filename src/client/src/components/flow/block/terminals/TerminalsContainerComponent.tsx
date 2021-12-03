@@ -35,8 +35,8 @@ const TerminalsContainerComponent = ({
   isParent = false,
   showMenuBox = true,
 }: Props) => {
-  const inTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
-  const outTerminals = terminals.filter((t) => !IsInputTerminal(t) && !IsPartOf(t));
+  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
+  const outputTerminals = terminals.filter((t) => !IsInputTerminal(t) && !IsPartOf(t));
   const parentBlockSize = useAppSelector(nodeSizeSelector);
   const parentProductBlockSize = useAppSelector(productNodeSizeSelector);
 
@@ -45,9 +45,9 @@ const TerminalsContainerComponent = ({
       <TerminalsMenuBox
         node={node}
         isParent={isParent}
-        isInput={true}
+        isInput
         showMenuBox={showMenuBox}
-        terminals={inTerminals}
+        terminals={inputTerminals}
         onClick={() => Click.OnInputMenu(showInTerminalMenu, inputMenuOpen)}
       />
       <TerminalsMenuBox
@@ -55,16 +55,17 @@ const TerminalsContainerComponent = ({
         isParent={isParent}
         isInput={false}
         showMenuBox={showMenuBox}
-        terminals={outTerminals}
+        terminals={outputTerminals}
         onClick={() => Click.OnOutputMenu(showOutTerminalMenu, outputMenuOpen)}
       />
       {inputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
           isParent={isParent}
-          IsInput={true}
-          terminals={inTerminals}
+          IsInput
+          terminals={inputTerminals}
           electro={electro}
+          hasActiveTerminals={inputTerminals.some((conn) => conn.visible)}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showInTerminalMenu, inputMenuOpen)}
           parentBlockSize={IsProduct(node) ? parentProductBlockSize : parentBlockSize}
@@ -76,7 +77,8 @@ const TerminalsContainerComponent = ({
           isParent={isParent}
           IsInput={false}
           electro={electro}
-          terminals={outTerminals}
+          hasActiveTerminals={outputTerminals.some((conn) => conn.visible)}
+          terminals={outputTerminals}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showOutTerminalMenu, outputMenuOpen)}
           parentBlockSize={IsProduct(node) ? parentProductBlockSize : parentBlockSize}

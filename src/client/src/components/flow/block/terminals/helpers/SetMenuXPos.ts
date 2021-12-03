@@ -21,14 +21,12 @@ const SetMenuXPos = (
   const marginLarge = 23;
 
   if (electro) {
-    if (isParent) return parentBlockSize.width + marginSmall;
-    return node.width + marginSmall;
+    if (!isParent) return node.width + marginSmall;
   }
 
-  if (hasActiveTerminals && !isParent) return node.width + marginLarge;
-  if (hasActiveTerminals && isParent) return parentBlockSize.width + marginLarge;
-  if (!hasActiveTerminals && !isParent) return node.width + marginSmall;
-  if (!hasActiveTerminals && isParent) return parentBlockSize.width + marginLarge;
+  if (isParent) return parentBlockSize.width + marginSmall;
+  if (hasActiveTerminals) return node.width + marginLarge;
+  return node.width + marginSmall;
 };
 
 export default SetMenuXPos;

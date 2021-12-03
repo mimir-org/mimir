@@ -1,6 +1,6 @@
 export { default as CompanyLogoBox } from "./CompanyLogoBox";
 export { default as LocationBox } from "./LocationBox";
-export { default as ProjectBox } from "./ProjectBox";
+export { default as ProjectHeaderBox } from "./ProjectHeaderBox";
 export { default as AvatarBox } from "./AvatarBox";
 export { default as HeaderBox } from "./HeaderBox";
 export { default as OptionsBox } from "./OptionsBox";

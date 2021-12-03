@@ -1,8 +1,9 @@
 import { MimirLogo } from "../../assets/icons/mimir/";
-import { ToolBar, Avatar, ProjectMenu } from "./";
+import { ToolBar, Avatar, ProjectMenuHeader } from "./";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { CompanyLogoBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader } from "../../helpers";
+import { VIEW_TYPE } from "../../models/project";
 import {
   projectMenuSelector,
   electroSelector,
@@ -15,7 +16,6 @@ import {
   userStateSelector,
   flowViewSelector,
 } from "../../redux/store";
-import { VIEW_TYPE } from "../../models/project";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -34,14 +34,14 @@ const Header = () => {
   return (
     <>
       <HeaderBox id="Header">
-        <Avatar userMenuOpen={userMenuOpen} userState={userState} dispatch={dispatch} />
-        <CompanyLogoBox>
-          <img src={GetCompanyLogoForHeader(company)} alt="logo" />
-        </CompanyLogoBox>
-        <ProjectMenu projectMenuOpen={projectMenuOpen} project={project} dispatch={dispatch} />
         <LogoBox>
           <img src={MimirLogo} alt="mimir-logo" />
         </LogoBox>
+        <ProjectMenuHeader projectMenuOpen={projectMenuOpen} project={project} dispatch={dispatch} />
+        <CompanyLogoBox>
+          <img src={GetCompanyLogoForHeader(company)} alt="logo" />
+        </CompanyLogoBox>
+        <Avatar userMenuOpen={userMenuOpen} userState={userState} dispatch={dispatch} />
       </HeaderBox>
       {flowView !== VIEW_TYPE.STARTPAGE && (
         <ToolBar
