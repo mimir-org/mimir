@@ -13,6 +13,11 @@ interface Props {
   dispatch: Dispatch;
 }
 
+/**
+ * Component for Open project menu.
+ * @returns the left column of the open project menu: a searchbar and projectslist
+ */
+
 export const ProjectDetails = ({ projects, projectDescription, dispatch }: Props) => (
   <Details>
     <SearchProject>

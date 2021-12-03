@@ -28,6 +28,10 @@ const Size = {
   TopMenu_Height: 56,
   MenuSmall_Width: 330,
   MenuSmall_Height: 200,
+  OpenProjectMenu_Small_Width: 308,
+  OpenProjectMenu_Small_Height: 281,
+  OpenProjectMenu_Large_Width: 950,
+  OpenProjectMenu_Large_Height: 552,
 };
 
 export default Size;

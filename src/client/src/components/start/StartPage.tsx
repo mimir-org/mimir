@@ -7,15 +7,13 @@ import { TextResources } from "../../assets/text";
  * @returns a splash page with Mimir logo
  */
 
-const StartPage = () => {
-  return (
-    <StartPageBackground>
-      <div className="slider">
-        <img src={MimirLogo} alt="mimir-logo" className="logo" />
-        <p className="version-text">{TextResources.Mimir_Version}</p>
-      </div>
-    </StartPageBackground>
-  );
-};
+const StartPage = () => (
+  <StartPageBackground>
+    <div className="slider">
+      <img src={MimirLogo} alt="mimir-logo" className="logo" />
+      <p className="version-text">{TextResources.Mimir_Version}</p>
+    </div>
+  </StartPageBackground>
+);
 
 export default StartPage;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../compLibrary/font";
+import { Size } from "../../../../../compLibrary/size";
 
 interface Props {
   large?: boolean | false;
@@ -14,8 +15,8 @@ const ProjectBox = styled.div<Props>`
   bottom: 25%;
   left: 25%;
   right: 25%;
-  width: ${(props) => (props.large ? 950 : 308)}px;
-  height: ${(props) => (props.large ? 552 : 281)}px;
+  width: ${(props) => (props.large ? Size.OpenProjectMenu_Large_Width : Size.OpenProjectMenu_Small_Width)}px;
+  height: ${(props) => (props.large ? Size.OpenProjectMenu_Large_Height : Size.OpenProjectMenu_Small_Height)}px;
   margin: auto;
   border: 2px solid ${Color.BlueMagenta};
   background-color: ${Color.White};
