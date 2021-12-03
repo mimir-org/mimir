@@ -5,7 +5,7 @@ import { CheckIcon } from "../assets/icons/checkmark";
 import { LibraryIcon } from "../assets/icons/modules";
 import { TextResources } from "../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
-import { TypeEditorInputs, TypeEditorInspector, TypePreview } from "./";
+import { TypeEditorInputs, TypePreview } from "./";
 import { OnCloseEditor, OnPropertyChange, OnSave } from "./handlers";
 import { getBlobData, getInitialData } from "./redux/actions";
 import { GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, GetTypeEditorLists, GetPropertiesHeight } from "./helpers";
@@ -14,7 +14,6 @@ import {
   SaveButton,
   TypeEditorContent,
   TypeEditorHeader,
-  TypeEditorInspectorWrapper,
   TypeEditorWrapper,
   TypePreviewColumn,
 } from "./styled";
