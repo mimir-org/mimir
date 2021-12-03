@@ -34,11 +34,11 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
       : attribute?.units?.[0]
   );
 
-  const isDisabled = () => (isAttribute ? isNodeLocked || attribute.isLocked : false);
+  const isDisabled = () => (isAttribute ? attribute.isLocked : false);
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterBox>
-        <ParameterHeader color={bodyColor} isNodeLocked={isNodeLocked}>
+        <ParameterHeader color={bodyColor}>
           {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
@@ -50,13 +50,13 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               <>
                 {isDisabled() ? (
                   <LockClosedParameterComponent
-                    className="parameterIcon lockIcon"
+                    className="parameterIcon"
                     fill={headerColor}
                     onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
                   />
                 ) : (
                   <LockOpenComponent
-                    className="parameterIcon lockIcon"
+                    className="parameterIcon"
                     onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
                   />
                 )}
