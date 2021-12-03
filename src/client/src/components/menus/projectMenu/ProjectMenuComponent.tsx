@@ -30,12 +30,12 @@ const ProjectMenuComponent = () => {
     <>
       <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU}>
         <MenuElement
-          text={TextResources.Project_Open_Project}
+          text={TextResources.Project_OpenProject}
           icon={Icons.OpenProjectIcon}
           onClick={() => Click.OnOpenClick(dispatch)}
         />
         <MenuElement
-          text={TextResources.Project_Create_Label}
+          text={TextResources.Project_CreateProject}
           icon={Icons.CreateProjectIcon}
           onClick={() => Click.OnCreate(dispatch)}
         />
@@ -45,12 +45,12 @@ const ProjectMenuComponent = () => {
           onClick={() => Click.OnSave(dispatch, projectState)}
         />
         <MenuElement
-          text={TextResources.Project_Export_ProjectLibrary}
+          text={TextResources.Project_Export_LibraryTypes}
           icon={Icons.ExportLibraryIcon}
           onClick={() => Click.OnSaveLibrary(dispatch)}
         />
         <MenuElement
-          text={TextResources.Project_Export_ProjectFile}
+          text={TextResources.Project_Export}
           icon={Icons.ExportProjectIcon}
           onClick={() => Click.OnSaveFile(dispatch)}
         />
@@ -67,12 +67,12 @@ const ProjectMenuComponent = () => {
           disabled={!selectedNodeIds}
         /> */}
         <MenuElement
-          text={TextResources.Project_Import_File}
+          text={TextResources.Project_Import}
           icon={Icons.ImportProjectIcon}
           onClick={() => Click.OnImportProject(dispatch)}
         />
         <MenuElement
-          text={TextResources.Project_Import_ProjectLibrary}
+          text={TextResources.Project_Import_LibraryTypes}
           icon={Icons.ImportLibraryIcon}
           onClick={() => Click.OnImportLibrary(dispatch)}
         />

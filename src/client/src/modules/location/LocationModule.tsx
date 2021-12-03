@@ -24,7 +24,7 @@ const LocationModule = ({ visible, rootNode, nodes }: Props) => {
     scene.current = CreateScene();
     renderer.current = CreateRenderer();
     controls.current = CreateControls(renderer, camera);
-    cubes.current = CreateCubes(scene, nodes.concat(rootNode));
+    cubes.current = CreateCubes(scene, nodes?.concat(rootNode));
     CreateLights(scene);
     mountRef.current?.appendChild(renderer.current.domElement);
     controls.current.addEventListener("change", () => OnRender(renderer, scene, camera));

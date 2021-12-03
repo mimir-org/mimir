@@ -877,6 +877,22 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.SET_OFFPAGE_STATUS:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((n) =>
+            n.id === action.payload.id
+              ? {
+                ...n,
+                connectionRequired: action.payload.required,
+              }
+              : n
+          ),
+        },
+      };
+
     default:
       return state;
   }

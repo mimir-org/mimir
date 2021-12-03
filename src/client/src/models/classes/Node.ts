@@ -53,6 +53,9 @@ class Node {
   blockWidth: number;
   blockHeight: number;
 
+  // OffPageNode
+  connectionRequired?: boolean | true;
+
   kind: string = NODE_KIND;
 
   constructor(node: Node) {

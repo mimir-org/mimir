@@ -6,6 +6,7 @@ import { GetFlowAspectIcon, GetHandleType } from "../../../helpers";
 import { OnMouseLeave } from "./handlers";
 import { AspectNodeBox } from "./styled";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
+import { SetTopPos } from "../treeNode/helpers";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -39,6 +40,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
             key={conn.id}
             visible={isHover}
             position={positionHandler}
+            topPos={SetTopPos(positionHandler)}
           >
             <Handle
               type={typeHandler}

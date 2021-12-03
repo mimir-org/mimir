@@ -57,6 +57,7 @@ export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUC
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export const UPDATE_NODE = "UPDATE_NODE";
 export const UPDATE_EDGE = "UPDATE_EDGE";
+export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
 
 // State types
 export interface ProjectState {
@@ -497,7 +498,6 @@ export interface CreateSubProject {
     edges: string[];
   };
 }
-
 export interface CreateSubProjectFinished {
   type: typeof CREATING_SUB_PROJECT_SUCCESS_OR_ERROR;
   payload: {
@@ -512,6 +512,13 @@ export interface UpdateNodeAction {
 export interface UpdateEdgeAction {
   type: typeof UPDATE_EDGE;
   payload: Edge;
+}
+export interface SetOffPageStatus {
+  type: typeof SET_OFFPAGE_STATUS;
+  payload: {
+    id: string;
+    required: boolean;
+  };
 }
 
 export type LockUnlockAttributeUnion =
@@ -579,4 +586,5 @@ export type ProjectActionTypes =
   | CreateSubProject
   | CreateSubProjectFinished
   | UpdateNodeAction
-  | UpdateEdgeAction;
+  | UpdateEdgeAction
+  | SetOffPageStatus;

@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode, IsProduct } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode, IsLocation, IsProduct } from "../../../../helpers";
 
 /**
  * Component for a child Node in BlockView.
@@ -84,6 +84,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
+        isLocation={IsLocation(node)}
       />
     </NodeBox>
   );

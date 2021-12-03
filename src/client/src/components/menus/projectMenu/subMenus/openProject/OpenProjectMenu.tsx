@@ -27,7 +27,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
       <ProjectBody large>
         <HeaderBox>
           <img src={CloseIcon} alt="icon" onClick={() => Click.OnReturn(dispatch)} className="icon" />
-          {TextResources.Project_Open_Project}
+          {TextResources.Project_OpenProject}
         </HeaderBox>
         <SearchBar />
         <div className="subheader">{TextResources.Project_Recent}</div>

@@ -171,19 +171,17 @@ const TextResources = {
   Project_Recent_Name: "Project name",
   Project_Recent_Owner: "Project owner",
   Project_Recent_Edited: "Last edited",
-  Project_Recent_Open: "Open project",
-  Project_Save_Label: "Save project to database",
+  Project_Save_Label: "Save project",
 
   Project_Import: "Import project",
-  Project_Import_File: "Import project file",
-  Project_Import_ProjectLibrary: "Import project library",
+  Project_Import_LibraryTypes: "Import library types",
   Project_Import_Library: "Import library",
   Project_Browse: "Browse file",
 
   Project_Export_File: "Export file",
-  Project_Export_ProjectFile: "Export project file",
+  Project_Export: "Export project",
   Project_Export_Library: "Export library",
-  Project_Export_ProjectLibrary: "Export project library",
+  Project_Export_LibraryTypes: "Export library types",
 
   Project_Commit_Project: "Commit project",
   Project_Commit_Collaboration_Partner: "Send to collaboration partner",
@@ -191,8 +189,6 @@ const TextResources = {
   Project_Commit: "Commit",
 
   Project_Logout: "Log out",
-  Project_Open_Project: "Open a project",
-  Project_Create_Label: "Create a project",
   Project_CreateProject: "Create project",
   Project_SubProject_Save: "Save selection as sub-project",
   Project_Name: "Project name",
@@ -209,7 +205,7 @@ const TextResources = {
   Project_Cancel: "Cancel",
 
   // Error
-  Error_Tile: "Oops, something went wrong",
+  Error_Tile: "Something went wrong",
   Error_ExportProject: "Can not export a project that does not exist",
   Error_GetFileData: "Could not create nodes and edges from file",
   Error_SaveUpdateProject: "Could not create or update project",
@@ -268,7 +264,9 @@ const TextResources = {
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
   Validation_BlockView: "Please selct a node before opening Block View.",
+  Validation_BlockView_Project: "Please selct a project before opening Block View.",
   Validation_Cancel: "Cancel",
+  Validation_Ok: "Ok",
 };
 
 export default TextResources;

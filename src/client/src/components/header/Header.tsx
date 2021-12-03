@@ -40,7 +40,14 @@ const Header = () => {
           <img src={MimirLogo} alt="mimir-logo" />
         </LogoBox>
       </HeaderBox>
-      <ToolBar libOpen={libOpen} explorerOpen={explorerOpen} treeView={treeView} visualFilter={filterOpen} electro={electro} />
+      <ToolBar
+        project={project}
+        libOpen={libOpen}
+        explorerOpen={explorerOpen}
+        treeView={treeView}
+        visualFilter={filterOpen}
+        electro={electro}
+      />
     </>
   );
 };

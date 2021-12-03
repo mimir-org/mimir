@@ -1,4 +1,5 @@
 import { Position } from "react-flow-renderer";
+import { Size } from "../../../../../compLibrary/size";
 import { Connector } from "../../../../../models";
 import { IsProductTerminal, IsLocationTerminal, IsPartOf } from "../../../helpers";
 
@@ -20,8 +21,8 @@ const SetTerminalYPos = (
   order: number,
   nodeHeight: number
 ) => {
-  const marginY = 17;
-  const marginYSmall = 5;
+  const marginY = parent ? 20 : 23;
+  const marginYSmall = 3;
 
   if (electro) {
     if (IsPartOf(conn)) return nodeHeight / 2 - marginYSmall;
@@ -48,7 +49,9 @@ export default SetTerminalYPos;
  * @returns a number used by the styled component HandleBox.
  */
 function CalculateY(count: number, parent: boolean, nodeHeight: number) {
-  const interval = parent ? 30 : 22; // Default vertical distance between each terminal
+  if (count === undefined) count = 0;
+
+  const interval = parent ? 30 : Size.Terminals_Interval; // Default vertical distance between each terminal
   const base = parent ? 290 : nodeHeight / 2 - 7; // Middle Position
 
   // Even-numbered terminals stacked upwards

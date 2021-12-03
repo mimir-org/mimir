@@ -5,26 +5,22 @@ import { ConnectorTreeViewIcon } from "../../../../../../assets/icons/connectors
 interface Props {
   visible: boolean;
   position: Position;
+  topPos: string;
 }
 
 const TreeHandleBox = styled.div<Props>`
   .function-treeview-handler {
-    visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
-    width: 14px;
-    height: 15px;
+    opacity: ${(props) => (props.visible ? 1 : 0)};
+    width: 19px;
+    height: 19px;
     background: url(${ConnectorTreeViewIcon});
     border-radius: 0;
-    bottom: -8px;
+    bottom: -18px;
     z-index: 1;
-    right: ${(props: { position: Position }) => props.position === Position.Right && -6}px;
-    left: ${(props: { position: Position }) => props.position === Position.Left && -6}px;
-
-    top: ${(props) =>
-      props.position === Position.Left
-        ? "50%"
-        : props.position === Position.Right
-        ? "50%"
-        : props.position === Position.Top && "-15px"};
+    right: ${(props) => props.position === Position.Right && -6}px;
+    left: ${(props) => props.position === Position.Left && -6}px;
+    top: ${(props) => props.topPos};
+    transition: opacity 0.5s ease-in-out;
   }
 `;
 

@@ -17,12 +17,18 @@ const SetTerminalXPos = (
   conn: Connector,
   position: Position,
   electro: boolean,
+  offPage: boolean,
   parent: boolean,
   order: number,
   nodeWidth: number
 ) => {
-  const marginX = 17;
-  const marginXSmall = 5;
+  const marginX = parent ? 20 : 23;
+  const marginXSmall = 3;
+
+  if (offPage) {
+    if (position === Position.Right) return 35;
+    return -12;
+  }
 
   if (!electro) {
     if (IsPartOf(conn)) return nodeWidth / 2;
