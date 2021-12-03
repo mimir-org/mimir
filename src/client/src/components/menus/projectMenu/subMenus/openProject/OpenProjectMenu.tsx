@@ -17,9 +17,9 @@ interface Props {
 
 /**
  * Open project menu component
+ * @param interface
  * @returns a menu for selecting a project or create a new one.
  */
-
 export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
   const projects = projectState.projectList as ProjectSimple[];
   const project = projects?.find((x) => x.selected);
