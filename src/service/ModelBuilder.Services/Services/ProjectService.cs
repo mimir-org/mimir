@@ -312,8 +312,8 @@ namespace Mb.Services.Services
                 if (!validation.IsValid)
                     throw new ModelBuilderBadRequestException($"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
-                var actualProject = await GetProject(subProjectAm.FromProjectId, true);
-                if (actualProject == null)
+                var fromProject = await GetProject(subProjectAm.FromProjectId, true);
+                if (fromProject == null)
                     throw new ModelBuilderInvalidOperationException("The original project does not exist");
 
                 // Create a new initial project
@@ -323,85 +323,18 @@ namespace Mb.Services.Services
                     Description = subProjectAm.Description
                 };
 
-                var initSubProjectCreated = CreateInitProject(subProjectToCreate, true);
-                await _projectRepository.CreateAsync(initSubProjectCreated);
+                var toProject = CreateInitProject(subProjectToCreate, true);
+                await _projectRepository.CreateAsync(toProject);
                 await _projectRepository.SaveAsync();
-                newCreatedProject = initSubProjectCreated.Id;
+                newCreatedProject = toProject.Id;
 
-                // Get all nodes from original project
-                var oldNodes = actualProject.Nodes.Where(x => subProjectAm.Nodes.Any(y => y == x.Id)).ToList();
-                var oldEdges = actualProject.Edges.Where(x => subProjectAm.Edges.Any(y => y == x.Id)).ToList();
-
-                // Create new nodes from old nodes
-                var remapData = _remapService.CreateRemap(initSubProjectCreated.Id, oldNodes, oldEdges, false);
-
-                // Remove old root nodes
-                remapData.nodes = remapData.nodes.Where(x => !x.IsRoot).ToList();
-
-                // Remove edges that point to old root nodes
-                remapData.edges = remapData.edges.Where(edge => remapData.nodes.Any(x => x.Id == edge.FromNodeId)).ToList();
-
-                // Initial list of edges and nodes if null
-                initSubProjectCreated.Nodes ??= new List<Node>();
-                initSubProjectCreated.Edges ??= new List<Edge>();
-
-                // Add edges and nodes to new sub project
-                foreach (var clonedDataNode in remapData.nodes)
-                {
-                    initSubProjectCreated.Nodes.Add(clonedDataNode);
-                }
-
-                foreach (var clonedDataEdge in remapData.edges)
-                {
-                    initSubProjectCreated.Edges.Add(clonedDataEdge);
-                }
-
-                foreach (var node in initSubProjectCreated.Nodes)
-                {
-                    // Find input partOf connector
-                    var relationConnector = (Relation) node.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Input, RelationType: RelationType.PartOf });
-                    if (relationConnector == null)
-                        continue;
-
-                    // Check if there is an edge pointing to input partOf connector
-                    if(initSubProjectCreated.Edges.Any(x => x.ToConnectorId == relationConnector.Id && x.ToNodeId == node.Id))
-                        continue;
-
-                    // Find the root aspect node that should connect
-                    var rootNode = initSubProjectCreated.Nodes.FirstOrDefault(x => x.IsRoot && x.Aspect == node.Aspect);
-
-                    // Find output partOf connector on root node
-                    var fromConnector = rootNode?.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Output, RelationType: RelationType.PartOf });
-
-                    if(fromConnector == null)
-                        continue;
-
-                    // Create an edge and point it from root connector to current node
-                    var edge = new Edge
-                    {
-                        Id = _commonRepository.CreateUniqueId(),
-                        FromConnectorId = fromConnector.Id,
-                        FromConnector = fromConnector,
-                        FromNodeId = rootNode.Id,
-                        FromNode = rootNode,
-                        ToConnectorId = relationConnector.Id,
-                        ToConnector = relationConnector,
-                        ToNodeId = node.Id,
-                        ToNode = node,
-                        MasterProjectId = initSubProjectCreated.Id,
-                        ProjectId = initSubProjectCreated.Id
-                    };
-
-                    initSubProjectCreated.Edges.Add(edge);
-                }
-
-                // Map and save the new project
-                var projectAm = _mapper.Map<ProjectAm>(initSubProjectCreated);
+                // Remap project
+                var subProject = _remapService.Remap(fromProject, toProject, subProjectAm.Nodes, subProjectAm.Edges);
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
 
-                var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm, _modelBuilderConfiguration.Domain);
+                var subProjectCreated = await UpdateProject(toProject.Id, subProject, _modelBuilderConfiguration.Domain);
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
