@@ -166,12 +166,21 @@ const TextResources = {
   // ProjectMenu
   Project: "Project",
   Project_Heading: "Projects",
+  Project_New: "Create project",
+  Project_Search_Placeholder: "Search Projects",
   Project_OpenProject: "Open project",
   Project_Recent: "Recent projects",
   Project_Recent_Name: "Project name",
   Project_Recent_Owner: "Project owner",
+  Project_Recent_Version: "Project Version",
   Project_Recent_Edited: "Last edited",
+
+  Project_Open_Label: "Open or start a new project",
   Project_Save_Label: "Save project",
+  Project_Description_About: "About the project",
+  Project_Description_Libraries: "Libraries",
+  Project_Description_SubProj: "Sub-projects",
+  Project_Description_Temps: "Templates",
 
   Project_Import: "Import project",
   Project_Import_LibraryTypes: "Import library types",
@@ -189,6 +198,7 @@ const TextResources = {
   Project_Commit: "Commit",
 
   Project_Logout: "Log out",
+  Project_Start_Label: "Start a new project",
   Project_CreateProject: "Create project",
   Project_SubProject_Save: "Save selection as sub-project",
   Project_Name: "Project name",
@@ -266,6 +276,10 @@ const TextResources = {
   Validation_BlockView: "Please selct a node before opening Block View.",
   Validation_BlockView_Project: "Please selct a project before opening Block View.",
   Validation_Cancel: "Cancel",
+
+  // Version
+  Mimir_Version: "Version 0.1",
+
   Validation_Ok: "Ok",
 };
 

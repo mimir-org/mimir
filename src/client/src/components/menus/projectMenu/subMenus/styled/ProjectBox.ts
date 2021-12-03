@@ -9,18 +9,19 @@ interface Props {
 }
 
 const ProjectBox = styled.div<Props>`
+  box-sizing: border-box;
   position: absolute;
   top: 25%;
   bottom: 25%;
   left: 25%;
   right: 25%;
-  width: ${(props) => (props.large ? 630 : Size.MenuSmall_Width)}px;
-  height: ${(props) => (props.large ? 500 : Size.MenuSmall_Height)}px;
+  width: ${(props) => (props.large ? Size.OpenProjectMenu_Large_Width : Size.OpenProjectMenu_Small_Width)}px;
+  height: ${(props) => (props.large ? Size.OpenProjectMenu_Large_Height : Size.OpenProjectMenu_Small_Height)}px;
   margin: auto;
   border: 2px solid ${Color.BlueMagenta};
   background-color: ${Color.White};
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
+  border-radius: 5px;
   font-weight: bold;
   font-size: ${FontSize.Header};
   padding: 12px;

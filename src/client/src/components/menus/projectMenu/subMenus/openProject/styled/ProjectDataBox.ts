@@ -8,17 +8,48 @@ interface Props {
 
 const ProjectDataBox = styled.div<Props>`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  height: 33px;
+  height: 30px;
+  padding: 0px 10px 0px 8px;
   font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
   text-decoration: ${(props) => props.isSelected && "underline"};
-  font-size: ${FontSize.Medium};
-  line-height: 1.5;
+  font-size: ${FontSize.Small};
   color: ${Color.Black};
   cursor: pointer;
-  border-color: ${Color.BlueMagenta};
 
-  .owner,
+  p {
+    white-space: nowrap;
+  }
+
+  .name {
+    padding-left: 22px;
+    width: 31%;
+  }
+
+  .owner {
+    width: 29%;
+  }
+
+  .version {
+    text-align: center;
+    width: 28%;
+  }
+
+  .edited {
+    text-align: right;
+    width: 12%;
+  }
+
+  &:nth-of-type(odd) {
+    background: ${Color.PurpleLight};
+  }
+
+  &:hover {
+    background: ${Color.BlueLight};
+  }
+
+  /* .owner,
   .name,
   .edited {
     display: -webkit-box;
@@ -26,29 +57,7 @@ const ProjectDataBox = styled.div<Props>`
     -webkit-box-orient: vertical;
     overflow: hidden;
     word-wrap: break-word;
-  }
-
-  .name {
-    width: 270px;
-    margin: 0px 7px 0px 3px;
-  }
-
-  .owner {
-    width: 200px;
-  }
-
-  .edited {
-    width: 115px;
-    margin: 0px 0px 0px 12px;
-  }
-
-  &:hover {
-    background: ${Color.BlueLight};
-  }
-
-  &:nth-of-type(even) {
-    background: ${Color.PurpleLight};
-  }
+  } */
 `;
 
 export default ProjectDataBox;
