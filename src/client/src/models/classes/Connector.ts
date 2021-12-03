@@ -10,6 +10,7 @@ class Connector {
   type: ConnectorType;
   semanticReference: string;
   nodeId: string;
+  nodeIri: string;
   visible: boolean;
 
   // Terminal

@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211201113058_ConnectorNodeIriSupport")]
+    partial class ConnectorNodeIriSupport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,10 +122,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("NodeId")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("NodeId");
-
-                    b.Property<string>("NodeIri")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("NodeIri");
 
                     b.Property<string>("QualifierId")
                         .HasColumnType("nvarchar(450)");
