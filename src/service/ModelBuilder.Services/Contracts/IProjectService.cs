@@ -27,6 +27,6 @@ namespace Mb.Services.Contracts
         IEnumerable<string> GetLockedAttributes(string projectId);
         IEnumerable<string> GetLockedEdges(string projectId);
         Task CommitProject(CommitPackage package);
-        Task<bool> ProjectExist(string projectId);
+        bool ProjectExist(string projectId);
     }
 }
