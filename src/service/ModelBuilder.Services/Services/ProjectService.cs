@@ -102,6 +102,7 @@ namespace Mb.Services.Services
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
                 foreach (var node in project.Nodes)
                 {
+                    // TODO: Må gjøres på en bedre måte, generell via mapper
                     if (node.Attributes != null)
                     {
                         foreach (var attribute in node.Attributes)
@@ -117,7 +118,7 @@ namespace Mb.Services.Services
                             node.Purpose = JsonConvert.DeserializeObject<Purpose>(node.PurposeString);
                         }
                     }
-
+                    // TODO: Må gjøres på en bedre måte, generell via mapper
                     if (node.Connectors != null)
                     {
                         foreach (var connector in node.Connectors.OfType<Terminal>())
@@ -133,7 +134,7 @@ namespace Mb.Services.Services
                             }
                         }
                     }
-
+                    // TODO: Må gjøres på en bedre måte, generell via mapper
                     if (node.Composites != null)
                     {
                         foreach (var composite in node.Composites)
@@ -147,17 +148,6 @@ namespace Mb.Services.Services
                                             JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
                                 }
                             }
-                        }
-                    }
-
-                    if (node.MasterProjectId != id)
-                    {
-                        var partOfEdge = node.Connectors.OfType<Relation>()
-                            .FirstOrDefault(x => x.Type == ConnectorType.Input);
-
-                        if (partOfEdge?.Node != null)
-                        {
-                            node.PositionY = node.PositionY + partOfEdge.Node.PositionY;
                         }
                     }
 
@@ -623,6 +613,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns></returns>
+        // TODO: Bør fikses på en bedre måte, 
         public async Task<bool> ProjectExist(string projectId)
         {
             var project = await _projectRepository.FindBy(x => x.Id == projectId).FirstOrDefaultAsync();
