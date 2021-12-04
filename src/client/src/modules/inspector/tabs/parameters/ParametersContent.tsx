@@ -5,7 +5,7 @@ import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters, OnIsCreateLibraryType } from "./handlers";
 import { ParameterRow } from "./";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import { GetAttributes } from "./helpers/GetAttributes";
 import { IsCreateLibraryType } from "../../helpers/IsType";
@@ -37,8 +37,9 @@ const ParametersContent = ({
 
   const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
   const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
-
   const username = useAppSelector(usernameSelector);
+
+  const shouldShowDefaultEntities = useRef(true);
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
@@ -51,6 +52,11 @@ const ParametersContent = ({
     IsCreateLibraryType(inspectorParentElement) &&
       OnIsCreateLibraryType(parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch);
   }, [inspectorParentElement, parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch]);
+
+  if (!isCreateLibraryType && shouldShowDefaultEntities.current) {
+    OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
+    shouldShowDefaultEntities.current = false;
+  }
 
   const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
 

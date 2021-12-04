@@ -30,33 +30,33 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
   const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
   const [unit, setUnit] = useState<EnumBase>(
     isAttribute
-      ? attribute.units.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]
+      ? attribute.units?.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]
       : attribute?.units?.[0]
   );
 
-  const isDisabled = () => (isAttribute ? isNodeLocked || attribute.isLocked : false);
+  const isDisabled = () => (isAttribute ? attribute.isLocked : false);
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterBox>
-        <ParameterHeader color={bodyColor} isNodeLocked={isNodeLocked}>
+        <ParameterHeader color={bodyColor}>
           {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
             <img src={WarningIcon} className="warningIcon" alt="icon" />
           )}
 
           <div className="parameterHeader">{attribute?.entity}</div>
           <div className="icons">
-            <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />
+            {false && <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />}
             {isAttribute && (
               <>
                 {isDisabled() ? (
                   <LockClosedParameterComponent
-                    className="parameterIcon lockIcon"
+                    className="parameterIcon"
                     fill={headerColor}
                     onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
                   />
                 ) : (
                   <LockOpenComponent
-                    className="parameterIcon lockIcon"
+                    className="parameterIcon"
                     onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
                   />
                 )}
@@ -92,7 +92,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               borderColor={Color.InspectorGreyBorder}
               fontSize={FontSize.Small}
               height={22}
-              defaultValue={unit.id}
+              defaultValue={unit?.id}
             />
           </div>
         </div>
