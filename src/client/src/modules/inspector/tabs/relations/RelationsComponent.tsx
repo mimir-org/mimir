@@ -1,7 +1,7 @@
 import { RelationsContent } from ".";
 import { RelationsBody } from "./styled";
 import { TextResources } from "../../../../assets/text";
-import { useAppSelector, edgeSelector, useAppDispatch } from "../../../../redux/store";
+import { useAppSelector, edgeSelector } from "../../../../redux/store";
 import { OnClickNode, OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
 import { GetRelations } from "./helpers/GetRelations";
 import { InspectorElement } from "../../types";
@@ -25,8 +25,6 @@ interface Props {
 }
 
 const RelationComponent = ({ element }: Props) => {
-  const dispatch = useAppDispatch();
-
   const edges = useAppSelector(edgeSelector);
   const connectors = useMemo(() => GetConnectors(element), [element]);
   const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
@@ -45,7 +43,7 @@ const RelationComponent = ({ element }: Props) => {
               label={TextResources.Inspector_Relations_Relationships}
               getName={(edge) => GetNameRelation(edge, element)}
               getColor={(edge, index) => GetActiveRelationColor(edge.fromConnector, index)}
-              onClick={(edge) => OnClickRelation(element, edge, setActiveNodeElement, dispatch)}
+              onClick={(edge) => OnClickRelation(element, edge, setActiveNodeElement)}
             />
           )}
           <RelationsContent
@@ -68,7 +66,7 @@ const RelationComponent = ({ element }: Props) => {
               label={TextResources.Inspector_Relations_Transport}
               getName={(edge) => GetNameTransport(edge, element)}
               getColor={(_, index) => GetListItemColor(index)}
-              onClick={(edge) => OnClickTransport(edge, setActiveEdgeElement, dispatch)}
+              onClick={(edge) => OnClickTransport(edge, setActiveEdgeElement)}
             />
           )}
           {IsEdge(element) && (
@@ -77,7 +75,7 @@ const RelationComponent = ({ element }: Props) => {
               label={TextResources.Inspector_Relations_Nodes}
               getName={(node) => GetNameNode(element, node)}
               getColor={(_, index) => GetListItemColor(index)}
-              onClick={(node) => OnClickNode(node, setActiveNodeElement, dispatch)}
+              onClick={(node) => OnClickNode(node, setActiveNodeElement)}
             />
           )}
         </>
