@@ -52,11 +52,12 @@ jobs:
       - name: View directory
         run: |
           ls -a
-          
+
       - name: Build client image
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./src/client/DockerFile
           builder: ${{ steps.buildx.outputs.name }}
           build-args: ENVIR=${{ inputs.environment }}
           target: final
