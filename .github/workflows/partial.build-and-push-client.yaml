@@ -56,7 +56,7 @@ jobs:
       - name: Build client image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./src/client
           file: ./src/client/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           build-args: ENVIR=${{ inputs.environment }}
