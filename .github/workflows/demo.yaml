@@ -9,36 +9,32 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  environment: demo
-  environment2: demoaibel
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-client-1:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/build-and-push-client.yaml@main
+    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial/build-and-push-client.yaml@main
     with:
-      environment: ${{env.environment}}
-      tag: ${{env.environment}}
+      environment: demo
+      tag: demo
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
       
   build-client-2:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/build-and-push-client.yaml@main
+    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial/build-and-push-client.yaml@main
     with:
-      environment: ${{env.environment2}}
-      tag: ${{env.environment2}}
+      environment: demoaibel
+      tag: demoaibel
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
   build-server:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/build-and-push-server.yaml@main
+    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial/build-and-push-server.yaml@main
     with:
-      tag: ${{env.environment}}
+      tag: demo
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
