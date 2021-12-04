@@ -17,20 +17,20 @@ jobs:
   build-client:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/build-and-push-client.yaml@main
     with:
-      environment: ${{env.environment}}
-      tag: ${{env.environment}}
+      environment: ${{ env.environment }}
+      tag: ${{ env.environment }}
     secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
+      REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
   build-server:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/build-and-push-server.yaml@main
     with:
-      tag: ${{env.environment}}
+      tag: ${{ env.environment }}
     secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
+      REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
       
 
