@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
-import { FontSize } from "../../../compLibrary/font";
+import { FontSize, FontWeight } from "../../../compLibrary/font";
 
 interface Props {
   disabled: boolean;
+  bottomLine: boolean;
 }
 
 const ProjectMenuElementBox = styled.div<Props>`
@@ -13,6 +14,10 @@ const ProjectMenuElementBox = styled.div<Props>`
   align-items: center;
   color: ${Color.BlueMagenta};
   cursor: pointer;
+  border-width: 0px;
+  border-bottom: ${(props) => (props.bottomLine ? 1 : 0)}px;
+  border-style: solid;
+  border-color: ${Color.Grey};
 
   .text {
     position: relative;
@@ -20,8 +25,8 @@ const ProjectMenuElementBox = styled.div<Props>`
     margin-left: 10px;
     vertical-align: super;
     font-size: ${FontSize.Standard};
-    font-weight: ${(props) => props.disabled && 300};
-    font-style: ${(props) => props.disabled && "italic"};
+    font-weight: ${(props) => props.disabled && FontWeight.Light};
+    font-style: ${(props) => props.disabled && FontWeight.Italic};
   }
 
   .icon {

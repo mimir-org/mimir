@@ -4,7 +4,7 @@ import { Color } from "../../../compLibrary/colors";
 
 const ProjectMenuBox = styled.div`
   position: absolute;
-  top: ${Size.TopMenu_Height}px;
+  top: ${Size.TopMenu_Height - 2}px;
   right: 265px;
   background: ${Color.White};
   height: auto;

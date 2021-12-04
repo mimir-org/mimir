@@ -43,10 +43,8 @@ const ProjectMenuComponent = () => {
           text={TextResources.Project_Save_Label}
           icon={Icons.SaveIcon}
           onClick={() => Click.OnSave(dispatch, projectState)}
+          bottomLine
         />
-
-        <hr />
-
         <MenuElement
           text={TextResources.Project_Import}
           icon={Icons.ImportProjectIcon}
@@ -56,9 +54,8 @@ const ProjectMenuComponent = () => {
           text={TextResources.Project_Export}
           icon={Icons.ExportProjectIcon}
           onClick={() => Click.OnSaveFile(dispatch)}
+          bottomLine
         />
-
-        <hr />
         {/* <MenuElement
           text={TextResources.Project_Commit_Project}
           icon={Icons.CommitProjectIcon}
