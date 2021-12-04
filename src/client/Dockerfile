@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.3
 # build environment
 # base image
 FROM node:13.12.0-alpine as build
