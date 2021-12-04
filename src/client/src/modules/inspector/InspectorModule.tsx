@@ -1,3 +1,4 @@
+import * as Selectors from "./helpers/selectors";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView, GetSelectedNode } from "../../helpers";
@@ -9,15 +10,6 @@ import { changeInspectorHeight } from "./redux/height/actions";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { useCallback, useRef } from "react";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import {
-  animatedModuleSelector,
-  explorerSelector,
-  inspectorActiveTabSelector,
-  inspectorSelector,
-  libOpenSelector,
-  projectSelector,
-  usernameSelector,
-} from "../../redux/store";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -30,13 +22,13 @@ interface Props {
 const InspectorModule = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useAppSelector(projectSelector);
-  const username = useAppSelector(usernameSelector);
-  const animate = useParametricAppSelector(animatedModuleSelector, type);
-  const activeTabIndex = useAppSelector(inspectorActiveTabSelector);
-  const inspectorOpen = useAppSelector(inspectorSelector);
-  const libOpen = useAppSelector(libOpenSelector);
-  const explorerOpen = useAppSelector(explorerSelector);
+  const project = useAppSelector(Selectors.projectSelector);
+  const username = useAppSelector(Selectors.usernameSelector);
+  const animate = useParametricAppSelector(Selectors.animatedModuleSelector, type);
+  const activeTabIndex = useAppSelector(Selectors.inspectorActiveTabSelector);
+  const inspectorOpen = useAppSelector(Selectors.inspectorSelector);
+  const libOpen = useAppSelector(Selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(Selectors.explorerSelector);
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;

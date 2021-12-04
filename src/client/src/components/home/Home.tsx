@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import * as Selectors from "./helpers/selectors";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
@@ -21,16 +22,7 @@ import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
 import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
 import { IsStartPage } from "../../helpers";
 import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
-import {
-  projectMenuSelector,
-  flowViewSelector,
-  useAppDispatch,
-  useAppSelector,
-  userMenuSelector,
-  projectStateSelector,
-  useParametricAppSelector,
-  isActiveMenuSelector,
-} from "../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 
 /**
  * The main component for Mimir
@@ -38,13 +30,13 @@ import {
  */
 const Home = () => {
   const dispatch = useAppDispatch();
-  const projectState = useAppSelector(projectStateSelector);
-  const projectMenuOpen = useAppSelector(projectMenuSelector);
-  const userMenuOpen = useAppSelector(userMenuSelector);
-  const flowView = useAppSelector(flowViewSelector);
+  const projectState = useAppSelector(Selectors.projectStateSelector);
+  const projectMenuOpen = useAppSelector(Selectors.projectMenuSelector);
+  const userMenuOpen = useAppSelector(Selectors.userMenuSelector);
+  const flowView = useAppSelector(Selectors.flowViewSelector);
   const inspectorRef = useRef(null);
-  const createProjectOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
-  const openProjectOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
+  const createProjectOpen = useParametricAppSelector(Selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
+  const openProjectOpen = useParametricAppSelector(Selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());

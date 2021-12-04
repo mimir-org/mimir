@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as Helpers from "./helpers/";
+import * as Selectors from "./helpers/selectors";
 import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
@@ -11,15 +12,7 @@ import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
-import {
-  animatedEdgeSelector,
-  filterSelector,
-  darkModeSelector,
-  iconSelector,
-  librarySelector,
-  projectSelector,
-  userStateSelector,
-} from "../../../redux/store";
+
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
@@ -33,13 +26,13 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useAppSelector(darkModeSelector);
-  const project = useAppSelector(projectSelector);
-  const userState = useAppSelector(userStateSelector);
-  const icons = useAppSelector(iconSelector);
-  const library = useAppSelector(librarySelector);
-  const visualFilter = useAppSelector(filterSelector);
-  const animatedEdge = useAppSelector(animatedEdgeSelector);
+  const darkMode = useAppSelector(Selectors.darkModeSelector);
+  const project = useAppSelector(Selectors.projectSelector);
+  const userState = useAppSelector(Selectors.userStateSelector);
+  const icons = useAppSelector(Selectors.iconSelector);
+  const library = useAppSelector(Selectors.librarySelector);
+  const visualFilter = useAppSelector(Selectors.filterSelector);
+  const animatedEdge = useAppSelector(Selectors.animatedEdgeSelector);
 
   const OnDragOver = (event) => {
     event.preventDefault();
