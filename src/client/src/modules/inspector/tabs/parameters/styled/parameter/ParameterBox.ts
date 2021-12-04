@@ -76,7 +76,8 @@ const ParameterBox = styled.div`
     }
 
     .parameterDropdown {
-      width: 68px;
+      max-width: 50%;
+      min-width: 40%;
       height: 24px;
       padding-left: 20px;
     }

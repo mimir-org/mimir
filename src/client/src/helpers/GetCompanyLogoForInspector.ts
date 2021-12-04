@@ -1,13 +1,17 @@
 import { AibelLogo } from "../assets/icons/aibel/inspector";
 import { EquinorLogo } from "../assets/icons/equinor/inspector";
-import { Node } from "../models";
+import { CreateLibraryType } from "../models";
 import { InspectorElement } from "../modules/inspector/types";
 
-const GetCompanyLogoForInspector = (company: string, node: Node | InspectorElement) => {
+const GetCompanyLogoForInspector = (company: string, elem: InspectorElement) => {
   let companyValue = company;
 
-  const split = node?.id?.split("_");
-  if (split && split.length === 2) companyValue = split[0];
+  if (elem instanceof CreateLibraryType) {
+    return null;
+  } else {
+    if (elem.domain)
+      companyValue = elem.domain;
+  }
 
   if (companyValue === "aibel.com") return AibelLogo;
   if (companyValue === "equinor.com") return EquinorLogo;

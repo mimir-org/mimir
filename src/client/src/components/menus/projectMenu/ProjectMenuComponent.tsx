@@ -44,16 +44,21 @@ const ProjectMenuComponent = () => {
           icon={Icons.SaveIcon}
           onClick={() => Click.OnSave(dispatch, projectState)}
         />
+
+        <hr />
+
         <MenuElement
-          text={TextResources.Project_Export_LibraryTypes}
-          icon={Icons.ExportLibraryIcon}
-          onClick={() => Click.OnSaveLibrary(dispatch)}
+          text={TextResources.Project_Import}
+          icon={Icons.ImportProjectIcon}
+          onClick={() => Click.OnImportProject(dispatch)}
         />
         <MenuElement
           text={TextResources.Project_Export}
           icon={Icons.ExportProjectIcon}
           onClick={() => Click.OnSaveFile(dispatch)}
         />
+
+        <hr />
         {/* <MenuElement
           text={TextResources.Project_Commit_Project}
           icon={Icons.CommitProjectIcon}
@@ -66,15 +71,17 @@ const ProjectMenuComponent = () => {
           onClick={() => Click.OnCreateSubProject(dispatch)}
           disabled={!selectedNodeIds}
         /> */}
-        <MenuElement
-          text={TextResources.Project_Import}
-          icon={Icons.ImportProjectIcon}
-          onClick={() => Click.OnImportProject(dispatch)}
-        />
+
         <MenuElement
           text={TextResources.Project_Import_LibraryTypes}
           icon={Icons.ImportLibraryIcon}
           onClick={() => Click.OnImportLibrary(dispatch)}
+        />
+
+        <MenuElement
+          text={TextResources.Project_Export_LibraryTypes}
+          icon={Icons.ExportLibraryIcon}
+          onClick={() => Click.OnSaveLibrary(dispatch)}
         />
       </ProjectMenuBox>
 

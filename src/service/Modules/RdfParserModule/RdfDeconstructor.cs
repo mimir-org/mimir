@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -590,7 +591,7 @@ namespace RdfParserModule
             if (pos is not ILiteralNode literal) throw new Exception($"Could not find any {errorPos} on node {node}");
             try
             {
-                return decimal.Parse(literal.Value);
+                return decimal.Parse(literal.Value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception e)
             {
