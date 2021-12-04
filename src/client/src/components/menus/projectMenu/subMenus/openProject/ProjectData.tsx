@@ -3,6 +3,7 @@ import { changeSelectedProject } from "../../../../../redux/store/project/action
 import { ProjectSimple } from "../../../../../models";
 import { useAppDispatch } from "../../../../../redux/store";
 import { ProjectDataBox } from "./styled";
+
 interface Props {
   projects: ProjectSimple[];
   projectId: string;

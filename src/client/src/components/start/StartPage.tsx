@@ -6,7 +6,6 @@ import { TextResources } from "../../assets/text";
  * The start page for Mimir
  * @returns a splash page with Mimir logo
  */
-
 const StartPage = () => (
   <StartPageBackground>
     <div className="slider">

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
@@ -14,22 +15,22 @@ import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary
 import { getBlobData } from "../../typeEditor/redux/actions";
 import { Header } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
+import { getUser } from "../../redux/store/user/actions";
+import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
+import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
+import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
+import { IsStartPage } from "../../helpers";
+import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
 import {
   projectMenuSelector,
   flowViewSelector,
   useAppDispatch,
   useAppSelector,
   userMenuSelector,
-  // isFetchingSelector,
   projectStateSelector,
   useParametricAppSelector,
   isActiveMenuSelector,
 } from "../../redux/store";
-import { getUser } from "../../redux/store/user/actions";
-import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
-import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
-import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
-import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
 
 /**
  * The main component for Mimir
@@ -37,7 +38,6 @@ import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
  */
 const Home = () => {
   const dispatch = useAppDispatch();
-  // const isFetching = useAppSelector(isFetchingSelector);
   const projectState = useAppSelector(projectStateSelector);
   const projectMenuOpen = useAppSelector(projectMenuSelector);
   const userMenuOpen = useAppSelector(userMenuSelector);
@@ -68,7 +68,6 @@ const Home = () => {
       }
     }, 2500);
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -76,13 +75,12 @@ const Home = () => {
       <Header />
       {projectMenuOpen && <ProjectMenuComponent />}
       {userMenuOpen && <UserMenuComponent />}
-      {flowView === (VIEW_TYPE.STARTPAGE as ViewType) && (
+      {IsStartPage() ? (
         <>
           <StartPage />
           {openProjectOpen && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
         </>
-      )}
-      {flowView !== VIEW_TYPE.STARTPAGE && (
+      ) : (
         <>
           <ExplorerModule />
           <FlowModule inspectorRef={inspectorRef} flowView={flowView} />

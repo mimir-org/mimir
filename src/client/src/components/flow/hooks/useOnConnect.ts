@@ -21,6 +21,7 @@ const useOnConnect = (
   const createdId = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === params.source);
   const targetNode = project.nodes.find((node) => node.id === params.target);
+  const existingEdge = GetExistingEdge(project, params, sourceNode, targetNode);
 
   let sourceConn: Connector;
   let targetConn: Connector;
@@ -32,8 +33,6 @@ const useOnConnect = (
       if (conn.id === params.targetHandle) targetConn = conn;
     });
   });
-
-  const existingEdge = GetExistingEdge(project, params, sourceNode, targetNode);
 
   if (IsPartOf(sourceConn) && IsPartOf(targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
 

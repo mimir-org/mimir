@@ -1,6 +1,6 @@
+import * as Click from "../../handlers";
 import { ProjectSimple } from "../../../../../models";
 import { Dispatch } from "redux";
-import * as Click from "../../handlers";
 import { CreateProjectIcon } from "../../../../../assets/icons/project";
 import { SearchBar, ProjectList, ProjectDescription } from "./";
 import { Button } from "../../../../../compLibrary/buttons";
@@ -14,10 +14,10 @@ interface Props {
 }
 
 /**
- * Component for Open project menu.
+ * Component for ProjectDetails in the OpenProjectMenu
+ * @param interface
  * @returns the left column of the open project menu: a searchbar and projectslist
  */
-
 export const ProjectDetails = ({ projects, projectDescription, dispatch }: Props) => (
   <Details>
     <SearchProject>
