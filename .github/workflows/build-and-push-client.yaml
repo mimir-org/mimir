@@ -1,4 +1,3 @@
-
 # Reusable workflow for building and pushing client app image.
 
 on:
@@ -7,7 +6,11 @@ on:
       environment:
         required: true
         type: string
-        description: The environment the client application will be deployed onto. Used for setting docker-tag.
+        description: The environment the client application will be deployed onto.
+      tag:
+        required: true
+        type: string
+        description: Tag to use for docker image.
     secrets:
       REGISTRY_SERVER_URL:
         required: true
@@ -33,5 +36,5 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.environment }} --build-arg ENVIR=${{ inputs.environment }}
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.environment }}
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.tag }} --build-arg ENVIR=${{ inputs.environment }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.tag }}
