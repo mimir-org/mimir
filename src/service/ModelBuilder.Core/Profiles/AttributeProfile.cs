@@ -7,6 +7,7 @@ using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Extensions;
+using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Core.Profiles
@@ -73,6 +74,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Format, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
+                .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.NodeId, src.NodeIri)))
