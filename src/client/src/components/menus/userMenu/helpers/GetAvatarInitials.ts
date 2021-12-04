@@ -1,4 +1,4 @@
-const GetUserInititals = (userName: string) => {
+const GetAvatarInititals = (userName: string) => {
   const userNameSplit = userName?.split(" ");
   let initials = "";
 
@@ -12,4 +12,4 @@ const GetUserInititals = (userName: string) => {
   return initials;
 };
 
-export default GetUserInititals;
+export default GetAvatarInititals;
