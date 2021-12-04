@@ -40,10 +40,6 @@ const NodeBox = styled.div<Props>`
     bottom: 15px;
     left: 0px;
   }
-
-  .symbolImg {
-    pointer-events: none;
-  }
 `;
 
 export default NodeBox;

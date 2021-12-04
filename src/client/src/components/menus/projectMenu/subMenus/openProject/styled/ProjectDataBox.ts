@@ -11,7 +11,7 @@ const ProjectDataBox = styled.div<Props>`
   flex-direction: row;
   align-items: center;
   height: 30px;
-  padding: 0px 10px 0px 8px;
+  padding: 0px 10px 0px 6px;
   font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
   text-decoration: ${(props) => props.isSelected && "underline"};
   font-size: ${FontSize.Small};
@@ -19,26 +19,28 @@ const ProjectDataBox = styled.div<Props>`
   cursor: pointer;
 
   p {
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .name {
-    padding-left: 22px;
-    width: 31%;
+    width: 40%;
   }
 
   .owner {
-    width: 29%;
+    width: 20%;
   }
 
   .version {
     text-align: center;
-    width: 28%;
+    width: 25%;
   }
 
   .edited {
     text-align: right;
-    width: 12%;
+    width: 15%;
   }
 
   &:nth-of-type(odd) {

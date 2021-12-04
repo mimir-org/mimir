@@ -159,6 +159,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
+          deleteKeyCode={"Delete"}
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>

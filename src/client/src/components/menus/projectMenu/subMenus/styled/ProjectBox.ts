@@ -6,13 +6,14 @@ import { Size } from "../../../../../compLibrary/size";
 interface Props {
   large?: boolean | false;
   visible: boolean;
+  startPage?: boolean | false;
 }
 
 const ProjectBox = styled.div<Props>`
   box-sizing: border-box;
   position: absolute;
   top: 25%;
-  bottom: 25%;
+  bottom: ${(props) => (props.startPage ? 10 : 25)}%;
   left: 25%;
   right: 25%;
   width: ${(props) => (props.large ? Size.OpenProjectMenu_Large_Width : Size.OpenProjectMenu_Small_Width)}px;

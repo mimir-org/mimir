@@ -15,6 +15,7 @@ interface Props {
   compositeLikeItems?: CompositeLikeItem[];
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  isInspectorOpen: boolean;
 }
 
 const InspectorTabs = ({
@@ -26,6 +27,7 @@ const InspectorTabs = ({
   compositeLikeItems,
   changeInspectorTabAction = changeInspectorTab,
   inspectorRef,
+  isInspectorOpen,
 }: Props) => {
   const shouldShowTabs = ShouldShowTabs(element);
 
@@ -50,6 +52,7 @@ const InspectorTabs = ({
                 activeTabIndex={activeTabIndex}
                 changeInspectorTabAction={changeInspectorTabAction}
                 inspectorRef={inspectorRef}
+                isInspectorOpen={isInspectorOpen}
               >
                 {tab}
               </InspectorTabWrapper>
