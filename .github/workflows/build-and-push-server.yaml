@@ -1,13 +1,12 @@
-
 # Reusable workflow for building and pushing server app image.
 
 on:
   workflow_call:
     inputs:
-      environment:
+      tag: 
         required: true
         type: string
-        description: The environment the client application will be deployed onto. Used for setting docker-tag.
+        description: Tag to use for docker image.
     secrets:
       REGISTRY_SERVER_URL:
         required: true
@@ -27,7 +26,6 @@ jobs:
     defaults:
       run:
         working-directory: ./src/service
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
@@ -35,7 +33,7 @@ jobs:
         with:
           login-server: ${{ secrets.REGISTRY_SERVER_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}          
+          password: ${{ secrets.REGISTRY_PASSWORD }}       
       - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:${{ inputs.environment }}
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:${{ inputs.environment }}
+          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:${{ inputs.tag }}
+          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-server:${{ inputs.tag }}
