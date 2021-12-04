@@ -30,11 +30,42 @@ jobs:
         working-directory: ./src/client
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
       - uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_SERVER_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}          
-      - run: |
-          docker build . -t ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.tag }} --build-arg ENVIR=${{ inputs.environment }}
-          docker push ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.tag }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}     
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp//.buildx-cache
+          key: ${{ runner.os }}-buildx-server-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-server
+
+      - name: Build client image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          builder: ${{ steps.buildx.outputs.name }}
+          build-args: ENVIR=${{ inputs.environment }}
+          push: true
+          tags: ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.tag }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=tmp/.buildx-cache-new
+      
+      # Currently, cache entries are not removed using local cache: https://github.com/docker/build-push-action/issues/252
+      # Clean and move in new cache, in order to keep cache size small (avoid build crashing because of exceeding max docker cache size)
+      # Can later on opt for github actions (https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#github-cache)
+      #   but it is currently experimental.
+      - name: Move buildx cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      
