@@ -12,7 +12,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-client:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial/build-and-push-client.yaml@main
+    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
     with:
       environment: test
       tag: test
@@ -22,7 +22,7 @@ jobs:
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
   build-server:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial/build-and-push-server.yaml@main
+    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-server.yaml@main
     with:
       tag: test
     secrets:
