@@ -4,7 +4,7 @@ import { Color } from "../../../../compLibrary/colors";
 
 const UserMenuBox = styled.div`
   position: absolute;
-  top: ${Size.TopMenu_Height}px;
+  top: ${Size.TopMenu_Height - 2}px;
   right: 0px;
   background: ${Color.White};
   height: auto;

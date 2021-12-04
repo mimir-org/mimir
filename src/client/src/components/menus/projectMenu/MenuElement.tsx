@@ -5,10 +5,11 @@ interface Props {
   icon: string;
   onClick?: () => void;
   disabled?: boolean | false;
+  bottomLine?: boolean;
 }
 
-const MenuElement = ({ text, icon, onClick, disabled }: Props) => (
-  <ProjectMenuElementBox onClick={onClick} disabled={disabled}>
+const MenuElement = ({ text, icon, onClick, disabled, bottomLine = false }: Props) => (
+  <ProjectMenuElementBox onClick={onClick} disabled={disabled} bottomLine={bottomLine}>
     <div className="icon">
       <img src={icon} alt={text} />
     </div>
