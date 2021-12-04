@@ -6,15 +6,12 @@ import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text";
 import { WebSocket } from "../../models";
 import { useDispatch } from "react-redux";
-
-// MSAL imports
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
 import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
 
-// Props
 type AppProps = {
   pca: IPublicClientApplication;
 };
@@ -28,7 +25,6 @@ const App = ({ pca }: AppProps) => {
     msalInstance.loginRedirect();
   };
 
-  // Start the websocket endpoint
   const websocket = new WebSocket();
   const dispatch = useDispatch();
   websocket.setDispatcher(dispatch);
