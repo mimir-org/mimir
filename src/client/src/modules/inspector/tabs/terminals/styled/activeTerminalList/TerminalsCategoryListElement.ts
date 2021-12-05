@@ -14,7 +14,7 @@ export const TerminalsCategoryListElement = styled.div<Props>`
   font-size: ${FontSize.Small};
   display: flex;
   background-color: ${(props) => props.color};
-  border-bottom: 1px solid ${Color.DarkGrey};
+  border-bottom: 1px solid ${Color.GreyDark};
 
   text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
   font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
@@ -34,7 +34,7 @@ export const TerminalsCategoryListElement = styled.div<Props>`
   }
 
   :hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     cursor: pointer;
     text-decoration: underline;
   }

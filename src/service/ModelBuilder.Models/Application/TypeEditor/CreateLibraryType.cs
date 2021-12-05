@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 using Newtonsoft.Json;
@@ -10,6 +11,8 @@ namespace Mb.Models.Application.TypeEditor
         [Required]
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         [EnumDataType(typeof(Aspect))]
         public Aspect Aspect { get; set; }
 
@@ -20,6 +23,9 @@ namespace Mb.Models.Application.TypeEditor
 
         [Required]
         public string RdsId { get; set; }
+
+        [Required] 
+        public string StatusId { get; set; } = "4590637F39B6BA6F39C74293BE9138DF";
 
         [Required]
         public string Purpose { get; set; }
@@ -46,6 +52,11 @@ namespace Mb.Models.Application.TypeEditor
 
         public string Version { get; set; }
         public string TypeId { get; set; }
+
+        public string UpdatedBy { get; set; }
+        public DateTime? Updated { get; set; }
+        public DateTime Created { get; set; }
+        public string CreatedBy { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

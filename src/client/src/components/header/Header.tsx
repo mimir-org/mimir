@@ -1,31 +1,26 @@
-import * as Click from "./handlers";
-import * as Icons from "../../assets/icons/header";
 import { MimirLogo } from "../../assets/icons/mimir/";
-import { ToolBar } from "./";
+import { ToolBar, Avatar, ProjectMenuHeader } from "./";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import { CompanyLogoBox, ProjectBox, AvatarBox, HeaderBox, LogoBox } from "./styled";
+import { CompanyLogoBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader } from "../../helpers";
-import { GetUserInitials } from "../menus/userMenu/helpers";
-import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../assets/icons/toogle";
-import { TextResources } from "../../assets/text";
+import { VIEW_TYPE } from "../../models/project";
 import {
   projectMenuSelector,
   electroSelector,
   explorerSelector,
-  treeFilterSelector,
-  blockFilterSelector,
+  filterSelector,
   libOpenSelector,
   treeSelector,
   projectSelector,
   userMenuSelector,
   userStateSelector,
+  flowViewSelector,
 } from "../../redux/store";
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
-  const treeFilterOpen = useAppSelector(treeFilterSelector);
-  const blockFilteOpen = useAppSelector(blockFilterSelector);
+  const filterOpen = useAppSelector(filterSelector);
   const projectMenuOpen = useAppSelector(projectMenuSelector);
   const userMenuOpen = useAppSelector(userMenuSelector);
   const libOpen = useAppSelector(libOpenSelector);
@@ -33,51 +28,31 @@ const Header = () => {
   const treeView = useAppSelector(treeSelector);
   const electro = useAppSelector(electroSelector);
   const userState = useAppSelector(userStateSelector);
+  const flowView = useAppSelector(flowViewSelector);
   const company = process.env.REACT_APP_COMPANY;
 
   return (
     <>
       <HeaderBox id="Header">
-        <AvatarBox isOpen={userMenuOpen} onClick={() => Click.OnUser(dispatch, userMenuOpen)}>
-          <p className={"initials"}>{GetUserInitials(userState?.user?.name)}</p>
-          <img
-            src={Icons.AvatarBackground}
-            alt="profile"
-            className="profile"
-            onClick={() => Click.OnUser(dispatch, userMenuOpen)}
-          />
-          <img
-            src={userMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
-            alt="icon"
-            className="toggle-icon"
-            onClick={() => Click.OnUser(dispatch, userMenuOpen)}
-          />
-        </AvatarBox>
-        <CompanyLogoBox>
-          <img src={GetCompanyLogoForHeader(company)} alt="logo" />
-        </CompanyLogoBox>
-        <ProjectBox isOpen={projectMenuOpen} onClick={() => Click.OnProject(dispatch, projectMenuOpen)}>
-          <p className="project-name">{project?.name ?? TextResources.Account_Project}</p>
-          <img
-            src={projectMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
-            alt="icon"
-            className="toggle-icon"
-            onClick={() => Click.OnProject(dispatch, projectMenuOpen)}
-          />
-        </ProjectBox>
         <LogoBox>
           <img src={MimirLogo} alt="mimir-logo" />
         </LogoBox>
+        <ProjectMenuHeader projectMenuOpen={projectMenuOpen} project={project} dispatch={dispatch} />
+        <CompanyLogoBox>
+          <img src={GetCompanyLogoForHeader(company)} alt="logo" />
+        </CompanyLogoBox>
+        <Avatar userMenuOpen={userMenuOpen} userState={userState} dispatch={dispatch} />
       </HeaderBox>
-
-      <ToolBar
-        libOpen={libOpen}
-        explorerOpen={explorerOpen}
-        treeView={treeView}
-        treeFilter={treeFilterOpen}
-        blockFilter={blockFilteOpen}
-        electro={electro}
-      />
+      {flowView !== VIEW_TYPE.STARTPAGE && (
+        <ToolBar
+          project={project}
+          libOpen={libOpen}
+          explorerOpen={explorerOpen}
+          treeView={treeView}
+          visualFilter={filterOpen}
+          electro={electro}
+        />
+      )}
     </>
   );
 };

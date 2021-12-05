@@ -7,6 +7,7 @@ using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Extensions;
+using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Core.Profiles
@@ -33,7 +34,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
                 .ForMember(dest => dest.Iri, opt => opt.Ignore())
                 .ForMember(dest => dest.Domain, opt => opt.Ignore())
-                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Entity))
+                .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
                 .ForMember(dest => dest.Value, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.Ignore())
                 .ForMember(dest => dest.QualifierId, opt => opt.MapFrom(src => src.QualifierId))
@@ -59,7 +60,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
-                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
@@ -73,9 +74,11 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Format, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
+                .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.NodeId, src.NodeIri)))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.NodeId, src.NodeIri)))
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
                 .ForMember(dest => dest.IsLockedBy, opt => opt.MapFrom(src => src.IsLockedBy))
@@ -91,7 +94,7 @@ namespace Mb.Core.Profiles
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
-               .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
+               .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
@@ -103,6 +106,7 @@ namespace Mb.Core.Profiles
                .ForMember(dest => dest.ConditionId, opt => opt.MapFrom(src => src.ConditionId))
                .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
+               .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
                .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
                .ForMember(dest => dest.CompositeId, opt => opt.MapFrom(src => src.CompositeId))
                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))

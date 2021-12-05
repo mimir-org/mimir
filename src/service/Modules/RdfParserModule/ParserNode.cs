@@ -6,8 +6,8 @@ namespace RdfParserModule
     public class ParserNode
     {
         public string Prefix { get; set; }
-        public string Id { get; set; }
         public string Iri { get; set; }
+        public string Domain { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
         public string Label { get; set; }
@@ -15,21 +15,29 @@ namespace RdfParserModule
         public string SemanticReference { get; set; }
         public bool IsLocked { get; set; }
         public string StatusId { get; set; }
-        public string MasterProjectId { get; set; }
+        public string MasterProjectIri { get; set; }
+        public string MasterProjectId => MasterProjectIri;
         public Aspect Aspect { get; set; }
         public bool IsRoot { get; set; }
         public decimal Length { get; set; }
         public decimal Width { get; set; }
         public bool IsTransport { get; set; }
+        public string Symbol { get; set; }
         public ICollection<ParserConnector> Terminals { get; set; }
+        public ICollection<ParserAttribute> Attributes { get; set; }
         public ICollection<ParserEdge> Edges { get; set; }
         public string parentId { get; set; }
         public ParserNode HasLocation { get; set; }
         public ParserNode FulfilledBy { get; set; }
 
+        public decimal PositionX { get; set; }
+        public decimal PositionY { get; set; }
+        public decimal PositionBlockX { get; set; }
+        public decimal PositionBlockY { get; set; }
+
         public override string ToString()
         {
-            return Label ?? Id;
+            return Label ?? Iri;
         }
     }
 
@@ -37,7 +45,7 @@ namespace RdfParserModule
     {
         public ParserTerminal InputTerminal { get; set; }
         public ParserTerminal OutputTerminal { get; set; }
-        public string InputTerminalId { get; set; }
-        public string OutputTerminalId { get; set; }
+        public string InputTerminalIri { get; set; }
+        public string OutputTerminalIri { get; set; }
     }
 }

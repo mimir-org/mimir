@@ -4,7 +4,7 @@ import * as func from "./saga";
 
 export function* commonSaga() {
   yield all([
-    takeEvery(type.FETCHING_CONTRACTORS, func.getContractors),
+    takeEvery(type.FETCHING_COLLABORATION_PARTNERS, func.getCollaborationPartners),
     takeEvery(type.FETCHING_STATUSES, func.getStatuses),
     takeEvery(type.FETCHING_COMBINED_ATTRIBUTE_FILTERS, func.getAttributeFilters),
     takeEvery(type.FETCHING_PARSERS, func.getParsers),

@@ -4,7 +4,7 @@ import { Color } from "../../../compLibrary/colors";
 const MenuColumn = styled.div`
   width: 100%;
   margin-top: 10px;
-  padding: 5px 0px 5px 15px;
+  padding: 5px 0px;
   color: ${Color.Black};
 `;
 

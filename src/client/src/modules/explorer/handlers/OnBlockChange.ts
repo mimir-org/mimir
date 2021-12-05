@@ -2,7 +2,6 @@ import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../r
 import { Node } from "../../../models";
 import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
-import { setLocation3D } from "../../location/redux/actions";
 import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
 
 /**
@@ -15,7 +14,12 @@ import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
  * @param dispatch
  */
 export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
-  dispatch(setLocation3D(false));
+  // Set selectNode
+  if (!selectedNode) {
+    dispatch(setActiveNode(node?.id, !node.isSelected));
+    dispatch(setActiveBlockNode(node?.id));
+    return;
+  }
 
   if (selectedNode && secondaryNode) {
     if (node === selectedNode && node !== secondaryNode) {
@@ -25,20 +29,13 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
     }
   }
 
-  // Set selectNode
-  if (!selectedNode) {
-    dispatch(setActiveNode(node?.id, !node.isSelected));
-    dispatch(setActiveBlockNode(node?.id));
-    return;
-  }
-
   // Handling Product
   if (IsProduct(selectedNode)) {
     if (!IsProduct(node)) {
       dispatch(setActiveNode(node?.id, !node.isSelected));
       dispatch(setActiveBlockNode(node?.id));
     }
-    if (IsProduct(node) && node.id !== selectedNode.id) dispatch(setNodeVisibility(node, false));
+    if (IsProduct(node) && node.id !== selectedNode.id) dispatch(setNodeVisibility(node, true));
     if (node === selectedNode) dispatch(setActiveNode(null, false));
     return;
   }

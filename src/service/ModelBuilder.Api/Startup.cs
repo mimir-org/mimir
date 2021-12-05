@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
@@ -38,9 +39,9 @@ namespace Mb.Api
                 //o.SerializerSettings.Converters.Add(new StringEnumConverter());
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
-            
+          
             var startupLogger = services.BuildServiceProvider().GetRequiredService<ILogger<Startup>>();
-
+          
             // Add Cors policy
             var origins = Configuration.GetSection("CorsConfiguration")?
                 .GetValue<string>("ValidOrigins")?.Split(",");

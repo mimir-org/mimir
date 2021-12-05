@@ -4,51 +4,53 @@ import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Size } from "../../../../../compLibrary/size";
 import { Input, Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { CreateSubProjectIcon } from "../../../../../assets/icons/project";
 
 interface Props {
   fromProjectId: string;
   nodeIds: string[];
   edgeIds: string[];
+  disabled: boolean;
 }
 
-export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId }: Props) => {
+export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled }: Props) => {
   const dispatch = useAppDispatch();
   const [projectName, setProjectName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU);
 
   return (
-    <>
-      <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+    !disabled && (
+      <ProjectBox visible={isOpen}>
         <ProjectBody>
           <HeaderBox>
             <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-            {TextResources.Account_SubProject_Create_Label}
+            {TextResources.Project_SubProject_Save}
           </HeaderBox>
-          <Label>{TextResources.Account_Name_Project_Label}</Label>
+          <Label>{TextResources.Project_Name}</Label>
           <Input
             onChange={(e: any) => setProjectName(e.target.value)}
             inputType="text"
-            placeholder={TextResources.Account_Name_Project_Placeholder}
+            placeholder={TextResources.Project_Name_Placeholder}
             value={projectName}
           />
           <ButtonBox left>
-            <Button onClick={() => Handlers.OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
+            <Button onClick={() => Handlers.OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
           </ButtonBox>
           {projectName && (
             <ButtonBox>
               <Button
                 onClick={() => Handlers.OnSubProjectCreateClick(fromProjectId, projectName, nodeIds, edgeIds, dispatch)}
-                type={TextResources.Account_SubProject_Create}
+                text={TextResources.Project_SubProject}
+                icon={CreateSubProjectIcon}
               />
             </ButtonBox>
           )}
         </ProjectBody>
       </ProjectBox>
-    </>
+    )
   );
 };
 

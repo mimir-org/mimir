@@ -10,3 +10,5 @@ export const GetPropertiesHeight = (isFull: boolean): number => {
     document.body.clientHeight + (isFull ? Size.TypeEditorPropertiesFull_BASELINE : Size.TypeEditorPropertiesShrunk_BASELINE)
   );
 };
+
+export default GetPropertiesHeight;

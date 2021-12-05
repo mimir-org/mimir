@@ -34,6 +34,8 @@ namespace Mb.Models.Data
         public string SemanticReference { get; set; }
         public bool Visible { get; set; }
         public virtual string NodeId { get; set; }
+        public virtual string NodeIri { get; set; }
+        public bool IsRequired { get; set; }
 
         [JsonIgnore]
         public virtual Node Node { get; set; }
@@ -57,13 +59,13 @@ namespace Mb.Models.Data
             if (string.IsNullOrEmpty(_domain))
                 _domain = id.ResolveDomain();
 
-            if (string.IsNullOrEmpty(_iri))
+            if (string.IsNullOrEmpty(_iri) || !_id.HasValidIri(_iri))
                 _iri = id.ResolveIri();
         }
 
         private void SetIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _iri = iri;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../compLibrary/colors";
+import { FontSize, FontWeight } from "../../../../../../compLibrary/font";
 
 interface Props {
   isSelected: boolean;
@@ -7,43 +8,58 @@ interface Props {
 
 const ProjectDataBox = styled.div<Props>`
   display: flex;
-  height: auto;
   flex-direction: row;
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
-  font-size: 12px;
+  align-items: center;
+  height: 30px;
+  padding: 0px 10px 0px 6px;
+  font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
+  text-decoration: ${(props) => props.isSelected && "underline"};
+  font-size: ${FontSize.Small};
   color: ${Color.Black};
   cursor: pointer;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  border-color: ${Color.BlueMagenta};
-  border: ${(props) => (props.isSelected ? 1 : 0)}px solid;
 
   p {
-    margin: 0px;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .name {
-    width: 45%;
+    width: 40%;
   }
 
   .owner {
-    width: 35%;
-    margin-left: 10px;
+    width: 20%;
+  }
+
+  .version {
+    text-align: center;
+    width: 25%;
   }
 
   .edited {
+    text-align: right;
     width: 15%;
-    margin-left: 10px;
+  }
+
+  &:nth-of-type(odd) {
+    background: ${Color.PurpleLight};
   }
 
   &:hover {
-    background: ${Color.LightBlue};
+    background: ${Color.BlueLight};
   }
 
-  &:nth-of-type(even) {
-    background: ${Color.LightPurple};
-  }
+  /* .owner,
+  .name,
+  .edited {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-wrap: break-word;
+  } */
 `;
 
 export default ProjectDataBox;

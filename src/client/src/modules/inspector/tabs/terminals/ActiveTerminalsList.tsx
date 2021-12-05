@@ -34,8 +34,14 @@ function ActiveTerminalsList({
   selectedTerminalIdentifier,
   onSelectTerminal,
 }: Props) {
-  const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>([]);
-  const [selectedTypesIds, setSelectedTypesIds] = useState<string[]>([]);
+  const [expandedCategoriesIds, setExpandedCategoriesIds] = useState<string[]>(terminalCategories.map((cat) => cat.id));
+  const [expandedTypesIds, setExpandedTypesIds] = useState<string[]>(
+    terminalCategories
+      .map((cat) => cat.items)
+      .flat()
+      .map((type) => [FormatTypeId(type, ConnectorType.Input), FormatTypeId(type, ConnectorType.Output)])
+      .flat()
+  );
   const filteredCategories = useMemo(
     () => FilterTerminalCategories(terminalCategories, terminals),
     [terminalCategories, terminals]
@@ -46,9 +52,9 @@ function ActiveTerminalsList({
   );
   const numTerminalsByCategoryId = useMemo(() => GetNumTerminalsByCategory(terminals), [terminals]);
 
-  const isCategoryExpanded = (category: TerminalCategory) => selectedCategoriesIds.includes(category.id);
+  const isCategoryExpanded = (category: TerminalCategory) => expandedCategoriesIds.includes(category.id);
   const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
-    selectedTypesIds.includes(FormatTypeId(type, connectorType));
+    expandedTypesIds.includes(FormatTypeId(type, connectorType));
 
   return (
     <ActiveTerminalListWrapper>
@@ -62,9 +68,9 @@ function ActiveTerminalsList({
               isSelected={selectedTerminal?.terminalCategoryId === category.id}
               radius={0}
               onClick={() =>
-                OnCategoryClick(category, isCategoryExpanded(category), selectedCategoriesIds, setSelectedCategoriesIds)
+                OnCategoryClick(category, isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)
               }
-              color={i % 2 ? undefined : Color.LightPurple}
+              color={i % 2 ? undefined : Color.PurpleLight}
             >
               <div className="numCategoryTerminals">{numCategoryTerminals}</div>
 
@@ -85,7 +91,7 @@ function ActiveTerminalsList({
                   selectedTerminal: selectedTerminal,
                   selectedTerminalIdentifier: selectedTerminalIdentifier,
                   onTypeClick: (type: TerminalType, connectorType: ConnectorType) =>
-                    OnTypeClick(type, connectorType, isTypeExpanded(type, connectorType), selectedTypesIds, setSelectedTypesIds),
+                    OnTypeClick(type, connectorType, isTypeExpanded(type, connectorType), expandedTypesIds, setExpandedTypesIds),
                   onSelectTerminal,
                 };
 

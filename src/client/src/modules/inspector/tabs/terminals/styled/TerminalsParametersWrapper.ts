@@ -12,7 +12,7 @@ const TerminalsParametersWrapper = styled.div`
 
   border-left-width: 1px;
   border-left-style: solid;
-  border-color: ${Color.DarkGrey};
+  border-color: ${Color.GreyDark};
 `;
 
 export { TerminalsParametersWrapper };

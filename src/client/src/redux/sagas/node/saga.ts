@@ -2,25 +2,20 @@ import * as types from "../../store/project/types";
 import { put } from "redux-saga/effects";
 import { msalInstance } from "../../..";
 import { GetDateNowUtc } from "../../../components/flow/helpers";
-import { User } from "../../../models";
 
 /**
- * Update updated date and updated by
+ * Function to update a node with date and the user that made the update.
+ * @param action
  */
 export function* changeNodeUpdated(action) {
   const account = msalInstance?.getActiveAccount();
-
-  const user: User = {
-    username: account.username,
-    name: account.name,
-  };
 
   yield put({
     type: types.CHANGE_NODE_UPDATED,
     payload: {
       nodeId: action.payload.nodeId,
       updated: GetDateNowUtc(),
-      user: user,
+      userName: account?.name ?? "",
     },
   });
 }

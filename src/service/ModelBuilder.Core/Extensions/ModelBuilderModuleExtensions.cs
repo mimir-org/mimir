@@ -74,18 +74,18 @@ namespace Mb.Core.Extensions
 
             // Dependency injection
 
-            services.AddSingleton<ICommonRepository, CommonRepository>();
-
+            services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
-            services.AddScoped<IContractorRepository, ContractorRepository>();
+            services.AddScoped<ICollaborationPartnerRepository, CollaborationPartnerRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ICompositeRepository, CompositeRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
+            services.AddScoped<IProjectLinkRepository, ProjectLinkRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
@@ -115,10 +115,11 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
+            cfg.AddProfile<CollaborationPartnerProfile>();
             cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new TransportProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new InterfaceProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
 

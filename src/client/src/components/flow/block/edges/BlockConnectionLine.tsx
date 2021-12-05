@@ -8,7 +8,7 @@ import { GetTerminalColor } from "../terminals/helpers";
  * @returns a line from a Node's terminal.
  */
 const BlockConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLineType, sourceHandle, sourceNode }) => {
-  const connector = sourceNode.data?.connectors.find((conn: Connector) => conn.id === sourceHandle.id) as Connector;
+  const connector = sourceNode.data?.connectors.find((conn: Connector) => conn.id === sourceHandle?.id) as Connector;
   const color = GetTerminalColor(connector);
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
 

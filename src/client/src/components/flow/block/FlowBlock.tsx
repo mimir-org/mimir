@@ -1,20 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop } from "../hooks";
-import { GetBlockNodeTypes, GetParent, IsTransport } from "../helpers";
+import { GetBlockNodeTypes } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { BlockFilterMenu } from "../../menus/filterMenu/";
+import { VisualFilterComponent } from "../../menus/filterMenu/";
 import { BlockConnectionLine } from "./edges";
-import { IsOffPage, SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
+import { Size } from "../../../compLibrary/size";
+import { SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
-import { setEdgeAnimation } from "../../../redux/store/project/actions";
 import {
   iconSelector,
   darkModeSelector,
@@ -22,8 +23,9 @@ import {
   projectSelector,
   secondaryNodeSelector,
   userStateSelector,
-  blockFilterSelector,
+  filterSelector,
   nodeSizeSelector,
+  productNodeSizeSelector,
   animatedEdgeSelector,
   location3DSelector,
 } from "../../../redux/store";
@@ -40,27 +42,26 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
-  const [elements, setElements] = useState<Elements>();
+  const [elements, setElements] = useState<Elements>([]);
   const darkMode = useAppSelector(darkModeSelector);
   const project = useAppSelector(projectSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const icons = useAppSelector(iconSelector);
   const lib = useAppSelector(librarySelector);
   const userState = useAppSelector(userStateSelector);
-  const blockFilter = useAppSelector(blockFilterSelector);
-  const parentNodeSize = useAppSelector(nodeSizeSelector);
+  const visualFilter = useAppSelector(filterSelector);
+  const parentSize = useAppSelector(nodeSizeSelector);
+  const parentProductSize = useAppSelector(productNodeSizeSelector);
   const animatedEdge = useAppSelector(animatedEdgeSelector);
   const showLocation3D = useAppSelector(location3DSelector);
-
   const node = GetSelectedNode();
-  const parent = GetParent(node);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, parent, parentNodeSize, animatedEdge));
+      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, parent, parentNodeSize, animatedEdge]
+    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -80,7 +81,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   // };
 
   // const OnConnectStop = (e) => {
-  //   return useOnConnectStop(e, project, dispatch);
+  //   return useOnConnectStop(e, project, dispatch, parentSize);
   // };
 
   const OnDragOver = (event) => {
@@ -123,20 +124,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     SetDarkModeColor(darkMode);
   }, [darkMode]);
 
-  useEffect(() => {
-    project?.edges.forEach((e) => {
-      if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, true));
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch, true);
     } else if (selectedElements.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], false, inspectorRef, dispatch, true);
+      handleNodeSelect(selectedElements[0], dispatch, true);
     } else if (selectedElements.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], false, inspectorRef, dispatch, true);
+      handleEdgeSelect(selectedElements[0], dispatch, true);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch, true);
     }
@@ -161,18 +155,17 @@ const FlowBlock = ({ inspectorRef }: Props) => {
           paneMoveable={true}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
-          defaultPosition={[450, 80]}
+          defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
           onlyRenderVisibleElements={true}
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
+          deleteKeyCode={"Delete"}
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
 
-        {blockFilter && (
-          <BlockFilterMenu elements={elements?.filter((elem) => !IsOffPage(elem?.data))} edgeAnimation={animatedEdge} />
-        )}
+        {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
       </div>
       <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />
     </>

@@ -8,7 +8,6 @@ class Node {
   iri: string;
   domain: string;
   rds: string;
-  contractor: string;
   description: string;
   semanticReference: string;
   tagNumber: string;
@@ -27,6 +26,7 @@ class Node {
   statusId: string;
   status: EnumBase;
   createdBy: string;
+  libraryTypeId: string;
   created: Date;
   updatedBy: string;
   updated: Date;
@@ -51,6 +51,9 @@ class Node {
   isHidden: boolean | false;
   blockWidth: number;
   blockHeight: number;
+
+  // OffPageNode
+  connectionRequired?: boolean | true;
 
   kind: string = NODE_KIND;
 

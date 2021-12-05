@@ -8,7 +8,7 @@ const OptionsButton = styled.div`
 
   &:hover {
     text-decoration: underline;
-    background-color: ${Color.LightCyan};
+    background-color: ${Color.CyanLight};
     cursor: pointer;
   }
 `;

@@ -1,14 +1,10 @@
 import styled from "styled-components";
+import { Size } from "../../../compLibrary/size";
 
-interface Props {
-  visible: boolean;
-}
-
-const LegendBody = styled.div<Props>`
-  width: 331px;
-  opacity: ${(props) => (props.visible ? 1 : 0)};
-  transition: opacity 0.2s ease-in-out;
-  bottom: 0;
+const LegendBody = styled.div`
+  position: relative;
+  width: ${Size.ModuleOpen}px;
+  top: 9px;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;

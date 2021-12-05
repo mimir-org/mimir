@@ -36,11 +36,11 @@ const UserMenuElement = styled.div`
   }
 
   &:hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
   }
 
   &:last-child {
-    margin-top: 30px;
+    margin-top: 10px;
     border-top: 1px solid ${Color.Grey};
     border-radius: 0px 0px 10px 10px;
   }

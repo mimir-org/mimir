@@ -1,9 +1,10 @@
-import { setProjectMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
 import { get } from "../../../../../../redux/store/project/actions";
+import { MENU_TYPE } from "../../../../../../models/project";
 
-const OnNoSaveClick = (dispatch: any, projectId: string, setConfirm: any) => {
+const OnNoSaveClick = (dispatch: any, projectId: string) => {
   dispatch(get(projectId));
-  setConfirm(false);
+  dispatch(changeActiveMenu(MENU_TYPE.PROJECT_MENU));
   dispatch(setProjectMenuVisibility(false));
 };
 

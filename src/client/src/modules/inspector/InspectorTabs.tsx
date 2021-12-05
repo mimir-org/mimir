@@ -1,7 +1,7 @@
 import { Project } from "../../models";
 import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { Action } from "redux";
-import InspectorTabWrapper from "./InspectorTabWrapper";
+import { InspectorTabWrapper } from "./";
 import { changeInspectorTab } from "./redux/tabs/actions";
 import { ShouldShowTabs } from "./helpers";
 import { ParametersComponent, TerminalsComponent, RelationsComponent, SimpleTypesComponent, AdminComponent } from "./tabs";
@@ -14,6 +14,8 @@ interface Props {
   terminalLikeItems?: TerminalLikeItem[];
   compositeLikeItems?: CompositeLikeItem[];
   changeInspectorTabAction?: (index: number) => Action;
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  isInspectorOpen: boolean;
 }
 
 const InspectorTabs = ({
@@ -24,10 +26,13 @@ const InspectorTabs = ({
   terminalLikeItems,
   compositeLikeItems,
   changeInspectorTabAction = changeInspectorTab,
+  inspectorRef,
+  isInspectorOpen,
 }: Props) => {
-  const [shouldShowAdmin, ...shouldShowTabs] = ShouldShowTabs(element);
+  const shouldShowTabs = ShouldShowTabs(element);
 
   const tabs = [
+    <AdminComponent element={element} project={project} />,
     <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
     <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
     <RelationsComponent element={element} />,
@@ -36,33 +41,23 @@ const InspectorTabs = ({
 
   return (
     <>
-      {element && (
-        <>
-          {shouldShowAdmin && (
-            <AdminComponent
-              element={element}
-              project={project}
-              index={0}
-              activeTabIndex={activeTabIndex}
-              changeInspectorTabAction={changeInspectorTabAction}
-            />
-          )}
-          {tabs.map(
-            (tab, i) =>
-              shouldShowTabs[i] && (
-                <InspectorTabWrapper
-                  key={i}
-                  element={element}
-                  index={i + 1}
-                  activeTabIndex={activeTabIndex}
-                  changeInspectorTabAction={changeInspectorTabAction}
-                >
-                  {tab}
-                </InspectorTabWrapper>
-              )
-          )}
-        </>
-      )}
+      {element &&
+        tabs.map(
+          (tab, i) =>
+            shouldShowTabs[i] && (
+              <InspectorTabWrapper
+                key={i}
+                element={element}
+                index={i}
+                activeTabIndex={activeTabIndex}
+                changeInspectorTabAction={changeInspectorTabAction}
+                inspectorRef={inspectorRef}
+                isInspectorOpen={isInspectorOpen}
+              >
+                {tab}
+              </InspectorTabWrapper>
+            )
+        )}
     </>
   );
 };

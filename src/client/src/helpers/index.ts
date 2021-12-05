@@ -6,13 +6,14 @@ export { default as IsFamily } from "./IsFamily";
 export { default as IsOffPage } from "./IsOffPage";
 export { default as IsDirectChild } from "./IsDirectChild";
 export { default as IsBlockView } from "./IsBlockView";
+export { default as IsStartPage } from "./IsStartPage";
 export { default as IsLibrary } from "./IsLibrary";
 export { default as IsExplorer } from "./IsExplorer";
 
 export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
 export { default as GetAspectColor } from "./GetAspectColor";
-export { default as GetRdsId } from "./GetRdsId";
+export { GetRdsId, GetRdsIdEdge, GetRdsPrefix } from "./GetRdsId";
 export { default as GetReferenceDesignation } from "./GetReferenceDesignation";
 export { default as GetObjectIcon } from "./GetObjectIcon";
 export { default as GetAspectIcon } from "./GetAspectIcon";

@@ -17,7 +17,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
-            builder.Property(p => p.Key).HasColumnName("Key").IsRequired();
+            builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.SelectedUnitId).HasColumnName("SelectedUnitId");
@@ -25,6 +25,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
             
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
+            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
             builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
             builder.Property(p => p.TransportId).HasColumnName("TransportId").IsRequired(false);
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired();

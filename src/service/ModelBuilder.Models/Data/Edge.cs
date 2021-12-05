@@ -27,15 +27,19 @@ namespace Mb.Models.Data
         }
 
         public string FromConnectorId { get; set; }
+        public string FromConnectorIri { get; set; }
         public Connector FromConnector { get; set; }
         
         public string ToConnectorId { get; set; }
+        public string ToConnectorIri { get; set; }
         public Connector ToConnector { get; set; }
         
         public string FromNodeId { get; set; }
+        public string FromNodeIri { get; set; }
         public Node FromNode { get; set; }
         
         public string ToNodeId { get; set; }
+        public string ToNodeIri { get; set; }
         public Node ToNode { get; set; }
 
         public string TransportId { get; set; }
@@ -70,13 +74,13 @@ namespace Mb.Models.Data
             if (string.IsNullOrEmpty(_domain))
                 _domain = id.ResolveDomain();
 
-            if (string.IsNullOrEmpty(_iri))
+            if (string.IsNullOrEmpty(_iri) || !_id.HasValidIri(_iri))
                 _iri = id.ResolveIri();
         }
 
         private void SetIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _iri = iri;
@@ -106,7 +110,7 @@ namespace Mb.Models.Data
 
         private void SetMasterProjectIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _masterProjectIri = iri;

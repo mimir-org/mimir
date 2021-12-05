@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 interface Props {
   color: string;
-  isNodeLocked: boolean;
 }
 
 const Header = styled.div<Props>`
@@ -36,10 +35,6 @@ const Header = styled.div<Props>`
     padding-left: 5px;
     cursor: pointer;
     margin: auto;
-  }
-
-  .lockIcon {
-    cursor: ${(props) => (props.isNodeLocked ? "default" : "pointer")};
   }
 `;
 

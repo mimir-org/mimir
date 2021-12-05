@@ -12,7 +12,7 @@ const TypeEditorInspectorWrapper = styled.div`
   height: ${Size.ModuleClosed}px;
 
   & > div {
-    background: ${Color.LightGrey};
+    background: ${Color.GreyLighter};
     width: 100%;
   }
 `;

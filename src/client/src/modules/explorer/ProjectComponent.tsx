@@ -1,19 +1,34 @@
 import { Node } from "../../models";
-import { AspectComponent } from "./aspectComponent/AspectComponent";
+import { TreeAspectComponent, BlockAspectComponent } from "./aspectComponent/";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
-import { GetSelectedNode, IsOffPage } from "../../helpers";
-import { blockElementsSelector, projectSelector, secondaryNodeSelector, useAppSelector } from "../../redux/store";
+import { GetSelectedNode, IsBlockView, IsOffPage } from "../../helpers";
+import {
+  blockElementsSelector,
+  projectSelector,
+  secondaryNodeSelector,
+  useAppDispatch,
+  useAppSelector,
+  usernameSelector,
+} from "../../redux/store";
 
+/**
+ * Component for a singe Project in Mimir, displayed in the Explorer Module.
+ * @returns drop-down menus with checkboxes for each Aspect.
+ */
 const ProjectComponent = () => {
-  const [closedNodes, setClosedNodes] = useState(new Set<string>());
-  const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
+  const dispatch = useAppDispatch();
+
   const elements = useAppSelector(blockElementsSelector);
   const project = useAppSelector(projectSelector);
+  const username = useAppSelector(usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedNode = GetSelectedNode();
   const secondaryNode = useAppSelector(secondaryNodeSelector);
+
+  const [closedNodes, setClosedNodes] = useState(new Set<string>());
+  const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
 
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
@@ -35,22 +50,39 @@ const ProjectComponent = () => {
     <>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
         if (!areAncestorsExpanded(node)) return null;
+        if (IsBlockView()) {
+          return (
+            <BlockAspectComponent
+              key={node.id}
+              project={project}
+              username={username}
+              node={node}
+              selectedNode={selectedNode}
+              secondaryNode={secondaryNode}
+              indent={indent}
+              expanded={!closedNodes.has(node.id)}
+              isLeaf={!HasChildren(node, project)}
+              elements={elements}
+              onElementExpanded={onExpandElement}
+              dispatch={dispatch}
+            />
+          );
+        }
         return (
-          <AspectComponent
+          <TreeAspectComponent
             key={node.id}
-            selectedNode={selectedNode}
-            secondaryNode={secondaryNode}
+            project={project}
+            username={username}
             node={node}
             nodes={nodes}
-            label={node.label}
             indent={indent}
             expanded={!closedNodes.has(node.id)}
             isLeaf={!HasChildren(node, project)}
-            elements={elements}
             isAncestorVisible={areAncestorsVisible(node)}
             isVisible={isVisible(node)}
             onElementExpanded={onExpandElement}
             onSetVisibleElement={onSetVisibleElement}
+            dispatch={dispatch}
           />
         );
       })}

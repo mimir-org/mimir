@@ -61,8 +61,6 @@ namespace RdfParserModule
             rdf.MakeProject(valueAsString);
 
             return Task.FromResult(rdf.Project);
-
-            //return Task.FromResult(Hardcoded());
         }
 
         public FileFormat GetFileFormat()
@@ -74,6 +72,7 @@ namespace RdfParserModule
             };
         }
 
+        // This is a hardcoded project that we know should work on import via DeserializeProjectAm
         private ProjectAm Hardcoded()
         {
 

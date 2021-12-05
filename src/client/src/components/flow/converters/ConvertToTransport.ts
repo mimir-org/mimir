@@ -3,12 +3,12 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
 const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
-  const currentTransport = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
+  const transportType = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   const transportId = CreateId();
 
-  if (currentTransport) {
-    if (currentTransport.attributes) {
-      currentTransport.attributes.forEach((x) => {
+  if (transportType) {
+    if (transportType.attributes) {
+      transportType.attributes.forEach((x) => {
         x.id = CreateId();
         x.transportId = transportId;
       });
@@ -40,13 +40,23 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
 
     return {
       id: transportId,
-      name: currentTransport.name,
-      semanticReference: currentTransport.semanticReference,
+      version: transportType.version,
+      rds: transportType.rds,
+      name: transportType.name,
+      label: transportType.label ?? transportType.name,
+      description: transportType.description,
+      statusId: transportType.statusId,
+      semanticReference: transportType.semanticReference,
       inputTerminalId: inputTerminal.id,
       inputTerminal: inputTerminal,
       outputTerminalId: outputTerminal.id,
       outputTerminal: outputTerminal,
-      attributes: currentTransport.attributes,
+      attributes: transportType.attributes,
+      updatedBy: transportType.updatedBy,
+      updated: transportType.updated,
+      createdBy: transportType.createdBy,
+      created: transportType.created,
+      libraryTypeId: transportType.id,
     } as Transport;
   }
 

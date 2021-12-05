@@ -1,19 +1,21 @@
 import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsMenu, TerminalsElement, ColorBar } from "./styled";
+import { TerminalsBox, TerminalsElement, ColorBar } from "./styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 import { Color } from "../../../../compLibrary/colors";
+import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
   node: Node;
-  parent: boolean;
-  input: boolean;
+  isParent: boolean;
+  IsInput: boolean;
   terminals: Connector[];
-  visible: boolean;
   electro: boolean;
+  hasActiveTerminals: boolean;
   onClick: (conn: Connector) => void;
   onBlur: () => void;
+  parentBlockSize: BlockNodeSize;
 }
 
 /**
@@ -21,31 +23,35 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenuComponent = ({ node, parent, input, terminals, visible, onClick, onBlur, electro }: Props) => {
-  const hasActiveTerminals = terminals.some((conn) => conn.visible);
-
-  return (
-    visible && (
-      <TerminalsMenu
-        tabIndex={0}
-        parent={parent}
-        input={input}
-        onBlur={onBlur}
-        color={GetAspectColor(node, AspectColorType.Selected)}
-        xPos={SetMenuXPos(parent, electro, hasActiveTerminals, node)}
-      >
-        {terminals.map((conn) => (
-          <TerminalsElement key={conn.id}>
-            <ColorBar color={GetTerminalColor(conn)} />
-            <div className="text" onClick={() => onClick(conn)}>
-              {conn.name}
-            </div>
-            <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.DarkGrey} id={conn.id} />
-          </TerminalsElement>
-        ))}
-      </TerminalsMenu>
-    )
-  );
-};
-
+const TerminalsMenuComponent = ({
+  node,
+  isParent,
+  IsInput,
+  terminals,
+  electro,
+  hasActiveTerminals,
+  onClick,
+  onBlur,
+  parentBlockSize,
+}: Props) => (
+  <TerminalsBox
+    id={"terminals-dropdown-" + node.id}
+    tabIndex={0}
+    isParent={isParent}
+    isInput={IsInput}
+    onBlur={onBlur}
+    color={GetAspectColor(node, AspectColorType.Selected)}
+    xPos={SetMenuXPos(isParent, electro, hasActiveTerminals, node, parentBlockSize)}
+  >
+    {terminals.map((conn) => (
+      <TerminalsElement key={conn.id}>
+        <ColorBar color={GetTerminalColor(conn)} />
+        <div className="terminal-name" onClick={() => onClick(conn)}>
+          {conn.name}
+        </div>
+        <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
+      </TerminalsElement>
+    ))}
+  </TerminalsBox>
+);
 export default TerminalsMenuComponent;

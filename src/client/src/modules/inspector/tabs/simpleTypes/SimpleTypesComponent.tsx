@@ -5,7 +5,7 @@ import { ParametersContent } from "../parameters";
 import { TerminalsWrapper } from "../terminals/styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "../terminals/styled/TerminalsParametersWrapper";
 import { CompositeLikeItem, InspectorElement } from "../../types";
-import { GetSimpleTypes } from "./GetSimpleTypes";
+import { GetSimpleTypes } from "./helpers/";
 import { IsCreateLibraryType } from "../../helpers/IsType";
 
 interface Props {

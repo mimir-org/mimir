@@ -3,11 +3,11 @@ import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
-import { Size } from "../../../../../compLibrary/size";
 import { Button } from "../../../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
-import { Input, Label } from "../../../../../compLibrary/input/text";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styled";
+import { Input } from "../../../../../compLibrary/input/text";
+import { ExportLibraryIcon } from "../../../../../assets/icons/project";
 
 export const ExportLibraryFileMenu = () => {
   const dispatch = useAppDispatch();
@@ -15,25 +15,31 @@ export const ExportLibraryFileMenu = () => {
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
 
   return (
-    <ProjectBox width={Size.MenuSmall_Width} height={Size.MenuSmall_Height} visible={isOpen}>
+    <ProjectBox visible={isOpen}>
       <ProjectBody>
         <HeaderBox>
           <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Account_Export_Library_File}
+          {TextResources.Project_Export_LibraryTypes}
         </HeaderBox>
-        <Label>{TextResources.Account_Save_Label_File_Name}</Label>
-        <Input
-          onChange={(e: any) => setFileName(e.target.value)}
-          inputType="text"
-          placeholder={TextResources.Account_Save_Label_File_Name}
-          value={fileName}
-        />
+        <InputBox>
+          <div className="label">{TextResources.Project_File_Name}</div>
+          <Input
+            onChange={(e: any) => setFileName(e.target.value)}
+            inputType="text"
+            placeholder={TextResources.Project_File_Name}
+            value={fileName}
+          />
+        </InputBox>
         <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} type={TextResources.Account_Cancel} />
+          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
         {fileName && (
           <ButtonBox>
-            <Button onClick={() => OnSaveClick(dispatch, fileName)} type={TextResources.Account_Export_File_Library_Label} />
+            <Button
+              onClick={() => OnSaveClick(dispatch, fileName)}
+              text={TextResources.Project_Export_Library}
+              icon={ExportLibraryIcon}
+            />
           </ButtonBox>
         )}
       </ProjectBody>

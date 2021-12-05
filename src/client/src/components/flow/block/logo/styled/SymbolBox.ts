@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import SymbolImage from "../../../../../compLibrary/symbol/styled/SymbolImage";
 
 const SymbolBox = styled.div`
-  position: relative;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 15px;
+  max-height: 30px;
+
+  ${SymbolImage} {
+    min-height: 30px;
+  }
 `;
 
 export default SymbolBox;

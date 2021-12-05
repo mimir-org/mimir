@@ -8,7 +8,8 @@ const Size = {
   BlockHeight: window.innerHeight,
   BlockSmallWidth: window.innerWidth / 2,
   BlockMarginX: 450,
-  BlockMarginY: 100,
+  BlockSecondaryMarginX: 250,
+  BlockMarginY: 80,
 
   // Terminals
   Terminals_Interval: 25,
@@ -20,13 +21,17 @@ const Size = {
 
   //TypeEditor
   TypeEditorInspectorOpen: 355,
-  TypeEditorPropertiesFull_BASELINE: -322,
-  TypeEditorPropertiesShrunk_BASELINE: -632,
+  TypeEditorPropertiesFull_BASELINE: -362,
+  TypeEditorPropertiesShrunk_BASELINE: -672,
 
   // Menus
   TopMenu_Height: 56,
   MenuSmall_Width: 330,
-  MenuSmall_Height: 220,
+  MenuSmall_Height: 200,
+  OpenProjectMenu_Small_Width: 519,
+  OpenProjectMenu_Small_Height: 330,
+  OpenProjectMenu_Large_Width: 1038,
+  OpenProjectMenu_Large_Height: 660,
 };
 
 export default Size;

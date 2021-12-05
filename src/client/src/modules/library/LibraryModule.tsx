@@ -46,14 +46,17 @@ const LibraryModule = () => {
         <img className="icon" src={LibraryIcon} alt="toggle" />
         <p className="text">{TextResources.Module_Library}</p>
       </ModuleHeader>
-      <ModuleBody visible={libOpen}>
-        <LibraryComponent
-          categories={filteredCategories}
-          search={(text: string) => setSearchString(text)}
-          dispatch={dispatch}
-          subProjects={libState?.subProjectTypes?.filter((x) => x.id !== project?.id)}
-        />
-      </ModuleBody>
+
+      {libOpen && (
+        <ModuleBody visible={libOpen}>
+          <LibraryComponent
+            categories={filteredCategories}
+            search={(text: string) => setSearchString(text)}
+            dispatch={dispatch}
+            subProjects={libState?.subProjectTypes?.filter((x) => x.id !== project?.id)}
+          />
+        </ModuleBody>
+      )}
 
       <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">
         <ModuleHeader legend>
@@ -62,7 +65,7 @@ const LibraryModule = () => {
             <p className="legend-text">{TextResources.Module_Legend}</p>
           </LegendHeader>
         </ModuleHeader>
-        <LegendModule visible={true} project={project} />
+        {legendOpen && <LegendModule project={project} />}
       </AnimatedModule>
     </AnimatedModule>
   );
