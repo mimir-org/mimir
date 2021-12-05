@@ -1,6 +1,6 @@
 import * as Handlers from "./handlers";
 import { useState } from "react";
-import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
@@ -9,8 +9,11 @@ import { Button } from "../../../../../compLibrary/buttons";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styled";
 import { CreateProjectIcon } from "../../../../../assets/icons/project";
 
-export const CreateProjectMenu = () => {
-  const dispatch = useAppDispatch();
+interface Props {
+  dispatch: any;
+}
+
+export const CreateProjectMenu = ({ dispatch }: Props) => {
   const [projectName, setProjectName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
 

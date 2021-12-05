@@ -64,9 +64,9 @@ const Home = () => {
 
   return (
     <>
-      <HeaderComponent />
-      {projectMenuOpen && <ProjectMenuComponent />}
-      {userMenuOpen && <UserMenuComponent />}
+      <HeaderComponent project={projectState?.project} projectMenuOpen={projectMenuOpen} dispatch={dispatch} />
+      {projectMenuOpen && <ProjectMenuComponent projectState={projectState} dispatch={dispatch} />}
+      {userMenuOpen && <UserMenuComponent dispatch={dispatch} />}
       {IsStartPage() ? (
         <>
           <StartPage />
@@ -74,16 +74,16 @@ const Home = () => {
         </>
       ) : (
         <>
-          <ExplorerModule />
-          <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
-          <InspectorModule inspectorRef={inspectorRef} />
-          <LibraryModule />
+          <ExplorerModule dispatch={dispatch} />
+          <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
+          <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
+          <LibraryModule project={projectState?.project} dispatch={dispatch} />
           <TypeEditorComponent />
         </>
       )}
-      {createProjectOpen && <CreateProjectMenu />}
-      <ErrorModule />
-      <ValidationModule />
+      {createProjectOpen && <CreateProjectMenu dispatch={dispatch} />}
+      <ErrorModule projectState={projectState} dispatch={dispatch} />
+      <ValidationModule dispatch={dispatch} />
     </>
   );
 };

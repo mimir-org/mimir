@@ -12,8 +12,10 @@ import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
+import { Project } from "../../../models";
 
 interface Props {
+  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
@@ -21,13 +23,12 @@ interface Props {
  * Component for the Flow library in TreeView
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = ({ inspectorRef }: Props) => {
+const FlowTree = ({ inspectorRef, project }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
   const darkMode = useAppSelector(selectors.darkModeSelector);
-  const project = useAppSelector(selectors.projectSelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);

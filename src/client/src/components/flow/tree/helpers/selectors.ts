@@ -1,6 +1,5 @@
 export {
   darkModeSelector,
-  projectSelector,
   userStateSelector,
   iconSelector,
   librarySelector,

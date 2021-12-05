@@ -9,20 +9,21 @@ import { useDragResizePanel } from "./helpers/useDragResizePanel";
 import { changeInspectorHeight } from "./redux/height/actions";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { useCallback, useRef } from "react";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { Project } from "../../models";
 
 interface Props {
+  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  dispatch: any;
 }
 
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
  * @returns a module with multiple tabs for different operations.
  */
-const InspectorModule = ({ inspectorRef }: Props) => {
-  const dispatch = useAppDispatch();
+const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useAppSelector(Selectors.projectSelector);
   const username = useAppSelector(Selectors.usernameSelector);
   const animate = useParametricAppSelector(Selectors.animatedModuleSelector, type);
   const activeTabIndex = useAppSelector(Selectors.inspectorActiveTabSelector);

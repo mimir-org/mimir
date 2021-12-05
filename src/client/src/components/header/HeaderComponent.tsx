@@ -1,19 +1,23 @@
 import * as selectors from "./helpers/selectors";
 import { MimirLogo } from "../../assets/icons/mimir";
 import { ToolBarComponent, AvatarComponent, ProjectMenuHeader } from ".";
-import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { CompanyLogoBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader, GetSelectedNode, IsStartPage } from "../../helpers";
+import { Project } from "../../models";
+import { useAppSelector } from "../../redux/store";
+
+interface Props {
+  project: Project;
+  projectMenuOpen: boolean;
+  dispatch: any;
+}
 
 /**
  * The top header in Mimir.
  * @returns a banner with the Mimir and company logo, and buttons for project/user menus.
  */
-const HeaderComponent = () => {
-  const dispatch = useAppDispatch();
-  const project = useAppSelector(selectors.projectSelector);
+const HeaderComponent = ({ project, projectMenuOpen, dispatch }: Props) => {
   const filterOpen = useAppSelector(selectors.filterSelector);
-  const projectMenuOpen = useAppSelector(selectors.projectMenuSelector);
   const userMenuOpen = useAppSelector(selectors.userMenuSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);

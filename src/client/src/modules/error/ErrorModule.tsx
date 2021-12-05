@@ -9,7 +9,8 @@ import { deleteCommonError } from "../../redux/store/common/actions";
 import { deleteLibraryError } from "../../redux/store/library/actions";
 import { deleteUserError } from "../../redux/store/user/actions";
 import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
-import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
+import { useAppSelector } from "../../redux/store/hooks";
+import { ProjectState } from "../../redux/store/project/types";
 
 interface ErrorMessage {
   key: string;
@@ -18,11 +19,14 @@ interface ErrorMessage {
   errorData: BadRequestData;
 }
 
-const ErrorModule = () => {
-  const dispatch = useAppDispatch();
+interface Props {
+  projectState: ProjectState;
+  dispatch: any;
+}
+
+const ErrorModule = ({ projectState, dispatch }: Props) => {
   const [visible, setVisible] = useState(false);
   const [errors, setErrors] = useState([] as ErrorMessage[]);
-  const projectState = useAppSelector(selectors.projectStateSelector);
   const libraryState = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const commonState = useAppSelector(selectors.commonStateSelector);

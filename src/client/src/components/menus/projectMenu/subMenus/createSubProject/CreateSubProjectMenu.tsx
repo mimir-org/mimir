@@ -1,6 +1,6 @@
 import * as Handlers from "./handlers";
 import { useState } from "react";
-import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
@@ -14,10 +14,10 @@ interface Props {
   nodeIds: string[];
   edgeIds: string[];
   disabled: boolean;
+  dispatch: any;
 }
 
-export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled }: Props) => {
-  const dispatch = useAppDispatch();
+export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled, dispatch }: Props) => {
   const [projectName, setProjectName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU);
 

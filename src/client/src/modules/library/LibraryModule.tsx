@@ -10,22 +10,25 @@ import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode } from "../../helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import { animatedModuleSelector, legendOpenSelector, libOpenSelector, librarySelector, projectSelector } from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { animatedModuleSelector, legendOpenSelector, libOpenSelector, librarySelector } from "../../redux/store";
+import { Project } from "../../models";
+
+interface Props {
+  project: Project;
+  dispatch: any;
+}
 
 /**
- * Component for Mimir's type library and Legend Module (to be removed).
+ * Component for Mimir's type library and Legend Module (to be moved).
  * @returns a module with a drop-down of Types and a search input.
  */
-const LibraryModule = () => {
-  const dispatch = useAppDispatch();
-
+const LibraryModule = ({ dispatch, project }: Props) => {
+  const [searchString, setSearchString] = useState("");
   const lib = MODULE_TYPE.LIBRARY;
   const legend = MODULE_TYPE.LEGEND;
 
-  const [searchString, setSearchString] = useState("");
   const libState = useAppSelector(librarySelector);
-  const project = useAppSelector(projectSelector);
   const legendOpen = useAppSelector(legendOpenSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
