@@ -1,4 +1,4 @@
-import { NotificationBox } from "../../compLibrary/box/";
+import { NotificationComponent } from "../../compLibrary/box/";
 import { useAppDispatch, useAppSelector, validationSelector } from "../../redux/store";
 import { setValidation } from "../../redux/store/validation/actions";
 
@@ -14,7 +14,7 @@ const ValidationModule = () => {
     dispatch(setValidation(true, ""));
   };
 
-  return !validation.valid && <NotificationBox onClick={onClick} message={validation.message} warning />;
+  return !validation.valid && <NotificationComponent onClick={onClick} message={validation.message} warning />;
 };
 
 export default ValidationModule;

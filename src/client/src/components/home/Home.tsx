@@ -25,7 +25,7 @@ import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 
 /**
- * The main component for Mimir
+ * The main component for Mimir.
  * @returns a JSX Element containing all the modules and components.
  */
 const Home = () => {
