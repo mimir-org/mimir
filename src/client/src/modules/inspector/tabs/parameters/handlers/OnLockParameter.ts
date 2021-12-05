@@ -19,11 +19,8 @@ const OnLockParameter = (
   attribute: Attribute,
   isLocked: boolean,
   isLockedBy: string,
-  isTopElementLocked: boolean,
   dispatch: Dispatch<any>
 ) => {
-  if (isTopElementLocked) return;
-
   if (IsNode(element)) {
     dispatch(setIsLockedNodeAttribute(attribute, element.id, isLocked, isLockedBy));
   } else if (IsTransport(element) && IsEdge(inspectorParentElement)) {

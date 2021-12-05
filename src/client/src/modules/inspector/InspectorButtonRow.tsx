@@ -41,11 +41,13 @@ const InspectorButtonRow = ({
     <ButtonWrapper visible={!!element}>
       {!IsCreateLibraryType(element) && (
         <>
-          <InspectorButton
-            onClick={() => setValidated(!validated)}
-            type={validated ? InspectorButtonType.ValidateCorrect : InspectorButtonType.Validate}
-            visible={true}
-          />
+          {false && ( //TODO: Add validation button back when validation logic has been implemented.
+            <InspectorButton
+              onClick={() => setValidated(!validated)}
+              type={validated ? InspectorButtonType.ValidateCorrect : InspectorButtonType.Validate}
+              visible={true}
+            />
+          )}
           <InspectorButton
             onClick={() => Click.OnLock(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}

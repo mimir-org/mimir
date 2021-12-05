@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./components/app";
 import { PersistGate } from "redux-persist/integration/react";
 
-// MSAL imports
+//  MSAL imports
 import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
 import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
