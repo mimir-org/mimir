@@ -28,7 +28,7 @@ const NotificationBox = styled.div<Props>`
     align-items: center;
     position: relative;
     height: 85px;
-    top: 25px;
+    top: 20px;
     margin: 10px 10px 0px 10px;
     width: 265px;
     text-align: center;
