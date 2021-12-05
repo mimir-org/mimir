@@ -215,6 +215,11 @@ export interface ModuleDescription {
   name: string;
 }
 
+export interface ProjectFileAm {
+  parserId: string;
+  fileContent: string;
+}
+
 export const SETTING_KEY = {
   PREFERED_TYPE: "PREFERED_TYPE",
 };

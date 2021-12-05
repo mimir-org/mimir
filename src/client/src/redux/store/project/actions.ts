@@ -1,6 +1,5 @@
 import * as Types from "./types";
-import { Node, Edge, Project, CommitPackage, Attribute, Connector, Composite } from "../../../models";
-import { ProjectAm } from "../../sagas/project/ConvertProject";
+import { Node, Edge, Project, CommitPackage, Attribute, Connector, Composite, ProjectFileAm } from "../../../models";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return {
@@ -366,10 +365,10 @@ export function exportProjectToFile(project: Project, fileName: string, isSubPro
   };
 }
 
-export function importProjectAction(project: ProjectAm): Types.ProjectActionTypes {
+export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTypes {
   return {
     type: Types.IMPORT_PROJECT,
-    payload: project,
+    payload: data,
   };
 }
 
