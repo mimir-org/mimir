@@ -15,6 +15,7 @@ interface Props {
 
 /**
  * Component for the Explorer Module in Mimir.
+ * @param interface
  * @returns a module where all nodes in Mimir are listed.
  */
 export const ExplorerModule = ({ dispatch }: Props) => {
