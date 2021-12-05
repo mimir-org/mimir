@@ -1,6 +1,6 @@
+import * as selectors from "./helpers/selectors";
 import { useState, useEffect } from "react";
-import { ErrorBox, ErrorItem, ErrorHeaderBox } from ".";
-import { ProjectBody } from "../../components/menus/projectMenu/subMenus/styled";
+import { ErrorBody, ErrorBox, ErrorItem, ErrorHeaderBox } from "./styled";
 import { CloseIcon } from "../../assets/icons/close";
 import { TextResources } from "../../assets/text";
 import { BadRequestData } from "../../models/webclient";
@@ -10,13 +10,6 @@ import { deleteLibraryError } from "../../redux/store/library/actions";
 import { deleteUserError } from "../../redux/store/user/actions";
 import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
-import {
-  commonStateSelector,
-  librarySelector,
-  projectStateSelector,
-  typeEditorStateSelector,
-  userStateSelector,
-} from "../../redux/store";
 
 interface ErrorMessage {
   key: string;
@@ -29,11 +22,11 @@ const ErrorModule = () => {
   const dispatch = useAppDispatch();
   const [visible, setVisible] = useState(false);
   const [errors, setErrors] = useState([] as ErrorMessage[]);
-  const projectState = useAppSelector(projectStateSelector);
-  const libraryState = useAppSelector(librarySelector);
-  const userState = useAppSelector(userStateSelector);
-  const commonState = useAppSelector(commonStateSelector);
-  const typeEditorState = useAppSelector(typeEditorStateSelector);
+  const projectState = useAppSelector(selectors.projectStateSelector);
+  const libraryState = useAppSelector(selectors.librarySelector);
+  const userState = useAppSelector(selectors.userStateSelector);
+  const commonState = useAppSelector(selectors.commonStateSelector);
+  const typeEditorState = useAppSelector(selectors.typeEditorStateSelector);
 
   const closeHeader = () => {
     if (errors) {
@@ -124,7 +117,7 @@ const ErrorModule = () => {
           <img src={CloseIcon} alt="Close error message" onClick={() => closeHeader()} className="icon" />
           {TextResources.Error_Tile}
         </ErrorHeaderBox>
-        <ProjectBody>
+        <ErrorBody>
           {errors?.map((x, index) => {
             return (
               <ErrorItem key={x.module + index}>
@@ -140,7 +133,7 @@ const ErrorModule = () => {
               </ErrorItem>
             );
           })}
-        </ProjectBody>
+        </ErrorBody>
       </ErrorBox>
     </>
   );
