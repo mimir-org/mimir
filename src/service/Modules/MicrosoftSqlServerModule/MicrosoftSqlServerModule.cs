@@ -54,7 +54,7 @@ namespace MicrosoftSqlServerModule
 
             services.AddDbContext<ModelBuilderDbContext>(options =>
             {
-                //options.EnableSensitiveDataLogging();
+                options.EnableSensitiveDataLogging();
                 options.UseSqlServer(connectionString, sqlOptions => sqlOptions.MigrationsAssembly("ModelBuilder.Core"));
             });
 

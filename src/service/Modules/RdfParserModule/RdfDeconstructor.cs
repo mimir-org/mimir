@@ -591,7 +591,7 @@ namespace RdfParserModule
             if (pos is not ILiteralNode literal) throw new Exception($"Could not find any {errorPos} on node {node}");
             try
             {
-                return decimal.Parse(literal.Value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo);
+                return decimal.Parse(literal.Value.Replace(',','.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception e)
             {

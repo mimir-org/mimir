@@ -1,7 +1,6 @@
 import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
-import { FileData } from "../../../../../models";
-import { ProjectAm } from "../../../../../redux/sagas/project/ConvertProject";
+import { FileData, ProjectFileAm } from "../../../../../models";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
 import { Button } from "../../../../../compLibrary/buttons";
@@ -17,14 +16,18 @@ export const ImportProjectFileMenu = () => {
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
     multiple: false,
     readAs: "Text",
-    accept: [".json"],
+    accept: [".json", ".nt", ".ttl"],
     limitFilesConfig: { min: 1, max: 1 },
   });
 
   const data = () => {
     if (!filesContent || filesContent.length <= 0) return null;
     const fileData = filesContent[0] as FileData;
-    return JSON.parse(fileData.content) as ProjectAm;
+    const data = {
+      parserId: "59ed4298-ee6a-443d-a465-35053e9b4581",
+      fileContent: fileData.content,
+    } as ProjectFileAm;
+    return data;
   };
 
   const buttonBrowseText = () => {
@@ -48,7 +51,7 @@ export const ImportProjectFileMenu = () => {
         {plainFiles?.length > 0 && data() && (
           <ButtonBox>
             <Button
-              onClick={() => OnProjectSaveClick(dispatch, data)}
+              onClick={() => OnProjectSaveClick(dispatch, data())}
               text={TextResources.Project_Import}
               icon={ImportProjectIcon}
             />
