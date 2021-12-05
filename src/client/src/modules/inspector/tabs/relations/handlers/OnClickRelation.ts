@@ -1,11 +1,10 @@
 import { Edge, Node } from "../../../../../models";
 import { OnClickNode } from ".";
-import { Dispatch } from "redux";
 
-const OnClickRelation = (node: Node, edge: Edge, setActiveFlowElement: (elementId: string) => void, dispatch: Dispatch) => {
+const OnClickRelation = (node: Node, edge: Edge, setActiveFlowElement: (elementId: string) => void) => {
   const toNode = FindToNodeByConnector(node, edge);
 
-  OnClickNode(toNode, setActiveFlowElement, dispatch);
+  OnClickNode(toNode, setActiveFlowElement);
 };
 
 const FindToNodeByConnector = (node: Node, edge: Edge): Node => {
