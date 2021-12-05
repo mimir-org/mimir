@@ -14,7 +14,7 @@ import { TypeEditorComponent } from "../../typeEditor";
 import { getCollaborationPartners, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { getBlobData } from "../../typeEditor/redux/actions";
-import { Header } from "../header";
+import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { getUser } from "../../redux/store/user/actions";
 import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
@@ -64,7 +64,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <HeaderComponent />
       {projectMenuOpen && <ProjectMenuComponent />}
       {userMenuOpen && <UserMenuComponent />}
       {IsStartPage() ? (

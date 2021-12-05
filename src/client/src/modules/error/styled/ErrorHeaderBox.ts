@@ -6,10 +6,8 @@ const ErrorHeaderBox = styled.div`
 
   .icon {
     position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 18px;
-    height: 18px;
+    right: 8px;
+    top: 8px;
     cursor: pointer;
   }
 `;

@@ -118,29 +118,31 @@ const ErrorModule = () => {
   }, [commonState.apiError, libraryState.apiError, projectState.apiError, userState.apiError, typeEditorState.apiError]);
 
   return (
-    <ErrorBox visible={visible}>
-      <ProjectBody>
+    <>
+      <ErrorBox visible={visible}>
         <ErrorHeaderBox>
           <img src={CloseIcon} alt="Close error message" onClick={() => closeHeader()} className="icon" />
           {TextResources.Error_Tile}
         </ErrorHeaderBox>
-        {errors?.map((x, index) => {
-          return (
-            <ErrorItem key={x.module + index}>
-              <h3>{x.module}</h3>
-              <p>{x.message}</p>
-              {x.errorData?.items?.map((y) => {
-                return (
-                  <p key={y.key}>
-                    {y.key}: {y.value}
-                  </p>
-                );
-              })}
-            </ErrorItem>
-          );
-        })}
-      </ProjectBody>
-    </ErrorBox>
+        <ProjectBody>
+          {errors?.map((x, index) => {
+            return (
+              <ErrorItem key={x.module + index}>
+                <h3>{x.module}</h3>
+                <p>{x.message}</p>
+                {x.errorData?.items?.map((y) => {
+                  return (
+                    <p key={y.key}>
+                      {y.key}: {y.value}
+                    </p>
+                  );
+                })}
+              </ErrorItem>
+            );
+          })}
+        </ProjectBody>
+      </ErrorBox>
+    </>
   );
 };
 export default ErrorModule;

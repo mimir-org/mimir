@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as Selectors from "./helpers/selectors";
+import * as selectors from "./helpers/selectors";
 import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
@@ -31,17 +31,17 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
-  const darkMode = useAppSelector(Selectors.darkModeSelector);
-  const project = useAppSelector(Selectors.projectSelector);
-  const secondaryNode = useAppSelector(Selectors.secondaryNodeSelector);
-  const icons = useAppSelector(Selectors.iconSelector);
-  const lib = useAppSelector(Selectors.librarySelector);
-  const userState = useAppSelector(Selectors.userStateSelector);
-  const visualFilter = useAppSelector(Selectors.filterSelector);
-  const parentSize = useAppSelector(Selectors.nodeSizeSelector);
-  const parentProductSize = useAppSelector(Selectors.productNodeSizeSelector);
-  const animatedEdge = useAppSelector(Selectors.animatedEdgeSelector);
-  const showLocation3D = useAppSelector(Selectors.location3DSelector);
+  const darkMode = useAppSelector(selectors.darkModeSelector);
+  const project = useAppSelector(selectors.projectSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const icons = useAppSelector(selectors.iconSelector);
+  const lib = useAppSelector(selectors.librarySelector);
+  const userState = useAppSelector(selectors.userStateSelector);
+  const visualFilter = useAppSelector(selectors.filterSelector);
+  const parentSize = useAppSelector(selectors.nodeSizeSelector);
+  const parentProductSize = useAppSelector(selectors.productNodeSizeSelector);
+  const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  const showLocation3D = useAppSelector(selectors.location3DSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(

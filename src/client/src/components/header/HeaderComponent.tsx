@@ -1,12 +1,15 @@
 import * as selectors from "./helpers/selectors";
-import { MimirLogo } from "../../assets/icons/mimir/";
-import { ToolBar, Avatar, ProjectMenuHeader } from "./";
+import { MimirLogo } from "../../assets/icons/mimir";
+import { ToolBarComponent, AvatarComponent, ProjectMenuHeader } from ".";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { CompanyLogoBox, HeaderBox, LogoBox } from "./styled";
-import { GetCompanyLogoForHeader } from "../../helpers";
-import { VIEW_TYPE } from "../../models/project";
+import { GetCompanyLogoForHeader, GetSelectedNode, IsStartPage } from "../../helpers";
 
-const Header = () => {
+/**
+ * The top header in Mimir.
+ * @returns a banner with the Mimir and company logo, and buttons for project/user menus.
+ */
+const HeaderComponent = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const filterOpen = useAppSelector(selectors.filterSelector);
@@ -17,7 +20,7 @@ const Header = () => {
   const treeView = useAppSelector(selectors.treeSelector);
   const electro = useAppSelector(selectors.electroSelector);
   const userState = useAppSelector(selectors.userStateSelector);
-  const flowView = useAppSelector(selectors.flowViewSelector);
+  const location3DActive = useAppSelector(selectors.location3DSelector);
   const company = process.env.REACT_APP_COMPANY;
 
   return (
@@ -30,20 +33,23 @@ const Header = () => {
         <CompanyLogoBox>
           <img src={GetCompanyLogoForHeader(company)} alt="logo" />
         </CompanyLogoBox>
-        <Avatar userMenuOpen={userMenuOpen} userState={userState} dispatch={dispatch} />
+        <AvatarComponent userMenuOpen={userMenuOpen} userState={userState} dispatch={dispatch} />
       </HeaderBox>
-      {flowView !== VIEW_TYPE.STARTPAGE && (
-        <ToolBar
+      {!IsStartPage() && (
+        <ToolBarComponent
           project={project}
           libOpen={libOpen}
           explorerOpen={explorerOpen}
           treeView={treeView}
           visualFilter={filterOpen}
           electro={electro}
+          location3DActive={location3DActive}
+          selectedNode={GetSelectedNode()}
+          dispatch={dispatch}
         />
       )}
     </>
   );
 };
 
-export default Header;
+export default HeaderComponent;

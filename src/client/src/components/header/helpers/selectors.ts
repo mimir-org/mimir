@@ -9,4 +9,5 @@ export {
   userMenuSelector,
   userStateSelector,
   flowViewSelector,
+  location3DSelector,
 } from "../../../redux/store/selectors";

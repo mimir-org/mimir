@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as Helpers from "./helpers/";
-import * as Selectors from "./helpers/selectors";
+import * as helpers from "./helpers/";
+import * as selectors from "./helpers/selectors";
 import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
@@ -26,13 +26,13 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useAppSelector(Selectors.darkModeSelector);
-  const project = useAppSelector(Selectors.projectSelector);
-  const userState = useAppSelector(Selectors.userStateSelector);
-  const icons = useAppSelector(Selectors.iconSelector);
-  const library = useAppSelector(Selectors.librarySelector);
-  const visualFilter = useAppSelector(Selectors.filterSelector);
-  const animatedEdge = useAppSelector(Selectors.animatedEdgeSelector);
+  const darkMode = useAppSelector(selectors.darkModeSelector);
+  const project = useAppSelector(selectors.projectSelector);
+  const userState = useAppSelector(selectors.userStateSelector);
+  const icons = useAppSelector(selectors.iconSelector);
+  const library = useAppSelector(selectors.librarySelector);
+  const visualFilter = useAppSelector(selectors.filterSelector);
+  const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -56,7 +56,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const OnConnect = (params) => {
     const fromNode = project.nodes.find((x) => x.id === params.source);
     const fromConnector = fromNode.connectors.find((x) => x.id === params.sourceHandle);
-    const edgeType = Helpers.GetEdgeType(fromConnector);
+    const edgeType = helpers.GetEdgeType(fromConnector);
     return useOnConnect(params, project, setElements, dispatch, edgeType, library, animatedEdge);
   };
 
@@ -77,9 +77,9 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch);
-    } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
+    } else if (selectedElements.length === 1 && helpers.GetNodeTypes[selectedElements[0]?.type]) {
       handleNodeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length === 1 && Helpers.GetEdgeTypes[selectedElements[0]?.type]) {
+    } else if (selectedElements.length === 1 && helpers.GetEdgeTypes[selectedElements[0]?.type]) {
       handleEdgeSelect(selectedElements[0], dispatch);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch);
@@ -106,8 +106,8 @@ const FlowTree = ({ inspectorRef }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        nodeTypes={Helpers.GetNodeTypes}
-        edgeTypes={Helpers.GetEdgeTypes}
+        nodeTypes={helpers.GetNodeTypes}
+        edgeTypes={helpers.GetEdgeTypes}
         defaultZoom={0.7}
         defaultPosition={[800, 0]}
         zoomOnDoubleClick={false}
