@@ -6,7 +6,7 @@ interface Props {
   marginLeft: number;
 }
 
-const CheckboxWrapper = styled.label<Props>`
+const CheckboxWrapper = styled.span<Props>`
   cursor: pointer;
   position: absolute;
   left: 7px;
