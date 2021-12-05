@@ -45,8 +45,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-client-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-client-${{ hashFiles('**/package-lock.json') }}-${{ github.sha }}
           restore-keys: |
+            ${{ runner.os }}-buildx-client-${{ hashFiles('**/package-lock.json') }}
             ${{ runner.os }}-buildx-client
 
       - name: Build client image

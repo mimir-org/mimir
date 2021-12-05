@@ -44,8 +44,9 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-server-${{ github.sha }}
+        key: ${{ runner.os }}-buildx-server-${{ hashFiles('**/*.csproj') }}-${{ github.sha }}
         restore-keys: |
+          ${{ runner.os }}-buildx-server-${{ hashFiles('**/*.csproj') }}
           ${{ runner.os }}-buildx-server
 
     - name: Build server image
