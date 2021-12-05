@@ -7,14 +7,14 @@ interface Props {
 }
 
 const LibElement = styled.div<Props>`
-  width: 286px;
+  width: 278px;
   height: 30px;
   border: 1px solid;
   border-color: ${(props) => (props.active ? Color.Black : Color.GreyDarker)};
   border-style: ${(props) => (props.active ? "dashed" : "default")};
   border-radius: 3px;
   background-color: ${Color.White};
-  margin: 0px 0px 3px 0px;
+  margin: 0px 0px 3px 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
