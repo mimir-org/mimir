@@ -25,7 +25,7 @@ const Size = {
   TypeEditorPropertiesShrunk_BASELINE: -672,
 
   // Menus
-  TopMenu_Height: 56,
+  TopMenu_Height: 54,
   MenuSmall_Width: 330,
   MenuSmall_Height: 200,
   OpenProjectMenu_Small_Width: 519,

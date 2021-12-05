@@ -13,10 +13,10 @@ const GetFilterElements = (elements: any[]) => {
 
     if (isEdge) {
       const edge = elem.data.edge as Edge;
-      edges.push(edge);
+      if (edge && !IsOffPage(edge.fromNode)) edges.push(edge);
     } else {
       const node = elem.data as Node;
-      if (!IsOffPage(node)) nodes.push(node);
+      if (node && !IsOffPage(node)) nodes.push(node);
     }
   });
 

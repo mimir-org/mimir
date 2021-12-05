@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import * as selectors from "./helpers/selectors";
 import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
@@ -16,44 +17,33 @@ import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
-import {
-  iconSelector,
-  darkModeSelector,
-  librarySelector,
-  projectSelector,
-  secondaryNodeSelector,
-  userStateSelector,
-  filterSelector,
-  nodeSizeSelector,
-  productNodeSizeSelector,
-  animatedEdgeSelector,
-  location3DSelector,
-} from "../../../redux/store";
+import { Project } from "../../../models";
 
 interface Props {
+  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
 /**
  * Component for the Flow library in BlockView
- * @returns a scene with Flow elements and Mimir nodes, transports and edges.
+ * @param interface
+ * @returns  a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = ({ inspectorRef }: Props) => {
+const FlowBlock = ({ inspectorRef, project }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
-  const darkMode = useAppSelector(darkModeSelector);
-  const project = useAppSelector(projectSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
-  const icons = useAppSelector(iconSelector);
-  const lib = useAppSelector(librarySelector);
-  const userState = useAppSelector(userStateSelector);
-  const visualFilter = useAppSelector(filterSelector);
-  const parentSize = useAppSelector(nodeSizeSelector);
-  const parentProductSize = useAppSelector(productNodeSizeSelector);
-  const animatedEdge = useAppSelector(animatedEdgeSelector);
-  const showLocation3D = useAppSelector(location3DSelector);
+  const darkMode = useAppSelector(selectors.darkModeSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const icons = useAppSelector(selectors.iconSelector);
+  const lib = useAppSelector(selectors.librarySelector);
+  const userState = useAppSelector(selectors.userStateSelector);
+  const visualFilter = useAppSelector(selectors.filterSelector);
+  const parentSize = useAppSelector(selectors.nodeSizeSelector);
+  const parentProductSize = useAppSelector(selectors.productNodeSizeSelector);
+  const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  const showLocation3D = useAppSelector(selectors.location3DSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(

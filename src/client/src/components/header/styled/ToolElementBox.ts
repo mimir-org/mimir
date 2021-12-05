@@ -5,7 +5,7 @@ interface Props {
   treeView: boolean;
 }
 
-const OptionsElement = styled.div<Props>`
+const ToolElementBox = styled.div<Props>`
   position: relative;
   display: flex;
   height: 41px;
@@ -34,4 +34,4 @@ const OptionsElement = styled.div<Props>`
     margin: auto;
   }
 `;
-export default OptionsElement;
+export default ToolElementBox;

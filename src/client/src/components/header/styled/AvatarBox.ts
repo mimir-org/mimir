@@ -22,6 +22,7 @@ const AvatarBox = styled.div<Props>`
     display: flex;
     align-self: flex-end;
     left: 10px;
+    top: 2px;
   }
 `;
 
