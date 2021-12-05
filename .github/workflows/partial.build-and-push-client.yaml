@@ -45,13 +45,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-server-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-client-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-server
-
-      - name: View directory
-        run: |
-          ls -a
+            ${{ runner.os }}-buildx-client
 
       - name: Build client image
         uses: docker/build-push-action@v2
