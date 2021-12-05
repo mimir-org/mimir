@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { ProjectData } from "./";
 import { ProjectSimple } from "../../../../../models";
 import { TextResources } from "../../../../../assets/text";
@@ -5,9 +6,10 @@ import { ProjectListBox, ProjectDataContainer, ProjectListLabels } from "./style
 
 interface Props {
   projectList: ProjectSimple[];
+  dispatch: Dispatch;
 }
 
-export const ProjectList = ({ projectList }: Props) => (
+export const ProjectList = ({ projectList, dispatch }: Props) => (
   <ProjectListBox>
     <ProjectListLabels>
       <p className="name">{TextResources.Project}</p>
@@ -26,6 +28,7 @@ export const ProjectList = ({ projectList }: Props) => (
             projectOwner={project.projectOwner}
             projectVersion={project.version}
             updated={project.updated}
+            dispatch={dispatch}
           />
         );
       })}

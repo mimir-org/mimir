@@ -1,5 +1,6 @@
 import * as Click from "./handlers";
 import * as Icons from "../../../assets/icons/project";
+import { Dispatch } from "redux";
 import { useCallback, useRef } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
@@ -14,7 +15,7 @@ import { ProjectState } from "../../../redux/store/project/types";
 
 interface Props {
   projectState: ProjectState;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

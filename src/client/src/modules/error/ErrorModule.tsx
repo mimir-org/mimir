@@ -1,4 +1,5 @@
 import * as selectors from "./helpers/selectors";
+import { Dispatch } from "redux";
 import { useState, useEffect } from "react";
 import { ErrorBody, ErrorBox, ErrorItem, ErrorHeaderBox } from "./styled";
 import { CloseIcon } from "../../assets/icons/close";
@@ -21,7 +22,7 @@ interface ErrorMessage {
 
 interface Props {
   projectState: ProjectState;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

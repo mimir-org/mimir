@@ -1,4 +1,5 @@
 import * as selectors from "./helpers/selectors";
+import { Dispatch } from "redux";
 import { MimirLogo } from "../../assets/icons/mimir";
 import { ToolBarComponent, AvatarComponent, ProjectMenuHeader } from ".";
 import { CompanyLogoBox, HeaderBox, LogoBox } from "./styled";
@@ -9,7 +10,7 @@ import { useAppSelector } from "../../redux/store";
 interface Props {
   project: Project;
   projectMenuOpen: boolean;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

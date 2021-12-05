@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { ProjectComponent } from "./";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
@@ -9,7 +10,7 @@ import { useAppSelector, useParametricAppSelector } from "../../redux/store/hook
 import { animatedModuleSelector, explorerSelector } from "../../redux/store";
 
 interface Props {
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

@@ -1,9 +1,10 @@
+import { Dispatch } from "redux";
 import { NotificationComponent } from "../../compLibrary/box/";
 import { useAppSelector, validationSelector } from "../../redux/store";
 import { setValidation } from "../../redux/store/validation/actions";
 
 interface Props {
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

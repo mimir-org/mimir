@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
 import { useAppSelector } from "../../../redux/store/hooks";
@@ -7,7 +8,7 @@ import { darkModeSelector, userStateSelector } from "../../../redux/store";
 import { TextResources } from "../../../assets/text";
 
 interface Props {
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

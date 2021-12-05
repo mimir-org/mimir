@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { TextResources } from "../../assets/text";
 import { LegendModule } from "../../modules/legend";
 import { LibraryComponent } from "./index";
@@ -16,7 +17,7 @@ import { Project } from "../../models";
 
 interface Props {
   project: Project;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

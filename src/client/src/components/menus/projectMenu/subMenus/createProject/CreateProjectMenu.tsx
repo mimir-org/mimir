@@ -1,4 +1,5 @@
 import * as Handlers from "./handlers";
+import { Dispatch } from "redux";
 import { useState } from "react";
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
@@ -10,7 +11,7 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styl
 import { CreateProjectIcon } from "../../../../../assets/icons/project";
 
 interface Props {
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const CreateProjectMenu = ({ dispatch }: Props) => {

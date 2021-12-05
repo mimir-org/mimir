@@ -1,4 +1,5 @@
 import * as Selectors from "./helpers/selectors";
+import { Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView, GetSelectedNode } from "../../helpers";
@@ -15,7 +16,7 @@ import { Project } from "../../models";
 interface Props {
   project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

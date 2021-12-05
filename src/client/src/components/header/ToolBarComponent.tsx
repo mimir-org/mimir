@@ -1,5 +1,6 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
+import { Dispatch } from "redux";
 import { Location } from "../../assets/icons/aspects";
 import { ViewType, VIEW_TYPE } from "../../models/project";
 import { IsBlockView, IsLocation } from "../../helpers";
@@ -16,7 +17,7 @@ interface Props {
   electro: boolean;
   location3DActive: boolean;
   selectedNode: Node;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**
