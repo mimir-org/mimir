@@ -13,5 +13,5 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0.0-alpine3.14-amd64 AS final
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "ModelBuilder.Api.dll"]
