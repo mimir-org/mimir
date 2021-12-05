@@ -21,6 +21,7 @@ interface Props {
 
 /**
  * Component for the Flow library in TreeView
+ * @param interface
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowTree = ({ inspectorRef, project }: Props) => {

@@ -12,6 +12,7 @@ interface Props {
 
 /**
  * Component for the User Menu.
+ * @param interface
  * @returns a menu for the user in the header of Mimir.
  */
 const UserMenuComponent = ({ dispatch }: Props) => {

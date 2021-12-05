@@ -20,6 +20,7 @@ interface Props {
 
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
+ * @param interface
  * @returns a module with multiple tabs for different operations.
  */
 const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {

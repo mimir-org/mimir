@@ -14,6 +14,7 @@ interface Props {
 
 /**
  * The top header in Mimir.
+ * @param interface
  * @returns a banner with the Mimir and company logo, and buttons for project/user menus.
  */
 const HeaderComponent = ({ project, projectMenuOpen, dispatch }: Props) => {

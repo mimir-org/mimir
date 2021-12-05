@@ -19,6 +19,7 @@ interface Props {
 
 /**
  * Component for the Project Menu.
+ * @param interface
  * @returns a menu for the Project in the header of Mimir.
  */
 const ProjectMenuComponent = ({ projectState, dispatch }: Props) => {

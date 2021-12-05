@@ -8,6 +8,7 @@ interface Props {
 
 /**
  * Component to handle validation in Mimir. If an action requires a feedback a box with information will appear.
+ * @param interface
  * @returns a box with a message and a close button.
  */
 const ValidationModule = ({ dispatch }: Props) => {

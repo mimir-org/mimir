@@ -24,6 +24,11 @@ interface Props {
   dispatch: any;
 }
 
+/**
+ * Module to handle errors coming from the server.
+ * @param interface
+ * @returns a box with the error messages.
+ */
 const ErrorModule = ({ projectState, dispatch }: Props) => {
   const [visible, setVisible] = useState(false);
   const [errors, setErrors] = useState([] as ErrorMessage[]);

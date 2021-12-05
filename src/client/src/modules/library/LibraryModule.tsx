@@ -21,7 +21,8 @@ interface Props {
 
 /**
  * Component for Mimir's type library and Legend Module (to be moved).
- * @returns a module with a drop-down of Types and a search input.
+ * @param interface
+ * @returns  a module with a drop-down of Types and a search input.
  */
 const LibraryModule = ({ dispatch, project }: Props) => {
   const [searchString, setSearchString] = useState("");
