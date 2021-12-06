@@ -14,7 +14,7 @@ const ToolBarBox = styled.div<Props>`
   width: auto;
   border-bottom: 1px solid ${Color.Grey};
   position: absolute;
-  top: 56px;
+  top: ${Size.TopMenu_Height}px;
   display: inline;
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
   z-index: 5;

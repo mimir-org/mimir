@@ -1,17 +1,11 @@
+import * as selectors from "./helpers/selectors";
 import { Node } from "../../models";
 import { TreeAspectComponent, BlockAspectComponent } from "./aspectComponent/";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { GetSelectedNode, IsBlockView, IsOffPage } from "../../helpers";
-import {
-  blockElementsSelector,
-  projectSelector,
-  secondaryNodeSelector,
-  useAppDispatch,
-  useAppSelector,
-  usernameSelector,
-} from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 
 /**
  * Component for a singe Project in Mimir, displayed in the Explorer Module.
@@ -19,13 +13,12 @@ import {
  */
 const ProjectComponent = () => {
   const dispatch = useAppDispatch();
-
-  const elements = useAppSelector(blockElementsSelector);
-  const project = useAppSelector(projectSelector);
-  const username = useAppSelector(usernameSelector);
+  const elements = useAppSelector(selectors.blockElementsSelector);
+  const project = useAppSelector(selectors.projectSelector);
+  const username = useAppSelector(selectors.usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedNode = GetSelectedNode();
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());

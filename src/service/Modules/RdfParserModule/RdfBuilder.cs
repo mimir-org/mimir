@@ -414,6 +414,11 @@ namespace RdfParserModule
                     BuildAttributes(nodeId, node.Attributes);
                 }
 
+                if (node.Symbol is not null)
+                {
+                    Graph.Assert(new Triple(nodeId, GetOrCreateUriNode(BuildIri("mimir", "symbol")), Graph.CreateLiteralNode(node.Symbol)));
+                }
+
 
                 foreach (var connector in node.Connectors)
                 {

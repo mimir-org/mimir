@@ -25,22 +25,24 @@ interface Props {
 const ProjectSubMenus = ({ projectState, commonState, selectedNodeIds, selectedEdgeIds, dispatch }: Props) => (
   <>
     <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
-    <CreateProjectMenu />
+    <CreateProjectMenu dispatch={dispatch} />
     <ExportProjectFileMenu projectState={projectState} dispatch={dispatch} />
-    <ImportProjectFileMenu />
-    <ExportLibraryFileMenu />
-    <ImportFileLibraryMenu />
+    <ImportProjectFileMenu dispatch={dispatch} />
+    <ExportLibraryFileMenu dispatch={dispatch} />
+    <ImportFileLibraryMenu dispatch={dispatch} />
     <CommitProjectMenu
       collaborationPartners={commonState.collaborationPartners}
       parsers={commonState.parsers}
       projectId={projectState?.project?.id}
       disabled={!projectState?.project?.isSubProject}
+      dispatch={dispatch}
     />
     <CreateSubProjectMenu
       fromProjectId={projectState?.project?.id}
       nodeIds={selectedNodeIds}
       edgeIds={selectedEdgeIds}
       disabled={!selectedNodeIds}
+      dispatch={dispatch}
     />
   </>
 );

@@ -35,6 +35,7 @@ export interface AttributeAm {
   formatId: string;
   terminalId: string;
   nodeId: string;
+  nodeIri: string;
   transportId: string;
   compositeId: string;
   attributeTypeId: string;
@@ -55,6 +56,8 @@ export interface ConnectorAm {
   semanticReference: string;
   visible: boolean;
   nodeId: string;
+  nodeIri: string;
+  isRequired: boolean;
 
   // Relation
   relationType: RelationType;
@@ -109,6 +112,10 @@ export interface EdgeAm {
   toConnectorId: string;
   fromNodeId: string;
   toNodeId: string;
+  fromConnectorIri: string;
+  toConnectorIri: string;
+  fromNodeIri: string;
+  toNodeIri: string;
   masterProjectId: string;
   masterProjectIri: string;
   transport: TransportAm;
@@ -214,6 +221,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       formatId: attribute.formatId,
       terminalId: attribute.terminalId,
       nodeId: attribute.nodeId,
+      nodeIri: attribute.nodeIri,
       attributeTypeId: attribute.attributeTypeId,
       compositeId: attribute.compositeId,
       units: ConvertUnits(attribute.units),
@@ -246,11 +254,13 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       semanticReference: connector.semanticReference,
       visible: connector.visible,
       nodeId: connector.nodeId,
+      nodeIri: connector.nodeIri,
       relationType: connector.relationType,
       color: connector.color,
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
+      isRequired: connector.isRequired
     } as ConnectorAm;
 
     converted.push(a);
@@ -270,6 +280,7 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
     semanticReference: connector.semanticReference,
     visible: connector.visible,
     nodeId: connector.nodeId,
+    nodeIri: connector.nodeIri,
     relationType: connector.relationType,
     color: connector.color,
     terminalCategoryId: connector.terminalCategoryId,
@@ -410,6 +421,10 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,
       toNodeId: edge.toNodeId,
+      fromConnectorIri: edge.fromConnectorIri,
+      toConnectorIri: edge.toConnectorIri,
+      fromNodeIri: edge.fromNodeIri,
+      toNodeIri: edge.toNodeIri,
       masterProjectId: edge.masterProjectId,
       masterProjectIri: edge.masterProjectIri,
       transport: ConvertTransport(edge.transport),

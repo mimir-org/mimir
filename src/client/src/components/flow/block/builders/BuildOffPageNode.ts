@@ -19,7 +19,7 @@ export interface OffPageData {
  * @param data
  * @returns the data type OffPageObject.
  */
-const CreateOffPageNode = (sourceNode: Node, data: OffPageData) => {
+const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
   const sourceConnector = sourceNode?.connectors.find((x) => x.id === data.sourceConnectorId);
   const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const marginY = 150;
@@ -122,4 +122,4 @@ const CreateOffPageNode = (sourceNode: Node, data: OffPageData) => {
   } as OffPageObject;
 };
 
-export default CreateOffPageNode;
+export default BuildOffPageNode;

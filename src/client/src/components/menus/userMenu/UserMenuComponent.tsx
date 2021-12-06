@@ -1,18 +1,24 @@
+import { memo } from "react";
+import { Dispatch } from "redux";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
-import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { useAppSelector } from "../../../redux/store/hooks";
 import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
-import { darkModeSelector, userStateSelector } from "../../../redux/store";
+import { userStateSelector } from "../../../redux/store";
 import { TextResources } from "../../../assets/text";
+
+interface Props {
+  dispatch: Dispatch;
+  darkMode: boolean;
+}
 
 /**
  * Component for the User Menu.
+ * @param interface
  * @returns a menu for the user in the header of Mimir.
  */
-const UserMenuComponent = () => {
-  const dispatch = useAppDispatch();
-  const darkMode = useAppSelector(darkModeSelector);
+const UserMenuComponent = ({ dispatch, darkMode }: Props) => {
   const userState = useAppSelector(userStateSelector);
 
   return (
@@ -45,4 +51,4 @@ const UserMenuComponent = () => {
   );
 };
 
-export default UserMenuComponent;
+export default memo(UserMenuComponent);

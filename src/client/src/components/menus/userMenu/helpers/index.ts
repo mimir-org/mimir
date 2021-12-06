@@ -1,1 +1,1 @@
-export { default as GetUserInitials } from "./GetUserInitials";
+export { default as GetAvatarInitials } from "./GetAvatarInitials";

@@ -1,4 +1,4 @@
-import { OptionsElement } from "./styled";
+import { ToolElementBox } from "./styled";
 
 interface Props {
   treeView: boolean;
@@ -7,14 +7,14 @@ interface Props {
   label: string;
 }
 /**
- * Component for one element in the ToolBar.
+ * Component for one element in the ToolBar Component.
  * @param interface
  * @returns a clickable box in the ToolBar.
  */
 const ToolBarElement = ({ treeView, onClick, icon, label }: Props) => (
-  <OptionsElement treeView={treeView} onClick={() => onClick()}>
+  <ToolElementBox treeView={treeView} onClick={() => onClick()}>
     <img src={icon} alt={label} className="logo" />
-  </OptionsElement>
+  </ToolElementBox>
 );
 
 export default ToolBarElement;

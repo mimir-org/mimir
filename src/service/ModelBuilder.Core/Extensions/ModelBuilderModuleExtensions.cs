@@ -74,8 +74,7 @@ namespace Mb.Core.Extensions
 
             // Dependency injection
 
-            services.AddSingleton<ICommonRepository, CommonRepository>();
-
+            services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
             services.AddScoped<IEdgeRepository, EdgeRepository>();
@@ -93,6 +92,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<ICommonService, CommonService>();
             services.AddScoped<INodeService, NodeService>();
             services.AddScoped<IVersionService, VersionService>();
+            services.AddScoped<IProjectFileService, ProjectFileService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();

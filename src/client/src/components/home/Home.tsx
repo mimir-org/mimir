@@ -1,4 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import * as selectors from "./helpers/selectors";
+import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
+import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
 import { ProjectMenuComponent } from "../menus/projectMenu";
@@ -11,22 +15,34 @@ import { TypeEditorComponent } from "../../typeEditor";
 import { getCollaborationPartners, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { getBlobData } from "../../typeEditor/redux/actions";
-import { Header } from "../header";
+import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
-import { projectMenuSelector, flowViewSelector, useAppDispatch, useAppSelector, userMenuSelector } from "../../redux/store";
 import { getUser } from "../../redux/store/user/actions";
+import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
+import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
+import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
+import { IsStartPage, SetDarkModeColor } from "../../helpers";
+import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+
+interface Props {
+  dispatch: Dispatch;
+}
 
 /**
- * The main component for Mimir
- * @returns a JSX Element containing all the modules and components.
+ * The main component for Mimir.
+ * @param interface
+ * @returns all the modules and components in the Mimir application.
  */
-const Home = () => {
-  const dispatch = useAppDispatch();
-  const projectMenuOpen = useAppSelector(projectMenuSelector);
-  const userMenuOpen = useAppSelector(userMenuSelector);
-
-  const flowView = useAppSelector(flowViewSelector);
+const Home = ({ dispatch }: Props) => {
+  const projectState = useAppSelector(selectors.projectStateSelector);
+  const projectMenuOpen = useAppSelector(selectors.projectMenuSelector);
+  const userMenuOpen = useAppSelector(selectors.userMenuSelector);
+  const flowView = useAppSelector(selectors.flowViewSelector);
+  const darkMode = useAppSelector(selectors.darkModeSelector);
   const inspectorRef = useRef(null);
+  const createProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
+  const openProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());
@@ -42,18 +58,42 @@ const Home = () => {
     dispatch(getUser());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(changeActiveMenu(null));
+    const timeout = setTimeout(() => {
+      if (flowView === (VIEW_TYPE.STARTPAGE as ViewType)) {
+        dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
+      }
+    }, 2500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    SetDarkModeColor(darkMode);
+  }, [darkMode]);
+
   return (
     <>
-      <Header />
-      {projectMenuOpen && <ProjectMenuComponent />}
-      {userMenuOpen && <UserMenuComponent />}
-      <ExplorerModule />
-      <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
-      <InspectorModule inspectorRef={inspectorRef} />
-      <LibraryModule />
-      <TypeEditorComponent />
-      <ErrorModule />
-      <ValidationModule />
+      <HeaderComponent project={projectState?.project} projectMenuOpen={projectMenuOpen} dispatch={dispatch} />
+      {projectMenuOpen && <ProjectMenuComponent projectState={projectState} dispatch={dispatch} />}
+      {userMenuOpen && <UserMenuComponent darkMode={darkMode} dispatch={dispatch} />}
+      {IsStartPage() ? (
+        <>
+          <StartPage />
+          {openProject && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
+          {createProject && <CreateProjectMenu dispatch={dispatch} />}
+        </>
+      ) : (
+        <>
+          <ExplorerModule dispatch={dispatch} />
+          <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
+          <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
+          <LibraryModule project={projectState?.project} dispatch={dispatch} />
+          <TypeEditorComponent />
+        </>
+      )}
+      <ErrorModule projectState={projectState} dispatch={dispatch} />
+      <ValidationModule dispatch={dispatch} />
     </>
   );
 };

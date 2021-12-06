@@ -42,6 +42,13 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar-track {
     background-color: transparent;
   }
+
+  hr {
+    width: 90%;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
 `;
 
 export default GlobalStyle;

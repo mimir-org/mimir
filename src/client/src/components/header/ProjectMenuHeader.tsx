@@ -1,7 +1,7 @@
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../assets/icons/chevron";
 import { TextResources } from "../../assets/text";
 import { OnProject } from "./handlers";
-import { ProjectBox } from "./styled";
+import { ProjectHeaderBox } from "./styled";
 import { Project } from "../../models";
 
 interface Props {
@@ -14,15 +14,15 @@ interface Props {
  * @param interface
  * @returns a clickable element that toggles the ProjectMenuComponent.
  */
-const ProjectMenu = ({ projectMenuOpen, project, dispatch }: Props) => (
-  <ProjectBox isOpen={projectMenuOpen} onClick={() => OnProject(dispatch, projectMenuOpen)}>
-    <p className="project-name">{project?.name ?? TextResources.Project}</p>
+const ProjectMenuHeader = ({ projectMenuOpen, project, dispatch }: Props) => (
+  <ProjectHeaderBox isOpen={projectMenuOpen} onClick={() => OnProject(dispatch, projectMenuOpen)}>
+    <p>{project?.name ?? TextResources.Project}</p>
     <img
-      src={projectMenuOpen ? ExpandWhiteIcon : CollapseWhiteIcon}
+      src={projectMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon}
       alt="icon"
       className="toggle-icon"
       onClick={() => OnProject(dispatch, projectMenuOpen)}
     />
-  </ProjectBox>
+  </ProjectHeaderBox>
 );
-export default ProjectMenu;
+export default ProjectMenuHeader;

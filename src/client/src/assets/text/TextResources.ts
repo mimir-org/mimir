@@ -30,7 +30,7 @@ const TextResources = {
   MainHeader_VisualFilter: "Visual Filter",
 
   // InspectorModule
-  Inspector_AdminInfo: "Admin info",
+  Inspector_AdminInfo: "Admin",
   Inspector_Object: "Object",
   Inspector_Parameters: "Parameters",
   Inspector_Relations: "Relations",
@@ -49,12 +49,12 @@ const TextResources = {
   Inspector_Relations_Function: "Go to function",
   Inspector_Relations_Input_object_connetion: "Input object connection",
   Inspector_Relations_Output_object_connetion: "Output object connection",
-  Inspector_Relations_Relationships: "Go To: Active Relations",
+  Inspector_Relations_Relationships: "Active Relations",
   Inspector_Relations_Active_Terminal_Types: "Active Terminal Types",
-  Inspector_Relations_Terminal_Input: "Go To: Terminal Input Object Connection",
-  Inspector_Relations_Terminal_Output: "Go To: Terminal Output Object Connection",
-  Inspector_Relations_Transport: "Go To: Connected Transport",
-  Inspector_Relations_Nodes: "Go To: Active Nodes",
+  Inspector_Relations_Terminal_Input: "Terminal Input Object Connections",
+  Inspector_Relations_Terminal_Output: "Terminal Output Object Connections",
+  Inspector_Relations_Transport: "Connected Transports",
+  Inspector_Relations_Nodes: "Active Nodes",
   Inspector_Relations_All_Terminal_Types: "All available Terminal Types",
   Inspector_Relations_Connector_Attributes: "Connector attributes",
 
@@ -166,12 +166,21 @@ const TextResources = {
   // ProjectMenu
   Project: "Project",
   Project_Heading: "Projects",
+  Project_New: "Create project",
+  Project_Search_Placeholder: "Search Projects",
   Project_OpenProject: "Open project",
   Project_Recent: "Recent projects",
-  Project_Recent_Name: "Project name",
-  Project_Recent_Owner: "Project owner",
+  Project_Recent_Owner: "Owner",
+  Project_Recent_Version: "Version",
   Project_Recent_Edited: "Last edited",
+
+  Project_Open_Label: "Open or start a new project",
   Project_Save_Label: "Save project",
+  Project_Description_About: "About the project",
+  Project_Description_Na: "No information currently available",
+  Project_Description_Libraries: "Libraries",
+  Project_Description_SubProj: "Sub-projects",
+  Project_Description_Temps: "Templates",
 
   Project_Import: "Import project",
   Project_Import_LibraryTypes: "Import library types",
@@ -189,6 +198,7 @@ const TextResources = {
   Project_Commit: "Commit",
 
   Project_Logout: "Log out",
+  Project_Start_Label: "Start a new project",
   Project_CreateProject: "Create project",
   Project_SubProject_Save: "Save selection as sub-project",
   Project_Name: "Project name",
@@ -265,7 +275,11 @@ const TextResources = {
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
   Validation_BlockView: "Please selct a node before opening Block View.",
   Validation_BlockView_Project: "Please selct a project before opening Block View.",
+  Validation_OffPage: "An off-page node can only be connected with a node of the same type.",
   Validation_Cancel: "Cancel",
+
+  // Version
+  Mimir_Version: "Version 0.1",
   Validation_Ok: "Ok",
 };
 

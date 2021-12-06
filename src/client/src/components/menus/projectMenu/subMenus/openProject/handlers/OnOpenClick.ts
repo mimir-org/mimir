@@ -1,9 +1,14 @@
-import { MENU_TYPE } from "../../../../../../models/project/project";
-import { changeActiveMenu } from "../../redux/actions";
+import { ViewType, VIEW_TYPE } from "../../../../../../models/project/project";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
+import { Dispatch } from "redux";
+import { changeFlowView } from "../../../../../../redux/store/flow/actions";
+import { get } from "../../../../../../redux/store/project/actions";
 
-const OnOpenClick = (dispatch: any, setConfirm: any) => {
-  setConfirm(true);
-  dispatch(changeActiveMenu(MENU_TYPE.PROJECT_MENU));
+const OnOpenClick = (projectId: string, dispatch: Dispatch) => {
+  dispatch(get(projectId));
+  dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
+  dispatch(setProjectMenuVisibility(false));
+  dispatch(changeActiveMenu(null));
 };
 
 export default OnOpenClick;
