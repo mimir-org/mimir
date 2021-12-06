@@ -3,14 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
 {
-    public class ProjectFileAm
+    public class ProjectConverterAm
     {
         [Required]
         public Guid ParserId { get; set; }
 
         [Required]
-        public string FileContent { get; set; }
-
-        public FileFormat FileFormat { get; set; }
+        public ProjectAm Project { get; set; }
     }
 }

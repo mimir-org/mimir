@@ -183,6 +183,48 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Convert project
+        /// </summary>
+        /// <param name="projectConverter"></param>
+        /// <returns></returns>
+        [HttpPost("convert")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Edit")]
+        public async Task<IActionResult> ConvertProject([FromBody] ProjectConverterAm projectConverter)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var project = await _projectFileService.ConvertProject(projectConverter);
+                return Ok(project);
+            }
+            catch (ModelBuilderBadRequestException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+
+                foreach (var error in e.Errors().ToList())
+                {
+                    ModelState.Remove(error.Key);
+                    ModelState.TryAddModelError(error.Key, error.Error);
+                }
+
+                return BadRequest(ModelState);
+            }
+            
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Import a new project
         /// </summary>
         /// <param name="id"></param>
