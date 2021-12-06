@@ -32,9 +32,7 @@ export const ExplorerModule = ({ dispatch }: Props) => {
         <p className="text">{type}</p>
         <img className="icon" src={ExplorerIcon} alt="toggle" />
       </ModuleHeader>
-      <ModuleBody visible={isOpen}>
-        <ProjectComponent />
-      </ModuleBody>
+      <ModuleBody visible>{isOpen && <ProjectComponent />}</ModuleBody>
     </AnimatedModule>
   );
 };

@@ -4,4 +4,5 @@ export {
   userMenuSelector,
   flowViewSelector,
   isActiveMenuSelector,
+  darkModeSelector,
 } from "../../../redux/store/selectors";

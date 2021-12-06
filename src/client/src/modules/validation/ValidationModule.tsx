@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Dispatch } from "redux";
 import { NotificationComponent } from "../../compLibrary/box/";
 import { useAppSelector, validationSelector } from "../../redux/store";
@@ -22,4 +23,4 @@ const ValidationModule = ({ dispatch }: Props) => {
   return !validation.valid && <NotificationComponent onClick={onClick} message={validation.message} warning />;
 };
 
-export default ValidationModule;
+export default memo(ValidationModule);

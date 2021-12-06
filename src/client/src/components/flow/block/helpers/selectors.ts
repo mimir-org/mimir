@@ -1,5 +1,4 @@
 export {
-  darkModeSelector,
   secondaryNodeSelector,
   iconSelector,
   librarySelector,

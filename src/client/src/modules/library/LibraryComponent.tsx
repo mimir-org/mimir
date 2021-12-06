@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { TextResources } from "../../assets/text";
 import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary/input/text";
@@ -75,4 +75,4 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
   );
 };
 
-export default LibraryComponent;
+export default memo(LibraryComponent);

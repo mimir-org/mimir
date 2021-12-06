@@ -16,6 +16,7 @@ import { Project } from "../../../models";
 
 interface Props {
   project: Project;
+  darkMode: boolean;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
@@ -24,12 +25,11 @@ interface Props {
  * @param interface
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = ({ inspectorRef, project }: Props) => {
+const FlowTree = ({ project, darkMode, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useAppSelector(selectors.darkModeSelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);

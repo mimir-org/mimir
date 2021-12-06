@@ -34,9 +34,10 @@ const Home = () => {
   const projectMenuOpen = useAppSelector(selectors.projectMenuSelector);
   const userMenuOpen = useAppSelector(selectors.userMenuSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
+  const darkMode = useAppSelector(selectors.darkModeSelector);
   const inspectorRef = useRef(null);
-  const createProjectOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
-  const openProjectOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
+  const createProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
+  const openProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());
@@ -66,22 +67,22 @@ const Home = () => {
     <>
       <HeaderComponent project={projectState?.project} projectMenuOpen={projectMenuOpen} dispatch={dispatch} />
       {projectMenuOpen && <ProjectMenuComponent projectState={projectState} dispatch={dispatch} />}
-      {userMenuOpen && <UserMenuComponent dispatch={dispatch} />}
+      {userMenuOpen && <UserMenuComponent darkMode={darkMode} dispatch={dispatch} />}
       {IsStartPage() ? (
         <>
           <StartPage />
-          {openProjectOpen && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
+          {openProject && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
+          {createProject && <CreateProjectMenu dispatch={dispatch} />}
         </>
       ) : (
         <>
           <ExplorerModule dispatch={dispatch} />
-          <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
+          <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} darkMode={darkMode} />
           <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule project={projectState?.project} dispatch={dispatch} />
           <TypeEditorComponent />
         </>
       )}
-      {createProjectOpen && <CreateProjectMenu dispatch={dispatch} />}
       <ErrorModule projectState={projectState} dispatch={dispatch} />
       <ValidationModule dispatch={dispatch} />
     </>
