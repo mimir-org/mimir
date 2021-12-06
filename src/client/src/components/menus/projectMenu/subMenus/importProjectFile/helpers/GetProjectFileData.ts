@@ -8,6 +8,7 @@ const GetProjectFileData = (filesContent: FileContent[], parser: ModuleDescripti
   return {
     parserId: parser.id,
     fileContent: fileData.content,
+    fileFormat: null
   };
 };
 export default GetProjectFileData;

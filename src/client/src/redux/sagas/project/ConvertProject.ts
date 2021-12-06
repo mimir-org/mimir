@@ -262,7 +262,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
-      isRequired: connector.isRequired
+      isRequired: connector.isRequired,
     } as ConnectorAm;
 
     converted.push(a);

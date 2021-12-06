@@ -21,9 +21,9 @@ type AppProps = {
 const App = ({ pca }: AppProps) => {
   const history = useHistory();
   const navigationClient = new ModelBuilderNavigationClient(history);
+  const isFetching = useAppSelector(isFetchingSelector);
   pca.setNavigationClient(navigationClient);
   const projectState = useAppSelector(projectStateSelector);
-  const isFetching = useAppSelector(isFetchingSelector);
 
   const login = () => {
     msalInstance.loginRedirect();

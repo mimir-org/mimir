@@ -26,7 +26,7 @@ const ProjectSubMenus = ({ projectState, commonState, selectedNodeIds, selectedE
   <>
     <OpenProjectMenu projectState={projectState} dispatch={dispatch} />
     <CreateProjectMenu dispatch={dispatch} />
-    <ExportProjectFileMenu projectState={projectState} dispatch={dispatch} />
+    <ExportProjectFileMenu projectState={projectState} dispatch={dispatch} parsers={commonState?.parsers} />
     <ImportProjectFileMenu dispatch={dispatch} parsers={commonState?.parsers} />
     <ExportLibraryFileMenu dispatch={dispatch} />
     <ImportFileLibraryMenu dispatch={dispatch} />

@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { OffPageIcon, OffPageRequiredIcon } from "../../../../assets/icons/offpage";
+import { OffPageIcon } from "../../../../assets/icons/offpage";
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 import { IsInputTerminal, IsTransport } from "../../helpers";
@@ -21,18 +21,12 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   if (!node) return null;
 
-  const required = node.connectionRequired;
   const terminal = node.connectors.find((c) => IsInputTerminal(c) && IsTransport(c));
   const iconColor = terminal?.color;
 
   return (
     <OffPageBox id={type + node.id}>
-      {required ? (
-        <OffPageRequiredIcon style={{ fill: iconColor }} className="logo" />
-      ) : (
-        <OffPageIcon style={{ fill: iconColor }} className="logo" />
-      )}
-
+      <OffPageIcon style={{ fill: iconColor }} className="logo" />
       <HandleComponent
         nodes={nodes}
         size={{ width: node.width, height: node.height }}

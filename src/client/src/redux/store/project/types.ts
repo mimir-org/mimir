@@ -1,4 +1,4 @@
-import { Project, Node, Edge, CommitPackage, ProjectFileAm } from "../../../models";
+import { Project, Node, Edge, CommitPackage, ProjectFileAm, ProjectConverterAm } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
@@ -344,11 +344,7 @@ export interface ChangeActiveConnector {
 }
 export interface ExportProjectFileAction {
   type: typeof EXPORT_PROJECT_TO_FILE;
-  payload: {
-    project: Project;
-    fileName: string;
-    isSubProject: boolean;
-  };
+  payload: ProjectConverterAm;
 }
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
@@ -515,8 +511,9 @@ export interface UpdateEdgeAction {
 export interface SetOffPageStatus {
   type: typeof SET_OFFPAGE_STATUS;
   payload: {
-    id: string;
-    required: boolean;
+    nodeId: string;
+    connectorId: string;
+    isRequired: boolean;
   };
 }
 
