@@ -23,7 +23,7 @@ const ButtonContainer = styled.button<Props>`
   color: ${Color.Black};
 
   .button-text {
-    max-width: 220px;
+    max-width: 260px;
     display: flex;
     padding: 0px 5px;
     margin-right: ${(props) => (props.icon ? 14 : 0)}px;
