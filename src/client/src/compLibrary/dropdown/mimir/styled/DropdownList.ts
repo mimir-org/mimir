@@ -20,7 +20,6 @@ const DropdownList = styled.div<Props>`
   border-radius: ${(props) => props.borderRadius}px;
   background-color: inherit;
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
-
   overflow-y: auto;
   z-index: 1;
 `;
