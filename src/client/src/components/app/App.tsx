@@ -11,6 +11,8 @@ import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
 import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
+import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
+import { isFetchingSelector, useAppSelector } from "../../redux/store";
 
 type AppProps = {
   pca: IPublicClientApplication;
@@ -19,6 +21,7 @@ type AppProps = {
 const App = ({ pca }: AppProps) => {
   const history = useHistory();
   const navigationClient = new ModelBuilderNavigationClient(history);
+  const isFetching = useAppSelector(isFetchingSelector);
   pca.setNavigationClient(navigationClient);
 
   const login = () => {
@@ -34,6 +37,9 @@ const App = ({ pca }: AppProps) => {
     <MsalProvider instance={pca}>
       <AuthenticatedTemplate>
         <GlobalStyle />
+        <SpinnerWrapper fetching={isFetching}>
+          <Spinner />
+        </SpinnerWrapper>
         <Home dispatch={dispatch} />
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>

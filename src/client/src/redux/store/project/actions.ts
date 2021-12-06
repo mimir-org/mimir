@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { Node, Edge, Project, CommitPackage, Attribute, Connector, Composite, ProjectFileAm } from "../../../models";
+import { Node, Edge, Project, CommitPackage, Attribute, Connector, Composite, ProjectFileAm, ProjectConverterAm } from "../../../models";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return {
@@ -354,14 +354,11 @@ export function changeActiveConnector(
   };
 }
 
-export function exportProjectToFile(project: Project, fileName: string, isSubProject: boolean): Types.ProjectActionTypes {
+export function exportProjectToFile(projectConverter: ProjectConverterAm): Types.ProjectActionTypes {
   return {
     type: Types.EXPORT_PROJECT_TO_FILE,
-    payload: {
-      project: project,
-      fileName: fileName,
-      isSubProject: isSubProject,
-    },
+    payload: projectConverter
+
   };
 }
 

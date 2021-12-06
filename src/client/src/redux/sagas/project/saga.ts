@@ -1,8 +1,8 @@
 import { call, put } from "redux-saga/effects";
-import { Project } from "../../../models";
+import { Project, ProjectFileAm } from "../../../models";
 import { ConvertProject, InitializeProject } from ".";
 import { saveAs } from "file-saver";
-import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
+import { get, post, GetBadResponseData, ApiError, GetBadRequestPayload, GetErrorResponsePayload } from "../../../models/webclient";
 import {
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
   CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -316,27 +316,31 @@ export function* updateProject(action) {
 
 export function* exportProjectFile(action: ExportProjectFileAction) {
   try {
-    const proj = ConvertProject(action.payload.project);
-    proj.isSubProject = action.payload.isSubProject;
-    const blob = new Blob([JSON.stringify(proj, null, 2)], {
-      type: "application/json",
-    });
-    saveAs(blob, action.payload.fileName + ".json");
-  } catch (error) {
-    const apiError = {
-      key: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
 
-    const payload = {
-      apiError: apiError,
-    };
+    const url = process.env.REACT_APP_API_BASE_URL + "project/convert/";
+    const response = yield call(post, url, action.payload);
+
+    if (response.status === 400) {
+      yield put(GetBadRequestPayload(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR));
+      return;
+    }
+
+    var data = response.data as ProjectFileAm;
+    const blob = new Blob([data.fileContent], {
+      type: data.fileFormat.contentType,
+    });
+
+    saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
 
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-      payload: payload,
+      payload: {
+        apiError: null
+      }
     });
+
+  } catch (error) {
+    yield put(GetErrorResponsePayload(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR, {}))
   }
 }
 

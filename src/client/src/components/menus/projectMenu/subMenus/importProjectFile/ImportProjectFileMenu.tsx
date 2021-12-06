@@ -40,7 +40,7 @@ export const ImportProjectFileMenu = ({ parsers, dispatch }: Props) => {
   const setButtonAction = () => {
     if (!hasParser) return () => null;
     if (hasParser && !data) return openFileSelector();
-    if (hasParser && data) return () => OnProjectSaveClick(dispatch, data);
+    if (hasParser && data) return OnProjectSaveClick(dispatch, data);
   };
 
   return (
