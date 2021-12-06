@@ -9,6 +9,7 @@ import { TypeEditorModule } from "../../typeEditor";
 import { Dispatch } from "redux";
 import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { GetSelectedNode } from "../../helpers";
+import { LibraryCategory } from "../../models/project";
 
 interface Props {
   search: (text: string) => void;
@@ -28,6 +29,10 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
 
   const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
   const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
+
+  const filterCatBySearch = (): LibraryCategory[] => {
+    return searchString ? filteredCategories : libCategories;
+  };
 
   const onChange = (e: { target: { value: any } }) => search(e.target.value);
 
@@ -56,7 +61,7 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
       </FavoritesBox>
 
       <LibBody legend={legendOpen}>
-        {filteredCategories?.map((category) => {
+        {filterCatBySearch().map((category) => {
           return (
             <LibraryCategoryComponent
               selectedElement={selectedElement}
@@ -66,6 +71,7 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
               category={category}
               customCategory={customCategory}
               dispatch={dispatch}
+              searchList={filteredCategories}
             />
           );
         })}
