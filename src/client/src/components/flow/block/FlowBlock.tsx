@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
+import * as hooks from "../hooks/";
 import ReactFlow, { Elements } from "react-flow-renderer";
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
-import { useOnConnect, useOnDrop, useOnRemove, useOnDragStop, useOnConnectStart, useOnConnectStop } from "../hooks";
 import { GetBlockNodeTypes } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/";
 import { BlockConnectionLine } from "./edges";
 import { Size } from "../../../compLibrary/size";
-import { SetDarkModeColor, GetSelectedNode, IsLocation } from "../../../helpers";
+import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
@@ -21,7 +21,6 @@ import { Project } from "../../../models";
 
 interface Props {
   project: Project;
-  darkMode: boolean;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
@@ -30,7 +29,7 @@ interface Props {
  * @param interface
  * @returns  a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = ({ project, darkMode, inspectorRef }: Props) => {
+const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
@@ -59,20 +58,20 @@ const FlowBlock = ({ project, darkMode, inspectorRef }: Props) => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
+    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
   };
 
   const OnConnect = (params) => {
-    return useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
+    return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
+  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
+  // };
 
-  const OnConnectStop = (e) => {
-    return useOnConnectStop(e, project, dispatch, parentSize);
-  };
+  // const OnConnectStop = (e) => {
+  //   return useOnConnectStop(e, project, dispatch, parentSize);
+  // };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -80,11 +79,11 @@ const FlowBlock = ({ project, darkMode, inspectorRef }: Props) => {
   };
 
   const OnNodeDragStop = (_event, activeNode) => {
-    return useOnDragStop(_event, activeNode, dispatch);
+    return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnDrop({
+    return hooks.useOnDrop({
       event,
       project,
       user: userState.user,
@@ -110,10 +109,6 @@ const FlowBlock = ({ project, darkMode, inspectorRef }: Props) => {
     dispatch(updateBlockElements(elements));
   }, [elements, dispatch]);
 
-  useEffect(() => {
-    SetDarkModeColor(darkMode);
-  }, [darkMode]);
-
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch, true);
@@ -134,8 +129,8 @@ const FlowBlock = ({ project, darkMode, inspectorRef }: Props) => {
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onConnect={OnConnect}
-          onConnectStart={OnConnectStart}
-          onConnectStop={OnConnectStop}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
           onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}

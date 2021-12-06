@@ -10,13 +10,11 @@ import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
-import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { Project } from "../../../models";
 
 interface Props {
   project: Project;
-  darkMode: boolean;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
@@ -25,7 +23,7 @@ interface Props {
  * @param interface
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = ({ project, darkMode, inspectorRef }: Props) => {
+const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
@@ -92,10 +90,6 @@ const FlowTree = ({ project, darkMode, inspectorRef }: Props) => {
   useEffect(() => {
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance]);
-
-  useEffect(() => {
-    SetDarkModeColor(darkMode);
-  }, [darkMode]);
 
   return (
     <>
