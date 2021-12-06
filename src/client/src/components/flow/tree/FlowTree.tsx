@@ -1,54 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as Helpers from "./helpers/";
+import * as helpers from "./helpers/";
+import * as selectors from "./helpers/selectors";
+import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
-import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { setEdgeAnimation, updatePosition } from "../../../redux/store/project/actions";
+import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { TreeFilterMenu } from "../../menus/filterMenu";
+import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
-import { SetDarkModeColor } from "../../../helpers";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
-import { IsTransport } from "../helpers";
-import {
-  animatedEdgeSelector,
-  darkModeSelector,
-  iconSelector,
-  inspectorSelector,
-  librarySelector,
-  projectSelector,
-  treeFilterSelector,
-  userStateSelector,
-} from "../../../redux/store";
+import { Project } from "../../../models";
 
 interface Props {
+  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
 /**
  * Component for the Flow library in TreeView
+ * @param interface
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = ({ inspectorRef }: Props) => {
+const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
-  const darkMode = useAppSelector(darkModeSelector);
-  const project = useAppSelector(projectSelector);
-  const userState = useAppSelector(userStateSelector);
-  const icons = useAppSelector(iconSelector);
-  const library = useAppSelector(librarySelector);
-  const inspectorOpen = useAppSelector(inspectorSelector);
-  const treeFilter = useAppSelector(treeFilterSelector);
-  const animatedEdge = useAppSelector(animatedEdgeSelector);
+  const userState = useAppSelector(selectors.userStateSelector);
+  const icons = useAppSelector(selectors.iconSelector);
+  const library = useAppSelector(selectors.librarySelector);
+  const visualFilter = useAppSelector(selectors.filterSelector);
+  const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
 
   const OnDragOver = (event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
+
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
@@ -66,7 +56,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const OnConnect = (params) => {
     const fromNode = project.nodes.find((x) => x.id === params.source);
     const fromConnector = fromNode.connectors.find((x) => x.id === params.sourceHandle);
-    const edgeType = Helpers.GetEdgeType(fromConnector);
+    const edgeType = helpers.GetEdgeType(fromConnector);
     return useOnConnect(params, project, setElements, dispatch, edgeType, library, animatedEdge);
   };
 
@@ -87,10 +77,10 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch);
-    } else if (selectedElements.length === 1 && Helpers.GetNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
-    } else if (selectedElements.length === 1 && Helpers.GetEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], inspectorOpen, inspectorRef, dispatch);
+    } else if (selectedElements.length === 1 && helpers.GetNodeTypes[selectedElements[0]?.type]) {
+      handleNodeSelect(selectedElements[0], dispatch);
+    } else if (selectedElements.length === 1 && helpers.GetEdgeTypes[selectedElements[0]?.type]) {
+      handleEdgeSelect(selectedElements[0], dispatch);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch);
     }
@@ -100,16 +90,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance]);
-
-  useEffect(() => {
-    SetDarkModeColor(darkMode);
-  }, [darkMode]);
-
-  useEffect(() => {
-    project?.edges.forEach((e) => {
-      if (IsTransport(e.fromConnector)) dispatch(setEdgeAnimation(e, false));
-    });
-  }, []);
 
   return (
     <>
@@ -122,20 +102,20 @@ const FlowTree = ({ inspectorRef }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        nodeTypes={Helpers.GetNodeTypes}
-        edgeTypes={Helpers.GetEdgeTypes}
+        nodeTypes={helpers.GetNodeTypes}
+        edgeTypes={helpers.GetEdgeTypes}
         defaultZoom={0.7}
         defaultPosition={[800, 0]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => onSelectionChange(e)}
         connectionLineComponent={TreeConnectionLine}
+        deleteKeyCode={"Delete"}
       >
         <Background />
         <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
-
-      {treeFilter && <TreeFilterMenu elements={elements} edgeAnimation={animatedEdge} />}
+      {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
     </>
   );
 };

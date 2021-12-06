@@ -5,6 +5,8 @@ import { FontSize } from "../../../../font";
 interface Props {
   color: string;
   miniCheckBox: boolean;
+  isBlockView: boolean;
+  isAspectNode: boolean;
 }
 
 const CheckboxWrapper = styled.label<Props>`
@@ -40,7 +42,7 @@ const CheckboxWrapper = styled.label<Props>`
   .label {
     position: relative;
     bottom: 19px;
-    left: 10px;
+    left: ${(props) => (props.isBlockView && props.isAspectNode ? 40 : 10)}px;
     max-width: 240px;
     font-size: ${FontSize.Standard};
     cursor: pointer;

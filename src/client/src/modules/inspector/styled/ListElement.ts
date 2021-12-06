@@ -14,7 +14,7 @@ const ListElement = styled.div<Props>`
   display: flex;
   align-items: center;
   background-color: ${(props) => props.color};
-  border-bottom: 1px solid ${Color.DarkGrey};
+  border-bottom: 1px solid ${Color.GreyDark};
 
   .icon {
     display: flex;
@@ -22,7 +22,7 @@ const ListElement = styled.div<Props>`
   }
 
   :hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     cursor: pointer;
     text-decoration: underline;
   }

@@ -2,10 +2,29 @@ import styled from "styled-components";
 import { Color } from "../../../../../../compLibrary/colors";
 
 const ProjectListBox = styled.div`
-  .text {
-    font-weight: bold;
-    font-size: 16px;
-    color: ${Color.BlueMagenta};
+  position: relative;
+  max-height: 350px;
+
+  :before {
+    content: "";
+    width: 1px;
+    height: 5px;
+    background: ${Color.BlueMagenta};
+    border-radius: 1px;
+    position: absolute;
+    bottom: 0;
+    left: 1;
+  }
+
+  :after {
+    content: "";
+    width: 1px;
+    height: 5px;
+    background: ${Color.BlueMagenta};
+    border-radius: 1px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 `;
 

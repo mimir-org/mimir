@@ -8,7 +8,7 @@ const UserMenuBox = styled.div`
   right: 0px;
   background: ${Color.White};
   height: auto;
-  width: 270px;
+  width: 250px;
   border-style: solid;
   border-color: ${Color.BlueMagenta};
   border-width: 0px 1px 1px 1px;

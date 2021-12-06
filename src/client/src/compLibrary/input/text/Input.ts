@@ -17,7 +17,7 @@ const Input = styled.input<Props>`
   height: 31px;
   text-align: left;
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
-  background-color: ${(props) => (props.readOnly ? Color.LighterGrey : Color.White)};
+  background-color: ${(props) => (props.readOnly ? Color.GreyLight : Color.White)};
   font-size: ${(props) => GetFontSize(props.fontSize)};
 
   @media (min-width: 3000px) {

@@ -7,8 +7,7 @@ import { InspectorHeader } from "../../modules/inspector";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
 import { useDragResizePanel } from "../../modules/inspector/helpers/useDragResizePanel";
 import { AnimatedInspector, ResizePanel } from "../../modules/inspector/styled";
-import { GetFilteredTerminalTypeExtendedList } from "../helpers";
-import { GetPropertiesHeight } from "../helpers/GetPropertiesHeight";
+import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../helpers";
 import {
   changeTypeEditorInspectorHeight,
   changeTypeEditorInspectorTab,
@@ -26,6 +25,7 @@ import {
   animatedModuleSelector,
   simpleTypeSelector,
   typeEditorInspectorActiveTabSelector,
+  usernameSelector,
 } from "../../redux/store";
 
 interface Props {
@@ -38,6 +38,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
 
   const type = MODULE_TYPE.INSPECTOR;
   const project = useAppSelector(projectSelector);
+  const username = useAppSelector(usernameSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, type);
   const inspectorOpen = useAppSelector(isTypeEditorInspectorOpen);
   const activeTabIndex = useAppSelector(typeEditorInspectorActiveTabSelector);
@@ -110,10 +111,11 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       zIndex={110}
       forwardRef={inspectorRef}
     >
-      <ResizePanel ref={resizePanelRef} />
+      <ResizePanel ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       <InspectorHeader
         project={project}
         element={createLibraryType}
+        username={username}
         dispatch={dispatch}
         open={inspectorOpen}
         activeTabIndex={activeTabIndex}
@@ -122,6 +124,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         terminalLikeItems={terminalLikeItems}
         compositeLikeItems={compositeLikeItems}
         inspectorRef={inspectorRef}
+        isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
         changeInspectorHeightAction={changeTypeEditorInspectorHeight}
         changeInspectorTabAction={changeTypeEditorInspectorTab}

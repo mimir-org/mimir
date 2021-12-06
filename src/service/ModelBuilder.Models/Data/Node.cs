@@ -47,10 +47,9 @@ namespace Mb.Models.Data
         [Required]
         public decimal PositionY { get; set; }
 
-        [Required]
         public bool IsLocked { get; set; }
-
-        public string IsLockedBy { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
 
         [Required]
         public decimal PositionBlockX { get; set; }
@@ -71,14 +70,14 @@ namespace Mb.Models.Data
 
         public string UpdatedBy { get; set; }
 
-        [Required]
         public DateTime Updated { get; set; }
 
         public DateTime? Created { get; set; }
 
         public string CreatedBy { get; set; }
 
-        [Required]
+        public string LibraryTypeId { get; set; }
+
         public string Version { get; set; }
 
         public Aspect Aspect { get; set; }
@@ -112,8 +111,11 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Composite> Composites { get; set; }
 
+        [Required]
+        public virtual string ProjectId { get; set; }
+
         [JsonIgnore]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual Project Project { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Edge> FromEdges { get; set; }
@@ -154,13 +156,13 @@ namespace Mb.Models.Data
             if (string.IsNullOrEmpty(_domain))
                 _domain = id.ResolveDomain();
 
-            if (string.IsNullOrEmpty(_iri))
+            if (string.IsNullOrEmpty(_iri) || !_id.HasValidIri(_iri))
                 _iri = id.ResolveIri();
         }
 
         private void SetIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _iri = iri;
@@ -190,7 +192,7 @@ namespace Mb.Models.Data
 
         private void SetMasterProjectIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _masterProjectIri = iri;

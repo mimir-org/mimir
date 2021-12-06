@@ -5,14 +5,15 @@ interface Props {
 }
 
 const HeaderBox = styled.div<Props>`
-  margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom : 40)}px;
+  margin-bottom: ${(props) => (props.marginBottom ? props.marginBottom : 32)}px;
   display: inline-flex;
   align-items: center;
+  margin: 9px 0px 10px 0px;
 
   .icon {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 12px;
+    top: 12px;
     cursor: pointer;
   }
 `;

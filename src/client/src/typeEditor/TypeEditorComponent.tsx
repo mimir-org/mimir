@@ -1,23 +1,21 @@
 import { useEffect, useRef } from "react";
 import { typeEditorStateSelector, useAppDispatch, useAppSelector } from "../redux/store";
-import { ListType } from "./TypeEditorList";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
 import { LibraryIcon } from "../assets/icons/modules";
 import { TextResources } from "../assets/text";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
-import { TypeEditorList, TypeEditorInputs, TypePreview, TypeEditorInspector } from "./";
-import { OnCloseEditor, OnPropertyChange, OnSave, OnTerminalCategoryChange } from "./handlers";
-import { getInitialData, getBlobData } from "./redux/actions";
-import { GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, IsLocation, IsProduct, GetWidth } from "./helpers";
+import { TypeEditorInputs, TypePreview } from "./";
+import { OnCloseEditor, OnPropertyChange, OnSave } from "./handlers";
+import { getBlobData, getInitialData } from "./redux/actions";
+import { GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, GetTypeEditorLists, GetPropertiesHeight } from "./helpers";
 import {
-  TypeEditorWrapper,
+  ChooseProperties,
+  SaveButton,
   TypeEditorContent,
   TypeEditorHeader,
-  ChooseProperties,
+  TypeEditorWrapper,
   TypePreviewColumn,
-  SaveButton,
-  TypeEditorInspectorWrapper,
 } from "./styled";
 
 /**
@@ -48,46 +46,11 @@ export const TypeEditorComponent = () => {
             icons={state?.icons}
             locationTypes={state?.locationTypes}
             purposes={state?.purposes}
+            isValidationVisible={state?.validationVisibility}
           />
-          <ChooseProperties ref={typeEditorPropertiesRef}>
-            <TypeEditorList
-              items={state?.rdsList}
-              createLibraryType={state?.createLibraryType}
-              listType={ListType.Rds}
-              onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
-            />
-            {!IsLocation(state?.createLibraryType.aspect) && (
-              <TypeEditorList
-                items={state?.terminals}
-                createLibraryType={state?.createLibraryType}
-                listType={ListType.Terminals}
-                onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
-                onTerminalCategoryChange={(key, data) => OnTerminalCategoryChange(key, data, dispatch)}
-              />
-            )}
-            {IsLocation(state?.createLibraryType.aspect) && (
-              <TypeEditorList
-                items={state?.predefinedAttributes}
-                createLibraryType={state?.createLibraryType}
-                listType={ListType.PredefinedAttributes}
-                onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
-              />
-            )}
-            <TypeEditorList
-              createLibraryType={state?.createLibraryType}
-              items={state?.attributes}
-              listType={IsLocation(state?.createLibraryType.aspect) ? ListType.LocationAttributes : ListType.ObjectAttributes}
-              onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
-            />
-            {IsProduct(state?.createLibraryType.aspect) && (
-              <TypeEditorList
-                items={state?.simpleTypes}
-                createLibraryType={state?.createLibraryType}
-                listType={ListType.SimpleTypes}
-                onPropertyChange={(key, data) => OnPropertyChange(key, data, dispatch)}
-              />
-            )}
-            <TypePreviewColumn wide={GetWidth(ListType.Preview)}>
+          <ChooseProperties ref={typeEditorPropertiesRef} height={GetPropertiesHeight(true)}>
+            {GetTypeEditorLists(state, dispatch)}
+            <TypePreviewColumn flex={1.5}>
               <TypePreview
                 createLibraryType={state?.createLibraryType}
                 rds={GetSelectedRds(state?.createLibraryType, state.rdsList)}
@@ -113,14 +76,14 @@ export const TypeEditorComponent = () => {
             </TypePreviewColumn>
           </ChooseProperties>
 
-          <TypeEditorInspectorWrapper>
+          {/* <TypeEditorInspectorWrapper>
             {!!state.createLibraryType.aspect && (
               <TypeEditorInspector
                 createLibraryType={state.createLibraryType}
                 typeEditorPropertiesRef={typeEditorPropertiesRef}
               />
             )}
-          </TypeEditorInspectorWrapper>
+          </TypeEditorInspectorWrapper> */}
         </TypeEditorContent>
       </TypeEditorWrapper>
     )

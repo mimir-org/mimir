@@ -1,7 +1,7 @@
 import { SET_EDGE_ANIMATION } from "../project/types";
 
 const initialState = {
-  animated: true,
+  animated: false,
 };
 
 export function edgeAnimationReducer(state = initialState, action) {

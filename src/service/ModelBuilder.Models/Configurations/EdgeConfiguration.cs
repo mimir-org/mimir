@@ -17,6 +17,10 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.ToConnectorId).HasColumnName("ToConnectorId").IsRequired();
             builder.Property(p => p.FromNodeId).HasColumnName("FromNodeId").IsRequired();
             builder.Property(p => p.ToNodeId).HasColumnName("ToNodeId").IsRequired();
+            builder.Property(p => p.FromConnectorIri).HasColumnName("FromConnectorIri").IsRequired();
+            builder.Property(p => p.ToConnectorIri).HasColumnName("ToConnectorIri").IsRequired();
+            builder.Property(p => p.FromNodeIri).HasColumnName("FromNodeIri").IsRequired();
+            builder.Property(p => p.ToNodeIri).HasColumnName("ToNodeIri").IsRequired();
 
             builder.Property(p => p.TransportId).HasColumnName("TransportId").IsRequired(false);
             builder.Property(p => p.InterfaceId).HasColumnName("InterfaceId").IsRequired(false);
@@ -31,6 +35,10 @@ namespace Mb.Models.Configurations
 
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
             builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
+
+            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false).HasDefaultValue(null);
         }
     }
 }

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { search } from "../../../../../redux/store/project/actions";
 import { useAppDispatch } from "../../../../../redux/store";
-import { SearchIcon } from "../../../../../assets/icons/common";
 import { SearchBarBox } from "./styled";
+import { TextResources } from "../../../../../assets/text";
 
 export const SearchBar = () => {
   const dispatch = useAppDispatch();
@@ -16,8 +16,13 @@ export const SearchBar = () => {
   return (
     <SearchBarBox>
       <label htmlFor="search" />
-      <input type="text" value={searchbarInput} placeholder="Search projects" onChange={onChange} autoFocus />
-      <img src={SearchIcon} alt="search-icon" />
+      <input
+        type="text"
+        value={searchbarInput}
+        placeholder={TextResources.Project_Search_Placeholder}
+        onChange={onChange}
+        autoFocus
+      />
     </SearchBarBox>
   );
 };

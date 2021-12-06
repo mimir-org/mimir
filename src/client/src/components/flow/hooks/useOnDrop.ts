@@ -1,4 +1,4 @@
-import { addNode, createEdge, setActiveNode } from "../../../redux/store/project/actions";
+import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Composite, Connector, Attribute } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
@@ -60,7 +60,8 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   const parentNode = getParentNode(sourceNode, project, data);
 
-  const position = { x: parentNode.positionX, y: parentNode.positionY + 200 }; // TODO: fix when implementing auto-position
+  const marginY = 200;
+  const position = { x: parentNode.positionX, y: parentNode.positionY + marginY }; // TODO: fix when implementing auto-position
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
   targetNode.composites?.forEach((composite) => initComposite(composite, targetNode));
@@ -69,7 +70,6 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
-  if (!IsBlockView()) dispatch(setActiveNode(targetNode.id, true));
 };
 
 const handleCreatePartOfEdge = (

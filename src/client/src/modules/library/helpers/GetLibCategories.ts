@@ -5,8 +5,8 @@ import { LibraryCategory } from "../../../models/project";
 import { LibraryState } from "../../../redux/store/library/types";
 import { IsBlockView } from "../../../helpers";
 
-const GetLibCategories = (selectedNode: Node, state: LibraryState): LibraryCategory[] => {
-  var allCategories = [];
+const GetLibCategories = (selectedNode: Node, state: LibraryState) => {
+  var allCategories = [] as LibraryCategory[];
   var items = concat(state.nodeTypes, state.interfaceTypes, state.transportTypes);
 
   const result = items.reduce((r, a) => {

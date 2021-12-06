@@ -40,6 +40,8 @@ export interface LibItem {
   rds: string;
   category: string;
   name: string;
+  label: string;
+  description: string;
   aspect: Aspect;
   connectors: Connector[];
   attributes?: Attribute[] | null;
@@ -52,6 +54,11 @@ export interface LibItem {
   terminalTypeId: string;
   libraryType: ObjectType;
   purpose: Purpose;
+  updatedBy: string;
+  updated: Date;
+  createdBy: string;
+  created: Date;
+  libraryTypeId: string;
 }
 
 export interface LibrarySubProjectItem {
@@ -64,11 +71,12 @@ export interface LibrarySubProjectItem {
   updatedBy: string;
 }
 
-export interface ProjectSimple {
+export interface ProjectItemCm {
   id: string;
   iri: string;
   domain: string;
   name: string;
+  version: string;
   description: string;
   projectOwner: string;
   updated: Date;
@@ -141,8 +149,9 @@ export interface LocationType {
 }
 
 export interface User {
-  username: string;
   name: string;
+  email: string;
+  role: string;
 }
 
 export interface FileData {
@@ -194,14 +203,21 @@ export interface CombinedAttributeFilter {
   combinedAttributes: CombinedAttribute[];
 }
 
-export interface Contractor {
-  id: string;
+export interface CollaborationPartner {
+  id: number;
   name: string;
   domain: string;
+  current: boolean;
+  Iri: string[];
 }
 export interface ModuleDescription {
   id: string;
   name: string;
+}
+
+export interface ProjectFileAm {
+  parserId: string;
+  fileContent: string;
 }
 
 export const SETTING_KEY = {

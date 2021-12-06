@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
@@ -32,12 +31,13 @@ namespace Mb.Models.Data
             set => SetDomain(value);
         }
 
-        public string Key { get; set; }
+        public string Entity { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }
         public string AttributeTypeId { get; set; }
         public bool IsLocked {  get; set; }
-        public string IsLockedBy {  get; set; }
+        public string IsLockedStatusBy {  get; set; }
+        public DateTime? IsLockedStatusDate {  get; set; }
         
         public string SelectedUnitId { get; set; }
         
@@ -73,7 +73,9 @@ namespace Mb.Models.Data
 
         public virtual string TerminalId { get; set; }
         public virtual string NodeId { get; set; }
+        public virtual string NodeIri { get; set; }
         public virtual string TransportId { get; set; }
+        public virtual string InterfaceId { get; set; }
         public virtual string CompositeId { get; set; }
 
         [JsonIgnore]
@@ -88,6 +90,9 @@ namespace Mb.Models.Data
         [JsonIgnore]
         public virtual Transport Transport { get; set; }
 
+        [JsonIgnore]
+        public virtual Interface Interface { get; set; }
+
         #endregion
 
         #region Private methods
@@ -101,13 +106,13 @@ namespace Mb.Models.Data
             if (string.IsNullOrEmpty(_domain))
                 _domain = id.ResolveDomain();
 
-            if (string.IsNullOrEmpty(_iri))
+            if (string.IsNullOrEmpty(_iri) || !_id.HasValidIri(_iri))
                 _iri = id.ResolveIri();
         }
 
         private void SetIri(string iri)
         {
-            if (string.IsNullOrEmpty(iri))
+            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
                 return;
 
             _iri = iri;

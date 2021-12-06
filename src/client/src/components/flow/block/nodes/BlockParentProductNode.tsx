@@ -1,13 +1,14 @@
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
-import { OnConnectorClick, ResizeHandler } from "./handlers";
+import { OnConnectorClick } from "./handlers";
 import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector } from "../../../../redux/store";
-import { GetAspectColor } from "../../../../helpers";
+import { productNodeSizeSelector, edgeSelector, electroSelector, nodeSelector } from "../../../../redux/store";
+import { GetAspectColor, IsLocation } from "../../../../helpers";
+import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -19,7 +20,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const parentBlockSize = useAppSelector(nodeSizeSelector);
+  const parentBlockSize = useAppSelector(productNodeSizeSelector);
 
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
@@ -28,8 +29,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, null));
-    ResizeHandler(node, null, parentBlockSize, dispatch);
-  }, [node, parentBlockSize, dispatch]);
+  }, [node]);
 
   if (!node) return null;
 
@@ -38,31 +38,33 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
       <ParentContainerComponent
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
-        selected={node.isBlockSelected}
-        width={parentBlockSize.width}
-        height={parentBlockSize.height}
-        hasChildren={terminals.length > 0}
+        size={parentBlockSize}
+        hasTerminals={terminals.length > 0}
+        isSecondaryNode={false}
+        onParentClick={() => OnParentClick(dispatch, node)}
+        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
+        dispatch={dispatch}
       />
 
       <TerminalsContainerComponent
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        parent={true}
+        isParent={true}
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        showMenuBox={true}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
       <HandleComponent
-        parent={true}
+        isParent={true}
         nodes={nodes}
-        width={parentBlockSize.width}
-        height={parentBlockSize.height}
+        size={parentBlockSize}
         terminals={terminals}
         electro={electro}
+        dispatch={dispatch}
+        isLocation={IsLocation(node)}
       />
     </>
   );

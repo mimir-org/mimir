@@ -11,7 +11,7 @@ interface Props {
 const ModuleBox = styled.div<Props>`
   border-right: 1px solid ${Color.Grey};
   border-left: ${(props) => props.type !== MODULE_TYPE.LEGEND && "1px solid" + Color.Grey};
-  background-color: ${Color.LightGrey};
+  background-color: ${Color.GreyLighter};
   width: ${(props) => props.type !== MODULE_TYPE.LEGEND && props.stop}px;
   height: ${(props) => (props.type === MODULE_TYPE.LEGEND ? props.stop + "px" : "100%")};
   position: ${(props) => (props.type === MODULE_TYPE.LEGEND || props.type === MODULE_TYPE.LIBRARY) && "fixed"};

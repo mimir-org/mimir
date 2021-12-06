@@ -1,5 +1,6 @@
-import { closeTypeEditor } from "../redux/actions";
+import { changeTypeEditorValidationVisibility, closeTypeEditor } from "../redux/actions";
 const onCloseEditor = (dispatch: any) => {
+  dispatch(changeTypeEditorValidationVisibility(false));
   dispatch(closeTypeEditor());
 };
 

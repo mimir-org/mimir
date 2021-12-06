@@ -3,13 +3,15 @@ import { Color } from "../../../../colors";
 
 interface Props {
   color: string;
+  marginLeft: number;
 }
 
-const CheckboxWrapper = styled.label<Props>`
+const CheckboxWrapper = styled.span<Props>`
   cursor: pointer;
   position: absolute;
   left: 7px;
   padding-bottom: 15px;
+  margin-left: ${(props) => props.marginLeft}px;
 
   input {
     position: absolute;

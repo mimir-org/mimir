@@ -1,39 +1,66 @@
 import { Node } from "../../../../../models";
-import { Banner, Block, Header, LogoBox } from "./styled";
-import { GetCompanyLogoForNode, IsLocation } from "../../../../../helpers";
+import { ParentBox, ResizeButton } from "./styled";
+import { IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
+import { ResizeIcon } from "../../../../../assets/icons/resize";
+import { memo, useRef } from "react";
+import { useResizeParentNode } from "./hooks";
+import { BlockNodeSize } from "../../../../../models/project";
+import { ParentBannerComponent } from ".";
 
 interface Props {
   node: Node;
   color: string;
-  selected: boolean;
-  width: number;
-  height: number;
-  hasChildren: boolean;
+  size: BlockNodeSize;
+  hasTerminals: boolean;
+  isSecondaryNode: boolean;
+  onParentClick: () => void;
+  onChildClick: () => void;
+  dispatch: any;
 }
 
 /**
- * Component for the parent node block in BlockView
+ * Component for the parent block node in BlockView.
  * @param interface
- * @returns a container that sits on top of a Flow node
+ * @returns a container that sits on top of a Flow node.
  */
-const ParentContainerComponent = ({ node, color, selected, width, height, hasChildren }: Props) => {
-  const company = process.env.REACT_APP_COMPANY;
+const ParentContainerComponent = ({
+  node,
+  color,
+  size,
+  hasTerminals,
+  isSecondaryNode,
+  onParentClick,
+  onChildClick,
+  dispatch,
+}: Props) => {
+  const resizePanelRef = useRef(null);
+  useResizeParentNode(node.id, resizePanelRef, dispatch);
 
   return (
-    <Block id={"block-" + node?.id} selected={selected} width={width} height={height}>
-      <Banner color={color}>
-        <Header>
-          <p className="text">={node?.label ?? node?.name}</p>
-        </Header>
-        <LogoBox hasChildren={hasChildren}>
-          <img src={GetCompanyLogoForNode(company, node, hasChildren)} alt="logo" className="logo" />
-        </LogoBox>
-      </Banner>
-      {IsLocation(node) && <Background variant={BackgroundVariant.Lines} color={Color.Grey} gap={20} />}
-      {!IsLocation(node) && <Background variant={BackgroundVariant.Dots} color={Color.Black} gap={20} />}
-    </Block>
+    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
+      <ParentBannerComponent
+        node={node}
+        color={color}
+        hasTerminals={hasTerminals}
+        isSecondaryNode={isSecondaryNode}
+        onParentClick={onParentClick}
+        onChildClick={onChildClick}
+      />
+      {IsProduct(node) && (
+        <ResizeButton id="ResizeParentNode" ref={resizePanelRef}>
+          <img src={ResizeIcon} alt="resize" className="icon" />
+        </ResizeButton>
+      )}
+      <Background
+        variant={IsLocation(node) ? BackgroundVariant.Lines : BackgroundVariant.Dots}
+        color={Color.Grey}
+        gap={20}
+        style={{ zIndex: 0 }}
+      />
+    </ParentBox>
   );
 };
-export default ParentContainerComponent;
+
+export default memo(ParentContainerComponent);

@@ -37,12 +37,14 @@ export { default as GetSelectedIcon } from "./GetSelectedIcon";
 export { default as GetSelectedTerminal } from "./GetSelectedTerminal";
 export { default as GetSelectedDiscipline } from "./GetSelectedDiscipline";
 export { default as GetLibraryType } from "./GetLibraryType";
+export { default as GetTypeEditorLists } from "./GetTypeEditorLists";
+export { default as GetPropertiesHeight } from "./GetPropertiesHeight";
 export { default as ShowObjectBlock } from "./ShowObjectBlock";
 export { default as FieldValidator } from "./FieldValidator";
 export { default as ResetRedux } from "./ResetRedux";
 
 // styling helpers
-export { default as GetWidth } from "./GetWidth";
+export { default as GetFlexForListType } from "./GetFlexForListType";
 export { default as SwitchBackground } from "./SwitchBackground";
 export { default as RemoveBackground } from "./RemoveBackground";
 export { default as RemoveHover } from "./RemoveHover";

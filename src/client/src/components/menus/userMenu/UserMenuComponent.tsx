@@ -1,36 +1,42 @@
-import { DarkMode, LightMode, Notifications, Settings, LogoutIcon } from "../../../assets/icons/header";
+import { memo } from "react";
+import { Dispatch } from "redux";
+import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
-import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { useAppSelector } from "../../../redux/store/hooks";
 import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
-import { darkModeSelector, userStateSelector } from "../../../redux/store";
+import { userStateSelector } from "../../../redux/store";
 import { TextResources } from "../../../assets/text";
+
+interface Props {
+  dispatch: Dispatch;
+  darkMode: boolean;
+}
 
 /**
  * Component for the User Menu.
+ * @param interface
  * @returns a menu for the user in the header of Mimir.
  */
-const UserMenuComponent = () => {
-  const dispatch = useAppDispatch();
-  const darkMode = useAppSelector(darkModeSelector);
+const UserMenuComponent = ({ dispatch, darkMode }: Props) => {
   const userState = useAppSelector(userStateSelector);
 
   return (
     <UserMenuBox id={MENU_TYPE.PROJECT_MENU}>
       <UserNameBox>
         <p>{userState.user && userState?.user?.name}</p>
-        <p className="user-title">{TextResources.UserMenu_User}</p>
+        <p className="user-role">{userState?.user?.role ?? TextResources.UserMenu_User}</p>
       </UserNameBox>
 
-      <UserMenuElement onClick={() => null}>
+      {/* <UserMenuElement onClick={() => null}>
         <img src={Settings} className="icon" alt="settings" />
         <p className="text">{TextResources.UserMenu_Settings}</p>
-      </UserMenuElement>
+      </UserMenuElement> */}
 
-      <UserMenuElement onClick={() => null}>
+      {/* <UserMenuElement onClick={() => null}>
         <img src={Notifications} className="icon" alt="notifications" />
         <p className="text">{TextResources.UserMenu_Notifications}</p>
-      </UserMenuElement>
+      </UserMenuElement> */}
 
       <UserMenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
         <img src={darkMode ? LightMode : DarkMode} className="icon" alt="darkmode" />
@@ -45,4 +51,4 @@ const UserMenuComponent = () => {
   );
 };
 
-export default UserMenuComponent;
+export default memo(UserMenuComponent);

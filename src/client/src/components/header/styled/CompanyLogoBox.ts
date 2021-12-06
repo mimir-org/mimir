@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const CompanyLogoBox = styled.div`
-  position: absolute;
+  position: relative;
   display: flex;
+  align-self: center;
+  margin-right: 35px;
   height: 35px;
   width: 88px;
   pointer-events: none;
-  right: 120px;
-  top: 10px;
 `;
 
 export default CompanyLogoBox;

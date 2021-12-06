@@ -1,11 +1,11 @@
-import { LogoBox, SymbolBox, BlockNodeNameBox } from "./styled";
+import { memo } from "react";
+import { LogoBox, SymbolBox, BlockNodeNameBox, BlockLogoWrapper } from "./styled";
 import { Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { GetCompanyLogoForNode } from "../../../../helpers";
 
 interface Props {
   node: Node;
-  parent: boolean;
 }
 
 /**
@@ -13,20 +13,20 @@ interface Props {
  * @param interface
  * @returns name,logo and symbol.
  */
-const BlockLogoComponent = ({ node, parent }: Props) => {
+const BlockLogoComponent = ({ node }: Props) => {
   const company = process.env.REACT_APP_COMPANY;
 
   return (
-    <>
+    <BlockLogoWrapper>
       <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
-      <LogoBox>
-        <img src={GetCompanyLogoForNode(company, node, parent)} alt="logo" className="logo" />
-      </LogoBox>
       <SymbolBox>
         <Symbol base64={node.symbol} text={node.name} />
       </SymbolBox>
-    </>
+      <LogoBox>
+        <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
+      </LogoBox>
+    </BlockLogoWrapper>
   );
 };
 
-export default BlockLogoComponent;
+export default memo(BlockLogoComponent);

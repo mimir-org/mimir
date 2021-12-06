@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
+import { BlockNodeSize } from "../../../models/project";
 
 interface Props {
   product: boolean;
-  width: number;
-  height: number;
+  size: BlockNodeSize;
   colorMain: string;
   colorSelected: string;
   isSelected: boolean;
@@ -14,8 +14,8 @@ interface Props {
 const NodeBox = styled.div<Props>`
   position: relative;
   opacity: ${(props) => (props.visible ? 1 : 0)};
-  height: ${(props) => props.height}px;
-  width: ${(props) => props.width}px;
+  height: ${(props) => props.size.height}px;
+  width: ${(props) => props.size.width}px;
   max-height: inherit;
   border-radius: 10px;
   font-size: 11px;
@@ -39,10 +39,6 @@ const NodeBox = styled.div<Props>`
     position: relative;
     bottom: 15px;
     left: 0px;
-  }
-
-  .symbolImg {
-    pointer-events: none;
   }
 `;
 

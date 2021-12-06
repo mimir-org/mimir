@@ -1,17 +1,13 @@
 import styled from "styled-components";
-import { FontSize } from "../../../../../../compLibrary/font";
+import { FontSize, FontWeight } from "../../../../../../compLibrary/font";
 
 const Header = styled.div`
   display: flex;
   justify-content: center;
-  font-size: ${FontSize.Standard};
   position: relative;
-  bottom: 7px;
-  font-weight: bold;
-
-  .text {
-    margin-left: 20px;
-  }
+  margin-right: 10px;
+  font-size: ${FontSize.Standard};
+  font-weight: ${FontWeight.Bold};
 `;
 
 export default Header;

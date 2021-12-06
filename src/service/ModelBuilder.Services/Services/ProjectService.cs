@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
@@ -18,7 +15,6 @@ using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -28,22 +24,27 @@ namespace Mb.Services.Services
 {
     public class ProjectService : IProjectService
     {
-        private readonly IProjectRepository _projectRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IAttributeRepository _attributeRepository;
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
-        private readonly ICommonRepository _commonRepository;
+        private readonly ITransportRepository _transportRepository;
+        private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
+        private readonly ICommonRepository _commonRepository;
         private readonly IModuleService _moduleService;
-        private readonly IAttributeRepository _attributeRepository;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly IRemapService _remapService;
+        private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
+        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger)
+            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, IRemapService remapService, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -55,6 +56,10 @@ namespace Mb.Services.Services
             _moduleService = moduleService;
             _attributeRepository = attributeRepository;
             _logger = logger;
+            _remapService = remapService;
+            _cooperateService = cooperateService;
+            _transportRepository = transportRepository;
+            _interfaceRepository = interfaceRepository;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -66,23 +71,9 @@ namespace Mb.Services.Services
         /// <param name="from"></param>
         /// <param name="number"></param>
         /// <returns></returns>
-        public IEnumerable<ProjectSimple> GetProjectList(string name, int from, int number)
+        public IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number)
         {
-            if (string.IsNullOrEmpty(name))
-                return _projectRepository.GetAll()
-                    .OrderByDescending(x => x.Updated)
-                    .Skip(from)
-                    .Take(number)
-                    .ProjectTo<ProjectSimple>(_mapper.ConfigurationProvider)
-                    .ToList();
-
-            return _projectRepository.GetAll()
-                .Where(x => x.Name.ToLower().StartsWith(name.ToLower()))
-                .OrderByDescending(x => x.Updated)
-                .Skip(from)
-                .Take(number)
-                .ProjectTo<ProjectSimple>(_mapper.ConfigurationProvider)
-                .ToList();
+            return _projectRepository.GetProjectList(name, from, number);
         }
 
         /// <summary>
@@ -95,33 +86,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
         {
-            var project = await _projectRepository
-                .FindBy(x => x.Id == id)
-                .Include(x => x.Edges)
-                .Include("Edges.FromNode")
-                .Include("Edges.ToNode")
-                .Include("Edges.FromConnector")
-                .Include("Edges.ToConnector")
-                .Include("Edges.Transport")
-                .Include("Edges.Transport.Attributes")
-                .Include("Edges.Transport.InputTerminal")
-                .Include("Edges.Transport.InputTerminal.Attributes")
-                .Include("Edges.Transport.OutputTerminal")
-                .Include("Edges.Transport.OutputTerminal.Attributes")
-                .Include("Edges.Interface")
-                .Include("Edges.Interface.InputTerminal")
-                .Include("Edges.Interface.InputTerminal.Attributes")
-                .Include("Edges.Interface.OutputTerminal")
-                .Include("Edges.Interface.OutputTerminal.Attributes")
-                .Include(x => x.Nodes)
-                .Include("Nodes.Attributes")
-                .Include("Nodes.Connectors")
-                .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Composites")
-                .Include("Nodes.Composites.Attributes")
-                .AsSplitQuery()
-                .OrderByDescending(x => x.Name)
-                .FirstOrDefaultAsync();
+            var project = await _projectRepository.GetAsyncComplete(id);
 
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
@@ -134,6 +99,7 @@ namespace Mb.Services.Services
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
                 foreach (var node in project.Nodes)
                 {
+                    // TODO: Må gjøres på en bedre måte, generell via mapper
                     if (node.Attributes != null)
                     {
                         foreach (var attribute in node.Attributes)
@@ -149,7 +115,7 @@ namespace Mb.Services.Services
                             node.Purpose = JsonConvert.DeserializeObject<Purpose>(node.PurposeString);
                         }
                     }
-
+                    // TODO: Må gjøres på en bedre måte, generell via mapper
                     if (node.Connectors != null)
                     {
                         foreach (var connector in node.Connectors.OfType<Terminal>())
@@ -165,7 +131,7 @@ namespace Mb.Services.Services
                             }
                         }
                     }
-
+                    // TODO: Må gjøres på en bedre måte, generell via mapper
                     if (node.Composites != null)
                     {
                         foreach (var composite in node.Composites)
@@ -182,38 +148,10 @@ namespace Mb.Services.Services
                         }
                     }
 
-                    if (node.MasterProjectId != id)
-                    {
-                        var partOfEdge = node.Connectors.OfType<Relation>()
-                            .FirstOrDefault(x => x.Type == ConnectorType.Input);
-
-                        if (partOfEdge?.Node != null)
-                        {
-                            node.PositionY = node.PositionY + partOfEdge.Node.PositionY;
-                        }
-                    }
-
                 }
             }
 
             return project;
-        }
-
-        /// <summary>
-        /// Import project, if exist update project
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        public async Task<Project> ImportProject(ProjectAm project)
-        {
-            if (project == null || string.IsNullOrEmpty(project.Id))
-                throw new ModelBuilderInvalidOperationException(
-                    "You can't import an project that is null or missing id");
-
-            if (_projectRepository.FindBy(x => x.Id == project.Id).Any())
-                return await UpdateProject(project.Id, project, _modelBuilderConfiguration.Domain);
-
-            return await CreateProject(project);
         }
 
         /// <summary>
@@ -307,8 +245,8 @@ namespace Mb.Services.Services
                 if (!validation.IsValid)
                     throw new ModelBuilderBadRequestException($"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
-                var actualProject = await GetProject(subProjectAm.FromProjectId, true);
-                if (actualProject == null)
+                var fromProject = await GetProject(subProjectAm.FromProjectId, true);
+                if (fromProject == null)
                     throw new ModelBuilderInvalidOperationException("The original project does not exist");
 
                 // Create a new initial project
@@ -318,25 +256,22 @@ namespace Mb.Services.Services
                     Description = subProjectAm.Description
                 };
 
-                var initSubProjectCreated = CreateInitProject(subProjectToCreate, true);
-                await _projectRepository.CreateAsync(initSubProjectCreated);
+                var toProject = CreateInitProject(subProjectToCreate, true);
+                await _projectRepository.CreateAsync(toProject);
                 await _projectRepository.SaveAsync();
-                newCreatedProject = initSubProjectCreated.Id;
+                newCreatedProject = toProject.Id;
 
-                // Remap and remove top nodes, edges
-                RemapSubProject(initSubProjectCreated, actualProject, subProjectAm);
-
-                // Map and save the new project
-                var projectAm = _mapper.Map<ProjectAm>(initSubProjectCreated);
+                // Remap project
+                var subProject = _remapService.Remap(fromProject, toProject, subProjectAm.Nodes, subProjectAm.Edges);
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
-                
-                var subProjectCreated = await UpdateProject(initSubProjectCreated.Id, projectAm, _modelBuilderConfiguration.Domain);
+
+                var subProjectCreated = await UpdateProject(toProject.Id, subProject, _modelBuilderConfiguration.Domain);
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
-                
+
                 return subProjectCreated;
             }
             catch (Exception e)
@@ -378,29 +313,7 @@ namespace Mb.Services.Services
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try
             {
-                var originalProject = await _projectRepository
-                    .FindBy(x => x.Id == id)
-                    .Include(x => x.Edges)
-                    .Include("Edges.Transport")
-                    .Include("Edges.Transport.Attributes")
-                    .Include("Edges.Transport.InputTerminal")
-                    .Include("Edges.Transport.InputTerminal.Attributes")
-                    .Include("Edges.Transport.OutputTerminal")
-                    .Include("Edges.Transport.OutputTerminal.Attributes")
-                    .Include("Edges.Interface")
-                    .Include("Edges.Interface.InputTerminal")
-                    .Include("Edges.Interface.InputTerminal.Attributes")
-                    .Include("Edges.Interface.OutputTerminal")
-                    .Include("Edges.Interface.OutputTerminal.Attributes")
-                    .Include(x => x.Nodes)
-                    .Include("Nodes.Attributes")
-                    .Include("Nodes.Connectors")
-                    .Include("Nodes.Connectors.Attributes")
-                    .Include("Nodes.Composites")
-                    .Include("Nodes.Composites.Attributes")
-                    .AsSplitQuery()
-                    .OrderByDescending(x => x.Name)
-                    .FirstOrDefaultAsync();
+                var originalProject = await _projectRepository.GetAsyncComplete(id);
 
                 if (originalProject == null)
                     throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
@@ -414,12 +327,12 @@ namespace Mb.Services.Services
                 // Edges
                 var existingEdges = originalProject.Edges.ToList();
                 var deleteEdges = existingEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
-                var subDeleteEdges = (await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id, invokedByDomain)).ToList();
+                var edgeChangeMap = await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id, invokedByDomain);
 
                 // Nodes
                 var existingNodes = originalProject.Nodes.ToList();
                 var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
-                var subDeleteNodes = (await _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain)).ToList();
+                var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain);
 
                 //Determine if project version should be incremented
                 SetProjectVersion(originalProject, projectAm);
@@ -427,17 +340,15 @@ namespace Mb.Services.Services
                 // Map new data
                 _mapper.Map(projectAm, originalProject);
 
-                var subNodes = _nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain).ToList();
-                var subEdges = _edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain).ToList();
+                nodeChangeMap = nodeChangeMap.Concat(_nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain)).ToList();
+                edgeChangeMap = edgeChangeMap.Concat(_edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain)).ToList();
 
                 ResolveLevelAndOrder(originalProject);
 
                 _projectRepository.Update(originalProject);
                 await _projectRepository.SaveAsync();
-                ClearAllChangeTracker();
-
-                // Resolve
-                await ResolveSubProjects(subNodes, subDeleteNodes, subEdges, subDeleteEdges, originalProject.Id);
+                await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), originalProject.Id);
+                await _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), originalProject.Id);
             }
             catch (Exception e)
             {
@@ -464,19 +375,8 @@ namespace Mb.Services.Services
             if (existingProject == null)
                 throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
 
-            var masterNodesCount = _nodeRepository.FindBy(x => x.MasterProjectId == projectId).Count();
-            var existingProjectNodesCount = existingProject.Nodes.Count;
-
-            if (masterNodesCount > existingProjectNodesCount)
-                throw new ModelBuilderInvalidOperationException(
-                    "You can't delete a project that is master for other sub projects.");
-
-
-            var nodesToDelete = existingProject.Nodes.Where(x => x.MasterProjectId == projectId).ToList();
-            var edgesToDelete = existingProject.Edges.Where(x => x.MasterProjectId == projectId).ToList();
-
-            await _edgeRepository.DeleteEdges(edgesToDelete, projectId, _modelBuilderConfiguration.Domain);
-            await _nodeRepository.DeleteNodes(nodesToDelete, projectId, _modelBuilderConfiguration.Domain);
+            _ = await _edgeRepository.DeleteEdges(existingProject.Edges, projectId, _modelBuilderConfiguration.Domain);
+            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _modelBuilderConfiguration.Domain);
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();
         }
@@ -500,23 +400,25 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Create a project from file
+        /// Lock or unlock an attribute
         /// </summary>
-        /// <param name="file"></param>
-        /// <param name="cancellationToken"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, Guid id)
+        /// <param name="lockUnlockEdgeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        public async Task LockUnlockEdge(LockUnlockEdgeAm lockUnlockEdgeAm)
         {
-            await using var stream = new MemoryStream();
-            await file.CopyToAsync(stream, cancellationToken);
+            if (string.IsNullOrWhiteSpace(lockUnlockEdgeAm?.Id))
+                throw new ModelBuilderBadRequestException($"When locking/unlocking an Edge id can't be null or empty.");
 
-            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-                throw new ModelBuilderModuleException($"There is no parser with key: {id}");
+            var edge = await _edgeRepository.GetAsync(lockUnlockEdgeAm.Id);
 
-            var par = _moduleService.Resolve<IModelBuilderParser>(id);
-            var project = await par.DeserializeProjectAm(stream.ToArray());
-            return await ImportProject(project);
+            if (edge == null || lockUnlockEdgeAm.IsLocked == edge.IsLocked)
+                return;
+
+            EdgeTransportsInterfacesAttributesLockUnlock(edge, lockUnlockEdgeAm.IsLocked, _contextAccessor.GetName(),
+                DateTime.Now.ToUniversalTime(), _transportRepository.GetAll(), _attributeRepository.GetAll(false), _interfaceRepository.GetAll());
+
+            await _edgeRepository.SaveAsync();
+            await _attributeRepository.SaveAsync();
         }
 
         /// <summary>
@@ -529,22 +431,9 @@ namespace Mb.Services.Services
             if (lockUnlockAttributeAm?.Id == null)
                 return;
 
-            var attribute = await _attributeRepository.GetAsync(lockUnlockAttributeAm.Id);
-
-            if (attribute == null)
-                return;
-
-            if (attribute.IsLocked == lockUnlockAttributeAm.IsLocked)
-                return;
-
-            var userName = _contextAccessor.GetName();
-
-            if (attribute.IsLocked && attribute.IsLockedBy != userName)
-                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + attribute.IsLockedBy);
-
-            attribute.IsLocked = lockUnlockAttributeAm.IsLocked;
-            attribute.IsLockedBy = attribute.IsLocked ? userName : null;
-
+            var attribute = _attributeRepository.GetAll(false).Where(x => x.Id == lockUnlockAttributeAm.Id);
+            LockUnlockAttributes(attribute, lockUnlockAttributeAm.IsLocked, _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
+            
             await _attributeRepository.SaveAsync();
         }
 
@@ -559,32 +448,19 @@ namespace Mb.Services.Services
             if (lockUnlockNodeAm?.Id == null || lockUnlockNodeAm.ProjectId == null)
                 return;
 
-            var userName = _contextAccessor.GetName();
-
             var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
-            var allAttributesInProject = _attributeRepository.GetAll(false).Where(x => x.Node != null && x.Node.MasterProjectId == lockUnlockNodeAm.ProjectId);
-            var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ToNodeId != null && x.ToNode.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            var currentNode = allNodesInProject.FirstOrDefault(x => x.Id == lockUnlockNodeAm.Id);
 
-            var node = allNodesInProject.FirstOrDefault(x => x.Id == lockUnlockNodeAm.Id && x.MasterProjectId == lockUnlockNodeAm.ProjectId);
+            if (currentNode == null)
+                throw new ModelBuilderBadRequestException($"Node with id {lockUnlockNodeAm.Id} not found.");
+            
+            var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
 
-            if (node?.Id == null)
-                return;
-
-            if (node.IsLocked == lockUnlockNodeAm.IsLocked)
-                return;
-
-            if (node.IsLocked && userName != node.IsLockedBy)
-                throw new ModelBuilderUnauthorizedAccessException("Locked by: " + node.IsLockedBy);
-
-            node.IsLocked = lockUnlockNodeAm.IsLocked;
-            node.IsLockedBy = node.IsLocked ? userName : null;
-
-            var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == node.Id);
-
-            LockUnlockAttributes(nodeAttributes, node, userName);
-            LockUnlockNodesAndAttributesRecursive(node, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+            LockUnlockNodesRecursive(lockUnlockNodeAm.IsLocked, currentNode, allNodesInProject, allEdgesInProject, _attributeRepository.GetAll(false),
+                _transportRepository.GetAll(), _interfaceRepository.GetAll(), _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
 
             await _nodeRepository.SaveAsync();
+            await _edgeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
         }
 
@@ -615,6 +491,19 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Returns a list of all locked edges id's
+        /// If param 'projectId' is null all locked edges in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked edges id></returns>
+        public IEnumerable<string> GetLockedEdges(string projectId)
+        {
+            return string.IsNullOrWhiteSpace(projectId)
+                ? _edgeRepository.FindBy(x => x.IsLocked).Select(y => y.Id)
+                : _edgeRepository.FindBy(x => x.IsLocked && x.MasterProjectId == projectId).Select(y => y.Id);
+        }
+
+        /// <summary>
         /// Resolve commit package
         /// </summary>
         /// <param name="package"></param>
@@ -639,14 +528,6 @@ namespace Mb.Services.Services
             var project = await GetProject(package.ProjectId);
             project.IsSubProject = true;
 
-            var currentUserName = _contextAccessor.GetName();
-
-            foreach (var node in project.Nodes)
-            {
-                node.IsLocked = true;
-                node.IsLockedBy = currentUserName;
-            }
-
             var data = await parser.SerializeProject(project);
             var projectString = System.Text.Encoding.UTF8.GetString(data);
 
@@ -664,11 +545,11 @@ namespace Mb.Services.Services
 
             foreach (var sender in senders)
             {
-                if (sender.Instance is IModelBuilderSyncService client)
-                {
-                    await client.SendData(export);
-                    await SetProjectCommitVersion(project.Id);
-                }
+                if (sender.Instance is not IModelBuilderSyncService client) 
+                    continue;
+
+                await client.SendData(export);
+                await SetProjectCommitVersion(project.Id);
             }
         }
 
@@ -677,131 +558,88 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns></returns>
-        public async Task<bool> ProjectExist(string projectId)
+        public bool ProjectExist(string projectId)
         {
-            var project = await _projectRepository.FindBy(x => x.Id == projectId).FirstOrDefaultAsync();
-            if (project == null)
-                return false;
-
-            _projectRepository.Detach(project);
-            return true;
+            return _projectRepository.Context.Projects.Any(x => x.Id == projectId);
         }
 
-        #region Private methods
+        #region Private
 
-        private async Task ResolveSubProjects(ICollection<Node> subNodes, ICollection<Node> subDeleteNodes, ICollection<Edge> subEdges, ICollection<Edge> subDeleteEdges, string projectId)
+        private void LockUnlockNodesRecursive(bool lockUnlock, Node node, IQueryable<Node> allNodes, IQueryable<Edge> allEdges, IQueryable<Attribute> allAttributes,
+            IQueryable<Transport> allTransports, IQueryable<Interface> allInterfaces, string userName, DateTime dateTimeNow,
+            int infiniteLoopGuardStart = 1, int infiniteLoopGuardMax = 100000)
         {
-            try
+            if(node == null)
+                return;
+
+            //Node and node attributes lock/unlock
+            if (node.IsLocked != lockUnlock)
             {
-                if (!subNodes.Any() && !subDeleteNodes.Any() && !subEdges.Any() && !subDeleteEdges.Any())
+                node.IsLocked = lockUnlock;
+                node.IsLockedStatusBy = userName;
+                node.IsLockedStatusDate = dateTimeNow;
+
+                LockUnlockAttributes(allAttributes.Where(x => x.NodeId == node.Id), lockUnlock, userName, dateTimeNow);
+            }
+
+            //Edge lock/unlock (including transport and interface attributes)
+            foreach (var edge in allEdges.Where(x => x.FromNodeId == node.Id))
+            {
+                EdgeTransportsInterfacesAttributesLockUnlock(edge, lockUnlock, userName, dateTimeNow, allTransports, allAttributes, allInterfaces);
+                var childNode = allNodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
+
+                //Exit recursion
+                if (childNode == null || childNode.Level <= node.Level)
                     return;
 
-                var originalProject = await _projectRepository
-                    .FindBy(x => x.Id == projectId, false)
-                    .Include(x => x.Edges)
-                    .Include(x => x.Nodes)
-                    .Include("Nodes.Attributes")
-                    .Include("Nodes.Connectors")
-                    .Include("Nodes.Connectors.Attributes")
-                    .AsSplitQuery()
-                    .OrderByDescending(x => x.Name)
-                    .FirstOrDefaultAsync();
+                infiniteLoopGuardStart++;
 
-                foreach (var subNode in subNodes)
-                {
-                    originalProject.Nodes.Add(subNode);
-                    _nodeRepository.Attach(subNode, EntityState.Unchanged);
-                }
+                //Exit recursion (safe guard)
+                if (infiniteLoopGuardStart >= infiniteLoopGuardMax)
+                    throw new ModelBuilderInvalidOperationException($"Error in lock/unlock nodes: Infinite recursion loop detected after {infiniteLoopGuardMax} iterations.");
 
-                foreach (var subEdge in subEdges)
-                {
-                    originalProject.Edges.Add(subEdge);
-                    _edgeRepository.Attach(subEdge, EntityState.Unchanged);
-                }
-
-                originalProject.Nodes =
-                    originalProject.Nodes.Where(x => subDeleteNodes.All(y => y.Id != x.Id)).ToList();
-                originalProject.Edges =
-                    originalProject.Edges.Where(x => subDeleteEdges.All(y => y.Id != x.Id)).ToList();
-
-                _projectRepository.Update(originalProject);
-                await _projectRepository.SaveAsync();
-                _projectRepository.Detach(originalProject);
-                ClearAllChangeTracker();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Can not resolve sub projects for project with id: {projectId}. Error: {e.Message}");
-                throw;
-            }
-            finally
-            {
-                ClearAllChangeTracker();
+                LockUnlockNodesRecursive(node.IsLocked, childNode, allNodes, allEdges, allAttributes, 
+                    allTransports, allInterfaces, userName, dateTimeNow, infiniteLoopGuardStart, infiniteLoopGuardMax);
             }
         }
 
-        private void LockUnlockNodesAndAttributesRecursive(
-            Node parentNode,
-            IQueryable<Node> allNodesInProject,
-            IQueryable<Attribute> allAttributesInProject,
-            IQueryable<Edge> allEdgesInProject,
-            string userName)
+        private void EdgeTransportsInterfacesAttributesLockUnlock(Edge edge, bool lockUnlock, string userName, 
+            DateTime dateTimeNow, IQueryable<Transport> allTransports, IQueryable<Attribute> allAttributes, IQueryable<Interface> allInterfaces)
         {
-            if (parentNode?.Id == null)
+            if (edge.IsLocked == lockUnlock)
                 return;
 
-            var edges = allEdgesInProject.Where(x => x.FromNodeId == parentNode.Id);
+            edge.IsLocked = lockUnlock;
+            edge.IsLockedStatusBy = userName;
+            edge.IsLockedStatusDate = dateTimeNow;
 
-            if (!edges.Any())
-                return;
-
-            foreach (var edge in edges)
+            //Transport attributes lock/unlock
+            if (!string.IsNullOrWhiteSpace(edge.TransportId))
             {
-                if (edge?.ToNodeId == null)
-                    return;
-
-                var childNode = allNodesInProject.FirstOrDefault(x => x.Id == edge.ToNodeId);
-
-                if (childNode?.Id == null)
-                    continue;
-
-                if (childNode.IsLocked == parentNode.IsLocked)
-                    continue;
-
-                if (childNode.IsLocked && userName != childNode.IsLockedBy)
-                    continue;
-
-                if (childNode.Level > parentNode.Level)
-                {
-                    childNode.IsLocked = parentNode.IsLocked;
-                    childNode.IsLockedBy = childNode.IsLocked ? userName : null;
-
-                    var nodeAttributes = allAttributesInProject.Where(x => x.NodeId == childNode.Id);
-                    LockUnlockAttributes(nodeAttributes, childNode, userName);
-                }
-
-                LockUnlockNodesAndAttributesRecursive(childNode, allNodesInProject, allAttributesInProject, allEdgesInProject, userName);
+                var transportObject = allTransports.FirstOrDefault(x => x.Id == edge.TransportId);
+                var transportAttributes = allAttributes.Where(x => x.TerminalId == transportObject.OutputTerminalId || x.TerminalId == transportObject.InputTerminalId);
+                LockUnlockAttributes(transportAttributes, lockUnlock, userName, dateTimeNow);
             }
+
+            if (string.IsNullOrWhiteSpace(edge.InterfaceId)) 
+                return;
+
+            //Interface attributes lock/unlock
+            var interfaceObject = allInterfaces.FirstOrDefault(x => x.Id == edge.InterfaceId);
+            var interfaceAttributes = allAttributes.Where(x => x.TerminalId == interfaceObject.OutputTerminalId || x.TerminalId == interfaceObject.InputTerminalId);
+            LockUnlockAttributes(interfaceAttributes, lockUnlock, userName, dateTimeNow);
         }
 
-        private void LockUnlockAttributes(IQueryable<Attribute> attributes, Node node, string userName)
+        private static void LockUnlockAttributes(IQueryable<Attribute> attributes, bool lockUnlock, string userName, DateTime dateTimeNow)
         {
-            if (!attributes.Any())
-                return;
-
-            foreach (var nodeAttribute in attributes)
+            foreach (var attribute in attributes)
             {
-                if (nodeAttribute == null)
+                if (attribute.IsLocked == lockUnlock)
                     continue;
 
-                if (nodeAttribute.IsLocked == node.IsLocked)
-                    continue;
-
-                if (nodeAttribute.IsLocked && nodeAttribute.IsLockedBy != userName)
-                    continue;
-
-                nodeAttribute.IsLocked = node.IsLocked;
-                nodeAttribute.IsLockedBy = nodeAttribute.IsLocked ? userName : null;
+                attribute.IsLocked = lockUnlock;
+                attribute.IsLockedStatusBy = userName;
+                attribute.IsLockedStatusDate = dateTimeNow;
             }
         }
 
@@ -837,6 +675,8 @@ namespace Mb.Services.Services
                     break;
             }
 
+            var userName = _contextAccessor.GetName();
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
 
             var node = new Node
             {
@@ -846,8 +686,6 @@ namespace Mb.Services.Services
                 PositionX = positionX,
                 PositionY = positionY,
                 Connectors = new List<Connector>(),
-                UpdatedBy = _contextAccessor.GetName(),
-                Updated = DateTime.Now.ToUniversalTime(),
                 Version = version,
                 Rds = string.Empty,
                 StatusId = "4590637F39B6BA6F39C74293BE9138DF",
@@ -857,9 +695,12 @@ namespace Mb.Services.Services
                 Length = null,
                 Height = null,
                 Cost = null,
-                Created = DateTime.Now.ToUniversalTime(),
-                CreatedBy = _contextAccessor.GetName()
-            };
+                Created = dateTimeNow,
+                CreatedBy = userName,
+                Updated = dateTimeNow,
+                UpdatedBy = userName,
+                LibraryTypeId = name
+        };
 
             var connector = new Relation
             {
@@ -923,10 +764,10 @@ namespace Mb.Services.Services
                 Version = version,
                 Name = createProject.Name,
                 Description = createProject.Description,
+                UpdatedBy = _contextAccessor.GetName(),
+                Updated = DateTime.Now.ToUniversalTime(),
                 IsSubProject = isSubProject,
                 ProjectOwner = _contextAccessor.GetName(),
-                Updated = DateTime.Now.ToUniversalTime(),
-                UpdatedBy = _contextAccessor.GetName(),
                 Nodes = new List<Node>
                 {
                     CreateInitAspectNode(Aspect.Function, pid),
@@ -1118,7 +959,6 @@ namespace Mb.Services.Services
             if (originalProject.Edges?.Count != projectAm.Edges?.Count)
             {
                 originalProject.IncrementMinorVersion();
-                return;
             }
 
         }
@@ -1137,72 +977,13 @@ namespace Mb.Services.Services
 
         private void ClearAllChangeTracker()
         {
-            _projectRepository?.Context?.ChangeTracker?.Clear();
-            _nodeRepository?.Context?.ChangeTracker?.Clear();
-            _edgeRepository?.Context?.ChangeTracker?.Clear();
-            _connectorRepository?.Context?.ChangeTracker?.Clear();
-            _attributeRepository?.Context?.ChangeTracker?.Clear();
+            _projectRepository?.Context?.ChangeTracker.Clear();
+            _nodeRepository?.Context?.ChangeTracker.Clear();
+            _edgeRepository?.Context?.ChangeTracker.Clear();
+            _connectorRepository?.Context?.ChangeTracker.Clear();
+            _attributeRepository?.Context?.ChangeTracker.Clear();
         }
 
-        private void RemapSubProject(Project newProject, Project oldProject, SubProjectAm subProjectAm)
-        {
-            // Get all node and edge data for the new sub project
-            var nodeList = oldProject.Nodes.Where(x => subProjectAm.Nodes.Any(y => y == x.Id)).Concat(newProject.Nodes).ToList();
-            var edgeList = oldProject.Edges.Where(x => subProjectAm.Edges.Any(y => y == x.Id)).ToList();
-
-            // Remove top-nodes and edges
-            var oldTopNodes = oldProject.Nodes.Where(x => x.IsRoot).ToList();
-            var edgesConnectedToOldTopNodes = oldProject.Edges.Where(x => oldTopNodes.Any(y => y.Id == x.FromNodeId)).ToList();
-
-            nodeList = nodeList.Where(x => oldTopNodes.All(y => y.Id != x.Id)).ToList();
-            edgeList = edgeList.Where(x => edgesConnectedToOldTopNodes.All(y => y.Id != x.Id)).ToList();
-
-            // Initial list if null
-            newProject.Nodes = new List<Node>();
-            newProject.Edges = new List<Edge>();
-
-            // Add the nodes to list, needed for creating many to many relation
-            foreach (var node in nodeList)
-            {
-                newProject.Nodes.Add(new Node { Id = node.Id });
-
-                // There should only be one input PartOf relation
-                var toRelation = node.Connectors.FirstOrDefault(x => x is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Input });
-                if (toRelation == null)
-                    continue;
-
-                if (edgeList.Any(x => x.ToConnectorId == toRelation.Id))
-                    continue;
-
-                var fromNode = nodeList.FirstOrDefault(x => x.IsRoot && x.MasterProjectId == newProject.Id && x.Aspect == node.Aspect);
-                var fromRelation = fromNode?.Connectors.FirstOrDefault(x => x is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Output });
-                if (fromRelation == null)
-                    continue;
-
-                // Create edge for node with missing PartOf relation
-                var edge = new Edge
-                {
-                    Id = _commonRepository.CreateUniqueId(),
-                    FromConnector = fromRelation,
-                    ToConnector = toRelation,
-                    FromConnectorId = fromRelation.Id,
-                    ToConnectorId = toRelation.Id,
-                    FromNode = fromNode,
-                    ToNode = node,
-                    FromNodeId = fromNode.Id,
-                    ToNodeId = node.Id,
-                    MasterProjectId = newProject.Id
-                };
-
-                newProject.Edges.Add(edge);
-            }
-
-            foreach (var edge in edgeList)
-            {
-                newProject.Edges.Add(new Edge { Id = edge.Id });
-            }
-        }
-
-        #endregion
+        #endregion Private
     }
 }

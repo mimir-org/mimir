@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Configurations;
+using Mb.Models.Exceptions;
+using Mb.Models.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace Mb.Data.Repositories
@@ -8,15 +11,17 @@ namespace Mb.Data.Repositories
     public class CommonRepository : ICommonRepository
     {
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly ICollaborationPartnerRepository _collaborationPartnerRepository;
         
-        public CommonRepository(IOptions<ModelBuilderConfiguration> modelBuilderConfiguration)
+        public CommonRepository(IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ICollaborationPartnerRepository collaborationPartnerRepository)
         {
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _collaborationPartnerRepository = collaborationPartnerRepository;
         }
 
         public string CreateUniqueId()
         {
-            return $"{_modelBuilderConfiguration.Domain}_{Guid.NewGuid()}";
+            return $"{_modelBuilderConfiguration.Domain}_{Guid.NewGuid().ToString().ToLower()}";
         }
 
         public string GetDomain()
@@ -41,6 +46,40 @@ namespace Mb.Data.Repositories
         public string CreateOrUseId(string id)
         {
             return HasValidId(id) ? id : CreateUniqueId();
+        }
+
+        public string ResolveId(string id, string iri)
+        {
+            if (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(iri)) 
+                return null;
+            
+            if (HasValidId(id)) 
+                return id;
+
+            var iriParsed = new Uri(iri);
+            var iriHost = iriParsed.Host;
+            var collaborationPartner = _collaborationPartnerRepository
+                .FindBy(c => c.Iris.Any(i => i.Equals(iriHost, StringComparison.InvariantCultureIgnoreCase)))
+                .FirstOrDefault();
+
+            if (collaborationPartner == null)
+            {
+                throw new ModelBuilderInvalidOperationException($"Parent domain could not be found for the host: {iriHost}");
+            }
+
+            var idPart = string.IsNullOrEmpty(iriParsed.Fragment) ? 
+                iriParsed.Segments.Last() : 
+                iriParsed.Fragment[1..];
+
+            return $"{collaborationPartner.Domain}_{idPart}";
+        }
+        
+        public string ResolveIri(string id, string iri)
+        {
+            if (!string.IsNullOrEmpty(iri)) 
+                return iri;
+            
+            return HasValidId(id) ? id.ResolveIri() : null;
         }
     }
 }

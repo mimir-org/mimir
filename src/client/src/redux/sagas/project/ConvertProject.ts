@@ -26,7 +26,7 @@ export interface AttributeAm {
   id: string;
   iri: string;
   domain: string;
-  key: string;
+  entity: string;
   value: string;
   selectedUnitId: string;
   qualifierId: string;
@@ -35,6 +35,7 @@ export interface AttributeAm {
   formatId: string;
   terminalId: string;
   nodeId: string;
+  nodeIri: string;
   transportId: string;
   compositeId: string;
   attributeTypeId: string;
@@ -43,6 +44,8 @@ export interface AttributeAm {
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
+  isLocked: boolean;
+  isLockedBy: string;
 }
 export interface ConnectorAm {
   id: string;
@@ -53,6 +56,8 @@ export interface ConnectorAm {
   semanticReference: string;
   visible: boolean;
   nodeId: string;
+  nodeIri: string;
+  isRequired: boolean;
 
   // Relation
   relationType: RelationType;
@@ -67,11 +72,11 @@ export interface NodeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   name: string;
   version: string;
   label: string;
   rds: string;
-  contractor: string;
   semanticReference: string;
   tagNumber: string;
   description: string;
@@ -92,18 +97,27 @@ export interface NodeAm {
   isRoot: boolean;
   purpose: Purpose;
   created: Date;
+  createdBy: string;
   updated: Date;
   updatedBy: string;
+  libraryTypeId: string;
+  isLocked: boolean;
+  IsLockedBy: string;
 }
 
 export interface EdgeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   fromConnectorId: string;
   toConnectorId: string;
   fromNodeId: string;
   toNodeId: string;
+  fromConnectorIri: string;
+  toConnectorIri: string;
+  fromNodeIri: string;
+  toNodeIri: string;
   masterProjectId: string;
   masterProjectIri: string;
   transport: TransportAm;
@@ -124,13 +138,23 @@ export interface ProjectAm {
 
 export interface TransportAm {
   id: string;
+  version: string;
+  rds: string;
   name: string;
+  label: string;
+  description: string;
+  statusId: string;
   semanticReference: string;
+  attributes: AttributeAm[];
   inputTerminalId: string;
   inputTerminal: ConnectorAm;
   outputTerminalId: string;
   outputTerminal: ConnectorAm;
-  attributes: AttributeAm[];
+  updatedBy: string;
+  updated: Date;
+  createdBy: string;
+  created: Date;
+  libraryTypeId: string;
 }
 export interface CompositeAm {
   id: string;
@@ -142,12 +166,23 @@ export interface CompositeAm {
 
 export interface InterfaceAm {
   id: string;
+  version: string;
+  rds: string;
   name: string;
+  label: string;
+  description: string;
+  statusId: string;
   semanticReference: string;
+  attributes: AttributeAm[];
   inputTerminalId: string;
   inputTerminal: ConnectorAm;
   outputTerminalId: string;
   outputTerminal: ConnectorAm;
+  updatedBy: string;
+  updated: Date;
+  createdBy: string;
+  created: Date;
+  libraryTypeId: string;
 }
 
 const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
@@ -179,7 +214,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       id: attribute.id,
       iri: attribute.iri,
       domain: attribute.domain,
-      key: attribute.key,
+      entity: attribute.entity,
       value: attribute.value,
       selectedUnitId: attribute.selectedUnitId,
       qualifierId: attribute.qualifierId,
@@ -188,6 +223,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       formatId: attribute.formatId,
       terminalId: attribute.terminalId,
       nodeId: attribute.nodeId,
+      nodeIri: attribute.nodeIri,
       attributeTypeId: attribute.attributeTypeId,
       compositeId: attribute.compositeId,
       units: ConvertUnits(attribute.units),
@@ -195,6 +231,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       selectType: attribute.selectType,
       discipline: attribute.discipline,
       tags: attribute.tags,
+      isLocked: attribute.isLocked,
+      isLockedBy: attribute.isLockedBy,
     } as AttributeAm;
 
     converted.push(a);
@@ -218,11 +256,13 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       semanticReference: connector.semanticReference,
       visible: connector.visible,
       nodeId: connector.nodeId,
+      nodeIri: connector.nodeIri,
       relationType: connector.relationType,
       color: connector.color,
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
+      isRequired: connector.isRequired
     } as ConnectorAm;
 
     converted.push(a);
@@ -242,6 +282,7 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
     semanticReference: connector.semanticReference,
     visible: connector.visible,
     nodeId: connector.nodeId,
+    nodeIri: connector.nodeIri,
     relationType: connector.relationType,
     color: connector.color,
     terminalCategoryId: connector.terminalCategoryId,
@@ -274,13 +315,23 @@ const ConvertTransport = (data: Transport): TransportAm => {
 
   return {
     id: data.id,
+    version: data.version,
+    rds: data.rds,
     name: data.name,
+    label: data.label,
+    description: data.description,
+    statusId: data.statusId,
     semanticReference: data.semanticReference,
+    attributes: ConvertAttributes(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertConnector(data.inputTerminal),
     outputTerminalId: data.outputTerminalId,
     outputTerminal: ConvertConnector(data.outputTerminal),
-    attributes: ConvertAttributes(data.attributes),
+    updatedBy: data.updatedBy,
+    updated: data.updated,
+    createdBy: data.createdBy,
+    created: data.created,
+    libraryTypeId: data.libraryTypeId,
   } as TransportAm;
 };
 
@@ -289,12 +340,23 @@ const ConvertInterface = (data: Interface): InterfaceAm => {
 
   return {
     id: data.id,
+    version: data.version,
+    rds: data.rds,
     name: data.name,
+    label: data.label,
+    description: data.description,
+    statusId: data.statusId,
     semanticReference: data.semanticReference,
+    attributes: ConvertAttributes(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertConnector(data.inputTerminal),
     outputTerminalId: data.outputTerminalId,
     outputTerminal: ConvertConnector(data.outputTerminal),
+    updatedBy: data.updatedBy,
+    updated: data.updated,
+    createdBy: data.createdBy,
+    created: data.created,
+    libraryTypeId: data.libraryTypeId,
   } as InterfaceAm;
 };
 
@@ -308,11 +370,11 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       id: node.id,
       iri: node.iri,
       domain: node.domain,
+      projectId: node.projectId,
       name: node.name,
       version: node.version,
       label: node.label,
       rds: node.rds,
-      contractor: node.contractor,
       semanticReference: node.semanticReference,
       tagNumber: node.tagNumber,
       description: node.description,
@@ -337,6 +399,9 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       createdBy: node.createdBy,
       updated: node.updated,
       updatedBy: node.updatedBy,
+      libraryTypeId: node.libraryTypeId,
+      isLocked: node.isLocked,
+      IsLockedBy: node.isLockedBy,
     } as NodeAm;
 
     convertedNodes.push(n);
@@ -355,10 +420,15 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       id: edge.id,
       iri: edge.iri,
       domain: edge.domain,
+      projectId: edge.projectId,
       fromConnectorId: edge.fromConnectorId,
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,
       toNodeId: edge.toNodeId,
+      fromConnectorIri: edge.fromConnectorIri,
+      toConnectorIri: edge.toConnectorIri,
+      fromNodeIri: edge.fromNodeIri,
+      toNodeIri: edge.toNodeIri,
       masterProjectId: edge.masterProjectId,
       masterProjectIri: edge.masterProjectIri,
       transport: ConvertTransport(edge.transport),

@@ -1,22 +1,27 @@
 import styled from "styled-components";
+import { Color } from "../../../../../compLibrary/colors";
 
 interface Props {
-  visible: boolean;
-  input: boolean;
-  parent: boolean;
+  isParent: boolean;
+  isInput: boolean;
+  xPos: number;
+  color: string;
 }
 
-/** Styled component that displays the button for showing the TerminalsMenu. */
 const TerminalsBox = styled.div<Props>`
-  opacity: ${(props) => (!props.visible ? 0 : 1)};
   position: absolute;
-  top: 6px;
-  cursor: pointer;
-  z-index: 5;
-  transition: opacity 250ms ease-in-out;
-
-  left: ${(props) => (props.input && props.parent ? "9px" : props.input && !props.parent ? "-1px" : "unset")};
-  right: ${(props) => (!props.input && props.parent ? "7px" : !props.input && !props.parent ? "-1px" : "unset")};
+  min-width: 150px;
+  width: max-content;
+  top: ${(props) => (props.isParent ? 3 : 5)}px;
+  left: ${(props) => (!props.isInput ? props.xPos + "px" : "unset")};
+  right: ${(props) => (props.isInput ? props.xPos + "px" : "unset")};
+  border: 1px solid;
+  border-color: ${(props) => props.color};
+  background-color: ${Color.White};
+  border-radius: 5px;
+  transition: right 250ms ease-in-out, left 250ms ease-in-out, top 250ms ease-in-out;
+  pointer-events: all;
+  z-index: 7;
 `;
 
 export default TerminalsBox;

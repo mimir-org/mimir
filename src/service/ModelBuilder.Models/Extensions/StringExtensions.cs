@@ -4,9 +4,9 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Mb.Models.Application.TypeEditor;
+using Mb.Models.Const;
 using Mb.Models.Data.Enums;
 using Mb.Models.Exceptions;
-using Mb.Models.Properties;
 
 namespace Mb.Models.Extensions
 {
@@ -52,7 +52,6 @@ namespace Mb.Models.Extensions
                 Id = terminalCategoryId
             };
 
-            //category.Id = category.Key.CreateMd5();
             var createTerminalType = new CreateTerminalType
             {
                 Name = terminalName,
@@ -79,6 +78,28 @@ namespace Mb.Models.Extensions
             return IncrementVersion(version, false, false, true);
         }
 
+        public static bool HasValidIri(this string id, string iri)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(iri))
+                return false;
+
+            var prefixWithoutId = GlobalSettings.IriMimirPrefix.Replace("ID", "");
+
+            if (!iri.Contains(prefixWithoutId) || !iri.Contains(GlobalSettings.IriMimirPrefix))
+                return false;
+
+            var idSegment = iri.ResolveId();
+
+            if (string.IsNullOrEmpty(idSegment))
+                return false;
+
+            var idToCheck = id.Split('_');
+            if (idToCheck.Length != 2)
+                return false;
+
+            return idToCheck[^1].Equals(idSegment);
+        }
+
         public static string ResolveDomain(this string id)
         {
             var idSplit = id?.Split('_', StringSplitOptions.RemoveEmptyEntries);
@@ -91,26 +112,20 @@ namespace Mb.Models.Extensions
                 return null;
 
             var idSplit = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
-            const string prefixMimir = @"https://rdf.equinor.com/sor/mimir#";
-            var iri = $"{prefixMimir}/ID#{idSplit[^1]}";
+            var iri = $"{GlobalSettings.IriMimirPrefix}{idSplit[^1]}";
             return iri;
         }
 
         public static string ResolveIdFromIriAndDomain(this string iri, string domain)
         {
-            if (string.IsNullOrEmpty(domain))
+            if (string.IsNullOrEmpty(domain) || string.IsNullOrEmpty(iri))
                 return null;
 
-            var hashSplit = iri.Split('#', StringSplitOptions.RemoveEmptyEntries);
-            if (hashSplit.Length == 2)
-            {
-                return $"{domain.Trim()}_{hashSplit[1].Trim()}";
-            }
+            var id = iri.ResolveId();
+            if (string.IsNullOrEmpty(id))
+                return null;
 
-            var idSplit = iri.Split("/", StringSplitOptions.RemoveEmptyEntries);
-            return idSplit.Length <= 0 ? 
-                string.Empty : 
-                $"{domain.Trim()}_{hashSplit[^1].Trim()}";
+            return $"{domain.Trim()}_{id.Trim()}";
         }
 
         public static string ResolveNameFromRoleClaim(this string role)
@@ -126,6 +141,25 @@ namespace Mb.Models.Extensions
         }
 
         #region Private
+
+        public static string ResolveId(this string iri)
+        {
+            var split = iri.Split(@"/", StringSplitOptions.RemoveEmptyEntries);
+            if (split.Length <= 1)
+                return null;
+
+            var lastSegment = split[^1];
+            if (string.IsNullOrEmpty(lastSegment))
+                return null;
+
+            if (lastSegment.Contains("ID", StringComparison.InvariantCulture))
+            {
+                var temp = lastSegment.Replace("ID", "");
+                return temp.Trim();
+            }
+
+            return lastSegment.Trim();
+        }
 
         private static string IncrementVersion(string version, bool incrementMajor, bool incrementMinor, bool incrementCommit)
         {

@@ -7,6 +7,7 @@ class Edge {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   fromConnectorId: string;
   fromConnector: Connector;
 
@@ -18,6 +19,11 @@ class Edge {
 
   toNodeId: string;
   toNode: Node;
+
+  fromConnectorIri: string;
+  toConnectorIri: string;
+  fromNodeIri: string;
+  toNodeIri: string;
 
   transportId: string;
   transport: Transport;

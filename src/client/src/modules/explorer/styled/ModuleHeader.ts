@@ -6,23 +6,25 @@ interface Props {
 }
 
 const ModuleHeader = styled.div<Props>`
+  display: flex;
   position: relative;
-  text-align: center;
-  margin: 30px 0px;
+  justify-content: center;
+  margin-top: 10px;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   cursor: pointer;
 
   .text {
     position: relative;
-    display: inline;
+    display: flex;
+    margin-right: 15px;
     opacity: ${(props) => (props.isOpen ? 1 : 0)};
     transition: opacity 0.2s ease-in-out;
   }
 
   .icon {
-    position: absolute;
-    right: ${(props) => (props.isOpen ? 97 : 10)}px;
+    position: relative;
+    right: ${(props) => !props.isOpen && "40px"};
     transition: right 0.2s ease-in-out;
   }
 `;

@@ -1,10 +1,16 @@
 import { OnCloseEditor } from ".";
 import { CreateLibraryType } from "../../models";
-import { saveLibraryType } from "../redux/actions";
+import { changeTypeEditorValidationVisibility, saveLibraryType } from "../redux/actions";
+import { IsTypeEditorSubmissionValid } from "../validators";
 
 const OnSave = (dispatch: any, createLibraryType: CreateLibraryType) => {
-  dispatch(saveLibraryType(createLibraryType));
-  OnCloseEditor(dispatch);
+  if (IsTypeEditorSubmissionValid(createLibraryType)) {
+    dispatch(changeTypeEditorValidationVisibility(false));
+    dispatch(saveLibraryType(createLibraryType));
+    OnCloseEditor(dispatch);
+  } else {
+    dispatch(changeTypeEditorValidationVisibility(true));
+  }
 };
 
 export default OnSave;

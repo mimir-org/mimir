@@ -1,5 +1,5 @@
-import { Action, Dispatch } from "redux";
 import * as Click from "./handlers";
+import { Action, Dispatch } from "redux";
 import { DownIcon, UpIcon } from "../../assets/icons/toogle";
 import { TextResources } from "../../assets/text";
 import { InspectorButton } from "../../compLibrary/buttons";
@@ -9,12 +9,12 @@ import { IsCreateLibraryType, IsNode } from "./helpers/IsType";
 import { ButtonWrapper, Title, ToggleBox } from "./styled";
 import { InspectorElement } from "./types";
 import { useState } from "react";
-import { IsBlockView, IsAspectNode } from "../../helpers";
-import { GetSelectedNode } from "../../helpers";
+import { IsBlockView, IsAspectNode, GetSelectedNode } from "../../helpers";
 
 interface Props {
   project: Project;
   element: InspectorElement;
+  username: string;
   open: boolean;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: (visibility: boolean) => Action;
@@ -26,6 +26,7 @@ interface Props {
 const InspectorButtonRow = ({
   project,
   element,
+  username,
   open,
   inspectorRef,
   changeInspectorVisibilityAction,
@@ -35,17 +36,20 @@ const InspectorButtonRow = ({
 }: Props) => {
   const [validated, setValidated] = useState(false);
   const deleteDisabled = IsNode(element) && (IsAspectNode(element) || (IsBlockView() && element === GetSelectedNode()));
+
   return (
     <ButtonWrapper visible={!!element}>
       {!IsCreateLibraryType(element) && (
         <>
+          {false && ( //TODO: Add validation button back when validation logic has been implemented.
+            <InspectorButton
+              onClick={() => setValidated(!validated)}
+              type={validated ? InspectorButtonType.ValidateCorrect : InspectorButtonType.Validate}
+              visible={true}
+            />
+          )}
           <InspectorButton
-            onClick={() => setValidated(!validated)}
-            type={validated ? InspectorButtonType.ValidateCorrect : InspectorButtonType.Validate}
-            visible={true}
-          />
-          <InspectorButton
-            onClick={() => Click.OnLock(element, project, !element.isLocked, dispatch)}
+            onClick={() => Click.OnLock(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
             visible={true}
           />

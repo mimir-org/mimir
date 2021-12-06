@@ -23,7 +23,7 @@ export const TerminalListElement = styled.div<Props>`
   }
 
   :hover {
-    background-color: ${Color.LightBlue};
+    background-color: ${Color.BlueLight};
     cursor: pointer;
     text-decoration: underline;
   }

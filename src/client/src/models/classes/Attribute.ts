@@ -6,7 +6,7 @@ class Attribute {
   id: string;
   iri: string;
   domain: string;
-  key: string;
+  entity: string;
   value: string;
   isLocked: boolean;
   isLockedBy: string;
@@ -24,6 +24,7 @@ class Attribute {
   attributeTypeId: string;
   terminalId: string;
   nodeId: string;
+  nodeIri: string;
   transportId: string;
   compositeId: string;
   selectValues: string[];

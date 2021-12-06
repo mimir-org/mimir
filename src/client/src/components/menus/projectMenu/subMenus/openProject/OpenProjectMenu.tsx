@@ -1,51 +1,51 @@
-import * as Click from "./handlers";
-import { useState } from "react";
-import { SearchBar, ProjectList } from "./";
+import { Dispatch } from "redux";
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
-import { CloseIcon } from "../../../../../assets/icons/close";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
-import { MessageComponent } from "../../../../message";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { OnOpen, OnReturn } from "./handlers";
+import { RightArrowIcon } from "../../../../../assets/icons/arrow";
+import { ProjectDetails } from ".";
+import { ProjectBody, ProjectBox, HeaderBox, ButtonsContainer, OpenButton } from "../styled";
+import { IsStartPage } from "../../../../../helpers";
 
 interface Props {
   projectState: ProjectState;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
+/**
+ * Open project menu component
+ * @param interface
+ * @returns a menu for selecting a project or create a new one.
+ */
 export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
-  const [confirm, setConfirm] = useState(false);
-  const projects = projectState.projectList as ProjectSimple[];
+  const projects = projectState.projectList as ProjectItemCm[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
+  const projectDescription = project?.description;
+  const hasProject = projectId && projectId !== "";
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   return (
-    <>
-      <ProjectBox visible={isOpen}>
-        <ProjectBody>
-          <HeaderBox>
-            <img src={CloseIcon} alt="icon" onClick={() => Click.OnReturn(dispatch)} className="icon" />
-            {TextResources.Account_Open_Label}
-          </HeaderBox>
-          <SearchBar />
-          <ProjectList projectList={projects} />
-          <ButtonBox>{projectId && <Button onClick={() => Click.OnOpen(dispatch, setConfirm)} type="Open" />}</ButtonBox>
-        </ProjectBody>
-      </ProjectBox>
-      {confirm && (
-        <MessageComponent
-          handleSave={() => Click.OnSave(dispatch, projectId, setConfirm)}
-          handleNoSave={() => Click.OnNoSave(dispatch, projectId, setConfirm)}
-          showConfirm={confirm}
-          setConfirm={setConfirm}
-          text={TextResources.Account_Confirm_Save}
-        />
-      )}
-    </>
+    <ProjectBox large visible={isOpen} startPage={IsStartPage()}>
+      <ProjectBody large>
+        <HeaderBox>{TextResources.Project_Open_Label}</HeaderBox>
+        <ProjectDetails projects={projects} projectDescription={projectDescription} dispatch={dispatch} />
+        <ButtonsContainer>
+          <Button onClick={() => OnReturn(dispatch)} text={TextResources.Project_Cancel} />
+          <OpenButton hasProject={hasProject}>
+            <Button
+              onClick={hasProject ? () => OnOpen(projectId, dispatch) : () => null}
+              text={TextResources.Project_Open}
+              icon={RightArrowIcon}
+            />
+          </OpenButton>
+        </ButtonsContainer>
+      </ProjectBody>
+    </ProjectBox>
   );
 };
 

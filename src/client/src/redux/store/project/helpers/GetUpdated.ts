@@ -40,9 +40,10 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeIsLocked = <T extends HasIn
   element: T,
   terminalId: string,
   attributeId: string,
-  isLocked: boolean
+  isLocked: boolean,
+  isLockedBy: string
 ): T => {
-  const UpdateAttribute = (attribute: Attribute) => UpdateAttributeIsLocked(attribute, isLocked);
+  const UpdateAttribute = (attribute: Attribute) => UpdateAttributeIsLocked(attribute, isLocked, isLockedBy);
   if (element.inputTerminalId === terminalId) {
     element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
       MapAttribute(attribute, attributeId, UpdateAttribute)
@@ -64,7 +65,8 @@ const UpdateAttributeValue = (attribute: Attribute, value: string, unitId: strin
   selectedUnitId: unitId,
 });
 
-const UpdateAttributeIsLocked = (attribute: Attribute, isLocked: boolean): Attribute => ({
+const UpdateAttributeIsLocked = (attribute: Attribute, isLocked: boolean, isLockedBy: string): Attribute => ({
   ...attribute,
   isLocked,
+  isLockedBy,
 });

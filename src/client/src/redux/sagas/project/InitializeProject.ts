@@ -10,17 +10,14 @@ export const InitializeProject = (project: Project): Project => {
   project.nodes = project.nodes.map((node) => {
     let initNode = new Node(node);
 
-    initAttributes(initNode);
+    if (initNode.attributes?.length > 0) initAttributes(initNode);
 
-    if (initNode.composites.length > 0) {
+    if (initNode.composites?.length > 0)
       initNode.composites = initNode.composites.map((composite) => initAttributes(composite) && new Composite(composite));
-    }
 
-    if (initNode.connectors.length > 0) {
+    if (initNode.connectors?.length > 0) {
       initNode.connectors = initNode.connectors.map((connector) => {
-        if (IsTransport(connector)) {
-          initAttributes(connector);
-        }
+        if (IsTransport(connector)) initAttributes(connector);
         return new Connector(connector);
       });
     }

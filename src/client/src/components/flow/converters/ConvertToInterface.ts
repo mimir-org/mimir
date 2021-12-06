@@ -3,9 +3,9 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
 const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
-  const currentInterface = library?.interfaceTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
+  const interfaceType = library?.interfaceTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
 
-  if (currentInterface) {
+  if (interfaceType) {
     const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
     const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
     inputTerminal.id = CreateId();
@@ -31,12 +31,23 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
 
     return {
       id: CreateId(),
-      name: currentInterface.name,
-      semanticReference: currentInterface.semanticReference,
+      version: interfaceType.version,
+      rds: interfaceType.rds,
+      name: interfaceType.name,
+      label: interfaceType.label ?? interfaceType.name,
+      description: interfaceType.description,
+      statusId: interfaceType.statusId,
+      semanticReference: interfaceType.semanticReference,
+      attributes: interfaceType.attributes,
       inputTerminalId: inputTerminal.id,
       inputTerminal: inputTerminal,
       outputTerminalId: outputTerminal.id,
       outputTerminal: outputTerminal,
+      updatedBy: interfaceType.updatedBy,
+      updated: interfaceType.updated,
+      createdBy: interfaceType.createdBy,
+      created: interfaceType.created,
+      libraryTypeId: interfaceType.id,
     } as Interface;
   }
   return null;

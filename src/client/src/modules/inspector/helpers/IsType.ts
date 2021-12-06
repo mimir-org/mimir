@@ -16,7 +16,6 @@ import {
   ATTRIBUTE_KIND,
 } from "../../../models";
 import { COMPOSITE_KIND } from "../../../models/classes/Composite";
-import { AttributeLikeItem } from "../types";
 
 export const IsNode = (element: any): element is Node => element?.kind === NODE_KIND;
 
@@ -33,7 +32,3 @@ export const IsComposite = (element: any): element is Composite => element?.kind
 export const IsCreateLibraryType = (element: any): element is CreateLibraryType => element?.kind === CREATE_LIBRARY_KIND;
 
 export const IsAttribute = (element: any): element is Attribute => element?.kind === ATTRIBUTE_KIND;
-
-type AttributeLikeItemKey = "key" | "entity";
-
-export const GetAttributeLikeItemKey = (item: AttributeLikeItem): AttributeLikeItemKey => (IsAttribute(item) ? "key" : "entity");
