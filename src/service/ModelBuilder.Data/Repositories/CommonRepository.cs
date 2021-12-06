@@ -58,9 +58,8 @@ namespace Mb.Data.Repositories
 
             var iriParsed = new Uri(iri);
             var iriHost = iriParsed.Host;
-            var collaborationPartner = _collaborationPartnerRepository
-                .FindBy(c => c.Iris.Any(i => i.Equals(iriHost, StringComparison.InvariantCultureIgnoreCase)))
-                .FirstOrDefault();
+            var collaborationPartners = _collaborationPartnerRepository.GetAll().ToList();
+            var collaborationPartner = collaborationPartners.FirstOrDefault(c => c.Iris.Any(i => i.Equals(iriHost)));
 
             if (collaborationPartner == null)
             {
@@ -79,6 +78,14 @@ namespace Mb.Data.Repositories
             if (!string.IsNullOrEmpty(iri)) 
                 return iri;
             
+            return HasValidId(id) ? id.ResolveIri() : null;
+        }
+
+        public string ResolveAttributeIri(string id, string iri)
+        {
+            if (!string.IsNullOrEmpty(iri))
+                return iri;
+
             return HasValidId(id) ? id.ResolveIri() : null;
         }
     }

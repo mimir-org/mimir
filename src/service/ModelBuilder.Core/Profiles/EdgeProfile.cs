@@ -11,7 +11,7 @@ namespace Mb.Core.Profiles
         {
             CreateMap<EdgeAm, Edge>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.Id, src.Iri)))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.FromConnectorId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.FromConnectorId, src.FromConnectorIri)))
                 .ForMember(dest => dest.ToConnectorId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.ToConnectorId, src.ToConnectorIri)))

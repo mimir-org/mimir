@@ -11,7 +11,7 @@ namespace Mb.Core.Profiles
         {
             CreateMap<ConnectorAm, Connector>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.Id, src.Iri)))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
@@ -34,7 +34,7 @@ namespace Mb.Core.Profiles
 
             CreateMap<ConnectorAm, RelationAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.Id, src.Iri)))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
@@ -46,7 +46,7 @@ namespace Mb.Core.Profiles
 
             CreateMap<ConnectorAm, TerminalAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.Id, src.Iri)))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))

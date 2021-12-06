@@ -163,7 +163,15 @@ namespace Mb.Services.Services
         {
             var project = CreateInitProject(createProject, false);
             await _projectRepository.CreateAsync(project);
-            await _projectRepository.SaveAsync();
+            try
+            {
+                await _projectRepository.SaveAsync();
+            }
+            catch (Exception e)
+            {
+                var dd = e.Message;
+            }
+
             return project;
         }
 
@@ -681,6 +689,7 @@ namespace Mb.Services.Services
             var node = new Node
             {
                 Id = _commonRepository.CreateUniqueId(),
+                Iri = "https://reidar.com",
                 Name = name,
                 Label = name,
                 PositionX = positionX,
@@ -705,6 +714,7 @@ namespace Mb.Services.Services
             var connector = new Relation
             {
                 Id = _commonRepository.CreateUniqueId(),
+                Iri = "https://reidar.com",
                 Name = connectorName,
                 Type = ConnectorType.Output,
                 NodeId = node.Id,
@@ -761,6 +771,7 @@ namespace Mb.Services.Services
             var project = new Project
             {
                 Id = pid,
+                Iri = "https://reidar.com",
                 Version = version,
                 Name = createProject.Name,
                 Description = createProject.Description,

@@ -12,7 +12,7 @@ namespace Mb.Models.Configurations
             builder.ToTable("Connector");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
+            //builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Type).HasColumnName("Type").IsRequired().HasConversion<string>();
             builder.Property(p => p.Visible).HasColumnName("Visible").IsRequired().HasConversion<string>();

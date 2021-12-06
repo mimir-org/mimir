@@ -33,5 +33,7 @@
         /// <param name="iri">IRI to validate</param>
         /// <returns>A valid IRI, null if value could not be resolved</returns>
         string ResolveIri(string id, string iri);
+
+        string ResolveAttributeIri(string id, string iri);
     }
 }

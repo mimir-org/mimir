@@ -57,7 +57,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags));
 
             CreateMap<AttributeAm, Attribute>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
@@ -93,7 +93,13 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
                 .ForMember(dest => dest.CompositeId, opt => opt.MapFrom(src => src.CompositeId))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
-                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
+                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()))
+                .AfterMap((src, dest, _) =>
+                {
+                    var id = commonRepository.CreateOrUseId(src.Id);
+                    dest.Id = id;
+                    dest.Iri = commonRepository.ResolveIri(dest.Id, dest.Iri);
+                });
 
             CreateMap<Attribute, AttributeAm>()
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
