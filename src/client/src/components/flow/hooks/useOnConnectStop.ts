@@ -15,10 +15,11 @@ const useOnConnectStop = (e, project: Project, dispatch: any, parentSize: BlockN
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
 
     // Calculate the boundaries for OffPage dropzone
-    const marginOffPageX = parentSize.width / 10;
-    const leftBound = parentSize.width + Size.BlockMarginX - marginOffPageX;
-    // const rightBound = parentSize.width + Size.BlockMarginX - marginOffPageX + 200;
-    const validDrop = !IsOffPage(sourceNode) && e.clientX > leftBound; //&& e.clientX < rightBound;
+    const pixelCorrection = parentSize.width / 10;
+    const dropZoneWidth = 100;
+    const leftBound = parentSize.width + Size.BlockMarginX - pixelCorrection;
+    const rightBound = leftBound + dropZoneWidth;
+    const validDrop = !IsOffPage(sourceNode) && e.clientX > leftBound && e.clientX < rightBound;
 
     if (validDrop) {
       const offPageData = {

@@ -1,4 +1,4 @@
-import * as Selectors from "./helpers/selectors";
+import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
@@ -26,12 +26,12 @@ interface Props {
  */
 const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
-  const username = useAppSelector(Selectors.usernameSelector);
-  const animate = useParametricAppSelector(Selectors.animatedModuleSelector, type);
-  const activeTabIndex = useAppSelector(Selectors.inspectorActiveTabSelector);
-  const inspectorOpen = useAppSelector(Selectors.inspectorSelector);
-  const libOpen = useAppSelector(Selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(Selectors.explorerSelector);
+  const username = useAppSelector(selectors.usernameSelector);
+  const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
+  const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);
+  const inspectorOpen = useAppSelector(selectors.inspectorSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;

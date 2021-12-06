@@ -15,6 +15,7 @@ interface Props {
 
 /**
  * Component for the Explorer Module in Mimir.
+ * @param interface
  * @returns a module where all nodes in Mimir are listed.
  */
 export const ExplorerModule = ({ dispatch }: Props) => {
@@ -31,9 +32,7 @@ export const ExplorerModule = ({ dispatch }: Props) => {
         <p className="text">{type}</p>
         <img className="icon" src={ExplorerIcon} alt="toggle" />
       </ModuleHeader>
-      <ModuleBody visible={isOpen}>
-        <ProjectComponent />
-      </ModuleBody>
+      <ModuleBody visible>{isOpen && <ProjectComponent />}</ModuleBody>
     </AnimatedModule>
   );
 };

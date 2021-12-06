@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface Props {
-  visible: boolean;
+  visible?: boolean | true;
 }
 
 const ModuleBody = styled.div<Props>`
