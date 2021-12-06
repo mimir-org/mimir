@@ -12,6 +12,9 @@ namespace Mb.Models.Application
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain { get; set; }
+        
+        [Required]
+        public string ProjectId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -31,10 +34,10 @@ namespace Mb.Models.Application
 
         public decimal PositionY { get; set; }
 
-        [Required]
         public bool IsLocked { get; set; }
 
-        public string IsLockedBy { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
 
         public decimal PositionBlockX { get; set; }
 

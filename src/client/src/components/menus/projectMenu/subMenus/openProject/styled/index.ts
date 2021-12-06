@@ -5,3 +5,4 @@ export { default as ProjectListBox } from "./ProjectListBox";
 export { default as ProjectListLabels } from "./ProjectListLabels";
 export { default as ProjectDescriptionBox } from "./ProjectDescriptionBox";
 export { default as ProjectDescriptionBody } from "./ProjectDescriptionBody";
+export { default as ProjectDetailsBox } from "./ProjectDetailsBox";

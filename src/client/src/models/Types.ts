@@ -71,7 +71,7 @@ export interface LibrarySubProjectItem {
   updatedBy: string;
 }
 
-export interface ProjectSimple {
+export interface ProjectItemCm {
   id: string;
   iri: string;
   domain: string;
@@ -213,6 +213,11 @@ export interface CollaborationPartner {
 export interface ModuleDescription {
   id: string;
   name: string;
+}
+
+export interface ProjectFileAm {
+  parserId: string;
+  fileContent: string;
 }
 
 export const SETTING_KEY = {

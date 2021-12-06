@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
@@ -9,8 +9,11 @@ import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styl
 import { Input } from "../../../../../compLibrary/input/text";
 import { ExportLibraryIcon } from "../../../../../assets/icons/project";
 
-export const ExportLibraryFileMenu = () => {
-  const dispatch = useAppDispatch();
+interface Props {
+  dispatch: any;
+}
+
+export const ExportLibraryFileMenu = ({ dispatch }: Props) => {
   const [fileName, setFileName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
 

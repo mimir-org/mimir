@@ -32,6 +32,7 @@ namespace Mb.Core.Controllers.V1
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly IProjectFileService _projectFileService;
 
         /// <summary>
         /// Project Controller Constructor
@@ -39,10 +40,11 @@ namespace Mb.Core.Controllers.V1
         /// <param name="projectService"></param>
         /// <param name="logger"></param>
         /// <param name="modelBuilderConfiguration"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration)
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, IProjectFileService projectFileService)
         {
             _projectService = projectService;
             _logger = logger;
+            _projectFileService = projectFileService;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -81,7 +83,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("search")]
-        [ProducesResponseType(typeof(IEnumerable<ProjectSimple>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProjectItemCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -135,9 +137,9 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Import a new project
+        /// Import a project
         /// </summary>
-        /// <param name="projectAm"></param>
+        /// <param name="fileData"></param>
         /// <returns></returns>
         [HttpPost("import")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
@@ -147,15 +149,27 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> ImportProject([FromBody] ProjectAm projectAm)
+        public async Task<IActionResult> ImportProject([FromBody] ProjectFileAm fileData)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var project = await _projectService.ImportProject(projectAm);
+                var project = await _projectFileService.ImportProject(fileData);
                 return Ok(project);
+            }
+            catch (ModelBuilderBadRequestException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                
+                foreach (var error in e.Errors().ToList())
+                {
+                    ModelState.Remove(error.Key);
+                    ModelState.TryAddModelError(error.Key, error.Error);
+                }
+
+                return BadRequest(ModelState);
             }
             catch (ModelBuilderDuplicateException e)
             {
@@ -186,6 +200,19 @@ namespace Mb.Core.Controllers.V1
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            //TODO: Temporary fix for missing LibraryTypeId on Transport and Interface objects in projectAm
+            if (projectAm?.Edges != null)
+            {
+                foreach (var edgeAm in projectAm.Edges)
+                {
+                    if (edgeAm?.Transport != null && string.IsNullOrWhiteSpace(edgeAm.Transport.LibraryTypeId))
+                        edgeAm.Transport.LibraryTypeId = "Not set. Should be set on client Am model";
+
+                    if (edgeAm?.Interface != null && string.IsNullOrWhiteSpace(edgeAm.Interface.LibraryTypeId))
+                        edgeAm.Interface.LibraryTypeId = "Not set. Should be set on client Am model";
+                }
+            }
 
             try
             {
@@ -296,8 +323,20 @@ namespace Mb.Core.Controllers.V1
                 if (!(file.ValidateJsonFile() || file.ValidateNtFile()))
                     return BadRequest("Invalid file extension. The file must be json or nt");
 
-                var createdProject = await _projectService.CreateFromFile(file, cancellationToken, new Guid(parser));
-                return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
+                var createdProject = await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
+                return StatusCode(StatusCodes.Status201Created, createdProject);
+            }
+            catch (ModelBuilderBadRequestException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+
+                foreach (var error in e.Errors().ToList())
+                {
+                    ModelState.Remove(error.Key);
+                    ModelState.TryAddModelError(error.Key, error.Error);
+                }
+
+                return BadRequest(ModelState);
             }
             catch (ModelBuilderModuleException e)
             {
@@ -383,6 +422,39 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Locks or unlock an Edge (transport or interface)
+        /// </summary>
+        /// <param name="lockUnlockEdgeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        [HttpPost("edge/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
+        public async Task<IActionResult> LockUnlockEdge([FromBody] LockUnlockEdgeAm lockUnlockEdgeAm)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await _projectService.LockUnlockEdge(lockUnlockEdgeAm);
+                return NoContent();
+            }
+            catch (ModelBuilderUnauthorizedAccessException e)
+            {
+                ModelState.AddModelError("attribute/lockUnlock", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Returns a list of all locked nodes id's
         /// If param 'projectId' is null all locked nodes in the database will be returned
         /// </summary>
@@ -433,6 +505,36 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var result = _projectService.GetLockedAttributes(projectId).ToList();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all locked edges id's
+        /// If param 'projectId' is null all locked edges in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked edges id></returns>
+        [HttpGet("edge/locked")]
+        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
+        public IActionResult GetLockedEdges(string projectId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var result = _projectService.GetLockedEdges(projectId).ToList();
                 return Ok(result);
             }
             catch (Exception e)

@@ -7,6 +7,7 @@ class Node {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   rds: string;
   description: string;
   semanticReference: string;

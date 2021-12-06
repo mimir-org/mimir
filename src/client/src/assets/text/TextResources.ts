@@ -275,11 +275,11 @@ const TextResources = {
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",
   Validation_BlockView: "Please selct a node before opening Block View.",
   Validation_BlockView_Project: "Please selct a project before opening Block View.",
+  Validation_OffPage: "An off-page node can only be connected with a node of the same type.",
   Validation_Cancel: "Cancel",
 
   // Version
   Mimir_Version: "Version 0.1",
-
   Validation_Ok: "Ok",
 };
 

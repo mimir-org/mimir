@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Application;
+using Newtonsoft.Json;
 
 namespace Mb.Models.Extensions
 {
@@ -19,6 +20,12 @@ namespace Mb.Models.Extensions
 
             validation.Result = results;
             return validation;
+        }
+
+        public static T DeepCopy<T>(this T self)
+        {
+            var serialized = JsonConvert.SerializeObject(self);
+            return JsonConvert.DeserializeObject<T>(serialized);
         }
     }
 }

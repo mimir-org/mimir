@@ -35,6 +35,10 @@ namespace Mb.Models.Configurations
 
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
             builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
+
+            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false).HasDefaultValue(null);
         }
     }
 }

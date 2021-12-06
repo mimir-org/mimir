@@ -17,7 +17,7 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
   const node = new Node({
     id: CreateId(),
     rds: data.rds,
-    semanticReference: data.semanticReference,
+    projectId: projectId,
     name: data.name,
     label: data.name,
     positionX: position.x,

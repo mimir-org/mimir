@@ -7,6 +7,7 @@ import { TextResources } from "../../../assets/text";
 import { IsLibrary } from "../../../helpers";
 import { GetFilterElements, PopulateFilterLists } from "./helpers";
 import { memo } from "react";
+
 interface Props {
   elements: any[];
   edgeAnimation: boolean;
@@ -14,6 +15,7 @@ interface Props {
 
 /**
  * Component for the Visual Filter.
+ * @param interface
  * @returns a menu with multiple checkboxes to control visibility of items in Mimir.
  */
 const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {

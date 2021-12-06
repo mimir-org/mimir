@@ -1,14 +1,15 @@
 import { Dispatch } from "redux";
-import { flowViewSelector, isActiveMenuSelector, useAppSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../../../../models/project";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
+import { MENU_TYPE } from "../../../../../models/project";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
 import { OnOpen, OnReturn } from "./handlers";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
 import { ProjectDetails } from ".";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonsContainer, OpenButton } from "../styled";
+import { IsStartPage } from "../../../../../helpers";
 
 interface Props {
   projectState: ProjectState;
@@ -21,17 +22,15 @@ interface Props {
  * @returns a menu for selecting a project or create a new one.
  */
 export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
-  const projects = projectState.projectList as ProjectSimple[];
+  const projects = projectState.projectList as ProjectItemCm[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
   const projectDescription = project?.description;
   const hasProject = projectId && projectId !== "";
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
-  const flowView = useAppSelector(flowViewSelector);
-  const startPageOpen = flowView === (VIEW_TYPE.STARTPAGE as ViewType);
 
   return (
-    <ProjectBox large visible={isOpen} startPage={startPageOpen}>
+    <ProjectBox large visible={isOpen} startPage={IsStartPage()}>
       <ProjectBody large>
         <HeaderBox>{TextResources.Project_Open_Label}</HeaderBox>
         <ProjectDetails projects={projects} projectDescription={projectDescription} dispatch={dispatch} />
