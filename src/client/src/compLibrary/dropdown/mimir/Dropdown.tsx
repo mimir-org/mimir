@@ -3,7 +3,7 @@ import { Color } from "../../colors";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { FontSize } from "../../font";
 import { Symbol } from "../../symbol";
-import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
+import { DropdownBox, DropdownHeader, DropdownList, DropdownListItem } from "./styled";
 
 interface Props {
   label: string;
@@ -39,9 +39,9 @@ const Dropdown = ({
   borderColor = Color.Black,
   fontSize = FontSize.Standard,
   height = 28,
-  listTop = 25,
+  listTop = 33,
 }: Props) => {
-  const [isListOpen, setIsListOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
@@ -63,9 +63,8 @@ const Dropdown = ({
   };
 
   return (
-    items &&
-    items.length > 0 && (
-      <DropdownMenuWrapper
+    items?.length > 0 && (
+      <DropdownBox
         disabled={disabled}
         tabIndex={0}
         onBlur={() => {
@@ -73,8 +72,14 @@ const Dropdown = ({
         }}
       >
         <label htmlFor={label} />
-        <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
-          <DropdownMenuHeader borderRadius={borderRadius} borderColor={borderColor} fontSize={fontSize} height={height}>
+        <>
+          <DropdownHeader
+            borderRadius={borderRadius}
+            borderColor={borderColor}
+            fontSize={fontSize}
+            height={height}
+            onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}
+          >
             {selectedItem && (
               <>
                 {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
@@ -82,24 +87,27 @@ const Dropdown = ({
                 <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
               </>
             )}
-          </DropdownMenuHeader>
-        </div>
+          </DropdownHeader>
+        </>
         {isListOpen && (
-          <DropdownMenuList borderRadius={borderRadius} borderColor={borderColor} top={listTop}>
+          <DropdownList borderRadius={borderRadius} borderColor={borderColor} top={listTop}>
             {items?.map((item) => {
               return (
-                <div onClick={(e) => handleChange(e, item)} key={item[keyProp]}>
-                  <DropdownMenuListItem fontSize={fontSize} borderColor={borderColor} height={height} borderRadius={borderRadius}>
-                    {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
-
-                    <p>{item.name ?? item.key}</p>
-                  </DropdownMenuListItem>
-                </div>
+                <DropdownListItem
+                  fontSize={fontSize}
+                  height={height}
+                  borderRadius={borderRadius}
+                  onClick={(e) => handleChange(e, item)}
+                  key={item[keyProp]}
+                >
+                  {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
+                  <p>{item.name ?? item.key}</p>
+                </DropdownListItem>
               );
             })}
-          </DropdownMenuList>
+          </DropdownList>
         )}
-      </DropdownMenuWrapper>
+      </DropdownBox>
     )
   );
 };

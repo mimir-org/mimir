@@ -6,21 +6,23 @@ interface Props {
   borderRadius: number;
 }
 
-const DropdownMenuList = styled.div<Props>`
+const DropdownList = styled.div<Props>`
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: ${(props) => props.top}px;
+  left: 0;
+  width: inherit;
+  max-height: 250px;
   border-width: 1px;
   border-style: solid;
   border-color: ${(props) => props.borderColor};
   border-radius: ${(props) => props.borderRadius}px;
   background-color: inherit;
-  position: absolute;
-  top: ${(props) => props.top}px;
-  left: 0;
-  z-index: 1;
-  width: 99%;
-  max-height: 250px;
+  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
+
   overflow-y: auto;
+  z-index: 1;
 `;
 
-export default DropdownMenuList;
+export default DropdownList;

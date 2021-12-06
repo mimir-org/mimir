@@ -56,7 +56,7 @@ export const ImportProjectFileMenu = ({ parsers, dispatch }: Props) => {
         </ButtonBox>
         <Label>{TextResources.Project_Parser}</Label>
         <Dropdown
-          label="Parser"
+          label=""
           valueProp="name"
           items={parsers}
           keyProp="id"

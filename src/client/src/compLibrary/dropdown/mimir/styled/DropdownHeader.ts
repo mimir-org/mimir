@@ -8,20 +8,21 @@ interface Props {
   fontSize: string;
 }
 
-const DropdownMenuHeader = styled.div<Props>`
+const DropdownHeader = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   height: ${(props) => props.height}px;
+  width: inherit;
   background: ${Color.White};
-  border: 1px solid ${(props: { borderColor: string }) => props.borderColor};
-  border-radius: ${(props: { borderRadius: number }) => props.borderRadius}px;
+  border: 1px solid ${(props) => props.borderColor};
+  border-radius: ${(props) => props.borderRadius}px;
   font-size: ${(props) => props.fontSize};
   color: ${Color.Black};
 
   p {
-    padding: 5px;
+    padding: 5px 10px;
   }
 
   img {
@@ -30,4 +31,4 @@ const DropdownMenuHeader = styled.div<Props>`
   }
 `;
 
-export default DropdownMenuHeader;
+export default DropdownHeader;
