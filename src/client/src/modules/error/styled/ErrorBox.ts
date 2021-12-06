@@ -8,8 +8,8 @@ interface Props {
 
 const ErrorBox = styled.div<Props>`
   width: 400px;
-  height: 70%;
   margin: auto;
+  max-height: 440px;
   border: 2px solid ${Color.RedWarning};
   background-color: ${Color.White};
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.15);
@@ -21,9 +21,10 @@ const ErrorBox = styled.div<Props>`
   bottom: 25%;
   left: 25%;
   right: 25%;
-  padding: 20px;
+  padding: 20px 6px 30px 20px;
   visibility: ${(props) => !props.visible && "hidden"};
-  z-index: 5000;
+  overflow: hidden;
+  z-index: 100;
 `;
 
 export default ErrorBox;

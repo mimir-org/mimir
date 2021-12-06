@@ -1,10 +1,9 @@
 import { changeActiveMenu, setProjectMenuVisibility } from "../../../../projectMenu/subMenus/redux/actions";
 import { importProjectAction } from "../../../../../../redux/store/project/actions";
-import { ProjectAm } from "../../../../../../redux/sagas/project/ConvertProject";
+import { ProjectFileAm } from "../../../../../../models";
 
-const OnProjectSaveClick = (dispatch: any, data: () => ProjectAm) => {
-  const project = data();
-  dispatch(importProjectAction(project));
+const OnProjectSaveClick = (dispatch: any, data: ProjectFileAm) => {
+  dispatch(importProjectAction(data));
   dispatch(changeActiveMenu(null));
   dispatch(setProjectMenuVisibility(false));
 };

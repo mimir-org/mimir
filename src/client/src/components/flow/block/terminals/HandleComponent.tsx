@@ -8,6 +8,7 @@ import { IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { BlockNodeSize } from "../../../../models/project";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
+
 interface Props {
   nodes: Node[];
   size: BlockNodeSize;

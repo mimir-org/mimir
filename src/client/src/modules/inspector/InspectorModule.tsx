@@ -1,3 +1,5 @@
+import * as selectors from "./helpers/selectors";
+import { Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
 import { IsBlockView, GetSelectedNode } from "../../helpers";
@@ -8,35 +10,28 @@ import { useDragResizePanel } from "./helpers/useDragResizePanel";
 import { changeInspectorHeight } from "./redux/height/actions";
 import { setModuleVisibility } from "../../redux/store/modules/actions";
 import { useCallback, useRef } from "react";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import {
-  animatedModuleSelector,
-  explorerSelector,
-  inspectorActiveTabSelector,
-  inspectorSelector,
-  libOpenSelector,
-  projectSelector,
-  usernameSelector,
-} from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { Project } from "../../models";
 
 interface Props {
+  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  dispatch: Dispatch;
 }
 
 /**
  * Component for the Inspector Module that shows the data for each object in Flow.
+ * @param interface
  * @returns a module with multiple tabs for different operations.
  */
-const InspectorModule = ({ inspectorRef }: Props) => {
-  const dispatch = useAppDispatch();
+const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useAppSelector(projectSelector);
-  const username = useAppSelector(usernameSelector);
-  const animate = useParametricAppSelector(animatedModuleSelector, type);
-  const activeTabIndex = useAppSelector(inspectorActiveTabSelector);
-  const inspectorOpen = useAppSelector(inspectorSelector);
-  const libOpen = useAppSelector(libOpenSelector);
-  const explorerOpen = useAppSelector(explorerSelector);
+  const username = useAppSelector(selectors.usernameSelector);
+  const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
+  const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);
+  const inspectorOpen = useAppSelector(selectors.inspectorSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
 
   const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;

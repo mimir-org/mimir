@@ -2,7 +2,7 @@ export { default as ProjectBox } from "./ProjectBox";
 export { default as ProjectBody } from "./ProjectBody";
 export { default as ProjectElement } from "./ProjectElement";
 export { default as HeaderBox } from "./HeaderBox";
-export { default as Details } from "./Details";
+export { default as Details } from "../openProject/styled/ProjectDetailsBox";
 export { default as SearchProject } from "./SearchProject";
 export { default as RightContainer } from "./RightContainer";
 export { default as OpenButton } from "./OpenButton";

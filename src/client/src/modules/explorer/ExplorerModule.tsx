@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { ProjectComponent } from "./";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
@@ -5,15 +6,19 @@ import { Size } from "../../compLibrary/size";
 import { ModuleHeader, ModuleBody } from "./styled";
 import { OnToggleClick } from "./handlers";
 import { ExplorerIcon } from "../../assets/icons/modules";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
 import { animatedModuleSelector, explorerSelector } from "../../redux/store";
+
+interface Props {
+  dispatch: Dispatch;
+}
 
 /**
  * Component for the Explorer Module in Mimir.
+ * @param interface
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = () => {
-  const dispatch = useAppDispatch();
+export const ExplorerModule = ({ dispatch }: Props) => {
   const isOpen = useAppSelector(explorerSelector);
   const type = MODULE_TYPE.EXPLORER;
   const animate = useParametricAppSelector(animatedModuleSelector, type);
@@ -27,9 +32,7 @@ export const ExplorerModule = () => {
         <p className="text">{type}</p>
         <img className="icon" src={ExplorerIcon} alt="toggle" />
       </ModuleHeader>
-      <ModuleBody visible={isOpen}>
-        <ProjectComponent />
-      </ModuleBody>
+      <ModuleBody visible>{isOpen && <ProjectComponent />}</ModuleBody>
     </AnimatedModule>
   );
 };

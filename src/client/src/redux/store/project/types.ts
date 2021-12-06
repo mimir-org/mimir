@@ -1,5 +1,4 @@
-import { Project, Node, Edge, CommitPackage } from "../../../models";
-import { ProjectAm } from "../../sagas/project/ConvertProject";
+import { Project, Node, Edge, CommitPackage, ProjectFileAm } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
@@ -351,7 +350,7 @@ export interface ExportProjectFileAction {
 }
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
-  payload: ProjectAm;
+  payload: ProjectFileAm;
 }
 
 export interface ExportProjectFileActionFinished {

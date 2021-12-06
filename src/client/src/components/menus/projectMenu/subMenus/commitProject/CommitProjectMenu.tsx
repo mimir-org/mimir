@@ -1,6 +1,6 @@
 import * as Handlers from "./handlers";
 import { useState } from "react";
-import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
@@ -16,10 +16,10 @@ interface Props {
   parsers: ModuleDescription[];
   projectId: string;
   disabled: boolean;
+  dispatch: any;
 }
 
-export const CommitProjectMenu = ({ collaborationPartners, parsers, projectId, disabled }: Props) => {
-  const dispatch = useAppDispatch();
+export const CommitProjectMenu = ({ collaborationPartners, parsers, projectId, disabled, dispatch }: Props) => {
   const [collaborationPartner, setCollaborationPartner] = useState(collaborationPartners[0]);
   const [parser, setParser] = useState(parsers[0]);
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.COMMIT_PROJECT);

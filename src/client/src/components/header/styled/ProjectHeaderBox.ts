@@ -9,7 +9,7 @@ interface Props {
 const ProjectHeaderBox = styled.div<Props>`
   position: relative;
   display: flex;
-  top: 1px;
+  top: 2px;
   margin-right: 75px;
   color: ${Color.White};
   font-weight: ${(props) => props.isOpen && FontWeight.Bold};
