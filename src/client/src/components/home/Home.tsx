@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as Selectors from "./helpers/selectors";
+import * as selectors from "./helpers/selectors";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
@@ -30,13 +30,13 @@ import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../
  */
 const Home = () => {
   const dispatch = useAppDispatch();
-  const projectState = useAppSelector(Selectors.projectStateSelector);
-  const projectMenuOpen = useAppSelector(Selectors.projectMenuSelector);
-  const userMenuOpen = useAppSelector(Selectors.userMenuSelector);
-  const flowView = useAppSelector(Selectors.flowViewSelector);
+  const projectState = useAppSelector(selectors.projectStateSelector);
+  const projectMenuOpen = useAppSelector(selectors.projectMenuSelector);
+  const userMenuOpen = useAppSelector(selectors.userMenuSelector);
+  const flowView = useAppSelector(selectors.flowViewSelector);
   const inspectorRef = useRef(null);
-  const createProjectOpen = useParametricAppSelector(Selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
-  const openProjectOpen = useParametricAppSelector(Selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
+  const createProjectOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
+  const openProjectOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());

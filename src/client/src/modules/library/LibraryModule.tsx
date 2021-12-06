@@ -2,17 +2,15 @@ import { Dispatch } from "redux";
 import { TextResources } from "../../assets/text";
 import { LegendModule } from "../../modules/legend";
 import { LibraryComponent } from "./index";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
-import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { ModuleBody, ModuleHeader, LegendHeader } from "./styled";
 import { MODULE_TYPE } from "../../models/project";
-import { GetSelectedNode } from "../../helpers";
 import { OnLibraryClick, OnLegendClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import { animatedModuleSelector, legendOpenSelector, libOpenSelector, librarySelector } from "../../redux/store";
+import { animatedModuleSelector, legendOpenSelector, libOpenSelector } from "../../redux/store";
 import { Project } from "../../models";
 
 interface Props {
@@ -30,20 +28,15 @@ const LibraryModule = ({ dispatch, project }: Props) => {
   const lib = MODULE_TYPE.LIBRARY;
   const legend = MODULE_TYPE.LEGEND;
 
-  const libState = useAppSelector(librarySelector);
   const legendOpen = useAppSelector(legendOpenSelector);
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
   const animateLegend = useParametricAppSelector(animatedModuleSelector, legend);
 
-  const selectedNode = GetSelectedNode();
   const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stopLib = libOpen ? Size.ModuleOpen : Size.ModuleClosed;
   const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
-
-  const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
-  const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
@@ -55,10 +48,10 @@ const LibraryModule = ({ dispatch, project }: Props) => {
       {libOpen && (
         <ModuleBody visible={libOpen}>
           <LibraryComponent
-            categories={filteredCategories}
             search={(text: string) => setSearchString(text)}
+            searchString={searchString}
+            projectId={project?.id}
             dispatch={dispatch}
-            subProjects={libState?.subProjectTypes?.filter((x) => x.id !== project?.id)}
           />
         </ModuleBody>
       )}
