@@ -4,14 +4,10 @@ interface Props {
   legend: boolean;
 }
 
-const LibraryBody = styled.div<Props>`
-  position: fixed;
-  margin-left: 15px;
-  width: 306px;
-  height: auto;
+const LibBody = styled.div<Props>`
+  width: calc(100% + 14px);
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-right: 10px;
   max-height: ${(props) => (props.legend ? 50 : 72)}%;
 
   @media screen and (max-height: 1100px) {
@@ -39,4 +35,4 @@ const LibraryBody = styled.div<Props>`
   }
 `;
 
-export default LibraryBody;
+export default LibBody;

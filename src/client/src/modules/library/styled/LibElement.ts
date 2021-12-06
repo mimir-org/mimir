@@ -6,30 +6,22 @@ interface Props {
   active?: boolean;
 }
 
-const LibElement = styled.div<Props>`
-  width: 271px;
-  height: 30px;
-  border: 1px solid;
-  border-color: ${(props) => (props.active ? Color.Black : Color.GreyDarker)};
-  border-style: ${(props) => (props.active ? "dashed" : "default")};
-  border-radius: 3px;
-  background-color: ${Color.White};
-  margin: 0px 0px 3px 15px;
+const LibElement = styled.button<Props>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  width: calc(100% - 16px);
+  height: 30px;
+  border: 1px;
+  border-color: ${(props) => (props.active ? Color.Black : Color.GreyDarker)};
+  border-style: ${(props) => (props.active ? "dashed" : "revert")};
+  border-radius: 3px;
+  background-color: ${Color.White};
+  margin: 3px 0 3px 16px;
   font-size: ${FontSize.Standard};
   padding-left: 10px;
   cursor: grab;
-
-  .type-name {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-wrap: break-word;
-    max-width: 237px;
-  }
 
   &:hover {
     background-color: ${Color.BlueLight};
