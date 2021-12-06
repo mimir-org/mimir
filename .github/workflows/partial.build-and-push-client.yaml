@@ -49,7 +49,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-client-${{ hashFiles('**/package-lock.json') }}
             ${{ runner.os }}-buildx-client
-
       - name: Build client image
         uses: docker/build-push-action@v2
         with:
@@ -74,4 +73,3 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-      

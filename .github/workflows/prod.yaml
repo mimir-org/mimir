@@ -23,7 +23,6 @@ jobs:
         run: |
           echo "Tag: ${{ steps.release.outputs.tag_name }}"
           echo "Version: ${{ steps.release.outputs.version }}"
-
   build-client-latest:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
     needs: create-release
@@ -69,7 +68,4 @@ jobs:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-          
-      
-      
           
