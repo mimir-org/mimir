@@ -34,7 +34,7 @@ const App = ({ pca }: AppProps) => {
     <MsalProvider instance={pca}>
       <AuthenticatedTemplate>
         <GlobalStyle />
-        <Home />
+        <Home dispatch={dispatch} />
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
         <LoginBox>

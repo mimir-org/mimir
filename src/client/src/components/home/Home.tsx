@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
+import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
@@ -20,16 +21,20 @@ import { getUser } from "../../redux/store/user/actions";
 import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
 import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
 import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
-import { IsStartPage } from "../../helpers";
+import { IsStartPage, SetDarkModeColor } from "../../helpers";
 import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+
+interface Props {
+  dispatch: Dispatch;
+}
 
 /**
  * The main component for Mimir.
- * @returns a JSX Element containing all the modules and components.
+ * @param interface
+ * @returns all the modules and components in the Mimir application.
  */
-const Home = () => {
-  const dispatch = useAppDispatch();
+const Home = ({ dispatch }: Props) => {
   const projectState = useAppSelector(selectors.projectStateSelector);
   const projectMenuOpen = useAppSelector(selectors.projectMenuSelector);
   const userMenuOpen = useAppSelector(selectors.userMenuSelector);
@@ -63,6 +68,10 @@ const Home = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  useEffect(() => {
+    SetDarkModeColor(darkMode);
+  }, [darkMode]);
+
   return (
     <>
       <HeaderComponent project={projectState?.project} projectMenuOpen={projectMenuOpen} dispatch={dispatch} />
@@ -77,7 +86,7 @@ const Home = () => {
       ) : (
         <>
           <ExplorerModule dispatch={dispatch} />
-          <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} darkMode={darkMode} />
+          <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule project={projectState?.project} dispatch={dispatch} />
           <TypeEditorComponent />
