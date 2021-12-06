@@ -71,7 +71,6 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
     visible: true,
     color: sourceConnector.color,
     kind: CONNECTOR_KIND,
-    isRequired: true,
   } as Connector;
 
   const partOfConnector = {

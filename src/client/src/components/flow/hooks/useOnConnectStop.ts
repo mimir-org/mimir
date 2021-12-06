@@ -1,5 +1,5 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
-import { createEdge, addNode } from "../../../redux/store/project/actions";
+import { createEdge, addNode, setOffPageStatus } from "../../../redux/store/project/actions";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
 import { BuildOffPageNode } from "../block/builders";
 import { OffPageData } from "../block/builders/BuildOffPageNode";
@@ -34,6 +34,7 @@ const useOnConnectStop = (e, project: Project, dispatch: any, parentSize: BlockN
       dispatch(addNode(offPageObject.node));
       dispatch(createEdge(offPageObject.partOfEdge));
       dispatch(createEdge(offPageObject.transportEdge));
+      dispatch(setOffPageStatus(edgeEvent.nodeId, edgeEvent.sourceId, true));
 
       SaveEventData(null, "edgeEvent");
     }

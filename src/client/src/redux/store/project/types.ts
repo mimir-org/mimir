@@ -344,7 +344,7 @@ export interface ChangeActiveConnector {
 }
 export interface ExportProjectFileAction {
   type: typeof EXPORT_PROJECT_TO_FILE;
-  payload: ProjectConverterAm
+  payload: ProjectConverterAm;
 }
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
@@ -511,8 +511,9 @@ export interface UpdateEdgeAction {
 export interface SetOffPageStatus {
   type: typeof SET_OFFPAGE_STATUS;
   payload: {
-    id: string;
-    required: boolean;
+    nodeId: string;
+    connectorId: string;
+    isRequired: boolean;
   };
 }
 

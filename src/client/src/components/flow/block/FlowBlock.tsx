@@ -65,13 +65,13 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
+  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+  //   return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
+  // };
 
-  const OnConnectStop = (e) => {
-    return hooks.useOnConnectStop(e, project, dispatch, parentSize);
-  };
+  // const OnConnectStop = (e) => {
+  //   return hooks.useOnConnectStop(e, project, dispatch, parentSize);
+  // };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -129,8 +129,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onConnect={OnConnect}
-          onConnectStart={OnConnectStart}
-          onConnectStop={OnConnectStop}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
           onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}
