@@ -34,7 +34,6 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
     connectors: [],
     attributes: [],
     isHidden: false,
-    connectionRequired: true,
     masterProjectId: sourceNode.masterProjectId,
     statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,
@@ -72,6 +71,7 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
     visible: true,
     color: sourceConnector.color,
     kind: CONNECTOR_KIND,
+    isRequired: true,
   } as Connector;
 
   const partOfConnector = {
