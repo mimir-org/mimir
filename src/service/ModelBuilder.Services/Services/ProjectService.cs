@@ -589,7 +589,7 @@ namespace Mb.Services.Services
                 var childNode = allNodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
 
                 //Exit recursion
-                if (childNode == null || childNode.Level < node.Level)
+                if (childNode == null || childNode.Level <= node.Level)
                     return;
 
                 infiniteLoopGuardStart++;
