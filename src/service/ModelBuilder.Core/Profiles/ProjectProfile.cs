@@ -12,7 +12,7 @@ namespace Mb.Core.Profiles
     {
         public ProjectProfile(IHttpContextAccessor contextAccessor, ICommonRepository commonRepository)
         {
-            CreateMap<Project, ProjectSimple>()
+            CreateMap<Project, ProjectItemCm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))

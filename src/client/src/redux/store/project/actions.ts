@@ -509,6 +509,19 @@ export function setIsLockedCompositeAttribute(
   };
 }
 
+export function updateNode(node: Node): Types.UpdateNodeAction {
+  return {
+    type: Types.UPDATE_NODE,
+    payload: node,
+  };
+}
+
+export function updateEdge(edge: Edge): Types.UpdateEdgeAction {
+  return {
+    type: Types.UPDATE_EDGE,
+    payload: edge,
+  };
+}
 export function setOffPageStatus(id: string, required: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_OFFPAGE_STATUS,

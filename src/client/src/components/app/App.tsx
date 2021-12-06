@@ -1,6 +1,7 @@
 import { useHistory } from "react-router";
 import { Home } from "../home/";
 import { GlobalStyle } from "../../compLibrary";
+import { useAppSelector, projectStateSelector } from "../../redux/store";
 import { LoginBox } from "./styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text";
@@ -20,6 +21,7 @@ const App = ({ pca }: AppProps) => {
   const history = useHistory();
   const navigationClient = new ModelBuilderNavigationClient(history);
   pca.setNavigationClient(navigationClient);
+  const projectState = useAppSelector(projectStateSelector);
 
   const login = () => {
     msalInstance.loginRedirect();
@@ -28,6 +30,7 @@ const App = ({ pca }: AppProps) => {
   const websocket = new WebSocket();
   const dispatch = useDispatch();
   websocket.setDispatcher(dispatch);
+  websocket.setProjectState(projectState);
   websocket.start();
 
   return (

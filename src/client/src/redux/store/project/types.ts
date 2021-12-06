@@ -54,6 +54,8 @@ export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_T
 export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
+export const UPDATE_NODE = "UPDATE_NODE";
+export const UPDATE_EDGE = "UPDATE_EDGE";
 export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
 
 // State types
@@ -502,6 +504,14 @@ export interface CreateSubProjectFinished {
   };
 }
 
+export interface UpdateNodeAction {
+  type: typeof UPDATE_NODE;
+  payload: Node;
+}
+export interface UpdateEdgeAction {
+  type: typeof UPDATE_EDGE;
+  payload: Edge;
+}
 export interface SetOffPageStatus {
   type: typeof SET_OFFPAGE_STATUS;
   payload: {
@@ -574,4 +584,6 @@ export type ProjectActionTypes =
   | ChangeNodeUpdated
   | CreateSubProject
   | CreateSubProjectFinished
+  | UpdateNodeAction
+  | UpdateEdgeAction
   | SetOffPageStatus;

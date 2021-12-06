@@ -83,7 +83,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet("search")]
-        [ProducesResponseType(typeof(IEnumerable<ProjectSimple>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProjectItemCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -200,6 +200,19 @@ namespace Mb.Core.Controllers.V1
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            //TODO: Temporary fix for missing LibraryTypeId on Transport and Interface objects in projectAm
+            if (projectAm?.Edges != null)
+            {
+                foreach (var edgeAm in projectAm.Edges)
+                {
+                    if (edgeAm?.Transport != null && string.IsNullOrWhiteSpace(edgeAm.Transport.LibraryTypeId))
+                        edgeAm.Transport.LibraryTypeId = "Not set. Should be set on client Am model";
+
+                    if (edgeAm?.Interface != null && string.IsNullOrWhiteSpace(edgeAm.Interface.LibraryTypeId))
+                        edgeAm.Interface.LibraryTypeId = "Not set. Should be set on client Am model";
+                }
+            }
 
             try
             {
@@ -409,6 +422,39 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Locks or unlock an Edge (transport or interface)
+        /// </summary>
+        /// <param name="lockUnlockEdgeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        [HttpPost("edge/lockUnlock")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Edit")]
+        public async Task<IActionResult> LockUnlockEdge([FromBody] LockUnlockEdgeAm lockUnlockEdgeAm)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                await _projectService.LockUnlockEdge(lockUnlockEdgeAm);
+                return NoContent();
+            }
+            catch (ModelBuilderUnauthorizedAccessException e)
+            {
+                ModelState.AddModelError("attribute/lockUnlock", e.Message);
+                return BadRequest(ModelState);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Returns a list of all locked nodes id's
         /// If param 'projectId' is null all locked nodes in the database will be returned
         /// </summary>
@@ -459,6 +505,36 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var result = _projectService.GetLockedAttributes(projectId).ToList();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all locked edges id's
+        /// If param 'projectId' is null all locked edges in the database will be returned
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>List of locked edges id></returns>
+        [HttpGet("edge/locked")]
+        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
+        public IActionResult GetLockedEdges(string projectId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var result = _projectService.GetLockedEdges(projectId).ToList();
                 return Ok(result);
             }
             catch (Exception e)

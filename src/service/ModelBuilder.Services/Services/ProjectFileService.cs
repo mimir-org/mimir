@@ -80,7 +80,7 @@ namespace Mb.Services.Services
             if (project == null || string.IsNullOrEmpty(project.Id))
                 throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
 
-            var exist = await _projectService.ProjectExist(project.Id);
+            var exist = _projectService.ProjectExist(project.Id);
 
             if (exist)
                 return await _projectService.UpdateProject(project.Id, project, _modelBuilderConfiguration.Domain);

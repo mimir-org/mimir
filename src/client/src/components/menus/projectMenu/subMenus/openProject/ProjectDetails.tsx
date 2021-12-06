@@ -1,5 +1,5 @@
 import * as Click from "../../handlers";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { Dispatch } from "redux";
 import { CreateProjectIcon } from "../../../../../assets/icons/project";
 import { SearchBar, ProjectList, ProjectDescription } from ".";
@@ -9,7 +9,7 @@ import { SearchProject, RightContainer } from "../styled";
 import { ProjectDetailsBox } from "./styled";
 
 interface Props {
-  projects: ProjectSimple[];
+  projects: ProjectItemCm[];
   projectDescription: string;
   dispatch: Dispatch;
 }
