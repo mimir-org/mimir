@@ -201,19 +201,6 @@ namespace Mb.Core.Controllers.V1
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //TODO: Temporary fix for missing LibraryTypeId on Transport and Interface objects in projectAm
-            if (projectAm?.Edges != null)
-            {
-                foreach (var edgeAm in projectAm.Edges)
-                {
-                    if (edgeAm?.Transport != null && string.IsNullOrWhiteSpace(edgeAm.Transport.LibraryTypeId))
-                        edgeAm.Transport.LibraryTypeId = "Not set. Should be set on client Am model";
-
-                    if (edgeAm?.Interface != null && string.IsNullOrWhiteSpace(edgeAm.Interface.LibraryTypeId))
-                        edgeAm.Interface.LibraryTypeId = "Not set. Should be set on client Am model";
-                }
-            }
-
             try
             {
                 var project = await _projectService.UpdateProject(id, projectAm, _modelBuilderConfiguration.Domain);
