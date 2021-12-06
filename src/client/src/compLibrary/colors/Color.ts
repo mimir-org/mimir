@@ -2,10 +2,9 @@ const Color = {
   // Common
   White: "#fff",
   Black: "#000",
-
   BlueMagenta: "#272738",
+  BlueDark: "#1D2635",
   BlueLight: "#D9E6FF",
-
   Grey: "#d9d9d9",
   GreyDark: "#c4c4c4",
   GreyDarker: "#898787",

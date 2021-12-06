@@ -76,6 +76,7 @@ export interface ProjectItemCm {
   iri: string;
   domain: string;
   name: string;
+  version: string;
   description: string;
   projectOwner: string;
   updated: Date;
@@ -212,6 +213,11 @@ export interface CollaborationPartner {
 export interface ModuleDescription {
   id: string;
   name: string;
+}
+
+export interface ProjectFileAm {
+  parserId: string;
+  fileContent: string;
 }
 
 export const SETTING_KEY = {

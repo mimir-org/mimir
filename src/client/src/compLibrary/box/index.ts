@@ -1,1 +1,1 @@
-export { default as NotificationBox } from "./NotificationBox";
+export { default as NotificationComponent } from "./NotificationComponent";

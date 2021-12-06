@@ -4,24 +4,35 @@ import { FontSize, FontWeight } from "../../../../../../compLibrary/font";
 
 const ProjectListLabels = styled.div`
   display: flex;
+  justify-content: space-between;
   font-weight: ${FontWeight.Normal};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
   border-bottom: 2px solid ${Color.BlueMagenta};
-  height: auto;
-  margin-bottom: -5px;
+  padding-right: 10px;
+
+  p {
+    white-space: nowrap;
+    margin-bottom: 2px;
+  }
 
   .name {
-    width: 270px;
-    margin-bottom: 3px;
+    width: 40%;
   }
 
   .owner {
-    width: 210px;
+    padding-left: 4px;
+    width: 20%;
+  }
+
+  .version {
+    text-align: center;
+    width: 25%;
   }
 
   .edited {
-    width: 120px;
+    text-align: right;
+    width: 15%;
   }
 `;
 

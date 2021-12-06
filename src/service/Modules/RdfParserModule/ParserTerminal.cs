@@ -12,7 +12,8 @@ namespace RdfParserModule
         public ConnectorType Type { get; set; }
         public string SemanticReference { get; set; }
 
-        public bool Visible => true;
+        public bool Visible { get; set; }
+        public string Color { get; set; }
         public string NodeIri { get; set; }
         public ParserNode Node { get; set; }
 

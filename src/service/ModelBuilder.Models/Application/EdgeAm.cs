@@ -9,9 +9,13 @@ namespace Mb.Models.Application
         public string Domain { get; set; }
         public string ProjectId { get; set; }
         public string FromConnectorId { get; set; }
+        public string FromConnectorIri { get; set; }
         public string ToConnectorId { get; set; }
+        public string ToConnectorIri { get; set; }
         public string FromNodeId { get; set; }
+        public string FromNodeIri { get; set; }
         public string ToNodeId { get; set; }
+        public string ToNodeIri { get; set; }
         public string MasterProjectId { get; set; }
         public string MasterProjectIri { get; set; }
         public bool IsLocked { get; set; }

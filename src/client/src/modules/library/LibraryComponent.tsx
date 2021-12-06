@@ -1,27 +1,33 @@
-import { useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { TextResources } from "../../assets/text";
-import { LibraryCategory } from "../../models/project";
 import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary/input/text";
 import { LibraryCategoryComponent } from ".";
-import { customCategorySelector, legendOpenSelector, useAppSelector } from "../../redux/store";
+import { customCategorySelector, legendOpenSelector, librarySelector, useAppSelector } from "../../redux/store";
 import { FavoritesBox, LibBody, SearchBox } from "./styled";
 import { TypeEditorModule } from "../../typeEditor";
 import { Dispatch } from "redux";
-import { LibrarySubProjectItem } from "../../models";
+import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
+import { GetSelectedNode } from "../../helpers";
 
 interface Props {
-  categories: LibraryCategory[];
   search: (text: string) => void;
+  searchString: string;
+  projectId: string;
   dispatch: Dispatch;
-  subProjects?: LibrarySubProjectItem[];
 }
 
-const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) => {
+const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
   const legendOpen = useAppSelector(legendOpenSelector);
   const customCategory = useAppSelector(customCategorySelector);
+  const libState = useAppSelector(librarySelector);
+  const selectedNode = GetSelectedNode();
+  // const subProjects = libState?.subProjectTypes?.filter((x) => x.id !== projectId);
+
+  const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
+  const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
 
   const onChange = (e: { target: { value: any } }) => search(e.target.value);
 
@@ -50,7 +56,7 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
       </FavoritesBox>
 
       <LibBody legend={legendOpen}>
-        {categories?.map((category) => {
+        {filteredCategories?.map((category) => {
           return (
             <LibraryCategoryComponent
               selectedElement={selectedElement}
@@ -69,4 +75,4 @@ const LibraryComponent = ({ categories, search, dispatch, subProjects }: Props) 
   );
 };
 
-export default LibraryComponent;
+export default memo(LibraryComponent);

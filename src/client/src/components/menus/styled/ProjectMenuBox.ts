@@ -5,10 +5,10 @@ import { Color } from "../../../compLibrary/colors";
 const ProjectMenuBox = styled.div`
   position: absolute;
   top: ${Size.TopMenu_Height}px;
-  right: 380px;
+  right: 265px;
   background: ${Color.White};
   height: auto;
-  width: 270px;
+  width: 250px;
   border-style: solid;
   border-color: ${Color.BlueMagenta};
   border-width: 0px 1px 1px 1px;

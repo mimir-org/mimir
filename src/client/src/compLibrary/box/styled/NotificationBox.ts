@@ -6,9 +6,9 @@ interface Props {
   color: string;
 }
 
-const Box = styled.div<Props>`
+const NotificationBox = styled.div<Props>`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   position: absolute;
   margin: auto;
   top: 25%;
@@ -24,9 +24,12 @@ const Box = styled.div<Props>`
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
 
   .text {
-    position: absolute;
-    height: 80px;
-    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 85px;
+    top: 20px;
+    margin: 10px 10px 0px 10px;
     width: 265px;
     text-align: center;
     line-height: 1.5;
@@ -34,4 +37,4 @@ const Box = styled.div<Props>`
   }
 `;
 
-export default Box;
+export default NotificationBox;

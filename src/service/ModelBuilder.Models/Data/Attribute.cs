@@ -73,6 +73,7 @@ namespace Mb.Models.Data
 
         public virtual string TerminalId { get; set; }
         public virtual string NodeId { get; set; }
+        public virtual string NodeIri { get; set; }
         public virtual string TransportId { get; set; }
         public virtual string InterfaceId { get; set; }
         public virtual string CompositeId { get; set; }

@@ -32,6 +32,7 @@ namespace Mb.Core.Controllers.V1
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly IProjectFileService _projectFileService;
 
         /// <summary>
         /// Project Controller Constructor
@@ -39,10 +40,11 @@ namespace Mb.Core.Controllers.V1
         /// <param name="projectService"></param>
         /// <param name="logger"></param>
         /// <param name="modelBuilderConfiguration"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration)
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, IProjectFileService projectFileService)
         {
             _projectService = projectService;
             _logger = logger;
+            _projectFileService = projectFileService;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
@@ -135,9 +137,9 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Import a new project
+        /// Import a project
         /// </summary>
-        /// <param name="projectAm"></param>
+        /// <param name="fileData"></param>
         /// <returns></returns>
         [HttpPost("import")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
@@ -147,15 +149,27 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> ImportProject([FromBody] ProjectAm projectAm)
+        public async Task<IActionResult> ImportProject([FromBody] ProjectFileAm fileData)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var project = await _projectService.ImportProject(projectAm);
+                var project = await _projectFileService.ImportProject(fileData);
                 return Ok(project);
+            }
+            catch (ModelBuilderBadRequestException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                
+                foreach (var error in e.Errors().ToList())
+                {
+                    ModelState.Remove(error.Key);
+                    ModelState.TryAddModelError(error.Key, error.Error);
+                }
+
+                return BadRequest(ModelState);
             }
             catch (ModelBuilderDuplicateException e)
             {
@@ -309,8 +323,20 @@ namespace Mb.Core.Controllers.V1
                 if (!(file.ValidateJsonFile() || file.ValidateNtFile()))
                     return BadRequest("Invalid file extension. The file must be json or nt");
 
-                var createdProject = await _projectService.CreateFromFile(file, cancellationToken, new Guid(parser));
-                return CreatedAtAction(nameof(GetById), new { id = createdProject.Id }, createdProject);
+                var createdProject = await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
+                return StatusCode(StatusCodes.Status201Created, createdProject);
+            }
+            catch (ModelBuilderBadRequestException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+
+                foreach (var error in e.Errors().ToList())
+                {
+                    ModelState.Remove(error.Key);
+                    ModelState.TryAddModelError(error.Key, error.Error);
+                }
+
+                return BadRequest(ModelState);
             }
             catch (ModelBuilderModuleException e)
             {

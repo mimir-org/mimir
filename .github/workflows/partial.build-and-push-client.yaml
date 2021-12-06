@@ -1,0 +1,77 @@
+# Reusable workflow for building and pushing client app image.
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        description: The environment the client application will be deployed onto.
+      tag:
+        required: true
+        type: string
+        description: Tag to use for docker image.
+    secrets:
+      REGISTRY_SERVER_URL:
+        required: true
+        description: Server URL of docker image repository.
+      REGISTRY_USERNAME:
+        required: true
+        description: Username to login onto docker image repository.
+      REGISTRY_PASSWORD:
+        required: true
+        description: Password to login onto docker image repository.
+
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/client
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.REGISTRY_SERVER_URL }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}     
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-client-${{ hashFiles('**/package-lock.json') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-client-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-buildx-client
+
+      - name: Build client image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./src/client
+          file: ./src/client/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          build-args: ENVIR=${{ inputs.environment }}
+          target: final
+          push: true
+          tags: ${{ secrets.REGISTRY_SERVER_URL }}/mimir-client:${{ inputs.tag }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          # Note the mode=max here
+          # More: https://github.com/moby/buildkit#--export-cache-options
+          # And: https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+      
+      # Currently, cache entries are not removed using local cache: https://github.com/docker/build-push-action/issues/252
+      # Clean and move in new cache, in order to keep cache size small (avoid build crashing because of exceeding max docker cache size)
+      # Can later on opt for github actions (https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#github-cache)
+      #   but it is currently experimental.
+      - name: Move buildx cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      

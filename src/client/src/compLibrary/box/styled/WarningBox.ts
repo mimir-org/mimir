@@ -7,7 +7,8 @@ interface Props {
 const WarningBox = styled.div<Props>`
   display: flex;
   position: absolute;
-  left: 0;
+  left: 3px;
+  top: 3px;
   margin: 5px 0px 0px 8px;
   width: 16px;
   height: 16px;

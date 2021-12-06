@@ -1,4 +1,4 @@
-import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { FileData, CreateLibraryType } from "../../../../../models";
 import { CloseIcon } from "../../../../../assets/icons/close";
@@ -9,8 +9,11 @@ import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
 import { ImportLibraryIcon } from "../../../../../assets/icons/project";
 
-export const ImportFileLibraryMenu = () => {
-  const dispatch = useAppDispatch();
+interface Props {
+  dispatch: any;
+}
+
+export const ImportFileLibraryMenu = ({ dispatch }: Props) => {
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.IMPORT_LIBRARY_FILE_MENU);
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({

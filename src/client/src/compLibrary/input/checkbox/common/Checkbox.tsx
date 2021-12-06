@@ -17,8 +17,8 @@ interface Props {
  */
 const Checkbox = ({ isChecked, onChange, color = Color.GreyHeader, readOnly, id, marginLeft = 0 }: Props) => (
   <CheckboxWrapper color={color} marginLeft={marginLeft}>
-    <input type="checkbox" readOnly={readOnly} key={id} checked={isChecked} onChange={() => onChange()} />
-    <div className="checkmark"></div>
+    <input id={id} type="checkbox" readOnly={readOnly} key={id} checked={isChecked} onChange={() => onChange()} />
+    <span className="checkmark"/>
   </CheckboxWrapper>
 );
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const OptionsBox = styled.div`
+const ToolBarBody = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -8,4 +8,4 @@ const OptionsBox = styled.div`
   height: 40px;
 `;
 
-export default OptionsBox;
+export default ToolBarBody;

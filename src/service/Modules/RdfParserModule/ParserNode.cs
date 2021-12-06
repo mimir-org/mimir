@@ -22,6 +22,7 @@ namespace RdfParserModule
         public decimal Length { get; set; }
         public decimal Width { get; set; }
         public bool IsTransport { get; set; }
+        public string Symbol { get; set; }
         public ICollection<ParserConnector> Terminals { get; set; }
         public ICollection<ParserAttribute> Attributes { get; set; }
         public ICollection<ParserEdge> Edges { get; set; }

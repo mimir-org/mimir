@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
@@ -154,23 +152,6 @@ namespace Mb.Services.Services
             }
 
             return project;
-        }
-
-        /// <summary>
-        /// Import project, if exist update project
-        /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
-        public async Task<Project> ImportProject(ProjectAm project)
-        {
-            if (project == null || string.IsNullOrEmpty(project.Id))
-                throw new ModelBuilderInvalidOperationException(
-                    "You can't import an project that is null or missing id");
-
-            if (_projectRepository.FindBy(x => x.Id == project.Id).Any())
-                return await UpdateProject(project.Id, project, _modelBuilderConfiguration.Domain);
-
-            return await CreateProject(project);
         }
 
         /// <summary>
@@ -419,27 +400,7 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Create a project from file
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="cancellationToken"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<Project> CreateFromFile(IFormFile file, CancellationToken cancellationToken, Guid id)
-        {
-            await using var stream = new MemoryStream();
-            await file.CopyToAsync(stream, cancellationToken);
-
-            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
-                throw new ModelBuilderModuleException($"There is no parser with key: {id}");
-
-            var par = _moduleService.Resolve<IModelBuilderParser>(id);
-            var project = await par.DeserializeProjectAm(stream.ToArray());
-            return await ImportProject(project);
-        }
-
-        /// <summary>
-        /// Lock or unlock an edge
+        /// Lock or unlock an attribute
         /// </summary>
         /// <param name="lockUnlockEdgeAm"></param>
         /// <returns>Status204NoContent</returns>

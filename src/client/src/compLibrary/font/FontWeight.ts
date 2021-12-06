@@ -1,7 +1,8 @@
 const FontWeight = {
-  Bold: "bold",
+  Bold: 700,
   Italic: "italic",
-  Normal: "normal",
+  Normal: 400,
+  Light: 300,
 };
 
 export default FontWeight;

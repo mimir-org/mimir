@@ -24,6 +24,7 @@ namespace Mb.Models.Application
         public virtual HashSet<string> Tags { get; set; }
         public string TerminalId { get; set; }
         public string NodeId { get; set; }
+        public string NodeIri { get; set; }
         public string TransportId { get; set; }
         public string InterfaceId { get; set; }
         public string CompositeId { get; set; }

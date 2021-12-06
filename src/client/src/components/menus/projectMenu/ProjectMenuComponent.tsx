@@ -1,24 +1,30 @@
 import * as Click from "./handlers";
 import * as Icons from "../../../assets/icons/project";
+import { Dispatch } from "redux";
 import { useCallback, useRef } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
 import { setProjectMenuVisibility } from "../projectMenu/subMenus/redux/actions";
 import { useOutsideClick } from "./hooks/useOutsideClick";
-import { activeMenuSelector, commonStateSelector, projectStateSelector } from "../../../redux/store";
-import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { activeMenuSelector, commonStateSelector } from "../../../redux/store";
+import { useAppSelector } from "../../../redux/store/hooks";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
 import { ProjectMenuBox } from "../styled";
 import { ProjectSubMenus, MenuElement } from "./";
+import { ProjectState } from "../../../redux/store/project/types";
+
+interface Props {
+  projectState: ProjectState;
+  dispatch: Dispatch;
+}
 
 /**
  * Component for the Project Menu.
+ * @param interface
  * @returns a menu for the Project in the header of Mimir.
  */
-const ProjectMenuComponent = () => {
+const ProjectMenuComponent = ({ projectState, dispatch }: Props) => {
   const [selectedNodeIds, selectedEdgeIds] = useSelectedFlowElements();
-  const dispatch = useAppDispatch();
-  const projectState = useAppSelector(projectStateSelector);
   const commonState = useAppSelector(commonStateSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
   const menuRef = useRef(null);
@@ -43,16 +49,18 @@ const ProjectMenuComponent = () => {
           text={TextResources.Project_Save_Label}
           icon={Icons.SaveIcon}
           onClick={() => Click.OnSave(dispatch, projectState)}
+          bottomLine
         />
         <MenuElement
-          text={TextResources.Project_Export_LibraryTypes}
-          icon={Icons.ExportLibraryIcon}
-          onClick={() => Click.OnSaveLibrary(dispatch)}
+          text={TextResources.Project_Import}
+          icon={Icons.ImportProjectIcon}
+          onClick={() => Click.OnImportProject(dispatch)}
         />
         <MenuElement
           text={TextResources.Project_Export}
           icon={Icons.ExportProjectIcon}
           onClick={() => Click.OnSaveFile(dispatch)}
+          bottomLine
         />
         {/* <MenuElement
           text={TextResources.Project_Commit_Project}
@@ -66,15 +74,17 @@ const ProjectMenuComponent = () => {
           onClick={() => Click.OnCreateSubProject(dispatch)}
           disabled={!selectedNodeIds}
         /> */}
-        <MenuElement
-          text={TextResources.Project_Import}
-          icon={Icons.ImportProjectIcon}
-          onClick={() => Click.OnImportProject(dispatch)}
-        />
+
         <MenuElement
           text={TextResources.Project_Import_LibraryTypes}
           icon={Icons.ImportLibraryIcon}
           onClick={() => Click.OnImportLibrary(dispatch)}
+        />
+
+        <MenuElement
+          text={TextResources.Project_Export_LibraryTypes}
+          icon={Icons.ExportLibraryIcon}
+          onClick={() => Click.OnSaveLibrary(dispatch)}
         />
       </ProjectMenuBox>
 
