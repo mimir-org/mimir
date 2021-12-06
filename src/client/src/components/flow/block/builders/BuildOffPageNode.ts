@@ -37,6 +37,7 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
     connectionRequired: true,
     masterProjectId: sourceNode.masterProjectId,
     statusId: sourceNode.statusId,
+    projectId: sourceNode.projectId,
   } as Node;
 
   const inputConnector = {
@@ -99,6 +100,7 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
     toNodeId: offPageNode.id,
     isHidden: false,
     kind: EDGE_KIND,
+    projectId: sourceNode.projectId,
   } as Edge;
 
   const transportEdge = {
@@ -113,6 +115,7 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
     toNodeId: offPageNode.id,
     isHidden: false,
     kind: EDGE_KIND,
+    projectId: sourceNode.projectId,
   } as Edge;
 
   return {
