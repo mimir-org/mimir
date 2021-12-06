@@ -5,6 +5,8 @@ export const GetFilteredLibCategories = (libCategories: LibraryCategory[], searc
   if (searchString === "") {
     return [];
   } else {
-    return libCategories.filter((x) => x.nodes.some((y) => y.name.toLowerCase().includes(searchStringLower)));
+    return libCategories.map((cat) => {
+      return { ...cat, nodes: cat.nodes.filter((libItem) => libItem.name.toLowerCase().includes(searchStringLower)) };
+    });
   }
 };
