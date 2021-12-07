@@ -21,6 +21,7 @@ const DropdownMenuHeader = styled.div<Props>`
   color: ${Color.Black};
 
   p {
+    margin: 0;
     padding: 5px;
   }
 

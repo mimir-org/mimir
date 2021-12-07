@@ -25,8 +25,8 @@ const CheckboxWrapper = styled.span<Props>`
   .checkmark {
     position: absolute;
     left: 0;
-    height: 11px;
-    width: 11px;
+    height: 15px;
+    width: 15px;
     background-color: ${Color.White} !important;
     border: 2px solid ${(props) => props.color};
     border-radius: 3px;
@@ -35,10 +35,11 @@ const CheckboxWrapper = styled.span<Props>`
   .checkmark:after {
     content: "";
     position: absolute;
-    left: 3px;
-    top: -0.5px;
-    width: 3px;
-    height: 7px;
+    left: 2.5px;
+    right: 0;
+    bottom: 3px;
+    width: 6px;
+    height: 8px;
     border: solid ${Color.White};
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);

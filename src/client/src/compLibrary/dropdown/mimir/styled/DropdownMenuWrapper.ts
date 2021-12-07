@@ -10,7 +10,6 @@ const DropdownMenuWrapper = styled.div<Props>`
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-bottom: 10px;
   background-color: ${Color.White};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   font-size: ${(props) => props.fontSize};

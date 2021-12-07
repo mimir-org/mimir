@@ -6,15 +6,14 @@ const MenuListItem = styled.div`
   display: flex;
   position: relative;
   height: 27px;
-  max-height: 45px;
   align-items: center;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;
+  overflow: hidden;
 
   .label {
-    height: 10px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

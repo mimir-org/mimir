@@ -1,5 +1,5 @@
 import { ButtonContainer } from "./styled";
-import { GetButtonText, GetButtonIcon, GetActiveButtonIcon, GetButtonWidth } from "./helpers";
+import { GetButtonText, GetButtonIcon, GetActiveButtonIcon } from "./helpers";
 import { useState } from "react";
 
 interface Props {
@@ -30,7 +30,6 @@ const InspectorButton = ({ onClick, type, visible, disabled }: Props) => {
 
   return (
     <ButtonContainer
-      width={GetButtonWidth(type)}
       onClick={() => onClick()}
       onMouseDown={() => setActive(true)}
       onMouseUp={() => setActive(false)}
@@ -38,7 +37,7 @@ const InspectorButton = ({ onClick, type, visible, disabled }: Props) => {
       visible={visible}
       disabled={disabled}
     >
-      <div>{GetButtonText(type)}</div>
+      {GetButtonText(type)}
       {active ? activeIcon : icon}
     </ButtonContainer>
   );

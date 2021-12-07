@@ -3,15 +3,13 @@ import { Color } from "../../../../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../../../../compLibrary/font";
 
 const MenuWrapper = styled.div`
+  position: relative;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  margin-bottom: 10px;
   background-color: ${Color.White};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
-  position: relative;
-  padding-left: 10px;
 
   .label {
     margin-bottom: 4px;
