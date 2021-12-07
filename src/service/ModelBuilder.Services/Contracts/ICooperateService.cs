@@ -9,5 +9,6 @@ namespace Mb.Services.Contracts
     {
         Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId);
         Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId);
+        Task SendAttributeUpdates(IReadOnlyCollection<(Attribute attribute, WorkerStatus workerStatus)> attributeMap, string domain);
     }
 }

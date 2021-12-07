@@ -29,5 +29,11 @@ namespace Mb.Data.Repositories
             var data = JsonConvert.SerializeObject(edge, DefaultSettings.SerializerSettings);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
         }
+
+        public async Task SendAttributeData(Attribute attribute, string domain, WorkerStatus workerStatus)
+        {
+            var data = JsonConvert.SerializeObject(attribute, DefaultSettings.SerializerSettings);
+            await _hubContext.Clients.Group(domain).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
+        }
     }
 }

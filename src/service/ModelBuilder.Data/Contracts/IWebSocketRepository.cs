@@ -8,5 +8,6 @@ namespace Mb.Data.Contracts
     {
         Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus);
         Task SendEdgeData(Edge edge, string projectId, WorkerStatus workerStatus);
+        Task SendAttributeData(Attribute attribute, string domain, WorkerStatus workerStatus);
     }
 }

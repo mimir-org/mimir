@@ -39,8 +39,10 @@ namespace Mb.Services.Services
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly List<(Node node, WorkerStatus workerStatus)> _websocketNodeUpdates;
+        private readonly List<(Edge edge, WorkerStatus workerStatus)> _websocketEdgeUpdates;
+        private readonly List<(Attribute attribute, WorkerStatus workerStatus)> _websocketAttributeUpdates;
         
-
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
@@ -61,6 +63,9 @@ namespace Mb.Services.Services
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
             _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _websocketNodeUpdates = new List<(Node node, WorkerStatus workerStatus)>();
+            _websocketEdgeUpdates = new List<(Edge edge, WorkerStatus workerStatus)>();
+            _websocketAttributeUpdates = new List<(Attribute attribute, WorkerStatus workerStatus)>();
         }
 
         /// <summary>
@@ -346,6 +351,7 @@ namespace Mb.Services.Services
                 ResolveLevelAndOrder(originalProject);
 
                 _projectRepository.Update(originalProject);
+
                 await _projectRepository.SaveAsync();
                 await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), originalProject.Id);
                 await _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), originalProject.Id);
@@ -419,6 +425,8 @@ namespace Mb.Services.Services
 
             await _edgeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
+            await _cooperateService.SendEdgeUpdates(_websocketEdgeUpdates, edge.MasterProjectId);
+            await _cooperateService.SendAttributeUpdates(_websocketAttributeUpdates, _modelBuilderConfiguration.Domain);
         }
 
         /// <summary>
@@ -435,6 +443,7 @@ namespace Mb.Services.Services
             LockUnlockAttributes(attribute, lockUnlockAttributeAm.IsLocked, _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
             
             await _attributeRepository.SaveAsync();
+            await _cooperateService.SendAttributeUpdates(_websocketAttributeUpdates, _modelBuilderConfiguration.Domain);
         }
 
         /// <summary>
@@ -458,10 +467,13 @@ namespace Mb.Services.Services
 
             LockUnlockNodesRecursive(lockUnlockNodeAm.IsLocked, currentNode, allNodesInProject, allEdgesInProject, _attributeRepository.GetAll(false),
                 _transportRepository.GetAll(), _interfaceRepository.GetAll(), _connectorRepository.GetAll(false), _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
-
+            
             await _nodeRepository.SaveAsync();
             await _edgeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
+            await _cooperateService.SendNodeUpdates(_websocketNodeUpdates, lockUnlockNodeAm.ProjectId);
+            await _cooperateService.SendEdgeUpdates(_websocketEdgeUpdates, lockUnlockNodeAm.ProjectId);
+            await _cooperateService.SendAttributeUpdates(_websocketAttributeUpdates, _modelBuilderConfiguration.Domain);
         }
 
         /// <summary>
@@ -578,6 +590,7 @@ namespace Mb.Services.Services
                 node.IsLocked = lockUnlock;
                 node.IsLockedStatusBy = userName;
                 node.IsLockedStatusDate = dateTimeNow;
+                _websocketNodeUpdates.Add((node, WorkerStatus.Update));
 
                 var nodeConnectors = allConnectors.Where(x => x.NodeId == node.Id);
                 var nodeAttributes = allAttributes.Where(x => nodeConnectors.Any(y => y.Id == x.TerminalId));
@@ -589,6 +602,7 @@ namespace Mb.Services.Services
             foreach (var edge in allEdges.Where(x => x.FromNodeId == node.Id))
             {
                 EdgeAttributesLockUnlock(edge, lockUnlock, userName, dateTimeNow, allTransports, allAttributes, allInterfaces, allConnectors);
+                
                 var childNode = allNodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
 
                 //Exit recursion
@@ -615,6 +629,7 @@ namespace Mb.Services.Services
             edge.IsLocked = lockUnlock;
             edge.IsLockedStatusBy = userName;
             edge.IsLockedStatusDate = dateTimeNow;
+            _websocketEdgeUpdates.Add((edge, WorkerStatus.Update));
 
             var edgeConnectors = allConnectors.Where(x => x.Id == edge.FromConnectorId || x.Id == edge.ToConnectorId);
             var transportObject = allTransports.FirstOrDefault(x => x.Id == edge.TransportId) ?? new Transport();
@@ -626,11 +641,11 @@ namespace Mb.Services.Services
                             x.TerminalId == transportObject.OutputTerminalId || 
                             x.TerminalId == interfaceObject.InputTerminalId ||
                             x.TerminalId == interfaceObject.OutputTerminalId);
-
+            
             LockUnlockAttributes(edgeAttributes, lockUnlock, userName, dateTimeNow);
         }
 
-        private static void LockUnlockAttributes(IQueryable<Attribute> attributes, bool lockUnlock, string userName, DateTime dateTimeNow)
+        private void LockUnlockAttributes(IQueryable<Attribute> attributes, bool lockUnlock, string userName, DateTime dateTimeNow)
         {
             foreach (var attribute in attributes)
             {
@@ -640,6 +655,7 @@ namespace Mb.Services.Services
                 attribute.IsLocked = lockUnlock;
                 attribute.IsLockedStatusBy = userName;
                 attribute.IsLockedStatusDate = dateTimeNow;
+                _websocketAttributeUpdates.Add((attribute, WorkerStatus.Update));
             }
         }
 
