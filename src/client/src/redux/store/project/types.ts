@@ -1,4 +1,4 @@
-import { Project, Node, Edge, CommitPackage, ProjectFileAm } from "../../../models";
+import { Project, Node, Edge, CommitPackage, ProjectFileAm, ProjectConverterAm } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
@@ -54,6 +54,8 @@ export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_T
 export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
+export const UPDATE_NODE = "UPDATE_NODE";
+export const UPDATE_EDGE = "UPDATE_EDGE";
 export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
 
 // State types
@@ -342,11 +344,7 @@ export interface ChangeActiveConnector {
 }
 export interface ExportProjectFileAction {
   type: typeof EXPORT_PROJECT_TO_FILE;
-  payload: {
-    project: Project;
-    fileName: string;
-    isSubProject: boolean;
-  };
+  payload: ProjectConverterAm;
 }
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
@@ -502,11 +500,20 @@ export interface CreateSubProjectFinished {
   };
 }
 
+export interface UpdateNodeAction {
+  type: typeof UPDATE_NODE;
+  payload: Node;
+}
+export interface UpdateEdgeAction {
+  type: typeof UPDATE_EDGE;
+  payload: Edge;
+}
 export interface SetOffPageStatus {
   type: typeof SET_OFFPAGE_STATUS;
   payload: {
-    id: string;
-    required: boolean;
+    nodeId: string;
+    connectorId: string;
+    isRequired: boolean;
   };
 }
 
@@ -574,4 +581,6 @@ export type ProjectActionTypes =
   | ChangeNodeUpdated
   | CreateSubProject
   | CreateSubProjectFinished
+  | UpdateNodeAction
+  | UpdateEdgeAction
   | SetOffPageStatus;

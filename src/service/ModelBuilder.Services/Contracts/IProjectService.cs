@@ -8,7 +8,7 @@ namespace Mb.Services.Contracts
 {
     public interface IProjectService
     {
-        IEnumerable<ProjectSimple> GetProjectList(string name, int from, int number);
+        IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number);
         Task<Project> GetProject(string id, bool ignoreNotFound = false);
         Task<Project> CreateProject(CreateProject createProject);
         Task<Project> CreateProject(ProjectAm project);
@@ -18,9 +18,11 @@ namespace Mb.Services.Contracts
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
         Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm);
         Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm);
+        Task LockUnlockEdge(LockUnlockEdgeAm lockUnlockEdgeAm);
         IEnumerable<string> GetLockedNodes(string projectId);
         IEnumerable<string> GetLockedAttributes(string projectId);
+        IEnumerable<string> GetLockedEdges(string projectId);
         Task CommitProject(CommitPackage package);
-        Task<bool> ProjectExist(string projectId);
+        bool ProjectExist(string projectId);
     }
 }

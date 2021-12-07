@@ -7,6 +7,7 @@ class Node {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   rds: string;
   description: string;
   semanticReference: string;
@@ -51,9 +52,6 @@ class Node {
   isHidden: boolean | false;
   blockWidth: number;
   blockHeight: number;
-
-  // OffPageNode
-  connectionRequired?: boolean | true;
 
   kind: string = NODE_KIND;
 

@@ -23,9 +23,14 @@ const ButtonContainer = styled.button<Props>`
   color: ${Color.Black};
 
   .button-text {
-    display: flex;
-    padding: 5px;
+    max-width: 260px;
+    padding: 0px 5px;
     margin-right: ${(props) => (props.icon ? 14 : 0)}px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+    overflow: hidden;
   }
 
   :active {

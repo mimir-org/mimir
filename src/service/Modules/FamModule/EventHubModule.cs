@@ -147,7 +147,7 @@ namespace EventHubModule
                     return;
                 }
 
-                var hasProject = projectService.ProjectExist(project.Id).Result;
+                var hasProject = projectService.ProjectExist(project.Id);
                 _ = hasProject ? 
                     projectService.UpdateProject(project.Id, project, e.SenderDomain).Result : 
                     projectService.CreateProject(project).Result;

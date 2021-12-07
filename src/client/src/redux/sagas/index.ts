@@ -1,6 +1,7 @@
 import { all, spawn, takeEvery } from "redux-saga/effects";
 import { commonSaga } from "./common";
 import { nodeSaga } from "./node";
+import { webSocketSaga } from "../../modules/cooperate/saga";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
 import { getUser } from "./user/saga";
 import { FETCHING_INITIAL_DATA, SAVE_LIBRARY_TYPE, FETCHING_BLOB_DATA, FETCHING_TYPE } from "../../typeEditor/redux/types";
@@ -97,4 +98,5 @@ export function* rootSaga() {
   yield spawn(sagas);
   yield spawn(commonSaga);
   yield spawn(nodeSaga);
+  yield spawn(webSocketSaga);
 }

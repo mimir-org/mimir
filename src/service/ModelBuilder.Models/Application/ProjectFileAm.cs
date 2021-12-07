@@ -10,5 +10,7 @@ namespace Mb.Models.Application
 
         [Required]
         public string FileContent { get; set; }
+
+        public FileFormat FileFormat { get; set; }
     }
 }

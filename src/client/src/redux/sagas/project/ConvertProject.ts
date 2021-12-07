@@ -72,6 +72,7 @@ export interface NodeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   name: string;
   version: string;
   label: string;
@@ -108,6 +109,7 @@ export interface EdgeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   fromConnectorId: string;
   toConnectorId: string;
   fromNodeId: string;
@@ -260,7 +262,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
-      isRequired: connector.isRequired
+      isRequired: connector.isRequired,
     } as ConnectorAm;
 
     converted.push(a);
@@ -368,6 +370,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       id: node.id,
       iri: node.iri,
       domain: node.domain,
+      projectId: node.projectId,
       name: node.name,
       version: node.version,
       label: node.label,
@@ -417,6 +420,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       id: edge.id,
       iri: edge.iri,
       domain: edge.domain,
+      projectId: edge.projectId,
       fromConnectorId: edge.fromConnectorId,
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,

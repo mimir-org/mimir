@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../models/project";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { LibCategoryHeader, LibCategoryButton } from "./styled";
@@ -11,6 +11,7 @@ interface Props {
   setSelectedElement: any;
   setSelectedElementType: any;
   dispatch: any;
+  searchList?: LibraryCategory[];
 }
 
 /**
@@ -25,10 +26,17 @@ const LibraryCategoryComponent = ({
   setSelectedElement,
   setSelectedElementType,
   dispatch,
+  searchList,
 }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const expandIcon = expanded ? ExpandIcon : CollapseIcon;
   const isCustomCategory = category.name === "Favorites";
+
+  useEffect(() => {
+    if (searchList && searchList.length > 0 && searchList.includes(category)) {
+      setExpanded(true);
+    }
+  }, [category, searchList]);
 
   return (
     <>

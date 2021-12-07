@@ -10,6 +10,7 @@ const ExplorerAspectLine = styled.div<Props>`
   visibility: ${(props) => !props.node.isRoot && "hidden"};
   height: ${(props) => props.node.isRoot && 2}px;
   background-color: ${(props) => GetAspectColor(props.node, AspectColorType.Selected)};
+  min-width: 490px;
 `;
 
 export default ExplorerAspectLine;

@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { Edge, Node, ProjectSimple } from "../../../models";
+import { Edge, Node, ProjectItemCm } from "../../../models";
 import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree } from "./helpers/";
 import { IsAspectNode, IsFamily } from "../../../helpers";
 import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
@@ -309,7 +309,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.CHANGE_SELECTED_PROJECT:
       const projectId = action.payload.projectId;
-      const projects = state.projectList as ProjectSimple[];
+      const projects = state.projectList as ProjectItemCm[];
 
       return {
         ...state,
@@ -853,16 +853,41 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.UPDATE_NODE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project.nodes.map((x) => (x.id === action.payload.id ? action.payload : x)),
+        },
+      };
+
+    case Types.UPDATE_EDGE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((x) => (x.id === action.payload.id ? action.payload : x)),
+        },
+      };
+
     case Types.SET_OFFPAGE_STATUS:
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((n) =>
-            n.id === action.payload.id
+            n?.id === action.payload.nodeId
               ? {
                   ...n,
-                  connectionRequired: action.payload.required,
+                  connectors: n.connectors.map((conn) =>
+                    conn.id === action.payload.connectorId
+                      ? {
+                          ...conn,
+                          isRequired: action.payload.isRequired,
+                        }
+                      : conn
+                  ),
                 }
               : n
           ),

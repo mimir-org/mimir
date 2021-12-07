@@ -80,7 +80,7 @@ namespace Mb.Services.Services
             if (project == null || string.IsNullOrEmpty(project.Id))
                 throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
 
-            var exist = await _projectService.ProjectExist(project.Id);
+            var exist = _projectService.ProjectExist(project.Id);
 
             if (exist)
                 return await _projectService.UpdateProject(project.Id, project, _modelBuilderConfiguration.Domain);
@@ -102,6 +102,34 @@ namespace Mb.Services.Services
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
             return await ImportProject(new ProjectFileAm {ParserId = id, FileContent = fileContent});
+        }
+
+        /// <summary>
+        /// Save and convert project
+        /// </summary>
+        /// <param name="projectConverter"></param>
+        /// <returns></returns>
+        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
+        /// <exception cref="ModelBuilderNullReferenceException"></exception>
+        public async Task<ProjectFileAm> ConvertProject(ProjectConverterAm projectConverter)
+        {
+            var par = _moduleService.Resolve<IModelBuilderParser>(projectConverter.ParserId);
+            if(par == null)
+                throw new ModelBuilderInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
+
+            var project = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _modelBuilderConfiguration.Domain);
+            if(project == null)
+                throw new ModelBuilderNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
+
+            var bytes = await par.SerializeProject(project);
+            var projectFile = new ProjectFileAm
+            {
+                FileContent = Encoding.UTF8.GetString(bytes),
+                ParserId = projectConverter.ParserId,
+                FileFormat = par.GetFileFormat()
+            };
+
+            return projectFile;
         }
 
         #endregion

@@ -25,7 +25,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.PositionX, opt => opt.MapFrom(src => src.PositionX))
                 .ForMember(dest => dest.PositionY, opt => opt.MapFrom(src => src.PositionY))
                 .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-                .ForMember(dest => dest.IsLockedBy, opt => opt.MapFrom(src => src.IsLockedBy))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
                 .ForMember(dest => dest.PositionBlockX, opt => opt.MapFrom(src => src.PositionBlockX))
                 .ForMember(dest => dest.PositionBlockY, opt => opt.MapFrom(src => src.PositionBlockY))
                 .ForMember(dest => dest.Level, opt => opt.Ignore())
@@ -49,6 +50,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.PurposeString, opt => opt.MapFrom(src => SerializePurpose(src)));
 
             CreateMap<Node, NodeAm>()
@@ -64,7 +67,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.PositionX, opt => opt.MapFrom(src => src.PositionX))
                 .ForMember(dest => dest.PositionY, opt => opt.MapFrom(src => src.PositionY))
                 .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-                .ForMember(dest => dest.IsLockedBy, opt => opt.MapFrom(src => src.IsLockedBy))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
                 .ForMember(dest => dest.PositionBlockX, opt => opt.MapFrom(src => src.PositionBlockX))
                 .ForMember(dest => dest.PositionBlockY, opt => opt.MapFrom(src => src.PositionBlockY))
                 .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.Length))

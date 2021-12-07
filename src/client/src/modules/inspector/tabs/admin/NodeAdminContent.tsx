@@ -106,7 +106,6 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
             defaultValue={node?.statusId}
             valueProp={null}
             onChange={(value: any) => onChange("statusId", value.id)}
-            listTop={31}
             borderRadius={5}
             disabled={IsAspectNode(node)}
           ></Dropdown>

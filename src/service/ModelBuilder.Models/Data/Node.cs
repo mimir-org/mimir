@@ -47,10 +47,9 @@ namespace Mb.Models.Data
         [Required]
         public decimal PositionY { get; set; }
 
-        [Required]
         public bool IsLocked { get; set; }
-
-        public string IsLockedBy { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
 
         [Required]
         public decimal PositionBlockX { get; set; }
@@ -79,7 +78,6 @@ namespace Mb.Models.Data
 
         public string LibraryTypeId { get; set; }
 
-        [Required]
         public string Version { get; set; }
 
         public Aspect Aspect { get; set; }
@@ -113,8 +111,11 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Composite> Composites { get; set; }
 
+        [Required]
+        public virtual string ProjectId { get; set; }
+
         [JsonIgnore]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual Project Project { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Edge> FromEdges { get; set; }
