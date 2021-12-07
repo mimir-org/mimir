@@ -620,6 +620,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
     case Types.LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR:
     case Types.LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
+    case Types.LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
@@ -642,6 +643,39 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                     isLocked: action.payload.isLocked,
                     isLockedBy: action.payload.isLockedBy,
                   })),
+                }
+              : x
+          ),
+        },
+      };
+
+    case Types.LOCK_UNLOCK_EDGE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          edges: state.project.edges.map((x) =>
+            x.id === action.payload.id
+              ? {
+                  ...x,
+                  isLocked: action.payload.isLocked,
+                  isLockedBy: action.payload.isLockedBy,
+                  transport: {
+                    ...x.transport,
+                    attributes: x.transport?.attributes?.map((attribute) => ({
+                      ...attribute,
+                      isLocked: action.payload.isLocked,
+                      isLockedBy: action.payload.isLockedBy,
+                    })),
+                  },
+                  interface: {
+                    ...x.interface,
+                    attributes: x.interface?.attributes?.map((attribute) => ({
+                      ...attribute,
+                      isLocked: action.payload.isLocked,
+                      isLockedBy: action.payload.isLockedBy,
+                    })),
+                  },
                 }
               : x
           ),

@@ -46,6 +46,8 @@ export const IMPORT_PROJECT_SUCCESS_OR_ERROR = "IMPORT_PROJECT_SUCCESS_OR_ERROR"
 export const LOCK_UNLOCK_NODE = "LOCK_UNLOCK_NODE";
 export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_NODE_ATTRIBUTE = "LOCK_UNLOCK_NODE_ATTRIBUTE";
+export const LOCK_UNLOCK_EDGE = "LOCK_UNLOCK_EDGE";
+export const LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_TRANSPORT_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_ATTRIBUTE";
 export const LOCK_UNLOCK_INTERFACE_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_ATTRIBUTE";
 export const LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "LOCK_UNLOCK_COMPOSITE_ATTRIBUTE";
@@ -403,6 +405,22 @@ export interface LockUnlockNodeAttribute {
   };
 }
 
+export interface LockUnlockEdge {
+  type: typeof LOCK_UNLOCK_EDGE;
+  payload: {
+    id: string;
+    isLocked: boolean;
+    isLockedBy: string;
+  };
+}
+
+export interface LockUnlockEdgeFinished {
+  type: typeof LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
 export interface LockUnlockTransportAttribute {
   type: typeof LOCK_UNLOCK_TRANSPORT_ATTRIBUTE;
   payload: {
@@ -569,6 +587,8 @@ export type ProjectActionTypes =
   | LockUnlockNode
   | LockUnlockNodeFinished
   | LockUnlockNodeAttribute
+  | LockUnlockEdge
+  | LockUnlockEdgeFinished
   | LockUnlockNodeTerminalAttribute
   | LockUnlockTransportTerminalAttribute
   | LockUnlockInterfaceTerminalAttribute

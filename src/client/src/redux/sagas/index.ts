@@ -30,6 +30,7 @@ import {
   LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
   LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
   CREATING_SUB_PROJECT,
+  LOCK_UNLOCK_EDGE,
 } from "./../store/project/types";
 import {
   getProject,
@@ -42,6 +43,7 @@ import {
   lockUnlockNode,
   lockUnlockAttribute,
   commitProject,
+  lockUnlockEdge,
 } from "./project/saga";
 import {
   getPredefinedAttributes,
@@ -79,6 +81,7 @@ function* sagas() {
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
     takeEvery(LOCK_UNLOCK_NODE, lockUnlockNode),
+    takeEvery(LOCK_UNLOCK_EDGE, lockUnlockEdge),
     takeEvery(LOCK_UNLOCK_NODE_ATTRIBUTE, lockUnlockAttribute),
     takeEvery(LOCK_UNLOCK_TRANSPORT_ATTRIBUTE, lockUnlockAttribute),
     takeEvery(LOCK_UNLOCK_INTERFACE_ATTRIBUTE, lockUnlockAttribute),

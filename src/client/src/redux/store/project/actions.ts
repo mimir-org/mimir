@@ -407,6 +407,17 @@ export function setIsLockedNodeAttribute(
   };
 }
 
+export function setIsLockedEdge(edge: Edge, isLocked: boolean, isLockedBy: string): Types.LockUnlockEdge {
+  return {
+    type: Types.LOCK_UNLOCK_EDGE,
+    payload: {
+      id: edge.id,
+      isLocked,
+      isLockedBy,
+    },
+  };
+}
+
 export function setIsLockedTransportAttribute(
   attribute: Attribute,
   edge: Edge,
