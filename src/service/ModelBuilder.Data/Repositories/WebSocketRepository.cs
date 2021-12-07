@@ -33,7 +33,7 @@ namespace Mb.Data.Repositories
         public async Task SendAttributeData(Attribute attribute, string domain, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(attribute, DefaultSettings.SerializerSettings);
-            await _hubContext.Clients.Group(domain).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
+            await _hubContext.Clients.Group(domain).SendAsync(WebSocketReceiver.ReceiveAttributeData, workerStatus, data);
         }
     }
 }
