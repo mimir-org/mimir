@@ -5,7 +5,7 @@ import { useCallback, useRef } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
 import { setProjectMenuVisibility } from "../projectMenu/subMenus/redux/actions";
-import { useOutsideClick } from "./hooks/useOutsideClick";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { activeMenuSelector, commonStateSelector } from "../../../redux/store";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
