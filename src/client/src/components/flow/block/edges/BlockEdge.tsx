@@ -36,8 +36,7 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
     targetPosition,
   });
 
-  const customPath = GetCustomPath(sourceX, sourceY, targetX, targetY);
-  const transportPath = electro ? customPath : smoothPath;
+  const transportPath = electro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return isTransport ? (
     <path id={id} style={GetEdgeStyle(color, visible)} className="path-blockEdge" d={transportPath} />
@@ -52,7 +51,7 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
   );
 };
 
-function GetCustomPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
+function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
   const margin = 20;
 
   const start = `M${sourceX} ${sourceY}`;
