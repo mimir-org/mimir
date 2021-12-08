@@ -5,8 +5,8 @@ import { SearchIcon } from "../../../assets/icons/common";
 
 const SearchInput = styled.input`
   width: 100%;
-  height: 32px;
-  padding: 0 8px;
+  height: 30px;
+  padding: 0 5px;
   font-style: ${FontWeight.Italic};
   font-size: ${FontSize.Standard};
   border: 1px solid ${Color.White};

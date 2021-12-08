@@ -10,15 +10,15 @@ const LibElement = styled.button<Props>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  width: calc(100% - 16px);
+  gap: 5px;
+  width: calc(100% - 15px);
   height: 30px;
   border: 1px;
   border-color: ${(props) => (props.active ? Color.Black : Color.GreyDarker)};
   border-style: ${(props) => (props.active ? "dashed" : "revert")};
   border-radius: 3px;
   background-color: ${Color.White};
-  margin: 3px 0 3px 16px;
+  margin: 5px 0 5px 15px;
   font-size: ${FontSize.Standard};
   padding-left: 10px;
   cursor: grab;

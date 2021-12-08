@@ -5,7 +5,7 @@ interface Props {
 }
 
 const LibBody = styled.div<Props>`
-  width: calc(100% + 14px);
+  width: calc(100% + 15px);
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: ${(props) => (props.legend ? 50 : 72)}%;

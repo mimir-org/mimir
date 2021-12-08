@@ -11,7 +11,7 @@ const LibCategoryButton = styled.button`
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 3px;
   background-color: ${Color.White};
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: ${FontSize.SubHeader};
   padding-left: 10px;
   padding-right: 14px;

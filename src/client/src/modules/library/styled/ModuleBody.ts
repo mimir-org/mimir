@@ -6,7 +6,7 @@ interface Props {
 
 const ModuleBody = styled.div<Props>`
   float: left;
-  padding: 0 16px;
+  padding: 0 15px;
   width: 331px;
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transition: opacity 0.2s ease-in-out;
