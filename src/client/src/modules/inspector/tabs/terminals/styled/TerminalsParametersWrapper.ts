@@ -5,6 +5,7 @@ import { Color } from "../../../../../compLibrary/colors";
 const TERMINALS_WIDTH_OFFSET: number = TERMINALS_COLUMN_WIDTH + 2 * TERMINALS_COLUMN_HORIZONTAL_PADDING;
 
 const TerminalsParametersWrapper = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   height: 100%;

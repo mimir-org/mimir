@@ -15,7 +15,8 @@ const ValueHeader = styled.div<Props>`
   min-height: 20px;
   border: 1px solid ${Color.Black};
   border-radius: 5px;
-  margin: 5px 0px 5px 32px;
+  margin: 5px 0 5px 30px;
+  padding: 2px 5px;
   background-color: ${Color.White};
 
   .selectedValues {
@@ -26,7 +27,7 @@ const ValueHeader = styled.div<Props>`
     text-overflow: ellipsis;
     text-transform: ${(props) => props.multiSelect && "capitalize"};
 
-    margin: 2px 13px 2px 13px;
+    //margin: 2px 13px 2px 13px;
     font-size: ${FontSize.Medium};
     color: ${Color.Black};
   }
@@ -37,7 +38,6 @@ const ValueHeader = styled.div<Props>`
 
   img {
     margin-left: auto;
-    padding-right: 7px;
     width: 10px;
     height: 6px;
   }

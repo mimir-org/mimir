@@ -2,13 +2,9 @@ import styled from "styled-components";
 
 const TypeEditorBox = styled.div`
   display: flex;
-  width: 297px;
-  margin: 15px 15px 15px 15px;
-  padding: 0;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  overflow: hidden;
+  gap: 30px;
+  margin: 15px 0 5px 0;
 `;
 
 export default TypeEditorBox;

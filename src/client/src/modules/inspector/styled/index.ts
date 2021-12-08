@@ -12,7 +12,8 @@ export { default as TabRow } from "./TabRow";
 export { default as NodeInfo } from "./NodeInfo";
 export { default as TabTitle } from "./TabTitle";
 export { default as ToggleBox } from "./ToggleBox";
-export { default as AdminInfoLogoBox } from "./AdminInfoLogoBox";
+export { default as AdminLogo } from "./AdminLogo";
+export { default as AdminContentWrapper } from "./AdminContentWrapper";
 
 // AttributesContainer
 export { default as Wrapper } from "./Wrapper";

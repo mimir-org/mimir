@@ -3,13 +3,12 @@ import { FontSize } from "../../../../../compLibrary/font";
 
 const Menu = styled.div`
   display: flex;
-  margin: 20px 0px 0px 5px;
-  width: 550px;
+  gap: 15px;
+  align-content: center;
+  max-width: 550px;
 
   .link {
     font-size: ${FontSize.Medium};
-    margin-left: 15px;
-    margin-top: 7px;
     text-decoration: underline;
     cursor: pointer;
   }

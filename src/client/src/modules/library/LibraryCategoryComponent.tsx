@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../models/project";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
-import { LibCategoryBox, LibCategoryHeader } from "./styled";
+import { LibCategoryHeader, LibCategoryButton } from "./styled";
 import { LibraryCategoryElement } from ".";
 
 interface Props {
@@ -40,10 +40,10 @@ const LibraryCategoryComponent = ({
 
   return (
     <>
-      <LibCategoryBox onClick={() => setExpanded(!expanded)}>
+      <LibCategoryButton onClick={() => setExpanded(!expanded)}>
         <LibCategoryHeader>{category.name}</LibCategoryHeader>
-        <img className="expandIcon" src={expandIcon} alt="expand-icon"></img>
-      </LibCategoryBox>
+        <img className="expandIcon" src={expandIcon} alt="expand-icon"/>
+      </LibCategoryButton>
       {expanded &&
         category?.nodes.map((item) => {
           return (

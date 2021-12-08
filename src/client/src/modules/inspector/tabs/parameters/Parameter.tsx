@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ParameterDescriptor } from "./";
 import { Entity } from "./styled";
 import { Color } from "../../../../compLibrary/colors";
-import { ParameterBox, ParameterHeader } from "./styled/parameter";
+import { ParameterButton, ParameterHeader, ParameterInputsWrapper } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../models";
 import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
@@ -11,6 +11,7 @@ import { CloseIcon } from "../../../../assets/icons/close";
 import { AttributeLikeItem } from "../../types";
 import { IsAttribute } from "../../helpers/IsType";
 import { FontSize } from "../../../../compLibrary/font";
+import { VisuallyHidden } from "../../../../compLibrary/util";
 
 export const PARAMETER_ENTITY_WIDTH: number = 255;
 
@@ -27,6 +28,7 @@ interface Props {
 
 function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
   const isAttribute = IsAttribute(attribute);
+  const isLocked = () => (isAttribute ? attribute.isLocked : false);
   const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
   const [unit, setUnit] = useState<EnumBase>(
     isAttribute
@@ -34,70 +36,62 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
       : attribute?.units?.[0]
   );
 
-  const isDisabled = () => (isAttribute ? attribute.isLocked : false);
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
-      <ParameterBox>
-        <ParameterHeader color={bodyColor}>
-          {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
-            <img src={WarningIcon} className="warningIcon" alt="icon" />
-          )}
+      <ParameterHeader color={bodyColor}>
+        {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
+          <img src={WarningIcon} className="warningIcon" alt="icon" />
+        )}
+        <span>{attribute?.entity}</span>
+        {false && (
+          <ParameterButton>
+            <VisuallyHidden>Open help</VisuallyHidden>
+            <img src={HelpIcon} alt="question mark" onClick={() => null} />
+          </ParameterButton>
+        )}
+        {isAttribute && (
+          <>
+            <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
+              <VisuallyHidden>{isLocked() ? "Unlock parameter" : "Lock parameter"}</VisuallyHidden>
+              {isLocked() ? (<LockClosedParameterComponent fill={headerColor} />) : (<LockOpenComponent />)}
+            </ParameterButton>
+            <ParameterButton onClick={() => onClose(attribute.id)}>
+              <VisuallyHidden>Close parameter</VisuallyHidden>
+              <img src={CloseIcon} alt="x mark" />
+            </ParameterButton>
+          </>
+        )}
+      </ParameterHeader>
+      <ParameterDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
+      <ParameterInputsWrapper>
+        <input
+          name="parameterInput"
+          className="parameterInput"
+          disabled={isLocked()}
+          value={value}
+          type="text"
+          onChange={(e) => isAttribute && setValue(e.target.value)}
+          onBlur={() => onChange(attribute.id, value, unit)}
+        />
 
-          <div className="parameterHeader">{attribute?.entity}</div>
-          <div className="icons">
-            {false && <img src={HelpIcon} className="parameterIcon" alt="icon" onClick={() => null} />}
-            {isAttribute && (
-              <>
-                {isDisabled() ? (
-                  <LockClosedParameterComponent
-                    className="parameterIcon"
-                    fill={headerColor}
-                    onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
-                  />
-                ) : (
-                  <LockOpenComponent
-                    className="parameterIcon"
-                    onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}
-                  />
-                )}
-
-                <img src={CloseIcon} className="parameterIcon" alt="icon" onClick={() => onClose(attribute.id)} />
-              </>
-            )}
-          </div>
-        </ParameterHeader>
-        <ParameterDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
-        <div className="inputContainer">
-          <input
-            name="parameterInput"
-            className="parameterInput"
-            disabled={isDisabled()}
-            value={value}
-            type="text"
-            onChange={(e) => isAttribute && setValue(e.target.value)}
-            onBlur={() => onChange(attribute.id, value, unit)}
-          />
-          <div className="parameterDropdown">
-            <CompDropdown
-              label="combinationDropdown"
-              items={attribute?.units ?? []}
-              disabled={isDisabled()}
-              keyProp="id"
-              valueProp="value"
-              onChange={(_unit) => {
-                isAttribute && setUnit(_unit);
-                onChange(attribute.id, value, _unit);
-              }}
-              borderRadius={2}
-              borderColor={Color.InspectorGreyBorder}
-              fontSize={FontSize.Small}
-              height={22}
-              listTop={27}
-              defaultValue={unit?.id}
-            />
-          </div>
-        </div>
-      </ParameterBox>
+        <CompDropdown
+          label="combinationDropdown"
+          items={attribute?.units ?? []}
+          disabled={isLocked()}
+          keyProp="id"
+          valueProp="value"
+          onChange={(_unit) => {
+            isAttribute && setUnit(_unit);
+            onChange(attribute.id, value, _unit);
+          }}
+          borderRadius={2}
+          borderColor={Color.InspectorGreyBorder}
+          fontSize={FontSize.Small}
+          height={22}
+          listTop={27}
+          defaultValue={unit?.id}
+        />
+      </ParameterInputsWrapper>
     </Entity>
   );
 }

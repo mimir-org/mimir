@@ -4,7 +4,7 @@ import { ListType, RadioButtonContainer } from "../../inputs/RadioButtonContaine
 import { TerminalListElement, TerminalCategoryWrapper } from "../../styled";
 import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
-import { SearchBarWrapper, SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "../../../compLibrary/";
+import { SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "../../../compLibrary/";
 import { CreateId } from "../../../components/flow/helpers";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../../types";
 
@@ -89,28 +89,26 @@ export const TransportInterfaceElement = ({
           onChange={(key, terminalTypeId) => onPropertyChange(key, terminalTypeId)}
         />
         {isSelected() && (
-          <SearchBarWrapper>
-            <SearchBarContainer>
-              <SearchBar>
-                <label htmlFor="terminalsearch" />
-                <input
-                  type="text"
-                  value={searchbarInput}
-                  placeholder={TextResources.TypeEditor_Search}
-                  onChange={handleChange}
-                  onFocus={() => setExpandList(!expandList)}
-                />
-                <img
-                  src={expandList ? ExpandIcon : CollapseIcon}
-                  alt="expand-icon"
-                  onClick={() => setExpandList(!expandList)}
-                  onFocus={() => setExpandList(!expandList)}
-                  className="icon"
-                />
-              </SearchBar>
-              {expandList && <SearchBarList>{showListItems()}</SearchBarList>}
-            </SearchBarContainer>
-          </SearchBarWrapper>
+          <SearchBarContainer>
+            <SearchBar>
+              <label htmlFor="terminalsearch" />
+              <input
+                type="text"
+                value={searchbarInput}
+                placeholder={TextResources.TypeEditor_Search}
+                onChange={handleChange}
+                onFocus={() => setExpandList(!expandList)}
+              />
+              <img
+                src={expandList ? ExpandIcon : CollapseIcon}
+                alt="expand-icon"
+                onClick={() => setExpandList(!expandList)}
+                onFocus={() => setExpandList(!expandList)}
+                className="icon"
+              />
+            </SearchBar>
+            {expandList && <SearchBarList>{showListItems()}</SearchBarList>}
+          </SearchBarContainer>
         )}
       </TerminalCategoryWrapper>
     </TerminalListElement>

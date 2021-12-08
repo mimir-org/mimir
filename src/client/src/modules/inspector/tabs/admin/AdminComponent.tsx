@@ -1,9 +1,8 @@
 import { Project } from "../../../../models";
-import { AdminInfoLogoBox } from "../../styled";
+import { AdminContentWrapper, AdminLogo } from "../../styled";
 import { InspectorElement } from "../../types";
 import { GetAdminContent } from "./GetAdminContent";
-import { statusSelector } from "../../../../redux/store";
-import { useAppSelector } from "../../../../redux/store/hooks";
+import { statusSelector, useAppSelector } from "../../../../redux/store";
 import { GetCompanyLogoForInspector } from "../../../../helpers";
 
 interface Props {
@@ -17,11 +16,8 @@ const AdminComponent = ({ element, project }: Props) => {
 
   return (
     <>
-      <AdminInfoLogoBox>
-        <img src={GetCompanyLogoForInspector(company, element)} alt="logo" className="logo" />
-      </AdminInfoLogoBox>
-      <hr />
-      {element && <div className="container">{GetAdminContent(element, project, statuses)}</div>}
+      <AdminLogo src={GetCompanyLogoForInspector(company, element)} alt="logo"/>
+      {element && <AdminContentWrapper>{GetAdminContent(element, project, statuses)}</AdminContentWrapper>}
     </>
   );
 };
