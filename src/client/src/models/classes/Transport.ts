@@ -4,6 +4,7 @@ export const TRANSPORT_KIND: string = "Transport";
 
 class Transport {
   id: string;
+  iri: string;
   version: string;
   rds: string;
   name: string;

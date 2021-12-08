@@ -12,6 +12,7 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Transport");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired().HasDefaultValue("1.0");
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
