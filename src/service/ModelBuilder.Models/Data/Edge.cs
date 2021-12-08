@@ -40,17 +40,8 @@ namespace Mb.Models.Data
         public DateTime? IsLockedStatusDate { get; set; }
 
         [Required]
-        public string MasterProjectId
-        {
-            get => _masterProjectId;
-            set => SetMasterProjectId(value);
-        }
-
-        public string MasterProjectIri
-        {
-            get => _masterProjectIri;
-            set => SetMasterProjectIri(value);
-        }
+        public string MasterProjectId { get; set; }
+        public string MasterProjectIri { get; set; }
 
         [Required]
         public virtual string ProjectId { get; set; }
@@ -58,35 +49,6 @@ namespace Mb.Models.Data
         [JsonIgnore]
         public virtual Project Project { get; set; }
         
-        #region Private methods
-
-        private void SetMasterProjectId(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                return;
-
-            _masterProjectId = id;
-            if (string.IsNullOrEmpty(_masterProjectIri))
-                _masterProjectIri = _masterProjectId.ResolveIri();
-        }
-
-        private void SetMasterProjectIri(string iri)
-        {
-            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(Id) && !Id.HasValidIri(iri)))
-                return;
-
-            _masterProjectIri = iri;
-            if (string.IsNullOrEmpty(_masterProjectId))
-                _masterProjectId = _masterProjectIri.ResolveIdFromIriAndDomain(Domain);
-        }
-
-        #endregion
-
-        #region Private members
-
-        private string _masterProjectId;
-        private string _masterProjectIri;
-
-        #endregion
+        
     }
 }

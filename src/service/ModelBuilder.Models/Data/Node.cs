@@ -73,17 +73,10 @@ namespace Mb.Models.Data
         public bool IsRoot { get; set; }
 
         [Required]
-        public string MasterProjectId
-        {
-            get => _masterProjectId;
-            set => SetMasterProjectId(value);
-        }
+        public string MasterProjectId { get; set; }
 
-        public string MasterProjectIri
-        {
-            get => _masterProjectIri;
-            set => SetMasterProjectIri(value);
-        }
+        [Required]
+        public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
 
@@ -131,36 +124,5 @@ namespace Mb.Models.Data
         {
             Version = Version.IncrementMajorVersion();
         }
-
-        #region Private methods
-
-        private void SetMasterProjectId(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                return;
-
-            _masterProjectId = id;
-            if (string.IsNullOrEmpty(_masterProjectIri))
-                _masterProjectIri = _masterProjectId.ResolveIri();
-        }
-
-        private void SetMasterProjectIri(string iri)
-        {
-            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(Id) && !Id.HasValidIri(iri)))
-                return;
-
-            _masterProjectIri = iri;
-            if (string.IsNullOrEmpty(_masterProjectId))
-                _masterProjectId = _masterProjectIri.ResolveIdFromIriAndDomain(Domain);
-        }
-
-        #endregion
-
-        #region Private members
-
-        private string _masterProjectId;
-        private string _masterProjectIri;
-
-        #endregion
     }
 }

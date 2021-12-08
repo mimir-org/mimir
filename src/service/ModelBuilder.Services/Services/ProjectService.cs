@@ -39,7 +39,7 @@ namespace Mb.Services.Services
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
         private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
-        
+
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
@@ -204,7 +204,7 @@ namespace Mb.Services.Services
                 CastConnectors(project);
 
                 // Remap and create new id's
-                Remap(project);
+                _remapService.Remap(project);
 
                 // Create an empty project
                 var newProject = new Project
@@ -330,7 +330,7 @@ namespace Mb.Services.Services
                 CastConnectors(projectAm);
 
                 // Remap and create new id's
-                Remap(projectAm);
+                _remapService.Remap(projectAm);
 
                 // Edges
                 var existingEdges = originalProject.Edges.ToList();
@@ -441,7 +441,7 @@ namespace Mb.Services.Services
 
             var attribute = _attributeRepository.GetAll(false).Where(x => x.Id == lockUnlockAttributeAm.Id);
             LockUnlockAttributes(attribute, lockUnlockAttributeAm.IsLocked, _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
-            
+
             await _attributeRepository.SaveAsync();
         }
 
@@ -461,7 +461,7 @@ namespace Mb.Services.Services
 
             if (currentNode == null)
                 throw new ModelBuilderBadRequestException($"Node with id {lockUnlockNodeAm.Id} not found.");
-            
+
             var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.MasterProjectId == lockUnlockNodeAm.ProjectId);
 
             LockUnlockNodesRecursive(lockUnlockNodeAm.IsLocked, currentNode, allNodesInProject, allEdgesInProject, _attributeRepository.GetAll(false),
@@ -553,7 +553,7 @@ namespace Mb.Services.Services
 
             foreach (var sender in senders)
             {
-                if (sender.Instance is not IModelBuilderSyncService client) 
+                if (sender.Instance is not IModelBuilderSyncService client)
                     continue;
 
                 await client.SendData(export);
@@ -577,7 +577,7 @@ namespace Mb.Services.Services
             IQueryable<Transport> allTransports, IQueryable<Interface> allInterfaces, string userName, DateTime dateTimeNow,
             int infiniteLoopGuardStart = 1, int infiniteLoopGuardMax = 100000)
         {
-            if(node == null)
+            if (node == null)
                 return;
 
             //Node and node attributes lock/unlock
@@ -606,12 +606,12 @@ namespace Mb.Services.Services
                 if (infiniteLoopGuardStart >= infiniteLoopGuardMax)
                     throw new ModelBuilderInvalidOperationException($"Error in lock/unlock nodes: Infinite recursion loop detected after {infiniteLoopGuardMax} iterations.");
 
-                LockUnlockNodesRecursive(node.IsLocked, childNode, allNodes, allEdges, allAttributes, 
+                LockUnlockNodesRecursive(node.IsLocked, childNode, allNodes, allEdges, allAttributes,
                     allTransports, allInterfaces, userName, dateTimeNow, infiniteLoopGuardStart, infiniteLoopGuardMax);
             }
         }
 
-        private void EdgeTransportsInterfacesAttributesLockUnlock(Edge edge, bool lockUnlock, string userName, 
+        private void EdgeTransportsInterfacesAttributesLockUnlock(Edge edge, bool lockUnlock, string userName,
             DateTime dateTimeNow, IQueryable<Transport> allTransports, IQueryable<Attribute> allAttributes, IQueryable<Interface> allInterfaces)
         {
             if (edge.IsLocked == lockUnlock)
@@ -629,7 +629,7 @@ namespace Mb.Services.Services
                 LockUnlockAttributes(transportAttributes, lockUnlock, userName, dateTimeNow);
             }
 
-            if (string.IsNullOrWhiteSpace(edge.InterfaceId)) 
+            if (string.IsNullOrWhiteSpace(edge.InterfaceId))
                 return;
 
             //Interface attributes lock/unlock
@@ -651,7 +651,7 @@ namespace Mb.Services.Services
             }
         }
 
-        private Node CreateInitAspectNode(Aspect aspect, string projectId)
+        private Node CreateInitAspectNode(Aspect aspect, string projectId, string projectIri)
         {
             const string version = "1.0";
             const decimal positionY = 5.0m;
@@ -686,10 +686,12 @@ namespace Mb.Services.Services
             var userName = _contextAccessor.GetName();
             var dateTimeNow = DateTime.Now.ToUniversalTime();
 
+            var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
+
             var node = new Node
             {
-                Id = _commonRepository.CreateUniqueId(),
-                Iri = "https://reidar.com",
+                Id = nodeId,
+                Iri = nodeIri,
                 Name = name,
                 Label = name,
                 PositionX = positionX,
@@ -708,17 +710,22 @@ namespace Mb.Services.Services
                 CreatedBy = userName,
                 Updated = dateTimeNow,
                 UpdatedBy = userName,
-                LibraryTypeId = name
-        };
+                LibraryTypeId = name,
+                ProjectId = projectId,
+                MasterProjectIri = projectIri
+            };
+
+            var (connectorId, connectorIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
 
             var connector = new Relation
             {
-                Id = _commonRepository.CreateUniqueId(),
-                Iri = "https://reidar.com",
+                Id = connectorId,
+                Iri = connectorIri,
                 Name = connectorName,
                 Type = ConnectorType.Output,
                 NodeId = node.Id,
-                RelationType = RelationType.PartOf,
+                NodeIri = node.Iri,
+                RelationType = RelationType.PartOf
             };
 
             node.Connectors.Add(connector);
@@ -767,11 +774,12 @@ namespace Mb.Services.Services
                 throw new ModelBuilderInvalidOperationException(
                     "There already exist a project with the same name");
 
-            var pid = _commonRepository.CreateUniqueId();
+            var (projectId, projectIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
+            
             var project = new Project
             {
-                Id = pid,
-                Iri = "https://reidar.com",
+                Id = projectId,
+                Iri = projectIri,
                 Version = version,
                 Name = createProject.Name,
                 Description = createProject.Description,
@@ -781,9 +789,9 @@ namespace Mb.Services.Services
                 ProjectOwner = _contextAccessor.GetName(),
                 Nodes = new List<Node>
                 {
-                    CreateInitAspectNode(Aspect.Function, pid),
-                    CreateInitAspectNode(Aspect.Product, pid),
-                    CreateInitAspectNode(Aspect.Location, pid)
+                    CreateInitAspectNode(Aspect.Function, projectId, projectIri),
+                    CreateInitAspectNode(Aspect.Product, projectId, projectIri),
+                    CreateInitAspectNode(Aspect.Location, projectId, projectIri)
                 }
             };
 
@@ -813,125 +821,6 @@ namespace Mb.Services.Services
                 }
 
                 node.Connectors = connectors;
-            }
-        }
-
-        private void Remap(ProjectAm project)
-        {
-            foreach (var node in project.Nodes.Where(x => !_commonRepository.HasValidId(x.Id)))
-            {
-                var newNodeId = _commonRepository.CreateUniqueId();
-                RemapComposites(newNodeId, node);
-                RemapConnectors(newNodeId, node, project);
-
-                foreach (var attribute in node.Attributes)
-                {
-                    if (attribute.NodeId == node.Id)
-                        attribute.NodeId = newNodeId;
-                }
-
-                node.Id = newNodeId;
-            }
-
-            foreach (var edge in project.Edges)
-            {
-                if (edge.Transport != null)
-                    RemapTransport(edge);
-
-                if (edge.Interface != null)
-                    RemapInterface(edge);
-
-
-                if (_commonRepository.HasValidId(edge.Id))
-                    continue;
-
-                edge.Id = _commonRepository.CreateUniqueId();
-            }
-        }
-
-        private void RemapTransport(EdgeAm edge)
-        {
-            if (edge.Transport == null)
-                return;
-
-            if (!_commonRepository.HasValidId(edge.Transport.Id))
-            {
-                var newTransportId = _commonRepository.CreateUniqueId();
-
-                if (edge.Transport.Attributes != null)
-                {
-                    foreach (var attribute in edge.Transport.Attributes)
-                    {
-                        attribute.TransportId = newTransportId;
-                    }
-                }
-
-
-                edge.Transport.Id = newTransportId;
-
-            }
-        }
-
-        private void RemapInterface(EdgeAm edge)
-        {
-            if (edge.Interface == null)
-                return;
-
-            if (!_commonRepository.HasValidId(edge.Interface.Id))
-            {
-                var newInterfaceId = _commonRepository.CreateUniqueId();
-                edge.Interface.Id = newInterfaceId;
-            }
-        }
-
-        private void RemapConnectors(string newNodeId, NodeAm node, ProjectAm project)
-        {
-            if (node?.Connectors == null || !node.Connectors.Any())
-                return;
-
-            foreach (var connector in node.Connectors)
-            {
-                var newConnectorId = _commonRepository.CreateUniqueId();
-
-                foreach (var edge in project.Edges)
-                {
-                    if (edge.FromConnectorId == connector.Id)
-                        edge.FromConnectorId = newConnectorId;
-                    if (edge.ToConnectorId == connector.Id)
-                        edge.ToConnectorId = newConnectorId;
-                    if (edge.FromNodeId == node.Id)
-                        edge.FromNodeId = newNodeId;
-                    if (edge.ToNodeId == node.Id)
-                        edge.ToNodeId = newNodeId;
-                }
-
-                foreach (var attribute in connector.Attributes)
-                {
-                    if (attribute.TerminalId == connector.Id)
-                        attribute.TerminalId = newConnectorId;
-                }
-
-                connector.Id = newConnectorId;
-                connector.NodeId = newNodeId;
-            }
-        }
-
-        private void RemapComposites(string newNodeId, NodeAm node)
-        {
-            if (node?.Composites == null || !node.Composites.Any())
-                return;
-
-            foreach (var composite in node.Composites)
-            {
-                if (!_commonRepository.HasValidId(composite.Id))
-                {
-                    composite.Id = _commonRepository.CreateUniqueId();
-                    foreach (var attribute in composite.Attributes)
-                    {
-                        attribute.CompositeId = composite.Id;
-                    }
-                }
-                composite.NodeId = newNodeId;
             }
         }
 

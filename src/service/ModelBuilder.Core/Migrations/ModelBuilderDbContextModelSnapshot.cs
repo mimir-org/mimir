@@ -89,6 +89,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Discipline");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<string>("Entity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -261,6 +266,11 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<string>("Iri")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -313,6 +323,11 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
 
                     b.Property<string>("FromConnectorId")
                         .IsRequired()
@@ -574,6 +589,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
+
                     b.Property<decimal?>("Height")
                         .HasColumnType("decimal(5,2)")
                         .HasColumnName("Height");
@@ -733,6 +753,11 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Domain");
 
                     b.Property<string>("Iri")
                         .IsRequired()

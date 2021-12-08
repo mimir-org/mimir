@@ -31,7 +31,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
             CreateMap<AttributeType, Attribute>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateId()))
                 .ForMember(dest => dest.Iri, opt => opt.Ignore())
                 .ForMember(dest => dest.Domain, opt => opt.Ignore())
                 .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
@@ -77,8 +77,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.NodeId, src.NodeIri)))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.NodeId, src.NodeIri)))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
                 .ForMember(dest => dest.Interface, opt => opt.Ignore())
                 .ForMember(dest => dest.Transport, opt => opt.Ignore())
@@ -93,16 +93,10 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
                 .ForMember(dest => dest.CompositeId, opt => opt.MapFrom(src => src.CompositeId))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
-                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()))
-                .AfterMap((src, dest, _) =>
-                {
-                    var id = commonRepository.CreateOrUseId(src.Id);
-                    dest.Id = id;
-                    dest.Iri = commonRepository.ResolveIri(dest.Id, dest.Iri);
-                });
+                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
             CreateMap<Attribute, AttributeAm>()
-               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))

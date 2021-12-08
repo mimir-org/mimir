@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
-using Newtonsoft.Json;
 
 namespace Mb.Models.Data
 {
