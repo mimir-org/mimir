@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Services.Contracts;
@@ -39,16 +40,36 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public Task SendAttributeUpdates(IReadOnlyCollection<(Attribute attribute, WorkerStatus workerStatus)> attributeMap, string domain)
+        public Task SendLockUnlockAttributeUpdates(IReadOnlyCollection<(LockUnlockAttributeAm lockUnlockAttributeAm, WorkerStatus workerStatus)> map)
         {
-            foreach (var tuple in attributeMap)
+            foreach (var tuple in map)
             {
-                _webSocketRepository.SendAttributeData(tuple.attribute, domain, tuple.workerStatus);
+                _webSocketRepository.SendLockUnlockAttributeData(tuple.lockUnlockAttributeAm, tuple.workerStatus);
             }
 
             return Task.CompletedTask;
         }
 
-        #endregion
+        public Task SendLockUnlockNodeUpdates(IReadOnlyCollection<(LockUnlockNodeAm lockUnlockNodeAm, WorkerStatus workerStatus)> map, string projectId)
+        {
+            foreach (var tuple in map)
+            {
+                _webSocketRepository.SendLockUnlockNodeData(tuple.lockUnlockNodeAm, projectId, tuple.workerStatus);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task SendLockUnlockEdgeUpdates(IReadOnlyCollection<(LockUnlockEdgeAm lockUnlockEdgeAm, WorkerStatus workerStatus)> map, string projectId)
+        {
+            foreach (var tuple in map)
+            {
+                _webSocketRepository.SendLockUnlockEdgeData(tuple.lockUnlockEdgeAm, projectId, tuple.workerStatus);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        #endregion Public methods
     }
 }

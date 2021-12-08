@@ -17,7 +17,7 @@ namespace Mb.Services.Contracts
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
         Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm);
-        Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm);
+        Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm, string edgeId = null);
         Task LockUnlockEdge(LockUnlockEdgeAm lockUnlockEdgeAm);
         IEnumerable<string> GetLockedNodes(string projectId);
         IEnumerable<string> GetLockedAttributes(string projectId);

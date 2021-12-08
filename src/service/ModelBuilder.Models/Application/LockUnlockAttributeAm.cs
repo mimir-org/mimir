@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
 {
@@ -6,7 +7,16 @@ namespace Mb.Models.Application
     {
         [Required]
         public string Id { get; set; }
+        
         [Required]
         public bool IsLocked { get; set; }
+
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
+        public string NodeId { get; set; }
+        public string TransportId { get; set; }
+        public string InterfaceId { get; set; }
+        public string CompositeId { get; set; }
+        public string EdgeId { get; set; }
     }
 }
