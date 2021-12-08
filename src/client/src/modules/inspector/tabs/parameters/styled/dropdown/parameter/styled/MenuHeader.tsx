@@ -14,15 +14,14 @@ const MenuHeader = styled.div`
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
 
-  p {
-    padding: 10px;
-  }
-
   img {
     margin-right: 4px;
     padding: 5px;
   }
+  
   .searchText {
+    margin: 0;
+    padding: 10px;
     opacity: 0.5;
     font-style: italic;
   }
