@@ -31,10 +31,10 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
         }
 
-        public async Task SendLockUnlockAttributeData(LockUnlockAttributeAm am, WorkerStatus workerStatus)
+        public async Task SendLockUnlockAttributeData(LockUnlockAttributeAm am, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
-            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveLockUnlockAttributeData, workerStatus, data);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockUnlockAttributeData, workerStatus, data);
         }
 
         public async Task SendLockUnlockNodeData(LockUnlockNodeAm am, string projectId, WorkerStatus workerStatus)

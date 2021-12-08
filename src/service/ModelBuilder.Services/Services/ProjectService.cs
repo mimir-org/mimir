@@ -473,7 +473,7 @@ namespace Mb.Services.Services
 
             //Send attribute to client via webSocket 
             await _cooperateService.SendLockUnlockAttributeUpdates(
-                new List<(LockUnlockAttributeAm am, WorkerStatus workerStatus)> { (lockUnlockAttributeAm, WorkerStatus.Update) });
+                new List<(LockUnlockAttributeAm am, WorkerStatus workerStatus)> { (lockUnlockAttributeAm, WorkerStatus.Update) }, lockUnlockAttributeAm.ProjectId);
         }
 
         /// <summary>

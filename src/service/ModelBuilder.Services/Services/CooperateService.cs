@@ -40,11 +40,11 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public Task SendLockUnlockAttributeUpdates(IReadOnlyCollection<(LockUnlockAttributeAm lockUnlockAttributeAm, WorkerStatus workerStatus)> map)
+        public Task SendLockUnlockAttributeUpdates(IReadOnlyCollection<(LockUnlockAttributeAm lockUnlockAttributeAm, WorkerStatus workerStatus)> map, string projectId)
         {
             foreach (var tuple in map)
             {
-                _webSocketRepository.SendLockUnlockAttributeData(tuple.lockUnlockAttributeAm, tuple.workerStatus);
+                _webSocketRepository.SendLockUnlockAttributeData(tuple.lockUnlockAttributeAm, projectId, tuple.workerStatus);
             }
 
             return Task.CompletedTask;

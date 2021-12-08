@@ -11,6 +11,9 @@ namespace Mb.Models.Application
         [Required]
         public bool IsLocked { get; set; }
 
+        [Required]
+        public string ProjectId { get; set; }
+
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
         public string NodeId { get; set; }
