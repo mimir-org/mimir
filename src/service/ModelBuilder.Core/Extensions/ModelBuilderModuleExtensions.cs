@@ -110,16 +110,16 @@ namespace Mb.Core.Extensions
             var cfg = new MapperConfigurationExpression();
             cfg.AddProfile(new AttributeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new ConnectorProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new EdgeProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new EdgeProfile());
+            cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
             cfg.AddProfile<CollaborationPartnerProfile>();
             cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>()));
+            cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
 

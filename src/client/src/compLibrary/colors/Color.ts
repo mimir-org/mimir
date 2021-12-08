@@ -8,6 +8,7 @@ const Color = {
   Grey: "#d9d9d9",
   GreyDark: "#c4c4c4",
   GreyDarker: "#898787",
+  GreyInactive: "#8C8C8C",
   GreyLighter: "#FBFBFF",
   GreyLight: "#F2F2F2",
   GreyHeader: "#4F4F4F",
