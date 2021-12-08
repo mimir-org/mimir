@@ -46,14 +46,7 @@ namespace Mb.TypeEditor.Data.Repositories
             if (!string.IsNullOrWhiteSpace(searchString))
                 nodeTypes = nodeTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
 
-            var libraryNodeItems = new List<LibraryNodeItem>();
-
-            Parallel.ForEach(nodeTypes, x =>
-            {
-                libraryNodeItems.Add(_mapper.Map<LibraryNodeItem>(x));
-            });
-
-            return libraryNodeItems;
+            return nodeTypes.Select(nodeType => _mapper.Map<LibraryNodeItem>(nodeType)).ToList();
         }
 
         public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
@@ -71,14 +64,7 @@ namespace Mb.TypeEditor.Data.Repositories
             if (!string.IsNullOrWhiteSpace(searchString))
                 interfaceTypes = interfaceTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
 
-            var libraryInterfaceItem = new List<LibraryInterfaceItem>();
-
-            Parallel.ForEach(interfaceTypes, x =>
-            {
-                libraryInterfaceItem.Add(_mapper.Map<LibraryInterfaceItem>(x));
-            });
-
-            return libraryInterfaceItem;
+            return interfaceTypes.Select(interfaceType => _mapper.Map<LibraryInterfaceItem>(interfaceType)).ToList();
         }
 
         public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null)
@@ -95,14 +81,7 @@ namespace Mb.TypeEditor.Data.Repositories
             if (!string.IsNullOrWhiteSpace(searchString))
                 transportTypes = transportTypes.Where(x => x.Name.ToLower().Contains(searchString.ToLower())).ToArray();
 
-            var libraryTransportItems = new List<LibraryTransportItem>();
-
-            Parallel.ForEach(transportTypes, x =>
-            {
-                libraryTransportItems.Add(_mapper.Map<LibraryTransportItem>(x));
-            });
-
-            return libraryTransportItems;
+            return transportTypes.Select(transportType => _mapper.Map<LibraryTransportItem>(transportType)).ToList();
         }
 
         public async Task<T> GetLibraryItem<T>(string id) where T : class, new()
@@ -158,6 +137,13 @@ namespace Mb.TypeEditor.Data.Repositories
             }
 
             return null;
+        }
+
+        public void ClearAllChangeTracker()
+        {
+            _transportTypeRepository?.Context?.ChangeTracker.Clear();
+            _interfaceTypeRepository?.Context?.ChangeTracker.Clear();
+            _nodeTypeRepository?.Context?.ChangeTracker.Clear();
         }
     }
 }
