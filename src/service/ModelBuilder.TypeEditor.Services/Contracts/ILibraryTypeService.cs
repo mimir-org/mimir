@@ -18,5 +18,6 @@ namespace Mb.TypeEditor.Services.Contracts
         Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType);
         Task CreateCompositeTypes(ICollection<CompositeTypeAm> compositeTypes);
         IEnumerable<CompositeType> GetCompositeTypes();
+        void ClearAllChangeTracker();
     }
 }

@@ -48,7 +48,7 @@ namespace Mb.Models.Application.TypeEditor
         public ICollection<string> CompositeTypes { get; set; }
 
         [JsonIgnore]
-        public string Key => $"{Name}-{RdsId}-{Version}";
+        public string Key => $"{Name}-{RdsId}-{Aspect}-{Version}";
 
         public string Version { get; set; }
         public string TypeId { get; set; }
