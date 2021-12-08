@@ -48,13 +48,14 @@ export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ER
 export const LOCK_UNLOCK_NODE_ATTRIBUTE = "LOCK_UNLOCK_NODE_ATTRIBUTE";
 export const LOCK_UNLOCK_EDGE = "LOCK_UNLOCK_EDGE";
 export const LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
+export const LOCK_UNLOCK_ATTRIBUTE = "LOCK_UNLOCK_ATTRIBUTE";
+export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 export const LOCK_UNLOCK_TRANSPORT_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_ATTRIBUTE";
 export const LOCK_UNLOCK_INTERFACE_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_ATTRIBUTE";
 export const LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "LOCK_UNLOCK_COMPOSITE_ATTRIBUTE";
 export const LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
-export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export const UPDATE_NODE = "UPDATE_NODE";
 export const UPDATE_EDGE = "UPDATE_EDGE";
@@ -395,16 +396,6 @@ export interface LockUnlockNodeFinished {
   };
 }
 
-export interface LockUnlockNodeAttribute {
-  type: typeof LOCK_UNLOCK_NODE_ATTRIBUTE;
-  payload: {
-    id: string;
-    nodeId: string;
-    isLocked: boolean;
-    isLockedBy: string;
-  };
-}
-
 export interface LockUnlockEdge {
   type: typeof LOCK_UNLOCK_EDGE;
   payload: {
@@ -421,11 +412,29 @@ export interface LockUnlockEdgeFinished {
   };
 }
 
+export interface LockUnlockAttribute {
+  type: typeof LOCK_UNLOCK_ATTRIBUTE;
+  payload: {
+    id: string;
+    isLocked: boolean;
+    isLockedBy: string;
+  };
+}
+export interface LockUnlockNodeAttribute {
+  type: typeof LOCK_UNLOCK_NODE_ATTRIBUTE;
+  payload: {
+    id: string;
+    nodeId: string;
+    isLocked: boolean;
+    isLockedBy: string;
+  };
+}
+
 export interface LockUnlockTransportAttribute {
   type: typeof LOCK_UNLOCK_TRANSPORT_ATTRIBUTE;
   payload: {
     id: string;
-    edgeId: string;
+    transportId: string;
     isLocked: boolean;
     isLockedBy: string;
   };
@@ -435,7 +444,7 @@ export interface LockUnlockInterfaceAttribute {
   type: typeof LOCK_UNLOCK_INTERFACE_ATTRIBUTE;
   payload: {
     id: string;
-    edgeId: string;
+    interfaceId: string;
     isLocked: boolean;
     isLockedBy: string;
   };
@@ -457,7 +466,7 @@ export interface LockUnlockTransportTerminalAttribute {
   payload: {
     id: string;
     terminalId: string;
-    edgeId: string;
+    transportId: string;
     isLocked: boolean;
     isLockedBy: string;
   };
@@ -468,7 +477,7 @@ export interface LockUnlockInterfaceTerminalAttribute {
   payload: {
     id: string;
     terminalId: string;
-    edgeId: string;
+    interfaceId: string;
     isLocked: boolean;
     isLockedBy: string;
   };
@@ -534,15 +543,6 @@ export interface SetOffPageStatus {
     isRequired: boolean;
   };
 }
-
-export type LockUnlockAttributeUnion =
-  | LockUnlockNodeAttribute
-  | LockUnlockTransportAttribute
-  | LockUnlockInterfaceAttribute
-  | LockUnlockNodeTerminalAttribute
-  | LockUnlockTransportTerminalAttribute
-  | LockUnlockInterfaceTerminalAttribute
-  | LockUnlockCompositeAttribute;
 
 export type ProjectActionTypes =
   | FetchingProjectAction

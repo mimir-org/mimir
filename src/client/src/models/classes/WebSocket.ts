@@ -1,7 +1,20 @@
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
 import { Dispatch } from "react";
+import { Attribute } from ".";
 import { WorkerStatus, Node, Edge } from "..";
-import { addNode, createEdge, removeEdge, removeNode, updateNode, updateEdge } from "../../redux/store/project/actions";
+import {
+  addNode,
+  createEdge,
+  removeEdge,
+  removeNode,
+  updateNode,
+  updateEdge,
+  setIsLockedNodeAttribute,
+  setIsLockedNodeTerminalAttribute,
+  setIsLockedTransportTerminalAttribute,
+  setIsLockedTransportAttribute,
+  setIsLockedCompositeAttribute,
+} from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 
 let instance = null;
@@ -34,11 +47,10 @@ class WebSocket {
       this._connection
         .start()
         .then(() => {
-
           // Start websocket connection
           this._running = true;
 
-          console.log('Websocket connection ok')
+          console.log("Websocket connection ok");
 
           // Joins the project group if any
           if (this._projectState?.project?.id) {
@@ -46,57 +58,16 @@ class WebSocket {
             this._group = this._projectState.project.id;
           }
 
-          // Receive information of node changes
-          this._connection.on("ReceiveNodeData", (eventType: WorkerStatus, data: string) => {
-            const jsonObject = JSON.parse(data);
-            const node = new Node(jsonObject);
-
-            if (eventType === WorkerStatus.Create) {
-              if (this._projectState?.project.nodes.some(x => x.id === node.id))
-                return;
-
-              this._dispatch(addNode(node));
-            }
-
-            if (!this._projectState?.project.nodes.some(x => x.id === node.id))
-              return;
-
-            if (eventType === WorkerStatus.Delete)
-              this._dispatch(removeNode(node.id));
-
-            if (eventType === WorkerStatus.Update)
-              this._dispatch(updateNode(node));
-          });
-
-          // Receive information of edge changes
-          this._connection.on("ReceiveEdgeData", (eventType: WorkerStatus, data: string) => {
-            const jsonObject = JSON.parse(data);
-            const edge = new Edge(jsonObject);
-
-            if (eventType === WorkerStatus.Create) {
-              if (this._projectState?.project.edges.some(x => x.id === edge.id))
-                return;
-
-              this._dispatch(createEdge(edge));
-            }
-
-            if (!this._projectState?.project.edges.some(x => x.id === edge.id))
-              return;
-
-            if (eventType === WorkerStatus.Delete)
-              this._dispatch(removeEdge(edge.id));
-
-            if (eventType === WorkerStatus.Update)
-              this._dispatch(updateEdge(edge));
-          });
+          this._connection.on("ReceiveNodeData", this.handleReceivedNodeData);
+          this._connection.on("ReceiveEdgeData", this.handleReceivedEdgeData);
+          this._connection.on("ReceivedAttributeData", this.handleReceivedAttributeData);
         })
-        .catch((e: any) => { });
+        .catch((e: any) => {});
     }
   }
 
   public setGroup(group: string) {
-    if (this._group)
-      this._connection.send("LeaveGroup", this._group);
+    if (this._group) this._connection.send("LeaveGroup", this._group);
 
     this._group = group;
     this._connection.send("JoinGroup", this._group);
@@ -117,6 +88,75 @@ class WebSocket {
   public getConnection(): HubConnection {
     return this._connection;
   }
+
+  private handleReceivedNodeData = (eventType: WorkerStatus, data: string) => {
+    const jsonObject = JSON.parse(data);
+    const node = new Node(jsonObject);
+
+    if (eventType === WorkerStatus.Create) {
+      if (this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
+
+      this._dispatch(addNode(node));
+    }
+
+    if (!this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
+
+    if (eventType === WorkerStatus.Delete) this._dispatch(removeNode(node.id));
+
+    if (eventType === WorkerStatus.Update) this._dispatch(updateNode(node));
+  };
+
+  private handleReceivedEdgeData = (eventType: WorkerStatus, data: string) => {
+    const jsonObject = JSON.parse(data);
+    const edge = new Edge(jsonObject);
+
+    if (eventType === WorkerStatus.Create) {
+      if (this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
+
+      this._dispatch(createEdge(edge));
+    }
+
+    if (!this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
+
+    if (eventType === WorkerStatus.Delete) this._dispatch(removeEdge(edge.id));
+
+    if (eventType === WorkerStatus.Update) this._dispatch(updateEdge(edge));
+  };
+
+  private handleReceivedAttributeData = (eventType: WorkerStatus, data: string) => {
+    const jsonObject = JSON.parse(data);
+    const attribute = new Attribute(jsonObject);
+
+    if (eventType !== WorkerStatus.LockUnlock) {
+      throw Error("Got attribute data, which was not an lockunlock.");
+    }
+
+    this.onLockUnlockAttribute(attribute);
+  };
+
+  private onLockUnlockAttribute = (attribute: Attribute) => {
+    if (attribute.nodeId) {
+      if (attribute.terminalId) {
+        this._dispatch(setIsLockedNodeTerminalAttribute(attribute));
+      } else if (attribute.compositeId) {
+        this._dispatch(setIsLockedCompositeAttribute(attribute));
+      } else {
+        this._dispatch(setIsLockedNodeAttribute);
+      }
+    } else if (attribute.transportId) {
+      if (attribute.terminalId) {
+        this._dispatch(setIsLockedTransportTerminalAttribute(attribute));
+      } else {
+        this._dispatch(setIsLockedTransportAttribute(attribute));
+      }
+    } else if (attribute.interfaceId) {
+      if (attribute.terminalId) {
+        this._dispatch(setIsLockedNodeTerminalAttribute(attribute));
+      } else {
+        this._dispatch(setIsLockedNodeAttribute);
+      }
+    }
+  };
 }
 
 export default WebSocket;

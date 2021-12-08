@@ -23,14 +23,16 @@ class Attribute {
   units: EnumBase[];
   attributeTypeId: string;
   terminalId: string;
-  nodeId: string;
-  nodeIri: string;
-  transportId: string;
-  compositeId: string;
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
+
+  nodeId: string;
+  nodeIri: string;
+  transportId: string;
+  interfaceId: string;
+  compositeId: string;
 
   kind: string = ATTRIBUTE_KIND;
 

@@ -3,6 +3,7 @@ import { Attribute } from "../../../../../models";
 import { IsNode, IsTransport, IsInterface, IsConnector, IsComposite, IsEdge } from "../../../helpers/IsType";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../types";
 import {
+  lockUnlockAttribute,
   setIsLockedCompositeAttribute,
   setIsLockedInterfaceAttribute,
   setIsLockedInterfaceTerminalAttribute,
@@ -21,7 +22,7 @@ const OnLockParameter = (
   isLockedBy: string,
   dispatch: Dispatch<any>
 ) => {
-  if (IsNode(element)) {
+  /* if (IsNode(element)) {
     dispatch(setIsLockedNodeAttribute(attribute, element.id, isLocked, isLockedBy));
   } else if (IsTransport(element) && IsEdge(inspectorParentElement)) {
     dispatch(setIsLockedTransportAttribute(attribute, inspectorParentElement, isLocked, isLockedBy));
@@ -35,7 +36,9 @@ const OnLockParameter = (
     dispatch(setIsLockedInterfaceTerminalAttribute(attribute, element.id, inspectorParentElement, isLocked, isLockedBy));
   } else if (IsComposite(element) && IsNode(inspectorParentElement)) {
     dispatch(setIsLockedCompositeAttribute(attribute, element.id, inspectorParentElement, isLocked, isLockedBy));
-  }
+  } */
+
+  dispatch(lockUnlockAttribute(attribute.id, isLocked, isLockedBy));
 };
 
 export default OnLockParameter;

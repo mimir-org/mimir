@@ -24,11 +24,11 @@ import {
   LockUnlockNode,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
   LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-  LockUnlockAttributeUnion,
   CreateSubProject,
   CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
   LockUnlockEdge,
   LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+  LockUnlockAttribute,
 } from "../../store/project/types";
 
 export function* getProject(action) {
@@ -560,7 +560,7 @@ export function* lockUnlockEdge(action: LockUnlockEdge) {
   }
 }
 
-export function* lockUnlockAttribute(action: LockUnlockAttributeUnion) {
+export function* lockUnlockAttribute(action: LockUnlockAttribute) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
     const { id, isLocked } = action.payload;
