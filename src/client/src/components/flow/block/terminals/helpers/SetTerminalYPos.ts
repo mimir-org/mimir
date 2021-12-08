@@ -21,13 +21,13 @@ const SetTerminalYPos = (
   order: number,
   nodeHeight: number
 ) => {
-  const marginY = parent ? 20 : 23;
+  const marginY = parent ? 20 : 22;
   const marginYSmall = 3;
 
   if (electro) {
     if (IsPartOf(conn)) return nodeHeight / 2 - marginYSmall;
     if (position === Position.Top) return -marginY;
-    return nodeHeight + marginYSmall;
+    return nodeHeight - marginYSmall;
   }
 
   if (IsPartOf(conn)) {

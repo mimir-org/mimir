@@ -17,7 +17,7 @@ const Size = {
   // Modules
   ModuleOpen: 331,
   ModuleClosed: 45,
-  Margin: 2,
+  Margin: 1,
 
   //TypeEditor
   TypeEditorInspectorOpen: 355,
