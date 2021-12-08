@@ -1,4 +1,4 @@
-import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath, Position } from "react-flow-renderer";
+import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../models";
 import { electroSelector, useAppSelector } from "../../../../redux/store";
 import { GetEdgeStyle, GetEdgeRelationStyle, IsLocationTerminal, IsProductTerminal } from "../../helpers";
@@ -36,15 +36,7 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
     targetPosition,
   });
 
-  const margin = 20;
-  const start = `M${sourceX} ${sourceY}`;
-  const firstAngle = `L${sourceX} ${sourceY + margin}`;
-  const q = `Q${sourceX} ${sourceY + margin * 10}, ${targetX} ${targetY - margin} `;
-  const c = `C ${sourceX} ${sourceY} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY - margin};`;
-  const secondAngle = `L${targetX} ${targetY - margin}`;
-  const stop = `L${targetX} ${targetY}`;
-
-  const customPath = `${start} ${firstAngle} ${q}`;
+  const customPath = GetCustomPath(sourceX, sourceY, targetX, targetY);
   const transportPath = electro ? customPath : smoothPath;
 
   return isTransport ? (
@@ -59,5 +51,16 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
     />
   );
 };
+
+function GetCustomPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
+  const margin = 20;
+
+  const start = `M${sourceX} ${sourceY}`;
+  const source = `C${sourceX} ${sourceY + margin}, ${sourceX} ${sourceY - margin * 5}, ${sourceX} ${sourceY}`;
+  const target = `S${targetX} ${targetY - margin * 5}`;
+  const stop = `${targetX} ${targetY}`;
+
+  return `${start} ${source} ${target} ${stop}`;
+}
 
 export default BlockEdge;
