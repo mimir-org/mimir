@@ -19,7 +19,7 @@
     "terminalTypeId": "029141A50753F5411DCCC401CA894CF3",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "EF2DD094A86FC97BDCD03A26F151A0A3",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:24:46.9861644",
@@ -45,7 +45,7 @@
     "terminalTypeId": "6DAD3FA88FA7A5192C2BBA462DA2B505",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "7DEDAF747E7D0B0575056AF616E6D697",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:25:53.0636539",
@@ -71,7 +71,7 @@
     "terminalTypeId": "EB9A78DC9F8CC30F4B1CB179CDC5E0D0",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "05B81E4C641A767CD4589B4745577CBC",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:27:09.9300627",
@@ -94,7 +94,7 @@
     "terminalTypeId": "A016243638B4FF81FE6FC8B8A1C9B434",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "F989E86447AFE21FCE3D5E44F376F04D",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:28:42.3379771",
@@ -121,7 +121,7 @@
     "terminalTypeId": "9B30E2A55BF21E196C80E7795A74FC4F",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "5D3ECDA99F66FE60A0450487C42523AB",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-30T07:33:11.7522152",
@@ -149,7 +149,7 @@
     "terminalTypeId": "ADAB65FA78CDC483F3D3BD5C6747FB0F",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "E75299D3AC44DF8B92FD589DD0AA98E4",
+
     "updatedBy": "Magnus Oanes Knædal",
     "updated": "2021-11-30T07:31:53.3938496",
     "created": "2021-11-30T07:07:38.6354683",
@@ -176,7 +176,7 @@
     "terminalTypeId": "A442A5697BA67C97C39F711AE781D7D4",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "9311F2788FCC4C93B186FFB9836DBB5E",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-30T07:35:02.0881966",
@@ -203,7 +203,7 @@
     "terminalTypeId": "559725969CD94768245A8B3C9EE5BDD7",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "37863C4F8F0EC663146E0F1063044CB1",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-30T07:32:05.5933985",
@@ -229,7 +229,7 @@
     "terminalTypeId": "029141A50753F5411DCCC401CA894CF3",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "EF2DD094A86FC97BDCD03A26F151A0A3",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:24:46.9861644",
@@ -255,7 +255,7 @@
     "terminalTypeId": "6DAD3FA88FA7A5192C2BBA462DA2B505",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "7DEDAF747E7D0B0575056AF616E6D697",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:25:53.0636539",
@@ -281,7 +281,7 @@
     "terminalTypeId": "EB9A78DC9F8CC30F4B1CB179CDC5E0D0",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "05B81E4C641A767CD4589B4745577CBC",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:27:09.9300627",
@@ -304,7 +304,7 @@
     "terminalTypeId": "A016243638B4FF81FE6FC8B8A1C9B434",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "F989E86447AFE21FCE3D5E44F376F04D",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-29T07:28:42.3379771",
@@ -331,7 +331,7 @@
     "terminalTypeId": "9B30E2A55BF21E196C80E7795A74FC4F",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "5D3ECDA99F66FE60A0450487C42523AB",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-30T07:33:11.7522152",
@@ -359,7 +359,7 @@
     "terminalTypeId": "ADAB65FA78CDC483F3D3BD5C6747FB0F",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "E75299D3AC44DF8B92FD589DD0AA98E4",
+
     "updatedBy": "Magnus Oanes Knædal",
     "updated": "2021-11-30T07:31:53.3938496",
     "created": "2021-11-30T07:07:38.6354683",
@@ -386,7 +386,7 @@
     "terminalTypeId": "A442A5697BA67C97C39F711AE781D7D4",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "9311F2788FCC4C93B186FFB9836DBB5E",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-30T07:35:02.0881966",
@@ -413,7 +413,7 @@
     "terminalTypeId": "559725969CD94768245A8B3C9EE5BDD7",
     "compositeTypes": null,
     "version": "1.0",
-    "typeId": "37863C4F8F0EC663146E0F1063044CB1",
+
     "updatedBy": null,
     "updated": null,
     "created": "2021-11-30T07:32:05.5933985",

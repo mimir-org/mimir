@@ -22,6 +22,7 @@ namespace Mb.TypeEditor.Services.Services
         public const string LibraryFileName = "library";
         public const string ContractorFileName = "contractor";
         public const string TerminalFileName = "terminal";
+        public const string TransportFileName = "transport";
         public const string UnitFileName = "unit";
         public const string ConditionFileName = "condition";
         public const string QualifierFileName = "qualifier";
@@ -88,6 +89,7 @@ namespace Mb.TypeEditor.Services.Services
                 var contractorFiles = fileList.Where(x => x.ToLower().Equals(ContractorFileName)).ToList();
                 var attributeFiles = fileList.Where(x => x.ToLower().Equals(AttributeFileName)).ToList();
                 var terminalFiles = fileList.Where(x => x.ToLower().Equals(TerminalFileName)).ToList();
+                var transportFiles = fileList.Where(x => x.ToLower().Equals(TransportFileName)).ToList();
                 var rdsFiles = fileList.Where(x => x.ToLower().Equals(RdsFileName)).ToList();
                 var predefinedAttributeFiles = fileList.Where(x => x.ToLower().Equals(PredefinedAttributeFileName)).ToList();
                 var purposeFiles = fileList.Where(x => x.ToLower().Equals(PurposeFileName)).ToList();
@@ -111,6 +113,7 @@ namespace Mb.TypeEditor.Services.Services
                 //var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
                 var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
                 var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
+                var transports = _fileRepository.ReadAllFiles<CreateLibraryType>(transportFiles).ToList();
                 var rds = _fileRepository.ReadAllFiles<CreateRds>(rdsFiles).ToList();
                 var predefinedAttributes = _fileRepository.ReadAllFiles<PredefinedAttribute>(predefinedAttributeFiles).ToList();
                 var purposes = _fileRepository.ReadAllFiles<Purpose>(purposeFiles).ToList();
@@ -138,6 +141,8 @@ namespace Mb.TypeEditor.Services.Services
                 await _attributeTypeService.CreatePredefinedAttributes(predefinedAttributes);
                 await _blobDataService.CreateBlobData(symbols);
                 await _libraryTypeService.CreateCompositeTypes(simpleTypes);
+
+                await _libraryTypeService.CreateLibraryTypes(transports);
 
             }
             catch (Exception e)
