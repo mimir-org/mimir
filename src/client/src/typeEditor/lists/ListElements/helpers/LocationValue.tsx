@@ -25,7 +25,7 @@ const LocationValue = ({ isMultiSelect, getValues, attributeName, defaultValue, 
         return (
           <ValuesListItem key={key}>
             {isMultiSelect ? (
-              <Checkbox isChecked={value} onChange={() => onMultipleValuesChange} id={key} />
+              <Checkbox isChecked={value} onChange={() => onMultipleValuesChange([key, value])} id={key} />
             ) : (
               <RadioButton
                 isChecked={value}
