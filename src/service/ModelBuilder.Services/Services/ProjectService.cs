@@ -173,15 +173,7 @@ namespace Mb.Services.Services
         {
             var project = CreateInitProject(createProject, false);
             await _projectRepository.CreateAsync(project);
-            try
-            {
-                await _projectRepository.SaveAsync();
-            }
-            catch (Exception e)
-            {
-                var dd = e.Message;
-            }
-
+            await _projectRepository.SaveAsync();
             return project;
         }
 
