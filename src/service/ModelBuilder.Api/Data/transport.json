@@ -1,6 +1,6 @@
 [
   {
-    "name": "Cable System 80",
+    "name": "Cable System 80 (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -26,7 +26,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Cable System 82",
+    "name": "Cable System 82 (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -52,7 +52,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Cable System 85",
+    "name": "Cable System 85 (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -78,7 +78,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Cable System 87",
+    "name": "Cable System 87 (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -101,7 +101,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Chemicals",
+    "name": "Chemicals (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -129,7 +129,7 @@
   },
 
   {
-    "name": "Process (HC)",
+    "name": "Process (HC) (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -146,7 +146,7 @@
     ],
     "locationType": null,
     "predefinedAttributes": null,
-    "terminalTypeId": "ADAB65FA78CDC483F3D3BD5C6747FB0F",
+    "terminalTypeId": "63BE0BD902113FDFF8BD37887699A8C7",
     "compositeTypes": null,
     "version": "1.0",
 
@@ -156,7 +156,7 @@
     "createdBy": "Magnus Oanes Knædal"
   },
   {
-    "name": "Utilities",
+    "name": "Utilities (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -173,7 +173,7 @@
     ],
     "locationType": null,
     "predefinedAttributes": null,
-    "terminalTypeId": "A442A5697BA67C97C39F711AE781D7D4",
+    "terminalTypeId": "9E66E10E51A0567B433CE12E59788374",
     "compositeTypes": null,
     "version": "1.0",
 
@@ -183,7 +183,7 @@
     "createdBy": "Magnus Oanes Knædal"
   },
   {
-    "name": "Water",
+    "name": "Water (F)",
     "description": null,
     "aspect": "Function",
     "objectType": "Transport",
@@ -200,7 +200,7 @@
     ],
     "locationType": null,
     "predefinedAttributes": null,
-    "terminalTypeId": "559725969CD94768245A8B3C9EE5BDD7",
+    "terminalTypeId": "C4F0FDFBDB12CD9E79A0AD9F1E976FDF",
     "compositeTypes": null,
     "version": "1.0",
 
@@ -210,7 +210,7 @@
     "createdBy": "Magnus Oanes Knædal"
   },
   {
-    "name": "Cable System 80",
+    "name": "Cable System 80 (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -236,7 +236,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Cable System 82",
+    "name": "Cable System 82 (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -262,7 +262,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Cable System 85",
+    "name": "Cable System 85 (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -288,7 +288,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Cable System 87",
+    "name": "Cable System 87 (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -311,7 +311,7 @@
     "createdBy": "Erlend Fjøsna"
   },
   {
-    "name": "Chemicals",
+    "name": "Chemicals (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -339,7 +339,7 @@
   },
 
   {
-    "name": "Process (HC)",
+    "name": "Process (HC) (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -356,7 +356,7 @@
     ],
     "locationType": null,
     "predefinedAttributes": null,
-    "terminalTypeId": "ADAB65FA78CDC483F3D3BD5C6747FB0F",
+    "terminalTypeId": "63BE0BD902113FDFF8BD37887699A8C7",
     "compositeTypes": null,
     "version": "1.0",
 
@@ -366,7 +366,7 @@
     "createdBy": "Magnus Oanes Knædal"
   },
   {
-    "name": "Utilities",
+    "name": "Utilities (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -383,7 +383,7 @@
     ],
     "locationType": null,
     "predefinedAttributes": null,
-    "terminalTypeId": "A442A5697BA67C97C39F711AE781D7D4",
+    "terminalTypeId": "9E66E10E51A0567B433CE12E59788374",
     "compositeTypes": null,
     "version": "1.0",
 
@@ -393,7 +393,7 @@
     "createdBy": "Magnus Oanes Knædal"
   },
   {
-    "name": "Water",
+    "name": "Water (P)",
     "description": null,
     "aspect": "Product",
     "objectType": "Transport",
@@ -410,7 +410,7 @@
     ],
     "locationType": null,
     "predefinedAttributes": null,
-    "terminalTypeId": "559725969CD94768245A8B3C9EE5BDD7",
+    "terminalTypeId": "C4F0FDFBDB12CD9E79A0AD9F1E976FDF",
     "compositeTypes": null,
     "version": "1.0",
 
