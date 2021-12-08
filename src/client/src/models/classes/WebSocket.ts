@@ -1,7 +1,7 @@
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
 import { Dispatch } from "react";
 import { Attribute } from ".";
-import { WorkerStatus, Node, Edge } from "..";
+import { WorkerStatus, Node, Edge, LockUnlockNodeAm, LockUnlockEdgeAm, LockUnlockAttributeAm } from "..";
 import {
   addNode,
   createEdge,
@@ -60,9 +60,11 @@ class WebSocket {
 
           this._connection.on("ReceiveNodeData", this.handleReceivedNodeData);
           this._connection.on("ReceiveEdgeData", this.handleReceivedEdgeData);
-          this._connection.on("ReceivedAttributeData", this.handleReceivedAttributeData);
+          this._connection.on("ReceiveLockUnlockAttributeData", this.handleReceiveLockUnlockAttributeData);
+          this._connection.on("ReceiveLockUnlockNodeData", this.handleReceiveLockUnlockNodeData);
+          this._connection.on("ReceiveLockUnlockEdgeData", this.handleReceiveLockUnlockEdgeData);
         })
-        .catch((e: any) => {});
+        .catch((e: any) => { });
     }
   }
 
@@ -123,15 +125,19 @@ class WebSocket {
     if (eventType === WorkerStatus.Update) this._dispatch(updateEdge(edge));
   };
 
-  private handleReceivedAttributeData = (eventType: WorkerStatus, data: string) => {
-    const jsonObject = JSON.parse(data);
-    const attribute = new Attribute(jsonObject);
+  private handleReceiveLockUnlockNodeData = (eventType: WorkerStatus, data: string) => {
+    const obj = JSON.parse(data) as LockUnlockNodeAm
+    console.log(obj);
+  };
 
-    if (eventType !== WorkerStatus.LockUnlock) {
-      throw Error("Got attribute data, which was not an lockunlock.");
-    }
+  private handleReceiveLockUnlockEdgeData = (eventType: WorkerStatus, data: string) => {
+    const obj = JSON.parse(data) as LockUnlockEdgeAm
+    console.log(obj);
+  };
 
-    this.onLockUnlockAttribute(attribute);
+  private handleReceiveLockUnlockAttributeData = (eventType: WorkerStatus, data: string) => {
+    const obj = JSON.parse(data) as LockUnlockAttributeAm
+    console.log(obj);
   };
 
   private onLockUnlockAttribute = (attribute: Attribute) => {

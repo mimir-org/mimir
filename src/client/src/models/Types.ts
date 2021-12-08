@@ -232,6 +232,35 @@ export interface ProjectConverterAm {
   filename: string;
 }
 
+export interface LockUnlockAttributeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
+  nodeId: string;
+  transportId: string;
+  interfaceId: string;
+  compositeId: string;
+  edgeId: string;
+}
+
+export interface LockUnlockNodeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
+}
+
+export interface LockUnlockEdgeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
+}
+
 export const SETTING_KEY = {
   PREFERED_TYPE: "PREFERED_TYPE",
 };
