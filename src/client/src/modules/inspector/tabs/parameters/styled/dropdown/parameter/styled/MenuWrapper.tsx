@@ -10,10 +10,6 @@ const MenuWrapper = styled.div`
   background-color: ${Color.White};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
-
-  .label {
-    margin-bottom: 4px;
-  }
 `;
 
 export default MenuWrapper;

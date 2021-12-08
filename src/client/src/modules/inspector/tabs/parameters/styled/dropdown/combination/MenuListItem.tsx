@@ -2,34 +2,29 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../../../compLibrary/font";
 
-const MenuListItem = styled.div`
-  display: flex;
+const MenuListItem = styled.label`
   position: relative;
-  height: 27px;
+  display: flex;
   align-items: center;
+  gap: 5px;
+  padding-left: 5px;
+  height: 25px;
   font-size: ${FontSize.Small};
   color: ${Color.Black};
   background-color: ${Color.White};
   cursor: pointer;
   overflow: hidden;
 
-  .label {
+  & > span {
+    flex: 1;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    padding: 10px;
-    margin-left: 22px;
-  }
-
-  img {
-    margin-left: 5px;
-    margin-right: 10px;
-    height: 14px;
   }
 
   :hover {
     background-color: ${(props) => props.color};
-    div {
+    span {
       text-decoration: underline;
     }
     .tooltipText {
