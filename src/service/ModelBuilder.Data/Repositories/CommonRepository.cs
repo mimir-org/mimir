@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
-using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
-using Microsoft.Extensions.Options;
 
 namespace Mb.Data.Repositories
 {
@@ -13,7 +11,6 @@ namespace Mb.Data.Repositories
     {
         #region Private members
 
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
         private readonly ICollaborationPartnerRepository _collaborationPartnerRepository;
         private ICollection<CollaborationPartner> _collaborationPartners;
         private CollaborationPartner _currentCollaborationPartner;
@@ -26,12 +23,10 @@ namespace Mb.Data.Repositories
         /// Repository for common data and application settings.
         /// There must be registered minimum one local Collaboration Partner
         /// </summary>
-        /// <param name="modelBuilderConfiguration"></param>
         /// <param name="collaborationPartnerRepository"></param>
-        public CommonRepository(IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ICollaborationPartnerRepository collaborationPartnerRepository)
+        public CommonRepository(ICollaborationPartnerRepository collaborationPartnerRepository)
         {
             _collaborationPartnerRepository = collaborationPartnerRepository;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
         }
 
         #endregion
@@ -57,7 +52,11 @@ namespace Mb.Data.Repositories
         /// <returns>Registered domain</returns>
         public string GetDomain()
         {
-            return _modelBuilderConfiguration.Domain;
+            Init();
+            if(_currentCollaborationPartner == null)
+                throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
+
+            return _currentCollaborationPartner.Domain;
         }
 
         /// <summary>

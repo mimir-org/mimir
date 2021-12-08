@@ -20,7 +20,6 @@ const BlockConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLin
         d={`M${sourceX},${sourceY} C ${sourceX} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY}`}
         markerEnd={markerEnd}
       />
-      {/* <circle cx={targetX} cy={targetY} fill={Color.White} r={3} stroke={color} strokeWidth={1.5} /> */}
     </g>
   );
 };

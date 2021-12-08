@@ -10,7 +10,6 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace Mb.Data.Repositories
 {
@@ -21,16 +20,16 @@ namespace Mb.Data.Repositories
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly IHttpContextAccessor _contextAccessor;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
-
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, IHttpContextAccessor contextAccessor) : base(dbContext)
+        private readonly ICommonRepository _commonRepository;
+        
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
             _connectorRepository = connectorRepository;
             _contextAccessor = contextAccessor;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _commonRepository = commonRepository;
         }
 
         public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
@@ -56,7 +55,7 @@ namespace Mb.Data.Repositories
                 else
                 {
                     // Parties is not allowed changed our edge
-                    if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                    if (_commonRepository.GetDomain() == edge.Domain && _commonRepository.GetDomain() != invokedByDomain)
                     {
                         Detach(edge);
                         continue;
@@ -82,7 +81,7 @@ namespace Mb.Data.Repositories
             foreach (var edge in delete)
             {
                 // Parties is not allowed delete our edge
-                if (_modelBuilderConfiguration.Domain == edge.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                if (_commonRepository.GetDomain() == edge.Domain && _commonRepository.GetDomain() != invokedByDomain)
                 {
                     Detach(edge);
                     continue;

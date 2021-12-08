@@ -9,8 +9,8 @@ const Terminals = styled.div<Props>`
   flex-direction: column;
   position: absolute;
   top: 5px;
-  left: ${(props) => props.input && `-115px`};
-  right: ${(props) => !props.input && `-115px`};
+  left: ${(props) => props.input && `-120px`};
+  right: ${(props) => !props.input && `-120px`};
   span {
     padding-bottom: 2px;
   }
