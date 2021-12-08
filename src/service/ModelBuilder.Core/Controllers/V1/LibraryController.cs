@@ -53,7 +53,7 @@ namespace Mb.Core.Controllers.V1
             catch (Exception e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                throw;
+                return StatusCode(500, e.Message);
             }
         }
 
