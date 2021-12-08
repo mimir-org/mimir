@@ -39,6 +39,16 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
+        public Task SendAttributeUpdates(IReadOnlyCollection<(Attribute attribute, WorkerStatus workerStatus)> attributeMap, string domain)
+        {
+            foreach (var tuple in attributeMap)
+            {
+                _webSocketRepository.SendAttributeData(tuple.attribute, domain, tuple.workerStatus);
+            }
+
+            return Task.CompletedTask;
+        }
+
         #endregion
     }
 }

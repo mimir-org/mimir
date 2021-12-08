@@ -6,7 +6,7 @@ const MenuListItem = styled.div`
   display: flex;
   max-height: 31px;
   align-items: center;
-  border-width: 1px 0px 0px 0px;
+  border-width: 1px 0px 1px 0px;
   border-style: solid;
   border-color: ${Color.GreyDark};
   font-size: ${FontSize.Standard};

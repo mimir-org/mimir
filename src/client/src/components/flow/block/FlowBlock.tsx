@@ -66,11 +66,11 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
+  //   return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
   // };
 
   // const OnConnectStop = (e) => {
-  //   return useOnConnectStop(e, project, dispatch, parentSize);
+  //   return hooks.useOnConnectStop(e, project, dispatch, parentSize);
   // };
 
   const OnDragOver = (event) => {

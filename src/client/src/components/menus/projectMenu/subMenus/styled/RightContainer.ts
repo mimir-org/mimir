@@ -24,7 +24,7 @@ const RightContainer = styled.div`
   .button-text {
     white-space: nowrap;
     font-weight: ${FontWeight.Bold};
-    font-size: ${FontSize.Header};
+    font-size: ${FontSize.SubHeader};
   }
 `;
 

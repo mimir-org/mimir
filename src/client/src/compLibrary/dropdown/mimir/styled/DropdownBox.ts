@@ -6,20 +6,21 @@ interface Props {
   fontSize?: string;
 }
 
-const DropdownMenuWrapper = styled.div<Props>`
+const DropdownBox = styled.div<Props>`
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
+  width: 100%;
   margin-bottom: 10px;
   background-color: ${Color.White};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   font-size: ${(props) => props.fontSize};
   color: ${Color.Black};
-  position: relative;
 
   .label {
     margin-bottom: 4px;
   }
 `;
 
-export default DropdownMenuWrapper;
+export default DropdownBox;

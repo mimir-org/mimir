@@ -92,6 +92,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
               borderColor={Color.InspectorGreyBorder}
               fontSize={FontSize.Small}
               height={22}
+              listTop={27}
               defaultValue={unit?.id}
             />
           </div>

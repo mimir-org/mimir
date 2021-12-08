@@ -12,5 +12,6 @@ namespace Mb.Services.Contracts
         Task<ProjectAm> ResolveProject(ProjectFileAm projectFile);
         Task<Project> ImportProject(ProjectFileAm project);
         Task<Project> ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id);
+        Task<ProjectFileAm> ConvertProject(ProjectConverterAm projectConverter);
     }
 }

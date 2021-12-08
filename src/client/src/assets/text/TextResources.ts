@@ -186,6 +186,7 @@ const TextResources = {
   Project_Import_LibraryTypes: "Import library types",
   Project_Import_Library: "Import library",
   Project_Browse: "Browse file",
+  Project_Parser: "Select data type",
 
   Project_Export_File: "Export file",
   Project_Export: "Export project",

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Mb.Models.Data;
+﻿using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,7 +12,6 @@ namespace Mb.Models.Configurations
             builder.ToTable("Project");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            //builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.IsSubProject).HasColumnName("IsSubProject").IsRequired();
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
