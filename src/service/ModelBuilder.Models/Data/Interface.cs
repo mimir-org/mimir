@@ -10,6 +10,7 @@ namespace Mb.Models.Data
     public class Interface
     {
         public string Id { get; set; }
+        public string Iri { get; set; }
         public string Version { get; set; }
         public string Rds { get; set; }
 
