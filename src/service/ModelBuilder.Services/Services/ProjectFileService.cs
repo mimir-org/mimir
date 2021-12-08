@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
-using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 
 namespace Mb.Services.Services
 {
@@ -20,15 +19,15 @@ namespace Mb.Services.Services
     {
         private readonly IModuleService _moduleService;
         private readonly IProjectService _projectService;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly ICommonRepository _commonRepository;
 
         #region Constructors
 
-        public ProjectFileService(IModuleService moduleService, IProjectService projectService, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration)
+        public ProjectFileService(IModuleService moduleService, IProjectService projectService, ICommonRepository commonRepository)
         {
             _moduleService = moduleService;
             _projectService = projectService;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _commonRepository = commonRepository;
         }
 
         #endregion
@@ -83,7 +82,7 @@ namespace Mb.Services.Services
             var exist = _projectService.ProjectExist(project.Id);
 
             if (exist)
-                return await _projectService.UpdateProject(project.Id, project, _modelBuilderConfiguration.Domain);
+                return await _projectService.UpdateProject(project.Id, project, _commonRepository.GetDomain());
 
             return await _projectService.CreateProject(project);
         }
@@ -117,7 +116,7 @@ namespace Mb.Services.Services
             if(par == null)
                 throw new ModelBuilderInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            var project = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _modelBuilderConfiguration.Domain);
+            var project = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
             if(project == null)
                 throw new ModelBuilderNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 

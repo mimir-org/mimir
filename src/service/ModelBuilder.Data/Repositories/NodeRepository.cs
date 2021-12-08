@@ -7,7 +7,6 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Mb.Data.Repositories
@@ -17,14 +16,14 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly ICompositeRepository _compositeRepository;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly ICommonRepository _commonRepository;
 
-        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICompositeRepository compositeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration) : base(dbContext)
+        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICompositeRepository compositeRepository, ICommonRepository commonRepository) : base(dbContext)
         {
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
             _compositeRepository = compositeRepository;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _commonRepository = commonRepository;
         }
 
         public IEnumerable<(Node node, WorkerStatus status)> UpdateInsert(ICollection<Node> original, Project project, string invokedByDomain)
@@ -49,7 +48,7 @@ namespace Mb.Data.Repositories
                         }
                     }
 
-                    node.Version = _modelBuilderConfiguration.Domain != node.Domain ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version : "1.0";
+                    node.Version = _commonRepository.GetDomain() != node.Domain ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version : "1.0";
                     _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Added);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
 
@@ -59,7 +58,7 @@ namespace Mb.Data.Repositories
                 else
                 {
                     // Parties is not allowed changed our node
-                    if (_modelBuilderConfiguration.Domain == node.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                    if (_commonRepository.GetDomain() == node.Domain && _commonRepository.GetDomain() != invokedByDomain)
                     {
                         Detach(node);
                         continue;
@@ -92,7 +91,7 @@ namespace Mb.Data.Repositories
             foreach (var node in delete)
             {
                 // Parties is not allowed delete our node
-                if (_modelBuilderConfiguration.Domain == node.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                if (_commonRepository.GetDomain() == node.Domain && _commonRepository.GetDomain() != invokedByDomain)
                 {
                     Detach(node);
                     continue;

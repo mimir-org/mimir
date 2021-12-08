@@ -25,7 +25,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Module = Mb.Models.Application.Module;
 
@@ -53,25 +52,14 @@ namespace Mb.Core.Extensions
             builder.AddJsonFile($"appsettings.{environment}.json", true);
             builder.AddJsonFile("appsettings.local.json", true);
             builder.AddEnvironmentVariables();
+            builder.Build();
 
-            var config = builder.Build();
-
-            var modelBuilderConfiguration = new ModelBuilderConfiguration();
-            var modelBuilderSection = config.GetSection(nameof(ModelBuilderConfiguration));
-            modelBuilderSection.Bind(modelBuilderConfiguration);
-
-            var domain = Environment.GetEnvironmentVariable("ModelBuilderConfiguration_Domain");
-            if (!string.IsNullOrEmpty(domain))
-                modelBuilderConfiguration.Domain = domain;
-
-            services.AddSingleton(Options.Create(modelBuilderConfiguration));
             services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.SuppressModelStateInvalidFilter = true;
+                options.SuppressModelStateInvalidFilter = false;
             });
 
             // Dependency injection
-
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
@@ -131,13 +119,7 @@ namespace Mb.Core.Extensions
 
             // Add modules
             services.CreateModules(provider, configuration, modules);
-
             services.AddSignalR();
-                //.AddNewtonsoftJsonProtocol(o =>
-                //{
-                //    o.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                //    o.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                //});
 
             return services;
         }
@@ -157,11 +139,6 @@ namespace Mb.Core.Extensions
                 logger.LogInformation("Reading modules");
                 Thread.Sleep(2000);
             }
-
-            var webSocketOptions = new WebSocketOptions
-            {
-                KeepAliveInterval = TimeSpan.FromSeconds(120),
-            };
 
             app.UseEndpoints(endpoints =>
             {
@@ -192,7 +169,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
+                    logger?.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }
@@ -214,7 +191,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
+                    logger?.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }
