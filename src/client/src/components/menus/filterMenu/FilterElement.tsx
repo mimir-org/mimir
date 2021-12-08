@@ -15,10 +15,10 @@ interface Props {
  * @param interface
  * @returns an element with a checkbox.
  */
-const FilterElement = ({ onChange, isChecked, visible, label, isHeader = false, isSubHeader = false, indent = 1 }: Props) =>
+const FilterElement = ({ onChange, isChecked, visible, label, isHeader, isSubHeader, indent = 1 }: Props) =>
   visible && (
     <ElementBox isHeader={isHeader} isSubHeader={isSubHeader} indent={indent}>
-      <Checkbox isChecked={isChecked} onChange={onChange} id={CreateId()} marginLeft={indent * 12} />
+      <Checkbox isChecked={isChecked} onChange={onChange} id={CreateId()} marginLeft={indent * 8} />
       <ElementLabel isHeader={isHeader} isSubHeader={isSubHeader} onClick={onChange}>
         {label}
       </ElementLabel>
