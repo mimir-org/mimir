@@ -16,10 +16,8 @@ namespace Mb.TypeEditor.Services.Services
 {
     public class SeedingService : ISeedingService
     {
-
         public const string RdsFileName = "rds";
         public const string AttributeFileName = "attribute";
-        public const string LibraryFileName = "library";
         public const string ContractorFileName = "contractor";
         public const string TerminalFileName = "terminal";
         public const string TransportFileName = "transport";
@@ -40,14 +38,13 @@ namespace Mb.TypeEditor.Services.Services
         private readonly IFileRepository _fileRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
         private readonly ILogger<SeedingService> _logger;
-        //private readonly ICommonService _commonService;
         private readonly ITerminalTypeService _terminalTypeService;
         private readonly IAttributeTypeService _attributeTypeService;
         private readonly IRdsService _rdsService;
         private readonly IBlobDataService _blobDataService;
         private readonly ILibraryTypeService _libraryTypeService;
 
-        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, IMapper mapper, ILogger<SeedingService> logger, ITerminalTypeService terminalTypeService, IAttributeTypeService attributeTypeService, IRdsService rdsService, IBlobDataService blobDataService, ILibraryTypeService libraryTypeService)
+        public SeedingService(IFileRepository fileRepository, IEnumBaseRepository enumBaseRepository, ILogger<SeedingService> logger, ITerminalTypeService terminalTypeService, IAttributeTypeService attributeTypeService, IRdsService rdsService, IBlobDataService blobDataService, ILibraryTypeService libraryTypeService)
         {
             _fileRepository = fileRepository;
             _enumBaseRepository = enumBaseRepository;
@@ -72,8 +69,6 @@ namespace Mb.TypeEditor.Services.Services
                 if (!fileList.Any())
                     return;
 
-                //var libraryFiles = fileList.Where(x => x.ToLower().Contains(LibraryFileName)).ToList();
-
                 //Enums
                 var unitFiles = fileList.Where(x => x.ToLower().Equals(UnitFileName)).ToList();
                 var conditionFiles = fileList.Where(x => x.ToLower().Equals(ConditionFileName)).ToList();
@@ -96,8 +91,6 @@ namespace Mb.TypeEditor.Services.Services
                 var symbolFileNames = fileList.Where(x => x.ToLower().Equals(SymbolFileName)).ToList();
                 var simpleTypeFileNames = fileList.Where(x => x.ToLower().Equals(SimpleTypeFileName)).ToList();
 
-                //var libraries = _fileRepository.ReadAllFiles<LibraryType>(libraryFiles).ToList();
-
                 var units = _fileRepository.ReadAllFiles<Unit>(unitFiles).ToList();
                 var conditions = _fileRepository.ReadAllFiles<AttributeCondition>(conditionFiles).ToList();
                 var qualifiers = _fileRepository.ReadAllFiles<AttributeQualifier>(qualifierFiles).ToList();
@@ -110,7 +103,6 @@ namespace Mb.TypeEditor.Services.Services
                 var symbols = _fileRepository.ReadAllFiles<BlobDataAm>(symbolFileNames).ToList();
                 var simpleTypes = _fileRepository.ReadAllFiles<CompositeTypeAm>(simpleTypeFileNames).ToList();
 
-                //var contractors = _fileRepository.ReadAllFiles<Contractor>(contractorFiles).ToList();
                 var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
                 var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
                 var transports = _fileRepository.ReadAllFiles<CreateLibraryType>(transportFiles).ToList();
@@ -118,23 +110,17 @@ namespace Mb.TypeEditor.Services.Services
                 var predefinedAttributes = _fileRepository.ReadAllFiles<PredefinedAttribute>(predefinedAttributeFiles).ToList();
                 var purposes = _fileRepository.ReadAllFiles<Purpose>(purposeFiles).ToList();
 
+                await CreateEnumBase(units);
+                await CreateEnumBase(conditions);
+                await CreateEnumBase(qualifiers);
+                await CreateEnumBase(sources);
+                await CreateEnumBase(rdsCategories);
+                await CreateEnumBase(terminalCategories);
+                await CreateEnumBase(attributeFormats);
+                await CreateEnumBase(buildStatuses);
+                await CreateEnumBase(typeAttributes);
+                await CreateEnumBase(purposes);
 
-                //await CreateAttributeTypesAsync(attributes);
-                //await CreateTerminalTypesAsync(terminals);
-                //await CreateLibraryTypeComponentsAsync(libraries);
-
-                await CreateEnumBase<Unit>(units);
-                await CreateEnumBase<AttributeCondition>(conditions);
-                await CreateEnumBase<AttributeQualifier>(qualifiers);
-                await CreateEnumBase<AttributeSource>(sources);
-                await CreateEnumBase<RdsCategory>(rdsCategories);
-                await CreateEnumBase<TerminalCategory>(terminalCategories);
-                await CreateEnumBase<AttributeFormat>(attributeFormats);
-                await CreateEnumBase<BuildStatus>(buildStatuses);
-                await CreateEnumBase<TypeAttribute>(typeAttributes);
-                await CreateEnumBase<Purpose>(purposes);
-
-                //await _commonService.CreateContractorsAsync(contractors);
                 await _attributeTypeService.CreateAttributeTypes(attributes);
                 await _terminalTypeService.CreateTerminalTypes(terminals);
                 await _rdsService.CreateRdsAsync(rds);
@@ -142,8 +128,10 @@ namespace Mb.TypeEditor.Services.Services
                 await _blobDataService.CreateBlobData(symbols);
                 await _libraryTypeService.CreateCompositeTypes(simpleTypes);
 
+                var existingLibraryTypes = _libraryTypeService.GetAllTypes().ToList();
+                transports = transports.Where(x => existingLibraryTypes.All(y => y.Key != x.Key)).ToList();
+                _libraryTypeService.ClearAllChangeTracker();
                 await _libraryTypeService.CreateLibraryTypes(transports);
-
             }
             catch (Exception e)
             {
