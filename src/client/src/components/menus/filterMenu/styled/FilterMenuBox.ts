@@ -8,8 +8,8 @@ interface Props {
 
 const FilterMenuBox = styled.div<Props>`
   position: absolute;
-  top: 95px;
-  right: ${(props) => (!props.libraryOpen ? Size.ModuleClosed + Size.Margin : Size.ModuleOpen + Size.Margin)}px;
+  top: 94px;
+  right: ${(props) => (!props.libraryOpen ? Size.ModuleClosed : Size.ModuleOpen)}px;
   background: ${Color.White};
   padding: 8px 0px 6px 0px;
   width: 350px;
