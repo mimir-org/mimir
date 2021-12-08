@@ -19,7 +19,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.ConvertToObject));
 
             CreateMap<TerminalType, Terminal>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateId()))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.Ignore())
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))

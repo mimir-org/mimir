@@ -11,10 +11,10 @@ namespace Mb.Core.Profiles
 {
     public class NodeProfile : Profile
     {
-        public NodeProfile(IHttpContextAccessor contextAccessor, ICommonRepository commonRepository)
+        public NodeProfile(IHttpContextAccessor contextAccessor)
         {
             CreateMap<NodeAm, Node>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))

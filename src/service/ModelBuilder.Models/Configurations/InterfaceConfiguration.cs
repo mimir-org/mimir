@@ -1,5 +1,4 @@
-﻿using System;
-using Mb.Models.Data;
+﻿using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,6 +11,7 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Interface");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired().HasDefaultValue("1.0");
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
