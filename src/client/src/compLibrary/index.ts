@@ -1,5 +1,4 @@
 export { default as SearchDropDown } from "./dropdown/SearchDropDown";
-export { default as SearchBarWrapper } from "./dropdown/SearchBarWrapper";
 export { default as SearchBar } from "./dropdown/SearchBar";
 export { default as SearchBarContainer } from "./dropdown/SearchBarContainer";
 export { default as SearchBarList } from "./dropdown/SearchBarList";

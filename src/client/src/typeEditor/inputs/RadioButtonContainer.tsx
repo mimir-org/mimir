@@ -1,6 +1,6 @@
 import { OnPropertyChangeFunction } from "../types";
 import { RadioButton } from "../../compLibrary/input/radiobutton";
-import { AttributeName } from "./styled";
+import { AttributeName, LabelWrapper } from "./styled";
 
 export enum ListType {
   Rds = 0,
@@ -28,14 +28,14 @@ export const RadioButtonContainer = ({ id, label, listType, defaultValue, checke
   };
 
   return (
-    <>
+    <LabelWrapper gap={'20px'}>
       <RadioButton
         isChecked={listType === ListType.Rds ? rdsIsSelected : terminalIsSelected}
         onChange={() => onCheckboxChange()}
         id={id}
       />
-      <AttributeName htmlFor={id}>{label}</AttributeName>
-    </>
+      <AttributeName>{label}</AttributeName>
+    </LabelWrapper>
   );
 };
 

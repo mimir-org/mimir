@@ -14,7 +14,7 @@ interface Props {
 const RadioButton = ({ isChecked, onChange, id }: Props) => (
   <RadioButtonWrapper>
     <input type="radio" value={id} key={id} checked={isChecked ?? false} id={id} onChange={(e) => onChange(e)} />
-    <div className="checkmark-circle"></div>
+    <div className="checkmark-circle"/>
   </RadioButtonWrapper>
 );
 

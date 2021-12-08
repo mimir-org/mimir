@@ -17,7 +17,7 @@ const TypeNameInput = styled.div<Props>`
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 
   p {
-    margin: 0px;
+    margin: 0;
   }
 
   .label {
@@ -32,7 +32,7 @@ const TypeNameInput = styled.div<Props>`
 
   input {
     max-height: 27px;
-    padding: 5px 0px 5px 9px;
+    padding: 5px 10px
   }
 `;
 

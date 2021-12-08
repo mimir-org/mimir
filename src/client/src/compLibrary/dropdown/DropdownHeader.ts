@@ -9,16 +9,15 @@ const DropdownHeader = styled.div`
   width: 63px;
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 5px;
-  padding: 1px;
+  padding: 0 5px;
   font-size: 11px;
   background-color: ${Color.White} !important;
 
   p {
-    padding: 2px 5px;
+    margin: 0;
   }
 
   .icon {
-    padding: 0px 5px;
     margin-left: auto;
     width: 10px;
     height: 6px;
