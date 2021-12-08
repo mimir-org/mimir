@@ -12,7 +12,6 @@ namespace Mb.Models.Configurations
             builder.ToTable("Node");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference");

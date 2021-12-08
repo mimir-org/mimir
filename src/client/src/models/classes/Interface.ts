@@ -4,6 +4,7 @@ export const INTERFACE_KIND: string = "Interface";
 
 class Interface {
   id: string;
+  iri: string;
   version: string;
   rds: string;
   name: string;

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
@@ -24,6 +23,65 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Remap a project, create new id if the id is not valid
+        /// </summary>
+        /// <param name="project"></param>
+        public void Remap(ProjectAm project)
+        {
+            var (projectId, projectIri) = _commonRepository.CreateOrUseIdAndIri(project.Id, project.Iri);
+
+            foreach (var node in project.Nodes)
+            {
+                var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(node.Id, node.Iri);
+
+                RemapComposites(nodeId, node);
+                RemapConnectors(nodeId, nodeIri, node, project);
+
+                foreach (var attribute in node.Attributes)
+                {
+                    var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
+                    attribute.Id = attributeId;
+                    attribute.Iri = attributeIri;
+                    attribute.NodeId = nodeId;
+                    attribute.NodeIri = nodeIri;
+                }
+
+                node.Id = nodeId;
+                node.Iri = nodeIri;
+                node.ProjectId = projectId;
+
+                if (string.IsNullOrEmpty(node.MasterProjectId))
+                    node.MasterProjectId = projectId;
+
+                if (string.IsNullOrEmpty(node.MasterProjectIri))
+                    node.MasterProjectIri = projectIri;
+            }
+
+            foreach (var edge in project.Edges)
+            {
+                var (edgeId, edgeIri) = _commonRepository.CreateOrUseIdAndIri(edge.Id, edge.Iri);
+
+                if (edge.Transport != null)
+                    RemapTransport(edge);
+
+                if (edge.Interface != null)
+                    RemapInterface(edge);
+
+                edge.Id = edgeId;
+                edge.Iri = edgeIri;
+
+                if (string.IsNullOrEmpty(edge.MasterProjectId))
+                    edge.MasterProjectId = projectId;
+
+                if (string.IsNullOrEmpty(edge.MasterProjectIri))
+                    edge.MasterProjectIri = projectIri;
+            }
+
+            project.Id = projectId;
+            project.Iri = projectIri;
+        }
+
+        /// <summary>
         /// Remap project from old to new
         /// </summary>
         /// <param name="fromProject"></param>
@@ -42,7 +100,7 @@ namespace Mb.Services.Services
             var oldEdges = fromProject.Edges.Where(x => edges.Any(y => y == x.Id)).ToList();
 
             // Create new nodes from old nodes
-            var remapData = CreateRemap(toProject.Id, oldNodes, oldEdges, false);
+            var remapData = CreateRemap(toProject.Id, oldNodes, oldEdges);
 
             // Remove old root nodes
             remapData.nodes = remapData.nodes.Where(x => !x.IsRoot).ToList();
@@ -85,19 +143,27 @@ namespace Mb.Services.Services
                 if (fromConnector == null)
                     continue;
 
+                var (edgeId, edgeIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
+
                 // Create an edge and point it from root connector to current node
                 var edge = new Edge
                 {
-                    Id = _commonRepository.CreateUniqueId(),
+                    Id = edgeId,
+                    Iri = edgeIri,
                     FromConnectorId = fromConnector.Id,
+                    FromConnectorIri = fromConnector.Iri,
                     FromConnector = fromConnector,
                     FromNodeId = rootNode.Id,
                     FromNode = rootNode,
+                    FromNodeIri = rootNode.Iri,
                     ToConnectorId = relationConnector.Id,
                     ToConnector = relationConnector,
+                    ToConnectorIri = relationConnector.Iri,
                     ToNodeId = node.Id,
                     ToNode = node,
+                    ToNodeIri = node.Iri,
                     MasterProjectId = toProject.Id,
+                    MasterProjectIri = toProject.Iri,
                     ProjectId = toProject.Id
                 };
 
@@ -115,35 +181,39 @@ namespace Mb.Services.Services
         /// <param name="projectId"></param>
         /// <param name="nodes"></param>
         /// <param name="edges"></param>
-        /// <param name="reuseValidIds"></param>
         /// <returns></returns>
-        public (ICollection<Node> nodes, ICollection<Edge> edges) CreateRemap(string projectId, ICollection<Node> nodes, ICollection<Edge> edges, bool reuseValidIds)
+        public (ICollection<Node> nodes, ICollection<Edge> edges) CreateRemap(string projectId, ICollection<Node> nodes, ICollection<Edge> edges)
         {
             var cloneNodes = new List<Node>();
             var cloneEdges = new List<Edge>();
 
             foreach (var node in nodes)
             {
+                var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
+                
                 var clone = node.DeepCopy();
                 clone.ProjectId = projectId;
-                clone.Id = reuseValidIds ? _commonRepository.CreateOrUseId(node.Id) : _commonRepository.CreateUniqueId();
-                clone.Composites = CloneComposites(node.Composites, clone.Id, reuseValidIds).ToList();
-                clone.Connectors = CloneConnectors(node.Connectors, edges, clone, node, reuseValidIds).ToList();
-                clone.Attributes = CloneAttributes(node.Attributes, reuseValidIds, nodeId: clone.Id).ToList();
+                clone.Id = nodeId;
+                clone.Iri = nodeIri;
+                clone.Composites = CloneComposites(node.Composites, clone.Id).ToList();
+                clone.Connectors = CloneConnectors(node.Connectors, edges, clone, node).ToList();
+                clone.Attributes = CloneAttributes(node.Attributes, nodeId: clone.Id).ToList();
                 cloneNodes.Add(clone);
             }
 
             foreach (var edge in edges)
             {
+                var (edgeId, edgeIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
                 var clone = edge.DeepCopy();
-                clone.Id = reuseValidIds ? _commonRepository.CreateOrUseId(edge.Id) : _commonRepository.CreateUniqueId();
+                clone.Id = edgeId;
+                clone.Iri = edgeIri;
                 clone.ProjectId = projectId;
 
                 if (edge.Transport != null)
                 {
-                    clone.Transport = CloneTransport(edge, reuseValidIds);
+                    clone.Transport = CloneTransport(edge);
                     clone.TransportId = clone.Transport.Id;
-                    clone.Interface = CloneInterface(edge, reuseValidIds);
+                    clone.Interface = CloneInterface(edge);
                     clone.InterfaceId = clone.Interface.Id;
                 }
                 cloneEdges.Add(clone);
@@ -152,38 +222,44 @@ namespace Mb.Services.Services
             return (cloneNodes, cloneEdges);
         }
 
-        private IEnumerable<Composite> CloneComposites(ICollection<Composite> composites, string nodeId, bool reuseValidIds)
+        #region Private methods
+
+        private IEnumerable<Composite> CloneComposites(ICollection<Composite> composites, string nodeId)
         {
             if (composites == null || !composites.Any())
                 yield break;
 
             foreach (var composite in composites)
             {
+                var (id, _) = _commonRepository.CreateOrUseIdAndIri(null, null);
                 var clone = composite.DeepCopy();
-                clone.Id = reuseValidIds ? _commonRepository.CreateOrUseId(composite.Id) : _commonRepository.CreateUniqueId();
+                clone.Id = id;
                 clone.NodeId = nodeId;
-                clone.Attributes = CloneAttributes(composite.Attributes, reuseValidIds, compositeId: clone.Id).ToList();
+                clone.Attributes = CloneAttributes(composite.Attributes, compositeId: clone.Id).ToList();
             }
         }
 
-        private IEnumerable<Attribute> CloneAttributes(ICollection<Attribute> attributes, bool reuseValidIds, string compositeId = null, string terminalId = null, string nodeId = null, string transportId = null)
+        private IEnumerable<Attribute> CloneAttributes(ICollection<Attribute> attributes, string compositeId = null, string terminalId = null, string nodeId = null, string transportId = null, string interfaceId = null)
         {
             if (attributes == null || !attributes.Any())
                 yield break;
 
             foreach (var attribute in attributes)
             {
+                var (id, iri) = _commonRepository.CreateOrUseIdAndIri(null, null);
                 var clone = attribute.DeepCopy();
-                clone.Id = reuseValidIds ? _commonRepository.CreateOrUseId(attribute.Id) : _commonRepository.CreateUniqueId();
+                clone.Id = id;
+                clone.Iri = iri;
                 clone.CompositeId = compositeId;
                 clone.TerminalId = terminalId;
                 clone.NodeId = nodeId;
                 clone.TransportId = transportId;
+                clone.InterfaceId = interfaceId;
                 yield return clone;
             }
         }
 
-        private IEnumerable<Connector> CloneConnectors(ICollection<Connector> connectors, ICollection<Edge> edges, Node cloneNode, Node oldNode, bool reuseValidIds)
+        private IEnumerable<Connector> CloneConnectors(ICollection<Connector> connectors, ICollection<Edge> edges, Node cloneNode, Node oldNode)
         {
             if (connectors == null || !connectors.Any())
                 yield break;
@@ -197,34 +273,46 @@ namespace Mb.Services.Services
                     _ => null
                 };
 
-                if(clone == null)
+                if (clone == null)
                     yield break;
 
-                clone.Id = reuseValidIds ? _commonRepository.CreateOrUseId(connector.Id) : _commonRepository.CreateUniqueId();
+                var (id, iri) = _commonRepository.CreateOrUseIdAndIri(null, null);
+
+                clone.Id = id;
+                clone.Iri = iri;
                 clone.NodeId = cloneNode.Id;
                 clone.Node = cloneNode;
                 if (clone is Terminal t && connector is Terminal tOld)
                 {
-                    t.Attributes = CloneAttributes(tOld.Attributes, reuseValidIds, terminalId: clone.Id).ToList();
+                    t.Attributes = CloneAttributes(tOld.Attributes, terminalId: clone.Id).ToList();
                 }
 
                 foreach (var edge in edges)
                 {
                     if (edge.FromConnectorId == connector.Id)
+                    {
                         edge.FromConnectorId = clone.Id;
+                        edge.FromConnectorIri = clone.Iri;
+                    }
+
                     if (edge.ToConnectorId == connector.Id)
+                    {
                         edge.ToConnectorId = clone.Id;
+                        edge.ToConnectorId = clone.Iri;
+                    }
 
                     if (edge.FromNodeId == oldNode.Id)
                     {
                         edge.FromNodeId = cloneNode.Id;
                         edge.FromNode = cloneNode;
+                        edge.FromNodeIri = cloneNode.Iri;
                     }
 
                     if (edge.ToNodeId == oldNode.Id)
                     {
                         edge.ToNodeId = cloneNode.Id;
                         edge.ToNode = cloneNode;
+                        edge.ToNodeIri = cloneNode.Iri;
                     }
                 }
 
@@ -232,28 +320,164 @@ namespace Mb.Services.Services
             }
         }
 
-        private Transport CloneTransport(Edge edge, bool reuseValidIds)
+        private Transport CloneTransport(Edge edge)
         {
             if (edge.Transport == null)
                 return null;
 
+            var (id, iri) = _commonRepository.CreateOrUseIdAndIri(null, null);
+
             var clone = edge.Transport.DeepCopy();
-            clone.Id = reuseValidIds ? _commonRepository.CreateOrUseId(edge.Transport.Id) : _commonRepository.CreateUniqueId();
-            clone.Attributes = CloneAttributes(edge.Transport.Attributes, reuseValidIds, transportId: clone.Id).ToList();
+            clone.Id = id;
+            clone.Iri = iri;
+            clone.Attributes = CloneAttributes(edge.Transport.Attributes, transportId: clone.Id).ToList();
             return clone;
         }
 
-        private Interface CloneInterface(Edge edge, bool reuseValidIds)
+        private Interface CloneInterface(Edge edge)
         {
             if (edge.Interface == null)
                 return null;
 
+            var (id, iri) = _commonRepository.CreateOrUseIdAndIri(null, null);
             var clone = edge.Interface.DeepCopy();
-            clone.Id = reuseValidIds ? _commonRepository.CreateOrUseId(edge.Interface.Id) : _commonRepository.CreateUniqueId();
-            clone.Attributes = CloneAttributes(edge.Interface.Attributes, reuseValidIds, transportId: clone.Id).ToList(); // TODO: We need interface id item here
+            clone.Id = id;
+            clone.Iri = iri;
+            clone.Attributes = CloneAttributes(edge.Interface.Attributes, interfaceId: clone.Id).ToList();
             return clone;
         }
 
-        
+        private void RemapTransport(EdgeAm edge)
+        {
+            if (edge.Transport == null)
+                return;
+
+            var (transportId, transportIri) = _commonRepository.CreateOrUseIdAndIri(edge.Transport.Id, edge.Transport.Iri);
+
+            if (edge.Transport.Attributes != null)
+            {
+                foreach (var attribute in edge.Transport.Attributes)
+                {
+                    var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
+                    attribute.Id = attributeId;
+                    attribute.Iri = attributeIri;
+                    
+                    if(attribute.TransportId == edge.Transport.Id)
+                        attribute.TransportId = transportId;
+                }
+            }
+
+            edge.Transport.Id = transportId;
+            edge.Transport.Iri = transportIri;
+        }
+
+        private void RemapInterface(EdgeAm edge)
+        {
+            if (edge.Interface == null)
+                return;
+
+            var (interfaceId, interfaceIri) = _commonRepository.CreateOrUseIdAndIri(edge.Interface.Id, edge.Interface.Iri);
+
+            if (edge.Interface.Attributes != null)
+            {
+                foreach (var attribute in edge.Interface.Attributes)
+                {
+                    var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
+                    attribute.Id = attributeId;
+                    attribute.Iri = attributeIri;
+
+                    if(attribute.InterfaceId == edge.Interface.Id)
+                        attribute.InterfaceId = interfaceId;
+                }
+            }
+
+            edge.Interface.Id = interfaceId;
+            edge.Interface.Iri = interfaceIri;
+        }
+
+        private void RemapConnectors(string newNodeId, string newNodeIri, NodeAm node, ProjectAm project)
+        {
+            if (node?.Connectors == null || !node.Connectors.Any())
+                return;
+
+            foreach (var connector in node.Connectors)
+            {
+                var (connectorId, connectorIri) = _commonRepository.CreateOrUseIdAndIri(connector.Id, connector.Iri);
+
+                foreach (var edge in project.Edges)
+                {
+                    if (edge.FromConnectorId == connector.Id)
+                    {
+                        edge.FromConnectorId = connectorId;
+                        edge.FromConnectorIri = connectorIri;
+                    }
+
+                    if (edge.ToConnectorId == connector.Id)
+                    {
+                        edge.ToConnectorId = connectorId;
+                        edge.ToConnectorIri = connectorIri;
+                    }
+
+                    if (edge.FromNodeId == node.Id)
+                    {
+                        edge.FromNodeId = newNodeId;
+                        edge.FromNodeIri = newNodeIri;
+                    }
+
+                    if (edge.ToNodeId == node.Id)
+                    {
+                        edge.ToNodeId = newNodeId;
+                        edge.ToNodeIri = newNodeIri;
+                    }
+                }
+
+                if (connector.Attributes != null && connector.Attributes.Any())
+                {
+                    foreach (var attribute in connector.Attributes)
+                    {
+                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
+                        attribute.Id = attributeId;
+                        attribute.Iri = attributeIri;
+
+                        if (attribute.TerminalId == connector.Id)
+                            attribute.TerminalId = connectorId;
+                    }
+                }
+
+                connector.Id = connectorId;
+                connector.Iri = connectorIri;
+                connector.NodeId = newNodeId;
+                connector.NodeIri = newNodeIri;
+            }
+        }
+
+        private void RemapComposites(string newNodeId, NodeAm node)
+        {
+            if (node?.Composites == null || !node.Composites.Any())
+                return;
+
+            foreach (var composite in node.Composites)
+            {
+                var (compositeId, _) = _commonRepository.CreateOrUseIdAndIri(composite.Id, null);
+
+                if (composite.Attributes != null && composite.Attributes.Any())
+                {
+                    foreach (var attribute in composite.Attributes)
+                    {
+                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
+                        attribute.Id = attributeId;
+                        attribute.Iri = attributeIri;
+                        
+                        if(attribute.CompositeId == composite.Id)
+                            attribute.CompositeId = compositeId;
+                    }
+                }
+
+                composite.Id = compositeId;
+                composite.NodeId = newNodeId;
+            }
+        }
+
+        #endregion
     }
 }
