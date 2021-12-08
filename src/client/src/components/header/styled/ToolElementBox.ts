@@ -8,7 +8,7 @@ interface Props {
 const ToolElementBox = styled.div<Props>`
   position: relative;
   display: flex;
-  height: 41px;
+  height: 40px;
   width: 60px;
   cursor: pointer;
 
