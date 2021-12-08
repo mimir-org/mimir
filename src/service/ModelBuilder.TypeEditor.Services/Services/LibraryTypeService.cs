@@ -317,6 +317,17 @@ namespace Mb.TypeEditor.Services.Services
         }
 
         /// <summary>
+        /// Clear the change tracker
+        /// </summary>
+        public void ClearAllChangeTracker()
+        {
+            _nodeTypeTerminalTypeRepository?.Context?.ChangeTracker.Clear();
+            _libraryTypeComponentRepository?.Context?.ChangeTracker.Clear();
+            _attributeTypeRepository?.Context?.ChangeTracker.Clear();
+            _compositeTypeRepository?.Context?.ChangeTracker.Clear();
+        }
+
+        /// <summary>
         /// Delete a type
         /// </summary>
         /// <param name="id"></param>
