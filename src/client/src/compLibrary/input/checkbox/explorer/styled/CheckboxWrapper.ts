@@ -50,7 +50,6 @@ const CheckboxWrapper = styled.label<Props>`
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    word-wrap: break-word;
   }
 
   .label:hover {
