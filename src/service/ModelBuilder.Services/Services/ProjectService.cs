@@ -6,7 +6,6 @@ using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
-using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
@@ -16,7 +15,6 @@ using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -38,7 +36,7 @@ namespace Mb.Services.Services
         private readonly IRemapService _remapService;
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        
         
         private readonly List<(Node node, WorkerStatus workerStatus)> _websocketNodeUpdates;
         private readonly List<(Edge edge, WorkerStatus workerStatus)> _websocketEdgeUpdates;
@@ -49,7 +47,7 @@ namespace Mb.Services.Services
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, ILogger<ProjectService> logger, IRemapService remapService, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
+            IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -65,7 +63,6 @@ namespace Mb.Services.Services
             _cooperateService = cooperateService;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
             _websocketNodeUpdates = new List<(Node node, WorkerStatus workerStatus)>();
             _websocketEdgeUpdates = new List<(Edge edge, WorkerStatus workerStatus)>();
             _websocketAttributeUpdates = new List<(Attribute attribute, WorkerStatus workerStatus)>();
@@ -277,7 +274,7 @@ namespace Mb.Services.Services
                 // Clean the change tracker
                 ClearAllChangeTracker();
 
-                var subProjectCreated = await UpdateProject(toProject.Id, subProject, _modelBuilderConfiguration.Domain);
+                var subProjectCreated = await UpdateProject(toProject.Id, subProject, _commonRepository.GetDomain());
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
@@ -386,8 +383,8 @@ namespace Mb.Services.Services
             if (existingProject == null)
                 throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
 
-            _ = await _edgeRepository.DeleteEdges(existingProject.Edges, projectId, _modelBuilderConfiguration.Domain);
-            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _modelBuilderConfiguration.Domain);
+            _ = await _edgeRepository.DeleteEdges(existingProject.Edges, projectId, _commonRepository.GetDomain());
+            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _commonRepository.GetDomain());
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();
         }
@@ -458,7 +455,7 @@ namespace Mb.Services.Services
 
             var updatedAttribute = _attributeRepository.FindBy(x => x.Id == lockUnlockAttributeAm.Id)?.First();
             _websocketAttributeUpdates.Add((updatedAttribute, WorkerStatus.Update));
-            await _cooperateService.SendAttributeUpdates(_websocketAttributeUpdates, _modelBuilderConfiguration.Domain);
+            await _cooperateService.SendAttributeUpdates(_websocketAttributeUpdates, _commonRepository.GetDomain());
         }
 
         /// <summary>
@@ -575,7 +572,7 @@ namespace Mb.Services.Services
                 Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
                 Parser = package.Parser,
                 CommitStatus = package.CommitStatus,
-                SenderDomain = _modelBuilderConfiguration.Domain,
+                SenderDomain = _commonRepository.GetDomain(),
                 ReceivingDomain = package.ReceivingDomain,
                 Document = projectString
             };

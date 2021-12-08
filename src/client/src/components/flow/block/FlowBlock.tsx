@@ -136,16 +136,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          zoomOnScroll={true}
-          paneMoveable={true}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
           defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
-          onlyRenderVisibleElements={true}
+          onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
+          zoomOnScroll
+          paneMoveable
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>

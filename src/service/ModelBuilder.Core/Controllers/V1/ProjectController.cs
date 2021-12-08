@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mb.Data.Contracts;
 using Mb.Models.Application;
-using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -31,21 +30,22 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
         private readonly IProjectFileService _projectFileService;
+        private readonly ICommonRepository _commonRepository;
 
         /// <summary>
         /// Project Controller Constructor
         /// </summary>
         /// <param name="projectService"></param>
         /// <param name="logger"></param>
-        /// <param name="modelBuilderConfiguration"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, IProjectFileService projectFileService)
+        /// <param name="projectFileService"></param>
+        /// <param name="commonRepository"></param>
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository)
         {
             _projectService = projectService;
             _logger = logger;
             _projectFileService = projectFileService;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _commonRepository = commonRepository;
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var project = await _projectService.UpdateProject(id, projectAm, _modelBuilderConfiguration.Domain);
+                var project = await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
                 return Ok(project);
             }
             catch (ModelBuilderDuplicateException e)
