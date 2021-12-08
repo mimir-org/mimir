@@ -36,22 +36,16 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
     targetPosition,
   });
 
-  if (electro) {
-    sourcePosition = Position.Right;
-    targetPosition = Position.Left;
-  }
+  const margin = 20;
+  const start = `M${sourceX} ${sourceY}`;
+  const firstAngle = `L${sourceX} ${sourceY + margin}`;
+  const q = `Q${sourceX} ${sourceY + margin * 10}, ${targetX} ${targetY - margin} `;
+  const c = `C ${sourceX} ${sourceY} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY - margin};`;
+  const secondAngle = `L${targetX} ${targetY - margin}`;
+  const stop = `L${targetX} ${targetY}`;
 
-  const electroPath = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-    borderRadius,
-  });
-
-  const transportPath = electro ? electroPath : smoothPath;
+  const customPath = `${start} ${firstAngle} ${q}`;
+  const transportPath = electro ? customPath : smoothPath;
 
   return isTransport ? (
     <path id={id} style={GetEdgeStyle(color, visible)} className="path-blockEdge" d={transportPath} />
