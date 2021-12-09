@@ -80,7 +80,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.Composites, opt => opt.MapFrom(src => src.Composites))
+                .ForMember(dest => dest.Simples, opt => opt.MapFrom(src => src.Simples))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))

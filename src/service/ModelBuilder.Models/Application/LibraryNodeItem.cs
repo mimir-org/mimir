@@ -22,7 +22,7 @@ namespace Mb.Models.Application
         public string SemanticReference { get; set; }
         public string SymbolId { get; set; }
         public ObjectType LibraryType => ObjectType.ObjectBlock;
-        public ICollection<Composite> Composites { get; set; }
+        public ICollection<Simple> Simples { get; set; }
         public Purpose Purpose { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }

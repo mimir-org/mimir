@@ -82,7 +82,7 @@ namespace Mb.Models.Application
 
         public ICollection<AttributeAm> Attributes { get; set; }
         
-        public ICollection<CompositeAm> Composites { get; set; }
+        public ICollection<SimpleAm> Simples { get; set; }
 
         [Required]
         public Aspect Aspect { get; set; }

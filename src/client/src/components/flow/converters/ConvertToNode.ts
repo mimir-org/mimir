@@ -26,7 +26,7 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     positionBlockY: position.y,
     connectors: data.connectors.map((c) => new Connector(c)),
     attributes: data.attributes,
-    composites: data.composites,
+    simples: data.simples,
     aspect: data.aspect,
     statusId: data.statusId,
     version: data.version,
@@ -61,8 +61,8 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     })
   }
 
-  if (node.composites) {
-    node.composites.forEach(x => {
+  if (node.simples) {
+    node.simples.forEach(x => {
       x.id = CreateId();
       if (x.attributes) {
         x.attributes.forEach(y => {
