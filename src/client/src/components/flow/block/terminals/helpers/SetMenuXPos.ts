@@ -24,7 +24,7 @@ const SetMenuXPos = (
     if (!isParent) return node.width + marginSmall;
   }
 
-  if (isParent) return parentBlockSize.width + marginSmall;
+  if (isParent) return parentBlockSize.width - marginSmall;
   if (hasActiveTerminals) return node.width + marginLarge;
   return node.width - marginSmall;
 };

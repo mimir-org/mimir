@@ -43,7 +43,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
-  }, [secondaryNode]);
+  }, [secondaryNode, node?.connectors]);
 
   if (!node) return null;
 

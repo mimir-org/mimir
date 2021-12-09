@@ -15,7 +15,7 @@ const TerminalsButtonBox = styled.div<Props>`
   cursor: pointer;
   transition: opacity 250ms ease-in-out;
   pointer-events: all;
-  /* z-index: 2; */
+  z-index: 2;
 
   .menu-icon {
     pointer-events: none;
