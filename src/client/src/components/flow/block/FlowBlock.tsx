@@ -138,7 +138,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onNodeDragStop={OnNodeDragStop}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
-          defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
+          defaultPosition={[100, Size.BlockMarginY]}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}

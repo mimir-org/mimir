@@ -9,7 +9,7 @@ const Size = {
   BlockSmallWidth: window.innerWidth / 2,
   BlockMarginX: 450,
   BlockSecondaryMarginX: 250,
-  BlockMarginY: 80,
+  BlockMarginY: 50,
 
   // Terminals
   Terminals_Interval: 22.5,

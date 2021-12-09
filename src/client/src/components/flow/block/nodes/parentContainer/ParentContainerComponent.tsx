@@ -15,6 +15,7 @@ interface Props {
   size: BlockNodeSize;
   hasTerminals: boolean;
   isSecondaryNode: boolean;
+  explorerOpen: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
   dispatch: any;
@@ -31,6 +32,7 @@ const ParentContainerComponent = ({
   size,
   hasTerminals,
   isSecondaryNode,
+  explorerOpen,
   onParentClick,
   onChildClick,
   dispatch,
@@ -39,7 +41,7 @@ const ParentContainerComponent = ({
   useResizeParentNode(node.id, resizePanelRef, dispatch);
 
   return (
-    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
+    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size} explorerOpen={explorerOpen}>
       <ParentBannerComponent
         node={node}
         color={color}
