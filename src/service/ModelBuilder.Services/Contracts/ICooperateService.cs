@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 
@@ -9,6 +10,8 @@ namespace Mb.Services.Contracts
     {
         Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId);
         Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId);
-        Task SendAttributeUpdates(IReadOnlyCollection<(Attribute attribute, WorkerStatus workerStatus)> attributeMap, string domain);
+        Task SendLockUnlockAttributeUpdates(IReadOnlyCollection<(LockUnlockAttributeAm lockUnlockAttributeAm, WorkerStatus workerStatus)> map, string projectId);
+        Task SendLockUnlockNodeUpdates(IReadOnlyCollection<(LockUnlockNodeAm lockUnlockNodeAm, WorkerStatus workerStatus)> map, string projectId);
+        Task SendLockUnlockEdgeUpdates(IReadOnlyCollection<(LockUnlockEdgeAm lockUnlockEdgeAm, WorkerStatus workerStatus)> map, string projectId);
     }
 }

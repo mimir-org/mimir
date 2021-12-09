@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
 {
@@ -6,9 +7,14 @@ namespace Mb.Models.Application
     {
         [Required]
         public string Id { get; set; }
+
         [Required]
         public string ProjectId { get; set; }
+
         [Required]
         public bool IsLocked { get; set; }
+
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
     }
 }

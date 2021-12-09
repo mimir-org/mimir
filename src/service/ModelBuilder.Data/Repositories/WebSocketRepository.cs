@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Mb.Data.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data;
 using Mb.Models.Data.Hubs;
@@ -30,10 +31,22 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
         }
 
-        public async Task SendAttributeData(Attribute attribute, string domain, WorkerStatus workerStatus)
+        public async Task SendLockUnlockAttributeData(LockUnlockAttributeAm am, string projectId, WorkerStatus workerStatus)
         {
-            var data = JsonConvert.SerializeObject(attribute, DefaultSettings.SerializerSettings);
-            await _hubContext.Clients.Group(domain).SendAsync(WebSocketReceiver.ReceiveAttributeData, workerStatus, data);
+            var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockUnlockAttributeData, workerStatus, data);
+        }
+
+        public async Task SendLockUnlockNodeData(LockUnlockNodeAm am, string projectId, WorkerStatus workerStatus)
+        {
+            var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockUnlockNodeData, workerStatus, data);
+        }
+
+        public async Task SendLockUnlockEdgeData(LockUnlockEdgeAm am, string projectId, WorkerStatus workerStatus)
+        {
+            var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockUnlockEdgeData, workerStatus, data);
         }
     }
 }

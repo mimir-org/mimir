@@ -435,7 +435,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                await _projectService.LockUnlockAttribute(lockUnlockAttributeAm);
+                await _projectService.LockUnlockAttribute(lockUnlockAttributeAm, true);
                 return NoContent();
             }
             catch (ModelBuilderUnauthorizedAccessException e)
@@ -468,7 +468,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                await _projectService.LockUnlockEdge(lockUnlockEdgeAm);
+                await _projectService.LockUnlockEdge(lockUnlockEdgeAm, true);
                 return NoContent();
             }
             catch (ModelBuilderUnauthorizedAccessException e)

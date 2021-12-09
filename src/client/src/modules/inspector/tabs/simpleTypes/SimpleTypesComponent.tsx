@@ -1,4 +1,4 @@
-import { Composite } from "../../../../models";
+import { Composite, Project } from "../../../../models";
 import { SimpleTypesSelector } from "./";
 import { useState } from "react";
 import { ParametersContent } from "../parameters";
@@ -10,6 +10,7 @@ import { IsCreateLibraryType } from "../../helpers/IsType";
 
 interface Props {
   element: InspectorElement;
+  project: Project;
   compositeLikeItems?: CompositeLikeItem[];
 }
 /**
@@ -17,7 +18,7 @@ interface Props {
  * @param node
  * @returns a drop-down menu where you can access a Node's SimpleTypes and attributes.
  */
-const SimpleTypesComponent = ({ element, compositeLikeItems }: Props) => {
+const SimpleTypesComponent = ({ element, project, compositeLikeItems }: Props) => {
   const [selectedSimpleTypeId, setSelectedSimpleTypeId] = useState<string>(null);
   const simpleTypes = compositeLikeItems ?? GetSimpleTypes(element);
   const selectedSimpleType = simpleTypes.find((t) => t.id === selectedSimpleTypeId);
@@ -32,6 +33,7 @@ const SimpleTypesComponent = ({ element, compositeLikeItems }: Props) => {
           <ParametersContent
             parametersElement={selectedSimpleType}
             inspectorParentElement={element}
+            project={project}
             elementIsLocked={elementIsLocked}
           />
         </TerminalsParametersWrapper>

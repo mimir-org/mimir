@@ -33,10 +33,10 @@ const InspectorTabs = ({
 
   const tabs = [
     <AdminComponent element={element} project={project} />,
-    <ParametersComponent element={element} attributeLikeItems={attributeLikeItems} />,
-    <TerminalsComponent element={element} terminalLikeItems={terminalLikeItems} />,
+    <ParametersComponent element={element} project={project} attributeLikeItems={attributeLikeItems} />,
+    <TerminalsComponent element={element} project={project} terminalLikeItems={terminalLikeItems} />,
     <RelationsComponent element={element} />,
-    <SimpleTypesComponent element={element} compositeLikeItems={compositeLikeItems} />,
+    <SimpleTypesComponent element={element} project={project} compositeLikeItems={compositeLikeItems} />,
   ];
 
   return (

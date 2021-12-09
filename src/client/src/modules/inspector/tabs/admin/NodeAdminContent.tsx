@@ -49,7 +49,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             fontSize={FontSize.Standard}
-            readOnly={IsAspectNode(node)}
+            readOnly={IsAspectNode(node) || node.isLocked}
             value={node.label ?? ""}
             onChange={(e: Event) => onChange("label", e.target.value)}
             inputType=""
@@ -107,7 +107,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
             valueProp={null}
             onChange={(value: any) => onChange("statusId", value.id)}
             borderRadius={5}
-            disabled={IsAspectNode(node)}
+            disabled={IsAspectNode(node) || node.isLocked}
           ></Dropdown>
         </div>
         <div>
@@ -119,7 +119,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
             <div>{TextResources.Inspector_Admin_Cost}</div>
             <Input
               fontSize={FontSize.Standard}
-              readOnly={IsAspectNode(node)}
+              readOnly={IsAspectNode(node) || node.isLocked}
               value={node.cost ?? ""}
               onChange={(e: Event) => onChange("cost", Number(e.target.value))}
               inputType=""
@@ -133,7 +133,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <TextArea
             height={200}
             value={node.description ?? ""}
-            readOnly={IsAspectNode(node)}
+            readOnly={IsAspectNode(node) || node.isLocked}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
           ></TextArea>
         </div>
