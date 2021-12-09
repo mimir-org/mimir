@@ -280,7 +280,7 @@ const TextResources = {
   Validation_Cancel: "Cancel",
 
   // Version
-  Mimir_Version: "Version 0.1",
+  Mimir_Version: "Version 1.0",
   Validation_Ok: "Ok",
 };
 
