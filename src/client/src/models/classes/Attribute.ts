@@ -31,10 +31,6 @@ class Attribute {
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
-
-  nodeId: string;
-  nodeIri: string;
-  transportId: string;
   interfaceId: string;
   compositeId: string;
 

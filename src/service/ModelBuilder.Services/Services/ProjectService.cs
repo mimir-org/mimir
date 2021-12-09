@@ -474,7 +474,7 @@ namespace Mb.Services.Services
             lockUnlockAttributeAm.NodeId = attribute.NodeId;
             lockUnlockAttributeAm.TransportId = attribute.TransportId;
             lockUnlockAttributeAm.InterfaceId = attribute.InterfaceId;
-            lockUnlockAttributeAm.CompositeId = attribute.CompositeId;
+            lockUnlockAttributeAm.CompositeId = attribute.SimpleId;
             lockUnlockAttributeAm.TerminalId = attribute.TerminalId;
 
             if (save)
