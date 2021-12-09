@@ -112,21 +112,21 @@
     "SemanticReference": null
   },
   {
-    "Code": "JE",
+    "Code": "JD",
     "Name": "Electrical power transport/distribution system",
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",
     "SemanticReference": null
   },
   {
-    "Code": "JG",
+    "Code": "JF",
     "Name": "Thermal energy transport/distribution system",
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",
     "SemanticReference": null
   },
   {
-    "Code": "JF",
+    "Code": "JE",
     "Name": "Mechanical energy transport/distribution system",
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",

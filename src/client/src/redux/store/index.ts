@@ -1,4 +1,4 @@
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import { libraryReducer } from "./library/reducers";
