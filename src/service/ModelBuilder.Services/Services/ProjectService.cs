@@ -441,7 +441,7 @@ namespace Mb.Services.Services
             //Lock/unlock all edge attributes
             foreach (var attribute in edgeAttributes)
             {
-                var lockUnlockAttribute = new LockUnlockAttributeAm { Id = attribute.Id, IsLocked = lockUnlockEdgeAm.IsLocked };
+                var lockUnlockAttribute = new LockUnlockAttributeAm { Id = attribute.Id, IsLocked = lockUnlockEdgeAm.IsLocked};
                 await LockUnlockAttribute(lockUnlockAttribute, false);
             }
 
@@ -457,7 +457,7 @@ namespace Mb.Services.Services
         /// <returns>Status204NoContent</returns>
         public async Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm, bool save)
         {
-            if (string.IsNullOrWhiteSpace(lockUnlockAttributeAm?.Id) || string.IsNullOrWhiteSpace(lockUnlockAttributeAm.ProjectId))
+            if (string.IsNullOrWhiteSpace(lockUnlockAttributeAm?.Id))
                 throw new ModelBuilderBadRequestException($"Error locking/unlocking Attribute: Id pr projectId can't be null or empty.");
 
             var attribute = await _attributeRepository.GetAsync(lockUnlockAttributeAm.Id);
