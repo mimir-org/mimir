@@ -2,6 +2,8 @@ import { call, put } from "redux-saga/effects";
 import { Project, ProjectFileAm, WebSocket } from "../../../models";
 import { ConvertProject, InitializeProject } from ".";
 import { saveAs } from "file-saver";
+import { IsBlockView } from "../../../helpers";
+import { IsPartOf } from "../../../components/flow/helpers";
 import {
   get,
   post,
@@ -62,6 +64,12 @@ export function* getProject(action) {
     }
 
     const project = InitializeProject(response.data);
+
+    if (!IsBlockView()) {
+      project?.edges.forEach((edge) => {
+        if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
+      });
+    }
 
     const payload = {
       project: project,
@@ -295,6 +303,12 @@ export function* updateProject(action) {
           node.isBlockSelected = oldNode.isBlockSelected;
           node.isSelected = oldNode.isSelected;
         }
+      });
+    }
+
+    if (!IsBlockView()) {
+      project?.edges.forEach((edge) => {
+        if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
       });
     }
 
