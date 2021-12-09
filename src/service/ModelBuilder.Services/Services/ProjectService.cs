@@ -645,13 +645,12 @@ namespace Mb.Services.Services
                 };
 
                 await LockUnlockEdge(lockUnlockEdgeAm, false);
-                
+
                 var childNode = _nodeRepository.GetAll(false).FirstOrDefault(x => x.Id == edge.ToNodeId && x.ProjectId == lockUnlockNodeAm.ProjectId);
 
-                //Exit recursion
-                if (childNode == null || childNode.Level < node.Level)
-                    return;
-
+                if (childNode != null && childNode.Level <= node.Level)
+                    continue;
+                
                 LockUnlockNodesRecursive(childNode, lockUnlockNodeAm, userName, dateTimeNow);
             }
         }
