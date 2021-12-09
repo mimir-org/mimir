@@ -1,10 +1,8 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { Dispatch } from "redux";
-import { Location } from "../../assets/icons/aspects";
 import { ViewType, VIEW_TYPE } from "../../models/project";
-import { IsBlockView, IsLocation } from "../../helpers";
-import { ToolBarBody, ToolBarBox, LocationBox } from "./styled";
+import { ToolBarBody, ToolBarBox } from "./styled";
 import { ToolBarElement } from ".";
 import { Node, Project } from "../../models";
 
@@ -66,11 +64,11 @@ const ToolBarComponent = ({
       />
     </ToolBarBody>
 
-    {IsBlockView() && IsLocation(selectedNode) && (
+    {/* {IsBlockView() && IsLocation(selectedNode) && (
       <LocationBox onClick={() => Click.OnLocation3D(dispatch, location3DActive)} active={location3DActive}>
         <img src={Location} alt={"location3D"} className="logo" />
       </LocationBox>
-    )}
+    )} */}
   </ToolBarBox>
 );
 
