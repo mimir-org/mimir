@@ -46,7 +46,7 @@ const TerminalsMenuComponent = ({
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>
         <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
-        <ColorTag color={GetTerminalColor(conn)} onClick={() => onClick(conn)}>{conn.name}</ColorTag>
+        <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
       </TerminalsElement>
     ))}
   </TerminalsBox>

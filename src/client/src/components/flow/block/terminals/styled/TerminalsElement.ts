@@ -3,7 +3,7 @@ import { Color } from "../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../compLibrary/font";
 import { ColorTag } from "./index";
 
-const TerminalsElement = styled.div`
+const TerminalsElement = styled.label`
   display: flex;
   align-items: center;
   justify-content: space-around;
