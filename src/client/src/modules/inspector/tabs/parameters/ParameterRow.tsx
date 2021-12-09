@@ -92,18 +92,7 @@ function ParameterRow({
             onChange={(id, value, unit) =>
               OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit?.id, dispatch)
             }
-            onLock={(attribute, isLocked) =>
-              OnLockParameter(
-                element,
-                inspectorParentElement,
-                terminalParentElement,
-                project,
-                attribute,
-                isLocked,
-                username,
-                dispatch
-              )
-            }
+            onLock={(attribute, isLocked) => OnLockParameter(project, attribute, isLocked, username, dispatch)}
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />
         ))}
