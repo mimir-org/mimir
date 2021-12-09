@@ -26,7 +26,7 @@ class Attribute {
   nodeId: string;
   nodeIri: string;
   transportId: string;
-  compositeId: string;
+  simpleId: string;
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;

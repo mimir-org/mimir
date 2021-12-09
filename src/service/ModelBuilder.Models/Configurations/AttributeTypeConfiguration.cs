@@ -48,10 +48,10 @@ namespace Mb.Models.Configurations
                 x => x.ToTable("TransportType_AttributeType")
             );
 
-            builder.HasMany(x => x.CompositeTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("CompositeType_AttributeType",
-                x => x.HasOne<CompositeType>().WithMany().HasForeignKey("CompositeTypeId"),
+            builder.HasMany(x => x.SimpleTypes).WithMany(y => y.AttributeTypes).UsingEntity<Dictionary<string, object>>("SimpleType_AttributeType",
+                x => x.HasOne<SimpleType>().WithMany().HasForeignKey("SimpleTypeId"),
                 x => x.HasOne<AttributeType>().WithMany().HasForeignKey("AttributeTypeId"),
-                x => x.ToTable("CompositeType_AttributeType")
+                x => x.ToTable("SimpleType_AttributeType")
             );
         }
     }

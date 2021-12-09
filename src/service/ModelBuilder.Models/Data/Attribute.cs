@@ -64,7 +64,7 @@ namespace Mb.Models.Data
         public virtual string NodeIri { get; set; }
         public virtual string TransportId { get; set; }
         public virtual string InterfaceId { get; set; }
-        public virtual string CompositeId { get; set; }
+        public virtual string SimpleId { get; set; }
 
         [JsonIgnore]
         public virtual Terminal Terminal { get; set; }
@@ -73,7 +73,7 @@ namespace Mb.Models.Data
         public virtual Node Node { get; set; }
 
         [JsonIgnore]
-        public virtual Composite Composite { get; set; }
+        public virtual Simple Simple { get; set; }
 
         [JsonIgnore]
         public virtual Transport Transport { get; set; }

@@ -101,19 +101,19 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all composite types
+        /// Get all simple types
         /// </summary>
         /// <returns></returns>
-        [HttpGet("compositeType")]
-        [ProducesResponseType(typeof(IEnumerable<CompositeType>), StatusCodes.Status200OK)]
+        [HttpGet("simpleType")]
+        [ProducesResponseType(typeof(IEnumerable<SimpleType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetCompositeTypes()
+        public IActionResult GetSimpleTypes()
         {
             try
             {
-                var types = _libraryTypeService.GetCompositeTypes().ToList();
+                var types = _libraryTypeService.GetSimpleTypes().ToList();
                 return Ok(types);
             }
             catch (Exception e)
@@ -246,20 +246,20 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         /// Create a simple type
         /// </summary>
         /// <returns></returns>
-        [HttpPost("compositeType")]
+        [HttpPost("simpleType")]
         [ProducesResponseType(typeof(IEnumerable<LibraryType>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> CreateCompositeType(CompositeTypeAm compositeType)
+        public async Task<IActionResult> CreateSimpleType(SimpleTypeAm simpleType)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var createdType = await _libraryTypeService.CreateCompositeType(compositeType);
+                var createdType = await _libraryTypeService.CreateSimpleType(simpleType);
                 return StatusCode(201, createdType);
             }
             catch (ModelBuilderDuplicateException e)

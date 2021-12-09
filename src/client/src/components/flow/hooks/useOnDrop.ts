@@ -69,7 +69,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
-  targetNode.composites?.forEach((composite) => initComposite(composite, targetNode));
+  targetNode.simples?.forEach((composite) => initComposite(composite, targetNode));
   targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
   targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
@@ -98,7 +98,7 @@ const initComposite = (composite: Composite, targetNode: Node) => {
   composite.id = compositeId;
   composite.nodeId = targetNode.id;
   composite.attributes.forEach((a) => {
-    a.compositeId = compositeId;
+    a.simpleId = compositeId;
   });
 };
 

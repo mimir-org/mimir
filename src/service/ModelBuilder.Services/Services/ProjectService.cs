@@ -139,13 +139,13 @@ namespace Mb.Services.Services
                         }
                     }
                     // TODO: Må gjøres på en bedre måte, generell via mapper
-                    if (node.Composites != null)
+                    if (node.Simples != null)
                     {
-                        foreach (var composite in node.Composites)
+                        foreach (var simple in node.Simples)
                         {
-                            if (composite.Attributes != null)
+                            if (simple.Attributes != null)
                             {
-                                foreach (var attribute in composite.Attributes)
+                                foreach (var attribute in simple.Attributes)
                                 {
                                     if (!string.IsNullOrEmpty(attribute.UnitString))
                                         attribute.Units =
