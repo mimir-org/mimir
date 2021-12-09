@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
-import { GetBlockNodeTypes } from "../helpers";
+import { GetBlockNodeTypes, IsTransport } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/";
@@ -18,6 +18,7 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, 
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Project } from "../../../models";
+import { setEdgeVisibility } from "../../../redux/store/project/actions";
 
 interface Props {
   project: Project;
@@ -124,6 +125,12 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       handleMultiSelect(dispatch, true);
     }
   };
+
+  useEffect(() => {
+    project?.edges.forEach((edge) => {
+      if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, false));
+    });
+  }, []);
 
   return (
     <>
