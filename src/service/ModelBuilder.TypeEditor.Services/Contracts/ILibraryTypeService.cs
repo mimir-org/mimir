@@ -15,9 +15,9 @@ namespace Mb.TypeEditor.Services.Contracts
         Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new();
         Task DeleteType(string id);
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
-        Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType);
-        Task CreateCompositeTypes(ICollection<CompositeTypeAm> compositeTypes);
-        IEnumerable<CompositeType> GetCompositeTypes();
+        Task<SimpleType> CreateSimpleType(SimpleTypeAm simpleType);
+        Task CreateSimpleTypes(ICollection<SimpleTypeAm> simpleTypes);
+        IEnumerable<SimpleType> GetSimpleTypes();
         void ClearAllChangeTracker();
     }
 }

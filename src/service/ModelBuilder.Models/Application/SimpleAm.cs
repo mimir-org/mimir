@@ -2,7 +2,7 @@
 
 namespace Mb.Models.Application
 {
-    public class CompositeAm
+    public class SimpleAm
     {
         public string Id { get; set; }
         public string Name { get; set; }

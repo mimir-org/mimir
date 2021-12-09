@@ -8,31 +8,31 @@ using Newtonsoft.Json;
 
 namespace Mb.Data.Repositories
 {
-    public class CompositeRepository : GenericRepository<ModelBuilderDbContext, Composite>, ICompositeRepository
+    public class SimpleRepository : GenericRepository<ModelBuilderDbContext, Simple>, ISimpleRepository
     {
         private readonly IAttributeRepository _attributeRepository;
 
-        public CompositeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository) : base(dbContext)
+        public SimpleRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
         }
 
-        public void AttachWithAttributes(ICollection<Composite> entities, EntityState state)
+        public void AttachWithAttributes(ICollection<Simple> entities, EntityState state)
         {
             if(entities == null)
                 return;
 
-            foreach (var composite in entities)
+            foreach (var simple in entities)
             {
-                if (composite.Attributes != null)
+                if (simple.Attributes != null)
                 {
-                    foreach (var attribute in composite.Attributes)
+                    foreach (var attribute in simple.Attributes)
                     {
                         attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
                         _attributeRepository.Attach(attribute, state);
                     }
                 }
-                Attach(composite, state);
+                Attach(simple, state);
             }
         }
     }

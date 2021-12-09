@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Data.Contracts
 {
-    public interface ICompositeRepository : IGenericRepository<ModelBuilderDbContext, Composite>
+    public interface ISimpleRepository : IGenericRepository<ModelBuilderDbContext, Simple>
     {
-        void AttachWithAttributes(ICollection<Composite> entities, EntityState state);
+        void AttachWithAttributes(ICollection<Simple> entities, EntityState state);
     }
 }

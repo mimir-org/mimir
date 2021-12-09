@@ -101,7 +101,7 @@ namespace Mb.TypeEditor.Services.Services
                 var buildStatuses = _fileRepository.ReadAllFiles<BuildStatus>(buildStatusFiles).ToList();
                 var typeAttributes = _fileRepository.ReadAllFiles<TypeAttribute>(typeAttributeFiles).ToList();
                 var symbols = _fileRepository.ReadAllFiles<BlobDataAm>(symbolFileNames).ToList();
-                var simpleTypes = _fileRepository.ReadAllFiles<CompositeTypeAm>(simpleTypeFileNames).ToList();
+                var simpleTypes = _fileRepository.ReadAllFiles<SimpleTypeAm>(simpleTypeFileNames).ToList();
 
                 var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
                 var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
@@ -126,7 +126,7 @@ namespace Mb.TypeEditor.Services.Services
                 await _rdsService.CreateRdsAsync(rds);
                 await _attributeTypeService.CreatePredefinedAttributes(predefinedAttributes);
                 await _blobDataService.CreateBlobData(symbols);
-                await _libraryTypeService.CreateCompositeTypes(simpleTypes);
+                await _libraryTypeService.CreateSimpleTypes(simpleTypes);
 
                 var existingLibraryTypes = _libraryTypeService.GetAllTypes().ToList();
                 transports = transports.Where(x => existingLibraryTypes.All(y => y.Key != x.Key)).ToList();

@@ -10,11 +10,11 @@ using Mb.Models.Extensions;
 
 namespace Mb.Core.Profiles
 {
-    public class CompositeProfile : Profile
+    public class SimpleProfile : Profile
     {
-        public CompositeProfile(ICommonRepository commonRepository)
+        public SimpleProfile(ICommonRepository commonRepository)
         {
-            CreateMap<CompositeAm, Composite>()
+            CreateMap<SimpleAm, Simple>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
@@ -22,14 +22,14 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
                 .ForMember(dest => dest.Node, opt => opt.Ignore());
 
-            CreateMap<Composite, CompositeAm>()
+            CreateMap<Simple, SimpleAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src =>src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId));
 
-            CreateMap<CompositeTypeAm, CompositeType>()
+            CreateMap<SimpleTypeAm, SimpleType>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Key.CreateMd5()))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
