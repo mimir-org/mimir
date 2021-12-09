@@ -15,10 +15,8 @@ const OnSaveClick = (dispatch: any, projectState: ProjectState, fileName: string
   const converter = {
     project: project,
     filename: fileName,
-    parserId: parserId
+    parserId: parserId,
   } as ProjectConverterAm;
-
-  console.log(converter.parserId);
 
   dispatch(exportProjectToFile(converter));
   dispatch(changeActiveMenu(null));
