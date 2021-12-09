@@ -1,4 +1,4 @@
-import * as selectors from "./helpers/selectors";
+import * as selectors from "./helpers/ParentSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";

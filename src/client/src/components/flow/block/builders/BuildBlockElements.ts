@@ -34,7 +34,7 @@ const BuildBlockElements = (
 
   // Product nodes have a different view
   if (IsProduct(selectedNode)) {
-    const parentProduct = BuildParentProductNode(selectedNode);
+    const parentProduct = BuildParentProductNode(selectedNode, explorerOpen);
     parentProduct && elements.push(parentProduct);
 
     DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, parentProductSize);

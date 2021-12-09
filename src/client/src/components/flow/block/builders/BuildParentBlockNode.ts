@@ -7,6 +7,8 @@ import { SetConnectorOrder } from "./helpers";
 /**
  * Component to create a parent node in BlockView.
  * @param node
+ * @param libOpen
+ * @param explorerOpen
  * @returns a FlowElement, the large box in BlockView.
  */
 const BuildParentBlockNode = (node: Node, libOpen: boolean, explorerOpen: boolean) => {
