@@ -18,7 +18,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
     [Produces("application/json")]
     [Authorize]
     [ApiController]
-    [ApiVersion("0.1")]
+    [ApiVersion("1.0")]
     [Route("V{version:apiVersion}/[controller]")]
     [SwaggerTag("Library type file services")]
     public class LibraryTypeFileController : ControllerBase
