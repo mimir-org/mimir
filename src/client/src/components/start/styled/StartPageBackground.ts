@@ -15,7 +15,7 @@ const StartPageBackground = styled.div`
       transform: translateY(0%);
     }
     to {
-      transform: translateY(-240%);
+      transform: translateY(-225%);
     }
   }
 
