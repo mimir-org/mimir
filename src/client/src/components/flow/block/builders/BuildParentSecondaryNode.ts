@@ -17,7 +17,7 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node, nodeSi
   SetConnectorOrder(secondaryNode);
 
   const type = TextResources.Type_BlockParentNode;
-  const margin = 100;
+  const margin = 70;
   const position = { x: primaryNode.positionBlockX + nodeSize.width + margin, y: primaryNode.positionBlockY };
 
   secondaryNode.positionBlockX = position.x;

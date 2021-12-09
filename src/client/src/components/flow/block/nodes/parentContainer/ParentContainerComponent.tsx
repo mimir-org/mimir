@@ -37,6 +37,7 @@ const ParentContainerComponent = ({
 }: Props) => {
   const resizePanelRef = useRef(null);
   useResizeParentNode(node.id, resizePanelRef, dispatch);
+  const isLocation = IsLocation(node);
 
   return (
     <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
@@ -54,9 +55,9 @@ const ParentContainerComponent = ({
         </ResizeButton>
       )}
       <Background
-        variant={IsLocation(node) ? BackgroundVariant.Lines : BackgroundVariant.Dots}
-        color={Color.Grey}
-        gap={20}
+        variant={isLocation ? BackgroundVariant.Lines : BackgroundVariant.Dots}
+        color={isLocation ? Color.Grey : Color.BlueDark}
+        gap={isLocation ? 20 : 15}
         style={{ zIndex: 0 }}
       />
     </ParentBox>

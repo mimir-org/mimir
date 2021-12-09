@@ -9,12 +9,14 @@ import { SetConnectorOrder } from "./helpers";
  * @param node
  * @returns a FlowElement, the large box in BlockView.
  */
-const BuildParentProductNode = (node: Node) => {
+const BuildParentProductNode = (node: Node, explorerOpen: boolean) => {
   if (!node) return null;
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentProductNode;
-  const position = { x: -125, y: -40 }; // TODO: fix hard-coded position
+  const position = { x: explorerOpen ? 390 : 90, y: 0 };
+  node.positionBlockX = position.x;
+  node.positionBlockY = position.y;
 
   return {
     key: CreateId(),

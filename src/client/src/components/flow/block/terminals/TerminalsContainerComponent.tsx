@@ -32,7 +32,7 @@ const TerminalsContainerComponent = ({
   showInTerminalMenu,
   showOutTerminalMenu,
   onClick,
-  isParent = false,
+  isParent,
   showMenuBox = true,
 }: Props) => {
   const inputTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));

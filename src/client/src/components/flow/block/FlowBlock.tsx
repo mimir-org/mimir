@@ -43,14 +43,18 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentProductSize = useAppSelector(selectors.productNodeSizeSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const showLocation3D = useAppSelector(selectors.location3DSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize));
+      setElements(
+        BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize, libOpen, explorerOpen)
+      );
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize]
+    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize, libOpen, explorerOpen]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -138,7 +142,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onNodeDragStop={OnNodeDragStop}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
-          defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
+          defaultPosition={[0, Size.BlockMarginY]}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}

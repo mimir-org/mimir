@@ -1,8 +1,8 @@
-import { Size } from "../../../../../compLibrary/size";
 import { Node } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
 import { GetFlowNodeByDataId } from "../../helpers";
 import { setBlockNodeWidth } from "../../redux/actions";
+import { SetMarginX } from "../helpers/SetParentNodeSize";
 
 /**
  * Component to handle responsive size of a ParentNode in BlockView.
@@ -11,10 +11,17 @@ import { setBlockNodeWidth } from "../../redux/actions";
  * @param size
  * @param dispatch
  */
-const ResizeHandler = (node: Node, secondaryNode: Node, size: BlockNodeSize, dispatch: any) => {
+const ResizeHandler = (
+  node: Node,
+  secondaryNode: Node,
+  size: BlockNodeSize,
+  libOpen: boolean,
+  explorerOpen: boolean,
+  dispatch: any
+) => {
   const updateScreenSize = () => {
     const width = secondaryNode ? window.innerWidth / 1.5 : window.innerWidth;
-    const marginX = secondaryNode ? Size.BlockSecondaryMarginX : Size.BlockMarginX;
+    const marginX = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
 
     dispatch(setBlockNodeWidth(width - marginX));
   };

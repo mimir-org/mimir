@@ -6,7 +6,7 @@ import { Aspect } from "../../../../models";
 const parent = {
   aspect: Aspect.NotSet,
   size: {
-    width: window.innerWidth - Size.BlockMarginX,
+    width: window.innerWidth - (Size.BlockMarginX - 100),
     height: window.innerHeight - Size.BlockMarginY,
   } as BlockNodeSize,
 };
