@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
 
 interface Props {
-  treeView: boolean;
+  active: boolean;
 }
 
 const ToolElementBox = styled.div<Props>`
@@ -17,17 +17,18 @@ const ToolElementBox = styled.div<Props>`
   }
 
   &:first-child {
-    background-color: ${(props) => props.treeView && Color.GreyToolBarSelected};
+    background-color: ${(props) => props.active && Color.GreyToolBarSelected};
     border-left: 1px solid ${Color.Grey};
     border-right: 1px solid ${Color.Grey};
   }
 
   &:nth-child(2) {
-    background-color: ${(props) => !props.treeView && Color.GreyToolBarSelected};
+    background-color: ${(props) => !props.active && Color.GreyToolBarSelected};
   }
 
   &:last-child {
     border-left: 1px solid ${Color.Grey};
+    background-color: ${(props) => props.active && Color.GreyToolBarSelected};
   }
 
   .logo {

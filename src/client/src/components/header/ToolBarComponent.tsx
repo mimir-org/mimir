@@ -1,10 +1,8 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { Dispatch } from "redux";
-import { Location } from "../../assets/icons/aspects";
 import { ViewType, VIEW_TYPE } from "../../models/project";
-import { IsBlockView, IsLocation } from "../../helpers";
-import { ToolBarBody, ToolBarBox, LocationBox } from "./styled";
+import { ToolBarBody, ToolBarBox } from "./styled";
 import { ToolBarElement } from ".";
 import { Node, Project } from "../../models";
 
@@ -12,9 +10,9 @@ interface Props {
   project: Project;
   libOpen: boolean;
   explorerOpen: boolean;
-  treeView: boolean;
-  visualFilter: boolean;
-  electro: boolean;
+  isTreeView: boolean;
+  visualFilterOpen: boolean;
+  isElectro: boolean;
   location3DActive: boolean;
   selectedNode: Node;
   dispatch: Dispatch;
@@ -29,9 +27,9 @@ const ToolBarComponent = ({
   project,
   libOpen,
   explorerOpen,
-  treeView,
-  visualFilter,
-  electro,
+  isTreeView,
+  visualFilterOpen,
+  isElectro,
   location3DActive,
   selectedNode,
   dispatch,
@@ -39,38 +37,37 @@ const ToolBarComponent = ({
   <ToolBarBox id="ToolBar" libOpen={libOpen} explorerOpen={explorerOpen}>
     <ToolBarBody>
       <ToolBarElement
-        treeView={treeView}
+        active={isTreeView}
         label={VIEW_TYPE.TREEVIEW}
-        icon={treeView ? Icons.TreeViewActive : Icons.TreeView}
+        icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
         onClick={() => Click.OnView(project, VIEW_TYPE.TREEVIEW as ViewType, dispatch)}
       />
       <ToolBarElement
-        treeView={treeView}
+        active={isTreeView}
         label={VIEW_TYPE.BLOCKVIEW}
-        icon={treeView ? Icons.BlockView : Icons.BlockViewActive}
+        icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
         onClick={() => Click.OnView(project, VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}
       />
-      {!treeView && (
+      {!isTreeView && (
         <ToolBarElement
-          treeView={treeView}
           label={"electro"}
-          icon={electro ? Icons.Vertical : Icons.Horizontal}
-          onClick={() => Click.OnElectro(dispatch, electro)}
+          icon={isElectro ? Icons.Vertical : Icons.Horizontal}
+          onClick={() => Click.OnElectro(dispatch, isElectro)}
         />
       )}
       <ToolBarElement
-        treeView={treeView}
+        active={visualFilterOpen}
         label={"visual-filter"}
-        icon={Icons.Filter}
-        onClick={() => Click.OnFilter(dispatch, visualFilter)}
+        icon={visualFilterOpen ? Icons.FilterActive : Icons.Filter}
+        onClick={() => Click.OnFilter(dispatch, visualFilterOpen)}
       />
     </ToolBarBody>
 
-    {IsBlockView() && IsLocation(selectedNode) && (
+    {/* {IsBlockView() && IsLocation(selectedNode) && (
       <LocationBox onClick={() => Click.OnLocation3D(dispatch, location3DActive)} active={location3DActive}>
         <img src={Location} alt={"location3D"} className="logo" />
       </LocationBox>
-    )}
+    )} */}
   </ToolBarBox>
 );
 
