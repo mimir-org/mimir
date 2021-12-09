@@ -12,8 +12,8 @@ export const InitializeProject = (project: Project): Project => {
 
     if (initNode.attributes?.length > 0) initAttributes(initNode);
 
-    if (initNode.composites?.length > 0)
-      initNode.composites = initNode.composites.map((composite) => initAttributes(composite) && new Composite(composite));
+    if (initNode.simples?.length > 0)
+      initNode.simples = initNode.simples.map((composite) => initAttributes(composite) && new Composite(composite));
 
     if (initNode.connectors?.length > 0) {
       initNode.connectors = initNode.connectors.map((connector) => {

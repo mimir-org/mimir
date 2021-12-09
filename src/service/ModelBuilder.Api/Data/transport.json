@@ -17,7 +17,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "029141A50753F5411DCCC401CA894CF3",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -43,7 +43,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "6DAD3FA88FA7A5192C2BBA462DA2B505",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -69,7 +69,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "EB9A78DC9F8CC30F4B1CB179CDC5E0D0",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -92,7 +92,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "A016243638B4FF81FE6FC8B8A1C9B434",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -119,7 +119,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "9B30E2A55BF21E196C80E7795A74FC4F",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -147,7 +147,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "63BE0BD902113FDFF8BD37887699A8C7",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": "Magnus Oanes Knædal",
@@ -174,7 +174,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "9E66E10E51A0567B433CE12E59788374",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -201,7 +201,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "C4F0FDFBDB12CD9E79A0AD9F1E976FDF",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -227,7 +227,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "029141A50753F5411DCCC401CA894CF3",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -253,7 +253,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "6DAD3FA88FA7A5192C2BBA462DA2B505",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -279,7 +279,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "EB9A78DC9F8CC30F4B1CB179CDC5E0D0",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -302,7 +302,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "A016243638B4FF81FE6FC8B8A1C9B434",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -329,7 +329,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "9B30E2A55BF21E196C80E7795A74FC4F",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -357,7 +357,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "63BE0BD902113FDFF8BD37887699A8C7",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": "Magnus Oanes Knædal",
@@ -384,7 +384,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "9E66E10E51A0567B433CE12E59788374",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,
@@ -411,7 +411,7 @@
     "locationType": null,
     "predefinedAttributes": null,
     "terminalTypeId": "C4F0FDFBDB12CD9E79A0AD9F1E976FDF",
-    "compositeTypes": null,
+    "simpleTypes": null,
     "version": "1.0",
 
     "updatedBy": null,

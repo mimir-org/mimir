@@ -10,18 +10,14 @@ const RdsListElement = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 15px;
   height: 30px;
-  padding-left: 7px;
+  padding: 2px 5px;
 
   &:hover {
     background-color: ${Color.BlueLight} !important;
   }
-
-  label:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
+  
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};
     font-weight: ${(props) => props.isSelected && FontWeight.Bold};

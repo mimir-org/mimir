@@ -23,6 +23,10 @@ class Attribute {
   units: EnumBase[];
   attributeTypeId: string;
   terminalId: string;
+  nodeId: string;
+  nodeIri: string;
+  transportId: string;
+  simpleId: string;
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;

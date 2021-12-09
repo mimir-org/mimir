@@ -89,7 +89,7 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Attribute> Attributes { get; set; }
 
-        public virtual ICollection<Composite> Composites { get; set; }
+        public virtual ICollection<Simple> Simples { get; set; }
 
         [Required]
         public virtual string ProjectId { get; set; }

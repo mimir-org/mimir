@@ -6,7 +6,7 @@ import { AspectColorType, LibItem, ObjectType } from "../../models";
 import { LibraryCategory } from "../../models/project";
 import { OnRemoveFavoriteClick, OnAddFavoriteClick } from "./handlers";
 import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
-import { AddFavoriteBox, LibElement, LibElementIcon, RemoveFavoriteBox } from "./styled";
+import { AddFavoriteBox, LibElement, LibElementIcon, LibElementText, RemoveFavoriteBox } from "./styled";
 
 interface Props {
   item: LibItem;
@@ -52,7 +52,7 @@ const LibraryCategoryElement = ({
       onDragStart={(event) => item.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(item))}
       key={item.id}
     >
-      <p className="type-name"> {item.name}</p>
+      <LibElementText>{item.name}</LibElementText>
       <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
         <img src={CloseIcon} alt="remove" />
       </RemoveFavoriteBox>
@@ -64,7 +64,7 @@ const LibraryCategoryElement = ({
       </AddFavoriteBox>
       <LibElementIcon color={GetAspectColor(item, AspectColorType.Main, false)}>
         {(item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport) && (
-          <img src={GetObjectIcon(item)} alt="aspect-icon" className="icon" draggable="false"></img>
+          <img src={GetObjectIcon(item)} alt="aspect color" className="icon" draggable="false"/>
         )}
       </LibElementIcon>
     </LibElement>

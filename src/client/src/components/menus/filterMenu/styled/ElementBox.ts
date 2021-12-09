@@ -6,13 +6,14 @@ interface Props {
   indent: number;
 }
 
-const ElementBox = styled.div<Props>`
+const ElementBox = styled.label<Props>`
   position: relative;
   display: flex;
   align-items: center;
+  gap: 10px;
   height: 30px;
   margin-top: ${(props) => (props.isHeader || props.isSubHeader) && "7px"};
-  padding-left: ${(props) => props.indent * 12}px;
+  padding-left: ${(props) => props.indent * 8}px;
   background-color: ${(props) => (props.isHeader ? Color.GreyLight : Color.White)};
 
   &:hover {

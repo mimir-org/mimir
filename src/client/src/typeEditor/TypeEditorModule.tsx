@@ -3,7 +3,7 @@ import { TextResources } from "../assets/text";
 import { NewTypeIcon, EditTypeIcon } from "../assets/icons/type";
 import { useAppDispatch } from "../redux/store";
 import { OnOpenTypeEditor } from "./handlers";
-import { TypeEditorBox, TypeEditorBoxContent } from "./styled";
+import { TypeEditorBox, TypeEditorButton } from "./styled";
 
 interface Props {
   selectedElement: string;
@@ -20,24 +20,14 @@ export const TypeEditorModule = ({ selectedElement, selectedElementType, onChang
 
   return (
     <TypeEditorBox>
-      <TypeEditorBoxContent active={true}>
-        <div
-          onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
-          className="typeeditor_box"
-        >
-          <img src={NewTypeIcon} alt="new-type" />
-          <p>{TextResources.TypeEditor_New_Type}</p>
-        </div>
-      </TypeEditorBoxContent>
-      <TypeEditorBoxContent active={selectedElement !== ""}>
-        <div
-          onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
-          className="typeeditor_box"
-        >
-          <img src={EditTypeIcon} alt="edit-type" />
-          <p>{TextResources.TypeEditor_Edit_Type}</p>
-        </div>
-      </TypeEditorBoxContent>
+      <TypeEditorButton disabled={false} onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}>
+        <img src={NewTypeIcon} alt="new type" />
+        {TextResources.TypeEditor_New_Type}
+      </TypeEditorButton>
+      <TypeEditorButton disabled={selectedElement === ""} onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}>
+        <img src={EditTypeIcon} alt="edit type" />
+        {TextResources.TypeEditor_Edit_Type}
+      </TypeEditorButton>
     </TypeEditorBox>
   );
 };

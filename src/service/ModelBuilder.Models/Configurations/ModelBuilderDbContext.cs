@@ -31,7 +31,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<NodeType> NodeTypes { get; set; }
         public virtual DbSet<TransportType> TransportTypes { get; set; }
         public virtual DbSet<InterfaceType> InterfaceTypes { get; set; }
-        public virtual DbSet<CompositeType> CompositeTypes { get; set; }
+        public virtual DbSet<SimpleType> SimpleTypes { get; set; }
         public virtual DbSet<NodeTypeTerminalType> NodeTypeTerminalTypes { get; set; }
         public virtual DbSet<TypeAttribute> TypeAttributes { get; set; }
         public virtual DbSet<PredefinedAttribute> PredefinedAttributes { get; set; }
@@ -39,7 +39,7 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Purpose> BlobCategories { get; set; }
         public virtual DbSet<Transport> Transports { get; set; }
         public virtual DbSet<Interface> Interfaces { get; set; }
-        public virtual DbSet<Composite> Composites { get; set; }
+        public virtual DbSet<Simple> Simples { get; set; }
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
@@ -69,8 +69,8 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new BlobDataConfiguration());
             modelBuilder.ApplyConfiguration(new TransportConfiguration());
             modelBuilder.ApplyConfiguration(new InterfaceConfiguration());
-            modelBuilder.ApplyConfiguration(new CompositeTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CompositeConfiguration());
+            modelBuilder.ApplyConfiguration(new SimpleTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new SimpleConfiguration());
             modelBuilder.ApplyConfiguration(new PurposeConfiguration());
             modelBuilder.ApplyConfiguration(new VersionConfiguration());
         }

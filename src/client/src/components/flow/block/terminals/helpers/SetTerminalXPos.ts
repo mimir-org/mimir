@@ -22,7 +22,7 @@ const SetTerminalXPos = (
   order: number,
   nodeWidth: number
 ) => {
-  const marginX = parent ? 20 : 23;
+  const marginX = parent ? 20 : 22;
   const marginXSmall = 3;
 
   if (offPage) {
@@ -32,7 +32,8 @@ const SetTerminalXPos = (
 
   if (!electro) {
     if (IsPartOf(conn)) return nodeWidth / 2;
-    if (position === Position.Right) return nodeWidth + marginXSmall;
+    if (position === Position.Right && !parent) return nodeWidth - marginXSmall;
+    if (position === Position.Right && parent) return nodeWidth;
     return -marginX;
   }
 
@@ -56,7 +57,7 @@ export default SetTerminalXPos;
  */
 function CalculateX(count: number, parent: boolean, nodeWith: number) {
   const interval = parent ? 35 : Size.Terminals_Interval; // Default horizontal distance between each terminal
-  const base = nodeWith / 2 - 8; // Middle position
+  const base = nodeWith / 2 - 12; // Middle position
 
   // Even-numbered terminals ordered left
   if (count % 2 === 0) return base - interval * (count / 2);

@@ -28,7 +28,7 @@ namespace Mb.Models.Application
         public string NodeIri { get; set; }
         public string TransportId { get; set; }
         public string InterfaceId { get; set; }
-        public string CompositeId { get; set; }
+        public string SimpleId { get; set; }
         public virtual ICollection<UnitAm> Units { get; set; }
         public ICollection<string> SelectValues { get; set; }
         public SelectType SelectType { get; set; }

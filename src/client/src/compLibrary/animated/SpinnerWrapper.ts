@@ -12,6 +12,7 @@ const SpinnerWrapper = styled.div<Props>`
   top: 50%;
   transform: translate(-50%, -50%);
   display: ${(props) => !props.fetching && "none"};
+  z-index: 100;
 `;
 
 export default SpinnerWrapper;

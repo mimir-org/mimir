@@ -5,12 +5,8 @@ interface Props {
 }
 
 const RemoveFavoriteBox = styled.div<Props>`
-  opacity: ${(props) => (props.visible ? 1 : 0)};
-  position: absolute;
-  right: 50px;
-  width: 25px;
-  height: 20px;
-  text-align: center;
+  display: ${(props) => (props.visible ? 'revert' : 'none')};
+  margin-left: auto;
 
   &:hover {
     cursor: pointer;

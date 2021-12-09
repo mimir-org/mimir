@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Mb.Models.Application.TypeEditor
 {
-    public class CompositeTypeAm
+    public class SimpleTypeAm
     {
         [Required]
         public string Name { get; set; }

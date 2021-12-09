@@ -4,8 +4,8 @@ import { FontSize } from "../../font";
 
 const NumericInput = styled.div`
   input {
-    padding: 2px 0px;
-    width: 18px;
+    width: 20px;
+    height: 20px;
     max-height: 20px;
     text-align: center;
     border-radius: 5px;

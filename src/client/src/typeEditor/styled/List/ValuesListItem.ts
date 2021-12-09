@@ -1,19 +1,21 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
 
-const ValuesListItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-width: 1px 0px 0px 0px;
-  border-color: ${Color.GreyDarker};
-  border-style: solid;
-  border-radius: 2px;
-  height: 20px;
-  padding: 2px 2px 2px 7px;
+interface Props {
+  gap?: string;
+}
 
-  label::first-letter {
-    text-transform: uppercase;
+const ValuesListItem = styled.label<Props>`
+  display: flex;
+  align-items: center;
+  gap: ${(props) => (props.gap ? props.gap : '10px')};
+  padding: 2px 5px;
+  border-bottom: 1px solid ${Color.GreyDarker};
+  border-radius: 3px;
+  height: 20px;
+  
+  :last-child {
+    border: 0;
   }
 
   :hover {

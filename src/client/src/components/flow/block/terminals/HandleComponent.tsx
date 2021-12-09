@@ -1,6 +1,7 @@
-import { memo, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { memo, useEffect, useState } from "react";
 import { Node, Connector } from "../../../../models";
-import { Handle } from "react-flow-renderer";
+import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
 import { IsValidBlockConnection, SetTerminalYPos, SetTerminalXPos, GetTerminalColor } from "./helpers";
 import { HandleBox } from "./styled";
@@ -11,10 +12,10 @@ import { OnMouseEnter, OnMouseLeave } from "./handlers";
 
 interface Props {
   nodes: Node[];
+  node: Node;
   size: BlockNodeSize;
   terminals: Connector[];
   dispatch: any;
-  isLocation: boolean;
   isParent?: boolean;
   electro?: boolean;
   offPage?: boolean;
@@ -26,19 +27,16 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({
-  nodes,
-  size,
-  terminals,
-  dispatch,
-  isLocation,
-  isParent = false,
-  electro = false,
-  offPage = false,
-  isVisible = true,
-}: Props) => {
+const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, electro, offPage, isVisible = true }: Props) => {
   const [visible, setVisible] = useState(isVisible);
   const className = "react-flow__handle-block";
+  const updateNodeInternals = useUpdateNodeInternals();
+
+  useEffect(() => {
+    setTimeout(() => {
+      updateNodeInternals(node?.id);
+    }, 200);
+  }, [electro, terminals]);
 
   return (
     <>

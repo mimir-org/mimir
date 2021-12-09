@@ -5,11 +5,15 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     font-family: ${FontType.Standard};
     width: 100%;
-    margin: 0px;
+    margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden;
   };
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
 
   img, picture, video, canvas, svg {
     max-width: 100%;

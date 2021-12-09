@@ -37,36 +37,6 @@ namespace Mb.Core.Migrations
                     b.ToTable("AttributeType_Unit", (string)null);
                 });
 
-            modelBuilder.Entity("CompositeType_AttributeType", b =>
-                {
-                    b.Property<string>("AttributeTypeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CompositeTypeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("AttributeTypeId", "CompositeTypeId");
-
-                    b.HasIndex("CompositeTypeId");
-
-                    b.ToTable("CompositeType_AttributeType", (string)null);
-                });
-
-            modelBuilder.Entity("CompositeType_NodeType", b =>
-                {
-                    b.Property<string>("CompositeTypeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("NodeTypeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CompositeTypeId", "NodeTypeId");
-
-                    b.HasIndex("NodeTypeId");
-
-                    b.ToTable("CompositeType_NodeType", (string)null);
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
                     b.Property<string>("Id")
@@ -76,10 +46,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("AttributeTypeId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AttributeTypeId");
-
-                    b.Property<string>("CompositeId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("CompositeId");
 
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
@@ -148,6 +114,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SemanticReference");
 
+                    b.Property<string>("SimpleId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("SimpleId");
+
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
 
@@ -173,8 +143,6 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompositeId");
-
                     b.HasIndex("ConditionId");
 
                     b.HasIndex("FormatId");
@@ -184,6 +152,8 @@ namespace Mb.Core.Migrations
                     b.HasIndex("NodeId");
 
                     b.HasIndex("QualifierId");
+
+                    b.HasIndex("SimpleId");
 
                     b.HasIndex("SourceId");
 
@@ -224,32 +194,6 @@ namespace Mb.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CollaborationPartner", (string)null);
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Composite", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("NodeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NodeId");
-
-                    b.ToTable("Composite", (string)null);
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
@@ -778,6 +722,32 @@ namespace Mb.Core.Migrations
                     b.ToTable("Project", (string)null);
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.Simple", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("NodeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NodeId");
+
+                    b.ToTable("Simple", (string)null);
+                });
+
             modelBuilder.Entity("Mb.Models.Data.Transport", b =>
                 {
                     b.Property<string>("Id")
@@ -958,26 +928,6 @@ namespace Mb.Core.Migrations
                     b.ToTable("BlobData", (string)null);
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.TypeEditor.CompositeType", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CompositeType", (string)null);
-                });
-
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.LibraryType", b =>
                 {
                     b.Property<string>("Id")
@@ -1129,6 +1079,26 @@ namespace Mb.Core.Migrations
                     b.ToTable("Rds", (string)null);
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.TypeEditor.SimpleType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SimpleType", (string)null);
+                });
+
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.TerminalType", b =>
                 {
                     b.Property<string>("Id")
@@ -1218,6 +1188,36 @@ namespace Mb.Core.Migrations
                     b.HasIndex("NodeTypeId");
 
                     b.ToTable("NodeType_AttributeType", (string)null);
+                });
+
+            modelBuilder.Entity("SimpleType_AttributeType", b =>
+                {
+                    b.Property<string>("AttributeTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SimpleTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AttributeTypeId", "SimpleTypeId");
+
+                    b.HasIndex("SimpleTypeId");
+
+                    b.ToTable("SimpleType_AttributeType", (string)null);
+                });
+
+            modelBuilder.Entity("SimpleType_NodeType", b =>
+                {
+                    b.Property<string>("NodeTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SimpleTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("NodeTypeId", "SimpleTypeId");
+
+                    b.HasIndex("SimpleTypeId");
+
+                    b.ToTable("SimpleType_NodeType", (string)null);
                 });
 
             modelBuilder.Entity("TerminalType_AttributeType", b =>
@@ -1418,43 +1418,8 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CompositeType_AttributeType", b =>
-                {
-                    b.HasOne("Mb.Models.Data.TypeEditor.AttributeType", null)
-                        .WithMany()
-                        .HasForeignKey("AttributeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Mb.Models.Data.TypeEditor.CompositeType", null)
-                        .WithMany()
-                        .HasForeignKey("CompositeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CompositeType_NodeType", b =>
-                {
-                    b.HasOne("Mb.Models.Data.TypeEditor.CompositeType", null)
-                        .WithMany()
-                        .HasForeignKey("CompositeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Mb.Models.Data.TypeEditor.NodeType", null)
-                        .WithMany()
-                        .HasForeignKey("NodeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Attribute", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Composite", "Composite")
-                        .WithMany("Attributes")
-                        .HasForeignKey("CompositeId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("Mb.Models.Data.Enums.AttributeCondition", "Condition")
                         .WithMany("Attributes")
                         .HasForeignKey("ConditionId")
@@ -1480,6 +1445,11 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("QualifierId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("Mb.Models.Data.Simple", "Simple")
+                        .WithMany("Attributes")
+                        .HasForeignKey("SimpleId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Mb.Models.Data.Enums.AttributeSource", "Source")
                         .WithMany("Attributes")
                         .HasForeignKey("SourceId")
@@ -1495,8 +1465,6 @@ namespace Mb.Core.Migrations
                         .HasForeignKey("TransportId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Composite");
-
                     b.Navigation("Condition");
 
                     b.Navigation("Format");
@@ -1507,22 +1475,13 @@ namespace Mb.Core.Migrations
 
                     b.Navigation("Qualifier");
 
+                    b.Navigation("Simple");
+
                     b.Navigation("Source");
 
                     b.Navigation("Terminal");
 
                     b.Navigation("Transport");
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.Composite", b =>
-                {
-                    b.HasOne("Mb.Models.Data.Node", "Node")
-                        .WithMany("Composites")
-                        .HasForeignKey("NodeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Node");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
@@ -1646,6 +1605,17 @@ namespace Mb.Core.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Simple", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Node", "Node")
+                        .WithMany("Simples")
+                        .HasForeignKey("NodeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Node");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Transport", b =>
@@ -1787,6 +1757,36 @@ namespace Mb.Core.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SimpleType_AttributeType", b =>
+                {
+                    b.HasOne("Mb.Models.Data.TypeEditor.AttributeType", null)
+                        .WithMany()
+                        .HasForeignKey("AttributeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.TypeEditor.SimpleType", null)
+                        .WithMany()
+                        .HasForeignKey("SimpleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SimpleType_NodeType", b =>
+                {
+                    b.HasOne("Mb.Models.Data.TypeEditor.NodeType", null)
+                        .WithMany()
+                        .HasForeignKey("NodeTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mb.Models.Data.TypeEditor.SimpleType", null)
+                        .WithMany()
+                        .HasForeignKey("SimpleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TerminalType_AttributeType", b =>
                 {
                     b.HasOne("Mb.Models.Data.TypeEditor.AttributeType", null)
@@ -1848,11 +1848,6 @@ namespace Mb.Core.Migrations
                     b.Navigation("TerminalType");
                 });
 
-            modelBuilder.Entity("Mb.Models.Data.Composite", b =>
-                {
-                    b.Navigation("Attributes");
-                });
-
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
                 {
                     b.Navigation("FromEdges");
@@ -1876,11 +1871,11 @@ namespace Mb.Core.Migrations
                 {
                     b.Navigation("Attributes");
 
-                    b.Navigation("Composites");
-
                     b.Navigation("Connectors");
 
                     b.Navigation("FromEdges");
+
+                    b.Navigation("Simples");
 
                     b.Navigation("ToEdges");
                 });
@@ -1890,6 +1885,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("Edges");
 
                     b.Navigation("Nodes");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Simple", b =>
+                {
+                    b.Navigation("Attributes");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Transport", b =>

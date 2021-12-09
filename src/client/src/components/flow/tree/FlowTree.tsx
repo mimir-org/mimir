@@ -6,12 +6,13 @@ import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { updatePosition } from "../../../redux/store/project/actions";
+import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { Project } from "../../../models";
+import { IsLocationTerminal, IsProductTerminal, IsTransport } from "../helpers";
 
 interface Props {
   project: Project;
@@ -90,6 +91,13 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   useEffect(() => {
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    project?.edges.forEach((edge) => {
+      if (IsTransport(edge.fromConnector) || IsLocationTerminal(edge.fromConnector) || IsProductTerminal(edge.fromConnector))
+        dispatch(setEdgeVisibility(edge, true));
+    });
+  }, []);
 
   return (
     <>

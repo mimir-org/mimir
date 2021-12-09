@@ -3,6 +3,7 @@ import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter, Project } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
+import { ParameterButton } from "./styled/parameter";
 import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters, OnIsCreateLibraryType } from "./handlers";
 import { ParameterRow } from "./";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -76,22 +77,21 @@ const ParametersContent = ({
             selectedItems={selectedFilters}
           />
 
-          <div
+          <ParameterButton
             className={`link ${isCreateLibraryType && "hide-link"}`}
             onClick={() => !isCreateLibraryType && OnClearAllFilters(parametersElement.id, dispatch)}
           >
             {TextResources.Inspector_Params_Clear_All}
-          </div>
-          <div
+          </ParameterButton>
+          <ParameterButton
             className={`link ${isCreateLibraryType && "hide-link"}`}
             onClick={() =>
               !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch)
             }
           >
             {TextResources.Inspector_Params_Default}
-          </div>
+          </ParameterButton>
         </Menu>
-        <hr />
       </Header>
       <ParametersRowWrapper>
         {hasFilters &&

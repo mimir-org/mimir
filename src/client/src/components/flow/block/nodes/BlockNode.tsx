@@ -1,5 +1,5 @@
 import { memo, FC, useState, useEffect } from "react";
-import { NodeProps, useUpdateNodeInternals } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../terminals";
@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode, IsLocation, IsProduct } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode, IsProduct } from "../../../../helpers";
 
 /**
  * Component for a child Node in BlockView.
@@ -26,7 +26,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [width, setWidth] = useState(Size.Node_Width);
   const [height, setHeight] = useState(Size.Node_Height);
 
-  const updateNodeInternals = useUpdateNodeInternals();
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
@@ -43,10 +42,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     setWidth(size.width);
     setHeight(size.height);
   }, [electro, terminals]);
-
-  useEffect(() => {
-    updateNodeInternals(node?.id);
-  });
 
   if (!node) return null;
 
@@ -80,11 +75,11 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       />
       <HandleComponent
         nodes={nodes}
+        node={node}
         size={{ width: node.width, height: node.height }}
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
-        isLocation={IsLocation(node)}
       />
     </NodeBox>
   );

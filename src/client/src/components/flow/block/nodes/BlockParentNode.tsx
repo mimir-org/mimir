@@ -6,7 +6,7 @@ import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { GetAspectColor, IsLocation } from "../../../../helpers";
+import { GetAspectColor } from "../../../../helpers";
 import { setBlockNodeSize } from "../redux/actions";
 import { Size } from "../../../../compLibrary/size";
 import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
@@ -61,21 +61,21 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        isParent={true}
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
+        isParent
       />
       <HandleComponent
-        isParent={true}
         nodes={nodes}
+        node={node}
         size={parentBlockSize}
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
-        isLocation={IsLocation(node)}
+        isParent
       />
     </>
   );

@@ -34,7 +34,7 @@ namespace Mb.Services.Services
             {
                 var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(node.Id, node.Iri);
 
-                RemapComposites(nodeId, node);
+                RemapSimples(nodeId, node);
                 RemapConnectors(nodeId, nodeIri, node, project);
 
                 foreach (var attribute in node.Attributes)
@@ -195,7 +195,7 @@ namespace Mb.Services.Services
                 clone.ProjectId = projectId;
                 clone.Id = nodeId;
                 clone.Iri = nodeIri;
-                clone.Composites = CloneComposites(node.Composites, clone.Id).ToList();
+                clone.Simples = CloneSimples(node.Simples, clone.Id).ToList();
                 clone.Connectors = CloneConnectors(node.Connectors, edges, clone, node).ToList();
                 clone.Attributes = CloneAttributes(node.Attributes, nodeId: clone.Id).ToList();
                 cloneNodes.Add(clone);
@@ -224,22 +224,22 @@ namespace Mb.Services.Services
 
         #region Private methods
 
-        private IEnumerable<Composite> CloneComposites(ICollection<Composite> composites, string nodeId)
+        private IEnumerable<Simple> CloneSimples(ICollection<Simple> simples, string nodeId)
         {
-            if (composites == null || !composites.Any())
+            if (simples == null || !simples.Any())
                 yield break;
 
-            foreach (var composite in composites)
+            foreach (var simple in simples)
             {
                 var (id, _) = _commonRepository.CreateOrUseIdAndIri(null, null);
-                var clone = composite.DeepCopy();
+                var clone = simple.DeepCopy();
                 clone.Id = id;
                 clone.NodeId = nodeId;
-                clone.Attributes = CloneAttributes(composite.Attributes, compositeId: clone.Id).ToList();
+                clone.Attributes = CloneAttributes(simple.Attributes, simpleId: clone.Id).ToList();
             }
         }
 
-        private IEnumerable<Attribute> CloneAttributes(ICollection<Attribute> attributes, string compositeId = null, string terminalId = null, string nodeId = null, string transportId = null, string interfaceId = null)
+        private IEnumerable<Attribute> CloneAttributes(ICollection<Attribute> attributes, string simpleId = null, string terminalId = null, string nodeId = null, string transportId = null, string interfaceId = null)
         {
             if (attributes == null || !attributes.Any())
                 yield break;
@@ -250,7 +250,7 @@ namespace Mb.Services.Services
                 var clone = attribute.DeepCopy();
                 clone.Id = id;
                 clone.Iri = iri;
-                clone.CompositeId = compositeId;
+                clone.SimpleId = simpleId;
                 clone.TerminalId = terminalId;
                 clone.NodeId = nodeId;
                 clone.TransportId = transportId;
@@ -451,30 +451,30 @@ namespace Mb.Services.Services
             }
         }
 
-        private void RemapComposites(string newNodeId, NodeAm node)
+        private void RemapSimples(string newNodeId, NodeAm node)
         {
-            if (node?.Composites == null || !node.Composites.Any())
+            if (node?.Simples == null || !node.Simples.Any())
                 return;
 
-            foreach (var composite in node.Composites)
+            foreach (var simple in node.Simples)
             {
-                var (compositeId, _) = _commonRepository.CreateOrUseIdAndIri(composite.Id, null);
+                var (simpleId, _) = _commonRepository.CreateOrUseIdAndIri(simple.Id, null);
 
-                if (composite.Attributes != null && composite.Attributes.Any())
+                if (simple.Attributes != null && simple.Attributes.Any())
                 {
-                    foreach (var attribute in composite.Attributes)
+                    foreach (var attribute in simple.Attributes)
                     {
                         var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
                         attribute.Id = attributeId;
                         attribute.Iri = attributeIri;
                         
-                        if(attribute.CompositeId == composite.Id)
-                            attribute.CompositeId = compositeId;
+                        if(attribute.SimpleId == simple.Id)
+                            attribute.SimpleId = simpleId;
                     }
                 }
 
-                composite.Id = compositeId;
-                composite.NodeId = newNodeId;
+                simple.Id = simpleId;
+                simple.NodeId = newNodeId;
             }
         }
 

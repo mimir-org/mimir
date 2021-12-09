@@ -46,7 +46,7 @@ export interface LibItem {
   aspect: Aspect;
   connectors: Connector[];
   attributes?: Attribute[] | null;
-  composites?: Composite[] | null;
+  simples?: Composite[] | null;
   semanticReference: string;
   statusId: string;
   version: string;

@@ -1,5 +1,5 @@
 import { Checkbox } from "../../compLibrary/input/checkbox/common";
-import { AttributeName } from "./styled";
+import { AttributeName, LabelWrapper } from "./styled";
 
 export enum Label {
   attributeTypes = 0,
@@ -31,12 +31,10 @@ export const CheckboxContainer = ({ id, name, label, defaultValue, onChange }: P
   };
 
   return (
-    <label>
+    <LabelWrapper>
       <Checkbox isChecked={isSelected()} onChange={() => onCheckboxChange()} />
-      <AttributeName htmlFor={id} onClick={() => onCheckboxChange()}>
-        {name}
-      </AttributeName>
-    </label>
+      <AttributeName>{name}</AttributeName>
+    </LabelWrapper>
   );
 };
 
