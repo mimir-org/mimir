@@ -21,5 +21,6 @@ namespace Mb.Models.Application
         public string InterfaceId { get; set; }
         public string CompositeId { get; set; }
         public string EdgeId { get; set; }
+        public string TerminalId { get; set; }
     }
 }
