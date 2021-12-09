@@ -42,7 +42,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
-    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
   };
 
   const OnLoad = useCallback(
