@@ -32,6 +32,12 @@ class Attribute {
   discipline: Discipline;
   tags: Set<string>;
 
+  nodeId: string;
+  nodeIri: string;
+  transportId: string;
+  interfaceId: string;
+  compositeId: string;
+
   kind: string = ATTRIBUTE_KIND;
 
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor

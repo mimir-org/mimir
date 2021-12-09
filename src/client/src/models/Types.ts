@@ -219,7 +219,7 @@ export interface ModuleDescription {
 export interface ProjectFileAm {
   parserId: string;
   fileContent: string;
-  fileFormat: FileFormat | null
+  fileFormat: FileFormat | null;
 }
 
 export interface FileFormat {
@@ -230,6 +230,36 @@ export interface ProjectConverterAm {
   parserId: string;
   project: ProjectAm;
   filename: string;
+}
+
+export interface LockUnlockAttributeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
+  nodeId: string;
+  edgeId: string;
+  transportId: string;
+  interfaceId: string;
+  compositeId: string;
+  terminalId: string;
+}
+
+export interface LockUnlockNodeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
+}
+
+export interface LockUnlockEdgeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
 }
 
 export const SETTING_KEY = {

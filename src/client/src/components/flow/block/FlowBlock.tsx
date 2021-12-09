@@ -58,7 +58,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
+    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
   };
 
   const OnConnect = (params) => {

@@ -24,9 +24,11 @@ import {
   LockUnlockNode,
   LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
   LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-  LockUnlockAttributeUnion,
   CreateSubProject,
   CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
+  LockUnlockEdge,
+  LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+  LockUnlockAttribute,
 } from "../../store/project/types";
 
 export function* getProject(action) {
@@ -507,11 +509,61 @@ export function* lockUnlockNode(action: LockUnlockNode) {
   }
 }
 
-export function* lockUnlockAttribute(action: LockUnlockAttributeUnion) {
+export function* lockUnlockEdge(action: LockUnlockEdge) {
+  try {
+    const url = process.env.REACT_APP_API_BASE_URL + "project/edge/lockunlock";
+    const response = yield call(post, url, action.payload);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = {
+        apiError: apiError,
+      };
+
+      yield put({
+        type: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+        payload: payload,
+      });
+      return;
+    }
+
+    const payload = {
+      apiError: null,
+    };
+    yield put({
+      type: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  } catch (error) {
+    const apiError = {
+      key: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = {
+      apiError: apiError,
+    };
+
+    yield put({
+      type: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* lockUnlockAttribute(action: LockUnlockAttribute) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
-    const { id, isLocked } = action.payload;
-    const response = yield call(post, url, { id, isLocked });
+    const response = yield call(post, url, action.payload);
 
     // This is a bad request
     if (response.status === 400) {

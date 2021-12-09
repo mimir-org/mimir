@@ -4,11 +4,13 @@ import {
   Edge,
   Project,
   CommitPackage,
-  Attribute,
   Connector,
   Composite,
   ProjectFileAm,
   ProjectConverterAm,
+  LockUnlockAttributeAm,
+  LockUnlockNodeAm,
+  LockUnlockEdgeAm,
 } from "../../../models";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
@@ -378,139 +380,164 @@ export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTyp
   };
 }
 
-export function setIsLockedNode(node: Node, project: Project, isLocked: boolean, isLockedBy: string): Types.LockUnlockNode {
+export function lockUnlockNode(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockUnlockNode {
   return {
     type: Types.LOCK_UNLOCK_NODE,
     payload: {
-      id: node.id,
-      projectId: project.id,
+      id: id,
+      projectId,
       isLocked,
       isLockedBy,
     },
   };
 }
 
-export function setIsLockedNodeAttribute(
-  attribute: Attribute,
-  nodeId: string,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockUnlockNodeAttribute {
+export function lockUnlockEdge(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockUnlockEdge {
   return {
-    type: Types.LOCK_UNLOCK_NODE_ATTRIBUTE,
+    type: Types.LOCK_UNLOCK_EDGE,
     payload: {
-      id: attribute.id,
-      nodeId,
+      id: id,
+      projectId,
       isLocked,
       isLockedBy,
+    },
+  };
+}
+
+export function lockUnlockAttribute(
+  id: string,
+  projectId: string,
+  isLocked: boolean,
+  isLockedBy: string
+): Types.LockUnlockAttribute {
+  return {
+    type: Types.LOCK_UNLOCK_ATTRIBUTE,
+    payload: {
+      id: id,
+      projectId,
+      isLocked,
+      isLockedBy,
+    },
+  };
+}
+
+export function setIsLockedNode(lockUnlockNodeAm: LockUnlockNodeAm): Types.SetLockUnlockNode {
+  return {
+    type: Types.SET_LOCK_UNLOCK_NODE,
+    payload: {
+      id: lockUnlockNodeAm.id,
+      isLocked: lockUnlockNodeAm.isLocked,
+      isLockedBy: lockUnlockNodeAm.isLockedStatusBy,
+    },
+  };
+}
+
+export function setIsLockedEdge(lockUnlockEdgeAm: LockUnlockEdgeAm): Types.SetLockUnlockEdge {
+  return {
+    type: Types.SET_LOCK_UNLOCK_EDGE,
+    payload: {
+      id: lockUnlockEdgeAm.id,
+      isLocked: lockUnlockEdgeAm.isLocked,
+      isLockedBy: lockUnlockEdgeAm.isLockedStatusBy,
+    },
+  };
+}
+
+export function setIsLockedNodeAttribute(lockUnlockAttributeAm: LockUnlockAttributeAm): Types.SetLockUnlockNodeAttribute {
+  return {
+    type: Types.SET_LOCK_UNLOCK_NODE_ATTRIBUTE,
+    payload: {
+      id: lockUnlockAttributeAm.id,
+      nodeId: lockUnlockAttributeAm.nodeId,
+      isLocked: lockUnlockAttributeAm.isLocked,
+      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedTransportAttribute(
-  attribute: Attribute,
-  edge: Edge,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockUnlockTransportAttribute {
+  lockUnlockAttributeAm: LockUnlockAttributeAm
+): Types.SetLockUnlockTransportAttribute {
   return {
-    type: Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
+    type: Types.SET_LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
     payload: {
-      id: attribute.id,
-      edgeId: edge.id,
-      isLocked,
-      isLockedBy,
+      id: lockUnlockAttributeAm.id,
+      transportId: lockUnlockAttributeAm.transportId,
+      isLocked: lockUnlockAttributeAm.isLocked,
+      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedInterfaceAttribute(
-  attribute: Attribute,
-  edge: Edge,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockUnlockInterfaceAttribute {
+  lockUnlockAttributeAm: LockUnlockAttributeAm
+): Types.SetLockUnlockInterfaceAttribute {
   return {
-    type: Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
+    type: Types.SET_LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
     payload: {
-      id: attribute.id,
-      edgeId: edge.id,
-      isLocked,
-      isLockedBy,
+      id: lockUnlockAttributeAm.id,
+      interfaceId: lockUnlockAttributeAm.interfaceId,
+      isLocked: lockUnlockAttributeAm.isLocked,
+      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedNodeTerminalAttribute(
-  attribute: Attribute,
-  terminalId: string,
-  node: Node,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockUnlockNodeTerminalAttribute {
+  lockUnlockAttributeAm: LockUnlockAttributeAm
+): Types.SetLockUnlockNodeTerminalAttribute {
   return {
-    type: Types.LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE,
+    type: Types.SET_LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE,
     payload: {
-      id: attribute.id,
-      terminalId,
-      nodeId: node.id,
-      isLocked,
-      isLockedBy,
+      id: lockUnlockAttributeAm.id,
+      terminalId: lockUnlockAttributeAm.terminalId,
+      nodeId: lockUnlockAttributeAm.nodeId,
+      isLocked: lockUnlockAttributeAm.isLocked,
+      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
     },
   };
 }
 export function setIsLockedTransportTerminalAttribute(
-  attribute: Attribute,
-  terminalId: string,
-  edge: Edge,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockUnlockTransportTerminalAttribute {
+  lockUnlockAttributeAm: LockUnlockAttributeAm
+): Types.SetLockUnlockTransportTerminalAttribute {
   return {
-    type: Types.LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
+    type: Types.SET_LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
     payload: {
-      id: attribute.id,
-      terminalId,
-      edgeId: edge.id,
-      isLocked,
-      isLockedBy,
+      id: lockUnlockAttributeAm.id,
+      terminalId: lockUnlockAttributeAm.terminalId,
+      transportId: lockUnlockAttributeAm.transportId,
+      isLocked: lockUnlockAttributeAm.isLocked,
+      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
     },
   };
 }
 export function setIsLockedInterfaceTerminalAttribute(
-  attribute: Attribute,
-  terminalId: string,
-  edge: Edge,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockUnlockInterfaceTerminalAttribute {
+  lockUnlockAttributeAm: LockUnlockAttributeAm,
+  edge: Edge
+): Types.SetLockUnlockInterfaceTerminalAttribute {
   return {
-    type: Types.LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
+    type: Types.SET_LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
     payload: {
-      id: attribute.id,
-      terminalId,
-      isLocked,
-      isLockedBy,
-      edgeId: edge.id,
+      id: lockUnlockAttributeAm.id,
+      terminalId: lockUnlockAttributeAm.terminalId,
+      interfaceId: lockUnlockAttributeAm.interfaceId,
+      isLocked: lockUnlockAttributeAm.isLocked,
+      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedCompositeAttribute(
-  attribute: Attribute,
-  compositeId: string,
-  node: Node,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockUnlockCompositeAttribute {
+  lockUnlockAttributeAm: LockUnlockAttributeAm
+): Types.SetLockUnlockCompositeAttribute {
   return {
-    type: Types.LOCK_UNLOCK_COMPOSITE_ATTRIBUTE,
+    type: Types.SET_LOCK_UNLOCK_COMPOSITE_ATTRIBUTE,
     payload: {
-      id: attribute.id,
-      compositeId,
-      nodeId: node.id,
-      isLocked,
-      isLockedBy,
+      id: lockUnlockAttributeAm.id,
+      compositeId: lockUnlockAttributeAm.compositeId,
+      nodeId: lockUnlockAttributeAm.nodeId,
+      isLocked: lockUnlockAttributeAm.isLocked,
+      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
     },
   };
 }
@@ -528,6 +555,7 @@ export function updateEdge(edge: Edge): Types.UpdateEdgeAction {
     payload: edge,
   };
 }
+
 export function setOffPageStatus(nodeId: string, connectorId: string, isRequired: boolean): Types.ProjectActionTypes {
   return {
     type: Types.SET_OFFPAGE_STATUS,

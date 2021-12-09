@@ -4,6 +4,8 @@
     {
         public const string ReceiveNodeData = "ReceiveNodeData";
         public const string ReceiveEdgeData = "ReceiveEdgeData";
-        public const string ReceiveAttributeData = "ReceiveAttributeData";
+        public const string ReceiveLockUnlockAttributeData = "ReceiveLockUnlockAttributeData";
+        public const string ReceiveLockUnlockNodeData = "ReceiveLockUnlockNodeData";
+        public const string ReceiveLockUnlockEdgeData = "ReceiveLockUnlockEdgeData";
     }
 }
