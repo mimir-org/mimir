@@ -36,7 +36,7 @@ const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, ele
     setTimeout(() => {
       updateNodeInternals(node?.id);
     }, 200);
-  }, [electro]);
+  }, [electro, terminals]);
 
   return (
     <>

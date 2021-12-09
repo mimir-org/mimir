@@ -52,7 +52,7 @@ function CalculateY(count: number, parent: boolean, nodeHeight: number) {
   if (count === undefined) count = 0;
 
   const interval = parent ? 30 : Size.Terminals_Interval; // Default vertical distance between each terminal
-  const base = parent ? 290 : nodeHeight / 2 - 7; // Middle Position
+  const base = parent ? 290 : nodeHeight / 2 - 12; // Middle Position
 
   // Even-numbered terminals stacked upwards
   if (count % 2 === 0) return base - interval * (count / 2);

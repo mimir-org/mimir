@@ -1,6 +1,7 @@
 import { Checkbox } from "../../../compLibrary/input/checkbox/common";
 import { CreateId } from "../../flow/helpers";
 import { ElementBox, ElementLabel } from "./styled";
+
 interface Props {
   onChange: () => void;
   isChecked: boolean;

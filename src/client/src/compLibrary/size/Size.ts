@@ -12,7 +12,7 @@ const Size = {
   BlockMarginY: 80,
 
   // Terminals
-  Terminals_Interval: 25,
+  Terminals_Interval: 22.5,
 
   // Modules
   ModuleOpen: 331,

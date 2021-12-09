@@ -52,11 +52,11 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
 };
 
 function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
-  const margin = 20;
+  const margin = 45;
 
   const start = `M${sourceX} ${sourceY}`;
-  const source = `C${sourceX} ${sourceY + margin}, ${sourceX} ${sourceY - margin * 5}, ${sourceX} ${sourceY}`;
-  const target = `S${targetX} ${targetY - margin * 5}`;
+  const source = `C${sourceX} ${sourceY + margin}, ${sourceX} ${sourceY - margin * 4}, ${sourceX} ${sourceY}`;
+  const target = `S${targetX} ${targetY - margin * 4}`;
   const stop = `${targetX} ${targetY}`;
 
   return `${start} ${source} ${target} ${stop}`;

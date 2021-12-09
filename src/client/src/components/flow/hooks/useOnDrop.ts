@@ -14,6 +14,7 @@ import {
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
 } from "../helpers";
+import { Size } from "../../../compLibrary/size";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -60,8 +61,12 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   const parentNode = getParentNode(sourceNode, project, data);
 
-  const marginY = 200;
-  const position = { x: parentNode.positionX, y: parentNode.positionY + marginY }; // TODO: fix when implementing auto-position
+  // TODO: fix when implementing auto-position
+  const marginY = 220;
+  const position = IsBlockView()
+    ? { x: event.clientX - Size.BlockMarginX, y: event.clientY }
+    : { x: parentNode.positionX, y: parentNode.positionY + marginY };
+
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
   targetNode.composites?.forEach((composite) => initComposite(composite, targetNode));
