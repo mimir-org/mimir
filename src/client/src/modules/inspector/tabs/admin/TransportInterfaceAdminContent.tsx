@@ -61,6 +61,7 @@ const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             fontSize={FontSize.Standard}
+            readOnly={edge.isLocked}
             value={element.label ?? ""}
             onChange={(e: Event) => onChange("label", e.target.value)}
             inputType=""
@@ -125,6 +126,7 @@ const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
             onChange={(value: any) => onChange("statusId", value.id)}
             listTop={31}
             borderRadius={5}
+            disabled={edge.isLocked}
           ></Dropdown>
         </div>
         <div>
@@ -139,6 +141,7 @@ const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
             height={200}
             value={element.description ?? ""}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange("description", e.target.value)}
+            readOnly={edge.isLocked}
           ></TextArea>
         </div>
       </TabColumn>
