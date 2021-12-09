@@ -14,7 +14,7 @@ const Banner = styled.div<Props>`
   width: 100%;
   border-radius: 8px 8px 0px 0px;
   background-color: ${(props) => props.color};
-  z-index: 1;
+  /* z-index: 1; */
 `;
 
 export default Banner;

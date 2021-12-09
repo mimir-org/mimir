@@ -10,7 +10,7 @@ import { setBlockNodeSize } from "../../redux/actions";
  * @param dispatch
  */
 const SetParentNodeSize = (secondaryNode: Node, libOpen: boolean, explorerOpen: boolean, dispatch: any) => {
-  const width = secondaryNode ? window.innerWidth / 3 : window.innerWidth;
+  const width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
   const margin = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
 
   dispatch(setBlockNodeSize(width - margin, Size.BlockHeight));
