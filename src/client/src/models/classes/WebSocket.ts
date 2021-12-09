@@ -1,6 +1,5 @@
 import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
-import { Dispatch } from "react";
-import { Attribute } from ".";
+import { Dispatch } from "redux";
 import { WorkerStatus, Node, Edge, LockUnlockNodeAm, LockUnlockEdgeAm, LockUnlockAttributeAm } from "..";
 import {
   addNode,
@@ -9,11 +8,14 @@ import {
   removeNode,
   updateNode,
   updateEdge,
-  setIsLockedNodeAttribute,
   setIsLockedNodeTerminalAttribute,
   setIsLockedTransportTerminalAttribute,
   setIsLockedTransportAttribute,
   setIsLockedCompositeAttribute,
+  setIsLockedNode,
+  setIsLockedEdge,
+  setIsLockedNodeAttribute,
+  setIsLockedInterfaceAttribute,
 } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 
@@ -64,7 +66,7 @@ class WebSocket {
           this._connection.on("ReceiveLockUnlockNodeData", this.handleReceiveLockUnlockNodeData);
           this._connection.on("ReceiveLockUnlockEdgeData", this.handleReceiveLockUnlockEdgeData);
         })
-        .catch((e: any) => { });
+        .catch((e: any) => {});
     }
   }
 
@@ -125,41 +127,41 @@ class WebSocket {
     if (eventType === WorkerStatus.Update) this._dispatch(updateEdge(edge));
   };
 
-  private handleReceiveLockUnlockNodeData = (eventType: WorkerStatus, data: string) => {
-    const obj = JSON.parse(data) as LockUnlockNodeAm
-    console.log(obj);
+  private handleReceiveLockUnlockNodeData = (_: WorkerStatus, data: string) => {
+    const lockUnlockNodeAm = JSON.parse(data) as LockUnlockNodeAm;
+    this._dispatch(setIsLockedNode(lockUnlockNodeAm));
   };
 
-  private handleReceiveLockUnlockEdgeData = (eventType: WorkerStatus, data: string) => {
-    const obj = JSON.parse(data) as LockUnlockEdgeAm
-    console.log(obj);
+  private handleReceiveLockUnlockEdgeData = (_: WorkerStatus, data: string) => {
+    const lockUnlockEdgeAm = JSON.parse(data) as LockUnlockEdgeAm;
+    this._dispatch(setIsLockedEdge(lockUnlockEdgeAm));
   };
 
-  private handleReceiveLockUnlockAttributeData = (eventType: WorkerStatus, data: string) => {
-    const obj = JSON.parse(data) as LockUnlockAttributeAm
-    console.log(obj);
+  private handleReceiveLockUnlockAttributeData = (_: WorkerStatus, data: string) => {
+    const lockUnlockAttributeAm = JSON.parse(data) as LockUnlockAttributeAm;
+    this.onLockUnlockAttribute(lockUnlockAttributeAm);
   };
 
-  private onLockUnlockAttribute = (attribute: Attribute) => {
-    if (attribute.nodeId) {
-      if (attribute.terminalId) {
-        this._dispatch(setIsLockedNodeTerminalAttribute(attribute));
-      } else if (attribute.compositeId) {
-        this._dispatch(setIsLockedCompositeAttribute(attribute));
+  private onLockUnlockAttribute = (lockUnlockAttributeAm: LockUnlockAttributeAm) => {
+    if (lockUnlockAttributeAm.nodeId) {
+      if (lockUnlockAttributeAm.terminalId) {
+        this._dispatch(setIsLockedNodeTerminalAttribute(lockUnlockAttributeAm));
+      } else if (lockUnlockAttributeAm.compositeId) {
+        this._dispatch(setIsLockedCompositeAttribute(lockUnlockAttributeAm));
       } else {
-        this._dispatch(setIsLockedNodeAttribute);
+        this._dispatch(setIsLockedNodeAttribute(lockUnlockAttributeAm));
       }
-    } else if (attribute.transportId) {
-      if (attribute.terminalId) {
-        this._dispatch(setIsLockedTransportTerminalAttribute(attribute));
+    } else if (lockUnlockAttributeAm.transportId) {
+      if (lockUnlockAttributeAm.terminalId) {
+        this._dispatch(setIsLockedTransportTerminalAttribute(lockUnlockAttributeAm));
       } else {
-        this._dispatch(setIsLockedTransportAttribute(attribute));
+        this._dispatch(setIsLockedTransportAttribute(lockUnlockAttributeAm));
       }
-    } else if (attribute.interfaceId) {
-      if (attribute.terminalId) {
-        this._dispatch(setIsLockedNodeTerminalAttribute(attribute));
+    } else if (lockUnlockAttributeAm.interfaceId) {
+      if (lockUnlockAttributeAm.terminalId) {
+        this._dispatch(setIsLockedNodeTerminalAttribute(lockUnlockAttributeAm));
       } else {
-        this._dispatch(setIsLockedNodeAttribute);
+        this._dispatch(setIsLockedInterfaceAttribute(lockUnlockAttributeAm));
       }
     }
   };

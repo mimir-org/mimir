@@ -625,7 +625,7 @@ namespace Mb.Services.Services
         {
             if (node == null)
                 return;
-
+            lockUnlockNodeAm.Id = node.Id;
             lockUnlockNodeAm.IsLockedStatusBy = userName;
             lockUnlockNodeAm.IsLockedStatusDate = dateTimeNow;
 

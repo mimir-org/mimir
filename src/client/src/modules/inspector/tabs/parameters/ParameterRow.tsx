@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CombinedAttribute } from "../../../../models";
+import { CombinedAttribute, Project } from "../../../../models";
 import { Parameter, PARAMETER_ENTITY_WIDTH } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
@@ -18,6 +18,7 @@ interface Props {
   elementIsLocked: boolean;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
+  project: Project;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   attributeLikeItems?: AttributeLikeItem[];
@@ -34,6 +35,7 @@ function ParameterRow({
   elementIsLocked,
   inspectorParentElement,
   terminalParentElement,
+  project,
   combinations,
   selectedCombinations,
   attributeLikeItems,
@@ -91,7 +93,16 @@ function ParameterRow({
               OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit?.id, dispatch)
             }
             onLock={(attribute, isLocked) =>
-              OnLockParameter(element, inspectorParentElement, terminalParentElement, attribute, isLocked, username, dispatch)
+              OnLockParameter(
+                element,
+                inspectorParentElement,
+                terminalParentElement,
+                project,
+                attribute,
+                isLocked,
+                username,
+                dispatch
+              )
             }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />

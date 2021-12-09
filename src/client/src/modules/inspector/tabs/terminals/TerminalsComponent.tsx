@@ -8,13 +8,15 @@ import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
 import { InspectorElement, SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 import { GetTerminalParentElement, GetTerminals } from "./helpers";
 import { IsCreateLibraryType } from "../../helpers/IsType";
+import { Project } from "../../../../models";
 
 interface Props {
   element: InspectorElement;
+  project: Project;
   terminalLikeItems?: TerminalLikeItem[];
 }
 
-const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
+const TerminalsComponent = ({ element, project, terminalLikeItems }: Props) => {
   const terminalParentElement = GetTerminalParentElement(element);
   const categoryTypes = useAppSelector(terminalTypeSelector);
   const [selectedTerminalIdentifier, setSelectedTerminalIdentifier] = useState<SelectedTerminalIdentifier>(null);
@@ -42,6 +44,7 @@ const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
+            project={project}
             elementIsLocked={elementIsLocked}
             attributeLikeItems={selectedTerminal.attributes}
           />

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Attribute } from "../../../../../models";
+import { Attribute, Project } from "../../../../../models";
 import { IsNode, IsTransport, IsInterface, IsConnector, IsComposite, IsEdge } from "../../../helpers/IsType";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../types";
 import {
@@ -17,6 +17,7 @@ const OnLockParameter = (
   element: InspectorParametersElement,
   inspectorParentElement: InspectorElement,
   terminalParentElement: InspectorTerminalsElement,
+  project: Project,
   attribute: Attribute,
   isLocked: boolean,
   isLockedBy: string,
@@ -38,7 +39,7 @@ const OnLockParameter = (
     dispatch(setIsLockedCompositeAttribute(attribute, element.id, inspectorParentElement, isLocked, isLockedBy));
   } */
 
-  dispatch(lockUnlockAttribute(attribute.id, isLocked, isLockedBy));
+  dispatch(lockUnlockAttribute(attribute.id, project.id, isLocked, isLockedBy));
 };
 
 export default OnLockParameter;

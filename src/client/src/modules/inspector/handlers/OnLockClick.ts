@@ -5,7 +5,7 @@ import { InspectorElement } from "../types";
 
 const OnLockClick = (element: InspectorElement, project: Project, isLocked: boolean, isLockedBy: string, dispatch: any) => {
   if (IsNode(element)) dispatch(lockUnlockNode(element.id, project.id, isLocked, isLockedBy));
-  if (IsEdge(element)) dispatch(lockUnlockEdge(element.id, isLocked, isLockedBy));
+  if (IsEdge(element)) dispatch(lockUnlockEdge(element.id, project.id, isLocked, isLockedBy));
 };
 
 export default OnLockClick;

@@ -627,7 +627,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    /* case Types.LOCK_UNLOCK_NODE:
+    case Types.SET_LOCK_UNLOCK_NODE:
       return {
         ...state,
         project: {
@@ -647,9 +647,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
               : x
           ),
         },
-      }; */
+      };
 
-    /* case Types.LOCK_UNLOCK_EDGE:
+    case Types.SET_LOCK_UNLOCK_EDGE:
       return {
         ...state,
         project: {
@@ -680,9 +680,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
               : x
           ),
         },
-      }; */
+      };
 
-    case Types.LOCK_UNLOCK_NODE_ATTRIBUTE:
+    case Types.SET_LOCK_UNLOCK_NODE_ATTRIBUTE:
       return {
         ...state,
         project: {
@@ -706,7 +706,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
-    case Types.LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE: {
+    case Types.SET_LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE: {
       const { id, isLocked, isLockedBy, terminalId, nodeId } = action.payload;
 
       return {
@@ -739,7 +739,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
     }
-    case Types.LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
+    case Types.SET_LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
       const { id, terminalId, transportId, isLocked, isLockedBy } = action.payload;
 
       return {
@@ -757,7 +757,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
     }
-    case Types.LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE: {
+    case Types.SET_LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE: {
       const { id, terminalId, interfaceId, isLocked, isLockedBy } = action.payload;
 
       return {
@@ -776,7 +776,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.LOCK_UNLOCK_TRANSPORT_ATTRIBUTE: {
+    case Types.SET_LOCK_UNLOCK_TRANSPORT_ATTRIBUTE: {
       const { id, isLocked, isLockedBy, transportId } = action.payload;
 
       return {
@@ -806,7 +806,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.LOCK_UNLOCK_INTERFACE_ATTRIBUTE: {
+    case Types.SET_LOCK_UNLOCK_INTERFACE_ATTRIBUTE: {
       const { id, isLocked, isLockedBy, interfaceId } = action.payload;
 
       return {
@@ -836,7 +836,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.LOCK_UNLOCK_COMPOSITE_ATTRIBUTE: {
+    case Types.SET_LOCK_UNLOCK_COMPOSITE_ATTRIBUTE: {
       const { id, compositeId, nodeId, isLocked, isLockedBy } = action.payload;
 
       return {

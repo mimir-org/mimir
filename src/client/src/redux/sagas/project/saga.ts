@@ -563,8 +563,7 @@ export function* lockUnlockEdge(action: LockUnlockEdge) {
 export function* lockUnlockAttribute(action: LockUnlockAttribute) {
   try {
     const url = process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
-    const { id, isLocked } = action.payload;
-    const response = yield call(post, url, { id, isLocked });
+    const response = yield call(post, url, action.payload);
 
     // This is a bad request
     if (response.status === 400) {

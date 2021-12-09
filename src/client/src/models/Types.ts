@@ -219,7 +219,7 @@ export interface ModuleDescription {
 export interface ProjectFileAm {
   parserId: string;
   fileContent: string;
-  fileFormat: FileFormat | null
+  fileFormat: FileFormat | null;
 }
 
 export interface FileFormat {
@@ -239,10 +239,11 @@ export interface LockUnlockAttributeAm {
   isLockedStatusBy: string;
   isLockedStatusDate: Date;
   nodeId: string;
+  edgeId: string;
   transportId: string;
   interfaceId: string;
   compositeId: string;
-  edgeId: string;
+  terminalId: string;
 }
 
 export interface LockUnlockNodeAm {

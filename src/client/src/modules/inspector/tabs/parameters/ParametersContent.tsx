@@ -1,6 +1,6 @@
 import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
-import { CombinedAttributeFilter } from "../../../../models";
+import { CombinedAttributeFilter, Project } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
 import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
 import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters, OnIsCreateLibraryType } from "./handlers";
@@ -22,6 +22,7 @@ interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
+  project: Project;
   elementIsLocked: boolean;
   attributeLikeItems?: AttributeLikeItem[];
 }
@@ -30,6 +31,7 @@ const ParametersContent = ({
   parametersElement,
   inspectorParentElement,
   terminalParentElement,
+  project,
   elementIsLocked,
   attributeLikeItems,
 }: Props) => {
@@ -110,6 +112,7 @@ const ParametersContent = ({
                 attributeLikeItems={attributeLikeItems}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 username={username}
+                project={project}
                 filterName={filterName}
                 headerColor={headerColor}
                 bodyColor={bodyColor}
