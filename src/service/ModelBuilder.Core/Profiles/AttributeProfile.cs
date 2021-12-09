@@ -80,7 +80,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
                 .ForMember(dest => dest.Interface, opt => opt.Ignore())
                 .ForMember(dest => dest.Transport, opt => opt.Ignore())
-                .ForMember(dest => dest.Composite, opt => opt.Ignore())
+                .ForMember(dest => dest.Simple, opt => opt.Ignore())
                 .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
                 .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
@@ -89,7 +89,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
                 .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
                 .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
-                .ForMember(dest => dest.CompositeId, opt => opt.MapFrom(src => src.CompositeId))
+                .ForMember(dest => dest.SimpleId, opt => opt.MapFrom(src => src.SimpleId))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
@@ -112,7 +112,7 @@ namespace Mb.Core.Profiles
                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
                .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
                .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
-               .ForMember(dest => dest.CompositeId, opt => opt.MapFrom(src => src.CompositeId))
+               .ForMember(dest => dest.SimpleId, opt => opt.MapFrom(src => src.SimpleId))
                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))

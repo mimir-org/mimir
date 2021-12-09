@@ -18,7 +18,7 @@ namespace Mb.TypeEditor.Core.Extensions
         {
             // Dependency Injection
             services.AddScoped<IAttributeTypeRepository, AttributeTypeRepository>();
-            services.AddScoped<ICompositeTypeRepository, CompositeTypeRepository>();
+            services.AddScoped<ISimpleTypeRepository, SimpleTypeRepository>();
             services.AddScoped<IInterfaceTypeRepository, InterfaceTypeRepository>();
             services.AddScoped<ILibraryTypeRepository, LibraryTypeRepository>();
             services.AddScoped<INodeTypeRepository, NodeTypeRepository>();

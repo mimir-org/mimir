@@ -39,7 +39,7 @@ class Node {
   symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
-  composites: Composite[];
+  simples: Composite[];
   width: number;
   height: number;
 

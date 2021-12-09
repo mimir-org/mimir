@@ -332,7 +332,7 @@ export function* getSelectedNode(action) {
 
 export function* getSimpleTypes(action) {
   try {
-    const simpleTypeslURL = process.env.REACT_APP_API_BASE_URL + "librarytype/compositetype";
+    const simpleTypeslURL = process.env.REACT_APP_API_BASE_URL + "librarytype/simpletype";
     const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
 
     const payload = {

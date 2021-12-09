@@ -22,11 +22,11 @@ namespace Mb.TypeEditor.Services.Services
         private readonly ILibraryRepository _libraryRepository;
         private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
-        private readonly ICompositeTypeRepository _compositeTypeRepository;
+        private readonly ISimpleTypeRepository _simpleTypeRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public LibraryTypeService(INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ILibraryRepository libraryRepository, ILibraryTypeRepository libraryTypeComponentRepository, IAttributeTypeRepository attributeTypeRepository, ICompositeTypeRepository compositeTypeRepository, IMapper mapper, IHttpContextAccessor contextAccessor)
+        public LibraryTypeService(INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ILibraryRepository libraryRepository, ILibraryTypeRepository libraryTypeComponentRepository, IAttributeTypeRepository attributeTypeRepository, ISimpleTypeRepository simpleTypeRepository, IMapper mapper, IHttpContextAccessor contextAccessor)
         {
             _nodeTypeTerminalTypeRepository = nodeTypeTerminalTypeRepository;
             _libraryRepository = libraryRepository;
@@ -34,7 +34,7 @@ namespace Mb.TypeEditor.Services.Services
             _mapper = mapper;
             _contextAccessor = contextAccessor;
             _attributeTypeRepository = attributeTypeRepository;
-            _compositeTypeRepository = compositeTypeRepository;
+            _simpleTypeRepository = simpleTypeRepository;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Mb.TypeEditor.Services.Services
                     .OfType<NodeType>()
                     .Include(x => x.TerminalTypes)
                     .Include(x => x.AttributeTypes)
-                    .Include(x => x.CompositeTypes)
+                    .Include(x => x.SimpleTypes)
                     .ThenInclude(y => y.AttributeTypes)
                     .FirstOrDefaultAsync();
             }
@@ -161,7 +161,7 @@ namespace Mb.TypeEditor.Services.Services
                 .Include(x => x.TerminalTypes)
                 .Include("TerminalTypes.TerminalType")
                 .Include(x => x.AttributeTypes)
-                .Include(x => x.CompositeTypes)
+                .Include(x => x.SimpleTypes)
                 .ThenInclude(y => y.AttributeTypes)
                 .ToList();
 
@@ -209,7 +209,7 @@ namespace Mb.TypeEditor.Services.Services
                         .Include(x => x.TerminalTypes)
                         .Include("TerminalTypes.TerminalType")
                         .Include(x => x.AttributeTypes)
-                        .Include(x => x.CompositeTypes)
+                        .Include(x => x.SimpleTypes)
                         .FirstOrDefaultAsync();
 
                     if (nodeItem == null)
@@ -248,23 +248,23 @@ namespace Mb.TypeEditor.Services.Services
         /// <summary>
         /// Create a simple type
         /// </summary>
-        /// <param name="compositeType"></param>
+        /// <param name="simpleType"></param>
         /// <returns></returns>
-        public async Task<CompositeType> CreateCompositeType(CompositeTypeAm compositeType)
+        public async Task<SimpleType> CreateSimpleType(SimpleTypeAm simpleType)
         {
-            var newType = _mapper.Map<CompositeType>(compositeType);
-            var existingType = await _compositeTypeRepository.GetAsync(newType.Id);
+            var newType = _mapper.Map<SimpleType>(simpleType);
+            var existingType = await _simpleTypeRepository.GetAsync(newType.Id);
 
             if (existingType != null)
-                throw new ModelBuilderDuplicateException($"Type with name {compositeType.Name} already exist.");
+                throw new ModelBuilderDuplicateException($"Type with name {simpleType.Name} already exist.");
 
             foreach (var attribute in newType.AttributeTypes)
             {
                 _attributeTypeRepository.Attach(attribute, EntityState.Unchanged);
             }
 
-            await _compositeTypeRepository.CreateAsync(newType);
-            await _compositeTypeRepository.SaveAsync();
+            await _simpleTypeRepository.CreateAsync(newType);
+            await _simpleTypeRepository.SaveAsync();
 
             return newType;
         }
@@ -272,21 +272,21 @@ namespace Mb.TypeEditor.Services.Services
         /// <summary>
         /// Create simple types
         /// </summary>
-        /// <param name="compositeTypes"></param>
+        /// <param name="simpleTypes"></param>
         /// <returns></returns>
-        public async Task CreateCompositeTypes(ICollection<CompositeTypeAm> compositeTypes)
+        public async Task CreateSimpleTypes(ICollection<SimpleTypeAm> simpleTypes)
         {
-            if (compositeTypes == null || !compositeTypes.Any())
+            if (simpleTypes == null || !simpleTypes.Any())
                 return;
 
-            foreach (var typeAm in compositeTypes)
+            foreach (var typeAm in simpleTypes)
             {
-                var newType = _mapper.Map<CompositeType>(typeAm);
-                var existingType = await _compositeTypeRepository.GetAsync(newType.Id);
+                var newType = _mapper.Map<SimpleType>(typeAm);
+                var existingType = await _simpleTypeRepository.GetAsync(newType.Id);
 
                 if (existingType != null)
                 {
-                    _compositeTypeRepository.Detach(existingType);
+                    _simpleTypeRepository.Detach(existingType);
                     continue;
                 }
 
@@ -295,9 +295,9 @@ namespace Mb.TypeEditor.Services.Services
                     _attributeTypeRepository.Attach(attribute, EntityState.Unchanged);
                 }
 
-                await _compositeTypeRepository.CreateAsync(newType);
-                await _compositeTypeRepository.SaveAsync();
-                _compositeTypeRepository.Detach(newType);
+                await _simpleTypeRepository.CreateAsync(newType);
+                await _simpleTypeRepository.SaveAsync();
+                _simpleTypeRepository.Detach(newType);
 
                 foreach (var attribute in newType.AttributeTypes)
                 {
@@ -310,9 +310,9 @@ namespace Mb.TypeEditor.Services.Services
         /// Get all simple types
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<CompositeType> GetCompositeTypes()
+        public IEnumerable<SimpleType> GetSimpleTypes()
         {
-            var types = _compositeTypeRepository.GetAll().Include(x => x.AttributeTypes).ToList();
+            var types = _simpleTypeRepository.GetAll().Include(x => x.AttributeTypes).ToList();
             return types;
         }
 
@@ -324,7 +324,7 @@ namespace Mb.TypeEditor.Services.Services
             _nodeTypeTerminalTypeRepository?.Context?.ChangeTracker.Clear();
             _libraryTypeComponentRepository?.Context?.ChangeTracker.Clear();
             _attributeTypeRepository?.Context?.ChangeTracker.Clear();
-            _compositeTypeRepository?.Context?.ChangeTracker.Clear();
+            _simpleTypeRepository?.Context?.ChangeTracker.Clear();
         }
 
         /// <summary>
@@ -408,11 +408,11 @@ namespace Mb.TypeEditor.Services.Services
                                 }
                             }
 
-                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+                            if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
                             {
-                                foreach (var compositeType in nt.CompositeTypes)
+                                foreach (var simpleType in nt.SimpleTypes)
                                 {
-                                    _compositeTypeRepository.Attach(compositeType, EntityState.Unchanged);
+                                    _simpleTypeRepository.Attach(simpleType, EntityState.Unchanged);
                                 }
                             }
                             await _libraryTypeComponentRepository.CreateAsync(nt);
@@ -426,11 +426,11 @@ namespace Mb.TypeEditor.Services.Services
                                 }
                             }
 
-                            if (nt.CompositeTypes != null && nt.CompositeTypes.Any())
+                            if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
                             {
-                                foreach (var compositeType in nt.CompositeTypes)
+                                foreach (var simpleType in nt.SimpleTypes)
                                 {
-                                    _compositeTypeRepository.Detach(compositeType);
+                                    _simpleTypeRepository.Detach(simpleType);
                                 }
                             }
 

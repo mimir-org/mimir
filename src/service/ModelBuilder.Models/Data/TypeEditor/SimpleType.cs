@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mb.Models.Data.TypeEditor
 {
-    public class CompositeType
+    public class SimpleType
     {
         public string Id { get; set; }
         public string Name { get; set; }
