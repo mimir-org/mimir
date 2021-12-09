@@ -12,7 +12,7 @@ import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { Project } from "../../../models";
-import { IsLocationTerminal, IsProductTerminal, IsTransport } from "../helpers";
+import { IsPartOf } from "../helpers";
 
 interface Props {
   project: Project;
@@ -94,8 +94,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
 
   useEffect(() => {
     project?.edges.forEach((edge) => {
-      if (IsTransport(edge.fromConnector) || IsLocationTerminal(edge.fromConnector) || IsProductTerminal(edge.fromConnector))
-        dispatch(setEdgeVisibility(edge, true));
+      if (!IsPartOf(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
     });
   }, []);
 
