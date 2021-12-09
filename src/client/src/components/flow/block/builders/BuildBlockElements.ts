@@ -13,6 +13,8 @@ import { BlockNodeSize } from "../../../../models/project";
  * @param animatedEdge
  * @param parentSize
  * @param parentProductSize
+ * @param libOpen
+ * @param explorerOpen
  * @returns all Elements.
  */
 const BuildBlockElements = (
@@ -21,7 +23,9 @@ const BuildBlockElements = (
   secondaryNode: Node,
   animatedEdge: boolean,
   parentSize: BlockNodeSize,
-  parentProductSize: BlockNodeSize
+  parentProductSize: BlockNodeSize,
+  libOpen: boolean,
+  explorerOpen: boolean
 ) => {
   if (!project) return;
   const elements: Elements = [];
@@ -37,7 +41,7 @@ const BuildBlockElements = (
     return elements;
   }
 
-  const parentBlock = BuildParentBlockNode(selectedNode);
+  const parentBlock = BuildParentBlockNode(selectedNode, libOpen, explorerOpen);
   parentBlock && elements.push(parentBlock);
 
   if (secondaryNode) {

@@ -5,7 +5,6 @@ import { BlockNodeSize } from "../../../../../../models/project";
 interface Props {
   selected: boolean;
   size: BlockNodeSize;
-  explorerOpen: boolean;
 }
 
 const ParentBox = styled.div<Props>`
@@ -13,7 +12,6 @@ const ParentBox = styled.div<Props>`
   cursor: ${(props) => (props.selected ? "grab" : "pointer")};
   width: ${(props) => props.size.width}px;
   height: ${(props) => props.size.height}px;
-  left: ${(props) => (props.explorerOpen ? 290 : 0)}px;
   min-width: 500px;
   max-width: 2500px;
   border-radius: 10px;

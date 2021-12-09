@@ -55,7 +55,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         size={parentBlockSize}
         hasTerminals={terminals.length > 0}
         isSecondaryNode={node.id === secondaryNode?.id}
-        explorerOpen={explorerOpen}
         onParentClick={() => OnParentClick(dispatch, node)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}

@@ -6,7 +6,7 @@ import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { productNodeSizeSelector, edgeSelector, electroSelector, nodeSelector, explorerSelector } from "../../../../redux/store";
+import { productNodeSizeSelector, edgeSelector, electroSelector, nodeSelector } from "../../../../redux/store";
 import { GetAspectColor } from "../../../../helpers";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 
@@ -21,7 +21,6 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
   const parentBlockSize = useAppSelector(productNodeSizeSelector);
-  const explorerOpen = useAppSelector(explorerSelector);
 
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
@@ -42,7 +41,6 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         size={parentBlockSize}
         hasTerminals={terminals.length > 0}
         isSecondaryNode={false}
-        explorerOpen={explorerOpen}
         onParentClick={() => OnParentClick(dispatch, node)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
