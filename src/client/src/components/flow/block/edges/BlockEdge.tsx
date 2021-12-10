@@ -39,7 +39,7 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
   const transportPath = electro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return isTransport ? (
-    <path id={id} style={GetEdgeStyle(color, visible)} className="path-blockEdge" d={transportPath} />
+    <path id={id} style={GetEdgeStyle(color, visible)} className="path-blockEdge" d={transportPath} markerEnd={markerEnd} />
   ) : (
     <path
       id={id}
@@ -52,14 +52,15 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
 };
 
 function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
-  const margin = 45;
+  const margin = 20;
+  const marginSmall = 15;
 
   const start = `M${sourceX} ${sourceY}`;
-  const source = `C${sourceX} ${sourceY + margin}, ${sourceX} ${sourceY - margin * 4}, ${sourceX} ${sourceY}`;
-  const target = `S${targetX} ${targetY - margin * 4}`;
+  const pathSource = `S${sourceX} ${sourceY - margin * 3} ${sourceX} ${sourceY + marginSmall}`;
+  const pathTarget = `${targetX} ${targetY - margin * 4}  ${targetX} ${targetY - marginSmall} ${targetX} ${targetY - margin}`;
   const stop = `${targetX} ${targetY}`;
 
-  return `${start} ${source} ${target} ${stop}`;
+  return `${start} ${pathSource} ${pathTarget} ${stop}`;
 }
 
 export default BlockEdge;
