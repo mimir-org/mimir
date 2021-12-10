@@ -1,5 +1,4 @@
 import { Node } from "../../../../../models";
-import { BlockNodeSize } from "../../../../../models/project";
 import { GetFlowNodeByDataId } from "../../helpers";
 import { SetMarginX } from "../helpers/SetParentNodeSize";
 
@@ -9,13 +8,16 @@ import { SetMarginX } from "../helpers/SetParentNodeSize";
  * @param secondaryNode
  * @param size
  */
-const ResizeHandler = (node: Node, secondaryNode: Node, size: BlockNodeSize, libOpen: boolean, explorerOpen: boolean) => {
+const ResizeHandler = (node: Node, secondaryNode: Node, setWidth: any, libOpen: boolean, explorerOpen: boolean) => {
   let width;
   let marginX;
+  console.log("test");
 
   const updateScreenSize = () => {
     width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
     marginX = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
+
+    setWidth(width - marginX);
   };
 
   window.onresize = updateScreenSize;
@@ -23,11 +25,9 @@ const ResizeHandler = (node: Node, secondaryNode: Node, size: BlockNodeSize, lib
   // Update the Flow parentNode
   const parentNode = GetFlowNodeByDataId(node?.id);
   if (parentNode) {
-    parentNode.style.width = `${size.width}px`;
-    parentNode.style.height = `${size.height}px`;
+    parentNode.style.width = `${width - marginX}px`;
+    // parentNode.style.height = `${height}px`;
   }
-
-  return width - marginX;
 };
 
 export default ResizeHandler;

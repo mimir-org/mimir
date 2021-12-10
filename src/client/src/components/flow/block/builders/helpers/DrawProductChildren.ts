@@ -3,7 +3,6 @@ import { TraverseProductNodes } from ".";
 import { BuildBlockEdge, BuildBlockProductNode } from "..";
 import { IsProduct, IsAspectNode } from "../../../../../helpers";
 import { Node, Edge, Connector } from "../../../../../models";
-import { BlockNodeSize } from "../../../../../models/project";
 import { IsPartOf, IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
 
@@ -14,15 +13,13 @@ import { GetBlockEdgeType } from "../../helpers";
  * @param selectedNode
  * @param elements
  * @param animatedEdge
- * @param parentNodeSize
  */
 const DrawProductChildren = (
   edges: Edge[],
   allNodes: Node[],
   selectedNode: Node,
   elements: Elements<any>,
-  animatedEdge: boolean,
-  parentNodeSize: BlockNodeSize
+  animatedEdge: boolean
 ) => {
   const productChildren: Node[] = [];
   TraverseProductNodes(edges, allNodes, selectedNode, productChildren);
@@ -35,7 +32,7 @@ const DrawProductChildren = (
   });
 
   productChildren.forEach((node) => {
-    const productChildNode = BuildBlockProductNode(node, parentNodeSize);
+    const productChildNode = BuildBlockProductNode(node);
     productChildNode && elements.push(productChildNode);
   });
 };

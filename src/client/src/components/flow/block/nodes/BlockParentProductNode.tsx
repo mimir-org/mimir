@@ -2,14 +2,14 @@ import * as selectors from "./helpers/ProductSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
-import { OnConnectorClick, ResizeHandler } from "./handlers";
+import { OnConnectorClick } from "./handlers";
 import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { GetAspectColor } from "../../../../helpers";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
-import { SetParentNodeSize } from "./helpers";
+// import { SetParentNodeSize } from "./helpers";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -21,9 +21,9 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
-  const libOpen = useAppSelector(selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(selectors.explorerSelector);
+  // const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
+  // const libOpen = useAppSelector(selectors.libOpenSelector);
+  // const explorerOpen = useAppSelector(selectors.explorerSelector);
 
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);

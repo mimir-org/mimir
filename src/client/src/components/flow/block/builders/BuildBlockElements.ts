@@ -3,7 +3,6 @@ import { Node, Project } from "../../../../models";
 import { BuildParentBlockNode, BuildParentSecondaryNode, BuildParentProductNode } from ".";
 import { DrawChildNodes, DrawProductChildren, DrawBlockEdges, DrawSecondaryChildren } from "./helpers";
 import { IsProduct } from "../../../../helpers";
-import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to draw all nodes and edges in BlockView.
@@ -22,8 +21,6 @@ const BuildBlockElements = (
   selectedNode: Node,
   secondaryNode: Node,
   animatedEdge: boolean,
-  parentSize: BlockNodeSize,
-  parentProductSize: BlockNodeSize,
   libOpen: boolean,
   explorerOpen: boolean
 ) => {
@@ -37,7 +34,7 @@ const BuildBlockElements = (
     const parentProduct = BuildParentProductNode(selectedNode, explorerOpen);
     parentProduct && elements.push(parentProduct);
 
-    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, parentProductSize);
+    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge);
     return elements;
   }
 
@@ -46,12 +43,12 @@ const BuildBlockElements = (
 
   if (secondaryNode) {
     const secondary = nodes.find((x) => x.id === secondaryNode.id);
-    const parentSecondaryBlock = BuildParentSecondaryNode(selectedNode, secondary, parentSize);
+    const parentSecondaryBlock = BuildParentSecondaryNode(selectedNode, secondary);
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(edges, nodes, selectedNode, elements, parentSize);
-  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, parentSize);
+  DrawChildNodes(edges, nodes, selectedNode, elements);
+  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements);
   DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 
   return elements;

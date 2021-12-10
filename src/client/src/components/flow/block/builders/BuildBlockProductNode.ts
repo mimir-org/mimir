@@ -3,15 +3,13 @@ import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder, SetOffPageNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
-import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to create a Product Node in BlockView.
  * @param node
- * @param parentNodeSize
  * @returns a Product Node of the type FlowElement.
  */
-const BuildProductBlockNode = (node: Node, parentNodeSize: BlockNodeSize) => {
+const BuildProductBlockNode = (node: Node) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
@@ -21,16 +19,16 @@ const BuildProductBlockNode = (node: Node, parentNodeSize: BlockNodeSize) => {
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node)
-    ? SetBlockNodePos(nodePos, parentPos, parentNodeSize)
-    : SetOffPageNodePos(nodePos, parentNodeSize);
+  // const position = !IsOffPage(node)
+  //   ? SetBlockNodePos(nodePos, parentPos, parentNodeSize)
+  //   : SetOffPageNodePos(nodePos, parentNodeSize);
 
   return {
     key: CreateId(),
     id: node.id,
     type: type,
     data: node,
-    position: position,
+    position: nodePos,
     isHidden: node.isHidden,
     isSelected: node.isSelected,
     draggable: true,

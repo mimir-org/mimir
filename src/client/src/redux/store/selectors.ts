@@ -182,16 +182,6 @@ export const heightSelector = createAppSelector(
   (width) => width
 );
 
-export const nodeSizeSelector = createAppSelector(
-  (state) => state.blockNodeSize.blockParents[0].size,
-  (size) => size
-);
-
-export const productNodeSizeSelector = createAppSelector(
-  (state) => state.blockNodeSize.blockParents[1].size,
-  (size) => size
-);
-
 export const darkModeSelector = createAppSelector(
   (state) => state.darkMode.active,
   (active) => active

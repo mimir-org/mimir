@@ -4,8 +4,6 @@ export {
   librarySelector,
   userStateSelector,
   filterSelector,
-  nodeSizeSelector,
-  productNodeSizeSelector,
   animatedEdgeSelector,
   location3DSelector,
   libOpenSelector,

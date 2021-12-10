@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
-import { memo, FC, useState, useEffect, useMemo } from "react";
+import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
@@ -18,12 +19,13 @@ import { SetParentNodeSize } from "./helpers";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
+  const [width, setWidth] = useState(window.innerWidth);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
+
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
-
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -34,19 +36,17 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
-  let size = useMemo(() => SetParentNodeSize(secondaryNode, libOpen, explorerOpen), [secondaryNode, libOpen, explorerOpen]);
+  useEffect(() => {
+    SetParentNodeSize(setWidth, secondaryNode, libOpen, explorerOpen);
+  }, [secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing
-
-  // size.width = useMemo(
-  //   () => ResizeHandler(node, secondaryNode, size, libOpen, explorerOpen),
-  //   [node, secondaryNode, size, libOpen, explorerOpen]
-  // );
+  useEffect(() => {
+    ResizeHandler(node, secondaryNode, setWidth, libOpen, explorerOpen);
+  }, [secondaryNode, libOpen, explorerOpen]);
 
   if (!node) return null;
-
-  node.width = size.width;
-  node.height = size.height;
+  node.width = width;
 
   return (
     <>

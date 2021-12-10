@@ -14,7 +14,6 @@ import {
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
 } from "../helpers";
-import { Size } from "../../../compLibrary/size";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 

@@ -37,11 +37,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const [elements, setElements] = useState<Elements>([]);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
-  const lib = useAppSelector(selectors.librarySelector);
+  const library = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
-  const parentSize = useAppSelector(selectors.nodeSizeSelector);
-  const parentProductSize = useAppSelector(selectors.productNodeSizeSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const showLocation3D = useAppSelector(selectors.location3DSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
@@ -50,12 +48,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(
-        BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize, libOpen, explorerOpen)
-      );
+      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, libOpen, explorerOpen));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize, libOpen, explorerOpen]
+    [project, node, secondaryNode, animatedEdge, libOpen, explorerOpen]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -67,7 +63,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnect = (params) => {
-    return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
+    return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, library, animatedEdge);
   };
 
   // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -93,7 +89,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       project,
       user: userState.user,
       icons,
-      library: lib,
+      library: library,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,
       setElements,
