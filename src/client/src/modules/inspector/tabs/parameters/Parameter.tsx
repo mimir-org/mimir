@@ -53,7 +53,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
           <>
             <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
               <VisuallyHidden>{isLocked() ? "Unlock parameter" : "Lock parameter"}</VisuallyHidden>
-              {isLocked() ? (<LockClosedParameterComponent fill={headerColor} />) : (<LockOpenComponent />)}
+              {isLocked() ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />}
             </ParameterButton>
             <ParameterButton onClick={() => onClose(attribute.id)}>
               <VisuallyHidden>Close parameter</VisuallyHidden>
