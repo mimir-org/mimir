@@ -17,14 +17,14 @@ const SetParentNodeSize = (secondaryNode: Node, libOpen: boolean, explorerOpen: 
 
 export function SetMarginX(width: number, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) {
   const WIDE_SCREEN = 2200;
-  const marginLarge = width > WIDE_SCREEN ? 85 : 0;
+  const marginLarge = width > WIDE_SCREEN ? 95 : 0;
   const marginSmall = width > WIDE_SCREEN ? 50 : 0;
 
   if (!secondaryNode) {
     if (libOpen && explorerOpen) return Size.ModuleOpen * 2 - marginLarge;
     if (libOpen && !explorerOpen) return Size.ModuleOpen - 100;
     if (!libOpen && explorerOpen) return Size.ModuleOpen - marginLarge;
-    if (!libOpen && !explorerOpen) return -250;
+    if (!libOpen && !explorerOpen) return -50;
   }
 
   // if (libOpen && explorerOpen) return 85;

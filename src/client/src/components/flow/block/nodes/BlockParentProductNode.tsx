@@ -36,9 +36,9 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   // }, [dispatch, node, libOpen, explorerOpen]);
 
   // Responsive resizing
-  useEffect(() => {
-    ResizeHandler(node, null, parentBlockSize, libOpen, explorerOpen, dispatch);
-  }, [node, parentBlockSize, libOpen, explorerOpen, dispatch]);
+  // useEffect(() => {
+  //   ResizeHandler(node, null, parentBlockSize, libOpen, explorerOpen);
+  // }, [node, parentBlockSize, libOpen, explorerOpen]);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, null));

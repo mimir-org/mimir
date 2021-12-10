@@ -21,7 +21,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  // const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
 
@@ -31,21 +30,18 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
-  // Set size
-  // useEffect(() => {
-  //   SetParentNodeSize(node, secondaryNode, libOpen, explorerOpen, dispatch);
-  // }, [dispatch, node, secondaryNode, libOpen, explorerOpen]);
-
-  // Responsive resizing
-  // useEffect(() => {
-  //   ResizeHandler(node, secondaryNode, { width: 100, height: 100 }, libOpen, explorerOpen, dispatch);
-  // }, [node, secondaryNode, libOpen, explorerOpen, dispatch]);
-
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
-  const size = useMemo(() => SetParentNodeSize(secondaryNode, libOpen, explorerOpen), [secondaryNode, libOpen, explorerOpen]);
+  let size = useMemo(() => SetParentNodeSize(secondaryNode, libOpen, explorerOpen), [secondaryNode, libOpen, explorerOpen]);
+
+  // Responsive resizing
+
+  // size.width = useMemo(
+  //   () => ResizeHandler(node, secondaryNode, size, libOpen, explorerOpen),
+  //   [node, secondaryNode, size, libOpen, explorerOpen]
+  // );
 
   if (!node) return null;
 

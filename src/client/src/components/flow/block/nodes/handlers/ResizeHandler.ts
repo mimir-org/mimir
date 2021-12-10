@@ -1,7 +1,6 @@
 import { Node } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
 import { GetFlowNodeByDataId } from "../../helpers";
-import { setBlockNodeWidth } from "../../redux/actions";
 import { SetMarginX } from "../helpers/SetParentNodeSize";
 
 /**
@@ -9,23 +8,14 @@ import { SetMarginX } from "../helpers/SetParentNodeSize";
  * @param node
  * @param secondaryNode
  * @param size
- * @param dispatch
  */
-const ResizeHandler = (
-  node: Node,
-  secondaryNode: Node,
-  size: BlockNodeSize,
-  libOpen: boolean,
-  explorerOpen: boolean,
-  dispatch: any
-) => {
+const ResizeHandler = (node: Node, secondaryNode: Node, size: BlockNodeSize, libOpen: boolean, explorerOpen: boolean) => {
+  let width;
+  let marginX;
+
   const updateScreenSize = () => {
-    const width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
-    const marginX = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
-
-    node.width = width - marginX;
-
-    // dispatch(setBlockNodeWidth(width - marginX));
+    width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
+    marginX = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
   };
 
   window.onresize = updateScreenSize;
@@ -36,6 +26,8 @@ const ResizeHandler = (
     parentNode.style.width = `${size.width}px`;
     parentNode.style.height = `${size.height}px`;
   }
+
+  return width - marginX;
 };
 
 export default ResizeHandler;

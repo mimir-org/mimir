@@ -73,4 +73,4 @@ const HandleComponent = ({ nodes, node, terminals, dispatch, isParent, electro, 
   );
 };
 
-export default memo(HandleComponent);
+export default HandleComponent;
