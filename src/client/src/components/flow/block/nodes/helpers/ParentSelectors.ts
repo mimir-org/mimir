@@ -2,7 +2,6 @@ export {
   edgeSelector,
   electroSelector,
   nodeSelector,
-  nodeSizeSelector,
   secondaryNodeSelector,
   libOpenSelector,
   explorerSelector,

@@ -6,13 +6,11 @@ import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
 import { memo, useRef } from "react";
 import { useResizeParentNode } from "./hooks";
-import { BlockNodeSize } from "../../../../../models/project";
 import { ParentBannerComponent } from ".";
 
 interface Props {
   node: Node;
   color: string;
-  size: BlockNodeSize;
   hasTerminals: boolean;
   isSecondaryNode: boolean;
   onParentClick: () => void;
@@ -28,7 +26,6 @@ interface Props {
 const ParentContainerComponent = ({
   node,
   color,
-  size,
   hasTerminals,
   isSecondaryNode,
   onParentClick,
@@ -40,7 +37,7 @@ const ParentContainerComponent = ({
   const isLocation = IsLocation(node);
 
   return (
-    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
+    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={{ width: node.width, height: node.height }}>
       <ParentBannerComponent
         node={node}
         color={color}

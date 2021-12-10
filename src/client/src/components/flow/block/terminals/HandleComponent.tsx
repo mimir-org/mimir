@@ -7,13 +7,11 @@ import { IsValidBlockConnection, SetTerminalYPos, SetTerminalXPos, GetTerminalCo
 import { HandleBox } from "./styled";
 import { IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
-import { BlockNodeSize } from "../../../../models/project";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 
 interface Props {
   nodes: Node[];
   node: Node;
-  size: BlockNodeSize;
   terminals: Connector[];
   dispatch: any;
   isParent?: boolean;
@@ -27,7 +25,7 @@ interface Props {
  * @param interface
  * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
  */
-const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, electro, offPage, isVisible = true }: Props) => {
+const HandleComponent = ({ nodes, node, terminals, dispatch, isParent, electro, offPage, isVisible = true }: Props) => {
   const [visible, setVisible] = useState(isVisible);
   const className = "react-flow__handle-block";
   const updateNodeInternals = useUpdateNodeInternals();
@@ -44,8 +42,8 @@ const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, ele
         if (conn.visible) {
           const [type, pos] = GetBlockHandleType(conn, electro);
           const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
-          const topPos = SetTerminalYPos(conn, pos, electro, isParent, order, size.height);
-          const leftPos = SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width);
+          const topPos = SetTerminalYPos(conn, pos, electro, isParent, order, node.height);
+          const leftPos = SetTerminalXPos(conn, pos, electro, offPage, isParent, order, node.width);
 
           return (
             <HandleBox

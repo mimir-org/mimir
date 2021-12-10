@@ -25,28 +25,36 @@ const SetTerminalXPos = (
   const marginX = parent ? 20 : 22;
   const marginXSmall = 3;
 
-  if (offPage) {
-    if (position === Position.Right) return 35;
-    return -12;
-  }
+  if (offPage) SetOffPageTerminalXPos(position);
+  if (electro) SetElectroTerminalXPos(conn, order, parent, nodeWidth, marginXSmall, marginX);
 
-  if (!electro) {
-    if (IsPartOf(conn)) return nodeWidth / 2;
-    if (position === Position.Right && !parent) return nodeWidth - marginXSmall;
-    if (position === Position.Right && parent) return nodeWidth;
-    return -marginX;
-  }
+  if (IsPartOf(conn)) return nodeWidth / 2;
+  if (position === Position.Right && !parent) return nodeWidth - marginXSmall;
+  if (position === Position.Right && parent) return nodeWidth;
+  return -marginX;
+};
 
+function SetOffPageTerminalXPos(position: Position) {
+  if (position === Position.Right) return 35;
+  if (position === Position.Left) return -12;
+}
+
+function SetElectroTerminalXPos(
+  conn: Connector,
+  order: number,
+  isParent: boolean,
+  nodeWidth: number,
+  marginXSmall: number,
+  marginX: number
+) {
   if (IsPartOf(conn)) {
     if (IsInputTerminal(conn)) return -marginX;
     return nodeWidth + marginXSmall;
   }
 
   if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return nodeWidth / 2 - marginXSmall;
-  return CalculateX(order, parent, nodeWidth);
-};
-
-export default SetTerminalXPos;
+  return CalculateX(order, isParent, nodeWidth);
+}
 
 /**
  * Function to calculate a terminal's X position. Terminals are positioned middle-out.
@@ -65,3 +73,4 @@ function CalculateX(count: number, parent: boolean, nodeWith: number) {
   // Odd-numbered terminals ordered right
   if (count % 2 !== 0) return base + interval * Math.floor(count / 2) + interval;
 }
+export default SetTerminalXPos;

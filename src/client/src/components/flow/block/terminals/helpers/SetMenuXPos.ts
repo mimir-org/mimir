@@ -1,5 +1,4 @@
 import { Node } from "../../../../../models";
-import { BlockNodeSize } from "../../../../../models/project";
 
 /**
  * Method to set the terminal menu's X position.
@@ -7,24 +6,17 @@ import { BlockNodeSize } from "../../../../../models/project";
  * @param electro
  * @param hasActiveTerminals
  * @param node
- * @param parentBlockSize
  * @returns a numeric value.
  */
-const SetMenuXPos = (
-  isParent: boolean,
-  electro: boolean,
-  hasActiveTerminals: boolean,
-  node: Node,
-  parentBlockSize: BlockNodeSize
-) => {
-  const marginSmall = 2;
+const SetMenuXPos = (isParent: boolean, electro: boolean, hasActiveTerminals: boolean, node: Node) => {
+  const marginSmall = 0;
   const marginLarge = 22;
 
   if (electro) {
     if (!isParent) return node.width + marginSmall;
   }
 
-  if (isParent) return parentBlockSize.width - marginSmall;
+  if (isParent) return node.width - marginSmall;
   if (hasActiveTerminals) return node.width + marginLarge;
   return node.width - marginSmall;
 };

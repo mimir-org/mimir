@@ -31,9 +31,9 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const node = nodes?.find((x) => x.id === data.id);
 
   // Set size
-  useEffect(() => {
-    SetParentNodeSize(null, libOpen, explorerOpen, dispatch);
-  }, [dispatch, libOpen, explorerOpen]);
+  // useEffect(() => {
+  //   SetParentNodeSize(node, null, libOpen, explorerOpen, dispatch);
+  // }, [dispatch, node, libOpen, explorerOpen]);
 
   // Responsive resizing
   useEffect(() => {
@@ -51,7 +51,6 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
       <ParentContainerComponent
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
-        size={parentBlockSize}
         hasTerminals={terminals.length > 0}
         isSecondaryNode={false}
         onParentClick={() => OnParentClick(dispatch, node)}
@@ -70,15 +69,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         showOutTerminalMenu={showOutTerminalMenu}
         isParent
       />
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={parentBlockSize}
-        terminals={terminals}
-        electro={electro}
-        dispatch={dispatch}
-        isParent
-      />
+      <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
     </>
   );
 };

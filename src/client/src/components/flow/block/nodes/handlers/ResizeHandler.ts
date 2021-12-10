@@ -23,7 +23,9 @@ const ResizeHandler = (
     const width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
     const marginX = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
 
-    dispatch(setBlockNodeWidth(width - marginX));
+    node.width = width - marginX;
+
+    // dispatch(setBlockNodeWidth(width - marginX));
   };
 
   window.onresize = updateScreenSize;

@@ -26,15 +26,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   return (
     <OffPageBox id={type + node.id}>
       <OffPageIcon style={{ fill: iconColor }} className="logo" />
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={{ width: node.width, height: node.height }}
-        terminals={node.connectors}
-        dispatch={dispatch}
-        isVisible={false}
-        offPage
-      />
+      <HandleComponent nodes={nodes} node={node} terminals={node.connectors} dispatch={dispatch} isVisible={false} offPage />
     </OffPageBox>
   );
 };

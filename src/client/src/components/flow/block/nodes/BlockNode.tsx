@@ -51,8 +51,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   return (
     <NodeBox
       id={type + node.id}
+      node={node}
       product={IsProduct(node)}
-      size={{ width: node.width, height: node.height }}
       visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
@@ -73,14 +73,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={{ width: node.width, height: node.height }}
-        terminals={terminals}
-        electro={electro}
-        dispatch={dispatch}
-      />
+      <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} />
     </NodeBox>
   );
 };

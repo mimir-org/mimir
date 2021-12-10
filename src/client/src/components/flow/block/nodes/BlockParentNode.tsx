@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/ParentSelectors";
-import { memo, FC, useState, useEffect } from "react";
+import { memo, FC, useState, useEffect, useMemo } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
@@ -21,7 +21,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
+  // const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
 
@@ -32,27 +32,31 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const node = nodes?.find((x) => x.id === data.id);
 
   // Set size
-  useEffect(() => {
-    SetParentNodeSize(secondaryNode, libOpen, explorerOpen, dispatch);
-  }, [dispatch, secondaryNode, libOpen, explorerOpen]);
+  // useEffect(() => {
+  //   SetParentNodeSize(node, secondaryNode, libOpen, explorerOpen, dispatch);
+  // }, [dispatch, node, secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing
-  useEffect(() => {
-    ResizeHandler(node, secondaryNode, parentBlockSize, libOpen, explorerOpen, dispatch);
-  }, [node, secondaryNode, parentBlockSize, libOpen, explorerOpen, dispatch]);
+  // useEffect(() => {
+  //   ResizeHandler(node, secondaryNode, { width: 100, height: 100 }, libOpen, explorerOpen, dispatch);
+  // }, [node, secondaryNode, libOpen, explorerOpen, dispatch]);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
+  const size = useMemo(() => SetParentNodeSize(secondaryNode, libOpen, explorerOpen), [secondaryNode, libOpen, explorerOpen]);
+
   if (!node) return null;
+
+  node.width = size.width;
+  node.height = size.height;
 
   return (
     <>
       <ParentContainerComponent
         node={node}
         color={GetAspectColor(node, AspectColorType.Header)}
-        size={parentBlockSize}
         hasTerminals={terminals.length > 0}
         isSecondaryNode={node.id === secondaryNode?.id}
         onParentClick={() => OnParentClick(dispatch, node)}
@@ -70,15 +74,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         showOutTerminalMenu={showOutTerminalMenu}
         isParent
       />
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={parentBlockSize}
-        terminals={terminals}
-        electro={electro}
-        dispatch={dispatch}
-        isParent
-      />
+      <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
     </>
   );
 };
