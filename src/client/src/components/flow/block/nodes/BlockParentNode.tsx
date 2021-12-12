@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { GetAspectColor } from "../../../../helpers";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 import { SetParentNodeSize } from "./helpers";
+import { blockElementsSelector } from "../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -20,6 +21,7 @@ import { SetParentNodeSize } from "./helpers";
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
@@ -30,23 +32,26 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const electro = useAppSelector(selectors.electroSelector);
+  const elements = useAppSelector(blockElementsSelector);
   const node = nodes?.find((x) => x.id === data.id);
+  const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    SetParentNodeSize(setWidth, secondaryNode, libOpen, explorerOpen);
+    SetParentNodeSize(setWidth, setHeight, secondaryNode, libOpen, explorerOpen);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing
   useEffect(() => {
-    ResizeHandler(node, secondaryNode, setWidth, libOpen, explorerOpen);
+    ResizeHandler(node, secondaryNode, setWidth, libOpen, explorerOpen, elements, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   if (!node) return null;
   node.width = width;
+  node.height = height;
 
   return (
     <>
@@ -70,7 +75,9 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         showOutTerminalMenu={showOutTerminalMenu}
         isParent
       />
-      <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
+      {hasActiveTerminals && (
+        <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
+      )}
     </>
   );
 };

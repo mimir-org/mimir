@@ -1,19 +1,18 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
+import { IsProduct } from "../../../helpers";
 import { Node } from "../../../models";
 
 interface Props {
-  product: boolean;
   node: Node;
   colorMain: string;
   colorSelected: string;
   isSelected: boolean;
-  visible: boolean;
 }
 
 const NodeBox = styled.div<Props>`
   position: relative;
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+  opacity: ${(props) => (!props.node.isHidden ? 1 : 0)};
   height: ${(props) => props.node.height}px;
   width: ${(props) => props.node.width}px;
   max-height: inherit;
@@ -35,7 +34,7 @@ const NodeBox = styled.div<Props>`
   .line {
     height: 1px;
     width: auto;
-    background-color: ${(props) => (props.product ? Color.ProductSelected : Color.FunctionSelected)};
+    background-color: ${(props) => (IsProduct(props.node) ? Color.ProductSelected : Color.FunctionSelected)};
     position: relative;
     bottom: 15px;
     left: 0px;

@@ -6,23 +6,23 @@ import { Position } from "../../../../../models/project";
  * @returns an updated position, containing X and Y values.
  */
 
-const SetBlockNodePos = (nodePos: Position) => {
-  // const margin = 20;
+const SetBlockNodePos = (nodePos: Position, libOpen: boolean) => {
+  const margin = 20;
 
-  // const xMin = parentPos.x;
-  // const xMax = parentPos.x + parentNodeSize?.width - Size.Node_Width;
-  // const yMin = parentPos.y + margin;
-  // const yMax = parentPos.y + parentNodeSize?.height - Size.Node_Height;
+  const yMin = 30;
+  const yMax = window.innerHeight - 180;
+  const xMin = 300;
+  const xMax = libOpen ? window.innerWidth - 400 : window.innerWidth - 80;
 
-  // let nodeY = nodePos.y;
-  // let nodeX = nodePos.x;
+  let nodeY = nodePos.y;
+  let nodeX = nodePos.x;
 
-  // if (nodeX < xMin) nodeX = xMin + margin;
-  // if (nodeX > xMax) nodeX = xMax - margin;
-  // if (nodeY < yMin) nodeY = yMin + margin * 2;
-  // if (nodeY > yMax) nodeY = yMax - margin;
+  if (nodeX < xMin) nodeX = xMin + margin;
+  if (nodeX > xMax) nodeX = xMax - margin;
+  if (nodeY < yMin) nodeY = yMin + margin;
+  if (nodeY > yMax) nodeY = yMax - margin * 1.5;
 
-  return { x: nodePos.x, y: nodePos.y };
+  return { x: nodeX, y: nodeY };
 };
 
 export default SetBlockNodePos;

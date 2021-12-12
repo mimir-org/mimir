@@ -1,8 +1,7 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder, SetOffPageNodePos } from "./helpers";
+import { GetNodeTypeString, SetConnectorOrder } from "./helpers";
 import { CreateId } from "../../helpers";
-import { IsOffPage } from "../../../../helpers";
 
 /**
  * Component to create a Product Node in BlockView.
@@ -14,7 +13,6 @@ const BuildProductBlockNode = (node: Node) => {
   const type = GetNodeTypeString(node);
 
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-  const parentPos = { x: -125, y: -40 }; // TODO: fix hard-coded position
 
   SetConnectorOrder(node);
 

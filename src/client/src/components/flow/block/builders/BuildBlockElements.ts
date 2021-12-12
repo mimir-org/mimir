@@ -10,8 +10,6 @@ import { IsProduct } from "../../../../helpers";
  * @param selectedNode
  * @param secondaryNode
  * @param animatedEdge
- * @param parentSize
- * @param parentProductSize
  * @param libOpen
  * @param explorerOpen
  * @returns all Elements.
@@ -47,7 +45,7 @@ const BuildBlockElements = (
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(edges, nodes, selectedNode, elements);
+  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen);
   secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements);
   DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 

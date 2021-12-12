@@ -11,11 +11,11 @@ import { IsPartOf } from "../../../helpers";
  * @param selectedNode
  * @param elements
  */
-const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, elements: Elements<any>) => {
+const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, elements: Elements<any>, libOpen: boolean) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(BuildBlockNode(toNode));
+      if (toNode) elements.push(BuildBlockNode(toNode, libOpen));
     }
   });
 };

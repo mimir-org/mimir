@@ -4,7 +4,7 @@ import { IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
-import { memo, useRef } from "react";
+import { useRef } from "react";
 import { useResizeParentNode } from "./hooks";
 import { ParentBannerComponent } from ".";
 
@@ -61,4 +61,4 @@ const ParentContainerComponent = ({
   );
 };
 
-export default memo(ParentContainerComponent);
+export default ParentContainerComponent;

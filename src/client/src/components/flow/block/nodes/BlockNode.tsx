@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode, IsProduct } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
 
 /**
  * Component for a child Node in BlockView.
@@ -32,6 +32,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(electroSelector);
   const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
+  const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
@@ -52,13 +53,11 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     <NodeBox
       id={type + node.id}
       node={node}
-      product={IsProduct(node)}
-      visible={!node.isHidden}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
       isSelected={node === GetSelectedBlockNode()}
-      onMouseOver={() => OnHover(showTerminalBox)}
-      onMouseOut={() => OnMouseOut(showTerminalBox)}
+      onMouseEnter={() => OnHover(showTerminalBox)}
+      onMouseLeave={() => OnMouseOut(showTerminalBox)}
     >
       <BlockLogoComponent node={node} />
 
@@ -73,7 +72,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
-      <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} />
+      {hasActiveTerminals && (
+        <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} />
+      )}
     </NodeBox>
   );
 };
