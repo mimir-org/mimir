@@ -13,6 +13,7 @@ export interface OffPageData {
   x: number;
   y: number;
 }
+
 /**
  * Component to create an OffPageNode.
  * @param project

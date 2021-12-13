@@ -1,3 +1,4 @@
+import { Size } from "../../../../../compLibrary/size";
 import { Position } from "../../../../../models/project";
 
 /**
@@ -7,21 +8,37 @@ import { Position } from "../../../../../models/project";
  * @param offPageNodePos
  * @returns an updated position, containing X and Y values.
  */
-const SetOffPageNodePos = (offPageNodePos: Position) => {
-  // const marginY = 50;
+const SetOffPageNodePos = (offPageNodePos: Position, libOpen: boolean, explorerOpen: boolean, secondaryNode: boolean) => {
+  const width = secondaryNode ? window.innerWidth / 2.3 : window.innerWidth;
 
-  // const yMin = marginY * 3;
-  // const xMax = parentNodeSize?.width;
+  const xMin = SetXMin(libOpen, explorerOpen, secondaryNode, width);
+  const xMax = xMin;
 
-  // let offPageY = offPageNodePos.y;
-  // let offPageX = offPageNodePos.x;
+  const yMin = 120;
 
-  // if (offPageNodePos.x < xMax) offPageX = xMax;
-  // if (offPageNodePos.x > xMax) offPageX = xMax;
+  let offPageX = offPageNodePos.x;
+  let offPageY = offPageNodePos.y;
+
+  if (offPageNodePos.x < xMin) offPageX = xMin;
+  if (offPageNodePos.x > xMax) offPageX = xMin;
   // if (offPageNodePos.y < yMin) offPageY = yMin;
   // if (offPageNodePos.y > yMax) offPageY = yMax;
 
-  return { x: offPageNodePos.x, y: offPageNodePos.y };
+  return { x: offPageX, y: offPageY };
 };
+
+function SetXMin(libOpen: boolean, explorerOpen: boolean, secondaryNode: boolean, width: number) {
+  const marginLarge = 145;
+
+  if (secondaryNode) {
+    if (libOpen && !explorerOpen) return width + 85;
+    if (!libOpen && explorerOpen) return width + Size.ModuleOpen + 55;
+    if ((!libOpen && !explorerOpen) || (libOpen && explorerOpen)) return width + Size.ModuleOpen - 115;
+  }
+
+  if (explorerOpen && !libOpen) return width + Size.ModuleOpen - 175;
+  if ((explorerOpen && libOpen) || (!explorerOpen && libOpen)) return width - marginLarge;
+  if (!explorerOpen && !libOpen) return width + marginLarge;
+}
 
 export default SetOffPageNodePos;

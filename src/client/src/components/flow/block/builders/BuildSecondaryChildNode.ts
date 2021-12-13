@@ -13,7 +13,9 @@ const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boo
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node) ? SetSecondaryNodePos(nodePos, libOpen, explorerOpen) : SetOffPageNodePos(nodePos);
+  const position = !IsOffPage(node)
+    ? SetSecondaryNodePos(nodePos, libOpen, explorerOpen)
+    : SetOffPageNodePos(nodePos, libOpen, explorerOpen, false);
 
   return {
     key: CreateId(),
