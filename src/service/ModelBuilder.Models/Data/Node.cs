@@ -16,6 +16,8 @@ namespace Mb.Models.Data
         public string Iri { get; set; }
 
         public string Domain => Id.ResolveDomain();
+        
+        public string Kind => nameof(Node);
 
         public string Rds { get; set; }
 

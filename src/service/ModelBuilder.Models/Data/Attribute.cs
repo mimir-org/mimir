@@ -19,6 +19,8 @@ namespace Mb.Models.Data
 
         public string Domain => Id.ResolveDomain();
 
+        public string Kind => nameof(Attribute);
+
         public string Entity { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }

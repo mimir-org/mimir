@@ -1,5 +1,5 @@
 import { CreateId, GetDateNowUtc } from "../helpers";
-import { Attribute, BlobData, Connector, LibItem, Node, User } from "../../../models";
+import { BlobData, LibItem, Node, User } from "../../../models";
 import { Size } from "../../../compLibrary/size";
 
 /**
@@ -24,11 +24,8 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     positionY: position.y,
     positionBlockX: position.x,
     positionBlockY: position.y,
-    connectors: data.connectors.map((c) => {
-      c.attributes = c.attributes?.map((attr) => new Attribute(attr));
-      return new Connector(c);
-    }),
-    attributes: data.attributes.map((attr) => new Attribute(attr)),
+    connectors: data.connectors,
+    attributes: data.attributes,
     simples: data.simples,
     aspect: data.aspect,
     statusId: data.statusId,

@@ -7,6 +7,8 @@ namespace Mb.Models.Data
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        
+        public string Kind => nameof(Simple);
         public string SemanticReference { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
         public virtual string NodeId { get; set; }

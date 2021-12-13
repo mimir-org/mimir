@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { Project, ProjectFileAm, WebSocket } from "../../../models";
-import { ConvertProject, InitializeProject } from ".";
+import { ConvertProject } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { IsPartOf } from "../../../components/flow/helpers";
@@ -63,7 +63,7 @@ export function* getProject(action) {
       return;
     }
 
-    const project = InitializeProject(response.data);
+    const project = response.data;
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
@@ -184,7 +184,7 @@ export function* createProject(action) {
     project.edges = [];
 
     const payload = {
-      project: InitializeProject(project),
+      project: project,
       apiError: null,
     };
 
@@ -293,7 +293,7 @@ export function* updateProject(action) {
       return;
     }
 
-    const project = InitializeProject(response.data);
+    const project = response.data;
 
     if (project.nodes && action.payload.nodes) {
       project.nodes.forEach((node) => {
