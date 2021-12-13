@@ -14,7 +14,6 @@ const useOnConnectStop = (e, project: Project, dispatch: any) => {
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
 
-    // Calculate the boundaries for OffPage dropzone
     const validDrop = ValidateOffPageDrop(e.clientX, e.clientY, sourceNode, edgeEvent);
 
     if (validDrop) {
@@ -39,10 +38,12 @@ const useOnConnectStop = (e, project: Project, dispatch: any) => {
 
 function ValidateOffPageDrop(clientX: number, clientY: number, sourceNode: Node, edgeEvent: EdgeEvent) {
   const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
-  const dropZoneWidth = 100;
+  console.log({ sourceConnector });
 
-  const leftBound = IsInputTerminal(sourceConnector) ? 0 : window.innerWidth - 100;
-  const rightBound = IsInputTerminal(sourceConnector) ? 0 : leftBound + dropZoneWidth;
+  // Calculate the boundaries for OffPage dropzone
+  const dropZoneWidth = 100;
+  const leftBound = IsInputTerminal(sourceConnector) ? 0 : window.innerWidth - 120;
+  const rightBound = IsInputTerminal(sourceConnector) ? 350 : leftBound + dropZoneWidth;
 
   return !IsOffPage(sourceNode) && clientX > leftBound && clientX < rightBound;
 }

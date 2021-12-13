@@ -25,6 +25,8 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
   const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const marginY = 150;
 
+  const isInput = IsInputTerminal(sourceConnector);
+
   const offPageNode = {
     id: CreateId(),
     name: "OffPage-" + sourceNode.name,
@@ -105,14 +107,14 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
 
   const transportEdge = {
     id: CreateId(),
-    fromConnector: sourceConnector,
-    fromConnectorId: sourceConnector?.id,
-    toConnector: inputConnector,
-    toConnectorId: inputConnector?.id,
-    fromNode: sourceNode,
-    fromNodeId: sourceNode.id,
-    toNode: offPageNode,
-    toNodeId: offPageNode.id,
+    fromConnector: isInput ? outputConnector : sourceConnector,
+    fromConnectorId: isInput ? outputConnector.id : sourceConnector?.id,
+    toConnector: isInput ? outputConnector : inputConnector,
+    toConnectorId: isInput ? outputConnector.id : inputConnector?.id,
+    fromNode: isInput ? offPageNode : sourceNode,
+    fromNodeId: isInput ? offPageNode.id : sourceNode.id,
+    toNode: isInput ? sourceNode : offPageNode,
+    toNodeId: isInput ? sourceNode.id : offPageNode.id,
     isHidden: false,
     kind: EDGE_KIND,
     projectId: sourceNode.projectId,
