@@ -20,11 +20,11 @@ import {
   SAVE_PROJECT,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
-  LOCK_UNLOCK_NODE,
+  LOCK_NODE,
   COMMIT_PROJECT,
   CREATING_SUB_PROJECT,
-  LOCK_UNLOCK_EDGE,
-  LOCK_UNLOCK_ATTRIBUTE,
+  LOCK_EDGE,
+  LOCK_ATTRIBUTE,
 } from "./../store/project/types";
 import {
   getProject,
@@ -34,10 +34,10 @@ import {
   updateProject,
   exportProjectFile,
   importProject,
-  lockUnlockNode,
-  lockUnlockAttribute,
+  lockNode,
+  lockAttribute,
   commitProject,
-  lockUnlockEdge,
+  lockEdge,
 } from "./project/saga";
 import {
   getPredefinedAttributes,
@@ -52,7 +52,7 @@ import {
   getSimpleTypes,
 } from "./typeEditor/saga";
 
-//TODO: Add takeEvery for LOCK_UNLOCK on
+//TODO: Add takeEvery for LOCK_ on
 function* sagas() {
   yield all([
     takeEvery(FETCHING_LIBRARY, searchLibrary),
@@ -74,9 +74,9 @@ function* sagas() {
     takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
-    takeEvery(LOCK_UNLOCK_NODE, lockUnlockNode),
-    takeEvery(LOCK_UNLOCK_EDGE, lockUnlockEdge),
-    takeEvery(LOCK_UNLOCK_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_NODE, lockNode),
+    takeEvery(LOCK_EDGE, lockEdge),
+    takeEvery(LOCK_ATTRIBUTE, lockAttribute),
     takeEvery(IMPORT_LIBRARY, importLibrary),
     takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),

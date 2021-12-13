@@ -232,7 +232,7 @@ export interface ProjectConverterAm {
   filename: string;
 }
 
-export interface LockUnlockAttributeAm {
+export interface LockAttributeAm {
   id: string;
   projectId: string;
   isLocked: boolean;
@@ -246,7 +246,7 @@ export interface LockUnlockAttributeAm {
   terminalId?: string;
 }
 
-export interface LockUnlockNodeAm {
+export interface LockNodeAm {
   id: string;
   projectId: string;
   isLocked: boolean;
@@ -254,7 +254,7 @@ export interface LockUnlockNodeAm {
   isLockedStatusDate?: Date;
 }
 
-export interface LockUnlockEdgeAm {
+export interface LockEdgeAm {
   id: string;
   projectId: string;
   isLocked: boolean;

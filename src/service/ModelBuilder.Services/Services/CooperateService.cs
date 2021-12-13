@@ -40,31 +40,31 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public Task SendLockUnlockAttributeUpdates(IReadOnlyCollection<(LockUnlockAttributeAm lockUnlockAttributeAm, WorkerStatus workerStatus)> map, string projectId)
+        public Task SendLockAttributeUpdates(IReadOnlyCollection<(LockAttributeAm lockAttributeAm, WorkerStatus workerStatus)> map, string projectId)
         {
             foreach (var tuple in map)
             {
-                _webSocketRepository.SendLockUnlockAttributeData(tuple.lockUnlockAttributeAm, projectId, tuple.workerStatus);
+                _webSocketRepository.SendLockAttributeData(tuple.lockAttributeAm, projectId, tuple.workerStatus);
             }
 
             return Task.CompletedTask;
         }
 
-        public Task SendLockUnlockNodeUpdates(IReadOnlyCollection<(LockUnlockNodeAm lockUnlockNodeAm, WorkerStatus workerStatus)> map, string projectId)
+        public Task SendLockNodeUpdates(IReadOnlyCollection<(LockNodeAm lockNodeAm, WorkerStatus workerStatus)> map, string projectId)
         {
             foreach (var tuple in map)
             {
-                _webSocketRepository.SendLockUnlockNodeData(tuple.lockUnlockNodeAm, projectId, tuple.workerStatus);
+                _webSocketRepository.SendLockNodeData(tuple.lockNodeAm, projectId, tuple.workerStatus);
             }
 
             return Task.CompletedTask;
         }
 
-        public Task SendLockUnlockEdgeUpdates(IReadOnlyCollection<(LockUnlockEdgeAm lockUnlockEdgeAm, WorkerStatus workerStatus)> map, string projectId)
+        public Task SendLockEdgeUpdates(IReadOnlyCollection<(LockEdgeAm lockEdgeAm, WorkerStatus workerStatus)> map, string projectId)
         {
             foreach (var tuple in map)
             {
-                _webSocketRepository.SendLockUnlockEdgeData(tuple.lockUnlockEdgeAm, projectId, tuple.workerStatus);
+                _webSocketRepository.SendLockEdgeData(tuple.lockEdgeAm, projectId, tuple.workerStatus);
             }
 
             return Task.CompletedTask;

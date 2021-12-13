@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../helpers";
 import { Project } from "../../../models";
-import { lockUnlockEdge, lockUnlockNode, setIsLockedEdge, setIsLockedNode } from "../../../redux/store/project/actions";
+import { lockEdge, lockNode, setIsLockedEdge, setIsLockedNode } from "../../../redux/store/project/actions";
 import { IsNode, IsEdge } from "../helpers/IsType";
 import { InspectorElement } from "../types";
 
@@ -17,8 +17,8 @@ const handleLockOnline = (
   isLockedBy: string,
   dispatch: Dispatch
 ) => {
-  if (IsNode(element)) dispatch(lockUnlockNode(element.id, project.id, isLocked, isLockedBy));
-  if (IsEdge(element)) dispatch(lockUnlockEdge(element.id, project.id, isLocked, isLockedBy));
+  if (IsNode(element)) dispatch(lockNode(element.id, project.id, isLocked, isLockedBy));
+  if (IsEdge(element)) dispatch(lockEdge(element.id, project.id, isLocked, isLockedBy));
 };
 
 const handleLockOffline = (

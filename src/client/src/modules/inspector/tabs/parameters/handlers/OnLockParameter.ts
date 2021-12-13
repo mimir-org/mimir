@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
 import { Attribute, Project } from "../../../../../models";
 import {
-  lockUnlockAttribute,
+  lockAttribute,
   setIsLockedCompositeAttribute,
   setIsLockedInterfaceAttribute,
   setIsLockedNodeAttribute,
@@ -40,7 +40,7 @@ const OnLockParameter = (
 };
 
 const handleLockOnline = (attribute: Attribute, project: Project, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {
-  dispatch(lockUnlockAttribute(attribute.id, project.id, isLocked, isLockedBy));
+  dispatch(lockAttribute(attribute.id, project.id, isLocked, isLockedBy));
 };
 
 const handleLockOffline = (

@@ -91,6 +91,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IVersionService, VersionService>();
             services.AddScoped<IProjectFileService, ProjectFileService>();
             services.AddScoped<ICooperateService, CooperateService>();
+            services.AddScoped<ILockService, LockService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
