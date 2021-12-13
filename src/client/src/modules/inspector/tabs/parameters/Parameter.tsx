@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ParameterDescriptor } from "./";
 import { Entity } from "./styled";
 import { Color } from "../../../../compLibrary/colors";
@@ -34,6 +34,14 @@ function Parameter({ attribute, combination, headerColor, bodyColor, onLock, onC
       ? attribute.units?.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]
       : attribute?.units?.[0]
   );
+
+  useEffect(() => {
+    if (IsAttribute(attribute)) {
+      if (attribute.value) setValue(attribute.value);
+      if (attribute.selectedUnitId)
+        setUnit(attribute.units?.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]);
+    }
+  }, [attribute]);
 
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
