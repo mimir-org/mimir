@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
@@ -8,8 +9,6 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
-using Mb.Services.Extensions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -17,7 +16,6 @@ namespace Mb.Services.Services
 {
     public class LockService : ILockService
     {
-        private readonly IHttpContextAccessor _contextAccessor;
         private readonly IAttributeRepository _attributeRepository;
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
@@ -26,10 +24,9 @@ namespace Mb.Services.Services
         private readonly IConnectorRepository _connectorRepository;
         private readonly ICooperateService _cooperateService;
 
-        public LockService(IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IConnectorRepository connectorRepository, 
+        public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IConnectorRepository connectorRepository, 
             IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
         {
-            _contextAccessor = contextAccessor;
             _nodeRepository = nodeRepository;
             _edgeRepository = edgeRepository;
             _connectorRepository = connectorRepository;
@@ -83,8 +80,10 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="lockAttributeAm"></param>
         /// <param name="save"></param>
+        /// <param name="userName"></param>
+        /// <param name="dateTimeNow"></param>
         /// <returns>Status204NoContent</returns>
-        public async Task LockAttribute(LockAttributeAm lockAttributeAm, bool save)
+        public async Task LockAttribute(LockAttributeAm lockAttributeAm, bool save, string userName, DateTime dateTimeNow)
         {
             if (string.IsNullOrWhiteSpace(lockAttributeAm?.Id))
                 throw new ModelBuilderBadRequestException($"Error locking/unlocking Attribute: Id or projectId can't be null or empty.");
@@ -95,8 +94,8 @@ namespace Mb.Services.Services
                 return;
 
             attribute.IsLocked = lockAttributeAm.IsLocked;
-            attribute.IsLockedStatusBy = _contextAccessor.GetName();
-            attribute.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+            attribute.IsLockedStatusBy = userName;
+            attribute.IsLockedStatusDate = dateTimeNow;
 
             lockAttributeAm.IsLockedStatusBy = attribute.IsLockedStatusBy;
             lockAttributeAm.IsLockedStatusDate = attribute.IsLockedStatusDate;
@@ -109,7 +108,7 @@ namespace Mb.Services.Services
             if (save)
                 await _attributeRepository.SaveAsync();
 
-            //WebSocket - send attribute to client 
+            //WebSocket - send attribute to client
             await _cooperateService.SendLockAttributeUpdates(
                 new List<(LockAttributeAm am, WorkerStatus workerStatus)> 
                     { (lockAttributeAm, WorkerStatus.Update) }, lockAttributeAm.ProjectId);
@@ -120,29 +119,34 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="lockEdgeAm"></param>
         /// <param name="save"></param>
+        /// <param name="userName"></param>
+        /// <param name="dateTimeNow"></param>
         /// <returns>Status204NoContent</returns>
-        public async Task LockEdge(LockEdgeAm lockEdgeAm, bool save)
+        public async Task LockEdge(LockEdgeAm lockEdgeAm, bool save, string userName, DateTime dateTimeNow)
         {
             if (string.IsNullOrWhiteSpace(lockEdgeAm?.Id) || string.IsNullOrWhiteSpace(lockEdgeAm.ProjectId))
                 throw new ModelBuilderBadRequestException($"Error locking/unlocking Edge: Id or projectId can't be null or empty.");
 
             var edge = await _edgeRepository.GetAsync(lockEdgeAm.Id);
 
-            if (edge == null || edge.IsLocked == lockEdgeAm.IsLocked)
+            if (edge == null)
                 return;
 
             //Edge lock/unlockt
-            edge.IsLocked = lockEdgeAm.IsLocked;
-            edge.IsLockedStatusBy = _contextAccessor.GetName();
-            edge.IsLockedStatusDate = DateTime.Now.ToUniversalTime();
+            if (edge.IsLocked != lockEdgeAm.IsLocked)
+            {
+                edge.IsLocked = lockEdgeAm.IsLocked;
+                edge.IsLockedStatusBy = userName;
+                edge.IsLockedStatusDate = dateTimeNow;
 
-            lockEdgeAm.IsLockedStatusBy = edge.IsLockedStatusBy;
-            lockEdgeAm.IsLockedStatusDate = edge.IsLockedStatusDate;
+                lockEdgeAm.IsLockedStatusBy = edge.IsLockedStatusBy;
+                lockEdgeAm.IsLockedStatusDate = edge.IsLockedStatusDate;
 
-            if (save)
-                await _edgeRepository.SaveAsync();
+                if (save)
+                    await _edgeRepository.SaveAsync();
+            }
 
-            //WebSocket - send edge to client 
+            //WebSocket - send edge to client
             await _cooperateService.SendLockEdgeUpdates(
                 new List<(LockEdgeAm am, WorkerStatus workerStatus)> 
                     { (lockEdgeAm, WorkerStatus.Update) }, lockEdgeAm.ProjectId);
@@ -196,7 +200,7 @@ namespace Mb.Services.Services
             foreach (var attribute in edgeAttributes)
             {
                 var lockAttribute = new LockAttributeAm { Id = attribute.Id, IsLocked = lockEdgeAm.IsLocked};
-                await LockAttribute(lockAttribute, false);
+                await LockAttribute(lockAttribute, false, userName, dateTimeNow);
             }
 
             if(save)
@@ -207,12 +211,17 @@ namespace Mb.Services.Services
         /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
         /// </summary>
         /// <param name="lockNodeAm"></param>
+        /// <param name="userName"></param>
+        /// <param name="dateTimeNow"></param>
         /// <returns>Status204NoContent</returns>
-        public async Task LockNode(LockNodeAm lockNodeAm)
+        public async Task LockNode(LockNodeAm lockNodeAm, string userName, DateTime dateTimeNow)
         {
             if (lockNodeAm?.Id == null || lockNodeAm.ProjectId == null)
                 throw new ModelBuilderBadRequestException($"Error locking/unlocking Node: Id or projectId can't be null or empty.");
-            
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ProjectId == lockNodeAm.ProjectId);
             
             if(!allEdgesInProject.Any())
@@ -224,8 +233,6 @@ namespace Mb.Services.Services
             if(node == null)
                 return;
 
-            var userName = _contextAccessor.GetName();
-            var dateTimeNow = DateTime.Now.ToUniversalTime();
             var allConnectors = _connectorRepository.GetAll(false);
             var allAttributes = _attributeRepository.GetAll(false);
 
@@ -234,10 +241,14 @@ namespace Mb.Services.Services
             await _nodeRepository.SaveAsync();
             await _edgeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
+
+            stopwatch.Stop();
+            Console.WriteLine("Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds);
         }
 
         #region Private
 
+        
         private async void LockNodesRecursive(Node node, LockNodeAm lockNodeAm, string userName, DateTime dateTimeNow,
             IQueryable<Node> allNodesInProject, IQueryable<Connector> allConnectors, IQueryable<Attribute> allAttributes, IQueryable<Edge> allEdgesInProject)
         {
@@ -255,7 +266,7 @@ namespace Mb.Services.Services
                 node.IsLockedStatusBy = lockNodeAm.IsLockedStatusBy;
                 node.IsLockedStatusDate = lockNodeAm.IsLockedStatusDate;
 
-                //WebSocket - send node to client 
+                //WebSocket - send to client
                 await _cooperateService.SendLockNodeUpdates(
                     new List<(LockNodeAm am, WorkerStatus workerStatus)>
                     { (lockNodeAm, WorkerStatus.Update) }, lockNodeAm.ProjectId);
@@ -268,7 +279,7 @@ namespace Mb.Services.Services
                 foreach (var attribute in attributes)
                 {
                     var lockAttribute = new LockAttributeAm { Id = attribute.Id, IsLocked = lockNodeAm.IsLocked };
-                    await LockAttribute(lockAttribute, false);
+                    await LockAttribute(lockAttribute, false, userName, dateTimeNow);
                 }
             }
 
@@ -286,7 +297,7 @@ namespace Mb.Services.Services
                     ProjectId = lockNodeAm.ProjectId
                 };
 
-                await LockEdge(lockEdgeAm, false);
+                await LockEdge(lockEdgeAm, false, userName, dateTimeNow);
 
                 var childNode = allNodesInProject.FirstOrDefault(x => x.Id == edge.ToNodeId);
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +25,7 @@ namespace Mb.Core.Controllers.V1
     [SwaggerTag("Lock")]
     public class LockController : ControllerBase
     {
+        private readonly IHttpContextAccessor _contextAccessor;
         private readonly ILockService _lockService;
         private readonly ILogger<LockController> _logger;
 
@@ -32,10 +34,12 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <param name="lockService"></param>
         /// <param name="logger"></param>
-        public LockController(ILockService lockService, ILogger<LockController> logger)
+        /// <param name="contextAccessor"></param>
+        public LockController(ILockService lockService, ILogger<LockController> logger, IHttpContextAccessor contextAccessor)
         {
             _lockService = lockService;
             _logger = logger;
+            _contextAccessor = contextAccessor;
         }
 
         /// <summary>
@@ -146,7 +150,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                await _lockService.LockAttribute(lockAttributeAm, true);
+                await _lockService.LockAttribute(lockAttributeAm, true, _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
                 return NoContent();
             }
             catch (ModelBuilderUnauthorizedAccessException e)
@@ -179,7 +183,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                await _lockService.LockEdge(lockEdgeAm, true);
+                await _lockService.LockEdge(lockEdgeAm, true, _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
                 return NoContent();
             }
             catch (ModelBuilderUnauthorizedAccessException e)
@@ -212,7 +216,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                await _lockService.LockNode(lockNodeAm);
+                await _lockService.LockNode(lockNodeAm, _contextAccessor.GetName(), DateTime.Now.ToUniversalTime());
                 return NoContent();
             }
             catch (ModelBuilderUnauthorizedAccessException e)
