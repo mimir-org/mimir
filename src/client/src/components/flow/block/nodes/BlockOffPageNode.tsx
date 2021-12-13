@@ -4,7 +4,7 @@ import { projectSelector, useAppDispatch, useAppSelector } from "../../../../red
 import { OffPageInputIcon, OffPageOutputIcon } from "../../../../assets/icons/offpage";
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
-import { IsInputTerminal, IsTransport } from "../../helpers";
+import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
 
 /**
  * Component for an offpage node in BlockView
@@ -20,7 +20,13 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   if (!node) return null;
 
-  const terminal = node.connectors.find((c) => IsInputTerminal(c) && IsTransport(c));
+  const inputConn = node.connectors.find((conn) => IsInputTerminal(conn) && IsTransport(conn));
+  const outputConn = node.connectors.find((conn) => IsOutputTerminal(conn) && IsTransport(conn));
+
+  const edgeInputConn = project?.edges?.find((edge) => edge.toConnector.id === inputConn.id)?.toConnector;
+  const edgeOutputConn = project?.edges?.find((edge) => edge.fromConnector.id === outputConn.id)?.fromConnector;
+
+  const terminal = edgeInputConn ?? edgeOutputConn;
   const iconColor = terminal?.color;
 
   return (

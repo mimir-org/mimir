@@ -1,4 +1,4 @@
-import { IsFunction, IsLocation, IsProduct, IsDirectChild, IsAspectNode } from "../../../helpers";
+import { IsFunction, IsLocation, IsProduct, IsDirectChild, IsAspectNode, IsOffPage } from "../../../helpers";
 import { Node, Connector } from "../../../models";
 import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPartOf } from "../helpers";
 
@@ -20,6 +20,7 @@ const ValidateBlockEdge = (
   source: Connector,
   target: Connector
 ) => {
+  if (IsOffPage(fromNode) || IsOffPage(toNode)) return true;
   if (!secondaryNode) return validEdge(selectedNode, fromNode, toNode, source, target);
   if (secondaryNode) return validSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
 };

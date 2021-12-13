@@ -1,5 +1,6 @@
 import { CreateId, IsInputTerminal, IsPartOf } from "../../helpers";
 import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, EDGE_KIND, Node, RelationType } from "../../../../models";
+import { Position } from "../../../../models/project";
 
 export interface OffPageObject {
   node: Node;
@@ -8,10 +9,10 @@ export interface OffPageObject {
 }
 
 export interface OffPageData {
-  sourceNodeId: string;
-  sourceConnectorId: string;
-  x: number;
-  y: number;
+  sourceNode: Node;
+  sourceConnector: Connector;
+  position: Position;
+  isTarget: boolean;
 }
 
 /**
@@ -20,20 +21,20 @@ export interface OffPageData {
  * @param data
  * @returns the data type OffPageObject.
  */
-const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
-  const sourceConnector = sourceNode?.connectors.find((x) => x.id === data.sourceConnectorId);
+const BuildOffPageNode = (data: OffPageData) => {
+  const sourceConnector = data.sourceConnector;
+  const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
-  const marginY = 150;
-
-  const isInput = IsInputTerminal(sourceConnector);
+  const offPageNodeIsTarget = data.isTarget;
+  const marginY = 120;
 
   const offPageNode = {
     id: CreateId(),
     name: "OffPage-" + sourceNode.name,
     label: "OffPage-" + sourceNode.label,
     aspect: Aspect.None,
-    positionBlockX: data.x,
-    positionBlockY: data.y - marginY,
+    positionBlockX: data.position.x,
+    positionBlockY: data.position.y - marginY,
     connectors: [],
     attributes: [],
     isHidden: false,
@@ -107,14 +108,14 @@ const BuildOffPageNode = (sourceNode: Node, data: OffPageData) => {
 
   const transportEdge = {
     id: CreateId(),
-    fromConnector: isInput ? outputConnector : sourceConnector,
-    fromConnectorId: isInput ? outputConnector.id : sourceConnector?.id,
-    toConnector: isInput ? outputConnector : inputConnector,
-    toConnectorId: isInput ? outputConnector.id : inputConnector?.id,
-    fromNode: isInput ? offPageNode : sourceNode,
-    fromNodeId: isInput ? offPageNode.id : sourceNode.id,
-    toNode: isInput ? sourceNode : offPageNode,
-    toNodeId: isInput ? sourceNode.id : offPageNode.id,
+    fromConnector: offPageNodeIsTarget ? sourceConnector : outputConnector,
+    fromConnectorId: offPageNodeIsTarget ? sourceConnector.id : outputConnector?.id,
+    toConnector: offPageNodeIsTarget ? inputConnector : sourceConnector,
+    toConnectorId: offPageNodeIsTarget ? inputConnector.id : sourceConnector?.id,
+    fromNode: offPageNodeIsTarget ? sourceNode : offPageNode,
+    fromNodeId: offPageNodeIsTarget ? sourceNode.id : offPageNode.id,
+    toNode: offPageNodeIsTarget ? offPageNode : sourceNode,
+    toNodeId: offPageNodeIsTarget ? offPageNode.id : sourceNode.id,
     isHidden: false,
     kind: EDGE_KIND,
     projectId: sourceNode.projectId,

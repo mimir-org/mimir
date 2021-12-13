@@ -26,7 +26,7 @@ const DrawChildNodes = (
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode));
+      if (toNode) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode, edges));
     }
   });
 };
