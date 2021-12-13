@@ -9,7 +9,7 @@ import { IsCreateLibraryType, IsNode } from "./helpers/IsType";
 import { ButtonWrapper, Title, ToggleBox } from "./styled";
 import { InspectorElement } from "./types";
 import { useState } from "react";
-import { IsBlockView, IsAspectNode, GetSelectedNode, IsUnsaved } from "../../helpers";
+import { IsBlockView, IsAspectNode, GetSelectedNode } from "../../helpers";
 
 interface Props {
   project: Project;
@@ -55,7 +55,6 @@ const InspectorButtonRow = ({
             onClick={() => Click.OnLock(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
             visible={true}
-            disabled={IsUnsaved(element)}
           />
           <InspectorButton
             onClick={() => !deleteDisabled && Click.OnDelete(project, element, dispatch, inspectorRef)}
