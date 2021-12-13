@@ -1,14 +1,7 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
-import { Attribute, LockUnlockAttributeAm, Project } from "../../../../../models";
+import { Attribute, Project } from "../../../../../models";
 import {
-  changeCompositeAttributeValue,
-  changeInterfaceAttributeValue,
-  changeInterfaceTerminalAttributeValue,
-  changeNodeAttributeValue,
-  changeNodeTerminalAttributeValue,
-  changeTransportAttributeValue,
-  changeTransportTerminalAttributeValue,
   lockUnlockAttribute,
   setIsLockedCompositeAttribute,
   setIsLockedInterfaceAttribute,
