@@ -9,6 +9,7 @@ export { default as IsBlockView } from "./IsBlockView";
 export { default as IsStartPage } from "./IsStartPage";
 export { default as IsLibrary } from "./IsLibrary";
 export { default as IsExplorer } from "./IsExplorer";
+export * from "./IsUnsaved";
 
 export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
