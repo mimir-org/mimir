@@ -13,6 +13,8 @@ namespace Mb.Models.Data
         public string Iri { get; set; }
         public string Version { get; set; }
         public string Rds { get; set; }
+        
+        public string Kind => nameof(Interface);
 
         [Required]
         public string Name { get; set; }
