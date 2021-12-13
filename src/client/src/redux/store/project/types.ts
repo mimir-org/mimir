@@ -43,21 +43,21 @@ export const EXPORT_PROJECT_TO_FILE = "EXPORT_PROJECT_TO_FILE";
 export const EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR = "EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR";
 export const IMPORT_PROJECT = "IMPORT_PROJECT";
 export const IMPORT_PROJECT_SUCCESS_OR_ERROR = "IMPORT_PROJECT_SUCCESS_OR_ERROR";
-export const LOCK_UNLOCK_NODE = "LOCK_UNLOCK_NODE";
-export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
-export const LOCK_UNLOCK_EDGE = "LOCK_UNLOCK_EDGE";
-export const LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
-export const LOCK_UNLOCK_ATTRIBUTE = "LOCK_UNLOCK_ATTRIBUTE";
-export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
-export const SET_LOCK_UNLOCK_NODE = "SET_LOCK_UNLOCK_NODE";
-export const SET_LOCK_UNLOCK_EDGE = "SET_LOCK_UNLOCK_EDGE";
-export const SET_LOCK_UNLOCK_NODE_ATTRIBUTE = "SET_LOCK_UNLOCK_NODE_ATTRIBUTE";
-export const SET_LOCK_UNLOCK_TRANSPORT_ATTRIBUTE = "SET_LOCK_UNLOCK_TRANSPORT_ATTRIBUTE";
-export const SET_LOCK_UNLOCK_INTERFACE_ATTRIBUTE = "SET_LOCK_UNLOCK_INTERFACE_ATTRIBUTE";
-export const SET_LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "SET_LOCK_UNLOCK_COMPOSITE_ATTRIBUTE";
-export const SET_LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE = "SET_LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE";
-export const SET_LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "SET_LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
-export const SET_LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "SET_LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
+export const LOCK_NODE = "LOCK_NODE";
+export const LOCK_NODE_SUCCESS_OR_ERROR = "LOCK_NODE_SUCCESS_OR_ERROR";
+export const LOCK_EDGE = "LOCK_EDGE";
+export const LOCK_EDGE_SUCCESS_OR_ERROR = "LOCK_NODE_SUCCESS_OR_ERROR";
+export const LOCK_ATTRIBUTE = "LOCK_ATTRIBUTE";
+export const LOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
+export const SET_LOCK_NODE = "SET_LOCK_NODE";
+export const SET_LOCK_EDGE = "SET_LOCK_EDGE";
+export const SET_LOCK_NODE_ATTRIBUTE = "SET_LOCK_NODE_ATTRIBUTE";
+export const SET_LOCK_TRANSPORT_ATTRIBUTE = "SET_LOCK_TRANSPORT_ATTRIBUTE";
+export const SET_LOCK_INTERFACE_ATTRIBUTE = "SET_LOCK_INTERFACE_ATTRIBUTE";
+export const SET_LOCK_COMPOSITE_ATTRIBUTE = "SET_LOCK_COMPOSITE_ATTRIBUTE";
+export const SET_LOCK_NODE_TERMINAL_ATTRIBUTE = "SET_LOCK_NODE_TERMINAL_ATTRIBUTE";
+export const SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
+export const SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE = "SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export const UPDATE_NODE = "UPDATE_NODE";
 export const UPDATE_EDGE = "UPDATE_EDGE";
@@ -381,8 +381,8 @@ export interface CommitProjectFinished {
   };
 }
 
-export interface LockUnlockNode {
-  type: typeof LOCK_UNLOCK_NODE;
+export interface LockNode {
+  type: typeof LOCK_NODE;
   payload: {
     id: string;
     projectId: string;
@@ -391,15 +391,15 @@ export interface LockUnlockNode {
   };
 }
 
-export interface LockUnlockNodeFinished {
-  type: typeof LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR;
+export interface LockNodeFinished {
+  type: typeof LOCK_NODE_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
   };
 }
 
-export interface LockUnlockEdge {
-  type: typeof LOCK_UNLOCK_EDGE;
+export interface LockEdge {
+  type: typeof LOCK_EDGE;
   payload: {
     id: string;
     projectId: string;
@@ -408,15 +408,15 @@ export interface LockUnlockEdge {
   };
 }
 
-export interface LockUnlockEdgeFinished {
-  type: typeof LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR;
+export interface LockEdgeFinished {
+  type: typeof LOCK_EDGE_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
   };
 }
 
-export interface LockUnlockAttribute {
-  type: typeof LOCK_UNLOCK_ATTRIBUTE;
+export interface LockAttribute {
+  type: typeof LOCK_ATTRIBUTE;
   payload: {
     id: string;
     projectId: string;
@@ -425,15 +425,15 @@ export interface LockUnlockAttribute {
   };
 }
 
-export interface LockUnlockAttributeFinished {
-  type: typeof LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR;
+export interface LockAttributeFinished {
+  type: typeof LOCK_ATTRIBUTE_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
   };
 }
 
-export interface SetLockUnlockNode {
-  type: typeof SET_LOCK_UNLOCK_NODE;
+export interface SetLockNode {
+  type: typeof SET_LOCK_NODE;
   payload: {
     id: string;
     isLocked: boolean;
@@ -441,8 +441,8 @@ export interface SetLockUnlockNode {
   };
 }
 
-export interface SetLockUnlockEdge {
-  type: typeof SET_LOCK_UNLOCK_EDGE;
+export interface SetLockEdge {
+  type: typeof SET_LOCK_EDGE;
   payload: {
     id: string;
     isLocked: boolean;
@@ -450,8 +450,8 @@ export interface SetLockUnlockEdge {
   };
 }
 
-export interface SetLockUnlockNodeAttribute {
-  type: typeof SET_LOCK_UNLOCK_NODE_ATTRIBUTE;
+export interface SetLockNodeAttribute {
+  type: typeof SET_LOCK_NODE_ATTRIBUTE;
   payload: {
     id: string;
     nodeId: string;
@@ -460,8 +460,8 @@ export interface SetLockUnlockNodeAttribute {
   };
 }
 
-export interface SetLockUnlockTransportAttribute {
-  type: typeof SET_LOCK_UNLOCK_TRANSPORT_ATTRIBUTE;
+export interface SetLockTransportAttribute {
+  type: typeof SET_LOCK_TRANSPORT_ATTRIBUTE;
   payload: {
     id: string;
     transportId: string;
@@ -470,8 +470,8 @@ export interface SetLockUnlockTransportAttribute {
   };
 }
 
-export interface SetLockUnlockInterfaceAttribute {
-  type: typeof SET_LOCK_UNLOCK_INTERFACE_ATTRIBUTE;
+export interface SetLockInterfaceAttribute {
+  type: typeof SET_LOCK_INTERFACE_ATTRIBUTE;
   payload: {
     id: string;
     interfaceId: string;
@@ -480,8 +480,8 @@ export interface SetLockUnlockInterfaceAttribute {
   };
 }
 
-export interface SetLockUnlockNodeTerminalAttribute {
-  type: typeof SET_LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE;
+export interface SetLockNodeTerminalAttribute {
+  type: typeof SET_LOCK_NODE_TERMINAL_ATTRIBUTE;
   payload: {
     id: string;
     terminalId: string;
@@ -491,8 +491,8 @@ export interface SetLockUnlockNodeTerminalAttribute {
   };
 }
 
-export interface SetLockUnlockTransportTerminalAttribute {
-  type: typeof SET_LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE;
+export interface SetLockTransportTerminalAttribute {
+  type: typeof SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE;
   payload: {
     id: string;
     terminalId: string;
@@ -502,8 +502,8 @@ export interface SetLockUnlockTransportTerminalAttribute {
   };
 }
 
-export interface SetLockUnlockInterfaceTerminalAttribute {
-  type: typeof SET_LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE;
+export interface SetLockInterfaceTerminalAttribute {
+  type: typeof SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE;
   payload: {
     id: string;
     terminalId: string;
@@ -513,8 +513,8 @@ export interface SetLockUnlockInterfaceTerminalAttribute {
   };
 }
 
-export interface SetLockUnlockCompositeAttribute {
-  type: typeof SET_LOCK_UNLOCK_COMPOSITE_ATTRIBUTE;
+export interface SetLockCompositeAttribute {
+  type: typeof SET_LOCK_COMPOSITE_ATTRIBUTE;
   payload: {
     id: string;
     compositeId: string;
@@ -607,20 +607,20 @@ export type ProjectActionTypes =
   | ImportProjectAction
   | ExportProjectFileActionFinished
   | ImportProjectActionFinished
-  | LockUnlockNode
-  | LockUnlockNodeFinished
-  | SetLockUnlockNodeAttribute
-  | LockUnlockEdge
-  | LockUnlockEdgeFinished
-  | SetLockUnlockNode
-  | SetLockUnlockEdge
-  | SetLockUnlockNodeTerminalAttribute
-  | SetLockUnlockTransportTerminalAttribute
-  | SetLockUnlockInterfaceTerminalAttribute
-  | SetLockUnlockTransportAttribute
-  | SetLockUnlockInterfaceAttribute
-  | SetLockUnlockCompositeAttribute
-  | LockUnlockAttributeFinished
+  | LockNode
+  | LockNodeFinished
+  | SetLockNodeAttribute
+  | LockEdge
+  | LockEdgeFinished
+  | SetLockNode
+  | SetLockEdge
+  | SetLockNodeTerminalAttribute
+  | SetLockTransportTerminalAttribute
+  | SetLockInterfaceTerminalAttribute
+  | SetLockTransportAttribute
+  | SetLockInterfaceAttribute
+  | SetLockCompositeAttribute
+  | LockAttributeFinished
   | CommitProject
   | CommitProjectFinished
   | ChangeNodeUpdated

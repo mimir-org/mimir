@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
 {
-    public class LockUnlockAttributeAm
+    public class LockAttributeAm
     {
         [Required]
         public string Id { get; set; }

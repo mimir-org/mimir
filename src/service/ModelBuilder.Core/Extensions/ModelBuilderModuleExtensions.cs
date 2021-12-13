@@ -10,10 +10,12 @@ using Mb.Core.Profiles;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Attributes;
 using Mb.Models.Configurations;
 using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
+using Mb.Models.Settings;
 using Mb.Services.Contracts;
 using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 using Module = Mb.Models.Application.Module;
 
@@ -44,7 +47,7 @@ namespace Mb.Core.Extensions
 
         public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
         {
-            // ModelBuilder Configuration configurations
+            // ModelBuilder Configurations
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
 
@@ -53,6 +56,14 @@ namespace Mb.Core.Extensions
             builder.AddJsonFile("appsettings.local.json", true);
             builder.AddEnvironmentVariables();
             builder.Build();
+
+            // ModelBuilder Application Settings
+            var config = builder.Build();
+
+            var modelBuilderConfiguration = new ApplicationSetting();
+            var modelBuilderSection = config.GetSection(nameof(ApplicationSetting));
+            modelBuilderSection.Bind(modelBuilderConfiguration);
+            services.AddSingleton(Options.Create(modelBuilderConfiguration));
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -80,6 +91,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IVersionService, VersionService>();
             services.AddScoped<IProjectFileService, ProjectFileService>();
             services.AddScoped<ICooperateService, CooperateService>();
+            services.AddScoped<ILockService, LockService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -121,6 +133,8 @@ namespace Mb.Core.Extensions
             services.CreateModules(provider, configuration, modules);
             services.AddSignalR();
 
+            // Add application settings
+
             return services;
         }
 
@@ -132,6 +146,8 @@ namespace Mb.Core.Extensions
             var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
 
             context.Database.Migrate();
+            serviceScope.CreateOrUpdateCurrentCollaborationPartner();
+
             var moduleReaderAwaiter = moduleService.InitialModules().ConfigureAwait(true).GetAwaiter();
 
             while (!moduleReaderAwaiter.IsCompleted)
@@ -150,6 +166,34 @@ namespace Mb.Core.Extensions
         }
 
         #region Private Methods
+
+        private static void CreateOrUpdateCurrentCollaborationPartner(this IServiceScope serviceScope)
+        {
+            // Define default collaboration settings
+            var appSettings = serviceScope.ServiceProvider.GetRequiredService<IOptions<ApplicationSetting>>()?.Value;
+            if (appSettings?.CollaborationPartner == null) 
+                return;
+
+            var commonService = serviceScope.ServiceProvider.GetRequiredService<ICommonService>();
+            var currentCollaborationPartner = commonService?.GetCollaborationPartnerByDomain(appSettings.CollaborationPartner.Domain).Result;
+
+            if (currentCollaborationPartner != null)
+            {
+                appSettings.CollaborationPartner = currentCollaborationPartner;
+                return;
+            }
+
+            var cp = new CollaborationPartnerAm
+            {
+                Current = true,
+                Domain = appSettings.CollaborationPartner.Domain,
+                Iris = appSettings.CollaborationPartner.Iris,
+                Name = appSettings.CollaborationPartner.Name
+            };
+            
+            currentCollaborationPartner = commonService?.CreateCollaborationPartnerAsync(cp).Result;
+            appSettings.CollaborationPartner = currentCollaborationPartner;
+        }
 
         private static void CreateModules(this IServiceCollection services, IServiceProvider provider, IConfiguration configuration, IEnumerable<Module> modules)
         {

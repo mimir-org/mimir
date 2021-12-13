@@ -86,13 +86,24 @@ function ParameterRow({
             key={combination.combined}
             attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(combination, attr))}
             combination={combination}
-            isNodeLocked={elementIsLocked}
             headerColor={headerColor}
             bodyColor={bodyColor}
             onChange={(id, value, unit) =>
               OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit?.id, dispatch)
             }
-            onLock={(attribute, isLocked) => OnLockParameter(project, attribute, isLocked, username, dispatch)}
+            onLock={(attribute, isLocked) =>
+              OnLockParameter(
+                element,
+                inspectorParentElement,
+                terminalParentElement,
+                elementIsLocked,
+                project,
+                attribute,
+                isLocked,
+                username,
+                dispatch
+              )
+            }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />
         ))}

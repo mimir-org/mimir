@@ -12,6 +12,8 @@ namespace Mb.Models.Data
         public string Iri { get; set; }
 
         public string Domain => Id.ResolveDomain();
+        
+        public string Kind => nameof(Edge);
 
         public string FromConnectorId { get; set; }
         public string FromConnectorIri { get; set; }

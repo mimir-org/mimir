@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
 {
-    public class LockUnlockEdgeAm
+    public class LockEdgeAm
     {
         [Required]
         public string Id { get; set; }

@@ -18,7 +18,6 @@ export const PARAMETER_ENTITY_WIDTH: number = 255;
 interface Props {
   attribute: AttributeLikeItem;
   combination: CombinedAttribute;
-  isNodeLocked: boolean;
   headerColor: string;
   bodyColor: string;
   onChange: (id: string, value: string, unit: EnumBase) => void;
@@ -26,9 +25,9 @@ interface Props {
   onClose: (id: string) => void;
 }
 
-function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
+function Parameter({ attribute, combination, headerColor, bodyColor, onLock, onClose, onChange }: Props) {
   const isAttribute = IsAttribute(attribute);
-  const isLocked = () => (isAttribute ? attribute.isLocked : false);
+  const isLocked = isAttribute ? attribute.isLocked : false;
   const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
   const [unit, setUnit] = useState<EnumBase>(
     isAttribute
@@ -52,8 +51,8 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
         {isAttribute && (
           <>
             <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
-              <VisuallyHidden>{isLocked() ? "Unlock parameter" : "Lock parameter"}</VisuallyHidden>
-              {isLocked() ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />}
+              <VisuallyHidden>{isLocked ? "Unlock parameter" : "Lock parameter"}</VisuallyHidden>
+              {isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />}
             </ParameterButton>
             <ParameterButton onClick={() => onClose(attribute.id)}>
               <VisuallyHidden>Close parameter</VisuallyHidden>
@@ -67,7 +66,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
         <input
           name="parameterInput"
           className="parameterInput"
-          disabled={isLocked()}
+          disabled={isLocked}
           value={value}
           type="text"
           onChange={(e) => isAttribute && setValue(e.target.value)}
@@ -77,7 +76,7 @@ function Parameter({ attribute, combination, isNodeLocked, headerColor, bodyColo
         <CompDropdown
           label="combinationDropdown"
           items={attribute?.units ?? []}
-          disabled={isLocked()}
+          disabled={isLocked}
           keyProp="id"
           valueProp="value"
           onChange={(_unit) => {
