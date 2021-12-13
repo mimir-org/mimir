@@ -20,7 +20,7 @@ interface Props {
   combination: CombinedAttribute;
   headerColor: string;
   bodyColor: string;
-  onChange: (id: string, value: string, unit: EnumBase) => void;
+  onChange: (id: string, value: string, unitId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: (id: string) => void;
 }
@@ -29,18 +29,10 @@ function Parameter({ attribute, combination, headerColor, bodyColor, onLock, onC
   const isAttribute = IsAttribute(attribute);
   const isLocked = isAttribute ? attribute.isLocked : false;
   const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
-  const [unit, setUnit] = useState<EnumBase>(
-    isAttribute
-      ? attribute.units?.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]
-      : attribute?.units?.[0]
-  );
+  const unit = isAttribute ? attribute.selectedUnitId : attribute.units?.[0].id;
 
   useEffect(() => {
-    if (IsAttribute(attribute)) {
-      if (attribute.value) setValue(attribute.value);
-      if (attribute.selectedUnitId)
-        setUnit(attribute.units?.find((_unit) => _unit.id === attribute.selectedUnitId) || attribute.units?.[0]);
-    }
+    if (IsAttribute(attribute) && attribute.value) setValue(attribute.value);
   }, [attribute]);
 
   return (
@@ -87,16 +79,13 @@ function Parameter({ attribute, combination, headerColor, bodyColor, onLock, onC
           disabled={isLocked}
           keyProp="id"
           valueProp="value"
-          onChange={(_unit) => {
-            isAttribute && setUnit(_unit);
-            onChange(attribute.id, value, _unit);
-          }}
+          onChange={(_unit: EnumBase) => onChange(attribute.id, value, _unit.id)}
           borderRadius={2}
           borderColor={Color.InspectorGreyBorder}
           fontSize={FontSize.Small}
           height={22}
           listTop={27}
-          defaultValue={unit?.id}
+          defaultValue={unit}
         />
       </ParameterInputsWrapper>
     </Entity>
