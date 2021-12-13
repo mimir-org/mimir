@@ -39,7 +39,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
     });
   }
 
-  return {
+  return new Transport({
     id: transportId,
     version: transportType.version,
     rds: transportType.rds,
@@ -58,7 +58,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
     createdBy: transportType.createdBy,
     created: transportType.created,
     libraryTypeId: transportType.id,
-  } as Transport;
+  } as Transport);
 };
 
 export default ConvertToTransport;

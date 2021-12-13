@@ -1,4 +1,4 @@
-import { Connector, Edge, Node } from "../../../models";
+import { Connector, Edge, EDGE_KIND, Node } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { ConvertToTransport, ConvertToInterface } from ".";
 import { IsTransport } from "../helpers";
