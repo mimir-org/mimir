@@ -1,3 +1,4 @@
+import { Size } from "../../../../../compLibrary/size";
 import { IsDirectChild } from "../../../../../helpers";
 import { Node } from "../../../../../models";
 import { updateBlockPosition } from "../../../../../redux/store/project/actions";
@@ -23,14 +24,18 @@ const ResizeHandler = (
   elements: any[],
   dispatch: any
 ) => {
-  let width: number;
+  let screenWidth: number;
   let marginX: number;
+  let width: number;
 
   const updateScreenSize = () => {
-    width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
+    screenWidth = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
     marginX = SetMarginX(secondaryNode !== null, libOpen, explorerOpen);
+    width = screenWidth - marginX;
 
-    setWidth(width - marginX);
+    if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
+
+    setWidth(width);
     updateChildXPosition();
   };
 
@@ -38,7 +43,7 @@ const ResizeHandler = (
     // Adjust X position relative to parent width
     elements.forEach((elem) => {
       if (IsDirectChild(elem.data, node)) {
-        if (elem.data.positionBlockX > width - 100)
+        if (elem.data.positionBlockX > screenWidth - 100)
           dispatch(updateBlockPosition(elem.id, elem.data.positionBlockX - 5, elem.data.positionBlockY));
       }
     });
@@ -49,7 +54,7 @@ const ResizeHandler = (
   // Update the Flow parentNode
   const parentNode = GetFlowNodeByDataId(node?.id);
   if (parentNode) {
-    parentNode.style.width = `${width - marginX}px`;
+    parentNode.style.width = `${width}px`;
   }
 };
 

@@ -5,6 +5,7 @@ const Size = {
 
   // BlockView
   BlockMarginY: 60,
+  BlockMaxWidth: 2650,
 
   // Terminals
   Terminals_Interval: 22.5,

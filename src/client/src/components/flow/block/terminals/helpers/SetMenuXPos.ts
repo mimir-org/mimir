@@ -9,16 +9,16 @@ import { Node } from "../../../../../models";
  * @returns a numeric value.
  */
 const SetMenuXPos = (isParent: boolean, electro: boolean, hasActiveTerminals: boolean, node: Node) => {
-  const marginSmall = 0;
-  const marginLarge = 22;
+  const marginSmall = 22;
+  const marginLarge = 200;
 
   if (electro) {
-    if (!isParent) return node.width + marginSmall;
+    if (!isParent) return node.width;
   }
 
-  if (isParent) return node.width - marginSmall;
-  if (hasActiveTerminals) return node.width + marginLarge;
-  return node.width - marginSmall;
+  if (isParent) return node.width - marginLarge;
+  if (hasActiveTerminals) return node.width + marginSmall;
+  return node.width;
 };
 
 export default SetMenuXPos;
