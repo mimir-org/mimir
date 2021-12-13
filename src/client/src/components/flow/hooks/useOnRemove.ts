@@ -1,4 +1,5 @@
-import { removeElements, FlowElement } from "react-flow-renderer";
+import { removeElements, FlowElement, Elements } from "react-flow-renderer";
+import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
 import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode } from "../../../helpers";
 import { EDGE_KIND, Project } from "../../../models";
@@ -9,20 +10,31 @@ import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 
 const useOnRemove = (
-  elements: any[],
+  elements: Elements,
   setElements: any,
-  dispatch: any,
+  dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project
 ) => {
-  const verifiedList: any[] = [];
+  const elementsToRemove: Elements = [];
+
+  elements = elements.filter((el) => !IsAspectNode(el.data));
+
+  const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
+
+  if (hasDeletedElement) {
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    SetPanelHeight(inspectorRef, Size.ModuleClosed);
+    dispatch(changeInspectorHeight(Size.ModuleClosed));
+    return setElements((els) => removeElements(elementsToRemove, els));
+  }
+};
+
+const handleDeleteElements = (elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) => {
   const selectedNode = GetSelectedNode();
   const selectedBlockNode = GetSelectedBlockNode();
   const blockView = IsBlockView();
   const edgeTypes = Object.values(EDGE_TYPE);
-
-  elements = elements.filter((el) => !IsAspectNode(el.data) && el !== selectedNode);
-
   let hasDeletedElement = false;
 
   for (var elem of elements) {
@@ -43,12 +55,7 @@ const useOnRemove = (
     }
   }
 
-  if (hasDeletedElement) {
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-    SetPanelHeight(inspectorRef, Size.ModuleClosed);
-    dispatch(changeInspectorHeight(Size.ModuleClosed));
-    return setElements((els) => removeElements(verifiedList, els));
-  }
+  return hasDeletedElement;
 };
 
 const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
