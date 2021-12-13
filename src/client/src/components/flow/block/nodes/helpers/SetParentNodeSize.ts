@@ -11,8 +11,8 @@ import { Size } from "../../../../../compLibrary/size";
 const SetParentNodeSize = (setWidth: any, setHeight: any, secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) => {
   const screenWidth = secondaryNode ? window.innerWidth / 2.3 : window.innerWidth;
   const marginX = SetMarginX(secondaryNode, libOpen, explorerOpen);
-  let width = screenWidth - marginX;
   const marginY = 80;
+  let width = screenWidth - marginX;
 
   if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
 

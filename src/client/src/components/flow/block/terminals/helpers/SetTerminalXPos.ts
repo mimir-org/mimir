@@ -25,8 +25,8 @@ const SetTerminalXPos = (
   const marginX = parent ? 20 : 22;
   const marginXSmall = 3;
 
-  if (offPage) SetOffPageTerminalXPos(position);
-  if (electro) SetElectroTerminalXPos(conn, order, parent, nodeWidth, marginXSmall, marginX);
+  if (offPage) return SetOffPageTerminalXPos(position);
+  if (electro) return SetElectroTerminalXPos(conn, order, parent, nodeWidth, marginXSmall, marginX);
 
   if (IsPartOf(conn)) return nodeWidth / 2;
   if (position === Position.Right && !parent) return nodeWidth - marginXSmall;
@@ -59,12 +59,12 @@ function SetElectroTerminalXPos(
 /**
  * Function to calculate a terminal's X position. Terminals are positioned middle-out.
  * @param count the count of input or output terminals for a node.
- * @param parent
+ * @param isParent+
  * @param nodeWidth
  * @returns a number used by the styled component HandleBox.
  */
-function CalculateX(count: number, parent: boolean, nodeWith: number) {
-  const interval = parent ? 35 : Size.Terminals_Interval; // Default horizontal distance between each terminal
+function CalculateX(count: number, isParent: boolean, nodeWith: number) {
+  const interval = isParent ? 35 : Size.Terminals_Interval; // Default horizontal distance between each terminal
   const base = nodeWith / 2 - 12; // Middle position
 
   // Even-numbered terminals ordered left

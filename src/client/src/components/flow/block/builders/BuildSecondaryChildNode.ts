@@ -6,8 +6,8 @@ import { IsOffPage } from "../../../../helpers";
 
 const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean) => {
   if (!node) return null;
-  const type = GetNodeTypeString(node);
 
+  const type = GetNodeTypeString(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
 
   SetConnectorOrder(node);

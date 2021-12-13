@@ -12,15 +12,16 @@ import { Position } from "../../../../../models/project";
 
 const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, secondaryNode: boolean) => {
   const margin = 20;
+  const marginLarge = 80;
   const width = secondaryNode ? window.innerWidth / 2.3 : window.innerWidth;
 
   const yMin = 30;
   const yMax = window.innerHeight - 180;
-  const xMin = SetXMin(explorerOpen);
-  const xMax = SetXMax(libOpen, explorerOpen, secondaryNode, width);
+  const xMin = SetXMin(explorerOpen, marginLarge);
+  const xMax = SetXMax(libOpen, explorerOpen, secondaryNode, width, yMin, marginLarge);
 
-  let nodeY = nodePos.y;
   let nodeX = nodePos.x;
+  let nodeY = nodePos.y;
 
   if (nodeX < xMin) nodeX = xMin + margin;
   if (nodeX > xMax) nodeX = xMax - margin;
@@ -30,22 +31,28 @@ const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, 
   return { x: nodeX, y: nodeY };
 };
 
-function SetXMax(libOpen: boolean, explorerOpen: boolean, secondaryNode: boolean, width: number) {
+function SetXMax(
+  libOpen: boolean,
+  explorerOpen: boolean,
+  secondaryNode: boolean,
+  width: number,
+  yMin: number,
+  marginLarge: number
+) {
   if (secondaryNode) {
-    if (libOpen && !explorerOpen) return width - 80;
+    if (libOpen && !explorerOpen) return width - marginLarge;
     if (!libOpen && explorerOpen) return width + 220;
     return width;
   }
 
   if ((libOpen && explorerOpen) || (libOpen && !explorerOpen)) return width - Size.ModuleOpen;
-  return width - 30;
+  return width - yMin;
 }
 
-function SetXMin(explorerOpen: boolean) {
-  const margin = 80;
+function SetXMin(explorerOpen: boolean, marginLarge: number) {
+  if (explorerOpen) return Size.ModuleOpen + marginLarge;
 
-  if (explorerOpen) return Size.ModuleOpen + margin;
-  return margin;
+  return marginLarge;
 }
 
 export default SetNodePos;
