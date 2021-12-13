@@ -24,11 +24,6 @@ namespace Mb.Services.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<CollaborationPartner> GetAllCollaborationPartners()
-        {
-            return _collaborationPartnerRepository.GetAll().OrderBy(x => x.Name).ToList();
-        }
-
         /// <summary>
         /// Get all combined attributes
         /// </summary>
@@ -64,6 +59,30 @@ namespace Mb.Services.Services
                     CombinedAttributes = combinedAttributes
                 };
             }
+        }
+
+        /// <summary>
+        /// Get all collaboration partners
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<CollaborationPartner> GetAllCollaborationPartners()
+        {
+            return _collaborationPartnerRepository.GetAll().OrderBy(x => x.Name).ToList();
+        }
+
+        /// <summary>
+        /// Get collaboration partner by domain
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public async Task<CollaborationPartner> GetCollaborationPartnerByDomain(string domain)
+        {
+            if (string.IsNullOrEmpty(domain))
+                return null;
+
+            var cp = await _collaborationPartnerRepository.FindBy(x => x.Domain != null && x.Domain.ToLower() == domain.ToLower()).FirstOrDefaultAsync();
+            return cp;
         }
 
         /// <summary>
@@ -104,6 +123,18 @@ namespace Mb.Services.Services
             await _collaborationPartnerRepository.CreateAsync(cp);
             await _collaborationPartnerRepository.SaveAsync();
             return cp;
+        }
+
+        /// <summary>
+        /// Update a collaboration partner
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collaborationPartner"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public Task<CollaborationPartner> UpdateCollaborationPartnerAsync(int id, CollaborationPartnerAm collaborationPartner)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
