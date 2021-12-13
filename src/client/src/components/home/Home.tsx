@@ -23,7 +23,8 @@ import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
 import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
 import { IsStartPage, SetDarkModeColor } from "../../helpers";
 import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
-import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { commonStateSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { ImportProjectFileMenu } from "../menus/projectMenu/subMenus/importProjectFile";
 
 interface Props {
   dispatch: Dispatch;
@@ -40,9 +41,11 @@ const Home = ({ dispatch }: Props) => {
   const userMenuOpen = useAppSelector(selectors.userMenuSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const darkMode = useAppSelector(selectors.darkModeSelector);
+  const commonState = useAppSelector(commonStateSelector);
   const inspectorRef = useRef(null);
-  const createProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
   const openProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
+  const createProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
+  const importProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());
@@ -82,6 +85,7 @@ const Home = ({ dispatch }: Props) => {
           <StartPage />
           {openProject && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
           {createProject && <CreateProjectMenu dispatch={dispatch} />}
+          {importProject && <ImportProjectFileMenu dispatch={dispatch} parsers={commonState?.parsers} />}
         </>
       ) : (
         <>
