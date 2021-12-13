@@ -8,9 +8,9 @@ import {
   Composite,
   ProjectFileAm,
   ProjectConverterAm,
-  LockUnlockAttributeAm,
-  LockUnlockNodeAm,
-  LockUnlockEdgeAm,
+  LockAttributeAm,
+  LockNodeAm,
+  LockEdgeAm,
 } from "../../../models";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
@@ -380,9 +380,9 @@ export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTyp
   };
 }
 
-export function lockUnlockNode(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockUnlockNode {
+export function lockNode(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockNode {
   return {
-    type: Types.LOCK_UNLOCK_NODE,
+    type: Types.LOCK_NODE,
     payload: {
       id: id,
       projectId,
@@ -392,9 +392,9 @@ export function lockUnlockNode(id: string, projectId: string, isLocked: boolean,
   };
 }
 
-export function lockUnlockEdge(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockUnlockEdge {
+export function lockEdge(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockEdge {
   return {
-    type: Types.LOCK_UNLOCK_EDGE,
+    type: Types.LOCK_EDGE,
     payload: {
       id: id,
       projectId,
@@ -404,14 +404,14 @@ export function lockUnlockEdge(id: string, projectId: string, isLocked: boolean,
   };
 }
 
-export function lockUnlockAttribute(
+export function lockAttribute(
   id: string,
   projectId: string,
   isLocked: boolean,
   isLockedBy: string
-): Types.LockUnlockAttribute {
+): Types.LockAttribute {
   return {
-    type: Types.LOCK_UNLOCK_ATTRIBUTE,
+    type: Types.LOCK_ATTRIBUTE,
     payload: {
       id: id,
       projectId,
@@ -421,123 +421,123 @@ export function lockUnlockAttribute(
   };
 }
 
-export function setIsLockedNode(lockUnlockNodeAm: LockUnlockNodeAm): Types.SetLockUnlockNode {
+export function setIsLockedNode(lockNodeAm: LockNodeAm): Types.SetLockNode {
   return {
-    type: Types.SET_LOCK_UNLOCK_NODE,
+    type: Types.SET_LOCK_NODE,
     payload: {
-      id: lockUnlockNodeAm.id,
-      isLocked: lockUnlockNodeAm.isLocked,
-      isLockedBy: lockUnlockNodeAm.isLockedStatusBy,
+      id: lockNodeAm.id,
+      isLocked: lockNodeAm.isLocked,
+      isLockedBy: lockNodeAm.isLockedStatusBy,
     },
   };
 }
 
-export function setIsLockedEdge(lockUnlockEdgeAm: LockUnlockEdgeAm): Types.SetLockUnlockEdge {
+export function setIsLockedEdge(lockEdgeAm: LockEdgeAm): Types.SetLockEdge {
   return {
-    type: Types.SET_LOCK_UNLOCK_EDGE,
+    type: Types.SET_LOCK_EDGE,
     payload: {
-      id: lockUnlockEdgeAm.id,
-      isLocked: lockUnlockEdgeAm.isLocked,
-      isLockedBy: lockUnlockEdgeAm.isLockedStatusBy,
+      id: lockEdgeAm.id,
+      isLocked: lockEdgeAm.isLocked,
+      isLockedBy: lockEdgeAm.isLockedStatusBy,
     },
   };
 }
 
-export function setIsLockedNodeAttribute(lockUnlockAttributeAm: LockUnlockAttributeAm): Types.SetLockUnlockNodeAttribute {
+export function setIsLockedNodeAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockNodeAttribute {
   return {
-    type: Types.SET_LOCK_UNLOCK_NODE_ATTRIBUTE,
+    type: Types.SET_LOCK_NODE_ATTRIBUTE,
     payload: {
-      id: lockUnlockAttributeAm.id,
-      nodeId: lockUnlockAttributeAm.nodeId,
-      isLocked: lockUnlockAttributeAm.isLocked,
-      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
+      id: lockAttributeAm.id,
+      nodeId: lockAttributeAm.nodeId,
+      isLocked: lockAttributeAm.isLocked,
+      isLockedBy: lockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedTransportAttribute(
-  lockUnlockAttributeAm: LockUnlockAttributeAm
-): Types.SetLockUnlockTransportAttribute {
+  lockAttributeAm: LockAttributeAm
+): Types.SetLockTransportAttribute {
   return {
-    type: Types.SET_LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
+    type: Types.SET_LOCK_TRANSPORT_ATTRIBUTE,
     payload: {
-      id: lockUnlockAttributeAm.id,
-      transportId: lockUnlockAttributeAm.transportId,
-      isLocked: lockUnlockAttributeAm.isLocked,
-      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
+      id: lockAttributeAm.id,
+      transportId: lockAttributeAm.transportId,
+      isLocked: lockAttributeAm.isLocked,
+      isLockedBy: lockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedInterfaceAttribute(
-  lockUnlockAttributeAm: LockUnlockAttributeAm
-): Types.SetLockUnlockInterfaceAttribute {
+  lockAttributeAm: LockAttributeAm
+): Types.SetLockInterfaceAttribute {
   return {
-    type: Types.SET_LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
+    type: Types.SET_LOCK_INTERFACE_ATTRIBUTE,
     payload: {
-      id: lockUnlockAttributeAm.id,
-      interfaceId: lockUnlockAttributeAm.interfaceId,
-      isLocked: lockUnlockAttributeAm.isLocked,
-      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
+      id: lockAttributeAm.id,
+      interfaceId: lockAttributeAm.interfaceId,
+      isLocked: lockAttributeAm.isLocked,
+      isLockedBy: lockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedNodeTerminalAttribute(
-  lockUnlockAttributeAm: LockUnlockAttributeAm
-): Types.SetLockUnlockNodeTerminalAttribute {
+  lockAttributeAm: LockAttributeAm
+): Types.SetLockNodeTerminalAttribute {
   return {
-    type: Types.SET_LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE,
+    type: Types.SET_LOCK_NODE_TERMINAL_ATTRIBUTE,
     payload: {
-      id: lockUnlockAttributeAm.id,
-      terminalId: lockUnlockAttributeAm.terminalId,
-      nodeId: lockUnlockAttributeAm.nodeId,
-      isLocked: lockUnlockAttributeAm.isLocked,
-      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
+      id: lockAttributeAm.id,
+      terminalId: lockAttributeAm.terminalId,
+      nodeId: lockAttributeAm.nodeId,
+      isLocked: lockAttributeAm.isLocked,
+      isLockedBy: lockAttributeAm.isLockedStatusBy,
     },
   };
 }
 export function setIsLockedTransportTerminalAttribute(
-  lockUnlockAttributeAm: LockUnlockAttributeAm
-): Types.SetLockUnlockTransportTerminalAttribute {
+  lockAttributeAm: LockAttributeAm
+): Types.SetLockTransportTerminalAttribute {
   return {
-    type: Types.SET_LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
+    type: Types.SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
     payload: {
-      id: lockUnlockAttributeAm.id,
-      terminalId: lockUnlockAttributeAm.terminalId,
-      transportId: lockUnlockAttributeAm.transportId,
-      isLocked: lockUnlockAttributeAm.isLocked,
-      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
+      id: lockAttributeAm.id,
+      terminalId: lockAttributeAm.terminalId,
+      transportId: lockAttributeAm.transportId,
+      isLocked: lockAttributeAm.isLocked,
+      isLockedBy: lockAttributeAm.isLockedStatusBy,
     },
   };
 }
 export function setIsLockedInterfaceTerminalAttribute(
-  lockUnlockAttributeAm: LockUnlockAttributeAm,
+  lockAttributeAm: LockAttributeAm,
   edge: Edge
-): Types.SetLockUnlockInterfaceTerminalAttribute {
+): Types.SetLockInterfaceTerminalAttribute {
   return {
-    type: Types.SET_LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
+    type: Types.SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE,
     payload: {
-      id: lockUnlockAttributeAm.id,
-      terminalId: lockUnlockAttributeAm.terminalId,
-      interfaceId: lockUnlockAttributeAm.interfaceId,
-      isLocked: lockUnlockAttributeAm.isLocked,
-      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
+      id: lockAttributeAm.id,
+      terminalId: lockAttributeAm.terminalId,
+      interfaceId: lockAttributeAm.interfaceId,
+      isLocked: lockAttributeAm.isLocked,
+      isLockedBy: lockAttributeAm.isLockedStatusBy,
     },
   };
 }
 
 export function setIsLockedCompositeAttribute(
-  lockUnlockAttributeAm: LockUnlockAttributeAm
-): Types.SetLockUnlockCompositeAttribute {
+  lockAttributeAm: LockAttributeAm
+): Types.SetLockCompositeAttribute {
   return {
-    type: Types.SET_LOCK_UNLOCK_COMPOSITE_ATTRIBUTE,
+    type: Types.SET_LOCK_COMPOSITE_ATTRIBUTE,
     payload: {
-      id: lockUnlockAttributeAm.id,
-      compositeId: lockUnlockAttributeAm.compositeId,
-      nodeId: lockUnlockAttributeAm.nodeId,
-      isLocked: lockUnlockAttributeAm.isLocked,
-      isLockedBy: lockUnlockAttributeAm.isLockedStatusBy,
+      id: lockAttributeAm.id,
+      compositeId: lockAttributeAm.compositeId,
+      nodeId: lockAttributeAm.nodeId,
+      isLocked: lockAttributeAm.isLocked,
+      isLockedBy: lockAttributeAm.isLockedStatusBy,
     },
   };
 }

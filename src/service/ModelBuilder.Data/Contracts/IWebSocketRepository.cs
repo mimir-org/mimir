@@ -9,9 +9,8 @@ namespace Mb.Data.Contracts
     {
         Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus);
         Task SendEdgeData(Edge edge, string projectId, WorkerStatus workerStatus);
-        
-        Task SendLockUnlockAttributeData(LockUnlockAttributeAm am, string projectId, WorkerStatus workerStatus);
-        Task SendLockUnlockNodeData(LockUnlockNodeAm am, string projectId, WorkerStatus workerStatus);
-        Task SendLockUnlockEdgeData(LockUnlockEdgeAm am, string projectId, WorkerStatus workerStatus);
+        Task SendLockAttributeData(LockAttributeAm am, string projectId, WorkerStatus workerStatus);
+        Task SendLockNodeData(LockNodeAm am, string projectId, WorkerStatus workerStatus);
+        Task SendLockEdgeData(LockEdgeAm am, string projectId, WorkerStatus workerStatus);
     }
 }

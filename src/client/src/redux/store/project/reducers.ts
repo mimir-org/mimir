@@ -142,10 +142,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
-                ...x,
-                positionX: action.payload.x,
-                positionY: action.payload.y,
-              }
+                  ...x,
+                  positionX: action.payload.x,
+                  positionY: action.payload.y,
+                }
               : x
           ),
         },
@@ -159,10 +159,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
-                ...x,
-                positionBlockX: action.payload.x,
-                positionBlockY: action.payload.y,
-              }
+                  ...x,
+                  positionBlockX: action.payload.x,
+                  positionBlockY: action.payload.y,
+                }
               : x
           ),
         },
@@ -176,9 +176,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((edge) =>
             edge.id === action.payload.edge.id
               ? {
-                ...edge,
-                isHidden: action.payload.isHidden,
-              }
+                  ...edge,
+                  isHidden: action.payload.isHidden,
+                }
               : edge
           ),
         },
@@ -192,9 +192,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((edge) =>
             edge.id === action.payload.edge.id
               ? {
-                ...edge,
-                animated: action.payload.animated,
-              }
+                  ...edge,
+                  animated: action.payload.animated,
+                }
               : edge
           ),
         },
@@ -208,9 +208,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
-                ...x,
-                [action.payload.key]: action.payload.value,
-              }
+                  ...x,
+                  [action.payload.key]: action.payload.value,
+                }
               : x
           ),
         },
@@ -342,9 +342,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
-                ...x,
-                [action.payload.propName]: action.payload.propValue,
-              }
+                  ...x,
+                  [action.payload.propName]: action.payload.propValue,
+                }
               : x
           ),
         },
@@ -358,17 +358,17 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
-                ...x,
-                attributes: x.attributes.map((attribute) =>
-                  attribute.id === action.payload.id
-                    ? {
-                      ...attribute,
-                      value: action.payload.value,
-                      selectedUnitId: action.payload.unitId,
-                    }
-                    : attribute
-                ),
-              }
+                  ...x,
+                  attributes: x.attributes.map((attribute) =>
+                    attribute.id === action.payload.id
+                      ? {
+                          ...attribute,
+                          value: action.payload.value,
+                          selectedUnitId: action.payload.unitId,
+                        }
+                      : attribute
+                  ),
+                }
               : x
           ),
         },
@@ -382,12 +382,12 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((x) =>
             x.id === action.payload.edgeId
               ? {
-                ...x,
-                transport: {
-                  ...x.transport,
-                  [action.payload.propName]: action.payload.propValue,
-                },
-              }
+                  ...x,
+                  transport: {
+                    ...x.transport,
+                    [action.payload.propName]: action.payload.propValue,
+                  },
+                }
               : x
           ),
         },
@@ -403,20 +403,20 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.id === edgeId
               ? {
-                ...e,
-                transport: {
-                  ...e.transport,
-                  attributes: e.transport.attributes.map((attribute) =>
-                    attribute.id === id
-                      ? {
-                        ...attribute,
-                        value,
-                        selectedUnitId: unitId,
-                      }
-                      : attribute
-                  ),
-                },
-              }
+                  ...e,
+                  transport: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            value,
+                            selectedUnitId: unitId,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
               : e
           ),
         },
@@ -431,12 +431,12 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((x) =>
             x.id === action.payload.edgeId
               ? {
-                ...x,
-                interface: {
-                  ...x.interface,
-                  [action.payload.propName]: action.payload.propValue,
-                },
-              }
+                  ...x,
+                  interface: {
+                    ...x.interface,
+                    [action.payload.propName]: action.payload.propValue,
+                  },
+                }
               : x
           ),
         },
@@ -452,20 +452,20 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.id === edgeId
               ? {
-                ...e,
-                interface: {
-                  ...e.transport,
-                  attributes: e.transport.attributes.map((attribute) =>
-                    attribute.id === id
-                      ? {
-                        ...attribute,
-                        selectedUnitId: unitId,
-                        value,
-                      }
-                      : attribute
-                  ),
-                },
-              }
+                  ...e,
+                  interface: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            selectedUnitId: unitId,
+                            value,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
               : e
           ),
         },
@@ -481,24 +481,24 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((n) =>
             n.id === nodeId
               ? {
-                ...n,
-                connectors: n.connectors.map((conn) =>
-                  conn.id === terminalId
-                    ? {
-                      ...conn,
-                      attributes: conn.attributes.map((attribute) =>
-                        attribute.id === id
-                          ? {
-                            ...attribute,
-                            value,
-                            selectedUnitId: unitId,
-                          }
-                          : attribute
-                      ),
-                    }
-                    : conn
-                ),
-              }
+                  ...n,
+                  connectors: n.connectors.map((conn) =>
+                    conn.id === terminalId
+                      ? {
+                          ...conn,
+                          attributes: conn.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  value,
+                                  selectedUnitId: unitId,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : conn
+                  ),
+                }
               : n
           ),
         },
@@ -514,9 +514,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.id === edgeId
               ? {
-                ...e,
-                transport: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId),
-              }
+                  ...e,
+                  transport: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId),
+                }
               : e
           ),
         },
@@ -532,9 +532,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.id === edgeId
               ? {
-                ...e,
-                interface: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId),
-              }
+                  ...e,
+                  interface: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId),
+                }
               : e
           ),
         },
@@ -550,24 +550,24 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((n) =>
             n.id === nodeId
               ? {
-                ...n,
-                composites: n.simples.map((comp) =>
-                  comp.id === compositeId
-                    ? {
-                      ...comp,
-                      attributes: comp.attributes.map((attribute) =>
-                        attribute.id === id
-                          ? {
-                            ...attribute,
-                            value,
-                            selectedUnitId: unitId,
-                          }
-                          : attribute
-                      ),
-                    }
-                    : comp
-                ),
-              }
+                  ...n,
+                  composites: n.simples.map((comp) =>
+                    comp.id === compositeId
+                      ? {
+                          ...comp,
+                          attributes: comp.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  value,
+                                  selectedUnitId: unitId,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : comp
+                  ),
+                }
               : n
           ),
         },
@@ -582,18 +582,18 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((n) =>
             n?.id === action.payload.nodeId
               ? {
-                ...n,
-                connectors: n.connectors.map((conn) =>
-                  conn.id === action.payload.connectorId
-                    ? {
-                      ...conn,
-                      visible: action.payload.visible,
-                      inputOrder: action.payload.inputOrder,
-                      outputOrder: action.payload.outputOrder,
-                    }
-                    : conn
-                ),
-              }
+                  ...n,
+                  connectors: n.connectors.map((conn) =>
+                    conn.id === action.payload.connectorId
+                      ? {
+                          ...conn,
+                          visible: action.payload.visible,
+                          inputOrder: action.payload.inputOrder,
+                          outputOrder: action.payload.outputOrder,
+                        }
+                      : conn
+                  ),
+                }
               : n
           ),
         },
@@ -618,16 +618,16 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
 
     case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
-    case Types.LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR:
-    case Types.LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
-    case Types.LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR:
+    case Types.LOCK_NODE_SUCCESS_OR_ERROR:
+    case Types.LOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
+    case Types.LOCK_EDGE_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case Types.SET_LOCK_UNLOCK_NODE:
+    case Types.SET_LOCK_NODE:
       return {
         ...state,
         project: {
@@ -635,21 +635,21 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.id
               ? {
-                ...x,
-                isLocked: action.payload.isLocked,
-                isLockedBy: action.payload.isLockedBy,
-                attributes: x.attributes.map((attribute) => ({
-                  ...attribute,
+                  ...x,
                   isLocked: action.payload.isLocked,
                   isLockedBy: action.payload.isLockedBy,
-                })),
-              }
+                  attributes: x.attributes.map((attribute) => ({
+                    ...attribute,
+                    isLocked: action.payload.isLocked,
+                    isLockedBy: action.payload.isLockedBy,
+                  })),
+                }
               : x
           ),
         },
       };
 
-    case Types.SET_LOCK_UNLOCK_EDGE:
+    case Types.SET_LOCK_EDGE:
       return {
         ...state,
         project: {
@@ -686,7 +686,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
-    case Types.SET_LOCK_UNLOCK_NODE_ATTRIBUTE:
+    case Types.SET_LOCK_NODE_ATTRIBUTE:
       return {
         ...state,
         project: {
@@ -694,23 +694,23 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
-                ...x,
-                attributes: x.attributes.map((attribute) =>
-                  attribute.id === action.payload.id
-                    ? {
-                      ...attribute,
-                      isLocked: action.payload.isLocked,
-                      isLockedBy: action.payload.isLockedBy,
-                    }
-                    : attribute
-                ),
-              }
+                  ...x,
+                  attributes: x.attributes.map((attribute) =>
+                    attribute.id === action.payload.id
+                      ? {
+                          ...attribute,
+                          isLocked: action.payload.isLocked,
+                          isLockedBy: action.payload.isLockedBy,
+                        }
+                      : attribute
+                  ),
+                }
               : x
           ),
         },
       };
 
-    case Types.SET_LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE: {
+    case Types.SET_LOCK_NODE_TERMINAL_ATTRIBUTE: {
       const { id, isLocked, isLockedBy, terminalId, nodeId } = action.payload;
 
       return {
@@ -720,30 +720,30 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((n) =>
             n.id === nodeId
               ? {
-                ...n,
-                connectors: n.connectors.map((conn) =>
-                  conn.id === terminalId
-                    ? {
-                      ...conn,
-                      attributes: conn.attributes.map((attribute) =>
-                        attribute.id === id
-                          ? {
-                            ...attribute,
-                            isLocked,
-                            isLockedBy,
-                          }
-                          : attribute
-                      ),
-                    }
-                    : conn
-                ),
-              }
+                  ...n,
+                  connectors: n.connectors.map((conn) =>
+                    conn.id === terminalId
+                      ? {
+                          ...conn,
+                          attributes: conn.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  isLocked,
+                                  isLockedBy,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : conn
+                  ),
+                }
               : n
           ),
         },
       };
     }
-    case Types.SET_LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
+    case Types.SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
       const { id, terminalId, transportId, isLocked, isLockedBy } = action.payload;
 
       return {
@@ -753,15 +753,15 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.transport && e.transport.id === transportId
               ? {
-                ...e,
-                transport: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.transport, terminalId, id, isLocked, isLockedBy),
-              }
+                  ...e,
+                  transport: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.transport, terminalId, id, isLocked, isLockedBy),
+                }
               : e
           ),
         },
       };
     }
-    case Types.SET_LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE: {
+    case Types.SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE: {
       const { id, terminalId, interfaceId, isLocked, isLockedBy } = action.payload;
 
       return {
@@ -771,16 +771,16 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.interface && e.interface.id === interfaceId
               ? {
-                ...e,
-                interface: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.interface, terminalId, id, isLocked, isLockedBy),
-              }
+                  ...e,
+                  interface: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.interface, terminalId, id, isLocked, isLockedBy),
+                }
               : e
           ),
         },
       };
     }
 
-    case Types.SET_LOCK_UNLOCK_TRANSPORT_ATTRIBUTE: {
+    case Types.SET_LOCK_TRANSPORT_ATTRIBUTE: {
       const { id, isLocked, isLockedBy, transportId } = action.payload;
 
       return {
@@ -790,27 +790,27 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.transport && e.transport.id === transportId
               ? {
-                ...e,
-                transport: {
-                  ...e.transport,
-                  attributes: e.transport.attributes.map((attribute) =>
-                    attribute.id === id
-                      ? {
-                        ...attribute,
-                        isLocked,
-                        isLockedBy,
-                      }
-                      : attribute
-                  ),
-                },
-              }
+                  ...e,
+                  transport: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            isLocked,
+                            isLockedBy,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
               : e
           ),
         },
       };
     }
 
-    case Types.SET_LOCK_UNLOCK_INTERFACE_ATTRIBUTE: {
+    case Types.SET_LOCK_INTERFACE_ATTRIBUTE: {
       const { id, isLocked, isLockedBy, interfaceId } = action.payload;
 
       return {
@@ -820,27 +820,27 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges.map((e) =>
             e.interface && e.interface.id === interfaceId
               ? {
-                ...e,
-                interface: {
-                  ...e.transport,
-                  attributes: e.transport.attributes.map((attribute) =>
-                    attribute.id === id
-                      ? {
-                        ...attribute,
-                        isLocked,
-                        isLockedBy,
-                      }
-                      : attribute
-                  ),
-                },
-              }
+                  ...e,
+                  interface: {
+                    ...e.transport,
+                    attributes: e.transport.attributes.map((attribute) =>
+                      attribute.id === id
+                        ? {
+                            ...attribute,
+                            isLocked,
+                            isLockedBy,
+                          }
+                        : attribute
+                    ),
+                  },
+                }
               : e
           ),
         },
       };
     }
 
-    case Types.SET_LOCK_UNLOCK_COMPOSITE_ATTRIBUTE: {
+    case Types.SET_LOCK_COMPOSITE_ATTRIBUTE: {
       const { id, compositeId, nodeId, isLocked, isLockedBy } = action.payload;
 
       return {
@@ -850,24 +850,24 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((n) =>
             n.id === nodeId
               ? {
-                ...n,
-                composites: n.simples.map((comp) =>
-                  comp.id === compositeId
-                    ? {
-                      ...comp,
-                      attributes: comp.attributes.map((attribute) =>
-                        attribute.id === id
-                          ? {
-                            ...attribute,
-                            isLocked,
-                            isLockedBy,
-                          }
-                          : attribute
-                      ),
-                    }
-                    : comp
-                ),
-              }
+                  ...n,
+                  composites: n.simples.map((comp) =>
+                    comp.id === compositeId
+                      ? {
+                          ...comp,
+                          attributes: comp.attributes.map((attribute) =>
+                            attribute.id === id
+                              ? {
+                                  ...attribute,
+                                  isLocked,
+                                  isLockedBy,
+                                }
+                              : attribute
+                          ),
+                        }
+                      : comp
+                  ),
+                }
               : n
           ),
         },
@@ -882,10 +882,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
-                ...x,
-                updated: action.payload.updated,
-                updatedBy: action.payload.userName,
-              }
+                  ...x,
+                  updated: action.payload.updated,
+                  updatedBy: action.payload.userName,
+                }
               : x
           ),
         },
@@ -921,16 +921,16 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           nodes: state.project.nodes.map((n) =>
             n?.id === action.payload.nodeId
               ? {
-                ...n,
-                connectors: n.connectors.map((conn) =>
-                  conn.id === action.payload.connectorId
-                    ? {
-                      ...conn,
-                      isRequired: action.payload.isRequired,
-                    }
-                    : conn
-                ),
-              }
+                  ...n,
+                  connectors: n.connectors.map((conn) =>
+                    conn.id === action.payload.connectorId
+                      ? {
+                          ...conn,
+                          isRequired: action.payload.isRequired,
+                        }
+                      : conn
+                  ),
+                }
               : n
           ),
         },

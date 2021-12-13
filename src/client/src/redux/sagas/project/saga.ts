@@ -23,14 +23,14 @@ import {
   IMPORT_PROJECT_SUCCESS_OR_ERROR,
   COMMIT_PROJECT_SUCCESS_OR_ERROR,
   CommitProject,
-  LockUnlockNode,
-  LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
-  LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+  LockNode,
+  LOCK_NODE_SUCCESS_OR_ERROR,
+  LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
   CreateSubProject,
   CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
-  LockUnlockEdge,
-  LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
-  LockUnlockAttribute,
+  LockEdge,
+  LOCK_EDGE_SUCCESS_OR_ERROR,
+  LockAttribute,
 } from "../../store/project/types";
 
 export function* getProject(action) {
@@ -472,9 +472,9 @@ export function* commitProject(action: CommitProject) {
   }
 }
 
-export function* lockUnlockNode(action: LockUnlockNode) {
+export function* lockNode(action: LockNode) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/node/lockunlock";
+    const url = process.env.REACT_APP_API_BASE_URL + "lock/node";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -482,7 +482,7 @@ export function* lockUnlockNode(action: LockUnlockNode) {
       const data = GetBadResponseData(response);
 
       const apiError = {
-        key: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+        key: LOCK_NODE_SUCCESS_OR_ERROR,
         errorMessage: data.title,
         errorData: data,
       } as ApiError;
@@ -492,7 +492,7 @@ export function* lockUnlockNode(action: LockUnlockNode) {
       };
 
       yield put({
-        type: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+        type: LOCK_NODE_SUCCESS_OR_ERROR,
         payload: payload,
       });
       return;
@@ -502,12 +502,12 @@ export function* lockUnlockNode(action: LockUnlockNode) {
       apiError: null,
     };
     yield put({
-      type: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+      type: LOCK_NODE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   } catch (error) {
     const apiError = {
-      key: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+      key: LOCK_NODE_SUCCESS_OR_ERROR,
       errorMessage: error.message,
       errorData: null,
     } as ApiError;
@@ -517,15 +517,15 @@ export function* lockUnlockNode(action: LockUnlockNode) {
     };
 
     yield put({
-      type: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+      type: LOCK_NODE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
 }
 
-export function* lockUnlockEdge(action: LockUnlockEdge) {
+export function* lockEdge(action: LockEdge) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/edge/lockunlock";
+    const url = process.env.REACT_APP_API_BASE_URL + "lock/edge";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -533,7 +533,7 @@ export function* lockUnlockEdge(action: LockUnlockEdge) {
       const data = GetBadResponseData(response);
 
       const apiError = {
-        key: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+        key: LOCK_EDGE_SUCCESS_OR_ERROR,
         errorMessage: data.title,
         errorData: data,
       } as ApiError;
@@ -543,7 +543,7 @@ export function* lockUnlockEdge(action: LockUnlockEdge) {
       };
 
       yield put({
-        type: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+        type: LOCK_EDGE_SUCCESS_OR_ERROR,
         payload: payload,
       });
       return;
@@ -553,12 +553,12 @@ export function* lockUnlockEdge(action: LockUnlockEdge) {
       apiError: null,
     };
     yield put({
-      type: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+      type: LOCK_EDGE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   } catch (error) {
     const apiError = {
-      key: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+      key: LOCK_EDGE_SUCCESS_OR_ERROR,
       errorMessage: error.message,
       errorData: null,
     } as ApiError;
@@ -568,15 +568,15 @@ export function* lockUnlockEdge(action: LockUnlockEdge) {
     };
 
     yield put({
-      type: LOCK_UNLOCK_EDGE_SUCCESS_OR_ERROR,
+      type: LOCK_EDGE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
 }
 
-export function* lockUnlockAttribute(action: LockUnlockAttribute) {
+export function* lockAttribute(action: LockAttribute) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
+    const url = process.env.REACT_APP_API_BASE_URL + "lock/attribute";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -584,7 +584,7 @@ export function* lockUnlockAttribute(action: LockUnlockAttribute) {
       const data = GetBadResponseData(response);
 
       const apiError = {
-        key: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+        key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
         errorMessage: data.title,
         errorData: data,
       } as ApiError;
@@ -594,13 +594,13 @@ export function* lockUnlockAttribute(action: LockUnlockAttribute) {
       };
 
       yield put({
-        type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+        type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
         payload: payload,
       });
     }
   } catch (error) {
     const apiError = {
-      key: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+      key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
       errorMessage: error.message,
       errorData: null,
     } as ApiError;
@@ -610,7 +610,7 @@ export function* lockUnlockAttribute(action: LockUnlockAttribute) {
     };
 
     yield put({
-      type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+      type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
