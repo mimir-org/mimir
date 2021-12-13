@@ -237,13 +237,13 @@ export interface LockUnlockAttributeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: Date;
-  nodeId: string;
-  edgeId: string;
-  transportId: string;
-  interfaceId: string;
-  compositeId: string;
-  terminalId: string;
+  isLockedStatusDate?: Date;
+  nodeId?: string;
+  edgeId?: string;
+  transportId?: string;
+  interfaceId?: string;
+  compositeId?: string;
+  terminalId?: string;
 }
 
 export interface LockUnlockNodeAm {
@@ -251,7 +251,7 @@ export interface LockUnlockNodeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: Date;
+  isLockedStatusDate?: Date;
 }
 
 export interface LockUnlockEdgeAm {
@@ -259,7 +259,7 @@ export interface LockUnlockEdgeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: Date;
+  isLockedStatusDate?: Date;
 }
 
 export const SETTING_KEY = {

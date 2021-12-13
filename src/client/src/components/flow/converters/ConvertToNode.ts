@@ -24,7 +24,10 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     positionY: position.y,
     positionBlockX: position.x,
     positionBlockY: position.y,
-    connectors: data.connectors.map((c) => new Connector(c)),
+    connectors: data.connectors.map((c) => {
+      c.attributes = c.attributes?.map((attr) => new Attribute(attr));
+      return new Connector(c);
+    }),
     attributes: data.attributes.map((attr) => new Attribute(attr)),
     simples: data.simples,
     aspect: data.aspect,
