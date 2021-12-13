@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
@@ -219,9 +218,6 @@ namespace Mb.Services.Services
             if (lockNodeAm?.Id == null || lockNodeAm.ProjectId == null)
                 throw new ModelBuilderBadRequestException($"Error locking/unlocking Node: Id or projectId can't be null or empty.");
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ProjectId == lockNodeAm.ProjectId);
             
             if(!allEdgesInProject.Any())
@@ -241,9 +237,6 @@ namespace Mb.Services.Services
             await _nodeRepository.SaveAsync();
             await _edgeRepository.SaveAsync();
             await _attributeRepository.SaveAsync();
-
-            stopwatch.Stop();
-            Console.WriteLine("Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds);
         }
 
         #region Private
