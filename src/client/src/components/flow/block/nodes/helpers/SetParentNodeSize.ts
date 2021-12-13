@@ -1,5 +1,4 @@
 import { Size } from "../../../../../compLibrary/size";
-import { Node } from "../../../../../models";
 
 /**
  * Set the size of the ParentNode in BlockView. The size is dependent on other modules being open/closed.
@@ -9,31 +8,19 @@ import { Node } from "../../../../../models";
  * @param libOpen
  * @param explorerOpen
  */
-const SetParentNodeSize = (setWidth: any, setHeight: any, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) => {
-  const width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
-  const marginX = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
+const SetParentNodeSize = (setWidth: any, setHeight: any, secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) => {
+  const width = secondaryNode ? window.innerWidth / 2.3 : window.innerWidth;
+  const marginX = SetMarginX(secondaryNode, libOpen, explorerOpen);
   const marginY = 80;
 
   setWidth(width - marginX);
-  setHeight(Size.BlockHeight - marginY);
+  setHeight(window.innerHeight - marginY);
 };
 
-export function SetMarginX(width: number, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) {
-  const WIDE_SCREEN = 2200;
-  const marginLarge = width > WIDE_SCREEN ? 95 : 0;
-  // const marginSmall = width > WIDE_SCREEN ? 50 : 0;
-
-  if (!secondaryNode) {
-    if (libOpen && explorerOpen) return Size.ModuleOpen * 2 - marginLarge;
-    if (libOpen && !explorerOpen) return Size.ModuleOpen - 60;
-    if (!libOpen && explorerOpen) return Size.ModuleOpen - marginLarge;
-    if (!libOpen && !explorerOpen) return -5;
-  }
-
-  // if (libOpen && explorerOpen) return 85;
-  // if (!libOpen && explorerOpen) return -40;
-  // if (libOpen && !explorerOpen) return -330;
-  // if (!libOpen && !explorerOpen) return 0;
+export function SetMarginX(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
+  if (libOpen && explorerOpen) return secondaryNode ? 170 : Size.ModuleOpen + 150;
+  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 0 : Size.ModuleOpen - 130;
+  if (!libOpen && !explorerOpen) return secondaryNode ? -130 : -100;
 }
 
 export default SetParentNodeSize;

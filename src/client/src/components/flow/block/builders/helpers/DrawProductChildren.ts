@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
 import { TraverseProductNodes } from ".";
-import { BuildBlockEdge, BuildBlockProductNode } from "..";
+import { BuildBlockEdge, BuildProductChildNode } from "..";
 import { IsProduct, IsAspectNode } from "../../../../../helpers";
 import { Node, Edge, Connector } from "../../../../../models";
 import { IsPartOf, IsTransportConnection } from "../../../helpers";
@@ -32,7 +32,7 @@ const DrawProductChildren = (
   });
 
   productChildren.forEach((node) => {
-    const productChildNode = BuildBlockProductNode(node);
+    const productChildNode = BuildProductChildNode(node);
     productChildNode && elements.push(productChildNode);
   });
 };

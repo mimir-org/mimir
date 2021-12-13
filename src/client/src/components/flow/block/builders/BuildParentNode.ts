@@ -11,12 +11,12 @@ import { SetConnectorOrder } from "./helpers";
  * @param explorerOpen
  * @returns a FlowElement, the large box in BlockView.
  */
-const BuildParentBlockNode = (node: Node, libOpen: boolean, explorerOpen: boolean) => {
+const BuildParentNode = (node: Node, libOpen: boolean, explorerOpen: boolean) => {
   if (!node) return null;
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
-  const position = { x: explorerOpen ? 390 : 90, y: 0 };
+  const position = { x: explorerOpen ? 390 : 90, y: 0 }; // TODO: fix magic numbers
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 
@@ -33,4 +33,4 @@ const BuildParentBlockNode = (node: Node, libOpen: boolean, explorerOpen: boolea
   } as FlowElement;
 };
 
-export default BuildParentBlockNode;
+export default BuildParentNode;

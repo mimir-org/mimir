@@ -41,7 +41,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    SetParentNodeSize(setWidth, setHeight, secondaryNode, libOpen, explorerOpen);
+    SetParentNodeSize(setWidth, setHeight, secondaryNode !== null, libOpen, explorerOpen);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing

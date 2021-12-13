@@ -28,7 +28,7 @@ const ResizeHandler = (
 
   const updateScreenSize = () => {
     width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
-    marginX = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
+    marginX = SetMarginX(secondaryNode !== null, libOpen, explorerOpen);
 
     setWidth(width - marginX);
     updateChildXPosition();

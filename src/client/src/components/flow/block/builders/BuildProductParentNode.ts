@@ -9,7 +9,7 @@ import { SetConnectorOrder } from "./helpers";
  * @param node
  * @returns a FlowElement, the large box in BlockView.
  */
-const BuildParentProductNode = (node: Node, explorerOpen: boolean) => {
+const BuildProductParentNode = (node: Node, explorerOpen: boolean) => {
   if (!node) return null;
   SetConnectorOrder(node);
 
@@ -31,4 +31,4 @@ const BuildParentProductNode = (node: Node, explorerOpen: boolean) => {
   } as FlowElement;
 };
 
-export default BuildParentProductNode;
+export default BuildProductParentNode;

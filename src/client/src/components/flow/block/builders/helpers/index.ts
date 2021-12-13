@@ -1,6 +1,8 @@
-export { default as GetNodeTypeString } from "./GetNodeTypeString";
-export { default as SetBlockNodePos } from "./SetBlockNodePos";
+export { default as SetNodePos } from "./SetNodePos";
+export { default as SetSecondaryNodePos } from "./SetSecondaryNodePos";
 export { default as SetOffPageNodePos } from "./SetOffPageNodePos";
+
+export { default as GetNodeTypeString } from "./GetNodeTypeString";
 export { default as SetConnectorOrder } from "./SetConnectorOrder";
 
 export { default as DrawChildNodes } from "./DrawChildNodes";

@@ -4,11 +4,6 @@ const Size = {
   Node_Height: 100,
 
   // BlockView
-  BlockWidth: window.innerWidth,
-  BlockHeight: window.innerHeight,
-  BlockSmallWidth: window.innerWidth / 2,
-  BlockMarginX: 450,
-  BlockSecondaryMarginX: 250,
   BlockMarginY: 60,
 
   // Terminals

@@ -13,7 +13,7 @@ const ParentBox = styled.div<Props>`
   width: ${(props) => props.size.width}px;
   height: ${(props) => props.size.height}px;
   min-width: 500px;
-  max-width: 2500px;
+  max-width: 2650px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.GreyDark};

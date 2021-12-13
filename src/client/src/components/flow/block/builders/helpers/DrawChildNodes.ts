@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { BuildBlockNode } from "..";
+import { BuildChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Node, Edge } from "../../../../../models";
 import { IsPartOf } from "../../../helpers";
@@ -10,12 +10,23 @@ import { IsPartOf } from "../../../helpers";
  * @param allNodes
  * @param selectedNode
  * @param elements
+ * @param libOpen
+ * @param explorerOpen
+ * @param secondaryNode
  */
-const DrawChildNodes = (edges: Edge[], allNodes: Node[], selectedNode: Node, elements: Elements<any>, libOpen: boolean) => {
+const DrawChildNodes = (
+  edges: Edge[],
+  allNodes: Node[],
+  selectedNode: Node,
+  elements: Elements<any>,
+  libOpen: boolean,
+  explorerOpen: boolean,
+  secondaryNode: boolean
+) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
-      if (toNode) elements.push(BuildBlockNode(toNode, libOpen));
+      if (toNode) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode));
     }
   });
 };
