@@ -315,31 +315,35 @@ namespace Mb.Services.Services
                 _remapService.Remap(projectAm);
 
                 // Edges
-                var existingEdges = originalProject.Edges.ToList();
-                var deleteEdges = existingEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
+                var originalEdges = originalProject.Edges.ToList();
+                var deleteEdges = originalEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
                 var edgeChangeMap = await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id, invokedByDomain);
 
                 // Nodes
-                var existingNodes = originalProject.Nodes.ToList();
-                var deleteNodes = existingNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
+                var originalNodes = originalProject.Nodes.ToList();
+                var deleteNodes = originalNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
                 var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain);
 
                 //Determine if project version should be incremented
                 SetProjectVersion(originalProject, projectAm);
 
-                // Map new data
+                // Map new data from projectAm to originalProject
                 _mapper.Map(projectAm, originalProject);
 
-                nodeChangeMap = nodeChangeMap.Concat(_nodeRepository.UpdateInsert(existingNodes, originalProject, invokedByDomain)).ToList();
-                edgeChangeMap = edgeChangeMap.Concat(_edgeRepository.UpdateInsert(existingEdges, originalProject, invokedByDomain)).ToList();
+                //New data from projectAm is now mapped to originalProject.
+                //To avoid confusion we now call originalProject 'updatedProject'
+                var updatedProject = originalProject;
 
-                ResolveLevelAndOrder(originalProject);
+                nodeChangeMap = nodeChangeMap.Concat(_nodeRepository.UpdateInsert(originalNodes, updatedProject, invokedByDomain)).ToList();
+                edgeChangeMap = edgeChangeMap.Concat(_edgeRepository.UpdateInsert(originalEdges, updatedProject, invokedByDomain)).ToList();
 
-                _projectRepository.Update(originalProject);
+                ResolveLevelAndOrder(updatedProject);
+
+                _projectRepository.Update(updatedProject);
 
                 await _projectRepository.SaveAsync();
-                await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), originalProject.Id);
-                await _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), originalProject.Id);
+                await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
+                await _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), updatedProject.Id);
             }
             catch (Exception e)
             {
