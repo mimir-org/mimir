@@ -31,12 +31,14 @@ class Edge {
   interfaceId: string;
   interface: Interface;
 
-  isLocked: boolean | false;
-  isLockedBy: string;
   isHidden: boolean | false;
   masterProjectId: string;
   masterProjectIri: string;
   isSelected: boolean;
+
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
 
   kind: string = EDGE_KIND;
 
