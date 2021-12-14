@@ -88,8 +88,8 @@ function ParameterRow({
             combination={combination}
             headerColor={headerColor}
             bodyColor={bodyColor}
-            onChange={(id, value, unit) =>
-              OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit?.id, dispatch)
+            onChange={(id, value, unitId) =>
+              OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
             }
             onLock={(attribute, isLocked) =>
               OnLockParameter(
