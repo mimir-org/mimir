@@ -1,11 +1,12 @@
 import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId, IsPartOf, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
+import { CreateId, GetParent, IsPartOf, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge } from "react-flow-renderer";
-import { createEdge, removeEdge } from "../../../redux/store/project/actions";
+import { createEdge, removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { Connector, Edge, Node, Project } from "../../../models";
 import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
+import { IsOffPage } from "../../../helpers";
 
 const useOnConnect = (
   params: any,
@@ -21,6 +22,10 @@ const useOnConnect = (
   const sourceNode = project.nodes.find((node) => node.id === params.source);
   const targetNode = project.nodes.find((node) => node.id === params.target);
   const existingEdge = GetExistingEdge(project, params, sourceNode, targetNode);
+
+  if (IsOffPage(sourceNode) && IsOffPage(targetNode)) {
+    HandleOffPage(project, sourceNode, targetNode, dispatch, animatedEdge, edgeType, library, setElements, params);
+  }
 
   let sourceConn: Connector;
   let targetConn: Connector;
@@ -77,6 +82,59 @@ function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: any) {
   //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
   const existingPartOfEdge = project.edges?.find((edge) => edge.toNodeId === targetNode.id && IsPartOf(edge?.fromConnector));
   if (existingPartOfEdge) dispatch(removeEdge(existingPartOfEdge.id));
+}
+
+function HandleOffPage(
+  project: Project,
+  sourceNode: Node,
+  targetNode: Node,
+  dispatch: any,
+  animatedEdge: boolean,
+  edgeType: EdgeType,
+  library: LibraryState,
+  setElements: any,
+  params: any
+) {
+  const id = CreateId();
+  const sourceParent = GetParent(sourceNode);
+  const targetParent = GetParent(targetNode);
+
+  const sourceTerminal = project.edges.find(
+    (edge) =>
+      edge.fromConnector.nodeId === sourceParent.id &&
+      IsTransport(edge.fromConnector) &&
+      edge.toConnector.nodeId === sourceNode.id
+  ).fromConnector;
+
+  const targetTerminal = project.edges.find(
+    (edge) =>
+      edge.toConnector.nodeId === targetParent.id && IsTransport(edge.toConnector) && edge.fromConnector.nodeId === targetNode.id
+  ).toConnector;
+
+  const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, library, animatedEdge);
+
+  dispatch(createEdge(edge));
+  dispatch(removeNode(sourceNode.id));
+  dispatch(removeNode(targetNode.id));
+
+  return setElements((els) => {
+    return addEdge(
+      {
+        ...params,
+        id: id,
+        type: edgeType,
+        arrowHeadType: null,
+        label: "",
+        animated: edgeType === EDGE_TYPE.TRANSPORT && animatedEdge,
+        data: {
+          source: sourceParent,
+          target: targetParent,
+          edge: edge,
+        },
+      },
+      els
+    );
+  });
 }
 
 export default useOnConnect;

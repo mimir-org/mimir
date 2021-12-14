@@ -4,7 +4,7 @@ import { GetNodeTypeString, SetSecondaryNodePos, SetConnectorOrder, SetOffPageNo
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 
-const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, edges: Edge[]) => {
+const BuildSecondaryChildNode = (node: Node, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean, edges: Edge[]) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
@@ -15,7 +15,7 @@ const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boo
   // Force node to fit Block
   const position = !IsOffPage(node)
     ? SetSecondaryNodePos(nodePos, libOpen, explorerOpen)
-    : SetOffPageNodePos(node, libOpen, explorerOpen, false, edges);
+    : SetOffPageNodePos(node, libOpen, explorerOpen, secondaryNode, edges);
 
   return {
     key: CreateId(),

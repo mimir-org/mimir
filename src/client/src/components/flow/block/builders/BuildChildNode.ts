@@ -12,7 +12,7 @@ import { IsOffPage } from "../../../../helpers";
  * @param secondaryNode
  * @returns a node of the type FlowElement.
  */
-const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, secondaryNode: boolean, edges: Edge[]) => {
+const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, secondaryNode: Node, edges: Edge[]) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
@@ -22,7 +22,7 @@ const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, sec
 
   // Force node to fit Block
   const position = !IsOffPage(node)
-    ? SetNodePos(nodePos, libOpen, explorerOpen, secondaryNode)
+    ? SetNodePos(nodePos, libOpen, explorerOpen, secondaryNode !== null)
     : SetOffPageNodePos(node, libOpen, explorerOpen, secondaryNode, edges);
 
   return {

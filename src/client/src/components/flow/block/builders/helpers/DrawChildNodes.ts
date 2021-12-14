@@ -21,7 +21,7 @@ const DrawChildNodes = (
   elements: Elements<any>,
   libOpen: boolean,
   explorerOpen: boolean,
-  secondaryNode: boolean
+  secondaryNode: Node
 ) => {
   edges.forEach((edge) => {
     if (validateEdge(edge, selectedNode)) {

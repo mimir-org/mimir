@@ -51,7 +51,6 @@ function SetXMax(
 
 function SetXMin(explorerOpen: boolean, marginLarge: number) {
   if (explorerOpen) return Size.ModuleOpen + marginLarge;
-
   return marginLarge;
 }
 

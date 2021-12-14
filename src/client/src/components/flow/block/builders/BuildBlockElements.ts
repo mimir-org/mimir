@@ -45,7 +45,7 @@ const BuildBlockElements = (
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen, explorerOpen, secondaryNode !== null);
+  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
   secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, libOpen, explorerOpen);
   DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 

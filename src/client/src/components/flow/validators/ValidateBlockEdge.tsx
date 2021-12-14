@@ -1,6 +1,6 @@
 import { IsFunction, IsLocation, IsProduct, IsDirectChild, IsAspectNode, IsOffPage } from "../../../helpers";
 import { Node, Connector } from "../../../models";
-import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPartOf } from "../helpers";
+import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPartOf, IsTransport } from "../helpers";
 
 /**
  * Validator for an edge in BlockView, where different rules apply for each Aspect.
@@ -20,7 +20,7 @@ const ValidateBlockEdge = (
   source: Connector,
   target: Connector
 ) => {
-  if (IsOffPage(fromNode) || IsOffPage(toNode)) return true;
+  if (IsOffPage(fromNode) || IsOffPage(toNode)) return IsTransportConnection(source, target);
   if (!secondaryNode) return validEdge(selectedNode, fromNode, toNode, source, target);
   if (secondaryNode) return validSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
 };
