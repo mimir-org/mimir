@@ -266,7 +266,7 @@ namespace Mb.Services.Services
 
                 //Find all node attributes
                 var nodeConnectors = allConnectors.Where(x => x.NodeId == node.Id);
-                var attributes = allAttributes.Where(x => nodeConnectors.Any(y => y.Id == x.TerminalId));
+                var attributes = allAttributes.Where(x => nodeConnectors.Any(y => y.Id == x.TerminalId || x.NodeId != null && x.NodeId == node.Id));
 
                 //Node attributes lock/unlock
                 foreach (var attribute in attributes)
