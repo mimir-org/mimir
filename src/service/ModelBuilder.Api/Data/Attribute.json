@@ -1778,19 +1778,6 @@
     "discipline": "Electrical"
   },
   {
-    "entity": "Enclosure rating",
-    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
-    "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
-    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
-    "units": [
-      "175AEE65C3F87C15B0BD60A713C59F40" // IP
-    ],
-    "aspect": "Function, Product",
-    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
-    "selectType": "None",
-    "discipline": "Electrical"
-  },
-  {
     "entity": "Chemistry",
     "qualifierId": "B01AD94A3420E851FCDFDD64866A35FE", // Rating
     "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
