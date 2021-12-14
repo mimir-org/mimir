@@ -29,7 +29,7 @@ function Parameter({ attribute, combination, headerColor, bodyColor, onLock, onC
   const isAttribute = IsAttribute(attribute);
   const isLocked = isAttribute ? attribute.isLocked : false;
   const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
-  const unit = isAttribute ? attribute.selectedUnitId : attribute.units?.[0].id;
+  const unit = isAttribute ? attribute.selectedUnitId ?? attribute.units?.[0]?.id : attribute.units?.[0]?.id;
 
   useEffect(() => {
     if (IsAttribute(attribute) && attribute.value) setValue(attribute.value);
