@@ -2,7 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentNode, BuildSecondaryParentNode, BuildProductParentNode } from ".";
 import { DrawChildNodes, DrawProductChildren, DrawBlockEdges, DrawSecondaryChildren } from "./helpers";
-import { IsProduct } from "../../../../helpers";
+import { IsOffPage, IsProduct } from "../../../../helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.
@@ -45,8 +45,8 @@ const BuildBlockElements = (
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }
 
-  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
   secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, libOpen, explorerOpen);
+  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
   DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 
   return elements;
