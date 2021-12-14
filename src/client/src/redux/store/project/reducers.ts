@@ -1,6 +1,6 @@
 import * as Types from "./types";
 import { Edge, Node, ProjectItemCm } from "../../../models";
-import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree } from "./helpers/";
+import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree, UpdateAttributeIsLocked } from "./helpers/";
 import { IsAspectNode, IsFamily } from "../../../helpers";
 import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
 
@@ -627,57 +627,57 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
-    case Types.SET_LOCK_NODE:
+    case Types.SET_LOCK_NODE: {
+      const { id, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.id
+            x.id === id
               ? {
                   ...x,
-                  isLocked: action.payload.isLocked,
-                  isLockedBy: action.payload.isLockedBy,
-                  attributes: x.attributes.map((attribute) => ({
-                    ...attribute,
-                    isLocked: action.payload.isLocked,
-                    isLockedBy: action.payload.isLockedBy,
-                  })),
+                  isLocked,
+                  isLockedStatusBy,
+                  isLockedStatusDate,
+                  attributes: x.attributes.map((attribute) =>
+                    UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
+                  ),
                 }
               : x
           ),
         },
       };
+    }
 
-    case Types.SET_LOCK_EDGE:
+    case Types.SET_LOCK_EDGE: {
+      const { id, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+
       return {
         ...state,
         project: {
           ...state.project,
           edges: state.project.edges.map((x) =>
-            x.id === action.payload.id
+            x.id === id
               ? {
                   ...x,
-                  isLocked: action.payload.isLocked,
-                  isLockedBy: action.payload.isLockedBy,
+                  isLocked,
+                  isLockedStatusBy,
                   transport: x.transport
                     ? {
                         ...x.transport,
-                        attributes: x.transport?.attributes?.map((attribute) => ({
-                          ...attribute,
-                          isLocked: action.payload.isLocked,
-                          isLockedBy: action.payload.isLockedBy,
-                        })),
+                        attributes: x.transport?.attributes?.map((attribute) =>
+                          UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
+                        ),
                       }
                     : null,
                   interface: x.interface
                     ? {
                         ...x.interface,
-                        attributes: x.interface?.attributes?.map((attribute) => ({
-                          ...attribute,
-                          isLocked: action.payload.isLocked,
-                          isLockedBy: action.payload.isLockedBy,
-                        })),
+                        attributes: x.interface?.attributes?.map((attribute) =>
+                          UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
+                        ),
                       }
                     : null,
                 }
@@ -685,23 +685,22 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ),
         },
       };
+    }
 
-    case Types.SET_LOCK_NODE_ATTRIBUTE:
+    case Types.SET_LOCK_NODE_ATTRIBUTE: {
+      const { id, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+
       return {
         ...state,
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.nodeId
+            x.id === nodeId
               ? {
                   ...x,
                   attributes: x.attributes.map((attribute) =>
-                    attribute.id === action.payload.id
-                      ? {
-                          ...attribute,
-                          isLocked: action.payload.isLocked,
-                          isLockedStatusBy: action.payload.isLockedBy,
-                        }
+                    attribute.id === id
+                      ? UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
                       : attribute
                   ),
                 }
@@ -709,9 +708,10 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ),
         },
       };
+    }
 
     case Types.SET_LOCK_NODE_TERMINAL_ATTRIBUTE: {
-      const { id, isLocked, isLockedBy, terminalId, nodeId } = action.payload;
+      const { id, terminalId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -727,11 +727,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                           ...conn,
                           attributes: conn.attributes.map((attribute) =>
                             attribute.id === id
-                              ? {
-                                  ...attribute,
-                                  isLocked,
-                                  isLockedStatusBy: isLockedBy,
-                                }
+                              ? UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
                               : attribute
                           ),
                         }
@@ -744,7 +740,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
     case Types.SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
-      const { id, terminalId, transportId, isLocked, isLockedBy } = action.payload;
+      const { id, terminalId, transportId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -754,7 +750,14 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
             e.transport && e.transport.id === transportId
               ? {
                   ...e,
-                  transport: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.transport, terminalId, id, isLocked, isLockedBy),
+                  transport: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(
+                    e.transport,
+                    terminalId,
+                    id,
+                    isLocked,
+                    isLockedStatusBy,
+                    isLockedStatusDate
+                  ),
                 }
               : e
           ),
@@ -762,7 +765,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
     case Types.SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE: {
-      const { id, terminalId, interfaceId, isLocked, isLockedBy } = action.payload;
+      const { id, terminalId, interfaceId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -772,7 +775,14 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
             e.interface && e.interface.id === interfaceId
               ? {
                   ...e,
-                  interface: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(e.interface, terminalId, id, isLocked, isLockedBy),
+                  interface: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(
+                    e.interface,
+                    terminalId,
+                    id,
+                    isLocked,
+                    isLockedStatusBy,
+                    isLockedStatusDate
+                  ),
                 }
               : e
           ),
@@ -781,7 +791,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_LOCK_TRANSPORT_ATTRIBUTE: {
-      const { id, isLocked, isLockedBy, transportId } = action.payload;
+      const { id, transportId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -795,11 +805,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                     ...e.transport,
                     attributes: e.transport.attributes.map((attribute) =>
                       attribute.id === id
-                        ? {
-                            ...attribute,
-                            isLocked,
-                            isLockedStatusBy: isLockedBy,
-                          }
+                        ? UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
                         : attribute
                     ),
                   },
@@ -811,7 +817,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_LOCK_INTERFACE_ATTRIBUTE: {
-      const { id, isLocked, isLockedBy, interfaceId } = action.payload;
+      const { id, interfaceId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -825,11 +831,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                     ...e.transport,
                     attributes: e.transport.attributes.map((attribute) =>
                       attribute.id === id
-                        ? {
-                            ...attribute,
-                            isLocked,
-                            isLockedStatusBy: isLockedBy,
-                          }
+                        ? UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
                         : attribute
                     ),
                   },
@@ -841,7 +843,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_LOCK_COMPOSITE_ATTRIBUTE: {
-      const { id, compositeId, nodeId, isLocked, isLockedBy } = action.payload;
+      const { id, compositeId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -857,11 +859,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                           ...comp,
                           attributes: comp.attributes.map((attribute) =>
                             attribute.id === id
-                              ? {
-                                  ...attribute,
-                                  isLocked,
-                                  isLockedStatusBy: isLockedBy,
-                                }
+                              ? UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
                               : attribute
                           ),
                         }

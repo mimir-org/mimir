@@ -380,43 +380,35 @@ export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTyp
   };
 }
 
-export function lockNode(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockNode {
+export function lockNode(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockNode {
   return {
     type: Types.LOCK_NODE,
     payload: {
       id: id,
       projectId,
       isLocked,
-      isLockedBy,
     },
   };
 }
 
-export function lockEdge(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockEdge {
+export function lockEdge(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockEdge {
   return {
     type: Types.LOCK_EDGE,
     payload: {
       id: id,
       projectId,
       isLocked,
-      isLockedBy,
     },
   };
 }
 
-export function lockAttribute(
-  id: string,
-  projectId: string,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockAttribute {
+export function lockAttribute(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockAttribute {
   return {
     type: Types.LOCK_ATTRIBUTE,
     payload: {
       id: id,
       projectId,
       isLocked,
-      isLockedBy,
     },
   };
 }
@@ -427,7 +419,8 @@ export function setIsLockedNode(lockNodeAm: LockNodeAm): Types.SetLockNode {
     payload: {
       id: lockNodeAm.id,
       isLocked: lockNodeAm.isLocked,
-      isLockedBy: lockNodeAm.isLockedStatusBy,
+      isLockedStatusBy: lockNodeAm.isLockedStatusBy,
+      isLockedStatusDate: lockNodeAm.isLockedStatusDate,
     },
   };
 }
@@ -438,7 +431,8 @@ export function setIsLockedEdge(lockEdgeAm: LockEdgeAm): Types.SetLockEdge {
     payload: {
       id: lockEdgeAm.id,
       isLocked: lockEdgeAm.isLocked,
-      isLockedBy: lockEdgeAm.isLockedStatusBy,
+      isLockedStatusBy: lockEdgeAm.isLockedStatusBy,
+      isLockedStatusDate: lockEdgeAm.isLockedStatusDate,
     },
   };
 }
@@ -450,42 +444,39 @@ export function setIsLockedNodeAttribute(lockAttributeAm: LockAttributeAm): Type
       id: lockAttributeAm.id,
       nodeId: lockAttributeAm.nodeId,
       isLocked: lockAttributeAm.isLocked,
-      isLockedBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusDate: lockAttributeAm.isLockedStatusDate,
     },
   };
 }
 
-export function setIsLockedTransportAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockTransportAttribute {
+export function setIsLockedTransportAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockTransportAttribute {
   return {
     type: Types.SET_LOCK_TRANSPORT_ATTRIBUTE,
     payload: {
       id: lockAttributeAm.id,
       transportId: lockAttributeAm.transportId,
       isLocked: lockAttributeAm.isLocked,
-      isLockedBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusDate: lockAttributeAm.isLockedStatusDate,
     },
   };
 }
 
-export function setIsLockedInterfaceAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockInterfaceAttribute {
+export function setIsLockedInterfaceAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockInterfaceAttribute {
   return {
     type: Types.SET_LOCK_INTERFACE_ATTRIBUTE,
     payload: {
       id: lockAttributeAm.id,
       interfaceId: lockAttributeAm.interfaceId,
       isLocked: lockAttributeAm.isLocked,
-      isLockedBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusDate: lockAttributeAm.isLockedStatusDate,
     },
   };
 }
 
-export function setIsLockedNodeTerminalAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockNodeTerminalAttribute {
+export function setIsLockedNodeTerminalAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockNodeTerminalAttribute {
   return {
     type: Types.SET_LOCK_NODE_TERMINAL_ATTRIBUTE,
     payload: {
@@ -493,13 +484,12 @@ export function setIsLockedNodeTerminalAttribute(
       terminalId: lockAttributeAm.terminalId,
       nodeId: lockAttributeAm.nodeId,
       isLocked: lockAttributeAm.isLocked,
-      isLockedBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusDate: lockAttributeAm.isLockedStatusDate,
     },
   };
 }
-export function setIsLockedTransportTerminalAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockTransportTerminalAttribute {
+export function setIsLockedTransportTerminalAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockTransportTerminalAttribute {
   return {
     type: Types.SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
     payload: {
@@ -507,7 +497,8 @@ export function setIsLockedTransportTerminalAttribute(
       terminalId: lockAttributeAm.terminalId,
       transportId: lockAttributeAm.transportId,
       isLocked: lockAttributeAm.isLocked,
-      isLockedBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusDate: lockAttributeAm.isLockedStatusDate,
     },
   };
 }
@@ -522,14 +513,13 @@ export function setIsLockedInterfaceTerminalAttribute(
       terminalId: lockAttributeAm.terminalId,
       interfaceId: lockAttributeAm.interfaceId,
       isLocked: lockAttributeAm.isLocked,
-      isLockedBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusDate: lockAttributeAm.isLockedStatusDate,
     },
   };
 }
 
-export function setIsLockedCompositeAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockCompositeAttribute {
+export function setIsLockedCompositeAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockCompositeAttribute {
   return {
     type: Types.SET_LOCK_COMPOSITE_ATTRIBUTE,
     payload: {
@@ -537,7 +527,8 @@ export function setIsLockedCompositeAttribute(
       compositeId: lockAttributeAm.compositeId,
       nodeId: lockAttributeAm.nodeId,
       isLocked: lockAttributeAm.isLocked,
-      isLockedBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusBy: lockAttributeAm.isLockedStatusBy,
+      isLockedStatusDate: lockAttributeAm.isLockedStatusDate,
     },
   };
 }
