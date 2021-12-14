@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { Project, ProjectFileAm, WebSocket } from "../../../models";
-import { ConvertProject } from ".";
+import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { IsPartOf } from "../../../components/flow/helpers";
@@ -295,36 +295,9 @@ export function* updateProject(action: SaveProjectAction) {
     }
 
     const project: Project = response.data.item1;
-    const reMappedIds: Object = response.data.item2;
+    const reMappedIds: { [id: string]: string } = response.data.item2;
 
-    if (project.nodes && action.payload.project.nodes) {
-      project.nodes.forEach((node) => {
-        let oldNode = action.payload.project.nodes.find((x) => x.id === node.id);
-        if (!oldNode && reMappedIds[node.id]) oldNode = action.payload.project.nodes.find((x) => x.id === reMappedIds[node.id]);
-        if (oldNode) {
-          node.isHidden = oldNode.isHidden;
-          node.isBlockSelected = oldNode.isBlockSelected;
-          node.isSelected = oldNode.isSelected;
-        }
-      });
-    }
-
-    if (project.edges && action.payload.project.edges) {
-      project.edges.forEach((edge) => {
-        let oldEdge = action.payload.project.edges.find((x) => x.id === edge.id);
-        if (!oldEdge && reMappedIds[edge.id]) oldEdge = action.payload.project.edges.find((x) => x.id === reMappedIds[edge.id]);
-        if (oldEdge) {
-          edge.isHidden = oldEdge.isHidden;
-          edge.isSelected = oldEdge.isSelected;
-        }
-      });
-    }
-
-    if (!IsBlockView()) {
-      project?.edges.forEach((edge) => {
-        if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
-      });
-    }
+    MapProperties(project, action.payload.project, reMappedIds);
 
     const payload = {
       project: project,
