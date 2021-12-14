@@ -1444,7 +1444,7 @@
       "894E489682900A936362F123633FF7BC", // kV
       "E84F64395609F2970B9161FBF0B943EE" // V
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1458,7 +1458,7 @@
       "894E489682900A936362F123633FF7BC", // kV
       "E84F64395609F2970B9161FBF0B943EE" // V
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1498,7 +1498,7 @@
       "2766B1116773996CE16DD0E969010E80", // kVA
       "3F201832F7AFA46EC99375292F1B92E6" // MVA
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1512,7 +1512,7 @@
       "2766B1116773996CE16DD0E969010E80", // kVA
       "3F201832F7AFA46EC99375292F1B92E6" // MVA
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1526,7 +1526,7 @@
       "2766B1116773996CE16DD0E969010E80", // kVA
       "3F201832F7AFA46EC99375292F1B92E6" // MVA
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1537,7 +1537,7 @@
     "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "F917171C8D07503473DBE853128DD6A0", // Nominal
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "CCA61D52018A96C3324B07AE871B6A60", // Unsigned float
     "selectType": "None",
     "discipline": "Electrical"
@@ -1551,7 +1551,7 @@
       "6E26614D307D41DE875987A143419AB9", // A
       "60458C323113E3C45FAABD08DBFBC55D" // kA
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1565,7 +1565,7 @@
       "6E26614D307D41DE875987A143419AB9", // A
       "60458C323113E3C45FAABD08DBFBC55D" // kA
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1579,7 +1579,7 @@
       "68FC7BE58329BBBEC78C6631C7F37A88", // Ω
       "C2969D285AED65E9133A39390B28EB7D" // Ohm
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "CCA61D52018A96C3324B07AE871B6A60", // Unsigned float
     "selectType": "None",
     "discipline": "Electrical"
@@ -1588,22 +1588,22 @@
     "entity": "Winding taps",
     "qualifierId": "B01AD94A3420E851FCDFDD64866A35FE", // Rating
     "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
-    "conditionId": "F917171C8D07503473DBE853128DD6A0", // Nominal
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
   },
   {
     "entity": "Ratios",
-    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
-    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "qualifierId": "B01AD94A3420E851FCDFDD64866A35FE", // Rating
+    "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
     "units": [
       "32957978C0E4FB6008812BAAFFD56EEC" // [list]
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
     "selectType": "None",
     "discipline": "Electrical"
@@ -1618,7 +1618,7 @@
       "62CF948E25D6F57E81EE422239ED1A5F", // MW
       "DD6E835F0610AE7BB54B3DBC88E792FD" // kW
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1629,7 +1629,7 @@
     "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
     "selectType": "SingleSelect",
     "selectValues": [
@@ -1640,11 +1640,11 @@
   },
   {
     "entity": "Transformer type, pulses",
-    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
+    "qualifierId": "B01AD94A3420E851FCDFDD64866A35FE", // Rating
     "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "SingleSelect",
     "selectValues": [
@@ -1663,7 +1663,7 @@
     "units": [
       "FCC9BF9B6381052C038DD5971355DD77" // Hz
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1676,7 +1676,20 @@
     "units": [
       "FCC9BF9B6381052C038DD5971355DD77" // Hz
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
+    "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
+    "selectType": "None",
+    "discipline": "Electrical"
+  },
+  {
+    "entity": "Frequency",
+    "qualifierId": "B01AD94A3420E851FCDFDD64866A35FE", // Rating
+    "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
+    "conditionId": "F917171C8D07503473DBE853128DD6A0", // Nominal
+    "units": [
+      "FCC9BF9B6381052C038DD5971355DD77" // Hz
+    ],
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1703,18 +1716,18 @@
       "B2B68149BFCC3F8193582BFB4EFFCF88", // W
       "894E489682900A936362F123633FF7BC" // kV
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
   },
   {
     "entity": "Phases generated",
-    "qualifierId": "23BE80E317DA30DBAAA862D672FD1E87", // NotSet
-    "sourceId": "E4AC50788784BA83FAAD1821E2F1E662", // NotSet
+    "qualifierId": "0D691C0758C26CCFBDD04750FC136926", // Required
+    "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "SingleSelect",
     "selectValues": [
@@ -1732,7 +1745,7 @@
       "4F76B6D7DC7A57426260347D9FB90F23", // Vah
       "BBF17540EC576CA6AA4D9ED6CC33E8AF" // kVAh
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1781,9 +1794,9 @@
     "entity": "Chemistry",
     "qualifierId": "B01AD94A3420E851FCDFDD64866A35FE", // Rating
     "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
-    "conditionId": "F917171C8D07503473DBE853128DD6A0", // Nominal
+    "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "8F862EE92B0ECBE913616212F57BDB88", // String
     "selectType": "SingleSelect",
     "selectValues": [
@@ -1802,7 +1815,7 @@
       "4F76B6D7DC7A57426260347D9FB90F23", // Vah
       "BBF17540EC576CA6AA4D9ED6CC33E8AF" // kVAh
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1813,7 +1826,7 @@
     "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "424EE17AEA18CAEB3DB3409D2C0A467A", // NotSet
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1836,12 +1849,12 @@
   {
     "entity": "Cross section",
     "qualifierId": "0D691C0758C26CCFBDD04750FC136926", // Required
-    "sourceId": "5802B6AACC88F78D4BF703CEE4B803F2", // Required
+    "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "F917171C8D07503473DBE853128DD6A0", // Nominal
     "units": [
       "7B88D4F4D073C691F680FF292FC0EB4A" // mm2
     ],
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
@@ -1849,10 +1862,10 @@
   {
     "entity": "Conductors/wires",
     "qualifierId": "0D691C0758C26CCFBDD04750FC136926", // Required
-    "sourceId": "5802B6AACC88F78D4BF703CEE4B803F2", // Required
+    "sourceId": "93DA780BECE3637E30BC2850F0E0FDA3", // Design
     "conditionId": "A2CE43F487C83C807558DC76AADE5850", // Minimum
     "units": null,
-    "aspect": "Function, Product",
+    "aspect": "Product",
     "formatId": "C2E4AB421C5E441D3EEC9BF6E70344F2", // Unsigned integer
     "selectType": "None",
     "discipline": "Electrical"
