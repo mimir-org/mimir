@@ -53,7 +53,7 @@ class Node {
 
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: Date;
+  isLockedStatusDate: string;
 
   kind: string = NODE_KIND;
 

@@ -38,7 +38,7 @@ class Edge {
 
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: Date;
+  isLockedStatusDate: string;
 
   kind: string = EDGE_KIND;
 

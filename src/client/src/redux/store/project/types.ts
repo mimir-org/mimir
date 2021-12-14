@@ -435,7 +435,7 @@ export interface SetLockNode {
     id: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -445,7 +445,7 @@ export interface SetLockEdge {
     id: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -456,7 +456,7 @@ export interface SetLockNodeAttribute {
     nodeId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -467,7 +467,7 @@ export interface SetLockTransportAttribute {
     transportId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -478,7 +478,7 @@ export interface SetLockInterfaceAttribute {
     interfaceId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -490,7 +490,7 @@ export interface SetLockNodeTerminalAttribute {
     nodeId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -502,7 +502,7 @@ export interface SetLockTransportTerminalAttribute {
     transportId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -514,7 +514,7 @@ export interface SetLockInterfaceTerminalAttribute {
     interfaceId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 
@@ -526,7 +526,7 @@ export interface SetLockCompositeAttribute {
     nodeId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
-    isLockedStatusDate: Date;
+    isLockedStatusDate: string;
   };
 }
 

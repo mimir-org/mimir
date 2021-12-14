@@ -33,7 +33,7 @@ const handleLockOffline = (
     projectId: project.id,
     isLocked,
     isLockedStatusBy: isLockedBy,
-    isLockedStatusDate: new Date(),
+    isLockedStatusDate: new Date().toISOString(),
   };
 
   if (IsNode(element)) dispatch(setIsLockedNode(lockObj));

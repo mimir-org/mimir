@@ -42,7 +42,7 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeIsLocked = <T extends HasIn
   attributeId: string,
   isLocked: boolean,
   isLockedBy: string,
-  isLockedStatusDate: Date
+  isLockedStatusDate: string
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeIsLocked(attribute, isLocked, isLockedBy, isLockedStatusDate);
   if (element.inputTerminalId === terminalId) {
@@ -70,7 +70,7 @@ export const UpdateAttributeIsLocked = (
   attribute: Attribute,
   isLocked: boolean,
   isLockedStatusBy: string,
-  isLockedStatusDate: Date
+  isLockedStatusDate: string
 ): Attribute => ({
   ...attribute,
   isLocked,

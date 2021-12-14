@@ -34,7 +34,7 @@ class Attribute {
 
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: Date;
+  isLockedStatusDate: string;
 
   kind: string = ATTRIBUTE_KIND;
 
