@@ -40,7 +40,7 @@ const BuildBlockElements = (
   parentBlock && elements.push(parentBlock);
 
   if (secondaryNode) {
-    const secondary = nodes.find((x) => x.id === secondaryNode.id);
+    const secondary = nodes?.find((x) => x.id === secondaryNode.id);
     const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary, libOpen, explorerOpen);
     parentSecondaryBlock && elements.push(parentSecondaryBlock);
   }

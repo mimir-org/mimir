@@ -25,6 +25,7 @@ const useOnConnect = (
 
   if (IsOffPage(sourceNode) && IsOffPage(targetNode)) {
     HandleOffPage(project, sourceNode, targetNode, dispatch, animatedEdge, edgeType, library, setElements, params);
+    return;
   }
 
   let sourceConn: Connector;
@@ -112,8 +113,14 @@ function HandleOffPage(
   ).toConnector;
 
   const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, library, animatedEdge);
-
   dispatch(createEdge(edge));
+
+  project.edges.forEach((edge) => {
+    if (IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)) {
+      dispatch(removeEdge(edge.id));
+    }
+  });
+
   dispatch(removeNode(sourceNode.id));
   dispatch(removeNode(targetNode.id));
 

@@ -66,13 +66,18 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, library, animatedEdge);
   };
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
-  };
+  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+  //   return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
+  // };
 
-  const OnConnectStop = (e) => {
-    return hooks.useOnConnectStop(e, project, dispatch);
-  };
+  // const OnConnectStop = (e) => {
+  //   return hooks.useOnConnectStop(e, project, dispatch);
+  // };
+
+  // const OnConnectEnd = (e) => {
+  //   console.log("END");
+  //   // return hooks.useOnConnectStop(e, project, dispatch);
+  // };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -123,7 +128,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   useEffect(() => {
-    project?.edges.forEach((edge) => {
+    project?.edges?.forEach((edge) => {
       if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, false));
     });
   }, []);
@@ -136,8 +141,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onConnect={OnConnect}
-          onConnectStart={OnConnectStart}
-          onConnectStop={OnConnectStop}
+          // onConnectStart={OnConnectStart}
+          // onConnectStop={OnConnectStop}
+          // onConnectEnd={OnConnectEnd}
           onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}

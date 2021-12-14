@@ -5,7 +5,6 @@ import { BuildOffPageNode } from "../block/builders";
 import { OffPageData } from "../block/builders/BuildOffPageNode";
 import { Project } from "../../../models";
 import { IsOffPage } from "../../../helpers";
-import { IsOutputTerminal } from "../helpers";
 
 const useOnConnectStop = (e, project: Project, dispatch: any) => {
   e.preventDefault();
@@ -14,14 +13,12 @@ const useOnConnectStop = (e, project: Project, dispatch: any) => {
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
     const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
-    const isTarget = IsOutputTerminal(sourceConnector);
 
     if (!IsOffPage(sourceNode)) {
       const offPageData = {
         sourceNode: sourceNode,
         sourceConnector: sourceConnector,
         position: { x: e.clientX, y: e.clientY },
-        isTarget: isTarget,
       } as OffPageData;
 
       const offPageObject = BuildOffPageNode(offPageData);

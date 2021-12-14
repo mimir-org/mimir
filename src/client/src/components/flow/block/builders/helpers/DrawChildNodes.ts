@@ -23,7 +23,7 @@ const DrawChildNodes = (
   explorerOpen: boolean,
   secondaryNode: Node
 ) => {
-  edges.forEach((edge) => {
+  edges?.forEach((edge) => {
     if (ValidateEdge(edge, selectedNode)) {
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
       if (IsOffPage(toNode)) {
@@ -49,7 +49,7 @@ function ValidateEdge(edge: Edge, selectedNode: Node) {
 export function ValidateOffPageNode(node: Node, elements: Elements<any>) {
   const offPageParent = GetParent(node);
 
-  return elements.some((elem) => elem.id === offPageParent.id);
+  return elements?.some((elem) => elem?.id === offPageParent?.id);
 }
 
 export default DrawChildNodes;

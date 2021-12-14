@@ -94,7 +94,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   }, [OnLoad, flowInstance]);
 
   useEffect(() => {
-    project?.edges.forEach((edge) => {
+    project?.edges?.forEach((edge) => {
       if (!IsPartOf(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
     });
   }, []);
