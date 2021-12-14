@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mb.Core.Migrations
 {
-    public partial class InitV1 : Migration
+    public partial class FinalV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
