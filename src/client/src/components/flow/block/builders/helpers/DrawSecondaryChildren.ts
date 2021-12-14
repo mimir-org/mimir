@@ -24,7 +24,7 @@ const DrawSecondaryChildren = (
     edges.forEach((edge) => {
       if (edge.fromNodeId === secondary.id && IsFamily(secondary, edge.toNode)) {
         const targetNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
-        if (targetNode) elements.push(BuildSecondaryChildNode(targetNode, secondary, libOpen, explorerOpen, edges));
+        if (targetNode) elements.push(BuildSecondaryChildNode(targetNode, libOpen, explorerOpen));
       }
     });
   }

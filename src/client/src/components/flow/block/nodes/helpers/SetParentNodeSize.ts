@@ -9,7 +9,7 @@ import { Size } from "../../../../../compLibrary/size";
  * @param explorerOpen
  */
 const SetParentNodeSize = (setWidth: any, setHeight: any, secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) => {
-  const screenWidth = secondaryNode ? window.innerWidth / 2.3 : window.innerWidth;
+  const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
   const marginX = SetMarginX(secondaryNode, libOpen, explorerOpen);
   const marginY = 80;
   let width = screenWidth - marginX;
@@ -21,9 +21,9 @@ const SetParentNodeSize = (setWidth: any, setHeight: any, secondaryNode: boolean
 };
 
 export function SetMarginX(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
-  if (libOpen && explorerOpen) return secondaryNode ? 170 : Size.ModuleOpen + 200;
-  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 0 : Size.ModuleOpen - 100;
-  if (!libOpen && !explorerOpen) return secondaryNode ? -130 : -60;
+  if (libOpen && explorerOpen) return secondaryNode ? 170 : Size.ModuleOpen + 250;
+  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 40 : Size.ModuleOpen - 60;
+  if (!libOpen && !explorerOpen) return secondaryNode ? -120 : -40;
 }
 
 export default SetParentNodeSize;

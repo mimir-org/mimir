@@ -28,9 +28,9 @@ const DrawChildNodes = (
       const toNode = allNodes.find((n) => n.id === edge.toNode.id);
       if (IsOffPage(toNode)) {
         const isValidOffPage = ValidateOffPageNode(toNode, elements);
-        if (toNode && isValidOffPage) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode, edges));
+        if (toNode && isValidOffPage) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode));
       } else {
-        if (toNode) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode, edges));
+        if (toNode) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode));
       }
     }
   });

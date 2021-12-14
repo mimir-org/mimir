@@ -16,7 +16,7 @@ const BuildParentNode = (node: Node, libOpen: boolean, explorerOpen: boolean) =>
   SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentNode;
-  const position = { x: explorerOpen ? 390 : 90, y: 0 }; // TODO: fix magic numbers
+  const position = { x: explorerOpen ? 420 : 110, y: 0 }; // TODO: fix magic numbers
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 

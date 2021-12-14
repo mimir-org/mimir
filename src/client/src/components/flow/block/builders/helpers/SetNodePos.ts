@@ -13,7 +13,7 @@ import { Position } from "../../../../../models/project";
 const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, secondaryNode: boolean) => {
   const margin = 20;
   const marginLarge = 80;
-  const width = secondaryNode ? window.innerWidth / 2.3 : window.innerWidth;
+  const width = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
 
   const yMin = 30;
   const yMax = window.innerHeight - 180;

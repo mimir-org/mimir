@@ -1,10 +1,10 @@
-import { Edge, Node } from "../../../../models";
+import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetSecondaryNodePos, SetConnectorOrder, SetOffPageNodePos } from "./helpers";
+import { GetNodeTypeString, SetSecondaryNodePos, SetConnectorOrder } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 
-const BuildSecondaryChildNode = (node: Node, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean, edges: Edge[]) => {
+const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
@@ -13,9 +13,7 @@ const BuildSecondaryChildNode = (node: Node, secondaryNode: Node, libOpen: boole
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node)
-    ? SetSecondaryNodePos(nodePos, libOpen, explorerOpen)
-    : SetOffPageNodePos(node, libOpen, explorerOpen, secondaryNode, edges);
+  const position = !IsOffPage(node) ? SetSecondaryNodePos(nodePos, libOpen, explorerOpen) : nodePos;
 
   return {
     key: CreateId(),

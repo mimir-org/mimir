@@ -2,7 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentNode, BuildSecondaryParentNode, BuildProductParentNode } from ".";
 import { DrawChildNodes, DrawProductChildren, DrawBlockEdges, DrawSecondaryChildren } from "./helpers";
-import { IsOffPage, IsProduct } from "../../../../helpers";
+import { IsProduct } from "../../../../helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.

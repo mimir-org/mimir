@@ -16,9 +16,14 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpe
   SetConnectorOrder(secondaryNode);
 
   const type = TextResources.Type_BlockParentNode;
-  const screenWidth = window.innerWidth / 2.3;
+  const screenWidth = window.innerWidth / 2.4;
+  const distanceToPrimaryNode = 150;
   const marginX = SetMarginX(true, libOpen, explorerOpen);
-  const position = { x: primaryNode.positionBlockX + screenWidth - marginX + 70, y: primaryNode.positionBlockY };
+
+  const position = {
+    x: primaryNode.positionBlockX + screenWidth - marginX + distanceToPrimaryNode,
+    y: primaryNode.positionBlockY,
+  };
 
   secondaryNode.positionBlockX = position.x;
   secondaryNode.positionBlockY = position.y;
