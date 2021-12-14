@@ -16,7 +16,7 @@ namespace Mb.Core.Profiles
     {
         public AttributeProfile(ICommonRepository commonRepository)
         {
-            CreateMap<CreateAttributeType, AttributeType>()
+            CreateMap<AttributeTypeAm, AttributeType>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Key.CreateMd5()))
                 .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
