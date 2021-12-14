@@ -700,7 +700,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                       ? {
                           ...attribute,
                           isLocked: action.payload.isLocked,
-                          isLockedBy: action.payload.isLockedBy,
+                          isLockedStatusBy: action.payload.isLockedBy,
                         }
                       : attribute
                   ),
@@ -730,7 +730,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                               ? {
                                   ...attribute,
                                   isLocked,
-                                  isLockedBy,
+                                  isLockedStatusBy: isLockedBy,
                                 }
                               : attribute
                           ),
@@ -798,7 +798,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                         ? {
                             ...attribute,
                             isLocked,
-                            isLockedBy,
+                            isLockedStatusBy: isLockedBy,
                           }
                         : attribute
                     ),
@@ -828,7 +828,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                         ? {
                             ...attribute,
                             isLocked,
-                            isLockedBy,
+                            isLockedStatusBy: isLockedBy,
                           }
                         : attribute
                     ),
@@ -860,7 +860,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                               ? {
                                   ...attribute,
                                   isLocked,
-                                  isLockedBy,
+                                  isLockedStatusBy: isLockedBy,
                                 }
                               : attribute
                           ),

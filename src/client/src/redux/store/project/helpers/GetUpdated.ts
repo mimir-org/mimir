@@ -68,5 +68,5 @@ const UpdateAttributeValue = (attribute: Attribute, value: string, unitId: strin
 const UpdateAttributeIsLocked = (attribute: Attribute, isLocked: boolean, isLockedBy: string): Attribute => ({
   ...attribute,
   isLocked,
-  isLockedBy,
+  isLockedStatusBy: isLockedBy,
 });

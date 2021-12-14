@@ -16,8 +16,6 @@ class Node {
   label: string;
   positionX: number;
   positionY: number;
-  isLocked: boolean | false;
-  isLockedBy: string;
   purpose: Purpose;
 
   positionBlockX: number;
@@ -52,6 +50,10 @@ class Node {
   isHidden: boolean | false;
   blockWidth: number;
   blockHeight: number;
+
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: Date;
 
   kind: string = NODE_KIND;
 
