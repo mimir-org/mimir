@@ -245,8 +245,8 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var project = await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
-                return Ok(project);
+                var projectTuple = await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
+                return Ok(projectTuple);
             }
             catch (ModelBuilderDuplicateException e)
             {

@@ -23,7 +23,7 @@ export function commitProject(commitPackage: CommitPackage): Types.ProjectAction
 export function save(project: Project): Types.ProjectActionTypes {
   return {
     type: Types.SAVE_PROJECT,
-    payload: project,
+    payload: { project },
   };
 }
 
@@ -404,12 +404,7 @@ export function lockEdge(id: string, projectId: string, isLocked: boolean, isLoc
   };
 }
 
-export function lockAttribute(
-  id: string,
-  projectId: string,
-  isLocked: boolean,
-  isLockedBy: string
-): Types.LockAttribute {
+export function lockAttribute(id: string, projectId: string, isLocked: boolean, isLockedBy: string): Types.LockAttribute {
   return {
     type: Types.LOCK_ATTRIBUTE,
     payload: {
@@ -455,9 +450,7 @@ export function setIsLockedNodeAttribute(lockAttributeAm: LockAttributeAm): Type
   };
 }
 
-export function setIsLockedTransportAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockTransportAttribute {
+export function setIsLockedTransportAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockTransportAttribute {
   return {
     type: Types.SET_LOCK_TRANSPORT_ATTRIBUTE,
     payload: {
@@ -469,9 +462,7 @@ export function setIsLockedTransportAttribute(
   };
 }
 
-export function setIsLockedInterfaceAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockInterfaceAttribute {
+export function setIsLockedInterfaceAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockInterfaceAttribute {
   return {
     type: Types.SET_LOCK_INTERFACE_ATTRIBUTE,
     payload: {
@@ -483,9 +474,7 @@ export function setIsLockedInterfaceAttribute(
   };
 }
 
-export function setIsLockedNodeTerminalAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockNodeTerminalAttribute {
+export function setIsLockedNodeTerminalAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockNodeTerminalAttribute {
   return {
     type: Types.SET_LOCK_NODE_TERMINAL_ATTRIBUTE,
     payload: {
@@ -497,9 +486,7 @@ export function setIsLockedNodeTerminalAttribute(
     },
   };
 }
-export function setIsLockedTransportTerminalAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockTransportTerminalAttribute {
+export function setIsLockedTransportTerminalAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockTransportTerminalAttribute {
   return {
     type: Types.SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
     payload: {
@@ -527,9 +514,7 @@ export function setIsLockedInterfaceTerminalAttribute(
   };
 }
 
-export function setIsLockedCompositeAttribute(
-  lockAttributeAm: LockAttributeAm
-): Types.SetLockCompositeAttribute {
+export function setIsLockedCompositeAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockCompositeAttribute {
   return {
     type: Types.SET_LOCK_COMPOSITE_ATTRIBUTE,
     payload: {

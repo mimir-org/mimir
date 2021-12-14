@@ -26,13 +26,21 @@ namespace Mb.Services.Services
         /// Remap a project, create new id if the id is not valid
         /// </summary>
         /// <param name="project"></param>
-        public void Remap(ProjectAm project)
+        public IDictionary<string, string> Remap(ProjectAm project)
         {
+
+            var reMappedIds = new Dictionary<string, string>();
+            
             var (projectId, projectIri) = _commonRepository.CreateOrUseIdAndIri(project.Id, project.Iri);
 
             foreach (var node in project.Nodes)
             {
                 var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(node.Id, node.Iri);
+
+                if (node.Id != nodeId)
+                {
+                    reMappedIds.Add(nodeId, node.Id);
+                }
 
                 RemapSimples(nodeId, node);
                 RemapConnectors(nodeId, nodeIri, node, project);
@@ -60,6 +68,11 @@ namespace Mb.Services.Services
             foreach (var edge in project.Edges)
             {
                 var (edgeId, edgeIri) = _commonRepository.CreateOrUseIdAndIri(edge.Id, edge.Iri);
+                
+                if (edge.Id != edgeId)
+                {
+                    reMappedIds.Add(edgeId, edge.Id);
+                }
 
                 if (edge.Transport != null)
                     RemapTransport(edge);
@@ -79,6 +92,8 @@ namespace Mb.Services.Services
 
             project.Id = projectId;
             project.Iri = projectIri;
+
+            return reMappedIds;
         }
 
         /// <summary>

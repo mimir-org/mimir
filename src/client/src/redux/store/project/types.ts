@@ -207,7 +207,9 @@ export interface SetActiveBlockNode {
 
 export interface SaveProjectAction {
   type: typeof SAVE_PROJECT;
-  payload: Project;
+  payload: {
+    project: Project;
+  };
 }
 
 export interface SaveProjectActionFinished {

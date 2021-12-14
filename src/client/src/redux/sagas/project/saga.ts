@@ -31,6 +31,7 @@ import {
   LockEdge,
   LOCK_EDGE_SUCCESS_OR_ERROR,
   LockAttribute,
+  SaveProjectAction,
 } from "../../store/project/types";
 
 export function* getProject(action) {
@@ -263,10 +264,10 @@ export function* createSubProject(action: CreateSubProject) {
   }
 }
 
-export function* updateProject(action) {
+export function* updateProject(action: SaveProjectAction) {
   try {
-    const projId = action.payload.id;
-    const proj = ConvertProject(action.payload);
+    const projId = action.payload.project.id;
+    const proj = ConvertProject(action.payload.project);
 
     const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
     const response = yield call(post, url, proj);
@@ -293,15 +294,28 @@ export function* updateProject(action) {
       return;
     }
 
-    const project = response.data;
+    const project: Project = response.data.item1;
+    const reMappedIds: Object = response.data.item2;
 
-    if (project.nodes && action.payload.nodes) {
+    if (project.nodes && action.payload.project.nodes) {
       project.nodes.forEach((node) => {
-        const oldNode = action.payload.nodes.find((x) => x.id === node.id);
+        let oldNode = action.payload.project.nodes.find((x) => x.id === node.id);
+        if (!oldNode && reMappedIds[node.id]) oldNode = action.payload.project.nodes.find((x) => x.id === reMappedIds[node.id]);
         if (oldNode) {
           node.isHidden = oldNode.isHidden;
           node.isBlockSelected = oldNode.isBlockSelected;
           node.isSelected = oldNode.isSelected;
+        }
+      });
+    }
+
+    if (project.edges && action.payload.project.edges) {
+      project.edges.forEach((edge) => {
+        let oldEdge = action.payload.project.edges.find((x) => x.id === edge.id);
+        if (!oldEdge && reMappedIds[edge.id]) oldEdge = action.payload.project.edges.find((x) => x.id === reMappedIds[edge.id]);
+        if (oldEdge) {
+          edge.isHidden = oldEdge.isHidden;
+          edge.isSelected = oldEdge.isSelected;
         }
       });
     }

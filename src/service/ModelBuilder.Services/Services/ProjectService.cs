@@ -257,7 +257,7 @@ namespace Mb.Services.Services
                 // Clean the change tracker
                 ClearAllChangeTracker();
 
-                var subProjectCreated = await UpdateProject(toProject.Id, subProject, _commonRepository.GetDomain());
+                var (subProjectCreated, _) = await UpdateProject(toProject.Id, subProject, _commonRepository.GetDomain());
 
                 // Clean the change tracker
                 ClearAllChangeTracker();
@@ -297,8 +297,10 @@ namespace Mb.Services.Services
         /// <param name="projectAm"></param>
         /// <param name="invokedByDomain"></param>
         /// <returns></returns>
-        public async Task<Project> UpdateProject(string id, ProjectAm projectAm, string invokedByDomain)
+        public async Task<(Project, IDictionary<string, string>)> UpdateProject(string id, ProjectAm projectAm, string invokedByDomain)
         {
+            IDictionary<string, string> reMappedIds;
+            
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try
@@ -312,7 +314,7 @@ namespace Mb.Services.Services
                 CastConnectors(projectAm);
 
                 // Remap and create new id's
-                _remapService.Remap(projectAm);
+                reMappedIds = _remapService.Remap(projectAm);
 
                 // Edges
                 var originalEdges = originalProject.Edges.ToList();
@@ -355,8 +357,10 @@ namespace Mb.Services.Services
                 ClearAllChangeTracker();
             }
 
+            var project = await GetProject(id);
+
             // Return project from database
-            return await GetProject(id);
+            return (project, reMappedIds);
         }
 
         /// <summary>
