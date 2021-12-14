@@ -14,7 +14,7 @@ interface Props {
   size: BlockNodeSize;
   color: string;
   hasTerminals: boolean;
-  isSecondaryNode: boolean;
+  isSecondaryNode?: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
   dispatch: any;

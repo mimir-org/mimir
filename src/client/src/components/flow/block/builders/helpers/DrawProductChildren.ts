@@ -19,7 +19,10 @@ const DrawProductChildren = (
   allNodes: Node[],
   selectedNode: Node,
   elements: Elements<any>,
-  animatedEdge: boolean
+  animatedEdge: boolean,
+  libOpen: boolean,
+  explorerOpen: boolean,
+  secondaryNode: Node
 ) => {
   const productChildren: Node[] = [];
   TraverseProductNodes(edges, allNodes, selectedNode, productChildren);
@@ -32,7 +35,7 @@ const DrawProductChildren = (
   });
 
   productChildren.forEach((node) => {
-    const productChildNode = BuildProductChildNode(node);
+    const productChildNode = BuildProductChildNode(node, libOpen, explorerOpen, secondaryNode);
     productChildNode && elements.push(productChildNode);
   });
 };

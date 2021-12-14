@@ -25,18 +25,15 @@ const ResizeHandler = (
 ) => {
   let screenWidth: number;
   let marginX: number;
-  let marginY: number;
   let width: number;
 
   const updateScreenSize = () => {
     screenWidth = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
     marginX = SetMarginX(secondaryNode !== null, libOpen, explorerOpen);
-    marginY = 80;
     width = screenWidth - marginX;
 
     if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
-    dispatch(setBlockNodeSize(width, window.innerHeight - marginY));
-
+    dispatch(setBlockNodeSize(width, window.innerHeight));
     updateChildXPosition();
   };
 

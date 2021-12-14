@@ -1,15 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ProductSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
-import { OnConnectorClick } from "./handlers";
+import { OnConnectorClick, ResizeHandler } from "./handlers";
 import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { GetAspectColor } from "../../../../helpers";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
-// import { SetParentNodeSize } from "./helpers";
+import { SetParentNodeSize } from "./helpers";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -21,24 +22,25 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  // const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
-  // const libOpen = useAppSelector(selectors.libOpenSelector);
-  // const explorerOpen = useAppSelector(selectors.explorerSelector);
 
+  const elements = useAppSelector(selectors.blockElementsSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const electro = useAppSelector(selectors.electroSelector);
+  const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
   // Set size
-  // useEffect(() => {
-  //   SetParentNodeSize(node, null, libOpen, explorerOpen, dispatch);
-  // }, [dispatch, node, libOpen, explorerOpen]);
+  useEffect(() => {
+    SetParentNodeSize(false, libOpen, explorerOpen, dispatch);
+  }, [libOpen, explorerOpen]);
 
   // Responsive resizing
-  // useEffect(() => {
-  //   ResizeHandler(node, null, parentBlockSize, libOpen, explorerOpen);
-  // }, [node, parentBlockSize, libOpen, explorerOpen]);
+  useEffect(() => {
+    ResizeHandler(node, null, libOpen, explorerOpen, elements, dispatch);
+  }, [libOpen, explorerOpen]);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, null));
@@ -50,10 +52,9 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
     <>
       <ParentContainerComponent
         node={node}
-        size={{ width: 300, height: 300 }}
+        size={size}
         color={GetAspectColor(node, AspectColorType.Header)}
         hasTerminals={terminals.length > 0}
-        isSecondaryNode={false}
         onParentClick={() => OnParentClick(dispatch, node)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
@@ -73,7 +74,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         nodes={nodes}
         node={node}
-        size={{ width: 300, height: 300 }}
+        size={size}
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
