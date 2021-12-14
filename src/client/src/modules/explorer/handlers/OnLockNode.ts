@@ -12,7 +12,7 @@ const OnLockNode = (node: Node, project: Project, isLockedBy: string, dispatch: 
         projectId: project.id,
         isLocked: !node.isLocked,
         isLockedStatusBy: isLockedBy,
-        isLockedStatusDate: null,
+        isLockedStatusDate: new Date(),
       })
     );
 };
