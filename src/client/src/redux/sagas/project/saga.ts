@@ -267,11 +267,9 @@ export function* updateProject(action) {
   try {
     const projId = action.payload.id;
     const proj = ConvertProject(action.payload);
-    console.log({ proj });
 
     const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
     const response = yield call(post, url, proj);
-    console.log({ response });
 
     // This is a bad request
     if (response.status === 400) {

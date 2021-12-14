@@ -3,13 +3,13 @@ import { IsDirectChild } from "../../../../../helpers";
 import { Node } from "../../../../../models";
 import { updateBlockPosition } from "../../../../../redux/store/project/actions";
 import { GetFlowNodeByDataId } from "../../helpers";
+import { setBlockNodeSize } from "../../redux/actions";
 import { SetMarginX } from "../helpers/SetParentNodeSize";
 
 /**
  * Component to handle responsive size of a ParentNode in BlockView.
  * @param node
  * @param secondaryNode
- * @param setWidth
  * @param libOpen
  * @param explorerOpen
  * @param elements
@@ -18,7 +18,6 @@ import { SetMarginX } from "../helpers/SetParentNodeSize";
 const ResizeHandler = (
   node: Node,
   secondaryNode: Node,
-  setWidth: any,
   libOpen: boolean,
   explorerOpen: boolean,
   elements: any[],
@@ -26,16 +25,18 @@ const ResizeHandler = (
 ) => {
   let screenWidth: number;
   let marginX: number;
+  let marginY: number;
   let width: number;
 
   const updateScreenSize = () => {
     screenWidth = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
     marginX = SetMarginX(secondaryNode !== null, libOpen, explorerOpen);
+    marginY = 80;
     width = screenWidth - marginX;
 
     if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
+    dispatch(setBlockNodeSize(width, window.innerHeight - marginY));
 
-    setWidth(width);
     updateChildXPosition();
   };
 

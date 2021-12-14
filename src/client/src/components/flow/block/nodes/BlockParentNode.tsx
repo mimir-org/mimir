@@ -20,8 +20,7 @@ import { blockElementsSelector } from "../../../../redux/store";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
+  const size = useAppSelector(selectors.nodeSizeSelector);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
@@ -41,22 +40,21 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    SetParentNodeSize(setWidth, setHeight, secondaryNode !== null, libOpen, explorerOpen);
+    SetParentNodeSize(secondaryNode !== null, libOpen, explorerOpen, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing
   useEffect(() => {
-    ResizeHandler(node, secondaryNode, setWidth, libOpen, explorerOpen, elements, dispatch);
+    ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   if (!node) return null;
-  node.width = width;
-  node.height = height;
 
   return (
     <>
       <ParentContainerComponent
         node={node}
+        size={size}
         color={GetAspectColor(node, AspectColorType.Header)}
         hasTerminals={terminals.length > 0}
         isSecondaryNode={node.id === secondaryNode?.id}
@@ -76,7 +74,15 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         isParent
       />
       {hasActiveTerminals && (
-        <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
+        <HandleComponent
+          nodes={nodes}
+          node={node}
+          size={size}
+          terminals={terminals}
+          electro={electro}
+          dispatch={dispatch}
+          isParent
+        />
       )}
     </>
   );

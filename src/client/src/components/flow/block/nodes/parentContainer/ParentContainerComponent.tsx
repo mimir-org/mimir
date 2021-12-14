@@ -7,9 +7,11 @@ import { ResizeIcon } from "../../../../../assets/icons/resize";
 import { useRef } from "react";
 import { useResizeParentNode } from "./hooks";
 import { ParentBannerComponent } from ".";
+import { BlockNodeSize } from "../../../../../models/project";
 
 interface Props {
   node: Node;
+  size: BlockNodeSize;
   color: string;
   hasTerminals: boolean;
   isSecondaryNode: boolean;
@@ -25,6 +27,7 @@ interface Props {
  */
 const ParentContainerComponent = ({
   node,
+  size,
   color,
   hasTerminals,
   isSecondaryNode,
@@ -37,7 +40,7 @@ const ParentContainerComponent = ({
   const isLocation = IsLocation(node);
 
   return (
-    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={{ width: node.width, height: node.height }}>
+    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
       <ParentBannerComponent
         node={node}
         color={color}

@@ -25,7 +25,7 @@ const BuildOffPageNode = (data: OffPageData) => {
   const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const offPageNodeIsTarget = IsOutputTerminal(sourceConnector);
-  const marginY = 120;
+  const marginY = 80;
 
   const offPageNode = {
     id: CreateId(),

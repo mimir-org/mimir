@@ -11,6 +11,7 @@ import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } fr
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
 import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component for a child Node in BlockView.
@@ -26,6 +27,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [width, setWidth] = useState(Size.Node_Width);
   const [height, setHeight] = useState(Size.Node_Height);
 
+  const size = { width: width, height: height } as BlockNodeSize;
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
@@ -39,15 +41,15 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    const size = SetNodeSize(terminals, electro);
-    setWidth(size.width);
-    setHeight(size.height);
+    const updatedSize = SetNodeSize(terminals, electro);
+    setWidth(updatedSize.width);
+    setHeight(updatedSize.height);
   }, [electro, terminals]);
 
   if (!node) return null;
 
-  node.width = width;
-  node.height = height;
+  node.width = size.width;
+  node.height = size.height;
 
   return (
     <NodeBox
@@ -73,7 +75,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         showOutTerminalMenu={showOutTerminalMenu}
       />
       {hasActiveTerminals && (
-        <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} />
+        <HandleComponent nodes={nodes} node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />
       )}
     </NodeBox>
   );

@@ -8,7 +8,6 @@ import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
 import { updateBlockPosition } from "../../../../redux/store/project/actions";
-import { Size } from "../../../../compLibrary/size";
 
 /**
  * Component for an offpage node in BlockView
@@ -21,6 +20,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const size = useAppSelector(selectors.nodeSizeSelector);
+
   const nodes = project?.nodes;
   const node = nodes?.find((n) => n.id === data.id);
   const type = "BlockOffPageNode-";
@@ -38,13 +39,9 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    let xPos = IsInputTerminal(terminal)
-      ? parentBlockNode?.positionBlockX + parentBlockNode?.width
-      : parentBlockNode?.positionBlockX - 35;
-
-    if (xPos > Size.BlockMaxWidth + parentBlockNode?.positionBlockX) xPos = Size.BlockMaxWidth + parentBlockNode?.positionBlockX;
+    const xPos = IsInputTerminal(terminal) ? parentBlockNode?.positionBlockX + size.width : parentBlockNode?.positionBlockX - 35;
     dispatch(updateBlockPosition(node?.id, xPos, node?.positionBlockY));
-  }, [node?.positionBlockX, parentBlockNode?.width, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
+  }, [size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
 
   if (!node) return null;
 
@@ -55,7 +52,15 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
       ) : (
         <OffPageOutputIcon style={{ fill: iconColor }} className="logo" />
       )}
-      <HandleComponent nodes={nodes} node={node} terminals={node.connectors} dispatch={dispatch} isVisible={false} offPage />
+      <HandleComponent
+        nodes={nodes}
+        node={node}
+        size={{ width: 0, height: 0 }}
+        terminals={node.connectors}
+        dispatch={dispatch}
+        isVisible={false}
+        offPage
+      />
     </OffPageBox>
   );
 };

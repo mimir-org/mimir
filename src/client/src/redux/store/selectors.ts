@@ -116,6 +116,16 @@ export const blockElementsSelector = createAppSelector(
   (elements) => elements
 );
 
+export const nodeSizeSelector = createAppSelector(
+  (state) => state.blockNodeSize.blockParents[0].size,
+  (size) => size
+);
+
+export const productNodeSizeSelector = createAppSelector(
+  (state) => state.blockNodeSize.blockParents[1].size,
+  (size) => size
+);
+
 export const treeSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view === VIEW_TYPE.TREEVIEW

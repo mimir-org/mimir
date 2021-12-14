@@ -50,6 +50,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
     <>
       <ParentContainerComponent
         node={node}
+        size={{ width: 300, height: 300 }}
         color={GetAspectColor(node, AspectColorType.Header)}
         hasTerminals={terminals.length > 0}
         isSecondaryNode={false}
@@ -69,7 +70,15 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         showOutTerminalMenu={showOutTerminalMenu}
         isParent
       />
-      <HandleComponent nodes={nodes} node={node} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
+      <HandleComponent
+        nodes={nodes}
+        node={node}
+        size={{ width: 300, height: 300 }}
+        terminals={terminals}
+        electro={electro}
+        dispatch={dispatch}
+        isParent
+      />
     </>
   );
 };
