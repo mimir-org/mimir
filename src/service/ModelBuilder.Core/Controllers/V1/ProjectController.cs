@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Mb.Data.Contracts;
 using Mb.Models.Application;
-using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -24,28 +23,29 @@ namespace Mb.Core.Controllers.V1
     [Produces("application/json")]
     [Authorize]
     [ApiController]
-    [ApiVersion("0.1")]
+    [ApiVersion("1.0")]
     [Route("V{version:apiVersion}/[controller]")]
     [SwaggerTag("Project")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
         private readonly IProjectFileService _projectFileService;
+        private readonly ICommonRepository _commonRepository;
 
         /// <summary>
         /// Project Controller Constructor
         /// </summary>
         /// <param name="projectService"></param>
         /// <param name="logger"></param>
-        /// <param name="modelBuilderConfiguration"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration, IProjectFileService projectFileService)
+        /// <param name="projectFileService"></param>
+        /// <param name="commonRepository"></param>
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository)
         {
             _projectService = projectService;
             _logger = logger;
             _projectFileService = projectFileService;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _commonRepository = commonRepository;
         }
 
         /// <summary>
@@ -183,6 +183,48 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Convert project
+        /// </summary>
+        /// <param name="projectConverter"></param>
+        /// <returns></returns>
+        [HttpPost("convert")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "Edit")]
+        public async Task<IActionResult> ConvertProject([FromBody] ProjectConverterAm projectConverter)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var project = await _projectFileService.ConvertProject(projectConverter);
+                return Ok(project);
+            }
+            catch (ModelBuilderBadRequestException e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+
+                foreach (var error in e.Errors().ToList())
+                {
+                    ModelState.Remove(error.Key);
+                    ModelState.TryAddModelError(error.Key, error.Error);
+                }
+
+                return BadRequest(ModelState);
+            }
+            
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Import a new project
         /// </summary>
         /// <param name="id"></param>
@@ -201,22 +243,9 @@ namespace Mb.Core.Controllers.V1
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //TODO: Temporary fix for missing LibraryTypeId on Transport and Interface objects in projectAm
-            if (projectAm?.Edges != null)
-            {
-                foreach (var edgeAm in projectAm.Edges)
-                {
-                    if (edgeAm?.Transport != null && string.IsNullOrWhiteSpace(edgeAm.Transport.LibraryTypeId))
-                        edgeAm.Transport.LibraryTypeId = "Not set. Should be set on client Am model";
-
-                    if (edgeAm?.Interface != null && string.IsNullOrWhiteSpace(edgeAm.Interface.LibraryTypeId))
-                        edgeAm.Interface.LibraryTypeId = "Not set. Should be set on client Am model";
-                }
-            }
-
             try
             {
-                var project = await _projectService.UpdateProject(id, projectAm, _modelBuilderConfiguration.Domain);
+                var project = await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
                 return Ok(project);
             }
             catch (ModelBuilderDuplicateException e)
@@ -347,195 +376,6 @@ namespace Mb.Core.Controllers.V1
             {
                 ModelState.AddModelError("UploadProject", e.Message);
                 return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
-        /// </summary>
-        /// <param name="lockUnlockAm"></param>
-        /// <returns>Status204NoContent</returns>
-        [HttpPost("node/lockUnlock")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> LockUnlockNode([FromBody] LockUnlockNodeAm lockUnlockAm)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                await _projectService.LockUnlockNode(lockUnlockAm);
-                return NoContent();
-            }
-            catch (ModelBuilderUnauthorizedAccessException e)
-            {
-                ModelState.AddModelError("node/lockUnlock", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Locks or unlock an attribute
-        /// </summary>
-        /// <param name="lockUnlockAttributeAm"></param>
-        /// <returns>Status204NoContent</returns>
-        [HttpPost("attribute/lockUnlock")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> LockUnlockAttribute([FromBody] LockUnlockAttributeAm lockUnlockAttributeAm)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                await _projectService.LockUnlockAttribute(lockUnlockAttributeAm);
-                return NoContent();
-            }
-            catch (ModelBuilderUnauthorizedAccessException e)
-            {
-                ModelState.AddModelError("attribute/lockUnlock", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Locks or unlock an Edge (transport or interface)
-        /// </summary>
-        /// <param name="lockUnlockEdgeAm"></param>
-        /// <returns>Status204NoContent</returns>
-        [HttpPost("edge/lockUnlock")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> LockUnlockEdge([FromBody] LockUnlockEdgeAm lockUnlockEdgeAm)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                await _projectService.LockUnlockEdge(lockUnlockEdgeAm);
-                return NoContent();
-            }
-            catch (ModelBuilderUnauthorizedAccessException e)
-            {
-                ModelState.AddModelError("attribute/lockUnlock", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Returns a list of all locked nodes id's
-        /// If param 'projectId' is null all locked nodes in the database will be returned
-        /// </summary>
-        /// <param name="projectId"></param>
-        /// <returns>List of locked node id></returns>
-        [HttpGet("node/locked")]
-        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public IActionResult GetLockedNodes(string projectId)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var result = _projectService.GetLockedNodes(projectId).ToList();
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Returns a list of all locked attributes id's
-        /// If param 'projectId' is null all locked attributes in the database will be returned
-        /// </summary>
-        /// <param name="projectId"></param>
-        /// <returns>List of locked attribute id></returns>
-        [HttpGet("attribute/locked")]
-        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public IActionResult GetLockedAttributes(string projectId)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var result = _projectService.GetLockedAttributes(projectId).ToList();
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Returns a list of all locked edges id's
-        /// If param 'projectId' is null all locked edges in the database will be returned
-        /// </summary>
-        /// <param name="projectId"></param>
-        /// <returns>List of locked edges id></returns>
-        [HttpGet("edge/locked")]
-        [ProducesResponseType(typeof(ICollection<string>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public IActionResult GetLockedEdges(string projectId)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var result = _projectService.GetLockedEdges(projectId).ToList();
-                return Ok(result);
             }
             catch (Exception e)
             {

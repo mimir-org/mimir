@@ -76,7 +76,7 @@ function ActiveTerminalsList({
 
               {category.name}
               <img
-                src={categoryExpanded ? ExpandAccordionIcon : CollapseAccordionIcon}
+                src={categoryExpanded ? CollapseAccordionIcon : ExpandAccordionIcon}
                 className="dropdownIcon"
                 alt="expand-icon"
               />

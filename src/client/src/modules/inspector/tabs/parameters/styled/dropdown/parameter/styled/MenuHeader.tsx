@@ -2,27 +2,29 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../../../../compLibrary/font";
 
-const MenuHeader = styled.div`
+const MenuHeader = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 28px;
+  height: 30px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   background: ${Color.White};
   border: 1px solid ${Color.Black};
   border-radius: 5px;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
 
-  p {
-    padding: 10px;
-  }
-
   img {
     margin-right: 4px;
     padding: 5px;
   }
+  
   .searchText {
+    margin: 0;
+    padding: 10px;
     opacity: 0.5;
     font-style: italic;
   }

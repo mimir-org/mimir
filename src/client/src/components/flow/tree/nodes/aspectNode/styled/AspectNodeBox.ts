@@ -8,7 +8,7 @@ interface Props {
 const AspectNodeBox = styled.div<Props>`
   padding-top: 10px;
   width: 90px;
-  height: 45px;
+  height: 55px;
   text-align: center;
   font-size: 11px;
   border-radius: 10px;

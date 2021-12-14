@@ -21,13 +21,13 @@ const SetTerminalYPos = (
   order: number,
   nodeHeight: number
 ) => {
-  const marginY = parent ? 20 : 23;
+  const marginY = parent ? 20 : 22;
   const marginYSmall = 3;
 
   if (electro) {
     if (IsPartOf(conn)) return nodeHeight / 2 - marginYSmall;
     if (position === Position.Top) return -marginY;
-    return nodeHeight + marginYSmall;
+    return nodeHeight - marginYSmall;
   }
 
   if (IsPartOf(conn)) {
@@ -52,7 +52,7 @@ function CalculateY(count: number, parent: boolean, nodeHeight: number) {
   if (count === undefined) count = 0;
 
   const interval = parent ? 30 : Size.Terminals_Interval; // Default vertical distance between each terminal
-  const base = parent ? 290 : nodeHeight / 2 - 7; // Middle Position
+  const base = parent ? 290 : nodeHeight / 2 - 12; // Middle Position
 
   // Even-numbered terminals stacked upwards
   if (count % 2 === 0) return base - interval * (count / 2);

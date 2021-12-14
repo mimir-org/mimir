@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Mb.Data.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data;
 using Mb.Models.Data.Hubs;
@@ -28,6 +29,24 @@ namespace Mb.Data.Repositories
         {
             var data = JsonConvert.SerializeObject(edge, DefaultSettings.SerializerSettings);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
+        }
+
+        public async Task SendLockAttributeData(LockAttributeAm am, string projectId, WorkerStatus workerStatus)
+        {
+            var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockAttributeData, workerStatus, data);
+        }
+
+        public async Task SendLockNodeData(LockNodeAm am, string projectId, WorkerStatus workerStatus)
+        {
+            var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockNodeData, workerStatus, data);
+        }
+
+        public async Task SendLockEdgeData(LockEdgeAm am, string projectId, WorkerStatus workerStatus)
+        {
+            var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockEdgeData, workerStatus, data);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Mb.Models.Enums;
+using Mb.Models.Extensions;
 
 namespace Mb.Models.Application
 {
@@ -8,7 +9,7 @@ namespace Mb.Models.Application
     {
         public string Id { get; set; }
         public string Iri { get; set; }
-        public string Domain { get; set; }
+        public string Domain => Id.ResolveDomain();
         public string Entity { get; set; }
         public string Value { get; set; }
         public string SemanticReference { get; set; }
@@ -27,7 +28,7 @@ namespace Mb.Models.Application
         public string NodeIri { get; set; }
         public string TransportId { get; set; }
         public string InterfaceId { get; set; }
-        public string CompositeId { get; set; }
+        public string SimpleId { get; set; }
         public virtual ICollection<UnitAm> Units { get; set; }
         public ICollection<string> SelectValues { get; set; }
         public SelectType SelectType { get; set; }

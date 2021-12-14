@@ -9,7 +9,6 @@ const TerminalList = styled.div<Props>`
   display: flex;
   flex-direction: column;
   min-width: 250px;
-  margin: 5px 10px 10px 10px;
   border: ${(props) => getBorder(props.hasItems)};
   border-radius: 5px;
 

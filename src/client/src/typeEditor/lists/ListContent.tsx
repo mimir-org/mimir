@@ -129,7 +129,7 @@ export const ListContent = ({
               key={element.id}
               simpleType={element}
               onChange={(key, data) => onPropertyChange(key, data)}
-              defaultValue={createLibraryType?.compositeTypes}
+              defaultValue={createLibraryType?.simpleTypes}
             />
           ))}
       </ListElementsContainer>

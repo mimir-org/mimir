@@ -8,4 +8,6 @@ export {
   productNodeSizeSelector,
   animatedEdgeSelector,
   location3DSelector,
+  libOpenSelector,
+  explorerSelector,
 } from "../../../../redux/store/selectors";

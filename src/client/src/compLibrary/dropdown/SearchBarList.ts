@@ -11,8 +11,8 @@ const SearchBarList = styled.div`
   font-size: 11px;
   position: absolute;
   top: 23px;
-  left: 0px;
-  width: 98.7%;
+  left: 0;
+  width: 100%;
   z-index: 1;
 `;
 

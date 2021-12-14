@@ -1,7 +1,7 @@
 import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsBox, TerminalsElement, ColorBar } from "./styled";
+import { TerminalsBox, TerminalsElement, ColorTag } from "./styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 import { Color } from "../../../../compLibrary/colors";
 import { BlockNodeSize } from "../../../../models/project";
@@ -45,11 +45,8 @@ const TerminalsMenuComponent = ({
   >
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>
-        <ColorBar color={GetTerminalColor(conn)} />
-        <div className="terminal-name" onClick={() => onClick(conn)}>
-          {conn.name}
-        </div>
         <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
+        <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
       </TerminalsElement>
     ))}
   </TerminalsBox>

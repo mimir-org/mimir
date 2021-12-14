@@ -15,7 +15,7 @@ export class CreateLibraryType {
   predefinedAttributes: PredefinedAttribute[];
   terminalTypeId: string;
   symbolId: string;
-  compositeTypes: string[];
+  simpleTypes: string[];
 
   kind: string = CREATE_LIBRARY_KIND;
 
@@ -34,6 +34,6 @@ export class CreateLibraryType {
       this.terminalTypes = [defaultTerminalTypeItem, { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output }];
     }
 
-    if (!this.compositeTypes) this.compositeTypes = [];
+    if (!this.simpleTypes) this.simpleTypes = [];
   }
 }

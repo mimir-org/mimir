@@ -1,7 +1,7 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../models/project";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
-import { LibCategoryBox, LibCategoryHeader } from "./styled";
+import { LibCategoryHeader, LibCategoryButton } from "./styled";
 import { LibraryCategoryElement } from ".";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
   setSelectedElement: any;
   setSelectedElementType: any;
   dispatch: any;
+  searchList?: LibraryCategory[];
 }
 
 /**
@@ -25,17 +26,24 @@ const LibraryCategoryComponent = ({
   setSelectedElement,
   setSelectedElementType,
   dispatch,
+  searchList,
 }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const expandIcon = expanded ? ExpandIcon : CollapseIcon;
   const isCustomCategory = category.name === "Favorites";
 
+  useEffect(() => {
+    if (searchList && searchList.length > 0 && searchList.includes(category)) {
+      setExpanded(true);
+    }
+  }, [category, searchList]);
+
   return (
     <>
-      <LibCategoryBox onClick={() => setExpanded(!expanded)}>
+      <LibCategoryButton onClick={() => setExpanded(!expanded)}>
         <LibCategoryHeader>{category.name}</LibCategoryHeader>
-        <img className="expandIcon" src={expandIcon} alt="expand-icon"></img>
-      </LibCategoryBox>
+        <img className="expandIcon" src={expandIcon} alt="expand-icon"/>
+      </LibCategoryButton>
       {expanded &&
         category?.nodes.map((item) => {
           return (

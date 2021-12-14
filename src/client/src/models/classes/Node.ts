@@ -39,7 +39,7 @@ class Node {
   symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
-  composites: Composite[];
+  simples: Composite[];
   width: number;
   height: number;
 
@@ -52,9 +52,6 @@ class Node {
   isHidden: boolean | false;
   blockWidth: number;
   blockHeight: number;
-
-  // OffPageNode
-  connectionRequired?: boolean | true;
 
   kind: string = NODE_KIND;
 

@@ -9,8 +9,9 @@ interface Props {
 
 const TerminalCategoryWrapper = styled.div<Props>`
   display: flex;
-  flex-direction: row;
   align-items: center;
+  gap: 15px;
+  padding: 3px 15px 3px 5px;
   min-height: 30px;
   border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.GreyDark : 0)};
 
@@ -18,7 +19,6 @@ const TerminalCategoryWrapper = styled.div<Props>`
     font-weight: ${(props) => props.expanded && FontWeight.Bold};
     text-decoration: ${(props) => props.expanded && "underline"};
     font-size: ${FontSize.Small};
-    margin-left: 9px;
   }
 
   .terminal-name:hover {
@@ -27,6 +27,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
   }
 
   button {
+    padding: 0;
     display: flex;
     align-items: center;
     height: 20px;
@@ -53,7 +54,6 @@ const TerminalCategoryWrapper = styled.div<Props>`
 
     .delete-text {
       margin-left: 3px;
-      margin-right: 10px;
     }
   }
 

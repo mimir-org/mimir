@@ -1,4 +1,5 @@
 import { Aspect, Connector, Attribute, ObjectType, Composite } from ".";
+import { ProjectAm } from "../redux/sagas/project/ConvertProject";
 import { CommitStatus, ConnectorType, Discipline, SelectType } from "./Enums";
 
 export interface AttributeType {
@@ -45,7 +46,7 @@ export interface LibItem {
   aspect: Aspect;
   connectors: Connector[];
   attributes?: Attribute[] | null;
-  composites?: Composite[] | null;
+  simples?: Composite[] | null;
   semanticReference: string;
   statusId: string;
   version: string;
@@ -218,6 +219,47 @@ export interface ModuleDescription {
 export interface ProjectFileAm {
   parserId: string;
   fileContent: string;
+  fileFormat: FileFormat | null;
+}
+
+export interface FileFormat {
+  contentType: string;
+  fileExtension: string;
+}
+export interface ProjectConverterAm {
+  parserId: string;
+  project: ProjectAm;
+  filename: string;
+}
+
+export interface LockAttributeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate?: Date;
+  nodeId?: string;
+  edgeId?: string;
+  transportId?: string;
+  interfaceId?: string;
+  compositeId?: string;
+  terminalId?: string;
+}
+
+export interface LockNodeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate?: Date;
+}
+
+export interface LockEdgeAm {
+  id: string;
+  projectId: string;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate?: Date;
 }
 
 export const SETTING_KEY = {

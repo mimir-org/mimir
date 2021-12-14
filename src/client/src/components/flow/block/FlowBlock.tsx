@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
-import { GetBlockNodeTypes } from "../helpers";
+import { GetBlockNodeTypes, IsTransport } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/";
@@ -18,6 +18,7 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, 
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Project } from "../../../models";
+import { setEdgeVisibility } from "../../../redux/store/project/actions";
 
 interface Props {
   project: Project;
@@ -43,14 +44,18 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentProductSize = useAppSelector(selectors.productNodeSizeSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const showLocation3D = useAppSelector(selectors.location3DSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize));
+      setElements(
+        BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize, libOpen, explorerOpen)
+      );
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize]
+    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize, libOpen, explorerOpen]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -58,7 +63,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
+    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
   };
 
   const OnConnect = (params) => {
@@ -66,11 +71,11 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
+  //   return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
   // };
 
   // const OnConnectStop = (e) => {
-  //   return useOnConnectStop(e, project, dispatch, parentSize);
+  //   return hooks.useOnConnectStop(e, project, dispatch, parentSize);
   // };
 
   const OnDragOver = (event) => {
@@ -121,6 +126,12 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     }
   };
 
+  useEffect(() => {
+    project?.edges.forEach((edge) => {
+      if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, false));
+    });
+  }, []);
+
   return (
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}>
@@ -136,16 +147,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          zoomOnScroll={true}
-          paneMoveable={true}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
-          defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
-          onlyRenderVisibleElements={true}
+          defaultPosition={[0, Size.BlockMarginY]}
+          onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
+          zoomOnScroll
+          paneMoveable
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>

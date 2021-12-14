@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const TerminalElementWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  margin: 3px 10px 2px 16px;
+  gap: 15px;
+  padding: 3px 15px 3px 15px;
 
   button {
     display: flex;
@@ -12,7 +12,8 @@ const TerminalElementWrapper = styled.div`
     background: transparent;
     border: none;
     cursor: pointer;
-    margin: 0px;
+    margin: 0;
+    padding: 0;
   }
 
   .delete-icon {

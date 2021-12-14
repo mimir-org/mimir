@@ -1,14 +1,14 @@
 import { memo, useMemo, useState } from "react";
 import { TextResources } from "../../assets/text";
-import { SearchIcon } from "../../assets/icons/common";
 import { SearchInput } from "../../compLibrary/input/text";
 import { LibraryCategoryComponent } from ".";
 import { customCategorySelector, legendOpenSelector, librarySelector, useAppSelector } from "../../redux/store";
-import { FavoritesBox, LibBody, SearchBox } from "./styled";
+import { LibBody } from "./styled";
 import { TypeEditorModule } from "../../typeEditor";
 import { Dispatch } from "redux";
 import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { GetSelectedNode } from "../../helpers";
+import { LibraryCategory } from "../../models/project";
 
 interface Props {
   search: (text: string) => void;
@@ -29,6 +29,10 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
   const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
   const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
 
+  const filterCatBySearch = (): LibraryCategory[] => {
+    return searchString ? filteredCategories : libCategories;
+  };
+
   const onChange = (e: { target: { value: any } }) => search(e.target.value);
 
   const typeEditorOpen = () => {
@@ -38,25 +42,20 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
 
   return (
     <>
-      <SearchBox>
-        <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
-        <img src={SearchIcon} alt="search" className="search-icon" />
-      </SearchBox>
+      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
       <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
-      <FavoritesBox>
-        <LibraryCategoryComponent
-          selectedElement={selectedElement}
-          setSelectedElement={setSelectedElement}
-          setSelectedElementType={setSelectedElementType}
-          key={customCategory.name}
-          category={customCategory}
-          customCategory={customCategory}
-          dispatch={dispatch}
-        />
-      </FavoritesBox>
+      <LibraryCategoryComponent
+        selectedElement={selectedElement}
+        setSelectedElement={setSelectedElement}
+        setSelectedElementType={setSelectedElementType}
+        key={customCategory.name}
+        category={customCategory}
+        customCategory={customCategory}
+        dispatch={dispatch}
+      />
 
       <LibBody legend={legendOpen}>
-        {filteredCategories?.map((category) => {
+        {filterCatBySearch().map((category) => {
           return (
             <LibraryCategoryComponent
               selectedElement={selectedElement}
@@ -66,6 +65,7 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
               category={category}
               customCategory={customCategory}
               dispatch={dispatch}
+              searchList={filteredCategories}
             />
           );
         })}

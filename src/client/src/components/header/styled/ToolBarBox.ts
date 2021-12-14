@@ -19,8 +19,8 @@ const ToolBarBox = styled.div<Props>`
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
   z-index: 5;
 
-  right: ${(props) => (props.libOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
-  left: ${(props) => (props.explorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
+  right: ${(props) => (props.libOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
+  left: ${(props) => (props.explorerOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
 `;
 
 export default ToolBarBox;

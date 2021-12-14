@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
 import { AttributeType } from "../../models";
-import { SearchBarWrapper, SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "..";
+import { SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "..";
 
 interface Props {
   value?: string;
@@ -52,29 +52,27 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
   }, [value, list]);
 
   return (
-    <SearchBarWrapper>
-      <SearchBarContainer>
-        <SearchBar>
-          <label htmlFor="terminalsearch" />
-          <input
-            type="text"
-            value={searchString}
-            placeholder={placeHolder ?? ""}
-            onChange={(e: any) => setSearchString(e.target.value)}
-            onFocus={() => setIsListOpen(!isListOpen)}
-          />
-          <img
-            src={isListOpen ? ExpandIcon : CollapseIcon}
-            alt="expand-icon"
-            onClick={() => {
-              setIsListOpen(!isListOpen);
-            }}
-            className="icon"
-          />
-        </SearchBar>
-        {isListOpen && list && <SearchBarList>{showListItems()}</SearchBarList>}
-      </SearchBarContainer>
-    </SearchBarWrapper>
+    <SearchBarContainer>
+      <SearchBar>
+        <label htmlFor="terminalsearch" />
+        <input
+          type="text"
+          value={searchString}
+          placeholder={placeHolder ?? ""}
+          onChange={(e: any) => setSearchString(e.target.value)}
+          onFocus={() => setIsListOpen(!isListOpen)}
+        />
+        <img
+          src={isListOpen ? ExpandIcon : CollapseIcon}
+          alt="expand-icon"
+          onClick={() => {
+            setIsListOpen(!isListOpen);
+          }}
+          className="icon"
+        />
+      </SearchBar>
+      {isListOpen && list && <SearchBarList>{showListItems()}</SearchBarList>}
+    </SearchBarContainer>
   );
 };
 

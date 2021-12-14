@@ -46,8 +46,8 @@ namespace Mb.Data.Repositories
                 .Include("Nodes.Attributes")
                 .Include("Nodes.Connectors")
                 .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Composites")
-                .Include("Nodes.Composites.Attributes")
+                .Include("Nodes.Simples")
+                .Include("Nodes.Simples.Attributes")
                 .AsSplitQuery()
                 .OrderByDescending(x => x.Name)
                 .FirstOrDefaultAsync();

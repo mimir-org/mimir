@@ -46,9 +46,9 @@ const HeaderComponent = ({ project, projectMenuOpen, dispatch }: Props) => {
           project={project}
           libOpen={libOpen}
           explorerOpen={explorerOpen}
-          treeView={treeView}
-          visualFilter={filterOpen}
-          electro={electro}
+          isTreeView={treeView}
+          visualFilterOpen={filterOpen}
+          isElectro={electro}
           location3DActive={location3DActive}
           selectedNode={GetSelectedNode()}
           dispatch={dispatch}

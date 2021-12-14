@@ -37,7 +37,7 @@ export interface AttributeAm {
   nodeId: string;
   nodeIri: string;
   transportId: string;
-  compositeId: string;
+  simpleId: string;
   attributeTypeId: string;
   units: UnitAm[];
   selectValues: string[];
@@ -93,6 +93,7 @@ export interface NodeAm {
   symbol: string;
   connectors: ConnectorAm[];
   attributes: AttributeAm[];
+  simples: CompositeAm[];
   aspect: Aspect;
   isRoot: boolean;
   purpose: Purpose;
@@ -225,7 +226,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       nodeId: attribute.nodeId,
       nodeIri: attribute.nodeIri,
       attributeTypeId: attribute.attributeTypeId,
-      compositeId: attribute.compositeId,
+      simpleId: attribute.simpleId,
       units: ConvertUnits(attribute.units),
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
@@ -262,7 +263,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
-      isRequired: connector.isRequired
+      isRequired: connector.isRequired,
     } as ConnectorAm;
 
     converted.push(a);
@@ -391,7 +392,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       symbol: node.symbol,
       connectors: ConvertConnectors(node.connectors),
       attributes: ConvertAttributes(node.attributes),
-      composites: ConvertComposites(node.composites),
+      simples: ConvertComposites(node.simples),
       aspect: node.aspect,
       isRoot: node.isRoot,
       purpose: node.purpose,

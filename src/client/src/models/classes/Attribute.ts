@@ -26,11 +26,13 @@ class Attribute {
   nodeId: string;
   nodeIri: string;
   transportId: string;
-  compositeId: string;
+  simpleId: string;
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
+  interfaceId: string;
+  compositeId: string;
 
   kind: string = ATTRIBUTE_KIND;
 

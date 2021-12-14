@@ -18,7 +18,7 @@ namespace Mb.Core.Controllers.V1
     [Produces("application/json")]
     [Authorize]
     [ApiController]
-    [ApiVersion("0.1")]
+    [ApiVersion("1.0")]
     [Route("V{version:apiVersion}/[controller]")]
     [SwaggerTag("Library")]
     public class LibraryController : ControllerBase
@@ -53,7 +53,7 @@ namespace Mb.Core.Controllers.V1
             catch (Exception e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
+                return StatusCode(500, e.Message);
             }
         }
 

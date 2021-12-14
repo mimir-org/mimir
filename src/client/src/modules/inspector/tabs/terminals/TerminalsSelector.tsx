@@ -1,9 +1,12 @@
-import { useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerminalsList";
-import { ActiveTerminalsList, TerminalsSearchBar } from "./";
+import { ActiveTerminalsList } from "./";
 import { FilterBySearchString } from "./helpers";
 import { TerminalsColumn } from "./styled";
 import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
+import { FontSize } from "../../../../compLibrary/font";
+import { TextResources } from "../../../../assets/text";
+import { Input } from "../../../../compLibrary/input/text";
 
 interface Props {
   terminals: TerminalLikeItem[];
@@ -28,7 +31,14 @@ function TerminalsSelector({
 
   return (
     <TerminalsColumn>
-      <TerminalsSearchBar searchString={searchString} onChange={(value) => setSearchString(value)} />
+      <Input
+        fontSize={FontSize.Standard}
+        fontStyle={'italic'}
+        className={searchString.length > 0 ? "" : "input-placeholder"}
+        value={searchString}
+        placeholder={TextResources.Inspector_Terminals_Search}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchString(e.currentTarget.value)}
+      />
       <ActiveTerminalsList
         terminals={filteredTerminals}
         terminalCategories={terminalCategories}

@@ -6,3 +6,4 @@ export { default as ProjectListLabels } from "./ProjectListLabels";
 export { default as ProjectDescriptionBox } from "./ProjectDescriptionBox";
 export { default as ProjectDescriptionBody } from "./ProjectDescriptionBody";
 export { default as ProjectDetailsBox } from "./ProjectDetailsBox";
+export { default as ProjectOptionsButtons } from "./ProjectOptionsButtons";

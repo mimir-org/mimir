@@ -1,14 +1,15 @@
+import * as selectors from "./helpers/ProductSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
-import { OnConnectorClick } from "./handlers";
+import { OnConnectorClick, ResizeHandler } from "./handlers";
 import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { productNodeSizeSelector, edgeSelector, electroSelector, nodeSelector } from "../../../../redux/store";
-import { GetAspectColor, IsLocation } from "../../../../helpers";
+import { GetAspectColor } from "../../../../helpers";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
+import { SetParentNodeSize } from "./helpers";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -20,12 +21,24 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const parentBlockSize = useAppSelector(productNodeSizeSelector);
+  const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
 
-  const nodes = useAppSelector(nodeSelector);
-  const edges = useAppSelector(edgeSelector);
-  const electro = useAppSelector(electroSelector);
+  const nodes = useAppSelector(selectors.nodeSelector);
+  const edges = useAppSelector(selectors.edgeSelector);
+  const electro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
+
+  // Set size
+  useEffect(() => {
+    SetParentNodeSize(null, libOpen, explorerOpen, dispatch);
+  }, [dispatch, libOpen, explorerOpen]);
+
+  // Responsive resizing
+  useEffect(() => {
+    ResizeHandler(node, null, parentBlockSize, libOpen, explorerOpen, dispatch);
+  }, [node, parentBlockSize, libOpen, explorerOpen, dispatch]);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, null));
@@ -50,21 +63,21 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         node={node}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        isParent={true}
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
+        isParent
       />
       <HandleComponent
-        isParent={true}
         nodes={nodes}
+        node={node}
         size={parentBlockSize}
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
-        isLocation={IsLocation(node)}
+        isParent
       />
     </>
   );

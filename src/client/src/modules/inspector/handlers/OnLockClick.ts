@@ -1,13 +1,37 @@
+import { Dispatch } from "redux";
+import { IsUnsaved } from "../../../helpers";
 import { Project } from "../../../models";
-import { setIsLockedNode } from "../../../redux/store/project/actions";
+import { lockEdge, lockNode, setIsLockedEdge, setIsLockedNode } from "../../../redux/store/project/actions";
 import { IsNode, IsEdge } from "../helpers/IsType";
 import { InspectorElement } from "../types";
 
-const OnLockClick = (element: InspectorElement, project: Project, isLocked: boolean, isLockedBy: string, dispatch: any) => {
-  if (IsNode(element)) dispatch(setIsLockedNode(element, project, isLocked, isLockedBy));
-  if (IsEdge(element)) {
-    //TODO: Implement Edge locking
-  }
+const OnLockClick = (element: InspectorElement, project: Project, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {
+  if (!IsUnsaved(element)) handleLockOnline(element, project, isLocked, isLockedBy, dispatch);
+  else handleLockOffline(element, project, isLocked, isLockedBy, dispatch);
+};
+
+const handleLockOnline = (
+  element: InspectorElement,
+  project: Project,
+  isLocked: boolean,
+  isLockedBy: string,
+  dispatch: Dispatch
+) => {
+  if (IsNode(element)) dispatch(lockNode(element.id, project.id, isLocked, isLockedBy));
+  if (IsEdge(element)) dispatch(lockEdge(element.id, project.id, isLocked, isLockedBy));
+};
+
+const handleLockOffline = (
+  element: InspectorElement,
+  project: Project,
+  isLocked: boolean,
+  isLockedBy: string,
+  dispatch: Dispatch
+) => {
+  const lockObj = { id: element.id, projectId: project.id, isLocked, isLockedStatusBy: isLockedBy };
+
+  if (IsNode(element)) dispatch(setIsLockedNode(lockObj));
+  if (IsEdge(element)) dispatch(setIsLockedEdge(lockObj));
 };
 
 export default OnLockClick;
