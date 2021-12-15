@@ -233,7 +233,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       discipline: attribute.discipline,
       tags: attribute.tags,
       isLocked: attribute.isLocked,
-      isLockedBy: attribute.isLockedBy,
+      isLockedBy: attribute.isLockedStatusBy,
     } as AttributeAm;
 
     converted.push(a);
@@ -402,7 +402,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       updatedBy: node.updatedBy,
       libraryTypeId: node.libraryTypeId,
       isLocked: node.isLocked,
-      IsLockedBy: node.isLockedBy,
+      IsLockedBy: node.isLockedStatusBy,
     } as NodeAm;
 
     convertedNodes.push(n);
