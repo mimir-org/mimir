@@ -1,14 +1,17 @@
 import { IsOffPage } from "../../../../../helpers";
 import { Connector, Edge } from "../../../../../models";
+import { IsInputTerminal } from "../../../helpers";
 
-const CheckIfOffPageExists = (edges: Edge[], connector: Connector) => {
-  const existingEdge = edges?.find(
-    (edge) =>
-      (edge?.fromConnector?.id === connector.id && IsOffPage(edge?.toNode)) ||
-      (edge?.toConnector?.id === connector.id && IsOffPage(edge?.fromNode))
-  );
+const HasOffPageNode = (edges: Edge[], connector: Connector) => {
+  let existingEdge: Edge;
 
-  return existingEdge !== null;
+  if (IsInputTerminal(connector)) {
+    existingEdge = edges?.find((edge) => edge?.toConnector?.id === connector.id && IsOffPage(edge?.fromNode));
+  } else {
+    existingEdge = edges?.find((edge) => edge?.fromConnector?.id === connector.id && IsOffPage(edge?.toNode));
+  }
+
+  return existingEdge !== undefined;
 };
 
-export default CheckIfOffPageExists;
+export default HasOffPageNode;
