@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../helpers";
-import { Project } from "../../../models";
+import { LockNodeAm, Project } from "../../../models";
 import { lockEdge, lockNode, setIsLockedEdge, setIsLockedNode } from "../../../redux/store/project/actions";
 import { IsNode, IsEdge } from "../helpers/IsType";
 import { InspectorElement } from "../types";
@@ -28,7 +28,13 @@ const handleLockOffline = (
   isLockedBy: string,
   dispatch: Dispatch
 ) => {
-  const lockObj = { id: element.id, projectId: project.id, isLocked, isLockedStatusBy: isLockedBy };
+  const lockObj: LockNodeAm = {
+    id: element.id,
+    projectId: project.id,
+    isLocked,
+    isLockedStatusBy: isLockedBy,
+    isLockedStatusDate: new Date().toISOString(),
+  };
 
   if (IsNode(element)) dispatch(setIsLockedNode(lockObj));
   if (IsEdge(element)) dispatch(setIsLockedEdge(lockObj));

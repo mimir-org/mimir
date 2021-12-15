@@ -8,6 +8,7 @@ import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
 import { updateBlockPosition } from "../../../../redux/store/project/actions";
+import { Size } from "../../../../compLibrary/size";
 
 /**
  * Component for an offpage node in BlockView
@@ -40,7 +41,12 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   // Update position relative to ParentBlockNode
   useEffect(() => {
     const xPos = IsInputTerminal(terminal) ? parentBlockNode?.positionBlockX + size.width : parentBlockNode?.positionBlockX - 35;
-    dispatch(updateBlockPosition(node?.id, xPos, node?.positionBlockY));
+    let yPos = node?.positionBlockY;
+    const yMin = 120;
+    const yMax = window.innerHeight - yMin;
+    if (yPos < yMin) yPos = yMin;
+    if (yPos > yMax) yPos = yMax;
+    dispatch(updateBlockPosition(node?.id, xPos, yPos));
   }, [size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
 
   if (!node) return null;
@@ -55,7 +61,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         nodes={nodes}
         node={node}
-        size={{ width: 0, height: 0 }}
+        size={{ width: 30, height: 30 }}
         terminals={node.connectors}
         dispatch={dispatch}
         isVisible={false}

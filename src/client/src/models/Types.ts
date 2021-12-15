@@ -237,7 +237,7 @@ export interface LockAttributeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate?: Date;
+  isLockedStatusDate: string;
   nodeId?: string;
   edgeId?: string;
   transportId?: string;
@@ -251,7 +251,7 @@ export interface LockNodeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate?: Date;
+  isLockedStatusDate: string;
 }
 
 export interface LockEdgeAm {
@@ -259,7 +259,7 @@ export interface LockEdgeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate?: Date;
+  isLockedStatusDate: string;
 }
 
 export interface ProjectResultAm {

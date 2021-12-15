@@ -5,14 +5,14 @@ const OffPageBox = styled.div`
   position: relative;
   align-items: center;
   z-index: 5 !important;
+  bottom: 31px;
 
   .logo {
     display: flex;
-    height: 35px;
+    height: 30px;
     width: 35px;
+    left: 3px;
     position: relative;
-    bottom: 16px;
-    left: 4px;
     pointer-events: none;
   }
 `;

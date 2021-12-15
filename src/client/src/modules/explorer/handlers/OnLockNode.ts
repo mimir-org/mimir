@@ -5,7 +5,16 @@ import { IsUnsaved } from "../../../helpers";
 
 const OnLockNode = (node: Node, project: Project, isLockedBy: string, dispatch: Dispatch) => {
   if (!IsUnsaved(node)) dispatch(lockNode(node.id, project.id, !node.isLocked, isLockedBy));
-  else dispatch(setIsLockedNode({ id: node.id, projectId: project.id, isLocked: !node.isLocked, isLockedStatusBy: isLockedBy }));
+  else
+    dispatch(
+      setIsLockedNode({
+        id: node.id,
+        projectId: project.id,
+        isLocked: !node.isLocked,
+        isLockedStatusBy: isLockedBy,
+        isLockedStatusDate: new Date().toISOString(),
+      })
+    );
 };
 
 export default OnLockNode;
