@@ -10,7 +10,7 @@ interface Props {
   node: Node;
   size: BlockNodeSize;
   isParent: boolean;
-  IsInput: boolean;
+  IsInput?: boolean;
   terminals: Connector[];
   electro: boolean;
   hasActiveTerminals: boolean;

@@ -6,7 +6,7 @@ import { Connector, Node } from "../../../../models";
 interface Props {
   node: Node;
   isParent: boolean;
-  isInput: boolean;
+  isInput?: boolean;
   showMenuBox: boolean;
   terminals: Connector[];
   onClick: () => void;

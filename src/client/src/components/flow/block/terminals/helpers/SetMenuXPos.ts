@@ -10,7 +10,7 @@ import { BlockNodeSize } from "../../../../../models/project";
  */
 const SetMenuXPos = (isParent: boolean, electro: boolean, hasActiveTerminals: boolean, size: BlockNodeSize) => {
   const marginSmall = 22;
-  const marginLarge = 200;
+  const marginLarge = 205;
 
   if (electro) {
     if (!isParent) return size.width;

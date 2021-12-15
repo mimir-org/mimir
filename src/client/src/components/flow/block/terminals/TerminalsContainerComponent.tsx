@@ -52,7 +52,6 @@ const TerminalsContainerComponent = ({
       <TerminalsMenuBox
         node={node}
         isParent={isParent}
-        isInput={false}
         showMenuBox={showMenuBox}
         terminals={outputTerminals}
         onClick={() => Click.OnOutputMenu(showOutTerminalMenu, outputMenuOpen)}
@@ -62,8 +61,8 @@ const TerminalsContainerComponent = ({
           node={node}
           size={size}
           isParent={isParent}
-          terminals={inputTerminals}
           electro={electro}
+          terminals={inputTerminals}
           hasActiveTerminals={inputTerminals.some((conn) => conn.visible)}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showInTerminalMenu, inputMenuOpen)}
@@ -75,10 +74,9 @@ const TerminalsContainerComponent = ({
           node={node}
           size={size}
           isParent={isParent}
-          IsInput={false}
           electro={electro}
-          hasActiveTerminals={outputTerminals.some((conn) => conn.visible)}
           terminals={outputTerminals}
+          hasActiveTerminals={outputTerminals.some((conn) => conn.visible)}
           onClick={onClick}
           onBlur={() => Click.OnBlur(showOutTerminalMenu, outputMenuOpen)}
         />
