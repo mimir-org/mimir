@@ -23,7 +23,7 @@ export function commitProject(commitPackage: CommitPackage): Types.ProjectAction
 export function save(project: Project): Types.ProjectActionTypes {
   return {
     type: Types.SAVE_PROJECT,
-    payload: project,
+    payload: { project },
   };
 }
 
