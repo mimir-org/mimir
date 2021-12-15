@@ -55,7 +55,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         nodes={nodes}
         node={node}
-        size={{ width: 0, height: 0 }}
+        size={{ width: 30, height: 30 }}
         terminals={node.connectors}
         dispatch={dispatch}
         isVisible={false}
