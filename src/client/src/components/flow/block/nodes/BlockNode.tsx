@@ -1,16 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../terminals";
-import { GetBlockNodeType, SetNodeSize } from "./helpers";
+import { HasOffPageNode, CreateOffPageNode, GetBlockNodeType, SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode, IsProduct } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component for a child Node in BlockView.
@@ -26,44 +28,55 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [width, setWidth] = useState(Size.Node_Width);
   const [height, setHeight] = useState(Size.Node_Height);
 
+  const size = { width: width, height: height } as BlockNodeSize;
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
+  const hasActiveTerminals = terminals.some((conn) => conn.visible);
+
+  // Check for connectors that require OffPage
+  useEffect(() => {
+    node?.connectors.forEach((conn) => {
+      if (conn.isRequired) {
+        const offPageExists = HasOffPageNode(edges, conn);
+        if (!offPageExists) CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, true);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    const size = SetNodeSize(terminals, electro);
-    setWidth(size.width);
-    setHeight(size.height);
+    const updatedSize = SetNodeSize(terminals, electro);
+    setWidth(updatedSize.width);
+    setHeight(updatedSize.height);
   }, [electro, terminals]);
 
   if (!node) return null;
 
-  node.width = width;
-  node.height = height;
+  node.width = size.width;
+  node.height = size.height;
 
   return (
     <NodeBox
       id={type + node.id}
-      product={IsProduct(node)}
-      size={{ width: node.width, height: node.height }}
-      visible={!node.isHidden}
+      node={node}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
       isSelected={node === GetSelectedBlockNode()}
-      onMouseOver={() => OnHover(showTerminalBox)}
-      onMouseOut={() => OnMouseOut(showTerminalBox)}
+      onMouseEnter={() => OnHover(showTerminalBox)}
+      onMouseLeave={() => OnMouseOut(showTerminalBox)}
     >
       <BlockLogoComponent node={node} />
 
       <TerminalsContainerComponent
         node={node}
+        size={size}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         terminals={terminals}
@@ -73,14 +86,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={{ width: node.width, height: node.height }}
-        terminals={terminals}
-        electro={electro}
-        dispatch={dispatch}
-      />
+      {hasActiveTerminals && (
+        <HandleComponent nodes={nodes} node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />
+      )}
     </NodeBox>
   );
 };

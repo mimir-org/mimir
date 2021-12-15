@@ -6,15 +6,13 @@ import { IsOffPage } from "../../../../helpers";
 const OnSaveClick = (dispatch: any, projectState: ProjectState) => {
   dispatch(setProjectMenuVisibility(false));
 
-  // Clear all OffPage elements
-  if (projectState.project) {
-    projectState.project.nodes = projectState.project.nodes.filter((node) => !IsOffPage(node));
-    projectState.project.edges = projectState.project.edges.filter(
-      (edge) => !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode)
-    );
+  const project = Object.assign({}, projectState.project);
 
-    dispatch(save(projectState.project));
-  }
+  // Remove all OffPage related
+  project.edges = project.edges.filter((edge) => !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode));
+  project.nodes = project.nodes.filter((n) => !IsOffPage(n));
+
+  dispatch(save(project));
 };
 
 export default OnSaveClick;

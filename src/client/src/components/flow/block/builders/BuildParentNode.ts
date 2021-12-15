@@ -5,16 +5,18 @@ import { CreateId } from "../../helpers";
 import { SetConnectorOrder } from "./helpers";
 
 /**
- * Component to create a parent Product Node in BlockView.
+ * Component to create a parent node in BlockView.
  * @param node
+ * @param libOpen
+ * @param explorerOpen
  * @returns a FlowElement, the large box in BlockView.
  */
-const BuildParentProductNode = (node: Node, explorerOpen: boolean) => {
+const BuildParentNode = (node: Node, libOpen: boolean, explorerOpen: boolean) => {
   if (!node) return null;
   SetConnectorOrder(node);
 
-  const type = TextResources.Type_BlockParentProductNode;
-  const position = { x: explorerOpen ? 390 : 90, y: 0 };
+  const type = TextResources.Type_BlockParentNode;
+  const position = { x: explorerOpen ? 420 : 110, y: 0 }; // TODO: fix magic numbers
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 
@@ -31,4 +33,4 @@ const BuildParentProductNode = (node: Node, explorerOpen: boolean) => {
   } as FlowElement;
 };
 
-export default BuildParentProductNode;
+export default BuildParentNode;

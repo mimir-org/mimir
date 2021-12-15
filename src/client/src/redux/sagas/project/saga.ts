@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
-import { Project, ProjectFileAm, WebSocket } from "../../../models";
-import { ConvertProject } from ".";
+import { Project, ProjectFileAm, ProjectResultAm, WebSocket } from "../../../models";
+import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { IsPartOf } from "../../../components/flow/helpers";
@@ -31,6 +31,7 @@ import {
   LockEdge,
   LOCK_EDGE_SUCCESS_OR_ERROR,
   LockAttribute,
+  SaveProjectAction,
 } from "../../store/project/types";
 
 export function* getProject(action) {
@@ -263,10 +264,10 @@ export function* createSubProject(action: CreateSubProject) {
   }
 }
 
-export function* updateProject(action) {
+export function* updateProject(action: SaveProjectAction) {
   try {
-    const projId = action.payload.id;
-    const proj = ConvertProject(action.payload);
+    const projId = action.payload.project.id;
+    const proj = ConvertProject(action.payload.project);
 
     const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
     const response = yield call(post, url, proj);
@@ -293,27 +294,12 @@ export function* updateProject(action) {
       return;
     }
 
-    const project = response.data;
+    const data: ProjectResultAm = response.data;
 
-    if (project.nodes && action.payload.nodes) {
-      project.nodes.forEach((node) => {
-        const oldNode = action.payload.nodes.find((x) => x.id === node.id);
-        if (oldNode) {
-          node.isHidden = oldNode.isHidden;
-          node.isBlockSelected = oldNode.isBlockSelected;
-          node.isSelected = oldNode.isSelected;
-        }
-      });
-    }
-
-    if (!IsBlockView()) {
-      project?.edges.forEach((edge) => {
-        if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
-      });
-    }
+    MapProperties(data.project, action.payload.project, data.idChanges);
 
     const payload = {
-      project: project,
+      project: data.project,
       apiError: null,
     };
 

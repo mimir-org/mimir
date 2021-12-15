@@ -8,14 +8,14 @@ import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
   node: Node;
+  size: BlockNodeSize;
   isParent: boolean;
-  IsInput: boolean;
+  IsInput?: boolean;
   terminals: Connector[];
   electro: boolean;
   hasActiveTerminals: boolean;
   onClick: (conn: Connector) => void;
   onBlur: () => void;
-  parentBlockSize: BlockNodeSize;
 }
 
 /**
@@ -25,6 +25,7 @@ interface Props {
  */
 const TerminalsMenuComponent = ({
   node,
+  size,
   isParent,
   IsInput,
   terminals,
@@ -32,7 +33,6 @@ const TerminalsMenuComponent = ({
   hasActiveTerminals,
   onClick,
   onBlur,
-  parentBlockSize,
 }: Props) => (
   <TerminalsBox
     id={"terminals-dropdown-" + node.id}
@@ -41,7 +41,7 @@ const TerminalsMenuComponent = ({
     isInput={IsInput}
     onBlur={onBlur}
     color={GetAspectColor(node, AspectColorType.Selected)}
-    xPos={SetMenuXPos(isParent, electro, hasActiveTerminals, node, parentBlockSize)}
+    xPos={SetMenuXPos(isParent, electro, hasActiveTerminals, size)}
   >
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>

@@ -1,4 +1,4 @@
-import { Aspect, Connector, Attribute, ObjectType, Composite } from ".";
+import { Aspect, Connector, Attribute, ObjectType, Composite, Project } from ".";
 import { ProjectAm } from "../redux/sagas/project/ConvertProject";
 import { CommitStatus, ConnectorType, Discipline, SelectType } from "./Enums";
 
@@ -237,7 +237,7 @@ export interface LockAttributeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate?: Date;
+  isLockedStatusDate: string;
   nodeId?: string;
   edgeId?: string;
   transportId?: string;
@@ -251,7 +251,7 @@ export interface LockNodeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate?: Date;
+  isLockedStatusDate: string;
 }
 
 export interface LockEdgeAm {
@@ -259,7 +259,12 @@ export interface LockEdgeAm {
   projectId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate?: Date;
+  isLockedStatusDate: string;
+}
+
+export interface ProjectResultAm {
+  project: Project;
+  idChanges: { [id: string]: string }
 }
 
 export const SETTING_KEY = {

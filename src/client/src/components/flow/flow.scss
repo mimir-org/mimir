@@ -12,11 +12,11 @@
 }
 
 .react-flow__nodes {
-  z-index: 11 !important;
+  z-index: 5 !important;
 }
 
 .react-flow__node {
-  z-index: 10 !important;
+  z-index: 5 !important;
 }
 
 .react-flow__edges {
@@ -81,5 +81,26 @@
     .path-blockPartEdge {
       stroke: black !important;
     }
+  }
+}
+
+.react-flow__node-AspectLocation,
+.react-flow__node-Location{
+  &.selected > div{
+    border-color: #A300A7 !important
+  }
+}
+
+.react-flow__node-AspectFunction,
+.react-flow__node-Function{
+  &.selected > div{
+    border-color: #FBC913 !important
+  }
+}
+
+.react-flow__node-AspectProduct,
+.react-flow__node-Product{
+  &.selected > div{
+    border-color: #069098 !important
   }
 }

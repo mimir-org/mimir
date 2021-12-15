@@ -105,12 +105,14 @@ namespace Mb.Services.Services
             lockAttributeAm.TerminalId = attribute.TerminalId;
 
             if (save)
+            {
                 await _attributeRepository.SaveAsync();
 
-            //WebSocket - send attribute to client
-            await _cooperateService.SendLockAttributeUpdates(
-                new List<(LockAttributeAm am, WorkerStatus workerStatus)> 
-                    { (lockAttributeAm, WorkerStatus.Update) }, lockAttributeAm.ProjectId);
+                //WebSocket - send attribute to client
+                await _cooperateService.SendLockAttributeUpdates(
+                    new List<(LockAttributeAm am, WorkerStatus workerStatus)>
+                        { (lockAttributeAm, WorkerStatus.Update) }, lockAttributeAm.ProjectId);
+            }
         }
 
         /// <summary>
@@ -266,7 +268,7 @@ namespace Mb.Services.Services
 
                 //Find all node attributes
                 var nodeConnectors = allConnectors.Where(x => x.NodeId == node.Id);
-                var attributes = allAttributes.Where(x => nodeConnectors.Any(y => y.Id == x.TerminalId));
+                var attributes = allAttributes.Where(x => nodeConnectors.Any(y => y.Id == x.TerminalId || x.NodeId != null && x.NodeId == node.Id));
 
                 //Node attributes lock/unlock
                 foreach (var attribute in attributes)

@@ -1,5 +1,4 @@
 import { Size } from "../../../../../compLibrary/size";
-import { Node } from "../../../../../models";
 import { setBlockNodeSize } from "../../redux/actions";
 
 /**
@@ -9,29 +8,19 @@ import { setBlockNodeSize } from "../../redux/actions";
  * @param explorerOpen
  * @param dispatch
  */
-const SetParentNodeSize = (secondaryNode: Node, libOpen: boolean, explorerOpen: boolean, dispatch: any) => {
-  const width = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
-  const margin = SetMarginX(width, secondaryNode, libOpen, explorerOpen);
+const SetParentNodeSize = (secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean, dispatch: any) => {
+  const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
+  const marginX = SetMarginX(secondaryNode, libOpen, explorerOpen);
+  let width = screenWidth - marginX;
 
-  dispatch(setBlockNodeSize(width - margin, Size.BlockHeight));
+  if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
+  dispatch(setBlockNodeSize(width, window.innerHeight));
 };
 
-export function SetMarginX(width: number, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) {
-  const WIDE_SCREEN = 2200;
-  const marginLarge = width > WIDE_SCREEN ? 85 : 0;
-  const marginSmall = width > WIDE_SCREEN ? 50 : 0;
-
-  if (!secondaryNode) {
-    if (libOpen && explorerOpen) return Size.ModuleOpen * 2 - marginLarge;
-    if (libOpen && !explorerOpen) return Size.ModuleOpen - marginLarge;
-    if (!libOpen && explorerOpen) return Size.ModuleOpen - marginLarge;
-    return -marginSmall;
-  }
-
-  if (libOpen && explorerOpen) return 85;
-  if (!libOpen && explorerOpen) return -40;
-  if (libOpen && !explorerOpen) return -40;
-  return -220;
+export function SetMarginX(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
+  if (libOpen && explorerOpen) return secondaryNode ? 170 : Size.ModuleOpen + 250;
+  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 40 : Size.ModuleOpen - 60;
+  if (!libOpen && !explorerOpen) return secondaryNode ? -120 : -40;
 }
 
 export default SetParentNodeSize;
