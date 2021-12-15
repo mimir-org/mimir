@@ -18,31 +18,39 @@ const IsValidBlockConnection = (conn: Connection, nodes: Node[], dispatch: any) 
   const targetNode = nodes.find((x) => x.id === conn.target);
   const targetTerminal = targetNode?.connectors.find((x) => x.id === conn.targetHandle);
 
-  const isValidType = sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
-  const isValidOffPageType = IsOffPage(sourceNode) && IsOffPage(targetNode);
+  const isValidNode = ValidateNode(sourceTerminal, targetTerminal);
+  let isValidOffPage = true;
 
-  document.addEventListener(
-    "mouseup",
-    () => onMouseUp(sourceTerminal, targetTerminal, isValidType, isValidOffPageType, dispatch),
-    { once: true }
-  );
+  if (IsOffPage(sourceNode) || IsOffPage(targetNode)) isValidOffPage = ValidateOffPageNode(sourceNode, targetNode);
 
-  return isValidType && isValidOffPageType;
+  document.addEventListener("mouseup", () => onMouseUp(sourceTerminal, targetTerminal, isValidNode, isValidOffPage, dispatch), {
+    once: true,
+  });
+
+  return isValidNode && isValidOffPage;
 };
 
-export default IsValidBlockConnection;
+function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {
+  return IsOffPage(sourceNode) && IsOffPage(targetNode);
+}
+
+function ValidateNode(sourceTerminal: Connector, targetTerminal: Connector) {
+  return sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
+}
 
 const onMouseUp = (
   sourceTerminal: Connector,
   targetTerminal: Connector,
-  isValidType: boolean,
-  isValidOffPageType: boolean,
+  validNode: boolean,
+  validOffPageNode: boolean,
   dispatch: any
 ) => {
-  if (sourceTerminal && targetTerminal && !isValidType) dispatch(setValidation(false, TextResources.Validation_Terminals));
-  if (sourceTerminal && targetTerminal && !isValidOffPageType) dispatch(setValidation(false, TextResources.Validation_OffPage));
+  if (sourceTerminal && targetTerminal && !validNode) dispatch(setValidation(false, TextResources.Validation_Terminals));
+  if (sourceTerminal && targetTerminal && !validOffPageNode) dispatch(setValidation(false, TextResources.Validation_OffPage));
 
   return document.removeEventListener("mouseup", () =>
-    onMouseUp(sourceTerminal, targetTerminal, isValidType, isValidOffPageType, dispatch)
+    onMouseUp(sourceTerminal, targetTerminal, validNode, validOffPageNode, dispatch)
   );
 };
+
+export default IsValidBlockConnection;
