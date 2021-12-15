@@ -40,9 +40,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   // Check for connectors that require OffPage
   useEffect(() => {
     node?.connectors.forEach((conn) => {
-      if (conn.isRequired) {
-        CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, false);
-      }
+      if (conn.isRequired) CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, true);
     });
   }, []);
 
