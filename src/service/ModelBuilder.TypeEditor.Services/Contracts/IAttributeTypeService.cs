@@ -11,8 +11,8 @@ namespace Mb.TypeEditor.Services.Contracts
     public interface IAttributeTypeService
     {
         IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect);
-        Task<AttributeType> CreateAttributeType(CreateAttributeType createAttributeType);
-        Task<ICollection<AttributeType>> CreateAttributeTypes(List<CreateAttributeType> attributeTypes);
+        Task<AttributeType> CreateAttributeType(AttributeTypeAm createAttributeType);
+        Task<ICollection<AttributeType>> CreateAttributeTypes(List<AttributeTypeAm> attributeTypes);
         IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes();
         Task<List<PredefinedAttribute>> CreatePredefinedAttributes(List<PredefinedAttribute> attributes);
     }
