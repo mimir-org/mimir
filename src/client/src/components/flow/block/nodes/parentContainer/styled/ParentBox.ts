@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../compLibrary/colors";
+import { Size } from "../../../../../../compLibrary/size";
 import { BlockNodeSize } from "../../../../../../models/project";
 
 interface Props {
@@ -13,7 +14,7 @@ const ParentBox = styled.div<Props>`
   width: ${(props) => props.size.width}px;
   height: ${(props) => props.size.height}px;
   min-width: 500px;
-  max-width: 2500px;
+  max-width: ${Size.BlockMaxWidth}px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.GreyDark};

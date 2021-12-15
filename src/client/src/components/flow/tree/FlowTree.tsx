@@ -13,6 +13,7 @@ import { TreeConnectionLine } from "./edges";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
+import { Size } from "../../../compLibrary/size";
 
 interface Props {
   project: Project;
@@ -93,7 +94,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   }, [OnLoad, flowInstance]);
 
   useEffect(() => {
-    project?.edges.forEach((edge) => {
+    project?.edges?.forEach((edge) => {
       if (!IsPartOf(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
     });
   }, []);
@@ -112,7 +113,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         nodeTypes={helpers.GetNodeTypes}
         edgeTypes={helpers.GetEdgeTypes}
         defaultZoom={0.7}
-        defaultPosition={[800, 0]}
+        defaultPosition={[800, Size.BlockMarginY]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => onSelectionChange(e)}

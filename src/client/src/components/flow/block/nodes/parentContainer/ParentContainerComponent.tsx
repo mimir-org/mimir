@@ -4,17 +4,17 @@ import { IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
-import { memo, useRef } from "react";
+import { useRef } from "react";
 import { useResizeParentNode } from "./hooks";
-import { BlockNodeSize } from "../../../../../models/project";
 import { ParentBannerComponent } from ".";
+import { BlockNodeSize } from "../../../../../models/project";
 
 interface Props {
   node: Node;
-  color: string;
   size: BlockNodeSize;
+  color: string;
   hasTerminals: boolean;
-  isSecondaryNode: boolean;
+  isSecondaryNode?: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
   dispatch: any;
@@ -27,8 +27,8 @@ interface Props {
  */
 const ParentContainerComponent = ({
   node,
-  color,
   size,
+  color,
   hasTerminals,
   isSecondaryNode,
   onParentClick,
@@ -64,4 +64,4 @@ const ParentContainerComponent = ({
   );
 };
 
-export default memo(ParentContainerComponent);
+export default ParentContainerComponent;

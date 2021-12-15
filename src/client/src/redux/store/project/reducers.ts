@@ -156,7 +156,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...state.project,
-          nodes: state.project.nodes.map((x) =>
+          nodes: state.project?.nodes.map((x) =>
             x.id === action.payload.nodeId
               ? {
                   ...x,
@@ -275,7 +275,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...state.project,
-          nodes: allNodes.map((x) => (x.id === nodeId ? { ...x, isSelected: active } : { ...x, isSelected: false })),
+          nodes: allNodes?.map((x) => (x.id === nodeId ? { ...x, isSelected: active } : { ...x, isSelected: false })),
           edges: state.project.edges,
         },
       };
@@ -289,7 +289,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...state.project,
-          edges: edges.map((edge) => (edge.id === edgeId ? { ...edge, isSelected: active } : { ...edge, isSelected: false })),
+          edges: edges?.map((edge) => (edge.id === edgeId ? { ...edge, isSelected: active } : { ...edge, isSelected: false })),
         },
       };
     }
@@ -302,7 +302,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...state.project,
-          nodes: nodes.map((x) => (x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false })),
+          nodes: nodes?.map((x) => (x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false })),
           edges: state.project.edges,
         },
       };

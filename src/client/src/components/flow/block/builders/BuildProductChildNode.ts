@@ -1,29 +1,26 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetBlockNodePos, SetConnectorOrder, SetOffPageNodePos } from "./helpers";
+import { GetNodeTypeString, SetNodePos, SetConnectorOrder } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
-import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to create a Product Node in BlockView.
  * @param node
- * @param parentNodeSize
+ * @param libOpen
+ * @param explorerOpen
+ * @param secondaryNode
  * @returns a Product Node of the type FlowElement.
  */
-const BuildProductBlockNode = (node: Node, parentNodeSize: BlockNodeSize) => {
+const BuildProductBlockNode = (node: Node, libOpen: boolean, explorerOpen: boolean, secondaryNode: Node) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-  const parentPos = { x: -125, y: -40 }; // TODO: fix hard-coded position
-
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node)
-    ? SetBlockNodePos(nodePos, parentPos, parentNodeSize)
-    : SetOffPageNodePos(nodePos, parentNodeSize);
+  const position = !IsOffPage(node) ? SetNodePos(nodePos, libOpen, explorerOpen, secondaryNode !== null) : nodePos;
 
   return {
     key: CreateId(),

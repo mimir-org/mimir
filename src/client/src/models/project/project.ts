@@ -73,12 +73,12 @@ export interface EdgeEvent {
   sourceId: string;
 }
 
-export interface BlockNodeSize {
-  width: number;
-  height: number;
-}
-
 export interface Position {
   x: number;
   y: number;
+}
+
+export interface BlockNodeSize {
+  width: number;
+  height: number;
 }

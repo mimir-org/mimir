@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ProductSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
@@ -21,24 +22,25 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const parentBlockSize = useAppSelector(selectors.nodeSizeSelector);
+
+  const elements = useAppSelector(selectors.blockElementsSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
-
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const electro = useAppSelector(selectors.electroSelector);
+  const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
   // Set size
   useEffect(() => {
-    SetParentNodeSize(null, libOpen, explorerOpen, dispatch);
-  }, [dispatch, libOpen, explorerOpen]);
+    SetParentNodeSize(false, libOpen, explorerOpen, dispatch);
+  }, [libOpen, explorerOpen]);
 
   // Responsive resizing
   useEffect(() => {
-    ResizeHandler(node, null, parentBlockSize, libOpen, explorerOpen, dispatch);
-  }, [node, parentBlockSize, libOpen, explorerOpen, dispatch]);
+    ResizeHandler(node, null, libOpen, explorerOpen, elements, dispatch);
+  }, [libOpen, explorerOpen]);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, null));
@@ -50,10 +52,9 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
     <>
       <ParentContainerComponent
         node={node}
+        size={size}
         color={GetAspectColor(node, AspectColorType.Header)}
-        size={parentBlockSize}
         hasTerminals={terminals.length > 0}
-        isSecondaryNode={false}
         onParentClick={() => OnParentClick(dispatch, node)}
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
@@ -61,6 +62,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
 
       <TerminalsContainerComponent
         node={node}
+        size={size}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         electro={electro}
@@ -73,7 +75,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         nodes={nodes}
         node={node}
-        size={parentBlockSize}
+        size={size}
         terminals={terminals}
         electro={electro}
         dispatch={dispatch}
