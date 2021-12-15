@@ -11,6 +11,9 @@ const OnSaveClick = (dispatch: any, projectState: ProjectState) => {
   project.edges = project.edges.filter((edge) => !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode));
   project.nodes = project.nodes.filter((n) => !IsOffPage(n));
 
+  console.log(project.edges);
+  console.log(project.nodes);
+
   dispatch(save(project));
 };
 
