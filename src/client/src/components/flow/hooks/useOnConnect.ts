@@ -2,7 +2,7 @@ import { EdgeType, EDGE_TYPE } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 import { CreateId, GetParent, IsPartOf, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge } from "react-flow-renderer";
-import { createEdge, removeEdge, removeNode } from "../../../redux/store/project/actions";
+import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
 import { Connector, Edge, Node, Project } from "../../../models";
 import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
@@ -101,28 +101,25 @@ function HandleOffPage(
   const targetParent = GetParent(targetNode);
 
   const sourceTerminal = project.edges.find(
-    (edge) =>
-      edge.fromConnector.nodeId === sourceParent.id &&
-      IsTransport(edge.fromConnector) &&
-      edge.toConnector.nodeId === sourceNode.id
+    (x) => x.fromConnector.nodeId === sourceParent.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === sourceNode.id
   ).fromConnector;
 
   const targetTerminal = project.edges.find(
-    (edge) =>
-      edge.toConnector.nodeId === targetParent.id && IsTransport(edge.toConnector) && edge.fromConnector.nodeId === targetNode.id
+    (x) => x.toConnector.nodeId === targetParent.id && IsTransport(x.toConnector) && x.fromConnector.nodeId === targetNode.id
   ).toConnector;
 
   const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, library, animatedEdge);
   dispatch(createEdge(edge));
 
-  project.edges.forEach((edge) => {
-    if (IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)) {
-      dispatch(removeEdge(edge.id));
+  project.edges.forEach((x) => {
+    if (IsOffPage(x.fromNode) || IsOffPage(x.toNode)) {
+      dispatch(removeEdge(x.id));
     }
   });
 
   dispatch(removeNode(sourceNode.id));
   dispatch(removeNode(targetNode.id));
+  dispatch(setOffPageStatus(sourceParent.id, sourceTerminal.id, false));
 
   return setElements((els) => {
     return addEdge(
