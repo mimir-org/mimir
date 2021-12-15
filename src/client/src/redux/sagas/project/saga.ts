@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { Project, ProjectFileAm, WebSocket } from "../../../models";
+import { Project, ProjectFileAm, ProjectResultAm, WebSocket } from "../../../models";
 import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
@@ -294,13 +294,12 @@ export function* updateProject(action: SaveProjectAction) {
       return;
     }
 
-    const project: Project = response.data.item1;
-    const reMappedIds: { [id: string]: string } = response.data.item2;
+    const data: ProjectResultAm = response.data;
 
-    MapProperties(project, action.payload.project, reMappedIds);
+    MapProperties(data.project, action.payload.project, data.idChanges);
 
     const payload = {
-      project: project,
+      project: data.project,
       apiError: null,
     };
 

@@ -13,7 +13,7 @@ namespace Mb.Services.Contracts
         Task<Project> CreateProject(CreateProject createProject);
         Task<Project> CreateProject(ProjectAm project);
         Task<Project> CreateProject(SubProjectAm subProjectAm);
-        Task<(Project, IDictionary<string, string>)> UpdateProject(string id, ProjectAm project, string invokedByDomain);
+        Task<ProjectResultAm> UpdateProject(string id, ProjectAm project, string invokedByDomain);
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
         Task CommitProject(CommitPackage package);

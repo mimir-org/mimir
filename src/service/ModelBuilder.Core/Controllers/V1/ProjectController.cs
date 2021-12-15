@@ -231,7 +231,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="projectAm"></param>
         /// <returns></returns>
         [HttpPost("update/{id}")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectResultAm), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Project), StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -245,8 +245,8 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var projectTuple = await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
-                return Ok(projectTuple);
+                var projectResult = await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
+                return Ok(projectResult);
             }
             catch (ModelBuilderDuplicateException e)
             {

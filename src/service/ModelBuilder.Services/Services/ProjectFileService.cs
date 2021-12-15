@@ -83,8 +83,8 @@ namespace Mb.Services.Services
 
             if (exist)
             {
-                var (updatedProject, _) = await _projectService.UpdateProject(project.Id, project, _commonRepository.GetDomain());
-                return updatedProject;
+                var projectResult = await _projectService.UpdateProject(project.Id, project, _commonRepository.GetDomain());
+                return projectResult.Project;
             }
             
             return await _projectService.CreateProject(project);
@@ -119,11 +119,11 @@ namespace Mb.Services.Services
             if(par == null)
                 throw new ModelBuilderInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            var (project, _) = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
-            if(project == null)
+            var projectResult = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
+            if(projectResult?.Project == null)
                 throw new ModelBuilderNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
-            var bytes = await par.SerializeProject(project);
+            var bytes = await par.SerializeProject(projectResult.Project);
             var projectFile = new ProjectFileAm
             {
                 FileContent = Encoding.UTF8.GetString(bytes),
