@@ -1,5 +1,6 @@
 import { Connection } from "react-flow-renderer";
 import { TextResources } from "../../../../../assets/text";
+import { IsOffPage } from "../../../../../helpers";
 import { Connector, Node } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/actions";
 
@@ -18,7 +19,7 @@ const IsValidBlockConnection = (conn: Connection, nodes: Node[], dispatch: any) 
   const targetTerminal = targetNode?.connectors.find((x) => x.id === conn.targetHandle);
 
   const isValidType = sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
-  const isValidOffPageType = true;
+  const isValidOffPageType = IsOffPage(sourceNode) && IsOffPage(targetNode);
 
   document.addEventListener(
     "mouseup",
