@@ -22,41 +22,50 @@ const SetTerminalXPos = (
   order: number,
   nodeWidth: number
 ) => {
-  const marginX = parent ? 20 : 23;
+  const marginX = parent ? 20 : 22;
   const marginXSmall = 3;
 
-  if (offPage) {
-    if (position === Position.Right) return 35;
-    return -12;
-  }
+  if (offPage) return SetOffPageTerminalXPos(position);
+  if (electro) return SetElectroTerminalXPos(conn, order, parent, nodeWidth, marginXSmall, marginX);
 
-  if (!electro) {
-    if (IsPartOf(conn)) return nodeWidth / 2;
-    if (position === Position.Right) return nodeWidth + marginXSmall;
-    return -marginX;
-  }
+  if (IsPartOf(conn)) return nodeWidth / 2;
+  if (position === Position.Right && !parent) return nodeWidth - marginXSmall;
+  if (position === Position.Right && parent) return nodeWidth;
+  return -marginX;
+};
 
+function SetOffPageTerminalXPos(position: Position) {
+  if (position === Position.Right) return 35;
+  if (position === Position.Left) return -12;
+}
+
+function SetElectroTerminalXPos(
+  conn: Connector,
+  order: number,
+  isParent: boolean,
+  nodeWidth: number,
+  marginXSmall: number,
+  marginX: number
+) {
   if (IsPartOf(conn)) {
     if (IsInputTerminal(conn)) return -marginX;
     return nodeWidth + marginXSmall;
   }
 
   if (IsProductTerminal(conn) || IsLocationTerminal(conn)) return nodeWidth / 2 - marginXSmall;
-  return CalculateX(order, parent, nodeWidth);
-};
-
-export default SetTerminalXPos;
+  return CalculateX(order, isParent, nodeWidth);
+}
 
 /**
  * Function to calculate a terminal's X position. Terminals are positioned middle-out.
  * @param count the count of input or output terminals for a node.
- * @param parent
+ * @param isParent+
  * @param nodeWidth
  * @returns a number used by the styled component HandleBox.
  */
-function CalculateX(count: number, parent: boolean, nodeWith: number) {
-  const interval = parent ? 35 : Size.Terminals_Interval; // Default horizontal distance between each terminal
-  const base = nodeWith / 2 - 8; // Middle position
+function CalculateX(count: number, isParent: boolean, nodeWith: number) {
+  const interval = isParent ? 35 : Size.Terminals_Interval; // Default horizontal distance between each terminal
+  const base = nodeWith / 2 - 12; // Middle position
 
   // Even-numbered terminals ordered left
   if (count % 2 === 0) return base - interval * (count / 2);
@@ -64,3 +73,4 @@ function CalculateX(count: number, parent: boolean, nodeWith: number) {
   // Odd-numbered terminals ordered right
   if (count % 2 !== 0) return base + interval * Math.floor(count / 2) + interval;
 }
+export default SetTerminalXPos;

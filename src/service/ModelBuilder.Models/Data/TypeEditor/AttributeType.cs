@@ -51,7 +51,7 @@ namespace Mb.Models.Data.TypeEditor
         public virtual ICollection<TransportType> TransportTypes { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<CompositeType> CompositeTypes { get; set; }
+        public virtual ICollection<SimpleType> SimpleTypes { get; set; }
 
         private string CreateDescription()
         {

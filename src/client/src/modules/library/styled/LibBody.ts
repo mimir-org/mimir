@@ -4,30 +4,26 @@ interface Props {
   legend: boolean;
 }
 
-const LibraryBody = styled.div<Props>`
-  position: fixed;
-  margin-left: 15px;
-  width: 306px;
-  height: auto;
+const LibBody = styled.div<Props>`
+  width: calc(100% + 15px);
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-right: 10px;
-  max-height: ${(props) => (props.legend ? 50 : 72)}%;
+  max-height: ${(props) => (props.legend ? 63 : 86)}%;
 
   @media screen and (max-height: 1100px) {
-    max-height: ${(props) => (props.legend ? 40 : 66)}%;
+    max-height: ${(props) => (props.legend ? 52 : 78)}%;
   }
 
   @media screen and (max-height: 1000px) {
-    max-height: ${(props) => (props.legend ? 30 : 61)}%;
+    max-height: ${(props) => (props.legend ? 45 : 72)}%;
   }
 
   @media screen and (max-height: 900px) {
-    max-height: ${(props) => (props.legend ? 20 : 57)}%;
+    max-height: ${(props) => (props.legend ? 37 : 67)}%;
   }
 
   @media screen and (max-height: 700px) {
-    max-height: ${(props) => (props.legend ? 25 : 47)}%;
+    max-height: ${(props) => (props.legend ? 25 : 53)}%;
   }
 
   @media screen and (max-height: 550px) {
@@ -39,4 +35,4 @@ const LibraryBody = styled.div<Props>`
   }
 `;
 
-export default LibraryBody;
+export default LibBody;

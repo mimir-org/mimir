@@ -44,11 +44,11 @@ namespace Mb.Models.Application.TypeEditor
         // InterfaceType, TransportType
         public string TerminalTypeId { get; set; }
 
-        // CompositeType
-        public ICollection<string> CompositeTypes { get; set; }
+        // SimpleType
+        public ICollection<string> SimpleTypes { get; set; }
 
         [JsonIgnore]
-        public string Key => $"{Name}-{RdsId}-{Version}";
+        public string Key => $"{Name}-{RdsId}-{Aspect}-{Version}";
 
         public string Version { get; set; }
         public string TypeId { get; set; }

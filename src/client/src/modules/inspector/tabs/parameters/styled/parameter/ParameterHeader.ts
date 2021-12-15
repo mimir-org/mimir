@@ -1,41 +1,26 @@
 import styled from "styled-components";
+import { FontSize } from "../../../../../../compLibrary/font";
 
 interface Props {
   color: string;
 }
 
-const Header = styled.div<Props>`
+const ParameterHeader = styled.div<Props>`
   display: flex;
-  flex-direction: row;
-  height: 27px;
+  gap: 8px;
+  height: 30px;
+  padding: 8px 6px 8px 20px;
   background-color: ${(props) => props.color};
-  margin: auto;
 
-  .parameterHeader {
-    padding-top: 6px;
-    padding-left: 20px;
+  span {
+    font-size: ${FontSize.Medium};
     font-weight: 500;
-  }
-
-  .icons {
-    display: flex;
-    flex-direction: row;
-    margin-left: auto;
-
-    :last-child {
-      padding-right: 5px;
-    }
+    margin-right: auto;
   }
 
   .warningIcon {
-    margin: auto -10px auto 10px;
-  }
-
-  .parameterIcon {
-    padding-left: 5px;
-    cursor: pointer;
-    margin: auto;
+    margin-left: -10px;
   }
 `;
 
-export default Header;
+export default ParameterHeader;

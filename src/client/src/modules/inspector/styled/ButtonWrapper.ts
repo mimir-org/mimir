@@ -9,6 +9,8 @@ const ButtonWrapper = styled.div<Props>`
   display: flex;
   margin-left: auto;
   justify-content: space-evenly;
+  align-items: center;
+  gap: 18px;
   position: relative;
 `;
 

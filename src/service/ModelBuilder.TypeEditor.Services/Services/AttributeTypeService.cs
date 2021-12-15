@@ -53,9 +53,9 @@ namespace Mb.TypeEditor.Services.Services
         /// </summary>
         /// <param name="createAttributeType"></param>
         /// <returns></returns>
-        public async Task<AttributeType> CreateAttributeType(CreateAttributeType createAttributeType)
+        public async Task<AttributeType> CreateAttributeType(AttributeTypeAm createAttributeType)
         {
-            var data = await CreateAttributeTypes(new List<CreateAttributeType> { createAttributeType });
+            var data = await CreateAttributeTypes(new List<AttributeTypeAm> { createAttributeType });
             return data.SingleOrDefault();
         }
 
@@ -64,7 +64,7 @@ namespace Mb.TypeEditor.Services.Services
         /// </summary>
         /// <param name="createAttributeTypes"></param>
         /// <returns></returns>
-        public async Task<ICollection<AttributeType>> CreateAttributeTypes(List<CreateAttributeType> createAttributeTypes)
+        public async Task<ICollection<AttributeType>> CreateAttributeTypes(List<AttributeTypeAm> createAttributeTypes)
         {
             if (createAttributeTypes == null || !createAttributeTypes.Any())
                 return new List<AttributeType>();

@@ -10,12 +10,7 @@ const ListElem = styled.div<Props>`
   flex-direction: row;
   align-items: center;
   height: 30px;
-  padding: 2px 5px 2px 0px;
-
-  label:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
+  padding: 2px 5px;
 
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};

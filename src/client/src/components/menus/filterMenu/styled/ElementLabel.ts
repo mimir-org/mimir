@@ -6,9 +6,8 @@ interface Props {
   isSubHeader: boolean;
 }
 
-const ElementLabel = styled.div<Props>`
+const ElementLabel = styled.span<Props>`
   position: relative;
-  margin-left: 30px;
   bottom: 0.5px;
   font-size: ${FontSize.Standard};
   font-weight: ${(props) => (props.isHeader || props.isSubHeader) && FontWeight.Bold};

@@ -21,22 +21,18 @@ const Dropdown = ({ items, selectedItems, onChange }: Props) => {
 
   return (
     <MenuWrapper>
-      <div onClick={(e) => setIsListOpen(!isListOpen)}>
-        <MenuHeader>
-          <p className="searchText">{TextResources.Inspector_Params_Search}</p>
-          <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-        </MenuHeader>
-      </div>
+      <MenuHeader onClick={(e) => setIsListOpen(!isListOpen)}>
+        <p className="searchText">{TextResources.Inspector_Params_Search}</p>
+        <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
+      </MenuHeader>
       {isListOpen && (
         <MenuList>
           {items?.map((item) => {
             return (
-              <div onClick={() => onChange(item, IsAttributeSelected(item))} key={item.name}>
-                <MenuListItem>
-                  <p>{item.name}</p>
-                  <Checkbox isChecked={IsAttributeSelected(item)} onChange={() => null} />
-                </MenuListItem>
-              </div>
+              <MenuListItem key={item.name}>
+                <Checkbox isChecked={IsAttributeSelected(item)} onChange={() => onChange(item, IsAttributeSelected(item))} />
+                <span>{item.name}</span>
+              </MenuListItem>
             );
           })}
         </MenuList>

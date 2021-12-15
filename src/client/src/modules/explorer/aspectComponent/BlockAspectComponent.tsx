@@ -6,11 +6,13 @@ import { Node, Project } from "../../../models";
 import { BlockAspectElement } from ".";
 import { SetBlockNodeIndent } from "./helpers";
 import { Dispatch } from "redux";
+import { GetWidth } from "../helpers";
 
 interface Props {
   project: Project;
   username: string;
   node: Node;
+  nodes: Node[];
   selectedNode: Node;
   secondaryNode: Node;
   indent: number;
@@ -24,6 +26,7 @@ export const BlockAspectComponent = ({
   project,
   username,
   node,
+  nodes,
   selectedNode,
   secondaryNode,
   expanded,
@@ -34,7 +37,7 @@ export const BlockAspectComponent = ({
   onElementExpanded,
 }: Props) => (
   <>
-    <AspectBox node={node}>
+    <AspectBox width={GetWidth(nodes)} node={node}>
       <ElementBox indent={SetBlockNodeIndent(node, indent)}>
         <LockComponent node={node} project={project} username={username} dispatch={dispatch} />
         <BlockAspectElement
@@ -54,7 +57,7 @@ export const BlockAspectComponent = ({
         ></img>
       )}
     </AspectBox>
-    <ExplorerAspectLine node={node} />
+    <ExplorerAspectLine width={GetWidth(nodes)} node={node} />
   </>
 );
 

@@ -11,24 +11,11 @@ namespace Mb.Models.Data
     {
         #region Properties
 
-        public string Id
-        {
-            get => _id;
-            set => SetId(value);
-        }
-
-        public string Iri
-        {
-            get => _iri;
-            set => SetIri(value);
-        }
-
-        public string Domain
-        {
-            get => _domain;
-            set => SetDomain(value);
-        }
-
+        public string Id { get; set; }
+        public string Iri { get; set; }
+        public string Domain => Id.ResolveDomain();
+        
+        public string Kind => nameof(Connector);
         public string Name { get; set; }
         public ConnectorType Type { get; set; }
         public string SemanticReference { get; set; }
@@ -45,51 +32,6 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual ICollection<Edge> ToEdges { get; set; }
-
-        #endregion
-
-        #region Private methods
-
-        private void SetId(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                return;
-
-            _id = id;
-            if (string.IsNullOrEmpty(_domain))
-                _domain = id.ResolveDomain();
-
-            if (string.IsNullOrEmpty(_iri) || !_id.HasValidIri(_iri))
-                _iri = id.ResolveIri();
-        }
-
-        private void SetIri(string iri)
-        {
-            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
-                return;
-
-            _iri = iri;
-            if (string.IsNullOrEmpty(_id) && !string.IsNullOrEmpty(_domain))
-                _id = iri.ResolveIdFromIriAndDomain(_domain);
-        }
-
-        private void SetDomain(string domain)
-        {
-            if (string.IsNullOrEmpty(domain))
-                return;
-
-            _domain = domain;
-            if (string.IsNullOrEmpty(_id) && !string.IsNullOrEmpty(_iri))
-                _id = _iri.ResolveIdFromIriAndDomain(domain);
-        }
-
-        #endregion
-
-        #region Private members
-
-        private string _id;
-        private string _iri;
-        private string _domain;
 
         #endregion
     }

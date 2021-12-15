@@ -12,23 +12,12 @@ namespace Mb.Models.Data
     [Serializable]
     public class Node
     {
-        public string Id
-        {
-            get => _id;
-            set => SetId(value);
-        }
+        public string Id { get; set; }
+        public string Iri { get; set; }
 
-        public string Iri
-        {
-            get => _iri;
-            set => SetIri(value);
-        }
-
-        public string Domain
-        {
-            get => _domain;
-            set => SetDomain(value);
-        }
+        public string Domain => Id.ResolveDomain();
+        
+        public string Kind => nameof(Node);
 
         public string Rds { get; set; }
 
@@ -86,17 +75,10 @@ namespace Mb.Models.Data
         public bool IsRoot { get; set; }
 
         [Required]
-        public string MasterProjectId
-        {
-            get => _masterProjectId;
-            set => SetMasterProjectId(value);
-        }
+        public string MasterProjectId { get; set; }
 
-        public string MasterProjectIri
-        {
-            get => _masterProjectIri;
-            set => SetMasterProjectIri(value);
-        }
+        [Required]
+        public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
 
@@ -109,7 +91,7 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Attribute> Attributes { get; set; }
 
-        public virtual ICollection<Composite> Composites { get; set; }
+        public virtual ICollection<Simple> Simples { get; set; }
 
         [Required]
         public virtual string ProjectId { get; set; }
@@ -144,72 +126,5 @@ namespace Mb.Models.Data
         {
             Version = Version.IncrementMajorVersion();
         }
-
-        #region Private methods
-
-        private void SetId(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                return;
-
-            _id = id;
-            if (string.IsNullOrEmpty(_domain))
-                _domain = id.ResolveDomain();
-
-            if (string.IsNullOrEmpty(_iri) || !_id.HasValidIri(_iri))
-                _iri = id.ResolveIri();
-        }
-
-        private void SetIri(string iri)
-        {
-            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
-                return;
-
-            _iri = iri;
-            if (string.IsNullOrEmpty(_id) && !string.IsNullOrEmpty(_domain))
-                _id = iri.ResolveIdFromIriAndDomain(_domain);
-        }
-
-        private void SetDomain(string domain)
-        {
-            if (string.IsNullOrEmpty(domain))
-                return;
-
-            _domain = domain;
-            if (string.IsNullOrEmpty(_id) && !string.IsNullOrEmpty(_iri))
-                _id = _iri.ResolveIdFromIriAndDomain(domain);
-        }
-
-        private void SetMasterProjectId(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-                return;
-
-            _masterProjectId = id;
-            if (string.IsNullOrEmpty(_masterProjectIri))
-                _masterProjectIri = _masterProjectId.ResolveIri();
-        }
-
-        private void SetMasterProjectIri(string iri)
-        {
-            if (string.IsNullOrEmpty(iri) || (!string.IsNullOrEmpty(_id) && !_id.HasValidIri(iri)))
-                return;
-
-            _masterProjectIri = iri;
-            if (string.IsNullOrEmpty(_masterProjectId))
-                _masterProjectId = _masterProjectIri.ResolveIdFromIriAndDomain(_domain);
-        }
-
-        #endregion
-
-        #region Private members
-
-        private string _id;
-        private string _iri;
-        private string _domain;
-        private string _masterProjectId;
-        private string _masterProjectIri;
-
-        #endregion
     }
 }

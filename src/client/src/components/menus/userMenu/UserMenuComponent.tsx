@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback, useRef } from "react";
 import { Dispatch } from "redux";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
@@ -7,6 +7,8 @@ import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
 import { userStateSelector } from "../../../redux/store";
 import { TextResources } from "../../../assets/text";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
+import { setUserMenuVisibility } from "../projectMenu/subMenus/redux/actions";
 
 interface Props {
   dispatch: Dispatch;
@@ -21,8 +23,12 @@ interface Props {
 const UserMenuComponent = ({ dispatch, darkMode }: Props) => {
   const userState = useAppSelector(userStateSelector);
 
+  const menuRef = useRef(null);
+  const onOutsideClick = useCallback(() => dispatch(setUserMenuVisibility(false)), [dispatch]);
+  useOutsideClick(menuRef, onOutsideClick);
+
   return (
-    <UserMenuBox id={MENU_TYPE.PROJECT_MENU}>
+    <UserMenuBox id={MENU_TYPE.PROJECT_MENU} ref={menuRef}>
       <UserNameBox>
         <p>{userState.user && userState?.user?.name}</p>
         <p className="user-role">{userState?.user?.role ?? TextResources.UserMenu_User}</p>

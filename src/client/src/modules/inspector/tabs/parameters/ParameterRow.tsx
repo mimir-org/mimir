@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CombinedAttribute } from "../../../../models";
+import { CombinedAttribute, Project } from "../../../../models";
 import { Parameter, PARAMETER_ENTITY_WIDTH } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
 import { Body, Entity, Box } from "./styled";
@@ -18,6 +18,7 @@ interface Props {
   elementIsLocked: boolean;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
+  project: Project;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   attributeLikeItems?: AttributeLikeItem[];
@@ -34,6 +35,7 @@ function ParameterRow({
   elementIsLocked,
   inspectorParentElement,
   terminalParentElement,
+  project,
   combinations,
   selectedCombinations,
   attributeLikeItems,
@@ -84,14 +86,23 @@ function ParameterRow({
             key={combination.combined}
             attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(combination, attr))}
             combination={combination}
-            isNodeLocked={elementIsLocked}
             headerColor={headerColor}
             bodyColor={bodyColor}
-            onChange={(id, value, unit) =>
-              OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit?.id, dispatch)
+            onChange={(id, value, unitId) =>
+              OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
             }
             onLock={(attribute, isLocked) =>
-              OnLockParameter(element, inspectorParentElement, terminalParentElement, attribute, isLocked, username, dispatch)
+              OnLockParameter(
+                element,
+                inspectorParentElement,
+                terminalParentElement,
+                elementIsLocked,
+                project,
+                attribute,
+                isLocked,
+                username,
+                dispatch
+              )
             }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />

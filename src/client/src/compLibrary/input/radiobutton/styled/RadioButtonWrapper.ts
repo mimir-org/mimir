@@ -6,6 +6,7 @@ const RadioButtonWrapper = styled.label`
   cursor: pointer;
   display: flex;
   align-items: center;
+  --radioButtonSize: 12px;
 
   input {
     display: none;
@@ -14,8 +15,10 @@ const RadioButtonWrapper = styled.label`
   .checkmark-circle {
     position: absolute;
     display: flex;
-    height: 12px;
-    width: 12px;
+    align-items: center;
+    justify-content: center;
+    height: var(--radioButtonSize);
+    width: var(--radioButtonSize);
     background-color: ${Color.White} !important;
     border: 1px solid ${Color.BlueMagenta};
     border-radius: 10px;
@@ -26,16 +29,13 @@ const RadioButtonWrapper = styled.label`
   }
 
   input:checked ~ .checkmark-circle:after {
-    position: absolute;
     display: flex;
     content: "";
-    top: 2.5px;
-    left: 2.2px;
-    height: 5.7px;
-    width: 5.7px;
+    width: calc(var(--radioButtonSize) / 2);
+    height: calc(var(--radioButtonSize) / 2);
+    border-radius: 50%;
     background-color: ${Color.BlueMagenta};
     border: 1px solid ${Color.BlueMagenta};
-    border-radius: 10px;
   }
 `;
 

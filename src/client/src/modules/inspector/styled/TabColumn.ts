@@ -8,11 +8,9 @@ interface Props {
 
 const TabColumn = styled.div<Props>`
   width: ${(props) => getWidth(props.width)};
-  height: 100%;
-  padding: 10px;
-  padding-left: 20px;
-  font-size: 12px;
+  font-size: ${FontSize.Medium};
   display: flex;
+  gap: 10px;
   flex-direction: column;
 
   & > div {

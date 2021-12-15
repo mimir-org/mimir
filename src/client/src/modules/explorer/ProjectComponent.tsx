@@ -6,6 +6,8 @@ import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { GetSelectedNode, IsBlockView, IsOffPage } from "../../helpers";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { ModuleContent } from "./styled";
+import { GetWidth } from "./helpers";
 
 /**
  * Component for a singe Project in Mimir, displayed in the Explorer Module.
@@ -40,7 +42,7 @@ const ProjectComponent = () => {
   if (!project || !nodes) return null;
 
   return (
-    <>
+    <ModuleContent width={GetWidth(nodes)}>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
         if (!areAncestorsExpanded(node)) return null;
         if (IsBlockView()) {
@@ -50,6 +52,7 @@ const ProjectComponent = () => {
               project={project}
               username={username}
               node={node}
+              nodes={nodes}
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
               indent={indent}
@@ -79,7 +82,7 @@ const ProjectComponent = () => {
           />
         );
       })}
-    </>
+    </ModuleContent>
   );
 };
 

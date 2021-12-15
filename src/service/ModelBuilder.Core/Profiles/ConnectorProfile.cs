@@ -10,15 +10,14 @@ namespace Mb.Core.Profiles
         public ConnectorProfile(ICommonRepository commonRepository)
         {
             CreateMap<ConnectorAm, Connector>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
-                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => commonRepository.ResolveId(src.NodeId, src.NodeIri)))
-                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => commonRepository.ResolveIri(src.NodeId, src.NodeIri)))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
                 .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired));
 
             CreateMap<TerminalAm, Terminal>()
@@ -35,7 +34,6 @@ namespace Mb.Core.Profiles
             CreateMap<ConnectorAm, RelationAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
@@ -47,7 +45,6 @@ namespace Mb.Core.Profiles
             CreateMap<ConnectorAm, TerminalAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
@@ -60,9 +57,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
 
             CreateMap<Connector, ConnectorAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))

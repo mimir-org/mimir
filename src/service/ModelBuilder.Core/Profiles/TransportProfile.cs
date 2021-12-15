@@ -1,6 +1,5 @@
 ﻿using System;
 using AutoMapper;
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Services.Extensions;
@@ -10,10 +9,11 @@ namespace Mb.Core.Profiles
 {
     public class TransportProfile : Profile
     {
-        public TransportProfile(IHttpContextAccessor contextAccessor, ICommonRepository commonRepository)
+        public TransportProfile(IHttpContextAccessor contextAccessor)
         {
             CreateMap<TransportAm, Transport>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
@@ -34,7 +34,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Edges, opt => opt.Ignore());
 
             CreateMap<Transport, TransportAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateOrUseId(src.Id)))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))

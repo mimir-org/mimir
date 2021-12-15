@@ -17,7 +17,10 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Id).HasColumnName("Id").ValueGeneratedOnAdd().IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
+            builder.Property(p => p.Current).HasColumnName("Current").IsRequired();
             builder.Property(p => p.Iris).HasColumnName("Iris").IsRequired(false).HasConversion(stringConverter, stringComparer);
+
+            builder.HasIndex(x => x.Domain).IsUnique();
         }
     }
 }

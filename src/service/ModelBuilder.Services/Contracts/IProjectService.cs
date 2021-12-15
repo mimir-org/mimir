@@ -13,15 +13,9 @@ namespace Mb.Services.Contracts
         Task<Project> CreateProject(CreateProject createProject);
         Task<Project> CreateProject(ProjectAm project);
         Task<Project> CreateProject(SubProjectAm subProjectAm);
-        Task<Project> UpdateProject(string id, ProjectAm project, string invokedByDomain);
+        Task<ProjectResultAm> UpdateProject(string id, ProjectAm project, string invokedByDomain);
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
-        Task LockUnlockNode(LockUnlockNodeAm lockUnlockNodeAm);
-        Task LockUnlockAttribute(LockUnlockAttributeAm lockUnlockAttributeAm);
-        Task LockUnlockEdge(LockUnlockEdgeAm lockUnlockEdgeAm);
-        IEnumerable<string> GetLockedNodes(string projectId);
-        IEnumerable<string> GetLockedAttributes(string projectId);
-        IEnumerable<string> GetLockedEdges(string projectId);
         Task CommitProject(CommitPackage package);
         bool ProjectExist(string projectId);
     }

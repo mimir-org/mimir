@@ -10,10 +10,12 @@ using Mb.Core.Profiles;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Attributes;
 using Mb.Models.Configurations;
 using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
+using Mb.Models.Settings;
 using Mb.Services.Contracts;
 using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
@@ -45,7 +47,7 @@ namespace Mb.Core.Extensions
 
         public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
         {
-            // ModelBuilder Configuration configurations
+            // ModelBuilder Configurations
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
 
@@ -53,25 +55,22 @@ namespace Mb.Core.Extensions
             builder.AddJsonFile($"appsettings.{environment}.json", true);
             builder.AddJsonFile("appsettings.local.json", true);
             builder.AddEnvironmentVariables();
+            builder.Build();
 
+            // ModelBuilder Application Settings
             var config = builder.Build();
 
-            var modelBuilderConfiguration = new ModelBuilderConfiguration();
-            var modelBuilderSection = config.GetSection(nameof(ModelBuilderConfiguration));
+            var modelBuilderConfiguration = new ApplicationSetting();
+            var modelBuilderSection = config.GetSection(nameof(ApplicationSetting));
             modelBuilderSection.Bind(modelBuilderConfiguration);
-
-            var domain = Environment.GetEnvironmentVariable("ModelBuilderConfiguration_Domain");
-            if (!string.IsNullOrEmpty(domain))
-                modelBuilderConfiguration.Domain = domain;
-
             services.AddSingleton(Options.Create(modelBuilderConfiguration));
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.SuppressModelStateInvalidFilter = true;
+                options.SuppressModelStateInvalidFilter = false;
             });
 
             // Dependency injection
-
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
@@ -81,7 +80,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<ICollaborationPartnerRepository, CollaborationPartnerRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
-            services.AddScoped<ICompositeRepository, CompositeRepository>();
+            services.AddScoped<ISimpleRepository, SimpleRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
             services.AddScoped<IWebSocketRepository, WebSocketRepository>();
 
@@ -92,6 +91,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IVersionService, VersionService>();
             services.AddScoped<IProjectFileService, ProjectFileService>();
             services.AddScoped<ICooperateService, CooperateService>();
+            services.AddScoped<ILockService, LockService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -110,17 +110,17 @@ namespace Mb.Core.Extensions
             var cfg = new MapperConfigurationExpression();
             cfg.AddProfile(new AttributeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new ConnectorProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new EdgeProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new EdgeProfile());
+            cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
             cfg.AddProfile<CollaborationPartnerProfile>();
             cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new CompositeProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>()));
+            cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
+            cfg.AddProfile(new SimpleProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
 
             // Create profiles
@@ -131,13 +131,9 @@ namespace Mb.Core.Extensions
 
             // Add modules
             services.CreateModules(provider, configuration, modules);
-
             services.AddSignalR();
-                //.AddNewtonsoftJsonProtocol(o =>
-                //{
-                //    o.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                //    o.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                //});
+
+            // Add application settings
 
             return services;
         }
@@ -150,6 +146,8 @@ namespace Mb.Core.Extensions
             var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
 
             context.Database.Migrate();
+            serviceScope.CreateOrUpdateCurrentCollaborationPartner();
+
             var moduleReaderAwaiter = moduleService.InitialModules().ConfigureAwait(true).GetAwaiter();
 
             while (!moduleReaderAwaiter.IsCompleted)
@@ -157,11 +155,6 @@ namespace Mb.Core.Extensions
                 logger.LogInformation("Reading modules");
                 Thread.Sleep(2000);
             }
-
-            var webSocketOptions = new WebSocketOptions
-            {
-                KeepAliveInterval = TimeSpan.FromSeconds(120),
-            };
 
             app.UseEndpoints(endpoints =>
             {
@@ -173,6 +166,34 @@ namespace Mb.Core.Extensions
         }
 
         #region Private Methods
+
+        private static void CreateOrUpdateCurrentCollaborationPartner(this IServiceScope serviceScope)
+        {
+            // Define default collaboration settings
+            var appSettings = serviceScope.ServiceProvider.GetRequiredService<IOptions<ApplicationSetting>>()?.Value;
+            if (appSettings?.CollaborationPartner == null) 
+                return;
+
+            var commonService = serviceScope.ServiceProvider.GetRequiredService<ICommonService>();
+            var currentCollaborationPartner = commonService?.GetCollaborationPartnerByDomain(appSettings.CollaborationPartner.Domain).Result;
+
+            if (currentCollaborationPartner != null)
+            {
+                appSettings.CollaborationPartner = currentCollaborationPartner;
+                return;
+            }
+
+            var cp = new CollaborationPartnerAm
+            {
+                Current = true,
+                Domain = appSettings.CollaborationPartner.Domain,
+                Iris = appSettings.CollaborationPartner.Iris,
+                Name = appSettings.CollaborationPartner.Name
+            };
+            
+            currentCollaborationPartner = commonService?.CreateCollaborationPartnerAsync(cp).Result;
+            appSettings.CollaborationPartner = currentCollaborationPartner;
+        }
 
         private static void CreateModules(this IServiceCollection services, IServiceProvider provider, IConfiguration configuration, IEnumerable<Module> modules)
         {
@@ -192,7 +213,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
+                    logger?.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }
@@ -214,7 +235,7 @@ namespace Mb.Core.Extensions
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
+                    logger?.LogError($"Module error: ({module?.ModuleDescription?.Name}), {e.Message}");
                 }
             }
         }

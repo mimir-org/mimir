@@ -3,24 +3,26 @@ import { Color } from "../../../colors";
 import { FontSize } from "../../../font";
 
 interface Props {
-  width: number;
   visible: boolean;
   disabled?: boolean;
 }
 
-const ButtonContainer = styled.div<Props>`
+const ButtonContainer = styled.button<Props>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px;
+  padding: 6px;
+  height: 28px;
+  min-width: 66px;
+  cursor: pointer;
   pointer-events: initial;
   visibility: ${(props) => !props.visible && "hidden"};
   box-shadow: inset 0 0 0 1.5px ${Color.InspectorGreyBorder};
   border-radius: 4px;
   font-size: ${FontSize.Standard};
   background-color: ${Color.White};
-  width: ${(props) => props.width}px;
-  height: 23px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin: 10px;
 
   ${(props) =>
     props.disabled &&
@@ -29,16 +31,6 @@ const ButtonContainer = styled.div<Props>`
       color: ${Color.GreyHeader};
       pointer-events: none;
     `}
-
-  div {
-    padding: 6px;
-    padding-right: 4px;
-  }
-
-  svg {
-    margin-left: auto;
-    margin-right: 6px;
-  }
 
   :hover {
     box-shadow: inset 0 0 0 2px ${Color.InspectorGreyBorder};

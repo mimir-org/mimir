@@ -1,41 +1,93 @@
-import { removeElements } from "react-flow-renderer";
+import { removeElements, FlowElement, Elements } from "react-flow-renderer";
+import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
-import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode } from "../../../helpers";
-import { EDGE_KIND } from "../../../models";
+import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode, IsOffPage } from "../../../helpers";
+import { EDGE_KIND, Node, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
-import { removeEdge, removeNode } from "../../../redux/store/project/actions";
+import { removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
+import { GetParent, IsTransport } from "../helpers";
 
-const useOnRemove = (elements: any[], setElements: any, dispatch: any, inspectorRef: React.MutableRefObject<HTMLDivElement>) => {
-  const verifiedList: any[] = [];
+const useOnRemove = (
+  elements: Elements,
+  setElements: any,
+  dispatch: Dispatch,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  project: Project
+) => {
+  const elementsToRemove: Elements = [];
+
+  elements = elements.filter((el) => !IsAspectNode(el.data));
+
+  const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
+
+  if (hasDeletedElement) {
+    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    SetPanelHeight(inspectorRef, Size.ModuleClosed);
+    dispatch(changeInspectorHeight(Size.ModuleClosed));
+    return setElements((els) => removeElements(elementsToRemove, els));
+  }
+};
+
+const handleDeleteElements = (elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) => {
   const selectedNode = GetSelectedNode();
   const selectedBlockNode = GetSelectedBlockNode();
   const blockView = IsBlockView();
   const edgeTypes = Object.values(EDGE_TYPE);
+  let hasDeletedElement = false;
 
-  elements = elements.filter((el) => !IsAspectNode(el.data) && el !== selectedNode);
-
-  elements.forEach((elem) => {
-    const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
+  for (var elem of elements) {
+    const isEdge = isElementEdge(edgeTypes, elem);
 
     if (isEdge) {
       if (!IsAspectNode(blockView ? selectedBlockNode : selectedNode)) {
+        if (findProjectEdgeByElementId(project, elem)?.isLocked) continue;
+        hasDeletedElement = true;
         dispatch(removeEdge(elem.id));
         verifiedList.push(elem);
       }
     } else {
+      const node = findProjectNodeByElementId(project, elem);
+
+      if (node?.isLocked) continue;
+
+      if (IsOffPage(node)) handleOffPageDelete(node, project, dispatch);
+
+      hasDeletedElement = true;
       dispatch(removeNode(elem.id));
       verifiedList.push(elem);
     }
-  });
+  }
 
-  dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
-  SetPanelHeight(inspectorRef, Size.ModuleClosed);
-  dispatch(changeInspectorHeight(Size.ModuleClosed));
+  return hasDeletedElement;
+};
 
-  return setElements((els) => removeElements(verifiedList, els));
+const handleOffPageDelete = (node: Node, project: Project, dispatch: Dispatch) => {
+  const parentNode = GetParent(node);
+
+  const offPageEdge = project.edges.find(
+    (x) =>
+      (x.fromConnector.nodeId === parentNode.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === node.id) ||
+      (x.toConnector.nodeId === parentNode.id && IsTransport(x.toConnector) && x.fromConnector.nodeId === node.id)
+  );
+
+  const parentNodeConnector = offPageEdge.fromConnector.nodeId === node.id ? offPageEdge.toConnector : offPageEdge.fromConnector;
+
+  if (offPageEdge) dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
+};
+
+const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
+  return edgeTypes.some((x) => x === element.type?.toString() || element.data?.kind === EDGE_KIND);
+};
+
+const findProjectEdgeByElementId = (project: Project, element: FlowElement) => {
+  return project.edges.find((edge) => edge.id === element.id);
+};
+
+const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
+  return project.nodes.find((node) => node.id === element.id);
 };
 
 export default useOnRemove;

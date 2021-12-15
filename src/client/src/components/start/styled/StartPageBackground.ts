@@ -7,7 +7,6 @@ const StartPageBackground = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  align-items: center;
   height: 100%;
   background-color: ${Color.BlueDark};
 
@@ -16,7 +15,7 @@ const StartPageBackground = styled.div`
       transform: translateY(0%);
     }
     to {
-      transform: translateY(-240%);
+      transform: translateY(-225%);
     }
   }
 
@@ -38,7 +37,9 @@ const StartPageBackground = styled.div`
     color: ${Color.White};
     font-family: ${FontType.Standard};
     font-size: ${FontSize.SubHeader};
-    margin-left: 280px;
+    text-align: right;
+    padding-right: 14px;
+    width: 100%;
   }
 `;
 

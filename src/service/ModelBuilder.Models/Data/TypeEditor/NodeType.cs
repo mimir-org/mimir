@@ -12,7 +12,7 @@ namespace Mb.Models.Data.TypeEditor
         public ICollection<AttributeType> AttributeTypes { get; set; }
         public string LocationType { get; set; }
         public string SymbolId { get; set; }
-        public virtual ICollection<CompositeType> CompositeTypes { get; set; }
+        public virtual ICollection<SimpleType> SimpleTypes { get; set; }
 
         [NotMapped]
         public ICollection<PredefinedAttributeAm> PredefinedAttributes { get; set; }

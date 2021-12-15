@@ -10,8 +10,11 @@ namespace Mb.Models.Data
     public class Transport
     {
         public string Id { get; set; }
+        public string Iri { get; set; }
         public string Version { get; set; }
         public string Rds { get; set; }
+        
+        public string Kind => nameof(Transport);
 
         [Required]
         public string Name { get; set; }

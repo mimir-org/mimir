@@ -1,4 +1,5 @@
 ﻿using System;
+using Mb.Models.Extensions;
 
 namespace Mb.Models.Application
 {
@@ -6,7 +7,7 @@ namespace Mb.Models.Application
     {
         public string Id { get; set; }
         public string Iri { get; set; }
-        public string Domain { get; set; }
+        public string Domain => Id.ResolveDomain();
         public string ProjectId { get; set; }
         public string FromConnectorId { get; set; }
         public string FromConnectorIri { get; set; }

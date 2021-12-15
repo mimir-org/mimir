@@ -2,36 +2,34 @@
 {
     public interface ICommonRepository
     {
-        string CreateUniqueId();
+        /// <summary>
+        /// Get current domain
+        /// </summary>
+        /// <returns>A new created id</returns>
+        string CreateId();
+
+        /// <summary>
+        /// Get current domain
+        /// </summary>
+        /// <returns>Registered domain</returns>
         string GetDomain();
-        bool HasValidId(string id);
-        string CreateOrUseId(string id);
-        
+
         /// <summary>
-        /// Provides an option to derive an ID based on an IRI.
-        /// If the ID is valid it will be returned.
-        /// If the ID is invalid it will be resolved based on the IRI.
+        /// Check if item has a valid id
         /// </summary>
-        /// <param name="id">ID to validate</param>
-        /// <param name="iri">IRI to derive ID from</param>
-        /// <returns>A valid ID which can be used as a primary key, null if value could not be resolved</returns>
-        /// <exception cref="ModelBuilderInvalidOperationException">
-        /// Will throw an exception if the IRI could not be resolved to an ID
-        /// </exception>
+        /// <param name="id">Id to validate</param>
+        /// <returns>True if the id is valid</returns>
         /// <remarks>
-        /// For an IRI to be resolved the host portion e.g sub.domain.com,
-        /// must be registered with a CollaborationPartner in their list of IRIs
+        /// For an id to be valid, it should be of this format: {domain unique}_{item unique}
         /// </remarks>
-        string ResolveId(string id, string iri);
-        
+        bool HasValidId(string id);
+
         /// <summary>
-        /// Provides an option to derive an IRI based on an ID.
-        /// If an IRI is present it will be returned.
-        /// If an IRI is not present it will be resolved based on the ID.
+        /// Create an id if the id is not valid
         /// </summary>
-        /// <param name="id">ID to derive IRI from</param>
-        /// <param name="iri">IRI to validate</param>
-        /// <returns>A valid IRI, null if value could not be resolved</returns>
-        string ResolveIri(string id, string iri);
+        /// <param name="id"></param>
+        /// <param name="iri"></param>
+        /// <returns>A valid id</returns>
+        (string id, string iri) CreateOrUseIdAndIri(string id, string iri);
     }
 }

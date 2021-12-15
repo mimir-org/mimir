@@ -6,12 +6,14 @@ import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { updatePosition } from "../../../redux/store/project/actions";
+import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
 import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
 import { Project } from "../../../models";
+import { IsPartOf } from "../helpers";
+import { Size } from "../../../compLibrary/size";
 
 interface Props {
   project: Project;
@@ -42,7 +44,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: any[]) => {
-    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
+    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
   };
 
   const OnLoad = useCallback(
@@ -91,6 +93,12 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     OnLoad(flowInstance);
   }, [OnLoad, flowInstance]);
 
+  useEffect(() => {
+    project?.edges?.forEach((edge) => {
+      if (!IsPartOf(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
+    });
+  }, []);
+
   return (
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}></div>
@@ -105,7 +113,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         nodeTypes={helpers.GetNodeTypes}
         edgeTypes={helpers.GetEdgeTypes}
         defaultZoom={0.7}
-        defaultPosition={[800, 0]}
+        defaultPosition={[800, Size.BlockMarginY]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => onSelectionChange(e)}

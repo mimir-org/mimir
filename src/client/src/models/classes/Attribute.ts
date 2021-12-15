@@ -8,8 +8,6 @@ class Attribute {
   domain: string;
   entity: string;
   value: string;
-  isLocked: boolean;
-  isLockedBy: string;
   selectedUnitId: string;
   unit: EnumBase;
   qualifierId: string;
@@ -26,11 +24,17 @@ class Attribute {
   nodeId: string;
   nodeIri: string;
   transportId: string;
-  compositeId: string;
+  simpleId: string;
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
   tags: Set<string>;
+  interfaceId: string;
+  compositeId: string;
+
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: string;
 
   kind: string = ATTRIBUTE_KIND;
 

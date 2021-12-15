@@ -23,8 +23,8 @@ const InspectorBox = styled.div<Props>`
   position: absolute;
   bottom: 0px;
   background-color: ${Color.GreyInspector};
-  right: ${(props) => (props.isLibraryOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
-  left: ${(props) => (props.isExplorerOpen ? Size.ModuleOpen + Size.Margin : Size.ModuleClosed + Size.Margin)}px;
+  right: ${(props) => (props.isLibraryOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
+  left: ${(props) => (props.isExplorerOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
   overflow-x: auto;
   overflow-y: hidden;
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;

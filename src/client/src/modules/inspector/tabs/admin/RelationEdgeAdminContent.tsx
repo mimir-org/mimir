@@ -27,7 +27,12 @@ const RelationEdgeAdminContent = ({ edge }: Props) => (
     <TabColumn>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Source}</div>
-        <Input value={(edge.fromNode.label ?? edge.fromNode.name) + " - " + edge.fromNodeId} onChange={() => null} inputType="" />
+        <Input
+          readOnly={true}
+          value={(edge.fromNode.label ?? edge.fromNode.name) + " - " + edge.fromNodeId}
+          onChange={() => null}
+          inputType=""
+        />
       </div>
       <div>
         <div>{TextResources.Inspector_EdgeAdmin_Target}</div>

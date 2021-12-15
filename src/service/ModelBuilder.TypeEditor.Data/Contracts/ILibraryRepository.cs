@@ -10,5 +10,6 @@ namespace Mb.TypeEditor.Data.Contracts
         Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null);
         Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null);
         Task<T> GetLibraryItem<T>(string id) where T : class, new();
+        void ClearAllChangeTracker();
     }
 }

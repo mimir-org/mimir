@@ -4,20 +4,16 @@ const Size = {
   Node_Height: 100,
 
   // BlockView
-  BlockWidth: window.innerWidth,
-  BlockHeight: window.innerHeight,
-  BlockSmallWidth: window.innerWidth / 2,
-  BlockMarginX: 450,
-  BlockSecondaryMarginX: 250,
-  BlockMarginY: 80,
+  BlockMarginY: 60,
+  BlockMaxWidth: 2650,
 
   // Terminals
-  Terminals_Interval: 25,
+  Terminals_Interval: 22.5,
 
   // Modules
   ModuleOpen: 331,
   ModuleClosed: 45,
-  Margin: 2,
+  Margin: 1,
 
   //TypeEditor
   TypeEditorInspectorOpen: 355,

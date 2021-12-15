@@ -7,9 +7,11 @@ namespace Mb.Services.Contracts
 {
     public interface ICommonService
     {
-        IEnumerable<CollaborationPartner> GetAllCollaborationPartners();
         IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters();
+        IEnumerable<CollaborationPartner> GetAllCollaborationPartners();
+        Task<CollaborationPartner> GetCollaborationPartnerByDomain(string domain);
         Task CreateCollaborationPartnersAsync(IEnumerable<CollaborationPartnerAm> collaborationPartners);
         Task<CollaborationPartner> CreateCollaborationPartnerAsync(CollaborationPartnerAm collaborationPartner);
+        Task<CollaborationPartner> UpdateCollaborationPartnerAsync(int id, CollaborationPartnerAm collaborationPartner);
     }
 }

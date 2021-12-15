@@ -88,10 +88,18 @@
     "parentId": null
   },
   {
-    "name": "Distribute",
+    "name": "Distribute (Electro)",
     "description": null,
     "semanticReference": null,
-    "discipline": "Process, Electrical",
+    "discipline": "Electrical",
+    "aspect": "NotSet",
+    "parentId": null
+  },
+  {
+    "name": "Distribute (Process)",
+    "description": null,
+    "semanticReference": null,
+    "discipline": "Process",
     "aspect": "NotSet",
     "parentId": null
   },

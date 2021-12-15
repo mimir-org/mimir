@@ -1,5 +1,5 @@
 import { CreateId, GetDateNowUtc } from "../helpers";
-import { BlobData, Connector, LibItem, Node, User } from "../../../models";
+import { BlobData, LibItem, Node, User } from "../../../models";
 import { Size } from "../../../compLibrary/size";
 
 /**
@@ -24,9 +24,9 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     positionY: position.y,
     positionBlockX: position.x,
     positionBlockY: position.y,
-    connectors: data.connectors.map((c) => new Connector(c)),
+    connectors: data.connectors,
     attributes: data.attributes,
-    composites: data.composites,
+    simples: data.simples,
     aspect: data.aspect,
     statusId: data.statusId,
     version: data.version,
@@ -45,31 +45,31 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
   } as Node);
 
   if (node.connectors) {
-    node.connectors.forEach(x => {
+    node.connectors.forEach((x) => {
       x.id = CreateId();
       if (x.attributes) {
-        x.attributes.forEach(y => {
+        x.attributes.forEach((y) => {
           y.id = CreateId();
         });
       }
-    })
+    });
   }
 
   if (node.attributes) {
-    node.attributes.forEach(x => {
+    node.attributes.forEach((x) => {
       x.id = CreateId();
-    })
+    });
   }
 
-  if (node.composites) {
-    node.composites.forEach(x => {
+  if (node.simples) {
+    node.simples.forEach((x) => {
       x.id = CreateId();
       if (x.attributes) {
-        x.attributes.forEach(y => {
+        x.attributes.forEach((y) => {
           y.id = CreateId();
-        })
+        });
       }
-    })
+    });
   }
 
   return node;

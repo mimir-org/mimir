@@ -82,27 +82,19 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
         .forEach((item) => onChange(item, areAllItemsSelected));
 
     return (
-      <div>
-        <MenuListItem color={bodyColor}>
-          <label className="label" onMouseEnter={() => resetToolTip()}>
-            {TextResources.Inspector_Params_Combinations_Select_All}
-            <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly={true} />
-          </label>
-        </MenuListItem>
-      </div>
+      <MenuListItem color={bodyColor} onMouseEnter={() => resetToolTip()}>
+        <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly={true} />
+        <span>{TextResources.Inspector_Params_Combinations_Select_All}</span>
+      </MenuListItem>
     );
   };
 
   const renderListItem = (item: CombinedAttribute) => {
     return (
-      <div key={item[keyProp]}>
-        <MenuListItem color={bodyColor}>
-          <label className="label" onMouseEnter={() => onMouseEnter(item)} ref={(ele) => refCallback(ele, item)}>
-            {item.combined}
-            <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
-          </label>
-        </MenuListItem>
-      </div>
+      <MenuListItem color={bodyColor} key={item[keyProp]} onMouseEnter={() => onMouseEnter(item)} ref={(ele) => refCallback(ele, item)}>
+        <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
+        <span>{item.combined}</span>
+      </MenuListItem>
     );
   };
 
@@ -111,7 +103,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
       <div onClick={() => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen} color={headerColor}>
           <p>{TextResources.Inspector_Params_Combinations}</p>
-          <img src={isListOpen ? ExpandWhiteIcon : CollapseWhiteIcon} alt="expand-icon" />
+          <img src={isListOpen ? CollapseWhiteIcon : ExpandWhiteIcon} alt="expand-icon" />
         </MenuHeader>
       </div>
       {isListOpen && (
