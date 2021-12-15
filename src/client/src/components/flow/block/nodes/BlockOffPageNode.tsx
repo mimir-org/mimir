@@ -31,8 +31,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   const inputConn = node?.connectors.find((conn) => IsInputTerminal(conn) && IsTransport(conn));
   const outputConn = node?.connectors.find((conn) => IsOutputTerminal(conn) && IsTransport(conn));
-  const edgeInputConn = project?.edges?.find((edge) => edge.toConnector.id === inputConn?.id)?.toConnector;
-  const edgeOutputConn = project?.edges?.find((edge) => edge.fromConnector.id === outputConn?.id)?.fromConnector;
+  const edgeInputConn = project?.edges?.find((edge) => edge.toConnector?.id === inputConn?.id)?.toConnector;
+  const edgeOutputConn = project?.edges?.find((edge) => edge.fromConnector?.id === outputConn?.id)?.fromConnector;
 
   const terminal = edgeInputConn ?? edgeOutputConn;
   const iconColor = terminal?.color;

@@ -22,7 +22,7 @@ export interface OffPageData {
 const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
-  const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
+  const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const offPageNodeIsTarget = IsOutputTerminal(sourceConnector);
   const marginY = 80;
 
