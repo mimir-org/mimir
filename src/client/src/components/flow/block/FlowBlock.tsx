@@ -72,7 +72,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, dispatch);
   };
 
   const OnDragOver = (event) => {

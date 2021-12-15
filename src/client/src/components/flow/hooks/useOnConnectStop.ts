@@ -7,7 +7,7 @@ import { Project, Node } from "../../../models";
 import { IsOffPage } from "../../../helpers";
 import { GetParent, IsOutputTerminal } from "../helpers";
 
-const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, dispatch: any) => {
+const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, secondaryNode: boolean, dispatch: any) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
 
@@ -16,7 +16,15 @@ const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, di
     const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
     const parentBlockNode = GetParent(sourceNode);
     const isTarget = IsOutputTerminal(sourceConnector);
-    const validDrop = IsValidDrop(sourceNode, e.clientX, parentNodeSize, isTarget, parentBlockNode?.positionBlockX);
+
+    const validDrop = IsValidDrop(
+      sourceNode,
+      e.clientX,
+      parentNodeSize,
+      isTarget,
+      secondaryNode,
+      parentBlockNode?.positionBlockX
+    );
 
     if (validDrop) {
       const offPageData = {
@@ -37,19 +45,42 @@ const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, di
   }
 };
 
-function IsValidDrop(sourceNode: Node, clientX: number, parentNodeSize: BlockNodeSize, isTarget: boolean, parentXPos: number) {
+function IsValidDrop(
+  sourceNode: Node,
+  clientX: number,
+  parentNodeSize: BlockNodeSize,
+  isTarget: boolean,
+  secondaryNode: boolean,
+  parentXPos: number
+) {
   const marginX = 90;
   clientX += marginX;
 
-  const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+  let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
+  if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+
   const dropZoneWidth = 200;
   const rightBound = leftBound + dropZoneWidth;
+  const isValidPostion = ValidatePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 
-  const validLeftBound = isTarget
-    ? clientX > leftBound && clientX < rightBound
-    : clientX < leftBound && clientX > leftBound - dropZoneWidth;
+  return !IsOffPage(sourceNode) && isValidPostion;
+}
 
-  return !IsOffPage(sourceNode) && validLeftBound;
+function ValidatePosition(
+  clientX: number,
+  leftBound: number,
+  rightBound: number,
+  dropZoneWidth: number,
+  secondaryNode: boolean,
+  isTarget: boolean
+) {
+  if (secondaryNode) {
+    if (isTarget) return clientX > leftBound && clientX < rightBound;
+    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
+  }
+
+  if (isTarget) return clientX > leftBound;
+  return clientX < leftBound;
 }
 
 export default useOnConnectStop;
