@@ -10,7 +10,8 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode, IsProduct } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component for a child Node in BlockView.
@@ -26,39 +27,39 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [width, setWidth] = useState(Size.Node_Width);
   const [height, setHeight] = useState(Size.Node_Height);
 
+  const size = { width: width, height: height } as BlockNodeSize;
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
   const electro = useAppSelector(electroSelector);
   const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
+  const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    const size = SetNodeSize(terminals, electro);
-    setWidth(size.width);
-    setHeight(size.height);
+    const updatedSize = SetNodeSize(terminals, electro);
+    setWidth(updatedSize.width);
+    setHeight(updatedSize.height);
   }, [electro, terminals]);
 
   if (!node) return null;
 
-  node.width = width;
-  node.height = height;
+  node.width = size.width;
+  node.height = size.height;
 
   return (
     <NodeBox
       id={type + node.id}
-      product={IsProduct(node)}
-      size={{ width: node.width, height: node.height }}
-      visible={!node.isHidden}
+      node={node}
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
       isSelected={node === GetSelectedBlockNode()}
-      onMouseOver={() => OnHover(showTerminalBox)}
-      onMouseOut={() => OnMouseOut(showTerminalBox)}
+      onMouseEnter={() => OnHover(showTerminalBox)}
+      onMouseLeave={() => OnMouseOut(showTerminalBox)}
     >
       <BlockLogoComponent node={node} />
 
@@ -73,14 +74,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
       />
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={{ width: node.width, height: node.height }}
-        terminals={terminals}
-        electro={electro}
-        dispatch={dispatch}
-      />
+      {hasActiveTerminals && (
+        <HandleComponent nodes={nodes} node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />
+      )}
     </NodeBox>
   );
 };

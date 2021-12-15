@@ -1,6 +1,6 @@
 import { ProjectState } from "../../../../redux/store/project/types";
 import { setProjectMenuVisibility } from "../../../menus/projectMenu/subMenus/redux/actions";
-import { save } from "../../../../redux/store/project/actions";
+import { removeEdge, removeNode, save } from "../../../../redux/store/project/actions";
 import { IsOffPage } from "../../../../helpers";
 
 const OnSaveClick = (dispatch: any, projectState: ProjectState) => {
@@ -8,10 +8,15 @@ const OnSaveClick = (dispatch: any, projectState: ProjectState) => {
 
   // Clear all OffPage elements
   if (projectState.project) {
-    projectState.project.nodes = projectState.project.nodes.filter((node) => !IsOffPage(node));
-    projectState.project.edges = projectState.project.edges.filter(
-      (edge) => !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode)
-    );
+    projectState.project.edges?.forEach((edge) => {
+      if (IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)) {
+        dispatch(removeEdge(edge.id));
+      }
+    });
+
+    projectState.project.nodes?.forEach((node) => {
+      if (IsOffPage(node)) dispatch(removeNode(node.id));
+    });
 
     dispatch(save(projectState.project));
   }

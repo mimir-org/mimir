@@ -1,10 +1,18 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetSecondaryNodePos, SetConnectorOrder } from "./helpers";
+import { GetNodeTypeString, SetNodePos, SetConnectorOrder } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 
-const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean) => {
+/**
+ * Component to create a child node in BlockView.
+ * @param node
+ * @param libOpen
+ * @param explorerOpen
+ * @param secondaryNode
+ * @returns a node of the type FlowElement.
+ */
+const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, secondaryNode: Node) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
@@ -13,7 +21,7 @@ const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boo
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node) ? SetSecondaryNodePos(nodePos, libOpen, explorerOpen) : nodePos;
+  const position = !IsOffPage(node) ? SetNodePos(nodePos, libOpen, explorerOpen, secondaryNode !== null) : nodePos;
 
   return {
     key: CreateId(),
@@ -29,4 +37,4 @@ const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boo
   } as FlowElement;
 };
 
-export default BuildSecondaryChildNode;
+export default BuildChildNode;

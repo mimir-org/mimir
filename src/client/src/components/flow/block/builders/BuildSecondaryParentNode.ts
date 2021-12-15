@@ -1,24 +1,29 @@
 import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
 import { Node } from "../../../../models";
-import { BlockNodeSize } from "../../../../models/project";
 import { CreateId } from "../../helpers";
+import { SetMarginX } from "../nodes/helpers/SetParentNodeSize";
 import { SetConnectorOrder } from "./helpers";
 
 /**
- * Component to create a secondary node in BlockView.
+ * Component to create a secondary parent node in BlockView.
  * @param primaryNode
  * @param secondaryNode
- * @param nodeSize
  * @returns a FlowElement, the big box in BlockView.
  */
-const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node, nodeSize: BlockNodeSize) => {
+const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) => {
   if (!primaryNode || !secondaryNode) return null;
   SetConnectorOrder(secondaryNode);
 
   const type = TextResources.Type_BlockParentNode;
-  const margin = 70;
-  const position = { x: primaryNode.positionBlockX + nodeSize.width + margin, y: primaryNode.positionBlockY };
+  const screenWidth = window.innerWidth / 2.4;
+  const distanceToPrimaryNode = 150;
+  const marginX = SetMarginX(true, libOpen, explorerOpen);
+
+  const position = {
+    x: primaryNode.positionBlockX + screenWidth - marginX + distanceToPrimaryNode,
+    y: primaryNode.positionBlockY,
+  };
 
   secondaryNode.positionBlockX = position.x;
   secondaryNode.positionBlockY = position.y;
@@ -36,4 +41,4 @@ const BuildParentSecondaryNode = (primaryNode: Node, secondaryNode: Node, nodeSi
   } as FlowElement;
 };
 
-export default BuildParentSecondaryNode;
+export default BuildSecondaryParentNode;
