@@ -38,10 +38,8 @@ namespace Mb.Services.Services
                 var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(node.Id, node.Iri);
 
                 if (node.Id != nodeId)
-                {
                     reMappedIds.Add(nodeId, node.Id);
-                }
-
+                
                 RemapSimples(nodeId, node);
                 RemapConnectors(nodeId, nodeIri, node, project);
 
@@ -70,9 +68,7 @@ namespace Mb.Services.Services
                 var (edgeId, edgeIri) = _commonRepository.CreateOrUseIdAndIri(edge.Id, edge.Iri);
                 
                 if (edge.Id != edgeId)
-                {
                     reMappedIds.Add(edgeId, edge.Id);
-                }
 
                 if (edge.Transport != null)
                     RemapTransport(edge);
