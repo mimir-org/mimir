@@ -64,14 +64,18 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
   return hasDeletedElement;
 };
 
-const handleOffPageDelete = (targetNode: Node, project: Project, dispatch: Dispatch) => {
-  const targetParent = GetParent(targetNode);
+const handleOffPageDelete = (node: Node, project: Project, dispatch: Dispatch) => {
+  const parentNode = GetParent(node);
 
   const offPageEdge = project.edges.find(
-    (x) => x.fromConnector.nodeId === targetParent.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === targetNode.id
+    (x) =>
+      (x.fromConnector.nodeId === parentNode.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === node.id) ||
+      (x.toConnector.nodeId === parentNode.id && IsTransport(x.toConnector) && x.fromConnector.nodeId === node.id)
   );
 
-  if (offPageEdge) dispatch(setOffPageStatus(targetParent.id, offPageEdge.fromConnector.id, false));
+  const parentNodeConnector = offPageEdge.fromConnector.nodeId === node.id ? offPageEdge.toConnector : offPageEdge.fromConnector;
+
+  if (offPageEdge) dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
 };
 
 const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
