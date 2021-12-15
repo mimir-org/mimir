@@ -1,13 +1,14 @@
 import { removeElements, FlowElement, Elements } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
-import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode } from "../../../helpers";
-import { EDGE_KIND, Project } from "../../../models";
+import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode, IsOffPage } from "../../../helpers";
+import { EDGE_KIND, Node, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
-import { removeEdge, removeNode } from "../../../redux/store/project/actions";
+import { removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
+import { GetParent, IsTransport } from "../helpers";
 
 const useOnRemove = (
   elements: Elements,
@@ -48,7 +49,12 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
         verifiedList.push(elem);
       }
     } else {
-      if (findProjectNodeByElementId(project, elem)?.isLocked) continue;
+      const node = findProjectNodeByElementId(project, elem);
+
+      if (node?.isLocked) continue;
+
+      if (IsOffPage(node)) handleOffPageDelete(node, project, dispatch);
+
       hasDeletedElement = true;
       dispatch(removeNode(elem.id));
       verifiedList.push(elem);
@@ -56,6 +62,16 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
   }
 
   return hasDeletedElement;
+};
+
+const handleOffPageDelete = (targetNode: Node, project: Project, dispatch: Dispatch) => {
+  const targetParent = GetParent(targetNode);
+
+  const offPageEdge = project.edges.find(
+    (x) => x.fromConnector.nodeId === targetParent.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === targetNode.id
+  );
+
+  if (offPageEdge) dispatch(setOffPageStatus(targetParent.id, offPageEdge.fromConnector.id, false));
 };
 
 const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
