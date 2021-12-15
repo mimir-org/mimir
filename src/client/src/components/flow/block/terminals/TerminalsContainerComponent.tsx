@@ -2,9 +2,11 @@ import * as Click from "./handlers";
 import { TerminalsMenuBox, TerminalsMenuComponent } from ".";
 import { Connector, Node } from "../../../../models";
 import { IsInputTerminal, IsPartOf } from "../../helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
   node: Node;
+  size: BlockNodeSize;
   inputMenuOpen: boolean;
   outputMenuOpen: boolean;
   terminals: Connector[];
@@ -23,6 +25,7 @@ interface Props {
  */
 const TerminalsContainerComponent = ({
   node,
+  size,
   inputMenuOpen,
   outputMenuOpen,
   terminals,
@@ -57,6 +60,7 @@ const TerminalsContainerComponent = ({
       {inputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
+          size={size}
           isParent={isParent}
           terminals={inputTerminals}
           electro={electro}
@@ -69,6 +73,7 @@ const TerminalsContainerComponent = ({
       {outputMenuOpen && (
         <TerminalsMenuComponent
           node={node}
+          size={size}
           isParent={isParent}
           IsInput={false}
           electro={electro}

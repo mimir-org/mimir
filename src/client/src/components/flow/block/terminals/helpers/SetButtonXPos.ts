@@ -5,7 +5,7 @@
  * @param isRightPos
  * @returns a string.
  */
-const SetButtonXPos = (isParent: boolean, isInput: boolean, isRightPos: boolean) => {
+const SetButtonXPos = (isParent: boolean, isInput: boolean, isRightPos?: boolean) => {
   if (isRightPos) {
     if (!isInput && isParent) return "10px";
     if (!isInput && !isParent) return "-1px";
