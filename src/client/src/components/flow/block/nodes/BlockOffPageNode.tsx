@@ -8,7 +8,6 @@ import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
 import { updateBlockPosition } from "../../../../redux/store/project/actions";
-import { Size } from "../../../../compLibrary/size";
 
 /**
  * Component for an offpage node in BlockView
