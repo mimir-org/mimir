@@ -20,7 +20,6 @@ import { blockElementsSelector } from "../../../../redux/store";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const size = useAppSelector(selectors.nodeSizeSelector);
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
@@ -32,6 +31,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const electro = useAppSelector(selectors.electroSelector);
   const elements = useAppSelector(blockElementsSelector);
+  const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
