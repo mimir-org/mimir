@@ -102,7 +102,7 @@ namespace Mb.TypeEditor.Services.Services
                 var symbols = _fileRepository.ReadAllFiles<BlobDataAm>(symbolFileNames).ToList();
                 var simpleTypes = _fileRepository.ReadAllFiles<SimpleTypeAm>(simpleTypeFileNames).ToList();
 
-                var attributes = _fileRepository.ReadAllFiles<CreateAttributeType>(attributeFiles).ToList();
+                var attributes = _fileRepository.ReadAllFiles<AttributeTypeAm>(attributeFiles).ToList();
                 var terminals = _fileRepository.ReadAllFiles<CreateTerminalType>(terminalFiles).ToList();
                 var transports = _fileRepository.ReadAllFiles<CreateLibraryType>(transportFiles).ToList();
                 var rds = _fileRepository.ReadAllFiles<CreateRds>(rdsFiles).ToList();

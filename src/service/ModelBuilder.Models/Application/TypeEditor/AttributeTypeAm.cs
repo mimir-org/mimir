@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Mb.Models.Application.TypeEditor
 {
-    public class CreateAttributeType
+    public class AttributeTypeAm
     {
         [Required]
         public string Entity { get; set; }
