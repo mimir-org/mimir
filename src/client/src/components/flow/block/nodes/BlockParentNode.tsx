@@ -64,6 +64,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       />
       <TerminalsContainerComponent
         node={node}
+        size={size}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
         electro={electro}
