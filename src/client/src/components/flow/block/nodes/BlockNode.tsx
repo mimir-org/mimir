@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode, IsOffPage } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 
 /**
@@ -40,7 +40,10 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   // Check for connectors that require OffPage
   useEffect(() => {
     node?.connectors.forEach((conn) => {
-      if (conn.isRequired) CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, true);
+      if (conn.isRequired) {
+        const offPageExists = edges?.find((edge) => edge?.fromConnector?.id === conn.id && IsOffPage(edge?.toNode));
+        if (!offPageExists) CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, true);
+      }
     });
   }, []);
 
