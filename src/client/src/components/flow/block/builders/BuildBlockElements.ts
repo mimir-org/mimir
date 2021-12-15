@@ -30,19 +30,19 @@ const BuildBlockElements = (
   // Product nodes have a different view
   if (IsProduct(selectedNode)) {
     const parentProduct = BuildProductParentNode(selectedNode, explorerOpen);
-    parentProduct && elements.push(parentProduct);
+    if (parentProduct) elements.push(parentProduct);
 
     DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, libOpen, explorerOpen, secondaryNode);
     return elements;
   }
 
   const parentBlock = BuildParentNode(selectedNode, libOpen, explorerOpen);
-  parentBlock && elements.push(parentBlock);
+  if (parentBlock) elements.push(parentBlock);
 
   if (secondaryNode) {
     const secondary = nodes?.find((x) => x.id === secondaryNode.id);
     const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary, libOpen, explorerOpen);
-    parentSecondaryBlock && elements.push(parentSecondaryBlock);
+    if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
   }
 
   secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, libOpen, explorerOpen);

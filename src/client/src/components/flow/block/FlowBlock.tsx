@@ -44,6 +44,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const showLocation3D = useAppSelector(selectors.location3DSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
+  const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(
@@ -71,7 +72,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e) => {
-    return hooks.useOnConnectStop(e, project, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, dispatch);
   };
 
   const OnDragOver = (event) => {

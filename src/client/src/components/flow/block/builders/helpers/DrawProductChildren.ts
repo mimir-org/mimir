@@ -31,12 +31,12 @@ const DrawProductChildren = (
     let productEdge = null;
     if (ValidateProductEdge(edge.fromNode, edge.fromConnector, edge.toConnector))
       productEdge = BuildBlockEdge(allNodes, edge, GetBlockEdgeType(edge.fromConnector), null, animatedEdge);
-    productEdge && elements.push(productEdge);
+    if (productEdge) elements.push(productEdge);
   });
 
   productChildren.forEach((node) => {
     const productChildNode = BuildProductChildNode(node, libOpen, explorerOpen, secondaryNode);
-    productChildNode && elements.push(productChildNode);
+    if (productChildNode) elements.push(productChildNode);
   });
 };
 
