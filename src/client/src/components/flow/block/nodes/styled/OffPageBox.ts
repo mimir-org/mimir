@@ -11,8 +11,8 @@ const OffPageBox = styled.div`
     height: 35px;
     width: 35px;
     position: relative;
-    top: 11px;
-    left: 1px;
+    bottom: 16px;
+    left: 4px;
     pointer-events: none;
   }
 `;

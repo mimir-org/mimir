@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Node, Connector } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
@@ -7,8 +7,8 @@ import { IsValidBlockConnection, SetTerminalYPos, SetTerminalXPos, GetTerminalCo
 import { HandleBox } from "./styled";
 import { IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
-import { BlockNodeSize } from "../../../../models/project";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
+import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
   nodes: Node[];
@@ -75,4 +75,4 @@ const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, ele
   );
 };
 
-export default memo(HandleComponent);
+export default HandleComponent;

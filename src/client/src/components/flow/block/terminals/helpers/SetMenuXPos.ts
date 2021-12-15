@@ -1,4 +1,3 @@
-import { Node } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
 
 /**
@@ -6,27 +5,20 @@ import { BlockNodeSize } from "../../../../../models/project";
  * @param isParent
  * @param electro
  * @param hasActiveTerminals
- * @param node
- * @param parentBlockSize
+ * @param size
  * @returns a numeric value.
  */
-const SetMenuXPos = (
-  isParent: boolean,
-  electro: boolean,
-  hasActiveTerminals: boolean,
-  node: Node,
-  parentBlockSize: BlockNodeSize
-) => {
-  const marginSmall = 2;
-  const marginLarge = 22;
+const SetMenuXPos = (isParent: boolean, electro: boolean, hasActiveTerminals: boolean, size: BlockNodeSize) => {
+  const marginSmall = 22;
+  const marginLarge = 205;
 
   if (electro) {
-    if (!isParent) return node.width + marginSmall;
+    if (!isParent) return size.width;
   }
 
-  if (isParent) return parentBlockSize.width - marginSmall;
-  if (hasActiveTerminals) return node.width + marginLarge;
-  return node.width - marginSmall;
+  if (isParent) return size.width - marginLarge;
+  if (hasActiveTerminals) return size.width + marginSmall;
+  return size.width;
 };
 
 export default SetMenuXPos;

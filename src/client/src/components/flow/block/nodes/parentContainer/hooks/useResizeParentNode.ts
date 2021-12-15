@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef } from "react";
-import { productNodeSizeSelector, useAppSelector } from "../../../../../../redux/store";
 import { GetFlowNodeByDataId } from "../../../helpers";
-import { setBlockProductNodeHeight, setBlockProductNodeWidth } from "../../../redux/actions";
 
 const MIN_HEIGHT = 700;
 const MIN_WIDTH = 700;
@@ -16,9 +14,8 @@ const MIN_WIDTH = 700;
 const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: any) => {
   const parentProductNodeRef = useRef(null);
   const parentProductNodeFlowRef = useRef(null);
-  const parentProductNodeSize = useAppSelector(productNodeSizeSelector);
-  const nodeHeightRef = useRef(parentProductNodeSize.height);
-  const nodeWidthRef = useRef(parentProductNodeSize.width);
+  const nodeHeightRef = useRef(window.innerHeight);
+  const nodeWidthRef = useRef(window.innerWidth);
 
   const prevYRef = useRef(nodeHeightRef.current);
   const prevXRef = useRef(nodeWidthRef.current);
@@ -98,8 +95,5 @@ const onMouseUp = (
   dispatch: any,
   resizeCallback: (e: MouseEvent) => void
 ) => {
-  if (nodeHeightRef.current > MIN_HEIGHT) dispatch(setBlockProductNodeHeight(nodeHeightRef.current));
-  if (nodeWidthRef.current > MIN_WIDTH) dispatch(setBlockProductNodeWidth(nodeWidthRef.current));
-
   document.removeEventListener("mousemove", resizeCallback);
 };
