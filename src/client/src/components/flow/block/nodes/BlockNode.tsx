@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../terminals";
-import { GetBlockNodeType, SetNodeSize } from "./helpers";
+import { CreateOffPageNode, GetBlockNodeType, SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
@@ -35,6 +36,15 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
+
+  // Check for connectors that require OffPage
+  useEffect(() => {
+    node?.connectors.forEach((conn) => {
+      if (conn.isRequired) {
+        CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, false);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));

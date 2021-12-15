@@ -1,6 +1,6 @@
-import { CreateId, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
-import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, EDGE_KIND, Node, RelationType } from "../../../../models";
-import { Position } from "../../../../models/project";
+import { CreateId, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../../helpers";
+import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, EDGE_KIND, Node, RelationType } from "../../../../../models";
+import { Position } from "../../../../../models/project";
 
 export interface OffPageObject {
   node: Node;
@@ -15,12 +15,11 @@ export interface OffPageData {
 }
 
 /**
- * Component to create an OffPageNode.
- * @param project
+ * Component to create an OffPage object.
  * @param data
  * @returns the data type OffPageObject.
  */
-const BuildOffPageNode = (data: OffPageData) => {
+const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors.find((x) => IsPartOf(x) && !IsInputTerminal(x));
@@ -127,4 +126,4 @@ const BuildOffPageNode = (data: OffPageData) => {
   } as OffPageObject;
 };
 
-export default BuildOffPageNode;
+export default CreateOffPageObject;
