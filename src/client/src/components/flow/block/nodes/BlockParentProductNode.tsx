@@ -4,7 +4,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsMenuComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
-import { ParentContainerComponent } from "./parentContainer";
+import { BlockParentContainer } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
@@ -51,7 +51,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <ParentContainerComponent
+      <BlockParentContainer
         node={node}
         size={size}
         color={GetAspectColor(node, AspectColorType.Header)}

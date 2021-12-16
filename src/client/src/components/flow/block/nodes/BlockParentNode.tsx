@@ -4,7 +4,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsMenuComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
-import { ParentContainerComponent } from "./parentContainer";
+import { BlockParentContainer } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
@@ -20,8 +20,8 @@ import { blockElementsSelector } from "../../../../redux/store";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [showInputMenu, setShowInTerminalMenu] = useState(false);
-  const [outTerminalMenu, setShowOutTerminalMenu] = useState(false);
+  const [showInputMenu, setShowInputMenu] = useState(false);
+  const [showOutputMenu, setShowOutputMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
 
   const libOpen = useAppSelector(selectors.libOpenSelector);
@@ -52,7 +52,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <ParentContainerComponent
+      <BlockParentContainer
         node={node}
         size={size}
         color={GetAspectColor(node, AspectColorType.Header)}
@@ -67,9 +67,9 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         terminals={terminals}
         size={size}
         showInputMenu={showInputMenu}
-        showOutputMenu={outTerminalMenu}
-        setShowInputMenu={setShowInTerminalMenu}
-        setShowOutputMenu={setShowOutTerminalMenu}
+        showOutputMenu={showOutputMenu}
+        setShowInputMenu={setShowInputMenu}
+        setShowOutputMenu={setShowOutputMenu}
         electro={electro}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         isParent
