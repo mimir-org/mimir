@@ -15,7 +15,7 @@ jobs:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
     with:
       environment: demo
-      tag: demo
+      tag: demoold
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
@@ -25,7 +25,7 @@ jobs:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
     with:
       environment: demoaibel
-      tag: demoaibel
+      tag: demoaibelold
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
@@ -34,7 +34,7 @@ jobs:
   build-server:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-server.yaml@main
     with:
-      tag: demo
+      tag: demoold
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
