@@ -7,20 +7,20 @@ interface Props {
   node: Node;
   isParent: boolean;
   isInput?: boolean;
-  showMenuBox: boolean;
+  showMenuButton: boolean;
   terminals: Connector[];
   onClick: () => void;
 }
 
 /**
- * Component for the MenuBox that displays the drop-down menu for terminals.
+ * Component for the MenuButton that displays the drop-down menu for terminals.
  * @param interface
  * @returns a clickable box.
  */
-const TerminalsMenuBox = ({ node, isParent, isInput, showMenuBox, terminals, onClick }: Props) => (
+const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminals, onClick }: Props) => (
   <TerminalsButtonBox
     id={"terminals-menu-button-" + node.id}
-    visible={showMenuBox && !IsAspectNode(node) && !!terminals.length}
+    visible={showMenuButton && !IsAspectNode(node) && !!terminals.length}
     left={SetButtonXPos(isParent, isInput)}
     right={SetButtonXPos(isParent, isInput, true)}
     onClick={() => onClick()}
@@ -29,4 +29,4 @@ const TerminalsMenuBox = ({ node, isParent, isInput, showMenuBox, terminals, onC
   </TerminalsButtonBox>
 );
 
-export default TerminalsMenuBox;
+export default TerminalsMenuButton;

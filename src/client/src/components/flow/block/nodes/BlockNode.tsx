@@ -3,7 +3,7 @@ import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
-import { TerminalsContainerComponent, HandleComponent } from "../terminals";
+import { TerminalsMenuComponent, HandleComponent } from "../terminals";
 import { HasOffPageNode, CreateOffPageNode, GetBlockNodeType, SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
@@ -21,14 +21,13 @@ import { BlockNodeSize } from "../../../../models/project";
  */
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [inTerminalMenu, showInTerminalMenu] = useState(false);
-  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const [terminalBox, showTerminalBox] = useState(false);
+  const [showInputMenu, setShowInputMenu] = useState(false);
+  const [showOutputMenu, setShowOutputMenu] = useState(false);
+  const [showMenuButton, setShowMenuButton] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const [width, setWidth] = useState(Size.Node_Width);
-  const [height, setHeight] = useState(Size.Node_Height);
+  const initialSize = { width: Size.Node_Width, height: Size.Node_Height } as BlockNodeSize;
+  const [size, setSize]: [BlockNodeSize, any] = useState(initialSize);
 
-  const size = { width: width, height: height } as BlockNodeSize;
   const nodes = useAppSelector(nodeSelector);
   const edges = useAppSelector(edgeSelector);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
@@ -42,7 +41,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     node?.connectors.forEach((conn) => {
       if (conn.isRequired) {
         const offPageExists = HasOffPageNode(edges, conn);
-        if (!offPageExists) CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, true);
+        if (!offPageExists) CreateOffPageNode(node, conn, { x: size.width, y: node?.positionBlockY }, dispatch, true);
       }
     });
   }, []);
@@ -53,8 +52,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     const updatedSize = SetNodeSize(terminals, electro);
-    setWidth(updatedSize.width);
-    setHeight(updatedSize.height);
+    setSize({ width: updatedSize.width, height: updatedSize.height });
   }, [electro, terminals]);
 
   if (!node) return null;
@@ -69,22 +67,22 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       colorSelected={GetAspectColor(data, AspectColorType.Selected)}
       isSelected={node === GetSelectedBlockNode()}
-      onMouseEnter={() => OnHover(showTerminalBox)}
-      onMouseLeave={() => OnMouseOut(showTerminalBox)}
+      onMouseEnter={() => OnHover(setShowMenuButton)}
+      onMouseLeave={() => OnMouseOut(setShowMenuButton)}
     >
       <BlockLogoComponent node={node} />
 
-      <TerminalsContainerComponent
+      <TerminalsMenuComponent
         node={node}
-        size={size}
-        inputMenuOpen={inTerminalMenu}
-        outputMenuOpen={outTerminalMenu}
         terminals={terminals}
+        size={size}
+        showInputMenu={showInputMenu}
+        showOutputMenu={showOutputMenu}
+        setShowInputMenu={setShowInputMenu}
+        setShowOutputMenu={setShowOutputMenu}
         electro={electro}
         onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
-        showMenuBox={terminalBox}
-        showInTerminalMenu={showInTerminalMenu}
-        showOutTerminalMenu={showOutTerminalMenu}
+        showMenuButton={showMenuButton}
       />
       {hasActiveTerminals && (
         <HandleComponent nodes={nodes} node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />

@@ -4,6 +4,14 @@ import { OffPageData } from "./CreateOffPageObject";
 import { CreateOffPageObject } from "./";
 import { Position } from "../../../../../models/project";
 
+/**
+ * Component to create an OffPageNode. The OffPageNode is created with a partOf edge to its parent, and a transport edge.
+ * @param sourceNode
+ * @param sourceConnector
+ * @param position
+ * @param dispatch
+ * @param isRequired
+ */
 const CreateOffPageNode = (
   sourceNode: Node,
   sourceConnector: Connector,

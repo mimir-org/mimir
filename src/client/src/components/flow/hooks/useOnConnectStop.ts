@@ -15,7 +15,7 @@ const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, se
     const parentBlockNode = GetParent(sourceNode);
     const isTarget = IsOutputTerminal(sourceConnector);
 
-    const validDrop = IsValidDrop(
+    const isOffPageDrop = ValidateOffPageDrop(
       sourceNode,
       e.clientX,
       parentNodeSize,
@@ -24,14 +24,14 @@ const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, se
       parentBlockNode?.positionBlockX
     );
 
-    if (validDrop) {
+    if (isOffPageDrop) {
       CreateOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, true);
       SaveEventData(null, "edgeEvent");
     }
   }
 };
 
-function IsValidDrop(
+function ValidateOffPageDrop(
   sourceNode: Node,
   clientX: number,
   parentNodeSize: BlockNodeSize,
@@ -47,12 +47,12 @@ function IsValidDrop(
 
   const dropZoneWidth = 200;
   const rightBound = leftBound + dropZoneWidth;
-  const isValidPostion = ValidatePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
+  const isValidPostion = ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 
   return !IsOffPage(sourceNode) && isValidPostion;
 }
 
-function ValidatePosition(
+function ValidateOffPagePosition(
   clientX: number,
   leftBound: number,
   rightBound: number,

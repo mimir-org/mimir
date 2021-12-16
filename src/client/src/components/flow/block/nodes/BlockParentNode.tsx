@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/ParentSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent, TerminalsContainerComponent } from "../terminals";
+import { HandleComponent, TerminalsMenuComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
 import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
@@ -20,8 +20,8 @@ import { blockElementsSelector } from "../../../../redux/store";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [inTerminalMenu, showInTerminalMenu] = useState(false);
-  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const [showInputMenu, setShowInTerminalMenu] = useState(false);
+  const [outTerminalMenu, setShowOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
 
   const libOpen = useAppSelector(selectors.libOpenSelector);
@@ -62,16 +62,16 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
       />
-      <TerminalsContainerComponent
+      <TerminalsMenuComponent
         node={node}
-        size={size}
-        inputMenuOpen={inTerminalMenu}
-        outputMenuOpen={outTerminalMenu}
-        electro={electro}
         terminals={terminals}
+        size={size}
+        showInputMenu={showInputMenu}
+        showOutputMenu={outTerminalMenu}
+        setShowInputMenu={setShowInTerminalMenu}
+        setShowOutputMenu={setShowOutTerminalMenu}
+        electro={electro}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        showInTerminalMenu={showInTerminalMenu}
-        showOutTerminalMenu={showOutTerminalMenu}
         isParent
       />
       {hasActiveTerminals && (

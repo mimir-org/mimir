@@ -17,7 +17,7 @@ export interface OffPageData {
 /**
  * Component to create an OffPage object.
  * @param data
- * @returns the data type OffPageObject.
+ * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
 const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
