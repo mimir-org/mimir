@@ -31,10 +31,19 @@ jobs:
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
-  build-server:
+  build-server-1:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-server.yaml@main
     with:
       tag: demo
+    secrets:
+      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
+      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
+      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
+
+  build-server-2:
+    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-server.yaml@main
+    with:
+      tag: demoaibel
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
