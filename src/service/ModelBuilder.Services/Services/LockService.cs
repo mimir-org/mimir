@@ -105,12 +105,14 @@ namespace Mb.Services.Services
             lockAttributeAm.TerminalId = attribute.TerminalId;
 
             if (save)
+            {
                 await _attributeRepository.SaveAsync();
 
-            //WebSocket - send attribute to client
-            await _cooperateService.SendLockAttributeUpdates(
-                new List<(LockAttributeAm am, WorkerStatus workerStatus)> 
-                    { (lockAttributeAm, WorkerStatus.Update) }, lockAttributeAm.ProjectId);
+                //WebSocket - send attribute to client
+                await _cooperateService.SendLockAttributeUpdates(
+                    new List<(LockAttributeAm am, WorkerStatus workerStatus)>
+                        { (lockAttributeAm, WorkerStatus.Update) }, lockAttributeAm.ProjectId);
+            }
         }
 
         /// <summary>

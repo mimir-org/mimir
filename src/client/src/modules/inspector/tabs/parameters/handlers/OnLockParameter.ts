@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
-import { Attribute, Project } from "../../../../../models";
+import { Attribute, LockAttributeAm, Project } from "../../../../../models";
 import {
   lockAttribute,
   setIsLockedCompositeAttribute,
@@ -54,11 +54,12 @@ const handleLockOffline = (
   isLockedBy: string,
   dispatch: Dispatch
 ) => {
-  const lockObj = {
+  const lockObj: LockAttributeAm = {
     id: attribute.id,
     projectId: project.id,
     isLocked,
     isLockedStatusBy: isLockedBy,
+    isLockedStatusDate: new Date().toISOString(),
   };
 
   if (IsNode(element)) {

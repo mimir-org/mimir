@@ -7,7 +7,7 @@ import { OffPageInputIcon, OffPageOutputIcon } from "../../../../assets/icons/of
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
-import { updateBlockPosition } from "../../../../redux/store/project/actions";
+import { UpdateOffPagePosition } from "./helpers";
 
 /**
  * Component for an offpage node in BlockView
@@ -31,16 +31,15 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   const inputConn = node?.connectors.find((conn) => IsInputTerminal(conn) && IsTransport(conn));
   const outputConn = node?.connectors.find((conn) => IsOutputTerminal(conn) && IsTransport(conn));
-  const edgeInputConn = project?.edges?.find((edge) => edge.toConnector.id === inputConn?.id)?.toConnector;
-  const edgeOutputConn = project?.edges?.find((edge) => edge.fromConnector.id === outputConn?.id)?.fromConnector;
+  const edgeInputConn = project?.edges?.find((edge) => edge.toConnector?.id === inputConn?.id)?.toConnector;
+  const edgeOutputConn = project?.edges?.find((edge) => edge.fromConnector?.id === outputConn?.id)?.fromConnector;
 
   const terminal = edgeInputConn ?? edgeOutputConn;
   const iconColor = terminal?.color;
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    const xPos = IsInputTerminal(terminal) ? parentBlockNode?.positionBlockX + size.width : parentBlockNode?.positionBlockX - 35;
-    dispatch(updateBlockPosition(node?.id, xPos, node?.positionBlockY));
+    UpdateOffPagePosition(node, parentBlockNode, terminal, size, dispatch);
   }, [size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
 
   if (!node) return null;
@@ -55,7 +54,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent
         nodes={nodes}
         node={node}
-        size={{ width: 0, height: 0 }}
+        size={{ width: 30, height: 30 }}
         terminals={node.connectors}
         dispatch={dispatch}
         isVisible={false}

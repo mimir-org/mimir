@@ -4,7 +4,7 @@ import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
 import { TerminalsContainerComponent, HandleComponent } from "../terminals";
-import { CreateOffPageNode, GetBlockNodeType, SetNodeSize } from "./helpers";
+import { HasOffPageNode, CreateOffPageNode, GetBlockNodeType, SetNodeSize } from "./helpers";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
@@ -41,7 +41,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     node?.connectors.forEach((conn) => {
       if (conn.isRequired) {
-        CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, false);
+        const offPageExists = HasOffPageNode(edges, conn);
+        if (!offPageExists) CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, true);
       }
     });
   }, []);

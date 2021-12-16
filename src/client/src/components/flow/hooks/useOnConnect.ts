@@ -120,6 +120,7 @@ function HandleOffPage(
   dispatch(removeNode(sourceNode.id));
   dispatch(removeNode(targetNode.id));
   dispatch(setOffPageStatus(sourceParent.id, sourceTerminal.id, false));
+  dispatch(setOffPageStatus(targetParent.id, targetTerminal.id, false));
 
   return setElements((els) => {
     return addEdge(
