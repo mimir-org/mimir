@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import * as selectors from "./helpers/ParentSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsContainerComponent } from "../terminals";
@@ -6,11 +8,10 @@ import { ParentContainerComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { GetAspectColor, IsLocation } from "../../../../helpers";
-import { setBlockNodeSize } from "../redux/actions";
-import { Size } from "../../../../compLibrary/size";
-import { edgeSelector, electroSelector, nodeSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../redux/store";
+import { GetAspectColor } from "../../../../helpers";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
+import { SetParentNodeSize } from "./helpers";
+import { blockElementsSelector } from "../../../../redux/store";
 
 /**
  * Component for the large parent block in BlockView.
@@ -22,26 +23,30 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const [inTerminalMenu, showInTerminalMenu] = useState(false);
   const [outTerminalMenu, showOutTerminalMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const parentBlockSize = useAppSelector(nodeSizeSelector);
 
-  const nodes = useAppSelector(nodeSelector);
-  const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
-  const electro = useAppSelector(electroSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
+  const nodes = useAppSelector(selectors.nodeSelector);
+  const edges = useAppSelector(selectors.edgeSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const electro = useAppSelector(selectors.electroSelector);
+  const elements = useAppSelector(blockElementsSelector);
+  const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
+  const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
-  // Set size
-  useEffect(() => {
-    const width = secondaryNode ? window.innerWidth / 2 : window.innerWidth;
-    const margin = secondaryNode ? Size.BlockSecondaryMarginX : Size.BlockMarginX;
-    dispatch(setBlockNodeSize(width - margin, Size.BlockHeight));
-  }, [dispatch, secondaryNode]);
-
-  // Resize
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
-    ResizeHandler(node, secondaryNode, parentBlockSize, dispatch);
-  }, [node, secondaryNode, parentBlockSize, dispatch]);
+  }, [secondaryNode, node?.connectors]);
+
+  useEffect(() => {
+    SetParentNodeSize(secondaryNode !== null, libOpen, explorerOpen, dispatch);
+  }, [secondaryNode, libOpen, explorerOpen]);
+
+  // Responsive resizing
+  useEffect(() => {
+    ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
+  }, [secondaryNode, libOpen, explorerOpen]);
 
   if (!node) return null;
 
@@ -49,8 +54,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     <>
       <ParentContainerComponent
         node={node}
+        size={size}
         color={GetAspectColor(node, AspectColorType.Header)}
-        size={parentBlockSize}
         hasTerminals={terminals.length > 0}
         isSecondaryNode={node.id === secondaryNode?.id}
         onParentClick={() => OnParentClick(dispatch, node)}
@@ -59,24 +64,27 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       />
       <TerminalsContainerComponent
         node={node}
+        size={size}
         inputMenuOpen={inTerminalMenu}
         outputMenuOpen={outTerminalMenu}
-        isParent={true}
         electro={electro}
         terminals={terminals}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
         showInTerminalMenu={showInTerminalMenu}
         showOutTerminalMenu={showOutTerminalMenu}
+        isParent
       />
-      <HandleComponent
-        isParent={true}
-        nodes={nodes}
-        size={parentBlockSize}
-        terminals={terminals}
-        electro={electro}
-        dispatch={dispatch}
-        isLocation={IsLocation(node)}
-      />
+      {hasActiveTerminals && (
+        <HandleComponent
+          nodes={nodes}
+          node={node}
+          size={size}
+          terminals={terminals}
+          electro={electro}
+          dispatch={dispatch}
+          isParent
+        />
+      )}
     </>
   );
 };

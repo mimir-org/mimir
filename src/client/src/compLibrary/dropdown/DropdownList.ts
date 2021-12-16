@@ -11,9 +11,9 @@ const DropdownList = styled.div`
   font-size: 11px;
   position: absolute;
   top: 23px;
-  left: 0px;
+  left: 0;
   max-height: 40px;
-  width: 95%;
+  width: 100%;
   z-index: 1;
 
   .dropdown_listitem {

@@ -31,7 +31,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
                 .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => CreateTerminalTypes(src.TerminalTypes.ToList(), $"{src.Key}-{commonRepository.GetDomain()}".CreateMd5()).ToList()))
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()))
-                .ForMember(dest => dest.CompositeTypes, opt => opt.MapFrom(src => CompositeTypes(src.CompositeTypes.ToList()).ToList()))
+                .ForMember(dest => dest.SimpleTypes, opt => opt.MapFrom(src => SimpleTypes(src.SimpleTypes.ToList()).ToList()))
                 .ForMember(dest => dest.PurposeId, opt => opt.MapFrom(src => src.Purpose))
                 .ForMember(dest => dest.Purpose, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
@@ -93,7 +93,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => src.TerminalTypes))
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
-                .ForMember(dest => dest.CompositeTypes, opt => opt.MapFrom(src => src.CompositeTypes.Select(x => x.Id)))
+                .ForMember(dest => dest.SimpleTypes, opt => opt.MapFrom(src => src.SimpleTypes.Select(x => x.Id)))
                 .ForMember(dest => dest.LocationType, opt => opt.MapFrom(src => src.LocationType))
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
                 .ForMember(dest => dest.PredefinedAttributes, opt => opt.MapFrom(src => src.PredefinedAttributes))
@@ -120,7 +120,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
-                .ForMember(dest => dest.CompositeTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.SimpleTypes, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationType, opt => opt.Ignore())
                 .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
                 .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
@@ -143,7 +143,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.AttributeTypes.Select(x => x.Id)))
-                .ForMember(dest => dest.CompositeTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.SimpleTypes, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationType, opt => opt.Ignore())
                 .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
                 .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
@@ -172,7 +172,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
-                .ForMember(dest => dest.Composites, opt => opt.MapFrom(src => src.CompositeTypes))
+                .ForMember(dest => dest.Simples, opt => opt.MapFrom(src => src.SimpleTypes))
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
@@ -220,8 +220,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
 
-            CreateMap<CompositeType, Composite>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateUniqueId()))
+            CreateMap<SimpleType, Simple>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateId()))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
@@ -341,12 +341,12 @@ namespace Mb.Core.Profiles
                 };
         }
 
-        private static IEnumerable<CompositeType> CompositeTypes(IReadOnlyCollection<string> compositeTypes)
+        private static IEnumerable<SimpleType> SimpleTypes(IReadOnlyCollection<string> simpleTypes)
         {
-            if (compositeTypes == null || !compositeTypes.Any())
+            if (simpleTypes == null || !simpleTypes.Any())
                 yield break;
-            foreach (var item in compositeTypes)
-                yield return new CompositeType
+            foreach (var item in simpleTypes)
+                yield return new SimpleType
                 {
                     Id = item
                 };

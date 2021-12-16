@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Const;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
@@ -23,7 +24,6 @@ namespace Mb.Services.Services
         private readonly IProjectService _projectService;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IMapper _mapper;
-        private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         public VersionService(IVersionRepository versionRepository, IProjectService projectService, IMapper mapper, IHttpContextAccessor contextAccessor)
         {
@@ -31,13 +31,6 @@ namespace Mb.Services.Services
             _projectService = projectService;
             _mapper = mapper;
             _contextAccessor = contextAccessor;
-
-            _jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
         }
 
         /// <summary>
@@ -107,7 +100,7 @@ namespace Mb.Services.Services
                 Name = project.Name,
                 Created = DateTime.Now.ToUniversalTime(),
                 CreatedBy = _contextAccessor.GetName(),
-                Data = JsonConvert.SerializeObject(project, _jsonSerializerSettings)
+                Data = JsonConvert.SerializeObject(project, DefaultSettings.SerializerSettings)
             };
 
             await _versionRepository.CreateAsync(version);

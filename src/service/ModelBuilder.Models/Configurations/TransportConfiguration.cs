@@ -12,6 +12,7 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Transport");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired().HasDefaultValue("1.0");
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
@@ -21,11 +22,11 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.OutputTerminalId).HasColumnName("OutputTerminalId").IsRequired();
             builder.Property(p => p.InputTerminalId).HasColumnName("InputTerminalId").IsRequired();
-            builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired().HasDefaultValue("Unknown");
-            builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired().HasDefaultValue(DateTime.MinValue.ToUniversalTime());
-            builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired().HasDefaultValue("Unknown");
-            builder.Property(p => p.Created).HasColumnName("Created").IsRequired().HasDefaultValue(DateTime.MinValue.ToUniversalTime());
-            builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired(false);
+            builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired(false);
+            builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired(false);
+            builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired();
+            builder.Property(p => p.Created).HasColumnName("Created").IsRequired();
+            builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired();
 
             builder.HasOne(x => x.OutputTerminal).WithMany(y => y.OutputTransports).HasForeignKey(x => x.OutputTerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.InputTerminal).WithMany(y => y.InputTransports).HasForeignKey(x => x.InputTerminalId).OnDelete(DeleteBehavior.NoAction);

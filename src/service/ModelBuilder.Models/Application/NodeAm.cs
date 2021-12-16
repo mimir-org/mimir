@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Mb.Models.Attributes;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Mb.Models.Extensions;
 
 namespace Mb.Models.Application
 {
@@ -11,7 +12,10 @@ namespace Mb.Models.Application
     {
         public string Id { get; set; }
         public string Iri { get; set; }
-        public string Domain { get; set; }
+        public string Domain => Id.ResolveDomain();
+
+        [Required]
+        public string ProjectId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -31,10 +35,10 @@ namespace Mb.Models.Application
 
         public decimal PositionY { get; set; }
 
-        [Required]
         public bool IsLocked { get; set; }
 
-        public string IsLockedBy { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
 
         public decimal PositionBlockX { get; set; }
 
@@ -78,7 +82,7 @@ namespace Mb.Models.Application
 
         public ICollection<AttributeAm> Attributes { get; set; }
         
-        public ICollection<CompositeAm> Composites { get; set; }
+        public ICollection<SimpleAm> Simples { get; set; }
 
         [Required]
         public Aspect Aspect { get; set; }

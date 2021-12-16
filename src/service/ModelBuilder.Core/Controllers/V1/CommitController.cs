@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Mb.Models.Application;
-using Mb.Models.Data;
+using Mb.Models.Data.Hubs;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
-using Mb.Services.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ namespace Mb.Core.Controllers.V1
     [Produces("application/json")]
     [Authorize]
     [ApiController]
-    [ApiVersion("0.1")]
+    [ApiVersion("1.0")]
     [Route("V{version:apiVersion}/[controller]")]
     [SwaggerTag("Commit")]
     public class CommitController : ControllerBase
@@ -55,40 +54,6 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 await _projectService.CommitProject(package);
-                return NoContent();
-            }
-            catch (ModelBuilderNotFoundException e)
-            {
-                ModelState.AddModelError("CommitProject", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (ModelBuilderModuleException e)
-            {
-                ModelState.AddModelError("CommitProject", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Test
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("test")]
-        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> TestSendData()
-        {
-            try
-            {
-                await _hubContext.Clients.All.SendAsync("ReceiveNode", new Node {Id = "Tester"});
                 return NoContent();
             }
             catch (ModelBuilderNotFoundException e)

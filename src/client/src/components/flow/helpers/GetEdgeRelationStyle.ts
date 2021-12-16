@@ -1,11 +1,11 @@
 import { Color } from "../../../compLibrary/colors";
-import { IsLocation, IsProduct } from "../../../helpers";
+import { IsProduct } from "../../../helpers";
 import { Node } from "../../../models";
 
 const GetEdgeRelationStyle = (source: Node, visible: boolean) => {
   const getColor = () => {
-    if (IsLocation(source)) return Color.LocationSelected;
     if (IsProduct(source)) return Color.ProductSelected;
+    return Color.LocationSelected;
   };
 
   return {

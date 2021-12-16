@@ -12,10 +12,9 @@ namespace Mb.Core.Profiles
     {
         public ProjectProfile(IHttpContextAccessor contextAccessor, ICommonRepository commonRepository)
         {
-            CreateMap<Project, ProjectSimple>()
+            CreateMap<Project, ProjectItemCm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
@@ -26,7 +25,6 @@ namespace Mb.Core.Profiles
             CreateMap<ProjectAm, Project>()
                 .ForMember(dest => dest.Id, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))
@@ -40,7 +38,6 @@ namespace Mb.Core.Profiles
             CreateMap<Project, ProjectAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => src.Domain))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))

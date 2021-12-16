@@ -12,7 +12,6 @@ namespace Mb.Models.Configurations
             builder.ToTable("Edge");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.FromConnectorId).HasColumnName("FromConnectorId").IsRequired();
             builder.Property(p => p.ToConnectorId).HasColumnName("ToConnectorId").IsRequired();
             builder.Property(p => p.FromNodeId).HasColumnName("FromNodeId").IsRequired();
@@ -35,6 +34,10 @@ namespace Mb.Models.Configurations
 
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
             builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
+
+            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false).HasDefaultValue(null);
         }
     }
 }

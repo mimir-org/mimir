@@ -1,4 +1,4 @@
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import { libraryReducer } from "./library/reducers";
@@ -15,13 +15,13 @@ import { secondaryReducer } from "./secondaryNode/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { electroViewReducer } from "../store/electro/reducers";
-import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
 import { validationReducer } from "../store/validation/reducers";
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "../store/customCategory/reducers";
 import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
 import { location3DReducer } from "../../modules/location/redux/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
+import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
 import { persistStore, persistReducer } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();

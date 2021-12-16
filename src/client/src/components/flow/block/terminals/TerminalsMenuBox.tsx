@@ -6,7 +6,7 @@ import { Connector, Node } from "../../../../models";
 interface Props {
   node: Node;
   isParent: boolean;
-  isInput: boolean;
+  isInput?: boolean;
   showMenuBox: boolean;
   terminals: Connector[];
   onClick: () => void;
@@ -21,7 +21,7 @@ const TerminalsMenuBox = ({ node, isParent, isInput, showMenuBox, terminals, onC
   <TerminalsButtonBox
     id={"terminals-menu-button-" + node.id}
     visible={showMenuBox && !IsAspectNode(node) && !!terminals.length}
-    left={SetButtonXPos(isParent, isInput, false)}
+    left={SetButtonXPos(isParent, isInput)}
     right={SetButtonXPos(isParent, isInput, true)}
     onClick={() => onClick()}
   >

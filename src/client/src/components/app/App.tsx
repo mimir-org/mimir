@@ -1,6 +1,7 @@
 import { useHistory } from "react-router";
 import { Home } from "../home/";
 import { GlobalStyle } from "../../compLibrary";
+import { useAppSelector, projectStateSelector, isFetchingSelector } from "../../redux/store";
 import { LoginBox } from "./styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text";
@@ -12,7 +13,7 @@ import { msalInstance } from "../..";
 import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
-import { isFetchingSelector, useAppSelector } from "../../redux/store";
+import { IsStartPage } from "../../helpers";
 
 type AppProps = {
   pca: IPublicClientApplication;
@@ -23,6 +24,7 @@ const App = ({ pca }: AppProps) => {
   const navigationClient = new ModelBuilderNavigationClient(history);
   const isFetching = useAppSelector(isFetchingSelector);
   pca.setNavigationClient(navigationClient);
+  const projectState = useAppSelector(projectStateSelector);
 
   const login = () => {
     msalInstance.loginRedirect();
@@ -31,15 +33,19 @@ const App = ({ pca }: AppProps) => {
   const websocket = new WebSocket();
   const dispatch = useDispatch();
   websocket.setDispatcher(dispatch);
+  websocket.setProjectState(projectState);
   websocket.start();
 
   return (
     <MsalProvider instance={pca}>
       <AuthenticatedTemplate>
         <GlobalStyle />
-        <SpinnerWrapper fetching={isFetching}>
-          <Spinner />
-        </SpinnerWrapper>
+        {!IsStartPage() && (
+          <SpinnerWrapper fetching={isFetching}>
+            <Spinner />
+          </SpinnerWrapper>
+        )}
+
         <Home dispatch={dispatch} />
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>

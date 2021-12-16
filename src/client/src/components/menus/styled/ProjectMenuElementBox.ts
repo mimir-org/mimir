@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
-import { FontSize, FontWeight } from "../../../compLibrary/font";
+import { FontSize } from "../../../compLibrary/font";
 
 interface Props {
   disabled: boolean;
@@ -12,12 +12,10 @@ const ProjectMenuElementBox = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: ${Color.BlueMagenta};
-  cursor: pointer;
+  color: ${(props) => (props.disabled ? Color.GreyInactive : Color.BlueMagenta)};
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   border-width: 0px;
-  border-bottom: ${(props) => (props.bottomLine ? 1 : 0)}px;
-  border-style: solid;
-  border-color: ${Color.Grey};
+  border-bottom: ${(props) => (props.bottomLine ? 1 : 0)}px solid ${Color.Grey};
 
   .text {
     position: relative;
@@ -25,8 +23,6 @@ const ProjectMenuElementBox = styled.div<Props>`
     margin-left: 10px;
     vertical-align: super;
     font-size: ${FontSize.Standard};
-    font-weight: ${(props) => props.disabled && FontWeight.Light};
-    font-style: ${(props) => props.disabled && FontWeight.Italic};
   }
 
   .icon {

@@ -23,18 +23,21 @@ const LocationValue = ({ isMultiSelect, getValues, attributeName, defaultValue, 
     <ValuesListWrapper>
       {Object.entries(getValues()).map(([key, value]) => {
         return (
-          <ValuesListItem key={key}>
-            {isMultiSelect ? (
-              <Checkbox isChecked={value} onChange={() => onMultipleValuesChange} id={key} />
-            ) : (
+          isMultiSelect ? (
+            <ValuesListItem key={key}>
+              <Checkbox isChecked={value} onChange={() => onMultipleValuesChange([key, value])} id={key} />
+              <AttributeName>{key}</AttributeName>
+            </ValuesListItem>
+          ) : (
+            <ValuesListItem key={key} gap={'25px'}>
               <RadioButton
                 isChecked={value}
                 onChange={(e) => OnSingleValueChange(e, attributeName, defaultValue, isMultiSelect, onChange)}
                 id={key}
               />
-            )}
-            <AttributeName htmlFor={key}>{key}</AttributeName>
-          </ValuesListItem>
+              <AttributeName>{key}</AttributeName>
+            </ValuesListItem>
+          )
         );
       })}
     </ValuesListWrapper>

@@ -48,7 +48,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildx-server-${{ hashFiles('**/*.csproj') }}
           ${{ runner.os }}-buildx-server
-
     - name: Build server image
       uses: docker/build-push-action@v2
       with:

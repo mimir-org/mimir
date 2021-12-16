@@ -37,7 +37,7 @@ export interface AttributeAm {
   nodeId: string;
   nodeIri: string;
   transportId: string;
-  compositeId: string;
+  simpleId: string;
   attributeTypeId: string;
   units: UnitAm[];
   selectValues: string[];
@@ -72,6 +72,7 @@ export interface NodeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   name: string;
   version: string;
   label: string;
@@ -92,6 +93,7 @@ export interface NodeAm {
   symbol: string;
   connectors: ConnectorAm[];
   attributes: AttributeAm[];
+  simples: CompositeAm[];
   aspect: Aspect;
   isRoot: boolean;
   purpose: Purpose;
@@ -108,6 +110,7 @@ export interface EdgeAm {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   fromConnectorId: string;
   toConnectorId: string;
   fromNodeId: string;
@@ -223,14 +226,14 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       nodeId: attribute.nodeId,
       nodeIri: attribute.nodeIri,
       attributeTypeId: attribute.attributeTypeId,
-      compositeId: attribute.compositeId,
+      simpleId: attribute.simpleId,
       units: ConvertUnits(attribute.units),
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
       discipline: attribute.discipline,
       tags: attribute.tags,
       isLocked: attribute.isLocked,
-      isLockedBy: attribute.isLockedBy,
+      isLockedBy: attribute.isLockedStatusBy,
     } as AttributeAm;
 
     converted.push(a);
@@ -260,7 +263,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
-      isRequired: connector.isRequired
+      isRequired: connector.isRequired,
     } as ConnectorAm;
 
     converted.push(a);
@@ -368,6 +371,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       id: node.id,
       iri: node.iri,
       domain: node.domain,
+      projectId: node.projectId,
       name: node.name,
       version: node.version,
       label: node.label,
@@ -388,7 +392,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       symbol: node.symbol,
       connectors: ConvertConnectors(node.connectors),
       attributes: ConvertAttributes(node.attributes),
-      composites: ConvertComposites(node.composites),
+      simples: ConvertComposites(node.simples),
       aspect: node.aspect,
       isRoot: node.isRoot,
       purpose: node.purpose,
@@ -398,7 +402,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       updatedBy: node.updatedBy,
       libraryTypeId: node.libraryTypeId,
       isLocked: node.isLocked,
-      IsLockedBy: node.isLockedBy,
+      IsLockedBy: node.isLockedStatusBy,
     } as NodeAm;
 
     convertedNodes.push(n);
@@ -417,6 +421,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       id: edge.id,
       iri: edge.iri,
       domain: edge.domain,
+      projectId: edge.projectId,
       fromConnectorId: edge.fromConnectorId,
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,

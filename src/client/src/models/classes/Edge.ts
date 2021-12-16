@@ -7,6 +7,7 @@ class Edge {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   fromConnectorId: string;
   fromConnector: Connector;
 
@@ -30,12 +31,14 @@ class Edge {
   interfaceId: string;
   interface: Interface;
 
-  isLocked: boolean | false;
-  isLockedBy: string;
   isHidden: boolean | false;
   masterProjectId: string;
   masterProjectIri: string;
   isSelected: boolean;
+
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: string;
 
   kind: string = EDGE_KIND;
 

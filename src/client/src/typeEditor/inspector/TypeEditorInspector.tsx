@@ -60,8 +60,8 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   );
 
   const compositeLikeItems = useMemo(
-    () => simpleTypes.filter((simp) => createLibraryType.compositeTypes.find((comp) => simp.id === comp)),
-    [simpleTypes, createLibraryType.compositeTypes]
+    () => simpleTypes.filter((simp) => createLibraryType.simpleTypes.find((comp) => simp.id === comp)),
+    [simpleTypes, createLibraryType.simpleTypes]
   );
 
   const initialRenderCompleted = useRef(false);

@@ -12,7 +12,6 @@ namespace Mb.Models.Configurations
             builder.ToTable("Node");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Domain).HasColumnName("Domain").IsRequired();
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference");
@@ -20,8 +19,9 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Label).HasColumnName("Label").IsRequired(false);
             builder.Property(p => p.PositionX).HasColumnName("PositionX").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.PositionY).HasColumnName("PositionY").HasColumnType("decimal(18,4)").IsRequired();
-            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired();
-            builder.Property(p => p.IsLockedBy).HasColumnName("IsLockedBy").IsRequired(false);
+            builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
+            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
+            builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
             builder.Property(p => p.PositionBlockX).HasColumnName("PositionBlockX").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.PositionBlockY).HasColumnName("PositionBlockY").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.Level).HasColumnName("Level").IsRequired();
@@ -29,9 +29,9 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.StatusId).HasColumnName("StatusId").IsRequired();
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
-            builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired(false).HasDefaultValue(null); ;
-            builder.Property(p => p.Created).HasColumnName("Created").IsRequired(false).HasDefaultValue(null);
-            builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired(false).HasDefaultValue(null);
+            builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired();
+            builder.Property(p => p.Created).HasColumnName("Created").IsRequired();
+            builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired();
             builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
             builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.IsRoot).HasColumnName("IsRoot").IsRequired();

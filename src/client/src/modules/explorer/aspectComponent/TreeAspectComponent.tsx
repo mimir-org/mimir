@@ -5,6 +5,7 @@ import { LockComponent } from "../lockComponent";
 import { Node, Project } from "../../../models";
 import { TreeAspectElement } from ".";
 import { Dispatch } from "redux";
+import { GetWidth } from "../helpers";
 
 interface Props {
   project: Project;
@@ -35,7 +36,7 @@ export const TreeAspectComponent = ({
   dispatch,
 }: Props) => (
   <>
-    <AspectBox node={node}>
+    <AspectBox width={GetWidth(nodes)} node={node}>
       <ElementBox indent={indent}>
         <VisibleComponent
           node={node}
@@ -55,7 +56,7 @@ export const TreeAspectComponent = ({
         ></img>
       )}
     </AspectBox>
-    <ExplorerAspectLine node={node} />
+    <ExplorerAspectLine width={GetWidth(nodes)} node={node} />
   </>
 );
 

@@ -12,6 +12,7 @@ import { GetProjectFileData } from "./helpers";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { Label } from "../../../../../compLibrary/input/text";
 import { ModuleDescription } from "../../../../../models";
+import { FontSize } from "../../../../../compLibrary/font";
 
 interface Props {
   parsers: ModuleDescription[];
@@ -53,10 +54,15 @@ export const ImportProjectFileMenu = ({ parsers, dispatch }: Props) => {
         <ButtonBox left>
           <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
         </ButtonBox>
-
         <Label>{TextResources.Project_Parser}</Label>
-        <Dropdown label="Parser" valueProp="name" items={parsers} keyProp="id" onChange={(e: any) => setParser(e)} />
-
+        <Dropdown
+          label=""
+          valueProp="name"
+          items={parsers}
+          keyProp="id"
+          fontSize={FontSize.Medium}
+          onChange={(e: any) => setParser(e)}
+        />
         <ButtonBox disabled={!hasParser}>
           <Button onClick={setButtonAction} text={buttonBrowseText()} icon={ImportProjectIcon} />
         </ButtonBox>

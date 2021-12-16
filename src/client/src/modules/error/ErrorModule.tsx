@@ -136,7 +136,7 @@ const ErrorModule = ({ projectState, dispatch }: Props) => {
                 {x.errorData?.items?.map((y) => {
                   return (
                     <p key={y.key}>
-                      {y.key}: {y.value}
+                      {y.key}: {JSON.stringify(y.value)}
                     </p>
                   );
                 })}

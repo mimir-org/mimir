@@ -3,7 +3,7 @@ import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../r
 import { MENU_TYPE } from "../../../../../models/project";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { ProjectState } from "../../../../../redux/store/project/types";
 import { OnOpen, OnReturn } from "./handlers";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
@@ -22,7 +22,7 @@ interface Props {
  * @returns a menu for selecting a project or create a new one.
  */
 export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
-  const projects = projectState.projectList as ProjectSimple[];
+  const projects = projectState.projectList as ProjectItemCm[];
   const project = projects?.find((x) => x.selected);
   const projectId = project?.id;
   const projectDescription = project?.description;

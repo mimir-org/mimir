@@ -106,7 +106,7 @@ const TextResources = {
   Inspector_Params_Combinations: "Select combinations",
   Inspector_Params_Combinations_Select_All: "Select all",
 
-  Inspector_Params_Search: "Search or Select Entity...",
+  Inspector_Params_Search: "Select Entity...",
 
   Inspector_Terminals_Search: "Search Terminal Type",
   Inspector_SimpleTypes_Search: "Search Simple Types",
@@ -280,7 +280,7 @@ const TextResources = {
   Validation_Cancel: "Cancel",
 
   // Version
-  Mimir_Version: "Version 0.1",
+  Mimir_Version: "Version 1.0",
   Validation_Ok: "Ok",
 };
 

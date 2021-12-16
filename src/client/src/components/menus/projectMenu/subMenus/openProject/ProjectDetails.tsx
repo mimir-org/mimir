@@ -1,15 +1,15 @@
 import * as Click from "../../handlers";
-import { ProjectSimple } from "../../../../../models";
+import { ProjectItemCm } from "../../../../../models";
 import { Dispatch } from "redux";
-import { CreateProjectIcon } from "../../../../../assets/icons/project";
+import { CreateProjectIcon, ImportProjectIcon } from "../../../../../assets/icons/project";
 import { SearchBar, ProjectList, ProjectDescription } from ".";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
 import { SearchProject, RightContainer } from "../styled";
-import { ProjectDetailsBox } from "./styled";
+import { ProjectDetailsBox, ProjectOptionsButtons } from "./styled";
 
 interface Props {
-  projects: ProjectSimple[];
+  projects: ProjectItemCm[];
   projectDescription: string;
   dispatch: Dispatch;
 }
@@ -26,12 +26,10 @@ export const ProjectDetails = ({ projects, projectDescription, dispatch }: Props
       <ProjectList projectList={projects} dispatch={dispatch} />
     </SearchProject>
     <RightContainer>
-      <Button
-        onClick={() => Click.OnCreate(dispatch)}
-        text={TextResources.Project_Start_Label}
-        icon={CreateProjectIcon}
-        iconLeft
-      />
+      <ProjectOptionsButtons>
+        <Button onClick={() => Click.OnCreate(dispatch)} text={TextResources.Project_Start_Label} icon={CreateProjectIcon} />
+        <Button onClick={() => Click.OnImportProject(dispatch)} text={TextResources.Project_Import} icon={ImportProjectIcon} />
+      </ProjectOptionsButtons>
       <ProjectDescription description={projectDescription} />
     </RightContainer>
   </ProjectDetailsBox>

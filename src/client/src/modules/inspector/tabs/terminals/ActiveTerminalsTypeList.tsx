@@ -61,7 +61,7 @@ function ActiveTerminalsTypeList({
         <div className="numTypeTerminals">{numTerminals}</div>
         {formatTerminalTypeName(terminalType.name, connectorType)}
         <img
-          src={expanded ? ExpandAccordionNestedIcon : CollapseAccordionNestedIcon}
+          src={expanded ? CollapseAccordionNestedIcon : ExpandAccordionNestedIcon}
           className="dropdownIcon"
           alt="expand-icon"
         />

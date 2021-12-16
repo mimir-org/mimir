@@ -5,12 +5,11 @@ import { FontSize } from "../font";
 const SearchBar = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: row;
+  height: 100%;
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 5px;
-  padding: 1px;
   background-color: ${Color.White} !important;
-
+  padding: 0 5px 0 10px;
   input:focus,
   textarea:focus,
   select:focus {
@@ -18,11 +17,10 @@ const SearchBar = styled.div`
   }
 
   input[type="text"] {
-    padding: 2.5px 13px;
     width: 100%;
     height: 12px;
     font-size: ${FontSize.Medium};
-    border: 0px;
+    border: 0;
   }
 
   input[type="text"]::placeholder {
@@ -33,8 +31,6 @@ const SearchBar = styled.div`
   }
 
   .icon {
-    padding: 0px 5px;
-    margin-left: auto;
     width: 10px;
     height: 6px;
   }

@@ -1,8 +1,17 @@
 import { call, put } from "redux-saga/effects";
-import { Project, ProjectFileAm } from "../../../models";
-import { ConvertProject, InitializeProject } from ".";
+import { Project, ProjectFileAm, ProjectResultAm, WebSocket } from "../../../models";
+import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
-import { get, post, GetBadResponseData, ApiError, GetBadRequestPayload, GetErrorResponsePayload } from "../../../models/webclient";
+import { IsBlockView } from "../../../helpers";
+import { IsPartOf } from "../../../components/flow/helpers";
+import {
+  get,
+  post,
+  GetBadResponseData,
+  ApiError,
+  GetBadRequestPayload,
+  GetErrorResponsePayload,
+} from "../../../models/webclient";
 import {
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
   CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -14,16 +23,22 @@ import {
   IMPORT_PROJECT_SUCCESS_OR_ERROR,
   COMMIT_PROJECT_SUCCESS_OR_ERROR,
   CommitProject,
-  LockUnlockNode,
-  LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
-  LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-  LockUnlockAttributeUnion,
+  LockNode,
+  LOCK_NODE_SUCCESS_OR_ERROR,
+  LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
   CreateSubProject,
   CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
+  LockEdge,
+  LOCK_EDGE_SUCCESS_OR_ERROR,
+  LockAttribute,
+  SaveProjectAction,
 } from "../../store/project/types";
 
 export function* getProject(action) {
   try {
+    const webSocket = new WebSocket();
+    if (webSocket.isRunning()) webSocket.setGroup(action.payload);
+
     const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
     const response = yield call(get, url);
 
@@ -49,7 +64,13 @@ export function* getProject(action) {
       return;
     }
 
-    const project = InitializeProject(response.data);
+    const project = response.data;
+
+    if (!IsBlockView()) {
+      project?.edges.forEach((edge) => {
+        if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
+      });
+    }
 
     const payload = {
       project: project,
@@ -164,7 +185,7 @@ export function* createProject(action) {
     project.edges = [];
 
     const payload = {
-      project: InitializeProject(project),
+      project: project,
       apiError: null,
     };
 
@@ -243,10 +264,10 @@ export function* createSubProject(action: CreateSubProject) {
   }
 }
 
-export function* updateProject(action) {
+export function* updateProject(action: SaveProjectAction) {
   try {
-    const projId = action.payload.id;
-    const proj = ConvertProject(action.payload);
+    const projId = action.payload.project.id;
+    const proj = ConvertProject(action.payload.project);
 
     const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
     const response = yield call(post, url, proj);
@@ -273,21 +294,12 @@ export function* updateProject(action) {
       return;
     }
 
-    const project = InitializeProject(response.data);
+    const data: ProjectResultAm = response.data;
 
-    if (project.nodes && action.payload.nodes) {
-      project.nodes.forEach((node) => {
-        const oldNode = action.payload.nodes.find((x) => x.id === node.id);
-        if (oldNode) {
-          node.isHidden = oldNode.isHidden;
-          node.isBlockSelected = oldNode.isBlockSelected;
-          node.isSelected = oldNode.isSelected;
-        }
-      });
-    }
+    MapProperties(data.project, action.payload.project, data.idChanges);
 
     const payload = {
-      project: project,
+      project: data.project,
       apiError: null,
     };
 
@@ -316,7 +328,6 @@ export function* updateProject(action) {
 
 export function* exportProjectFile(action: ExportProjectFileAction) {
   try {
-
     const url = process.env.REACT_APP_API_BASE_URL + "project/convert/";
     const response = yield call(post, url, action.payload);
 
@@ -335,12 +346,11 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
       payload: {
-        apiError: null
-      }
+        apiError: null,
+      },
     });
-
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR, {}))
+    yield put(GetErrorResponsePayload(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR, {}));
   }
 }
 
@@ -448,9 +458,9 @@ export function* commitProject(action: CommitProject) {
   }
 }
 
-export function* lockUnlockNode(action: LockUnlockNode) {
+export function* lockNode(action: LockNode) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/node/lockunlock";
+    const url = process.env.REACT_APP_API_BASE_URL + "lock/node";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -458,7 +468,7 @@ export function* lockUnlockNode(action: LockUnlockNode) {
       const data = GetBadResponseData(response);
 
       const apiError = {
-        key: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+        key: LOCK_NODE_SUCCESS_OR_ERROR,
         errorMessage: data.title,
         errorData: data,
       } as ApiError;
@@ -468,7 +478,7 @@ export function* lockUnlockNode(action: LockUnlockNode) {
       };
 
       yield put({
-        type: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+        type: LOCK_NODE_SUCCESS_OR_ERROR,
         payload: payload,
       });
       return;
@@ -478,12 +488,12 @@ export function* lockUnlockNode(action: LockUnlockNode) {
       apiError: null,
     };
     yield put({
-      type: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+      type: LOCK_NODE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   } catch (error) {
     const apiError = {
-      key: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+      key: LOCK_NODE_SUCCESS_OR_ERROR,
       errorMessage: error.message,
       errorData: null,
     } as ApiError;
@@ -493,24 +503,23 @@ export function* lockUnlockNode(action: LockUnlockNode) {
     };
 
     yield put({
-      type: LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR,
+      type: LOCK_NODE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }
 }
 
-export function* lockUnlockAttribute(action: LockUnlockAttributeUnion) {
+export function* lockEdge(action: LockEdge) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/attribute/lockunlock";
-    const { id, isLocked } = action.payload;
-    const response = yield call(post, url, { id, isLocked });
+    const url = process.env.REACT_APP_API_BASE_URL + "lock/edge";
+    const response = yield call(post, url, action.payload);
 
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
 
       const apiError = {
-        key: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+        key: LOCK_EDGE_SUCCESS_OR_ERROR,
         errorMessage: data.title,
         errorData: data,
       } as ApiError;
@@ -520,13 +529,22 @@ export function* lockUnlockAttribute(action: LockUnlockAttributeUnion) {
       };
 
       yield put({
-        type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+        type: LOCK_EDGE_SUCCESS_OR_ERROR,
         payload: payload,
       });
+      return;
     }
+
+    const payload = {
+      apiError: null,
+    };
+    yield put({
+      type: LOCK_EDGE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
   } catch (error) {
     const apiError = {
-      key: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+      key: LOCK_EDGE_SUCCESS_OR_ERROR,
       errorMessage: error.message,
       errorData: null,
     } as ApiError;
@@ -536,7 +554,49 @@ export function* lockUnlockAttribute(action: LockUnlockAttributeUnion) {
     };
 
     yield put({
-      type: LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+      type: LOCK_EDGE_SUCCESS_OR_ERROR,
+      payload: payload,
+    });
+  }
+}
+
+export function* lockAttribute(action: LockAttribute) {
+  try {
+    const url = process.env.REACT_APP_API_BASE_URL + "lock/attribute";
+    const response = yield call(post, url, action.payload);
+
+    // This is a bad request
+    if (response.status === 400) {
+      const data = GetBadResponseData(response);
+
+      const apiError = {
+        key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = {
+        apiError: apiError,
+      };
+
+      yield put({
+        type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+        payload: payload,
+      });
+    }
+  } catch (error) {
+    const apiError = {
+      key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
+    const payload = {
+      apiError: apiError,
+    };
+
+    yield put({
+      type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
       payload: payload,
     });
   }

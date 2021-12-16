@@ -29,7 +29,7 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
       });
     }
 
-    return {
+    return new Interface({
       id: CreateId(),
       version: interfaceType.version,
       rds: interfaceType.rds,
@@ -48,7 +48,7 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
       createdBy: interfaceType.createdBy,
       created: interfaceType.created,
       libraryTypeId: interfaceType.id,
-    } as Interface;
+    } as Interface);
   }
   return null;
 };

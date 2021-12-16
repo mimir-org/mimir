@@ -4,17 +4,17 @@ import { IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
-import { memo, useRef } from "react";
+import { useRef } from "react";
 import { useResizeParentNode } from "./hooks";
-import { BlockNodeSize } from "../../../../../models/project";
 import { ParentBannerComponent } from ".";
+import { BlockNodeSize } from "../../../../../models/project";
 
 interface Props {
   node: Node;
-  color: string;
   size: BlockNodeSize;
+  color: string;
   hasTerminals: boolean;
-  isSecondaryNode: boolean;
+  isSecondaryNode?: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
   dispatch: any;
@@ -27,8 +27,8 @@ interface Props {
  */
 const ParentContainerComponent = ({
   node,
-  color,
   size,
+  color,
   hasTerminals,
   isSecondaryNode,
   onParentClick,
@@ -37,6 +37,7 @@ const ParentContainerComponent = ({
 }: Props) => {
   const resizePanelRef = useRef(null);
   useResizeParentNode(node.id, resizePanelRef, dispatch);
+  const isLocation = IsLocation(node);
 
   return (
     <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
@@ -54,13 +55,13 @@ const ParentContainerComponent = ({
         </ResizeButton>
       )}
       <Background
-        variant={IsLocation(node) ? BackgroundVariant.Lines : BackgroundVariant.Dots}
-        color={Color.Grey}
-        gap={20}
+        variant={isLocation ? BackgroundVariant.Lines : BackgroundVariant.Dots}
+        color={isLocation ? Color.Grey : Color.BlueDark}
+        gap={isLocation ? 20 : 15}
         style={{ zIndex: 0 }}
       />
     </ParentBox>
   );
 };
 
-export default memo(ParentContainerComponent);
+export default ParentContainerComponent;

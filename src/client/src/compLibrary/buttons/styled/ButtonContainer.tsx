@@ -24,7 +24,6 @@ const ButtonContainer = styled.button<Props>`
 
   .button-text {
     max-width: 260px;
-    display: flex;
     padding: 0px 5px;
     margin-right: ${(props) => (props.icon ? 14 : 0)}px;
     display: -webkit-box;

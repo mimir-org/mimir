@@ -7,6 +7,7 @@ class Node {
   id: string;
   iri: string;
   domain: string;
+  projectId: string;
   rds: string;
   description: string;
   semanticReference: string;
@@ -15,8 +16,6 @@ class Node {
   label: string;
   positionX: number;
   positionY: number;
-  isLocked: boolean | false;
-  isLockedBy: string;
   purpose: Purpose;
 
   positionBlockX: number;
@@ -38,7 +37,7 @@ class Node {
   symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
-  composites: Composite[];
+  simples: Composite[];
   width: number;
   height: number;
 
@@ -52,8 +51,9 @@ class Node {
   blockWidth: number;
   blockHeight: number;
 
-  // OffPageNode
-  connectionRequired?: boolean | true;
+  isLocked: boolean;
+  isLockedStatusBy: string;
+  isLockedStatusDate: string;
 
   kind: string = NODE_KIND;
 

@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
-import { GetBlockNodeTypes } from "../helpers";
+import { GetBlockNodeTypes, IsTransport } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/";
@@ -18,6 +18,7 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, 
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Project } from "../../../models";
+import { setEdgeVisibility } from "../../../redux/store/project/actions";
 
 interface Props {
   project: Project;
@@ -36,21 +37,22 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const [elements, setElements] = useState<Elements>([]);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
-  const lib = useAppSelector(selectors.librarySelector);
+  const library = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
-  const parentSize = useAppSelector(selectors.nodeSizeSelector);
-  const parentProductSize = useAppSelector(selectors.productNodeSizeSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const showLocation3D = useAppSelector(selectors.location3DSelector);
+  const libOpen = useAppSelector(selectors.libOpenSelector);
+  const explorerOpen = useAppSelector(selectors.explorerSelector);
+  const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentSize, parentProductSize));
+      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, libOpen, explorerOpen));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge, parentSize, parentProductSize]
+    [project, node, secondaryNode, animatedEdge, libOpen, explorerOpen]
   );
 
   const OnElementsRemove = (elementsToRemove) => {
@@ -58,20 +60,20 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef);
+    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
   };
 
   const OnConnect = (params) => {
-    return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, lib, animatedEdge);
+    return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, library, animatedEdge);
   };
 
-  // const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-  //   return useOnConnectStart(e, { nodeId, handleType, handleId });
-  // };
+  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
+    return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
+  };
 
-  // const OnConnectStop = (e) => {
-  //   return useOnConnectStop(e, project, dispatch, parentSize);
-  // };
+  const OnConnectStop = (e) => {
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, dispatch);
+  };
 
   const OnDragOver = (event) => {
     event.preventDefault();
@@ -88,7 +90,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       project,
       user: userState.user,
       icons,
-      library: lib,
+      library: library,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,
       setElements,
@@ -121,6 +123,12 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     }
   };
 
+  useEffect(() => {
+    project?.edges?.forEach((edge) => {
+      if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, false));
+    });
+  }, []);
+
   return (
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}>
@@ -129,23 +137,23 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onConnect={OnConnect}
-          // onConnectStart={OnConnectStart}
-          // onConnectStop={OnConnectStop}
+          onConnectStart={OnConnectStart}
+          onConnectStop={OnConnectStop}
           onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          zoomOnScroll={true}
-          paneMoveable={true}
           zoomOnDoubleClick={false}
           defaultZoom={0.9}
-          defaultPosition={[Size.BlockMarginX, Size.BlockMarginY]}
-          onlyRenderVisibleElements={true}
+          defaultPosition={[0, Size.BlockMarginY]}
+          onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
+          zoomOnScroll
+          paneMoveable
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>

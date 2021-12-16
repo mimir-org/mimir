@@ -7,9 +7,9 @@ interface Props {
 }
 
 const ListElement = styled.div<Props>`
-  padding: 5px 10px;
-  min-width: 230px;
-  height: 20px;
+  padding: 8px 10px;
+  min-width: 250px;
+  height: 30px;
   font-size: ${FontSize.Medium};
   display: flex;
   align-items: center;

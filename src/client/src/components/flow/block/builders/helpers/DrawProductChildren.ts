@@ -1,9 +1,8 @@
 import { Elements } from "react-flow-renderer";
 import { TraverseProductNodes } from ".";
-import { BuildBlockEdge, BuildBlockProductNode } from "..";
+import { BuildBlockEdge, BuildProductChildNode } from "..";
 import { IsProduct, IsAspectNode } from "../../../../../helpers";
 import { Node, Edge, Connector } from "../../../../../models";
-import { BlockNodeSize } from "../../../../../models/project";
 import { IsPartOf, IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
 
@@ -14,7 +13,6 @@ import { GetBlockEdgeType } from "../../helpers";
  * @param selectedNode
  * @param elements
  * @param animatedEdge
- * @param parentNodeSize
  */
 const DrawProductChildren = (
   edges: Edge[],
@@ -22,7 +20,9 @@ const DrawProductChildren = (
   selectedNode: Node,
   elements: Elements<any>,
   animatedEdge: boolean,
-  parentNodeSize: BlockNodeSize
+  libOpen: boolean,
+  explorerOpen: boolean,
+  secondaryNode: Node
 ) => {
   const productChildren: Node[] = [];
   TraverseProductNodes(edges, allNodes, selectedNode, productChildren);
@@ -31,12 +31,12 @@ const DrawProductChildren = (
     let productEdge = null;
     if (ValidateProductEdge(edge.fromNode, edge.fromConnector, edge.toConnector))
       productEdge = BuildBlockEdge(allNodes, edge, GetBlockEdgeType(edge.fromConnector), null, animatedEdge);
-    productEdge && elements.push(productEdge);
+    if (productEdge) elements.push(productEdge);
   });
 
   productChildren.forEach((node) => {
-    const productChildNode = BuildBlockProductNode(node, parentNodeSize);
-    productChildNode && elements.push(productChildNode);
+    const productChildNode = BuildProductChildNode(node, libOpen, explorerOpen, secondaryNode);
+    if (productChildNode) elements.push(productChildNode);
   });
 };
 

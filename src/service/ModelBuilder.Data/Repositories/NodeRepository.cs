@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Mb.Data.Repositories
@@ -16,18 +15,18 @@ namespace Mb.Data.Repositories
     {
         private readonly IConnectorRepository _connectorRepository;
         private readonly IAttributeRepository _attributeRepository;
-        private readonly ICompositeRepository _compositeRepository;
-        private readonly ModelBuilderConfiguration _modelBuilderConfiguration;
+        private readonly ISimpleRepository _simpleRepository;
+        private readonly ICommonRepository _commonRepository;
 
-        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ICompositeRepository compositeRepository, IOptions<ModelBuilderConfiguration> modelBuilderConfiguration) : base(dbContext)
+        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ISimpleRepository simpleRepository, ICommonRepository commonRepository) : base(dbContext)
         {
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
-            _compositeRepository = compositeRepository;
-            _modelBuilderConfiguration = modelBuilderConfiguration?.Value;
+            _simpleRepository = simpleRepository;
+            _commonRepository = commonRepository;
         }
 
-        public IEnumerable<Node> UpdateInsert(ICollection<Node> original, Project project, string invokedByDomain)
+        public IEnumerable<(Node node, WorkerStatus status)> UpdateInsert(ICollection<Node> original, Project project, string invokedByDomain)
         {
             if (project?.Nodes == null || !project.Nodes.Any())
                 yield break;
@@ -40,13 +39,6 @@ namespace Mb.Data.Repositories
             {
                 if (newNodes.Any(x => x.Id == node.Id))
                 {
-                    if (node.MasterProjectId != project.Id)
-                    {
-                        Attach(node, EntityState.Unchanged);
-                        yield return node;
-                        continue;
-                    }
-
                     if (node.Attributes != null)
                     {
                         foreach (var attribute in node.Attributes)
@@ -56,18 +48,17 @@ namespace Mb.Data.Repositories
                         }
                     }
 
-                    node.Version = _modelBuilderConfiguration.Domain != node.Domain ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version : "1.0";
-                    _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Added);
+                    node.Version = _commonRepository.GetDomain() != node.Domain ? string.IsNullOrEmpty(node.Version) ? "1.0" : node.Version : "1.0";
+                    _simpleRepository.AttachWithAttributes(node.Simples, EntityState.Added);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Added);
+
+                    yield return (node, WorkerStatus.Create);
                     Attach(node, EntityState.Added);
                 }
                 else
                 {
-                    if (node.MasterProjectId != project.Id)
-                        continue;
-
                     // Parties is not allowed changed our node
-                    if (_modelBuilderConfiguration.Domain == node.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                    if (_commonRepository.GetDomain() == node.Domain && _commonRepository.GetDomain() != invokedByDomain)
                     {
                         Detach(node);
                         continue;
@@ -84,47 +75,41 @@ namespace Mb.Data.Repositories
 
                     SetNodeVersion(original?.FirstOrDefault(x => x.Id == node.Id), node);
 
-                    _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Modified);
+                    _simpleRepository.AttachWithAttributes(node.Simples, EntityState.Modified);
                     _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Modified);
+                    yield return (node, WorkerStatus.Update);
                     Attach(node, EntityState.Modified);
                 }
             }
         }
 
-        public async Task<IEnumerable<Node>> DeleteNodes(ICollection<Node> delete, string projectId, string invokedByDomain)
+        public IEnumerable<(Node node, WorkerStatus status)> DeleteNodes(ICollection<Node> delete, string projectId, string invokedByDomain)
         {
-            var subNodes = new List<Node>();
+            if (delete == null || projectId == null || !delete.Any())
+                yield break;
 
             foreach (var node in delete)
             {
-                if (node.MasterProjectId != projectId)
-                {
-                    subNodes.Add(node);
-                    continue;
-                }
-
                 // Parties is not allowed delete our node
-                if (_modelBuilderConfiguration.Domain == node.Domain && _modelBuilderConfiguration.Domain != invokedByDomain)
+                if (_commonRepository.GetDomain() == node.Domain && _commonRepository.GetDomain() != invokedByDomain)
                 {
                     Detach(node);
                     continue;
                 }
 
                 _attributeRepository.Attach(node.Attributes, EntityState.Deleted);
-                _compositeRepository.AttachWithAttributes(node.Composites, EntityState.Deleted);
+                _simpleRepository.AttachWithAttributes(node.Simples, EntityState.Deleted);
                 _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
-
-                await Delete(node.Id);
+                Attach(node, EntityState.Deleted);
+                yield return (node, WorkerStatus.Delete);
             }
-
-            return subNodes;
         }
 
         #region Private
 
         private void SetNodeVersion(Node originalNode, Node node)
         {
-            if(originalNode?.Id == null || string.IsNullOrWhiteSpace(node?.Id))
+            if (originalNode?.Id == null || string.IsNullOrWhiteSpace(node?.Id))
                 return;
 
             //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
@@ -135,7 +120,7 @@ namespace Mb.Data.Repositories
                 node.Version = originalNode.Version.IncrementMinorVersion();
                 return;
             }
-            
+
             //Description
             if (originalNode.Description != node.Description)
             {
@@ -220,8 +205,8 @@ namespace Mb.Data.Repositories
                 return;
             }
 
-            //Composites
-            if (originalNode.Composites?.Count != node.Composites?.Count)
+            //Simples
+            if (originalNode.Simples?.Count != node.Simples?.Count)
             {
                 node.Version = originalNode.Version.IncrementMinorVersion();
             }

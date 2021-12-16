@@ -1,6 +1,7 @@
 import { all, spawn, takeEvery } from "redux-saga/effects";
 import { commonSaga } from "./common";
 import { nodeSaga } from "./node";
+import { webSocketSaga } from "../../modules/cooperate/saga";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
 import { getUser } from "./user/saga";
 import { FETCHING_INITIAL_DATA, SAVE_LIBRARY_TYPE, FETCHING_BLOB_DATA, FETCHING_TYPE } from "../../typeEditor/redux/types";
@@ -19,16 +20,11 @@ import {
   SAVE_PROJECT,
   EXPORT_PROJECT_TO_FILE,
   IMPORT_PROJECT,
-  LOCK_UNLOCK_NODE,
-  LOCK_UNLOCK_NODE_ATTRIBUTE,
+  LOCK_NODE,
   COMMIT_PROJECT,
-  LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE,
-  LOCK_UNLOCK_COMPOSITE_ATTRIBUTE,
-  LOCK_UNLOCK_INTERFACE_ATTRIBUTE,
-  LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE,
-  LOCK_UNLOCK_TRANSPORT_ATTRIBUTE,
-  LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE,
   CREATING_SUB_PROJECT,
+  LOCK_EDGE,
+  LOCK_ATTRIBUTE,
 } from "./../store/project/types";
 import {
   getProject,
@@ -38,9 +34,10 @@ import {
   updateProject,
   exportProjectFile,
   importProject,
-  lockUnlockNode,
-  lockUnlockAttribute,
+  lockNode,
+  lockAttribute,
   commitProject,
+  lockEdge,
 } from "./project/saga";
 import {
   getPredefinedAttributes,
@@ -55,7 +52,7 @@ import {
   getSimpleTypes,
 } from "./typeEditor/saga";
 
-//TODO: Add takeEvery for LOCK_UNLOCK on
+//TODO: Add takeEvery for LOCK_ on
 function* sagas() {
   yield all([
     takeEvery(FETCHING_LIBRARY, searchLibrary),
@@ -77,14 +74,9 @@ function* sagas() {
     takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
-    takeEvery(LOCK_UNLOCK_NODE, lockUnlockNode),
-    takeEvery(LOCK_UNLOCK_NODE_ATTRIBUTE, lockUnlockAttribute),
-    takeEvery(LOCK_UNLOCK_TRANSPORT_ATTRIBUTE, lockUnlockAttribute),
-    takeEvery(LOCK_UNLOCK_INTERFACE_ATTRIBUTE, lockUnlockAttribute),
-    takeEvery(LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
-    takeEvery(LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
-    takeEvery(LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE, lockUnlockAttribute),
-    takeEvery(LOCK_UNLOCK_COMPOSITE_ATTRIBUTE, lockUnlockAttribute),
+    takeEvery(LOCK_NODE, lockNode),
+    takeEvery(LOCK_EDGE, lockEdge),
+    takeEvery(LOCK_ATTRIBUTE, lockAttribute),
     takeEvery(IMPORT_LIBRARY, importLibrary),
     takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),
@@ -97,4 +89,5 @@ export function* rootSaga() {
   yield spawn(sagas);
   yield spawn(commonSaga);
   yield spawn(nodeSaga);
+  yield spawn(webSocketSaga);
 }

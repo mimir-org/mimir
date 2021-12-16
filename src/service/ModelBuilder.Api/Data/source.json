@@ -61,5 +61,12 @@
     "semanticReference": null,
     "aspect": "NotSet",
     "parentId": null
+  },
+  {
+    "name": "Capacity",
+    "description": null,
+    "semanticReference": null,
+    "aspect": "NotSet",
+    "parentId": null
   }
 ]

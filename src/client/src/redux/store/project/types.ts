@@ -43,17 +43,24 @@ export const EXPORT_PROJECT_TO_FILE = "EXPORT_PROJECT_TO_FILE";
 export const EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR = "EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR";
 export const IMPORT_PROJECT = "IMPORT_PROJECT";
 export const IMPORT_PROJECT_SUCCESS_OR_ERROR = "IMPORT_PROJECT_SUCCESS_OR_ERROR";
-export const LOCK_UNLOCK_NODE = "LOCK_UNLOCK_NODE";
-export const LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR";
-export const LOCK_UNLOCK_NODE_ATTRIBUTE = "LOCK_UNLOCK_NODE_ATTRIBUTE";
-export const LOCK_UNLOCK_TRANSPORT_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_ATTRIBUTE";
-export const LOCK_UNLOCK_INTERFACE_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_ATTRIBUTE";
-export const LOCK_UNLOCK_COMPOSITE_ATTRIBUTE = "LOCK_UNLOCK_COMPOSITE_ATTRIBUTE";
-export const LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE";
-export const LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
-export const LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE = "LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE";
-export const LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
+export const LOCK_NODE = "LOCK_NODE";
+export const LOCK_NODE_SUCCESS_OR_ERROR = "LOCK_NODE_SUCCESS_OR_ERROR";
+export const LOCK_EDGE = "LOCK_EDGE";
+export const LOCK_EDGE_SUCCESS_OR_ERROR = "LOCK_NODE_SUCCESS_OR_ERROR";
+export const LOCK_ATTRIBUTE = "LOCK_ATTRIBUTE";
+export const LOCK_ATTRIBUTE_SUCCESS_OR_ERROR = "LOCK_ATTRIBUTE_SUCCESS_OR_ERROR";
+export const SET_LOCK_NODE = "SET_LOCK_NODE";
+export const SET_LOCK_EDGE = "SET_LOCK_EDGE";
+export const SET_LOCK_NODE_ATTRIBUTE = "SET_LOCK_NODE_ATTRIBUTE";
+export const SET_LOCK_TRANSPORT_ATTRIBUTE = "SET_LOCK_TRANSPORT_ATTRIBUTE";
+export const SET_LOCK_INTERFACE_ATTRIBUTE = "SET_LOCK_INTERFACE_ATTRIBUTE";
+export const SET_LOCK_COMPOSITE_ATTRIBUTE = "SET_LOCK_COMPOSITE_ATTRIBUTE";
+export const SET_LOCK_NODE_TERMINAL_ATTRIBUTE = "SET_LOCK_NODE_TERMINAL_ATTRIBUTE";
+export const SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
+export const SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE = "SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE";
 export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
+export const UPDATE_NODE = "UPDATE_NODE";
+export const UPDATE_EDGE = "UPDATE_EDGE";
 export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
 
 // State types
@@ -200,7 +207,9 @@ export interface SetActiveBlockNode {
 
 export interface SaveProjectAction {
   type: typeof SAVE_PROJECT;
-  payload: Project;
+  payload: {
+    project: Project;
+  };
 }
 
 export interface SaveProjectActionFinished {
@@ -342,7 +351,7 @@ export interface ChangeActiveConnector {
 }
 export interface ExportProjectFileAction {
   type: typeof EXPORT_PROJECT_TO_FILE;
-  payload: ProjectConverterAm
+  payload: ProjectConverterAm;
 }
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
@@ -374,101 +383,152 @@ export interface CommitProjectFinished {
   };
 }
 
-export interface LockUnlockNode {
-  type: typeof LOCK_UNLOCK_NODE;
+export interface LockNode {
+  type: typeof LOCK_NODE;
   payload: {
     id: string;
     projectId: string;
     isLocked: boolean;
-    isLockedBy: string;
   };
 }
 
-export interface LockUnlockNodeFinished {
-  type: typeof LOCK_UNLOCK_NODE_SUCCESS_OR_ERROR;
+export interface LockNodeFinished {
+  type: typeof LOCK_NODE_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
   };
 }
 
-export interface LockUnlockNodeAttribute {
-  type: typeof LOCK_UNLOCK_NODE_ATTRIBUTE;
+export interface LockEdge {
+  type: typeof LOCK_EDGE;
+  payload: {
+    id: string;
+    projectId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockEdgeFinished {
+  type: typeof LOCK_EDGE_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
+export interface LockAttribute {
+  type: typeof LOCK_ATTRIBUTE;
+  payload: {
+    id: string;
+    projectId: string;
+    isLocked: boolean;
+  };
+}
+
+export interface LockAttributeFinished {
+  type: typeof LOCK_ATTRIBUTE_SUCCESS_OR_ERROR;
+  payload: {
+    apiError: ApiError;
+  };
+}
+
+export interface SetLockNode {
+  type: typeof SET_LOCK_NODE;
+  payload: {
+    id: string;
+    isLocked: boolean;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
+  };
+}
+
+export interface SetLockEdge {
+  type: typeof SET_LOCK_EDGE;
+  payload: {
+    id: string;
+    isLocked: boolean;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
+  };
+}
+
+export interface SetLockNodeAttribute {
+  type: typeof SET_LOCK_NODE_ATTRIBUTE;
   payload: {
     id: string;
     nodeId: string;
     isLocked: boolean;
-    isLockedBy: string;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
   };
 }
 
-export interface LockUnlockTransportAttribute {
-  type: typeof LOCK_UNLOCK_TRANSPORT_ATTRIBUTE;
+export interface SetLockTransportAttribute {
+  type: typeof SET_LOCK_TRANSPORT_ATTRIBUTE;
   payload: {
     id: string;
-    edgeId: string;
+    transportId: string;
     isLocked: boolean;
-    isLockedBy: string;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
   };
 }
 
-export interface LockUnlockInterfaceAttribute {
-  type: typeof LOCK_UNLOCK_INTERFACE_ATTRIBUTE;
+export interface SetLockInterfaceAttribute {
+  type: typeof SET_LOCK_INTERFACE_ATTRIBUTE;
   payload: {
     id: string;
-    edgeId: string;
+    interfaceId: string;
     isLocked: boolean;
-    isLockedBy: string;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
   };
 }
 
-export interface LockUnlockNodeTerminalAttribute {
-  type: typeof LOCK_UNLOCK_NODE_TERMINAL_ATTRIBUTE;
+export interface SetLockNodeTerminalAttribute {
+  type: typeof SET_LOCK_NODE_TERMINAL_ATTRIBUTE;
   payload: {
     id: string;
     terminalId: string;
     nodeId: string;
     isLocked: boolean;
-    isLockedBy: string;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
   };
 }
 
-export interface LockUnlockTransportTerminalAttribute {
-  type: typeof LOCK_UNLOCK_TRANSPORT_TERMINAL_ATTRIBUTE;
+export interface SetLockTransportTerminalAttribute {
+  type: typeof SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE;
   payload: {
     id: string;
     terminalId: string;
-    edgeId: string;
+    transportId: string;
     isLocked: boolean;
-    isLockedBy: string;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
   };
 }
 
-export interface LockUnlockInterfaceTerminalAttribute {
-  type: typeof LOCK_UNLOCK_INTERFACE_TERMINAL_ATTRIBUTE;
+export interface SetLockInterfaceTerminalAttribute {
+  type: typeof SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE;
   payload: {
     id: string;
     terminalId: string;
-    edgeId: string;
+    interfaceId: string;
     isLocked: boolean;
-    isLockedBy: string;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
   };
 }
 
-export interface LockUnlockCompositeAttribute {
-  type: typeof LOCK_UNLOCK_COMPOSITE_ATTRIBUTE;
+export interface SetLockCompositeAttribute {
+  type: typeof SET_LOCK_COMPOSITE_ATTRIBUTE;
   payload: {
     id: string;
     compositeId: string;
     nodeId: string;
     isLocked: boolean;
-    isLockedBy: string;
-  };
-}
-
-export interface LockUnlockAttributeFinished {
-  type: typeof LOCK_UNLOCK_ATTRIBUTE_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
+    isLockedStatusBy: string;
+    isLockedStatusDate: string;
   };
 }
 
@@ -498,22 +558,22 @@ export interface CreateSubProjectFinished {
   };
 }
 
+export interface UpdateNodeAction {
+  type: typeof UPDATE_NODE;
+  payload: Node;
+}
+export interface UpdateEdgeAction {
+  type: typeof UPDATE_EDGE;
+  payload: Edge;
+}
 export interface SetOffPageStatus {
   type: typeof SET_OFFPAGE_STATUS;
   payload: {
-    id: string;
-    required: boolean;
+    nodeId: string;
+    connectorId: string;
+    isRequired: boolean;
   };
 }
-
-export type LockUnlockAttributeUnion =
-  | LockUnlockNodeAttribute
-  | LockUnlockTransportAttribute
-  | LockUnlockInterfaceAttribute
-  | LockUnlockNodeTerminalAttribute
-  | LockUnlockTransportTerminalAttribute
-  | LockUnlockInterfaceTerminalAttribute
-  | LockUnlockCompositeAttribute;
 
 export type ProjectActionTypes =
   | FetchingProjectAction
@@ -555,19 +615,25 @@ export type ProjectActionTypes =
   | ImportProjectAction
   | ExportProjectFileActionFinished
   | ImportProjectActionFinished
-  | LockUnlockNode
-  | LockUnlockNodeFinished
-  | LockUnlockNodeAttribute
-  | LockUnlockNodeTerminalAttribute
-  | LockUnlockTransportTerminalAttribute
-  | LockUnlockInterfaceTerminalAttribute
-  | LockUnlockTransportAttribute
-  | LockUnlockInterfaceAttribute
-  | LockUnlockCompositeAttribute
-  | LockUnlockAttributeFinished
+  | LockNode
+  | LockNodeFinished
+  | SetLockNodeAttribute
+  | LockEdge
+  | LockEdgeFinished
+  | SetLockNode
+  | SetLockEdge
+  | SetLockNodeTerminalAttribute
+  | SetLockTransportTerminalAttribute
+  | SetLockInterfaceTerminalAttribute
+  | SetLockTransportAttribute
+  | SetLockInterfaceAttribute
+  | SetLockCompositeAttribute
+  | LockAttributeFinished
   | CommitProject
   | CommitProjectFinished
   | ChangeNodeUpdated
   | CreateSubProject
   | CreateSubProjectFinished
+  | UpdateNodeAction
+  | UpdateEdgeAction
   | SetOffPageStatus;
