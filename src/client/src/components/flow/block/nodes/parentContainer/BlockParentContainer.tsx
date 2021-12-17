@@ -26,7 +26,7 @@ interface Props {
  * @returns a parent container with terminals menus and terminals. The component serves as a container for the
  * parent node's child nodes.
  */
-const BlockParentComponent = ({
+const BlockParentContainer = ({
   node,
   size,
   color,
@@ -65,4 +65,4 @@ const BlockParentComponent = ({
   );
 };
 
-export default BlockParentComponent;
+export default BlockParentContainer;
