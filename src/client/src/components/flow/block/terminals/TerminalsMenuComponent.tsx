@@ -36,8 +36,8 @@ const TerminalsMenuComponent = ({
   isParent,
   showMenuButton = true,
 }: Props) => {
-  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) && !IsPartOf(t));
-  const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) && !IsPartOf(t));
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
 
   return (
     <>
@@ -66,7 +66,7 @@ const TerminalsMenuComponent = ({
           hasActiveTerminals={inputTerminals.some((conn) => conn.visible)}
           onClick={onClick}
           onBlur={() => Click.OnBlur(setShowInputMenu, showInputMenu)}
-          IsInput
+          isInput
         />
       )}
       {showOutputMenu && (

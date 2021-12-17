@@ -40,7 +40,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   // Update position relative to ParentBlockNode
   useEffect(() => {
     UpdateOffPagePosition(node, parentBlockNode, terminal, size, dispatch);
-  }, [size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
+  }, [node?.positionBlockX, size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
 
   if (!node) return null;
 

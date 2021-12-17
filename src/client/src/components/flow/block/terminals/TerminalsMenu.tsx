@@ -10,7 +10,7 @@ interface Props {
   node: Node;
   size: BlockNodeSize;
   isParent: boolean;
-  IsInput?: boolean;
+  isInput?: boolean;
   terminals: Connector[];
   electro: boolean;
   hasActiveTerminals: boolean;
@@ -23,12 +23,12 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenu = ({ node, size, isParent, IsInput, terminals, electro, hasActiveTerminals, onClick, onBlur }: Props) => (
+const TerminalsMenu = ({ node, size, isParent, isInput, terminals, electro, hasActiveTerminals, onClick, onBlur }: Props) => (
   <TerminalsBox
     id={"terminals-dropdown-" + node.id}
     tabIndex={0}
     isParent={isParent}
-    isInput={IsInput}
+    isInput={isInput}
     onBlur={onBlur}
     color={GetAspectColor(node, AspectColorType.Selected)}
     xPos={SetMenuXPos(isParent, electro, hasActiveTerminals, size)}

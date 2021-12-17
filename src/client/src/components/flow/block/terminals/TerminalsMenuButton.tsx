@@ -13,9 +13,9 @@ interface Props {
 }
 
 /**
- * Component for the MenuButton that displays the drop-down menu for terminals.
+ * Component for the MenuButton for TerminalsMenu.
  * @param interface
- * @returns a clickable box.
+ * @returns a clickable button that toggles the display of the terminals menu.
  */
 const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminals, onClick }: Props) => (
   <TerminalsButtonBox
