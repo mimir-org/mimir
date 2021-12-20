@@ -1,0 +1,45 @@
+version: "3.2"
+
+services:
+  client:
+    build:
+      context: ./src/client
+      args:
+        ENVIR: docker
+    ports:
+      - "3000:80"
+    networks:
+      - test_network
+
+  server:
+    build: ./src/service
+    ports:
+      - "5000:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+    networks:
+      - test_network
+    depends_on:
+      - mssql
+
+  mssql:
+    image: "mcr.microsoft.com/mssql/server:2017-CU8-ubuntu"
+    hostname: "mssql"
+    container_name: mssql
+    volumes:
+      - mssql:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=P4ssw0rd1
+      - MSSQL_PID=Standard
+    restart: unless-stopped
+    networks:
+      - test_network
+
+volumes:
+  mssql:
+    driver: local
+
+networks:
+  test_network:
+    driver: bridge
