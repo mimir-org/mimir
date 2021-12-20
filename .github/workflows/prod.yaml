@@ -37,7 +37,7 @@ jobs:
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      respository: mimir-client-2
+      repository: mimir-client-2
       tag: latest
       context: ./src/client
       file: ./src/client/DockerFile
@@ -56,7 +56,7 @@ jobs:
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      respository: mimir-server-2
+      repository: mimir-server-2
       tag: latest
       context: ./src/server
       file: ./src/server/DockerFile
