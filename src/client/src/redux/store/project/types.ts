@@ -36,7 +36,7 @@ export const CHANGE_INTERFACE_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_ATTRIBUTE_VALU
 export const CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE";
 export const CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE";
 export const CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE";
-export const CHANGE_COMPOSITE_ATTRIBUTE_VALUE = "CHANGE_COMPOSITE_ATTRIBUTE_VALUE";
+export const CHANGE_SIMPLE_ATTRIBUTE_VALUE = "CHANGE_SIMPLE_ATTRIBUTE_VALUE";
 export const DELETE_PROJECT_ERROR = "DELETE_PROJECT_ERROR";
 export const CHANGE_ACTIVE_CONNECTOR = "CHANGE_ACTIVE_CONNECTOR";
 export const EXPORT_PROJECT_TO_FILE = "EXPORT_PROJECT_TO_FILE";
@@ -54,7 +54,7 @@ export const SET_LOCK_EDGE = "SET_LOCK_EDGE";
 export const SET_LOCK_NODE_ATTRIBUTE = "SET_LOCK_NODE_ATTRIBUTE";
 export const SET_LOCK_TRANSPORT_ATTRIBUTE = "SET_LOCK_TRANSPORT_ATTRIBUTE";
 export const SET_LOCK_INTERFACE_ATTRIBUTE = "SET_LOCK_INTERFACE_ATTRIBUTE";
-export const SET_LOCK_COMPOSITE_ATTRIBUTE = "SET_LOCK_COMPOSITE_ATTRIBUTE";
+export const SET_LOCK_SIMPLE_ATTRIBUTE = "SET_LOCK_SIMPLE_ATTRIBUTE";
 export const SET_LOCK_NODE_TERMINAL_ATTRIBUTE = "SET_LOCK_NODE_TERMINAL_ATTRIBUTE";
 export const SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE = "SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE";
@@ -321,14 +321,14 @@ export interface ChangeInterfaceTerminalAttributeValue {
     terminalId: string;
   };
 }
-export interface ChangeCompositeAttributeValue {
-  type: typeof CHANGE_COMPOSITE_ATTRIBUTE_VALUE;
+export interface ChangeSimpleAttributeValue {
+  type: typeof CHANGE_SIMPLE_ATTRIBUTE_VALUE;
   payload: {
     id: string;
     value: string;
     unitId: string;
     nodeId: string;
-    compositeId: string;
+    simpleId: string;
   };
 }
 
@@ -520,11 +520,11 @@ export interface SetLockInterfaceTerminalAttribute {
   };
 }
 
-export interface SetLockCompositeAttribute {
-  type: typeof SET_LOCK_COMPOSITE_ATTRIBUTE;
+export interface SetLockSimpleAttribute {
+  type: typeof SET_LOCK_SIMPLE_ATTRIBUTE;
   payload: {
     id: string;
-    compositeId: string;
+    simpleId: string;
     nodeId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
@@ -608,7 +608,7 @@ export type ProjectActionTypes =
   | ChangeNodeTerminalAttributeValue
   | ChangeTransportTerminalAttributeValue
   | ChangeInterfaceTerminalAttributeValue
-  | ChangeCompositeAttributeValue
+  | ChangeSimpleAttributeValue
   | DeleteProjectErrorAction
   | ChangeActiveConnector
   | ExportProjectFileAction
@@ -627,7 +627,7 @@ export type ProjectActionTypes =
   | SetLockInterfaceTerminalAttribute
   | SetLockTransportAttribute
   | SetLockInterfaceAttribute
-  | SetLockCompositeAttribute
+  | SetLockSimpleAttribute
   | LockAttributeFinished
   | CommitProject
   | CommitProjectFinished

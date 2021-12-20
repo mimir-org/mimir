@@ -1,21 +1,21 @@
 import {
   Edge,
   Node,
-  NODE_KIND,
-  EDGE_KIND,
   Transport,
   Interface,
   Connector,
+  Simple,
+  CreateLibraryType,
+  Attribute,
+  EDGE_KIND,
+  NODE_KIND,
   TRANSPORT_KIND,
   INTERFACE_KIND,
   CONNECTOR_KIND,
-  Composite,
-  CreateLibraryType,
+  SIMPLE_KIND,
   CREATE_LIBRARY_KIND,
-  Attribute,
   ATTRIBUTE_KIND,
 } from "../../../models";
-import { COMPOSITE_KIND } from "../../../models/classes/Composite";
 
 export const IsNode = (element: any): element is Node => element?.kind === NODE_KIND;
 
@@ -27,7 +27,7 @@ export const IsInterface = (element: any): element is Interface => element?.kind
 
 export const IsConnector = (element: any): element is Connector => element?.kind === CONNECTOR_KIND;
 
-export const IsComposite = (element: any): element is Composite => element?.kind === COMPOSITE_KIND;
+export const IsSimple = (element: any): element is Simple => element?.kind === SIMPLE_KIND;
 
 export const IsCreateLibraryType = (element: any): element is CreateLibraryType => element?.kind === CREATE_LIBRARY_KIND;
 

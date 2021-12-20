@@ -3,7 +3,7 @@ import { BlobData, Project } from "../../models";
 import { GetInspectorColor, GetInspectorHeaderText } from "./helpers";
 import { Menu } from "./styled";
 import { InspectorTabs } from ".";
-import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
+import { AttributeLikeItem, SimpleLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { Action, Dispatch } from "redux";
 import { InspectorButtonRow } from "./";
 
@@ -22,7 +22,7 @@ interface Props {
   onToggle?: Function;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
-  compositeLikeItems?: CompositeLikeItem[];
+  simpleLikeItems?: SimpleLikeItem[];
   icons?: BlobData[];
 }
 
@@ -42,7 +42,7 @@ const InspectorHeader = ({
   icons,
   attributeLikeItems,
   terminalLikeItems,
-  compositeLikeItems,
+  simpleLikeItems,
 }: Props) => {
   return (
     <Menu id="InspectorHeader" color={GetInspectorColor(element)}>
@@ -52,7 +52,7 @@ const InspectorHeader = ({
         activeTabIndex={activeTabIndex}
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
-        compositeLikeItems={compositeLikeItems}
+        simpleLikeItems={simpleLikeItems}
         changeInspectorTabAction={changeInspectorTabAction}
         inspectorRef={inspectorRef}
         isInspectorOpen={isInspectorOpen}
