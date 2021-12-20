@@ -32,6 +32,42 @@ jobs:
           echo "Tag: ${{ steps.release.outputs.new_tag }}"
           echo "Version: ${{ steps.release.outputs.new_version }}"
 
+  build-client-latest-2:
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    needs: create-release
+    if: ${{needs.create-release.outputs.tag!=''}}
+    with:
+      respository: mimir-client-2
+      tag: latest
+      context: ./src/client
+      file: ./src/client/DockerFile
+      target: final
+      build_args: |
+        ENVIR=prod
+      hash_files_template: '**/package-lock.json'
+      push: true
+    secrets:
+      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
+      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
+      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
+
+  build-server-latest-2:
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    needs: create-release
+    if: ${{needs.create-release.outputs.tag!=''}}
+    with:
+      respository: mimir-server-2
+      tag: latest
+      context: ./src/server
+      file: ./src/server/DockerFile
+      target: final
+      hash_files_template: '**/*.csproj'
+      push: true
+    secrets:
+      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
+      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
+      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
+
   build-client-latest:
     uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
     needs: create-release
