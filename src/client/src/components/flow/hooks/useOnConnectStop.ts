@@ -3,7 +3,7 @@ import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage"
 import { Project, Node } from "../../../models";
 import { IsOffPage } from "../../../helpers";
 import { GetParent, IsOutputTerminal } from "../helpers";
-import { CreateOffPageNode } from "../block/nodes/helpers";
+import { CreateOffPageNode } from "../block/nodes/helpers/offPage";
 
 const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, secondaryNode: boolean, dispatch: any) => {
   e.preventDefault();
@@ -25,7 +25,8 @@ const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, se
     );
 
     if (isOffPageDrop) {
-      CreateOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, true);
+      const isRequired = true;
+      CreateOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, isRequired);
       SaveEventData(null, "edgeEvent");
     }
   }

@@ -1,6 +1,6 @@
-import { IsOffPage } from "../../../../../helpers";
-import { Connector, Edge } from "../../../../../models";
-import { IsInputTerminal } from "../../../helpers";
+import { IsOffPage } from "../../../../../../helpers";
+import { Connector, Edge } from "../../../../../../models";
+import { IsInputTerminal } from "../../../../helpers";
 
 const HasOffPageNode = (edges: Edge[], connector: Connector) => {
   let existingEdge: Edge;

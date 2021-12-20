@@ -1,5 +1,5 @@
-export { ReactComponent as OffPageOutputIcon } from "./offpageicon.svg";
-export { ReactComponent as OffPageInputIcon } from "./offpageinputicon.svg";
+export { ReactComponent as OffPageRequiredOutputIcon } from "./requiredOutputIcon.svg";
+export { ReactComponent as OffPageRequiredInputIcon } from "./requiredInputIcon.svg";
 
-export { ReactComponent as OffPageOutputCompleteIcon } from "./offpageCompleteIcon.svg";
-export { ReactComponent as OffPageInputCompleteIcon } from "./offpageInputCompleteIcon.svg";
+export { ReactComponent as OffPageConnectedOutputIcon } from "./connectedOutputIcon.svg";
+export { ReactComponent as OffPageConnectedInputIcon } from "./connectedInputIcon.svg";

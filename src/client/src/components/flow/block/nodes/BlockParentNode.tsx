@@ -75,15 +75,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         isParent
       />
       {hasActiveTerminals && (
-        <HandleComponent
-          nodes={nodes}
-          node={node}
-          size={size}
-          terminals={terminals}
-          electro={electro}
-          dispatch={dispatch}
-          isParent
-        />
+        <HandleComponent node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
       )}
     </>
   );

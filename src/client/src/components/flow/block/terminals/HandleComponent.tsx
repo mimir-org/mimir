@@ -9,9 +9,9 @@ import { IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { BlockNodeSize } from "../../../../models/project";
+import { useAppSelector, nodeSelector } from "../../../../redux/store";
 
 interface Props {
-  nodes: Node[];
   node: Node;
   size: BlockNodeSize;
   terminals: Connector[];
@@ -19,16 +19,16 @@ interface Props {
   isParent?: boolean;
   electro?: boolean;
   offPage?: boolean;
-  isVisible?: boolean;
 }
 
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param interface
- * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
+ * @returns a Flow Handle element with an icon that corresponds with the terminal type.
  */
-const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, electro, offPage, isVisible = true }: Props) => {
-  const [visible, setVisible] = useState(isVisible);
+const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, offPage }: Props) => {
+  const nodes = useAppSelector(nodeSelector);
+  const [visible, setVisible] = useState(!offPage);
   const className = "react-flow__handle-block";
   const updateNodeInternals = useUpdateNodeInternals();
 

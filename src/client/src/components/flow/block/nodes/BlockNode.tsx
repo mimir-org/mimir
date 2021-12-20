@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import * as selectors from "./helpers/BlockNodeSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
 import { TerminalsMenuComponent, HandleComponent } from "../terminals";
-import { HasOffPageNode, CreateOffPageNode, GetBlockNodeType, SetNodeSize } from "./helpers";
+import { AddRequiredOffPageNode, AddConnectedOffPageNode } from "./helpers/offPage";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
 import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
+import { GetBlockNodeType, SetNodeSize } from "./helpers";
 
 /**
  * Component for a child Node in BlockView.
@@ -28,23 +29,20 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const initialSize = { width: Size.Node_Width, height: Size.Node_Height } as BlockNodeSize;
   const [size, setSize]: [BlockNodeSize, any] = useState(initialSize);
 
-  const nodes = useAppSelector(nodeSelector);
-  const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
-  const electro = useAppSelector(electroSelector);
+  const nodes = useAppSelector(selectors.nodeSelector);
+  const edges = useAppSelector(selectors.edgeSelector);
+  const blockElements = useAppSelector(selectors.blockElementsSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const electro = useAppSelector(selectors.electroSelector);
   const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
-  // Check for connectors that require OffPage
-  useEffect(() => {
-    node?.connectors.forEach((conn) => {
-      if (conn.isRequired) {
-        const offPageExists = HasOffPageNode(edges, conn);
-        if (!offPageExists) CreateOffPageNode(node, conn, { x: size.width, y: node?.positionBlockY }, dispatch, true);
-      }
-    });
-  }, []);
+  // Check for elements that require OffPage
+  // useEffect(() => {
+  //   AddRequiredOffPageNode(node, edges, size, dispatch);
+  //   AddConnectedOffPageNode(node, edges, size, blockElements, secondaryNode, dispatch);
+  // }, []);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
@@ -71,7 +69,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
       onMouseLeave={() => OnMouseOut(setShowMenuButton)}
     >
       <BlockLogoComponent node={node} />
-
       <TerminalsMenuComponent
         node={node}
         terminals={terminals}
@@ -85,7 +82,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         showMenuButton={showMenuButton}
       />
       {hasActiveTerminals && (
-        <HandleComponent nodes={nodes} node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />
+        <HandleComponent node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />
       )}
     </NodeBox>
   );

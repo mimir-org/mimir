@@ -69,11 +69,12 @@ const handleOffPageDelete = (node: Node, project: Project, dispatch: Dispatch) =
 
   const offPageEdge = project.edges.find(
     (x) =>
-      (x.fromConnector.nodeId === parentNode.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === node.id) ||
-      (x.toConnector.nodeId === parentNode.id && IsTransport(x.toConnector) && x.fromConnector.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNode.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
   );
 
-  const parentNodeConnector = offPageEdge.fromConnector.nodeId === node.id ? offPageEdge.toConnector : offPageEdge.fromConnector;
+  const parentNodeConnector =
+    offPageEdge?.fromConnector?.nodeId === node.id ? offPageEdge?.toConnector : offPageEdge?.fromConnector;
 
   if (offPageEdge) dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
 };
