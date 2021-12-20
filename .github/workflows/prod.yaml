@@ -15,7 +15,7 @@ jobs:
 
       - name: Bump version and push tag
         id: tag_version
-        uses: mimir-actions/generate-release-tag-action@main
+        uses: mimir-org/mimir-actions/generate-release-tag-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prefix: "v"
