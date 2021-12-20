@@ -12,19 +12,32 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-client:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
-      environment: stage
+      repository: mimir-client
       tag: stage
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: final
+      build_args: |
+        ENVIR=stage
+      hash_files_template: '**/package-lock.json'
+      push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
   build-server:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-server.yaml@main
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
+      repository: mimir-server
       tag: stage
+      context: ./src/service
+      file: ./src/service/Dockerfile
+      target: final
+      hash_files_template: '**/*.csproj'
+      push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
