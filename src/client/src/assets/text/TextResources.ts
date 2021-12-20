@@ -118,6 +118,14 @@ const TextResources = {
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
 
+  // ExplorerModule
+  Explorer_Lock_Node: "Lock node",
+  Explorer_Unlock_Node: "Unlock node",
+  Explorer_Hide_Node: "Hide node",
+  Explorer_Show_Node: "Show node",
+  Explorer_Open_Group: "Open group",
+  Explorer_Close_Group: "Close group",
+
   // TypeEditorModule
   TypeEditor: "Type Editor",
   TypeEditor_New_Type: "New Type",
