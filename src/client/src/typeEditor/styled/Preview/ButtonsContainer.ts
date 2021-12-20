@@ -6,16 +6,22 @@ interface Props {
   disabled?: boolean;
 }
 
-const SaveButton = styled.button<Props>`
-  width: 151px;
+const ButtonsContainer = styled.div<Props>`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  button {
+    min-width: 151px;
   height: 34px;
+  margin-bottom: 0px;
   display: flex;
   flex-direction: row;
   align-items: center;
   background: ${Color.White};
   border: 2px solid ${Color.BlueMagenta};
   border-radius: 5px;
-  padding: 0px 20px;
+  padding: 0px 16px;
   white-space: nowrap;
   cursor: pointer;
   font-family: ${FontType.Standard};
@@ -23,13 +29,9 @@ const SaveButton = styled.button<Props>`
   color: ${Color.Black};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 
-  .icon {
-    padding: 0px 6px;
-  }
-
-  &:hover {
-    border: 2px solid ${Color.BlueMagenta};
+  .button-text {
+    padding: 0 !important;
   }
 `;
 
-export default SaveButton;
+export default ButtonsContainer;
