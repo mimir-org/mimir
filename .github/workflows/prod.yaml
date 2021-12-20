@@ -40,7 +40,7 @@ jobs:
       repository: mimir-client-2
       tag: latest
       context: ./src/client
-      file: ./src/client/DockerFile
+      file: ./src/client/Dockerfile
       target: final
       build_args: |
         ENVIR=prod
@@ -59,7 +59,7 @@ jobs:
       repository: mimir-server-2
       tag: latest
       context: ./src/server
-      file: ./src/server/DockerFile
+      file: ./src/server/Dockerfile
       target: final
       hash_files_template: '**/*.csproj'
       push: true
