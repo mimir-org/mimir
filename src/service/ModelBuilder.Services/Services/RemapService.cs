@@ -478,6 +478,7 @@ namespace Mb.Services.Services
                         var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
                         attribute.Id = attributeId;
                         attribute.Iri = attributeIri;
+                        attribute.NodeId = newNodeId;
                         
                         if(attribute.SimpleId == simple.Id)
                             attribute.SimpleId = simpleId;
