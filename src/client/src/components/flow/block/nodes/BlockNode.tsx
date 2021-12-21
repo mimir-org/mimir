@@ -5,7 +5,7 @@ import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
 import { TerminalsMenuComponent, HandleComponent } from "../terminals";
-import { AddRequiredOffPageNode, AddConnectedOffPageNode } from "./helpers/offPage";
+import { HandleRequiredOffPageNode, HandleConnectedOffPageNode } from "./helpers/offPage";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
@@ -39,10 +39,10 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const hasActiveTerminals = terminals.some((conn) => conn.visible);
 
   // Check for elements that require OffPage
-  // useEffect(() => {
-  //   AddRequiredOffPageNode(node, edges, size, dispatch);
-  //   AddConnectedOffPageNode(node, edges, size, blockElements, secondaryNode, dispatch);
-  // }, []);
+  useEffect(() => {
+    HandleRequiredOffPageNode(node, edges, size, dispatch);
+    HandleConnectedOffPageNode(node, edges, size, blockElements, secondaryNode, dispatch);
+  }, [secondaryNode]);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
