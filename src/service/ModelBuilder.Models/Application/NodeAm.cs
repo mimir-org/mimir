@@ -8,7 +8,7 @@ using Mb.Models.Extensions;
 
 namespace Mb.Models.Application
 {
-    public class NodeAm
+    public class NodeAm : IValidatableObject
     {
         public string Id { get; set; }
         public string Iri { get; set; }
@@ -89,5 +89,51 @@ namespace Mb.Models.Application
 
         [Required]
         public bool IsRoot { get; set; }
+
+        #region Validate
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (string.IsNullOrWhiteSpace(Id))
+                yield return new ValidationResult("Id is required", new List<string> { GetType().Name });
+
+            if (string.IsNullOrWhiteSpace(Iri))
+                yield return new ValidationResult("Iri is required", new List<string> { GetType().Name });
+
+            if (string.IsNullOrWhiteSpace(Name))
+                yield return new ValidationResult("Name is required", new List<string> { GetType().Name });
+
+            if (PositionBlockX < 0)
+                yield return new ValidationResult("PositionBlockX can't have a negative value", new List<string> { GetType().Name });
+
+            if (PositionX < 0)
+                yield return new ValidationResult("PositionX can't have a negative value", new List<string> { GetType().Name });
+
+            if (PositionBlockY < 0)
+                yield return new ValidationResult("PositionBlockY can't have a negative value", new List<string> { GetType().Name });
+
+            if (PositionY < 0)
+                yield return new ValidationResult("PositionY can't have a negative value", new List<string> { GetType().Name });
+
+            if (Created == null || string.IsNullOrWhiteSpace(Created.ToString()))
+                yield return new ValidationResult("Created (DateTime) is required", new List<string> { GetType().Name });
+
+            if (string.IsNullOrWhiteSpace(CreatedBy))
+                yield return new ValidationResult("CreatedBy is required", new List<string> { GetType().Name });
+
+            if (string.IsNullOrWhiteSpace(LibraryTypeId))
+                yield return new ValidationResult("LibraryTypeId is required", new List<string> { GetType().Name });
+
+            if (Aspect == Aspect.None)
+                yield return new ValidationResult("Aspect 'None' is not allowed", new List<string> { GetType().Name });
+
+            if (string.IsNullOrWhiteSpace(MasterProjectId))
+                yield return new ValidationResult("MasterProjectId is required", new List<string> { GetType().Name });
+
+            if (string.IsNullOrWhiteSpace(MasterProjectIri))
+                yield return new ValidationResult("MasterProjectIri is required", new List<string> { GetType().Name });
+        }
+
+        #endregion Validate
     }
 }
