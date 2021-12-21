@@ -540,8 +540,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
     }
-    case Types.CHANGE_COMPOSITE_ATTRIBUTE_VALUE: {
-      const { id, compositeId, nodeId, value, unitId } = action.payload;
+    case Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE: {
+      const { id, simpleId, nodeId, value, unitId } = action.payload;
 
       return {
         ...state,
@@ -551,11 +551,11 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
             n.id === nodeId
               ? {
                   ...n,
-                  composites: n.simples.map((comp) =>
-                    comp.id === compositeId
+                  simples: n.simples.map((simple) =>
+                    simple.id === simpleId
                       ? {
-                          ...comp,
-                          attributes: comp.attributes.map((attribute) =>
+                          ...simple,
+                          attributes: simple.attributes.map((attribute) =>
                             attribute.id === id
                               ? {
                                   ...attribute,
@@ -565,7 +565,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                               : attribute
                           ),
                         }
-                      : comp
+                      : simple
                   ),
                 }
               : n
@@ -842,8 +842,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_LOCK_COMPOSITE_ATTRIBUTE: {
-      const { id, compositeId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+    case Types.SET_LOCK_SIMPLE_ATTRIBUTE: {
+      const { id, simpleId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -853,17 +853,17 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
             n.id === nodeId
               ? {
                   ...n,
-                  composites: n.simples.map((comp) =>
-                    comp.id === compositeId
+                  simples: n.simples.map((simple) =>
+                    simple.id === simpleId
                       ? {
-                          ...comp,
-                          attributes: comp.attributes.map((attribute) =>
+                          ...simple,
+                          attributes: simple.attributes.map((attribute) =>
                             attribute.id === id
                               ? UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
                               : attribute
                           ),
                         }
-                      : comp
+                      : simple
                   ),
                 }
               : n

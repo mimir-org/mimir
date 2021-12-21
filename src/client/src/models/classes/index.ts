@@ -5,6 +5,6 @@ export { default as Connector, CONNECTOR_KIND } from "./Connector";
 export { default as Attribute, ATTRIBUTE_KIND } from "./Attribute";
 export { default as Transport, TRANSPORT_KIND } from "./Transport";
 export { default as Interface, INTERFACE_KIND } from "./Interface";
-export { default as Composite, COMPOSITE_KIND } from "./Composite";
+export { default as Simple, SIMPLE_KIND } from "./Simple";
 export { CreateLibraryType, CREATE_LIBRARY_KIND } from "./CreateLibraryType";
 export { default as WebSocket } from "./WebSocket";

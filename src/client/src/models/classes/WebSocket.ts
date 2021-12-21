@@ -11,7 +11,7 @@ import {
   setIsLockedNodeTerminalAttribute,
   setIsLockedTransportTerminalAttribute,
   setIsLockedTransportAttribute,
-  setIsLockedCompositeAttribute,
+  setIsLockedSimpleAttribute,
   setIsLockedNode,
   setIsLockedEdge,
   setIsLockedNodeAttribute,
@@ -147,7 +147,7 @@ class WebSocket {
       if (lockAttributeAm.terminalId) {
         this._dispatch(setIsLockedNodeTerminalAttribute(lockAttributeAm));
       } else if (lockAttributeAm.compositeId) {
-        this._dispatch(setIsLockedCompositeAttribute(lockAttributeAm));
+        this._dispatch(setIsLockedSimpleAttribute(lockAttributeAm));
       } else {
         this._dispatch(setIsLockedNodeAttribute(lockAttributeAm));
       }

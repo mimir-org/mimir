@@ -3,12 +3,12 @@ import { ListSearchBar } from "../../compLibrary";
 import { SearchIcon } from "../../assets/icons/common";
 import { ListType } from "../TypeEditorList";
 import { GetListFilter } from "./ListElements/helpers";
-import { Rds, AttributeType, CompositeType, PredefinedAttribute, TerminalTypeDict } from "../../models";
+import { Rds, AttributeType, SimpleType, PredefinedAttribute, TerminalTypeDict } from "../../models";
 
 interface Props {
   listType: ListType;
   placeHolder: string;
-  list: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  list: Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[];
   setlistItems: any;
 }
 
@@ -18,7 +18,7 @@ interface Props {
 const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
   const [searchString, setSearchString] = useState("");
 
-  const filterListItems = (): Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
+  const filterListItems = (): Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[] => {
     return searchString ? GetListFilter(searchString, listType, list) : list;
   };
 

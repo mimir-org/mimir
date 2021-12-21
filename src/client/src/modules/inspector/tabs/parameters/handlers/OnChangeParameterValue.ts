@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { IsComposite, IsConnector, IsEdge, IsInterface, IsNode, IsTransport } from "../../../helpers/IsType";
+import { IsSimple, IsConnector, IsEdge, IsInterface, IsNode, IsTransport } from "../../../helpers/IsType";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../types";
 import {
-  changeCompositeAttributeValue,
+  changeSimpleAttributeValue,
   changeInterfaceAttributeValue,
   changeInterfaceTerminalAttributeValue,
   changeNodeAttributeValue,
@@ -32,8 +32,8 @@ const OnChangeParameterValue = (
     dispatch(changeTransportTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unit));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsInterface(terminalParentElement)) {
     dispatch(changeInterfaceTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unit));
-  } else if (IsComposite(element) && IsNode(inspectorParentElement)) {
-    dispatch(changeCompositeAttributeValue(attributeId, element, inspectorParentElement, value, unit));
+  } else if (IsSimple(element) && IsNode(inspectorParentElement)) {
+    dispatch(changeSimpleAttributeValue(attributeId, element, inspectorParentElement, value, unit));
   }
 };
 
