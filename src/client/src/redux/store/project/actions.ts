@@ -5,7 +5,7 @@ import {
   Project,
   CommitPackage,
   Connector,
-  Composite,
+  Simple,
   ProjectFileAm,
   ProjectConverterAm,
   LockAttributeAm,
@@ -319,20 +319,20 @@ export function changeInterfaceTerminalAttributeValue(
   };
 }
 
-export function changeCompositeAttributeValue(
+export function changeSimpleAttributeValue(
   id: string,
-  composite: Composite,
+  simple: Simple,
   node: Node,
   value: string,
   unitId: string
-): Types.ChangeCompositeAttributeValue {
+): Types.ChangeSimpleAttributeValue {
   return {
-    type: Types.CHANGE_COMPOSITE_ATTRIBUTE_VALUE,
+    type: Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE,
     payload: {
       id,
       value,
       unitId,
-      compositeId: composite.id,
+      simpleId: simple.id,
       nodeId: node.id,
     },
   };
@@ -519,12 +519,12 @@ export function setIsLockedInterfaceTerminalAttribute(
   };
 }
 
-export function setIsLockedCompositeAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockCompositeAttribute {
+export function setIsLockedSimpleAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockSimpleAttribute {
   return {
-    type: Types.SET_LOCK_COMPOSITE_ATTRIBUTE,
+    type: Types.SET_LOCK_SIMPLE_ATTRIBUTE,
     payload: {
       id: lockAttributeAm.id,
-      compositeId: lockAttributeAm.compositeId,
+      simpleId: lockAttributeAm.compositeId,
       nodeId: lockAttributeAm.nodeId,
       isLocked: lockAttributeAm.isLocked,
       isLockedStatusBy: lockAttributeAm.isLockedStatusBy,

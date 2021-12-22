@@ -8,7 +8,7 @@ import {
   ConnectorType,
   RelationType,
   EnumBase,
-  Composite,
+  Simple,
   Transport,
   Interface,
   SelectType,
@@ -93,7 +93,7 @@ export interface NodeAm {
   symbol: string;
   connectors: ConnectorAm[];
   attributes: AttributeAm[];
-  simples: CompositeAm[];
+  simples: SimpleAm[];
   aspect: Aspect;
   isRoot: boolean;
   purpose: Purpose;
@@ -157,7 +157,7 @@ export interface TransportAm {
   created: Date;
   libraryTypeId: string;
 }
-export interface CompositeAm {
+export interface SimpleAm {
   id: string;
   name: string;
   semanticReference: string;
@@ -292,19 +292,19 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
   } as ConnectorAm;
 };
 
-const ConvertComposites = (composites: Composite[]): CompositeAm[] => {
-  let converted = [] as CompositeAm[];
+const ConvertSimples = (simples: Simple[]): SimpleAm[] => {
+  let converted = [] as SimpleAm[];
 
-  if (!composites) return converted;
+  if (!simples) return converted;
 
-  composites.forEach((composite) => {
+  simples.forEach((simple) => {
     const a = {
-      id: composite.id,
-      name: composite.name,
-      semanticReference: composite.semanticReference,
-      nodeId: composite.nodeId,
-      attributes: ConvertAttributes(composite.attributes),
-    } as CompositeAm;
+      id: simple.id,
+      name: simple.name,
+      semanticReference: simple.semanticReference,
+      nodeId: simple.nodeId,
+      attributes: ConvertAttributes(simple.attributes),
+    } as SimpleAm;
     converted.push(a);
   });
 
@@ -392,7 +392,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       symbol: node.symbol,
       connectors: ConvertConnectors(node.connectors),
       attributes: ConvertAttributes(node.attributes),
-      simples: ConvertComposites(node.simples),
+      simples: ConvertSimples(node.simples),
       aspect: node.aspect,
       isRoot: node.isRoot,
       purpose: node.purpose,

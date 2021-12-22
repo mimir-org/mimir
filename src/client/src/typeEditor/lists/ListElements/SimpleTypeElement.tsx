@@ -1,10 +1,10 @@
-import { CompositeType } from "../../../models";
+import { SimpleType } from "../../../models";
 import { ListElem } from "../../../compLibrary/list";
 import { CheckboxContainer, Label } from "../../inputs/CheckboxContainer";
 import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {
-  simpleType: CompositeType;
+  simpleType: SimpleType;
   onChange: OnPropertyChangeFunction;
   defaultValue?: string[];
 }
@@ -14,7 +14,7 @@ export const SimpleTypeElement = ({ simpleType, onChange, defaultValue }: Props)
     <CheckboxContainer
       id={simpleType.id}
       name={simpleType.name}
-      label={Label.compositeTypes}
+      label={Label.simpleTypes}
       defaultValue={defaultValue}
       onChange={onChange}
     />

@@ -13,7 +13,7 @@ const ResetRedux = (dispatch: any, key: keyof CreateLibraryType, value: any) => 
     dispatch(updateValue("attributeTypes", []));
   }
   if (key === "aspect" && !IsProduct(value)) {
-    dispatch(updateValue("compositeTypes", []));
+    dispatch(updateValue("simpleTypes", []));
   }
   if (key === "objectType" && IsObjectBlock(value)) {
     dispatch(updateValue("terminalTypeId", ""));

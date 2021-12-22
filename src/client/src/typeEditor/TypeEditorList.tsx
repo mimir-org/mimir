@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ListWrapper } from "../compLibrary/list";
 import { ListContent, ListSearch } from "./lists/";
 import { GetListLabel, GetFlexForListType } from "./helpers";
-import { AttributeType, CompositeType, CreateLibraryType, PredefinedAttribute, Rds, TerminalTypeDict } from "../models";
+import { AttributeType, SimpleType, CreateLibraryType, PredefinedAttribute, Rds, TerminalTypeDict } from "../models";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
 
 export enum ListType {
@@ -16,7 +16,7 @@ export enum ListType {
 
 export interface TypeEditorListProps {
   createLibraryType: CreateLibraryType;
-  items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  items: Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[];
   disabled?: boolean;
   listType: ListType;
   onPropertyChange?: OnPropertyChangeFunction;
