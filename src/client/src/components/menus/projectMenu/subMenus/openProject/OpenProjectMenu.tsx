@@ -38,7 +38,7 @@ export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
           <Button onClick={() => OnReturn(dispatch)} text={TextResources.Project_Cancel} />
           <OpenButton hasProject={hasProject}>
             <Button
-              onClick={hasProject ? () => OnOpen(projectId, dispatch) : () => null}
+              onClick={hasProject ? () => OnOpen(projectId, projectState.project, dispatch) : () => null}
               text={TextResources.Project_Open}
               icon={RightArrowIcon}
             />
