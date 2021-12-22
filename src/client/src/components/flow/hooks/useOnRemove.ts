@@ -8,7 +8,7 @@ import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
-import { GetParent, IsTransport } from "../helpers";
+import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } from "../helpers";
 
 const useOnRemove = (
   elements: Elements,
@@ -76,7 +76,25 @@ const handleOffPageDelete = (node: Node, project: Project, dispatch: Dispatch) =
   const parentNodeConnector =
     offPageEdge?.fromConnector?.nodeId === node.id ? offPageEdge?.toConnector : offPageEdge?.fromConnector;
 
-  if (offPageEdge) dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
+  const connectedEdge = project.edges.find((edge) => edge.fromConnectorId === parentNodeConnector.id && !IsOffPage(edge.toNode));
+
+  if (offPageEdge && !connectedEdge) {
+    // When deleting a Required OffPageNode, the parent's connector is reset to not required
+    dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
+  }
+
+  if (connectedEdge) {
+    // When deleting a Connected OffPageNode, the actual edge that the OffPageNode refers to is also deleted
+    dispatch(removeEdge(connectedEdge.id));
+    dispatch(removeEdge(offPageEdge.id));
+
+    const partOfEdge = project.edges.find(
+      (x) =>
+        (x.fromConnector?.nodeId === parentNode.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+        (x.toConnector?.nodeId === parentNode.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+    );
+    if (partOfEdge) dispatch(removeEdge(partOfEdge.id));
+  }
 };
 
 const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
