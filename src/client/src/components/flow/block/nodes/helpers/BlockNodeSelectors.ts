@@ -1,7 +1,1 @@
-export {
-  edgeSelector,
-  electroSelector,
-  nodeSelector,
-  secondaryNodeSelector,
-  blockElementsSelector,
-} from "../../../../../redux/store";
+export { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../../redux/store";

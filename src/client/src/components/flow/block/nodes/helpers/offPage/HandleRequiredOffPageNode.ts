@@ -1,4 +1,4 @@
-import { CreateRequiredOffPageNode, HasOffPageNode } from ".";
+import { CreateRequiredOffPageNode, HasRequiredOffPageNode } from ".";
 import { Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 
@@ -7,7 +7,7 @@ const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSiz
 
   node?.connectors.forEach((conn) => {
     if (conn.isRequired) {
-      const offPageExists = HasOffPageNode(edges, conn);
+      const offPageExists = HasRequiredOffPageNode(edges, conn);
       if (!offPageExists) CreateRequiredOffPageNode(node, conn, { x: size.width, y: node?.positionBlockY }, dispatch, isRequired);
     }
   });
