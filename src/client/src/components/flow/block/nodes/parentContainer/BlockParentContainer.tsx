@@ -6,7 +6,7 @@ import { Color } from "../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../assets/icons/resize";
 import { useRef } from "react";
 import { useResizeParentNode } from "./hooks";
-import { ParentBannerComponent } from ".";
+import { BlockParentBanner } from ".";
 import { BlockNodeSize } from "../../../../../models/project";
 
 interface Props {
@@ -23,9 +23,10 @@ interface Props {
 /**
  * Component for the parent block node in BlockView.
  * @param interface
- * @returns a container that sits on top of a Flow node.
+ * @returns a parent container with terminals menus and terminals. The component serves as a container for the
+ * parent node's child nodes.
  */
-const ParentContainerComponent = ({
+const BlockParentContainer = ({
   node,
   size,
   color,
@@ -41,7 +42,7 @@ const ParentContainerComponent = ({
 
   return (
     <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
-      <ParentBannerComponent
+      <BlockParentBanner
         node={node}
         color={color}
         hasTerminals={hasTerminals}
@@ -64,4 +65,4 @@ const ParentContainerComponent = ({
   );
 };
 
-export default ParentContainerComponent;
+export default BlockParentContainer;

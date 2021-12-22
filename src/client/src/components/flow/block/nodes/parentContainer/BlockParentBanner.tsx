@@ -18,7 +18,7 @@ interface Props {
  * @param interface
  * @returns a menu banner with logo, name and arrows for navigation.
  */
-const ParentBannerComponent = ({ node, color, hasTerminals, isSecondaryNode, onParentClick, onChildClick }: Props) => {
+const BlockParentBanner = ({ node, color, hasTerminals, isSecondaryNode, onParentClick, onChildClick }: Props) => {
   const showArrowDown = HasChildren(node);
   const showArrowUp = !IsAspectNode(node);
   const prefix = GetRdsPrefix(node);
@@ -49,4 +49,4 @@ const ParentBannerComponent = ({ node, color, hasTerminals, isSecondaryNode, onP
   );
 };
 
-export default ParentBannerComponent;
+export default BlockParentBanner;

@@ -1,10 +1,18 @@
-import { Connector, Node } from "../../../../../models";
-import { addNode, createEdge, setOffPageStatus } from "../../../../../redux/store/project/actions";
+import { Connector, Node } from "../../../../../../models";
+import { addNode, createEdge, setOffPageStatus } from "../../../../../../redux/store/project/actions";
 import { OffPageData } from "./CreateOffPageObject";
-import { CreateOffPageObject } from "./";
-import { Position } from "../../../../../models/project";
+import { CreateOffPageObject } from ".";
+import { Position } from "../../../../../../models/project";
 
-const CreateOffPageNode = (
+/**
+ * Component to create a required OffPageNode. The OffPageNode is created with a partOf edge to its parent, and a transport edge.
+ * @param sourceNode
+ * @param sourceConnector
+ * @param position
+ * @param dispatch
+ * @param isRequired
+ */
+const CreateRequiredOffPageNode = (
   sourceNode: Node,
   sourceConnector: Connector,
   position: Position,
@@ -25,4 +33,4 @@ const CreateOffPageNode = (
   dispatch(setOffPageStatus(sourceNode.id, sourceConnector.id, isRequired));
 };
 
-export default CreateOffPageNode;
+export default CreateRequiredOffPageNode;

@@ -1,6 +1,6 @@
-import { CreateId, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../../helpers";
-import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, EDGE_KIND, Node, RelationType } from "../../../../../models";
-import { Position } from "../../../../../models/project";
+import { CreateId, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../../../helpers";
+import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, EDGE_KIND, Node, RelationType } from "../../../../../../models";
+import { Position } from "../../../../../../models/project";
 
 export interface OffPageObject {
   node: Node;
@@ -17,7 +17,7 @@ export interface OffPageData {
 /**
  * Component to create an OffPage object.
  * @param data
- * @returns the data type OffPageObject.
+ * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
 const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
@@ -46,15 +46,15 @@ const CreateOffPageObject = (data: OffPageData) => {
     name: "OffPageInput",
     type: ConnectorType.Input,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector.terminalCategory,
-    terminalCategoryId: sourceConnector.terminalCategoryId,
-    terminalTypeId: sourceConnector.terminalTypeId,
+    terminalCategory: sourceConnector?.terminalCategory,
+    terminalCategoryId: sourceConnector?.terminalCategoryId,
+    terminalTypeId: sourceConnector?.terminalTypeId,
     attributes: [],
     semanticReference: "",
     inputOrder: 0,
     outputOrder: 0,
     visible: true,
-    color: sourceConnector.color,
+    color: sourceConnector?.color,
     kind: CONNECTOR_KIND,
   } as Connector;
 
@@ -63,15 +63,15 @@ const CreateOffPageObject = (data: OffPageData) => {
     name: "OffPageOutput",
     type: ConnectorType.Output,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector.terminalCategory,
-    terminalCategoryId: sourceConnector.terminalCategoryId,
-    terminalTypeId: sourceConnector.terminalTypeId,
+    terminalCategory: sourceConnector?.terminalCategory,
+    terminalCategoryId: sourceConnector?.terminalCategoryId,
+    terminalTypeId: sourceConnector?.terminalTypeId,
     attributes: [],
     semanticReference: "",
     inputOrder: 0,
     outputOrder: 0,
     visible: true,
-    color: sourceConnector.color,
+    color: sourceConnector?.color,
     kind: CONNECTOR_KIND,
   } as Connector;
 

@@ -8,7 +8,7 @@ import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
-import { GetParent, IsTransport } from "../helpers";
+import { GetParent, IsPartOf, IsTransport } from "../helpers";
 
 const useOnRemove = (
   elements: Elements,
@@ -67,15 +67,37 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
 const handleOffPageDelete = (node: Node, project: Project, dispatch: Dispatch) => {
   const parentNode = GetParent(node);
 
-  const offPageEdge = project.edges.find(
+  const offPageTransportEdge = project.edges.find(
     (x) =>
-      (x.fromConnector.nodeId === parentNode.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === node.id) ||
-      (x.toConnector.nodeId === parentNode.id && IsTransport(x.toConnector) && x.fromConnector.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNode.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
   );
 
-  const parentNodeConnector = offPageEdge.fromConnector.nodeId === node.id ? offPageEdge.toConnector : offPageEdge.fromConnector;
+  const offPagepartOfEdge = project.edges.find(
+    (x) =>
+      (x.fromConnector?.nodeId === parentNode.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+  );
 
-  if (offPageEdge) dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
+  const parentNodeConnector =
+    offPageTransportEdge?.fromConnector?.nodeId === node.id
+      ? offPageTransportEdge?.toConnector
+      : offPageTransportEdge?.fromConnector;
+
+  const connectedEdge = project.edges.find((edge) => edge.fromConnectorId === parentNodeConnector.id && !IsOffPage(edge.toNode));
+
+  if (offPageTransportEdge && !connectedEdge) {
+    // When deleting a Required OffPageNode, the parent's connector is reset to not required
+    dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
+  }
+
+  if (connectedEdge) {
+    // When deleting a Connected OffPageNode, the actual edge that the OffPageNode refers to is also deleted
+    dispatch(removeEdge(connectedEdge.id));
+    dispatch(removeEdge(offPageTransportEdge.id));
+  }
+
+  if (offPagepartOfEdge) dispatch(removeEdge(offPagepartOfEdge.id));
 };
 
 const isElementEdge = (edgeTypes: string[], element: FlowElement) => {

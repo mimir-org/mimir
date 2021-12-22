@@ -3,11 +3,11 @@ import * as selectors from "./helpers/selectors";
 import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { OffPageInputIcon, OffPageOutputIcon } from "../../../../assets/icons/offpage";
 import { HandleComponent } from "../terminals";
 import { OffPageBox } from "./styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
-import { UpdateOffPagePosition } from "./helpers";
+import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers/offPage";
+import { Connector } from "../../../../models";
 
 /**
  * Component for an offpage node in BlockView
@@ -21,45 +21,36 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
-
-  const nodes = project?.nodes;
-  const node = nodes?.find((n) => n.id === data.id);
   const type = "BlockOffPageNode-";
 
-  const offPageParent = GetParent(node);
+  const offPageInputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
+  const offPageOutputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
+
+  const edge = project?.edges?.find((x) => IsTransport(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
+  const isOffPageNodeTarget = edge?.toNodeId === data.id;
+  const offPageTerminal = isOffPageNodeTarget ? offPageInputTerminal : offPageOutputTerminal;
+
+  const offPageParent = GetParent(data);
   const parentBlockNode = GetParent(offPageParent);
 
-  const inputConn = node?.connectors.find((conn) => IsInputTerminal(conn) && IsTransport(conn));
-  const outputConn = node?.connectors.find((conn) => IsOutputTerminal(conn) && IsTransport(conn));
-  const edgeInputConn = project?.edges?.find((edge) => edge.toConnector?.id === inputConn?.id)?.toConnector;
-  const edgeOutputConn = project?.edges?.find((edge) => edge.fromConnector?.id === outputConn?.id)?.fromConnector;
+  const parentNodeTerminal = isOffPageNodeTarget
+    ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
+    : offPageParent?.connectors.find((c) => c.id === edge?.toConnectorId);
 
-  const terminal = edgeInputConn ?? edgeOutputConn;
-  const iconColor = terminal?.color;
+  const iconColor = offPageTerminal?.color;
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    UpdateOffPagePosition(node, parentBlockNode, terminal, size, dispatch);
-  }, [size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
+    UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
+  }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
 
-  if (!node) return null;
+  if (!data) return null;
+  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
   return (
-    <OffPageBox id={type + node.id}>
-      {IsInputTerminal(terminal) ? (
-        <OffPageInputIcon style={{ fill: iconColor }} className="logo" />
-      ) : (
-        <OffPageOutputIcon style={{ fill: iconColor }} className="logo" />
-      )}
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={{ width: 30, height: 30 }}
-        terminals={node.connectors}
-        dispatch={dispatch}
-        isVisible={false}
-        offPage
-      />
+    <OffPageBox id={type + data.id}>
+      <OffPageIcon style={{ fill: iconColor }} className="logo" />
+      <HandleComponent node={data} size={{ width: 30, height: 30 }} terminals={data.connectors} dispatch={dispatch} offPage />
     </OffPageBox>
   );
 };
