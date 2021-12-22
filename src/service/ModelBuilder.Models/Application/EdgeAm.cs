@@ -31,50 +31,50 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (string.IsNullOrWhiteSpace(Id))
-                yield return new ValidationResult("Id is required", new List<string> { GetType().Name });
+            //If EdgeAm property 'Domain' is null it means that this is a new Edge (not existing in db yet)
 
-            if (string.IsNullOrWhiteSpace(Iri))
-                yield return new ValidationResult("Iri is required", new List<string> { GetType().Name });
+            if (string.IsNullOrWhiteSpace(Id))
+                yield return new ValidationResult("Id can't be null or empty", new List<string> { GetType().Name });
+
+            if (string.IsNullOrWhiteSpace(Iri) && !string.IsNullOrWhiteSpace(Domain))
+                yield return new ValidationResult("Iri can't be null or empty", new List<string> { GetType().Name });
 
             if (string.IsNullOrWhiteSpace(ProjectId))
-                yield return new ValidationResult("ProjectId is required", new List<string> { GetType().Name });
+                yield return new ValidationResult("ProjectId can't be null or empty", new List<string> { GetType().Name });
 
             if (string.IsNullOrWhiteSpace(FromConnectorId))
-                yield return new ValidationResult("FromConnectorId is required", new List<string> { GetType().Name });
+                yield return new ValidationResult("FromConnectorId can't be null or empty", new List<string> { GetType().Name });
 
-            if (string.IsNullOrWhiteSpace(FromConnectorIri))
-                yield return new ValidationResult("FromConnectorIri is required", new List<string> { GetType().Name });
+            if (string.IsNullOrWhiteSpace(FromConnectorIri) && !string.IsNullOrWhiteSpace(Domain))
+                yield return new ValidationResult("FromConnectorIri can't be null or empty", new List<string> { GetType().Name });
 
             if (string.IsNullOrWhiteSpace(ToConnectorId))
-                yield return new ValidationResult("ToConnectorId is required", new List<string> { GetType().Name });
+                yield return new ValidationResult("ToConnectorId can't be null or empty", new List<string> { GetType().Name });
 
-            if (string.IsNullOrWhiteSpace(ToConnectorIri))
-                yield return new ValidationResult("ToConnectorIri is required", new List<string> { GetType().Name });
+            if (string.IsNullOrWhiteSpace(ToConnectorIri) && !string.IsNullOrWhiteSpace(Domain))
+                yield return new ValidationResult("ToConnectorIri can't be null or empty", new List<string> { GetType().Name });
 
             if (string.IsNullOrWhiteSpace(FromNodeId))
-                yield return new ValidationResult("FromNodeId is required", new List<string> { GetType().Name });
+                yield return new ValidationResult("FromNodeId can't be null or empty", new List<string> { GetType().Name });
 
             if (string.IsNullOrWhiteSpace(ToNodeId))
-                yield return new ValidationResult("ToNodeId is required", new List<string> { GetType().Name });
+                yield return new ValidationResult("ToNodeId can't be null or empty", new List<string> { GetType().Name });
 
-            if (string.IsNullOrWhiteSpace(ToNodeIri))
-                yield return new ValidationResult("ToNodeIri is required", new List<string> { GetType().Name });
+            if (string.IsNullOrWhiteSpace(ToNodeIri) && !string.IsNullOrWhiteSpace(Domain))
+                yield return new ValidationResult("ToNodeIri can't be null or empty", new List<string> { GetType().Name });
 
             if (string.IsNullOrWhiteSpace(MasterProjectId))
-                yield return new ValidationResult("MasterProjectId is required", new List<string> { GetType().Name });
+                yield return new ValidationResult("MasterProjectId can't be null or empty", new List<string> { GetType().Name });
 
-            if (string.IsNullOrWhiteSpace(MasterProjectIri))
-                yield return new ValidationResult("MasterProjectIri is required", new List<string> { GetType().Name });
+            if (string.IsNullOrWhiteSpace(MasterProjectIri) && !string.IsNullOrWhiteSpace(Domain))
+                yield return new ValidationResult("MasterProjectIri can't be null or empty", new List<string> { GetType().Name });
 
             if (Transport != null)
-            {
-                //TODO: Validate TransportAm
-            }
+                Transport.Validate(validationContext);
 
             if (Interface != null)
             {
-                //TODO: Validate InterfaceAm
+                //TODO: Interface.Validate(validationContext);
             }
         }
 

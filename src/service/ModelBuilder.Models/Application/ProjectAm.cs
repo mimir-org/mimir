@@ -38,11 +38,8 @@ namespace Mb.Models.Application
             if (string.IsNullOrEmpty(Iri))
                 yield return new ValidationResult($"{nameof(Iri)} can't be null or empty", new List<string> { GetType().Name });
 
-            if (string.IsNullOrEmpty(Name))
-                yield return new ValidationResult($"{nameof(Name)} can't be null or empty", new List<string> { GetType().Name });
-
-            if (!Nodes.Any())
-                yield return new ValidationResult($"{nameof(Nodes)} list must be greater than 0", new List<string> { GetType().Name });
+            if (string.IsNullOrEmpty(Iri))
+                yield return new ValidationResult($"{nameof(Iri)} can't be null or empty", new List<string> { GetType().Name });
 
             //Nodes
             if (Nodes.Any())
