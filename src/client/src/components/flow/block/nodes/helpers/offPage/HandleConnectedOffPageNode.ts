@@ -55,15 +55,4 @@ function OnlyOneNodeVisible(edge: Edge, isNodeTarget: boolean) {
   return !targetNodeVisible;
 }
 
-// function DoesOriginalEdgeExist(edge: Edge, edges: Edge[]) {
-//   return edges.some((x) => x.fromConnectorId === edge?.fromConnector?.id && !IsOffPage(edge.toNode));
-// }
-
-// function HandleRemoveOffPage(edge: Edge, edges: Edge[], dispatch: any) {
-//   if (IsOffPage(edge.toNode) && !DoesOriginalEdgeExist(edge, edges)) {
-//     dispatch(removeEdge(edge.id));
-//     dispatch(removeNode(edge.toNode.id));
-//   }
-// }
-
 export default HandleConnectedOffPageNode;
