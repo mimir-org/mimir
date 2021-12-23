@@ -27,10 +27,10 @@ const CreateRequiredOffPageNode = (
 
   const offPageObject = CreateOffPageObject(offPageData);
 
+  dispatch(setOffPageStatus(sourceNode.id, sourceConnector.id, isRequired));
   dispatch(addNode(offPageObject.node));
   dispatch(createEdge(offPageObject.partOfEdge));
   dispatch(createEdge(offPageObject.transportEdge));
-  dispatch(setOffPageStatus(sourceNode.id, sourceConnector.id, isRequired));
 };
 
 export default CreateRequiredOffPageNode;

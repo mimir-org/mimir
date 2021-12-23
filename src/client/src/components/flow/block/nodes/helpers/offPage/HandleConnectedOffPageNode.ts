@@ -19,7 +19,7 @@ const HandleConnectedOffPageNode = (node: Node, secondaryNode: Node, edges: Edge
     if (IsValidTransport(edge, secondaryNode)) {
       const isNodeTarget = edge.toNodeId === node.id;
 
-      if (OnlyOneNodeVisible(node, edge, isNodeTarget)) {
+      if (OnlyOneNodeVisible(edge, isNodeTarget)) {
         const offPageExists = HasConnectedOffPageNode(edges, edge, isNodeTarget);
         if (!offPageExists) AddConnectedOffPageNode(node, isNodeTarget, edge, dispatch, size);
       }
@@ -44,27 +44,15 @@ function AddConnectedOffPageNode(node: Node, isNodeTarget: boolean, edge: Edge, 
   CreateConnectedOffPageNode(node, connector, { x: xPos, y: node?.positionBlockY }, dispatch);
 }
 
-function OnlyOneNodeVisible(node: Node, edge: Edge, isNodeTarget: boolean) {
-  const sourceNode = isNodeTarget ? node : edge.toNode;
-  const targetNode = isNodeTarget ? edge.toNode : node;
+function OnlyOneNodeVisible(edge: Edge, isNodeTarget: boolean) {
+  const sourceNode = isNodeTarget ? edge.fromNode : edge.toNode;
+  const targetNode = isNodeTarget ? edge.toNode : edge.fromNode;
 
   const sourceNodeParent = GetParent(sourceNode);
   const targetNodeParent = GetParent(targetNode);
-
   const targetNodeVisible = sourceNodeParent.id === targetNodeParent.id;
 
   return !targetNodeVisible;
 }
-
-// function DoesOriginalEdgeExist(edge: Edge, edges: Edge[]) {
-//   return edges.some((x) => x.fromConnectorId === edge?.fromConnector?.id && !IsOffPage(edge.toNode));
-// }
-
-// function HandleRemoveOffPage(edge: Edge, edges: Edge[], dispatch: any) {
-//   if (IsOffPage(edge.toNode) && !DoesOriginalEdgeExist(edge, edges)) {
-//     dispatch(removeEdge(edge.id));
-//     dispatch(removeNode(edge.toNode.id));
-//   }
-// }
 
 export default HandleConnectedOffPageNode;

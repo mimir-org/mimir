@@ -11,3 +11,6 @@ export { default as HasConnectedOffPageNode } from "./HasConnectedOffPageNode";
 export { default as UpdateOffPagePosition } from "./UpdateOffPagePosition";
 
 export { default as GetOffPageIcon } from "./GetOffPageIcon";
+
+export { default as HandleOffPageDelete } from "./HandleOffPageDelete";
+export { default as HandleConnectedOffPageDelete } from "./HandleConnectedOffPageDelete";
