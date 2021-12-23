@@ -2,7 +2,7 @@ import { removeElements, FlowElement, Elements } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
 import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode, IsOffPage } from "../../../helpers";
-import { EDGE_KIND, Node, Project } from "../../../models";
+import { Connector, Edge, EDGE_KIND, Node, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
@@ -18,7 +18,6 @@ const useOnRemove = (
   project: Project
 ) => {
   const elementsToRemove: Elements = [];
-
   elements = elements.filter((el) => !IsAspectNode(el.data));
 
   const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
@@ -67,37 +66,74 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
 const handleOffPageDelete = (node: Node, project: Project, dispatch: Dispatch) => {
   const parentNode = GetParent(node);
 
-  const offPageTransportEdge = project.edges.find(
-    (x) =>
-      (x.fromConnector?.nodeId === parentNode.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNode.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
-  );
+  const offPageTransportEdge = getOffPageTransportEdge(node, parentNode, project);
+  const offPagePartOfEdge = getOffPagePartOfEdge(node, parentNode, project);
+  const parentNodeConnector = getParentNodeConnector(offPageTransportEdge, node);
+  const offPageConnectedReferenceEdge = getOffPageConnectedReferenceEdge(parentNodeConnector, project);
 
-  const offPagepartOfEdge = project.edges.find(
-    (x) =>
-      (x.fromConnector?.nodeId === parentNode.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNode.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
-  );
-
-  const parentNodeConnector =
-    offPageTransportEdge?.fromConnector?.nodeId === node.id
-      ? offPageTransportEdge?.toConnector
-      : offPageTransportEdge?.fromConnector;
-
-  const connectedEdge = project.edges.find((edge) => edge.fromConnectorId === parentNodeConnector.id && !IsOffPage(edge.toNode));
-
-  if (offPageTransportEdge && !connectedEdge) {
+  if (offPageTransportEdge && !offPageConnectedReferenceEdge) {
     // When deleting a Required OffPageNode, the parent's connector is reset to not required
     dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
   }
 
-  if (connectedEdge) {
-    // When deleting a Connected OffPageNode, the actual edge that the OffPageNode refers to is also deleted
-    dispatch(removeEdge(connectedEdge.id));
-    dispatch(removeEdge(offPageTransportEdge.id));
+  if (offPageConnectedReferenceEdge) {
+    handleConnectedOffPageDelete(project, offPageTransportEdge, offPageConnectedReferenceEdge, dispatch);
   }
 
-  if (offPagepartOfEdge) dispatch(removeEdge(offPagepartOfEdge.id));
+  if (offPagePartOfEdge) dispatch(removeEdge(offPagePartOfEdge.id));
+};
+
+const handleConnectedOffPageDelete = (project: Project, transportEdge: Edge, referenceEdge: Edge, dispatch: Dispatch) => {
+  // When deleting a Connected OffPageNode, the actual edge that the OffPageNode refers to is also deleted
+  dispatch(removeEdge(referenceEdge.id));
+  dispatch(removeEdge(transportEdge.id));
+
+  // The opposite Connected OffPageNode and edges are also deleted
+  const oppositeTransportEdge = project.edges.find(
+    (x) =>
+      (IsOffPage(x.fromNode) || IsOffPage(x.toNode)) &&
+      (x.fromConnectorId === referenceEdge.fromConnectorId || x.toConnectorId === referenceEdge.toConnectorId)
+  );
+
+  const oppositeOffPageNode = IsOffPage(oppositeTransportEdge.toNode)
+    ? oppositeTransportEdge.toNode
+    : oppositeTransportEdge.fromNode;
+
+  const oppositePartOfEdge = getOffPagePartOfEdge(oppositeOffPageNode, GetParent(oppositeOffPageNode), project);
+
+  dispatch(removeNode(oppositeOffPageNode.id));
+  dispatch(removeEdge(oppositeTransportEdge.id));
+  dispatch(removeEdge(oppositePartOfEdge.id));
+};
+
+const getOffPageTransportEdge = (node: Node, parentNode: Node, project: Project) => {
+  return project.edges.find(
+    (x) =>
+      (x.fromConnector?.nodeId === parentNode.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+  );
+};
+
+const getOffPagePartOfEdge = (node: Node, parentNode: Node, project: Project) => {
+  return project.edges.find(
+    (x) =>
+      (x.fromConnector?.nodeId === parentNode.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+  );
+};
+
+const getOffPageConnectedReferenceEdge = (parentNodeConnector: Connector, project: Project) => {
+  return project.edges.find(
+    (edge) =>
+      (edge.fromConnectorId === parentNodeConnector.id && !IsOffPage(edge.toNode)) ||
+      (edge.toConnectorId === parentNodeConnector.id && !IsOffPage(edge.fromNode))
+  );
+};
+
+const getParentNodeConnector = (offPageTransportEdge: Edge, node: Node) => {
+  return offPageTransportEdge?.fromConnector?.nodeId === node.id
+    ? offPageTransportEdge?.toConnector
+    : offPageTransportEdge?.fromConnector;
 };
 
 const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
