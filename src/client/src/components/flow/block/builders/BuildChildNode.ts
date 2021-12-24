@@ -9,10 +9,10 @@ import { IsOffPage } from "../../../../helpers";
  * @param node
  * @param libOpen
  * @param explorerOpen
- * @param secondaryNode
+ * @param splitView
  * @returns a node of the type FlowElement.
  */
-const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, secondaryNode: Node) => {
+const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, splitView: boolean) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
@@ -21,7 +21,7 @@ const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, sec
   SetConnectorOrder(node);
 
   // Force node to fit Block
-  const position = !IsOffPage(node) ? SetNodePos(nodePos, libOpen, explorerOpen, secondaryNode !== null) : nodePos;
+  const position = !IsOffPage(node) ? SetNodePos(nodePos, libOpen, explorerOpen, splitView) : nodePos;
 
   return {
     key: CreateId(),
