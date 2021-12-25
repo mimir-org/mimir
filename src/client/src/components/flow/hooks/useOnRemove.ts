@@ -1,7 +1,6 @@
 import { removeElements, FlowElement, Elements } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
-import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode, IsOffPage } from "../../../helpers";
 import { EDGE_KIND, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
@@ -9,6 +8,8 @@ import { changeInspectorHeight } from "../../../modules/inspector/redux/height/a
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { HandleOffPageDelete } from "../block/nodes/helpers/offPage";
+import { IsPartOf } from "../helpers";
+import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode, IsOffPage } from "../../../helpers";
 
 const useOnRemove = (
   elements: Elements,
@@ -44,12 +45,15 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
       if (!IsAspectNode(blockView ? selectedBlockNode : selectedNode)) {
         if (findProjectEdgeByElementId(project, elem)?.isLocked) continue;
         hasDeletedElement = true;
+
+        // Find OffPage nodes/edges related to the edge to be deleted
+        handleRelatedOffPageElements(project, elem, dispatch);
+
         dispatch(removeEdge(elem.id));
         verifiedList.push(elem);
       }
     } else {
       const node = findProjectNodeByElementId(project, elem);
-
       if (node?.isLocked) continue;
 
       if (IsOffPage(node)) HandleOffPageDelete(project, node, dispatch);
@@ -73,6 +77,30 @@ const findProjectEdgeByElementId = (project: Project, element: FlowElement) => {
 
 const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
   return project.nodes.find((node) => node.id === element.id);
+};
+
+const handleRelatedOffPageElements = (project: Project, element: FlowElement, dispatch: Dispatch) => {
+  project.nodes.forEach((node) => {
+    if (IsOffPage(node)) {
+      const offPageTransportEdge = project.edges.find(
+        (edge) =>
+          (IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)) &&
+          (edge?.toConnectorId === element.data.edge.toConnectorId || edge?.fromConnectorId === element.data.edge.fromConnectorId)
+      );
+
+      if (!offPageTransportEdge) return;
+
+      const offPagePartOfTerminal = node.connectors.find((c) => IsPartOf(c));
+
+      const offPagePartOfEdge = project.edges.find(
+        (edge) => IsOffPage(edge.toNode) && edge.toNodeId === node.id && edge.toConnectorId === offPagePartOfTerminal.id
+      );
+
+      if (offPagePartOfEdge) dispatch(removeEdge(offPagePartOfEdge.id));
+      dispatch(removeEdge(offPageTransportEdge.id));
+      dispatch(removeNode(node.id));
+    }
+  });
 };
 
 export default useOnRemove;
