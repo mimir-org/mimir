@@ -20,7 +20,7 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
-  const offPageMargin = 20;
+  const offPageMargin = 15;
 
   if (IsOffPage(targetNode)) targetX += offPageMargin;
   if (IsOffPage(sourceNode)) sourceX -= offPageMargin;
