@@ -9,33 +9,36 @@ import { GetBlockEdgeType } from "../../helpers";
 /**
  * Component to draw all children of a selected Product Node in BlockView.
  * @param edges
- * @param allNodes
+ * @param nodes
  * @param selectedNode
  * @param elements
  * @param animatedEdge
+ * @param libOpen
+ * @param explorerOpen
+ * @param splitView
  */
 const DrawProductChildren = (
   edges: Edge[],
-  allNodes: Node[],
+  nodes: Node[],
   selectedNode: Node,
   elements: Elements<any>,
   animatedEdge: boolean,
   libOpen: boolean,
   explorerOpen: boolean,
-  secondaryNode: Node
+  splitView: boolean
 ) => {
   const productChildren: Node[] = [];
-  TraverseProductNodes(edges, allNodes, selectedNode, productChildren);
+  TraverseProductNodes(edges, nodes, selectedNode, productChildren);
 
   edges?.forEach((edge: Edge) => {
     let productEdge = null;
     if (ValidateProductEdge(edge.fromNode, edge.fromConnector, edge.toConnector))
-      productEdge = BuildBlockEdge(allNodes, edge, GetBlockEdgeType(edge.fromConnector), null, animatedEdge);
+      productEdge = BuildBlockEdge(nodes, edge, GetBlockEdgeType(edge.fromConnector), null, animatedEdge);
     if (productEdge) elements.push(productEdge);
   });
 
   productChildren.forEach((node) => {
-    const productChildNode = BuildProductChildNode(node, libOpen, explorerOpen, secondaryNode);
+    const productChildNode = BuildProductChildNode(node, libOpen, explorerOpen, splitView);
     if (productChildNode) elements.push(productChildNode);
   });
 };

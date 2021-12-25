@@ -39,7 +39,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   // Check for elements that require OffPage
   useEffect(() => {
-    HandleConnectedOffPageNode(node, secondaryNode, edges, size, dispatch);
+    HandleConnectedOffPageNode(node, edges, size, dispatch);
     HandleRequiredOffPageNode(node, edges, size, dispatch);
   }, [secondaryNode]);
 

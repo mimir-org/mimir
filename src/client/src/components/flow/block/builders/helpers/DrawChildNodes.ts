@@ -12,7 +12,7 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
  * @param elements
  * @param libOpen
  * @param explorerOpen
- * @param secondaryNode
+ * @param splitView
  */
 const DrawChildNodes = (
   edges: Edge[],
@@ -21,46 +21,44 @@ const DrawChildNodes = (
   elements: Elements<any>,
   libOpen: boolean,
   explorerOpen: boolean,
-  secondaryNode: Node
+  splitView: boolean
 ) => {
   edges?.forEach((edge) => {
     if (ValidateEdge(edge, selectedNode)) {
       const toNode = nodes.find((n) => n.id === edge.toNode.id);
       if (IsOffPage(toNode)) {
-        const isValidOffPage = ValidateOffPageNode(toNode, secondaryNode, elements, edges, nodes);
-        if (toNode && isValidOffPage) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode));
-      } else {
-        if (toNode) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, secondaryNode));
-      }
+        const isValidOffPage = ValidateOffPageNode(toNode, splitView, elements, edges, nodes);
+        if (isValidOffPage) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, splitView));
+      } else elements.push(BuildChildNode(toNode, libOpen, explorerOpen, splitView));
     }
   });
 };
 
 function ValidateEdge(edge: Edge, selectedNode: Node) {
   if (IsOffPage(edge.toNode)) return IsPartOf(edge.toConnector);
-  return edge.fromNodeId === selectedNode?.id && IsFamily(selectedNode, edge.toNode) && IsPartOf(edge.toConnector);
+  return IsPartOf(edge.toConnector) && IsFamily(selectedNode, edge.toNode) && edge.fromNodeId === selectedNode?.id;
 }
 
-export function ValidateOffPageNode(node: Node, secondaryNode: Node, elements: Elements<any>, edges: Edge[], nodes: Node[]) {
+function ValidateOffPageNode(node: Node, splitView: boolean, elements: Elements<any>, edges: Edge[], nodes: Node[]) {
   const offPageParent = GetParent(node);
 
-  if (secondaryNode) {
+  if (splitView) {
     const offPageInputTerminal = node.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
     const offPageOutputTerminal = node.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
 
-    const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === offPageInputTerminal.id);
-    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === offPageOutputTerminal.id);
+    const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === offPageInputTerminal?.id);
+    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === offPageOutputTerminal?.id);
 
     let terminal: Connector;
 
     if (edgeToOffPage) {
-      const sourceNode = nodes.find((n) => n.id === edgeToOffPage.fromNodeId);
-      terminal = sourceNode.connectors.find((c) => c.id === edgeToOffPage.fromConnectorId);
+      const sourceNode = nodes.find((n) => n.id === edgeToOffPage?.fromNodeId);
+      terminal = sourceNode.connectors.find((c) => c.id === edgeToOffPage?.fromConnectorId);
     }
 
     if (edgeFromOffPage) {
-      const targetNode = nodes.find((n) => n.id === edgeFromOffPage.toNodeId);
-      terminal = targetNode.connectors.find((c) => c.id === edgeFromOffPage.toConnectorId);
+      const targetNode = nodes.find((n) => n.id === edgeFromOffPage?.toNodeId);
+      terminal = targetNode.connectors.find((c) => c.id === edgeFromOffPage?.toConnectorId);
     }
     return terminal?.isRequired;
   }

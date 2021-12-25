@@ -9,14 +9,13 @@ import { GetParent, IsTransportConnection } from "../../../../helpers";
  * This occurs if a targetNode or a sourceNode to a tranport edge is not displayed on the screen. The OffPageNode is only
  * a visual element, and is not part of the project's data model.
  * @param node
- * @param secondaryNode
  * @param edges
  * @param size
  * @param dispatch
  */
-const HandleConnectedOffPageNode = (node: Node, secondaryNode: Node, edges: Edge[], size: BlockNodeSize, dispatch: any) => {
+const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: any) => {
   edges.forEach((edge) => {
-    if (IsValidTransport(edge, secondaryNode)) {
+    if (IsValidTransport(edge, node)) {
       const isNodeTarget = edge.toNodeId === node.id;
 
       if (OnlyOneNodeVisible(edge, isNodeTarget)) {
@@ -27,10 +26,10 @@ const HandleConnectedOffPageNode = (node: Node, secondaryNode: Node, edges: Edge
   });
 };
 
-function IsValidTransport(edge: Edge, secondaryNode: Node) {
+function IsValidTransport(edge: Edge, node: Node) {
   return (
-    !secondaryNode &&
     IsTransportConnection(edge.fromConnector, edge.toConnector) &&
+    (node.id === edge.fromNodeId || node.id === edge.toNodeId) &&
     !IsOffPage(edge.toNode) &&
     !IsOffPage(edge.fromNode)
   );
