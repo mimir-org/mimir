@@ -81,7 +81,7 @@ const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
 
 const handleRelatedOffPageElements = (project: Project, element: FlowElement, dispatch: Dispatch) => {
   project.nodes.forEach((node) => {
-    if (IsOffPage(node)) {
+    if (IsOffPage(node) && (node.id === element.data.edge.fromNodeId || node.id === element.data.edge.toNodeId)) {
       const offPageTransportEdge = project.edges.find(
         (edge) =>
           (IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)) &&

@@ -8,6 +8,7 @@ import { OffPageBox } from "./styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers/offPage";
 import { Connector } from "../../../../models";
+import { GetSelectedBlockNode } from "../../../../helpers";
 
 /**
  * Component for an offpage node in BlockView
@@ -48,7 +49,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
   return (
-    <OffPageBox id={type + data.id}>
+    <OffPageBox id={type + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>
       <OffPageIcon style={{ fill: iconColor }} className="logo" />
       <HandleComponent node={data} size={{ width: 30, height: 30 }} terminals={data.connectors} dispatch={dispatch} offPage />
     </OffPageBox>
