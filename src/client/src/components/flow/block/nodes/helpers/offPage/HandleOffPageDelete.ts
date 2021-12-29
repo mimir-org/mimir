@@ -13,7 +13,6 @@ import { GetParent, IsPartOf, IsTransport } from "../../../../helpers";
  */
 const HandleOffPageDelete = (project: Project, node: Node, dispatch: Dispatch) => {
   const parentNode = GetParent(node);
-
   const offPageTransportEdge = getOffPageTransportEdge(node, parentNode, project);
   const offPagePartOfEdge = getOffPagePartOfEdge(node, parentNode, project);
   const parentNodeConnector = getParentNodeConnector(offPageTransportEdge, node);
