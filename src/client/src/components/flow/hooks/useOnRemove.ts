@@ -1,7 +1,7 @@
 import { removeElements, FlowElement, Elements } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
-import { EDGE_KIND, Project } from "../../../models";
+import { Edge, EDGE_KIND, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
@@ -48,7 +48,6 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
 
         // Find OffPage nodes/edges related to the edge to be deleted
         handleRelatedOffPageElements(project, elem, dispatch);
-
         dispatch(removeEdge(elem.id));
         verifiedList.push(elem);
       }
@@ -80,25 +79,26 @@ const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
 };
 
 const handleRelatedOffPageElements = (project: Project, element: FlowElement, dispatch: Dispatch) => {
+  const edge = element?.data?.edge as Edge;
   project.nodes.forEach((node) => {
-    if (IsOffPage(node) && (node.id === element.data.edge.fromNodeId || node.id === element.data.edge.toNodeId)) {
+    if (IsOffPage(node) && (node?.id === edge?.fromNodeId || node?.id === edge?.toNodeId)) {
       const offPageTransportEdge = project.edges.find(
-        (edge) =>
-          (IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)) &&
-          (edge?.toConnectorId === element.data.edge.toConnectorId || edge?.fromConnectorId === element.data.edge.fromConnectorId)
+        (x) =>
+          (IsOffPage(x?.fromNode) || IsOffPage(x?.toNode)) &&
+          (x?.toConnectorId === edge?.toConnectorId || x?.fromConnectorId === edge?.fromConnectorId)
       );
 
       if (!offPageTransportEdge) return;
 
-      const offPagePartOfTerminal = node.connectors.find((c) => IsPartOf(c));
+      const offPagePartOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
 
       const offPagePartOfEdge = project.edges.find(
-        (edge) => IsOffPage(edge.toNode) && edge.toNodeId === node.id && edge.toConnectorId === offPagePartOfTerminal.id
+        (x) => IsOffPage(x?.toNode) && x?.toNodeId === node?.id && x?.toConnectorId === offPagePartOfTerminal?.id
       );
 
       if (offPagePartOfEdge) dispatch(removeEdge(offPagePartOfEdge.id));
-      dispatch(removeEdge(offPageTransportEdge.id));
-      dispatch(removeNode(node.id));
+      dispatch(removeEdge(offPageTransportEdge?.id));
+      dispatch(removeNode(node?.id));
     }
   });
 };
