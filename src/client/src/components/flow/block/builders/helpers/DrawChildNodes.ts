@@ -26,6 +26,8 @@ const DrawChildNodes = (
   edges?.forEach((edge) => {
     if (ValidateEdge(edge, selectedNode)) {
       const toNode = nodes.find((n) => n.id === edge.toNode.id);
+      if (!toNode) return;
+
       if (IsOffPage(toNode)) {
         const isValidOffPage = ValidateOffPageNode(toNode, splitView, elements, edges, nodes);
         if (isValidOffPage) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, splitView));
