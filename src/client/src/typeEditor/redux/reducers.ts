@@ -193,7 +193,7 @@ export function typeEditorReducer(state = initialState, action: Types.TypeEditor
           predefinedAttributes: [] as PredefinedAttribute[],
           terminalTypeId: "",
           symbolId: "",
-          compositeTypes: [] as string[],
+          simpleTypes: [] as string[],
         } as CreateLibraryType),
         inspector: {
           visibility: false,

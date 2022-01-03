@@ -59,7 +59,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
     [terminalTypes, createLibraryType.terminalTypes]
   );
 
-  const compositeLikeItems = useMemo(
+  const simpleLikeItems = useMemo(
     () => simpleTypes.filter((simp) => createLibraryType.simpleTypes.find((comp) => simp.id === comp)),
     [simpleTypes, createLibraryType.simpleTypes]
   );
@@ -122,7 +122,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         icons={icons}
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
-        compositeLikeItems={compositeLikeItems}
+        simpleLikeItems={simpleLikeItems}
         inspectorRef={inspectorRef}
         isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}

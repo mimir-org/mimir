@@ -1,11 +1,11 @@
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
-import { AspectBox, ElementBox, ExplorerAspectLine } from "./styled";
+import { AspectContainer } from "./styled";
 import { VisibleComponent } from "../visibleComponent";
 import { LockComponent } from "../lockComponent";
 import { Node, Project } from "../../../models";
 import { TreeAspectElement } from ".";
 import { Dispatch } from "redux";
 import { GetWidth } from "../helpers";
+import { OnLockNode, OnTreeChange } from "../handlers";
 
 interface Props {
   project: Project;
@@ -14,10 +14,10 @@ interface Props {
   nodes: Node[];
   indent: number;
   isLeaf: boolean;
-  expanded: boolean;
+  isExpanded: boolean;
   isAncestorVisible: boolean;
   isVisible: boolean;
-  onElementExpanded: (expanded: boolean, nodeId: string) => void;
+  onToggleExpanded: () => void;
   onSetVisibleElement: (visible: boolean, nodeId: string) => void;
   dispatch: Dispatch;
 }
@@ -26,38 +26,35 @@ export const TreeAspectComponent = ({
   username,
   node,
   nodes,
-  expanded,
+  isExpanded,
   indent,
   isLeaf,
   isAncestorVisible,
   isVisible,
   onSetVisibleElement,
-  onElementExpanded,
+  onToggleExpanded,
   dispatch,
 }: Props) => (
-  <>
-    <AspectBox width={GetWidth(nodes)} node={node}>
-      <ElementBox indent={indent}>
-        <VisibleComponent
-          node={node}
-          isAncestorVisible={isAncestorVisible}
-          isVisible={isVisible}
-          onSetVisibleElement={onSetVisibleElement}
-        />
-        <LockComponent node={node} project={project} username={username} dispatch={dispatch} />
-        <TreeAspectElement node={node} nodes={nodes} />
-      </ElementBox>
-      {!isLeaf && (
-        <img
-          className="expand-icon"
-          src={expanded ? ExpandIcon : CollapseIcon}
-          alt="expand-icon"
-          onClick={() => onElementExpanded(!expanded, node.id)}
-        ></img>
-      )}
-    </AspectBox>
-    <ExplorerAspectLine width={GetWidth(nodes)} node={node} />
-  </>
+  <AspectContainer width={GetWidth(nodes)} node={node}>
+    <VisibleComponent
+      isHidden={node.isHidden}
+      isAncestorVisible={isAncestorVisible}
+      isVisible={isVisible}
+      onToggleVisible={() => {
+        onSetVisibleElement(!isVisible, node.id);
+        OnTreeChange(node, project, dispatch);
+      }}
+    />
+    <LockComponent isLocked={node.isLocked} onToggleLocked={() => OnLockNode(node, project, username, dispatch)} />
+    <TreeAspectElement
+      node={node}
+      nodes={nodes}
+      isExpanded={isExpanded}
+      isLeaf={isLeaf}
+      onToggleExpanded={onToggleExpanded}
+      indent={indent}
+    />
+  </AspectContainer>
 );
 
 export default TreeAspectComponent;

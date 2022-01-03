@@ -30,7 +30,6 @@ class Attribute {
   discipline: Discipline;
   tags: Set<string>;
   interfaceId: string;
-  compositeId: string;
 
   isLocked: boolean;
   isLockedStatusBy: string;

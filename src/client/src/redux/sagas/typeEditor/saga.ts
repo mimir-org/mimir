@@ -1,7 +1,7 @@
 import { call, put as statePut } from "redux-saga/effects";
 import { ADD_LIBRARY_ITEM, REMOVE_LIBRARY_ITEM } from "../../store/library/types";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
-import { Aspect, CompositeType, CompositeTypeResponse, CreateLibraryType } from "../../../models";
+import { Aspect, SimpleType, SimpleTypeResponse, CreateLibraryType } from "../../../models";
 import {
   FETCHING_TYPE_SUCCESS_OR_ERROR,
   FETCHING_INITIAL_SUCCESS_OR_ERROR,
@@ -336,8 +336,8 @@ export function* getSimpleTypes(action) {
     const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
 
     const payload = {
-      simpleTypes: (simpleTypesURLResponse.data as Array<CompositeTypeResponse>).map((comp) => {
-        return { ...comp, attributes: comp.attributeTypes } as CompositeType;
+      simpleTypes: (simpleTypesURLResponse.data as Array<SimpleTypeResponse>).map((comp) => {
+        return { ...comp, attributes: comp.attributeTypes } as SimpleType;
       }),
     };
 

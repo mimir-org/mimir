@@ -1,2 +1,2 @@
-export { default as ParentContainerComponent } from "./ParentContainerComponent";
-export { default as ParentBannerComponent } from "./ParentBannerComponent";
+export { default as BlockParentContainer } from "./BlockParentContainer";
+export { default as BlockParentBanner } from "./BlockParentBanner";

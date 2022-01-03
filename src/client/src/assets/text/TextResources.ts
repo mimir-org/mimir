@@ -118,6 +118,14 @@ const TextResources = {
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
 
+  // ExplorerModule
+  Explorer_Lock_Node: "Lock node",
+  Explorer_Unlock_Node: "Unlock node",
+  Explorer_Hide_Node: "Hide node",
+  Explorer_Show_Node: "Show node",
+  Explorer_Open_Group: "Open group",
+  Explorer_Close_Group: "Close group",
+
   // TypeEditorModule
   TypeEditor: "Type Editor",
   TypeEditor_New_Type: "New Type",
@@ -141,6 +149,8 @@ const TextResources = {
   TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
   TypeEditor_Button_Add: "Add to Library",
   TypeEditor_Button_Edit: "Save Type Edit",
+  TypeEditor_Button_Cancel_Add: "Cancel New Type",
+  TypeEditor_Button_Cancel_Edit: "Cancel Edit",
   TypeEditor_Type_Placeholder: "Write type name",
   TypeEditor_Aspect_Placeholder: "Choose Aspect",
   TypeEditor_Object_Placeholder: "Select Object Type",

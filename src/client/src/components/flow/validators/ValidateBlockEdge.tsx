@@ -20,12 +20,13 @@ const ValidateBlockEdge = (
   source: Connector,
   target: Connector
 ) => {
-  if (IsOffPage(fromNode) || IsOffPage(toNode)) return IsTransportConnection(source, target);
-  if (!secondaryNode) return validEdge(selectedNode, fromNode, toNode, source, target);
-  if (secondaryNode) return validSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
+  if (IsOffPage(fromNode)) return validateOffPageSourceEdge(toNode, selectedNode, source, target);
+  if (IsOffPage(toNode)) return validateOffPageTargetEdge(fromNode, selectedNode, source, target);
+  if (!secondaryNode) return validateEdge(selectedNode, fromNode, toNode, source, target);
+  if (secondaryNode) return validateSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
 };
 
-function validEdge(selectedNode: Node, fromNode: Node, toNode: Node, source: Connector, target: Connector) {
+function validateEdge(selectedNode: Node, fromNode: Node, toNode: Node, source: Connector, target: Connector) {
   if (IsProduct(selectedNode) && IsProduct(toNode)) {
     if (IsPartOf(source)) if (IsAspectNode(fromNode) || IsAspectNode(toNode) || selectedNode.id === fromNode.id) return false;
     return true;
@@ -37,7 +38,7 @@ function validEdge(selectedNode: Node, fromNode: Node, toNode: Node, source: Con
   return IsTransportConnection(source, target) && IsFunction(fromNode);
 }
 
-function validSecondaryEdge(selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) {
+function validateSecondaryEdge(selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) {
   if (IsLocation(secondaryNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, selectedNode);
   if (IsProduct(secondaryNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, selectedNode);
 
@@ -46,6 +47,13 @@ function validSecondaryEdge(selectedNode: Node, secondaryNode: Node, fromNode: N
     if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
     return IsTransportConnection(source, target);
   }
+}
+
+function validateOffPageSourceEdge(toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
+  return IsTransportConnection(source, target) && IsDirectChild(toNode, selectedNode);
+}
+function validateOffPageTargetEdge(fromNode: Node, selectedNode: Node, source: Connector, target: Connector) {
+  return IsTransportConnection(source, target) && IsDirectChild(fromNode, selectedNode);
 }
 
 export default ValidateBlockEdge;

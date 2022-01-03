@@ -8,9 +8,9 @@ const OnSaveClick = (dispatch: any, projectState: ProjectState) => {
 
   const project = Object.assign({}, projectState.project);
 
-  // Remove all OffPage related
+  // Remove everything OffPage related
   project.edges = project.edges.filter((edge) => !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode));
-  project.nodes = project.nodes.filter((n) => !IsOffPage(n));
+  project.nodes = project.nodes.filter((node) => !IsOffPage(node));
 
   dispatch(save(project));
 };

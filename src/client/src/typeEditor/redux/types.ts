@@ -11,7 +11,7 @@ import {
   PredefinedAttribute,
   BlobData,
   LibraryFilter,
-  CompositeType,
+  SimpleType,
   TerminalTypeDict,
 } from "../../models";
 
@@ -62,7 +62,7 @@ export interface TypeEditorState {
   attributes: AttributeType[];
   locationTypes: LocationType[];
   predefinedAttributes: PredefinedAttribute[];
-  simpleTypes: CompositeType[];
+  simpleTypes: SimpleType[];
   apiError: ApiError[];
   icons: BlobData[];
   inspector: {
@@ -186,7 +186,7 @@ export interface FetchingSimpleTypesActionFinished {
   type: typeof FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR;
   payload: {
     apiError: ApiError;
-    simpleTypes: CompositeType[];
+    simpleTypes: SimpleType[];
   };
 }
 export interface OpenTypeEditor {
