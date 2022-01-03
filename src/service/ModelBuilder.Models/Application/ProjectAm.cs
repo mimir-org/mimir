@@ -61,14 +61,6 @@ namespace Mb.Models.Application
             {
                 if (Edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
                     yield return new ValidationResult($"{nameof(Edges)} list has duplicate edge id's", new List<string> { nameof(Edges) });
-
-                foreach (var nodeAm in Edges)
-                {
-                    foreach (var result in nodeAm.Validate(validationContext))
-                    {
-                        yield return result;
-                    }
-                }
             }
         }
 

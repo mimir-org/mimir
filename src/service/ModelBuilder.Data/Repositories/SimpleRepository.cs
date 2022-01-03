@@ -31,7 +31,9 @@ namespace Mb.Data.Repositories
                     {
                         attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
 
-                        if (!_attributeRepository.Context.ChangeTracker.Entries<Attribute>().Any(x => x.Entity.Id == attribute.Id))
+                        var isTracked = _attributeRepository.Context.ChangeTracker.Entries<Attribute>().Any(x => x.Entity.Id == attribute.Id);
+
+                        if (!isTracked)
                             _attributeRepository.Attach(attribute, state);
                     }
                 }

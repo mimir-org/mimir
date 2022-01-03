@@ -25,6 +25,7 @@ namespace Mb.Models.Application
         [Required]
         public string Label { get; set; }
 
+        [Required]
         public string Rds { get; set; }
 
         public string SemanticReference { get; set; }
@@ -62,16 +63,20 @@ namespace Mb.Models.Application
         [Required]
         public string MasterProjectId { get; set; }
         
+        [Required]
         public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
 
         public Purpose Purpose { get; set; }
 
+        [Required]
         public DateTime? Created { get; set; }
         
+        [Required]
         public string CreatedBy { get; set; }
 
+        [Required]
         public string LibraryTypeId { get; set; }
 
         public DateTime? Updated { get; set; }
@@ -94,47 +99,11 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            //If NodeAm property 'Domain' is null it means that this is a new Node (not existing in db yet)
-
-            if (string.IsNullOrWhiteSpace(Id))
-                yield return new ValidationResult("Id can't be null or empty", new List<string> { GetType().Name });
-
-            //TODO: Need to fix that the client are mapping Iri value before adding the two code lines below
-            //if (string.IsNullOrWhiteSpace(Iri) && !string.IsNullOrWhiteSpace(Domain))
-            //    yield return new ValidationResult("Iri can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(Name))
-                yield return new ValidationResult("Name can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(PositionBlockX.ToString()))
-                yield return new ValidationResult("PositionBlockX can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(PositionX.ToString()))
-                yield return new ValidationResult("PositionX can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(PositionBlockY.ToString()))
-                yield return new ValidationResult("PositionBlockY can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(PositionY.ToString()))
-                yield return new ValidationResult("PositionY can't be null or empty", new List<string> { GetType().Name });
-
-            if (Created == null || string.IsNullOrWhiteSpace(Created.ToString()))
-                yield return new ValidationResult("Created (DateTime) can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(CreatedBy))
-                yield return new ValidationResult("CreatedBy can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(LibraryTypeId))
-                yield return new ValidationResult("LibraryTypeId can't be null or empty", new List<string> { GetType().Name });
-
             if (Aspect == Aspect.None)
                 yield return new ValidationResult("Aspect 'None' is not allowed", new List<string> { GetType().Name });
 
-            if (string.IsNullOrWhiteSpace(MasterProjectId))
-                yield return new ValidationResult("MasterProjectId is can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrWhiteSpace(MasterProjectIri) && !string.IsNullOrWhiteSpace(Domain))
-                yield return new ValidationResult("MasterProjectIri can't be null or empty", new List<string> { GetType().Name });
+            if (Aspect == Aspect.NotSet)
+                yield return new ValidationResult($"Aspect {nameof(Aspect.NotSet)} is not allowed", new List<string> { GetType().Name });
         }
 
         #endregion Validate
