@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
@@ -29,7 +30,9 @@ namespace Mb.Data.Repositories
                     foreach (var attribute in simple.Attributes)
                     {
                         attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
-                        _attributeRepository.Attach(attribute, state);
+
+                        if (!_attributeRepository.Context.ChangeTracker.Entries<Attribute>().Any(x => x.Entity.Id == attribute.Id))
+                            _attributeRepository.Attach(attribute, state);
                     }
                 }
                 Attach(simple, state);

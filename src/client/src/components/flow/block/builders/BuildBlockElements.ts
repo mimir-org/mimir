@@ -26,27 +26,27 @@ const BuildBlockElements = (
   const elements: Elements = [];
   const nodes = project.nodes;
   const edges = project.edges;
+  const splitView = secondaryNode !== null;
 
   // Product nodes have a different view
   if (IsProduct(selectedNode)) {
     const parentProduct = BuildProductParentNode(selectedNode, explorerOpen);
     if (parentProduct) elements.push(parentProduct);
-
-    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, libOpen, explorerOpen, secondaryNode);
+    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, libOpen, explorerOpen, splitView);
     return elements;
   }
 
   const parentBlock = BuildParentNode(selectedNode, libOpen, explorerOpen);
   if (parentBlock) elements.push(parentBlock);
 
-  if (secondaryNode) {
+  if (splitView) {
     const secondary = nodes?.find((x) => x.id === secondaryNode.id);
     const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary, libOpen, explorerOpen);
     if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
+    DrawSecondaryChildren(edges, nodes, secondaryNode, elements, libOpen, explorerOpen);
   }
 
-  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, libOpen, explorerOpen);
-  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
+  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen, explorerOpen, splitView);
   DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
 
   return elements;

@@ -2,9 +2,9 @@
 import * as selectors from "./helpers/ParentSelectors";
 import { memo, FC, useState, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent, TerminalsContainerComponent } from "../terminals";
+import { HandleComponent, TerminalsMenuComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
-import { ParentContainerComponent } from "./parentContainer";
+import { BlockParentContainer } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
@@ -20,8 +20,8 @@ import { blockElementsSelector } from "../../../../redux/store";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [inTerminalMenu, showInTerminalMenu] = useState(false);
-  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
+  const [showInputMenu, setShowInputMenu] = useState(false);
+  const [showOutputMenu, setShowOutputMenu] = useState(false);
   const [terminals, setTerminals]: [Connector[], any] = useState([]);
 
   const libOpen = useAppSelector(selectors.libOpenSelector);
@@ -52,7 +52,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <>
-      <ParentContainerComponent
+      <BlockParentContainer
         node={node}
         size={size}
         color={GetAspectColor(node, AspectColorType.Header)}
@@ -62,28 +62,20 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
         dispatch={dispatch}
       />
-      <TerminalsContainerComponent
+      <TerminalsMenuComponent
         node={node}
-        size={size}
-        inputMenuOpen={inTerminalMenu}
-        outputMenuOpen={outTerminalMenu}
-        electro={electro}
         terminals={terminals}
+        size={size}
+        showInputMenu={showInputMenu}
+        showOutputMenu={showOutputMenu}
+        setShowInputMenu={setShowInputMenu}
+        setShowOutputMenu={setShowOutputMenu}
+        electro={electro}
         onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        showInTerminalMenu={showInTerminalMenu}
-        showOutTerminalMenu={showOutTerminalMenu}
         isParent
       />
       {hasActiveTerminals && (
-        <HandleComponent
-          nodes={nodes}
-          node={node}
-          size={size}
-          terminals={terminals}
-          electro={electro}
-          dispatch={dispatch}
-          isParent
-        />
+        <HandleComponent node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
       )}
     </>
   );

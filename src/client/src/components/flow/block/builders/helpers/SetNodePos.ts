@@ -6,19 +6,19 @@ import { Position } from "../../../../../models/project";
  * @param nodePos
  * @param libOpen
  * @param explorerOpen
- * @param secondaryNode
+ * @param splitView
  * @returns an updated position, containing X and Y values.
  */
 
-const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, secondaryNode: boolean) => {
+const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, splitView: boolean) => {
   const margin = 20;
   const marginLarge = 80;
-  const width = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
+  const width = splitView ? window.innerWidth / 2.4 : window.innerWidth;
 
   const yMin = 30;
   const yMax = window.innerHeight - 180;
   const xMin = SetXMin(explorerOpen, marginLarge);
-  const xMax = SetXMax(libOpen, explorerOpen, secondaryNode, width, yMin, marginLarge);
+  const xMax = SetXMax(libOpen, explorerOpen, splitView, width, yMin, marginLarge);
 
   let nodeX = nodePos.x;
   let nodeY = nodePos.y;

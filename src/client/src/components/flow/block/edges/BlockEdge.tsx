@@ -1,4 +1,5 @@
 import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { IsOffPage } from "../../../../helpers";
 import { Connector } from "../../../../models";
 import { electroSelector, useAppSelector } from "../../../../redux/store";
 import { GetEdgeStyle, GetEdgeRelationStyle, IsLocationTerminal, IsProductTerminal } from "../../helpers";
@@ -9,13 +10,20 @@ import { GetEdgeStyle, GetEdgeRelationStyle, IsLocationTerminal, IsProductTermin
  * @returns a TransportEdge or RelationEdge in BlockView.
  */
 const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
-  const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
-  const isTransport = !IsLocationTerminal(sourceConn) && !IsProductTerminal(sourceConn);
   const electro = useAppSelector(electroSelector);
+  const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
+  const sourceNode = data.source;
+  const targetNode = data.target;
+
+  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
+  const isTransport = !IsLocationTerminal(sourceConn) && !IsProductTerminal(sourceConn);
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
+  const offPageMargin = 15;
+
+  if (IsOffPage(targetNode)) targetX += offPageMargin;
+  if (IsOffPage(sourceNode)) sourceX -= offPageMargin;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
