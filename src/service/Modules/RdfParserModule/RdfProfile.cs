@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using AutoMapper;
 using Mb.Models.Application;
+using RdfParserModule.Models;
 
 namespace RdfParserModule
 {

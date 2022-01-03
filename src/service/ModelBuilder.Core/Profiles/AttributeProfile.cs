@@ -45,6 +45,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
                 .ForMember(dest => dest.Format, opt => opt.MapFrom(src => src.Format))
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.Id)) // TODO: Convert
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.TerminalId, opt => opt.Ignore())
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
@@ -71,6 +72,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
                 .ForMember(dest => dest.Format, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
+                .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri)) // TODO: Logic if null?
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
@@ -101,6 +103,7 @@ namespace Mb.Core.Profiles
                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
                .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
+               .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))

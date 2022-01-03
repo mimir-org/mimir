@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Enums;
 
-namespace RdfParserModule
+namespace RdfParserModule.Models
 {
     public class ParserConnector
     {
@@ -34,17 +34,5 @@ namespace RdfParserModule
         {
             return Label ?? Id;
         }
-    }
-
-    public class ParserTerminal : ParserConnector
-    {
-        public string TerminalCategoryId { get; set; }
-        public string TerminalTypeId { get; set; }
-
-    }
-
-    public class ParserRelation : ParserConnector
-    {
-        public RelationType Relation { get; set; }
     }
 }

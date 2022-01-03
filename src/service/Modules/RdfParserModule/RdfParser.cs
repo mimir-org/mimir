@@ -17,11 +17,13 @@ namespace RdfParserModule
     {
         private ServiceProvider _provider;
         private IMapper _mapper;
+        private IRdfBuilder _rdfBuilder;
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)
         {
             _provider = services.BuildServiceProvider();
             _mapper = _provider.GetService<IMapper>();
+            _rdfBuilder = _provider.GetService<IRdfBuilder>();
         }
 
         public ICollection<Profile> GetProfiles()
@@ -40,11 +42,8 @@ namespace RdfParserModule
 
         public Task<byte[]> SerializeProject(Project project)
         {
-            var builder = new RdfBuilder();
-            builder.BuildProject(project);
-
-            var bytes = builder.GetBytes<NTriplesWriter>();
-
+            _rdfBuilder.BuildProject(project);
+            var bytes = _rdfBuilder.GetBytes<NTriplesWriter>();
             return Task.FromResult(bytes);
         }
 
