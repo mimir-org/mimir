@@ -27,10 +27,13 @@ export function save(project: Project): Types.ProjectActionTypes {
   };
 }
 
-export function get(id: string): Types.ProjectActionTypes {
+export function get(id: string, project: Project): Types.ProjectActionTypes {
   return {
     type: Types.FETCHING_PROJECT,
-    payload: id,
+    payload: {
+      id,
+      project,
+    },
   };
 }
 
