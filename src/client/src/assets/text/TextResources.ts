@@ -224,6 +224,7 @@ const TextResources = {
   Project_Create: "Create",
   Project_SubProject: "Save Sub-project",
   Project_Cancel: "Cancel",
+  Project_Menu_Instruction: "Please select an option from the project menu to continue using Mímir",
 
   // Error
   Error_Tile: "Something went wrong",
