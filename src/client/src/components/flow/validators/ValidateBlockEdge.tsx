@@ -1,6 +1,6 @@
-import { IsFunction, IsLocation, IsProduct, IsDirectChild, IsAspectNode, IsOffPage } from "../../../helpers";
+import { IsFunction, IsLocation, IsProduct, IsOffPage } from "../../../helpers";
 import { Node, Connector } from "../../../models";
-import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPartOf } from "../helpers";
+import { IsTransportConnection, IsProductConnection, IsLocationConnection } from "../helpers";
 
 /**
  * Validator for an edge in BlockView, where different rules apply for each Aspect.
@@ -10,6 +10,7 @@ import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPar
  * @param toNode
  * @param source
  * @param target
+ * @param elements
  * @returns a boolean value.
  */
 const ValidateBlockEdge = (
@@ -18,49 +19,48 @@ const ValidateBlockEdge = (
   fromNode: Node,
   toNode: Node,
   source: Connector,
-  target: Connector
+  target: Connector,
+  elements: any[]
 ) => {
-  if (!secondaryNode) {
-    if (IsOffPage(fromNode)) return validateOffPageSourceEdge(toNode, selectedNode, source, target);
-    if (IsOffPage(toNode)) return validateOffPageTargetEdge(fromNode, toNode, selectedNode, source, target);
-    return validateEdge(selectedNode, fromNode, toNode, source, target);
+  const splitView = secondaryNode !== null;
+  const hasFromNode = elements.some((elem) => elem.id === fromNode.id);
+  const hasToNode = elements.some((elem) => elem.id === toNode.id);
+
+  if (splitView) {
+    return hasFromNode && hasToNode && validateSplitView(selectedNode, secondaryNode, fromNode, toNode, source, target);
   }
-  if (secondaryNode) {
-    if (IsOffPage(toNode)) return !toNode.isConnectedOffPage;
-    if (IsOffPage(fromNode)) return !fromNode.isConnectedOffPage;
-    return validateSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
-  }
+  return hasFromNode && hasToNode;
 };
 
-function validateEdge(selectedNode: Node, fromNode: Node, toNode: Node, source: Connector, target: Connector) {
-  if (IsProduct(selectedNode) && IsProduct(toNode)) {
-    if (IsPartOf(source)) if (IsAspectNode(fromNode) || IsAspectNode(toNode) || selectedNode.id === fromNode.id) return false;
-    return true;
+function validateSplitView(
+  selectedNode: Node,
+  splitNode: Node,
+  fromNode: Node,
+  toNode: Node,
+  source: Connector,
+  target: Connector
+) {
+  if (IsLocation(selectedNode)) {
+    if (IsProduct(splitNode)) return IsProductConnection(source, target);
+    if (IsFunction(splitNode)) return IsTransportConnection(source, target);
+    return IsLocationConnection(source, target);
+  }
+  if (IsProduct(selectedNode)) {
+    if (IsLocation(splitNode)) return IsLocationConnection(source, target);
+    if (IsFunction(splitNode)) return IsTransportConnection(source, target);
+    return IsProductConnection(source, target);
   }
 
-  if (!IsDirectChild(fromNode, selectedNode) || !IsDirectChild(toNode, selectedNode)) return false;
-  if (IsProduct(selectedNode)) return (IsTransportConnection(source, target) || IsPartOf(source)) && IsProduct(fromNode);
-  if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsLocation(fromNode);
-
-  return IsTransportConnection(source, target) && IsFunction(fromNode);
+  if (IsProduct(splitNode)) return IsProductConnection(source, target);
+  if (IsLocation(splitNode)) return IsLocationConnection(source, target);
+  if (IsFunction(splitNode)) return IsTransportConnection(source, target) || IsOffPage(fromNode) || IsOffPage(toNode);
 }
 
-function validateSecondaryEdge(selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) {
-  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, selectedNode);
-  if (IsProduct(secondaryNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, selectedNode);
-
-  if (IsFunction(secondaryNode)) {
-    if (IsProduct(selectedNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
-    if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
-    return IsTransportConnection(source, target);
-  }
-}
-
-function validateOffPageSourceEdge(toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
-  return IsTransportConnection(source, target) && IsDirectChild(toNode, selectedNode);
-}
-function validateOffPageTargetEdge(fromNode: Node, toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
-  return IsTransportConnection(source, target) && IsDirectChild(fromNode, selectedNode) && IsDirectChild(toNode, fromNode);
-}
+// function validateOffPageSourceEdge(toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
+//   return IsTransportConnection(source, target) && IsDirectChild(toNode, selectedNode);
+// }
+// function validateOffPageTargetEdge(fromNode: Node, toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
+//   return IsTransportConnection(source, target) && IsDirectChild(fromNode, selectedNode) && IsDirectChild(toNode, fromNode);
+// }
 
 export default ValidateBlockEdge;
