@@ -1,4 +1,5 @@
-import { Aspect, ObjectType, TerminalTypeItem, PredefinedAttribute, ConnectorType } from "..";
+import { Aspect, ConnectorType, ObjectType, PredefinedAttribute, TerminalTypeItem } from "..";
+import { CreateId } from "../../components/flow/helpers";
 
 export const CREATE_LIBRARY_KIND: string = "CreateLibraryType";
 export class CreateLibraryType {
@@ -23,6 +24,7 @@ export class CreateLibraryType {
     Object.assign(this, createLibraryType);
 
     if (!this.attributeTypes) this.attributeTypes = [];
+    if (!this.simpleTypes) this.simpleTypes = [];
 
     if (!this.terminalTypes) {
       const defaultTerminalTypeItem = {
@@ -34,6 +36,9 @@ export class CreateLibraryType {
       this.terminalTypes = [defaultTerminalTypeItem, { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output }];
     }
 
-    if (!this.simpleTypes) this.simpleTypes = [];
+    // Assign fake-ids to items for handling CRUD in redux store
+    if (this.terminalTypes) {
+      this.terminalTypes = this.terminalTypes.map(terminalTypeItem => ({...terminalTypeItem, terminalId: CreateId()}))
+    }
   }
 }

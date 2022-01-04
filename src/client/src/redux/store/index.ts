@@ -1,6 +1,6 @@
 import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
-import typeEditorReducer  from "../../typeEditor/redux/typeEditorSlice";
+import typeEditorReducer, { typeEditorSlice } from "../../typeEditor/redux/typeEditorSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
@@ -62,7 +62,19 @@ const store = configureStore({
   devTools: (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], },
+      serializableCheck: {
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+        ],
+        ignoredPaths: [
+          typeEditorSlice.name
+        ]
+      },
     }).concat(sagaMiddleware),
 });
 

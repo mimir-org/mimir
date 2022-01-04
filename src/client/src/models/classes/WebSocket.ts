@@ -95,7 +95,7 @@ class WebSocket {
 
   private handleReceivedNodeData = (eventType: WorkerStatus, data: string) => {
     const jsonObject = JSON.parse(data);
-    const node = jsonObject as Node;
+    const node = new Node(jsonObject);
 
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
@@ -112,7 +112,7 @@ class WebSocket {
 
   private handleReceivedEdgeData = (eventType: WorkerStatus, data: string) => {
     const jsonObject = JSON.parse(data);
-    const edge = jsonObject as Edge;
+    const edge = new Edge(jsonObject);
 
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.edges.some((x) => x.id === edge.id)) return;

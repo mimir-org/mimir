@@ -1,8 +1,7 @@
 import { TerminalTypeItem } from "../../../../../models";
 
 const OnDirectionChange = (item: number, defaultTerminal: TerminalTypeItem, onChange: Function) => {
-  defaultTerminal.connectorType = Number(item);
-  onChange("update", defaultTerminal);
+  onChange("update", {...defaultTerminal, connectorType: Number(item)});
 };
 
 export default OnDirectionChange;

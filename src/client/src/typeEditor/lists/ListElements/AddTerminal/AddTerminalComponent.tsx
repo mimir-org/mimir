@@ -17,7 +17,7 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => (
   <TerminalElementWrapper>
     <NumericValueInput
       value={defaultTerminal.number.toString()}
-      onChange={(item: number) => OnQuantityChange(item, defaultTerminal, onchange)}
+      onChange={(item: number) => OnQuantityChange(item, defaultTerminal, onChange)}
     />
     <SearchDropDown
       value={defaultTerminal.terminalTypeId}

@@ -113,7 +113,6 @@ export const typeEditorSlice = createSlice({
     fetchingTypeSuccessOrError: (state, action: PayloadAction<CreateLibraryType>) => {
       state.fetching = false;
       state.visible = true;
-      //TODO: Do not use non-serializable class
       state.createLibraryType = new CreateLibraryType(action.payload)
       state.inspector.visibility = false;
       state.inspector.height = Size.ModuleClosed;
@@ -142,29 +141,34 @@ export const typeEditorSlice = createSlice({
       state.apiError = action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError;
     },
     updateCreateLibraryType: (state, action: PayloadAction<UpdateCreateLibraryType>) => {
-      state.createLibraryType[action.payload.key] = action.payload.value;
+      state.createLibraryType = {
+        ...state.createLibraryType,
+        [action.payload.key]: action.payload.value
+      };
     },
     addTerminalType: (state, action: PayloadAction<TerminalTypeItem>) => {
-      state.createLibraryType.terminalTypes = [...state.createLibraryType.terminalTypes, action.payload];
+      state.createLibraryType = {
+        ...state.createLibraryType,
+        terminalTypes: [...state.createLibraryType.terminalTypes, action.payload]
+      };
     },
     removeTerminalType: (state, action: PayloadAction<TerminalTypeItem>) => {
-      state.createLibraryType.terminalTypes = [
-        ...state.createLibraryType.terminalTypes.filter(
-          (terminal) => terminal.terminalId !== action.payload.terminalId
-        ),
-      ];
+      state.createLibraryType = {
+        ...state.createLibraryType,
+        terminalTypes: state.createLibraryType.terminalTypes.filter((terminal) => terminal.terminalId !== action.payload.terminalId)
+      };
     },
     updateTerminalType: (state, action: PayloadAction<TerminalTypeItem>) => {
-      state.createLibraryType.terminalTypes = [
-        ...state.createLibraryType.terminalTypes.map((terminal) =>
-          terminal.terminalId === action.payload.terminalId ? action.payload : terminal
-        )
-      ]
+      state.createLibraryType = {
+        ...state.createLibraryType,
+        terminalTypes: state.createLibraryType.terminalTypes.map((terminal) => terminal.terminalId === action.payload.terminalId ? action.payload : terminal)
+      };
     },
     removeTerminalTypeByCategory: (state, action: PayloadAction<string>) => {
-      state.createLibraryType.terminalTypes = [
-        ...state.createLibraryType.terminalTypes.filter((terminal) => terminal.categoryId !== action.payload)
-      ]
+      state.createLibraryType = {
+        ...state.createLibraryType,
+        terminalTypes: state.createLibraryType.terminalTypes.filter((terminal) => terminal.categoryId !== action.payload)
+      };
     },
     clearAllTerminalTypes: (state) => {
       state.createLibraryType.terminalTypes = [];
