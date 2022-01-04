@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { typeEditorStateSelector, useAppDispatch, useAppSelector } from "../redux/store";
-import { getBlobData, getInitialData } from "./redux/actions";
+import { fetchingBlobData, fetchingInitialData } from "./redux/typeEditorSlice";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
 import { LibraryIcon } from "../assets/icons/modules";
@@ -30,8 +30,8 @@ export const TypeEditorComponent = () => {
   const createMode = state.createLibraryType.id === null;
 
   useEffect(() => {
-    dispatch(getInitialData());
-    dispatch(getBlobData());
+    dispatch(fetchingInitialData());
+    dispatch(fetchingBlobData());
   }, [dispatch]);
 
   return (

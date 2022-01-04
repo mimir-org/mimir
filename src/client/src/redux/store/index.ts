@@ -1,8 +1,9 @@
 import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
-import { combineReducers, createStore, compose, applyMiddleware } from "redux";
+import typeEditorReducer  from "../../typeEditor/redux/typeEditorSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
-import { typeEditorReducer } from "../../typeEditor/redux/reducers";
 import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
 import { inspectorReducer } from "../../modules/inspector/redux/tabs/reducers";
@@ -22,10 +23,7 @@ import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
 import { location3DReducer } from "../../modules/location/redux/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
-import { persistStore, persistReducer } from "redux-persist";
-
-const sagaMiddleware = createSagaMiddleware();
-const composeEnhancer = (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) || compose;
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 
 const rootReducers = combineReducers({
   library: libraryReducer,
@@ -57,7 +55,17 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
-const store = createStore(persistedReducer, {}, composeEnhancer(applyMiddleware(sagaMiddleware)));
+const sagaMiddleware = createSagaMiddleware();
+
+const store = configureStore({
+  reducer: persistedReducer,
+  devTools: (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: { ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], },
+    }).concat(sagaMiddleware),
+});
+
 const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducers>;

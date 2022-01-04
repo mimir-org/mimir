@@ -14,7 +14,6 @@ import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
 import { getCollaborationPartners, getStatuses, getAttributeFilters, getParsers } from "../../redux/store/common/actions";
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
-import { getBlobData } from "../../typeEditor/redux/actions";
 import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { getUser } from "../../redux/store/user/actions";
@@ -25,6 +24,7 @@ import { IsStartPage, SetDarkModeColor } from "../../helpers";
 import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
 import { commonStateSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { ImportProjectFileMenu } from "../menus/projectMenu/subMenus/importProjectFile";
+import { fetchingBlobData } from "../../typeEditor/redux/typeEditorSlice";
 
 interface Props {
   dispatch: Dispatch;
@@ -57,7 +57,7 @@ const Home = ({ dispatch }: Props) => {
     dispatch(getParsers());
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
-    dispatch(getBlobData());
+    dispatch(fetchingBlobData());
     dispatch(getUser());
   }, [dispatch]);
 

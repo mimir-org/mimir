@@ -1,6 +1,6 @@
 import { OnCloseEditor } from ".";
 import { CreateLibraryType } from "../../models";
-import { changeTypeEditorValidationVisibility, saveLibraryType } from "../redux/actions";
+import { changeTypeEditorValidationVisibility, saveLibraryType } from "../redux/typeEditorSlice";
 import { IsTypeEditorSubmissionValid } from "../validators";
 
 const OnSave = (dispatch: any, createLibraryType: CreateLibraryType) => {
