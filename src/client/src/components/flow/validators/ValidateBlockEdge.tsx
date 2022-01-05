@@ -1,11 +1,13 @@
+import { Elements } from "react-flow-renderer";
 import { IsFunction, IsLocation, IsProduct, IsOffPage } from "../../../helpers";
 import { Node, Connector } from "../../../models";
 import { IsTransportConnection, IsProductConnection, IsLocationConnection } from "../helpers";
 
 /**
- * Validator for an edge in BlockView, where different rules apply for each Aspect.
+ * Validator for an edge in BlockView. The basis for drawing an edge in BlockView is that the source node
+ * and the target node are in the elements array - meaning that the nodes are drawn to the screen.
  * @param selectedNode
- * @param secondaryNode
+ * @param splitNode
  * @param fromNode
  * @param toNode
  * @param source
@@ -15,21 +17,22 @@ import { IsTransportConnection, IsProductConnection, IsLocationConnection } from
  */
 const ValidateBlockEdge = (
   selectedNode: Node,
-  secondaryNode: Node,
+  splitNode: Node,
   fromNode: Node,
   toNode: Node,
   source: Connector,
   target: Connector,
-  elements: any[]
+  elements: Elements<any>
 ) => {
-  const splitView = secondaryNode !== null;
-  const hasFromNode = elements.some((elem) => elem.id === fromNode.id);
-  const hasToNode = elements.some((elem) => elem.id === toNode.id);
+  const splitView = splitNode !== null;
+  const isFromNodeOnScreen = elements.some((elem) => elem.id === fromNode.id);
+  const isToNodeOnScreen = elements.some((elem) => elem.id === toNode.id);
 
   if (splitView) {
-    return hasFromNode && hasToNode && validateSplitView(selectedNode, secondaryNode, fromNode, toNode, source, target);
+    return isFromNodeOnScreen && isToNodeOnScreen && validateSplitView(selectedNode, splitNode, fromNode, toNode, source, target);
   }
-  return hasFromNode && hasToNode;
+
+  return isFromNodeOnScreen && isToNodeOnScreen;
 };
 
 function validateSplitView(
@@ -55,12 +58,5 @@ function validateSplitView(
   if (IsLocation(splitNode)) return IsLocationConnection(source, target);
   if (IsFunction(splitNode)) return IsTransportConnection(source, target) || IsOffPage(fromNode) || IsOffPage(toNode);
 }
-
-// function validateOffPageSourceEdge(toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
-//   return IsTransportConnection(source, target) && IsDirectChild(toNode, selectedNode);
-// }
-// function validateOffPageTargetEdge(fromNode: Node, toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
-//   return IsTransportConnection(source, target) && IsDirectChild(fromNode, selectedNode) && IsDirectChild(toNode, fromNode);
-// }
 
 export default ValidateBlockEdge;

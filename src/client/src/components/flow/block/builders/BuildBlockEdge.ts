@@ -1,3 +1,4 @@
+import { Elements } from "react-flow-renderer";
 import { Edge, Node } from "../../../../models";
 import { EdgeType } from "../../../../models/project";
 import { ConvertEdgeToFlow } from "../../converters";
@@ -10,7 +11,7 @@ export const BuildBlockEdge = (
   edgeType: EdgeType,
   secondaryNode: Node,
   animated: boolean,
-  elements: any[]
+  elements: Elements<any>
 ) => {
   const sourceNode = nodes.find((node) => node.id === edge.fromNodeId);
   const targetNode = nodes.find((node) => node.id === edge.toNodeId);

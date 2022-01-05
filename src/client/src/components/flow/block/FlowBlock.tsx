@@ -28,7 +28,7 @@ interface Props {
 /**
  * Component for the Flow library in BlockView
  * @param interface
- * @returns  a scene with Flow elements and Mimir nodes, transports and edges.
+ * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();

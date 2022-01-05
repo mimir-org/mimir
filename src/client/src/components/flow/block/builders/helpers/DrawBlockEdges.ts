@@ -5,7 +5,7 @@ import { EdgeType, EDGE_TYPE } from "../../../../../models/project";
 import { IsPartOf } from "../../../helpers";
 
 /**
- * Component to draw all edges in BlockView.
+ * Component to draw all edges in BlockView. PartOf edges are not displayed in BlockView.
  * @param project
  * @param elements
  * @param secondaryNode
@@ -15,10 +15,15 @@ const DrawBlockEdges = (project: Project, elements: Elements<any>, secondaryNode
   const nodes = project.nodes;
   const edges = project.edges;
 
-  edges?.forEach((edge) => {
+  edges.forEach((edge) => {
     if (!IsPartOf(edge.fromConnector)) {
-      const blockEdge = BuildBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType, secondaryNode, animatedEdge, elements);
-      if (blockEdge) elements.push(blockEdge);
+      const sourceNodeIsOnScreen = elements.some((x) => x.id === edge.fromNodeId);
+      const targetNodeIsOnScreen = elements.some((x) => x.id === edge.toNodeId);
+
+      if (sourceNodeIsOnScreen && targetNodeIsOnScreen) {
+        const blockEdge = BuildBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType, secondaryNode, animatedEdge, elements);
+        if (blockEdge) elements.push(blockEdge);
+      }
     }
   });
 };
