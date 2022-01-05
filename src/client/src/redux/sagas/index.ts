@@ -24,7 +24,7 @@ import {
   CREATING_SUB_PROJECT,
   LOCK_EDGE,
   LOCK_ATTRIBUTE,
-} from "./../store/project/types";
+} from "../store/project/types";
 import {
   getProject,
   createProject,
@@ -53,6 +53,7 @@ import {
 import {
   fetchingBlobData,
   fetchingInitialData,
+  fetchingSimpleTypes,
   fetchingType,
   saveLibraryType
 } from "../../typeEditor/redux/typeEditorSlice";
@@ -83,7 +84,7 @@ function* sagas() {
     takeEvery(fetchingInitialData, getTerminals),
     takeEvery(fetchingInitialData, getPredefinedAttributes),
     takeEvery(fetchingInitialData, getAttributes),
-    takeEvery(fetchingInitialData, getSimpleTypes),
+    takeEvery(fetchingSimpleTypes, getSimpleTypes),
     takeEvery(fetchingBlobData, getBlobData),
     takeEvery(fetchingType, getSelectedType),
     takeEvery(saveLibraryType, saveType),

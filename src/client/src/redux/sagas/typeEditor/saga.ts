@@ -1,7 +1,9 @@
 import { call, put as statePut } from "redux-saga/effects";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { ADD_LIBRARY_ITEM, REMOVE_LIBRARY_ITEM } from "../../store/library/types";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
-import { Aspect, SimpleType, SimpleTypeResponse, CreateLibraryType } from "../../../models";
+import { Aspect, CreateLibraryType, SimpleType, SimpleTypeResponse } from "../../../models";
+import { FetchingTypeAction } from "../../../typeEditor/redux/types";
 import {
   fetchingAttributesSuccessOrError,
   fetchingBlobDataSuccessOrError,
@@ -15,13 +17,13 @@ import {
   saveLibraryTypeSuccessOrError
 } from "../../../typeEditor/redux/typeEditorSlice";
 
-export function* saveType(action) {
+export function* saveType(action: PayloadAction<CreateLibraryType>) {
   try {
-    const createLibraryType = action.payload.libraryType as CreateLibraryType;
-    let url = "";
+    const createLibraryType = action.payload;
 
-    if (createLibraryType.id) url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.id;
-    else url = process.env.REACT_APP_API_BASE_URL + "librarytype";
+    const url = createLibraryType.id ?
+      `${process.env.REACT_APP_API_BASE_URL}librarytype/${createLibraryType.id}` :
+      `${process.env.REACT_APP_API_BASE_URL}librarytype`
 
     const response = yield call(post, url, createLibraryType);
 
@@ -68,8 +70,8 @@ export function* saveType(action) {
 
 export function* getInitialData() {
   try {
-    const purposesUrl = process.env.REACT_APP_API_BASE_URL + "enum/9";
-    const purposesResponse = yield call(get, purposesUrl);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}enum/9`;
+    const purposesResponse = yield call(get, endpointUrl);
 
     yield statePut(fetchingInitialDataSuccessOrError(purposesResponse.data));
   } catch (error) {
@@ -80,8 +82,8 @@ export function* getInitialData() {
 export function* getRDS(action) {
   try {
     const aspect = action.payload != null ? action.payload.aspect : Aspect.NotSet;
-    const rdsURL = process.env.REACT_APP_API_BASE_URL + "rds/" + aspect;
-    const rdsResponse = yield call(get, rdsURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}rds/${aspect}`;
+    const rdsResponse = yield call(get, endpointUrl);
 
     yield statePut(fetchingRdsSuccessOrError(rdsResponse.data));
   } catch (error) {
@@ -91,8 +93,8 @@ export function* getRDS(action) {
 
 export function* getTerminals() {
   try {
-    const terminalURL = process.env.REACT_APP_API_BASE_URL + "terminaltype/category";
-    const terminalResponse = yield call(get, terminalURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}terminaltype/category`;
+    const terminalResponse = yield call(get, endpointUrl);
 
     yield statePut(fetchingTerminalsSuccessOrError(terminalResponse.data));
   } catch (error) {
@@ -103,8 +105,8 @@ export function* getTerminals() {
 export function* getAttributes(action) {
   try {
     const aspect = action.payload != null ? action.payload.aspect : Aspect.NotSet;
-    const attributesURL = process.env.REACT_APP_API_BASE_URL + "attributetype/" + aspect;
-    const attributesResponse = yield call(get, attributesURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}attributetype/${aspect}`;
+    const attributesResponse = yield call(get, endpointUrl);
 
     yield statePut(fetchingAttributesSuccessOrError(attributesResponse.data));
   } catch (error) {
@@ -114,8 +116,8 @@ export function* getAttributes(action) {
 
 export function* getLocationTypes() {
   try {
-    const locationTypesURL = process.env.REACT_APP_API_BASE_URL + "enum/location-types";
-    const locationTypesResponse = yield call(get, locationTypesURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}enum/location-types`;
+    const locationTypesResponse = yield call(get, endpointUrl);
 
     yield statePut(fetchingLocationTypesSuccessOrError(locationTypesResponse.data));
   } catch (error) {
@@ -125,8 +127,8 @@ export function* getLocationTypes() {
 
 export function* getPredefinedAttributes() {
   try {
-    const predefinedAttributesURL = process.env.REACT_APP_API_BASE_URL + "attributetype/predefined-attributes";
-    const predefinedAttributesResponse = yield call(get, predefinedAttributesURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}attributetype/predefined-attributes`;
+    const predefinedAttributesResponse = yield call(get, endpointUrl);
 
     yield statePut(fetchingPredefinedAttributesSuccessOrError(predefinedAttributesResponse.data));
   } catch (error) {
@@ -136,8 +138,8 @@ export function* getPredefinedAttributes() {
 
 export function* getBlobData() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "blob/";
-    const response = yield call(get, url);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}blob/`;
+    const response = yield call(get, endpointUrl);
 
     // This is a bad request
     if (response.status === 400) {
@@ -165,10 +167,10 @@ export function* getBlobData() {
   }
 }
 
-export function* getSelectedType(action) {
+export function* getSelectedType(action: PayloadAction<FetchingTypeAction>) {
   try {
-    const selectedNodeURL = process.env.REACT_APP_API_BASE_URL + "librarytype/" + action.payload.selectedType + "/" + action.payload.filter;
-    const selectedNodeResponse = yield call(get, selectedNodeURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}librarytype/${action.payload.selectedType}/${action.payload.filter}`;
+    const selectedNodeResponse = yield call(get, endpointUrl);
     const createLibraryType = selectedNodeResponse.data as CreateLibraryType;
     createLibraryType.id = action.payload.selectedType;
 
@@ -180,8 +182,8 @@ export function* getSelectedType(action) {
 
 export function* getSimpleTypes() {
   try {
-    const simpleTypeslURL = process.env.REACT_APP_API_BASE_URL + "librarytype/simpletype";
-    const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}librarytype/simpletype`;
+    const simpleTypesURLResponse = yield call(get, endpointUrl);
 
     const simpleTypes = (simpleTypesURLResponse.data as Array<SimpleTypeResponse>).map((comp) => {
       return { ...comp, attributes: comp.attributeTypes } as SimpleType;

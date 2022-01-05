@@ -1,3 +1,4 @@
+import { CREATE_LIBRARY_KIND } from "../../../models/classes/CreateLibraryType";
 import {
   Edge,
   Node,
@@ -13,7 +14,6 @@ import {
   INTERFACE_KIND,
   CONNECTOR_KIND,
   SIMPLE_KIND,
-  CREATE_LIBRARY_KIND,
   ATTRIBUTE_KIND,
 } from "../../../models";
 

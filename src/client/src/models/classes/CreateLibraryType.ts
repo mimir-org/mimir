@@ -2,7 +2,8 @@ import { Aspect, ConnectorType, ObjectType, PredefinedAttribute, TerminalTypeIte
 import { CreateId } from "../../components/flow/helpers";
 
 export const CREATE_LIBRARY_KIND: string = "CreateLibraryType";
-export class CreateLibraryType {
+
+export default interface CreateLibraryType {
   id: string;
   name: string;
   aspect: Aspect;
@@ -17,28 +18,51 @@ export class CreateLibraryType {
   terminalTypeId: string;
   symbolId: string;
   simpleTypes: string[];
+  kind: string;
+}
 
-  kind: string = CREATE_LIBRARY_KIND;
+export let defaultCreateLibraryType: CreateLibraryType = {
+  id: null,
+  name: "",
+  aspect: Aspect.NotSet,
+  objectType: ObjectType.NotSet,
+  purpose: "",
+  semanticReference: "",
+  rdsId: "",
+  terminalTypes: [] as TerminalTypeItem[],
+  attributeTypes: [] as string[],
+  locationType: "",
+  predefinedAttributes: [] as PredefinedAttribute[],
+  terminalTypeId: "",
+  symbolId: "",
+  simpleTypes: [] as string[],
+  kind: CREATE_LIBRARY_KIND
+}
 
-  constructor(createLibraryType: CreateLibraryType) {
-    Object.assign(this, createLibraryType);
+export function fromJsonCreateLibraryType(createLibraryTypeJson: any): CreateLibraryType {
+  return ensureValidState({...defaultCreateLibraryType, ...createLibraryTypeJson});
+}
 
-    if (!this.attributeTypes) this.attributeTypes = [];
-    if (!this.simpleTypes) this.simpleTypes = [];
+function ensureValidState(newCreateLibraryType: CreateLibraryType) {
+  const createLibraryTypeState = {...newCreateLibraryType};
 
-    if (!this.terminalTypes) {
-      const defaultTerminalTypeItem = {
-        number: 1,
-        terminalTypeId: this.terminalTypeId,
-        connectorType: ConnectorType.Input,
-      } as TerminalTypeItem;
+  if (!createLibraryTypeState.attributeTypes) createLibraryTypeState.attributeTypes = [];
+  if (!createLibraryTypeState.simpleTypes) createLibraryTypeState.simpleTypes = [];
 
-      this.terminalTypes = [defaultTerminalTypeItem, { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output }];
-    }
+  if (!createLibraryTypeState.terminalTypes) {
+    const defaultTerminalTypeItem = {
+      number: 1,
+      terminalTypeId: createLibraryTypeState.terminalTypeId,
+      connectorType: ConnectorType.Input,
+    } as TerminalTypeItem;
 
-    // Assign fake-ids to items for handling CRUD in redux store
-    if (this.terminalTypes) {
-      this.terminalTypes = this.terminalTypes.map(terminalTypeItem => ({...terminalTypeItem, terminalId: CreateId()}))
-    }
+    createLibraryTypeState.terminalTypes = [defaultTerminalTypeItem, { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output }];
   }
+
+  // Assign temporary-ids to items for handling CRUD in redux store
+  if (createLibraryTypeState.terminalTypes) {
+    createLibraryTypeState.terminalTypes = createLibraryTypeState.terminalTypes.map(terminalTypeItem => ({...terminalTypeItem, terminalId: CreateId()}))
+  }
+
+  return createLibraryTypeState;
 }

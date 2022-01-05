@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Size } from "../../compLibrary/size";
 import { ApiError } from "../../models/webclient";
+import { defaultCreateLibraryType, fromJsonCreateLibraryType } from "../../models/classes/CreateLibraryType";
 import {
   FetchingBlobDataActionFinished,
   FetchingSimpleTypesActionFinished,
@@ -9,12 +10,10 @@ import {
   UpdateCreateLibraryType
 } from "./types";
 import {
-  Aspect,
   AttributeType,
   BlobData,
   CreateLibraryType,
   LocationType,
-  ObjectType,
   PredefinedAttribute,
   Purpose,
   Rds,
@@ -22,27 +21,12 @@ import {
   TerminalTypeItem
 } from "../../models";
 
-const initialState: TypeEditorState = {
+const initialTypeEditorState: TypeEditorState = {
   visible: false,
   fetching: false,
   creating: false,
   validationVisibility: false,
-  createLibraryType: {
-    id: null,
-    name: "",
-    aspect: Aspect.NotSet,
-    objectType: ObjectType.NotSet,
-    purpose: "",
-    semanticReference: "",
-    rdsId: "",
-    terminalTypes: [] as TerminalTypeItem[],
-    attributeTypes: [] as string[],
-    locationType: "",
-    predefinedAttributes: [] as PredefinedAttribute[],
-    terminalTypeId: "",
-    symbolId: "",
-    simpleTypes: [] as string[],
-  } as CreateLibraryType,
+  createLibraryType: {...defaultCreateLibraryType},
   purposes: [],
   rdsList: [],
   terminals: [],
@@ -61,7 +45,7 @@ const initialState: TypeEditorState = {
 
 export const typeEditorSlice = createSlice({
   name: 'typeEditor',
-  initialState,
+  initialState: initialTypeEditorState,
   reducers: {
     fetchingInitialData: (state) => {
       state.fetching = true;
@@ -70,36 +54,21 @@ export const typeEditorSlice = createSlice({
       state.fetching = false;
       state.purposes = action.payload;
     },
-    fetchingRds: (state) => {
-      state.fetching = true;
-    },
     fetchingRdsSuccessOrError: (state, action: PayloadAction<Rds[]>) => {
       state.fetching = false;
       state.rdsList = action.payload ? action.payload : [];
-    },
-    fetchingTerminals: (state) => {
-      state.fetching = true;
     },
     fetchingTerminalsSuccessOrError: (state, action: PayloadAction<TerminalTypeDictItem[]>) => {
       state.fetching = false;
       state.terminals = action.payload;
     },
-    fetchingAttributes: (state) => {
-      state.fetching = true;
-    },
     fetchingAttributesSuccessOrError: (state, action: PayloadAction<AttributeType[]>) => {
       state.fetching = false;
       state.attributes = action.payload ? action.payload : [];
     },
-    fetchingLocationTypes: (state) => {
-      state.fetching = true;
-    },
     fetchingLocationTypesSuccessOrError: (state, action: PayloadAction<LocationType[]>) => {
       state.fetching = false;
       state.locationTypes = action.payload;
-    },
-    fetchingPredefinedAttributes: (state) => {
-      state.fetching = true;
     },
     fetchingPredefinedAttributesSuccessOrError: (state, action: PayloadAction<PredefinedAttribute[]>) => {
       state.fetching = false;
@@ -108,12 +77,12 @@ export const typeEditorSlice = createSlice({
     fetchingType: (state, action: PayloadAction<FetchingTypeAction>) => {
       state.fetching = true;
       state.visible = false;
-      state.createLibraryType = {...initialState.createLibraryType};
+      state.createLibraryType = {...initialTypeEditorState.createLibraryType};
     },
     fetchingTypeSuccessOrError: (state, action: PayloadAction<CreateLibraryType>) => {
       state.fetching = false;
       state.visible = true;
-      state.createLibraryType = new CreateLibraryType(action.payload)
+      state.createLibraryType = fromJsonCreateLibraryType(action.payload);
       state.inspector.visibility = false;
       state.inspector.height = Size.ModuleClosed;
       state.inspector.activeTabIndex = null;
@@ -180,8 +149,8 @@ export const typeEditorSlice = createSlice({
     saveLibraryTypeSuccessOrError: (state, action: PayloadAction<ApiError>) => {
       state.fetching = false;
       state.apiError = action.payload ? [...state.apiError, action.payload] : state.apiError;
-      state.createLibraryType = {...initialState.createLibraryType};
-      state.inspector = {...initialState.inspector};
+      state.createLibraryType = {...initialTypeEditorState.createLibraryType};
+      state.inspector = {...initialTypeEditorState.inspector};
     },
     deleteTypeEditorError: (state, action: PayloadAction<string>) => {
       state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
@@ -189,8 +158,8 @@ export const typeEditorSlice = createSlice({
     changeTypeEditorVisibility: (state, action: PayloadAction<boolean>) => {
       state.fetching = false;
       state.visible = action.payload;
-      state.createLibraryType = {...initialState.createLibraryType};
-      state.inspector = {...initialState.inspector};
+      state.createLibraryType = {...initialTypeEditorState.createLibraryType};
+      state.inspector = {...initialTypeEditorState.inspector};
     },
     changeTypeEditorValidationVisibility: (state, action: PayloadAction<boolean>) => {
       state.validationVisibility = action.payload;
@@ -210,15 +179,10 @@ export const typeEditorSlice = createSlice({
 export const {
   fetchingInitialData,
   fetchingInitialDataSuccessOrError,
-  fetchingRds,
   fetchingRdsSuccessOrError,
-  fetchingTerminals,
   fetchingTerminalsSuccessOrError,
-  fetchingAttributes,
   fetchingAttributesSuccessOrError,
-  fetchingLocationTypes,
   fetchingLocationTypesSuccessOrError,
-  fetchingPredefinedAttributes,
   fetchingPredefinedAttributesSuccessOrError,
   fetchingType,
   fetchingTypeSuccessOrError,
