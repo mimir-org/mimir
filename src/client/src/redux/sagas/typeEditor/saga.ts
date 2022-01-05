@@ -28,14 +28,7 @@ export function* saveType(action: PayloadAction<CreateLibraryType>) {
     const response = yield call(post, url, createLibraryType);
 
     if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: saveLibraryTypeSuccessOrError.type,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
+      const apiError = getApiErrorForBadRequest(saveLibraryTypeSuccessOrError.type, response);
       yield statePut(saveLibraryTypeSuccessOrError(apiError));
       return;
     }
@@ -58,12 +51,7 @@ export function* saveType(action: PayloadAction<CreateLibraryType>) {
       payload: response.data,
     });
   } catch (error) {
-    const apiError = {
-      key: saveLibraryTypeSuccessOrError.type,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
+    const apiError = getApiErrorForException(saveLibraryTypeSuccessOrError.type, error);
     yield statePut(saveLibraryTypeSuccessOrError(apiError));
   }
 }
@@ -143,27 +131,15 @@ export function* getBlobData() {
 
     // This is a bad request
     if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: fetchingBlobDataSuccessOrError.type,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      yield statePut(fetchingBlobDataSuccessOrError({ icons: [], apiError }));
+      const apiError = getApiErrorForBadRequest(fetchingBlobDataSuccessOrError.type, response);
+      yield statePut(fetchingBlobDataSuccessOrError({ icons: [], apiError}));
       return;
     }
 
     yield statePut(fetchingBlobDataSuccessOrError({ icons: response.data, apiError: null }));
   } catch (error) {
-    const apiError = {
-      key: fetchingBlobDataSuccessOrError.type,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    yield yield statePut(fetchingBlobDataSuccessOrError({ icons: [], apiError }));
+    const apiError = getApiErrorForException(fetchingBlobDataSuccessOrError.type, error);
+    yield statePut(fetchingBlobDataSuccessOrError({ icons: [], apiError }));
   }
 }
 
@@ -199,4 +175,21 @@ export function* getSimpleTypes() {
 
     yield statePut(fetchingSimpleTypesSuccessOrError({simpleTypes: [], apiError}));
   }
+}
+
+function getApiErrorForBadRequest(key: string, response: any): ApiError {
+  const data = GetBadResponseData(response);
+  return {
+    key,
+    errorMessage: data?.title,
+    errorData: data
+  };
+}
+
+function getApiErrorForException(key: string, error: any): ApiError {
+  return {
+    key,
+    errorMessage: error?.message,
+    errorData: null,
+  };
 }
