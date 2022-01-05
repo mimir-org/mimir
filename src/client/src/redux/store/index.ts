@@ -1,13 +1,12 @@
 import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
 import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
+import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
 import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
-import { inspectorReducer } from "../../modules/inspector/redux/tabs/reducers";
-import { inspectorHeightReducer } from "../../modules/inspector/redux/height/reducers";
 import { moduleReducer } from "./modules/reducers";
 import { menuReducer } from "../../components/menus/projectMenu/subMenus/redux/reducers";
 import { commonReducer } from "./common/reducers";
@@ -29,7 +28,6 @@ const rootReducers = combineReducers({
   library: libraryReducer,
   typeEditor: typeEditorReducer,
   inspector: inspectorReducer,
-  inspectorHeight: inspectorHeightReducer,
   userState: userReducer,
   projectState: projectReducer,
   modules: moduleReducer,

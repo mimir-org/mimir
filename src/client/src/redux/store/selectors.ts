@@ -188,7 +188,7 @@ export const inspectorActiveTabSelector = createAppSelector(
 );
 
 export const heightSelector = createAppSelector(
-  (state) => state.inspectorHeight.height,
+  (state) => state.inspector.height,
   (width) => width
 );
 

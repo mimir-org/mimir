@@ -4,7 +4,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { setModuleVisibility } from "../../../redux/store/modules/actions";
 import { SetPanelHeight } from "../helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
-import { changeInspectorHeight } from "../redux/height/actions";
+import { changeInspectorHeight } from "../redux/inspectorSlice";
 import { InspectorElement } from "../types";
 import { IsEdge, IsNode } from "../helpers/IsType";
 import { Dispatch } from "redux";
