@@ -25,7 +25,6 @@ namespace Mb.Models.Application
         [Required]
         public string Label { get; set; }
 
-        [Required]
         public string Rds { get; set; }
 
         public string SemanticReference { get; set; }
@@ -63,7 +62,6 @@ namespace Mb.Models.Application
         [Required]
         public string MasterProjectId { get; set; }
         
-        [Required]
         public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
@@ -99,6 +97,9 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            if (string.IsNullOrWhiteSpace(Rds) && !IsRoot)
+                yield return new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { GetType().Name });
+
             if (Aspect == Aspect.None)
                 yield return new ValidationResult("Aspect 'None' is not allowed", new List<string> { GetType().Name });
 

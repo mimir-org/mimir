@@ -8,16 +8,15 @@ namespace Mb.Models.Application
 {
     public class ProjectAm : IValidatableObject
     {
+        [Required]
         public string Id { get; set; }
+        [Required]
         public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
-
         [Required]
         public string Name { get; set; }
-
         [Required]
         public bool IsSubProject { get; set; }
-        
         public string Version { get; set; }
         public string Description { get; set; }
         public string ProjectOwner { get; set; }
@@ -31,16 +30,6 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            //ProjectAm
-            if (string.IsNullOrEmpty(Id))
-                yield return new ValidationResult($"{nameof(Id)} can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrEmpty(Iri))
-                yield return new ValidationResult($"{nameof(Iri)} can't be null or empty", new List<string> { GetType().Name });
-
-            if (string.IsNullOrEmpty(Iri))
-                yield return new ValidationResult($"{nameof(Iri)} can't be null or empty", new List<string> { GetType().Name });
-
             //Nodes
             if (Nodes.Any())
             {
