@@ -47,14 +47,14 @@ import {
   getAttributes,
   saveType,
   getBlobData,
-  getSelectedType,
+  getSelectedCreateLibraryType,
   getSimpleTypes,
 } from "./typeEditor/saga";
 import {
-  fetchingBlobData,
-  fetchingInitialData,
-  fetchingSimpleTypes,
-  fetchingType,
+  fetchBlobData,
+  fetchInitialData,
+  fetchSimpleTypes,
+  fetchCreateLibraryType,
   saveLibraryType
 } from "../../typeEditor/redux/typeEditorSlice";
 
@@ -78,15 +78,15 @@ function* sagas() {
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),
     takeEvery(FETCHING_LIBRARY_INTERFACE_TYPES, getInterfaceTypes),
     takeEvery(COMMIT_PROJECT, commitProject),
-    takeEvery(fetchingInitialData, getInitialData),
-    takeEvery(fetchingInitialData, getLocationTypes),
-    takeEvery(fetchingInitialData, getRDS),
-    takeEvery(fetchingInitialData, getTerminals),
-    takeEvery(fetchingInitialData, getPredefinedAttributes),
-    takeEvery(fetchingInitialData, getAttributes),
-    takeEvery(fetchingSimpleTypes, getSimpleTypes),
-    takeEvery(fetchingBlobData, getBlobData),
-    takeEvery(fetchingType, getSelectedType),
+    takeEvery(fetchInitialData, getInitialData),
+    takeEvery(fetchInitialData, getLocationTypes),
+    takeEvery(fetchInitialData, getRDS),
+    takeEvery(fetchInitialData, getTerminals),
+    takeEvery(fetchInitialData, getPredefinedAttributes),
+    takeEvery(fetchInitialData, getAttributes),
+    takeEvery(fetchSimpleTypes, getSimpleTypes),
+    takeEvery(fetchBlobData, getBlobData),
+    takeEvery(fetchCreateLibraryType, getSelectedCreateLibraryType),
     takeEvery(saveLibraryType, saveType),
   ]);
 }

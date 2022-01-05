@@ -24,7 +24,7 @@ import { IsStartPage, SetDarkModeColor } from "../../helpers";
 import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
 import { commonStateSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { ImportProjectFileMenu } from "../menus/projectMenu/subMenus/importProjectFile";
-import { fetchingBlobData } from "../../typeEditor/redux/typeEditorSlice";
+import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 
 interface Props {
   dispatch: Dispatch;
@@ -57,7 +57,7 @@ const Home = ({ dispatch }: Props) => {
     dispatch(getParsers());
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
-    dispatch(fetchingBlobData());
+    dispatch(fetchBlobData());
     dispatch(getUser());
   }, [dispatch]);
 
