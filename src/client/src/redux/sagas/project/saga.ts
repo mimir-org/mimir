@@ -32,14 +32,15 @@ import {
   LOCK_EDGE_SUCCESS_OR_ERROR,
   LockAttribute,
   SaveProjectAction,
+  FetchingProjectAction,
 } from "../../store/project/types";
 
-export function* getProject(action) {
+export function* getProject(action: FetchingProjectAction) {
   try {
     const webSocket = new WebSocket();
-    if (webSocket.isRunning()) webSocket.setGroup(action.payload);
+    if (webSocket.isRunning()) webSocket.setGroup(action.payload.id);
 
-    const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
+    const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload.id;
     const response = yield call(get, url);
 
     // This is a bad request
@@ -65,6 +66,8 @@ export function* getProject(action) {
     }
 
     const project = response.data;
+
+    MapProperties(project, action.payload.project, {});
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
