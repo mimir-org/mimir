@@ -23,7 +23,7 @@ import { edgeAnimationReducer } from "./edgeAnimation/reducers";
 import { location3DReducer } from "../../modules/location/redux/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
+import { persistStore, persistReducer } from 'redux-persist'
 
 const rootReducers = combineReducers({
   library: libraryReducer,
@@ -62,9 +62,12 @@ const store = configureStore({
   devTools: (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]),
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      },
+      // TODO: Re-enable checks after rewrite of most reducers/actions
+      immutableCheck: false,
+      serializableCheck: false,
+      // serializableCheck: {
+      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      // },
     }).concat(sagaMiddleware),
 });
 
