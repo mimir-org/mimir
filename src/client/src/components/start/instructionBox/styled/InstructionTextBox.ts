@@ -8,6 +8,7 @@ const InstructionBox = styled.div`
   right: 200px;
   width: 236px;
   height: 95px;
+  background-color: ${Color.BlueDark};
   display: flex;
   align-items: center;
   border: ${Color.White} solid 1px;
