@@ -25,6 +25,7 @@ import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
 import { commonStateSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { ImportProjectFileMenu } from "../menus/projectMenu/subMenus/importProjectFile";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
+import { InstructionBoxComponent } from "../start/instructionBox";
 
 interface Props {
   dispatch: Dispatch;
@@ -46,6 +47,8 @@ const Home = ({ dispatch }: Props) => {
   const openProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
   const createProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
   const importProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
+  const instructionBox = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.INSTRUCTION_PROJECT_MENU);
+  const showInstructionBox = instructionBox && !projectState?.project;
 
   useEffect(() => {
     dispatch(importLibraryInterfaceTypes());
@@ -86,6 +89,7 @@ const Home = ({ dispatch }: Props) => {
           {openProject && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
           {createProject && <CreateProjectMenu dispatch={dispatch} />}
           {importProject && <ImportProjectFileMenu dispatch={dispatch} parsers={commonState?.parsers} />}
+          {showInstructionBox && <InstructionBoxComponent />}
         </>
       ) : (
         <>
