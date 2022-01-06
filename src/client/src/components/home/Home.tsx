@@ -18,7 +18,7 @@ import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
-import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
+import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/menuSlice";
 import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
 import { IsStartPage, SetDarkModeColor } from "../../helpers";
 import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";

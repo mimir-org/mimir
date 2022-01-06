@@ -8,7 +8,7 @@ import { OnDarkMode, OnLogOut } from "./handlers";
 import { userStateSelector } from "../../../redux/store";
 import { TextResources } from "../../../assets/text";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { setUserMenuVisibility } from "../projectMenu/subMenus/redux/actions";
+import { setUserMenuVisibility } from "../projectMenu/subMenus/redux/menuSlice";
 
 interface Props {
   dispatch: Dispatch;

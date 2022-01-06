@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { useCallback, useRef } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
-import { setProjectMenuVisibility } from "../projectMenu/subMenus/redux/actions";
+import { setProjectMenuVisibility } from "./subMenus/redux/menuSlice";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { activeMenuSelector, commonStateSelector } from "../../../redux/store";
 import { useAppSelector } from "../../../redux/store/hooks";

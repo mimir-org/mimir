@@ -1,4 +1,4 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { importLibrary } from "../../../../../../redux/store/library/actions";
 import { CreateLibraryType } from "../../../../../../models";
 

@@ -1,4 +1,4 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../../../projectMenu/subMenus/redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { create } from "../../../../../../redux/store/project/actions";
 import { changeFlowView } from "../../../../../../redux/store/flow/actions";
 import { ViewType, VIEW_TYPE } from "../../../../../../models/project";

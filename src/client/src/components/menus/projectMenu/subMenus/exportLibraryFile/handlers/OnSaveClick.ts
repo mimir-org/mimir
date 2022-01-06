@@ -1,4 +1,4 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { exportLibrary } from "../../../../../../redux/store/library/actions";
 
 const OnSaveClick = (dispatch: any, fileName: string) => {

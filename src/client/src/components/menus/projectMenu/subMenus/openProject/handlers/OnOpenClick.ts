@@ -1,5 +1,5 @@
 import { ViewType, VIEW_TYPE } from "../../../../../../models/project/project";
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { Dispatch } from "redux";
 import { changeFlowView } from "../../../../../../redux/store/flow/actions";
 import { get } from "../../../../../../redux/store/project/actions";

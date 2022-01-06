@@ -1,4 +1,4 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { commitProject } from "../../../../../../redux/store/project/actions";
 import { CommitPackage, CommitStatus } from "../../../../../../models";
 
