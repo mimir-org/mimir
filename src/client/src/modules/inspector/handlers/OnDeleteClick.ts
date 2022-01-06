@@ -1,7 +1,7 @@
 import { Size } from "../../../compLibrary/size";
 import { Edge, Node, Project } from "../../../models";
 import { MODULE_TYPE } from "../../../models/project";
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { SetPanelHeight } from "../helpers";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../redux/inspectorSlice";
@@ -23,7 +23,7 @@ const OnDeleteClick = (
     HandleEdgeDelete(element, project, dispatch);
   }
 
-  dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+  dispatch(setModuleVisibility({type: MODULE_TYPE.INSPECTOR, visible: false, animate: true}));
   dispatch(changeInspectorHeight(Size.ModuleClosed));
   SetPanelHeight(inspectorRef, Size.ModuleClosed);
 };

@@ -8,7 +8,7 @@ import { InspectorHeader } from ".";
 import { InspectorElement } from "./types";
 import { useDragResizePanel } from "./helpers";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
-import { setModuleVisibility } from "../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
 import { useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { Project } from "../../models";
@@ -45,7 +45,7 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const element: InspectorElement = node || edge;
 
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
-  const changeInspectorVisibilityAction = useCallback((open: boolean) => setModuleVisibility(type, open, true), [type]);
+  const changeInspectorVisibilityAction = useCallback((open: boolean) => setModuleVisibility({type: type, visible: open, animate: true}), [type]);
 
   return (
     <AnimatedInspector

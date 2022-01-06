@@ -1,7 +1,7 @@
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 
 const OnLegendClick = (dispatch: any, open: boolean, legendKey: string) => {
-  dispatch(setModuleVisibility(legendKey, !open, true));
+  dispatch(setModuleVisibility({type: legendKey, visible: !open, animate: true}));
 };
 
 export default OnLegendClick;

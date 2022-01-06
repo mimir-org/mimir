@@ -3,11 +3,11 @@ import createSagaMiddleware from "redux-saga";
 import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
 import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
 import userReducer  from "./user/userSlice";
+import modulesReducer from "./modules/modulesSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
 import { projectReducer } from "./project/reducers";
-import { moduleReducer } from "./modules/reducers";
 import { menuReducer } from "../../components/menus/projectMenu/subMenus/redux/reducers";
 import { commonReducer } from "./common/reducers";
 import { flowReducer } from "./flow/reducers";
@@ -30,7 +30,7 @@ const rootReducers = combineReducers({
   inspector: inspectorReducer,
   userState: userReducer,
   projectState: projectReducer,
-  modules: moduleReducer,
+  modules: modulesReducer,
   menu: menuReducer,
   flow: flowReducer,
   secondaryNode: secondaryReducer,

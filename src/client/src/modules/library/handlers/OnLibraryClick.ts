@@ -1,8 +1,8 @@
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 
 const OnLibraryClick = (dispatch: any, open: boolean, libraryKey: string, legendKey: string) => {
-  dispatch(setModuleVisibility(libraryKey, !open, true));
-  dispatch(setModuleVisibility(legendKey, !open, true));
+  dispatch(setModuleVisibility({type: libraryKey, visible: !open, animate: true}));
+  dispatch(setModuleVisibility({type: legendKey, visible: !open, animate: true}));
 };
 
 export default OnLibraryClick;

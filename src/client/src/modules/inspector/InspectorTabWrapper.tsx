@@ -3,7 +3,7 @@ import { Action } from "redux";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
 import { useAppDispatch } from "../../redux/store";
-import { setModuleVisibility } from "../../redux/store/modules/actions";
+import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
 import { GetTabsColor, GetInspectorText, GetTabId, SetPanelHeight } from "./helpers";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { TabHeader, TabTitle, TabBody } from "./styled";
@@ -33,7 +33,7 @@ const InspectorTabWrapper = ({
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
     if (!isInspectorOpen) {
-      dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, true, true));
+      dispatch(setModuleVisibility({type: MODULE_TYPE.INSPECTOR, visible: true, animate: true}));
       dispatch(changeInspectorHeight(Size.ModuleOpen));
       SetPanelHeight(inspectorRef, Size.ModuleOpen);
     }
