@@ -1,4 +1,3 @@
-import { Elements } from "react-flow-renderer";
 import { IsFunction, IsLocation, IsProduct, IsOffPage } from "../../../helpers";
 import { Node, Connector } from "../../../models";
 import { IsTransportConnection, IsProductConnection, IsLocationConnection } from "../helpers";
@@ -12,7 +11,6 @@ import { IsTransportConnection, IsProductConnection, IsLocationConnection } from
  * @param toNode
  * @param source
  * @param target
- * @param elements
  * @returns a boolean value.
  */
 const ValidateBlockEdge = (
@@ -21,21 +19,18 @@ const ValidateBlockEdge = (
   fromNode: Node,
   toNode: Node,
   source: Connector,
-  target: Connector,
-  elements: Elements<any>
+  target: Connector
 ) => {
   const splitView = splitNode !== null;
-  const isFromNodeOnScreen = elements.some((elem) => elem.id === fromNode.id);
-  const isToNodeOnScreen = elements.some((elem) => elem.id === toNode.id);
 
   if (splitView) {
-    return isFromNodeOnScreen && isToNodeOnScreen && validateSplitView(selectedNode, splitNode, fromNode, toNode, source, target);
+    return ValidateSplitView(selectedNode, splitNode, fromNode, toNode, source, target);
   }
 
-  return isFromNodeOnScreen && isToNodeOnScreen;
+  return true;
 };
 
-function validateSplitView(
+function ValidateSplitView(
   selectedNode: Node,
   splitNode: Node,
   fromNode: Node,

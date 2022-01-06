@@ -21,7 +21,7 @@ const DrawBlockEdges = (project: Project, elements: Elements<any>, secondaryNode
       const targetNodeIsOnScreen = elements.some((x) => x.id === edge.toNodeId);
 
       if (sourceNodeIsOnScreen && targetNodeIsOnScreen) {
-        const blockEdge = BuildBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType, secondaryNode, animatedEdge, elements);
+        const blockEdge = BuildBlockEdge(nodes, edge, EDGE_TYPE.BLOCK as EdgeType, secondaryNode, animatedEdge);
         if (blockEdge) elements.push(blockEdge);
       }
     }

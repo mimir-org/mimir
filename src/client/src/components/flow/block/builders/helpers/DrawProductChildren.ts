@@ -40,7 +40,7 @@ const DrawProductChildren = (
     let productEdge = null;
     if (ValidateProductEdge(edge.fromNode, edge.toNode, edge.fromConnector, edge.toConnector)) {
       const edgeType = GetBlockEdgeType(edge.fromConnector);
-      productEdge = BuildBlockEdge(nodes, edge, edgeType, null, animatedEdge, elements);
+      productEdge = BuildBlockEdge(nodes, edge, edgeType, null, animatedEdge);
     }
     if (productEdge) elements.push(productEdge);
   });
