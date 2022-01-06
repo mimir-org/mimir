@@ -8,7 +8,7 @@ export enum Aspect {
 export enum ConnectorType {
   Input = 0,
   Output = 1,
-  //Bidirectional = 2,
+  Bidirectional = 2,
 }
 
 export enum RelationType {
