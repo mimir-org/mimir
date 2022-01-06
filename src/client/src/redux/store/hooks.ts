@@ -1,13 +1,7 @@
 import { useMemo } from "react";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from ".";
-import {
-  createSelector,
-  OutputParametricSelector,
-  OutputSelector,
-  ParametricSelector,
-  Selector,
-} from "@reduxjs/toolkit";
+import { createSelector, OutputParametricSelector, OutputSelector, ParametricSelector, Selector } from "@reduxjs/toolkit";
 
 /**
  * Custom Dispatch hook used within application.

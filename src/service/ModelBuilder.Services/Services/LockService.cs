@@ -22,9 +22,10 @@ namespace Mb.Services.Services
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly ICooperateService _cooperateService;
+        private readonly ISimpleRepository _simpleRepository;
 
         public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IConnectorRepository connectorRepository, 
-            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
+            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository)
         {
             _nodeRepository = nodeRepository;
             _edgeRepository = edgeRepository;
@@ -33,6 +34,7 @@ namespace Mb.Services.Services
             _cooperateService = cooperateService;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
+            _simpleRepository = simpleRepository;
         }
 
         /// <summary>
@@ -103,6 +105,14 @@ namespace Mb.Services.Services
             lockAttributeAm.InterfaceId = attribute.InterfaceId;
             lockAttributeAm.CompositeId = attribute.SimpleId;
             lockAttributeAm.TerminalId = attribute.TerminalId;
+
+            if (!string.IsNullOrWhiteSpace(lockAttributeAm.CompositeId) && string.IsNullOrWhiteSpace(lockAttributeAm.NodeId))
+            {
+                var simple = _simpleRepository.FindBy(x => x.Id == lockAttributeAm.CompositeId)?.First();
+
+                if (simple != null)
+                    lockAttributeAm.NodeId = simple.NodeId;
+            }
 
             if (save)
             {

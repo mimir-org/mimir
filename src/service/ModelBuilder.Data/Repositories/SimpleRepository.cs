@@ -30,9 +30,7 @@ namespace Mb.Data.Repositories
                     foreach (var attribute in simple.Attributes)
                     {
                         attribute.UnitString = attribute.Units != null ? JsonConvert.SerializeObject(attribute.Units) : null;
-
-                        if (!_attributeRepository.Context.ChangeTracker.Entries<Attribute>().Any(x => x.Entity.Id == attribute.Id))
-                            _attributeRepository.Attach(attribute, state);
+                        _attributeRepository.Attach(attribute, state);
                     }
                 }
                 Attach(simple, state);
