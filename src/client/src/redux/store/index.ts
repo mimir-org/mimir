@@ -9,12 +9,12 @@ import flowReducer from "./flow/flowSlice";
 import electroReducer from "./electro/electroSlice";
 import commonReducer from "./common/commonSlice";
 import darkModeReducer from "./darkMode/darkModeSlice";
+import parametersReducer from "../../modules/inspector/tabs/parameters/redux/parametersSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
-import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { validationReducer } from "./validation/reducers";
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "./customCategory/reducers";
@@ -37,7 +37,7 @@ const rootReducers = combineReducers({
   electro: electroReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
-  parametersReducer: parametersReducer,
+  parameters: parametersReducer,
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,

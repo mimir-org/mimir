@@ -266,7 +266,7 @@ export const makeFilterSelector = () =>
 
 export const makeSelectedFilterSelector = () =>
   createParametricAppSelector(
-    (state) => state.parametersReducer.selectedAttributeFilters,
+    (state) => state.parameters.selectedAttributeFilters,
     (_, parametersElementId: string) => parametersElementId,
     (selectedAttributeFilters, parametersElementId) => selectedAttributeFilters[parametersElementId] ?? {}
   );
