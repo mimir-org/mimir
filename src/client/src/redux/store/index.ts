@@ -11,6 +11,7 @@ import commonReducer from "./common/commonSlice";
 import darkModeReducer from "./darkMode/darkModeSlice";
 import parametersReducer from "../../modules/inspector/tabs/parameters/redux/parametersSlice";
 import customCategoryReducer from "./customCategory/customCategorySlice";
+import location3DReducer from "../../modules/location/redux/location3DSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
@@ -19,7 +20,6 @@ import { secondaryReducer } from "./secondaryNode/reducers";
 import { validationReducer } from "./validation/reducers";
 import { rootSaga } from "../sagas";
 import { edgeAnimationReducer } from "./edgeAnimation/reducers";
-import { location3DReducer } from "../../modules/location/redux/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
 import { persistStore, persistReducer } from 'redux-persist'
