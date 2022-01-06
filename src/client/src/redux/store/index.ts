@@ -6,6 +6,7 @@ import userReducer  from "./user/userSlice";
 import modulesReducer from "./modules/modulesSlice";
 import menuReducer from "../../components/menus/projectMenu/subMenus/redux/menuSlice";
 import flowReducer from "./flow/flowSlice";
+import electroReducer from "./electro/electroSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
@@ -14,7 +15,6 @@ import { commonReducer } from "./common/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
 import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
-import { electroViewReducer } from "./electro/reducers";
 import { validationReducer } from "./validation/reducers";
 import { rootSaga } from "../sagas";
 import { customCategoryReducer } from "./customCategory/reducers";
@@ -34,7 +34,7 @@ const rootReducers = combineReducers({
   menu: menuReducer,
   flow: flowReducer,
   secondaryNode: secondaryReducer,
-  electro: electroViewReducer,
+  electro: electroReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
   parametersReducer: parametersReducer,
