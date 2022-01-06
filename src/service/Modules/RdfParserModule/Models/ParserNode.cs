@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mb.Models.Enums;
 
-namespace RdfParserModule
+namespace RdfParserModule.Models
 {
     public class ParserNode
     {
@@ -39,13 +39,5 @@ namespace RdfParserModule
         {
             return Label ?? Iri;
         }
-    }
-
-    public class ParserTransport : ParserNode
-    {
-        public ParserTerminal InputTerminal { get; set; }
-        public ParserTerminal OutputTerminal { get; set; }
-        public string InputTerminalIri { get; set; }
-        public string OutputTerminalIri { get; set; }
     }
 }

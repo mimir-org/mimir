@@ -9,11 +9,11 @@ using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using RdfParserModule.Models;
 using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
-using VDS.RDF.Writing;
 using INode = VDS.RDF.INode;
 
 namespace RdfParserModule
@@ -381,7 +381,7 @@ namespace RdfParserModule
 
             if (inputTerminalNodes is not null)
             {
-                var inputTerminals = inputTerminalNodes.Select(obj => new ParserTerminal
+                var inputTerminals = inputTerminalNodes.Select(obj => new ParserConnector
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -397,7 +397,7 @@ namespace RdfParserModule
             }
             if (outputTerminalNodes is not null)
             {
-                var outputTerminals = outputTerminalNodes.Select(obj => new ParserTerminal
+                var outputTerminals = outputTerminalNodes.Select(obj => new ParserConnector
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -459,7 +459,7 @@ namespace RdfParserModule
             return connectors;
         }
 
-        private (string termCatId, string termTypeId) GetTerminalCategoryIdAndTerminalTypeId(ParserTerminal terminal)
+        private (string termCatId, string termTypeId) GetTerminalCategoryIdAndTerminalTypeId(ParserConnector terminal)
         {
             var terminalTypes = GetObjects(terminal.Iri, Resources.type);
 
@@ -626,7 +626,7 @@ namespace RdfParserModule
             }
         }
 
-        private ParserTerminal GetTransportInTerminal(string transportIri)
+        private ParserConnector GetTransportInTerminal(string transportIri)
         {
             var inTerminals = GetObjects(transportIri, Resources.hasInputTerminal);
 
@@ -674,7 +674,7 @@ namespace RdfParserModule
             return inTerminal;
         }
 
-        private ParserTerminal GetTransportOutTerminal(string transportIri)
+        private ParserConnector GetTransportOutTerminal(string transportIri)
         {
             var outTerminals = GetObjects(transportIri, Resources.hasOutputTerminal);
 
