@@ -1,5 +1,5 @@
 import { ViewType, VIEW_TYPE } from "../../../models/project";
-import { changeFlowView } from "../../../redux/store/flow/actions";
+import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { GetSelectedNode } from "../../../helpers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
