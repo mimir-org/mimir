@@ -6,56 +6,32 @@ using Mb.Models.Const;
 using Mb.Models.Data.Enums;
 using Newtonsoft.Json;
 using RdfParserModule.Properties;
-using RdfParserModule.Repositories;
-using VDS.RDF;
+using RdfParserModule.Services;
 using Attribute = Mb.Models.Data.Attribute;
 
 namespace RdfParserModule.Extensions
 {
     public static class AttributeExtensions
     {
-        public static void AssertAttribute(this Attribute attribute, IGraph graph, INode node, IOntologyRepository ontologyRepository)
+        public static void AssertAttribute(this Attribute attribute, string parentIri, IOntologyService ontologyService)
         {
             // TODO: Extend attribute to get iri for qualifier, source, condition and format
             var rootIri = new Uri(attribute.Iri).GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
 
-            // Subjects
-            var attributeNode = attribute.Iri.GetOrCreateUriNode(graph);
-            var attributeTypeNode = attribute.AttributeTypeIri.GetOrCreateUriNode(graph);
-            var datum = (attribute.Iri + "-datum").GetOrCreateUriNode(graph);
-
-            // Predicates
-            var domainPredicate = ontologyRepository.BuildIri("mimir", "domain").GetOrCreateUriNode(graph);
-            var labelPredicate = Resources.label.GetOrCreateUriNode(graph);
-            var typePredicate = Resources.type.GetOrCreateUriNode(graph);
-            var hasPhysicalQuantityPredicate = ontologyRepository.BuildIri("lis", "hasPhysicalQuantity").GetOrCreateUriNode(graph);
-            var qualifierPredicate = ($"{rootIri}/qualifier").GetOrCreateUriNode(graph);
-            var sourcePredicate = ($"{rootIri}/source").GetOrCreateUriNode(graph);
-            var conditionPredicate = ($"{rootIri}/condition").GetOrCreateUriNode(graph);
-            var formatPredicate = ($"{rootIri}/format").GetOrCreateUriNode(graph);
-            
-            // Objects
-            var domainObject = graph.CreateLiteralNode(attribute.Domain);
-            var physicalQuantityObject = ontologyRepository.BuildIri("lis", "PhysicalQuantity").GetOrCreateUriNode(graph);
-            var qualifierObject = ($"{rootIri}/qualifier/ID{attribute.QualifierId}").GetOrCreateUriNode(graph);
-            var sourceObject = ($"{rootIri}/source/ID{attribute.SourceId}").GetOrCreateUriNode(graph);
-            var conditionObject = ($"{rootIri}/condition/ID{attribute.Condition}").GetOrCreateUriNode(graph);
-            var formatObject = ($"{rootIri}/format/ID{attribute.Format}").GetOrCreateUriNode(graph);
-
             // Asserts
-            graph.Assert(new Triple(attributeNode, domainPredicate, domainObject));
-            graph.Assert(new Triple(attributeTypeNode, labelPredicate, graph.CreateLiteralNode(attribute.Entity)));
-            graph.Assert(new Triple(attributeNode, typePredicate, physicalQuantityObject));
-            graph.Assert(new Triple(attributeNode, typePredicate, attributeTypeNode));
-            graph.Assert(new Triple(node, hasPhysicalQuantityPredicate, attributeNode));
-
-            graph.Assert(new Triple(datum, qualifierPredicate, qualifierObject));
-            graph.Assert(new Triple(datum, sourcePredicate, sourceObject));
-            graph.Assert(new Triple(datum, conditionPredicate, conditionObject));
-            graph.Assert(new Triple(datum, formatPredicate, formatObject));
+            ontologyService.AssertNode(attribute.Iri, "mimir__domain", attribute.Domain, true);
+            //ontologyService.AssertNode(attribute.AttributeTypeIri, Resources.label, attribute.Entity, true);
+            ontologyService.AssertNode(attribute.Iri, Resources.type, "lis__PhysicalQuantity");
+            //ontologyService.AssertNode(attribute.Iri, Resources.type, attribute.AttributeTypeIri);
+            ontologyService.AssertNode(parentIri, "lis__hasPhysicalQuantity", attribute.Iri);
+            
+            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/qualifier", $"{rootIri}/qualifier/ID{attribute.QualifierId}");
+            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/source", $"{rootIri}/source/ID{attribute.SourceId}");
+            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/condition", $"{rootIri}/condition/ID{attribute.ConditionId}");
+            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/format", $"{rootIri}/format/ID{attribute.FormatId}");
         }
 
-        public static void AssertAttributeValue(this Attribute attribute, IGraph graph, INode node, IOntologyRepository ontologyRepository, ILibRepository libRepository)
+        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
         {
             if(string.IsNullOrEmpty(attribute?.Value))
                 return;
@@ -63,34 +39,21 @@ namespace RdfParserModule.Extensions
             var selectedUnit = attribute.GetSelectedUnit(libRepository);
             var allowedUnits = attribute.GetAllowedUnits();
 
-            // Subjects
-            var attributeNode = attribute.Iri.GetOrCreateUriNode(graph);
-            var datum = (attribute.Iri + "-datum").GetOrCreateUriNode(graph);
-            var unitNode = string.IsNullOrEmpty(attribute.SelectedUnitId) ? null : ontologyRepository.BuildIri("eq", attribute.SelectedUnitId).GetOrCreateUriNode(graph);
-
-            // Predicates
-            var datumValuePredicate = ontologyRepository.BuildIri("lis", "datumValue").GetOrCreateUriNode(graph);
-            var typePredicate = Resources.type.GetOrCreateUriNode(graph);
-            var qualityQuantifiedAsPredicate = ontologyRepository.BuildIri("lis", "qualityQuantifiedAs").GetOrCreateUriNode(graph);
-            var labelPredicate = Resources.label.GetOrCreateUriNode(graph);
-            var datumUomPredicate = ontologyRepository.BuildIri("lis", "datumUOM").GetOrCreateUriNode(graph);
-
-            // Objects
-            var quantityDatum = ontologyRepository.BuildIri("lis", "ScalarQuantityDatum").GetOrCreateUriNode(graph);
-            var datumValueObject = selectedUnit?.Name != null ? graph.CreateLiteralNode(attribute.Value, new Uri(ontologyRepository.BuildIri("xsd", selectedUnit.Name))) : graph.CreateLiteralNode(attribute.Value);
-            var unitOfMeasureObject = ontologyRepository.BuildIri("lis", "Scale").GetOrCreateUriNode(graph);
-
             // Asserts
-            graph.Assert(new Triple(datum, datumValuePredicate, datumValueObject));
-            graph.Assert(new Triple(datum, typePredicate, quantityDatum));
-            graph.Assert(new Triple(attributeNode, qualityQuantifiedAsPredicate, datum));
+            if(!string.IsNullOrEmpty(selectedUnit?.Name))
+                ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumValue", ontologyService.CreateLiteralNode(attribute.Value, new Uri(ontologyService.BuildIri("xsd", selectedUnit.Name))));
+            else
+                ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumValue", attribute.Value);
 
-            if (unitNode == null || string.IsNullOrWhiteSpace(selectedUnit?.Name)) 
+            ontologyService.AssertNode($"{attribute.Iri}-datum", Resources.type, "lis__ScalarQuantityDatum");
+            ontologyService.AssertNode(attribute.Iri, "lis__qualityQuantifiedAs", $"{attribute.Iri}-datum");
+
+            if (string.IsNullOrWhiteSpace(attribute.SelectedUnitId) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
                 return;
-            
-            graph.Assert(new Triple(unitNode, typePredicate, unitOfMeasureObject));
-            graph.Assert(new Triple(unitNode, labelPredicate, graph.CreateLiteralNode(selectedUnit.Name)));
-            graph.Assert(new Triple(datum, datumUomPredicate, unitNode));
+
+            ontologyService.AssertNode($"eq__{attribute.SelectedUnitId}", Resources.type, "lis__Scale");
+            ontologyService.AssertNode($"eq__{attribute.SelectedUnitId}", Resources.label, selectedUnit.Name, true);
+            ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumUOM", $"eq__{attribute.SelectedUnitId}");
 
             // TODO: Add all allowed units
         }

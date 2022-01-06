@@ -4,7 +4,7 @@ using VDS.RDF;
 
 namespace RdfParserModule
 {
-    [Transient]
+    [Scope]
     public interface IRdfBuilder
     {
         void BuildProject(Project project);

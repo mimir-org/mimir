@@ -15,24 +15,24 @@ namespace RdfParserModule.Repositories
 
         #region Public methods
 
-        public string BuildIri(string prefix, string suffix, string midfix = "")
+        public string BuildIri(string prefix, string suffix, string midFix = "")
         {
-            if (_namespaces.TryGetValue(prefix, out var fullNamespace))
+            if (Namespaces.TryGetValue(prefix, out var fullNamespace))
             {
-                return $"{fullNamespace}{midfix}{suffix}";
+                return $"{fullNamespace}{midFix}{suffix}";
             }
 
             if (prefix.ValidPrefix(Graph))
             {
-                return $"{prefix}{midfix}{suffix}";
+                return $"{prefix}{midFix}{suffix}";
             }
 
             if (prefix.ValidNamespace())
             {
-                return $"{prefix}/{midfix}{suffix}";
+                return $"{prefix}/{midFix}{suffix}";
             }
 
-            return $"{prefix}{midfix}{suffix}";
+            return $"{prefix}{midFix}{suffix}";
         }
 
         #endregion
