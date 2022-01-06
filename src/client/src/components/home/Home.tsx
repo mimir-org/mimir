@@ -16,7 +16,7 @@ import { getCollaborationPartners, getStatuses, getAttributeFilters, getParsers 
 import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
 import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
-import { getUser } from "../../redux/store/user/actions";
+import { fetchUser } from "../../redux/store/user/userSlice";
 import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
 import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/actions";
 import { MENU_TYPE, ViewType, VIEW_TYPE } from "../../models/project";
@@ -55,13 +55,12 @@ const Home = ({ dispatch }: Props) => {
     dispatch(importLibraryTransportTypes());
     dispatch(search(""));
     dispatch(searchLibrary(""));
-    dispatch(getUser());
     dispatch(getCollaborationPartners());
     dispatch(getParsers());
     dispatch(getStatuses());
     dispatch(getAttributeFilters());
     dispatch(fetchBlobData());
-    dispatch(getUser());
+    dispatch(fetchUser());
   }, [dispatch]);
 
   useEffect(() => {

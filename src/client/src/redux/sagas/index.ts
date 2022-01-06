@@ -4,7 +4,7 @@ import { nodeSaga } from "./node";
 import { webSocketSaga } from "../../modules/cooperate/saga";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
 import { getUser } from "./user/saga";
-import { FETCHING_USER } from "../store/user/types";
+import { fetchUser } from "../store/user/userSlice";
 import {
   FETCHING_LIBRARY,
   EXPORT_LIBRARY,
@@ -62,7 +62,7 @@ import {
 function* sagas() {
   yield all([
     takeEvery(FETCHING_LIBRARY, searchLibrary),
-    takeEvery(FETCHING_USER, getUser),
+    takeEvery(fetchUser, getUser),
     takeEvery(CREATING_PROJECT, createProject),
     takeEvery(CREATING_SUB_PROJECT, createSubProject),
     takeEvery(FETCHING_PROJECT, getProject),
