@@ -24,7 +24,6 @@ namespace Mb.Models.Data
         public string Value { get; set; }
         public string SemanticReference { get; set; }
         public string AttributeTypeId { get; set; }
-        public string AttributeTypeIri { get; set; }
         public bool IsLocked {  get; set; }
         public string IsLockedStatusBy {  get; set; }
         public DateTime? IsLockedStatusDate {  get; set; }

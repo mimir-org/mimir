@@ -15,6 +15,13 @@ namespace RdfParserModule.Repositories
 
         #region Public methods
 
+        /// <summary>
+        /// Build an iri from segments
+        /// </summary>
+        /// <param name="prefix"></param>
+        /// <param name="suffix"></param>
+        /// <param name="midFix"></param>
+        /// <returns></returns>
         public string BuildIri(string prefix, string suffix, string midFix = "")
         {
             if (Namespaces.TryGetValue(prefix, out var fullNamespace))
@@ -37,8 +44,12 @@ namespace RdfParserModule.Repositories
 
         #endregion
 
-        #region private methods
+        #region Private methods
 
+        /// <summary>
+        /// Create an ontology graph
+        /// </summary>
+        /// <returns></returns>
         private static IGraph CreateOntologyGraph()
         {
             var graph = new OntologyGraph();
@@ -47,6 +58,10 @@ namespace RdfParserModule.Repositories
             return graph;
         }
 
+        /// <summary>
+        /// Initialize namespaces
+        /// </summary>
+        /// <returns></returns>
         private static Dictionary<string, string> CreateNamespaces()
         {
             return new Dictionary<string, string>

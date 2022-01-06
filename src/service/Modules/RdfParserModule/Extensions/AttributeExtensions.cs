@@ -20,11 +20,16 @@ namespace RdfParserModule.Extensions
 
             // Asserts
             ontologyService.AssertNode(attribute.Iri, "mimir__domain", attribute.Domain, true);
-            //ontologyService.AssertNode(attribute.AttributeTypeIri, Resources.label, attribute.Entity, true);
             ontologyService.AssertNode(attribute.Iri, Resources.type, "lis__PhysicalQuantity");
-            //ontologyService.AssertNode(attribute.Iri, Resources.type, attribute.AttributeTypeIri);
             ontologyService.AssertNode(parentIri, "lis__hasPhysicalQuantity", attribute.Iri);
-            
+
+            // TODO: Add AttributeTypeIri etc. to missing types
+            //if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
+            //{
+            //    ontologyService.AssertNode(attribute.AttributeTypeIri, Resources.label, attribute.Entity, true);
+            //    ontologyService.AssertNode(attribute.Iri, Resources.type, attribute.AttributeTypeIri);
+            //}
+
             ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/qualifier", $"{rootIri}/qualifier/ID{attribute.QualifierId}");
             ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/source", $"{rootIri}/source/ID{attribute.SourceId}");
             ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/condition", $"{rootIri}/condition/ID{attribute.ConditionId}");

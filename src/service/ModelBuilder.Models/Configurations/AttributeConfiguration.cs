@@ -21,7 +21,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.SelectedUnitId).HasColumnName("SelectedUnitId");
             builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId");
-            builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
+            //builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
             
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);

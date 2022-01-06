@@ -14,7 +14,6 @@ using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
-using VDS.RDF.Writing;
 using INode = VDS.RDF.INode;
 
 namespace RdfParserModule
