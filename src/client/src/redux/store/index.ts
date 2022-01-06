@@ -8,12 +8,12 @@ import menuReducer from "../../components/menus/projectMenu/subMenus/redux/menuS
 import flowReducer from "./flow/flowSlice";
 import electroReducer from "./electro/electroSlice";
 import commonReducer from "./common/commonSlice";
+import darkModeReducer from "./darkMode/darkModeSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
-import { darkModeReducer } from "./darkMode/reducers";
 import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
 import { validationReducer } from "./validation/reducers";
 import { rootSaga } from "../sagas";
