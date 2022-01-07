@@ -4,7 +4,6 @@ import { nodeSaga } from "./node";
 import { webSocketSaga } from "../../modules/cooperate/saga";
 import { searchLibrary, exportLibrary, importLibrary, getTransportTypes, getInterfaceTypes } from "./library/saga";
 import { getUser } from "./user/saga";
-import { FETCHING_INITIAL_DATA, SAVE_LIBRARY_TYPE, FETCHING_BLOB_DATA, FETCHING_TYPE } from "../../typeEditor/redux/types";
 import { FETCHING_USER } from "../store/user/types";
 import {
   FETCHING_LIBRARY,
@@ -25,7 +24,7 @@ import {
   CREATING_SUB_PROJECT,
   LOCK_EDGE,
   LOCK_ATTRIBUTE,
-} from "./../store/project/types";
+} from "../store/project/types";
 import {
   getProject,
   createProject,
@@ -47,10 +46,17 @@ import {
   getTerminals,
   getAttributes,
   saveType,
-  getblobData,
-  getSelectedNode,
+  getBlobData,
+  getSelectedCreateLibraryType,
   getSimpleTypes,
 } from "./typeEditor/saga";
+import {
+  fetchBlobData,
+  fetchInitialData,
+  fetchSimpleTypes,
+  fetchCreateLibraryType,
+  saveLibraryType
+} from "../../typeEditor/redux/typeEditorSlice";
 
 //TODO: Add takeEvery for LOCK_ on
 function* sagas() {
@@ -62,15 +68,6 @@ function* sagas() {
     takeEvery(FETCHING_PROJECT, getProject),
     takeEvery(SEARCH_PROJECT, searchProject),
     takeEvery(SAVE_PROJECT, updateProject),
-    takeEvery(FETCHING_INITIAL_DATA, getInitialData),
-    takeEvery(FETCHING_INITIAL_DATA, getLocationTypes),
-    takeEvery(FETCHING_INITIAL_DATA, getRDS),
-    takeEvery(FETCHING_INITIAL_DATA, getTerminals),
-    takeEvery(FETCHING_INITIAL_DATA, getPredefinedAttributes),
-    takeEvery(FETCHING_INITIAL_DATA, getAttributes),
-    takeEvery(FETCHING_INITIAL_DATA, getSimpleTypes),
-    takeEvery(FETCHING_TYPE, getSelectedNode),
-    takeEvery(SAVE_LIBRARY_TYPE, saveType),
     takeEvery(EXPORT_PROJECT_TO_FILE, exportProjectFile),
     takeEvery(IMPORT_PROJECT, importProject),
     takeEvery(EXPORT_LIBRARY, exportLibrary),
@@ -78,10 +75,19 @@ function* sagas() {
     takeEvery(LOCK_EDGE, lockEdge),
     takeEvery(LOCK_ATTRIBUTE, lockAttribute),
     takeEvery(IMPORT_LIBRARY, importLibrary),
-    takeEvery(FETCHING_BLOB_DATA, getblobData),
     takeEvery(FETCHING_LIBRARY_TRANSPORT_TYPES, getTransportTypes),
     takeEvery(FETCHING_LIBRARY_INTERFACE_TYPES, getInterfaceTypes),
     takeEvery(COMMIT_PROJECT, commitProject),
+    takeEvery(fetchInitialData, getInitialData),
+    takeEvery(fetchInitialData, getLocationTypes),
+    takeEvery(fetchInitialData, getRDS),
+    takeEvery(fetchInitialData, getTerminals),
+    takeEvery(fetchInitialData, getPredefinedAttributes),
+    takeEvery(fetchInitialData, getAttributes),
+    takeEvery(fetchSimpleTypes, getSimpleTypes),
+    takeEvery(fetchBlobData, getBlobData),
+    takeEvery(fetchCreateLibraryType, getSelectedCreateLibraryType),
+    takeEvery(saveLibraryType, saveType),
   ]);
 }
 

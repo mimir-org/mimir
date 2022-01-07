@@ -9,7 +9,7 @@ import { deleteProjectError } from "../../redux/store/project/actions";
 import { deleteCommonError } from "../../redux/store/common/actions";
 import { deleteLibraryError } from "../../redux/store/library/actions";
 import { deleteUserError } from "../../redux/store/user/actions";
-import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
+import { deleteTypeEditorError } from "../../typeEditor/redux/typeEditorSlice";
 import { useAppSelector } from "../../redux/store/hooks";
 import { ProjectState } from "../../redux/store/project/types";
 

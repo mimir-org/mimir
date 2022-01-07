@@ -11,8 +11,8 @@ import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../hel
 import {
   changeTypeEditorInspectorHeight,
   changeTypeEditorInspectorTab,
-  changeTypeEditorInspectorVisibility,
-} from "../redux/actions";
+  changeTypeEditorInspectorVisibility
+} from "../redux/typeEditorSlice";
 import {
   useAppDispatch,
   useAppSelector,

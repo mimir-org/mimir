@@ -19,18 +19,16 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
   const [expandCategory, setExpandCategory] = useState(true);
   const terminalsQuantity = defaultTerminals?.length;
 
-  const defaultTerminal = {
-    terminalId: CreateId(),
-    terminalTypeId: "",
-    selected: false,
-    connectorType: ConnectorType.Input,
-    number: 1,
-    categoryId: categoryId,
-  } as TerminalTypeItem;
-
-  const onCategoryAdd = (terminal: TerminalTypeItem) => {
+  const onCategoryAdd = () => {
     setExpandCategory(true);
-    onChange("add", terminal);
+    onChange("add", {
+      terminalId: CreateId(),
+      terminalTypeId: "",
+      selected: false,
+      connectorType: ConnectorType.Input,
+      number: 1,
+      categoryId: categoryId,
+    });
   };
 
   const onCategoryUpdateOrRemove = (key: TerminalCategoryChangeKey, terminal: TerminalTypeItem) => {
@@ -38,13 +36,8 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
   };
 
   const showTerminals = () => {
-    let terminalsArray: TerminalTypeItem[] = [];
     if (terminalsQuantity > 0) {
-      terminalsArray = defaultTerminals.map((t) => {
-        t.terminalId = CreateId();
-        return t;
-      });
-      return terminalsArray.map((t) => {
+      return defaultTerminals.map((t) => {
         return (
           <AddTerminalComponent
             key={t.terminalId}
@@ -60,7 +53,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
   return (
     <TerminalListElement>
       <TerminalCategoryWrapper expanded={terminalsQuantity > 0}>
-        <button onClick={() => onCategoryAdd(defaultTerminal)}>
+        <button onClick={() => onCategoryAdd()}>
           <img src={AddIcon} alt="add-icon" className="add-icon" />
           <p className="add-text">{TextResources.TypeEditor_Properties_Add_Terminal}</p>
         </button>
@@ -68,7 +61,7 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
           {name}
         </p>
         {terminalsQuantity > 0 && (
-          <button className="delete-button" onClick={() => onChange("removeAll", defaultTerminal)}>
+          <button className="delete-button" onClick={() => onChange("removeAll", defaultTerminals[0])}>
             <p className="delete-text">{TextResources.TypeEditor_Properties_Clear_All_Terminal}</p>
           </button>
         )}
