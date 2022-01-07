@@ -1,5 +1,5 @@
 import { Size } from "../../../../../compLibrary/size";
-import { setBlockNodeSize } from "../../redux/actions";
+import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
 
 /**
  * Set the size of the ParentNode in BlockView. The size is dependent on other modules being open/closed.
@@ -14,7 +14,7 @@ const SetParentNodeSize = (secondaryNode: boolean, libOpen: boolean, explorerOpe
   let width = screenWidth - marginX;
 
   if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
-  dispatch(setBlockNodeSize(width, window.innerHeight));
+  dispatch(setBlockNodeSize({ width, height: window.innerHeight }));
 };
 
 export function SetMarginX(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {

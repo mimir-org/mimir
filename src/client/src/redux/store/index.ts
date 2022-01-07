@@ -13,6 +13,7 @@ import parametersReducer from "../../modules/inspector/tabs/parameters/redux/par
 import customCategoryReducer from "./customCategory/customCategorySlice";
 import location3DReducer from "../../modules/location/redux/location3DSlice";
 import validationReducer from "./validation/validationSlice";
+import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { libraryReducer } from "./library/reducers";
@@ -21,7 +22,6 @@ import { secondaryReducer } from "./secondaryNode/reducers";
 import { rootSaga } from "../sagas";
 import { edgeAnimationReducer } from "./edgeAnimation/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
-import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
 import { persistStore, persistReducer } from 'redux-persist'
 
 const rootReducers = combineReducers({
