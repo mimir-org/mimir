@@ -1,6 +1,6 @@
 import { call, put as statePut } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { ADD_LIBRARY_ITEM, REMOVE_LIBRARY_ITEM } from "../../store/library/types";
+import { addLibraryItem, removeLibraryItem } from "../../store/library/librarySlice";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
 import { Aspect, CreateLibraryType, SimpleType, SimpleTypeResponse } from "../../../models";
 import { FetchingTypeAction } from "../../../typeEditor/redux/types";
@@ -35,21 +35,12 @@ export function* saveType(action: PayloadAction<CreateLibraryType>) {
 
     yield statePut(saveLibraryTypeSuccessOrError(null));
 
-    // Remove item from library
-    if (createLibraryType.id) {
-      yield statePut({
-        type: REMOVE_LIBRARY_ITEM,
-        payload: {
-          id: createLibraryType.id,
-        },
-      });
-    }
+    // LIBRARY: Remove item
+    yield (statePut(removeLibraryItem(createLibraryType.id)));
 
-    // Add the new item to library
-    yield statePut({
-      type: ADD_LIBRARY_ITEM,
-      payload: response.data,
-    });
+    // LIBRARY: Add the created library item back in
+    yield statePut(addLibraryItem(response.data));
+
   } catch (error) {
     const apiError = getApiErrorForException(saveLibraryTypeSuccessOrError.type, error);
     yield statePut(saveLibraryTypeSuccessOrError(apiError));

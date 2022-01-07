@@ -13,7 +13,7 @@ import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
 import { fetchCollaborationPartners, fetchStatuses, fetchCombinedAttributeFilters, fetchParsers } from "../../redux/store/common/commonSlice";
-import { importLibraryInterfaceTypes, importLibraryTransportTypes, searchLibrary } from "../../redux/store/library/actions";
+import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
 import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { fetchUser } from "../../redux/store/user/userSlice";
@@ -51,10 +51,10 @@ const Home = ({ dispatch }: Props) => {
   const showInstructionBox = instructionBox && !projectState?.project;
 
   useEffect(() => {
-    dispatch(importLibraryInterfaceTypes());
-    dispatch(importLibraryTransportTypes());
+    dispatch(fetchLibraryInterfaceTypes());
+    dispatch(fetchLibraryTransportTypes());
     dispatch(search(""));
-    dispatch(searchLibrary(""));
+    dispatch(fetchLibrary(""));
     dispatch(fetchCollaborationPartners());
     dispatch(fetchParsers());
     dispatch(fetchStatuses());
