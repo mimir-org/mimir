@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RdfParserModule
+namespace RdfParserModule.Models
 {
     public class ParserAttribute
     {

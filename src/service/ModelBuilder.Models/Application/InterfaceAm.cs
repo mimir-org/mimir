@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mb.Models.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Attribute = Mb.Models.Data.Attribute;
@@ -9,6 +10,7 @@ namespace Mb.Models.Application
     {
         public string Id { get; set; }
         public string Iri { get; set; }
+        public string Domain => Id.ResolveDomain();
         public string Version { get; set; }
         public string Rds { get; set; }
 
