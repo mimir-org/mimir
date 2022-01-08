@@ -2,7 +2,7 @@ import { Connection } from "react-flow-renderer";
 import { TextResources } from "../../../../../../assets/text";
 import { IsFamily } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
-import { setValidation } from "../../../../../../redux/store/validation/actions";
+import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
 
 /**
  * Function to check if a connection/edge in TreeView is valid.
@@ -26,6 +26,6 @@ const IsValidTreeConnection = (node: Node, conn: Connection, nodes: Node[], disp
 export default IsValidTreeConnection;
 
 const onMouseUp = (isValidAspect: boolean, dispatch: any) => {
-  if (!isValidAspect) dispatch(setValidation(false, TextResources.Validation_Aspect));
+  if (!isValidAspect) dispatch(setValidation({ valid: false, message: TextResources.Validation_Aspect }));
   return document.removeEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch));
 };

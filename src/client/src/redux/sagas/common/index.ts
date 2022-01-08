@@ -1,12 +1,17 @@
 import { all, takeEvery } from "redux-saga/effects";
-import * as type from "../../store/common/types";
-import * as func from "./saga";
+import { getAttributeFilters, getCollaborationPartners, getParsers, getStatuses } from "./saga";
+import {
+  fetchCollaborationPartners,
+  fetchCombinedAttributeFilters,
+  fetchParsers,
+  fetchStatuses
+} from "../../store/common/commonSlice";
 
 export function* commonSaga() {
   yield all([
-    takeEvery(type.FETCHING_COLLABORATION_PARTNERS, func.getCollaborationPartners),
-    takeEvery(type.FETCHING_STATUSES, func.getStatuses),
-    takeEvery(type.FETCHING_COMBINED_ATTRIBUTE_FILTERS, func.getAttributeFilters),
-    takeEvery(type.FETCHING_PARSERS, func.getParsers),
+    takeEvery(fetchCollaborationPartners, getCollaborationPartners),
+    takeEvery(fetchStatuses, getStatuses),
+    takeEvery(fetchCombinedAttributeFilters, getAttributeFilters),
+    takeEvery(fetchParsers, getParsers),
   ]);
 }

@@ -3,7 +3,7 @@ import { IsDirectChild } from "../../../../../helpers";
 import { Node } from "../../../../../models";
 import { updateBlockPosition } from "../../../../../redux/store/project/actions";
 import { GetFlowNodeByDataId } from "../../helpers";
-import { setBlockNodeSize } from "../../redux/actions";
+import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
 import { SetMarginX } from "../helpers/SetParentNodeSize";
 
 /**
@@ -33,7 +33,7 @@ const ResizeHandler = (
     width = screenWidth - marginX;
 
     if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
-    dispatch(setBlockNodeSize(width, window.innerHeight));
+    dispatch(setBlockNodeSize({ width, height: window.innerHeight }));
     updateChildXPosition();
   };
 
