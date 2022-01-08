@@ -1,6 +1,6 @@
 import { TextResources } from "../../../../../../assets/text";
 import { ProjectState } from "../../../../../../redux/store/project/types";
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { exportProjectToFile } from "../../../../../../redux/store/project/actions";
 import { ProjectConverterAm } from "../../../../../../models";
 import { ConvertProject } from "../../../../../../redux/sagas/project";

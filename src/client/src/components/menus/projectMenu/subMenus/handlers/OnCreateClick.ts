@@ -1,4 +1,4 @@
-import { changeActiveMenu } from "../../../projectMenu/subMenus/redux/actions";
+import { changeActiveMenu } from "../redux/menuSlice";
 import { create } from "../../../../../redux/store/project/actions";
 
 const OnCreateClick = (dispatch: any) => {

@@ -4,8 +4,8 @@ import { Size } from "../../../compLibrary/size";
 import { Edge, EDGE_KIND, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
-import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
+import { changeInspectorHeight } from "../../../modules/inspector/redux/inspectorSlice";
+import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { HandleOffPageDelete } from "../block/nodes/helpers/offPage";
 import { IsPartOf } from "../helpers";
@@ -24,7 +24,7 @@ const useOnRemove = (
   const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
 
   if (hasDeletedElement) {
-    dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+    dispatch(setModuleVisibility({type: MODULE_TYPE.INSPECTOR, visible: false, animate: true}));
     SetPanelHeight(inspectorRef, Size.ModuleClosed);
     dispatch(changeInspectorHeight(Size.ModuleClosed));
     return setElements((els) => removeElements(elementsToRemove, els));

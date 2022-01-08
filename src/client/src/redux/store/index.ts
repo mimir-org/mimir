@@ -1,45 +1,43 @@
 import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
 import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
+import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
+import userReducer  from "./user/userSlice";
+import modulesReducer from "./modules/modulesSlice";
+import menuReducer from "../../components/menus/projectMenu/subMenus/redux/menuSlice";
+import flowReducer from "./flow/flowSlice";
+import electroReducer from "./electro/electroSlice";
+import commonReducer from "./common/commonSlice";
+import darkModeReducer from "./darkMode/darkModeSlice";
+import parametersReducer from "../../modules/inspector/tabs/parameters/redux/parametersSlice";
+import customCategoryReducer from "./customCategory/customCategorySlice";
+import location3DReducer from "../../modules/location/redux/location3DSlice";
+import validationReducer from "./validation/validationSlice";
+import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
+import libraryReducer from "./library/librarySlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import { libraryReducer } from "./library/reducers";
-import { userReducer } from "./user/reducers";
 import { projectReducer } from "./project/reducers";
-import { inspectorReducer } from "../../modules/inspector/redux/tabs/reducers";
-import { inspectorHeightReducer } from "../../modules/inspector/redux/height/reducers";
-import { moduleReducer } from "./modules/reducers";
-import { menuReducer } from "../../components/menus/projectMenu/subMenus/redux/reducers";
-import { commonReducer } from "./common/reducers";
-import { flowReducer } from "./flow/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
-import { darkModeReducer } from "./darkMode/reducers";
-import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
-import { electroViewReducer } from "./electro/reducers";
-import { validationReducer } from "./validation/reducers";
 import { rootSaga } from "../sagas";
-import { customCategoryReducer } from "./customCategory/reducers";
 import { edgeAnimationReducer } from "./edgeAnimation/reducers";
-import { location3DReducer } from "../../modules/location/redux/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
-import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
 import { persistStore, persistReducer } from 'redux-persist'
 
 const rootReducers = combineReducers({
   library: libraryReducer,
   typeEditor: typeEditorReducer,
   inspector: inspectorReducer,
-  inspectorHeight: inspectorHeightReducer,
   userState: userReducer,
   projectState: projectReducer,
-  modules: moduleReducer,
+  modules: modulesReducer,
   menu: menuReducer,
   flow: flowReducer,
   secondaryNode: secondaryReducer,
-  electro: electroViewReducer,
+  electro: electroReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
-  parametersReducer: parametersReducer,
+  parameters: parametersReducer,
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,

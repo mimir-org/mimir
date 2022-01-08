@@ -9,8 +9,8 @@ import {
   post,
   GetBadResponseData,
   ApiError,
-  GetBadRequestPayload,
-  GetErrorResponsePayload,
+  GetApiErrorForBadRequest,
+  GetApiErrorForException,
 } from "../../../models/webclient";
 import {
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -335,7 +335,12 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     const response = yield call(post, url, action.payload);
 
     if (response.status === 400) {
-      yield put(GetBadRequestPayload(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR));
+      yield put({
+        type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
+        payload: {
+          apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
+        },
+      });
       return;
     }
 
@@ -353,7 +358,13 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
       },
     });
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR, {}));
+
+    yield put({
+      type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
+      payload: {
+        apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
+      },
+    });
   }
 }
 

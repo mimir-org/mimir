@@ -2,7 +2,7 @@ import { Project } from "../../models";
 import { AttributeLikeItem, SimpleLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { Action } from "redux";
 import { InspectorTabWrapper } from "./";
-import { changeInspectorTab } from "./redux/tabs/actions";
+import { changeInspectorTab } from "./redux/inspectorSlice";
 import { ShouldShowTabs } from "./helpers";
 import { ParametersComponent, TerminalsComponent, RelationsComponent, SimpleTypesComponent, AdminComponent } from "./tabs";
 
