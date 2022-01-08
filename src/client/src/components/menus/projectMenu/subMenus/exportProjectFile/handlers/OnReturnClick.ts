@@ -1,4 +1,4 @@
-import { changeActiveMenu } from "../../../../projectMenu/subMenus/redux/actions";
+import { changeActiveMenu } from "../../redux/menuSlice";
 
 const OnReturnClick = (dispatch: any) => {
   dispatch(changeActiveMenu(null));

@@ -188,7 +188,7 @@ export const inspectorActiveTabSelector = createAppSelector(
 );
 
 export const heightSelector = createAppSelector(
-  (state) => state.inspectorHeight.height,
+  (state) => state.inspector.height,
   (width) => width
 );
 
@@ -266,7 +266,7 @@ export const makeFilterSelector = () =>
 
 export const makeSelectedFilterSelector = () =>
   createParametricAppSelector(
-    (state) => state.parametersReducer.selectedAttributeFilters,
+    (state) => state.parameters.selectedAttributeFilters,
     (_, parametersElementId: string) => parametersElementId,
     (selectedAttributeFilters, parametersElementId) => selectedAttributeFilters[parametersElementId] ?? {}
   );

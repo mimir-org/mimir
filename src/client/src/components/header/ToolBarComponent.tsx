@@ -52,7 +52,7 @@ const ToolBarComponent = ({
         <ToolBarElement
           label={"electro"}
           icon={isElectro ? Icons.Vertical : Icons.Horizontal}
-          onClick={() => Click.OnElectro(dispatch, isElectro)}
+          onClick={() => Click.OnElectro(dispatch)}
         />
       )}
       <ToolBarElement

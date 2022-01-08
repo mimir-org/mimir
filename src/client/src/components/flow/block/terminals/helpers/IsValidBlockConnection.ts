@@ -2,7 +2,7 @@ import { Connection } from "react-flow-renderer";
 import { TextResources } from "../../../../../assets/text";
 import { IsOffPage } from "../../../../../helpers";
 import { Connector, Node } from "../../../../../models";
-import { setValidation } from "../../../../../redux/store/validation/actions";
+import { setValidation } from "../../../../../redux/store/validation/validationSlice";
 
 /**
  * Function to check if a connection/edge in BlockView is valid.
@@ -45,8 +45,8 @@ const onMouseUp = (
   validOffPageNode: boolean,
   dispatch: any
 ) => {
-  if (sourceTerminal && targetTerminal && !validNode) dispatch(setValidation(false, TextResources.Validation_Terminals));
-  if (sourceTerminal && targetTerminal && !validOffPageNode) dispatch(setValidation(false, TextResources.Validation_OffPage));
+  if (sourceTerminal && targetTerminal && !validNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals}));
+  if (sourceTerminal && targetTerminal && !validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_OffPage}));
 
   return document.removeEventListener("mouseup", () =>
     onMouseUp(sourceTerminal, targetTerminal, validNode, validOffPageNode, dispatch)

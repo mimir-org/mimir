@@ -1,64 +1,29 @@
 import { CombinedAttribute } from "../../../../../models";
 
-export const ADD_ATTRIBUTE_FILTER = "ADD_ATTRIBUTE_FILTER";
-export const REMOVE_ATTRIBUTE_FILTER = "REMOVE_ATTRIBUTE_FILTER";
-export const ADD_ALL_ATTRIBUTE_FILTERS = "ADD_ALL_ATTRIBUTE_FILTERS";
-export const REMOVE_ALL_ATTRIBUTE_FILTERS = "REMOVE_ALL_ATTRIBUTE_FILTERS";
-export const ADD_COMBINED_ATTRIBUTE = "ADD_COMBINED_ATTRIBUTE";
-export const REMOVE_COMBINED_ATTRIBUTE = "REMOVE_COMBINED_ATTRIBUTE";
-
-export type ReducerState = {
+export interface ReducerState {
   selectedAttributeFilters: AttributeDict;
-};
+}
 
-export type AttributeDict = {
+export interface AttributeDict {
   [elementId: string]: FilterDict;
-};
-
-export type FilterDict = { [filterName: string]: CombinedAttribute[] };
-
-export interface AddAttributeFilter {
-  type: typeof ADD_ATTRIBUTE_FILTER;
-  payload: { elementId: string; filterName: string };
 }
 
-export interface RemoveAttributeFilter {
-  type: typeof REMOVE_ATTRIBUTE_FILTER;
-  payload: { elementId: string; filterName: string };
+export interface FilterDict {
+  [filterName: string]: CombinedAttribute[]
 }
 
-export interface AddAllAttributeFilters {
-  type: typeof ADD_ALL_ATTRIBUTE_FILTERS;
-  payload: { elementId: string; filterNames: string[] };
+export interface AttributeFilter {
+  elementId: string,
+  filterName: string
 }
 
-export interface RemoveAllAttributeFilters {
-  type: typeof REMOVE_ALL_ATTRIBUTE_FILTERS;
-  payload: { elementId: string };
+export interface AttributeFilters {
+  elementId: string;
+  filterNames: string[];
 }
 
-export interface AddCombinedAttribute {
-  type: typeof ADD_COMBINED_ATTRIBUTE;
-  payload: {
-    elementId: string;
-    filterName: string;
-    combination: CombinedAttribute;
-  };
+export interface CombinedAttributeFilter {
+  elementId: string;
+  filterName: string;
+  combination: CombinedAttribute;
 }
-
-export interface RemoveCombinedAttribute {
-  type: typeof REMOVE_COMBINED_ATTRIBUTE;
-  payload: {
-    elementId: string;
-    filterName: string;
-    combination: CombinedAttribute;
-  };
-}
-
-export type ParametersActionTypes =
-  | AddAttributeFilter
-  | RemoveAttributeFilter
-  | AddAllAttributeFilters
-  | RemoveAllAttributeFilters
-  | AddCombinedAttribute
-  | RemoveCombinedAttribute;
