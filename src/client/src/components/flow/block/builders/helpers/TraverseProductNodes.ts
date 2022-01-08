@@ -1,29 +1,29 @@
-import { Edge, Node } from "../../../../../models";
+import { Node, Project } from "../../../../../models";
 import { IsPartOf } from "../../../helpers";
 
 /**
- * Function to find children of a given Product Node in BlockView, and add them to the elements list.
- * @param edges
- * @param nodes
+ * Function to find children of a given Product Node in BlockView, and add them to a productChildren list.
+ * @param project
  * @param selectedNode
- * @param elements
+ * @param productChildren
  */
-function TraverseProductNodes(edges: Edge[], nodes: Node[], selectedNode: Node, elements: Node[]) {
+function TraverseProductNodes(project: Project, selectedNode: Node, productChildren: Node[]) {
   const children: Node[] = [];
+  const nodes = project.nodes;
+  const edges = project.edges;
 
   edges.forEach((edge) => {
     if (edge.fromNodeId === selectedNode.id && IsPartOf(edge.fromConnector)) {
       const node = nodes.find((x) => x.id === edge.toNodeId);
       children.push(node);
-      elements.push(node);
+      productChildren.push(node);
     }
   });
 
-  // Base case
   if (children.length === 0) return;
 
   children.forEach((node) => {
-    TraverseProductNodes(edges, nodes, node, elements);
+    TraverseProductNodes(project, node, productChildren);
   });
 }
 

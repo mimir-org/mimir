@@ -1,11 +1,12 @@
-import { IsFunction, IsLocation, IsProduct, IsDirectChild, IsAspectNode, IsOffPage } from "../../../helpers";
+import { IsFunction, IsLocation, IsProduct, IsOffPage } from "../../../helpers";
 import { Node, Connector } from "../../../models";
-import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPartOf } from "../helpers";
+import { IsTransportConnection, IsProductConnection, IsLocationConnection } from "../helpers";
 
 /**
- * Validator for an edge in BlockView, where different rules apply for each Aspect.
+ * Validator for an edge in BlockView. The basis for drawing an edge in BlockView is that the source node
+ * and the target node are in the elements array - meaning that the nodes are drawn to the screen.
  * @param selectedNode
- * @param secondaryNode
+ * @param splitNode
  * @param fromNode
  * @param toNode
  * @param source
@@ -14,46 +15,43 @@ import { IsTransportConnection, IsProductConnection, IsLocationConnection, IsPar
  */
 const ValidateBlockEdge = (
   selectedNode: Node,
-  secondaryNode: Node,
+  splitNode: Node,
   fromNode: Node,
   toNode: Node,
   source: Connector,
   target: Connector
 ) => {
-  if (IsOffPage(fromNode)) return validateOffPageSourceEdge(toNode, selectedNode, source, target);
-  if (IsOffPage(toNode)) return validateOffPageTargetEdge(fromNode, selectedNode, source, target);
-  if (!secondaryNode) return validateEdge(selectedNode, fromNode, toNode, source, target);
-  if (secondaryNode) return validateSecondaryEdge(selectedNode, secondaryNode, fromNode, source, target);
+  const splitView = splitNode !== null;
+
+  if (splitView) {
+    return ValidateSplitView(selectedNode, splitNode, fromNode, toNode, source, target);
+  }
+
+  return true;
 };
 
-function validateEdge(selectedNode: Node, fromNode: Node, toNode: Node, source: Connector, target: Connector) {
-  if (IsProduct(selectedNode) && IsProduct(toNode)) {
-    if (IsPartOf(source)) if (IsAspectNode(fromNode) || IsAspectNode(toNode) || selectedNode.id === fromNode.id) return false;
-    return true;
+function ValidateSplitView(
+  selectedNode: Node,
+  splitNode: Node,
+  fromNode: Node,
+  toNode: Node,
+  source: Connector,
+  target: Connector
+) {
+  if (IsLocation(selectedNode)) {
+    if (IsProduct(splitNode)) return IsProductConnection(source, target);
+    if (IsFunction(splitNode)) return IsTransportConnection(source, target);
+    return IsLocationConnection(source, target);
+  }
+  if (IsProduct(selectedNode)) {
+    if (IsLocation(splitNode)) return IsLocationConnection(source, target);
+    if (IsFunction(splitNode)) return IsTransportConnection(source, target);
+    return IsProductConnection(source, target);
   }
 
-  if (!IsDirectChild(fromNode, selectedNode)) return false;
-  if (IsProduct(selectedNode)) return (IsTransportConnection(source, target) || IsPartOf(source)) && IsProduct(fromNode);
-  if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsLocation(fromNode);
-  return IsTransportConnection(source, target) && IsFunction(fromNode);
-}
-
-function validateSecondaryEdge(selectedNode: Node, secondaryNode: Node, fromNode: Node, source: Connector, target: Connector) {
-  if (IsLocation(secondaryNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, selectedNode);
-  if (IsProduct(secondaryNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, selectedNode);
-
-  if (IsFunction(secondaryNode)) {
-    if (IsProduct(selectedNode)) return IsProductConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
-    if (IsLocation(selectedNode)) return IsLocationConnection(source, target) && IsDirectChild(fromNode, secondaryNode);
-    return IsTransportConnection(source, target);
-  }
-}
-
-function validateOffPageSourceEdge(toNode: Node, selectedNode: Node, source: Connector, target: Connector) {
-  return IsTransportConnection(source, target) && IsDirectChild(toNode, selectedNode);
-}
-function validateOffPageTargetEdge(fromNode: Node, selectedNode: Node, source: Connector, target: Connector) {
-  return IsTransportConnection(source, target) && IsDirectChild(fromNode, selectedNode);
+  if (IsProduct(splitNode)) return IsProductConnection(source, target);
+  if (IsLocation(splitNode)) return IsLocationConnection(source, target);
+  if (IsFunction(splitNode)) return IsTransportConnection(source, target) || IsOffPage(fromNode) || IsOffPage(toNode);
 }
 
 export default ValidateBlockEdge;
