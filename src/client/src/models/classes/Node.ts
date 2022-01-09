@@ -51,6 +51,8 @@ class Node {
   blockWidth: number;
   blockHeight: number;
 
+  isConnectedOffPage: boolean | false;
+
   isLocked: boolean;
   isLockedStatusBy: string;
   isLockedStatusDate: string;

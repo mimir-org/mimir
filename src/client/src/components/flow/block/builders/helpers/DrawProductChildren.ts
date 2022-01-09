@@ -1,15 +1,14 @@
 import { Elements } from "react-flow-renderer";
 import { TraverseProductNodes } from ".";
 import { BuildBlockEdge, BuildProductChildNode } from "..";
-import { IsProduct, IsAspectNode } from "../../../../../helpers";
-import { Node, Edge, Connector } from "../../../../../models";
-import { IsPartOf, IsTransportConnection } from "../../../helpers";
+import { IsProduct } from "../../../../../helpers";
+import { Node, Connector, Project } from "../../../../../models";
+import { IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
 
 /**
  * Component to draw all children of a selected Product Node in BlockView.
- * @param edges
- * @param nodes
+ * @param project
  * @param selectedNode
  * @param elements
  * @param animatedEdge
@@ -18,8 +17,7 @@ import { GetBlockEdgeType } from "../../helpers";
  * @param splitView
  */
 const DrawProductChildren = (
-  edges: Edge[],
-  nodes: Node[],
+  project: Project,
   selectedNode: Node,
   elements: Elements<any>,
   animatedEdge: boolean,
@@ -28,23 +26,30 @@ const DrawProductChildren = (
   splitView: boolean
 ) => {
   const productChildren: Node[] = [];
-  TraverseProductNodes(edges, nodes, selectedNode, productChildren);
+  const nodes = project.nodes;
+  const edges = project.edges;
 
-  edges?.forEach((edge: Edge) => {
-    let productEdge = null;
-    if (ValidateProductEdge(edge.fromNode, edge.fromConnector, edge.toConnector))
-      productEdge = BuildBlockEdge(nodes, edge, GetBlockEdgeType(edge.fromConnector), null, animatedEdge);
-    if (productEdge) elements.push(productEdge);
-  });
+  TraverseProductNodes(project, selectedNode, productChildren);
 
   productChildren.forEach((node) => {
     const productChildNode = BuildProductChildNode(node, libOpen, explorerOpen, splitView);
     if (productChildNode) elements.push(productChildNode);
   });
+
+  edges?.forEach((edge) => {
+    let productEdge = null;
+    if (ValidateProductEdge(edge.fromNode, edge.toNode, edge.fromConnector, edge.toConnector)) {
+      const edgeType = GetBlockEdgeType(edge.fromConnector);
+      productEdge = BuildBlockEdge(nodes, edge, edgeType, null, animatedEdge);
+    }
+    if (productEdge) elements.push(productEdge);
+  });
+
+  return elements;
 };
 
-function ValidateProductEdge(fromNode: Node, source: Connector, target: Connector) {
-  return (IsPartOf(source) || IsTransportConnection(source, target)) && IsProduct(fromNode) && !IsAspectNode(fromNode);
+function ValidateProductEdge(fromNode: Node, toNode: Node, source: Connector, target: Connector) {
+  return IsProduct(fromNode) && IsProduct(toNode) && IsTransportConnection(source, target);
 }
 
 export default DrawProductChildren;

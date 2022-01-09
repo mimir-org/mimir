@@ -1,13 +1,12 @@
 import { Elements } from "react-flow-renderer";
 import { BuildChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
-import { Node, Edge, Connector } from "../../../../../models";
+import { Node, Edge, Connector, Project } from "../../../../../models";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } from "../../../helpers";
 
 /**
  * Component to draw all children nodes in BlockView.
- * @param edges
- * @param nodes
+ * @param project
  * @param selectedNode
  * @param elements
  * @param libOpen
@@ -15,14 +14,16 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
  * @param splitView
  */
 const DrawChildNodes = (
-  edges: Edge[],
-  nodes: Node[],
+  project: Project,
   selectedNode: Node,
   elements: Elements<any>,
   libOpen: boolean,
   explorerOpen: boolean,
   splitView: boolean
 ) => {
+  const nodes = project.nodes;
+  const edges = project.edges;
+
   edges?.forEach((edge) => {
     if (ValidateEdge(edge, selectedNode)) {
       const toNode = nodes.find((n) => n.id === edge.toNode.id);

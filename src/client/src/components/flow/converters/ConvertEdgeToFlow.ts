@@ -28,7 +28,6 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
       target: targetNode,
       edge: edge,
       isSelected: edge.isSelected,
-      label: "REIDAR ER SØT",
     },
     isHidden: false, // Opacity is controlled by the styled component
     parentType: sourceNode?.aspect,

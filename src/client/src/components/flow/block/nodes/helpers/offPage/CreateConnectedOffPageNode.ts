@@ -20,6 +20,7 @@ const CreateConnectedOffPageNode = (sourceNode: Node, sourceConnector: Connector
   } as OffPageData;
 
   const offPageObject = CreateOffPageObject(offPageData);
+  offPageObject.node.isConnectedOffPage = true;
 
   dispatch(addNode(offPageObject.node));
   dispatch(createEdge(offPageObject.partOfEdge));
