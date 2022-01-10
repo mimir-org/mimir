@@ -1,7 +1,7 @@
 import * as Click from "./handlers";
 import { TerminalsMenuButton, TerminalsMenu } from ".";
 import { Connector, Node } from "../../../../models";
-import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
@@ -36,8 +36,15 @@ const TerminalsMenuComponent = ({
   isParent,
   showMenuButton = true,
 }: Props) => {
-  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
-  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+  let inputTerminals: Connector[] = [];
+  let outputTerminals: Connector[] = [];
+
+  terminals.forEach((t) => {
+    if (!IsPartOf(t)) {
+      if (IsInputTerminal(t) || IsBidirectionalTerminal(t)) inputTerminals.push(t);
+      if (IsOutputTerminal(t) || IsBidirectionalTerminal(t)) outputTerminals.push(t);
+    }
+  });
 
   return (
     <>
