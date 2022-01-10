@@ -10,7 +10,6 @@
     <Product>MimirOrg.Models</Product>
     <Description>Models and extensions for TypeLibrary and Mimir</Description>
     <PackageProjectUrl>https://github.com/mimir-org</PackageProjectUrl>
-    <PackageIcon>mimir_logo.png</PackageIcon>
     <RepositoryUrl>https://github.com/mimir-org</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>mimir;typelibrary</PackageTags>
@@ -23,13 +22,6 @@
     <Compile Remove="Properties\**" />
     <EmbeddedResource Remove="Properties\**" />
     <None Remove="Properties\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\..\common\mimir_logo.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
