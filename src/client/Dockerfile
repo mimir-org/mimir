@@ -3,7 +3,6 @@ ARG ENVIR
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 RUN apk update && apk add python make g++\ && rm -rf /var/cache/apk/*
-RUN npm install react-scripts@4.0.1 -g --silent
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci --silent
