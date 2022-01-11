@@ -26,11 +26,16 @@ namespace ApplicationInsightsLoggingModule
 
             var aiOptions = new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions
             {
-                InstrumentationKey = insightConfig.InstrumentationKey,
                 ConnectionString = insightConfig.ConnectionString,
-                EndpointAddress = insightConfig.EndpointAddress,
                 EnableAdaptiveSampling = insightConfig.EnableAdaptiveSampling,
-                EnableQuickPulseMetricStream = insightConfig.EnablePerformanceCounterCollectionModule,
+                EnableQuickPulseMetricStream = insightConfig.EnableQuickPulseMetricStream,
+                EnablePerformanceCounterCollectionModule = insightConfig.EnablePerformanceCounterCollectionModule,
+                EnableHeartbeat = insightConfig.EnableHeartbeat,
+                EnableAzureInstanceMetadataTelemetryModule = insightConfig.EnableAzureInstanceMetadataTelemetryModule,
+                EnableDependencyTrackingTelemetryModule = insightConfig.EnableDependencyTrackingTelemetryModule,
+                EnableEventCounterCollectionModule = insightConfig.EnableEventCounterCollectionModule,
+                EnableDiagnosticsTelemetryModule = insightConfig.EnableDiagnosticsTelemetryModule,
+                EnableRequestTrackingTelemetryModule = insightConfig.EnableRequestTrackingTelemetryModule,
                 DeveloperMode = insightConfig.DeveloperMode
             };
 
@@ -109,7 +114,7 @@ namespace ApplicationInsightsLoggingModule
                     aiOptions.DeveloperMode = enableDeveloperMode;
             }
 
-            if (!string.IsNullOrEmpty(aiOptions.InstrumentationKey))
+            if (!string.IsNullOrEmpty(aiOptions.ConnectionString))
             {
                 services.AddApplicationInsightsTelemetry(aiOptions);
             }
