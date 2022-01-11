@@ -45,6 +45,11 @@ namespace ApplicationInsightsLoggingModule
                 aiOptions.EndpointAddress = Environment.GetEnvironmentVariable("ApplicationInsights_EndpointAddress");
             }
 
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ApplicationInsights_ConnectionString")))
+            {
+                aiOptions.ConnectionString = Environment.GetEnvironmentVariable("ApplicationInsights_ConnectionString");
+            }
+
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ApplicationInsights_EnableAdaptiveSampling")))
             {
                 if(bool.TryParse(Environment.GetEnvironmentVariable("ApplicationInsights_EnableAdaptiveSampling"), out var adaptiveSampling))
