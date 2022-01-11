@@ -17,7 +17,7 @@ interface Props {
 }
 /**
  * Component to show Preview area with selected object type, type name, rds and symbol
- * @param param0
+ * @param params
  * @returns the visual type preview area
  */
 export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {
@@ -53,10 +53,10 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
             <InfoText>{rdsLabel}</InfoText>
             <InfoText>{createLibraryType?.name}</InfoText>
             {(IsFunction(aspect) || IsProduct(aspect)) && IsTransport(objectType) && (
-              <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
+              <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }} />
             )}
             {(IsFunction(aspect) || IsProduct(aspect)) && IsInterface(objectType) && (
-              <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
+              <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }} />
             )}
           </InfoWrapper>
         )}
