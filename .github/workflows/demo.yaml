@@ -12,40 +12,50 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-client-1:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
-      environment: demo
+      repository: mimir-client
       tag: demo
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: final
+      build_args: |
+        ENVIR=demo
+      hash_files_template: '**/package-lock.json'
+      push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
       
   build-client-2:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-client.yaml@main
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
-      environment: demoaibel
+      repository: mimir-client
       tag: demoaibel
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: final
+      build_args: |
+        ENVIR=demoaibel
+      hash_files_template: '**/package-lock.json'
+      push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
-  build-server-1:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-server.yaml@main
+  build-server:
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
+      repository: mimir-server
       tag: demo
+      context: ./src/service
+      file: ./src/service/Dockerfile
+      target: final
+      hash_files_template: '**/*.csproj'
+      push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-
-  build-server-2:
-    uses: equinor/ti-spine-modelbuilder/.github/workflows/partial.build-and-push-server.yaml@main
-    with:
-      tag: demoaibel
-    secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-      
