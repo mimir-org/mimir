@@ -38,26 +38,9 @@ jobs:
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
       repository: mimir-client
-      tag: latest
-      context: ./src/client
-      file: ./src/client/Dockerfile
-      target: final
-      build_args: |
-        ENVIR=prod
-      hash_files_template: '**/package-lock.json'
-      push: true
-    secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-
-  build-client-release:
-    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
-    needs: create-release
-    if: ${{needs.create-release.outputs.tag!=''}}
-    with:
-      repository: mimir-client
-      tag: ${{needs.create-release.outputs.tag}}
+      tags: |
+       latest
+       ${{needs.create-release.outputs.tag}}
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
@@ -76,7 +59,9 @@ jobs:
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
       repository: mimir-server
-      tag: latest
+      tags: |
+       latest
+       ${{needs.create-release.outputs.tag}}
       context: ./src/service
       file: ./src/service/Dockerfile
       target: final
@@ -87,20 +72,4 @@ jobs:
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
-  build-server-release:
-    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
-    needs: create-release
-    if: ${{needs.create-release.outputs.tag!=''}}
-    with:
-      repository: mimir-server
-      tag: ${{needs.create-release.outputs.tag}}
-      context: ./src/service
-      file: ./src/service/Dockerfile
-      target: final
-      hash_files_template: '**/*.csproj'
-      push: true
-    secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
           
