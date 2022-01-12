@@ -1,8 +1,7 @@
 import { TerminalTypeItem } from "../../../../../models";
 
 const OnQuantityChange = (item: number, defaultTerminal: TerminalTypeItem, onChange: Function) => {
-  defaultTerminal.number = item;
-  onChange("update", defaultTerminal);
+  onChange("update", { ...defaultTerminal, number: item });
 };
 
 export default OnQuantityChange;

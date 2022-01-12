@@ -9,8 +9,8 @@ import {
   post,
   GetBadResponseData,
   ApiError,
-  GetBadRequestPayload,
-  GetErrorResponsePayload,
+  GetApiErrorForBadRequest,
+  GetApiErrorForException,
 } from "../../../models/webclient";
 import {
   FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -32,14 +32,15 @@ import {
   LOCK_EDGE_SUCCESS_OR_ERROR,
   LockAttribute,
   SaveProjectAction,
+  FetchingProjectAction,
 } from "../../store/project/types";
 
-export function* getProject(action) {
+export function* getProject(action: FetchingProjectAction) {
   try {
     const webSocket = new WebSocket();
-    if (webSocket.isRunning()) webSocket.setGroup(action.payload);
+    if (webSocket.isRunning()) webSocket.setGroup(action.payload.id);
 
-    const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload;
+    const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload.id;
     const response = yield call(get, url);
 
     // This is a bad request
@@ -65,6 +66,8 @@ export function* getProject(action) {
     }
 
     const project = response.data;
+
+    MapProperties(project, action.payload.project, {});
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
@@ -332,7 +335,12 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     const response = yield call(post, url, action.payload);
 
     if (response.status === 400) {
-      yield put(GetBadRequestPayload(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR));
+      yield put({
+        type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
+        payload: {
+          apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
+        },
+      });
       return;
     }
 
@@ -350,7 +358,13 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
       },
     });
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR, {}));
+
+    yield put({
+      type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
+      payload: {
+        apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
+      },
+    });
   }
 }
 

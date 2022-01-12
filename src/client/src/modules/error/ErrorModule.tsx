@@ -6,10 +6,10 @@ import { CloseIcon } from "../../assets/icons/close";
 import { TextResources } from "../../assets/text";
 import { BadRequestData } from "../../models/webclient";
 import { deleteProjectError } from "../../redux/store/project/actions";
-import { deleteCommonError } from "../../redux/store/common/actions";
-import { deleteLibraryError } from "../../redux/store/library/actions";
-import { deleteUserError } from "../../redux/store/user/actions";
-import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
+import { deleteCommonError } from "../../redux/store/common/commonSlice";
+import { deleteLibraryError } from "../../redux/store/library/librarySlice";
+import { deleteUserError } from "../../redux/store/user/userSlice";
+import { deleteTypeEditorError } from "../../typeEditor/redux/typeEditorSlice";
 import { useAppSelector } from "../../redux/store/hooks";
 import { ProjectState } from "../../redux/store/project/types";
 

@@ -52,6 +52,7 @@ export const MENU_TYPE = {
   IMPORT_LIBRARY_FILE_MENU: "ImportLibraryFile",
   COMMIT_PROJECT: "CommitProject",
   CREATE_SUB_PROJECT_MENU: "CreateSubProjectMenu",
+  INSTRUCTION_PROJECT_MENU: "InstructionProjectMenu",
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;

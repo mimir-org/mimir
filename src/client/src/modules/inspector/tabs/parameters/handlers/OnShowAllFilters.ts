@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { CombinedAttributeFilter } from "../../../../../models";
 import { CombinedAttributeDict } from "../../../types";
-import { addAllAttributeFilters, addCombinedAttribute } from "../redux/actions";
+import { addAllAttributeFilters, addCombinedAttribute } from "../redux/parametersSlice";
 
 const OnShowAllFilters = (
   elementId: string,
@@ -10,15 +10,12 @@ const OnShowAllFilters = (
   dispatch: Dispatch<any>
 ) => {
   dispatch(
-    addAllAttributeFilters(
-      elementId,
-      filters.map((filter) => filter.name)
-    )
+    addAllAttributeFilters({ elementId, filterNames: filters.map((filter) => filter.name) })
   );
 
   filters.forEach((filter) =>
     attributeCombinations[filter.name].forEach((combination) =>
-      dispatch(addCombinedAttribute(elementId, filter.name, combination))
+      dispatch(addCombinedAttribute({elementId, filterName: filter.name, combination}))
     )
   );
 };

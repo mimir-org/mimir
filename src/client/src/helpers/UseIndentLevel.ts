@@ -1,7 +1,7 @@
 const UseIndentLevel = (indent: number) => {
-  const margin = 5;
-  const increase = 10;
-  return margin + indent * increase;
+  const base = 10;
+  const multiplier = indent > 1 ? indent : 0;
+  return `${base + (multiplier * base)}px`;
 };
 
 export default UseIndentLevel;

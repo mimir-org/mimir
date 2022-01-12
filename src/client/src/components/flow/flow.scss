@@ -85,22 +85,22 @@
 }
 
 .react-flow__node-AspectLocation,
-.react-flow__node-Location{
-  &.selected > div{
-    border-color: #A300A7 !important
+.react-flow__node-Location {
+  &.selected > div {
+    border-color: #a300a7 !important;
   }
 }
 
 .react-flow__node-AspectFunction,
-.react-flow__node-Function{
-  &.selected > div{
-    border-color: #FBC913 !important
+.react-flow__node-Function {
+  &.selected > div {
+    border-color: #fbc913 !important;
   }
 }
 
 .react-flow__node-AspectProduct,
-.react-flow__node-Product{
-  &.selected > div{
-    border-color: #069098 !important
+.react-flow__node-Product {
+  &.selected > div {
+    border-color: #069098 !important;
   }
 }

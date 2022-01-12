@@ -28,7 +28,7 @@ interface Props {
 /**
  * Component for the Flow library in BlockView
  * @param interface
- * @returns  a scene with Flow elements and Mimir nodes, transports and edges.
+ * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const OnElementsRemove = (elementsToRemove) => {
     const nodeToRemove = elementsToRemove[0];
     project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) elementsToRemove.push(edge);
+      if (edge.fromNodeId === nodeToRemove?.id || edge.toNodeId === nodeToRemove?.id) elementsToRemove.push(edge);
     });
     return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
   };

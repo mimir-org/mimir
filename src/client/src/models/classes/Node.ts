@@ -1,4 +1,4 @@
-import { EnumBase, Attribute, Aspect, Purpose, Composite } from "..";
+import { EnumBase, Attribute, Aspect, Purpose, Simple } from "..";
 import Connector from "./Connector";
 
 export const NODE_KIND: string = "Node";
@@ -37,7 +37,7 @@ class Node {
   symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
-  simples: Composite[];
+  simples: Simple[];
   width: number;
   height: number;
 
@@ -50,6 +50,8 @@ class Node {
   isHidden: boolean | false;
   blockWidth: number;
   blockHeight: number;
+
+  isConnectedOffPage: boolean | false;
 
   isLocked: boolean;
   isLockedStatusBy: string;

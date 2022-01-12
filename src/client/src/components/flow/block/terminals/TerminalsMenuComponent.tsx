@@ -1,54 +1,87 @@
-import { GetAspectColor } from "../../../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../models";
-import { GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsBox, TerminalsElement, ColorTag } from "./styled";
-import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
-import { Color } from "../../../../compLibrary/colors";
+import * as Click from "./handlers";
+import { TerminalsMenuButton, TerminalsMenu } from ".";
+import { Connector, Node } from "../../../../models";
+import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 
 interface Props {
   node: Node;
-  size: BlockNodeSize;
-  isParent: boolean;
-  IsInput?: boolean;
   terminals: Connector[];
+  size: BlockNodeSize;
+  showInputMenu: boolean;
+  showOutputMenu: boolean;
+  setShowInputMenu: any;
+  setShowOutputMenu: any;
   electro: boolean;
-  hasActiveTerminals: boolean;
   onClick: (conn: Connector) => void;
-  onBlur: () => void;
+  isParent?: boolean;
+  showMenuButton?: boolean;
 }
 
 /**
- * Component for the drop-down menu of terminals.
+ * Component for the terminals menu on the nodes in BlockView.
  * @param interface
- * @returns a drop-down menu with a node's input or output terminals.
+ * @returns two buttons to activate two menus of input and output terminals.
  */
 const TerminalsMenuComponent = ({
   node,
   size,
-  isParent,
-  IsInput,
+  showInputMenu,
+  showOutputMenu,
   terminals,
   electro,
-  hasActiveTerminals,
+  setShowInputMenu,
+  setShowOutputMenu,
   onClick,
-  onBlur,
-}: Props) => (
-  <TerminalsBox
-    id={"terminals-dropdown-" + node.id}
-    tabIndex={0}
-    isParent={isParent}
-    isInput={IsInput}
-    onBlur={onBlur}
-    color={GetAspectColor(node, AspectColorType.Selected)}
-    xPos={SetMenuXPos(isParent, electro, hasActiveTerminals, size)}
-  >
-    {terminals.map((conn) => (
-      <TerminalsElement key={conn.id}>
-        <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
-        <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
-      </TerminalsElement>
-    ))}
-  </TerminalsBox>
-);
+  isParent,
+  showMenuButton = true,
+}: Props) => {
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+
+  return (
+    <>
+      <TerminalsMenuButton
+        node={node}
+        isParent={isParent}
+        showMenuButton={showMenuButton}
+        terminals={inputTerminals}
+        onClick={() => Click.OnInputMenu(setShowInputMenu, showInputMenu)}
+        isInput
+      />
+      <TerminalsMenuButton
+        node={node}
+        isParent={isParent}
+        showMenuButton={showMenuButton}
+        terminals={outputTerminals}
+        onClick={() => Click.OnOutputMenu(setShowOutputMenu, showOutputMenu)}
+      />
+      {showInputMenu && (
+        <TerminalsMenu
+          node={node}
+          size={size}
+          isParent={isParent}
+          electro={electro}
+          terminals={inputTerminals}
+          hasActiveTerminals={inputTerminals.some((conn) => conn.visible)}
+          onClick={onClick}
+          onBlur={() => Click.OnBlur(setShowInputMenu, showInputMenu)}
+          isInput
+        />
+      )}
+      {showOutputMenu && (
+        <TerminalsMenu
+          node={node}
+          size={size}
+          isParent={isParent}
+          electro={electro}
+          terminals={outputTerminals}
+          hasActiveTerminals={outputTerminals.some((conn) => conn.visible)}
+          onClick={onClick}
+          onBlur={() => Click.OnBlur(setShowOutputMenu, showOutputMenu)}
+        />
+      )}
+    </>
+  );
+};
 export default TerminalsMenuComponent;

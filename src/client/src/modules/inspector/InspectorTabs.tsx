@@ -1,8 +1,8 @@
 import { Project } from "../../models";
-import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
+import { AttributeLikeItem, SimpleLikeItem, InspectorElement, TerminalLikeItem } from "./types";
 import { Action } from "redux";
 import { InspectorTabWrapper } from "./";
-import { changeInspectorTab } from "./redux/tabs/actions";
+import { changeInspectorTab } from "./redux/inspectorSlice";
 import { ShouldShowTabs } from "./helpers";
 import { ParametersComponent, TerminalsComponent, RelationsComponent, SimpleTypesComponent, AdminComponent } from "./tabs";
 
@@ -12,7 +12,7 @@ interface Props {
   activeTabIndex: number;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
-  compositeLikeItems?: CompositeLikeItem[];
+  simpleLikeItems?: SimpleLikeItem[];
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
@@ -24,7 +24,7 @@ const InspectorTabs = ({
   activeTabIndex,
   attributeLikeItems,
   terminalLikeItems,
-  compositeLikeItems,
+  simpleLikeItems,
   changeInspectorTabAction = changeInspectorTab,
   inspectorRef,
   isInspectorOpen,
@@ -36,7 +36,7 @@ const InspectorTabs = ({
     <ParametersComponent element={element} project={project} attributeLikeItems={attributeLikeItems} />,
     <TerminalsComponent element={element} project={project} terminalLikeItems={terminalLikeItems} />,
     <RelationsComponent element={element} />,
-    <SimpleTypesComponent element={element} project={project} compositeLikeItems={compositeLikeItems} />,
+    <SimpleTypesComponent element={element} project={project} simpleLikeItems={simpleLikeItems} />,
   ];
 
   return (

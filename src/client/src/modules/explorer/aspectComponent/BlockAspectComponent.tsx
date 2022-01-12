@@ -1,12 +1,11 @@
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
-import { AspectBox, ElementBox, ExplorerAspectLine } from "./styled";
+import { AspectContainer } from "./styled";
 import { LockComponent } from "../lockComponent";
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../models";
 import { BlockAspectElement } from ".";
-import { SetBlockNodeIndent } from "./helpers";
 import { Dispatch } from "redux";
 import { GetWidth } from "../helpers";
+import { OnLockNode } from "../handlers";
 
 interface Props {
   project: Project;
@@ -17,9 +16,9 @@ interface Props {
   secondaryNode: Node;
   indent: number;
   isLeaf: boolean;
-  expanded: boolean;
-  elements: Elements<any>;
-  onElementExpanded: (expanded: boolean, nodeId: string) => void;
+  isExpanded: boolean;
+  elements: Elements;
+  onToggleExpanded: () => void;
   dispatch: Dispatch;
 }
 export const BlockAspectComponent = ({
@@ -29,36 +28,27 @@ export const BlockAspectComponent = ({
   nodes,
   selectedNode,
   secondaryNode,
-  expanded,
+  isExpanded,
   indent,
   isLeaf,
   elements,
   dispatch,
-  onElementExpanded,
+  onToggleExpanded,
 }: Props) => (
-  <>
-    <AspectBox width={GetWidth(nodes)} node={node}>
-      <ElementBox indent={SetBlockNodeIndent(node, indent)}>
-        <LockComponent node={node} project={project} username={username} dispatch={dispatch} />
-        <BlockAspectElement
-          node={node}
-          selectedNode={selectedNode}
-          secondaryNode={secondaryNode}
-          elements={elements}
-          dispatch={dispatch}
-        />
-      </ElementBox>
-      {!isLeaf && (
-        <img
-          className="expand-icon"
-          src={expanded ? ExpandIcon : CollapseIcon}
-          alt="expand-icon"
-          onClick={() => onElementExpanded(!expanded, node.id)}
-        ></img>
-      )}
-    </AspectBox>
-    <ExplorerAspectLine width={GetWidth(nodes)} node={node} />
-  </>
+  <AspectContainer width={GetWidth(nodes)} node={node}>
+    <LockComponent isLocked={node.isLocked} onToggleLocked={() => OnLockNode(node, project, username, dispatch)} />
+    <BlockAspectElement
+      node={node}
+      isExpanded={isExpanded}
+      isLeaf={isLeaf}
+      onToggleExpanded={onToggleExpanded}
+      selectedNode={selectedNode}
+      secondaryNode={secondaryNode}
+      elements={elements}
+      dispatch={dispatch}
+      indent={indent}
+    />
+  </AspectContainer>
 );
 
 export default BlockAspectComponent;

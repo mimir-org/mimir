@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 
@@ -9,6 +10,7 @@ namespace Mb.Models.Application
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
+        [Required]
         public string Name { get; set; }
         public ConnectorType Type { get; set; }
         public string SemanticReference { get; set; }

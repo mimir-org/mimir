@@ -24,30 +24,28 @@ const BuildBlockElements = (
 ) => {
   if (!project) return;
   const elements: Elements = [];
-  const nodes = project.nodes;
-  const edges = project.edges;
+  const splitView = secondaryNode !== null;
 
   // Product nodes have a different view
   if (IsProduct(selectedNode)) {
     const parentProduct = BuildProductParentNode(selectedNode, explorerOpen);
-    if (parentProduct) elements.push(parentProduct);
-
-    DrawProductChildren(edges, nodes, selectedNode, elements, animatedEdge, libOpen, explorerOpen, secondaryNode);
-    return elements;
+    if (!parentProduct) return;
+    elements.push(parentProduct);
+    return DrawProductChildren(project, selectedNode, elements, animatedEdge, libOpen, explorerOpen, splitView);
   }
 
   const parentBlock = BuildParentNode(selectedNode, libOpen, explorerOpen);
   if (parentBlock) elements.push(parentBlock);
 
-  if (secondaryNode) {
-    const secondary = nodes?.find((x) => x.id === secondaryNode.id);
+  if (splitView) {
+    const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
     const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary, libOpen, explorerOpen);
     if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
+    DrawSecondaryChildren(project, secondaryNode, elements, libOpen, explorerOpen);
   }
 
-  secondaryNode && DrawSecondaryChildren(edges, nodes, secondaryNode, elements, libOpen, explorerOpen);
-  DrawChildNodes(edges, nodes, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
-  DrawBlockEdges(edges, nodes, elements, secondaryNode, animatedEdge);
+  DrawChildNodes(project, selectedNode, elements, libOpen, explorerOpen, splitView);
+  DrawBlockEdges(project, elements, secondaryNode, animatedEdge);
 
   return elements;
 };

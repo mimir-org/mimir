@@ -28,7 +28,7 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsProductTerminal(conn)) {
     name = conn.name;
-    color = GetAspectColor(node, AspectColorType.Main);
+    color = Color.ProductMain;
     return [name, color];
   }
 };

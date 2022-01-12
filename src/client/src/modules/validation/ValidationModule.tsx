@@ -2,7 +2,7 @@ import { memo } from "react";
 import { Dispatch } from "redux";
 import { NotificationComponent } from "../../compLibrary/box/";
 import { useAppSelector, validationSelector } from "../../redux/store";
-import { setValidation } from "../../redux/store/validation/actions";
+import { setValidation } from "../../redux/store/validation/validationSlice";
 
 interface Props {
   dispatch: Dispatch;
@@ -17,7 +17,7 @@ const ValidationModule = ({ dispatch }: Props) => {
   const validation = useAppSelector(validationSelector);
 
   const onClick = () => {
-    dispatch(setValidation(true, ""));
+    dispatch(setValidation({ valid: true, message: "" }));
   };
 
   return !validation.valid && <NotificationComponent onClick={onClick} message={validation.message} warning />;

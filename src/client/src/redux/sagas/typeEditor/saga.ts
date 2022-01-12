@@ -1,358 +1,186 @@
 import { call, put as statePut } from "redux-saga/effects";
-import { ADD_LIBRARY_ITEM, REMOVE_LIBRARY_ITEM } from "../../store/library/types";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { addLibraryItem, removeLibraryItem } from "../../store/library/librarySlice";
 import { get, post, GetBadResponseData, ApiError } from "../../../models/webclient";
-import { Aspect, CompositeType, CompositeTypeResponse, CreateLibraryType } from "../../../models";
+import { Aspect, CreateLibraryType, SimpleType, SimpleTypeResponse } from "../../../models";
+import { FetchingTypeAction } from "../../../typeEditor/redux/types";
 import {
-  FETCHING_TYPE_SUCCESS_OR_ERROR,
-  FETCHING_INITIAL_SUCCESS_OR_ERROR,
-  FETCHING_RDS_SUCCESS_OR_ERROR,
-  FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-  FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-  SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
-  FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
-  FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
-  FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-  FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
-  TypeEditorActionTypes,
-} from "../../../typeEditor/redux/types";
+  fetchAttributesSuccessOrError,
+  fetchBlobDataSuccessOrError,
+  fetchInitialDataSuccessOrError,
+  fetchLocationTypesSuccessOrError,
+  fetchPredefinedAttributesSuccessOrError,
+  fetchRdsSuccessOrError,
+  fetchSimpleTypesSuccessOrError,
+  fetchTerminalsSuccessOrError,
+  fetchCreateLibraryTypeSuccessOrError,
+  saveLibraryTypeSuccessOrError
+} from "../../../typeEditor/redux/typeEditorSlice";
 
-export function* saveType(action) {
+export function* saveType(action: PayloadAction<CreateLibraryType>) {
   try {
-    const createLibraryType = action.payload.libraryType as CreateLibraryType;
-    let url = "";
+    const createLibraryType = action.payload;
 
-    if (createLibraryType.id) url = process.env.REACT_APP_API_BASE_URL + "librarytype/" + createLibraryType.id;
-    else url = process.env.REACT_APP_API_BASE_URL + "librarytype";
+    const url = createLibraryType.id ?
+      `${process.env.REACT_APP_API_BASE_URL}librarytype/${createLibraryType.id}` :
+      `${process.env.REACT_APP_API_BASE_URL}librarytype`
 
     const response = yield call(post, url, createLibraryType);
 
     if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      const payload = {
-        apiError: apiError,
-      };
-
-      yield statePut({
-        type: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      const apiError = getApiErrorForBadRequest(saveLibraryTypeSuccessOrError.type, response);
+      yield statePut(saveLibraryTypeSuccessOrError(apiError));
       return;
     }
 
-    const payload = {
-      apiError: null,
-    };
+    yield statePut(saveLibraryTypeSuccessOrError(null));
 
-    yield statePut({
-      type: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    // LIBRARY: Remove item
+    yield (statePut(removeLibraryItem(createLibraryType.id)));
 
-    // Remove item from library
-    if (createLibraryType.id) {
-      yield statePut({
-        type: REMOVE_LIBRARY_ITEM,
-        payload: {
-          id: createLibraryType.id,
-        },
-      });
-    }
+    // LIBRARY: Add the created library item back in
+    yield statePut(addLibraryItem(response.data));
 
-    // Add the new item to library
-    yield statePut({
-      type: ADD_LIBRARY_ITEM,
-      payload: response.data,
-    });
   } catch (error) {
-    const apiError = {
-      key: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      apiError: apiError,
-    };
-
-    yield statePut({
-      type: SAVE_LIBRARY_TYPE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    const apiError = getApiErrorForException(saveLibraryTypeSuccessOrError.type, error);
+    yield statePut(saveLibraryTypeSuccessOrError(apiError));
   }
 }
 
-export function* getInitialData(action: TypeEditorActionTypes) {
+export function* getInitialData() {
   try {
-    const purposesUrl = process.env.REACT_APP_API_BASE_URL + "enum/9";
-    const purposesResponse = yield call(get, purposesUrl);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}enum/9`;
+    const purposesResponse = yield call(get, endpointUrl);
 
-    const payload = {
-      purposes: purposesResponse.data,
-    };
-
-    yield statePut({
-      type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchInitialDataSuccessOrError(purposesResponse.data));
   } catch (error) {
-    const payload = {
-      aspects: [],
-      objectTypes: [],
-      purposes: [],
-    };
-
-    yield statePut({
-      type: FETCHING_INITIAL_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchInitialDataSuccessOrError([]));
   }
 }
 
 export function* getRDS(action) {
   try {
     const aspect = action.payload != null ? action.payload.aspect : Aspect.NotSet;
-    const rdsURL = process.env.REACT_APP_API_BASE_URL + "rds/" + aspect;
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}rds/${aspect}`;
+    const rdsResponse = yield call(get, endpointUrl);
 
-    const rdsResponse = yield call(get, rdsURL);
-
-    const payload = {
-      Rds: rdsResponse.data,
-    };
-
-    yield statePut({
-      type: FETCHING_RDS_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchRdsSuccessOrError(rdsResponse.data));
   } catch (error) {
-    const payload = {
-      Rds: [],
-    };
-
-    yield statePut({
-      type: FETCHING_RDS_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchRdsSuccessOrError([]));
   }
 }
 
-export function* getTerminals(action) {
+export function* getTerminals() {
   try {
-    const terminalURL = process.env.REACT_APP_API_BASE_URL + "terminaltype/category";
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}terminaltype/category`;
+    const terminalResponse = yield call(get, endpointUrl);
 
-    const terminalResponse = yield call(get, terminalURL);
-
-    const payload = {
-      terminals: terminalResponse.data,
-    };
-
-    yield statePut({
-      type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchTerminalsSuccessOrError(terminalResponse.data));
   } catch (error) {
-    const payload = {
-      terminals: [],
-    };
-
-    yield statePut({
-      type: FETCHING_TERMINALS_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchTerminalsSuccessOrError([]));
   }
 }
 
 export function* getAttributes(action) {
   try {
     const aspect = action.payload != null ? action.payload.aspect : Aspect.NotSet;
-    const attributesURL = process.env.REACT_APP_API_BASE_URL + "attributetype/" + aspect;
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}attributetype/${aspect}`;
+    const attributesResponse = yield call(get, endpointUrl);
 
-    const attributesResponse = yield call(get, attributesURL);
-
-    const payload = {
-      AttributeType: attributesResponse.data,
-    };
-
-    yield statePut({
-      type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchAttributesSuccessOrError(attributesResponse.data));
   } catch (error) {
-    const payload = {
-      AttributeType: [],
-    };
-
-    yield statePut({
-      type: FETCHING_ATTRIBUTES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchAttributesSuccessOrError([]));
   }
 }
 
-export function* getLocationTypes(action) {
+export function* getLocationTypes() {
   try {
-    const locationTypesURL = process.env.REACT_APP_API_BASE_URL + "enum/location-types";
-    const locationTypesResponse = yield call(get, locationTypesURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}enum/location-types`;
+    const locationTypesResponse = yield call(get, endpointUrl);
 
-    const payload = {
-      locationTypes: locationTypesResponse.data,
-    };
-
-    yield statePut({
-      type: FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchLocationTypesSuccessOrError(locationTypesResponse.data));
   } catch (error) {
-    const payload = {
-      locationTypes: [],
-    };
-
-    yield statePut({
-      type: FETCHING_LOCATIONTYPES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchLocationTypesSuccessOrError([]));
   }
 }
 
-export function* getPredefinedAttributes(action) {
+export function* getPredefinedAttributes() {
   try {
-    const predefinedAttributesURL = process.env.REACT_APP_API_BASE_URL + "attributetype/predefined-attributes";
-    const predefinedAttributesResponse = yield call(get, predefinedAttributesURL);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}attributetype/predefined-attributes`;
+    const predefinedAttributesResponse = yield call(get, endpointUrl);
 
-    const payload = {
-      predefinedAttributes: predefinedAttributesResponse.data,
-    };
-
-    yield statePut({
-      type: FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchPredefinedAttributesSuccessOrError(predefinedAttributesResponse.data));
   } catch (error) {
-    const payload = {
-      predefinedAttributes: [],
-    };
-
-    yield statePut({
-      type: FETCHING_PREDEFINED_ATTRIBUTES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchPredefinedAttributesSuccessOrError([]));
   }
 }
 
-export function* getblobData() {
+export function* getBlobData() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "blob/";
-    const response = yield call(get, url);
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}blob/`;
+    const response = yield call(get, endpointUrl);
 
     // This is a bad request
     if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      const payload = {
-        icons: [],
-        apiError: apiError,
-      };
-
-      yield statePut({
-        type: FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      const apiError = getApiErrorForBadRequest(fetchBlobDataSuccessOrError.type, response);
+      yield statePut(fetchBlobDataSuccessOrError({ icons: [], apiError}));
       return;
     }
-    // Bad request end
 
-    const payload = {
-      icons: response.data,
-      apiError: null,
-    };
+    yield statePut(fetchBlobDataSuccessOrError({ icons: response.data, apiError: null }));
+  } catch (error) {
+    const apiError = getApiErrorForException(fetchBlobDataSuccessOrError.type, error);
+    yield statePut(fetchBlobDataSuccessOrError({ icons: [], apiError }));
+  }
+}
 
-    yield statePut({
-      type: FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-      payload: payload,
+export function* getSelectedCreateLibraryType(action: PayloadAction<FetchingTypeAction>) {
+  try {
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}librarytype/${action.payload.selectedType}/${action.payload.filter}`;
+    const selectedNodeResponse = yield call(get, endpointUrl);
+    const createLibraryType = selectedNodeResponse.data as CreateLibraryType;
+    createLibraryType.id = action.payload.selectedType;
+
+    yield statePut(fetchCreateLibraryTypeSuccessOrError(selectedNodeResponse.data));
+  } catch (error) {
+    yield statePut(fetchCreateLibraryTypeSuccessOrError(null));
+  }
+}
+
+export function* getSimpleTypes() {
+  try {
+    const endpointUrl = `${process.env.REACT_APP_API_BASE_URL}librarytype/simpletype`;
+    const simpleTypesURLResponse = yield call(get, endpointUrl);
+
+    const simpleTypes = (simpleTypesURLResponse.data as Array<SimpleTypeResponse>).map((comp) => {
+      return { ...comp, attributes: comp.attributeTypes } as SimpleType;
     });
+
+    yield statePut(fetchSimpleTypesSuccessOrError({simpleTypes, apiError: null}));
   } catch (error) {
     const apiError = {
-      key: FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
+      key: fetchSimpleTypesSuccessOrError.type,
       errorMessage: error.message,
       errorData: null,
     } as ApiError;
 
-    const payload = {
-      icons: [],
-      apiError: apiError,
-    };
-
-    yield statePut({
-      type: FETCHING_BLOB_DATA_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield statePut(fetchSimpleTypesSuccessOrError({simpleTypes: [], apiError}));
   }
 }
 
-export function* getSelectedNode(action) {
-  try {
-    const selectedNodeURL =
-      process.env.REACT_APP_API_BASE_URL + "librarytype/" + action.payload.selectedType + "/" + action.payload.filter;
-
-    const selectedNodeResponse = yield call(get, selectedNodeURL);
-    const createLibraryType = selectedNodeResponse.data as CreateLibraryType;
-    createLibraryType.id = action.payload.selectedType;
-
-    const payload = {
-      selectedNode: selectedNodeResponse.data,
-    };
-
-    yield statePut({
-      type: FETCHING_TYPE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const payload = {
-      selectedNode: {},
-    };
-
-    yield statePut({
-      type: FETCHING_TYPE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
+function getApiErrorForBadRequest(key: string, response: any): ApiError {
+  const data = GetBadResponseData(response);
+  return {
+    key,
+    errorMessage: data?.title,
+    errorData: data
+  };
 }
 
-export function* getSimpleTypes(action) {
-  try {
-    const simpleTypeslURL = process.env.REACT_APP_API_BASE_URL + "librarytype/simpletype";
-    const simpleTypesURLResponse = yield call(get, simpleTypeslURL);
-
-    const payload = {
-      simpleTypes: (simpleTypesURLResponse.data as Array<CompositeTypeResponse>).map((comp) => {
-        return { ...comp, attributes: comp.attributeTypes } as CompositeType;
-      }),
-    };
-
-    yield statePut({
-      type: FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const payload = {
-      simpleTypes: [],
-    };
-
-    yield statePut({
-      type: FETCHING_SIMPLE_TYPES_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
+function getApiErrorForException(key: string, error: any): ApiError {
+  return {
+    key,
+    errorMessage: error?.message,
+    errorData: null,
+  };
 }

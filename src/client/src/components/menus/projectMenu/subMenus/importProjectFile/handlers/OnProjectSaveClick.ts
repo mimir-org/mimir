@@ -1,4 +1,4 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../../../projectMenu/subMenus/redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { importProjectAction } from "../../../../../../redux/store/project/actions";
 import { ProjectFileAm } from "../../../../../../models";
 

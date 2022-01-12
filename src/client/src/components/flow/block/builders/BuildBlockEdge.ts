@@ -9,8 +9,10 @@ export const BuildBlockEdge = (nodes: Node[], edge: Edge, edgeType: EdgeType, se
   const targetNode = nodes.find((node) => node.id === edge.toNodeId);
   const selectedNode = GetSelectedNode();
 
-  if (ValidateBlockEdge(selectedNode, secondaryNode, edge.fromNode, edge.toNode, edge.fromConnector, edge.toConnector))
-    return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
+  if (sourceNode && targetNode) {
+    if (ValidateBlockEdge(selectedNode, secondaryNode, sourceNode, targetNode, edge.fromConnector, edge.toConnector))
+      return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
+  }
 };
 
 export default BuildBlockEdge;

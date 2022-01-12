@@ -1,4 +1,4 @@
-export { default as LegendHeader } from "./LegendHeader";
+export { default as LibHeader } from "./LibHeader";
 export { default as LibElement } from "./LibElement";
 export { default as LibBody } from "./LibBody";
 export { default as LibCategoryButton } from "./LibCategoryButton";

@@ -1,6 +1,6 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
-import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Composite, Connector, Attribute } from "../../../models";
+import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Simple, Connector, Attribute } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
 import { Dispatch } from "redux";
@@ -68,7 +68,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
-  targetNode.simples?.forEach((composite) => initComposite(composite, targetNode));
+  targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
   targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
   targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
@@ -92,12 +92,12 @@ const handleCreatePartOfEdge = (
   dispatch(createEdge(partofEdge));
 };
 
-const initComposite = (composite: Composite, targetNode: Node) => {
-  var compositeId = CreateId();
-  composite.id = compositeId;
-  composite.nodeId = targetNode.id;
-  composite.attributes.forEach((a) => {
-    a.simpleId = compositeId;
+const initSimple = (simple: Simple, targetNode: Node) => {
+  const simpleId = CreateId();
+  simple.id = simpleId;
+  simple.nodeId = targetNode.id;
+  simple.attributes.forEach((a) => {
+    a.simpleId = simpleId;
   });
 };
 

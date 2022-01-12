@@ -1,47 +1,43 @@
 import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
-import { combineReducers, createStore, compose, applyMiddleware } from "redux";
-import { libraryReducer } from "./library/reducers";
-import { typeEditorReducer } from "../../typeEditor/redux/reducers";
-import { userReducer } from "./user/reducers";
+import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
+import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
+import userReducer  from "./user/userSlice";
+import modulesReducer from "./modules/modulesSlice";
+import menuReducer from "../../components/menus/projectMenu/subMenus/redux/menuSlice";
+import flowReducer from "./flow/flowSlice";
+import electroReducer from "./electro/electroSlice";
+import commonReducer from "./common/commonSlice";
+import darkModeReducer from "./darkMode/darkModeSlice";
+import parametersReducer from "../../modules/inspector/tabs/parameters/redux/parametersSlice";
+import customCategoryReducer from "./customCategory/customCategorySlice";
+import location3DReducer from "../../modules/location/redux/location3DSlice";
+import validationReducer from "./validation/validationSlice";
+import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
+import libraryReducer from "./library/librarySlice";
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
-import { inspectorReducer } from "../../modules/inspector/redux/tabs/reducers";
-import { inspectorHeightReducer } from "../../modules/inspector/redux/height/reducers";
-import { moduleReducer } from "./modules/reducers";
-import { menuReducer } from "../../components/menus/projectMenu/subMenus/redux/reducers";
-import { commonReducer } from "./common/reducers";
-import { flowReducer } from "./flow/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
-import { darkModeReducer } from "./darkMode/reducers";
-import { parametersReducer } from "../../modules/inspector/tabs/parameters/redux/reducers";
-import { electroViewReducer } from "../store/electro/reducers";
-import { validationReducer } from "../store/validation/reducers";
 import { rootSaga } from "../sagas";
-import { customCategoryReducer } from "../store/customCategory/reducers";
-import { edgeAnimationReducer } from "../store/edgeAnimation/reducers";
-import { location3DReducer } from "../../modules/location/redux/reducers";
+import { edgeAnimationReducer } from "./edgeAnimation/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
-import { blockNodeSizeReducer } from "../../components/flow/block/redux/reducers";
-import { persistStore, persistReducer } from "redux-persist";
-
-const sagaMiddleware = createSagaMiddleware();
-const composeEnhancer = (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]) || compose;
+import { persistStore, persistReducer } from 'redux-persist'
 
 const rootReducers = combineReducers({
   library: libraryReducer,
   typeEditor: typeEditorReducer,
   inspector: inspectorReducer,
-  inspectorHeight: inspectorHeightReducer,
   userState: userReducer,
   projectState: projectReducer,
-  modules: moduleReducer,
+  modules: modulesReducer,
   menu: menuReducer,
   flow: flowReducer,
   secondaryNode: secondaryReducer,
-  electro: electroViewReducer,
+  electro: electroReducer,
   commonState: commonReducer,
   darkMode: darkModeReducer,
-  parametersReducer: parametersReducer,
+  parameters: parametersReducer,
   customCategory: customCategoryReducer,
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
@@ -57,7 +53,22 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
-const store = createStore(persistedReducer, {}, composeEnhancer(applyMiddleware(sagaMiddleware)));
+const sagaMiddleware = createSagaMiddleware();
+
+const store = configureStore({
+  reducer: persistedReducer,
+  devTools: (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      // TODO: Re-enable checks after rewrite of most reducers/actions
+      immutableCheck: false,
+      serializableCheck: false,
+      // serializableCheck: {
+      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      // },
+    }).concat(sagaMiddleware),
+});
+
 const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducers>;
