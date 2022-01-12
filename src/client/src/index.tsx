@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
 import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 
 const rootElement = document.getElementById("root");
 export const msalInstance = new PublicClientApplication(msalConfig);
@@ -28,6 +29,15 @@ msalInstance.addEventCallback((event: EventMessage) => {
     msalInstance.setActiveAccount(account);
   }
 });
+
+const appInsights = new ApplicationInsights({
+  config: {
+    connectionString: process.env.REACT_APP_APP_INSIGHTS_CONNECTION_STRING,
+  },
+});
+
+appInsights.loadAppInsights();
+appInsights.trackPageView();
 
 ReactDOM.render(
   <Provider store={red.store}>

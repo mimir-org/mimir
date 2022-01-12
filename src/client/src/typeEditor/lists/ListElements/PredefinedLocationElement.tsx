@@ -16,16 +16,16 @@ interface Props {
 
 export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect, defaultValue, onChange }: Props) => {
   const [expandList, setExpandList] = useState(false);
-  const isSelected = defaultValue.some((a) => a.key === attributeName);
+  const isSelected = defaultValue?.some((a) => a.key === attributeName);
 
-  const locationAttribute = {
+  const locationAttribute: PredefinedAttribute = {
     key: attributeName,
     values: values,
     isMultiSelect: isMultiSelect,
-  } as PredefinedAttribute;
+  };
 
   const onCheckboxChange = () => {
-    let attributes = defaultValue;
+    let attributes = [...defaultValue];
     if (isSelected) {
       attributes = attributes.filter((a) => a.key !== locationAttribute.key);
     } else {

@@ -1,6 +1,6 @@
 {
   "name": "modelbuilder",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@azure/msal-browser": "^2.15.0",
@@ -8,13 +8,14 @@
     "@emotion/core": "^10.1.1",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^10.0.3",
+    "@microsoft/applicationinsights-web": "^2.7.2",
     "@microsoft/signalr": "^5.0.11",
     "@reduxjs/toolkit": "^1.6.2",
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-dropdown": "^1.9.2",
     "react-flow-renderer": "^9.7.0",
     "react-moment": "^1.1.1",
@@ -40,6 +41,7 @@
     "build:stage": "env-cmd -f .env.stage react-scripts build",
     "build:prod": "env-cmd -f .env.prod react-scripts build",
     "test": "react-scripts test",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -63,20 +65,21 @@
     ]
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0",
-    "node-sass": "^6.0.1",
-    "react-scripts": "^4.0.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
-    "@types/react-router-dom": "^5.1.7",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.25",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.16",
     "@types/react-router": "^5.1.11",
+    "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.15",
+    "env-cmd": "^10.1.0",
+    "node-sass": "^6.0.1",
+    "react-scripts": "^4.0.3",
+    "source-map-explorer": "^2.5.2",
     "typescript": "^4.5.0"
   }
 }
