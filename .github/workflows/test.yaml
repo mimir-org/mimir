@@ -15,7 +15,7 @@ jobs:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
-      tag: test
+      tags: test
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
@@ -32,7 +32,7 @@ jobs:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-server
-      tag: test
+      tags: test
       context: ./src/service
       file: ./src/service/Dockerfile
       target: final
