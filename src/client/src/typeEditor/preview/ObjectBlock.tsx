@@ -13,7 +13,7 @@ interface Props {
 }
 /**
  * Component to show an object block with input output terminals
- * @param param0
+ * @param params
  * @returns the visual block in Type Preview Info
  */
 export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outputTerminals, symbol }: Props) => {
@@ -40,14 +40,14 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
         {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
         {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
-      <InfoWrapper height={'100%'}>
+      <InfoWrapper height={"100%"}>
         <InfoText>{rdsLabel}</InfoText>
         <InfoText>{createLibraryType.name}</InfoText>
-        {symbol &&
+        {symbol && (
           <InfoSymbolWrapper>
             <Symbol base64={symbol.data} text={symbol.name} />
           </InfoSymbolWrapper>
-        }
+        )}
       </InfoWrapper>
     </PreviewObjectBlock>
   );
