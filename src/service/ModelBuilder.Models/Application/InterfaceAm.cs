@@ -1,4 +1,4 @@
-﻿using Mb.Models.Extensions;
+using Mb.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,7 +29,7 @@ namespace Mb.Models.Application
         public string OutputTerminalId { get; set; }
         public TerminalAm OutputTerminal { get; set; }
         public ICollection<Attribute> Attributes { get; set; }
-        
+
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }

@@ -1,4 +1,4 @@
-﻿using Mb.Models.Data;
+using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -26,7 +26,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired();
             builder.Property(p => p.Created).HasColumnName("Created").IsRequired();
             builder.Property(p => p.LibraryTypeId).HasColumnName("LibraryTypeId").IsRequired();
-            
+
             builder.HasOne(x => x.OutputTerminal).WithMany(y => y.OutputInterfaces).HasForeignKey(x => x.OutputTerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.InputTerminal).WithMany(y => y.InputInterfaces).HasForeignKey(x => x.InputTerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Status).WithMany(y => y.Interfaces).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);

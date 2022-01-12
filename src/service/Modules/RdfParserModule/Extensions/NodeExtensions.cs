@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 using Mb.Data.Contracts;
 using Mb.Models.Data;

@@ -1,4 +1,4 @@
-﻿using Mb.Models.Extensions;
+using Mb.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

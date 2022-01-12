@@ -1,4 +1,4 @@
-﻿namespace Mb.Models.Const
+namespace Mb.Models.Const
 {
     public static class WebSocketReceiver
     {

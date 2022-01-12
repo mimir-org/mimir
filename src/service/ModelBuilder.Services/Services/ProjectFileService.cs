@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -86,7 +86,7 @@ namespace Mb.Services.Services
                 var projectResult = await _projectService.UpdateProject(project.Id, project, _commonRepository.GetDomain());
                 return projectResult.Project;
             }
-            
+
             return await _projectService.CreateProject(project);
         }
 
@@ -103,7 +103,7 @@ namespace Mb.Services.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-            return await ImportProject(new ProjectFileAm {ParserId = id, FileContent = fileContent});
+            return await ImportProject(new ProjectFileAm { ParserId = id, FileContent = fileContent });
         }
 
         /// <summary>
@@ -116,11 +116,11 @@ namespace Mb.Services.Services
         public async Task<ProjectFileAm> ConvertProject(ProjectConverterAm projectConverter)
         {
             var par = _moduleService.Resolve<IModelBuilderParser>(projectConverter.ParserId);
-            if(par == null)
+            if (par == null)
                 throw new ModelBuilderInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
             var projectResult = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
-            if(projectResult?.Project == null)
+            if (projectResult?.Project == null)
                 throw new ModelBuilderNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
             var bytes = await par.SerializeProject(projectResult.Project);

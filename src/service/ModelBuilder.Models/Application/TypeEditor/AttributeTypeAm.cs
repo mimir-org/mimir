@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Mb.Models.Data.Enums;
@@ -14,7 +14,7 @@ namespace Mb.Models.Application.TypeEditor
 
         [Required]
         public string QualifierId { get; set; }
-        
+
         [Required]
         public string SourceId { get; set; }
 
@@ -22,7 +22,7 @@ namespace Mb.Models.Application.TypeEditor
         public string ConditionId { get; set; }
 
         public ICollection<string> Units { get; set; }
-        
+
         public ICollection<string> SelectValues { get; set; }
 
         [Required]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Application;
@@ -104,7 +104,7 @@ namespace Mb.Core.Controllers.V1
             {
                 var data = await _projectService.GetProject(id);
 
-                if(data is { IsSubProject: false }) 
+                if (data is { IsSubProject: false })
                     return BadRequest("This is not a subProject");
 
                 return Ok(data);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using AzureActiveDirectoryModule.Models;
 using Mb.Models.Const;

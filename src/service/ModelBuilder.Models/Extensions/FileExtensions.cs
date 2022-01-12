@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -22,7 +22,7 @@ namespace Mb.Models.Extensions
 
         }
 
-        public static T Deserialize<T>(this byte[] value) where T: class, new()
+        public static T Deserialize<T>(this byte[] value) where T : class, new()
         {
             if (value == null)
                 throw new ModelBuilderNullReferenceException("The file byte array is null");

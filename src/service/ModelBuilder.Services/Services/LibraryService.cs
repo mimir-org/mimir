@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -34,7 +34,7 @@ namespace Mb.Services.Services
             var transports = await _libraryRepository.GetTransportTypes(searchString);
             var interfaces = await _libraryRepository.GetInterfaceTypes(searchString);
             var subProjects = await GetSubProjects(searchString);
-            
+
             var library = new Library
             {
                 ObjectBlocks = objectBlocks.ToList(),

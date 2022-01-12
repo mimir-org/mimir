@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +19,12 @@ namespace EventHubModule.Services
             _eventHubConfiguration = eventHubConfiguration?.Value;
         }
 
-        public async Task SendDataAsync<T>(List<T> data) where T: class
+        public async Task SendDataAsync<T>(List<T> data) where T : class
         {
             if (_eventHubConfiguration == null || !_eventHubConfiguration.HasValidProducerConfiguration())
                 return;
 
-            if(data == null || !data.Any())
+            if (data == null || !data.Any())
                 return;
 
             await using var producer = new EventHubProducerClient(_eventHubConfiguration?.ProducerConnectionString, _eventHubConfiguration?.ProducerEventHubName);
@@ -34,7 +34,7 @@ namespace EventHubModule.Services
                 var eventData = CreateEventData(item);
                 eventBatch.TryAdd(eventData);
             }
-            
+
             await producer.SendAsync(eventBatch);
         }
 

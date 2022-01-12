@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Models.Data.Enums;
@@ -18,7 +18,7 @@ namespace Mb.Models.Extensions
                 PopulateEnumTypes();
             }
 
-            return EnumTypes.TryGetValue((int)enumType, out var value) ? value : typeof(EnumBase);
+            return EnumTypes.TryGetValue((int) enumType, out var value) ? value : typeof(EnumBase);
         }
 
         private static void PopulateEnumTypes()

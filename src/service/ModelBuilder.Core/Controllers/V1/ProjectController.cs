@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -162,7 +162,7 @@ namespace Mb.Core.Controllers.V1
             catch (ModelBuilderBadRequestException e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                
+
                 foreach (var error in e.Errors().ToList())
                 {
                     ModelState.Remove(error.Key);
@@ -216,7 +216,7 @@ namespace Mb.Core.Controllers.V1
 
                 return BadRequest(ModelState);
             }
-            
+
             catch (Exception e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");

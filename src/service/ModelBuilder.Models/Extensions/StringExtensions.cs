@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -126,12 +126,12 @@ namespace Mb.Models.Extensions
                 return versionStringSplit.Length == 2 ? newVersion : newVersion + "." + versionStringSplit[2];
             }
 
-            if (!incrementCommit || versionStringSplit.Length != 3) 
+            if (!incrementCommit || versionStringSplit.Length != 3)
                 return version;
 
             versionNumber = Convert.ToInt32(versionStringSplit[2]) + incrementStep;
             newVersion = versionStringSplit[0] + "." + versionStringSplit[1] + "." + versionNumber;
-            
+
             return newVersion;
         }
 

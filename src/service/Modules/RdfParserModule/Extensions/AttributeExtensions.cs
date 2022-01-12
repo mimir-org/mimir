@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
@@ -38,14 +38,14 @@ namespace RdfParserModule.Extensions
 
         public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
         {
-            if(string.IsNullOrEmpty(attribute?.Value))
+            if (string.IsNullOrEmpty(attribute?.Value))
                 return;
 
             var selectedUnit = attribute.GetSelectedUnit(libRepository);
             var allowedUnits = attribute.GetAllowedUnits();
 
             // Asserts
-            if(!string.IsNullOrEmpty(selectedUnit?.Name))
+            if (!string.IsNullOrEmpty(selectedUnit?.Name))
                 ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumValue", ontologyService.CreateLiteralNode(attribute.Value, new Uri(ontologyService.BuildIri("xsd", selectedUnit.Name))));
             else
                 ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumValue", attribute.Value);

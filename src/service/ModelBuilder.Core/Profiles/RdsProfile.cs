@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Extensions;

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
@@ -18,12 +18,12 @@ namespace Mb.Models.Data.TypeEditor
 
         public string SourceId { get; set; }
         public AttributeSource Source { get; set; }
-        
+
         public string ConditionId { get; set; }
         public AttributeCondition Condition { get; set; }
-        
+
         public ICollection<Unit> Units { get; set; }
-        
+
         public string FormatId { get; set; }
         public AttributeFormat Format { get; set; }
 

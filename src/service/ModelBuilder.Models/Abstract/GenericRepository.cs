@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -92,7 +92,7 @@ namespace Mb.Models.Abstract
 
         public void Attach(ICollection<TEntity> entities, EntityState state)
         {
-            if(entities == null || !entities.Any())
+            if (entities == null || !entities.Any())
                 return;
 
             foreach (var entity in entities)

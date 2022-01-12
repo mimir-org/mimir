@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text;
 using Mb.Data.Contracts;
@@ -63,7 +63,7 @@ namespace RdfParserModule.Services
         /// <param name="uri"></param>
         public void SetBaseUri(Uri uri)
         {
-            if(uri == null)
+            if (uri == null)
                 return;
 
             _ontologyRepository.Graph.BaseUri = uri;

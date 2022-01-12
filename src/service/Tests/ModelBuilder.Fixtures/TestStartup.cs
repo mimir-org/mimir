@@ -1,4 +1,4 @@
-﻿using Mb.Api;
+using Mb.Api;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ namespace ModelBuilder.Fixtures
     {
         public ServiceProvider ServiceProvider;
 
-        public TestStartup(IConfiguration configuration): base(configuration)
+        public TestStartup(IConfiguration configuration) : base(configuration)
         {
 
         }

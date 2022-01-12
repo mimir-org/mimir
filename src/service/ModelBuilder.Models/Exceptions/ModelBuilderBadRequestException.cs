@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Models.Application;
@@ -29,17 +29,17 @@ namespace Mb.Models.Exceptions
             if (_validation.IsValid)
                 yield break;
 
-            if(_validation.Result == null || !_validation.Result.Any())
+            if (_validation.Result == null || !_validation.Result.Any())
                 yield break;
 
             foreach (var result in _validation.Result)
             {
-                if(result == null || string.IsNullOrEmpty(result.ErrorMessage) || !result.MemberNames.Any())
+                if (result == null || string.IsNullOrEmpty(result.ErrorMessage) || !result.MemberNames.Any())
                     continue;
 
                 foreach (var name in result.MemberNames)
                 {
-                    if(string.IsNullOrEmpty(name))
+                    if (string.IsNullOrEmpty(name))
                         continue;
 
                     yield return new ModelBuilderBadRequest

@@ -1,4 +1,4 @@
-﻿namespace Mb.Models.Enums
+namespace Mb.Models.Enums
 {
     public enum ConnectorType
     {

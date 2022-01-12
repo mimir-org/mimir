@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
@@ -53,7 +53,7 @@ namespace Mb.Data.Repositories
         public string GetDomain()
         {
             Init();
-            if(_currentCollaborationPartner == null)
+            if (_currentCollaborationPartner == null)
                 throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
 
             return _currentCollaborationPartner.Domain;
@@ -97,6 +97,7 @@ namespace Mb.Data.Repositories
                 return (ResolveId(iri), iri);
 
             var newId = CreateId();
+
             return (newId, ResolveIri(newId));
         }
 
@@ -109,7 +110,7 @@ namespace Mb.Data.Repositories
         /// </summary>
         private void Init()
         {
-            if(_collaborationPartners != null && _collaborationPartners.Any() && _currentCollaborationPartner != null)
+            if (_collaborationPartners != null && _collaborationPartners.Any() && _currentCollaborationPartner != null)
                 return;
 
             _collaborationPartners = _collaborationPartnerRepository?.GetAll()?.ToList();
@@ -136,9 +137,7 @@ namespace Mb.Data.Repositories
             if (collaborationPartner == null)
                 return null;
 
-            var idPart = string.IsNullOrEmpty(iriParsed.Fragment) ?
-                iriParsed.Segments.Last() :
-                iriParsed.Fragment[1..];
+            var idPart = string.IsNullOrEmpty(iriParsed.Fragment) ? iriParsed.Segments.Last() : iriParsed.Fragment[1..];
 
             return $"{collaborationPartner.Domain}_{idPart}";
         }
@@ -156,7 +155,7 @@ namespace Mb.Data.Repositories
                 throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
 
             var iri = _currentCollaborationPartner.Iris?.FirstOrDefault();
-            if(iri == null)
+            if (iri == null)
                 throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner default iri");
 
             if (iri.StartsWith("http"))
@@ -180,7 +179,7 @@ namespace Mb.Data.Repositories
                 return id;
 
             var lastSegment = split[^1];
-            return string.IsNullOrEmpty(lastSegment) ? id : lastSegment.Replace("ID","").Trim();
+            return string.IsNullOrEmpty(lastSegment) ? id : lastSegment.Replace("ID", "").Trim();
         }
 
         #endregion

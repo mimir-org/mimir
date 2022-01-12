@@ -1,4 +1,4 @@
-﻿namespace AzureActiveDirectoryModule.Models
+namespace AzureActiveDirectoryModule.Models
 {
     public class SwaggerContact
     {
