@@ -1,6 +1,6 @@
 import { Connector } from "../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
-import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { IsInputTerminal, IsPartOf } from "../../helpers";
 
 /**
  * Function to give a handle/terminal a position and type.
@@ -9,13 +9,11 @@ import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } 
  * @returns a tuple with type and position.
  */
 const GetBlockHandleType = (conn: Connector, electro: boolean): [HandleType, Position] => {
-  if (electro || IsPartOf(conn)) {
-    if (IsInputTerminal(conn)) return ["target", Position.Top];
-    if (IsOutputTerminal(conn)) return ["source", Position.Bottom];
-  }
+  const sourcePosition = electro || IsPartOf(conn) ? Position.Bottom : Position.Right;
+  const targetPosition = electro || IsPartOf(conn) ? Position.Top : Position.Left;
 
-  if (IsInputTerminal(conn) || IsBidirectionalTerminal(conn)) return ["target", Position.Left];
-  if (IsOutputTerminal(conn) || IsBidirectionalTerminal(conn)) return ["source", Position.Right];
+  if (IsInputTerminal(conn) || conn.isBidirectionalInput) return ["target", targetPosition];
+  return ["source", sourcePosition];
 };
 
 export default GetBlockHandleType;

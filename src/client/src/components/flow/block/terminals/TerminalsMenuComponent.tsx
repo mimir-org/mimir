@@ -13,7 +13,7 @@ interface Props {
   setShowInputMenu: any;
   setShowOutputMenu: any;
   electro: boolean;
-  onClick: (conn: Connector) => void;
+  onClick: (conn: Connector, isInput: boolean) => void;
   isParent?: boolean;
   showMenuButton?: boolean;
 }

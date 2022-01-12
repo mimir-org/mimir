@@ -355,7 +355,8 @@ export function changeActiveConnector(
   connectorId: string,
   visible: boolean,
   inputOrder: number,
-  outputOrder: number
+  outputOrder: number,
+  isBidirectionalInput?: boolean
 ): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
@@ -365,6 +366,7 @@ export function changeActiveConnector(
       visible,
       inputOrder,
       outputOrder,
+      isBidirectionalInput,
     },
   };
 }

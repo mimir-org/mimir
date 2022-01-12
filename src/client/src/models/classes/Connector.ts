@@ -24,6 +24,7 @@ class Connector {
   // Only client
   inputOrder: number;
   outputOrder: number;
+  isBidirectionalInput: boolean;
 
   // Relation
   relationType: RelationType;

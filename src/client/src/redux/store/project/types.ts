@@ -350,6 +350,7 @@ export interface ChangeActiveConnector {
     visible: boolean;
     inputOrder: number;
     outputOrder: number;
+    isBidirectionalInput?: boolean;
   };
 }
 export interface ExportProjectFileAction {

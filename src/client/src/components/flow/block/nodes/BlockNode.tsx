@@ -77,7 +77,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         setShowInputMenu={setShowInputMenu}
         setShowOutputMenu={setShowOutputMenu}
         electro={electro}
-        onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
+        onClick={(conn, isInput) => OnTerminalClick(conn, isInput, node, dispatch, edges)}
         showMenuButton={showMenuButton}
       />
       {hasActiveTerminals && (

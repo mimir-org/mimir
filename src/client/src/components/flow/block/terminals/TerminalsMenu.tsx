@@ -14,7 +14,7 @@ interface Props {
   terminals: Connector[];
   electro: boolean;
   hasActiveTerminals: boolean;
-  onClick: (conn: Connector) => void;
+  onClick: (conn: Connector, isInput: boolean) => void;
   onBlur: () => void;
 }
 
@@ -35,7 +35,7 @@ const TerminalsMenu = ({ node, size, isParent, isInput, terminals, electro, hasA
   >
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>
-        <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
+        <Checkbox isChecked={conn.visible} onChange={() => onClick(conn, isInput)} color={Color.GreyDark} id={conn.id} />
         <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
       </TerminalsElement>
     ))}

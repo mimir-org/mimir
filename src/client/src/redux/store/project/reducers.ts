@@ -590,6 +590,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                           visible: action.payload.visible,
                           inputOrder: action.payload.inputOrder,
                           outputOrder: action.payload.outputOrder,
+                          isBidirectionalInput: action.payload?.isBidirectionalInput,
                         }
                       : conn
                   ),

@@ -44,15 +44,15 @@ const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, o
         if (conn.visible) {
           const [type, pos] = GetBlockHandleType(conn, electro);
           const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
-          const topPos = SetTerminalYPos(conn, pos, electro, isParent, order, size.height);
-          const leftPos = SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width);
+          const yPos = SetTerminalYPos(conn, pos, electro, isParent, order, size.height);
+          const xPos = SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width);
 
           return (
             <HandleBox
               visible={visible && conn.visible && !IsPartOf(conn)}
               id={"handle-" + conn.id}
-              top={topPos}
-              left={leftPos}
+              yPos={yPos}
+              xPos={xPos}
               key={conn.id}
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
