@@ -1,6 +1,6 @@
 {
   "name": "modelbuilder",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@azure/msal-browser": "^2.15.0",
@@ -15,7 +15,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.1",
+    "react-dom": "^17.0.2",
     "react-dropdown": "^1.9.2",
     "react-flow-renderer": "^9.7.0",
     "react-moment": "^1.1.1",
