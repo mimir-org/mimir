@@ -66,9 +66,8 @@ class WebSocket {
           this._connection.on("ReceiveLockNodeData", this.handleReceiveLockNodeData);
           this._connection.on("ReceiveLockEdgeData", this.handleReceiveLockEdgeData);
         })
-        .catch((e: unknown) => {
-          console.error(e);
-        });
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        .catch((_e: unknown) => {});
     }
   }
 
