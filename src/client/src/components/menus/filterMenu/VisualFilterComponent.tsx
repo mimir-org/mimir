@@ -36,7 +36,7 @@ const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
     <FilterMenuBox libraryOpen={libOpen}>
       <Header>{TextResources.Filter_Heading}</Header>
       <MenuColumn>
-        <AnimationFilter edges={edges} edgeAnimation={edgeAnimation} dispatch={dispatch} />
+        <AnimationFilter edgeAnimation={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter edges={edges} nodes={nodes} items={partOfItems} dispatch={dispatch} visible={!!partOfItems.length} />
         <RelationFilter edges={edges} items={relationItems} dispatch={dispatch} visible={!!relationItems.length} />
         <TransportFilter edges={edges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />

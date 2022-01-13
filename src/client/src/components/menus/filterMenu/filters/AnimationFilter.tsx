@@ -1,11 +1,9 @@
 import { Dispatch } from "redux";
 import { FilterElement } from "../";
 import { TextResources } from "../../../../assets/text";
-import { Edge } from "../../../../models";
-import { OnEdgeAnimationChange } from "../handlers";
+import { toggleEdgeAnimation } from "../../../../redux/store/edgeAnimation/edgeAnimationSlice";
 
 interface Props {
-  edges: Edge[];
   edgeAnimation: boolean;
   dispatch: Dispatch;
 }
@@ -15,10 +13,10 @@ interface Props {
  * @param interface
  * @returns a checkbox to toggle Edge animation on/off.
  */
-const AnimationFilter = ({ edges, edgeAnimation, dispatch }: Props) => (
+const AnimationFilter = ({ edgeAnimation, dispatch }: Props) => (
   <FilterElement
     label={TextResources.Filter_Edge_Animation}
-    onChange={() => OnEdgeAnimationChange(edges, dispatch, edgeAnimation)}
+    onChange={() => dispatch(toggleEdgeAnimation())}
     isChecked={edgeAnimation}
     visible={true}
   />

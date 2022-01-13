@@ -42,9 +42,6 @@ class Edge {
 
   kind: string = EDGE_KIND;
 
-  // Only client
-  animated: boolean | false;
-
   constructor(edge: Edge) {
     Object.assign(this, edge);
   }

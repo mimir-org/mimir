@@ -138,13 +138,6 @@ export function setEdgeVisibility(edge: Edge, isHidden: boolean): Types.ProjectA
   };
 }
 
-export function setEdgeAnimation(edge: Edge, animated: boolean): Types.ProjectActionTypes {
-  return {
-    type: Types.SET_EDGE_ANIMATION,
-    payload: { edge, animated },
-  };
-}
-
 export function setLocationNodeSize(nodeId: string, key: string, value: number): Types.ProjectActionTypes {
   return {
     type: Types.SET_LOCATION_NODE_SIZE,
