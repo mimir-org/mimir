@@ -20,7 +20,6 @@ export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const SET_NODE_VISIBILITY = "SET_NODE_VISIBILITY";
 export const SET_EDGE_VISIBILITY = "SET_EDGE_VISIBILITY";
-export const SET_EDGE_ANIMATION = "SET_EDGE_ANIMATION";
 export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
 export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
 export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
@@ -165,14 +164,6 @@ export interface SetEdgeVisibility {
   payload: {
     edge: Edge;
     isHidden: boolean;
-  };
-}
-
-export interface SetEdgeAnimation {
-  type: typeof SET_EDGE_ANIMATION;
-  payload: {
-    edge: Edge;
-    animated: boolean;
   };
 }
 
@@ -592,7 +583,6 @@ export type ProjectActionTypes =
   | UpdatePositionAction
   | SetNodeVisibility
   | SetEdgeVisibility
-  | SetEdgeAnimation
   | SetActiveNode
   | SetActiveEdge
   | SetActiveBlockNode

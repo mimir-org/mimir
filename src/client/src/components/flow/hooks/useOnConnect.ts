@@ -42,7 +42,7 @@ const useOnConnect = (
   if (IsPartOf(sourceConn) && IsPartOf(targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
 
   if (!existingEdge) {
-    currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library, animatedEdge);
+    currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
     dispatch(createEdge(currentEdge));
   } else currentEdge = existingEdge;
 
@@ -108,7 +108,7 @@ function HandleOffPage(
     (x) => x.toConnector.nodeId === targetParent.id && IsTransport(x.toConnector) && x.fromConnector.nodeId === targetNode.id
   ).toConnector;
 
-  const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, library, animatedEdge);
+  const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, library);
   dispatch(createEdge(edge));
 
   project.edges.forEach((x) => {
