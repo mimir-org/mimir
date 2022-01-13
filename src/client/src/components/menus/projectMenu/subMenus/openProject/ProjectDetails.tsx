@@ -19,7 +19,7 @@ interface Props {
  * @param interface
  * @returns the left column of the open project menu: a searchbar and projectslist
  */
-export const ProjectDetails = ({ projects, projectDescription, dispatch }: Props) => (
+export const ProjectDetails = ({ projects, dispatch }: Props) => (
   <ProjectDetailsBox>
     <SearchProject>
       <SearchBar />
@@ -30,7 +30,7 @@ export const ProjectDetails = ({ projects, projectDescription, dispatch }: Props
         <Button onClick={() => Click.OnCreate(dispatch)} text={TextResources.Project_Start_Label} icon={CreateProjectIcon} />
         <Button onClick={() => Click.OnImportProject(dispatch)} text={TextResources.Project_Import} icon={ImportProjectIcon} />
       </ProjectOptionsButtons>
-      <ProjectDescription description={projectDescription} />
+      <ProjectDescription />
     </RightContainer>
   </ProjectDetailsBox>
 );
