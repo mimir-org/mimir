@@ -1,6 +1,6 @@
 import { MODULE_TYPE } from "../../../models/project";
-import { ModulesState, ModuleState, ModulesVisibility } from "./types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ModuleState, ModulesState, ModulesVisibility } from "./types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialModuleState: ModulesState = {
   types: [

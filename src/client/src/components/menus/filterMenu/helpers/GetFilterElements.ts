@@ -1,5 +1,5 @@
 import { IsOffPage } from "../../../../helpers";
-import { Node, Edge, EDGE_KIND } from "../../../../models";
+import { EDGE_KIND, Edge, Node } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 
 const GetFilterElements = (elements: any[]) => {

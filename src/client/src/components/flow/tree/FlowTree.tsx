@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import ReactFlow, { Elements, Background, OnLoadParams } from "react-flow-renderer";
+import ReactFlow, { Background, Elements, OnLoadParams, Edge as FlowEdge, Connection } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu";
 import { TreeConnectionLine } from "./edges";
-import { handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
+import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
 import { Size } from "../../../compLibrary/size";
@@ -55,11 +55,11 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     [project, animatedEdge, dispatch]
   );
 
-  const OnConnect = (params) => {
-    const fromNode = project.nodes.find((x) => x.id === params.source);
-    const fromConnector = fromNode.connectors.find((x) => x.id === params.sourceHandle);
+  const OnConnect = (connection: FlowEdge | Connection) => {
+    const fromNode = project.nodes.find((x) => x.id === connection.source);
+    const fromConnector = fromNode.connectors.find((x) => x.id === connection.sourceHandle);
     const edgeType = helpers.GetEdgeType(fromConnector);
-    return useOnConnect(params, project, setElements, dispatch, edgeType, library, animatedEdge);
+    return useOnConnect(connection, project, setElements, dispatch, edgeType, library, animatedEdge);
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {

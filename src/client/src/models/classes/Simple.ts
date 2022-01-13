@@ -1,6 +1,6 @@
 import { Attribute } from "..";
 
-export const SIMPLE_KIND: string = "Simple";
+export const SIMPLE_KIND = "Simple";
 
 class Simple {
   id: string;

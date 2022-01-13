@@ -1,4 +1,5 @@
-import { Edge, Node, EDGE_KIND, Connector } from "../../../../models";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Connector, EDGE_KIND, Edge, Node } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { IsTransport } from "../../../flow/helpers";
 

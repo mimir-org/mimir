@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
-import ReactFlow, { Elements } from "react-flow-renderer";
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection } from "react-flow-renderer";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreenComponent } from "../../fullscreen";
 import { GetBlockEdgeTypes } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
@@ -14,7 +14,7 @@ import { BlockConnectionLine } from "./edges";
 import { Size } from "../../../compLibrary/size";
 import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
-import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNodeSelect, handleNoSelect } from "../handlers";
+import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Project } from "../../../models";
@@ -63,7 +63,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
   };
 
-  const OnConnect = (params) => {
+  const OnConnect = (params: FlowEdge | Connection) => {
     return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, library, animatedEdge);
   };
 
@@ -71,16 +71,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
   };
 
-  const OnConnectStop = (e) => {
+  const OnConnectStop = (e: MouseEvent) => {
     return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, dispatch);
   };
 
-  const OnDragOver = (event) => {
+  const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event, activeNode) => {
+  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 

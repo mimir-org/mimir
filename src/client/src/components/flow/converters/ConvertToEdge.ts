@@ -1,6 +1,6 @@
 import { Connector, Edge, Node } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
-import { ConvertToTransport, ConvertToInterface } from ".";
+import { ConvertToInterface, ConvertToTransport } from ".";
 import { IsTransport } from "../helpers";
 
 /**

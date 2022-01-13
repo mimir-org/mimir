@@ -2,7 +2,7 @@ import { WarningIcon } from "../../assets/icons/common";
 import { TextResources } from "../../assets/text";
 import { Button } from "../buttons";
 import { Color } from "../colors";
-import { NotificationBox, WarningBox, ButtonBox } from "./styled";
+import { ButtonBox, NotificationBox, WarningBox } from "./styled";
 
 interface Props {
   message: string;

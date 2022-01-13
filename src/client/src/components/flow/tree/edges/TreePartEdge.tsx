@@ -1,4 +1,4 @@
-import { getSmoothStepPath } from "react-flow-renderer";
+import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType } from "../../../../models";
 import { GetEdgeStyle } from "../../helpers";
@@ -8,7 +8,7 @@ import { GetEdgeStyle } from "../../helpers";
  * @param params
  * @returns a vertical edge between nodes of the same Aspect.
  */
-const TreePartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
+const TreePartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
   const color = GetAspectColor(data.edge.fromNode, AspectColorType.Main);
   const style = GetEdgeStyle(color, !data.edge.isHidden);
 

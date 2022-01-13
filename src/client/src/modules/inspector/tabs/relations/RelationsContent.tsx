@@ -1,4 +1,4 @@
-import { Node, Connector, Edge } from "../../../../models";
+import { Connector, Edge, Node } from "../../../../models";
 import { ListElement } from "../../styled";
 import { RelationsColumn, RelationsHeader, TerminalList } from "./styled";
 

@@ -7,7 +7,7 @@ const GetLocationTypes = (locations: LocationType[]): DropDownCategoryItem<Locat
 
   locations.forEach((category) => {
     const cat = { id: category.id, name: category.name, description: category.name, image: null, items: [] };
-    category?.locationSubTypes.forEach((element, index) => {
+    category?.locationSubTypes.forEach((element) => {
       cat.items.push({
         id: element.id,
         name: element.name,

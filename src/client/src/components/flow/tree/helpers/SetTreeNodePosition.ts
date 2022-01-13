@@ -1,7 +1,7 @@
 import { IsAspectNode } from "../../../../helpers";
 import { Node } from "../../../../models";
 
-const SetTreeNodePosition = (node: Node, parentNode: Node) => {
+const SetTreeNodePosition = (node: Node, _parentNode: Node) => {
   const defaultAspectPosY = 100;
   if (IsAspectNode(node)) return { x: node.positionX, y: defaultAspectPosY };
 

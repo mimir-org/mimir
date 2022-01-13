@@ -1,7 +1,7 @@
-import { CreateLibraryType, BlobData } from "../../models";
+import { BlobData, CreateLibraryType } from "../../models";
 
 const GetSelectedIcon = (createLibraryType: CreateLibraryType, icon: BlobData[]): BlobData => {
-  let selectedIcon: BlobData = icon.find((i) => i.id === createLibraryType?.symbolId);
+  const selectedIcon: BlobData = icon.find((i) => i.id === createLibraryType?.symbolId);
   return selectedIcon;
 };
 

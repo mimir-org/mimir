@@ -1,6 +1,6 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
-import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Simple, Connector, Attribute } from "../../../models";
+import { Attribute, BlobData, Connector, LibItem, LibrarySubProjectItem, Node, Project, Simple, User } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
 import { Dispatch } from "redux";

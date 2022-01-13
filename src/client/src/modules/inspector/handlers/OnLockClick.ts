@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../helpers";
 import { LockNodeAm, Project } from "../../../models";
 import { lockEdge, lockNode, setIsLockedEdge, setIsLockedNode } from "../../../redux/store/project/actions";
-import { IsNode, IsEdge } from "../helpers/IsType";
+import { IsEdge, IsNode } from "../helpers/IsType";
 import { InspectorElement } from "../types";
 
 const OnLockClick = (element: InspectorElement, project: Project, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {

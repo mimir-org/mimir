@@ -1,6 +1,6 @@
 import * as selectors from "./helpers/selectors";
 import { Node } from "../../models";
-import { TreeAspectComponent, BlockAspectComponent } from "./aspectComponent/";
+import { BlockAspectComponent, TreeAspectComponent } from "./aspectComponent/";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";

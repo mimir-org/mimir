@@ -1,4 +1,4 @@
-import { ViewType, VIEW_TYPE } from "../../../../../../models/project/project";
+import { VIEW_TYPE, ViewType } from "../../../../../../models/project/project";
 import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { Dispatch } from "redux";
 import { changeFlowView } from "../../../../../../redux/store/flow/flowSlice";

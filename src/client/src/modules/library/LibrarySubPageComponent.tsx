@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LibrarySubProjectItem } from "../../models";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
+import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
 import { LibCategoryButton, LibCategoryHeader, LibElement } from "./styled";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   subProjects?: LibrarySubProjectItem[];
 }
 
-const LibrarySubPageComponent = ({ dispatch, subProjects }: Props) => {
+const LibrarySubPageComponent = ({ subProjects }: Props) => {
   const [expanded, setExpanded] = useState(false);
   const expandIcon = expanded ? ExpandIcon : CollapseIcon;
 
@@ -21,7 +21,7 @@ const LibrarySubPageComponent = ({ dispatch, subProjects }: Props) => {
     <>
       <LibCategoryButton onClick={() => setExpanded(!expanded)}>
         <LibCategoryHeader>Sub projects</LibCategoryHeader>
-        <img className="expandIcon" src={expandIcon} alt="expand-icon"/>
+        <img className="expandIcon" src={expandIcon} alt="expand-icon" />
       </LibCategoryButton>
       {expanded &&
         subProjects?.map((node) => {

@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { FilterElement } from "../";
 import { TextResources } from "../../../../assets/text";
 import { Connector, Edge, Node } from "../../../../models";
@@ -7,7 +8,7 @@ interface Props {
   edges: Edge[];
   nodes: Node[];
   items: Connector[];
-  dispatch: any;
+  dispatch: Dispatch;
   visible: boolean;
 }
 

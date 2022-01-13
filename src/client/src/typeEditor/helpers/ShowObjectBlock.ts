@@ -1,6 +1,6 @@
 import { ListType } from "../TypeEditorList";
 import { CreateLibraryType } from "../../models";
-import { IsFunction, IsProduct, IsObjectBlock } from ".";
+import { IsFunction, IsObjectBlock, IsProduct } from ".";
 
 const ShowObjectBlock = (listType: ListType, createLibraryType: CreateLibraryType): boolean => {
   return (

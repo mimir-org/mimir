@@ -1,11 +1,11 @@
 import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../compLibrary/list";
-import { PreviewArea, InfoWrapper, InfoText } from "../styled";
+import { InfoText, InfoWrapper, PreviewArea } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
 import { TextResources } from "../../assets/text";
-import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";
-import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface } from "../helpers";
+import { InterfaceIcon, TransportIcon } from "../../assets/icons/type";
+import { IsFunction, IsInterface, IsLocation, IsObjectBlock, IsProduct, IsTransport } from "../helpers";
 
 interface Props {
   createLibraryType: CreateLibraryType;

@@ -1,15 +1,15 @@
 import { CreateLibraryType } from "../../models";
 import {
   IsAspectSelectionInvalid,
+  IsAttributeTypesSelectionInvalid,
   IsLocationSelectionInvalid,
   IsObjectSelectionInvalid,
-  IsPurposeSelectionInvalid,
-  IsSymbolSelectionInvalid,
-  IsTypeNameInvalid,
-  IsRdsSelectionInvalid,
-  IsTerminalTypesSelectionInvalid,
-  IsAttributeTypesSelectionInvalid,
   IsPredefinedAttributesSelectionInvalid,
+  IsPurposeSelectionInvalid,
+  IsRdsSelectionInvalid,
+  IsSymbolSelectionInvalid,
+  IsTerminalTypesSelectionInvalid,
+  IsTypeNameInvalid,
 } from "../validators";
 
 export function IsTypeEditorSubmissionValid(createLibraryType: CreateLibraryType): boolean {

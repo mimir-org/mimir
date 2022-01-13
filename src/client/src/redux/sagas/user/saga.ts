@@ -1,4 +1,4 @@
-import { put, call } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { User } from "../../../models";
 import { ApiError, get } from "../../../models/webclient";
 import { fetchUserSuccessOrError } from "../../store/user/userSlice";

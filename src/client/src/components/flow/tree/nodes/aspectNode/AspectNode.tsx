@@ -1,5 +1,5 @@
-import { memo, FC, useState, useEffect } from "react";
-import { NodeProps, Handle } from "react-flow-renderer";
+import { FC, memo, useEffect, useState } from "react";
+import { Handle, NodeProps } from "react-flow-renderer";
 import { TreeHandleBox } from "../treeNode/styled";
 import { AspectColorType, Connector, Node } from "../../../../../models";
 import { GetFlowAspectIcon, GetHandleType } from "../../../helpers";

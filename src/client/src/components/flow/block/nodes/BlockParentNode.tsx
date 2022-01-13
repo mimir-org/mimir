@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
-import { memo, FC, useState, useEffect } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsMenuComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
@@ -22,7 +22,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [showInputMenu, setShowInputMenu] = useState(false);
   const [showOutputMenu, setShowOutputMenu] = useState(false);
-  const [terminals, setTerminals]: [Connector[], any] = useState([]);
+  const [terminals, setTerminals] = useState<Connector[]>([]);
 
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);

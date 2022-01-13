@@ -2,7 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { TraverseProductNodes } from ".";
 import { BuildBlockEdge, BuildProductChildNode } from "..";
 import { IsProduct } from "../../../../../helpers";
-import { Node, Connector, Project } from "../../../../../models";
+import { Connector, Node, Project } from "../../../../../models";
 import { IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
 
@@ -19,7 +19,7 @@ import { GetBlockEdgeType } from "../../helpers";
 const DrawProductChildren = (
   project: Project,
   selectedNode: Node,
-  elements: Elements<any>,
+  elements: Elements,
   animatedEdge: boolean,
   libOpen: boolean,
   explorerOpen: boolean,

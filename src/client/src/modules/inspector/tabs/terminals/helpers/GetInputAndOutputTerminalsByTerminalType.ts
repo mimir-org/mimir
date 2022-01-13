@@ -2,10 +2,10 @@ import { IsInputTerminal } from "../../../../../components/flow/helpers";
 import { TerminalLikeItem } from "../../../types";
 
 export const GetInputAndOutputTerminalsByTerminalType = (terminals: TerminalLikeItem[]) => {
-  let inputTerminalsByCategory = new Map<string, TerminalLikeItem[]>();
-  let outputTerminalsByCategory = new Map<string, TerminalLikeItem[]>();
+  const inputTerminalsByCategory = new Map<string, TerminalLikeItem[]>();
+  const outputTerminalsByCategory = new Map<string, TerminalLikeItem[]>();
 
-  for (let terminal of terminals) {
+  for (const terminal of terminals) {
     if (IsInputTerminal(terminal)) InsertMapWithDefault(terminal.terminalTypeId, terminal, inputTerminalsByCategory);
     else InsertMapWithDefault(terminal.terminalTypeId, terminal, outputTerminalsByCategory);
   }

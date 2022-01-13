@@ -2,10 +2,10 @@ import * as Click from "../../handlers";
 import { ProjectItemCm } from "../../../../../models";
 import { Dispatch } from "redux";
 import { CreateProjectIcon, ImportProjectIcon } from "../../../../../assets/icons/project";
-import { SearchBar, ProjectList, ProjectDescription } from ".";
+import { ProjectDescription, ProjectList, SearchBar } from ".";
 import { Button } from "../../../../../compLibrary/buttons";
 import { TextResources } from "../../../../../assets/text";
-import { SearchProject, RightContainer } from "../styled";
+import { RightContainer, SearchProject } from "../styled";
 import { ProjectDetailsBox, ProjectOptionsButtons } from "./styled";
 
 interface Props {

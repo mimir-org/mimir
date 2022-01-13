@@ -1,7 +1,7 @@
 import { Edge, Node, Project } from "../../models";
 import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
 import { AttributeLikeItem } from "../../modules/inspector/types";
-import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
+import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "../../redux/store";
 import { ProjectState } from "./project/types";
 
 export const isProjectStateFetchingSelector = createAppSelector(

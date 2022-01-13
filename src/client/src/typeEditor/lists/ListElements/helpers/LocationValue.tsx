@@ -1,4 +1,4 @@
-import { ValuesListWrapper, ValuesListItem } from "../../../styled";
+import { ValuesListItem, ValuesListWrapper } from "../../../styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 import { RadioButton } from "../../../../compLibrary/input/radiobutton";
 import { AttributeName } from "../../../inputs/styled";
@@ -8,7 +8,7 @@ import { OnPropertyChangeFunction } from "../../../types";
 
 interface Props {
   isMultiSelect: boolean;
-  getValues: () => object;
+  getValues: () => Record<string, boolean>;
   attributeName: string;
   defaultValue: PredefinedAttribute[];
   onChange: OnPropertyChangeFunction;
@@ -22,22 +22,20 @@ const LocationValue = ({ isMultiSelect, getValues, attributeName, defaultValue, 
   return (
     <ValuesListWrapper>
       {Object.entries(getValues()).map(([key, value]) => {
-        return (
-          isMultiSelect ? (
-            <ValuesListItem key={key}>
-              <Checkbox isChecked={value} onChange={() => onMultipleValuesChange([key, value])} id={key} />
-              <AttributeName>{key}</AttributeName>
-            </ValuesListItem>
-          ) : (
-            <ValuesListItem key={key} gap={'25px'}>
-              <RadioButton
-                isChecked={value}
-                onChange={(e) => OnSingleValueChange(e, attributeName, defaultValue, isMultiSelect, onChange)}
-                id={key}
-              />
-              <AttributeName>{key}</AttributeName>
-            </ValuesListItem>
-          )
+        return isMultiSelect ? (
+          <ValuesListItem key={key}>
+            <Checkbox isChecked={value} onChange={() => onMultipleValuesChange([key, value])} id={key} />
+            <AttributeName>{key}</AttributeName>
+          </ValuesListItem>
+        ) : (
+          <ValuesListItem key={key} gap={"25px"}>
+            <RadioButton
+              isChecked={value}
+              onChange={(e) => OnSingleValueChange(e, attributeName, defaultValue, isMultiSelect, onChange)}
+              id={key}
+            />
+            <AttributeName>{key}</AttributeName>
+          </ValuesListItem>
         );
       })}
     </ValuesListWrapper>

@@ -14,17 +14,17 @@ import {
   changeTypeEditorInspectorVisibility
 } from "../redux/typeEditorSlice";
 import {
+  animatedModuleSelector,
+  attributeTypeSelector,
+  iconSelector,
+  isTypeEditorInspectorOpen,
+  projectSelector,
+  simpleTypeSelector,
+  terminalTypeSelector,
+  typeEditorInspectorActiveTabSelector,
   useAppDispatch,
   useAppSelector,
-  projectSelector,
   useParametricAppSelector,
-  iconSelector,
-  attributeTypeSelector,
-  isTypeEditorInspectorOpen,
-  terminalTypeSelector,
-  animatedModuleSelector,
-  simpleTypeSelector,
-  typeEditorInspectorActiveTabSelector,
   usernameSelector,
 } from "../../redux/store";
 

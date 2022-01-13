@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { MENU_TYPE } from "../../../models/project";
 import { useAppSelector } from "../../../redux/store/hooks";
-import { UserMenuElement, UserMenuBox, UserNameBox } from "./styled";
+import { UserMenuBox, UserMenuElement, UserNameBox } from "./styled";
 import { OnDarkMode, OnLogOut } from "./handlers";
 import { userStateSelector } from "../../../redux/store";
 import { TextResources } from "../../../assets/text";

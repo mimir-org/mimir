@@ -1,6 +1,6 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetSecondaryNodePos, SetConnectorOrder } from "./helpers";
+import { GetNodeTypeString, SetConnectorOrder, SetSecondaryNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 

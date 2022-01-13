@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontType, FontSize } from "../../../compLibrary/font";
+import { FontSize, FontType } from "../../../compLibrary/font";
 
 interface Props {
   isOpen?: boolean;

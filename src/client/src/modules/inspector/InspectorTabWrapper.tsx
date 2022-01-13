@@ -4,9 +4,9 @@ import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
 import { useAppDispatch } from "../../redux/store";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
-import { GetTabsColor, GetInspectorText, GetTabId, SetPanelHeight } from "./helpers";
+import { GetInspectorText, GetTabId, GetTabsColor, SetPanelHeight } from "./helpers";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
-import { TabHeader, TabTitle, TabBody } from "./styled";
+import { TabBody, TabHeader, TabTitle } from "./styled";
 import { InspectorElement } from "./types";
 
 interface Props {

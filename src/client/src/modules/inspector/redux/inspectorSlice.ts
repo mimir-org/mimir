@@ -1,5 +1,5 @@
 import { ATTRIBUTE_TAB } from "../../../models/project";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Size } from "../../../compLibrary/size";
 
 const initialInspectorState = {

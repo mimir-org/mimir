@@ -1,17 +1,17 @@
 import { Dispatch } from "redux";
 import { CombinedAttribute, Project } from "../../../../models";
-import { Parameter, PARAMETER_ENTITY_WIDTH } from "./";
+import { PARAMETER_ENTITY_WIDTH, Parameter } from "./";
 import { DoesCombinationMatchAttribute } from "./helpers";
-import { Body, Entity, Box } from "./styled";
+import { Body, Box, Entity } from "./styled";
 import { CombinationDropdown } from "./CombinationDropdown";
 import { RemoveIconComponent } from "../../../../assets/icons/close";
-import { OnChangeParameterValue, OnChangeFilterChoice, OnLockParameter, OnChangeAttributeCombinationChoice } from "./handlers";
+import { OnChangeAttributeCombinationChoice, OnChangeFilterChoice, OnChangeParameterValue, OnLockParameter } from "./handlers";
 import { useMemo } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import { GetAttributes } from "./helpers/GetAttributes";
 import { IsCreateLibraryType } from "../../helpers/IsType";
 
-const FILTER_ENTITY_WIDTH: number = 191;
+const FILTER_ENTITY_WIDTH = 191;
 
 interface Props {
   element: InspectorParametersElement;

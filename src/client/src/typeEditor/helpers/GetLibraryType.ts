@@ -1,4 +1,4 @@
-import { ObjectType, LibraryFilter } from "../../models";
+import { LibraryFilter, ObjectType } from "../../models";
 
 const GetLibraryType = (libraryType: ObjectType) => {
   switch (libraryType) {

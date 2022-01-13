@@ -1,7 +1,7 @@
 import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { create } from "../../../../../../redux/store/project/actions";
 import { changeFlowView } from "../../../../../../redux/store/flow/flowSlice";
-import { ViewType, VIEW_TYPE } from "../../../../../../models/project";
+import { VIEW_TYPE, ViewType } from "../../../../../../models/project";
 
 const OnProjectCreateClick = (dispatch: any, projectName: string) => {
   dispatch(create(projectName, projectName));

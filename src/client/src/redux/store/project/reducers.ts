@@ -1,8 +1,12 @@
 import * as Types from "./types";
 import { Edge, Node, ProjectItemCm } from "../../../models";
-import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree, UpdateAttributeIsLocked } from "./helpers/";
 import { IsAspectNode, IsFamily } from "../../../helpers";
-import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
+import {
+  GetUpdatedEdgeInnerWithTerminalAttributeIsLocked,
+  GetUpdatedEdgeInnerWithTerminalAttributeValue,
+  TraverseTree,
+  UpdateAttributeIsLocked,
+} from "./helpers/";
 
 const initialState: Types.ProjectState = {
   fetching: false,
@@ -294,7 +298,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_ACTIVE_BLOCKNODE:
+    case Types.SET_ACTIVE_BLOCKNODE: {
       const blockId = action.payload.nodeId;
       const nodes = state.project.nodes;
 
@@ -306,8 +310,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges,
         },
       };
+    }
 
-    case Types.CHANGE_SELECTED_PROJECT:
+    case Types.CHANGE_SELECTED_PROJECT: {
       const projectId = action.payload.projectId;
       const projects = state.projectList as ProjectItemCm[];
 
@@ -318,6 +323,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           project.id === projectId ? { ...project, selected: true } : { ...project, selected: false }
         ),
       };
+    }
 
     case Types.CHANGE_ALL_NODES:
       return {

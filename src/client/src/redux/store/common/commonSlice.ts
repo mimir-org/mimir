@@ -1,11 +1,11 @@
 import { CombinedAttributeFilter, ModuleDescription } from "../../../models";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   CommonState,
   FetchCollaboratorPartnersFinished,
-  FetchStatusesFinished,
   FetchCombinedAttributeFilterFinished,
-  FetchParsersFinished
+  FetchParsersFinished,
+  FetchStatusesFinished
 } from "./types";
 
 const initialCommonState: CommonState = {

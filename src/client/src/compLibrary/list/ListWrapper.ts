@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../colors";
-import { FontType, FontSize, FontWeight } from "../font";
+import { FontSize, FontType, FontWeight } from "../font";
 
 interface Props {
   flex?: string | number;

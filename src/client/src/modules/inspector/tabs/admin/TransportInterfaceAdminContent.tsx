@@ -24,7 +24,7 @@ type Element = Transport | Interface;
 const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
   const onChange = <K extends keyof Element>(key: K, value: Element[K]) =>
-    !!edge.transport ? dispatch(changeTransportValue(edge.id, key, value)) : dispatch(changeInterfaceValue(edge.id, key, value));
+    edge.transport ? dispatch(changeTransportValue(edge.id, key, value)) : dispatch(changeInterfaceValue(edge.id, key, value));
 
   const element = edge.transport ?? edge.interface;
 

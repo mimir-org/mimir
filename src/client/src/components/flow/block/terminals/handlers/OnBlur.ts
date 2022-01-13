@@ -1,4 +1,4 @@
-const OnBlur = (showInputTerminalMenu: any, isInputMenuOpen: boolean) => {
+const OnBlur = (showInputTerminalMenu: (show: boolean) => void, isInputMenuOpen: boolean) => {
   showInputTerminalMenu(!isInputMenuOpen);
 };
 

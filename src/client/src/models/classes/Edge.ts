@@ -1,7 +1,7 @@
-import { Aspect, Connector, Node, Transport, Interface } from "..";
+import { Aspect, Connector, Interface, Node, Transport } from "..";
 
 export type isEdge = keyof Edge;
-export const EDGE_KIND: string = "Edge";
+export const EDGE_KIND = "Edge";
 
 class Edge {
   id: string;

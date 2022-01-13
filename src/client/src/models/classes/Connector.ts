@@ -1,6 +1,6 @@
-import { ConnectorType, EnumBase, Attribute, RelationType } from "..";
+import { Attribute, ConnectorType, EnumBase, RelationType } from "..";
 
-export const CONNECTOR_KIND: string = "Connector";
+export const CONNECTOR_KIND = "Connector";
 
 class Connector {
   id: string;

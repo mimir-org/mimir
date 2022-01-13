@@ -4,18 +4,18 @@ import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
 import { useState } from "react";
-import { Input } from "../../../../../compLibrary/input/text";
+import { Input, Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styled";
+import { ButtonBox, HeaderBox, InputBox, ProjectBody, ProjectBox } from "../styled";
 import { ExportProjectIcon } from "../../../../../assets/icons/project";
-import { Label } from "../../../../../compLibrary/input/text";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { ModuleDescription } from "../../../../../models";
+import { Dispatch } from "redux";
 
 interface Props {
   projectState: ProjectState;
-  dispatch: any;
+  dispatch: Dispatch;
   parsers: ModuleDescription[];
 }
 
@@ -33,11 +33,17 @@ export const ExportProjectFileMenu = ({ projectState, dispatch, parsers }: Props
           {TextResources.Project_Export}
         </HeaderBox>
         <Label>{TextResources.Project_Parser}</Label>
-        <Dropdown label="Parser" valueProp="name" items={parsers} keyProp="id" onChange={(e: any) => setParser(e)} />
+        <Dropdown
+          label="Parser"
+          valueProp="name"
+          items={parsers}
+          keyProp="id"
+          onChange={(item: ModuleDescription) => setParser(item)}
+        />
         <InputBox>
           <div className="label">{TextResources.Project_File_Name}</div>
           <Input
-            onChange={(e: any) => setFileName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
             inputType="text"
             placeholder={TextResources.Project_File_Name}
             value={fileName}

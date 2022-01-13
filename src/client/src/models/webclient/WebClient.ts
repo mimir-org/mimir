@@ -1,6 +1,6 @@
 import { msalInstance } from "../../index";
 import { loginRequest } from "./MsalConfig";
-import { RequestInitDefault, HttpResponse } from ".";
+import { HttpResponse, RequestInitDefault } from ".";
 import { TextResources } from "../../assets/text";
 
 export const Token = async () => {
