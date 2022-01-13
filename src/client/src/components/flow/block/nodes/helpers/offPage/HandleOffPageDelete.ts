@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { HandleConnectedOffPageDelete } from ".";
 import { IsOffPage } from "../../../../../../helpers";
-import { Project, Node, Edge, Connector } from "../../../../../../models";
+import { Connector, Edge, Node, Project } from "../../../../../../models";
 import { removeEdge, setOffPageStatus } from "../../../../../../redux/store/project/actions";
 import { GetParent, IsPartOf, IsTransport } from "../../../../helpers";
 

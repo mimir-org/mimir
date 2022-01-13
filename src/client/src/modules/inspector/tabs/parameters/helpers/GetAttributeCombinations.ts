@@ -10,7 +10,7 @@ const GetAttributeCombinations = (
 ): CombinedAttributeDict => {
   const combinations: CombinedAttributeDict = {};
 
-  for (let filter of attributeFilters) {
+  for (const filter of attributeFilters) {
     combinations[filter.name] = filter.combinedAttributes.filter((combination) =>
       attributes.find((attr) => attr.entity === filter.name && DoesCombinationMatchAttribute(combination, attr))
     );

@@ -1,6 +1,6 @@
 import { Attribute } from "../../../models";
 
-const PixelCalculator = (attribute: Attribute): Number => {
+const PixelCalculator = (attribute: Attribute): number => {
   const ratio = 150.0;
 
   if (!attribute || !attribute.value || !attribute.selectedUnitId)

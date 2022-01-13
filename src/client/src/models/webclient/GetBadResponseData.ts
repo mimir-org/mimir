@@ -1,4 +1,4 @@
-import { HttpResponse, BadRequestData } from ".";
+import { BadRequestData, HttpResponse } from ".";
 import { BadRequestDataItem } from "./Types";
 
 const GetBadResponseData = (response: HttpResponse<any>): BadRequestData => {
@@ -6,7 +6,7 @@ const GetBadResponseData = (response: HttpResponse<any>): BadRequestData => {
 
   const title = response?.data?.title ?? response?.statusText ?? "";
 
-  var data = {
+  const data = {
     title: title,
     items: [],
   } as BadRequestData;

@@ -8,6 +8,7 @@ import { useRef } from "react";
 import { useResizeParentNode } from "./hooks";
 import { BlockParentBanner } from ".";
 import { BlockNodeSize } from "../../../../../models/project";
+import { Dispatch } from "redux";
 
 interface Props {
   node: Node;
@@ -17,7 +18,7 @@ interface Props {
   isSecondaryNode?: boolean;
   onParentClick: () => void;
   onChildClick: () => void;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

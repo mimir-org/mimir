@@ -1,7 +1,7 @@
 import { Color } from "../../../compLibrary/colors";
 import { IsFunction, IsLocation, IsProduct } from "../../../helpers";
 import { InspectorElement } from "../types";
-import { IsNode, IsEdge, IsCreateLibraryType } from "./IsType";
+import { IsCreateLibraryType, IsEdge, IsNode } from "./IsType";
 
 const GetTabsColor = (element: InspectorElement) => {
   if (IsNode(element) || IsCreateLibraryType(element)) {

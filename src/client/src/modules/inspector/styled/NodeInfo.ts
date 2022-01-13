@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-interface Props {}
-
-const NodeInfo = styled.div<Props>`
+const NodeInfo = styled.div`
   display: flex;
   flex-shrink: 0;
   margin: 14px 0px 10px 10px;

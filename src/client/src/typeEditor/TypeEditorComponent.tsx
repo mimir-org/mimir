@@ -9,7 +9,7 @@ import { Button } from "../compLibrary/buttons";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorInputs, TypePreview } from "./";
 import { OnCloseEditor, OnPropertyChange, OnSave } from "./handlers";
-import { GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, GetTypeEditorLists, GetPropertiesHeight } from "./helpers";
+import { GetPropertiesHeight, GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, GetTypeEditorLists } from "./helpers";
 import {
   ButtonsContainer,
   ChooseProperties,

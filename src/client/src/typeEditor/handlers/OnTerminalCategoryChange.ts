@@ -1,12 +1,12 @@
 import { Dispatch } from "redux";
-import { TerminalTypeItem, ConnectorType } from "../../models";
+import { ConnectorType, TerminalTypeItem } from "../../models";
 import { TerminalCategoryChangeKey } from "../types";
 import {
   addTerminalType,
   removeTerminalType,
   removeTerminalTypeByCategory,
-  updateTerminalType,
-  updateCreateLibraryType
+  updateCreateLibraryType,
+  updateTerminalType
 } from "../redux/typeEditorSlice";
 
 export const OnTerminalCategoryChange = (

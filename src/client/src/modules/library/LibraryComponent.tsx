@@ -17,7 +17,7 @@ interface Props {
   dispatch: Dispatch;
 }
 
-const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) => {
+const LibraryComponent = ({ search, searchString, dispatch }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState(null);
   const legendOpen = useAppSelector(legendOpenSelector);

@@ -1,5 +1,5 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../../../helpers";
-import { Aspect, Connector, ConnectorType, CONNECTOR_KIND, Edge, EDGE_KIND, Node, RelationType } from "../../../../../../models";
+import { Aspect, CONNECTOR_KIND, Connector, ConnectorType, EDGE_KIND, Edge, Node, RelationType } from "../../../../../../models";
 import { Position } from "../../../../../../models/project";
 
 export interface OffPageObject {

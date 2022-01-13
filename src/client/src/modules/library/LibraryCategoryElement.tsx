@@ -4,7 +4,7 @@ import { AddIcon } from "../../assets/icons/type";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
 import { AspectColorType, LibItem, ObjectType } from "../../models";
 import { LibraryCategory } from "../../models/project";
-import { OnRemoveFavoriteClick, OnAddFavoriteClick } from "./handlers";
+import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
 import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
 import { AddFavoriteBox, LibElement, LibElementIcon, LibElementText, RemoveFavoriteBox } from "./styled";
 

@@ -1,4 +1,4 @@
-import { Aspect, Connector, Attribute, ObjectType, Simple, Project } from ".";
+import { Aspect, Attribute, Connector, ObjectType, Project, Simple } from ".";
 import { ProjectAm } from "../redux/sagas/project/ConvertProject";
 import { CommitStatus, ConnectorType, Discipline, SelectType } from "./Enums";
 
@@ -137,7 +137,7 @@ export interface Purpose {
 
 export interface PredefinedAttribute {
   key: string;
-  values: Object;
+  values: Record<string, boolean>;
   isMultiSelect: boolean;
 }
 
@@ -264,7 +264,7 @@ export interface LockEdgeAm {
 
 export interface ProjectResultAm {
   project: Project;
-  idChanges: { [id: string]: string }
+  idChanges: { [id: string]: string };
 }
 
 export const SETTING_KEY = {

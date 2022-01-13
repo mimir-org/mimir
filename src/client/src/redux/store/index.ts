@@ -22,7 +22,7 @@ import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
 import { rootSaga } from "../sagas";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistReducer, persistStore } from 'redux-persist'
 
 const rootReducers = combineReducers({
   library: libraryReducer,

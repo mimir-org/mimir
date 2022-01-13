@@ -6,17 +6,18 @@ import { TextResources } from "../../../../../assets/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnProjectSaveClick, OnReturnClick } from "./handlers";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ButtonBox, HeaderBox, ProjectBody, ProjectBox } from "../styled";
 import { ImportProjectIcon } from "../../../../../assets/icons/project";
 import { GetProjectFileData } from "./helpers";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { Label } from "../../../../../compLibrary/input/text";
 import { ModuleDescription } from "../../../../../models";
 import { FontSize } from "../../../../../compLibrary/font";
+import { Dispatch } from "redux";
 
 interface Props {
   parsers: ModuleDescription[];
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const ImportProjectFileMenu = ({ parsers, dispatch }: Props) => {
@@ -61,7 +62,7 @@ export const ImportProjectFileMenu = ({ parsers, dispatch }: Props) => {
           items={parsers}
           keyProp="id"
           fontSize={FontSize.Medium}
-          onChange={(e: any) => setParser(e)}
+          onChange={(item: ModuleDescription) => setParser(item)}
         />
         <ButtonBox disabled={!hasParser}>
           <Button onClick={setButtonAction} text={buttonBrowseText()} icon={ImportProjectIcon} />

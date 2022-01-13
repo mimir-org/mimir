@@ -1,10 +1,10 @@
 import { call, put } from "redux-saga/effects";
-import { get, GetApiErrorForBadRequest, GetApiErrorForException } from "../../../models/webclient";
+import { GetApiErrorForBadRequest, GetApiErrorForException, get } from "../../../models/webclient";
 import {
   fetchCollaborationPartnersSuccessOrError,
-  fetchStatusesSuccessOrError,
   fetchCombinedAttributeFiltersSuccessOrError,
-  fetchParsersSuccessOrError
+  fetchParsersSuccessOrError,
+  fetchStatusesSuccessOrError
 } from "../../store/common/commonSlice";
 
 /**

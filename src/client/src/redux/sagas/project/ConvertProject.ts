@@ -1,19 +1,19 @@
 import {
-  Project,
   Aspect,
-  Node,
-  Edge,
   Attribute,
   Connector,
   ConnectorType,
-  RelationType,
+  Discipline,
+  Edge,
   EnumBase,
+  Interface,
+  Node,
+  Project,
+  Purpose,
+  RelationType,
+  SelectType,
   Simple,
   Transport,
-  Interface,
-  SelectType,
-  Discipline,
-  Purpose,
 } from "../../../models/";
 
 export interface UnitAm {
@@ -187,7 +187,7 @@ export interface InterfaceAm {
 }
 
 const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
-  let converted = [] as UnitAm[];
+  const converted = [] as UnitAm[];
 
   if (!units) return converted;
 
@@ -206,7 +206,7 @@ const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
 };
 
 const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
-  let converted = [] as AttributeAm[];
+  const converted = [] as AttributeAm[];
 
   if (!attributes) return converted;
 
@@ -243,7 +243,7 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
 };
 
 const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
-  let converted = [] as ConnectorAm[];
+  const converted = [] as ConnectorAm[];
 
   if (!connectors) return converted;
 
@@ -293,7 +293,7 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
 };
 
 const ConvertSimples = (simples: Simple[]): SimpleAm[] => {
-  let converted = [] as SimpleAm[];
+  const converted = [] as SimpleAm[];
 
   if (!simples) return converted;
 
@@ -362,7 +362,7 @@ const ConvertInterface = (data: Interface): InterfaceAm => {
 };
 
 const ConvertNodes = (nodes: Node[]): NodeAm[] => {
-  let convertedNodes = [] as NodeAm[];
+  const convertedNodes = [] as NodeAm[];
 
   if (!nodes) return convertedNodes;
 
@@ -412,7 +412,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
 };
 
 const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
-  let convertedEdges = [] as EdgeAm[];
+  const convertedEdges = [] as EdgeAm[];
 
   if (!edges) return convertedEdges;
 

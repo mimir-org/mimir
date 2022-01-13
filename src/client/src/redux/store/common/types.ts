@@ -1,4 +1,4 @@
-import { CombinedAttributeFilter, CollaborationPartner, EnumBase, ModuleDescription } from "../../../models";
+import { CollaborationPartner, CombinedAttributeFilter, EnumBase, ModuleDescription } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 // State types

@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Color } from "../../colors";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
+import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
 import { FontSize } from "../../font";
 import { Symbol } from "../../symbol";
 import { DropdownBox, DropdownHeader, DropdownList, DropdownListItem } from "./styled";
 
 interface Props {
   label: string;
-  items: any[];
+  items: DropdownItem[];
   keyProp: string;
   valueProp: string;
-  onChange: Function;
+  onChange: (item: DropdownItem) => void;
   defaultValue?: string;
   valueImageProp?: string;
   disabled?: boolean;
@@ -19,6 +19,11 @@ interface Props {
   fontSize?: string;
   height?: number;
   listTop?: number;
+}
+
+interface DropdownItem {
+  name: string;
+  key?: string;
 }
 
 /**
@@ -56,7 +61,7 @@ const Dropdown = ({
     setSelectedItem(items[0]);
   }, [defaultValue, items, keyProp]);
 
-  const handleChange = (_e: any, value: any) => {
+  const handleChange = (value: DropdownItem) => {
     setSelectedItem(value);
     setIsListOpen(!isListOpen);
     onChange(value);
@@ -78,7 +83,7 @@ const Dropdown = ({
             borderColor={borderColor}
             fontSize={fontSize}
             height={height}
-            onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}
+            onClick={disabled ? null : () => setIsListOpen(!isListOpen)}
           >
             {selectedItem && (
               <>
@@ -97,7 +102,7 @@ const Dropdown = ({
                   fontSize={fontSize}
                   height={height}
                   borderRadius={borderRadius}
-                  onClick={(e) => handleChange(e, item)}
+                  onClick={() => handleChange(item)}
                   key={item[keyProp]}
                 >
                   {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}

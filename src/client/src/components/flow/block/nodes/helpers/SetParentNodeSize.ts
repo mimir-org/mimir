@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { Size } from "../../../../../compLibrary/size";
 import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
 
@@ -8,7 +9,7 @@ import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
  * @param explorerOpen
  * @param dispatch
  */
-const SetParentNodeSize = (secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean, dispatch: any) => {
+const SetParentNodeSize = (secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean, dispatch: Dispatch) => {
   const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
   const marginX = SetMarginX(secondaryNode, libOpen, explorerOpen);
   let width = screenWidth - marginX;

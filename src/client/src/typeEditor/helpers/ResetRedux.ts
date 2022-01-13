@@ -1,4 +1,4 @@
-import { IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface } from ".";
+import { IsInterface, IsLocation, IsObjectBlock, IsProduct, IsTransport } from ".";
 import { CreateLibraryType } from "../../models";
 import { clearAllTerminalTypes, updateCreateLibraryType } from "../redux/typeEditorSlice";
 

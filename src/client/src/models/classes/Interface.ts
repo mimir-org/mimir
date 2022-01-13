@@ -1,6 +1,6 @@
 import { Attribute, Connector } from ".";
 
-export const INTERFACE_KIND: string = "Interface";
+export const INTERFACE_KIND = "Interface";
 
 class Interface {
   id: string;

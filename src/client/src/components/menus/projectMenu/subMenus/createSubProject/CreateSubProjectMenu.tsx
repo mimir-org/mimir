@@ -1,20 +1,21 @@
 import * as Handlers from "./handlers";
-import { useState } from "react";
+import React, { useState } from "react";
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
 import { Input, Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ButtonBox, HeaderBox, ProjectBody, ProjectBox } from "../styled";
 import { CreateSubProjectIcon } from "../../../../../assets/icons/project";
+import { Dispatch } from "redux";
 
 interface Props {
   fromProjectId: string;
   nodeIds: string[];
   edgeIds: string[];
   disabled: boolean;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled, dispatch }: Props) => {
@@ -31,7 +32,7 @@ export const CreateSubProjectMenu = ({ nodeIds, edgeIds, fromProjectId, disabled
           </HeaderBox>
           <Label>{TextResources.Project_Name}</Label>
           <Input
-            onChange={(e: any) => setProjectName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
             inputType="text"
             placeholder={TextResources.Project_Name_Placeholder}
             value={projectName}

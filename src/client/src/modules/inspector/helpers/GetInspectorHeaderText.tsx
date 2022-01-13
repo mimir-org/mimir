@@ -2,7 +2,7 @@ import { IsAspectNode } from "../../../helpers";
 import { GetSelectedIcon } from "../../../typeEditor/helpers";
 import { NodeInfo } from "../styled";
 import { InspectorElement } from "../types";
-import { IsNode, IsEdge, IsCreateLibraryType } from "./IsType";
+import { IsCreateLibraryType, IsEdge, IsNode } from "./IsType";
 import { Symbol } from "../../../compLibrary/symbol";
 import { BlobData } from "../../../models";
 

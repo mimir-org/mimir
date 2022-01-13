@@ -6,17 +6,18 @@ import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
 import { Label } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ButtonBox, HeaderBox, ProjectBody, ProjectBox } from "../styled";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { CollaborationPartner, ModuleDescription } from "../../../../../models";
 import { CommitProjectIcon } from "../../../../../assets/icons/project";
+import { Dispatch } from "redux";
 
 interface Props {
   collaborationPartners: CollaborationPartner[];
   parsers: ModuleDescription[];
   projectId: string;
   disabled: boolean;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const CommitProjectMenu = ({ collaborationPartners, parsers, projectId, disabled, dispatch }: Props) => {
@@ -39,7 +40,7 @@ export const CommitProjectMenu = ({ collaborationPartners, parsers, projectId, d
             valueProp="name"
             items={collaborationPartners}
             keyProp="id"
-            onChange={(e: any) => setCollaborationPartner(e)}
+            onChange={(item: CollaborationPartner) => setCollaborationPartner(item)}
           />
           <Label>{TextResources.Project_Commit_Parser}</Label>
           <Dropdown
@@ -47,7 +48,7 @@ export const CommitProjectMenu = ({ collaborationPartners, parsers, projectId, d
             valueProp="name"
             items={parsers}
             keyProp="id"
-            onChange={(e: any) => setParser(e)}
+            onChange={(item: ModuleDescription) => setParser(item)}
           />
 
           <ButtonBox left>

@@ -1,21 +1,21 @@
-import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
-import { WorkerStatus, Node, Edge, LockNodeAm, LockEdgeAm, LockAttributeAm } from "..";
+import { Edge, LockAttributeAm, LockEdgeAm, LockNodeAm, Node, WorkerStatus } from "..";
 import {
   addNode,
   createEdge,
   removeEdge,
   removeNode,
-  updateNode,
-  updateEdge,
-  setIsLockedNodeTerminalAttribute,
-  setIsLockedTransportTerminalAttribute,
-  setIsLockedTransportAttribute,
-  setIsLockedSimpleAttribute,
-  setIsLockedNode,
   setIsLockedEdge,
-  setIsLockedNodeAttribute,
   setIsLockedInterfaceAttribute,
+  setIsLockedNode,
+  setIsLockedNodeAttribute,
+  setIsLockedNodeTerminalAttribute,
+  setIsLockedSimpleAttribute,
+  setIsLockedTransportAttribute,
+  setIsLockedTransportTerminalAttribute,
+  updateEdge,
+  updateNode,
 } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
 
@@ -23,7 +23,7 @@ let instance = null;
 class WebSocket {
   private _connection: HubConnection;
   private _running: boolean;
-  private _dispatch: Dispatch<any>;
+  private _dispatch: Dispatch;
   private _projectState: ProjectState;
   private _group: string;
 
@@ -66,7 +66,8 @@ class WebSocket {
           this._connection.on("ReceiveLockNodeData", this.handleReceiveLockNodeData);
           this._connection.on("ReceiveLockEdgeData", this.handleReceiveLockEdgeData);
         })
-        .catch((e: any) => {});
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        .catch((_e: unknown) => {});
     }
   }
 
@@ -77,7 +78,7 @@ class WebSocket {
     this._connection.send("JoinGroup", this._group);
   }
 
-  public setDispatcher(dispatch: Dispatch<any>) {
+  public setDispatcher(dispatch: Dispatch) {
     this._dispatch = dispatch;
   }
 

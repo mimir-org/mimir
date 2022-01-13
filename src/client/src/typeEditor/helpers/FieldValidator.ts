@@ -1,6 +1,6 @@
 import { TypeEditorState } from "../redux/types";
 import { Aspect, ObjectType } from "../../models";
-import { IsFunction, IsLocation, IsObjectBlock, IsTransport, IsInterface } from ".";
+import { IsFunction, IsInterface, IsLocation, IsObjectBlock, IsTransport } from ".";
 
 const FieldValidator = (state: TypeEditorState, input: string) => {
   const aspect = state.createLibraryType.aspect;

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/BlockNodeSelectors";
-import { memo, FC, useState, useEffect } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
 import { NodeBox } from "../../styled";
-import { TerminalsMenuComponent, HandleComponent } from "../terminals";
-import { HandleRequiredOffPageNode, HandleConnectedOffPageNode } from "./helpers/offPage";
+import { HandleComponent, TerminalsMenuComponent } from "../terminals";
+import { HandleConnectedOffPageNode, HandleRequiredOffPageNode } from "./helpers/offPage";
 import { FilterTerminals } from "../helpers";
 import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
@@ -25,9 +25,9 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [showInputMenu, setShowInputMenu] = useState(false);
   const [showOutputMenu, setShowOutputMenu] = useState(false);
   const [showMenuButton, setShowMenuButton] = useState(false);
-  const [terminals, setTerminals]: [Connector[], any] = useState([]);
+  const [terminals, setTerminals] = useState<Connector[]>([]);
   const initialSize = { width: Size.Node_Width, height: Size.Node_Height } as BlockNodeSize;
-  const [size, setSize]: [BlockNodeSize, any] = useState(initialSize);
+  const [size, setSize] = useState<BlockNodeSize>(initialSize);
 
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);

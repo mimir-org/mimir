@@ -1,7 +1,7 @@
 import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsBox, TerminalsElement, ColorTag } from "./styled";
+import { ColorTag, TerminalsBox, TerminalsElement } from "./styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 import { Color } from "../../../../compLibrary/colors";
 import { BlockNodeSize } from "../../../../models/project";

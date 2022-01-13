@@ -1,10 +1,11 @@
+import { Dispatch } from "redux";
 import { FilterElement } from "../";
 import { TextResources } from "../../../../assets/text";
 import { toggleEdgeAnimation } from "../../../../redux/store/edgeAnimation/edgeAnimationSlice";
 
 interface Props {
   edgeAnimation: boolean;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

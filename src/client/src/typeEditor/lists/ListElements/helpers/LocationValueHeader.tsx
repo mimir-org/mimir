@@ -3,9 +3,9 @@ import { ValueHeader } from "../../../styled";
 
 interface Props {
   expandList: boolean;
-  setExpandList: any;
+  setExpandList: (expand: boolean) => void;
   isMultiSelect: boolean;
-  getValues: () => object;
+  getValues: () => Record<string, boolean>;
 }
 
 const LocationValueHeader = ({ expandList, setExpandList, isMultiSelect, getValues }: Props) => (

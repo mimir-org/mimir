@@ -1,6 +1,6 @@
 import red from "../../../redux/store";
 import { IsPartOf } from ".";
-import { Node, Edge } from "../../../models";
+import { Edge, Node } from "../../../models";
 
 /**
  * Function to find a node's parentNode

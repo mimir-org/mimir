@@ -1,7 +1,7 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { MimirLogo } from "../../assets/icons/mimir";
-import { ToolBarComponent, AvatarComponent, ProjectMenuHeader } from ".";
+import { AvatarComponent, ProjectMenuHeader, ToolBarComponent } from ".";
 import { CompanyLogoBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader, GetSelectedNode, IsStartPage } from "../../helpers";
 import { Project } from "../../models";

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ListWrapper } from "../compLibrary/list";
 import { ListContent, ListSearch } from "./lists/";
-import { GetListLabel, GetFlexForListType } from "./helpers";
-import { AttributeType, SimpleType, CreateLibraryType, PredefinedAttribute, Rds, TerminalTypeDict } from "../models";
+import { GetFlexForListType, GetListLabel } from "./helpers";
+import { AttributeType, CreateLibraryType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../models";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
 
 export enum ListType {

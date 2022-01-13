@@ -1,7 +1,7 @@
 import { ConnectorType, CreateLibraryType, TerminalType } from "../../../models";
 
 const GetOutputTerminals = (createLibraryType: CreateLibraryType, terminals: any[]): TerminalType[] => {
-  let terminalsArray: TerminalType[] = [];
+  const terminalsArray: TerminalType[] = [];
   createLibraryType?.terminalTypes
     .filter((t) => ConnectorType[t.connectorType] === ConnectorType[ConnectorType.Output])
     .forEach((t) => {

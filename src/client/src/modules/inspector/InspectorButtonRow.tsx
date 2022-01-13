@@ -7,9 +7,9 @@ import { InspectorButtonType } from "../../compLibrary/buttons/inspector/Inspect
 import { Project } from "../../models";
 import { IsCreateLibraryType, IsNode } from "./helpers/IsType";
 import { ButtonWrapper, Title, ToggleBox } from "./styled";
-import { InspectorElement } from "./types";
+import { ChangeInspectorVisibilityAction, InspectorElement, OnToogleHandler } from "./types";
 import { useState } from "react";
-import { IsBlockView, IsAspectNode, GetSelectedNode } from "../../helpers";
+import { GetSelectedNode, IsAspectNode, IsBlockView } from "../../helpers";
 
 interface Props {
   project: Project;
@@ -17,9 +17,9 @@ interface Props {
   username: string;
   open: boolean;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
-  changeInspectorVisibilityAction: (visibility: boolean) => Action;
+  changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
   changeInspectorHeightAction: (height: number) => Action;
-  onToggle?: Function;
+  onToggle?: OnToogleHandler;
   dispatch: Dispatch;
 }
 

@@ -1,7 +1,7 @@
-import { EnumBase, Attribute, Aspect, Purpose, Simple } from "..";
+import { Aspect, Attribute, EnumBase, Purpose, Simple } from "..";
 import Connector from "./Connector";
 
-export const NODE_KIND: string = "Node";
+export const NODE_KIND = "Node";
 
 class Node {
   id: string;

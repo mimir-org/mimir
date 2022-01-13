@@ -1,6 +1,6 @@
 import { Attribute, Connector } from ".";
 
-export const TRANSPORT_KIND: string = "Transport";
+export const TRANSPORT_KIND = "Transport";
 
 class Transport {
   id: string;

@@ -1,7 +1,7 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
-import { useState, useEffect } from "react";
-import { ErrorBody, ErrorBox, ErrorItem, ErrorHeaderBox } from "./styled";
+import { useEffect, useState } from "react";
+import { ErrorBody, ErrorBox, ErrorHeaderBox, ErrorItem } from "./styled";
 import { CloseIcon } from "../../assets/icons/close";
 import { TextResources } from "../../assets/text";
 import { BadRequestData } from "../../models/webclient";

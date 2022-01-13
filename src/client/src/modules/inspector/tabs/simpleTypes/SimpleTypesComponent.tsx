@@ -1,10 +1,10 @@
-import { Simple, Project } from "../../../../models";
+import { Project, Simple } from "../../../../models";
 import { SimpleTypesSelector } from "./";
 import { useState } from "react";
 import { ParametersContent } from "../parameters";
 import { TerminalsWrapper } from "../terminals/styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "../terminals/styled/TerminalsParametersWrapper";
-import { SimpleLikeItem, InspectorElement } from "../../types";
+import { InspectorElement, SimpleLikeItem } from "../../types";
 import { GetSimpleTypes } from "./helpers/";
 import { IsCreateLibraryType } from "../../helpers/IsType";
 

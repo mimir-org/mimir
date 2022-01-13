@@ -1,4 +1,4 @@
-import { VisibleOnIcon, VisibleOffIcon, VisibleSubOffIcon } from "../../../assets/icons/visible";
+import { VisibleOffIcon, VisibleOnIcon, VisibleSubOffIcon } from "../../../assets/icons/visible";
 
 const GetIcon = (isHidden: boolean, isAncestorVisible: boolean, isVisible: boolean) => {
   if (isVisible && !isHidden) return VisibleOnIcon;

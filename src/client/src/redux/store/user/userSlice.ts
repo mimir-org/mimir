@@ -1,5 +1,5 @@
-import { UserState, FetchUserActionFinished } from "./types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FetchUserActionFinished, UserState } from "./types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialUserState: UserState = {
   fetching: false,

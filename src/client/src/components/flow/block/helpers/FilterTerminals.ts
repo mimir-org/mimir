@@ -1,6 +1,6 @@
 import { GetSelectedNode, IsFunction, IsLocation, IsProduct } from "../../../../helpers";
 import { Connector, Node } from "../../../../models";
-import { IsLocationTerminal, IsTransport, IsProductTerminal, IsPartOf } from "../../helpers";
+import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../helpers";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
@@ -11,7 +11,7 @@ import { IsLocationTerminal, IsTransport, IsProductTerminal, IsPartOf } from "..
  */
 const FilterTerminals = (connectors: Connector[], secondaryNode: Node) => {
   const selectedNode = GetSelectedNode();
-  let terminals: Connector[] = [];
+  const terminals: Connector[] = [];
 
   connectors?.forEach((c) => {
     validateTerminal(selectedNode, secondaryNode, c) && terminals.push(c);

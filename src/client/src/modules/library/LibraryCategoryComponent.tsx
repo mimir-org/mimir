@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../models/project";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
-import { LibCategoryHeader, LibCategoryButton } from "./styled";
+import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
+import { LibCategoryButton, LibCategoryHeader } from "./styled";
 import { LibraryCategoryElement } from ".";
 
 interface Props {

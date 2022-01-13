@@ -7,8 +7,8 @@ import { AspectKey, ObjectTypeKey } from "./types";
 import Validation from "./validation/Validation";
 import {
   IsAspectSelectionInvalid,
-  IsObjectSelectionInvalid,
   IsLocationSelectionInvalid,
+  IsObjectSelectionInvalid,
   IsPurposeSelectionInvalid,
   IsSymbolSelectionInvalid,
   IsTypeNameInvalid

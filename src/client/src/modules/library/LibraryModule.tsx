@@ -9,9 +9,9 @@ import { Icon } from "../../compLibrary/icon";
 import { LegendHeader } from "../legend/styled";
 import { LibHeader, ModuleBody, ModuleHeader } from "./styled";
 import { MODULE_TYPE } from "../../models/project";
-import { OnLibraryClick, OnLegendClick } from "./handlers";
+import { OnLegendClick, OnLibraryClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
-import { useAppSelector, useParametricAppSelector, animatedModuleSelector, legendOpenSelector, libOpenSelector } from "../../redux/store";
+import { animatedModuleSelector, legendOpenSelector, libOpenSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { Project } from "../../models";
 
 interface Props {

@@ -1,6 +1,6 @@
 import { BlobData, CreateLibraryType, TerminalType } from "../../models";
 import { GetBlockColor, GetBlockHeight } from "./helpers";
-import { PreviewObjectBlock, InfoWrapper, InfoText, InfoSymbolWrapper, InputOutputTerminals, Terminals } from "../styled";
+import { InfoSymbolWrapper, InfoText, InfoWrapper, InputOutputTerminals, PreviewObjectBlock, Terminals } from "../styled";
 import { ConnectorIcon } from "../../assets/icons/connectors";
 import { Symbol } from "../../compLibrary/symbol";
 
@@ -22,7 +22,7 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
   const outputCount = outputTerminals?.length;
 
   const showTerminals = (input: boolean): any[] => {
-    let terminalsArray = [];
+    const terminalsArray = [];
     const inputOutputArray = input ? inputTerminals : outputTerminals;
     inputOutputArray?.forEach((t, index) => {
       terminalsArray.push(

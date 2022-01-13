@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { PredefinedAttribute } from "../../../models";
 import { CheckboxContainer } from "../../inputs";
-import { LocationValueHeader, LocationValue } from "./helpers";
+import { LocationValue, LocationValueHeader } from "./helpers";
 import { Label } from "../../inputs/CheckboxContainer";
 import { OnPropertyChangeFunction } from "../../types";
-import { TerminalListElement, TerminalCategoryWrapper, SelectValue } from "../../styled";
+import { SelectValue, TerminalCategoryWrapper, TerminalListElement } from "../../styled";
 
 interface Props {
   attributeName: string;
-  values: object;
+  values: Record<string, boolean>;
   isMultiSelect: boolean;
   defaultValue?: PredefinedAttribute[];
   onChange: OnPropertyChangeFunction;

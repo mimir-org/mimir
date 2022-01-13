@@ -1,4 +1,4 @@
-import { Project, Node, Edge, CommitPackage, ProjectFileAm, ProjectConverterAm } from "../../../models";
+import { CommitPackage, Edge, Node, Project, ProjectConverterAm, ProjectFileAm } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
@@ -103,7 +103,7 @@ export interface FetchingProjectActionFinished {
 
 export interface CreatingProjectAction {
   type: typeof CREATING_PROJECT;
-  payload: object;
+  payload: Record<string, unknown>;
 }
 
 export interface CreatingProjectActionFinished {

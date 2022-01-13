@@ -1,7 +1,7 @@
 import { ListType } from "../TypeEditorList";
 import { TextResources } from "../../assets/text";
 import { CreateLibraryType } from "../../models";
-import { IsLocation, IsTransport, IsInterface } from ".";
+import { IsInterface, IsLocation, IsTransport } from ".";
 
 const GetListLabel = (listType: ListType, createLibraryType: CreateLibraryType): string => {
   if (listType === ListType.Rds) return TextResources.TypeEditor_Properties_RDS;

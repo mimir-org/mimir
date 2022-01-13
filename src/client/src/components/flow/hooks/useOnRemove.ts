@@ -1,7 +1,7 @@
-import { removeElements, FlowElement, Elements } from "react-flow-renderer";
+import { Elements, FlowElement, removeElements } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
-import { Edge, EDGE_KIND, Project } from "../../../models";
+import { EDGE_KIND, Edge, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/inspectorSlice";
@@ -9,7 +9,7 @@ import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { removeEdge, removeNode } from "../../../redux/store/project/actions";
 import { HandleOffPageDelete } from "../block/nodes/helpers/offPage";
 import { IsPartOf } from "../helpers";
-import { GetSelectedNode, IsAspectNode, IsBlockView, GetSelectedBlockNode, IsOffPage } from "../../../helpers";
+import { GetSelectedBlockNode, GetSelectedNode, IsAspectNode, IsBlockView, IsOffPage } from "../../../helpers";
 
 const useOnRemove = (
   elements: Elements,
@@ -38,7 +38,7 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
 
-  for (var elem of elements) {
+  for (const elem of elements) {
     const isEdge = isElementEdge(edgeTypes, elem);
 
     if (isEdge) {

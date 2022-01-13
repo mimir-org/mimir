@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Project, Node, Edge } from "../../../models";
+import { Edge, Node, Project } from "../../../models";
 import { FindParentEdge } from "../../../modules/explorer/helpers/ParentNode";
 import { changeNodeValue } from "../../../redux/store/project/actions";
 import { GetChildren } from "./GetChildren";

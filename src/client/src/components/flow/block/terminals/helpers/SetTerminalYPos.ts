@@ -1,7 +1,7 @@
 import { Position } from "react-flow-renderer";
 import { Size } from "../../../../../compLibrary/size";
 import { Connector } from "../../../../../models";
-import { IsProductTerminal, IsLocationTerminal, IsPartOf } from "../../../helpers";
+import { IsLocationTerminal, IsPartOf, IsProductTerminal } from "../../../helpers";
 
 /**
  * Component to set the Y position of a terminal in BlockView.

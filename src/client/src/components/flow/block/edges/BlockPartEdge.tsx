@@ -1,4 +1,4 @@
-import { getSmoothStepPath } from "react-flow-renderer";
+import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { Color } from "../../../../compLibrary/colors";
 
 /**
@@ -6,7 +6,7 @@ import { Color } from "../../../../compLibrary/colors";
  * @param params
  * @returns a PartOfEdge between Product Nodes.
  */
-const BlockPartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
+const BlockPartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
   const visible = !data?.edge.isHidden;
 
   const smoothPath = getSmoothStepPath({

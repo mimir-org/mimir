@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { ObjectType } from "../../models";
 import { GetLibraryType } from "../helpers";
-import { fetchCreateLibraryType, changeTypeEditorVisibility } from "../redux/typeEditorSlice";
+import { changeTypeEditorVisibility, fetchCreateLibraryType } from "../redux/typeEditorSlice";
 
 export const OnOpenTypeEditor = (
   selectedElement: string,

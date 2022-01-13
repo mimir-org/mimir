@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
-import { BuildParentNode, BuildSecondaryParentNode, BuildProductParentNode } from ".";
-import { DrawChildNodes, DrawProductChildren, DrawBlockEdges, DrawSecondaryChildren } from "./helpers";
+import { BuildParentNode, BuildProductParentNode, BuildSecondaryParentNode } from ".";
+import { DrawBlockEdges, DrawChildNodes, DrawProductChildren, DrawSecondaryChildren } from "./helpers";
 import { IsProduct } from "../../../../helpers";
 
 /**

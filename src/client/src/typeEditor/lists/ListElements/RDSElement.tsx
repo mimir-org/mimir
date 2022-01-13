@@ -1,6 +1,6 @@
 import { ListType, RadioButtonContainer } from "../../inputs/RadioButtonContainer";
 import { Rds } from "../../../models";
-import { ListElementCategoryWrapper, ListCategoryElement, RdsListElement } from "../../styled";
+import { ListCategoryElement, ListElementCategoryWrapper, RdsListElement } from "../../styled";
 import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {

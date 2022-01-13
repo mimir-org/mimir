@@ -1,7 +1,7 @@
 import { Aspect, ConnectorType, ObjectType, PredefinedAttribute, TerminalTypeItem } from "..";
 import { CreateId } from "../../components/flow/helpers";
 
-export const CREATE_LIBRARY_KIND: string = "CreateLibraryType";
+export const CREATE_LIBRARY_KIND = "CreateLibraryType";
 
 export default interface CreateLibraryType {
   id: string;
@@ -21,7 +21,7 @@ export default interface CreateLibraryType {
   kind: string;
 }
 
-export let defaultCreateLibraryType: CreateLibraryType = {
+export const defaultCreateLibraryType: CreateLibraryType = {
   id: null,
   name: "",
   aspect: Aspect.NotSet,
