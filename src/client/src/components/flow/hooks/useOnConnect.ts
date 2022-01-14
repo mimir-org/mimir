@@ -18,6 +18,7 @@ const useOnConnect = (
   animatedEdge: boolean
 ) => {
   SaveEventData(null, "edgeEvent");
+  console.log(params);
   const createdId = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === params.source);
   const targetNode = project.nodes.find((node) => node.id === params.target);
