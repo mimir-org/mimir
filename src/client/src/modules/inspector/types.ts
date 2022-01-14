@@ -1,17 +1,18 @@
+import { Action, Dispatch } from "redux";
 import {
-  Node,
-  Edge,
-  Interface,
-  Transport,
-  Simple,
-  Connector,
-  CreateLibraryType,
   Attribute,
   AttributeType,
   CombinedAttribute,
-  TerminalTypeExtended,
+  Connector,
   ConnectorType,
+  CreateLibraryType,
+  Edge,
+  Interface,
+  Node,
+  Simple,
   SimpleType,
+  TerminalTypeExtended,
+  Transport,
 } from "../../models";
 
 /**
@@ -46,3 +47,14 @@ export type SelectedTerminalIdentifier = {
   connectorType: ConnectorType;
   index: number;
 };
+
+export type ChangeInspectorVisibilityAction = (visibility: boolean) => Action;
+export type ChangeInspectorHeightAction = (height: number) => Action;
+export type ChangeInspectorTabAction = (index: number) => Action;
+export type OnToogleHandler = (
+  dispatch: Dispatch,
+  open: boolean,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  changeInspectorVisibilityAction: ChangeInspectorVisibilityAction,
+  changeInspectorHeightAction: ChangeInspectorHeightAction
+) => void;

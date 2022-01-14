@@ -1,19 +1,17 @@
-import { Connector, ConnectorType, Transport } from "../../../models";
+import { Attribute, Connector, ConnectorType, Transport } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
 const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const transportType = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
-  const transportId = CreateId();
-
   if (!transportType) return null;
 
-  if (transportType.attributes) {
-    transportType.attributes.forEach((x) => {
-      x.id = CreateId();
-      x.transportId = transportId;
-    });
-  }
+  const transportId = CreateId();
+  const attributes: Attribute[] = transportType?.attributes.map((a) => ({
+    ...a,
+    transportId,
+    id: CreateId()
+  })) ?? [];
 
   const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
   const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
@@ -52,7 +50,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
     inputTerminal: inputTerminal,
     outputTerminalId: outputTerminal.id,
     outputTerminal: outputTerminal,
-    attributes: transportType.attributes,
+    attributes: attributes,
     updatedBy: transportType.updatedBy,
     updated: transportType.updated,
     createdBy: transportType.createdBy,

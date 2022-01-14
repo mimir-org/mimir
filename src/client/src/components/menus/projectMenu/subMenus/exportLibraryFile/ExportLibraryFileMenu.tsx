@@ -1,16 +1,17 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styled";
+import { ButtonBox, HeaderBox, InputBox, ProjectBody, ProjectBox } from "../styled";
 import { Input } from "../../../../../compLibrary/input/text";
 import { ExportLibraryIcon } from "../../../../../assets/icons/project";
+import { Dispatch } from "redux";
 
 interface Props {
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const ExportLibraryFileMenu = ({ dispatch }: Props) => {
@@ -27,7 +28,7 @@ export const ExportLibraryFileMenu = ({ dispatch }: Props) => {
         <InputBox>
           <div className="label">{TextResources.Project_File_Name}</div>
           <Input
-            onChange={(e: any) => setFileName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
             inputType="text"
             placeholder={TextResources.Project_File_Name}
             value={fileName}

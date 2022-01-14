@@ -10,7 +10,7 @@ import { activeMenuSelector, commonStateSelector } from "../../../redux/store";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
 import { ProjectMenuBox } from "../styled";
-import { ProjectSubMenus, MenuElement } from "./";
+import { MenuElement, ProjectSubMenus } from "./";
 import { ProjectState } from "../../../redux/store/project/types";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { Validation } from "./types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialValidationState: Validation = {
   valid: true,

@@ -10,8 +10,8 @@ import {
   GetAspectIcon,
   IsAspectNode,
   UseIndentLevel,
-  useSelectedNodes,
-  UseSetSelectNodes
+  UseSetSelectNodes,
+  useSelectedNodes
 } from "../../../helpers";
 
 interface Props {

@@ -1,12 +1,12 @@
-import { ReducerState, AttributeFilter, AttributeFilters, CombinedAttributeFilter } from "./types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AttributeFilter, AttributeFilters, CombinedAttributeFilter, ReducerState } from "./types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialParametersState: ReducerState = {
   selectedAttributeFilters: {},
 };
 
 export const parametersSlice = createSlice({
-  name: 'parameters',
+  name: "parameters",
   initialState: initialParametersState,
   reducers: {
     addAttributeFilter: (state, action: PayloadAction<AttributeFilter>) => {
@@ -22,7 +22,7 @@ export const parametersSlice = createSlice({
     },
     removeAttributeFilter: (state, action: PayloadAction<AttributeFilter>) => {
       const { elementId, filterName } = action.payload;
-      const { [filterName]: removed, ...filters } = state.selectedAttributeFilters[elementId];
+      const { [filterName]: _removed, ...filters } = state.selectedAttributeFilters[elementId];
 
       state.selectedAttributeFilters = {
         ...state.selectedAttributeFilters,
@@ -40,7 +40,7 @@ export const parametersSlice = createSlice({
       };
     },
     removeAllAttributeFilters: (state, action: PayloadAction<string>) => {
-      const { [action.payload]: removed, ...selectedAttributeFilters } = state.selectedAttributeFilters;
+      const { [action.payload]: _removed, ...selectedAttributeFilters } = state.selectedAttributeFilters;
       state.selectedAttributeFilters = selectedAttributeFilters;
     },
     addCombinedAttribute: (state, action: PayloadAction<CombinedAttributeFilter>) => {
@@ -69,7 +69,7 @@ export const parametersSlice = createSlice({
         },
       };
     },
-  }
+  },
 });
 
 export const {
@@ -78,7 +78,7 @@ export const {
   addAllAttributeFilters,
   removeAllAttributeFilters,
   addCombinedAttribute,
-  removeCombinedAttribute
+  removeCombinedAttribute,
 } = parametersSlice.actions;
 
 export default parametersSlice.reducer;

@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockEdge } from "..";
-import { Node, Project } from "../../../../../models";
-import { EdgeType, EDGE_TYPE } from "../../../../../models/project";
+import { Edge, Node, Project } from "../../../../../models";
+import { EDGE_TYPE, EdgeType } from "../../../../../models/project";
 import { IsPartOf } from "../../../helpers";
 
 /**
@@ -11,7 +11,7 @@ import { IsPartOf } from "../../../helpers";
  * @param secondaryNode
  * @param animatedEdge
  */
-const DrawBlockEdges = (project: Project, elements: Elements<any>, secondaryNode: Node, animatedEdge: boolean) => {
+const DrawBlockEdges = (project: Project, elements: Elements<Edge>, secondaryNode: Node, animatedEdge: boolean) => {
   const nodes = project.nodes;
   const edges = project.edges;
 

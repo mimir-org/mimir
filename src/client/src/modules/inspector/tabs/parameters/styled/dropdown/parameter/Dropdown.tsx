@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { MenuWrapper, MenuHeader, MenuList, MenuListItem } from "./styled";
-import { ExpandIcon, CollapseIcon } from "../../../../../../../assets/icons/chevron";
+import { MenuHeader, MenuList, MenuListItem, MenuWrapper } from "./styled";
+import { CollapseIcon, ExpandIcon } from "../../../../../../../assets/icons/chevron";
 import { TextResources } from "../../../../../../../assets/text";
 import { CombinedAttributeFilter } from "../../../../../../../models";
 import { FilterDict } from "../../../redux/types";
@@ -21,7 +21,7 @@ const Dropdown = ({ items, selectedItems, onChange }: Props) => {
 
   return (
     <MenuWrapper>
-      <MenuHeader onClick={(e) => setIsListOpen(!isListOpen)}>
+      <MenuHeader onClick={() => setIsListOpen(!isListOpen)}>
         <p className="searchText">{TextResources.Inspector_Params_Search}</p>
         <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
       </MenuHeader>

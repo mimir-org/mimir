@@ -1,7 +1,7 @@
 import { useHistory } from "react-router";
 import { Home } from "../home/";
 import { GlobalStyle } from "../../compLibrary";
-import { useAppSelector, projectStateSelector, isFetchingSelector } from "../../redux/store";
+import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
 import { LoginBox } from "./styled";
 import { LogoutIcon } from "../../assets/icons/header";
 import { TextResources } from "../../assets/text";
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
-import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
+import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
 import { IsStartPage } from "../../helpers";

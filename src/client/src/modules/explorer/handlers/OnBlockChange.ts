@@ -1,8 +1,8 @@
 import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../redux/store/project/actions";
 import { Node } from "../../../models";
-import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
+import { removeSecondaryNode, setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
-import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
+import { IsDirectChild, IsFamily, IsProduct } from "../../../helpers";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.

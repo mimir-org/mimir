@@ -1,6 +1,6 @@
 import { FlowState } from "./types";
-import { ViewType, VIEW_TYPE } from "../../../models/project";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { VIEW_TYPE, ViewType } from "../../../models/project";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: FlowState = {
   view: VIEW_TYPE.STARTPAGE as ViewType,

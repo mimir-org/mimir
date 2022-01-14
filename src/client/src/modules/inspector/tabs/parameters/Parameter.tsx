@@ -5,7 +5,7 @@ import { Color } from "../../../../compLibrary/colors";
 import { ParameterButton, ParameterHeader, ParameterInputsWrapper } from "./styled/parameter";
 import { Dropdown as CompDropdown } from "../../../../compLibrary/dropdown/mimir";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../models";
-import { WarningIcon, HelpIcon } from "../../../../assets/icons/common";
+import { HelpIcon, WarningIcon } from "../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { AttributeLikeItem } from "../../types";
@@ -13,7 +13,7 @@ import { IsAttribute } from "../../helpers/IsType";
 import { FontSize } from "../../../../compLibrary/font";
 import { VisuallyHidden } from "../../../../compLibrary/util";
 
-export const PARAMETER_ENTITY_WIDTH: number = 255;
+export const PARAMETER_ENTITY_WIDTH = 255;
 
 interface Props {
   attribute: AttributeLikeItem;

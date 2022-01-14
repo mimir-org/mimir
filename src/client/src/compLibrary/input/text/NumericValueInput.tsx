@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NumericInput } from ".";
 
 interface Props {
   value: string;
-  onChange: Function;
+  onChange: (quantity: number) => void;
 }
 
 const NumericValueInput = ({ value, onChange }: Props) => {
@@ -11,13 +11,13 @@ const NumericValueInput = ({ value, onChange }: Props) => {
 
   useEffect(() => {
     if (value) {
-      var num = parseInt(value) || 0;
+      const num = parseInt(value) || 0;
       setQuantity(num);
     }
   }, [value]);
 
-  const handleChange = (e: any) => {
-    var num = parseInt(e.target.value) || 0;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const num = parseInt(e.target.value) || 0;
     setQuantity(num);
   };
 

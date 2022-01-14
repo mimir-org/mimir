@@ -1,11 +1,7 @@
 import { TextResources } from "../../../../../assets/text";
-import { ProjectDescriptionBox, ProjectDescriptionBody } from "./styled";
+import { ProjectDescriptionBody, ProjectDescriptionBox } from "./styled";
 
-interface Props {
-  description: string;
-}
-
-export const ProjectDescription = ({ description }: Props) => (
+export const ProjectDescription = () => (
   <ProjectDescriptionBox>
     <ProjectDescriptionBody>
       <p className="about">{TextResources.Project_Description_About}</p>

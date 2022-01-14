@@ -3,6 +3,7 @@ import { addNode, createEdge, setOffPageStatus } from "../../../../../../redux/s
 import { OffPageData } from "./CreateOffPageObject";
 import { CreateOffPageObject } from ".";
 import { Position } from "../../../../../../models/project";
+import { Dispatch } from "redux";
 
 /**
  * Component to create a required OffPageNode. The OffPageNode is created with a partOf edge to its parent, and a transport edge.
@@ -16,7 +17,7 @@ const CreateRequiredOffPageNode = (
   sourceNode: Node,
   sourceConnector: Connector,
   position: Position,
-  dispatch: any,
+  dispatch: Dispatch,
   isRequired: boolean
 ) => {
   const offPageData = {

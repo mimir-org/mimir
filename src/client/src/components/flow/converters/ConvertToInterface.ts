@@ -1,4 +1,4 @@
-import { Connector, Interface, ConnectorType } from "../../../models";
+import { Connector, ConnectorType, Interface } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 

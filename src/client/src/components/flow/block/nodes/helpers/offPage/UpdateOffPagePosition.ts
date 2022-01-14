@@ -1,9 +1,16 @@
+import { Dispatch } from "redux";
 import { Connector, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { updateBlockPosition } from "../../../../../../redux/store/project/actions";
 import { IsInputTerminal } from "../../../../helpers";
 
-const UpdateOffPagePosition = (node: Node, parentBlockNode: Node, terminal: Connector, size: BlockNodeSize, dispatch: any) => {
+const UpdateOffPagePosition = (
+  node: Node,
+  parentBlockNode: Node,
+  terminal: Connector,
+  size: BlockNodeSize,
+  dispatch: Dispatch
+) => {
   const inputTerminalPos = parentBlockNode?.positionBlockX + size.width;
   const outputTerminalPos = parentBlockNode?.positionBlockX - 35;
 

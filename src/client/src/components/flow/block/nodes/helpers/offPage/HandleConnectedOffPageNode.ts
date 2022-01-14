@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { CreateConnectedOffPageNode, HasConnectedOffPageNode } from ".";
 import { IsOffPage } from "../../../../../../helpers";
 import { Edge, Node } from "../../../../../../models";
@@ -13,7 +14,7 @@ import { GetParent, IsTransportConnection } from "../../../../helpers";
  * @param size
  * @param dispatch
  */
-const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: any) => {
+const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   edges.forEach((edge) => {
     if (IsValidTransport(edge, node)) {
       const isNodeTarget = edge.toNodeId === node.id;
@@ -35,7 +36,7 @@ function IsValidTransport(edge: Edge, node: Node) {
   );
 }
 
-function AddConnectedOffPageNode(node: Node, isNodeTarget: boolean, edge: Edge, dispatch: any, size: BlockNodeSize) {
+function AddConnectedOffPageNode(node: Node, isNodeTarget: boolean, edge: Edge, dispatch: Dispatch, size: BlockNodeSize) {
   const nodeParent = GetParent(node);
   const xPos = isNodeTarget ? nodeParent?.positionBlockX : size.width;
   const connector = node?.connectors.find((c) => (isNodeTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));

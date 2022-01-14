@@ -1,14 +1,14 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
 import { Attribute, LockAttributeAm, Project } from "../../../../../models";
-import { IsNode, IsTransport, IsEdge, IsInterface, IsConnector, IsSimple } from "../../../helpers/IsType";
-import { InspectorParametersElement, InspectorElement, InspectorTerminalsElement } from "../../../types";
+import { IsConnector, IsEdge, IsInterface, IsNode, IsSimple, IsTransport } from "../../../helpers/IsType";
+import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../types";
 import {
   lockAttribute,
-  setIsLockedSimpleAttribute,
   setIsLockedInterfaceAttribute,
   setIsLockedNodeAttribute,
   setIsLockedNodeTerminalAttribute,
+  setIsLockedSimpleAttribute,
   setIsLockedTransportAttribute,
   setIsLockedTransportTerminalAttribute,
 } from "../../../../../redux/store/project/actions";

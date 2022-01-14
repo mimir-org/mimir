@@ -1,4 +1,4 @@
-import { ArrowHeadType, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { ArrowHeadType, EdgeProps, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { IsOffPage } from "../../../../helpers";
 import { Connector } from "../../../../models";
 import { electroSelector, useAppSelector } from "../../../../redux/store";
@@ -15,7 +15,7 @@ import {
  * @param params
  * @returns a TransportEdge or RelationEdge in BlockView.
  */
-const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }) => {
+const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
   const electro = useAppSelector(electroSelector);
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;

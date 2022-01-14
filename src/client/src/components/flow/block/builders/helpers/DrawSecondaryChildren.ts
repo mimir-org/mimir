@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
 import { BuildSecondaryChildNode } from "..";
-import { IsFamily, IsDirectChild } from "../../../../../helpers";
+import { IsDirectChild, IsFamily } from "../../../../../helpers";
 import { Node, Project } from "../../../../../models";
 
 /**
@@ -14,7 +14,7 @@ import { Node, Project } from "../../../../../models";
 const DrawSecondaryChildren = (
   project: Project,
   secondary: Node,
-  elements: Elements<any>,
+  elements: Elements,
   libOpen: boolean,
   explorerOpen: boolean
 ) => {

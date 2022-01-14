@@ -8,7 +8,7 @@ import { EnumBase, Node, Project } from "../../../../models";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
-import { IsAspectNode, IsProduct, GetRdsId, GetReferenceDesignation } from "../../../../helpers";
+import { GetRdsId, GetReferenceDesignation, IsAspectNode, IsProduct } from "../../../../helpers";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 

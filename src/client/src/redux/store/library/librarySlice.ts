@@ -1,5 +1,5 @@
 import { CreateLibraryType, LibItem, ObjectType } from "../../../models";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
 
@@ -13,10 +13,10 @@ const initialLibraryState: LibraryState = {
 };
 
 export const librarySlice = createSlice({
-  name: 'library',
+  name: "library",
   initialState: initialLibraryState,
   reducers: {
-    fetchLibrary: (state, action: PayloadAction<string>) => {
+    fetchLibrary: (state, _action: PayloadAction<string>) => {
       state.fetching = true;
       state.nodeTypes = [];
       state.transportTypes = [];
@@ -26,12 +26,12 @@ export const librarySlice = createSlice({
         : state.apiError;
     },
     fetchLibrarySuccessOrError: (state, action: PayloadAction<FetchLibrary>) => {
-        state.fetching = false;
-        const { nodeTypes, transportTypes, interfaceTypes, subProjectTypes } = action.payload;
-        Object.assign(state, { nodeTypes, transportTypes, interfaceTypes, subProjectTypes });
-        action.payload.apiError && state.apiError.push(action.payload.apiError);
+      state.fetching = false;
+      const { nodeTypes, transportTypes, interfaceTypes, subProjectTypes } = action.payload;
+      Object.assign(state, { nodeTypes, transportTypes, interfaceTypes, subProjectTypes });
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
-    exportLibrary: (state, action: PayloadAction<string>) => {
+    exportLibrary: (state, _action: PayloadAction<string>) => {
       state.fetching = true;
       state.apiError = state.apiError
         ? state.apiError.filter((elem) => elem.key !== exportLibrarySuccessOrError.type)
@@ -41,7 +41,7 @@ export const librarySlice = createSlice({
       state.fetching = false;
       action.payload && state.apiError.push(action.payload);
     },
-    importLibrary: (state, action: PayloadAction<CreateLibraryType[]>) => {
+    importLibrary: (state, _action: PayloadAction<CreateLibraryType[]>) => {
       state.fetching = true;
       state.apiError = state.apiError
         ? state.apiError.filter((elem) => elem.key !== importLibrarySuccessOrError.type)
@@ -86,8 +86,8 @@ export const librarySlice = createSlice({
     deleteLibraryError: (state, action: PayloadAction<string>) => {
       state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
     },
-  }
-})
+  },
+});
 
 export const {
   fetchLibrary,
@@ -102,7 +102,7 @@ export const {
   fetchLibraryInterfaceTypesSuccessOrError,
   addLibraryItem,
   removeLibraryItem,
-  deleteLibraryError
+  deleteLibraryError,
 } = librarySlice.actions;
 
 export default librarySlice.reducer;

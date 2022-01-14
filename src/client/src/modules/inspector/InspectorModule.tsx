@@ -2,7 +2,7 @@ import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
-import { IsBlockView, GetSelectedNode } from "../../helpers";
+import { GetSelectedNode, IsBlockView } from "../../helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { InspectorElement } from "./types";

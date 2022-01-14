@@ -1,6 +1,6 @@
 import { Color } from "../../../../compLibrary/colors";
 import { SimpleLikeItem } from "../../types";
-import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "../terminals/styled/activeTerminalList";
+import { TerminalsCategoryListElement, TerminalsListElementWrapper } from "../terminals/styled/activeTerminalList";
 
 interface Props {
   simpleTypes: SimpleLikeItem[];

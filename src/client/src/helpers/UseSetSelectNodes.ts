@@ -11,7 +11,7 @@ export const UseSetSelectNodes = (): [SetFlowElementFunction] => {
 
   const setActiveNodes = useCallback(
     (elements: Node[]) => {
-      let nodesArray = [];
+      const nodesArray = [];
       elements.forEach((e) => {
         nodes.forEach((n) => {
           if (n.id === e.id) {

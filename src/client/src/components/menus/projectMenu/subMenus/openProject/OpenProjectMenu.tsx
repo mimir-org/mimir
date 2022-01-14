@@ -8,7 +8,7 @@ import { ProjectState } from "../../../../../redux/store/project/types";
 import { OnOpen, OnReturn } from "./handlers";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
 import { ProjectDetails } from ".";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonsContainer, OpenButton } from "../styled";
+import { ButtonsContainer, HeaderBox, OpenButton, ProjectBody, ProjectBox } from "../styled";
 import { IsStartPage } from "../../../../../helpers";
 
 interface Props {

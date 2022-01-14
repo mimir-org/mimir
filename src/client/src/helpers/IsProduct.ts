@@ -1,4 +1,4 @@
-import { Node, LibItem, Aspect, CreateLibraryType } from "../models";
+import { Aspect, CreateLibraryType, LibItem, Node } from "../models";
 
 const IsProduct = (item: Node | LibItem | CreateLibraryType) => {
   return item?.aspect === Aspect.Product;

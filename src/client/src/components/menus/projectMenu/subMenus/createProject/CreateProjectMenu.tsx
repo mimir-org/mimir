@@ -7,7 +7,7 @@ import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
 import { Input } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styled";
+import { ButtonBox, HeaderBox, InputBox, ProjectBody, ProjectBox } from "../styled";
 import { CreateProjectIcon } from "../../../../../assets/icons/project";
 
 interface Props {

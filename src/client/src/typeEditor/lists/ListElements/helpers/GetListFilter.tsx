@@ -1,12 +1,12 @@
 import { ListType } from "../../../TypeEditorList";
-import { Rds, AttributeType, SimpleType, PredefinedAttribute, TerminalTypeDict } from "../../../../models";
+import { AttributeType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../../../../models";
 import {
-  IsRds,
-  IsTerminal,
-  IsObjectAttributes,
   IsLocationAttributes,
-  IsSimpleTypes,
+  IsObjectAttributes,
   IsPredefinedAttributes,
+  IsRds,
+  IsSimpleTypes,
+  IsTerminal,
 } from "../../../helpers";
 
 const GetListFilter = (
@@ -14,7 +14,7 @@ const GetListFilter = (
   listType: ListType,
   list: Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[]
 ): Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[] => {
-  let filter: any[] = list;
+  const filter: any[] = list;
   if (list)
     if (IsRds(listType))
       return filter.filter((x) => x.name.match(new RegExp(searchString, "i")) || x.code.match(new RegExp(searchString, "i")));

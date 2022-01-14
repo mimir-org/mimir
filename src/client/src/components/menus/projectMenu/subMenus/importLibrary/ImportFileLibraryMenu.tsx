@@ -1,12 +1,12 @@
 import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { MENU_TYPE } from "../../../../../models/project";
-import { FileData, CreateLibraryType } from "../../../../../models";
+import { CreateLibraryType, FileData } from "../../../../../models";
 import { CloseIcon } from "../../../../../assets/icons/close";
 import { TextResources } from "../../../../../assets/text";
 import { Button } from "../../../../../compLibrary/buttons";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox } from "../styled";
+import { ButtonBox, HeaderBox, ProjectBody, ProjectBox } from "../styled";
 import { ImportLibraryIcon } from "../../../../../assets/icons/project";
 
 interface Props {

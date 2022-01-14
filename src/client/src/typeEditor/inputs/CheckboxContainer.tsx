@@ -12,6 +12,7 @@ interface Props {
   name?: string;
   label: Label;
   defaultValue?: any;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   onChange: Function;
 }
 

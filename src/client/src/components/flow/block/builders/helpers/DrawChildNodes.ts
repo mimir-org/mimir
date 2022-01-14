@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { BuildChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
-import { Node, Edge, Connector, Project } from "../../../../../models";
+import { Connector, Edge, Node, Project } from "../../../../../models";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } from "../../../helpers";
 
 /**
@@ -16,7 +16,7 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
 const DrawChildNodes = (
   project: Project,
   selectedNode: Node,
-  elements: Elements<any>,
+  elements: Elements,
   libOpen: boolean,
   explorerOpen: boolean,
   splitView: boolean
@@ -42,7 +42,7 @@ function ValidateEdge(edge: Edge, selectedNode: Node) {
   return IsPartOf(edge.toConnector) && IsFamily(selectedNode, edge.toNode) && edge.fromNodeId === selectedNode?.id;
 }
 
-function ValidateOffPageNode(node: Node, splitView: boolean, elements: Elements<any>, edges: Edge[], nodes: Node[]) {
+function ValidateOffPageNode(node: Node, splitView: boolean, elements: Elements, edges: Edge[], nodes: Node[]) {
   const offPageParent = GetParent(node);
 
   if (splitView) {

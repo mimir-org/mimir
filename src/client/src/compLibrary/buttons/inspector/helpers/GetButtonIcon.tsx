@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 import { InspectorButtonType } from "../InspectorButton";
 import { LockClosedComponent, LockOpenComponent } from "../../../../assets/icons/lock";
-import { CheckmarkEmptyComponent, CheckmarkCheckedComponent } from "../../../../assets/icons/checkmark";
+import { CheckmarkCheckedComponent, CheckmarkEmptyComponent } from "../../../../assets/icons/checkmark";
 import {
-  DeleteIconComponent,
   DeleteActiveIconComponent,
   DeleteDisabledIconComponent,
+  DeleteIconComponent,
 } from "../../../../assets/icons/delete";
 
 export const GetButtonIcon = (type: InspectorButtonType): ReactElement => {

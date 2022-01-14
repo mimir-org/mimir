@@ -1,4 +1,4 @@
-import { LockOpen, LockClosed } from "../../../assets/icons/lock";
+import { LockClosed, LockOpen } from "../../../assets/icons/lock";
 import { AspectButton } from "../aspectComponent/styled";
 import { Icon } from "../../../compLibrary/icon";
 import { VisuallyHidden } from "../../../compLibrary/util";

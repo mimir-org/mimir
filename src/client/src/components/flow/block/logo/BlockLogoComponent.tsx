@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { LogoBox, SymbolBox, BlockNodeNameBox, BlockLogoWrapper } from "./styled";
+import { BlockLogoWrapper, BlockNodeNameBox, LogoBox, SymbolBox } from "./styled";
 import { Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { GetCompanyLogoForNode } from "../../../../helpers";

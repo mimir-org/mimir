@@ -6,7 +6,7 @@ import { MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight, changeInspectorTab } from "../../../modules/inspector/redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
-import { setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
+import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../redux/store/project/actions";
 
 export const handleNoSelect = (
   project: Project,

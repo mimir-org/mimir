@@ -1,4 +1,4 @@
-import { LegendBody, LegendElement, LegendColor } from "./styled";
+import { LegendBody, LegendColor, LegendElement } from "./styled";
 import { LegendComponent } from "./";
 import { Project } from "../../models";
 

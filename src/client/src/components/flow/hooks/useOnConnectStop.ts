@@ -1,11 +1,18 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Project, Node } from "../../../models";
+import { Node, Project } from "../../../models";
 import { IsOffPage } from "../../../helpers";
 import { GetParent, IsOutputTerminal } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/helpers/offPage";
+import { Dispatch } from "redux";
 
-const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, secondaryNode: boolean, dispatch: any) => {
+const useOnConnectStop = (
+  e: MouseEvent,
+  project: Project,
+  parentNodeSize: BlockNodeSize,
+  secondaryNode: boolean,
+  dispatch: Dispatch
+) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
 

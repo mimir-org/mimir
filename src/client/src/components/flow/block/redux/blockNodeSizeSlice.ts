@@ -1,6 +1,6 @@
 import { Size } from "../../../../compLibrary/size";
 import { BlockNodeSize } from "./types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Aspect } from "../../../../models/Enums";
 
 const parent = {

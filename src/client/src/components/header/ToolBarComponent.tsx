@@ -1,7 +1,7 @@
 import * as Click from "./handlers";
 import * as Icons from "../../assets/icons/header";
 import { Dispatch } from "redux";
-import { ViewType, VIEW_TYPE } from "../../models/project";
+import { VIEW_TYPE, ViewType } from "../../models/project";
 import { ToolBarBody, ToolBarBox } from "./styled";
 import { ToolBarElement } from ".";
 import { Node, Project } from "../../models";
@@ -23,17 +23,7 @@ interface Props {
  * @param interface
  * @returns a menu with icons for different features.
  */
-const ToolBarComponent = ({
-  project,
-  libOpen,
-  explorerOpen,
-  isTreeView,
-  visualFilterOpen,
-  isElectro,
-  location3DActive,
-  selectedNode,
-  dispatch,
-}: Props) => (
+const ToolBarComponent = ({ project, libOpen, explorerOpen, isTreeView, visualFilterOpen, isElectro, dispatch }: Props) => (
   <ToolBarBox id="ToolBar" libOpen={libOpen} explorerOpen={explorerOpen}>
     <ToolBarBody>
       <ToolBarElement

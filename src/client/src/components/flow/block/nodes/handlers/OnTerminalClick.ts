@@ -1,8 +1,9 @@
+import { Dispatch } from "redux";
 import { Connector, Edge, Node } from "../../../../../models";
 import { changeActiveConnector, removeEdge } from "../../../../../redux/store/project/actions";
 import { IsBidirectionalTerminal } from "../../../helpers";
 
-const OnTerminalClick = (conn: Connector, isInput: boolean, node: Node, dispatch: any, edges: Edge[]) => {
+const OnTerminalClick = (conn: Connector, isInput: boolean, node: Node, dispatch: Dispatch, edges: Edge[]) => {
   let isBidirectionalInput = false;
 
   if (IsBidirectionalTerminal(conn)) {

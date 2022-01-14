@@ -4,7 +4,7 @@ import { TextResources } from "../../../assets/text";
 import { CreateId } from "../../../components/flow/helpers";
 import { AddIcon } from "../../../assets/icons/type";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
-import { TerminalListElement, TerminalCategoryWrapper, AddTerminalWrapper } from "../../styled";
+import { AddTerminalWrapper, TerminalCategoryWrapper, TerminalListElement } from "../../styled";
 import { OnTerminalCategoryChangeFunction, TerminalCategoryChangeKey } from "../../types";
 
 interface Props {

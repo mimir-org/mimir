@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
+import React, { useEffect, useState } from "react";
+import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
 import { AttributeType } from "../../models";
-import { SearchBarContainer, SearchBar, SearchBarList, SearchBarListItem } from "..";
+import { SearchBar, SearchBarContainer, SearchBarList, SearchBarListItem } from "..";
 
-interface Props {
+interface Props<T extends SearchDropDownItem> {
   value?: string;
   placeHolder?: string;
-  onChange: Function;
-  list: SearchDropDownItem[];
+  onChange: (item: T) => void;
+  list: T[];
 }
 
 export interface SearchDropDownItem {
@@ -16,7 +16,7 @@ export interface SearchDropDownItem {
   attributes: AttributeType[];
 }
 
-const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
+const SearchDropDown = <T extends SearchDropDownItem>({ value, placeHolder, list, onChange }: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
   const isInArray = list.find((x) => x.name === searchString);
@@ -27,7 +27,7 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
       list.filter((x) => x && x.name && x.name.toLowerCase().includes(searchString.toLowerCase()))) ||
     list;
 
-  const valueChanged = (item) => {
+  const valueChanged = (item: T) => {
     setSearchString(item.name);
     setIsListOpen(false);
     onChange(item);
@@ -59,7 +59,7 @@ const SearchDropDown = ({ value, placeHolder, list, onChange }: Props) => {
           type="text"
           value={searchString}
           placeholder={placeHolder ?? ""}
-          onChange={(e: any) => setSearchString(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchString(e.target.value)}
           onFocus={() => setIsListOpen(!isListOpen)}
         />
         <img

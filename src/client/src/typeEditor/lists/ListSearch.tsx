@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ListSearchBar } from "../../compLibrary";
 import { SearchIcon } from "../../assets/icons/common";
 import { ListType } from "../TypeEditorList";
 import { GetListFilter } from "./ListElements/helpers";
-import { Rds, AttributeType, SimpleType, PredefinedAttribute, TerminalTypeDict } from "../../models";
+import { AttributeType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../../models";
 
 interface Props {
   listType: ListType;

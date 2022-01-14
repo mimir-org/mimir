@@ -13,8 +13,8 @@ import Validation from "../validation/Validation";
  */
 export function GetTypeEditorLists(state: TypeEditorState, dispatch: Dispatch<any>) {
   return Object.values(ListType).map((type, key) => {
-    let listTypeEnum = ListType[type as keyof typeof ListType];
-    let listDescriptor = GetTypeEditorListDescriptor(listTypeEnum, state, dispatch);
+    const listTypeEnum = ListType[type as keyof typeof ListType];
+    const listDescriptor = GetTypeEditorListDescriptor(listTypeEnum, state, dispatch);
 
     return (listDescriptor.isVisible &&
       <Validation key={key}

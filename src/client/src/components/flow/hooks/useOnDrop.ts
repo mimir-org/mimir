@@ -1,6 +1,6 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
-import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Simple, Connector, Attribute } from "../../../models";
+import { Attribute, BlobData, Connector, LibItem, LibrarySubProjectItem, Node, Project, Simple, User } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
 import { Dispatch } from "redux";
@@ -86,7 +86,7 @@ const handleCreatePartOfEdge = (
   targetNode.level = sourceNode.level + 1;
   const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library, false);
+  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
   dispatch(createEdge(partofEdge));

@@ -1,21 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Node, Connector } from "../../../../models";
+import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { IsValidBlockConnection, SetTerminalYPos, SetTerminalXPos, GetTerminalColor } from "./helpers";
+import { GetTerminalColor, IsValidBlockConnection, SetTerminalXPos, SetTerminalYPos } from "./helpers";
 import { HandleBox } from "./styled";
 import { IsInputTerminal, IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { BlockNodeSize } from "../../../../models/project";
-import { useAppSelector, nodeSelector } from "../../../../redux/store";
+import { nodeSelector, useAppSelector } from "../../../../redux/store";
+import { Dispatch } from "redux";
 
 interface Props {
   node: Node;
   size: BlockNodeSize;
   terminals: Connector[];
-  dispatch: any;
+  dispatch: Dispatch;
   isParent?: boolean;
   electro?: boolean;
   offPage?: boolean;

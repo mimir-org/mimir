@@ -1,4 +1,4 @@
-import { Project, Edge, Node } from "..";
+import { Edge, Node, Project } from "..";
 import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { ConnectorType, RelationType } from "../Enums";
 import { post } from "../../models/webclient";
@@ -9,7 +9,7 @@ import { IsAspectNode, IsFamily } from "../../helpers";
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {
     const file = event.dataTransfer.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
 
     reader.onload = () => {
       resolve(reader.result);
@@ -35,7 +35,7 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
 
     if (!targetnodeConnector) return [[], []];
 
-    let data = await readFile(event);
+    const data = await readFile(event);
     const loadedProject = JSON.parse(data as string) as ProjectAm;
 
     if (!loadedProject.isSubProject) return [[], []];

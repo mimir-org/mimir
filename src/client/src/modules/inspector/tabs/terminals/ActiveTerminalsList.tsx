@@ -4,7 +4,7 @@ import { TerminalCategory } from "../../../../typeEditor/helpers/GetFilteredTerm
 import { ConnectorType, TerminalType } from "../../../../models";
 import { ActiveTerminalsTypeList } from "./";
 import { OnCategoryClick, OnTypeClick } from "./handlers";
-import { ExpandAccordionIcon, CollapseAccordionIcon } from "../../../../assets/icons/toogle";
+import { CollapseAccordionIcon, ExpandAccordionIcon } from "../../../../assets/icons/toogle";
 import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 import {
   FilterTerminalCategories,
@@ -14,9 +14,9 @@ import {
 } from "./helpers";
 
 import {
-  TerminalsListElementWrapper,
-  TerminalsCategoryListElement,
   ActiveTerminalListWrapper,
+  TerminalsCategoryListElement,
+  TerminalsListElementWrapper,
 } from "./styled/activeTerminalList";
 
 interface Props {

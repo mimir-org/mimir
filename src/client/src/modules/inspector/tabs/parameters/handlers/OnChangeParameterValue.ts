@@ -1,12 +1,12 @@
 import { Dispatch } from "redux";
-import { IsSimple, IsConnector, IsEdge, IsInterface, IsNode, IsTransport } from "../../../helpers/IsType";
+import { IsConnector, IsEdge, IsInterface, IsNode, IsSimple, IsTransport } from "../../../helpers/IsType";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../types";
 import {
-  changeSimpleAttributeValue,
   changeInterfaceAttributeValue,
   changeInterfaceTerminalAttributeValue,
   changeNodeAttributeValue,
   changeNodeTerminalAttributeValue,
+  changeSimpleAttributeValue,
   changeTransportAttributeValue,
   changeTransportTerminalAttributeValue,
 } from "../../../../../redux/store/project/actions";

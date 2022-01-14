@@ -1,6 +1,6 @@
 import { ObjectType } from "../models";
 import { TextResources } from "../assets/text";
-import { NewTypeIcon, EditTypeIcon } from "../assets/icons/type";
+import { EditTypeIcon, NewTypeIcon } from "../assets/icons/type";
 import { useAppDispatch } from "../redux/store";
 import { OnOpenTypeEditor } from "./handlers";
 import { TypeEditorBox, TypeEditorButton } from "./styled";

@@ -1,6 +1,6 @@
-import { ValidateRelationItem, ValidatePartOfItem, ValidateTransportItem, ValidateFulfilledByItem } from ".";
+import { ValidateFulfilledByItem, ValidatePartOfItem, ValidateRelationItem, ValidateTransportItem } from ".";
 import { Connector, Edge } from "../../../../models";
-import { IsLocationTerminal, IsPartOf, IsTransport, IsProductTerminal } from "../../../flow/helpers";
+import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../flow/helpers";
 
 /**
  * Method to add content to the different categories in the Visual Filter.

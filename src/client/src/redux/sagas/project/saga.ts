@@ -5,34 +5,34 @@ import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { IsPartOf } from "../../../components/flow/helpers";
 import {
-  get,
-  post,
-  GetBadResponseData,
   ApiError,
   GetApiErrorForBadRequest,
   GetApiErrorForException,
+  GetBadResponseData,
+  get,
+  post,
 } from "../../../models/webclient";
 import {
-  FETCHING_PROJECT_SUCCESS_OR_ERROR,
-  CREATING_PROJECT_SUCCESS_OR_ERROR,
-  SEARCH_PROJECT_SUCCESS_OR_ERROR,
-  SAVE_PROJECT_SUCCESS_OR_ERROR,
-  ExportProjectFileAction,
-  ImportProjectAction,
-  EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-  IMPORT_PROJECT_SUCCESS_OR_ERROR,
   COMMIT_PROJECT_SUCCESS_OR_ERROR,
-  CommitProject,
-  LockNode,
-  LOCK_NODE_SUCCESS_OR_ERROR,
-  LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-  CreateSubProject,
+  CREATING_PROJECT_SUCCESS_OR_ERROR,
   CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
-  LockEdge,
-  LOCK_EDGE_SUCCESS_OR_ERROR,
-  LockAttribute,
-  SaveProjectAction,
+  CommitProject,
+  CreateSubProject,
+  EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
+  ExportProjectFileAction,
+  FETCHING_PROJECT_SUCCESS_OR_ERROR,
   FetchingProjectAction,
+  IMPORT_PROJECT_SUCCESS_OR_ERROR,
+  ImportProjectAction,
+  LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
+  LOCK_EDGE_SUCCESS_OR_ERROR,
+  LOCK_NODE_SUCCESS_OR_ERROR,
+  LockAttribute,
+  LockEdge,
+  LockNode,
+  SAVE_PROJECT_SUCCESS_OR_ERROR,
+  SEARCH_PROJECT_SUCCESS_OR_ERROR,
+  SaveProjectAction,
 } from "../../store/project/types";
 
 export function* getProject(action: FetchingProjectAction) {
@@ -344,7 +344,7 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
       return;
     }
 
-    var data = response.data as ProjectFileAm;
+    const data = response.data as ProjectFileAm;
     const blob = new Blob([data.fileContent], {
       type: data.fileFormat.contentType,
     });

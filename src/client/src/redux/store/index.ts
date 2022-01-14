@@ -15,14 +15,14 @@ import location3DReducer from "../../modules/location/redux/location3DSlice";
 import validationReducer from "./validation/validationSlice";
 import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import libraryReducer from "./library/librarySlice";
+import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
 import { rootSaga } from "../sagas";
-import { edgeAnimationReducer } from "./edgeAnimation/reducers";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistReducer, persistStore } from 'redux-persist'
 
 const rootReducers = combineReducers({
   library: libraryReducer,

@@ -1,16 +1,16 @@
 import * as Types from "./types";
 import {
-  Node,
-  Edge,
-  Project,
   CommitPackage,
   Connector,
-  Simple,
-  ProjectFileAm,
-  ProjectConverterAm,
+  Edge,
   LockAttributeAm,
-  LockNodeAm,
   LockEdgeAm,
+  LockNodeAm,
+  Node,
+  Project,
+  ProjectConverterAm,
+  ProjectFileAm,
+  Simple,
 } from "../../../models";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
@@ -135,13 +135,6 @@ export function setEdgeVisibility(edge: Edge, isHidden: boolean): Types.ProjectA
   return {
     type: Types.SET_EDGE_VISIBILITY,
     payload: { edge, isHidden },
-  };
-}
-
-export function setEdgeAnimation(edge: Edge, animated: boolean): Types.ProjectActionTypes {
-  return {
-    type: Types.SET_EDGE_ANIMATION,
-    payload: { edge, animated },
   };
 }
 
@@ -385,7 +378,7 @@ export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTyp
   };
 }
 
-export function lockNode(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockNode {
+export function lockNode(id: string, projectId: string, isLocked: boolean, _isLockedStatusBy: string): Types.LockNode {
   return {
     type: Types.LOCK_NODE,
     payload: {
@@ -396,7 +389,7 @@ export function lockNode(id: string, projectId: string, isLocked: boolean, isLoc
   };
 }
 
-export function lockEdge(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockEdge {
+export function lockEdge(id: string, projectId: string, isLocked: boolean, _isLockedStatusBy: string): Types.LockEdge {
   return {
     type: Types.LOCK_EDGE,
     payload: {
@@ -407,7 +400,7 @@ export function lockEdge(id: string, projectId: string, isLocked: boolean, isLoc
   };
 }
 
-export function lockAttribute(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockAttribute {
+export function lockAttribute(id: string, projectId: string, isLocked: boolean, _isLockedStatusBy: string): Types.LockAttribute {
   return {
     type: Types.LOCK_ATTRIBUTE,
     payload: {
@@ -509,7 +502,7 @@ export function setIsLockedTransportTerminalAttribute(lockAttributeAm: LockAttri
 }
 export function setIsLockedInterfaceTerminalAttribute(
   lockAttributeAm: LockAttributeAm,
-  edge: Edge
+  _edge: Edge
 ): Types.SetLockInterfaceTerminalAttribute {
   return {
     type: Types.SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE,
