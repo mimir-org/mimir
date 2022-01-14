@@ -8,9 +8,10 @@ import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import { ButtonBox, HeaderBox, ProjectBody, ProjectBox } from "../styled";
 import { ImportLibraryIcon } from "../../../../../assets/icons/project";
+import { Dispatch } from "redux";
 
 interface Props {
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const ImportFileLibraryMenu = ({ dispatch }: Props) => {

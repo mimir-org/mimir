@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Edge, Node, Project } from "..";
 import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { ConnectorType, RelationType } from "../Enums";

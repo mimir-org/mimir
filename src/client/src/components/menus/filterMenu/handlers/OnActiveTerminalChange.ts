@@ -1,9 +1,11 @@
+import { Dispatch } from "redux";
 import { EDGE_KIND } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { IsPartOf } from "../../../flow/helpers";
 
-const OnActiveTerminalChange = (activeElements: any[], dispatch: any, visible: boolean) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const OnActiveTerminalChange = (activeElements: any[], dispatch: Dispatch, visible: boolean) => {
   const edgeTypes = Object.values(EDGE_TYPE);
 
   // Toggle active terminals and edges

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Checkbox } from "../../compLibrary/input/checkbox/common";
 import { AttributeName, LabelWrapper } from "./styled";
 

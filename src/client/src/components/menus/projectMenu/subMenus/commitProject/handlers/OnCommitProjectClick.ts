@@ -1,8 +1,9 @@
 import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { commitProject } from "../../../../../../redux/store/project/actions";
 import { CommitPackage, CommitStatus } from "../../../../../../models";
+import { Dispatch } from "redux";
 
-const OnCommitProjectClick = (dispatch: any, projectId: string, parserId: string, receiverDomain: string) => {
+const OnCommitProjectClick = (dispatch: Dispatch, projectId: string, parserId: string, receiverDomain: string) => {
   const commitPackage = {
     projectId: projectId,
     commitStatus: CommitStatus.Review,

@@ -6,13 +6,14 @@ import { OnBlockChange } from "../handlers";
 import { IsChecked, IsMiniCheckbox } from "../helpers";
 import { Elements } from "react-flow-renderer";
 import { AspectElementWrapper } from "./styled";
+import { Dispatch } from "redux";
 
 interface Props {
   node: Node;
   selectedNode: Node;
   secondaryNode: Node;
   elements: Elements;
-  dispatch: any;
+  dispatch: Dispatch;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
@@ -24,7 +25,17 @@ interface Props {
  * @param interface
  * @returns an element with either an Aspect header or a checkbox.
  */
-const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, dispatch, isLeaf, isExpanded, onToggleExpanded, indent }: Props) => (
+const BlockAspectElement = ({
+  node,
+  selectedNode,
+  secondaryNode,
+  elements,
+  dispatch,
+  isLeaf,
+  isExpanded,
+  onToggleExpanded,
+  indent,
+}: Props) => (
   <AspectElementWrapper indent={UseIndentLevel(indent)}>
     <CheckboxExplorer
       color={GetAspectColor(node, AspectColorType.Selected)}
@@ -36,7 +47,7 @@ const BlockAspectElement = ({ node, selectedNode, secondaryNode, elements, dispa
       label={node.label}
       icon={GetAspectIcon(node)}
     />
-    {!isLeaf && <AspectExpandButton onClick={onToggleExpanded} isExpanded={isExpanded}/>}
+    {!isLeaf && <AspectExpandButton onClick={onToggleExpanded} isExpanded={isExpanded} />}
   </AspectElementWrapper>
 );
 

@@ -1,4 +1,5 @@
 import { Connection } from "react-flow-renderer";
+import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text";
 import { IsOffPage } from "../../../../../helpers";
 import { Connector, Node } from "../../../../../models";
@@ -11,7 +12,7 @@ import { setValidation } from "../../../../../redux/store/validation/validationS
  * @param dispatch
  * @returns a boolean value.
  */
-const IsValidBlockConnection = (conn: Connection, nodes: Node[], dispatch: any) => {
+const IsValidBlockConnection = (conn: Connection, nodes: Node[], dispatch: Dispatch) => {
   const sourceNode = nodes.find((x) => x.id === conn.source);
   const sourceTerminal = sourceNode.connectors.find((x) => x.id === conn.sourceHandle);
 
@@ -43,10 +44,12 @@ const onMouseUp = (
   targetTerminal: Connector,
   validNode: boolean,
   validOffPageNode: boolean,
-  dispatch: any
+  dispatch: Dispatch
 ) => {
-  if (sourceTerminal && targetTerminal && !validNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals}));
-  if (sourceTerminal && targetTerminal && !validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_OffPage}));
+  if (sourceTerminal && targetTerminal && !validNode)
+    dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals }));
+  if (sourceTerminal && targetTerminal && !validOffPageNode)
+    dispatch(setValidation({ valid: false, message: TextResources.Validation_OffPage }));
 
   return document.removeEventListener("mouseup", () =>
     onMouseUp(sourceTerminal, targetTerminal, validNode, validOffPageNode, dispatch)

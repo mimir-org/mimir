@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { TerminalCategoryFilter } from ".";
 import { FilterElement } from "..";
 import { TextResources } from "../../../../assets/text";
@@ -13,7 +14,7 @@ export interface TerminalCategory {
 interface Props {
   edges: Edge[];
   items: Connector[];
-  dispatch: any;
+  dispatch: Dispatch;
   visible: boolean;
 }
 

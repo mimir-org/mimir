@@ -1,7 +1,7 @@
 import { call, put as statePut } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { addLibraryItem, removeLibraryItem } from "../../store/library/librarySlice";
-import { ApiError, GetBadResponseData, get, post } from "../../../models/webclient";
+import { ApiError, GetBadResponseData, get, post, HttpResponse } from "../../../models/webclient";
 import { Aspect, CreateLibraryType, SimpleType, SimpleTypeResponse } from "../../../models";
 import { FetchingTypeAction } from "../../../typeEditor/redux/types";
 import {
@@ -14,16 +14,16 @@ import {
   fetchRdsSuccessOrError,
   fetchSimpleTypesSuccessOrError,
   fetchTerminalsSuccessOrError,
-  saveLibraryTypeSuccessOrError
+  saveLibraryTypeSuccessOrError,
 } from "../../../typeEditor/redux/typeEditorSlice";
 
 export function* saveType(action: PayloadAction<CreateLibraryType>) {
   try {
     const createLibraryType = action.payload;
 
-    const url = createLibraryType.id ?
-      `${process.env.REACT_APP_API_BASE_URL}librarytype/${createLibraryType.id}` :
-      `${process.env.REACT_APP_API_BASE_URL}librarytype`
+    const url = createLibraryType.id
+      ? `${process.env.REACT_APP_API_BASE_URL}librarytype/${createLibraryType.id}`
+      : `${process.env.REACT_APP_API_BASE_URL}librarytype`;
 
     const response = yield call(post, url, createLibraryType);
 
@@ -36,11 +36,10 @@ export function* saveType(action: PayloadAction<CreateLibraryType>) {
     yield statePut(saveLibraryTypeSuccessOrError(null));
 
     // LIBRARY: Remove item
-    yield (statePut(removeLibraryItem(createLibraryType.id)));
+    yield statePut(removeLibraryItem(createLibraryType.id));
 
     // LIBRARY: Add the created library item back in
     yield statePut(addLibraryItem(response.data));
-
   } catch (error) {
     const apiError = getApiErrorForException(saveLibraryTypeSuccessOrError.type, error);
     yield statePut(saveLibraryTypeSuccessOrError(apiError));
@@ -123,7 +122,7 @@ export function* getBlobData() {
     // This is a bad request
     if (response.status === 400) {
       const apiError = getApiErrorForBadRequest(fetchBlobDataSuccessOrError.type, response);
-      yield statePut(fetchBlobDataSuccessOrError({ icons: [], apiError}));
+      yield statePut(fetchBlobDataSuccessOrError({ icons: [], apiError }));
       return;
     }
 
@@ -156,7 +155,7 @@ export function* getSimpleTypes() {
       return { ...comp, attributes: comp.attributeTypes } as SimpleType;
     });
 
-    yield statePut(fetchSimpleTypesSuccessOrError({simpleTypes, apiError: null}));
+    yield statePut(fetchSimpleTypesSuccessOrError({ simpleTypes, apiError: null }));
   } catch (error) {
     const apiError = {
       key: fetchSimpleTypesSuccessOrError.type,
@@ -164,20 +163,21 @@ export function* getSimpleTypes() {
       errorData: null,
     } as ApiError;
 
-    yield statePut(fetchSimpleTypesSuccessOrError({simpleTypes: [], apiError}));
+    yield statePut(fetchSimpleTypesSuccessOrError({ simpleTypes: [], apiError }));
   }
 }
 
-function getApiErrorForBadRequest(key: string, response: any): ApiError {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getApiErrorForBadRequest(key: string, response: HttpResponse<any>): ApiError {
   const data = GetBadResponseData(response);
   return {
     key,
     errorMessage: data?.title,
-    errorData: data
+    errorData: data,
   };
 }
 
-function getApiErrorForException(key: string, error: any): ApiError {
+function getApiErrorForException(key: string, error: Error): ApiError {
   return {
     key,
     errorMessage: error?.message,

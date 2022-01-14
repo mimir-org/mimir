@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Dispatch } from "redux";
 import { CloseIcon } from "../../assets/icons/close";
 import { AddIcon } from "../../assets/icons/type";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
@@ -12,10 +13,10 @@ interface Props {
   item: LibItem;
   customCategory: LibraryCategory;
   selectedElement: string;
-  setSelectedElement: any;
-  setSelectedElementType: any;
+  setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
   isCustomCategory: boolean;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**
@@ -64,7 +65,7 @@ const LibraryCategoryElement = ({
       </AddFavoriteBox>
       <LibElementIcon color={GetAspectColor(item, AspectColorType.Main, false)}>
         {(item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport) && (
-          <img src={GetObjectIcon(item)} alt="aspect color" className="icon" draggable="false"/>
+          <img src={GetObjectIcon(item)} alt="aspect color" className="icon" draggable="false" />
         )}
       </LibElementIcon>
     </LibElement>

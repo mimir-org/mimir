@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { CommonState } from "../../../redux/store/common/types";
 import { ProjectState } from "../../../redux/store/project/types";
 import { CommitProjectMenu } from "./subMenus/commitProject";
@@ -14,7 +15,7 @@ interface Props {
   commonState: CommonState;
   selectedNodeIds: string[];
   selectedEdgeIds: string[];
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**

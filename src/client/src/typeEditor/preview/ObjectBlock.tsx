@@ -21,7 +21,7 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
   const inputCount = inputTerminals?.length;
   const outputCount = outputTerminals?.length;
 
-  const showTerminals = (input: boolean): any[] => {
+  const showTerminals = (input: boolean): React.ReactNodeArray => {
     const terminalsArray = [];
     const inputOutputArray = input ? inputTerminals : outputTerminals;
     inputOutputArray?.forEach((t, index) => {
@@ -40,14 +40,14 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
         {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
         {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
-      <InfoWrapper height={'100%'}>
+      <InfoWrapper height={"100%"}>
         <InfoText>{rdsLabel}</InfoText>
         <InfoText>{createLibraryType.name}</InfoText>
-        {symbol &&
+        {symbol && (
           <InfoSymbolWrapper>
             <Symbol base64={symbol.data} text={symbol.name} />
           </InfoSymbolWrapper>
-        }
+        )}
       </InfoWrapper>
     </PreviewObjectBlock>
   );

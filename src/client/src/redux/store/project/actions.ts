@@ -180,6 +180,7 @@ export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeNodeValue(nodeId: string, propName: string, propValue: any): Types.ChangeNodePropValue {
   return {
     type: Types.CHANGE_NODE_PROP_VALUE,
@@ -191,6 +192,7 @@ export function changeNodeValue(nodeId: string, propName: string, propValue: any
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeTransportValue(edgeId: string, propName: string, propValue: any): Types.ChangeTransportPropValue {
   return {
     type: Types.CHANGE_TRANSPORT_PROP_VALUE,
@@ -201,6 +203,7 @@ export function changeTransportValue(edgeId: string, propName: string, propValue
     },
   };
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeInterfaceValue(edgeId: string, propName: string, propValue: any): Types.ChangeInterfacePropValue {
   return {
     type: Types.CHANGE_INTERFACE_PROP_VALUE,

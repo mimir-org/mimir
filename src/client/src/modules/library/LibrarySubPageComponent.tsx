@@ -2,9 +2,10 @@ import { useState } from "react";
 import { LibrarySubProjectItem } from "../../models";
 import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
 import { LibCategoryButton, LibCategoryHeader, LibElement } from "./styled";
+import { Dispatch } from "redux";
 
 interface Props {
-  dispatch: any;
+  dispatch: Dispatch;
   subProjects?: LibrarySubProjectItem[];
 }
 

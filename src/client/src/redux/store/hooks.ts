@@ -70,7 +70,7 @@ export const useParametricAppSelector = <P, R, C>(selector: OutputParametricSele
  * const values = useUniqueParametricAppSelector(selectorFactoryFunc, props);
  */
 export const useUniqueParametricAppSelector = <P, R>(
-  selectorFactoryFunc: () => OutputParametricSelector<RootState, P, R, any>,
+  selectorFactoryFunc: () => OutputParametricSelector<RootState, P, R, unknown>,
   props: P
 ) => {
   const selector = useMemo(selectorFactoryFunc, [selectorFactoryFunc]);

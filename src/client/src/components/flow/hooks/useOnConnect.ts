@@ -9,23 +9,28 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { IsOffPage } from "../../../helpers";
 import { Dispatch } from "redux";
 
-const useOnConnect = (
-  connection: FlowEdge | Connection,
-  project: Project,
-  setElements: React.Dispatch<React.SetStateAction<Elements>>,
-  dispatch: Dispatch,
-  edgeType: EdgeType,
-  library: LibraryState,
-  animatedEdge: boolean
-) => {
+interface UseOnConnectParams {
+  connection: FlowEdge | Connection;
+  project: Project;
+  setElements: React.Dispatch<React.SetStateAction<Elements>>;
+  dispatch: Dispatch;
+  edgeType: EdgeType;
+  library: LibraryState;
+  animatedEdge: boolean;
+}
+
+const useOnConnect = (params: UseOnConnectParams) => {
   SaveEventData(null, "edgeEvent");
+
+  const { project, connection, library, edgeType, animatedEdge, setElements, dispatch } = params;
+
   const createdId = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === connection.source);
   const targetNode = project.nodes.find((node) => node.id === connection.target);
   const existingEdge = GetExistingEdge(project, connection, sourceNode, targetNode);
 
   if (IsOffPage(sourceNode) && IsOffPage(targetNode)) {
-    HandleOffPage(project, sourceNode, targetNode, dispatch, animatedEdge, edgeType, library, setElements, connection);
+    HandleOffPage(params, sourceNode, targetNode);
     return;
   }
 
@@ -69,11 +74,11 @@ const useOnConnect = (
   });
 };
 
-function GetExistingEdge(project: Project, connection: any, sourceNode: Node, targetNode: Node) {
+function GetExistingEdge(project: Project, connection: FlowEdge | Connection, sourceNode: Node, targetNode: Node) {
   return project.edges?.find(
     (edge) =>
-      edge.fromConnectorId === connection.sourceHandle.id &&
-      edge.toConnectorId === connection.targetHandle.id &&
+      edge.fromConnectorId === connection.sourceHandle &&
+      edge.toConnectorId === connection.targetHandle &&
       edge.fromNodeId === sourceNode.id &&
       edge.toNodeId === targetNode.id &&
       edge.isHidden === targetNode.isHidden
@@ -86,17 +91,9 @@ function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch
   if (existingPartOfEdge) dispatch(removeEdge(existingPartOfEdge.id));
 }
 
-function HandleOffPage(
-  project: Project,
-  sourceNode: Node,
-  targetNode: Node,
-  dispatch: Dispatch,
-  animatedEdge: boolean,
-  edgeType: EdgeType,
-  library: LibraryState,
-  setElements: React.Dispatch<React.SetStateAction<Elements>>,
-  connection: FlowEdge | Connection
-) {
+function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode: Node) {
+  const { project, connection, edgeType, animatedEdge, library, dispatch, setElements } = params;
+
   const id = CreateId();
   const sourceParent = GetParent(sourceNode);
   const targetParent = GetParent(targetNode);
