@@ -1,7 +1,8 @@
+import { Elements } from "react-flow-renderer";
 import { Node } from "../../../models";
 import { EDGE_TYPE } from "../../../models/project";
 
-const IsChecked = (elements: any[], node: Node) => {
+const IsChecked = (elements: Elements, node: Node) => {
   if (!node) return false;
 
   const edgeTypes = Object.values(EDGE_TYPE);

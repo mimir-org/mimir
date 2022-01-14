@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { FilterElement } from "../";
 import { TextResources } from "../../../../assets/text";
 import { Connector, Edge } from "../../../../models";
@@ -7,7 +8,7 @@ import { AllRelationsChecked } from "../helpers/IsChecked";
 interface Props {
   edges: Edge[];
   items: Connector[];
-  dispatch: any;
+  dispatch: Dispatch;
   visible: boolean;
 }
 

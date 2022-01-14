@@ -60,11 +60,12 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove?.id || edge.toNodeId === nodeToRemove?.id) elementsToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
+    return hooks.useOnRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
   };
 
-  const OnConnect = (params: FlowEdge | Connection) => {
-    return hooks.useOnConnect(params, project, setElements, dispatch, EDGE_TYPE.BLOCK as EdgeType, library, animatedEdge);
+  const OnConnect = (connection: FlowEdge | Connection) => {
+    const edgeType = EDGE_TYPE.BLOCK as EdgeType;
+    return hooks.useOnConnect({ connection, project, edgeType, library, animatedEdge, setElements, dispatch });
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {

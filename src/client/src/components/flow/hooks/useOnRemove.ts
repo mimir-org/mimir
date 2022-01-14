@@ -13,10 +13,10 @@ import { GetSelectedBlockNode, GetSelectedNode, IsAspectNode, IsBlockView, IsOff
 
 const useOnRemove = (
   elements: Elements,
-  setElements: any,
-  dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  project: Project
+  project: Project,
+  setElements: React.Dispatch<React.SetStateAction<Elements>>,
+  dispatch: Dispatch
 ) => {
   const elementsToRemove: Elements = [];
   elements = elements.filter((el) => !IsAspectNode(el.data));
@@ -24,7 +24,7 @@ const useOnRemove = (
   const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
 
   if (hasDeletedElement) {
-    dispatch(setModuleVisibility({type: MODULE_TYPE.INSPECTOR, visible: false, animate: true}));
+    dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
     SetPanelHeight(inspectorRef, Size.ModuleClosed);
     dispatch(changeInspectorHeight(Size.ModuleClosed));
     return setElements((els) => removeElements(elementsToRemove, els));
@@ -42,11 +42,9 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
     const isEdge = isElementEdge(edgeTypes, elem);
 
     if (isEdge) {
-      if (!IsAspectNode(blockView ? selectedBlockNode : selectedNode)) {
-        if (findProjectEdgeByElementId(project, elem)?.isLocked) continue;
+      if (!IsAspectNode(blockView ? selectedBlockNode : selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
         hasDeletedElement = true;
 
-        // Find OffPage nodes/edges related to the edge to be deleted
         handleRelatedOffPageElements(project, elem, dispatch);
         dispatch(removeEdge(elem.id));
         verifiedList.push(elem);

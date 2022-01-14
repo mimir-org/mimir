@@ -1,5 +1,6 @@
 import { ApiError, GetBadResponseData, HttpResponse } from ".";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const GetApiErrorForBadRequest = (response: HttpResponse<any>, key: string): ApiError => {
   const data = GetBadResponseData(response);
 
@@ -8,6 +9,6 @@ const GetApiErrorForBadRequest = (response: HttpResponse<any>, key: string): Api
     errorMessage: data?.title,
     errorData: data,
   };
-}
+};
 
 export default GetApiErrorForBadRequest;

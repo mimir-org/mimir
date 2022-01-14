@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useStoreActions, useStoreState } from "react-flow-renderer";
 import { Node } from "../models";
 
-type SetFlowElementFunction = (elements: Node[]) => void;
+export type SetFlowElementFunction = (elements: Node[]) => void;
 
 export const UseSetSelectNodes = (): [SetFlowElementFunction] => {
   const setSelectedElements = useStoreActions((state) => state.setSelectedElements);

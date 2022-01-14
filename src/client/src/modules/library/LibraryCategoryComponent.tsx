@@ -3,14 +3,16 @@ import { LibraryCategory } from "../../models/project";
 import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
 import { LibCategoryButton, LibCategoryHeader } from "./styled";
 import { LibraryCategoryElement } from ".";
+import { Dispatch } from "redux";
+import { ObjectType } from "../../models";
 
 interface Props {
   customCategory: LibraryCategory;
   category: LibraryCategory;
   selectedElement: string;
-  setSelectedElement: any;
-  setSelectedElementType: any;
-  dispatch: any;
+  setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
+  dispatch: Dispatch;
   searchList?: LibraryCategory[];
 }
 
@@ -42,7 +44,7 @@ const LibraryCategoryComponent = ({
     <>
       <LibCategoryButton onClick={() => setExpanded(!expanded)}>
         <LibCategoryHeader>{category.name}</LibCategoryHeader>
-        <img className="expandIcon" src={expandIcon} alt="expand-icon"/>
+        <img className="expandIcon" src={expandIcon} alt="expand-icon" />
       </LibCategoryButton>
       {expanded &&
         category?.nodes.map((item) => {

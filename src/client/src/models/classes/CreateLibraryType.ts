@@ -36,15 +36,15 @@ export const defaultCreateLibraryType: CreateLibraryType = {
   terminalTypeId: "",
   symbolId: "",
   simpleTypes: [] as string[],
-  kind: CREATE_LIBRARY_KIND
-}
+  kind: CREATE_LIBRARY_KIND,
+};
 
-export function fromJsonCreateLibraryType(createLibraryTypeJson: any): CreateLibraryType {
-  return ensureValidState({...defaultCreateLibraryType, ...createLibraryTypeJson});
+export function fromJsonCreateLibraryType(createLibraryTypeJson: CreateLibraryType): CreateLibraryType {
+  return ensureValidState({ ...defaultCreateLibraryType, ...createLibraryTypeJson });
 }
 
 function ensureValidState(newCreateLibraryType: CreateLibraryType) {
-  const createLibraryTypeState = {...newCreateLibraryType};
+  const createLibraryTypeState = { ...newCreateLibraryType };
 
   if (!createLibraryTypeState.attributeTypes) createLibraryTypeState.attributeTypes = [];
   if (!createLibraryTypeState.simpleTypes) createLibraryTypeState.simpleTypes = [];
@@ -56,12 +56,18 @@ function ensureValidState(newCreateLibraryType: CreateLibraryType) {
       connectorType: ConnectorType.Input,
     } as TerminalTypeItem;
 
-    createLibraryTypeState.terminalTypes = [defaultTerminalTypeItem, { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output }];
+    createLibraryTypeState.terminalTypes = [
+      defaultTerminalTypeItem,
+      { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output },
+    ];
   }
 
   // Assign temporary-ids to items for handling CRUD in redux store
   if (createLibraryTypeState.terminalTypes) {
-    createLibraryTypeState.terminalTypes = createLibraryTypeState.terminalTypes.map(terminalTypeItem => ({...terminalTypeItem, terminalId: CreateId()}))
+    createLibraryTypeState.terminalTypes = createLibraryTypeState.terminalTypes.map((terminalTypeItem) => ({
+      ...terminalTypeItem,
+      terminalId: CreateId(),
+    }));
   }
 
   return createLibraryTypeState;

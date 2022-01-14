@@ -1,6 +1,6 @@
-import { ConnectorType, CreateLibraryType, TerminalType } from "../../../models";
+import { ConnectorType, CreateLibraryType, TerminalType, TerminalTypeDict } from "../../../models";
 
-const GetInputTerminals = (createLibraryType: CreateLibraryType, terminals: any[]): TerminalType[] => {
+const GetInputTerminals = (createLibraryType: CreateLibraryType, terminals: TerminalTypeDict): TerminalType[] => {
   const terminalsArray: TerminalType[] = [];
   createLibraryType?.terminalTypes
     .filter((t) => t.connectorType === ConnectorType.Input)

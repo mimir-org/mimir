@@ -1,4 +1,4 @@
-const OnExpandClick = (setExpanded: any, expanded: boolean) => {
+const OnExpandClick = (setExpanded: (expanded: boolean) => void, expanded: boolean) => {
   setExpanded(!expanded);
 };
 

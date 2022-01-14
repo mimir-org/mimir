@@ -233,6 +233,7 @@ export interface ChangeNodePropValue {
   payload: {
     nodeId: string;
     propName: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     propValue: any;
   };
 }
@@ -252,6 +253,7 @@ export interface ChangeTransportPropValue {
   payload: {
     edgeId: string;
     propName: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     propValue: any;
   };
 }
@@ -271,6 +273,7 @@ export interface ChangeInterfacePropValue {
   payload: {
     edgeId: string;
     propName: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     propValue: any;
   };
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CreateLibraryType, TerminalType } from "../../models";
 import { ListType } from "../TypeEditorList";
 import { GetFilteredTerminalsList } from ".";

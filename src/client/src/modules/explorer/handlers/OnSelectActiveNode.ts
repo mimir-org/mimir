@@ -1,10 +1,11 @@
+import { SetFlowElementFunction } from "../../../helpers";
 import { Node } from "../../../models";
 
 export const OnSelectActiveNode = (
   node: Node,
   nodes: Node[],
   selectedNodes: string[],
-  setActiveFlowElement: (element: any) => void
+  setActiveFlowElement: SetFlowElementFunction
 ) => {
   let tempArray: Node[] = [];
 

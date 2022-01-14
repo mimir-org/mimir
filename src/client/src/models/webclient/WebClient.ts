@@ -50,13 +50,10 @@ const errorMessage = <T>(response: HttpResponse<T>) => {
     return TextResources.Error_Server;
   }
 
-  return TextResources.Error_ServerUnavailable
-}
+  return TextResources.Error_ServerUnavailable;
+};
 
-export async function get<T>(
-  path: string,
-  args: RequestInit = { method: "get" }
-): Promise<HttpResponse<T>> {
+export async function get<T>(path: string, args: RequestInit = { method: "get" }): Promise<HttpResponse<T>> {
   const req = { ...RequestInitDefault, ...args };
   const token = await Token();
   req.headers["Authorization"] = token;
@@ -65,6 +62,7 @@ export async function get<T>(
 
 export async function post<T>(
   path: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any,
   args: RequestInit = { method: "post", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {
@@ -76,6 +74,7 @@ export async function post<T>(
 
 export async function put<T>(
   path: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any,
   args: RequestInit = { method: "put", body: JSON.stringify(body) }
 ): Promise<HttpResponse<T>> {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CreateLibraryType } from "../../models";
 import { ListType } from "../TypeEditorList";
 import { GetAttributesList, GetFilteredAttributesList, GetFilteredRdsList, GetFilteredTerminalsList } from ".";

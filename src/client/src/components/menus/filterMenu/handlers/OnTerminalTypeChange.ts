@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { Edge } from "../../../../models";
 import { setEdgeVisibility } from "../../../../redux/store/project/actions";
 import { IsTransport } from "../../../flow/helpers";
@@ -7,7 +8,7 @@ const OnTerminalTypeChange = (
   terminalCategoryId: string,
   terminalTypeId: string,
   isChecked: boolean,
-  dispatch: any
+  dispatch: Dispatch
 ) => {
   edges?.forEach((edge) => {
     if (IsTransport(edge.fromConnector)) {

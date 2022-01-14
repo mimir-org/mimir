@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import ReactFlow, { Background, Elements, OnLoadParams, Edge as FlowEdge, Connection } from "react-flow-renderer";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
@@ -14,6 +13,14 @@ import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect }
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
 import { Size } from "../../../compLibrary/size";
+import ReactFlow, {
+  Background,
+  Elements,
+  OnLoadParams,
+  Edge as FlowEdge,
+  Connection,
+  Node as FlowNode,
+} from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -36,15 +43,16 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
 
-  const OnDragOver = (event) => {
+  const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event: any, n: any) => dispatch(updatePosition(n.id, n.position.x, n.position.y));
+  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
+    dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
-  const OnElementsRemove = (elementsToRemove: any[]) => {
-    return useOnRemove(elementsToRemove, setElements, dispatch, inspectorRef, project);
+  const OnElementsRemove = (elementsToRemove: Elements) => {
+    return useOnRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnLoad = useCallback(
@@ -59,7 +67,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     const fromNode = project.nodes.find((x) => x.id === connection.source);
     const fromConnector = fromNode.connectors.find((x) => x.id === connection.sourceHandle);
     const edgeType = helpers.GetEdgeType(fromConnector);
-    return useOnConnect(connection, project, setElements, dispatch, edgeType, library, animatedEdge);
+    return useOnConnect({ connection, project, setElements, dispatch, edgeType, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {

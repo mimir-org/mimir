@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TerminalType, TerminalTypeDict } from "../../models";
 
 export type TerminalCategory = {
