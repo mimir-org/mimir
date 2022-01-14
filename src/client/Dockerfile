@@ -2,7 +2,6 @@ FROM node:13.12.0-alpine as build
 ARG ENVIR
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-RUN apk update && apk add python make g++\ && rm -rf /var/cache/apk/*
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm ci --silent
