@@ -1,4 +1,4 @@
-﻿using Mb.Models.Abstract;
+using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.TypeEditor.Data.Contracts;

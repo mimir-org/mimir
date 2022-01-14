@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;

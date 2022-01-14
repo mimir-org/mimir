@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Mb.Models.Attributes;
 using Mb.Models.Data;
 using VDS.RDF;

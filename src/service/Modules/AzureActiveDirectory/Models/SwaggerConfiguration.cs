@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace AzureActiveDirectoryModule.Models
 {
@@ -9,7 +9,7 @@ namespace AzureActiveDirectoryModule.Models
         public SwaggerContact Contact { get; set; }
         public IList<Scope> Scopes { get; set; }
         public Dictionary<string, string> ScopesDictionary => ConvertToDictionary();
-        
+
         private Dictionary<string, string> ConvertToDictionary()
         {
             var dictionary = new Dictionary<string, string>();

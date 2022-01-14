@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

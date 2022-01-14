@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using RdfParserModule.Properties;
@@ -29,7 +29,7 @@ namespace RdfParserModule.Extensions
                 ontologyService.AssertNode(edge.Transport.Iri, Resources.hasAspect, $"imf:{edge.FromNode.Aspect}");
                 //ontologyService.AssertNode(edge.transport.Iri, Resources.hasParent, $"imf:{edge.FromNode.Aspect}");
 
-                if(edge.Transport.InputTerminal != null)
+                if (edge.Transport.InputTerminal != null)
                     edge.AssertStreamTerminal(edge.Transport.Iri, edge.Transport.InputTerminal, ontologyService);
 
                 if (edge.Transport.OutputTerminal != null)
@@ -76,7 +76,7 @@ namespace RdfParserModule.Extensions
                     throw new ArgumentOutOfRangeException(nameof(terminal.Type), terminal.Type, null);
             }
 
-            if(!string.IsNullOrWhiteSpace(terminalType))
+            if (!string.IsNullOrWhiteSpace(terminalType))
                 ontologyService.AssertNode(terminal.Iri, Resources.type, terminalType);
 
             if (!string.IsNullOrWhiteSpace(hasTerminal))
@@ -85,7 +85,7 @@ namespace RdfParserModule.Extensions
             ontologyService.AssertNode(terminal.Iri, Resources.type, Resources.StreamTerminal);
             ontologyService.AssertNode(terminal.Iri, Resources.type, $"{terminal.Name} {terminal.Type}");
 
-            if(edgeConnector != null)
+            if (edgeConnector != null)
                 ontologyService.AssertNode(terminal.Iri, Resources.label, edgeConnector.Iri);
         }
     }

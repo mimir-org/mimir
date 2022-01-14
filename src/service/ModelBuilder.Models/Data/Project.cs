@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
@@ -14,7 +14,7 @@ namespace Mb.Models.Data
         public string Iri { get; set; }
 
         public string Domain => Id.ResolveDomain();
-        
+
         [Required]
         public bool IsSubProject { get; set; }
 

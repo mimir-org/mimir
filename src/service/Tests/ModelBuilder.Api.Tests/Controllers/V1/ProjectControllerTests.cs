@@ -57,7 +57,7 @@
 //        {
 //            const string searchString = "";
 //            var response = await Client.GetAsync($"{Version}/project/search?name={searchString}");
-            
+
 //            Assert.True(response.IsSuccessStatusCode);
 
 //            var content = await response.Content.ReadAsStringAsync();

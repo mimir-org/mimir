@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Data;

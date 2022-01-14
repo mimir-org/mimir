@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
@@ -12,21 +12,21 @@ namespace Mb.Models.Data
         public string Iri { get; set; }
 
         public string Domain => Id.ResolveDomain();
-        
+
         public string Kind => nameof(Edge);
 
         public string FromConnectorId { get; set; }
         public string FromConnectorIri { get; set; }
         public Connector FromConnector { get; set; }
-        
+
         public string ToConnectorId { get; set; }
         public string ToConnectorIri { get; set; }
         public Connector ToConnector { get; set; }
-        
+
         public string FromNodeId { get; set; }
         public string FromNodeIri { get; set; }
         public Node FromNode { get; set; }
-        
+
         public string ToNodeId { get; set; }
         public string ToNodeIri { get; set; }
         public Node ToNode { get; set; }
@@ -50,7 +50,7 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual Project Project { get; set; }
-        
-        
+
+
     }
 }

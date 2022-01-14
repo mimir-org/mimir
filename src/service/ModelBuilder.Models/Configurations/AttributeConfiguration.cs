@@ -1,4 +1,4 @@
-﻿using Mb.Models.Configurations.Converters;
+using Mb.Models.Configurations.Converters;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -23,7 +23,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId");
             //builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
-            
+
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
             builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
             builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);

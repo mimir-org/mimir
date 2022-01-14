@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
@@ -20,7 +20,7 @@ namespace Mb.Data.Repositories
 
         public void AttachWithAttributes(ICollection<Connector> entities, EntityState state)
         {
-            if(entities == null)
+            if (entities == null)
                 return;
 
             foreach (var connector in entities.OfType<Terminal>())

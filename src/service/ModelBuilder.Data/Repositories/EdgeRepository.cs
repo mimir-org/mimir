@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ICommonRepository _commonRepository;
-        
+
         public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
@@ -42,7 +42,7 @@ namespace Mb.Data.Repositories
             foreach (var edge in project.Edges)
             {
                 ResetEdgeBeforeSave(edge);
-                
+
                 if (newEdges.Any(x => x.Id == edge.Id))
                 {
                     SetEdgeProperties(edge, true);
@@ -102,7 +102,7 @@ namespace Mb.Data.Repositories
                         x.TerminalId == edge.Transport.InputTerminalId ||
                         x.TerminalId == edge.Transport.OutputTerminalId).ToList();
 
-                    if(terminalTransportAttributes.Any())
+                    if (terminalTransportAttributes.Any())
                         _attributeRepository.Attach(terminalTransportAttributes, EntityState.Deleted);
                 }
 
@@ -113,12 +113,12 @@ namespace Mb.Data.Repositories
                         x.TerminalId == edge.Interface.InputTerminalId ||
                         x.TerminalId == edge.Interface.OutputTerminalId).ToList();
 
-                    if(terminalInterfaceAttributes.Any())
+                    if (terminalInterfaceAttributes.Any())
                         _attributeRepository.Attach(terminalInterfaceAttributes, EntityState.Deleted);
                 }
 
                 //Transport - (delete)
-                if(edge.Transport != null)
+                if (edge.Transport != null)
                     _transportRepository.Attach(edge.Transport, EntityState.Deleted);
 
                 //Interface - (delete)
@@ -173,7 +173,7 @@ namespace Mb.Data.Repositories
 
             if (string.IsNullOrWhiteSpace(edge?.Transport?.StatusId))
             {
-                if(edge?.Transport != null)
+                if (edge?.Transport != null)
                     edge.Transport.StatusId = ObjectType.NotSet.ToString();
             }
 
@@ -196,7 +196,7 @@ namespace Mb.Data.Repositories
 
             const string version = "1.0";
 
-            if(!string.IsNullOrWhiteSpace(edge?.Transport?.Version))
+            if (!string.IsNullOrWhiteSpace(edge?.Transport?.Version))
                 edge.Transport.Version = version;
 
             if (!string.IsNullOrWhiteSpace(edge?.Transport?.CreatedBy))

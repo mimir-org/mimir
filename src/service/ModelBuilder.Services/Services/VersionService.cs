@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -89,7 +89,7 @@ namespace Mb.Services.Services
             if (string.IsNullOrWhiteSpace(project?.Id))
                 throw new ModelBuilderInvalidOperationException("Project not found");
 
-            if(_versionRepository.GetAll().Any(x => x.TypeId == project.Id && x.Ver == project.Version))
+            if (_versionRepository.GetAll().Any(x => x.TypeId == project.Id && x.Ver == project.Version))
                 throw new ModelBuilderInvalidOperationException($"Project with id {project.Id} and version {project.Version} already exist");
 
             var version = new Version

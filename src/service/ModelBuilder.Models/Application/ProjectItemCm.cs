@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Mb.Models.Extensions;
 
 namespace Mb.Models.Application

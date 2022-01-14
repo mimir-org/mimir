@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
@@ -23,7 +23,7 @@ namespace Mb.Data.Repositories
             var enumT = EnumType.Unit.GetEnumTypeFromEnum();
             var method = typeof(Queryable).GetMethod("OfType");
             var generic = method?.MakeGenericMethod(new Type[] { enumT });
-            var result = (IEnumerable<Unit>)generic?.Invoke(null, new object[] { _enumBaseRepository.GetAll() });
+            var result = (IEnumerable<Unit>) generic?.Invoke(null, new object[] { _enumBaseRepository.GetAll() });
             return result?.ToList();
         }
     }

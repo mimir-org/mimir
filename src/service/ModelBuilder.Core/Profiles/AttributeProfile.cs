@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;

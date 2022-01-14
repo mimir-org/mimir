@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Mb.Models.Configurations;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Data.Repositories;

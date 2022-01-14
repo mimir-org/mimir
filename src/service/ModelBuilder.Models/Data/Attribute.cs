@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Data.Enums;
@@ -24,18 +24,18 @@ namespace Mb.Models.Data
         public string Value { get; set; }
         public string SemanticReference { get; set; }
         public string AttributeTypeId { get; set; }
-        public bool IsLocked {  get; set; }
-        public string IsLockedStatusBy {  get; set; }
-        public DateTime? IsLockedStatusDate {  get; set; }
-        
+        public bool IsLocked { get; set; }
+        public string IsLockedStatusBy { get; set; }
+        public DateTime? IsLockedStatusDate { get; set; }
+
         public string SelectedUnitId { get; set; }
-        
+
         public string QualifierId { get; set; }
         public AttributeQualifier Qualifier { get; set; }
 
         public string SourceId { get; set; }
         public AttributeSource Source { get; set; }
-        
+
         public string ConditionId { get; set; }
         public AttributeCondition Condition { get; set; }
 

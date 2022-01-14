@@ -1,4 +1,4 @@
-﻿namespace ApplicationInsightsLoggingModule
+namespace ApplicationInsightsLoggingModule
 {
     public class ApplicationInsights
     {

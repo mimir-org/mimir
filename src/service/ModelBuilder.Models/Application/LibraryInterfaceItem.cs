@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 

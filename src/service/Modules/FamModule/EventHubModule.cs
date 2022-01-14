@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -140,7 +140,7 @@ namespace EventHubModule
 
 
                 var project = parser.DeserializeProjectAm(Encoding.UTF8.GetBytes(e.Document))?.Result;
-                
+
                 if (project == null)
                 {
                     logger?.LogError($"Can't parse project with ID: {e.ProjectId}.");
@@ -148,8 +148,8 @@ namespace EventHubModule
                 }
 
                 var hasProject = projectService.ProjectExist(project.Id);
-                _ = hasProject ? 
-                    projectService.UpdateProject(project.Id, project, e.SenderDomain).Result?.Project : 
+                _ = hasProject ?
+                    projectService.UpdateProject(project.Id, project, e.SenderDomain).Result?.Project :
                     projectService.CreateProject(project).Result;
             }
             catch (Exception ex)

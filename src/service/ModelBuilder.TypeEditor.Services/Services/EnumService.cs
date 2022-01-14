@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,7 +45,7 @@ namespace Mb.TypeEditor.Services.Services
             var enumT = enumType.GetEnumTypeFromEnum();
             var method = typeof(Queryable).GetMethod("OfType");
             var generic = method?.MakeGenericMethod(new Type[] { enumT });
-            var result = (IEnumerable<EnumBase>)generic?.Invoke(null, new object[] { _enumBaseRepository.GetAll() });
+            var result = (IEnumerable<EnumBase>) generic?.Invoke(null, new object[] { _enumBaseRepository.GetAll() });
             return result?.ToList();
         }
 

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mb.Data.Contracts;
@@ -30,7 +30,7 @@ namespace Mb.Services.Services
         {
 
             var reMappedIds = new Dictionary<string, string>();
-            
+
             var (projectId, projectIri) = _commonRepository.CreateOrUseIdAndIri(project.Id, project.Iri);
 
             foreach (var node in project.Nodes)
@@ -39,7 +39,7 @@ namespace Mb.Services.Services
 
                 if (node.Id != nodeId)
                     reMappedIds.Add(nodeId, node.Id);
-                
+
                 RemapSimples(nodeId, node);
                 RemapConnectors(nodeId, nodeIri, node, project);
 
@@ -66,7 +66,7 @@ namespace Mb.Services.Services
             foreach (var edge in project.Edges)
             {
                 var (edgeId, edgeIri) = _commonRepository.CreateOrUseIdAndIri(edge.Id, edge.Iri);
-                
+
                 if (edge.Id != edgeId)
                     reMappedIds.Add(edgeId, edge.Id);
 
@@ -137,7 +137,7 @@ namespace Mb.Services.Services
             foreach (var node in toProject.Nodes)
             {
                 // Find input partOf connector
-                var relationConnector = (Relation)node.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Input, RelationType: RelationType.PartOf });
+                var relationConnector = (Relation) node.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Input, RelationType: RelationType.PartOf });
                 if (relationConnector == null)
                     continue;
 
@@ -201,7 +201,7 @@ namespace Mb.Services.Services
             foreach (var node in nodes)
             {
                 var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(null, null);
-                
+
                 var clone = node.DeepCopy();
                 clone.ProjectId = projectId;
                 clone.Id = nodeId;
@@ -372,8 +372,8 @@ namespace Mb.Services.Services
                     var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
                     attribute.Id = attributeId;
                     attribute.Iri = attributeIri;
-                    
-                    if(attribute.TransportId == edge.Transport.Id)
+
+                    if (attribute.TransportId == edge.Transport.Id)
                         attribute.TransportId = transportId;
                 }
             }
@@ -397,7 +397,7 @@ namespace Mb.Services.Services
                     attribute.Id = attributeId;
                     attribute.Iri = attributeIri;
 
-                    if(attribute.InterfaceId == edge.Interface.Id)
+                    if (attribute.InterfaceId == edge.Interface.Id)
                         attribute.InterfaceId = interfaceId;
                 }
             }
@@ -478,8 +478,8 @@ namespace Mb.Services.Services
                         var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
                         attribute.Id = attributeId;
                         attribute.Iri = attributeIri;
-                        
-                        if(attribute.SimpleId == simple.Id)
+
+                        if (attribute.SimpleId == simple.Id)
                             attribute.SimpleId = simpleId;
                     }
                 }
