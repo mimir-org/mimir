@@ -1,4 +1,4 @@
-﻿namespace Mb.Data.Contracts
+namespace Mb.Data.Contracts
 {
     public interface ICommonRepository
     {

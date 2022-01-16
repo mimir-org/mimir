@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -34,13 +34,13 @@ namespace Mb.Services.Services
                 .Include(x => x.Qualifier)
                 .Include(x => x.Source)
                 .Include(x => x.Condition)
-                .Select(x => new {x.Entity, x.Qualifier, x.Source, x.Condition}).Distinct()
+                .Select(x => new { x.Entity, x.Qualifier, x.Source, x.Condition }).Distinct()
                 .ToList();
 
             var groups = allFilteredAttributes.GroupBy(x => x.Entity).Select(x => x.ToList());
             foreach (var group in groups)
             {
-                if(!group.Any())
+                if (!group.Any())
                     continue;
 
                 var combinedAttributes = group.Select(x => new CombinedAttribute
@@ -94,7 +94,7 @@ namespace Mb.Services.Services
         {
             var existingTypes = _collaborationPartnerRepository.GetAll().ToList();
             var notExistingTypes = collaborationPartners.Where(x => existingTypes.All(y => y.Name != x.Name && y.Domain != x.Domain)).ToList();
-            
+
             if (!notExistingTypes.Any())
                 throw new ModelBuilderDuplicateException("There is already registered a collaboration partners with names or domains");
 

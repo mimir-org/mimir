@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Const;
 using Mb.Models.Data;

@@ -28,7 +28,7 @@ export const CreateProjectMenu = ({ dispatch }: Props) => {
         <InputBox>
           <div className="label">{TextResources.Project_Name}</div>
           <Input
-            onChange={(e: any) => setProjectName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
             inputType="text"
             placeholder={TextResources.Project_Name_Placeholder}
             value={projectName}

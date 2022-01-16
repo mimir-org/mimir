@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Attributes;
@@ -52,7 +52,7 @@ namespace Mb.Models.Application
 
         [ValidatePositiveDecimal]
         public decimal? Height { get; set; }
-        
+
         [ValidatePositiveDecimal]
         public decimal? Cost { get; set; }
 
@@ -61,7 +61,7 @@ namespace Mb.Models.Application
 
         [Required]
         public string MasterProjectId { get; set; }
-        
+
         public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
@@ -70,7 +70,7 @@ namespace Mb.Models.Application
 
         [Required]
         public DateTime? Created { get; set; }
-        
+
         [Required]
         public string CreatedBy { get; set; }
 
@@ -78,13 +78,13 @@ namespace Mb.Models.Application
         public string LibraryTypeId { get; set; }
 
         public DateTime? Updated { get; set; }
-        
+
         public string UpdatedBy { get; set; }
 
         public ICollection<ConnectorAm> Connectors { get; set; }
 
         public ICollection<AttributeAm> Attributes { get; set; }
-        
+
         public ICollection<SimpleAm> Simples { get; set; }
 
         [Required]

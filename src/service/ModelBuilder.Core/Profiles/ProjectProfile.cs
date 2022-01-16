@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;

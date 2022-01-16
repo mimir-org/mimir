@@ -2,6 +2,7 @@ import Moment from "react-moment";
 import { changeSelectedProject } from "../../../../../redux/store/project/actions";
 import { ProjectItemCm } from "../../../../../models";
 import { ProjectDataBox } from "./styled";
+import { Dispatch } from "redux";
 
 interface Props {
   projects: ProjectItemCm[];
@@ -10,7 +11,7 @@ interface Props {
   projectOwner: string;
   projectVersion: string;
   updated: Date;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 export const ProjectDataComponent = ({

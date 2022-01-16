@@ -3,11 +3,12 @@ import { TextResources } from "../../assets/text";
 import { OnProject } from "./handlers";
 import { ProjectHeaderBox } from "./styled";
 import { Project } from "../../models";
+import { Dispatch } from "redux";
 
 interface Props {
   projectMenuOpen: boolean;
   project: Project;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 /**
  * Component for the ProjectMenu element in the header of Mimir.

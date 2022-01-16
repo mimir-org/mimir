@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { OnPropertyChangeFunction } from "../types";
 import { RadioButton } from "../../compLibrary/input/radiobutton";
 import { AttributeName, LabelWrapper } from "./styled";
@@ -28,7 +29,7 @@ export const RadioButtonContainer = ({ id, label, listType, defaultValue, checke
   };
 
   return (
-    <LabelWrapper gap={'20px'}>
+    <LabelWrapper gap={"20px"}>
       <RadioButton
         isChecked={listType === ListType.Rds ? rdsIsSelected : terminalIsSelected}
         onChange={() => onCheckboxChange()}

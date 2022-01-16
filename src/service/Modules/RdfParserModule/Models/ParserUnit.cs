@@ -1,4 +1,4 @@
-﻿namespace RdfParserModule.Models
+namespace RdfParserModule.Models
 {
     public class ParserUnit
     {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DropDownCategoryItem } from "../../compLibrary/dropdown/typeEditor/Dropdown";
 import { Aspect } from "../../models";
 import { CreateId } from "../../components/flow/helpers";

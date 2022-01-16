@@ -8,15 +8,15 @@ import {
   IsAttributeTypesSelectionInvalid,
   IsPredefinedAttributesSelectionInvalid,
   IsRdsSelectionInvalid,
-  IsTerminalTypesSelectionInvalid
+  IsTerminalTypesSelectionInvalid,
 } from "../validators";
 
 interface TypeEditorListDescriptor extends TypeEditorListProps {
-  isVisible: boolean,
+  isVisible: boolean;
   validation: {
-    visible: boolean,
-    message: string
-  }
+    visible: boolean;
+    message: string;
+  };
 }
 
 /**
@@ -26,7 +26,11 @@ interface TypeEditorListDescriptor extends TypeEditorListProps {
  * @param state State of the TypeEditor at render
  * @param dispatch General dispatch function for the application
  */
-export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEditorState, dispatch: Dispatch<any>): TypeEditorListDescriptor {
+export function GetTypeEditorListDescriptor(
+  listType: ListType,
+  state: TypeEditorState,
+  dispatch: Dispatch
+): TypeEditorListDescriptor {
   switch (listType) {
     case ListType.Rds:
       return {
@@ -37,8 +41,8 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsRdsSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_RDS
-        }
+          message: TextResources.TypeEditor_Error_RDS,
+        },
       };
     case ListType.Terminals:
       return {
@@ -50,8 +54,8 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         onTerminalCategoryChange: (key, data) => OnTerminalCategoryChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsTerminalTypesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Terminals
-        }
+          message: TextResources.TypeEditor_Error_Terminals,
+        },
       };
     case ListType.PredefinedAttributes:
       return {
@@ -62,8 +66,8 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsPredefinedAttributesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Location_Attributes
-        }
+          message: TextResources.TypeEditor_Error_Location_Attributes,
+        },
       };
     case ListType.ObjectAttributes:
       return {
@@ -74,8 +78,8 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsAttributeTypesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Attributes
-        }
+          message: TextResources.TypeEditor_Error_Attributes,
+        },
       };
     case ListType.LocationAttributes:
       return {
@@ -86,8 +90,8 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsAttributeTypesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Attributes
-        }
+          message: TextResources.TypeEditor_Error_Attributes,
+        },
       };
     case ListType.SimpleTypes:
       return {
@@ -98,8 +102,8 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: false,
-          message: ''
-        }
+          message: "",
+        },
       };
     default:
       return {
@@ -109,7 +113,7 @@ export function GetTypeEditorListDescriptor(listType: ListType, state: TypeEdito
         createLibraryType: undefined,
         validation: {
           message: "",
-          visible: false
+          visible: false,
         },
       };
   }

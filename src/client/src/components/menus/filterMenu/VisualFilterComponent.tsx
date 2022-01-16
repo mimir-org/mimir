@@ -7,9 +7,10 @@ import { TextResources } from "../../../assets/text";
 import { IsLibrary } from "../../../helpers";
 import { GetFilterElements, PopulateFilterLists } from "./helpers";
 import { memo } from "react";
+import { Elements } from "react-flow-renderer";
 
 interface Props {
-  elements: any[];
+  elements: Elements<Node | Edge>;
   edgeAnimation: boolean;
 }
 

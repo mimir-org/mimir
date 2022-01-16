@@ -10,6 +10,7 @@ import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../helpers";
 import { GetReferenceDesignationEdge } from "../../../../helpers/GetReferenceDesignation";
+import { DropDownItem } from "../../../../compLibrary/dropdown/typeEditor/Dropdown";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -123,7 +124,7 @@ const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
             keyProp={"id"}
             defaultValue={element?.statusId}
             valueProp={null}
-            onChange={(value: any) => onChange("statusId", value.id)}
+            onChange={(value: DropDownItem<EnumBase>) => onChange("statusId", value.id)}
             listTop={31}
             borderRadius={5}
             disabled={edge.isLocked}

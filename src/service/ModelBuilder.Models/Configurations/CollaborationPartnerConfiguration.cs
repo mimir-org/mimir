@@ -1,4 +1,4 @@
-﻿using Mb.Models.Configurations.Converters;
+using Mb.Models.Configurations.Converters;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

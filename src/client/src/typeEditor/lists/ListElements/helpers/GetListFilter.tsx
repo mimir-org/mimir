@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ListType } from "../../../TypeEditorList";
 import { AttributeType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../../../../models";
 import {

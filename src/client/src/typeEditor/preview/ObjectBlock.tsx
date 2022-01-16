@@ -21,7 +21,7 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
   const inputCount = inputTerminals?.length;
   const outputCount = outputTerminals?.length;
 
-  const showTerminals = (input: boolean): any[] => {
+  const showTerminals = (input: boolean): React.ReactNodeArray => {
     const terminalsArray = [];
     const inputOutputArray = input ? inputTerminals : outputTerminals;
     inputOutputArray?.forEach((t, index) => {

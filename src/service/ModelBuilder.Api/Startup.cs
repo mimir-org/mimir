@@ -37,20 +37,20 @@ namespace Mb.Api
                 //o.SerializerSettings.Converters.Add(new StringEnumConverter());
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
-          
+
             var startupLogger = services.BuildServiceProvider().GetRequiredService<ILogger<Startup>>();
-          
+
             // Add Cors policy
             var origins = Configuration.GetSection("CorsConfiguration")?
                 .GetValue<string>("ValidOrigins")?.Split(",");
-            
+
             if (NoOriginsAreProvided(origins))
             {
                 startupLogger.LogInformation("No Cors origins provided in config file. Reading from environment");
-                
+
                 origins = Environment.GetEnvironmentVariable("CorsConfiguration_ValidOrigins")?.Split(",");
             }
-            
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -66,7 +66,7 @@ namespace Mb.Api
                         builder.WithOrigins(origins)
                             .AllowCredentials();
                     }
-                    
+
                     builder.AllowAnyHeader()
                         .AllowAnyMethod()
                         .SetIsOriginAllowedToAllowWildcardSubdomains();
@@ -108,7 +108,6 @@ namespace Mb.Api
             //    {
             //        endpoints.MapControllers();
             //    });
-            
         }
 
         private static bool NoOriginsAreProvided(string[] origins)

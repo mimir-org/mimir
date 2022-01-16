@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using AutoMapper;
 using Mb.Models.Data;
 using Microsoft.Extensions.Configuration;

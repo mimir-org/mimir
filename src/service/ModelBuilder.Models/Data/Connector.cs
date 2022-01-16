@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
@@ -14,7 +14,7 @@ namespace Mb.Models.Data
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
-        
+
         public string Kind => nameof(Connector);
         public string Name { get; set; }
         public ConnectorType Type { get; set; }

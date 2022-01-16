@@ -7,12 +7,12 @@ const OnChangeAttributeCombinationChoice = (
   filterName: string,
   combination: CombinedAttribute,
   selected: boolean,
-  dispatch: Dispatch<any>
+  dispatch: Dispatch
 ) => {
   if (!selected) {
-    dispatch(addCombinedAttribute({elementId, filterName, combination}));
+    dispatch(addCombinedAttribute({ elementId, filterName, combination }));
   } else {
-    dispatch(removeCombinedAttribute({elementId, filterName, combination}));
+    dispatch(removeCombinedAttribute({ elementId, filterName, combination }));
   }
 };
 

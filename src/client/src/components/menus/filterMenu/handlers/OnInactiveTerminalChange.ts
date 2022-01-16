@@ -1,7 +1,8 @@
+import { Dispatch } from "redux";
 import { Node } from "../../../../models";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 
-const OnInactiveTerminalChange = (nodes: Node[], dispatch: any, visible: boolean) => {
+const OnInactiveTerminalChange = (nodes: Node[], dispatch: Dispatch, visible: boolean) => {
   const terminals = [];
 
   nodes.forEach((n) => {

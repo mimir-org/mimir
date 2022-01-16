@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VDS.RDF;
 
 namespace RdfParserModule.Extensions

@@ -117,7 +117,7 @@ const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-const getParentNode = (sourceNode: Node, project: Project, data: any) => {
+const getParentNode = (sourceNode: Node, project: Project, data: LibItem) => {
   if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
 };

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -95,7 +95,7 @@ namespace RdfParserModule
             //Store.AddInferenceEngine(new RdfsReasoner());
 
         }
-        
+
 
 
         private ParserNode GetNode(string iri)
@@ -109,10 +109,10 @@ namespace RdfParserModule
         }
         private ParserConnector GetConnector(string iri)
         {
-            var c = 
+            var c =
                 (from connector in ParserConnectors
-                where connector.Iri == iri
-                select connector).ToList();
+                 where connector.Iri == iri
+                 select connector).ToList();
 
             if (c.Count != 1)
             {
@@ -219,7 +219,7 @@ namespace RdfParserModule
         {
             var p = RdfGraph.CreateUriNode(Resources.isAspectOf);
             var list = Store.GetTriplesWithPredicate(p).Select(t => t.Subject).ToList();
-            
+
 
             var roots = list.Select(node => new ParserNode
             {
@@ -236,7 +236,7 @@ namespace RdfParserModule
             foreach (var node in roots)
             {
                 var label = GetLabel(node.Iri);
-                
+
                 if (label.ToLower().Contains("function"))
                 {
                     node.Label = "Function";
@@ -421,7 +421,7 @@ namespace RdfParserModule
 
             foreach (var connector in connectors)
             {
-                
+
                 var label = GetLabel(connector.Id);
 
                 if (label != null)
@@ -491,7 +491,7 @@ namespace RdfParserModule
             return node;
         }
 
-        
+
 
         private string GetLabel(string iri)
         {
@@ -591,7 +591,7 @@ namespace RdfParserModule
             if (pos is not ILiteralNode literal) throw new Exception($"Could not find any {errorPos} on node {node}");
             try
             {
-                return decimal.Parse(literal.Value.Replace(',','.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo);
+                return decimal.Parse(literal.Value.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception e)
             {
@@ -615,7 +615,7 @@ namespace RdfParserModule
             var aspectNode = aspects.First();
 
             var aspectString = aspectNode.ToString().Split("#")[^1];
-            
+
             try
             {
                 return Enum.Parse<Aspect>(aspectString);
@@ -704,7 +704,7 @@ namespace RdfParserModule
             if (toConnectors.Count != 1) throw new Exception("A terminal can only be connected to one, 1, other terminal");
 
             var toConnector = toConnectors.First().ToString();
-            outTerminal.ToConnectorIri= toConnector;
+            outTerminal.ToConnectorIri = toConnector;
 
             var toNodes = GetSubjects(Resources.hasInputTerminal, outTerminal.ToConnectorIri);
             if (toNodes.Count != 1) throw new Exception("A connector can only belong to one, 1, aspect object");
@@ -741,9 +741,9 @@ namespace RdfParserModule
             {
                 var inTerminal = GetTransportInTerminal(transport.Iri);
                 var outTerminal = GetTransportOutTerminal(transport.Iri);
-                
+
                 transport.Name = GetLabel(transport.Iri);
-                
+
                 transport.Aspect = GetAspect(transport.Iri);
 
                 transport.InputTerminal = inTerminal;
@@ -832,7 +832,7 @@ namespace RdfParserModule
 
             }).ToList();
 
-            
+
             foreach (var attribute in attributes)
             {
                 var attributeTypeId = GetAttributeTypeId(attribute.Iri);
@@ -936,7 +936,7 @@ namespace RdfParserModule
         public List<ParserNode> GetAllFunctionObjectsWithTerminals()
         {
             var subs = GetFunctionalSystemBlocks();
-            
+
             var nodes = subs.Select(node => new ParserNode
             {
                 Prefix = "",

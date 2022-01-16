@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { FilterElement } from "..";
 import { Connector, Edge } from "../../../../models";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "../handlers";
@@ -7,7 +8,7 @@ interface Props {
   category: TerminalCategory;
   edges: Edge[];
   items: Connector[];
-  dispatch: any;
+  dispatch: Dispatch;
   visible: boolean;
 }
 

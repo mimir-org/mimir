@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Mb.Models.Extensions
         {
             var method = typeof(EnumMapper).GetMethod("CreateEnum");
             var genericMethod = method?.MakeGenericMethod(createEnum.EnumType.GetEnumTypeFromEnum());
-            return (EnumBase)genericMethod?.Invoke(new EnumMapper(), new object[] { createEnum });
+            return (EnumBase) genericMethod?.Invoke(new EnumMapper(), new object[] { createEnum });
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Mb.Models.Extensions
             if (!typeof(T).IsEnum)
                 throw new NotSupportedException($"{typeof(T)} must be an enumerated type");
 
-            return (T)(object)flags.Cast<int>().Aggregate(0, (c, n) => c |= n);
+            return (T) (object) flags.Cast<int>().Aggregate(0, (c, n) => c |= n);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Mb.Models.Extensions
         {
             return Enum.GetValues(typeof(T))
                 .Cast<Enum>()
-                .ToDictionary(t => (int)(object)t, t => t.GetDisplayName());
+                .ToDictionary(t => (int) (object) t, t => t.GetDisplayName());
         }
     }
 

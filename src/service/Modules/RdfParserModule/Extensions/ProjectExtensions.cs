@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Mb.Models.Data;
 using RdfParserModule.Properties;
 using RdfParserModule.Services;
@@ -9,7 +9,7 @@ namespace RdfParserModule.Extensions
     {
         public static void AssertGraph(this Project project, IOntologyService ontologyService)
         {
-            if(project == null || ontologyService == null)
+            if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null in Project.AssertGraph");
 
             ontologyService.SetBaseUri(new Uri(project.Iri));

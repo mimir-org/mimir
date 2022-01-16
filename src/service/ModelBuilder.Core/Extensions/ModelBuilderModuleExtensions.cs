@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -172,7 +172,7 @@ namespace Mb.Core.Extensions
         {
             // Define default collaboration settings
             var appSettings = serviceScope.ServiceProvider.GetRequiredService<IOptions<ApplicationSetting>>()?.Value;
-            if (appSettings?.CollaborationPartner == null) 
+            if (appSettings?.CollaborationPartner == null)
                 return;
 
             var commonService = serviceScope.ServiceProvider.GetRequiredService<ICommonService>();
@@ -191,7 +191,7 @@ namespace Mb.Core.Extensions
                 Iris = appSettings.CollaborationPartner.Iris,
                 Name = appSettings.CollaborationPartner.Name
             };
-            
+
             currentCollaborationPartner = commonService?.CreateCollaborationPartnerAsync(cp).Result;
             appSettings.CollaborationPartner = currentCollaborationPartner;
         }

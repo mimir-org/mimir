@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,7 +34,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         }
 
         #region Get
-        
+
         /// <summary>
         /// Get blob data from category
         /// </summary>

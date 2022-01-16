@@ -1,4 +1,4 @@
-﻿namespace EventHubModule
+namespace EventHubModule
 {
     public class EventHubConfiguration
     {
@@ -14,7 +14,7 @@
 
         public bool HasValidConsumerConfiguration()
         {
-            return !string.IsNullOrEmpty(ConsumerConnectionString) && 
+            return !string.IsNullOrEmpty(ConsumerConnectionString) &&
                    !string.IsNullOrEmpty(ConsumerEventHubName) &&
                    !string.IsNullOrEmpty(ConsumerBlobStorageConnectionString) &&
                    !string.IsNullOrEmpty(ConsumerBlobContainerName);
