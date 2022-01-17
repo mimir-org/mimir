@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import { Connector, Edge, Node } from "../../../models";
+import { Connector } from "../../../models";
 import { FilterMenuBox, Header } from "./styled";
 import { MenuColumn } from "../styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./filters";
@@ -10,7 +10,7 @@ import { memo } from "react";
 import { Elements } from "react-flow-renderer";
 
 interface Props {
-  elements: Elements<Node | Edge>;
+  elements: Elements;
   edgeAnimation: boolean;
 }
 
@@ -22,10 +22,7 @@ interface Props {
 const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const filterElements = GetFilterElements(elements);
-
-  const nodes = filterElements[0] as Node[];
-  const edges = filterElements[1] as Edge[];
+  const { nodes, edges } = GetFilterElements(elements);
 
   const transportItems = [] as Connector[];
   const relationItems = [] as Connector[];

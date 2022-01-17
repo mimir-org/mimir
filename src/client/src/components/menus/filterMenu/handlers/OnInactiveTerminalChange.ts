@@ -15,7 +15,7 @@ const OnInactiveTerminalChange = (nodes: Node[], dispatch: Dispatch, visible: bo
   if (terminals.length === 0) return;
 
   terminals.forEach((elem) => {
-    dispatch(changeActiveConnector(elem.nodeId, elem.id, ConnectorVisibility.InputVisible, elem.inputOrder, elem.outputOrder));
+    dispatch(changeActiveConnector(elem.nodeId, elem.id, ConnectorVisibility.InputVisible)); // TODO: FIX
   });
 };
 

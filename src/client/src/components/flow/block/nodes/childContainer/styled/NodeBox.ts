@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
-import { IsProduct } from "../../../helpers";
-import { Node } from "../../../models";
+import { Color } from "../../../../../../compLibrary/colors";
+import { IsProduct } from "../../../../../../helpers";
+import { Node } from "../../../../../../models";
+import { Size } from "../../../../../../compLibrary/size";
 
 interface Props {
   node: Node;
@@ -11,11 +12,14 @@ interface Props {
 }
 
 const NodeBox = styled.div<Props>`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: stretch;
+  min-height: ${Size.Node_Height}px;
+  min-width: ${Size.Node_Width}px;
+  padding: 5px 0;
   opacity: ${(props) => (!props.node.isHidden ? 1 : 0)};
-  height: ${(props) => props.node.height}px;
-  width: ${(props) => props.node.width}px;
-  max-height: inherit;
   border-radius: 10px;
   font-size: 11px;
   text-align: center;
@@ -37,7 +41,7 @@ const NodeBox = styled.div<Props>`
     background-color: ${(props) => (IsProduct(props.node) ? Color.ProductSelected : Color.FunctionSelected)};
     position: relative;
     bottom: 15px;
-    left: 0px;
+    left: 0;
   }
 `;
 

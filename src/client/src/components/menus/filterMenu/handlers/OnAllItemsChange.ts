@@ -29,8 +29,10 @@ export const OnAllTransportsChange = (edges: Edge[], dispatch: Dispatch) => {
 
 export const OnAllTerminalsChange = (terminals: Connector[], dispatch: Dispatch, visible: boolean) => {
   terminals.forEach((c) => {
-    const connectorVisibility = visible ? ConnectorVisibility.None : c.connectorVisibility;
-    dispatch(changeActiveConnector(c.nodeId, c.id, connectorVisibility, c.inputOrder, c.outputOrder));
+    let connectorVisibility = ConnectorVisibility.None;
+    if (!visible) connectorVisibility = c.connectorVisibility;
+
+    dispatch(changeActiveConnector(c.nodeId, c.id, connectorVisibility));
   });
 };
 

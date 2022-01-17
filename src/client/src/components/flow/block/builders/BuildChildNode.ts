@@ -1,6 +1,6 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetConnectorOrder, SetNodePos } from "./helpers";
+import { GetNodeTypeString, SetNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 
@@ -17,8 +17,6 @@ const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, spl
 
   const type = GetNodeTypeString(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-
-  SetConnectorOrder(node);
 
   // Force node to fit Block
   const position = !IsOffPage(node) ? SetNodePos(nodePos, libOpen, explorerOpen, splitView) : nodePos;

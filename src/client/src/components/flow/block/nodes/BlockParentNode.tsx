@@ -2,16 +2,16 @@
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent, TerminalsMenuComponent } from "../terminals";
-import { OnTerminalClick, ResizeHandler } from "./handlers";
-import { BlockParentContainer } from "./parentContainer";
+import { HandleComponent } from "../terminals";
+import { OnConnectorClick, ResizeHandler } from "./handlers";
 import { FilterTerminals } from "../helpers";
-import { AspectColorType, Connector } from "../../../../models";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { GetAspectColor, IsConnectorVisible } from "../../../../helpers";
+import { Connector } from "../../../../models";
+import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../redux/store";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 import { SetParentNodeSize } from "./helpers";
-import { blockElementsSelector } from "../../../../redux/store";
+import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { BlockParentComponent } from "./parentContainer";
+import { BoxWrapper } from "./styled";
 
 /**
  * Component for the large parent block in BlockView.
@@ -20,8 +20,6 @@ import { blockElementsSelector } from "../../../../redux/store";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [showInputMenu, setShowInputMenu] = useState(false);
-  const [showOutputMenu, setShowOutputMenu] = useState(false);
   const [terminals, setTerminals] = useState<Connector[]>([]);
 
   const libOpen = useAppSelector(selectors.libOpenSelector);
@@ -29,11 +27,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const electro = useAppSelector(selectors.electroSelector);
   const elements = useAppSelector(blockElementsSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const hasActiveTerminals = terminals.some((c) => IsConnectorVisible(c));
+  const isElectro = useAppSelector(selectors.electroSelector);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
@@ -48,36 +45,26 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+
   if (!node) return null;
 
   return (
-    <>
-      <BlockParentContainer
+    <BoxWrapper isElectro={isElectro}>
+      <HandleComponent node={node} terminals={inputTerminals} />
+      <BlockParentComponent
         node={node}
         size={size}
-        color={GetAspectColor(node, AspectColorType.Header)}
-        hasTerminals={terminals.length > 0}
-        isSecondaryNode={node.id === secondaryNode?.id}
-        onParentClick={() => OnParentClick(dispatch, node)}
-        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
-        dispatch={dispatch}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
+        isNavigationActive={node.id !== secondaryNode?.id}
+        onNavigateUpClick={() => OnParentClick(dispatch, node)}
+        onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
       />
-      <TerminalsMenuComponent
-        node={node}
-        terminals={terminals}
-        size={size}
-        showInputMenu={showInputMenu}
-        showOutputMenu={showOutputMenu}
-        setShowInputMenu={setShowInputMenu}
-        setShowOutputMenu={setShowOutputMenu}
-        electro={electro}
-        onClick={(conn, isInput) => OnTerminalClick(conn, isInput, node, dispatch, edges)}
-        isParent
-      />
-      {hasActiveTerminals && (
-        <HandleComponent node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
-      )}
-    </>
+      <HandleComponent node={node} terminals={outputTerminals} />
+    </BoxWrapper>
   );
 };
 

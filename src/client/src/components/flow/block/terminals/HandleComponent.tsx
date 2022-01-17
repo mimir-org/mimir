@@ -3,23 +3,17 @@ import { useEffect, useState } from "react";
 import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { GetTerminalColor, IsValidBlockConnection, SetTerminalXPos, SetTerminalYPos } from "./helpers";
-import { HandleBox } from "./styled";
-import { IsInputTerminal, IsPartOf } from "../../helpers";
+import { GetTerminalColor, IsValidBlockConnection } from "./helpers";
+import { HandleBox, HandleContainer } from "./styled";
+import { IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
-import { BlockNodeSize } from "../../../../models/project";
-import { nodeSelector, useAppSelector } from "../../../../redux/store";
-import { Dispatch } from "redux";
+import { electroSelector, nodeSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { IsConnectorVisible } from "../../../../helpers";
 
 interface Props {
   node: Node;
-  size: BlockNodeSize;
   terminals: Connector[];
-  dispatch: Dispatch;
-  isParent?: boolean;
-  electro?: boolean;
   offPage?: boolean;
 }
 
@@ -28,8 +22,10 @@ interface Props {
  * @param interface
  * @returns a Flow Handle element with an icon that corresponds with the terminal type.
  */
-const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, offPage }: Props) => {
+const HandleComponent = ({ node, terminals, offPage }: Props) => {
+  const dispatch = useAppDispatch();
   const nodes = useAppSelector(nodeSelector);
+  const isElectro = useAppSelector(electroSelector);
   const [visible, setVisible] = useState(!offPage);
   const className = "react-flow__handle-block";
   const updateNodeInternals = useUpdateNodeInternals();
@@ -38,23 +34,18 @@ const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, o
     setTimeout(() => {
       updateNodeInternals(node?.id);
     }, 200);
-  }, [electro, terminals]);
+  }, [isElectro, terminals]);
 
   return (
-    <>
+    <HandleContainer isElectro={isElectro}>
       {terminals.map((conn) => {
         if (IsConnectorVisible(conn)) {
-          const [type, pos] = GetBlockHandleType(conn, electro);
-          const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
-          const yPos = SetTerminalYPos(conn, pos, electro, isParent, order, size.height);
-          const xPos = SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width);
+          const [type, pos] = GetBlockHandleType(conn, isElectro);
 
           return (
             <HandleBox
               visible={visible && !IsPartOf(conn)}
               id={"handle-" + conn.id}
-              yPos={yPos}
-              xPos={xPos}
               key={conn.id}
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
@@ -62,7 +53,6 @@ const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, o
               <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
               <Handle
                 type={type}
-                style={electro ? { marginLeft: "7px" } : { marginTop: "9px" }}
                 position={pos}
                 id={conn.id}
                 className={className}
@@ -73,7 +63,7 @@ const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, o
         }
         return null;
       })}
-    </>
+    </HandleContainer>
   );
 };
 

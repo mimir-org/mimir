@@ -21,10 +21,6 @@ class Connector {
   attributes: Attribute[];
   terminalTypeId: string;
 
-  // Only client
-  inputOrder: number;
-  outputOrder: number;
-
   // Relation
   relationType: RelationType;
 

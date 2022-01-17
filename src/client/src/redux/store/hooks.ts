@@ -3,6 +3,10 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { RootState } from ".";
 import { OutputParametricSelector, OutputSelector, ParametricSelector, Selector, createSelector } from "@reduxjs/toolkit";
 
+type UnknownFunction = (...args: unknown[]) => unknown;
+type RootStateSelector = Selector<RootState>;
+type RootStateSelectorArray = ReadonlyArray<RootStateSelector>;
+
 /**
  * Custom Dispatch hook used within application.
  */
@@ -15,7 +19,7 @@ export const useAppDispatch = useDispatch;
 export const createAppSelector: <R, T>(
   selector: Selector<RootState, R>,
   combiner: (res: R) => T
-) => OutputSelector<RootState, T, (res: R) => T> = createSelector;
+) => OutputSelector<RootStateSelectorArray, T, (res: R) => T> = createSelector;
 
 /**
  * Custom createSelector hook used within application, with type linting, allowing for props as parameters.
@@ -32,7 +36,7 @@ export const createParametricAppSelector: <R1, R2, P, T>(
 export const combineAppSelectors: <R, T>(
   selectors: Selector<RootState, R>[],
   combiner: (...res: R[]) => T
-) => OutputSelector<RootState, T, (...res: R[]) => T> = createSelector;
+) => OutputSelector<RootStateSelectorArray, T, (...res: R[]) => T> = createSelector;
 
 /**
  * Custom useSelector hook with type linting.
@@ -51,7 +55,10 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
  * @example
  * const values = useParametricAppSelector(selector, props);
  */
-export const useParametricAppSelector = <P, R, C>(selector: OutputParametricSelector<RootState, P, R, C>, props: P) => {
+export const useParametricAppSelector = <P, R>(
+  selector: OutputParametricSelector<RootState, P, R, UnknownFunction>,
+  props: P
+) => {
   return useAppSelector((state) => selector(state, props));
 };
 
@@ -70,7 +77,7 @@ export const useParametricAppSelector = <P, R, C>(selector: OutputParametricSele
  * const values = useUniqueParametricAppSelector(selectorFactoryFunc, props);
  */
 export const useUniqueParametricAppSelector = <P, R>(
-  selectorFactoryFunc: () => OutputParametricSelector<RootState, P, R, unknown>,
+  selectorFactoryFunc: () => OutputParametricSelector<RootState, P, R, UnknownFunction>,
   props: P
 ) => {
   const selector = useMemo(selectorFactoryFunc, [selectorFactoryFunc]);

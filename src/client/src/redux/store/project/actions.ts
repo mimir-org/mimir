@@ -350,9 +350,7 @@ export function deleteProjectError(key: string) {
 export function changeActiveConnector(
   nodeId: string,
   connectorId: string,
-  connectorVisibility: ConnectorVisibility,
-  inputOrder: number,
-  outputOrder: number
+  connectorVisibility: ConnectorVisibility
 ): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
@@ -360,8 +358,6 @@ export function changeActiveConnector(
       nodeId,
       connectorId,
       connectorVisibility,
-      inputOrder,
-      outputOrder,
     },
   };
 }

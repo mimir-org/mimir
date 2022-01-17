@@ -1,7 +1,6 @@
 import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 import { App } from "./components/app";
 import { PersistGate } from "redux-persist/integration/react";
 import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
@@ -43,9 +42,7 @@ ReactDOM.render(
   <Provider store={red.store}>
     <ReactFlowProvider>
       <PersistGate loading={null} persistor={red.persistor}>
-        <BrowserRouter forceRefresh={true}>
-          <App pca={msalInstance} />
-        </BrowserRouter>
+        <App pca={msalInstance} />
       </PersistGate>
     </ReactFlowProvider>
   </Provider>,

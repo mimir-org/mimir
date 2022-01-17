@@ -48,10 +48,14 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   if (!data) return null;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
+  const inputTerminals = data.connectors.filter((t) => IsInputTerminal(t));
+  const outputTerminals = data.connectors.filter((t) => IsOutputTerminal(t));
+
   return (
     <OffPageBox id={type + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>
+      <HandleComponent node={data} terminals={inputTerminals} offPage />
       <OffPageIcon style={{ fill: iconColor }} className="logo" />
-      <HandleComponent node={data} size={{ width: 30, height: 30 }} terminals={data.connectors} dispatch={dispatch} offPage />
+      <HandleComponent node={data} terminals={outputTerminals} offPage />
     </OffPageBox>
   );
 };

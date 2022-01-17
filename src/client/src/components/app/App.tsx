@@ -1,4 +1,3 @@
-import { useHistory } from "react-router";
 import { Home } from "../home/";
 import { GlobalStyle } from "../../compLibrary";
 import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
@@ -8,7 +7,6 @@ import { TextResources } from "../../assets/text";
 import { WebSocket } from "../../models";
 import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";
-import { ModelBuilderNavigationClient } from "../../models/webclient";
 import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
@@ -20,10 +18,7 @@ type AppProps = {
 };
 
 const App = ({ pca }: AppProps) => {
-  const history = useHistory();
-  const navigationClient = new ModelBuilderNavigationClient(history);
   const isFetching = useAppSelector(isFetchingSelector);
-  pca.setNavigationClient(navigationClient);
   const projectState = useAppSelector(projectStateSelector);
 
   const login = () => {
