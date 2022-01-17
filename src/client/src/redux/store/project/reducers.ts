@@ -577,10 +577,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                     conn.id === action.payload.connectorId
                       ? {
                           ...conn,
-                          visible: action.payload.visible,
+                          connectorVisibility: action.payload.connectorVisibility,
                           inputOrder: action.payload.inputOrder,
                           outputOrder: action.payload.outputOrder,
-                          isBidirectionalInput: action.payload?.isBidirectionalInput,
                         }
                       : conn
                   ),

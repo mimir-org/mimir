@@ -1,5 +1,6 @@
+import { IsConnectorVisible } from "../../../../../helpers";
 import { Node } from "../../../../../models";
-import { IsInputTerminal } from "../../../helpers";
+import { IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 
 /**
  * Method to set the order for each terminal. The value defines the position for the terminal.
@@ -10,8 +11,8 @@ const SetConnectorOrder = (node: Node) => {
   let outputOrder = 0;
 
   node.connectors.forEach((conn) => {
-    if (conn.visible && IsInputTerminal(conn)) conn.inputOrder = inputOrder++;
-    if (conn.visible && !IsInputTerminal(conn)) conn.outputOrder = outputOrder++;
+    if (IsConnectorVisible(conn) && IsInputTerminal(conn)) conn.inputOrder = inputOrder++;
+    if (IsConnectorVisible(conn) && IsOutputTerminal(conn)) conn.outputOrder = outputOrder++;
   });
 };
 

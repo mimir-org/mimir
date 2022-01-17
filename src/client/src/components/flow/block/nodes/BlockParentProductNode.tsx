@@ -3,12 +3,12 @@ import * as selectors from "./helpers/ProductSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent, TerminalsMenuComponent } from "../terminals";
-import { OnConnectorClick, ResizeHandler } from "./handlers";
+import { OnTerminalClick, ResizeHandler } from "./handlers";
 import { BlockParentContainer } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
 import { AspectColorType, Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { GetAspectColor } from "../../../../helpers";
+import { GetAspectColor, IsConnectorVisible } from "../../../../helpers";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 import { SetParentNodeSize } from "./helpers";
 
@@ -31,7 +31,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(selectors.electroSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const hasActiveTerminals = terminals.some((conn) => conn.visible);
+  const hasActiveTerminals = terminals.some((c) => IsConnectorVisible(c));
 
   // Set size
   useEffect(() => {
@@ -69,7 +69,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         setShowInputMenu={setShowInputMenu}
         setShowOutputMenu={setShowOutputMenu}
         electro={electro}
-        onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
+        onClick={(conn, isInput) => OnTerminalClick(conn, isInput, node, dispatch, edges)}
         isParent
       />
       {hasActiveTerminals && (

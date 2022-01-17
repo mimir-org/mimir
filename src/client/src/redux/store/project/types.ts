@@ -1,4 +1,4 @@
-import { CommitPackage, Edge, Node, Project, ProjectConverterAm, ProjectFileAm } from "../../../models";
+import { CommitPackage, ConnectorVisibility, Edge, Node, Project, ProjectConverterAm, ProjectFileAm } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
@@ -341,10 +341,9 @@ export interface ChangeActiveConnector {
   payload: {
     nodeId: string;
     connectorId: string;
-    visible: boolean;
+    connectorVisibility: ConnectorVisibility;
     inputOrder: number;
     outputOrder: number;
-    isBidirectionalInput?: boolean;
   };
 }
 export interface ExportProjectFileAction {

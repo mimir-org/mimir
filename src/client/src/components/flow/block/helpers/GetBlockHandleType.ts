@@ -1,4 +1,4 @@
-import { Connector } from "../../../../models";
+import { Connector, ConnectorVisibility } from "../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
 import { IsInputTerminal, IsPartOf } from "../../helpers";
 
@@ -12,7 +12,7 @@ const GetBlockHandleType = (conn: Connector, electro: boolean): [HandleType, Pos
   const sourcePosition = electro || IsPartOf(conn) ? Position.Bottom : Position.Right;
   const targetPosition = electro || IsPartOf(conn) ? Position.Top : Position.Left;
 
-  if (IsInputTerminal(conn) || conn.isBidirectionalInput) return ["target", targetPosition];
+  if (IsInputTerminal(conn) || conn.connectorVisibility === ConnectorVisibility.InputVisible) return ["target", targetPosition];
   return ["source", sourcePosition];
 };
 

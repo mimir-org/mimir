@@ -11,6 +11,7 @@ import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { BlockNodeSize } from "../../../../models/project";
 import { nodeSelector, useAppSelector } from "../../../../redux/store";
 import { Dispatch } from "redux";
+import { IsConnectorVisible } from "../../../../helpers";
 
 interface Props {
   node: Node;
@@ -42,7 +43,7 @@ const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, o
   return (
     <>
       {terminals.map((conn) => {
-        if (conn.visible) {
+        if (IsConnectorVisible(conn)) {
           const [type, pos] = GetBlockHandleType(conn, electro);
           const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
           const yPos = SetTerminalYPos(conn, pos, electro, isParent, order, size.height);
@@ -50,7 +51,7 @@ const HandleComponent = ({ node, size, terminals, dispatch, isParent, electro, o
 
           return (
             <HandleBox
-              visible={visible && conn.visible && !IsPartOf(conn)}
+              visible={visible && !IsPartOf(conn)}
               id={"handle-" + conn.id}
               yPos={yPos}
               xPos={xPos}

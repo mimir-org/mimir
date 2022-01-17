@@ -1,6 +1,6 @@
 import * as Click from "./handlers";
 import { TerminalsMenu, TerminalsMenuButton } from ".";
-import { Connector, Node } from "../../../../models";
+import { Connector, ConnectorVisibility, Node } from "../../../../models";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 
@@ -70,7 +70,7 @@ const TerminalsMenuComponent = ({
           isParent={isParent}
           electro={electro}
           terminals={inputTerminals}
-          hasActiveTerminals={inputTerminals.some((conn) => conn.visible)}
+          hasActiveTerminals={inputTerminals.some((conn) => conn.connectorVisibility !== ConnectorVisibility.None)}
           onClick={onClick}
           onBlur={() => Click.OnBlur(setShowInputMenu, showInputMenu)}
           isInput
@@ -84,7 +84,7 @@ const TerminalsMenuComponent = ({
           isInput={false}
           electro={electro}
           terminals={outputTerminals}
-          hasActiveTerminals={outputTerminals.some((conn) => conn.visible)}
+          hasActiveTerminals={outputTerminals.some((conn) => conn.connectorVisibility !== ConnectorVisibility.None)}
           onClick={onClick}
           onBlur={() => Click.OnBlur(setShowOutputMenu, showOutputMenu)}
         />

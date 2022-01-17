@@ -5,6 +5,7 @@ export enum Aspect {
   Product = 4,
   Location = 8,
 }
+
 export enum ConnectorType {
   Input = 0,
   Output = 1,

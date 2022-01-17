@@ -11,7 +11,7 @@ import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
 import { Size } from "../../../../compLibrary/size";
 import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { GetAspectColor, GetSelectedBlockNode, IsConnectorVisible } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 import { GetBlockNodeType, SetNodeSize } from "./helpers";
 
@@ -35,7 +35,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(selectors.electroSelector);
   const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
-  const hasActiveTerminals = terminals.some((conn) => conn.visible);
+  const hasActiveTerminals = terminals.some((c) => IsConnectorVisible(c));
 
   // Check for elements that require OffPage
   useEffect(() => {

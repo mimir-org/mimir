@@ -1,6 +1,16 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../../../helpers";
-import { Aspect, CONNECTOR_KIND, Connector, ConnectorType, EDGE_KIND, Edge, Node, RelationType } from "../../../../../../models";
 import { Position } from "../../../../../../models/project";
+import {
+  Aspect,
+  CONNECTOR_KIND,
+  Connector,
+  ConnectorType,
+  EDGE_KIND,
+  Edge,
+  Node,
+  RelationType,
+  ConnectorVisibility,
+} from "../../../../../../models";
 
 export interface OffPageObject {
   node: Node;
@@ -53,7 +63,7 @@ const CreateOffPageObject = (data: OffPageData) => {
     semanticReference: "",
     inputOrder: 0,
     outputOrder: 0,
-    visible: true,
+    connectorVisibility: ConnectorVisibility.InputVisible,
     color: sourceConnector?.color,
     kind: CONNECTOR_KIND,
   } as Connector;
@@ -70,7 +80,7 @@ const CreateOffPageObject = (data: OffPageData) => {
     semanticReference: "",
     inputOrder: 0,
     outputOrder: 0,
-    visible: true,
+    connectorVisibility: ConnectorVisibility.OutputVisible,
     color: sourceConnector?.color,
     kind: CONNECTOR_KIND,
   } as Connector;

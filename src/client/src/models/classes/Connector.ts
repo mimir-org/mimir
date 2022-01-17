@@ -1,4 +1,4 @@
-import { Attribute, ConnectorType, EnumBase, RelationType } from "..";
+import { Attribute, ConnectorType, ConnectorVisibility, EnumBase, RelationType } from "..";
 
 export const CONNECTOR_KIND = "Connector";
 
@@ -11,7 +11,7 @@ class Connector {
   semanticReference: string;
   nodeId: string;
   nodeIri: string;
-  visible: boolean;
+  connectorVisibility: ConnectorVisibility;
   isRequired: boolean;
 
   // Terminal
@@ -24,7 +24,6 @@ class Connector {
   // Only client
   inputOrder: number;
   outputOrder: number;
-  isBidirectionalInput: boolean;
 
   // Relation
   relationType: RelationType;
