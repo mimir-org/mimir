@@ -11,6 +11,7 @@ const OnActiveTerminalChange = (activeElements: any[], dispatch: Dispatch, visib
   // Toggle active terminals and edges
   activeElements.forEach((elem) => {
     const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
+    // const connectorVisibility = visible ? ConnectorVisibility.None: elem.connectorVisibility;
 
     if (isEdge) {
       if (!IsPartOf(elem.fromConnector)) elem.isHidden = visible;

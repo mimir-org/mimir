@@ -1,5 +1,5 @@
-import { GetAspectColor } from "../../../../helpers";
-import { AspectColorType, Connector, ConnectorVisibility, Node } from "../../../../models";
+import { GetAspectColor, IsConnectorVisible } from "../../../../helpers";
+import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor, SetMenuXPos } from "./helpers";
 import { ColorTag, TerminalsBox, TerminalsElement } from "./styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
@@ -36,7 +36,7 @@ const TerminalsMenu = ({ node, size, isParent, isInput, terminals, electro, hasA
     {terminals.map((conn) => (
       <TerminalsElement key={conn.id}>
         <Checkbox
-          isChecked={conn.connectorVisibility !== ConnectorVisibility.None}
+          isChecked={IsConnectorVisible(conn)}
           onChange={() => onClick(conn, isInput)}
           color={Color.GreyDark}
           id={conn.id}
