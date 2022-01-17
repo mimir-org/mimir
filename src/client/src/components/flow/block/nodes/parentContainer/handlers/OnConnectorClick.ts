@@ -5,7 +5,7 @@ import { changeActiveConnector, removeEdge } from "../../../../../../redux/store
 const OnConnectorClick = (conn: Connector, dispatch: Dispatch, edges: Edge[], nodes: Node[]) => {
   const actualNode = nodes.find((x) => x.id === conn.nodeId);
 
-  dispatch(changeActiveConnector(actualNode.id, conn.id, !conn.visible, conn.inputOrder, conn.outputOrder));
+  dispatch(changeActiveConnector(actualNode.id, conn.id, !conn.visible));
 
   if (conn.visible) {
     const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);

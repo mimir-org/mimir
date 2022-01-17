@@ -2,7 +2,6 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a parent ProductNode in BlockView.
@@ -11,10 +10,10 @@ import { SetConnectorOrder } from "./helpers";
  */
 const BuildProductParentNode = (node: Node, explorerOpen: boolean) => {
   if (!node) return null;
-  SetConnectorOrder(node);
 
   const type = TextResources.Type_BlockParentProductNode;
-  const position = { x: explorerOpen ? 390 : 90, y: 0 }; // TODO: fix magic numbers
+  // TODO: fix magic numbers and remove state mutation outside store
+  const position = { x: explorerOpen ? 390 : 90, y: 0 };
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 

@@ -7,7 +7,7 @@ import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "..
  * Different node types allow different terminal types.
  * @param connectors
  * @param secondaryNode selected secondaryNode, if any
- * @returns a filtered list.
+ * @returns a filtered list connectors sorted by name.
  */
 const FilterTerminals = (connectors: Connector[], secondaryNode: Node) => {
   const selectedNode = GetSelectedNode();
@@ -16,7 +16,8 @@ const FilterTerminals = (connectors: Connector[], secondaryNode: Node) => {
   connectors?.forEach((c) => {
     validateTerminal(selectedNode, secondaryNode, c) && terminals.push(c);
   });
-  return terminals;
+
+  return terminals.sort((a, b) => a.name.localeCompare(b.name));
 };
 
 function validateTerminal(selected: Node, secondary: Node, c: Connector) {
