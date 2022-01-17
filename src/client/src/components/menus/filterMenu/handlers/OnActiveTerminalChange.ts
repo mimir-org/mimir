@@ -14,7 +14,7 @@ const OnActiveTerminalChange = (activeElements: any[], dispatch: Dispatch, visib
 
     if (isEdge) {
       if (!IsPartOf(elem.fromConnector)) elem.isHidden = visible;
-    } else dispatch(changeActiveConnector(elem?.nodeId, elem?.id, !visible, elem?.inputOrder, elem?.outputOrder));
+    } else dispatch(changeActiveConnector(elem?.nodeId, elem?.id, !visible));
   });
 };
 

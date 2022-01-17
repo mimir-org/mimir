@@ -2,15 +2,16 @@
 import * as selectors from "./helpers/ProductSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent, TerminalsMenuComponent } from "../terminals";
+import { HandleComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
-import { BlockParentContainer } from "./parentContainer";
+import { BlockParentComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
-import { AspectColorType, Connector } from "../../../../models";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { GetAspectColor } from "../../../../helpers";
+import { Connector } from "../../../../models";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 import { SetParentNodeSize } from "./helpers";
+import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { BoxWrapper } from "./styled";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -19,8 +20,6 @@ import { SetParentNodeSize } from "./helpers";
  */
 const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [showInputMenu, setShowInputMenu] = useState(false);
-  const [showOutputMenu, setShowOutputMenu] = useState(false);
   const [terminals, setTerminals] = useState<Connector[]>([]);
 
   const elements = useAppSelector(selectors.blockElementsSelector);
@@ -28,10 +27,9 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
-  const electro = useAppSelector(selectors.electroSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const hasActiveTerminals = terminals.some((conn) => conn.visible);
+  const isElectro = useAppSelector(selectors.electroSelector);
 
   // Set size
   useEffect(() => {
@@ -47,35 +45,26 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
     setTerminals(FilterTerminals(node?.connectors, null));
   }, [node]);
 
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+
   if (!node) return null;
 
   return (
-    <>
-      <BlockParentContainer
+    <BoxWrapper isElectro={isElectro}>
+      <HandleComponent node={node} terminals={inputTerminals} />
+      <BlockParentComponent
         node={node}
         size={size}
-        color={GetAspectColor(node, AspectColorType.Header)}
-        hasTerminals={terminals.length > 0}
-        onParentClick={() => OnParentClick(dispatch, node)}
-        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
-        dispatch={dispatch}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
+        isNavigationActive={true}
+        onNavigateUpClick={() => OnParentClick(dispatch, node)}
+        onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
+        onConnectorClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
       />
-      <TerminalsMenuComponent
-        node={node}
-        terminals={terminals}
-        size={size}
-        showInputMenu={showInputMenu}
-        showOutputMenu={showOutputMenu}
-        setShowInputMenu={setShowInputMenu}
-        setShowOutputMenu={setShowOutputMenu}
-        electro={electro}
-        onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        isParent
-      />
-      {hasActiveTerminals && (
-        <HandleComponent node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} isParent />
-      )}
-    </>
+      <HandleComponent node={node} terminals={outputTerminals} />
+    </BoxWrapper>
   );
 };
 

@@ -1,87 +1,56 @@
 import * as Click from "./handlers";
 import { TerminalsMenu, TerminalsMenuButton } from ".";
 import { Connector, Node } from "../../../../models";
-import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
-import { BlockNodeSize } from "../../../../models/project";
+import { useState } from "react";
+import { TerminalMenuWrapper } from "./styled";
 
 interface Props {
   node: Node;
   terminals: Connector[];
-  size: BlockNodeSize;
-  showInputMenu: boolean;
-  showOutputMenu: boolean;
-  setShowInputMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowOutputMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  electro: boolean;
   onClick: (conn: Connector) => void;
   isParent?: boolean;
+  isInput?: boolean;
   showMenuButton?: boolean;
 }
 
 /**
  * Component for the terminals menu on the nodes in BlockView.
  * @param interface
- * @returns two buttons to activate two menus of input and output terminals.
+ * @returns a button to active the menu for the terminal supplied
  */
 const TerminalsMenuComponent = ({
   node,
-  size,
-  showInputMenu,
-  showOutputMenu,
   terminals,
-  electro,
-  setShowInputMenu,
-  setShowOutputMenu,
   onClick,
   isParent,
+  isInput,
   showMenuButton = true,
 }: Props) => {
-  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
-  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <>
+    <TerminalMenuWrapper>
       <TerminalsMenuButton
         node={node}
         isParent={isParent}
         showMenuButton={showMenuButton}
-        terminals={inputTerminals}
-        onClick={() => Click.OnInputMenu(setShowInputMenu, showInputMenu)}
-        isInput
+        terminals={terminals}
+        onClick={() => Click.OnInputMenu(setShowMenu, showMenu)}
+        isInput={isInput}
       />
-      <TerminalsMenuButton
-        node={node}
-        isParent={isParent}
-        showMenuButton={showMenuButton}
-        terminals={outputTerminals}
-        onClick={() => Click.OnOutputMenu(setShowOutputMenu, showOutputMenu)}
-      />
-      {showInputMenu && (
+      {showMenu && (
         <TerminalsMenu
           node={node}
-          size={size}
-          isParent={isParent}
-          electro={electro}
-          terminals={inputTerminals}
-          hasActiveTerminals={inputTerminals.some((conn) => conn.visible)}
+          isInput={isInput}
+          terminals={terminals}
+          hasActiveTerminals={terminals.some((conn) => conn.visible)}
           onClick={onClick}
-          onBlur={() => Click.OnBlur(setShowInputMenu, showInputMenu)}
-          isInput
+          onBlur={() => Click.OnBlur(setShowMenu, showMenu)}
         />
       )}
-      {showOutputMenu && (
-        <TerminalsMenu
-          node={node}
-          size={size}
-          isParent={isParent}
-          electro={electro}
-          terminals={outputTerminals}
-          hasActiveTerminals={outputTerminals.some((conn) => conn.visible)}
-          onClick={onClick}
-          onBlur={() => Click.OnBlur(setShowOutputMenu, showOutputMenu)}
-        />
-      )}
-    </>
+    </TerminalMenuWrapper>
   );
 };
+
+
 export default TerminalsMenuComponent;

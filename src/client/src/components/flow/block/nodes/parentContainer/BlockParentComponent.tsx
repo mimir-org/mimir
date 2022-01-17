@@ -1,4 +1,4 @@
-import { Node } from "../../../../../models";
+import { Connector, Node } from "../../../../../models";
 import { ParentBox, ResizeButton } from "./styled";
 import { IsLocation, IsProduct } from "../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
@@ -8,35 +8,36 @@ import { useRef } from "react";
 import { useResizeParentNode } from "./hooks";
 import { BlockParentBanner } from ".";
 import { BlockNodeSize } from "../../../../../models/project";
-import { Dispatch } from "redux";
+import { useAppDispatch } from "../../../../../redux/store";
 
 interface Props {
   node: Node;
   size: BlockNodeSize;
-  color: string;
-  hasTerminals: boolean;
-  isSecondaryNode?: boolean;
-  onParentClick: () => void;
-  onChildClick: () => void;
-  dispatch: Dispatch;
+  inputTerminals: Connector[];
+  outputTerminals: Connector[];
+  isNavigationActive: boolean;
+  onNavigateUpClick: () => void;
+  onNavigateDownClick: () => void;
+  onConnectorClick: (conn: Connector) => void;
 }
 
 /**
  * Component for the parent block node in BlockView.
  * @param interface
- * @returns a parent container with terminals menus and terminals. The component serves as a container for the
- * parent node's child nodes.
+ * @returns a parent container with terminals menus and terminals.
+ * The component serves as a container for the parent node's child nodes.
  */
-const BlockParentContainer = ({
+const BlockParentComponent = ({
   node,
   size,
-  color,
-  hasTerminals,
-  isSecondaryNode,
-  onParentClick,
-  onChildClick,
-  dispatch,
+  inputTerminals,
+  outputTerminals,
+  isNavigationActive,
+  onNavigateUpClick,
+  onNavigateDownClick,
+  onConnectorClick
 }: Props) => {
+  const dispatch = useAppDispatch();
   const resizePanelRef = useRef(null);
   useResizeParentNode(node.id, resizePanelRef, dispatch);
   const isLocation = IsLocation(node);
@@ -45,15 +46,16 @@ const BlockParentContainer = ({
     <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
       <BlockParentBanner
         node={node}
-        color={color}
-        hasTerminals={hasTerminals}
-        isSecondaryNode={isSecondaryNode}
-        onParentClick={onParentClick}
-        onChildClick={onChildClick}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
+        isNavigationActive={isNavigationActive}
+        onNavigateUpClick={() => onNavigateUpClick()}
+        onNavigateDownClick={() => onNavigateDownClick()}
+        onConnectorClick={(c) => onConnectorClick(c)}
       />
       {IsProduct(node) && (
-        <ResizeButton id="ResizeParentNode" ref={resizePanelRef}>
-          <img src={ResizeIcon} alt="resize" className="icon" />
+        <ResizeButton ref={resizePanelRef}>
+          <img src={ResizeIcon} alt="resize" />
         </ResizeButton>
       )}
       <Background
@@ -66,4 +68,4 @@ const BlockParentContainer = ({
   );
 };
 
-export default BlockParentContainer;
+export default BlockParentComponent;

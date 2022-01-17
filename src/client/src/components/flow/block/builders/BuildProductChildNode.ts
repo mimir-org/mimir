@@ -1,6 +1,6 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetConnectorOrder, SetNodePos } from "./helpers";
+import { GetNodeTypeString, SetNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 
@@ -12,12 +12,11 @@ import { IsOffPage } from "../../../../helpers";
  * @param splitView
  * @returns a Product Node of the type FlowElement.
  */
-const BuildProductBlockNode = (node: Node, libOpen: boolean, explorerOpen: boolean, splitView: boolean) => {
+const BuildProductChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, splitView: boolean) => {
   if (!node) return null;
   const type = GetNodeTypeString(node);
 
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-  SetConnectorOrder(node);
 
   // Force node to fit Block
   const position = !IsOffPage(node) ? SetNodePos(nodePos, libOpen, explorerOpen, splitView) : nodePos;
@@ -36,4 +35,4 @@ const BuildProductBlockNode = (node: Node, libOpen: boolean, explorerOpen: boole
   } as FlowElement;
 };
 
-export default BuildProductBlockNode;
+export default BuildProductChildNode;

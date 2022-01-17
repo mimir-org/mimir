@@ -9,7 +9,7 @@ const ResizeButton = styled.div`
   pointer-events: all;
   z-index: 1;
 
-  .icon {
+  img {
     pointer-events: none;
     position: relative;
     height: 15px;

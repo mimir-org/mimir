@@ -1,5 +1,5 @@
 import { IsAspectNode } from "../../../../helpers";
-import { GetMenuIcon, SetButtonXPos } from "./helpers";
+import { GetMenuIcon } from "./helpers";
 import { TerminalsButtonBox } from "./styled";
 import { Connector, Node } from "../../../../models";
 
@@ -21,8 +21,6 @@ const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminal
   <TerminalsButtonBox
     id={"terminals-menu-button-" + node.id}
     visible={showMenuButton && !IsAspectNode(node) && !!terminals.length}
-    left={SetButtonXPos(isParent, isInput)}
-    right={SetButtonXPos(isParent, isInput, true)}
     onClick={() => onClick()}
   >
     <img src={GetMenuIcon(node, isParent, isInput)} className="menu-icon" alt="menu" />

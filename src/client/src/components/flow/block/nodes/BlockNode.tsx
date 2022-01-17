@@ -3,17 +3,18 @@ import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
-import { NodeBox } from "../../styled";
-import { HandleComponent, TerminalsMenuComponent } from "../terminals";
+import { HandleComponent } from "../terminals";
 import { HandleConnectedOffPageNode, HandleRequiredOffPageNode } from "./helpers/offPage";
 import { FilterTerminals } from "../helpers";
-import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
+import { OnTerminalClick } from "./handlers";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
-import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { GetAspectColor } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
-import { GetBlockNodeType, SetNodeSize } from "./helpers";
+import { SetNodeSize } from "./helpers";
+import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { BoxWrapper } from "./styled";
+import { BlockChildComponent } from "./childContainer";
 
 /**
  * Component for a child Node in BlockView.
@@ -22,9 +23,6 @@ import { GetBlockNodeType, SetNodeSize } from "./helpers";
  */
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [showInputMenu, setShowInputMenu] = useState(false);
-  const [showOutputMenu, setShowOutputMenu] = useState(false);
-  const [showMenuButton, setShowMenuButton] = useState(false);
   const [terminals, setTerminals] = useState<Connector[]>([]);
   const initialSize = { width: Size.Node_Width, height: Size.Node_Height } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
@@ -33,9 +31,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const electro = useAppSelector(selectors.electroSelector);
-  const type = GetBlockNodeType(data);
   const node = nodes?.find((x) => x.id === data.id);
-  const hasActiveTerminals = terminals.some((conn) => conn.visible);
+  const isElectro = useAppSelector(selectors.electroSelector);
 
   // Check for elements that require OffPage
   useEffect(() => {
@@ -52,38 +49,24 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     setSize({ width: updatedSize.width, height: updatedSize.height });
   }, [electro, terminals]);
 
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+
   if (!node) return null;
 
-  node.width = size.width;
-  node.height = size.height;
-
   return (
-    <NodeBox
-      id={type + node.id}
-      node={node}
-      colorMain={GetAspectColor(data, AspectColorType.Main)}
-      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-      isSelected={node === GetSelectedBlockNode()}
-      onMouseEnter={() => OnHover(setShowMenuButton)}
-      onMouseLeave={() => OnMouseOut(setShowMenuButton)}
-    >
-      <BlockLogoComponent node={node} />
-      <TerminalsMenuComponent
+    <BoxWrapper isElectro={isElectro}>
+      <HandleComponent node={node} terminals={inputTerminals} />
+      <BlockChildComponent
         node={node}
-        terminals={terminals}
-        size={size}
-        showInputMenu={showInputMenu}
-        showOutputMenu={showOutputMenu}
-        setShowInputMenu={setShowInputMenu}
-        setShowOutputMenu={setShowOutputMenu}
-        electro={electro}
-        onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
-        showMenuButton={showMenuButton}
+        colorMain={GetAspectColor(data, AspectColorType.Main)}
+        colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
+        onConnectorClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
       />
-      {hasActiveTerminals && (
-        <HandleComponent node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />
-      )}
-    </NodeBox>
+      <HandleComponent node={node} terminals={outputTerminals} />
+    </BoxWrapper>
   );
 };
 

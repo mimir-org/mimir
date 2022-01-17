@@ -29,7 +29,7 @@ export const OnAllTransportsChange = (edges: Edge[], dispatch: Dispatch) => {
 
 export const OnAllTerminalsChange = (terminals: Connector[], dispatch: Dispatch, visible: boolean) => {
   terminals.forEach((c) => {
-    dispatch(changeActiveConnector(c.nodeId, c.id, !visible, c.inputOrder, c.outputOrder));
+    dispatch(changeActiveConnector(c.nodeId, c.id, !visible));
   });
 };
 

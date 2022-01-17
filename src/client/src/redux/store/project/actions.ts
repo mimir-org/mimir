@@ -350,8 +350,6 @@ export function changeActiveConnector(
   nodeId: string,
   connectorId: string,
   visible: boolean,
-  inputOrder: number,
-  outputOrder: number
 ): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
@@ -359,8 +357,6 @@ export function changeActiveConnector(
       nodeId,
       connectorId,
       visible,
-      inputOrder,
-      outputOrder,
     },
   };
 }

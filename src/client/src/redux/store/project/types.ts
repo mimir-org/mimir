@@ -342,8 +342,6 @@ export interface ChangeActiveConnector {
     nodeId: string;
     connectorId: string;
     visible: boolean;
-    inputOrder: number;
-    outputOrder: number;
   };
 }
 export interface ExportProjectFileAction {
