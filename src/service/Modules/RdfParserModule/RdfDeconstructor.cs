@@ -390,7 +390,7 @@ namespace RdfParserModule
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString()),
                     Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
-                    Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible")))
+                    //Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
                 }).ToList();
 
                 connectors.AddRange(inputTerminals);
@@ -406,7 +406,7 @@ namespace RdfParserModule
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString()),
                     Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
-                    Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible")))
+                    //Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
                 }).ToList();
 
                 connectors.AddRange(outputTerminals);
