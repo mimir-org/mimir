@@ -47,6 +47,14 @@
   }
 }
 
+#react-flow__arrow {
+  :first-child {
+    fill: var(--arrow-color);
+    stroke: var(--arrow-color);
+    transform: rotate(180deg);
+  }
+}
+
 .path-transportEdge,
 .path-partEdge,
 .path-relationEdge,

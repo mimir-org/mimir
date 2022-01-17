@@ -4,7 +4,7 @@ import * as hooks from "../hooks/";
 import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection } from "react-flow-renderer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreenComponent } from "../../fullscreen";
-import { GetBlockEdgeTypes, SetBidirectionalTerminals, SetInitialEdgeVisibility } from "../block/helpers";
+import { GetBlockEdgeTypes, SetInitialBidirectionalTerminals, SetInitialEdgeVisibility } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { GetBlockNodeTypes } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
@@ -125,7 +125,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
-    SetBidirectionalTerminals(project);
+    SetInitialBidirectionalTerminals(project);
   }, []);
 
   return (

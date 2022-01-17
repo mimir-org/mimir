@@ -81,6 +81,7 @@ const TerminalsMenuComponent = ({
           node={node}
           size={size}
           isParent={isParent}
+          isInput={false}
           electro={electro}
           terminals={outputTerminals}
           hasActiveTerminals={outputTerminals.some((conn) => conn.visible)}

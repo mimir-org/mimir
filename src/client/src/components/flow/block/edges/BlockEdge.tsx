@@ -21,19 +21,18 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
   const sourceNode = data.source;
   const targetNode = data.target;
+  const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
 
+  const markerStart = isBidirectional ? getMarkerEnd(ArrowHeadType.Arrow, null) : null;
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
-  const markerStart = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
   const isTransport = !IsLocationTerminal(sourceConn) && !IsProductTerminal(sourceConn);
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
   const offPageMargin = 15;
-  const bidirectionalMargin = 8;
 
   if (IsOffPage(targetNode)) targetX += offPageMargin;
   if (IsOffPage(sourceNode)) sourceX -= offPageMargin;
-  if (IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn)) sourceX += bidirectionalMargin;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
