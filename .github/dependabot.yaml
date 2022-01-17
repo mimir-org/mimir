@@ -8,7 +8,7 @@ updates:
     allow:
       - dependency-type: "production"
     target-branch: "julesprint"
-    assignees:
+    reviewees:
       - "mrlandro"
       - "henrik-knudsen"
       - "arisasel"
@@ -19,7 +19,7 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "julesprint"
-    assignees:
+    reviewees:
       - "reliaboe"
       - "kahovden"
 
@@ -28,5 +28,5 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "julesprint"
-    assignees:
+    reviewees:
       - "henrik-knudsen"
