@@ -5,8 +5,6 @@ updates:
     directory: "/src/client"
     schedule:
       interval: "daily"
-    allow:
-      - dependency-type: "production"
     target-branch: "julesprint"
     reviewers:
       - "henrik-knudsen"
