@@ -2,7 +2,7 @@ import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
 import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
 import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
-import userReducer  from "./user/userSlice";
+import userReducer from "./user/userSlice";
 import modulesReducer from "./modules/modulesSlice";
 import menuReducer from "../../components/menus/projectMenu/subMenus/redux/menuSlice";
 import flowReducer from "./flow/flowSlice";
@@ -22,7 +22,7 @@ import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
 import { rootSaga } from "../sagas";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
-import { persistReducer, persistStore } from 'redux-persist'
+import { persistReducer, persistStore } from "redux-persist";
 
 const rootReducers = combineReducers({
   library: libraryReducer,
@@ -57,7 +57,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: persistedReducer,
-  devTools: (process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"]),
+  devTools: process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"],
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // TODO: Re-enable checks after rewrite of most reducers/actions
