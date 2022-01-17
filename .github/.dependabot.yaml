@@ -6,14 +6,17 @@ updates:
     schedule:
       interval: "daily"
     allow:
-      - dependency-type: "production" 
+      - dependency-type: "production"
+    target-branch: "julesprint"
 
   - package-ecosystem: "nuget"
     directory: "/src/service"
     schedule:
       interval: "daily"
+    target-branch: "julesprint"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
+    target-branch: "julesprint"
