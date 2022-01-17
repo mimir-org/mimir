@@ -11,6 +11,12 @@ export enum ConnectorType {
   Bidirectional = 2,
 }
 
+export enum ConnectorVisibility {
+  None = 0,
+  InputVisible = 1,
+  OutputVisible = 2,
+}
+
 export enum RelationType {
   NotSet = 0,
   HasLocation = 1,
