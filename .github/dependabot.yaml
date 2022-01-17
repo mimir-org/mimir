@@ -8,15 +8,25 @@ updates:
     allow:
       - dependency-type: "production"
     target-branch: "julesprint"
-
+    assignees:
+      - "mrlandro"
+      - "henrik-knudsen"
+      - "arisasel"
+      - "fruithut"
+    
   - package-ecosystem: "nuget"
     directory: "/src/service"
     schedule:
       interval: "daily"
     target-branch: "julesprint"
+    assignees:
+      - "reliaboe"
+      - "kahovden"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
     target-branch: "julesprint"
+    assignees:
+      - "henrik-knudsen"
