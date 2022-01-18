@@ -2,13 +2,29 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["ModelBuilder.Api/ModelBuilder.Api.csproj", "ModelBuilder.Api/"]
-RUN dotnet restore "ModelBuilder.Api/ModelBuilder.Api.csproj"
-COPY . .
-WORKDIR "/src/ModelBuilder.Api"
-RUN dotnet build "ModelBuilder.Api.csproj" -c Release -o /app/build
-RUN dotnet publish "ModelBuilder.Api.csproj" -c Release -o /app/publish
 
+COPY ModelBuilder.Api/*.csproj ModelBuilder.Api/
+COPY ModelBuilder.Core/*.csproj ModelBuilder.Core/
+COPY ModelBuilder.Data/*.csproj ModelBuilder.Data/
+COPY ModelBuilder.Models/*.csproj ModelBuilder.Models/
+COPY ModelBuilder.Services/*.csproj ModelBuilder.Services/
+
+COPY ModelBuilder.TypeEditor.Core/*.csproj ModelBuilder.TypeEditor.Core/
+COPY ModelBuilder.TypeEditor.Data/*.csproj ModelBuilder.TypeEditor.Data/
+COPY ModelBuilder.TypeEditor.Services/*.csproj ModelBuilder.TypeEditor.Services/
+
+COPY Modules/ApplicationInsightsLoggingModule/*.csproj Modules/ApplicationInsightsLoggingModule/
+COPY Modules/AzureActiveDirectory/*.csproj Modules/AzureActiveDirectory/
+COPY Modules/DefaultParserModule/*.csproj Modules/DefaultParserModule/
+COPY Modules/FamModule/*.csproj Modules/FamModule/
+COPY Modules/MicrosoftSqlServerModule/*.csproj Modules/MicrosoftSqlServerModule/
+COPY Modules/RdfParserModule/*.csproj Modules/RdfParserModule/
+
+RUN dotnet restore ModelBuilder.Api/ModelBuilder.Api.csproj
+
+COPY . .
+RUN dotnet build ModelBuilder.Api/ModelBuilder.Api.csproj -c Release --no-restore
+RUN dotnet publish ModelBuilder.Api/ModelBuilder.Api.csproj -c Release --no-restore -o /app/publish
 
 # icu-libs are not included in alpine runtime images
 # see: https://github.com/dotnet/dotnet-docker/blob/main/samples/selecting-tags.md#alpine-globalization and https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-x64#L19
