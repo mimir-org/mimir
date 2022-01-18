@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { IsConnectorVisible } from "../../../../helpers";
 import { ConnectorVisibility, Node } from "../../../../models";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 
@@ -7,7 +8,7 @@ const OnInactiveTerminalChange = (nodes: Node[], dispatch: Dispatch, visible: bo
 
   nodes.forEach((n) => {
     n.connectors?.forEach((c) => {
-      if (visible) c.connectorVisibility !== ConnectorVisibility.None && terminals.push(c);
+      if (visible) IsConnectorVisible(c) && terminals.push(c);
       // else !c.visible && terminals.push(c); // TODO: FIX conn
     });
   });
