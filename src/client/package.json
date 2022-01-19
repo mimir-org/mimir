@@ -41,6 +41,8 @@
     "test": "react-scripts test --passWithNoTests",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "lint": "eslint . --max-warnings=0 --ext .ts,.tsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -78,10 +80,12 @@
     "env-cmd": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.5.1",
     "react-scripts": "^4.0.3",
     "sass": "^1.48.0",
     "source-map-explorer": "^2.5.2",
