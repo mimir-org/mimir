@@ -30,7 +30,7 @@ jobs:
 
   code-quality-client:
     needs: [check-for-changes]
-    if: ${{ needs.check-for-changes.outputs.client-changed == true }}
+    if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
     runs-on: ubuntu-latest
     defaults:
       run:
