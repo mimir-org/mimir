@@ -1,21 +1,44 @@
 name: Code Quality
 
+# Contains jobs related to code quality checks.
+# code-quality-client: Runs code quality related checks related to the client.
+#   Does not actually build the client, as this is done via docker image on merge.
+#   If the build fails,
+
 on:
   pull_request:
-    
+
   push:
     branches: ["feature/ci-qa"]
 
   workflow_dispatch:
 
 jobs:
+  check-for-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      client-changed: ${{ steps.changes.outputs.client }}
+      server-changed: ${{ steps.changes.outputs.server }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            client:
+              - 'src/client/**'
+            server:
+              - 'src/service/**'
 
   code-quality-client:
+    needs: [check-for-changes]
+    if: ${{ needs.check-for-changes.outputs.client-changed == "true" }}
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: src/client
-    
+
     steps:
       - uses: actions/checkout@v2
 
@@ -23,14 +46,11 @@ jobs:
         with:
           node-version: 13
           cache: "npm"
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: "**/package-lock.json"
 
       - name: Install dependencies
         working-directory: src/client
         run: npm ci
-
-      - name: Build
-        run: npm run build
 
       - name: Test
         run: npm test
@@ -39,10 +59,6 @@ jobs:
         working-directory: src/client
         run: npm run lint
 
-      - name: Prettier
+      - name: Format
         working-directory: src/client
-        run: npm run format:check  
-
-      
-
-      
+        run: npm run format:check
