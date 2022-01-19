@@ -4,6 +4,7 @@ on:
   pull_request:
     
   push:
+    branches: ["feature/ci-qa"]
 
   workflow_dispatch:
     
@@ -41,5 +42,24 @@ jobs:
       - name: Lint
         working-directory: src/client
         run: npm run lint
+
+  prettier-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 13
+          cache: "npm"
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: src/client
+        run: npm ci
+
+      - name: Prettier
+        working-directory: src/client
+        run: npm run format:check
 
       
