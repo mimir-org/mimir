@@ -9,7 +9,6 @@ on:
   pull_request:
 
   push:
-    branches: ["feature/ci-qa"]
 
   workflow_dispatch:
 
@@ -28,7 +27,33 @@ jobs:
           base: ${{ github.ref }}
           filters: .github/change-filters.yaml
 
-  code-quality-client:
+  ######### CLIENT ###########
+
+  code-quality-client-build:
+    needs: [check-for-changes]
+    if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/client
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 13
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: src/client
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+  code-quality-client-test:
     needs: [check-for-changes]
     if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
     runs-on: ubuntu-latest
@@ -52,6 +77,27 @@ jobs:
       - name: Test
         run: npm test
 
+  code-quality-client-lint:
+    needs: [check-for-changes]
+    if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/client
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 13
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: src/client
+        run: npm ci
+
       - name: Lint
         working-directory: src/client
         run: npm run lint
@@ -59,3 +105,48 @@ jobs:
       - name: Format
         working-directory: src/client
         run: npm run format:check
+
+  code-quality-client-format:
+    needs: [check-for-changes]
+    if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/client
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 13
+          cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: src/client
+        run: npm ci
+
+      - name: Format
+        working-directory: src/client
+        run: npm run format:check
+
+  ######### SERVER ###########
+
+  code-quality-server-format:
+    needs: [check-for-changes]
+    if: ${{ needs.check-for-changes.outputs.server-changed == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/service
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Format
+        run: dotnet format . --verify-no-changes --verbosity diagnostic
