@@ -1,10 +1,5 @@
 name: Code Quality
 
-# Contains jobs related to code quality checks.
-# code-quality-client: Runs code quality related checks related to the client.
-#   Does not actually build the client, as this is done via docker image on merge.
-#   If the build fails,
-
 on:
   pull_request:
 
