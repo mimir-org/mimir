@@ -7,25 +7,15 @@ on:
     branches: ["feature/ci-qa"]
 
   workflow_dispatch:
-    
-jobs:
-  lint-client:
-    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
-    with:
-      repository: mimir-client
-      tags: dev
-      context: ./src/client
-      file: ./src/client/Dockerfile
-      target: lint
-      hash_files_template: '**/package-lock.json'
-      push: false
-    secrets:
-      REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
-  lint-node:
+jobs:
+
+  code-quality-client:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/client
+    
     steps:
       - uses: actions/checkout@v2
 
@@ -38,28 +28,21 @@ jobs:
       - name: Install dependencies
         working-directory: src/client
         run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
 
       - name: Lint
         working-directory: src/client
         run: npm run lint
 
-  prettier-node:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 13
-          cache: "npm"
-          cache-dependency-path: '**/package-lock.json'
-
-      - name: Install dependencies
-        working-directory: src/client
-        run: npm ci
-
       - name: Prettier
         working-directory: src/client
-        run: npm run format:check
+        run: npm run format:check  
+
+      
 
       
