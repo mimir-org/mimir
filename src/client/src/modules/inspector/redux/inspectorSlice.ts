@@ -29,19 +29,19 @@ const initialInspectorState = {
 };
 
 export const inspectorSlice = createSlice({
-  name: 'inspector',
+  name: "inspector",
   initialState: initialInspectorState,
   reducers: {
     changeInspectorTab: (state, action: PayloadAction<number>) => {
       state.tabs = state.tabs.map((tab, index) =>
         index === action.payload ? { ...tab, visible: true } : { ...tab, visible: false }
-      )
+      );
     },
     changeInspectorHeight: (state, action: PayloadAction<number>) => {
       state.height = action.payload;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { changeInspectorTab, changeInspectorHeight } = inspectorSlice.actions;
 export default inspectorSlice.reducer;

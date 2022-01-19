@@ -15,15 +15,17 @@ const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: 
   const canNavigateUp = HasChildren(node);
   const canNavigateDown = !IsAspectNode(node);
 
-  return isActive && (
-    <>
-      <NavigationButton disabled={!canNavigateDown} onClick={canNavigateDown ? onNavigateUpClick : null}>
-        <img src={canNavigateDown ? ArrowUpIcon : ArrowUpInactiveIcon} alt="arrow up" />
-      </NavigationButton>
-      <NavigationButton disabled={!canNavigateUp} onClick={canNavigateUp ? onNavigateDownClick : null}>
-        <img src={canNavigateUp ? ArrowDownIcon : ArrowDownInactiveIcon} alt="arrow down" />
-      </NavigationButton>
-    </>
+  return (
+    isActive && (
+      <>
+        <NavigationButton disabled={!canNavigateDown} onClick={canNavigateDown ? onNavigateUpClick : null}>
+          <img src={canNavigateDown ? ArrowUpIcon : ArrowUpInactiveIcon} alt="arrow up" />
+        </NavigationButton>
+        <NavigationButton disabled={!canNavigateUp} onClick={canNavigateUp ? onNavigateDownClick : null}>
+          <img src={canNavigateUp ? ArrowDownIcon : ArrowDownInactiveIcon} alt="arrow down" />
+        </NavigationButton>
+      </>
+    )
   );
 };
 

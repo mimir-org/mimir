@@ -10,7 +10,6 @@ const BuildSecondaryChildNode = (node: Node, libOpen: boolean, explorerOpen: boo
   const type = GetNodeTypeString(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
 
-
   // Force node to fit Block
   const position = !IsOffPage(node) ? SetSecondaryNodePos(nodePos, libOpen, explorerOpen) : nodePos;
 

@@ -25,7 +25,7 @@ const BlockParentBanner = ({
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
-  onConnectorClick
+  onConnectorClick,
 }: Props) => {
   const prefix = GetRdsPrefix(node);
   const company = process.env.REACT_APP_COMPANY;
@@ -47,7 +47,10 @@ const BlockParentBanner = ({
         )}
       </HeaderGroup>
       <HeaderGroup gap={"5px"}>
-        <HeaderTitle>{prefix}{node.label ?? node.name}</HeaderTitle>
+        <HeaderTitle>
+          {prefix}
+          {node.label ?? node.name}
+        </HeaderTitle>
         <Navigation
           isActive={isNavigationActive}
           node={node}

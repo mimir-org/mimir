@@ -12,7 +12,7 @@ const LegendHeader = styled.button<Props>`
   align-items: center;
   gap: 10px;
   width: ${Size.ModuleOpen}px;
-  padding: ${(props) => props.isOpen ? '20px 0' : '10px 0'};
+  padding: ${(props) => (props.isOpen ? "20px 0" : "10px 0")};
 
   background: transparent;
   border: 0;

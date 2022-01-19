@@ -5,14 +5,14 @@ const initialElectroState = {
 };
 
 export const electroSlice = createSlice({
-  name: 'electro',
+  name: "electro",
   initialState: initialElectroState,
   reducers: {
     toggleElectroView: (state) => {
       state.visible = !state.visible;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { toggleElectroView } = electroSlice.actions;
 export default electroSlice.reducer;

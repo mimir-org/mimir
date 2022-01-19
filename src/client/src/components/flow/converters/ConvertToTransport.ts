@@ -7,11 +7,12 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   if (!transportType) return null;
 
   const transportId = CreateId();
-  const attributes: Attribute[] = transportType?.attributes.map((a) => ({
-    ...a,
-    transportId,
-    id: CreateId()
-  })) ?? [];
+  const attributes: Attribute[] =
+    transportType?.attributes.map((a) => ({
+      ...a,
+      transportId,
+      id: CreateId(),
+    })) ?? [];
 
   const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
   const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;

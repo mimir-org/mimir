@@ -35,6 +35,6 @@ const BlockChildHeader = ({ node, inputTerminals, outputTerminals, onConnectorCl
       />
     </NodeBoxHeader>
   );
-}
+};
 
 export default BlockChildHeader;

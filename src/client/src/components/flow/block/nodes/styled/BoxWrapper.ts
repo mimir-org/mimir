@@ -6,7 +6,7 @@ interface Props {
 
 const BoxWrapper = styled.div<Props>`
   display: flex;
-  flex-direction: ${(props) => props.isElectro ? 'column' : 'row'};
+  flex-direction: ${(props) => (props.isElectro ? "column" : "row")};
   justify-content: center;
   align-items: center;
 `;

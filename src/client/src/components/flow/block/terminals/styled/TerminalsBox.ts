@@ -11,8 +11,8 @@ const TerminalsBox = styled.div<Props>`
   position: absolute;
   width: 175px;
   top: 0;
-  right: ${(props) => props.isInput ? `calc(100% + ${props.menuOffset})` : 'revert'};
-  left: ${(props) => !props.isInput ? `calc(100% + ${props.menuOffset})` : 'revert'};
+  right: ${(props) => (props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
+  left: ${(props) => (!props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
   border: 1px solid ${(props) => props.color};
   background-color: ${Color.White};
   border-radius: 5px;

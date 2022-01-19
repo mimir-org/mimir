@@ -18,14 +18,7 @@ interface Props {
  * @param interface
  * @returns a button to active the menu for the terminal supplied
  */
-const TerminalsMenuComponent = ({
-  node,
-  terminals,
-  onClick,
-  isParent,
-  isInput,
-  showMenuButton = true,
-}: Props) => {
+const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, showMenuButton = true }: Props) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -51,6 +44,5 @@ const TerminalsMenuComponent = ({
     </TerminalMenuWrapper>
   );
 };
-
 
 export default TerminalsMenuComponent;

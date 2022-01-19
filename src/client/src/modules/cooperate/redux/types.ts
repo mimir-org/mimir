@@ -13,6 +13,4 @@ interface CooperateAddEdge {
   payload: Edge;
 }
 
-export type CooperateActionTypes =
-  | CooperateAddNode
-  | CooperateAddEdge;
+export type CooperateActionTypes = CooperateAddNode | CooperateAddEdge;

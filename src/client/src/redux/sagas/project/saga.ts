@@ -358,7 +358,6 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
       },
     });
   } catch (error) {
-
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
       payload: {

@@ -5,7 +5,7 @@ interface Props {
 }
 
 const RemoveFavoriteBox = styled.div<Props>`
-  display: ${(props) => (props.visible ? 'revert' : 'none')};
+  display: ${(props) => (props.visible ? "revert" : "none")};
   margin-left: auto;
 
   &:hover {

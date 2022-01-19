@@ -28,13 +28,13 @@ const initialModuleState: ModulesState = {
 };
 
 export const modulesSlice = createSlice({
-  name: 'modules',
+  name: "modules",
   initialState: initialModuleState,
   reducers: {
     setModuleVisibility: (state, action: PayloadAction<ModuleState>) => {
       state.types.forEach((type) => {
         if (type.type === action.payload.type) {
-          type.visible = action.payload.visible
+          type.visible = action.payload.visible;
           type.animate = true;
         }
       });
@@ -44,9 +44,9 @@ export const modulesSlice = createSlice({
         type.visible = action.payload.visible;
         type.animate = action.payload.animate;
       });
-    }
-  }
-})
+    },
+  },
+});
 
 export const { setModuleVisibility, setModulesVisibility } = modulesSlice.actions;
 export default modulesSlice.reducer;

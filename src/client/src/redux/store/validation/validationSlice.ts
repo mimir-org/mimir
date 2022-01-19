@@ -7,15 +7,15 @@ const initialValidationState: Validation = {
 };
 
 export const validationSlice = createSlice({
-  name: 'validation',
+  name: "validation",
   initialState: initialValidationState,
   reducers: {
     setValidation: (state, action: PayloadAction<Validation>) => {
       state.valid = action.payload.valid;
       state.message = action.payload.message;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { setValidation } = validationSlice.actions;
 export default validationSlice.reducer;

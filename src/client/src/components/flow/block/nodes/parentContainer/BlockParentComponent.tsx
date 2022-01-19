@@ -35,7 +35,7 @@ const BlockParentComponent = ({
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
-  onConnectorClick
+  onConnectorClick,
 }: Props) => {
   const dispatch = useAppDispatch();
   const resizePanelRef = useRef(null);

@@ -1,5 +1,5 @@
 export interface ModulesState {
-  types: ModuleState[]
+  types: ModuleState[];
 }
 
 export interface ModuleState {

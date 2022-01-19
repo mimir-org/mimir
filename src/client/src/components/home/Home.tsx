@@ -12,7 +12,12 @@ import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
-import { fetchCollaborationPartners, fetchCombinedAttributeFilters, fetchParsers, fetchStatuses } from "../../redux/store/common/commonSlice";
+import {
+  fetchCollaborationPartners,
+  fetchCombinedAttributeFilters,
+  fetchParsers,
+  fetchStatuses,
+} from "../../redux/store/common/commonSlice";
 import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
 import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";

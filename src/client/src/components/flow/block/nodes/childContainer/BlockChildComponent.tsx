@@ -20,14 +20,7 @@ interface Props {
  * Component for the child block node in BlockView.
  * @returns a child container with terminals menus and terminals.
  */
-const BlockChildComponent = ({
-  node,
-  colorMain,
-  colorSelected,
-  inputTerminals,
-  outputTerminals,
-  onConnectorClick
-}: Props) => {
+const BlockChildComponent = ({ node, colorMain, colorSelected, inputTerminals, outputTerminals, onConnectorClick }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
 
   return (

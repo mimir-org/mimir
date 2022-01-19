@@ -6,7 +6,7 @@ import {
   removeTerminalType,
   removeTerminalTypeByCategory,
   updateCreateLibraryType,
-  updateTerminalType
+  updateTerminalType,
 } from "../redux/typeEditorSlice";
 
 export const OnTerminalCategoryChange = (
@@ -26,6 +26,6 @@ export const OnTerminalCategoryChange = (
     dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
     dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Input }));
     dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Output }));
-    dispatch(updateCreateLibraryType({key: key, value: terminalTypeItem.terminalTypeId}));
+    dispatch(updateCreateLibraryType({ key: key, value: terminalTypeItem.terminalTypeId }));
   }
 };

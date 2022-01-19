@@ -9,5 +9,4 @@ const TreeLogoWrapper = styled.div`
   padding: 0 8px;
 `;
 
-
 export default TreeLogoWrapper;

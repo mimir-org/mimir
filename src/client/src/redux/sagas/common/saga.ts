@@ -4,7 +4,7 @@ import {
   fetchCollaborationPartnersSuccessOrError,
   fetchCombinedAttributeFiltersSuccessOrError,
   fetchParsersSuccessOrError,
-  fetchStatusesSuccessOrError
+  fetchStatusesSuccessOrError,
 } from "../../store/common/commonSlice";
 
 /**

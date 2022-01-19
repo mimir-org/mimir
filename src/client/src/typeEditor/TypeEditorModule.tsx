@@ -20,11 +20,17 @@ export const TypeEditorModule = ({ selectedElement, selectedElementType, onChang
 
   return (
     <TypeEditorBox>
-      <TypeEditorButton disabled={false} onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}>
+      <TypeEditorButton
+        disabled={false}
+        onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
+      >
         <img src={NewTypeIcon} alt="new type" />
         {TextResources.TypeEditor_New_Type}
       </TypeEditorButton>
-      <TypeEditorButton disabled={selectedElement === ""} onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}>
+      <TypeEditorButton
+        disabled={selectedElement === ""}
+        onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
+      >
         <img src={EditTypeIcon} alt="edit type" />
         {TextResources.TypeEditor_Edit_Type}
       </TypeEditorButton>

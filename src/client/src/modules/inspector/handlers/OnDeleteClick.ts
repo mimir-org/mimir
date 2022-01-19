@@ -23,7 +23,7 @@ const OnDeleteClick = (
     HandleEdgeDelete(element, project, dispatch);
   }
 
-  dispatch(setModuleVisibility({type: MODULE_TYPE.INSPECTOR, visible: false, animate: true}));
+  dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
   dispatch(changeInspectorHeight(Size.ModuleClosed));
   SetPanelHeight(inspectorRef, Size.ModuleClosed);
 };

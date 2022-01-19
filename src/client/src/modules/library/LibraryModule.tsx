@@ -11,7 +11,13 @@ import { LibHeader, ModuleBody, ModuleHeader } from "./styled";
 import { MODULE_TYPE } from "../../models/project";
 import { OnLegendClick, OnLibraryClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
-import { animatedModuleSelector, legendOpenSelector, libOpenSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import {
+  animatedModuleSelector,
+  legendOpenSelector,
+  libOpenSelector,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../redux/store";
 import { Project } from "../../models";
 
 interface Props {

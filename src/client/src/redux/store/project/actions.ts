@@ -346,11 +346,7 @@ export function deleteProjectError(key: string) {
   };
 }
 
-export function changeActiveConnector(
-  nodeId: string,
-  connectorId: string,
-  visible: boolean,
-): Types.ProjectActionTypes {
+export function changeActiveConnector(nodeId: string, connectorId: string, visible: boolean): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {

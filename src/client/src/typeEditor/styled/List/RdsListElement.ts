@@ -17,7 +17,7 @@ const RdsListElement = styled.div<Props>`
   &:hover {
     background-color: ${Color.BlueLight} !important;
   }
-  
+
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};
     font-weight: ${(props) => props.isSelected && FontWeight.Bold};

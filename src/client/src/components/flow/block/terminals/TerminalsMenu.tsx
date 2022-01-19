@@ -22,7 +22,7 @@ interface Props {
  */
 const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, onClick, onBlur }: Props) => {
   const isElectroViewEnabled = useAppSelector(electroSelector);
-  const menuOffset = !isElectroViewEnabled && hasActiveTerminals ? '25px' : '10px';
+  const menuOffset = !isElectroViewEnabled && hasActiveTerminals ? "25px" : "10px";
 
   return (
     <TerminalsBox

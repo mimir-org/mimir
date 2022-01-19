@@ -7,14 +7,14 @@ const initialState: FlowState = {
 };
 
 export const flowSlice = createSlice({
-  name: 'flow',
+  name: "flow",
   initialState: initialState,
   reducers: {
     changeFlowView: (state, action: PayloadAction<ViewType>) => {
       state.view = action.payload;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { changeFlowView } = flowSlice.actions;
 export default flowSlice.reducer;

@@ -8,7 +8,7 @@ const initialCustomCategoryState: LibraryCategory = {
 };
 
 export const customCategorySlice = createSlice({
-  name: 'customCategory',
+  name: "customCategory",
   initialState: initialCustomCategoryState,
   reducers: {
     addCustomCategoryNode: (state, action: PayloadAction<LibItem>) => {
@@ -16,9 +16,9 @@ export const customCategorySlice = createSlice({
     },
     removeCustomCategoryNode: (state, action: PayloadAction<string>) => {
       state.nodes = state.nodes.filter((n) => n.id !== action.payload);
-    }
-  }
-})
+    },
+  },
+});
 
 export const { addCustomCategoryNode, removeCustomCategoryNode } = customCategorySlice.actions;
 export default customCategorySlice.reducer;
