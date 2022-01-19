@@ -8,6 +8,8 @@ import { AuthenticationResult, EventMessage, EventType, PublicClientApplication 
 import { ReactFlowProvider } from "react-flow-renderer";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 
+//
+
 const rootElement = document.getElementById("root");
 export const msalInstance = new PublicClientApplication(msalConfig);
 
