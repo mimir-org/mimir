@@ -10,6 +10,10 @@ FROM dependencies AS lint
 COPY . .
 RUN npm run lint
 
+FROM dependencies AS format
+COPY . .
+RUN npm run format:check
+
 FROM dependencies AS test
 ENV CI=true
 COPY . .
