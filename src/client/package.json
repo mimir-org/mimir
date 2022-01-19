@@ -38,9 +38,9 @@
     "build:demoaibel": "env-cmd -f .env.demoaibel react-scripts build",
     "build:stage": "env-cmd -f .env.stage react-scripts build",
     "build:prod": "env-cmd -f .env.prod react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --passWithNoTests",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "lint": "eslint src/**/*.ts src/**/*.tsx",
+    "lint": "eslint . --max-warnings=0 --ext .ts,.tsx",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
