@@ -1,0 +1,26 @@
+name: Code Quality
+
+on:
+  pull_request:
+    
+  push:
+
+  workflow_dispatch:
+    
+jobs:
+  lint-client:
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    with:
+      repository: mimir-client
+      tags: dev
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: lint
+      build_args: |
+        ENVIR=dev
+      hash_files_template: '**/package-lock.json'
+      push: false
+    secrets:
+      REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
