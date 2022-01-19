@@ -16,11 +16,28 @@ jobs:
       context: ./src/client
       file: ./src/client/Dockerfile
       target: lint
-      build_args: |
-        ENVIR=dev
       hash_files_template: '**/package-lock.json'
       push: false
     secrets:
       REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
       REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
       REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
+  lint-node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 13
+          cache: "npm"
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      
