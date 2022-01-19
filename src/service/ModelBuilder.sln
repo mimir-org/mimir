@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Models", "Mode
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{C5359E03-91E7-405A-803A-11182980C4E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureActiveDirectoryModule", "Modules\AzureActiveDirectory\AzureActiveDirectoryModule.csproj", "{B94CCCE8-C799-45ED-8C5D-40FE33364B82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureActiveDirectoryModule", "Modules\AzureActiveDirectoryModule\AzureActiveDirectoryModule.csproj", "{B94CCCE8-C799-45ED-8C5D-40FE33364B82}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlServerModule", "Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj", "{9A1495B9-6CD5-46F4-9DCB-D314103A7F1B}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultParserModule", "Modu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fixtures", "Fixtures", "{CF9AF418-0087-4C8C-82A6-4038AE7DC19E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\FamModule\EventHubModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\EventHubModule\EventHubModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdfParserModule", "Modules\RdfParserModule\RdfParserModule.csproj", "{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}"
 EndProject
