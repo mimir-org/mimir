@@ -9,6 +9,7 @@ on:
   pull_request:
 
   push:
+    branches: [main, stage, demo, julesprint]
 
   workflow_dispatch:
 
