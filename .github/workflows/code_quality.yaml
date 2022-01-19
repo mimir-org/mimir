@@ -25,11 +25,8 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: changes
         with:
-          filters: |
-            client:
-              - 'src/client/**'
-            server:
-              - 'src/service/**'
+          base: ${{ github.ref }}
+          filters: .github/change-filters.yaml
 
   code-quality-client:
     needs: [check-for-changes]

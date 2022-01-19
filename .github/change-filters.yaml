@@ -1,0 +1,4 @@
+client:
+  - "src/client/**"
+server:
+  - "src/service/**"
