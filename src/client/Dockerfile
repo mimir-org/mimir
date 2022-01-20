@@ -13,6 +13,7 @@ FROM base as format
 RUN npm run format:check
 
 FROM base as test
+ENV CI=true
 RUN npm test
 
 FROM base as build
