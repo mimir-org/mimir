@@ -6,9 +6,9 @@ import { GetBlockHandleType } from "../../block/helpers";
 import { GetTerminalColor, IsValidBlockConnection, ShowHandle } from "./helpers";
 import { HandleBox, HandleContainer } from "./styled";
 import { IsPartOf } from "../../helpers";
-import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { electroSelector, nodeSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { TerminalIcon } from ".";
 
 interface Props {
   node: Node;
@@ -41,6 +41,7 @@ const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
       {terminals.map((conn) => {
         if (ShowHandle(conn, isInput)) {
           const [type, pos] = GetBlockHandleType(conn, isElectro);
+          const color = GetTerminalColor(conn);
 
           return (
             <HandleBox
@@ -50,7 +51,7 @@ const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
             >
-              <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
+              <TerminalIcon conn={conn} color={color} className={className} />
               <Handle
                 type={type}
                 position={pos}

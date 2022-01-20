@@ -58,10 +58,10 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
         size={size}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
-        isNavigationActive={true}
         onNavigateUpClick={() => OnParentClick(dispatch, node)}
         onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
+        isNavigationActive
       />
       <HandleComponent node={node} terminals={outputTerminals} />
     </BoxWrapper>
