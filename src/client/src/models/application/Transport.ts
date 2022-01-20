@@ -2,7 +2,7 @@ import { Attribute, Connector } from ".";
 
 export const TRANSPORT_KIND = "Transport";
 
-class Transport {
+interface Transport {
   id: string;
   iri: string;
   version: string;
@@ -22,12 +22,7 @@ class Transport {
   createdBy: string;
   created: Date;
   libraryTypeId: string;
-
-  kind: string = TRANSPORT_KIND;
-
-  constructor(transport: Transport) {
-    Object.assign(this, transport);
-  }
+  kind: string;
 }
 
 export default Transport;

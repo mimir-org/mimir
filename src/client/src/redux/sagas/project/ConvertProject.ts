@@ -23,6 +23,7 @@ export interface UnitAm {
   description: string;
   semanticReference: string;
 }
+
 export interface AttributeAm {
   id: string;
   iri: string;
@@ -38,6 +39,7 @@ export interface AttributeAm {
   nodeId: string;
   nodeIri: string;
   transportId: string;
+  interfaceId: string;
   simpleId: string;
   attributeTypeId: string;
   units: UnitAm[];
@@ -48,6 +50,7 @@ export interface AttributeAm {
   isLocked: boolean;
   isLockedBy: string;
 }
+
 export interface ConnectorAm {
   id: string;
   iri: string;
@@ -69,6 +72,7 @@ export interface ConnectorAm {
   attributes: AttributeAm[];
   terminalTypeId: string;
 }
+
 export interface NodeAm {
   id: string;
   iri: string;
@@ -158,6 +162,7 @@ export interface TransportAm {
   created: Date;
   libraryTypeId: string;
 }
+
 export interface SimpleAm {
   id: string;
   name: string;
@@ -188,31 +193,29 @@ export interface InterfaceAm {
 }
 
 const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
-  const converted = [] as UnitAm[];
+  const converted: UnitAm[] = [];
 
   if (!units) return converted;
 
   units.forEach((unit) => {
-    const u = {
+    converted.push({
       id: unit.id,
       name: unit.name,
       description: unit.description,
       semanticReference: unit.semanticReference,
-    } as UnitAm;
-
-    converted.push(u);
+    });
   });
 
   return converted;
 };
 
 const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
-  const converted = [] as AttributeAm[];
+  const converted: AttributeAm[] = [];
 
   if (!attributes) return converted;
 
   attributes.forEach((attribute) => {
-    const a = {
+    converted.push({
       id: attribute.id,
       iri: attribute.iri,
       domain: attribute.domain,
@@ -226,6 +229,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       terminalId: attribute.terminalId,
       nodeId: attribute.nodeId,
       nodeIri: attribute.nodeIri,
+      transportId: attribute.transportId,
+      interfaceId: attribute.interfaceId,
       attributeTypeId: attribute.attributeTypeId,
       simpleId: attribute.simpleId,
       units: ConvertUnits(attribute.units),
@@ -235,21 +240,19 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       tags: attribute.tags,
       isLocked: attribute.isLocked,
       isLockedBy: attribute.isLockedStatusBy,
-    } as AttributeAm;
-
-    converted.push(a);
+    });
   });
 
   return converted;
 };
 
 const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
-  const converted = [] as ConnectorAm[];
+  const converted: ConnectorAm[] = [];
 
   if (!connectors) return converted;
 
   connectors.forEach((connector) => {
-    const a = {
+    converted.push({
       id: connector.id,
       iri: connector.iri,
       domain: connector.domain,
@@ -265,9 +268,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
       isRequired: connector.isRequired,
-    } as ConnectorAm;
-
-    converted.push(a);
+    });
   });
 
   return converted;
@@ -290,23 +291,23 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
     terminalCategoryId: connector.terminalCategoryId,
     attributes: ConvertAttributes(connector.attributes),
     terminalTypeId: connector.terminalTypeId,
-  } as ConnectorAm;
+    isRequired: connector.isRequired
+  };
 };
 
 const ConvertSimples = (simples: Simple[]): SimpleAm[] => {
-  const converted = [] as SimpleAm[];
+  const converted: SimpleAm[] = [];
 
   if (!simples) return converted;
 
   simples.forEach((simple) => {
-    const a = {
+    converted.push({
       id: simple.id,
       name: simple.name,
       semanticReference: simple.semanticReference,
       nodeId: simple.nodeId,
       attributes: ConvertAttributes(simple.attributes),
-    } as SimpleAm;
-    converted.push(a);
+    });
   });
 
   return converted;
@@ -334,7 +335,7 @@ const ConvertTransport = (data: Transport): TransportAm => {
     createdBy: data.createdBy,
     created: data.created,
     libraryTypeId: data.libraryTypeId,
-  } as TransportAm;
+  };
 };
 
 const ConvertInterface = (data: Interface): InterfaceAm => {
@@ -359,16 +360,16 @@ const ConvertInterface = (data: Interface): InterfaceAm => {
     createdBy: data.createdBy,
     created: data.created,
     libraryTypeId: data.libraryTypeId,
-  } as InterfaceAm;
+  };
 };
 
 const ConvertNodes = (nodes: Node[]): NodeAm[] => {
-  const convertedNodes = [] as NodeAm[];
+  const convertedNodes: NodeAm[] = [];
 
   if (!nodes) return convertedNodes;
 
   nodes.forEach((node) => {
-    const n = {
+    convertedNodes.push({
       id: node.id,
       iri: node.iri,
       domain: node.domain,
@@ -404,21 +405,19 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       libraryTypeId: node.libraryTypeId,
       isLocked: node.isLocked,
       IsLockedBy: node.isLockedStatusBy,
-    } as NodeAm;
-
-    convertedNodes.push(n);
+    });
   });
 
   return convertedNodes;
 };
 
 const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
-  const convertedEdges = [] as EdgeAm[];
+  const convertedEdges: EdgeAm[] = [];
 
   if (!edges) return convertedEdges;
 
   edges.forEach((edge) => {
-    const e = {
+    convertedEdges.push({
       id: edge.id,
       iri: edge.iri,
       domain: edge.domain,
@@ -435,9 +434,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       masterProjectIri: edge.masterProjectIri,
       transport: ConvertTransport(edge.transport),
       interface: ConvertInterface(edge.interface),
-    } as EdgeAm;
-
-    convertedEdges.push(e);
+    });
   });
 
   return convertedEdges;
@@ -454,7 +451,7 @@ const ConvertProject = (project: Project): ProjectAm => {
     description: project.description,
     nodes: ConvertNodes(project.nodes),
     edges: ConvertEdges(project.edges),
-  } as ProjectAm;
+  };
 };
 
 export default ConvertProject;
