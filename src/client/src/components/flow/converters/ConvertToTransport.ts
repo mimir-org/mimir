@@ -58,7 +58,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
     createdBy: transportType.createdBy,
     created: transportType.created,
     libraryTypeId: transportType.id,
-    kind: TRANSPORT_KIND
+    kind: TRANSPORT_KIND,
   };
 };
 

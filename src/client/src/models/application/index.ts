@@ -1,4 +1,4 @@
-export { ATTRIBUTE_KIND } from "./Attribute"
+export { ATTRIBUTE_KIND } from "./Attribute";
 export { CONNECTOR_KIND } from "./Connector";
 export { EDGE_KIND } from "./Edge";
 export { INTERFACE_KIND } from "./Interface";
