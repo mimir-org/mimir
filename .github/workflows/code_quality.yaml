@@ -102,6 +102,8 @@ jobs:
     needs: [check-for-changes, code-quality-server-build]
     if: ${{ needs.check-for-changes.outputs.docker-server-changed == 'true' }}
     runs-on: ubuntu-latest
+    env:
+      image_name: mimir-server
     steps:
       - uses: actions/checkout@v2
 
@@ -116,7 +118,9 @@ jobs:
 
       - name: Load image
         run: |
-          echo "image_id=$(docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}/mimir-server | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p')" >> $GITHUB_ENV
+          docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}/${{ env.image_name }} \
+           | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p') \
+           | xargs -i docker tag {} ${{ env.image_name }}
 
       - name: Ls images
         run: docker image ls
@@ -126,5 +130,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
         with:
-          image: ${{ env.image_id }}
+          image: ${{ env.image_name }}
           args: --file=src/service/Dockerfile
