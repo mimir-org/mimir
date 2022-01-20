@@ -99,7 +99,7 @@ jobs:
   ######### DOCKER ###########
 
   code-quality-docker-server-security:
-    needs: [check-for-changes]
+    needs: [check-for-changes, code-quality-server-build]
     if: ${{ needs.check-for-changes.outputs.docker-server-changed == 'true' }}
     runs-on: ubuntu-latest
     steps:
@@ -108,22 +108,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Set image name env variable
-        run: echo "image_name=mimir-server-${{ hashFiles('**/*.csproj') }}-${{ github.sha }}-final" >> $GITHUB_ENV
-
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ env.image_name }}
-          path: /tmp/${{ env.image_name }}
+          name: ${{ needs.code-quality-server-build.artefact_name }}
+          path: /tmp/${{ needs.code-quality-server-build.artefact_name }}
 
       - name: Load image
-        run: docker load --input /tmp/${{ env.image_name }}
+        run: docker load --input /tmp/${{ needs.code-quality-server-build.artefact_name }}
 
       - name: Run Snyk to check Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
         with:
-          image: ${{ env.image_name }}
+          image: ${{ needs.code-quality-server-build.artefact_name }}
           args: --file=src/service/Dockerfile
