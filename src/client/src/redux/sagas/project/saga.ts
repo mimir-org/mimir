@@ -271,7 +271,6 @@ export function* updateProject(action: SaveProjectAction) {
   try {
     const projId = action.payload.project.id;
     const proj = ConvertProject(action.payload.project);
-
     const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
     const response = yield call(post, url, proj);
 
@@ -358,7 +357,6 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
       },
     });
   } catch (error) {
-
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
       payload: {

@@ -13,7 +13,7 @@ interface Props {
 }
 /**
  * Component to show an object block with input output terminals
- * @param param0
+ * @param params
  * @returns the visual block in Type Preview Info
  */
 export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outputTerminals, symbol }: Props) => {

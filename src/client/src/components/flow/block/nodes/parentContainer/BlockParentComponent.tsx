@@ -18,7 +18,7 @@ interface Props {
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
-  onConnectorClick: (conn: Connector) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean) => void;
 }
 
 /**
@@ -35,7 +35,7 @@ const BlockParentComponent = ({
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
-  onConnectorClick
+  onConnectorClick,
 }: Props) => {
   const dispatch = useAppDispatch();
   const resizePanelRef = useRef(null);
@@ -51,7 +51,7 @@ const BlockParentComponent = ({
         isNavigationActive={isNavigationActive}
         onNavigateUpClick={() => onNavigateUpClick()}
         onNavigateDownClick={() => onNavigateDownClick()}
-        onConnectorClick={(c) => onConnectorClick(c)}
+        onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
       />
       {IsProduct(node) && (
         <ResizeButton ref={resizePanelRef}>

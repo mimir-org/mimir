@@ -9,6 +9,7 @@ import { IsPartOf } from "../../helpers";
 import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { electroSelector, nodeSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { IsConnectorVisible } from "../../../../helpers";
 
 interface Props {
   node: Node;
@@ -38,12 +39,12 @@ const HandleComponent = ({ node, terminals, offPage }: Props) => {
   return (
     <HandleContainer isElectro={isElectro}>
       {terminals.map((conn) => {
-        if (conn.visible) {
+        if (IsConnectorVisible(conn)) {
           const [type, pos] = GetBlockHandleType(conn, isElectro);
 
           return (
             <HandleBox
-              visible={visible && conn.visible && !IsPartOf(conn)}
+              visible={visible && !IsPartOf(conn)}
               id={"handle-" + conn.id}
               key={conn.id}
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}

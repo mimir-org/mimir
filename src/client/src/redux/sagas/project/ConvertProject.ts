@@ -14,6 +14,7 @@ import {
   SelectType,
   Simple,
   Transport,
+  ConnectorVisibility,
 } from "../../../models/";
 
 export interface UnitAm {
@@ -57,7 +58,7 @@ export interface ConnectorAm {
   name: string;
   type: ConnectorType;
   semanticReference: string;
-  visible: boolean;
+  connectorVisibility: ConnectorVisibility;
   nodeId: string;
   nodeIri: string;
   isRequired: boolean;
@@ -258,7 +259,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       name: connector.name,
       type: connector.type,
       semanticReference: connector.semanticReference,
-      visible: connector.visible,
+      connectorVisibility: connector.connectorVisibility,
       nodeId: connector.nodeId,
       nodeIri: connector.nodeIri,
       relationType: connector.relationType,
@@ -282,7 +283,7 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
     name: connector.name,
     type: connector.type,
     semanticReference: connector.semanticReference,
-    visible: connector.visible,
+    connectorVisibility: connector.connectorVisibility,
     nodeId: connector.nodeId,
     nodeIri: connector.nodeIri,
     relationType: connector.relationType,

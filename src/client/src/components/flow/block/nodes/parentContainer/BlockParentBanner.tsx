@@ -11,7 +11,7 @@ interface Props {
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
-  onConnectorClick: (conn: Connector) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean) => void;
 }
 
 /**
@@ -25,7 +25,7 @@ const BlockParentBanner = ({
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
-  onConnectorClick
+  onConnectorClick,
 }: Props) => {
   const prefix = GetRdsPrefix(node);
   const company = process.env.REACT_APP_COMPANY;
@@ -36,8 +36,8 @@ const BlockParentBanner = ({
         <TerminalsMenuComponent
           node={node}
           terminals={inputTerminals}
-          onClick={(c) => onConnectorClick(c)}
-          isInput={true}
+          onClick={(c, isInput) => onConnectorClick(c, isInput)}
+          isInput
           isParent
         />
         {!node.isRoot && (
@@ -47,7 +47,10 @@ const BlockParentBanner = ({
         )}
       </HeaderGroup>
       <HeaderGroup gap={"5px"}>
-        <HeaderTitle>{prefix}{node.label ?? node.name}</HeaderTitle>
+        <HeaderTitle>
+          {prefix}
+          {node.label ?? node.name}
+        </HeaderTitle>
         <Navigation
           isActive={isNavigationActive}
           node={node}
@@ -58,8 +61,7 @@ const BlockParentBanner = ({
       <TerminalsMenuComponent
         node={node}
         terminals={outputTerminals}
-        onClick={(c) => onConnectorClick(c)}
-        isInput={false}
+        onClick={(c, isInput) => onConnectorClick(c, isInput)}
         isParent
       />
     </HeaderContainer>

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Connector, Edge } from "../../../../models";
+import { Connector, ConnectorVisibility, Edge } from "../../../../models";
 import { changeActiveConnector, setEdgeVisibility } from "../../../../redux/store/project/actions";
 import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../flow/helpers";
 
@@ -29,7 +29,10 @@ export const OnAllTransportsChange = (edges: Edge[], dispatch: Dispatch) => {
 
 export const OnAllTerminalsChange = (terminals: Connector[], dispatch: Dispatch, visible: boolean) => {
   terminals.forEach((c) => {
-    dispatch(changeActiveConnector(c.nodeId, c.id, !visible));
+    let connectorVisibility = ConnectorVisibility.None;
+    if (!visible) connectorVisibility = c.connectorVisibility;
+
+    dispatch(changeActiveConnector(c.nodeId, c.id, connectorVisibility));
   });
 };
 

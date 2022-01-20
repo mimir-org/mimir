@@ -20,7 +20,7 @@ namespace RdfParserModule.Extensions
                     ontologyService.AssertNode(terminal.Iri, Resources.type, Resources.FSBTerminal);
                     ontologyService.AssertNode(terminal.Iri, Resources.label, $"{terminal.Name} {terminal.Type}", true);
                     ontologyService.AssertNode(terminal.Iri, "mimir__color", terminal.Color, true);
-                    ontologyService.AssertNode(terminal.Iri, "mimir__visible", terminal.Visible.ToString(), true);
+                    ontologyService.AssertNode(terminal.Iri, "mimir__visible", terminal.ConnectorVisibility.ToString(), true);
                     switch (terminal.Type)
                     {
                         case ConnectorType.Input:

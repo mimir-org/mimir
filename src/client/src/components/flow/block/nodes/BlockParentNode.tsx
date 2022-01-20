@@ -6,7 +6,7 @@ import { HandleComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
 import { FilterTerminals } from "../helpers";
 import { Connector } from "../../../../models";
-import { useAppDispatch, useAppSelector , blockElementsSelector } from "../../../../redux/store";
+import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../redux/store";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 import { SetParentNodeSize } from "./helpers";
 import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
@@ -61,7 +61,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         isNavigationActive={node.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnParentClick(dispatch, node)}
         onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
-        onConnectorClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />
     </BoxWrapper>

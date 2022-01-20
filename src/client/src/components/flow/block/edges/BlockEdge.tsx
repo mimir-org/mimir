@@ -2,7 +2,13 @@ import { ArrowHeadType, EdgeProps, getBezierPath, getMarkerEnd, getSmoothStepPat
 import { IsOffPage } from "../../../../helpers";
 import { Connector } from "../../../../models";
 import { electroSelector, useAppSelector } from "../../../../redux/store";
-import { GetEdgeRelationStyle, GetEdgeStyle, IsLocationTerminal, IsProductTerminal } from "../../helpers";
+import {
+  GetEdgeStyle,
+  GetEdgeRelationStyle,
+  IsLocationTerminal,
+  IsProductTerminal,
+  IsBidirectionalTerminal,
+} from "../../helpers";
 
 /**
  * Component for an Edge in BlockView.
@@ -12,9 +18,12 @@ import { GetEdgeRelationStyle, GetEdgeStyle, IsLocationTerminal, IsProductTermin
 const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
   const electro = useAppSelector(electroSelector);
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
+  const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
   const sourceNode = data.source;
   const targetNode = data.target;
+  const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
 
+  const markerStart = isBidirectional ? getMarkerEnd(ArrowHeadType.Arrow, null) : null;
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
   const isTransport = !IsLocationTerminal(sourceConn) && !IsProductTerminal(sourceConn);
   const visible = !data?.edge?.isHidden;
@@ -47,7 +56,14 @@ const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, tar
   const transportPath = electro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return isTransport ? (
-    <path id={id} style={GetEdgeStyle(color, visible)} className="path-blockEdge" d={transportPath} markerEnd={markerEnd} />
+    <path
+      id={id}
+      style={GetEdgeStyle(color, visible)}
+      className="path-blockEdge"
+      d={transportPath}
+      markerStart={markerStart}
+      markerEnd={markerEnd}
+    />
   ) : (
     <path
       id={id}

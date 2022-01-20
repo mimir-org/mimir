@@ -1,4 +1,4 @@
-import { Attribute, ConnectorType, EnumBase, RelationType } from "..";
+import { Attribute, ConnectorType, ConnectorVisibility, EnumBase, RelationType } from "..";
 
 export const CONNECTOR_KIND = "Connector";
 
@@ -11,7 +11,7 @@ interface Connector {
   semanticReference: string;
   nodeId: string;
   nodeIri: string;
-  visible: boolean;
+  connectorVisibility: ConnectorVisibility;
   isRequired: boolean;
 
   // Terminal

@@ -6,7 +6,7 @@ const DropdownHeader = styled.div`
   flex: 1;
   align-items: center;
   flex-direction: row;
-  width: 63px;
+  width: 90px;
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 5px;
   padding: 0 5px;

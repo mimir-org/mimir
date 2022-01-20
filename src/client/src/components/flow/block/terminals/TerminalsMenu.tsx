@@ -1,4 +1,4 @@
-import { GetAspectColor } from "../../../../helpers";
+import { GetAspectColor, IsConnectorVisible } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor } from "./helpers";
 import { ColorTag, TerminalsBox, TerminalsElement } from "./styled";
@@ -11,7 +11,7 @@ interface Props {
   isInput?: boolean;
   terminals: Connector[];
   hasActiveTerminals: boolean;
-  onClick: (conn: Connector) => void;
+  onClick: (conn: Connector, isInput: boolean) => void;
   onBlur: () => void;
 }
 
@@ -22,7 +22,7 @@ interface Props {
  */
 const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, onClick, onBlur }: Props) => {
   const isElectroViewEnabled = useAppSelector(electroSelector);
-  const menuOffset = !isElectroViewEnabled && hasActiveTerminals ? '25px' : '10px';
+  const menuOffset = !isElectroViewEnabled && hasActiveTerminals ? "25px" : "8px";
 
   return (
     <TerminalsBox
@@ -35,7 +35,12 @@ const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, onClick, 
     >
       {terminals.map((conn) => (
         <TerminalsElement key={conn.id}>
-          <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
+          <Checkbox
+            isChecked={IsConnectorVisible(conn)}
+            onChange={() => onClick(conn, isInput)}
+            color={Color.GreyDark}
+            id={conn.id}
+          />
           <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
         </TerminalsElement>
       ))}

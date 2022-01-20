@@ -13,21 +13,14 @@ interface Props {
   colorSelected: string;
   inputTerminals: Connector[];
   outputTerminals: Connector[];
-  onConnectorClick: (conn: Connector) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean) => void;
 }
 
 /**
  * Component for the child block node in BlockView.
  * @returns a child container with terminals menus and terminals.
  */
-const BlockChildComponent = ({
-  node,
-  colorMain,
-  colorSelected,
-  inputTerminals,
-  outputTerminals,
-  onConnectorClick
-}: Props) => {
+const BlockChildComponent = ({ node, colorMain, colorSelected, inputTerminals, outputTerminals, onConnectorClick }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
 
   return (
@@ -43,7 +36,7 @@ const BlockChildComponent = ({
         node={node}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
-        onConnectorClick={(c) => onConnectorClick(c)}
+        onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
         showMenuButton={showMenuButton}
       />
       <SymbolBox>

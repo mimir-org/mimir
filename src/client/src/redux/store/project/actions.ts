@@ -2,6 +2,7 @@ import * as Types from "./types";
 import {
   CommitPackage,
   Connector,
+  ConnectorVisibility,
   Edge,
   LockAttributeAm,
   LockEdgeAm,
@@ -349,14 +350,14 @@ export function deleteProjectError(key: string) {
 export function changeActiveConnector(
   nodeId: string,
   connectorId: string,
-  visible: boolean,
+  connectorVisibility: ConnectorVisibility
 ): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {
       nodeId,
       connectorId,
-      visible,
+      connectorVisibility,
     },
   };
 }
