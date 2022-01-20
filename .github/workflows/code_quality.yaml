@@ -104,6 +104,7 @@ jobs:
     if: ${{ needs.check-for-changes.outputs.docker-client-changed == 'true' }}
     runs-on: ubuntu-latest
     env:
+      artefact_name: ${{ needs.code-quality-client-build.outputs.artefact_name }}
       image_name: mimir-client
     steps:
       - uses: actions/checkout@v2
@@ -114,12 +115,12 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ needs.code-quality-client-build.outputs.artefact_name }}
-          path: /tmp/${{ needs.code-quality-client-build.outputs.artefact_name }}
+          name: ${{ env.artefact_name }}
+          path: /tmp/${{ env.artefact_name }}
 
       - name: Load and tag docker image
         run: |
-          load_output=$(docker load --input /tmp/${{ needs.code-quality-client-build.outputs.artefact_name }}/${{ env.image_name }})
+          load_output=$(docker load --input /tmp/${{ env.artefact_name }}/${{ env.image_name }})
           echo $load_output | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} ${{ env.image_name }}
 
       - name: Run Snyk to check Docker image for vulnerabilities
@@ -135,6 +136,7 @@ jobs:
     if: ${{ needs.check-for-changes.outputs.docker-server-changed == 'true' }}
     runs-on: ubuntu-latest
     env:
+      artefact_name: ${{ needs.code-quality-server-build.outputs.artefact_name }}
       image_name: mimir-server
     steps:
       - uses: actions/checkout@v2
@@ -145,12 +147,12 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ needs.code-quality-server-build.outputs.artefact_name }}
-          path: /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}
+          name: ${{ env.artefact_name }}
+          path: /tmp/${{ env.artefact_name }}
 
       - name: Load and tag docker image
         run: |
-          load_output=$(docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}/${{ env.image_name }})
+          load_output=$(docker load --input /tmp/${{ env.artefact_name }}/${{ env.image_name }})
           echo $load_output | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p' | xargs -i docker tag {} ${{ env.image_name }}
 
       - name: Run Snyk to check Docker image for vulnerabilities
