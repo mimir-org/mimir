@@ -12,7 +12,7 @@ import { Size } from "../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 import { SetNodeSize } from "./helpers";
-import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
 import { BoxWrapper } from "./styled";
 import { BlockChildComponent } from "./childContainer";
 
@@ -49,14 +49,14 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     setSize({ width: updatedSize.width, height: updatedSize.height });
   }, [electro, terminals]);
 
-  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
-  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsInputTerminal(t) || IsBidirectionalTerminal(t)));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsOutputTerminal(t) || IsBidirectionalTerminal(t)));
 
   if (!node) return null;
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={node} terminals={inputTerminals} />
+      <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockChildComponent
         node={node}
         colorMain={GetAspectColor(data, AspectColorType.Main)}

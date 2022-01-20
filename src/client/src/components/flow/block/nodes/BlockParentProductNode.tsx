@@ -52,7 +52,7 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={node} terminals={inputTerminals} />
+      <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockParentComponent
         node={node}
         size={size}
