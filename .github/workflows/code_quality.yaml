@@ -122,5 +122,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
         with:
-          image: ${{ needs.code-quality-server-build.outputs.artefact_name }}
+          image: mimir-server
           args: --file=src/service/Dockerfile
