@@ -76,61 +76,31 @@ jobs:
   code-quality-server-build:
     needs: [check-for-changes]
     if: ${{ needs.check-for-changes.outputs.server-changed == 'true' }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/service
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.x
-
-      - uses: actions/cache@v2
-        with:
-          path: ~/.nuget/packages
-          # Look to see if there is a cache hit for the corresponding requirements file
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget
-
-      - name: Restore
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build -c Release --no-restore
-
-      # Currently, there are some problems with test project, making tests fail.
-      #
-      #- name: Test
-      #  run: dotnet test  --no-restore --verbosity normal
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    with:
+      repository: mimir-server
+      context: ./src/service
+      file: ./src/service/Dockerfile
+      target: build
+      hash_files_template: "**/*.csproj"
+    secrets:
+      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
+      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
+      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
   code-quality-server-format:
     needs: [check-for-changes]
     if: ${{ needs.check-for-changes.outputs.server-changed == 'true' }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/service
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.x
-
-      - uses: actions/cache@v2
-        with:
-          path: ~/.nuget/packages
-          # Look to see if there is a cache hit for the corresponding requirements file
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget
-
-      - name: Format
-        run: dotnet format . --verify-no-changes --verbosity diagnostic
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    with:
+      repository: mimir-server
+      context: ./src/service
+      file: ./src/service/Dockerfile
+      target: format
+      hash_files_template: "**/*.csproj"
+    secrets:
+      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
+      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
+      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
 
   ######### DOCKER ###########

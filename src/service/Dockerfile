@@ -3,13 +3,18 @@
 # In order to restore and properly cache all dependencies, ALL csproj need to be copied into container.
 # Docker does not offer good support for glob pattern, so the csproj files are all copied in cwd, and a inline script is used to recreate correct folder structure for restore.
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS base
 COPY ModelBuilder.*/*.csproj ./
 RUN for file in $(ls *.csproj); do mkdir -p ${file%.*}/ && mv $file ${file%.*}/; done
 COPY Modules/*/*.csproj ./
 RUN for file in $(ls *.csproj); do mkdir -p Modules/${file%.*}/ && mv $file Modules/${file%.*}/; done
 RUN dotnet restore ModelBuilder.Api/ModelBuilder.Api.csproj
 COPY . .
+
+FROM base as format
+RUN dotnet format . --verify-no-changes --verbosity diagnostic
+
+FROM base as build
 RUN dotnet build ModelBuilder.Api/ModelBuilder.Api.csproj -c Release --no-restore
 
 FROM build as publish
