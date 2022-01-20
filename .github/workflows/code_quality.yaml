@@ -116,7 +116,7 @@ jobs:
 
       - name: Load image
         run: |
-          image_id=$(docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}/mimir-server | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p}}')
+          image_id=$(docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}/mimir-server | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p')
 
       - name: Ls images
         run: docker image ls
@@ -126,5 +126,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
         with:
-          image: $image_id
+          image: ${{ env.image_id }}
           args: --file=src/service/Dockerfile
