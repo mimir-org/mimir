@@ -41,76 +41,35 @@ jobs:
   code-quality-client-test:
     needs: [check-for-changes]
     if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/client
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 13
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: Install dependencies
-        working-directory: src/client
-        run: npm ci
-
-      - name: Test
-        run: npm test
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    with:
+      repository: mimir-client
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: test
+      hash_files_template: "**/package-lock.json"
 
   code-quality-client-lint:
     needs: [check-for-changes]
     if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/client
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 13
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: Install dependencies
-        working-directory: src/client
-        run: npm ci
-
-      - name: Lint
-        working-directory: src/client
-        run: npm run lint
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    with:
+      repository: mimir-client
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: lint
+      hash_files_template: "**/package-lock.json"
 
   code-quality-client-format:
     needs: [check-for-changes]
     if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/client
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 13
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-
-      - name: Install dependencies
-        working-directory: src/client
-        run: npm ci
-
-      - name: Format
-        working-directory: src/client
-        run: npm run format:check
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    with:
+      repository: mimir-client
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: format
+      hash_files_template: "**/package-lock.json"
 
   ######### SERVER ###########
 
