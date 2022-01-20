@@ -111,16 +111,16 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ needs.code-quality-server-build.artefact_name }}
-          path: /tmp/${{ needs.code-quality-server-build.artefact_name }}
+          name: ${{ needs.code-quality-server-build.outputs.artefact_name }}
+          path: /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}
 
       - name: Load image
-        run: docker load --input /tmp/${{ needs.code-quality-server-build.artefact_name }}
+        run: docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}
 
       - name: Run Snyk to check Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
         with:
-          image: ${{ needs.code-quality-server-build.artefact_name }}
+          image: ${{ needs.code-quality-server-build.outputs.artefact_name }}
           args: --file=src/service/Dockerfile
