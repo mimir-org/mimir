@@ -8,7 +8,7 @@ const HeaderGroup = styled.div<HeaderGroupProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: ${(props) => props.gap ?? 'revert'};
+  gap: ${(props) => props.gap ?? "revert"};
 `;
 
 export default HeaderGroup;
