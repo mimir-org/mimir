@@ -5,3 +5,4 @@ export { default as TerminalsElement } from "./TerminalsElement";
 export { default as ColorTag } from "./ColorTag";
 export { default as HandleBox } from "./HandleBox";
 export { default as HandleContainer } from "./HandleContainer";
+export { default as BidirectionalBox } from "./BidirectionalBox";
