@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CREATE_LIBRARY_KIND } from "../../../models/classes/CreateLibraryType";
+import { CREATE_LIBRARY_KIND } from "../../../models/application/CreateLibraryType";
 import {
   ATTRIBUTE_KIND,
-  Attribute,
   CONNECTOR_KIND,
-  Connector,
-  CreateLibraryType,
   EDGE_KIND,
-  Edge,
   INTERFACE_KIND,
-  Interface,
   NODE_KIND,
-  Node,
   SIMPLE_KIND,
-  Simple,
   TRANSPORT_KIND,
+  Attribute,
+  Connector,
+  Edge,
+  Interface,
+  Node,
+  Simple,
   Transport,
+  CreateLibraryType,
 } from "../../../models";
 
 export const IsNode = (element: any): element is Node => element?.kind === NODE_KIND;

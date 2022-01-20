@@ -2,7 +2,7 @@ import { Attribute, Connector } from ".";
 
 export const INTERFACE_KIND = "Interface";
 
-class Interface {
+interface Interface {
   id: string;
   iri: string;
   version: string;
@@ -22,12 +22,7 @@ class Interface {
   createdBy: string;
   created: Date;
   libraryTypeId: string;
-
-  kind: string = INTERFACE_KIND;
-
-  constructor(otherInterface: Interface) {
-    Object.assign(this, otherInterface);
-  }
+  kind: string;
 }
 
 export default Interface;

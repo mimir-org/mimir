@@ -2,7 +2,7 @@ import { Attribute, ConnectorType, EnumBase, RelationType } from "..";
 
 export const CONNECTOR_KIND = "Connector";
 
-class Connector {
+interface Connector {
   id: string;
   iri: string;
   domain: string;
@@ -24,11 +24,7 @@ class Connector {
   // Relation
   relationType: RelationType;
 
-  kind: string = CONNECTOR_KIND;
-
-  constructor(connector: Connector) {
-    Object.assign(this, connector);
-  }
+  kind: string;
 }
 
 export default Connector;
