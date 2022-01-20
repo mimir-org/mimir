@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { EDGE_KIND } from "../../../../models";
+import { ConnectorVisibility, EDGE_KIND } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { changeActiveConnector } from "../../../../redux/store/project/actions";
 import { IsPartOf } from "../../../flow/helpers";
@@ -11,10 +11,11 @@ const OnActiveTerminalChange = (activeElements: any[], dispatch: Dispatch, visib
   // Toggle active terminals and edges
   activeElements.forEach((elem) => {
     const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
+    // const connectorVisibility = visible ? ConnectorVisibility.None: elem.connectorVisibility;
 
     if (isEdge) {
       if (!IsPartOf(elem.fromConnector)) elem.isHidden = visible;
-    } else dispatch(changeActiveConnector(elem?.nodeId, elem?.id, !visible));
+    } else dispatch(changeActiveConnector(elem?.nodeId, elem?.id, ConnectorVisibility.InputVisible)); // TODO: fix
   });
 };
 

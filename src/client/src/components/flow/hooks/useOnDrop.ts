@@ -1,10 +1,21 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
-import { Attribute, BlobData, Connector, LibItem, LibrarySubProjectItem, Node, Project, Simple, User } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
+import {
+  Attribute,
+  BlobData,
+  Connector,
+  ConnectorVisibility,
+  LibItem,
+  LibrarySubProjectItem,
+  Node,
+  Project,
+  Simple,
+  User,
+} from "../../../models";
 import {
   CreateId,
   GetProjectData,
@@ -107,6 +118,7 @@ const initConnector = (connector: Connector, targetNode: Node) => {
   connector.attributes?.forEach((a) => {
     a.id = CreateId();
   });
+  connector.connectorVisibility = ConnectorVisibility.None;
 };
 
 const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {

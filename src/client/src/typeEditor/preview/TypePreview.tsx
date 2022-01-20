@@ -17,7 +17,7 @@ interface Props {
 }
 /**
  * Component to show Preview area with selected object type, type name, rds and symbol
- * @param param0
+ * @param params
  * @returns the visual type preview area
  */
 export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {

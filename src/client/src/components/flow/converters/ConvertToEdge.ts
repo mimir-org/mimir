@@ -1,4 +1,4 @@
-import { Connector, Edge, Node } from "../../../models";
+import { Connector, Edge, Node, EDGE_KIND } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { ConvertToInterface, ConvertToTransport } from ".";
 
@@ -16,8 +16,8 @@ const ConvertToEdge = (
   targetNode: Node,
   projectId: string,
   library: LibraryState
-) => {
-  return new Edge({
+): Edge => {
+  return {
     id: id,
     projectId: projectId,
     fromConnectorId: sourceConn.id,
@@ -32,7 +32,8 @@ const ConvertToEdge = (
     masterProjectId: projectId,
     transport: ConvertToTransport(sourceConn, library),
     interface: ConvertToInterface(sourceConn, library),
-  } as Edge);
+    kind: EDGE_KIND,
+  } as Edge;
 };
 
 export default ConvertToEdge;

@@ -7,7 +7,7 @@ interface Props {
   node: Node;
   inputTerminals: Connector[];
   outputTerminals: Connector[];
-  onConnectorClick: (conn: Connector) => void;
+  onConnectorClick: (conn: Connector, isInput: boolean) => void;
   showMenuButton?: boolean;
 }
 
@@ -15,26 +15,23 @@ interface Props {
  * Component for the top banner menu on a ChildNode in BlockView.
  * @returns a banner with terminal menus and name.
  */
-const BlockChildHeader = ({ node, inputTerminals, outputTerminals, onConnectorClick, showMenuButton }: Props) => {
-  return (
-    <NodeBoxHeader>
-      <TerminalsMenuComponent
-        node={node}
-        terminals={inputTerminals}
-        onClick={(c) => onConnectorClick(c)}
-        showMenuButton={showMenuButton}
-        isInput={true}
-      />
-      <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
-      <TerminalsMenuComponent
-        node={node}
-        terminals={outputTerminals}
-        onClick={(c) => onConnectorClick(c)}
-        showMenuButton={showMenuButton}
-        isInput={false}
-      />
-    </NodeBoxHeader>
-  );
-};
+const BlockChildHeader = ({ node, inputTerminals, outputTerminals, onConnectorClick, showMenuButton }: Props) => (
+  <NodeBoxHeader>
+    <TerminalsMenuComponent
+      node={node}
+      terminals={inputTerminals}
+      onClick={(c, isInput) => onConnectorClick(c, isInput)}
+      showMenuButton={showMenuButton}
+      isInput
+    />
+    <BlockNodeNameBox>{node.label ?? node.name}</BlockNodeNameBox>
+    <TerminalsMenuComponent
+      node={node}
+      terminals={outputTerminals}
+      onClick={(c, isInput) => onConnectorClick(c, isInput)}
+      showMenuButton={showMenuButton}
+    />
+  </NodeBoxHeader>
+);
 
 export default BlockChildHeader;

@@ -3,7 +3,11 @@ import { ConnectorType, CreateLibraryType, TerminalType, TerminalTypeDict } from
 const GetOutputTerminals = (createLibraryType: CreateLibraryType, terminals: TerminalTypeDict): TerminalType[] => {
   const terminalsArray: TerminalType[] = [];
   createLibraryType?.terminalTypes
-    .filter((t) => ConnectorType[t.connectorType] === ConnectorType[ConnectorType.Output])
+    .filter(
+      (t) =>
+        ConnectorType[t.connectorType] === ConnectorType[ConnectorType.Output] ||
+        ConnectorType[t.connectorType] === ConnectorType[ConnectorType.Bidirectional]
+    )
     .forEach((t) => {
       terminals.forEach((x) => {
         x.value.forEach((y) => {

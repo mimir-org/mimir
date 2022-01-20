@@ -14,14 +14,13 @@ import { Dispatch } from "redux";
  * @param dispatch
  */
 const CreateConnectedOffPageNode = (sourceNode: Node, sourceConnector: Connector, position: Position, dispatch: Dispatch) => {
-  const offPageData = {
+  const offPageData: OffPageData = {
     sourceNode: sourceNode,
     sourceConnector: sourceConnector,
     position: { x: position.x, y: position.y },
-  } as OffPageData;
+  }
 
   const offPageObject = CreateOffPageObject(offPageData);
-  offPageObject.node.isConnectedOffPage = true;
 
   dispatch(addNode(offPageObject.node));
   dispatch(createEdge(offPageObject.partOfEdge));

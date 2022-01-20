@@ -6,7 +6,7 @@ import { AspectColorType, Connector } from "../../../../models";
 import { HandleComponent } from "../terminals";
 import { HandleConnectedOffPageNode, HandleRequiredOffPageNode } from "./helpers/offPage";
 import { FilterTerminals } from "../helpers";
-import { OnTerminalClick } from "./handlers";
+import { OnConnectorClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../helpers";
@@ -63,7 +63,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
-        onConnectorClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />
     </BoxWrapper>

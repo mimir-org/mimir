@@ -1,4 +1,5 @@
 import { Size } from "../../../../../compLibrary/size";
+import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
 import { IsInputTerminal } from "../../../helpers";
 
@@ -18,8 +19,8 @@ const SetNodeSize = (terminals: Connector[], electro: boolean) => {
   let width = Size.Node_Width;
 
   terminals.forEach((t) => {
-    t.visible && IsInputTerminal(t) && inTerminals++;
-    t.visible && !IsInputTerminal(t) && outTerminals++;
+    IsConnectorVisible(t) && IsInputTerminal(t) && inTerminals++;
+    IsConnectorVisible(t) && !IsInputTerminal(t) && outTerminals++;
   });
 
   if (electro) {

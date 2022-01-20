@@ -1,7 +1,7 @@
 import Edge from "./Edge";
 import Node from "./Node";
 
-class Project {
+interface Project {
   id: string;
   iri: string;
   domain: string;
@@ -14,11 +14,6 @@ class Project {
   update: Date;
   nodes: Node[];
   edges: Edge[];
-
-  // Constructor
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  constructor() {}
 }
 
 export default Project;
