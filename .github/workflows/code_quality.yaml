@@ -116,11 +116,9 @@ jobs:
           name: ${{ needs.code-quality-server-build.outputs.artefact_name }}
           path: /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}
 
-      - name: Load image
+      - name: Load and tag docker image
         run: |
-          docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}/${{ env.image_name }} \
-           | sed -n 's/^Loaded image ID: sha256:\([0-9a-f]*\).*/\1/p') \
-           | xargs -i docker tag {} ${{ env.image_name }}
+          docker load --input /tmp/${{ needs.code-quality-server-build.outputs.artefact_name }}/${{ env.image_name }} | xargs -i docker tag {} ${{ env.image_name }}
 
       - name: Ls images
         run: docker image ls
