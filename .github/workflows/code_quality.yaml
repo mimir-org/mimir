@@ -41,7 +41,7 @@ jobs:
 
   code-quality-client-test:
     needs: [check-for-changes]
-    if: ${{ false && needs.check-for-changes.outputs.client-changed == 'true' }}
+    if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
@@ -52,7 +52,7 @@ jobs:
 
   code-quality-client-lint:
     needs: [check-for-changes]
-    if: ${{ false && needs.check-for-changes.outputs.client-changed == 'true' }}
+    if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
@@ -63,7 +63,7 @@ jobs:
 
   code-quality-client-format:
     needs: [check-for-changes]
-    if: ${{ false && needs.check-for-changes.outputs.client-changed == 'true' }}
+    if: ${{ needs.check-for-changes.outputs.client-changed == 'true' }}
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
@@ -88,7 +88,7 @@ jobs:
 
   code-quality-server-format:
     needs: [check-for-changes]
-    if: ${{ false && needs.check-for-changes.outputs.server-changed == 'true' }}
+    if: ${{ needs.check-for-changes.outputs.server-changed == 'true' }}
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-server
