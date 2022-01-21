@@ -1,4 +1,4 @@
-import { CreateId, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../../../helpers";
+import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import {
   Aspect,
@@ -33,7 +33,7 @@ const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
-  const offPageNodeIsTarget = IsOutputTerminal(sourceConnector);
+  const offPageNodeIsTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
   const marginY = 80;
 
   const offPageNode = {
