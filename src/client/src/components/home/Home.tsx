@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
-import { LibraryModule } from "../../modules/library";
+import { LibraryModule } from "../../modules/newLibrary";
 import { ProjectMenuComponent } from "../menus/projectMenu";
 import { UserMenuComponent } from "../menus/userMenu";
 import { search } from "../../redux/store/project/actions";
@@ -12,7 +12,12 @@ import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
-import { fetchCollaborationPartners, fetchCombinedAttributeFilters, fetchParsers, fetchStatuses } from "../../redux/store/common/commonSlice";
+import {
+  fetchCollaborationPartners,
+  fetchCombinedAttributeFilters,
+  fetchParsers,
+  fetchStatuses,
+} from "../../redux/store/common/commonSlice";
 import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
 import { HeaderComponent } from "../header";
 import { ExplorerModule } from "../../modules/explorer/ExplorerModule";

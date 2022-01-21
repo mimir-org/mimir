@@ -116,7 +116,21 @@ const TextResources = {
   Inspector_Condition: "Condition",
 
   // LibraryModule
-  Library_SearchBox_Placeholder: "Search the Library",
+  Library_Templates: "Templates",
+  Library_SubProjects: "Sub-Projects",
+  Library_SearchBox_Placeholder_Library: "Search Library for types...",
+  Library_SearchBox_Placeholder_Templates: "Search for Templates...",
+  Library_SearchBox_Placeholder_Subprojects: "Search for Sub-Projects...",
+  Library_SearchFilter_Collections: "Search Collections",
+  Library_SearchFilter_Latest_Version: "Only latest version",
+  Library_SearchFilter_Other: "Other search filter",
+  Library_Manage_Collections: "Add collections to work with Types",
+  Library_Select_Collections: "Select Collections to add to Library",
+  Library_Manage_Collections_Button: "Manage Collections",
+  Library_Manage_Collections_Update_Library: "Update Library",
+  Library_New_Type: "New Type",
+  Library_Edit_Type: "Edit Type",
+  Library_Delete_Type: "Delete Type",
 
   // ExplorerModule
   Explorer_Lock_Node: "Lock node",
