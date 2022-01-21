@@ -2,7 +2,7 @@ import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
 import { Node, Project } from "../../../models";
 import { IsOffPage } from "../../../helpers";
-import { GetParent, IsOutputTerminal } from "../helpers";
+import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/helpers/offPage";
 import { Dispatch } from "redux";
 
@@ -20,7 +20,7 @@ const useOnConnectStop = (
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
     const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
     const parentBlockNode = GetParent(sourceNode);
-    const isTarget = IsOutputTerminal(sourceConnector);
+    const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
     const isOffPageDrop = ValidateOffPageDrop(
       sourceNode,
@@ -56,6 +56,7 @@ function ValidateOffPageDrop(
   const dropZoneWidth = 200;
   const rightBound = leftBound + dropZoneWidth;
   const isValidPostion = ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
+  console.log(sourceNode, clientX, leftBound);
 
   return !IsOffPage(sourceNode) && isValidPostion;
 }
