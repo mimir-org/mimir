@@ -56,7 +56,6 @@ function ValidateOffPageDrop(
   const dropZoneWidth = 200;
   const rightBound = leftBound + dropZoneWidth;
   const isValidPostion = ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
-  console.log(sourceNode, clientX, leftBound);
 
   return !IsOffPage(sourceNode) && isValidPostion;
 }
