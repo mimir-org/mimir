@@ -115,10 +115,11 @@ function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode:
     }
   });
 
+  const isRequired = false;
   dispatch(removeNode(sourceNode.id));
   dispatch(removeNode(targetNode.id));
-  dispatch(setOffPageStatus(sourceParent.id, sourceTerminal.id, false));
-  dispatch(setOffPageStatus(targetParent.id, targetTerminal.id, false));
+  dispatch(setOffPageStatus(sourceParent.id, sourceTerminal.id, isRequired));
+  dispatch(setOffPageStatus(targetParent.id, targetTerminal.id, isRequired));
 
   return setElements((els) => {
     return addEdge(
