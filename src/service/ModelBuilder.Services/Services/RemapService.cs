@@ -342,8 +342,6 @@ namespace Mb.Services.Services
             clone.Id = id;
             clone.Iri = iri;
 
-            // TODO: clone input and output terminal
-            
             clone.Attributes = CloneAttributes(edge.Transport.Attributes, transportId: clone.Id).ToList();
             return clone;
         }
@@ -358,8 +356,6 @@ namespace Mb.Services.Services
             clone.Id = id;
             clone.Iri = iri;
 
-            // TODO: Clone input and output terminal
-
             clone.Attributes = CloneAttributes(edge.Interface.Attributes, interfaceId: clone.Id).ToList();
             return clone;
         }
@@ -370,45 +366,6 @@ namespace Mb.Services.Services
                 return;
 
             var (transportId, transportIri) = _commonRepository.CreateOrUseIdAndIri(edge.Transport.Id, edge.Transport.Iri);
-
-            if (edge.Transport.InputTerminal != null)
-            {
-                var (terminalId, terminalIri) = _commonRepository.CreateOrUseIdAndIri(edge.Transport.InputTerminal.Id, edge.Transport.InputTerminal.Iri);
-                edge.Transport.InputTerminal.Id = terminalId;
-                edge.Transport.InputTerminal.Iri = terminalIri;
-                edge.Transport.InputTerminalId = terminalId;
-
-                if (edge.Transport.InputTerminal.Attributes != null)
-                {
-                    foreach (var attribute in edge.Transport.InputTerminal.Attributes)
-                    {
-                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                        attribute.Id = attributeId;
-                        attribute.Iri = attributeIri;
-                        attribute.TerminalId = terminalId;
-                    }
-                }
-
-            }
-
-            if (edge.Transport.OutputTerminal != null)
-            {
-                var (terminalId, terminalIri) = _commonRepository.CreateOrUseIdAndIri(edge.Transport.OutputTerminal.Id, edge.Transport.OutputTerminal.Iri);
-                edge.Transport.OutputTerminal.Id = terminalId;
-                edge.Transport.OutputTerminal.Iri = terminalIri;
-                edge.Transport.OutputTerminalId = terminalId;
-
-                if (edge.Transport.OutputTerminal.Attributes != null)
-                {
-                    foreach (var attribute in edge.Transport.OutputTerminal.Attributes)
-                    {
-                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                        attribute.Id = attributeId;
-                        attribute.Iri = attributeIri;
-                        attribute.TerminalId = terminalId;
-                    }
-                }
-            }
 
             if (edge.Transport.Attributes != null)
             {
@@ -433,44 +390,6 @@ namespace Mb.Services.Services
                 return;
 
             var (interfaceId, interfaceIri) = _commonRepository.CreateOrUseIdAndIri(edge.Interface.Id, edge.Interface.Iri);
-
-            if (edge.Interface.InputTerminal != null)
-            {
-                var (terminalId, terminalIri) = _commonRepository.CreateOrUseIdAndIri(edge.Interface.InputTerminal.Id, edge.Interface.InputTerminal.Iri);
-                edge.Interface.InputTerminal.Id = terminalId;
-                edge.Interface.InputTerminal.Iri = terminalIri;
-                edge.Interface.InputTerminalId = terminalId;
-
-                if (edge.Interface.InputTerminal.Attributes != null)
-                {
-                    foreach (var attribute in edge.Interface.InputTerminal.Attributes)
-                    {
-                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                        attribute.Id = attributeId;
-                        attribute.Iri = attributeIri;
-                        attribute.TerminalId = terminalId;
-                    }
-                }
-            }
-
-            if (edge.Interface.OutputTerminal != null)
-            {
-                var (terminalId, terminalIri) = _commonRepository.CreateOrUseIdAndIri(edge.Interface.OutputTerminal.Id, edge.Interface.OutputTerminal.Iri);
-                edge.Interface.OutputTerminal.Id = terminalId;
-                edge.Interface.OutputTerminal.Iri = terminalIri;
-                edge.Interface.OutputTerminalId = terminalId;
-
-                if (edge.Interface.OutputTerminal.Attributes != null)
-                {
-                    foreach (var attribute in edge.Interface.OutputTerminal.Attributes)
-                    {
-                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                        attribute.Id = attributeId;
-                        attribute.Iri = attributeIri;
-                        attribute.TerminalId = terminalId;
-                    }
-                }
-            }
 
             if (edge.Interface.Attributes != null)
             {
