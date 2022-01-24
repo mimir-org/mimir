@@ -38,7 +38,7 @@ export const ImportProjectFileMenu = () => {
   const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
   const data = GetProjectFileData(filesContent, parser);
   const onAction = () => OnProjectSaveClick(dispatch, data);
-  const isActionDisabled = !hasParser && filesContent?.length <= 0 || plainFiles?.length <= 0;
+  const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
     <Modal title={TextResources.Project_Import} isOpen={isOpen} onExit={onExit}>
@@ -51,7 +51,9 @@ export const ImportProjectFileMenu = () => {
         fontSize={FontSize.Medium}
         onChange={(item: ModuleDescription) => setParser(item)}
       />
-      <Label>{TextResources.Project_Import_File}: {selectedText}</Label>
+      <Label>
+        {TextResources.Project_Import_File}: {selectedText}
+      </Label>
       <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
       <ButtonBox>
         <Button onClick={onExit} text={TextResources.Project_Cancel} />

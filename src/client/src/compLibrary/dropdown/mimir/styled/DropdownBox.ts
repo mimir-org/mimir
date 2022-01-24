@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../colors";
-import ParameterInputsWrapper
-  from "../../../../modules/inspector/tabs/parameters/styled/parameter/ParameterInputsWrapper";
+import ParameterInputsWrapper from "../../../../modules/inspector/tabs/parameters/styled/parameter/ParameterInputsWrapper";
 
 interface Props {
   disabled: boolean;
