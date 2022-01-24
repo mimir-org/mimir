@@ -6,6 +6,15 @@ import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/helpers/offPage";
 import { Dispatch } from "redux";
 
+/**
+ * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
+ * This is where an OffPage node can be created.
+ * @param e
+ * @param project
+ * @param parentNodeSize
+ * @param secondaryNode
+ * @param dispatch
+ */
 const useOnConnectStop = (
   e: MouseEvent,
   project: Project,
