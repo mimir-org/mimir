@@ -3,18 +3,18 @@ import { useEffect, useState } from "react";
 import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { GetTerminalColor, IsValidBlockConnection } from "./helpers";
+import { GetTerminalColor, IsValidBlockConnection, ShowHandle } from "./helpers";
 import { HandleBox, HandleContainer } from "./styled";
 import { IsPartOf } from "../../helpers";
-import { ConnectorIcon } from "../../../../assets/icons/connectors";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { electroSelector, nodeSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { IsConnectorVisible } from "../../../../helpers";
+import { TerminalIcon } from ".";
 
 interface Props {
   node: Node;
   terminals: Connector[];
   offPage?: boolean;
+  isInput?: boolean;
 }
 
 /**
@@ -22,7 +22,7 @@ interface Props {
  * @param interface
  * @returns a Flow Handle element with an icon that corresponds with the terminal type.
  */
-const HandleComponent = ({ node, terminals, offPage }: Props) => {
+const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
   const dispatch = useAppDispatch();
   const nodes = useAppSelector(nodeSelector);
   const isElectro = useAppSelector(electroSelector);
@@ -39,8 +39,9 @@ const HandleComponent = ({ node, terminals, offPage }: Props) => {
   return (
     <HandleContainer isElectro={isElectro}>
       {terminals.map((conn) => {
-        if (IsConnectorVisible(conn)) {
+        if (ShowHandle(conn, isInput)) {
           const [type, pos] = GetBlockHandleType(conn, isElectro);
+          const color = GetTerminalColor(conn);
 
           return (
             <HandleBox
@@ -50,7 +51,7 @@ const HandleComponent = ({ node, terminals, offPage }: Props) => {
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
             >
-              <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
+              <TerminalIcon conn={conn} color={color} className={className} />
               <Handle
                 type={type}
                 position={pos}

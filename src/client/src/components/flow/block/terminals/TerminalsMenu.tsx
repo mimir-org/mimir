@@ -1,10 +1,12 @@
 import { GetAspectColor, IsConnectorVisible } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
 import { GetTerminalColor } from "./helpers";
-import { ColorTag, TerminalsBox, TerminalsElement } from "./styled";
+import { BidirectionalBox, ColorTag, TerminalsBox, TerminalsElement } from "./styled";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
 import { Color } from "../../../../compLibrary/colors";
 import { electroSelector, useAppSelector } from "../../../../redux/store";
+import { IsBidirectionalTerminal } from "../../helpers";
+import { BidirectionalIcon } from "../../../../assets/icons/bidirectional";
 
 interface Props {
   node: Node;
@@ -41,7 +43,14 @@ const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, onClick, 
             color={Color.GreyDark}
             id={conn.id}
           />
-          <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
+          {!IsBidirectionalTerminal(conn) ? (
+            <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
+          ) : (
+            <BidirectionalBox>
+              <BidirectionalIcon fill={GetTerminalColor(conn)} className="icon" />
+              {conn.name}
+            </BidirectionalBox>
+          )}
         </TerminalsElement>
       ))}
     </TerminalsBox>

@@ -1,7 +1,5 @@
 # Mimir Client
 
-
-
 ## Code style
 
 The project uses ESLint to enforce code style. This is governed by the .eslintrc.js file in client/.
@@ -32,8 +30,8 @@ To check for formatting issues (dry-run), run:
 
 If using vscode, use the Prettier - Code formatter (by Prettier) extension to incorporate prettier into vscode. Additionally, you can configure code formatting when saving files via preferences:
 
-1. Ctrl + Shift + P to open vscode command prompt.
-2. Select "Preferences: Open Settings (JSON)"
-3. Set formatting on save to true:
+1.  Ctrl + Shift + P to open vscode command prompt.
+2.  Select "Preferences: Open Settings (JSON)"
+3.  Set formatting on save to true:
 
           "editor.formatOnSave": true,
