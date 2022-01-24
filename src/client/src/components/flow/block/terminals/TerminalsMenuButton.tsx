@@ -21,6 +21,7 @@ const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminal
   <TerminalsButtonBox
     id={"terminals-menu-button-" + node.id}
     visible={showMenuButton && !IsAspectNode(node) && !!terminals.length}
+    isInput={isInput}
     onClick={() => onClick()}
   >
     <img src={GetMenuIcon(node, isParent, isInput)} className="menu-icon" alt="menu" />
