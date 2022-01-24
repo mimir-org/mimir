@@ -195,7 +195,9 @@ const TextResources = {
   Project_Import: "Import project",
   Project_Import_LibraryTypes: "Import library types",
   Project_Import_Library: "Import library",
-  Project_Browse: "Browse file",
+  Project_Import_Library_File: "File",
+  Project_Import_Library_Select: "Please select a file",
+  Project_Browse: "Browse",
   Project_Parser: "Select data type",
 
   Project_Export_File: "Export file",
@@ -293,6 +295,9 @@ const TextResources = {
   // Version
   Mimir_Version: "Version 1.0",
   Validation_Ok: "Ok",
+
+  // Modal
+  Modal_Close: "Close menu",
 };
 
 export default TextResources;

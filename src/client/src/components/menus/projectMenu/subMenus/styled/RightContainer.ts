@@ -5,7 +5,6 @@ const RightContainer = styled.div`
   flex-direction: column;
   min-width: 356px;
   min-height: 506px;
-  margin-left: 20px;
 `;
 
 export default RightContainer;

@@ -1,53 +1,41 @@
-import React, { useState } from "react";
-import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { MENU_TYPE } from "../../../../../models/project";
-import { CloseIcon } from "../../../../../assets/icons/close";
-import { TextResources } from "../../../../../assets/text";
 import { Button } from "../../../../../compLibrary/buttons";
-import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ButtonBox, HeaderBox, InputBox, ProjectBody, ProjectBox } from "../styled";
-import { Input } from "../../../../../compLibrary/input/text";
+import { ButtonBox } from "../styled";
 import { ExportLibraryIcon } from "../../../../../assets/icons/project";
-import { Dispatch } from "redux";
+import { MENU_TYPE } from "../../../../../models/project";
+import { Modal } from "../../../modal/Modal";
+import { TextResources } from "../../../../../assets/text";
+import { ChangeEvent, useState } from "react";
+import { Input, Label } from "../../../../../compLibrary/input/text";
+import { OnReturnClick, OnSaveClick } from "./handlers";
+import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
 
-interface Props {
-  dispatch: Dispatch;
-}
-
-export const ExportLibraryFileMenu = ({ dispatch }: Props) => {
+export const ExportLibraryFileMenu = () => {
+  const dispatch = useAppDispatch();
   const [fileName, setFileName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
+  const onExit = () => OnReturnClick(dispatch);
+  const onAction = () => OnSaveClick(dispatch, fileName);
+  const isActionDisabled = !fileName;
 
   return (
-    <ProjectBox visible={isOpen}>
-      <ProjectBody>
-        <HeaderBox>
-          <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_Export_LibraryTypes}
-        </HeaderBox>
-        <InputBox>
-          <div className="label">{TextResources.Project_File_Name}</div>
-          <Input
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
-            inputType="text"
-            placeholder={TextResources.Project_File_Name}
-            value={fileName}
-          />
-        </InputBox>
-        <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
-        </ButtonBox>
-        {fileName && (
-          <ButtonBox>
-            <Button
-              onClick={() => OnSaveClick(dispatch, fileName)}
-              text={TextResources.Project_Export_Library}
-              icon={ExportLibraryIcon}
-            />
-          </ButtonBox>
-        )}
-      </ProjectBody>
-    </ProjectBox>
+    <Modal title={TextResources.Project_Export_LibraryTypes} isOpen={isOpen} onExit={onExit}>
+      <Label>{TextResources.Project_File_Name}</Label>
+      <Input
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
+        inputType="text"
+        placeholder={TextResources.Project_File_Name}
+        value={fileName}
+      />
+      <ButtonBox>
+        <Button onClick={onExit} text={TextResources.Project_Cancel} />
+        <Button
+          disabled={isActionDisabled}
+          onClick={onAction}
+          text={TextResources.Project_Export_Library}
+          icon={ExportLibraryIcon}
+        />
+      </ButtonBox>
+    </Modal>
   );
 };
 

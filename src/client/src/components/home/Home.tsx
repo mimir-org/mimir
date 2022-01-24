@@ -27,7 +27,7 @@ import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/menuSlice"
 import { MENU_TYPE, VIEW_TYPE, ViewType } from "../../models/project";
 import { IsStartPage, SetDarkModeColor } from "../../helpers";
 import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
-import { commonStateSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { ImportProjectFileMenu } from "../menus/projectMenu/subMenus/importProjectFile";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import { InstructionBoxComponent } from "../start/instructionBox";
@@ -47,7 +47,6 @@ const Home = ({ dispatch }: Props) => {
   const userMenuOpen = useAppSelector(selectors.userMenuSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const darkMode = useAppSelector(selectors.darkModeSelector);
-  const commonState = useAppSelector(commonStateSelector);
   const inspectorRef = useRef(null);
   const openProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
   const createProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
@@ -85,14 +84,14 @@ const Home = ({ dispatch }: Props) => {
   return (
     <>
       <HeaderComponent project={projectState?.project} projectMenuOpen={projectMenuOpen} dispatch={dispatch} />
-      {projectMenuOpen && <ProjectMenuComponent projectState={projectState} dispatch={dispatch} />}
+      {projectMenuOpen && <ProjectMenuComponent />}
       {userMenuOpen && <UserMenuComponent darkMode={darkMode} dispatch={dispatch} />}
       {IsStartPage() ? (
         <>
           <StartPage />
-          {openProject && <OpenProjectMenu projectState={projectState} dispatch={dispatch} />}
-          {createProject && <CreateProjectMenu dispatch={dispatch} />}
-          {importProject && <ImportProjectFileMenu dispatch={dispatch} parsers={commonState?.parsers} />}
+          {openProject && <OpenProjectMenu />}
+          {createProject && <CreateProjectMenu />}
+          {importProject && <ImportProjectFileMenu />}
           {showInstructionBox && <InstructionBoxComponent />}
         </>
       ) : (
