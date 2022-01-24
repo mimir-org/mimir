@@ -195,8 +195,8 @@ const TextResources = {
   Project_Import: "Import project",
   Project_Import_LibraryTypes: "Import library types",
   Project_Import_Library: "Import library",
-  Project_Import_Library_File: "File",
-  Project_Import_Library_Select: "Please select a file",
+  Project_Import_File: "File",
+  Project_Import_Select: "Please select a file",
   Project_Browse: "Browse",
   Project_Parser: "Select data type",
 

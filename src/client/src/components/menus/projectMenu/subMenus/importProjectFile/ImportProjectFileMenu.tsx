@@ -10,6 +10,7 @@ import { Modal } from "../../../modal/Modal";
 import { TextResources } from "../../../../../assets/text";
 import { useFilePicker } from "use-file-picker";
 import { useState } from "react";
+import { ModuleDescription } from "../../../../../models";
 import { OnProjectSaveClick, OnReturnClick } from "./handlers";
 import {
   commonStateParsersSelector,
@@ -22,11 +23,10 @@ import {
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
   const parsers = useAppSelector(commonStateParsersSelector);
+  const [parser, setParser] = useState(parsers[0]);
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
-  const [parser, setParser] = useState(null);
   const hasParser = parser !== null;
-  const isActionDisabled = !hasParser;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
     multiple: false,
@@ -35,18 +35,10 @@ export const ImportProjectFileMenu = () => {
     limitFilesConfig: { min: 1, max: 1 },
   });
 
-  const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return TextResources.Project_Import;
-    return plainFiles[0].name;
-  };
-
+  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
   const data = GetProjectFileData(filesContent, parser);
-
-  const setButtonAction = () => {
-    if (!hasParser) return () => null;
-    if (hasParser && !data) return openFileSelector();
-    if (hasParser && data) return OnProjectSaveClick(dispatch, data);
-  };
+  const onAction = () => OnProjectSaveClick(dispatch, data);
+  const isActionDisabled = !hasParser && filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
     <Modal title={TextResources.Project_Import} isOpen={isOpen} onExit={onExit}>
@@ -57,11 +49,13 @@ export const ImportProjectFileMenu = () => {
         items={parsers}
         keyProp="id"
         fontSize={FontSize.Medium}
-        onChange={(item) => setParser(item)}
+        onChange={(item: ModuleDescription) => setParser(item)}
       />
+      <Label>{TextResources.Project_Import_File}: {selectedText}</Label>
+      <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
       <ButtonBox>
         <Button onClick={onExit} text={TextResources.Project_Cancel} />
-        <Button disabled={isActionDisabled} onClick={setButtonAction} text={buttonBrowseText()} icon={ImportProjectIcon} />
+        <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Import} icon={ImportProjectIcon} />
       </ButtonBox>
     </Modal>
   );

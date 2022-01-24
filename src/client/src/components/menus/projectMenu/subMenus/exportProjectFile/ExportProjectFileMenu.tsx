@@ -6,7 +6,7 @@ import { MENU_TYPE } from "../../../../../models/project";
 import { Modal } from "../../../modal/Modal";
 import { ModuleDescription } from "../../../../../models";
 import { TextResources } from "../../../../../assets/text";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../compLibrary/input/text";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import {
@@ -20,10 +20,10 @@ import {
 
 export const ExportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
-  const parsers = useAppSelector(commonStateParsersSelector);
   const project = useAppSelector(projectSelector);
+  const parsers = useAppSelector(commonStateParsersSelector);
+  const [parser, setParser] = useState(parsers[0]);
   const [fileName, setFileName] = useState("");
-  const [parser, setParser] = useState(null);
   const hasParser = parser !== null;
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
@@ -34,7 +34,7 @@ export const ExportProjectFileMenu = () => {
     <Modal title={TextResources.Project_Export} isOpen={isOpen} onExit={onExit}>
       <Label>{TextResources.Project_File_Name}</Label>
       <Input
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
         inputType="text"
         placeholder={TextResources.Project_File_Name}
         value={fileName}

@@ -29,14 +29,14 @@ export const ImportFileLibraryMenu = () => {
     return JSON.parse(fileData.content) as CreateLibraryType[];
   };
 
-  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Library_Select;
+  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
   const onAction = () => OnSaveClick(dispatch, data);
   const isActionDisabled = filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
     <Modal title={TextResources.Project_Import_LibraryTypes} isOpen={isOpen} onExit={onExit}>
       <Label>
-        {TextResources.Project_Import_Library_File}: {selectedText}
+        {TextResources.Project_Import_File}: {selectedText}
       </Label>
       <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
       <ButtonBox>
