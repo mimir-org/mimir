@@ -341,6 +341,7 @@ namespace Mb.Services.Services
             var clone = edge.Transport.DeepCopy();
             clone.Id = id;
             clone.Iri = iri;
+
             clone.Attributes = CloneAttributes(edge.Transport.Attributes, transportId: clone.Id).ToList();
             return clone;
         }
@@ -354,6 +355,7 @@ namespace Mb.Services.Services
             var clone = edge.Interface.DeepCopy();
             clone.Id = id;
             clone.Iri = iri;
+
             clone.Attributes = CloneAttributes(edge.Interface.Attributes, interfaceId: clone.Id).ToList();
             return clone;
         }

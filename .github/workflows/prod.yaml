@@ -21,6 +21,7 @@ jobs:
           prefix: "v"
 
       - name: Release
+        if: ${{ steps.tag_version.outputs.new_tag != '' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
@@ -28,6 +29,7 @@ jobs:
           generate_release_notes: true
 
       - name: Check Output Parameters
+        if: ${{ steps.tag_version.outputs.new_tag != '' }}
         run: |
           echo "Tag: ${{ steps.release.outputs.new_tag }}"
           echo "Version: ${{ steps.release.outputs.new_version }}"
