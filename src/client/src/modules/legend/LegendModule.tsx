@@ -15,7 +15,7 @@ const LegendModule = ({ project }: Props) => {
         return (
           <LegendElement key={legend.key}>
             <span>{legend.name}</span>
-            <LegendColor color={legend.color}/>
+            <LegendColor color={legend.color} />
           </LegendElement>
         );
       })}

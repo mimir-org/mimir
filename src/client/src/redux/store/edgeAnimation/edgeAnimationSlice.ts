@@ -5,14 +5,14 @@ const initialEdgeAnimationState = {
 };
 
 export const edgeAnimationSlice = createSlice({
-  name: 'edgeAnimation',
+  name: "edgeAnimation",
   initialState: initialEdgeAnimationState,
   reducers: {
     toggleEdgeAnimation: (state) => {
       state.animated = !state.animated;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { toggleEdgeAnimation } = edgeAnimationSlice.actions;
 export default edgeAnimationSlice.reducer;

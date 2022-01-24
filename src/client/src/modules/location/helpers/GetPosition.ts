@@ -2,13 +2,12 @@ import { PixelCalculator } from ".";
 import { Attribute } from "../../../models";
 
 export interface Position {
-  relativeX: number,
-  relativeY: number,
-  relativeZ: number
+  relativeX: number;
+  relativeY: number;
+  relativeZ: number;
 }
 
 const GetPosition = (map: Map<string, Attribute>, isRoot: boolean): Position => {
-
   if (isRoot) {
     return {
       relativeX: 0.0,

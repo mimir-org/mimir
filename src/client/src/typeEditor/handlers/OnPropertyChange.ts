@@ -5,5 +5,5 @@ import { updateCreateLibraryType } from "../redux/typeEditorSlice";
 
 export const OnPropertyChange = <K extends keyof CreateLibraryType>(key: K, value: CreateLibraryType[K], dispatch: Dispatch) => {
   ResetRedux(dispatch, key, value);
-  dispatch(updateCreateLibraryType({key, value}));
+  dispatch(updateCreateLibraryType({ key, value }));
 };

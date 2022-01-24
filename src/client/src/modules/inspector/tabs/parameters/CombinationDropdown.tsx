@@ -91,7 +91,12 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
 
   const renderListItem = (item: CombinedAttribute) => {
     return (
-      <MenuListItem color={bodyColor} key={item[keyProp]} onMouseEnter={() => onMouseEnter(item)} ref={(ele) => refCallback(ele, item)}>
+      <MenuListItem
+        color={bodyColor}
+        key={item[keyProp]}
+        onMouseEnter={() => onMouseEnter(item)}
+        ref={(ele) => refCallback(ele, item)}
+      >
         <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
         <span>{item.combined}</span>
       </MenuListItem>

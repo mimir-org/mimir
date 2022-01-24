@@ -16,7 +16,7 @@ const AdminComponent = ({ element, project }: Props) => {
 
   return (
     <>
-      <AdminLogo src={GetCompanyLogoForInspector(company, element)} alt="logo"/>
+      <AdminLogo src={GetCompanyLogoForInspector(company, element)} alt="logo" />
       {element && <AdminContentWrapper>{GetAdminContent(element, project, statuses)}</AdminContentWrapper>}
     </>
   );

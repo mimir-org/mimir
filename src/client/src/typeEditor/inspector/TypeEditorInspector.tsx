@@ -11,7 +11,7 @@ import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../hel
 import {
   changeTypeEditorInspectorHeight,
   changeTypeEditorInspectorTab,
-  changeTypeEditorInspectorVisibility
+  changeTypeEditorInspectorVisibility,
 } from "../redux/typeEditorSlice";
 import {
   animatedModuleSelector,

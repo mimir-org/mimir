@@ -33,7 +33,7 @@ const InspectorTabWrapper = ({
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
     if (!isInspectorOpen) {
-      dispatch(setModuleVisibility({type: MODULE_TYPE.INSPECTOR, visible: true, animate: true}));
+      dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
       dispatch(changeInspectorHeight(Size.ModuleOpen));
       SetPanelHeight(inspectorRef, Size.ModuleOpen);
     }

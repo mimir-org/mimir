@@ -9,12 +9,12 @@ export interface AttributeDict {
 }
 
 export interface FilterDict {
-  [filterName: string]: CombinedAttribute[]
+  [filterName: string]: CombinedAttribute[];
 }
 
 export interface AttributeFilter {
-  elementId: string,
-  filterName: string
+  elementId: string;
+  filterName: string;
 }
 
 export interface AttributeFilters {

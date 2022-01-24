@@ -14,7 +14,7 @@ export function* getUser() {
       role: response?.data?.role,
     };
 
-    yield put(fetchUserSuccessOrError({user: user, apiError: null}));
+    yield put(fetchUserSuccessOrError({ user: user, apiError: null }));
   } catch (error) {
     const apiError: ApiError = {
       key: fetchUserSuccessOrError.type,
@@ -22,6 +22,6 @@ export function* getUser() {
       errorData: null,
     };
 
-    yield put(fetchUserSuccessOrError({user: null, apiError: apiError}));
+    yield put(fetchUserSuccessOrError({ user: null, apiError: apiError }));
   }
 }

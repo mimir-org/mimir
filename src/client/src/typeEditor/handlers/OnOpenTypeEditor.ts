@@ -11,7 +11,7 @@ export const OnOpenTypeEditor = (
 ) => {
   if (selectedElement && selectedElementType !== ObjectType.NotSet) {
     const filter = GetLibraryType(selectedElementType);
-    dispatch(fetchCreateLibraryType({selectedType: selectedElement, filter}));
+    dispatch(fetchCreateLibraryType({ selectedType: selectedElement, filter }));
     onChange();
   } else {
     dispatch(changeTypeEditorVisibility(true));

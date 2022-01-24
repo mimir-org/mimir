@@ -18,7 +18,7 @@ const CreateConnectedOffPageNode = (sourceNode: Node, sourceConnector: Connector
     sourceNode: sourceNode,
     sourceConnector: sourceConnector,
     position: { x: position.x, y: position.y },
-  }
+  };
 
   const offPageObject = CreateOffPageObject(offPageData);
 

@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 interface Props {
-  gap?: string
+  gap?: string;
 }
 
 const LabelWrapper = styled.label<Props>`
   display: flex;
-  gap: ${(props) => (props.gap ? props.gap : '10px')};
+  gap: ${(props) => (props.gap ? props.gap : "10px")};
 
   &:hover {
     text-decoration: underline;

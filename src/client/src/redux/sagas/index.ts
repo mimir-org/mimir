@@ -10,7 +10,7 @@ import {
   fetchLibrary,
   fetchLibraryInterfaceTypes,
   fetchLibraryTransportTypes,
-  importLibrary as importLibraryAction
+  importLibrary as importLibraryAction,
 } from "../store/library/librarySlice";
 import {
   COMMIT_PROJECT,
@@ -55,7 +55,7 @@ import {
   fetchCreateLibraryType,
   fetchInitialData,
   fetchSimpleTypes,
-  saveLibraryType
+  saveLibraryType,
 } from "../../typeEditor/redux/typeEditorSlice";
 
 //TODO: Add takeEvery for LOCK_ on

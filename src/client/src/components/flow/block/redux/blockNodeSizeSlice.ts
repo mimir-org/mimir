@@ -22,7 +22,7 @@ const parentProduct = {
 const initialBlockNodeSizeState = { blockParents: [parent, parentProduct] };
 
 export const blockNodeSizeSlice = createSlice({
-  name: 'blockNodeSize',
+  name: "blockNodeSize",
   initialState: initialBlockNodeSizeState,
   reducers: {
     setBlockNodeSize: (state, action: PayloadAction<BlockNodeSize>) => {
@@ -30,9 +30,9 @@ export const blockNodeSizeSlice = createSlice({
       state.blockParents.forEach((x) => {
         x.aspect !== Aspect.Product && (x.size = { width, height: height - Size.BlockMarginY });
       });
-    }
-  }
-})
+    },
+  },
+});
 
 export const { setBlockNodeSize } = blockNodeSizeSlice.actions;
 export default blockNodeSizeSlice.reducer;

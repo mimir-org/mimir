@@ -45,7 +45,10 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const element: InspectorElement = node || edge;
 
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
-  const changeInspectorVisibilityAction = useCallback((open: boolean) => setModuleVisibility({type: type, visible: open, animate: true}), [type]);
+  const changeInspectorVisibilityAction = useCallback(
+    (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
+    [type]
+  );
 
   return (
     <AnimatedInspector

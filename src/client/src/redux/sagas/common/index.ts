@@ -4,7 +4,7 @@ import {
   fetchCollaborationPartners,
   fetchCombinedAttributeFilters,
   fetchParsers,
-  fetchStatuses
+  fetchStatuses,
 } from "../../store/common/commonSlice";
 
 export function* commonSaga() {
