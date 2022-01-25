@@ -11,4 +11,4 @@ interface MimirEnv {
 }
 
 // eslint-disable-next-line no-var
-declare var MIMIR_ENV: MimirEnv;
+declare var __MIMIR_ENV: MimirEnv;
