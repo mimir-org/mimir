@@ -1,33 +1,23 @@
 import * as Click from "./handlers";
 import * as Icons from "../../../assets/icons/project";
-import { Dispatch } from "redux";
-import { useCallback, useRef } from "react";
 import { MENU_TYPE } from "../../../models/project";
+import { ProjectMenuBox } from "../styled";
 import { TextResources } from "../../../assets/text";
 import { setProjectMenuVisibility } from "./subMenus/redux/menuSlice";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { activeMenuSelector, commonStateSelector } from "../../../redux/store";
-import { useAppSelector } from "../../../redux/store/hooks";
-import { useSelectedFlowElements } from "../../../helpers/UseSelectedFlowElements";
-import { ProjectMenuBox } from "../styled";
 import { MenuElement, ProjectSubMenus } from "./";
-import { ProjectState } from "../../../redux/store/project/types";
-
-interface Props {
-  projectState: ProjectState;
-  dispatch: Dispatch;
-}
+import { useCallback, useRef } from "react";
+import { activeMenuSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 
 /**
  * Component for the Project Menu.
- * @param interface
  * @returns a menu for the Project in the header of Mimir.
  */
-const ProjectMenuComponent = ({ projectState, dispatch }: Props) => {
-  const [selectedNodeIds, selectedEdgeIds] = useSelectedFlowElements();
-  const commonState = useAppSelector(commonStateSelector);
+const ProjectMenuComponent = () => {
+  const dispatch = useAppDispatch();
+  const project = useAppSelector(projectSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
-  const isNoActiveProject = !projectState.project;
+  const isNoActiveProject = !project;
 
   const menuRef = useRef(null);
   const onOutsideClick = useCallback(() => !activeMenu && dispatch(setProjectMenuVisibility(false)), [activeMenu, dispatch]);
@@ -49,7 +39,7 @@ const ProjectMenuComponent = ({ projectState, dispatch }: Props) => {
         <MenuElement
           text={TextResources.Project_Save_Label}
           icon={isNoActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
-          onClick={() => Click.OnSave(dispatch, projectState)}
+          onClick={() => Click.OnSave(dispatch, project)}
           disabled={isNoActiveProject}
           bottomLine
         />
@@ -90,14 +80,7 @@ const ProjectMenuComponent = ({ projectState, dispatch }: Props) => {
           onClick={() => Click.OnSaveLibrary(dispatch)}
         />
       </ProjectMenuBox>
-
-      <ProjectSubMenus
-        projectState={projectState}
-        commonState={commonState}
-        selectedNodeIds={selectedNodeIds}
-        selectedEdgeIds={selectedEdgeIds}
-        dispatch={dispatch}
-      />
+      <ProjectSubMenus />
     </>
   );
 };

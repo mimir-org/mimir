@@ -1,21 +1,19 @@
-import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { MENU_TYPE } from "../../../../../models/project";
-import { CreateLibraryType, FileData } from "../../../../../models";
-import { CloseIcon } from "../../../../../assets/icons/close";
-import { TextResources } from "../../../../../assets/text";
 import { Button } from "../../../../../compLibrary/buttons";
-import { useFilePicker } from "use-file-picker";
-import { OnReturnClick, OnSaveClick } from "./handlers";
-import { ButtonBox, HeaderBox, ProjectBody, ProjectBox } from "../styled";
+import { ButtonBox } from "../styled";
 import { ImportLibraryIcon } from "../../../../../assets/icons/project";
-import { Dispatch } from "redux";
+import { Label } from "../../../../../compLibrary/input/text";
+import { MENU_TYPE } from "../../../../../models/project";
+import { Modal } from "../../../modal/Modal";
+import { TextResources } from "../../../../../assets/text";
+import { useFilePicker } from "use-file-picker";
+import { CreateLibraryType, FileData } from "../../../../../models";
+import { OnReturnClick, OnSaveClick } from "./handlers";
+import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
 
-interface Props {
-  dispatch: Dispatch;
-}
-
-export const ImportFileLibraryMenu = ({ dispatch }: Props) => {
+export const ImportFileLibraryMenu = () => {
+  const dispatch = useAppDispatch();
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.IMPORT_LIBRARY_FILE_MENU);
+  const onExit = () => OnReturnClick(dispatch);
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
     multiple: false,
@@ -31,35 +29,26 @@ export const ImportFileLibraryMenu = ({ dispatch }: Props) => {
     return JSON.parse(fileData.content) as CreateLibraryType[];
   };
 
-  const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return TextResources.Project_Import_Library;
-    return plainFiles[0].name;
-  };
+  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
+  const onAction = () => OnSaveClick(dispatch, data);
+  const isActionDisabled = filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
-    <ProjectBox visible={isOpen}>
-      <ProjectBody>
-        <HeaderBox>
-          <img src={CloseIcon} alt="Close project" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_Import_LibraryTypes}
-        </HeaderBox>
-        <ButtonBox>
-          <Button onClick={() => openFileSelector()} text={buttonBrowseText()} icon={ImportLibraryIcon} />
-        </ButtonBox>
-        <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
-        </ButtonBox>
-        {plainFiles?.length > 0 && data() && (
-          <ButtonBox>
-            <Button
-              onClick={() => OnSaveClick(dispatch, data)}
-              text={TextResources.Project_Import_Library}
-              icon={ImportLibraryIcon}
-            />
-          </ButtonBox>
-        )}
-      </ProjectBody>
-    </ProjectBox>
+    <Modal title={TextResources.Project_Import_LibraryTypes} isOpen={isOpen} onExit={onExit}>
+      <Label>
+        {TextResources.Project_Import_File}: {selectedText}
+      </Label>
+      <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
+      <ButtonBox>
+        <Button onClick={onExit} text={TextResources.Project_Cancel} />
+        <Button
+          disabled={isActionDisabled}
+          onClick={onAction}
+          text={TextResources.Project_Import_Library}
+          icon={ImportLibraryIcon}
+        />
+      </ButtonBox>
+    </Modal>
   );
 };
 

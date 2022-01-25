@@ -1,28 +1,31 @@
-import { useState } from "react";
-import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { MENU_TYPE } from "../../../../../models/project";
-import { CloseIcon } from "../../../../../assets/icons/close";
-import { TextResources } from "../../../../../assets/text";
 import { Button } from "../../../../../compLibrary/buttons";
-import { useFilePicker } from "use-file-picker";
-import { OnProjectSaveClick, OnReturnClick } from "./handlers";
-import { ButtonBox, HeaderBox, ProjectBody, ProjectBox } from "../styled";
-import { ImportProjectIcon } from "../../../../../assets/icons/project";
-import { GetProjectFileData } from "./helpers";
+import { ButtonBox } from "../styled";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
-import { Label } from "../../../../../compLibrary/input/text";
-import { ModuleDescription } from "../../../../../models";
 import { FontSize } from "../../../../../compLibrary/font";
-import { Dispatch } from "redux";
+import { GetProjectFileData } from "./helpers";
+import { ImportProjectIcon } from "../../../../../assets/icons/project";
+import { Label } from "../../../../../compLibrary/input/text";
+import { MENU_TYPE } from "../../../../../models/project";
+import { Modal } from "../../../modal/Modal";
+import { TextResources } from "../../../../../assets/text";
+import { useFilePicker } from "use-file-picker";
+import { useState } from "react";
+import { ModuleDescription } from "../../../../../models";
+import { OnProjectSaveClick, OnReturnClick } from "./handlers";
+import {
+  commonStateParsersSelector,
+  isActiveMenuSelector,
+  useAppDispatch,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../../../../redux/store";
 
-interface Props {
-  parsers: ModuleDescription[];
-  dispatch: Dispatch;
-}
-
-export const ImportProjectFileMenu = ({ parsers, dispatch }: Props) => {
+export const ImportProjectFileMenu = () => {
+  const dispatch = useAppDispatch();
+  const parsers = useAppSelector(commonStateParsersSelector);
+  const [parser, setParser] = useState(parsers[0]);
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
-  const [parser, setParser] = useState(null);
+  const onExit = () => OnReturnClick(dispatch);
   const hasParser = parser !== null;
 
   const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
@@ -32,43 +35,31 @@ export const ImportProjectFileMenu = ({ parsers, dispatch }: Props) => {
     limitFilesConfig: { min: 1, max: 1 },
   });
 
-  const buttonBrowseText = () => {
-    if (plainFiles?.length < 1) return TextResources.Project_Import;
-    return plainFiles[0].name;
-  };
-
+  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
   const data = GetProjectFileData(filesContent, parser);
-
-  const setButtonAction = () => {
-    if (!hasParser) return () => null;
-    if (hasParser && !data) return openFileSelector();
-    if (hasParser && data) return OnProjectSaveClick(dispatch, data);
-  };
+  const onAction = () => OnProjectSaveClick(dispatch, data);
+  const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
-    <ProjectBox visible={isOpen}>
-      <ProjectBody>
-        <HeaderBox>
-          <img src={CloseIcon} alt="close" onClick={() => OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_Import}
-        </HeaderBox>
-        <ButtonBox left>
-          <Button onClick={() => OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
-        </ButtonBox>
-        <Label>{TextResources.Project_Parser}</Label>
-        <Dropdown
-          label=""
-          valueProp="name"
-          items={parsers}
-          keyProp="id"
-          fontSize={FontSize.Medium}
-          onChange={(item: ModuleDescription) => setParser(item)}
-        />
-        <ButtonBox disabled={!hasParser}>
-          <Button onClick={setButtonAction} text={buttonBrowseText()} icon={ImportProjectIcon} />
-        </ButtonBox>
-      </ProjectBody>
-    </ProjectBox>
+    <Modal title={TextResources.Project_Import} isOpen={isOpen} onExit={onExit}>
+      <Label>{TextResources.Project_Parser}</Label>
+      <Dropdown
+        label=""
+        valueProp="name"
+        items={parsers}
+        keyProp="id"
+        fontSize={FontSize.Medium}
+        onChange={(item: ModuleDescription) => setParser(item)}
+      />
+      <Label>
+        {TextResources.Project_Import_File}: {selectedText}
+      </Label>
+      <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
+      <ButtonBox>
+        <Button onClick={onExit} text={TextResources.Project_Cancel} />
+        <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Import} icon={ImportProjectIcon} />
+      </ButtonBox>
+    </Modal>
   );
 };
 export default ImportProjectFileMenu;

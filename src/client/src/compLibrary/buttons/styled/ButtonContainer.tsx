@@ -16,15 +16,14 @@ const ButtonContainer = styled.button<Props>`
   background: ${Color.GreyLight};
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
-  margin: 10px 0px;
   padding-left: 5px;
   cursor: pointer;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
 
-  .button-text {
+  > span {
     max-width: 260px;
-    padding: 0px 5px;
+    padding: 0 5px;
     margin-right: ${(props) => (props.icon ? 14 : 0)}px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -33,11 +32,16 @@ const ButtonContainer = styled.button<Props>`
     overflow: hidden;
   }
 
+  :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   :active {
     border-width: 2px;
   }
 
-  :hover {
+  :hover:not(:disabled) {
     text-decoration: underline;
   }
 `;
