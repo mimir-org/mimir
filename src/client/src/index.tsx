@@ -9,8 +9,6 @@ import { ReactFlowProvider } from "react-flow-renderer";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import Config from "./models/Config";
 
-console.log(Config.API_BASE_URL);
-
 const rootElement = document.getElementById("root");
 export const msalInstance = new PublicClientApplication(msalConfig);
 
