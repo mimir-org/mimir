@@ -28,7 +28,7 @@ execute_injection() {
   }
 
   inject_env_variables() {
-    sed -i "s~$placeholder~$json~g" $file_to_inject
+    sed -i "s~\"$placeholder\"~$json~g" $file_to_inject
   }
 
   get_env_variables

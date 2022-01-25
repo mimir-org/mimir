@@ -1,6 +1,6 @@
-const isProduction = () => process.env.NODE_ENV !== "development";
+const isProduction = process.env.NODE_ENV !== "development";
 
-const assignValue = (key: keyof MimirEnv) => (isProduction() ? window.MIMIR_ENV[key] : process.env[`REACT_APP_${key}`]);
+const assignValue = (key: keyof MimirEnv) => (isProduction ? window.MIMIR_ENV[key] : process.env[`REACT_APP_${key}`]);
 
 const config: MimirEnv = {
   API_BASE_URL: assignValue("API_BASE_URL"),
