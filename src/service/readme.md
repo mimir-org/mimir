@@ -9,17 +9,11 @@ The project contain a .editorconfig file, which is used for consistent code styl
 
 dotnet-format is a code formatter for dotnet that applies style preferences to a project or solution. Preferences will be read from an .editorconfig file, if present, otherwise a default set of preferences will be used. [Github repository](https://github.com/dotnet/format)
 
-The tool can be installed via the dotnet cli:
-
-    dotnet tool install -g dotnet-format --version "7.*" --add-source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet7/nuget/v3/index.json
-
-and uninstalled:
-
-    dotnet tool uninstall -g dotnet-format
+The tool is automatically installed with .NET 6, under the subcommand dotnet format.
 
 To format the project using dotnet-format, run the following command from the service folder:
 
-    dotnet-format
+    dotnet format
 
 The tool will pick up the .editorconfig and format all .cs files found in the subprojects.
 

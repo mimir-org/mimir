@@ -6,6 +6,7 @@ import { LogoBox, SymbolBox } from "../../logo/styled";
 import { Symbol } from "../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./index";
+import Config from "../../../../../models/Config";
 
 interface Props {
   node: Node;
@@ -43,7 +44,7 @@ const BlockChildComponent = ({ node, colorMain, colorSelected, inputTerminals, o
         <Symbol base64={node.symbol} text={node.name} />
       </SymbolBox>
       <LogoBox>
-        <img src={GetCompanyLogoForNode(process.env.REACT_APP_COMPANY, node)} alt="logo" />
+        <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
       </LogoBox>
     </NodeBox>
   );
