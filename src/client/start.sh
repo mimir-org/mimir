@@ -3,10 +3,12 @@
 execute_injection() {
   # Injects custom environment variables into index.html.
   # 1. Read in prefix (e.g. MIMIR_ENV), placeholder (where to inject, e.g. __MIMIR_ENV__)
-  # and file_to_inject (e.g. index.html) as arguments.
+  #    and file_to_inject (e.g. index.html) as arguments.
   # 2. Read all environment variables containing prefix.
   # 3. Build json string, containing key, value pairs of the environment variable name (stripping away MIMIR_ENV_) and its value.
-  #   e.g. MIMIR_ENV_API_URL=localhost:5000 -> API_URL: 'localhost:5000'
+  #    e.g. MIMIR_ENV_API_URL=localhost:5000 -> API_URL: 'localhost:5000'.
+  #    When transforming the key value pair, it is important to remember that the value might contain "=", so we need to match against first occurence of the character,
+  #    e.g. ([^=]*).
   # 4. Inject variables into file file_to_inject, location specified by placeholder.
 
   prefix=$1
@@ -21,7 +23,7 @@ execute_injection() {
     json="{ "
 
     for var in $list; do
-      json="$json $(echo $var | sed -r -e "s/${prefix}_(.*)=(.*)/\1: '\2'/g"), "
+      json="$json $(echo $var | sed -r -e "s/${prefix}_([^=]*)=(.*)/\1: '\2'/g"), "
     done
 
     json="${json%??} }"
