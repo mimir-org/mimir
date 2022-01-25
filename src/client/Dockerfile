@@ -22,5 +22,6 @@ FROM nginx:stable-alpine AS final
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY start.sh .
+RUN chmod +x start.sh
 EXPOSE 80
 ENTRYPOINT "./start.sh" "MIMIR_ENV" "__MIMIR_ENV__" "/usr/share/nginx/html/index.html"
