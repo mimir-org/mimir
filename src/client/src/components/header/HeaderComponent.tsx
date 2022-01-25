@@ -7,6 +7,7 @@ import { GetCompanyLogoForHeader, GetSelectedNode, IsStartPage } from "../../hel
 import { Project } from "../../models";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { VIEW_TYPE } from "../../models/project";
+import Config from "../../models/Config";
 
 interface Props {
   project: Project;
@@ -28,7 +29,7 @@ const HeaderComponent = ({ project, projectMenuOpen, dispatch }: Props) => {
   const electro = useAppSelector(selectors.electroSelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const location3DActive = useAppSelector(selectors.location3DSelector);
-  const company = process.env.REACT_APP_COMPANY;
+  const company = Config.COMPANY;
 
   return (
     <>

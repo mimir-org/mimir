@@ -34,13 +34,14 @@ import {
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   SaveProjectAction,
 } from "../../store/project/types";
+import Config from "../../../models/Config";
 
 export function* getProject(action: FetchingProjectAction) {
   try {
     const webSocket = new WebSocket();
     if (webSocket.isRunning()) webSocket.setGroup(action.payload.id);
 
-    const url = process.env.REACT_APP_API_BASE_URL + "project/" + action.payload.id;
+    const url = Config.API_BASE_URL + "project/" + action.payload.id;
     const response = yield call(get, url);
 
     // This is a bad request
@@ -105,7 +106,7 @@ export function* getProject(action: FetchingProjectAction) {
 
 export function* searchProject(action) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/search?name=" + action.payload;
+    const url = Config.API_BASE_URL + "project/search?name=" + action.payload;
     const response = yield call(get, url);
 
     // This is a bad request
@@ -159,7 +160,7 @@ export function* searchProject(action) {
 
 export function* createProject(action) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project";
+    const url = Config.API_BASE_URL + "project";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -216,7 +217,7 @@ export function* createProject(action) {
 
 export function* createSubProject(action: CreateSubProject) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "subproject";
+    const url = Config.API_BASE_URL + "subproject";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -271,7 +272,7 @@ export function* updateProject(action: SaveProjectAction) {
   try {
     const projId = action.payload.project.id;
     const proj = ConvertProject(action.payload.project);
-    const url = process.env.REACT_APP_API_BASE_URL + "project/update/" + projId;
+    const url = Config.API_BASE_URL + "project/update/" + projId;
     const response = yield call(post, url, proj);
 
     // This is a bad request
@@ -330,7 +331,7 @@ export function* updateProject(action: SaveProjectAction) {
 
 export function* exportProjectFile(action: ExportProjectFileAction) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/convert/";
+    const url = Config.API_BASE_URL + "project/convert/";
     const response = yield call(post, url, action.payload);
 
     if (response.status === 400) {
@@ -368,7 +369,7 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
 
 export function* importProject(action: ImportProjectAction) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "project/import/";
+    const url = Config.API_BASE_URL + "project/import/";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -420,7 +421,7 @@ export function* importProject(action: ImportProjectAction) {
 
 export function* commitProject(action: CommitProject) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "commit";
+    const url = Config.API_BASE_URL + "commit";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -472,7 +473,7 @@ export function* commitProject(action: CommitProject) {
 
 export function* lockNode(action: LockNode) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "lock/node";
+    const url = Config.API_BASE_URL + "lock/node";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -523,7 +524,7 @@ export function* lockNode(action: LockNode) {
 
 export function* lockEdge(action: LockEdge) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "lock/edge";
+    const url = Config.API_BASE_URL + "lock/edge";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
@@ -574,7 +575,7 @@ export function* lockEdge(action: LockEdge) {
 
 export function* lockAttribute(action: LockAttribute) {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "lock/attribute";
+    const url = Config.API_BASE_URL + "lock/attribute";
     const response = yield call(post, url, action.payload);
 
     // This is a bad request

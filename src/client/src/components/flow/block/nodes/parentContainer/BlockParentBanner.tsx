@@ -3,6 +3,7 @@ import { AspectColorType, Connector, Node } from "../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./styled";
 import { TerminalsMenuComponent } from "../../terminals";
 import Navigation from "../navigation/Navigation";
+import Config from "../../../../../models/Config";
 
 interface Props {
   node: Node;
@@ -28,7 +29,7 @@ const BlockParentBanner = ({
   onConnectorClick,
 }: Props) => {
   const prefix = GetRdsPrefix(node);
-  const company = process.env.REACT_APP_COMPANY;
+  const company = Config.COMPANY;
 
   return (
     <HeaderContainer color={GetAspectColor(node, AspectColorType.Header)}>

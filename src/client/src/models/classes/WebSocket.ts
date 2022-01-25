@@ -18,6 +18,7 @@ import {
   updateNode,
 } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
+import Config from "../Config";
 
 let instance = null;
 class WebSocket {
@@ -36,7 +37,7 @@ class WebSocket {
     this._running = false;
 
     this._connection = new HubConnectionBuilder()
-      .withUrl(`${process.env.REACT_APP_SOCKET_BASE_URL}hub/modelbuilder`)
+      .withUrl(`${Config.SOCKET_BASE_URL}hub/modelbuilder`)
       .withAutomaticReconnect()
       .build();
 

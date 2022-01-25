@@ -6,6 +6,7 @@ import { post } from "../../models/webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text";
 import { IsAspectNode, IsFamily } from "../../helpers";
+import Config from "../Config";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -41,7 +42,7 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
 
     if (!loadedProject.isSubProject) return [[], []];
 
-    const url = process.env.REACT_APP_API_BASE_URL + "project/import/";
+    const url = Config.API_BASE_URL + "project/import/";
     const response = await post(url, loadedProject);
 
     if (response.status !== 200) {

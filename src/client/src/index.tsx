@@ -7,6 +7,9 @@ import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
 import { AuthenticationResult, EventMessage, EventType, PublicClientApplication } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
+import Config from "./models/Config";
+
+console.log(Config.API_BASE_URL);
 
 const rootElement = document.getElementById("root");
 export const msalInstance = new PublicClientApplication(msalConfig);
@@ -31,7 +34,7 @@ msalInstance.addEventCallback((event: EventMessage) => {
 
 const appInsights = new ApplicationInsights({
   config: {
-    connectionString: process.env.REACT_APP_APP_INSIGHTS_CONNECTION_STRING,
+    connectionString: Config.APP_INSIGHTS_CONNECTION_STRING,
   },
 });
 
