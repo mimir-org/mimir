@@ -6,7 +6,9 @@ import { removeEdge, setOffPageStatus } from "../../../../../../redux/store/proj
 import { GetParent, IsPartOf, IsTransport } from "../../../../helpers";
 
 /**
- * Component to handle deleting an OffPageNode
+ * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected
+ * A Connected OffPage node is pointing to another node that is not visible on the screen, this is handled by
+ * the HandleConnectedOffPageDelete component.
  * @param project
  * @param node
  * @param dispatch
@@ -19,8 +21,8 @@ const HandleOffPageDelete = (project: Project, node: Node, dispatch: Dispatch) =
   const offPageConnectedReferenceEdge = getOffPageConnectedReferenceEdge(parentNodeConnector, project);
 
   if (offPageTransportEdge && !offPageConnectedReferenceEdge) {
-    // When deleting a Required OffPageNode, the parent's connector is reset to not required
-    dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
+    const parentConnectorIsRequired = false;
+    dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, parentConnectorIsRequired));
   }
 
   if (offPageConnectedReferenceEdge)
@@ -45,7 +47,7 @@ function getOffPageConnectedReferenceEdge(parentNodeConnector: Connector, projec
   );
 }
 
-function getParentNodeConnector(offPageTransportEdge: Edge, node: Node) {
+export function getParentNodeConnector(offPageTransportEdge: Edge, node: Node) {
   return offPageTransportEdge?.fromConnector?.nodeId === node.id
     ? offPageTransportEdge?.toConnector
     : offPageTransportEdge?.fromConnector;
