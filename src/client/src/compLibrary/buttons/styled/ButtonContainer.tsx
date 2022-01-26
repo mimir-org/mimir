@@ -4,6 +4,7 @@ import { FontSize } from "../../font";
 
 interface Props {
   icon: boolean;
+  disabled?: boolean;
 }
 
 const ButtonContainer = styled.button<Props>`
@@ -18,9 +19,10 @@ const ButtonContainer = styled.button<Props>`
   border-radius: 2px;
   margin: 10px 0px;
   padding-left: 5px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 
   .button-text {
     max-width: 260px;
@@ -38,7 +40,7 @@ const ButtonContainer = styled.button<Props>`
   }
 
   :hover {
-    text-decoration: underline;
+    text-decoration: ${(props) => (props.disabled ? "none" : "underline")};
   }
 `;
 
