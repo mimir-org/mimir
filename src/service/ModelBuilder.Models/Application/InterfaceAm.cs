@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Application
 {
@@ -26,7 +25,7 @@ namespace Mb.Models.Application
         public TerminalAm InputTerminal { get; set; }
         public string OutputTerminalId { get; set; }
         public TerminalAm OutputTerminal { get; set; }
-        public ICollection<Attribute> Attributes { get; set; }
+        public ICollection<AttributeAm> Attributes { get; set; }
         
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
