@@ -300,7 +300,7 @@ namespace Mb.Services.Services
         public async Task<ProjectResultAm> UpdateProject(string id, ProjectAm projectAm, string invokedByDomain)
         {
             IDictionary<string, string> remap;
-            
+
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try

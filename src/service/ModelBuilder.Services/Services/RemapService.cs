@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mb.Data.Contracts;
@@ -35,7 +35,7 @@ namespace Mb.Services.Services
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
-            
+
             project.Nodes = RemapNodes(replacement, project.Nodes, project.Edges, remap, false).ToList();
             project.Edges = RemapEdges(replacement, project.Edges, remap, false).ToList();
 
@@ -112,7 +112,7 @@ namespace Mb.Services.Services
             foreach (var node in toProject.Nodes)
             {
                 // Find input partOf connector
-                var relationConnector = (Relation)node.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Input, RelationType: RelationType.PartOf });
+                var relationConnector = (Relation) node.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Input, RelationType: RelationType.PartOf });
                 if (relationConnector == null)
                     continue;
 
@@ -229,7 +229,7 @@ namespace Mb.Services.Services
                 var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = node.Id, FromIri = node.Iri };
                 var nodeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-                if(nodeReplacement.FromId != nodeReplacement.ToId)
+                if (nodeReplacement.FromId != nodeReplacement.ToId)
                     remap.Add(nodeReplacement.ToId, nodeReplacement.FromId);
 
                 node.Simples = RemapSimples(nodeReplacement, node.Simples, createCopy).ToList();

@@ -290,6 +290,7 @@ const TextResources = {
   Validation_BlockView: "Please selct a node before opening Block View.",
   Validation_BlockView_Project: "Please selct a project before opening Block View.",
   Validation_OffPage: "An off-page node can only be connected with a node of the same type.",
+  Validation_Connectors: "A terminal can only have one connection.",
   Validation_Cancel: "Cancel",
 
   // Version
