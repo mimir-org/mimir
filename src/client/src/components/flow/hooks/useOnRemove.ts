@@ -14,6 +14,7 @@ import { getParentNodeConnector } from "../block/nodes/helpers/offPage/HandleOff
 
 const useOnRemove = (
   elements: Elements,
+  blockEdgesToRemove: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,
   setElements: React.Dispatch<React.SetStateAction<Elements>>,
@@ -21,8 +22,11 @@ const useOnRemove = (
 ) => {
   const elementsToRemove: Elements = [];
   elements = elements.filter((el) => !IsAspectNode(el.data));
+  const blockView = IsBlockView();
 
-  const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
+  if (blockView) handleBlockEdges(blockEdgesToRemove, project, dispatch);
+
+  const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, blockView, dispatch);
 
   if (hasDeletedElement) {
     dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
@@ -32,10 +36,15 @@ const useOnRemove = (
   }
 };
 
-const handleDeleteElements = (elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) => {
+const handleDeleteElements = (
+  elements: Elements,
+  verifiedList: Elements,
+  project: Project,
+  blockView: boolean,
+  dispatch: Dispatch
+) => {
   const selectedNode = GetSelectedNode();
   const selectedBlockNode = GetSelectedBlockNode();
-  const blockView = IsBlockView();
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
 
@@ -46,7 +55,7 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
       if (!IsAspectNode(blockView ? selectedBlockNode : selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
         hasDeletedElement = true;
 
-        handleRelatedOffPageElements(project, elem, dispatch);
+        handleRelatedOffPageElements(project, elem?.data?.edge, dispatch);
         dispatch(removeEdge(elem.id));
         verifiedList.push(elem);
       }
@@ -77,9 +86,16 @@ const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
   return project.nodes.find((node) => node.id === element.id);
 };
 
-const handleRelatedOffPageElements = (project: Project, element: FlowElement, dispatch: Dispatch) => {
-  const edge = element?.data?.edge as Edge;
+const handleBlockEdges = (edgesToRemove: Edge[], project: Project, dispatch: Dispatch) => {
+  if (edgesToRemove.length !== 0) {
+    edgesToRemove.forEach((edge) => {
+      handleRelatedOffPageElements(project, edge, dispatch);
+      dispatch(removeEdge(edge.id));
+    });
+  }
+};
 
+const handleRelatedOffPageElements = (project: Project, edge: Edge, dispatch: Dispatch) => {
   project.nodes.forEach((node) => {
     if (IsOffPage(node) && (node?.id === edge?.fromNodeId || node?.id === edge?.toNodeId)) {
       const offPageTransportEdge = project.edges.find(
