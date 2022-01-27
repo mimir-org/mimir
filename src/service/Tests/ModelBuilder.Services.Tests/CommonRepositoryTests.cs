@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Mb.Models.Common;
 using Xunit;
@@ -78,14 +78,14 @@ namespace ModelBuilder.Services.Tests
         }
 
         [Theory]
-        [InlineData(null,null)]
-        [InlineData("","")]
+        [InlineData(null, null)]
+        [InlineData("", "")]
         [InlineData("xxx", "yyy")]
         public void CreateOrUseIdAndIri_Creates_Ok_From_Bad_Data(string fromId, string fromIri)
         {
-            var replacement = new ReplacementId {FromId = fromId, FromIri = fromIri};
+            var replacement = new ReplacementId { FromId = fromId, FromIri = fromIri };
             var replacement2 = _projectFixture.CommonRepository.CreateOrUseIdAndIri(replacement);
-            
+
             // Check if id has format xxx_xxx
             var segments = replacement2.ToId.Split('_', StringSplitOptions.RemoveEmptyEntries);
             Assert.True(segments.Length == 2);
@@ -105,16 +105,16 @@ namespace ModelBuilder.Services.Tests
             Assert.NotNull(current);
             Assert.Equal(current.Domain, segments[0]);
         }
-        
+
         [Theory]
         [InlineData(null, "https://hansa.no/asdefrg")]
         [InlineData("", "https://hansa.no/asdefrg")]
         [InlineData("xxx", "https://hansa.no/asdefrg")]
         public void CreateOrUseIdAndIri_Creates_Ok_From_External_Data(string fromId, string fromIri)
         {
-            var replacement = new ReplacementId {FromId = fromId, FromIri = fromIri};
+            var replacement = new ReplacementId { FromId = fromId, FromIri = fromIri };
             var replacement2 = _projectFixture.CommonRepository.CreateOrUseIdAndIri(replacement);
-            
+
             // Check if id has format xxx_xxx
             var segments = replacement2.ToId.Split('_', StringSplitOptions.RemoveEmptyEntries);
             Assert.True(segments.Length == 2);

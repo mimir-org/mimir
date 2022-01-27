@@ -206,7 +206,7 @@ namespace Mb.Data.Repositories
             if (string.IsNullOrEmpty(idPart))
                 throw new InvalidOperationException("Can't resolve id-part from IRI. The IRI has wrong format");
 
-            if(idPart.Length < 2)
+            if (idPart.Length < 2)
                 throw new InvalidOperationException("Can't resolve id-part from IRI. The IRI has wrong format");
 
             if (idPart.StartsWith("ID"))

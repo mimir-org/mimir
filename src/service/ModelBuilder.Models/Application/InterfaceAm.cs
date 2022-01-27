@@ -28,7 +28,7 @@ namespace Mb.Models.Application
         public string OutputTerminalId { get; set; }
         public TerminalAm OutputTerminal { get; set; }
         public ICollection<AttributeAm> Attributes { get; set; }
-        
+
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }

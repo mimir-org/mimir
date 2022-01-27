@@ -1,4 +1,4 @@
-﻿using Mb.Models.Common;
+using Mb.Models.Common;
 
 namespace Mb.Data.Contracts
 {
