@@ -5,14 +5,18 @@ updates:
     directory: "/src/client"
     schedule:
       interval: "daily"
+      time: "09:30"
+      timezone: "Europe/Oslo"
     target-branch: "julesprint"
     reviewers:
       - "henrik-knudsen"
-    
+
   - package-ecosystem: "nuget"
     directory: "/src/service"
     schedule:
       interval: "daily"
+      time: "07:00"
+      timezone: "Europe/Oslo"
     target-branch: "julesprint"
     reviewers:
       - "kahovden"
@@ -21,6 +25,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      time: "09:30"
+      timezone: "Europe/Oslo"
     target-branch: "julesprint"
     reviewers:
       - "henrik-knudsen"
