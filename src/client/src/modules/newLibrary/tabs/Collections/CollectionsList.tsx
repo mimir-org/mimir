@@ -1,26 +1,87 @@
-import { Collection } from ".";
-import { CollectionsActions, LibraryTab } from "../../../../models";
+import { ObjectType } from "../../../../models";
 import { CollectionsListWrapper } from "./styled";
-import data from "../Collections/Collections.json";
+import { LibraryCategory } from "../../../../models/project";
+import { useMemo } from "react";
+import { GetFilteredLibCategories, GetLibCategories } from "../../helpers";
+import { customCategorySelector, librarySelector, useAppSelector } from "../../../../redux/store";
+import { GetSelectedNode } from "../../../../helpers";
+import { LibraryCategoryComponent } from "../..";
+import { useDispatch } from "react-redux";
+import { FilterByAspect } from "./helpers";
+// import data from "../Collections/Collections.json";
+// import { Collection } from ".";
 
 interface Props {
-  collectionState: CollectionsActions;
-  activeTab: LibraryTab;
-  selectedCollections: string[];
-  onChange: (action: string, id: string) => void;
+  // collectionState: CollectionsActions;
+  // activeTab: LibraryTab;
+  // selectedCollections: string[];
+  searchString: string;
+  selectedElement: string;
+  setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
+  functionSort: boolean;
+  productSort: boolean;
+  locationSort: boolean;
 }
 
-const CollectionsList = ({ collectionState, selectedCollections, activeTab, onChange }: Props) => {
-  const isChecked = (id: string) => {
-    return selectedCollections.includes(id);
+const CollectionsList = ({
+  // collectionState,
+  // activeTab,
+  // selectedCollections,
+  searchString,
+  selectedElement,
+  setSelectedElement,
+  setSelectedElementType,
+  functionSort,
+  productSort,
+  locationSort,
+}: Props) => {
+  const dispatch = useDispatch();
+  // const isChecked = (id: string) => {
+  //   return selectedCollections.includes(id);
+  // };
+  // const collections =
+  //   collectionState === CollectionsActions.ReadOnly ? data.collections.filter((x) => isChecked(x.id) === true) : data.collections;
+
+  const libState = useAppSelector(librarySelector);
+  const customCategory = useAppSelector(customCategorySelector);
+
+  const selectedNode = GetSelectedNode();
+
+  const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
+  const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
+
+  const filterCatBySearch = (): LibraryCategory[] => {
+    return searchString ? filteredCategories : libCategories;
   };
-  const collections =
-    collectionState === CollectionsActions.ReadOnly ? data.collections.filter((x) => isChecked(x.id) === true) : data.collections;
 
   return (
     <CollectionsListWrapper>
-      {console.log("selectedCollections", selectedCollections)}
-      {collections.map((collection) => (
+      <LibraryCategoryComponent
+        selectedElement={selectedElement}
+        setSelectedElement={setSelectedElement}
+        setSelectedElementType={setSelectedElementType}
+        key={customCategory.name}
+        category={customCategory}
+        customCategory={customCategory}
+        dispatch={dispatch}
+      />
+      {FilterByAspect(functionSort, productSort, locationSort, filterCatBySearch()).map((category) => {
+        return (
+          <LibraryCategoryComponent
+            selectedElement={selectedElement}
+            setSelectedElement={setSelectedElement}
+            setSelectedElementType={setSelectedElementType}
+            key={category.name}
+            category={category}
+            customCategory={customCategory}
+            dispatch={dispatch}
+            searchList={filteredCategories}
+          />
+        );
+      })}
+
+      {/* {collections.map((collection) => (
         <Collection
           key={collection.id}
           id={collection.id}
@@ -32,7 +93,7 @@ const CollectionsList = ({ collectionState, selectedCollections, activeTab, onCh
           activeTab={activeTab}
           onChange={onChange}
         />
-      ))}
+      ))} */}
     </CollectionsListWrapper>
   );
 };
