@@ -1,23 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch } from "redux";
-import { LibraryTab, Project } from "../../models";
+import { LibraryTab } from "../../models";
 import { Icon } from "../../compLibrary/icon";
 import { LibraryIcon } from "../../assets/icons/modules";
-import { LibraryTabHeader, LibraryTabsWrapper } from "./styled";
 import { OnLibraryClick } from "./handlers";
+import { ConvertToLibTabName } from "./helpers";
 import { MODULE_TYPE } from "../../models/project";
+import { LibraryTabHeader, LibraryTabsWrapper } from "./styled";
 
 interface Props {
   isOpen: boolean;
   activeTab: LibraryTab;
   setActiveTab: (tab: LibraryTab) => void;
-  project: Project;
   dispatch: Dispatch;
-  collections?: any[];
-  templates?: any[];
-  subProjects?: any[];
 }
 
-const ModuleTabs = ({ isOpen, activeTab, setActiveTab, project, dispatch, collections, templates, subProjects }: Props) => {
+const ModuleTabs = ({ isOpen, activeTab, setActiveTab, dispatch }: Props) => {
   const lib = MODULE_TYPE.LIBRARY;
   const stringIsNumber = (v: any) => isNaN(Number(v)) === false;
 
@@ -31,7 +29,7 @@ const ModuleTabs = ({ isOpen, activeTab, setActiveTab, project, dispatch, collec
           return (
             <div key={key} onClick={() => setActiveTab(Number(key) as LibraryTab)}>
               <LibraryTabHeader key={key} isActive={activeTab === Number(key)}>
-                <p>{LibraryTab[key]}</p>
+                <p>{ConvertToLibTabName(Number(key) as LibraryTab)}</p>
               </LibraryTabHeader>
             </div>
           );
