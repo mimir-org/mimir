@@ -26,7 +26,7 @@ const CollectionsWrapper = styled.div<Props>`
       bottom: ${(props) => (props.manageCollections ? "5%" : "")};
       align-self: center;
       background: transparent;
-      max-width: 200px;
+      min-width: 200px;
       height: 34px;
       border: 1.5px solid ${Color.BlueMagenta};
       border-radius: 5px;

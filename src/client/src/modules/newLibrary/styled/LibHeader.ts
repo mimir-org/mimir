@@ -10,7 +10,7 @@ const LibHeader = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: ${Size.ModuleOpen}px;
-  height: 220px;
+  height: 180px; //220px;
   border: 0;
   margin: 0;
 

@@ -17,9 +17,9 @@ const LibraryTabHeader = styled.div<Props>`
   border: 1.5px solid ${Color.BlueMagenta};
   border-bottom: ${(props) => (props.isActive ? "3px solid" + Color.GreyLighter : "0px")};
   margin-right: 4px;
-  height: ${(props) => (props.isActive ? 40 : 32)}px;
-  margin-top: ${(props) => (props.isActive ? 1 : 7)}px;
-  padding: ${(props) => (props.isActive ? "12px 10px 0px 10px;" : "6px 9px 0px 9px")};
+  height: ${(props) => (props.isActive ? 41 : 32)}px;
+  margin-top: ${(props) => (props.isActive ? 3 : 7)}px;
+  padding: ${(props) => (props.isActive ? "12px 10px 0px 10px;" : "7px 9px 0px 9px")};
   box-shadow: -4px 0 4px -5px rgba(0, 0, 0, 0.4), 4px 0 3px -5px rgba(0, 0, 0, 0.4);
 
   p {

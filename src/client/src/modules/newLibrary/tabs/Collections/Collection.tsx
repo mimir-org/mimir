@@ -1,4 +1,4 @@
-import { Collections, Movable } from "../../../../assets/icons/library";
+import { Movable } from "../../../../assets/icons/library";
 import { Color } from "../../../../compLibrary/colors";
 import { Icon } from "../../../../compLibrary/icon";
 import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
@@ -11,27 +11,24 @@ interface Props {
   name: string;
   checked: boolean;
   typeCategories: string[];
-  position: number;
   collectionState: CollectionsActions;
   activeTab: LibraryTab;
   onChange: (action: string, id: string) => void;
 }
 
-const Collection = ({ id, name, checked, typeCategories, position, collectionState, activeTab, onChange }: Props) => {
+const Collection = ({ id, name, checked, typeCategories, collectionState, activeTab, onChange }: Props) => {
   const onCheckboxChange = () => {
     if (checked) {
       onChange("remove", id);
-      console.log("removed ", id);
     } else {
       onChange("add", id);
-      console.log("added ", id);
     }
-    console.log("checked", name, checked);
   };
   return (
     <CollectionBox manageCollections={collectionState === CollectionsActions.Manage}>
       <Icon size={24} src={GetCollectionIcon(activeTab)} className="collections" alt="Library-icon" />
       <p>{name}</p>
+      <span>{typeCategories}</span>
       {collectionState === CollectionsActions.Manage && (
         <>
           <Checkbox isChecked={checked ?? false} onChange={onCheckboxChange} color={Color.BlueMagenta} />

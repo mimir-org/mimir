@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors";
-import { FontSize } from "../../../compLibrary/font";
+import { FontSize, FontType } from "../../../compLibrary/font";
 
 const LibCategoryButton = styled.button`
   display: inline-flex;
@@ -13,6 +13,7 @@ const LibCategoryButton = styled.button`
   background-color: ${Color.White};
   margin-top: 10px;
   font-size: ${FontSize.SubHeader};
+  font-family: ${FontType.Standard};
   padding-left: 10px;
   padding-right: 14px;
   -webkit-user-select: none;
