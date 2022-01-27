@@ -299,8 +299,8 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<ProjectResultAm> UpdateProject(string id, ProjectAm projectAm, string invokedByDomain)
         {
-            IDictionary<string, string> reMappedIds;
-
+            IDictionary<string, string> remap;
+            
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try
@@ -314,7 +314,7 @@ namespace Mb.Services.Services
                 CastConnectors(projectAm);
 
                 // Remap and create new id's
-                reMappedIds = _remapService.Remap(projectAm);
+                remap = _remapService.Remap(projectAm);
 
                 // Edges
                 var originalEdges = originalProject.Edges.ToList();
@@ -363,7 +363,7 @@ namespace Mb.Services.Services
             return new ProjectResultAm
             {
                 Project = project,
-                IdChanges = reMappedIds
+                IdChanges = remap
             };
         }
 

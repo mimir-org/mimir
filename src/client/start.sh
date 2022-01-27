@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-./docker-entrypoint.sh
-
 execute_injection() {
   # Injects custom environment variables into index.html.
   # 1. Read in prefix (e.g. MIMIR_ENV), placeholder (where to inject, e.g. __MIMIR_ENV__)

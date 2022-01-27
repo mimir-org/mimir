@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
@@ -23,73 +24,47 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Remap a project, create new id if the id is not valid
+        /// Remap a project
         /// </summary>
-        /// <param name="project"></param>
+        /// <param name="project">ProjectAm</param>
+        /// <returns>IDictionary&lt;string, string&gt;</returns>
+        /// <remarks>The remap function will create new id's on project and all sub objects, if the
+        /// id is missing or legal.The function will also create iri for all objects.</remarks>
         public IDictionary<string, string> Remap(ProjectAm project)
         {
+            var remap = new Dictionary<string, string>();
+            var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
+            var replacement = _commonRepository.CreateOrUseIdAndIri(r);
+            
+            project.Nodes = RemapNodes(replacement, project.Nodes, project.Edges, remap, false).ToList();
+            project.Edges = RemapEdges(replacement, project.Edges, remap, false).ToList();
 
-            var reMappedIds = new Dictionary<string, string>();
+            project.Id = replacement.ToId;
+            project.Iri = replacement.ToIri;
 
-            var (projectId, projectIri) = _commonRepository.CreateOrUseIdAndIri(project.Id, project.Iri);
+            return remap;
+        }
 
-            foreach (var node in project.Nodes)
-            {
-                var (nodeId, nodeIri) = _commonRepository.CreateOrUseIdAndIri(node.Id, node.Iri);
+        /// <summary>
+        /// Clone a project
+        /// </summary>
+        /// <param name="project">ProjectAm</param>
+        /// <returns>IDictionary&lt;string, string&gt;</returns>
+        /// <remarks>The clone function will create a new project and sub objects, based on
+        /// the predefined object.</remarks>
+        public IDictionary<string, string> Clone(ProjectAm project)
+        {
+            var remap = new Dictionary<string, string>();
+            var r = new ReplacementId();
+            var replacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-                if (node.Id != nodeId)
-                    reMappedIds.Add(nodeId, node.Id);
+            project.Nodes = RemapNodes(replacement, project.Nodes, project.Edges, remap, true).ToList();
+            project.Edges = RemapEdges(replacement, project.Edges, remap, true).ToList();
 
-                RemapSimples(nodeId, node);
-                RemapConnectors(nodeId, nodeIri, node, project);
+            project.Id = replacement.ToId;
+            project.Iri = replacement.ToIri;
 
-                foreach (var attribute in node.Attributes)
-                {
-                    var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                    attribute.Id = attributeId;
-                    attribute.Iri = attributeIri;
-                    attribute.NodeId = nodeId;
-                    attribute.NodeIri = nodeIri;
-                }
-
-                node.Id = nodeId;
-                node.Iri = nodeIri;
-                node.ProjectId = projectId;
-
-                if (string.IsNullOrEmpty(node.MasterProjectId))
-                    node.MasterProjectId = projectId;
-
-                if (string.IsNullOrEmpty(node.MasterProjectIri))
-                    node.MasterProjectIri = projectIri;
-            }
-
-            foreach (var edge in project.Edges)
-            {
-                var (edgeId, edgeIri) = _commonRepository.CreateOrUseIdAndIri(edge.Id, edge.Iri);
-
-                if (edge.Id != edgeId)
-                    reMappedIds.Add(edgeId, edge.Id);
-
-                if (edge.Transport != null)
-                    RemapTransport(edge);
-
-                if (edge.Interface != null)
-                    RemapInterface(edge);
-
-                edge.Id = edgeId;
-                edge.Iri = edgeIri;
-
-                if (string.IsNullOrEmpty(edge.MasterProjectId))
-                    edge.MasterProjectId = projectId;
-
-                if (string.IsNullOrEmpty(edge.MasterProjectIri))
-                    edge.MasterProjectIri = projectIri;
-            }
-
-            project.Id = projectId;
-            project.Iri = projectIri;
-
-            return reMappedIds;
+            return remap;
         }
 
         /// <summary>
@@ -137,7 +112,7 @@ namespace Mb.Services.Services
             foreach (var node in toProject.Nodes)
             {
                 // Find input partOf connector
-                var relationConnector = (Relation) node.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Input, RelationType: RelationType.PartOf });
+                var relationConnector = (Relation)node.Connectors.FirstOrDefault(x => x is Relation { Type: ConnectorType.Input, RelationType: RelationType.PartOf });
                 if (relationConnector == null)
                     continue;
 
@@ -231,6 +206,88 @@ namespace Mb.Services.Services
             }
 
             return (cloneNodes, cloneEdges);
+        }
+
+        /// <summary>
+        /// Remap a collection of nodes and all sub objects.
+        /// </summary>
+        /// <param name="project">ReplacementId</param>
+        /// <param name="nodes">ICollection&lt;NodeAm&gt; nodes</param>
+        /// <param name="edges">ICollection&lt;EdgeAm&gt; edges</param>
+        /// <param name="remap">Dictionary&lt;string, string&gt; remap</param>
+        /// <param name="createCopy">bool</param>
+        /// <returns>IEnumerable&lt;NodeAm&gt;</returns>
+        /// <remarks>If id is not correct, it will create new unique id's for all nodes and children objects.
+        /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
+        public IEnumerable<NodeAm> RemapNodes(ReplacementId project, ICollection<NodeAm> nodes, ICollection<EdgeAm> edges, Dictionary<string, string> remap, bool createCopy)
+        {
+            if (nodes == null || !nodes.Any())
+                yield break;
+
+            foreach (var node in nodes)
+            {
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = node.Id, FromIri = node.Iri };
+                var nodeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+
+                if(nodeReplacement.FromId != nodeReplacement.ToId)
+                    remap.Add(nodeReplacement.ToId, nodeReplacement.FromId);
+
+                node.Simples = RemapSimples(nodeReplacement, node.Simples, createCopy).ToList();
+                node.Connectors = RemapConnectors(nodeReplacement, node.Connectors, edges, createCopy).ToList();
+                var attr = RemapAttributes(nodeReplacement, node.Attributes, createCopy).ToList();
+                node.Attributes = attr.Any() ? attr : null;
+
+                node.Id = nodeReplacement.ToId;
+                node.Iri = nodeReplacement.ToIri;
+                node.ProjectId = project.ToId;
+
+                if (string.IsNullOrWhiteSpace(node.MasterProjectId))
+                    node.MasterProjectId = project.ToId;
+
+                if (string.IsNullOrEmpty(node.MasterProjectIri))
+                    node.MasterProjectIri = project.ToId;
+
+                yield return createCopy ? node.DeepCopy() : node;
+            }
+        }
+
+        /// <summary>
+        /// Remap a collection of edges and all sub objects.
+        /// </summary>
+        /// <param name="project">ReplacementId</param>
+        /// <param name="edges">ICollection&lt;EdgeAm&gt;</param>
+        /// <param name="remap">Dictionary&lt;string, string&gt;</param>
+        /// <param name="createCopy">bool</param>
+        /// <returns>IEnumerable&lt;EdgeAm&gt;</returns>
+        /// <remarks>If id is not correct, it will create new unique id's for all edges and children objects.
+        /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
+        public IEnumerable<EdgeAm> RemapEdges(ReplacementId project, ICollection<EdgeAm> edges, Dictionary<string, string> remap, bool createCopy)
+        {
+            if (edges == null || !edges.Any())
+                yield break;
+
+            foreach (var edge in edges)
+            {
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = edge.Id, FromIri = edge.Iri };
+                var edgeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+
+                if (edgeReplacement.FromId != edgeReplacement.ToId)
+                    remap.Add(edgeReplacement.ToId, edgeReplacement.FromId);
+
+                edge.Transport = RemapTransport(edge.Transport, createCopy);
+                edge.Interface = RemapInterface(edge.Interface, createCopy);
+
+                edge.Id = edgeReplacement.ToId;
+                edge.Iri = edgeReplacement.ToIri;
+
+                if (string.IsNullOrWhiteSpace(edge.MasterProjectId))
+                    edge.MasterProjectId = project.ToId;
+
+                if (string.IsNullOrEmpty(edge.MasterProjectIri))
+                    edge.MasterProjectIri = project.ToId;
+
+                yield return createCopy ? edge.DeepCopy() : edge;
+            }
         }
 
         #region Private methods
@@ -360,135 +417,165 @@ namespace Mb.Services.Services
             return clone;
         }
 
-        private void RemapTransport(EdgeAm edge)
+        // Remap connectors
+        private IEnumerable<ConnectorAm> RemapConnectors(ReplacementId replacement, ICollection<ConnectorAm> connectors, ICollection<EdgeAm> edges, bool createCopy)
         {
-            if (edge.Transport == null)
-                return;
+            if (connectors == null || !connectors.Any())
+                yield break;
 
-            var (transportId, transportIri) = _commonRepository.CreateOrUseIdAndIri(edge.Transport.Id, edge.Transport.Iri);
-
-            if (edge.Transport.Attributes != null)
+            foreach (var connector in connectors)
             {
-                foreach (var attribute in edge.Transport.Attributes)
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connector.Id, FromIri = connector.Iri };
+                var connectorReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+
+                _ = edges?.Where(x => x.FromConnectorId == connectorReplacement.FromId).Select(y =>
                 {
-                    var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                    attribute.Id = attributeId;
-                    attribute.Iri = attributeIri;
+                    y.FromConnectorIri = connectorReplacement.ToIri;
+                    y.FromConnectorId = connectorReplacement.ToId;
+                    y.FromNodeId = replacement.ToId;
+                    y.FromNodeIri = replacement.ToIri;
+                    return y;
+                }).ToList();
 
-                    if (attribute.TransportId == edge.Transport.Id)
-                        attribute.TransportId = transportId;
-                }
-            }
-
-            edge.Transport.Id = transportId;
-            edge.Transport.Iri = transportIri;
-        }
-
-        private void RemapInterface(EdgeAm edge)
-        {
-            if (edge.Interface == null)
-                return;
-
-            var (interfaceId, interfaceIri) = _commonRepository.CreateOrUseIdAndIri(edge.Interface.Id, edge.Interface.Iri);
-
-            if (edge.Interface.Attributes != null)
-            {
-                foreach (var attribute in edge.Interface.Attributes)
+                _ = edges?.Where(x => x.ToConnectorId == connectorReplacement.FromId).Select(y =>
                 {
-                    var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                    attribute.Id = attributeId;
-                    attribute.Iri = attributeIri;
+                    y.ToConnectorIri = connectorReplacement.ToIri;
+                    y.ToConnectorId = connectorReplacement.ToId;
+                    y.ToNodeId = replacement.ToId;
+                    y.ToNodeIri = replacement.ToIri;
+                    return y;
+                }).ToList();
 
-                    if (attribute.InterfaceId == edge.Interface.Id)
-                        attribute.InterfaceId = interfaceId;
-                }
-            }
+                var attr = RemapAttributes(connectorReplacement, connector.Attributes, createCopy).ToList();
+                connector.Attributes = attr.Any() ? attr : null;
 
-            edge.Interface.Id = interfaceId;
-            edge.Interface.Iri = interfaceIri;
-        }
+                connector.Id = connectorReplacement.ToId;
+                connector.Iri = connectorReplacement.ToIri;
 
-        private void RemapConnectors(string newNodeId, string newNodeIri, NodeAm node, ProjectAm project)
-        {
-            if (node?.Connectors == null || !node.Connectors.Any())
-                return;
-
-            foreach (var connector in node.Connectors)
-            {
-                var (connectorId, connectorIri) = _commonRepository.CreateOrUseIdAndIri(connector.Id, connector.Iri);
-
-                foreach (var edge in project.Edges)
+                if (connector.NodeId == replacement.FromId)
                 {
-                    if (edge.FromConnectorId == connector.Id)
-                    {
-                        edge.FromConnectorId = connectorId;
-                        edge.FromConnectorIri = connectorIri;
-                    }
-
-                    if (edge.ToConnectorId == connector.Id)
-                    {
-                        edge.ToConnectorId = connectorId;
-                        edge.ToConnectorIri = connectorIri;
-                    }
-
-                    if (edge.FromNodeId == node.Id)
-                    {
-                        edge.FromNodeId = newNodeId;
-                        edge.FromNodeIri = newNodeIri;
-                    }
-
-                    if (edge.ToNodeId == node.Id)
-                    {
-                        edge.ToNodeId = newNodeId;
-                        edge.ToNodeIri = newNodeIri;
-                    }
+                    connector.NodeId = replacement.ToId;
+                    connector.NodeIri = replacement.ToIri;
                 }
 
-                if (connector.Attributes != null && connector.Attributes.Any())
-                {
-                    foreach (var attribute in connector.Attributes)
-                    {
-                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                        attribute.Id = attributeId;
-                        attribute.Iri = attributeIri;
-
-                        if (attribute.TerminalId == connector.Id)
-                            attribute.TerminalId = connectorId;
-                    }
-                }
-
-                connector.Id = connectorId;
-                connector.Iri = connectorIri;
-                connector.NodeId = newNodeId;
-                connector.NodeIri = newNodeIri;
+                yield return createCopy ? connector.DeepCopy() : connector;
             }
         }
 
-        private void RemapSimples(string newNodeId, NodeAm node)
+        // Remap attributes
+        private IEnumerable<AttributeAm> RemapAttributes(ReplacementId replacement, ICollection<AttributeAm> attributes, bool createCopy)
         {
-            if (node?.Simples == null || !node.Simples.Any())
-                return;
+            if (attributes == null || !attributes.Any())
+                yield break;
 
-            foreach (var simple in node.Simples)
+            foreach (var attribute in attributes)
             {
-                var (simpleId, _) = _commonRepository.CreateOrUseIdAndIri(simple.Id, null);
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = attribute.Id, FromIri = attribute.Iri };
+                var attributeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
-                if (simple.Attributes != null && simple.Attributes.Any())
+                if (attribute.TerminalId == replacement.FromId)
+                    attribute.TerminalId = replacement.ToId;
+
+                if (attribute.NodeId == replacement.FromId)
                 {
-                    foreach (var attribute in simple.Attributes)
-                    {
-                        var (attributeId, attributeIri) = _commonRepository.CreateOrUseIdAndIri(attribute.Id, attribute.Iri);
-                        attribute.Id = attributeId;
-                        attribute.Iri = attributeIri;
-
-                        if (attribute.SimpleId == simple.Id)
-                            attribute.SimpleId = simpleId;
-                    }
+                    attribute.NodeId = replacement.ToId;
+                    attribute.NodeIri = replacement.ToIri;
                 }
 
-                simple.Id = simpleId;
-                simple.NodeId = newNodeId;
+                if (attribute.TransportId == replacement.FromId)
+                    attribute.TransportId = replacement.ToId;
+
+                if (attribute.SimpleId == replacement.FromId)
+                    attribute.SimpleId = replacement.ToId;
+
+                attribute.Id = attributeReplacement.ToId;
+                attribute.Iri = attributeReplacement.ToIri;
+
+                yield return createCopy ? attribute.DeepCopy() : attribute;
             }
+        }
+
+        // Remap simple
+        private IEnumerable<SimpleAm> RemapSimples(ReplacementId replacement, ICollection<SimpleAm> simples, bool createCopy)
+        {
+            if (simples == null || !simples.Any())
+                yield break;
+
+            foreach (var simple in simples)
+            {
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = simple.Id };
+                var simpleReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+
+                var attr = RemapAttributes(simpleReplacement, simple.Attributes, createCopy).ToList();
+                simple.Attributes = attr.Any() ? attr : null;
+                simple.Id = simpleReplacement.ToId;
+                simple.NodeId = replacement.ToId;
+
+                yield return createCopy ? simple.DeepCopy() : simple;
+            }
+        }
+
+        // Remap transport
+        private TransportAm RemapTransport(TransportAm transport, bool createCopy)
+        {
+            if (transport == null)
+                return null;
+
+            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = transport.Id, FromIri = transport.Iri };
+            var transportReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+
+            var attr = RemapAttributes(transportReplacement, transport.Attributes, createCopy).ToList();
+            transport.Attributes = attr.Any() ? attr : null;
+            transport.InputTerminal = RemapTerminal(transportReplacement, transport.InputTerminal, createCopy);
+            transport.OutputTerminal = RemapTerminal(transportReplacement, transport.OutputTerminal, createCopy);
+            transport.InputTerminalId = transport.InputTerminal?.Id;
+            transport.OutputTerminalId = transport.OutputTerminal?.Id;
+            transport.Id = transportReplacement.ToId;
+            transport.Iri = transportReplacement.ToIri;
+            return createCopy ? transport.DeepCopy() : transport;
+        }
+
+        // Remap interface
+        private InterfaceAm RemapInterface(InterfaceAm interfaceAm, bool createCopy)
+        {
+            if (interfaceAm == null)
+                return null;
+
+            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = interfaceAm.Id, FromIri = interfaceAm.Iri };
+            var transportReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+
+            var attr = RemapAttributes(transportReplacement, interfaceAm.Attributes, createCopy).ToList();
+            interfaceAm.Attributes = attr.Any() ? attr : null;
+            interfaceAm.InputTerminal = RemapTerminal(transportReplacement, interfaceAm.InputTerminal, createCopy);
+            interfaceAm.OutputTerminal = RemapTerminal(transportReplacement, interfaceAm.OutputTerminal, createCopy);
+            interfaceAm.InputTerminalId = interfaceAm.InputTerminal?.Id;
+            interfaceAm.OutputTerminalId = interfaceAm.OutputTerminal?.Id;
+            interfaceAm.Id = transportReplacement.ToId;
+            interfaceAm.Iri = transportReplacement.ToIri;
+            return createCopy ? interfaceAm.DeepCopy() : interfaceAm;
+        }
+
+        // Remap terminal
+        private TerminalAm RemapTerminal(ReplacementId replacement, TerminalAm terminal, bool createCopy)
+        {
+            if (terminal == null)
+                return null;
+
+            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = terminal.Id, FromIri = terminal.Iri };
+            var terminalReplacement = _commonRepository.CreateOrUseIdAndIri(r);
+            var attr = RemapAttributes(terminalReplacement, terminal.Attributes, createCopy).ToList();
+            terminal.Attributes = attr.Any() ? attr : null;
+
+            terminal.Id = terminalReplacement.ToId;
+            terminal.Iri = terminalReplacement.ToIri;
+
+            if (terminal.NodeId == replacement.FromId)
+            {
+                terminal.NodeId = replacement.FromId;
+                terminal.NodeIri = replacement.ToIri;
+            }
+
+            return createCopy ? terminal.DeepCopy() : terminal;
         }
 
         #endregion
