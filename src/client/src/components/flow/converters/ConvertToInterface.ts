@@ -29,7 +29,7 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState): Inter
       });
     }
 
-    return ({
+    return {
       id: CreateId(),
       iri: "",
       version: interfaceType.version,
@@ -49,8 +49,8 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState): Inter
       createdBy: interfaceType.createdBy,
       created: interfaceType.created,
       libraryTypeId: interfaceType.id,
-      kind: INTERFACE_KIND
-    });
+      kind: INTERFACE_KIND,
+    };
   }
   return null;
 };

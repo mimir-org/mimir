@@ -2,7 +2,7 @@ name: CI - PROD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   create-release:
@@ -21,6 +21,7 @@ jobs:
           prefix: "v"
 
       - name: Release
+        if: ${{ steps.tag_version.outputs.new_tag != '' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
@@ -28,6 +29,7 @@ jobs:
           generate_release_notes: true
 
       - name: Check Output Parameters
+        if: ${{ steps.tag_version.outputs.new_tag != '' }}
         run: |
           echo "Tag: ${{ steps.release.outputs.new_tag }}"
           echo "Version: ${{ steps.release.outputs.new_version }}"
@@ -39,14 +41,14 @@ jobs:
     with:
       repository: mimir-client
       tags: |
-       latest
-       ${{needs.create-release.outputs.tag}}
+        latest
+        ${{needs.create-release.outputs.tag}}
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
       build_args: |
         ENVIR=prod
-      hash_files_template: '**/package-lock.json'
+      hash_files_template: "**/package-lock.json"
       push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
@@ -60,16 +62,14 @@ jobs:
     with:
       repository: mimir-server
       tags: |
-       latest
-       ${{needs.create-release.outputs.tag}}
+        latest
+        ${{needs.create-release.outputs.tag}}
       context: ./src/service
       file: ./src/service/Dockerfile
       target: final
-      hash_files_template: '**/*.csproj'
+      hash_files_template: "**/*.csproj"
       push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-
-          

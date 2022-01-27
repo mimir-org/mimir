@@ -8,13 +8,15 @@ const initialUserState: UserState = {
 };
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: initialUserState,
   reducers: {
     fetchUser: (state) => {
       state.fetching = true;
       state.user = null;
-      state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== fetchUserSuccessOrError.type) : state.apiError
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchUserSuccessOrError.type)
+        : state.apiError;
     },
     fetchUserSuccessOrError: (state, action: PayloadAction<FetchUserActionFinished>) => {
       state.fetching = false;
@@ -23,9 +25,9 @@ export const userSlice = createSlice({
     },
     deleteUserError: (state, action: PayloadAction<string>) => {
       state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { fetchUser, fetchUserSuccessOrError, deleteUserError } = userSlice.actions;
 export default userSlice.reducer;

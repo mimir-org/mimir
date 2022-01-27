@@ -5,7 +5,7 @@ import {
   FetchCollaboratorPartnersFinished,
   FetchCombinedAttributeFilterFinished,
   FetchParsersFinished,
-  FetchStatusesFinished
+  FetchStatusesFinished,
 } from "./types";
 
 const initialCommonState: CommonState = {
@@ -18,7 +18,7 @@ const initialCommonState: CommonState = {
 };
 
 export const commonSlice = createSlice({
-  name: 'common',
+  name: "common",
   initialState: initialCommonState,
   reducers: {
     fetchCollaborationPartners: (state) => {
@@ -72,8 +72,8 @@ export const commonSlice = createSlice({
     deleteCommonError: (state, action: PayloadAction<string>) => {
       state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
     },
-  }
-})
+  },
+});
 
 export const {
   fetchCollaborationPartners,
@@ -84,7 +84,7 @@ export const {
   fetchParsersSuccessOrError,
   fetchStatuses,
   fetchStatusesSuccessOrError,
-  deleteCommonError
+  deleteCommonError,
 } = commonSlice.actions;
 
 export default commonSlice.reducer;

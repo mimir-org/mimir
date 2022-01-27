@@ -21,7 +21,6 @@ const AspectButton = styled.button<Props>`
   :hover {
     opacity: ${(props) => (props.isHidden || props.isLocked ? 1 : 0.5)};
   }
-
 `;
 
 export default AspectButton;

@@ -3,7 +3,7 @@ export {
   explorerSelector,
   filterSelector,
   libOpenSelector,
-  treeSelector,
+  isActiveViewSelector,
   userMenuSelector,
   userStateSelector,
   flowViewSelector,

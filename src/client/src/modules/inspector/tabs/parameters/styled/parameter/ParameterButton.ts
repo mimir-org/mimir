@@ -6,7 +6,8 @@ const ParameterButton = styled.button`
   padding: 0;
   cursor: pointer;
 
-  img, svg {
+  img,
+  svg {
     height: 12px;
     width: 12px;
   }

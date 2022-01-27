@@ -54,8 +54,7 @@ function ActiveTerminalsTypeList({
       <TerminalTypeListElement
         onClick={() => onTypeClick(terminalType, connectorType)}
         isSelected={
-          selectedTerminal?.terminalTypeId === terminalType.id &&
-          selectedTerminalIdentifier?.connectorType === connectorType
+          selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminalIdentifier?.connectorType === connectorType
         }
       >
         <div className="numTypeTerminals">{numTerminals}</div>

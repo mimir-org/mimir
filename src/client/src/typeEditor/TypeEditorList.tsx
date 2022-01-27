@@ -37,7 +37,7 @@ export const TypeEditorList = ({
 }: TypeEditorListProps) => {
   const [filteredListItems, setListItems] = useState(items);
   return (
-    <ListWrapper flex={GetFlexForListType(listType)} disabled={disabled} minHeight={'100%'}>
+    <ListWrapper flex={GetFlexForListType(listType)} disabled={disabled} minHeight={"100%"}>
       <ListSearch
         listType={listType}
         placeHolder={GetListLabel(listType, createLibraryType)}

@@ -10,12 +10,13 @@ import {
   fetchLibraryTransportTypesSuccessOrError,
   importLibrarySuccessOrError,
 } from "../../store/library/librarySlice";
+import Config from "../../../models/Config";
 
 export function* searchLibrary(action: PayloadAction<string>) {
   const emptyPayload = { nodeTypes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
 
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}library?name=${action.payload}`;
+    const url = `${Config.API_BASE_URL}library?name=${action.payload}`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -40,7 +41,7 @@ export function* searchLibrary(action: PayloadAction<string>) {
 
 export function* exportLibrary(action: PayloadAction<string>) {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}librarytypefile/export`;
+    const url = `${Config.API_BASE_URL}librarytypefile/export`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -63,7 +64,7 @@ export function* exportLibrary(action: PayloadAction<string>) {
 
 export function* importLibrary(action: PayloadAction<CreateLibraryType[]>) {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}librarytypefile/import`;
+    const url = `${Config.API_BASE_URL}librarytypefile/import`;
     const response = yield call(post, url, action.payload);
 
     if (response.status === 400) {
@@ -81,7 +82,7 @@ export function* importLibrary(action: PayloadAction<CreateLibraryType[]>) {
 
 export function* getTransportTypes() {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}library/transport`;
+    const url = `${Config.API_BASE_URL}library/transport`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -99,7 +100,7 @@ export function* getTransportTypes() {
 
 export function* getInterfaceTypes() {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}library/interface`;
+    const url = `${Config.API_BASE_URL}library/interface`;
     const response = yield call(get, url);
 
     if (response.status === 400) {

@@ -1,5 +1,3 @@
-import { CommitPackage, ConnectorVisibility, Edge, Node, Project, ProjectConverterAm, ProjectFileAm } from "../../../models";
-import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
 export const COMMIT_PROJECT_SUCCESS_OR_ERROR = "COMMIT_PROJECT_SUCCESS_OR_ERROR";
@@ -61,13 +59,24 @@ export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export const UPDATE_NODE = "UPDATE_NODE";
 export const UPDATE_EDGE = "UPDATE_EDGE";
 export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
+import { ApiError } from "../../../models/webclient";
+import {
+  CommitPackage,
+  ConnectorVisibility,
+  Edge,
+  Node,
+  Project,
+  ProjectConverterAm,
+  ProjectFileAm,
+  ProjectItemCm,
+} from "../../../models";
 
 // State types
 export interface ProjectState {
   fetching: boolean;
   creating: boolean;
   project: Project;
-  projectList: [];
+  projectList: ProjectItemCm[];
   apiError: ApiError[];
 }
 

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Enums
 {
@@ -6,10 +6,10 @@ namespace Mb.Models.Enums
     {
         [Display(Name = "None")]
         None = 0,
-        
+
         [Display(Name = "Input visible")]
         InputVisible = 1,
-        
+
         [Display(Name = "Output visible")]
         OutputVisible = 2
     }

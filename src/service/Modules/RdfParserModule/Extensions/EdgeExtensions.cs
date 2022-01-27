@@ -83,7 +83,7 @@ namespace RdfParserModule.Extensions
                 ontologyService.AssertNode(iri, hasTerminal, terminal.Iri);
 
             ontologyService.AssertNode(terminal.Iri, Resources.type, Resources.StreamTerminal);
-            ontologyService.AssertNode(terminal.Iri, Resources.type, $"{terminal.Name} {terminal.Type}");
+            ontologyService.AssertNode(terminal.Iri, Resources.type, $"{terminal.Name} {terminal.Type}", true);
 
             if (edgeConnector != null)
                 ontologyService.AssertNode(terminal.Iri, Resources.label, edgeConnector.Iri);

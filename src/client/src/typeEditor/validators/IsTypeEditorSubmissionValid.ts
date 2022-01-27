@@ -24,7 +24,7 @@ export function IsTypeEditorSubmissionValid(createLibraryType: CreateLibraryType
     IsTerminalTypesSelectionInvalid,
     IsAttributeTypesSelectionInvalid,
     IsPredefinedAttributesSelectionInvalid,
-  ].every(func => func(createLibraryType) === false)
+  ].every((func) => func(createLibraryType) === false);
 }
 
 export default IsTypeEditorSubmissionValid;

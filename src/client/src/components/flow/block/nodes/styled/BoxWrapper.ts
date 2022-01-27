@@ -8,8 +8,8 @@ const BoxWrapper = styled.div<Props>`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: ${props => props.isElectro ? 'column' : 'row'};
-  padding: ${props => props.isElectro ? '0 20px' : '20px 0'};
+  flex-direction: ${(props) => (props.isElectro ? "column" : "row")};
+  padding: ${(props) => (props.isElectro ? "0 20px" : "20px 0")};
 `;
 
 export default BoxWrapper;

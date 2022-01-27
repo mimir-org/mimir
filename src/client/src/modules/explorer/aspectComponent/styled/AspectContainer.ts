@@ -17,8 +17,9 @@ const AspectContainer = styled.div<Props>`
   font-size: ${FontSize.Standard};
   position: relative;
   margin-top: ${(props) => props.node.isRoot && "15px"};
-  background-color: ${(props) => props.node.isRoot ? Color.GreyLighter : GetAspectColor(props.node, AspectColorType.Main, true)};
-  border-bottom: ${(props) => props.node.isRoot && '2px solid' + GetAspectColor(props.node, AspectColorType.Selected)}};
+  background-color: ${(props) =>
+    props.node.isRoot ? Color.GreyLighter : GetAspectColor(props.node, AspectColorType.Main, true)};
+  border-bottom: ${(props) => props.node.isRoot && "2px solid" + GetAspectColor(props.node, AspectColorType.Selected)}};
 
   &:hover {
     background-color: ${Color.BlueLight};

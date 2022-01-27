@@ -9,7 +9,7 @@ const initialMenuState: MenuState = {
 };
 
 export const menuSlice = createSlice({
-  name: 'menu',
+  name: "menu",
   initialState: initialMenuState,
   reducers: {
     changeActiveMenu: (state, action: PayloadAction<string>) => {
@@ -23,9 +23,9 @@ export const menuSlice = createSlice({
     },
     setFilterMenuVisibility: (state, action: PayloadAction<boolean>) => {
       state.filterMenuVisibility = action.payload;
-    }
-  }
-})
+    },
+  },
+});
 
 export const { changeActiveMenu, setProjectMenuVisibility, setUserMenuVisibility, setFilterMenuVisibility } = menuSlice.actions;
 export default menuSlice.reducer;

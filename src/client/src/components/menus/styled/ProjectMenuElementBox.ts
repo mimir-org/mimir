@@ -7,40 +7,34 @@ interface Props {
   bottomLine: boolean;
 }
 
-const ProjectMenuElementBox = styled.div<Props>`
-  padding: 0px 20px;
+const ProjectMenuElementBox = styled.button<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: ${(props) => (props.disabled ? Color.GreyInactive : Color.BlueMagenta)};
-  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
-  border-width: 0px;
+  gap: 10px;
+  width: 100%;
+  background: transparent;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-width: 0;
+  color: ${Color.BlueMagenta};
   border-bottom: ${(props) => (props.bottomLine ? 1 : 0)}px solid ${Color.Grey};
 
-  .text {
-    position: relative;
-    display: flex;
-    margin-left: 10px;
-    vertical-align: super;
+  :disabled {
+    cursor: default;
+  }
+
+  :hover:not(:disabled) {
+    background-color: ${Color.BlueLight};
+    text-decoration: underline;
+  }
+
+  > span {
     font-size: ${FontSize.Standard};
   }
 
-  .icon {
-    display: flex;
-    width: 18px;
-    height: 18px;
-    position: relative;
-    bottom: 0px;
-    left: 0px;
-  }
-
-  &:hover {
-    background-color: ${(props) => !props.disabled && Color.BlueLight};
-    text-decoration: ${(props) => !props.disabled && "underline"};
-  }
-
-  &:last-child {
-    border-radius: 0px 0px 10px 10px;
+  :last-child {
+    border-radius: 0 0 10px 10px;
   }
 `;
 

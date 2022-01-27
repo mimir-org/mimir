@@ -2,13 +2,12 @@ import { PixelCalculator } from ".";
 import { Attribute } from "../../../models";
 
 export interface Size {
-  width: number,
-  height: number,
-  depth: number
+  width: number;
+  height: number;
+  depth: number;
 }
 
 const GetSize = (map: Map<string, Attribute>): Size => {
-
   const widthAttribute = map.get("Size box Width");
   const heightAttribute = map.get("Size box Height");
   const depthAttribute = map.get("Size box Length");
@@ -16,7 +15,7 @@ const GetSize = (map: Map<string, Attribute>): Size => {
   return {
     width: PixelCalculator(widthAttribute),
     height: PixelCalculator(heightAttribute),
-    depth: PixelCalculator(depthAttribute)
+    depth: PixelCalculator(depthAttribute),
   } as Size;
 };
 

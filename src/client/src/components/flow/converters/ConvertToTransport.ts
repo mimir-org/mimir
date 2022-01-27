@@ -7,11 +7,12 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
   if (!transportType) return null;
 
   const transportId = CreateId();
-  const attributes: Attribute[] = transportType?.attributes.map((a) => ({
-    ...a,
-    transportId,
-    id: CreateId()
-  })) ?? [];
+  const attributes: Attribute[] =
+    transportType?.attributes.map((a) => ({
+      ...a,
+      transportId,
+      id: CreateId(),
+    })) ?? [];
 
   const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
   const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
@@ -57,7 +58,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
     createdBy: transportType.createdBy,
     created: transportType.created,
     libraryTypeId: transportType.id,
-    kind: TRANSPORT_KIND
+    kind: TRANSPORT_KIND,
   };
 };
 

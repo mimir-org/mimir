@@ -1,10 +1,10 @@
 name: CI - DEMO
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ demo ]
+    branches: [demo]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,13 +21,13 @@ jobs:
       target: final
       build_args: |
         ENVIR=demo
-      hash_files_template: '**/package-lock.json'
+      hash_files_template: "**/package-lock.json"
       push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-      
+
   build-client-2:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
@@ -38,7 +38,7 @@ jobs:
       target: final
       build_args: |
         ENVIR=demoaibel
-      hash_files_template: '**/package-lock.json'
+      hash_files_template: "**/package-lock.json"
       push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
@@ -55,10 +55,9 @@ jobs:
       context: ./src/service
       file: ./src/service/Dockerfile
       target: final
-      hash_files_template: '**/*.csproj'
+      hash_files_template: "**/*.csproj"
       push: true
     secrets:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-      

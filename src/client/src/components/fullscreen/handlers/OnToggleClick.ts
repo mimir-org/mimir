@@ -7,7 +7,7 @@ import { setModulesVisibility } from "../../../redux/store/modules/modulesSlice"
 const OnToggleClick = (dispatch: Dispatch, isOpen: boolean, inspectorRef: React.MutableRefObject<HTMLDivElement>) => {
   SetPanelHeight(inspectorRef, isOpen ? Size.ModuleClosed : Size.ModuleOpen);
   dispatch(changeInspectorHeight(isOpen ? Size.ModuleClosed : Size.ModuleOpen));
-  dispatch(setModulesVisibility({visible: !isOpen, animate: true}));
+  dispatch(setModulesVisibility({ visible: !isOpen, animate: true }));
 };
 
 export default OnToggleClick;

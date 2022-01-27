@@ -11,7 +11,7 @@ import {
   IsAspectNode,
   UseIndentLevel,
   UseSetSelectNodes,
-  useSelectedNodes
+  useSelectedNodes,
 } from "../../../helpers";
 
 interface Props {
@@ -32,10 +32,9 @@ const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExpanded, 
   const [selectedNodes] = useSelectedNodes();
   const [setActiveNodeElement] = UseSetSelectNodes();
 
-  const aspectElementContent =
-    IsAspectNode(node) ?
-    GetAspectHeaderContent(node) :
-    GetAspectChildContent(node, nodes, selectedNodes, isExpanded, setActiveNodeElement);
+  const aspectElementContent = IsAspectNode(node)
+    ? GetAspectHeaderContent(node)
+    : GetAspectChildContent(node, nodes, selectedNodes, isExpanded, setActiveNodeElement);
 
   return (
     <AspectElementWrapper indent={UseIndentLevel(indent)}>

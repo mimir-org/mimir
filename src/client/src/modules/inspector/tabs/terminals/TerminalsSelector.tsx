@@ -33,7 +33,7 @@ function TerminalsSelector({
     <TerminalsColumn>
       <Input
         fontSize={FontSize.Standard}
-        fontStyle={'italic'}
+        fontStyle={"italic"}
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}
         placeholder={TextResources.Inspector_Terminals_Search}

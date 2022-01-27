@@ -1,10 +1,11 @@
 import { call, put } from "redux-saga/effects";
+import Config from "../../../models/Config";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get } from "../../../models/webclient";
 import {
   fetchCollaborationPartnersSuccessOrError,
   fetchCombinedAttributeFiltersSuccessOrError,
   fetchParsersSuccessOrError,
-  fetchStatusesSuccessOrError
+  fetchStatusesSuccessOrError,
 } from "../../store/common/commonSlice";
 
 /**
@@ -12,7 +13,7 @@ import {
  */
 export function* getCollaborationPartners() {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}common/collaboration-partner`;
+    const url = `${Config.API_BASE_URL}common/collaboration-partner`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -33,7 +34,7 @@ export function* getCollaborationPartners() {
  */
 export function* getStatuses() {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}enum/7`;
+    const url = `${Config.API_BASE_URL}enum/7`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -54,7 +55,7 @@ export function* getStatuses() {
  */
 export function* getAttributeFilters() {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}common/attribute-filter`;
+    const url = `${Config.API_BASE_URL}common/attribute-filter`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -75,7 +76,7 @@ export function* getAttributeFilters() {
  */
 export function* getParsers() {
   try {
-    const url = `${process.env.REACT_APP_API_BASE_URL}common/parser`;
+    const url = `${Config.API_BASE_URL}common/parser`;
     const response = yield call(get, url);
 
     if (response.status === 400) {

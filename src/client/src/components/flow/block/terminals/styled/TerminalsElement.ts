@@ -12,13 +12,13 @@ const TerminalsElement = styled.label`
   border-bottom: 1px solid ${Color.GreyDark};
   font-size: ${FontSize.Tiny};
   color: ${Color.Black};
-  
+
   &:hover {
     background-color: ${Color.BlueLight};
     text-decoration: underline;
     cursor: pointer;
   }
-  
+
   :first-child {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
