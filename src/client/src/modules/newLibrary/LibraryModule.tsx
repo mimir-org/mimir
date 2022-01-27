@@ -3,13 +3,12 @@ import { ModuleFooter, ModuleHeader } from ".";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
-import { LibraryTab, CollectionsActions, Project } from "../../models";
+import { LibraryTab, CollectionsActions, ObjectType } from "../../models";
 import { ModuleBody } from "./styled";
 import { GetModuleContent } from "./helpers";
 import { useAppSelector, useParametricAppSelector, animatedModuleSelector, libOpenSelector } from "../../redux/store";
 import { useState } from "react";
 interface Props {
-  project: Project;
   dispatch: Dispatch;
 }
 
@@ -19,7 +18,17 @@ interface Props {
  * @returns a module with tabs and its contents
  */
 
-const LibraryModule = ({ dispatch, project }: Props) => {
+const LibraryModule = ({ dispatch }: Props) => {
+  const [activeTab, setActiveTab] = useState(LibraryTab.Library);
+  const [searchString, setSearchString] = useState("");
+  const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
+  const [selectedElement, setSelectedElement] = useState("");
+  const [selectedElementType, setSelectedElementType] = useState<ObjectType>(null);
+  const [functionSort, setFunctionSort] = useState(true);
+  const [productSort, setProductSort] = useState(true);
+  const [locationSort, setLocationSort] = useState(true);
+
+  const showFooter = collectionState !== CollectionsActions.Manage;
   const lib = MODULE_TYPE.LIBRARY;
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
@@ -27,15 +36,51 @@ const LibraryModule = ({ dispatch, project }: Props) => {
   const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stopLib = libOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
-  const [activeTab, setActiveTab] = useState(LibraryTab.Library);
-  const [collectionState, setCollectionState] = useState(CollectionsActions.NonSelectedAdmin);
-  const showFooter = collectionState !== CollectionsActions.Manage;
+  const typeEditorOpen = () => {
+    setSelectedElement("");
+    setSelectedElementType(null);
+  };
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
-      <ModuleHeader libOpen={libOpen} dispatch={dispatch} activeTab={activeTab} setActiveTab={setActiveTab} project={project} />
-      <ModuleBody libOpen={libOpen}>{GetModuleContent(activeTab, collectionState, setCollectionState)}</ModuleBody>
-      {showFooter && <ModuleFooter libOpen={libOpen} activeTab={activeTab} setCollectionState={setCollectionState} />}
+      <ModuleHeader
+        libOpen={libOpen}
+        dispatch={dispatch}
+        activeTab={activeTab}
+        setActiveTab={(tab: LibraryTab) => setActiveTab(tab)}
+        search={(text: string) => setSearchString(text)}
+        functionSort={functionSort}
+        productSort={productSort}
+        locationSort={locationSort}
+        setFunctionSort={(sort: boolean) => setFunctionSort(sort)}
+        setProductSort={(sort: boolean) => setProductSort(sort)}
+        setLocationSort={(sort: boolean) => setLocationSort(sort)}
+      />
+      <ModuleBody libOpen={libOpen}>
+        {GetModuleContent(
+          activeTab,
+          collectionState,
+          setCollectionState,
+          searchString,
+          selectedElement,
+          setSelectedElement,
+          setSelectedElementType,
+          functionSort,
+          productSort,
+          locationSort
+        )}
+      </ModuleBody>
+      {showFooter && (
+        <ModuleFooter
+          libOpen={libOpen}
+          activeTab={activeTab}
+          setCollectionState={setCollectionState}
+          selectedElement={selectedElement}
+          selectedElementType={selectedElementType}
+          onChange={typeEditorOpen}
+          dispatch={dispatch}
+        />
+      )}
     </AnimatedModule>
   );
 };

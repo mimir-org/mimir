@@ -100,7 +100,7 @@ const Home = ({ dispatch }: Props) => {
           <ExplorerModule dispatch={dispatch} />
           <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
-          <LibraryModule project={projectState?.project} dispatch={dispatch} />
+          <LibraryModule dispatch={dispatch} />
           <TypeEditorComponent />
         </>
       )}
