@@ -24,9 +24,8 @@ const useOnRemove = (
   elements = elements.filter((el) => !IsAspectNode(el.data));
   const blockView = IsBlockView();
 
-  if (blockView) handleBlockEdges(blockEdgesToRemove, project, dispatch);
-
   const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, blockView, dispatch);
+  if (blockView) handleBlockEdges(blockEdgesToRemove, project, dispatch);
 
   if (hasDeletedElement) {
     dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
