@@ -17,7 +17,7 @@ import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
-import { Project } from "../../../models";
+import { Edge, Project } from "../../../models";
 
 interface Props {
   project: Project;
@@ -54,12 +54,14 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     [project, node, secondaryNode, animatedEdge, libOpen, explorerOpen]
   );
 
-  const OnElementsRemove = (elementsToRemove) => {
+  const OnElementsRemove = (elementsToRemove: Elements) => {
     const nodeToRemove = elementsToRemove[0];
+    const edgesToRemove: Edge[] = [];
+
     project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === nodeToRemove?.id || edge.toNodeId === nodeToRemove?.id) elementsToRemove.push(edge);
+      if (edge.fromNodeId === nodeToRemove?.id || edge.toNodeId === nodeToRemove?.id) edgesToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
+    return hooks.useOnRemove(elementsToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {

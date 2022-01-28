@@ -34,8 +34,8 @@ const HandleOffPageDelete = (project: Project, node: Node, dispatch: Dispatch) =
 function getOffPageTransportEdge(node: Node, parentNode: Node, project: Project) {
   return project.edges.find(
     (x) =>
-      (x.fromConnector?.nodeId === parentNode.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNode.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNode?.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode?.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
   );
 }
 
@@ -56,8 +56,8 @@ export function getParentNodeConnector(offPageTransportEdge: Edge, node: Node) {
 export function getOffPagePartOfEdge(node: Node, parentNode: Node, project: Project) {
   return project.edges.find(
     (x) =>
-      (x.fromConnector?.nodeId === parentNode.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNode.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNode?.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode?.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
   );
 }
 
