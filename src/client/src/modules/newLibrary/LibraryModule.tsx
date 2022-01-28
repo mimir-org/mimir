@@ -1,11 +1,9 @@
 import { Dispatch } from "redux";
-import { ModuleFooter, ModuleHeader } from ".";
+import { ModuleHeader, ModuleBody, ModuleFooter } from ".";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
 import { LibraryTab, CollectionsActions, ObjectType } from "../../models";
-import { ModuleBody } from "./styled";
-import { GetModuleContent } from "./helpers";
 import { useAppSelector, useParametricAppSelector, animatedModuleSelector, libOpenSelector } from "../../redux/store";
 import { useState } from "react";
 interface Props {
@@ -56,20 +54,19 @@ const LibraryModule = ({ dispatch }: Props) => {
         setProductSort={(sort: boolean) => setProductSort(sort)}
         setLocationSort={(sort: boolean) => setLocationSort(sort)}
       />
-      <ModuleBody libOpen={libOpen}>
-        {GetModuleContent(
-          activeTab,
-          collectionState,
-          setCollectionState,
-          searchString,
-          selectedElement,
-          setSelectedElement,
-          setSelectedElementType,
-          functionSort,
-          productSort,
-          locationSort
-        )}
-      </ModuleBody>
+      <ModuleBody
+        libOpen={libOpen}
+        activeTab={activeTab}
+        collectionState={collectionState}
+        setCollectionState={setCollectionState}
+        searchString={searchString}
+        selectedElement={selectedElement}
+        setSelectedElement={setSelectedElement}
+        setSelectedElementType={setSelectedElementType}
+        functionSort={functionSort}
+        productSort={productSort}
+        locationSort={locationSort}
+      />
       {showFooter && (
         <ModuleFooter
           libOpen={libOpen}

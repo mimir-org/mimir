@@ -10,7 +10,7 @@ export { default as AspectBoxesUnderline } from "./AspectBoxesUnderline";
 export { default as LibHeader } from "./LibHeader";
 export { default as LibFooter } from "./LibFooter";
 export { default as LibFooterButtonsWrapper } from "./LibFooterButtonsWrapper";
-export { default as ModuleBody } from "./ModuleBody";
+export { default as ModuleContent } from "./ModuleContent";
 
 // not used
 export { default as LibElement } from "./LibElement";

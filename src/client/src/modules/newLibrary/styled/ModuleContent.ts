@@ -4,7 +4,7 @@ interface Props {
   libOpen: boolean;
 }
 
-const ModuleBody = styled.div<Props>`
+const ModuleContent = styled.div<Props>`
   box-sizing: border-box;
   display: flex;
   width: 100%;
@@ -15,4 +15,4 @@ const ModuleBody = styled.div<Props>`
   overflow-y: hidden;
 `;
 
-export default ModuleBody;
+export default ModuleContent;
