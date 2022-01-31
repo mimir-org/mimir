@@ -11,6 +11,7 @@ export { default as LibHeader } from "./LibHeader";
 export { default as LibFooter } from "./LibFooter";
 export { default as LibFooterButtonsWrapper } from "./LibFooterButtonsWrapper";
 export { default as ModuleContent } from "./ModuleContent";
+export { default as ModalButtonsWrapper } from "./ModalButtonsWrapper";
 
 // not used
 export { default as LibElement } from "./LibElement";

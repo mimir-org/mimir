@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Dispatch } from "redux";
+import { ConfirmDeleteType } from ".";
 import { NewType, EditType, DeleteType } from "../../assets/icons/library";
 import { TextResources } from "../../assets/text";
 import { Button } from "../../compLibrary/buttons";
 import { CollectionsActions, LibraryTab, ObjectType } from "../../models";
 import { OnOpenTypeEditor } from "../../typeEditor/handlers";
-import { OnDeleteTypeClick } from "./handlers";
 import { LibFooter, LibFooterButtonsWrapper } from "./styled";
 // import { GetCollectionIcon } from "./tabs/Collections/helpers";
 
@@ -27,6 +28,7 @@ const ModuleFooter = ({
   onChange,
   dispatch,
 }: Props) => {
+  const [confirmDeleteBox, setConfirmDeleteBox] = useState(false);
   return (
     <LibFooter libOpen={libOpen}>
       <LibFooterButtonsWrapper>
@@ -44,11 +46,19 @@ const ModuleFooter = ({
       </LibFooterButtonsWrapper>
       <LibFooterButtonsWrapper>
         <Button
-          onClick={() => OnDeleteTypeClick(selectedElement, dispatch)}
+          onClick={() => setConfirmDeleteBox(true)}
           text={TextResources.Library_Delete_Type}
           icon={DeleteType}
           disabled={selectedElement === ""}
         />
+        {confirmDeleteBox && (
+          <ConfirmDeleteType
+            isOpen={confirmDeleteBox}
+            onExit={setConfirmDeleteBox}
+            selectedElement={selectedElement}
+            dispatch={dispatch}
+          />
+        )}
         {/* <Button
           onClick={() => setCollectionState(CollectionsActions.Manage)}
           text={TextResources.Library_Manage_Collections_Button}

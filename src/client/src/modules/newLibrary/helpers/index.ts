@@ -8,3 +8,4 @@ export { default as SetNewSelectedElement } from "./SetNewSelectedElement";
 export { default as SetNewSelectedElementType } from "./SetNewSelectedElementType";
 export { default as GetFilterIcon } from "./GetFilterIcon";
 export { default as ConvertToLibTabName } from "./ConvertToLibTabName";
+export { default as GetSelectedElement } from "./GetSelectedElement";

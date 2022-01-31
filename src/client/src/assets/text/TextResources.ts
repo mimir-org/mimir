@@ -133,6 +133,9 @@ const TextResources = {
   Library_New_Type: "New Type",
   Library_Edit_Type: "Edit Type",
   Library_Delete_Type: "Delete Type",
+  Library_Delete_Type_Confirm: "Are you sure you want to delete ",
+  Library_Delete_Type_Yes: "Yes",
+  Library_Delete_Type_No: "No",
 
   // ExplorerModule
   Explorer_Lock_Node: "Lock node",
