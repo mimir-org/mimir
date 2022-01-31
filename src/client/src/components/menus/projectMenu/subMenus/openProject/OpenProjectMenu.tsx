@@ -1,10 +1,11 @@
 import { Button } from "../../../../../compLibrary/buttons";
 import { ButtonBox } from "../styled";
-import { Modal } from "../../../modal/Modal";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
 import { ProjectDetails } from ".";
 import { RightArrowIcon } from "../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../assets/text";
 import { MENU_TYPE, VIEW_TYPE } from "../../../../../models/project";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnOpen, OnReturn } from "./handlers";
 import {
   isActiveMenuSelector,
@@ -34,12 +35,14 @@ export const OpenProjectMenu = () => {
   const isActionDisabled = !projectId || projectId === "";
 
   return (
-    <Modal title={TextResources.Project_Open_Label} isOpen={isOpen} onExit={onExit} top={isStartPage && "20%"}>
-      <ProjectDetails projects={projectList} projectDescription={projectDescription} />
-      <ButtonBox>
-        <Button onClick={onExit} text={TextResources.Project_Cancel} />
-        <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Open} icon={RightArrowIcon} />
-      </ButtonBox>
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_Open_Label} inset={isStartPage && "120px 0 0 0"}>
+        <ProjectDetails projects={projectList} projectDescription={projectDescription} />
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Open} icon={RightArrowIcon} />
+        </ButtonBox>
+      </InfoModalContent>
     </Modal>
   );
 };

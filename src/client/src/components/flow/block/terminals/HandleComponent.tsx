@@ -7,7 +7,7 @@ import { GetTerminalColor, IsValidBlockConnection, ShowHandle } from "./helpers"
 import { HandleBox, HandleContainer } from "./styled";
 import { IsPartOf } from "../../helpers";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
-import { electroSelector, nodeSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { TerminalIcon } from ".";
 
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
  */
 const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
   const dispatch = useAppDispatch();
-  const nodes = useAppSelector(nodeSelector);
+  const project = useAppSelector(projectSelector);
   const isElectro = useAppSelector(electroSelector);
   const [visible, setVisible] = useState(!offPage);
   const className = "react-flow__handle-block";
@@ -57,7 +57,7 @@ const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
                 position={pos}
                 id={conn.id}
                 className={className}
-                isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, dispatch)}
+                isValidConnection={(connection) => IsValidBlockConnection(connection, project, dispatch)}
               />
             </HandleBox>
           );

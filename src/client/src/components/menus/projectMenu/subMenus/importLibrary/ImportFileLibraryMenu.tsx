@@ -3,7 +3,8 @@ import { ButtonBox } from "../styled";
 import { ImportLibraryIcon } from "../../../../../assets/icons/project";
 import { Label } from "../../../../../compLibrary/input/text";
 import { MENU_TYPE } from "../../../../../models/project";
-import { Modal } from "../../../modal/Modal";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../assets/text";
 import { useFilePicker } from "use-file-picker";
 import { CreateLibraryType, FileData } from "../../../../../models";
@@ -34,20 +35,22 @@ export const ImportFileLibraryMenu = () => {
   const isActionDisabled = filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
-    <Modal title={TextResources.Project_Import_LibraryTypes} isOpen={isOpen} onExit={onExit}>
-      <Label>
-        {TextResources.Project_Import_File}: {selectedText}
-      </Label>
-      <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
-      <ButtonBox>
-        <Button onClick={onExit} text={TextResources.Project_Cancel} />
-        <Button
-          disabled={isActionDisabled}
-          onClick={onAction}
-          text={TextResources.Project_Import_Library}
-          icon={ImportLibraryIcon}
-        />
-      </ButtonBox>
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_Import_LibraryTypes}>
+        <Label>
+          {TextResources.Project_Import_File}: {selectedText}
+        </Label>
+        <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button
+            disabled={isActionDisabled}
+            onClick={onAction}
+            text={TextResources.Project_Import_Library}
+            icon={ImportLibraryIcon}
+          />
+        </ButtonBox>
+      </InfoModalContent>
     </Modal>
   );
 };

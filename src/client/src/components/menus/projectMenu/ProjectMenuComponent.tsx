@@ -3,11 +3,11 @@ import * as Icons from "../../../assets/icons/project";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuBox } from "../styled";
 import { TextResources } from "../../../assets/text";
-import { setProjectMenuVisibility } from "./subMenus/redux/menuSlice";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { MenuElement, ProjectSubMenus } from "./";
-import { useCallback, useRef } from "react";
+import { MenuElement } from "./";
 import { activeMenuSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
+import { setProjectMenuVisibility } from "./subMenus/redux/menuSlice";
+import { useCallback, useRef } from "react";
 
 /**
  * Component for the Project Menu.
@@ -67,20 +67,17 @@ const ProjectMenuComponent = () => {
           onClick={() => Click.OnCreateSubProject(dispatch)}
           disabled={!selectedNodeIds}
         /> */}
-
         <MenuElement
           text={TextResources.Project_Import_LibraryTypes}
           icon={Icons.ImportLibraryIcon}
           onClick={() => Click.OnImportLibrary(dispatch)}
         />
-
         <MenuElement
           text={TextResources.Project_Export_LibraryTypes}
           icon={Icons.ExportLibraryIcon}
           onClick={() => Click.OnSaveLibrary(dispatch)}
         />
       </ProjectMenuBox>
-      <ProjectSubMenus />
     </>
   );
 };

@@ -4,7 +4,8 @@ import { CommitProjectIcon } from "../../../../../assets/icons/project";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { Label } from "../../../../../compLibrary/input/text";
 import { MENU_TYPE } from "../../../../../models/project";
-import { Modal } from "../../../modal/Modal";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../assets/text";
 import { useState } from "react";
 import { CollaborationPartner, ModuleDescription } from "../../../../../models";
@@ -34,28 +35,29 @@ export const CommitProjectMenu = () => {
   const isActionDisabled = !(collaborationPartner && parser && projectId);
 
   return (
-    <Modal title={TextResources.Project_Commit_Project} isOpen={isOpen} onExit={onExit}>
-      <Label>{TextResources.Project_Commit_Collaboration_Partner}</Label>
-      <Dropdown
-        label="Collaboration partner"
-        valueProp="name"
-        items={collaborationPartners}
-        keyProp="id"
-        onChange={(item: CollaborationPartner) => setCollaborationPartner(item)}
-      />
-      <Label>{TextResources.Project_Commit_Parser}</Label>
-      <Dropdown
-        label="Collaboration partner"
-        valueProp="name"
-        items={parsers}
-        keyProp="id"
-        onChange={(item: ModuleDescription) => setParser(item)}
-      />
-
-      <ButtonBox>
-        <Button onClick={onExit} text={TextResources.Project_Cancel} />
-        <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Commit} icon={CommitProjectIcon} />
-      </ButtonBox>
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_Commit_Project}>
+        <Label>{TextResources.Project_Commit_Collaboration_Partner}</Label>
+        <Dropdown
+          label="Collaboration partner"
+          valueProp="name"
+          items={collaborationPartners}
+          keyProp="id"
+          onChange={(item: CollaborationPartner) => setCollaborationPartner(item)}
+        />
+        <Label>{TextResources.Project_Commit_Parser}</Label>
+        <Dropdown
+          label="Collaboration partner"
+          valueProp="name"
+          items={parsers}
+          keyProp="id"
+          onChange={(item: ModuleDescription) => setParser(item)}
+        />
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Commit} icon={CommitProjectIcon} />
+        </ButtonBox>
+      </InfoModalContent>
     </Modal>
   );
 };

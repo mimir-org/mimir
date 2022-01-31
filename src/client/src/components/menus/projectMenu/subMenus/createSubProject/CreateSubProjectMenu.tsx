@@ -2,7 +2,8 @@ import { Button } from "../../../../../compLibrary/buttons";
 import { ButtonBox } from "../styled";
 import { CreateSubProjectIcon } from "../../../../../assets/icons/project";
 import { MENU_TYPE } from "../../../../../models/project";
-import { Modal } from "../../../modal/Modal";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../assets/text";
 import { useSelectedFlowElements } from "../../../../../helpers";
 import { ChangeEvent, useState } from "react";
@@ -27,23 +28,25 @@ export const CreateSubProjectMenu = () => {
   const onAction = () => OnSubProjectCreateClick(fromProjectId, projectName, selectedNodeIds, selectedEdgeIds, dispatch);
 
   return (
-    <Modal title={TextResources.Project_SubProject_Save} isOpen={isOpen} onExit={onExit}>
-      <Label>{TextResources.Project_Name}</Label>
-      <Input
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
-        inputType="text"
-        placeholder={TextResources.Project_Name_Placeholder}
-        value={projectName}
-      />
-      <ButtonBox>
-        <Button onClick={onExit} text={TextResources.Project_Cancel} />
-        <Button
-          disabled={isActionDisabled}
-          onClick={onAction}
-          text={TextResources.Project_SubProject}
-          icon={CreateSubProjectIcon}
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_SubProject_Save}>
+        <Label>{TextResources.Project_Name}</Label>
+        <Input
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
+          inputType="text"
+          placeholder={TextResources.Project_Name_Placeholder}
+          value={projectName}
         />
-      </ButtonBox>
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button
+            disabled={isActionDisabled}
+            onClick={onAction}
+            text={TextResources.Project_SubProject}
+            icon={CreateSubProjectIcon}
+          />
+        </ButtonBox>
+      </InfoModalContent>
     </Modal>
   );
 };

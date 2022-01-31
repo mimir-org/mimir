@@ -1,10 +1,8 @@
 import styled from "styled-components";
+import { FontSize } from "../../font";
 
 const Label = styled.label`
-  font-weight: 400;
-  font-size: 14px;
-  font-style: normal;
-  line-height: 16px;
+  font-size: ${FontSize.Standard};
 `;
 
 export default Label;

@@ -3,7 +3,8 @@ import { ButtonBox } from "../styled";
 import { Dropdown } from "../../../../../compLibrary/dropdown/mimir";
 import { ExportProjectIcon } from "../../../../../assets/icons/project";
 import { MENU_TYPE } from "../../../../../models/project";
-import { Modal } from "../../../modal/Modal";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModuleDescription } from "../../../../../models";
 import { TextResources } from "../../../../../assets/text";
 import { ChangeEvent, useState } from "react";
@@ -31,31 +32,33 @@ export const ExportProjectFileMenu = () => {
   const isActionDisabled = !(fileName && hasParser);
 
   return (
-    <Modal title={TextResources.Project_Export} isOpen={isOpen} onExit={onExit}>
-      <Label>{TextResources.Project_File_Name}</Label>
-      <Input
-        onChange={(e: ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
-        inputType="text"
-        placeholder={TextResources.Project_File_Name}
-        value={fileName}
-      />
-      <Label>{TextResources.Project_Parser}</Label>
-      <Dropdown
-        label="Parser"
-        valueProp="name"
-        items={parsers}
-        keyProp="id"
-        onChange={(item: ModuleDescription) => setParser(item)}
-      />
-      <ButtonBox>
-        <Button onClick={onExit} text={TextResources.Project_Cancel} />
-        <Button
-          disabled={isActionDisabled}
-          onClick={onAction}
-          text={TextResources.Project_Export_File}
-          icon={ExportProjectIcon}
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_Export}>
+        <Label>{TextResources.Project_File_Name}</Label>
+        <Input
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
+          inputType="text"
+          placeholder={TextResources.Project_File_Name}
+          value={fileName}
         />
-      </ButtonBox>
+        <Label>{TextResources.Project_Parser}</Label>
+        <Dropdown
+          label="Parser"
+          valueProp="name"
+          items={parsers}
+          keyProp="id"
+          onChange={(item: ModuleDescription) => setParser(item)}
+        />
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button
+            disabled={isActionDisabled}
+            onClick={onAction}
+            text={TextResources.Project_Export_File}
+            icon={ExportProjectIcon}
+          />
+        </ButtonBox>
+      </InfoModalContent>
     </Modal>
   );
 };

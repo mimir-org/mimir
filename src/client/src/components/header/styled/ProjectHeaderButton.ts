@@ -6,19 +6,16 @@ interface Props {
   isOpen: boolean;
 }
 
-const ProjectHeaderBox = styled.div<Props>`
-  position: relative;
+const ProjectHeaderButton = styled.button<Props>`
   display: flex;
-  top: 2px;
+  align-items: center;
+  gap: 10px;
   margin-right: 75px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
   color: ${Color.White};
   font-weight: ${(props) => props.isOpen && FontWeight.Bold};
-  cursor: pointer;
-
-  .toggle-icon {
-    width: 8px;
-    margin-left: 10px;
-  }
 `;
 
-export default ProjectHeaderBox;
+export default ProjectHeaderButton;
