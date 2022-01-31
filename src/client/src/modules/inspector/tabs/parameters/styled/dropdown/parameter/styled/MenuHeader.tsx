@@ -21,7 +21,7 @@ const MenuHeader = styled.button`
     margin-right: 4px;
     padding: 5px;
   }
-  
+
   .searchText {
     margin: 0;
     padding: 10px;

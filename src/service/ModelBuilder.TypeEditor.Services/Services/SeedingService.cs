@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -78,7 +78,7 @@ namespace Mb.TypeEditor.Services.Services
                 var attributeFormatFiles = fileList.Where(x => x.ToLower().Equals(AttributeFormatFileName)).ToList();
                 var buildStatusFiles = fileList.Where(x => x.ToLower().Equals(BuildStatusFileName)).ToList();
                 var typeAttributeFiles = fileList.Where(x => x.ToLower().Equals(TypeAttributeFileName)).ToList();
-                
+
                 //Other
                 var contractorFiles = fileList.Where(x => x.ToLower().Equals(ContractorFileName)).ToList();
                 var attributeFiles = fileList.Where(x => x.ToLower().Equals(AttributeFileName)).ToList();
@@ -138,7 +138,7 @@ namespace Mb.TypeEditor.Services.Services
             }
         }
 
-        
+
 
         private async Task CreateEnumBase<T>(IEnumerable<T> items) where T : EnumBase
         {

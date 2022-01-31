@@ -1,25 +1,26 @@
 import { Elements } from "react-flow-renderer";
 import { BuildSecondaryChildNode } from "..";
-import { IsFamily, IsDirectChild } from "../../../../../helpers";
-import { Node, Edge } from "../../../../../models";
+import { IsDirectChild, IsFamily } from "../../../../../helpers";
+import { Node, Project } from "../../../../../models";
 
 /**
  * Component to draw all secondaryNode children nodes in BlockView.
- * @param edges
- * @param nodes
+ * @param project
  * @param secondary
  * @param elements
  * @param libOpen
  * @param explorerOpen
  */
 const DrawSecondaryChildren = (
-  edges: Edge[],
-  nodes: Node[],
+  project: Project,
   secondary: Node,
-  elements: Elements<any>,
+  elements: Elements,
   libOpen: boolean,
   explorerOpen: boolean
 ) => {
+  const nodes = project.nodes;
+  const edges = project.edges;
+
   if (secondary) {
     edges?.forEach((edge) => {
       if (edge.fromNodeId === secondary.id && IsFamily(secondary, edge.toNode)) {

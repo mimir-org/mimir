@@ -4,7 +4,7 @@ import { TerminalLikeItem } from "../../../types";
 export const CountNumberOfTerminals = (terminals: TerminalLikeItem[]): number => {
   let count = 0;
 
-  for (let terminal of terminals) {
+  for (const terminal of terminals) {
     count += GetNumberOfTerminals(terminal);
   }
 

@@ -2,15 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { FontType } from "./font";
 
 const GlobalStyle = createGlobalStyle`
-  html, body {
-    font-family: ${FontType.Standard};
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-  };
-
+  // CSS RESET (https://www.joshwcomeau.com/css/custom-css-reset/)
   *, *::before, *::after {
     box-sizing: border-box;
   }
@@ -19,12 +11,34 @@ const GlobalStyle = createGlobalStyle`
     max-width: 100%;
   }
 
+  body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
+  }
+
   p, h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word;
   }
 
   #root {
-    margin: 0;
+    isolation: isolate;
+  }
+
+  // APPLICATION SPECIFIC GLOBALS
+  html, body {
+    font-family: ${FontType.Standard};
+  };
+
+  #root {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -35,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
     width: 14px;
     height: 18px;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border: 4px solid rgba(0, 0, 0, 0);
     background-clip: padding-box;
@@ -52,7 +66,6 @@ const GlobalStyle = createGlobalStyle`
     margin-top: 0;
     margin-bottom: 0;
   }
-
 `;
 
 export default GlobalStyle;

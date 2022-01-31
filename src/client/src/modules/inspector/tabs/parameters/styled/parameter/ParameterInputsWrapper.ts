@@ -5,7 +5,7 @@ const ParameterInputsWrapper = styled.div`
   display: flex;
   gap: 16px;
   padding: 10px 35px 0 20px;
-  
+
   input {
     flex: 1;
     height: 100%;

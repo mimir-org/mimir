@@ -1,10 +1,10 @@
-﻿using Mb.Models.Data.Enums;
+using Mb.Models.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mb.Models.Configurations
 {
-    public class EnumBaseConfiguration: IEntityTypeConfiguration<EnumBase>
+    public class EnumBaseConfiguration : IEntityTypeConfiguration<EnumBase>
     {
         public void Configure(EntityTypeBuilder<EnumBase> builder)
         {
@@ -18,7 +18,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.InternalType).HasColumnName("InternalType").IsRequired();
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
-            
+
             builder.HasOne(x => x.Parent).WithMany(y => y.Children).HasForeignKey(x => x.ParentId).OnDelete(DeleteBehavior.NoAction);
         }
     }

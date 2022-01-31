@@ -1,4 +1,4 @@
-﻿namespace Mb.Models.Settings
+namespace Mb.Models.Settings
 {
     public class CollaborationPartnerSetting
     {

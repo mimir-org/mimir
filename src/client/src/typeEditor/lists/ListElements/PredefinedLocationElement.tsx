@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { PredefinedAttribute } from "../../../models";
 import { CheckboxContainer } from "../../inputs";
-import { LocationValueHeader, LocationValue } from "./helpers";
+import { LocationValue, LocationValueHeader } from "./helpers";
 import { Label } from "../../inputs/CheckboxContainer";
 import { OnPropertyChangeFunction } from "../../types";
-import { TerminalListElement, TerminalCategoryWrapper, SelectValue } from "../../styled";
+import { SelectValue, TerminalCategoryWrapper, TerminalListElement } from "../../styled";
 
 interface Props {
   attributeName: string;
-  values: object;
+  values: Record<string, boolean>;
   isMultiSelect: boolean;
   defaultValue?: PredefinedAttribute[];
   onChange: OnPropertyChangeFunction;
@@ -16,16 +16,16 @@ interface Props {
 
 export const PredefinedLocationElement = ({ attributeName, values, isMultiSelect, defaultValue, onChange }: Props) => {
   const [expandList, setExpandList] = useState(false);
-  const isSelected = defaultValue.some((a) => a.key === attributeName);
+  const isSelected = defaultValue?.some((a) => a.key === attributeName);
 
-  const locationAttribute = {
+  const locationAttribute: PredefinedAttribute = {
     key: attributeName,
     values: values,
     isMultiSelect: isMultiSelect,
-  } as PredefinedAttribute;
+  };
 
   const onCheckboxChange = () => {
-    let attributes = defaultValue;
+    let attributes = [...defaultValue];
     if (isSelected) {
       attributes = attributes.filter((a) => a.key !== locationAttribute.key);
     } else {

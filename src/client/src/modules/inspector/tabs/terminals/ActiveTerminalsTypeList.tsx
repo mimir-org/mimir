@@ -1,9 +1,9 @@
 import { ConnectorType, TerminalType } from "../../../../models";
-import { TerminalTypeListElement, TerminalsListElementWrapper, TerminalListElement } from "./styled/activeTerminalList";
-import { ExpandAccordionNestedIcon, CollapseAccordionNestedIcon } from "../../../../assets/icons/toogle";
+import { TerminalListElement, TerminalTypeListElement, TerminalsListElementWrapper } from "./styled/activeTerminalList";
+import { CollapseAccordionNestedIcon, ExpandAccordionNestedIcon } from "../../../../assets/icons/toogle";
 import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 import { useCallback, useMemo } from "react";
-import { formatTerminalTypeName, CountNumberOfTerminals, GetNumberOfTerminals } from "./helpers";
+import { CountNumberOfTerminals, GetNumberOfTerminals, formatTerminalTypeName } from "./helpers";
 
 interface Props {
   terminalType: TerminalType;
@@ -30,7 +30,7 @@ function ActiveTerminalsTypeList({
 
   const renderTerminalListElement = useCallback(
     (terminal: TerminalLikeItem) => {
-      let numberOfItemsToRender = GetNumberOfTerminals(terminal);
+      const numberOfItemsToRender = GetNumberOfTerminals(terminal);
 
       return [...Array(numberOfItemsToRender).keys()].map((i) => (
         <TerminalListElement
@@ -54,8 +54,7 @@ function ActiveTerminalsTypeList({
       <TerminalTypeListElement
         onClick={() => onTypeClick(terminalType, connectorType)}
         isSelected={
-          selectedTerminal?.terminalTypeId === terminalType.id &&
-          selectedTerminalIdentifier?.connectorType === connectorType
+          selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminalIdentifier?.connectorType === connectorType
         }
       >
         <div className="numTypeTerminals">{numTerminals}</div>

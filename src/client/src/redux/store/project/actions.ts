@@ -1,16 +1,17 @@
 import * as Types from "./types";
 import {
-  Node,
-  Edge,
-  Project,
   CommitPackage,
   Connector,
-  Composite,
-  ProjectFileAm,
-  ProjectConverterAm,
+  ConnectorVisibility,
+  Edge,
   LockAttributeAm,
-  LockNodeAm,
   LockEdgeAm,
+  LockNodeAm,
+  Node,
+  Project,
+  ProjectConverterAm,
+  ProjectFileAm,
+  Simple,
 } from "../../../models";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
@@ -27,10 +28,13 @@ export function save(project: Project): Types.ProjectActionTypes {
   };
 }
 
-export function get(id: string): Types.ProjectActionTypes {
+export function get(id: string, project: Project): Types.ProjectActionTypes {
   return {
     type: Types.FETCHING_PROJECT,
-    payload: id,
+    payload: {
+      id,
+      project,
+    },
   };
 }
 
@@ -135,13 +139,6 @@ export function setEdgeVisibility(edge: Edge, isHidden: boolean): Types.ProjectA
   };
 }
 
-export function setEdgeAnimation(edge: Edge, animated: boolean): Types.ProjectActionTypes {
-  return {
-    type: Types.SET_EDGE_ANIMATION,
-    payload: { edge, animated },
-  };
-}
-
 export function setLocationNodeSize(nodeId: string, key: string, value: number): Types.ProjectActionTypes {
   return {
     type: Types.SET_LOCATION_NODE_SIZE,
@@ -184,6 +181,7 @@ export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeNodeValue(nodeId: string, propName: string, propValue: any): Types.ChangeNodePropValue {
   return {
     type: Types.CHANGE_NODE_PROP_VALUE,
@@ -195,6 +193,7 @@ export function changeNodeValue(nodeId: string, propName: string, propValue: any
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeTransportValue(edgeId: string, propName: string, propValue: any): Types.ChangeTransportPropValue {
   return {
     type: Types.CHANGE_TRANSPORT_PROP_VALUE,
@@ -205,6 +204,7 @@ export function changeTransportValue(edgeId: string, propName: string, propValue
     },
   };
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeInterfaceValue(edgeId: string, propName: string, propValue: any): Types.ChangeInterfacePropValue {
   return {
     type: Types.CHANGE_INTERFACE_PROP_VALUE,
@@ -319,20 +319,20 @@ export function changeInterfaceTerminalAttributeValue(
   };
 }
 
-export function changeCompositeAttributeValue(
+export function changeSimpleAttributeValue(
   id: string,
-  composite: Composite,
+  simple: Simple,
   node: Node,
   value: string,
   unitId: string
-): Types.ChangeCompositeAttributeValue {
+): Types.ChangeSimpleAttributeValue {
   return {
-    type: Types.CHANGE_COMPOSITE_ATTRIBUTE_VALUE,
+    type: Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE,
     payload: {
       id,
       value,
       unitId,
-      compositeId: composite.id,
+      simpleId: simple.id,
       nodeId: node.id,
     },
   };
@@ -350,18 +350,14 @@ export function deleteProjectError(key: string) {
 export function changeActiveConnector(
   nodeId: string,
   connectorId: string,
-  visible: boolean,
-  inputOrder: number,
-  outputOrder: number
+  connectorVisibility: ConnectorVisibility
 ): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ACTIVE_CONNECTOR,
     payload: {
       nodeId,
       connectorId,
-      visible,
-      inputOrder,
-      outputOrder,
+      connectorVisibility,
     },
   };
 }
@@ -380,7 +376,7 @@ export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTyp
   };
 }
 
-export function lockNode(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockNode {
+export function lockNode(id: string, projectId: string, isLocked: boolean, _isLockedStatusBy: string): Types.LockNode {
   return {
     type: Types.LOCK_NODE,
     payload: {
@@ -391,7 +387,7 @@ export function lockNode(id: string, projectId: string, isLocked: boolean, isLoc
   };
 }
 
-export function lockEdge(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockEdge {
+export function lockEdge(id: string, projectId: string, isLocked: boolean, _isLockedStatusBy: string): Types.LockEdge {
   return {
     type: Types.LOCK_EDGE,
     payload: {
@@ -402,7 +398,7 @@ export function lockEdge(id: string, projectId: string, isLocked: boolean, isLoc
   };
 }
 
-export function lockAttribute(id: string, projectId: string, isLocked: boolean, isLockedStatusBy: string): Types.LockAttribute {
+export function lockAttribute(id: string, projectId: string, isLocked: boolean, _isLockedStatusBy: string): Types.LockAttribute {
   return {
     type: Types.LOCK_ATTRIBUTE,
     payload: {
@@ -504,7 +500,7 @@ export function setIsLockedTransportTerminalAttribute(lockAttributeAm: LockAttri
 }
 export function setIsLockedInterfaceTerminalAttribute(
   lockAttributeAm: LockAttributeAm,
-  edge: Edge
+  _edge: Edge
 ): Types.SetLockInterfaceTerminalAttribute {
   return {
     type: Types.SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE,
@@ -519,12 +515,12 @@ export function setIsLockedInterfaceTerminalAttribute(
   };
 }
 
-export function setIsLockedCompositeAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockCompositeAttribute {
+export function setIsLockedSimpleAttribute(lockAttributeAm: LockAttributeAm): Types.SetLockSimpleAttribute {
   return {
-    type: Types.SET_LOCK_COMPOSITE_ATTRIBUTE,
+    type: Types.SET_LOCK_SIMPLE_ATTRIBUTE,
     payload: {
       id: lockAttributeAm.id,
-      compositeId: lockAttributeAm.compositeId,
+      simpleId: lockAttributeAm.compositeId,
       nodeId: lockAttributeAm.nodeId,
       isLocked: lockAttributeAm.isLocked,
       isLockedStatusBy: lockAttributeAm.isLockedStatusBy,

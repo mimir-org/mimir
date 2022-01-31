@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -57,7 +57,7 @@ namespace Mb.TypeEditor.Services.Services
         {
             var existingTypes = _libraryTypeRepository.GetAll().ToList();
             var newTypes = new List<CreateLibraryType>();
-            
+
             foreach (var createLibraryType in libraryTypes)
             {
                 LibraryType libraryType = createLibraryType.ObjectType switch
@@ -68,12 +68,12 @@ namespace Mb.TypeEditor.Services.Services
                     _ => null
                 };
 
-                if(libraryType == null || existingTypes.Any(x => x.Id == libraryType.Id))
+                if (libraryType == null || existingTypes.Any(x => x.Id == libraryType.Id))
                     continue;
 
                 newTypes.Add(createLibraryType);
             }
-            if(newTypes.Any())
+            if (newTypes.Any())
                 await _libraryTypeService.CreateLibraryTypes(newTypes);
         }
 

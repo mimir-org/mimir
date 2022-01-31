@@ -26,8 +26,8 @@ const InitialSortNodes = (nodes: Node[]): void => {
 const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
   const buckets: Map<number, Node[]> = new Map();
 
-  for (let node of nodes) {
-    let indent = SetIndentLevel(node, 0);
+  for (const node of nodes) {
+    const indent = SetIndentLevel(node, 0);
 
     if (!buckets.has(indent)) {
       buckets.set(indent, []);
@@ -46,15 +46,15 @@ const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
 const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
   let sortedNodedWithIndent: [Node, number][] = [];
 
-  for (let indent of Array.from(buckets.keys())) {
-    let bucket = buckets.get(indent);
+  for (const indent of Array.from(buckets.keys())) {
+    const bucket = buckets.get(indent);
 
     if (indent === 0) {
       sortedNodedWithIndent = bucket.map((node) => [node, indent]);
       continue;
     }
 
-    for (let node of bucket) {
+    for (const node of bucket) {
       AddNodeFromBucket(node, indent, sortedNodedWithIndent);
     }
   }
@@ -70,7 +70,7 @@ const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
  */
 const AddNodeFromBucket = (node: Node, indent: number, sortedNodedWithIndent: [Node, number][]) => {
   for (let i = 0; i < sortedNodedWithIndent.length; i++) {
-    let [otherNode] = sortedNodedWithIndent[i];
+    const [otherNode] = sortedNodedWithIndent[i];
 
     if (IsParentOf(otherNode, node)) {
       sortedNodedWithIndent.splice(i + 1, 0, [node, indent]);

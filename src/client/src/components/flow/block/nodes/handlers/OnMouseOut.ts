@@ -1,4 +1,4 @@
-const OnMouseOut = (showTerminalButton: any) => {
+const OnMouseOut = (showTerminalButton: (show: boolean) => void) => {
   showTerminalButton(false);
 };
 

@@ -1,11 +1,11 @@
 import { Color } from "../../../../compLibrary/colors";
-import { CompositeLikeItem } from "../../types";
-import { TerminalsListElementWrapper, TerminalsCategoryListElement } from "../terminals/styled/activeTerminalList";
+import { SimpleLikeItem } from "../../types";
+import { TerminalsCategoryListElement, TerminalsListElementWrapper } from "../terminals/styled/activeTerminalList";
 
 interface Props {
-  simpleTypes: CompositeLikeItem[];
+  simpleTypes: SimpleLikeItem[];
   selectedSimpleTypeId: string;
-  onSelect: (item: CompositeLikeItem) => void;
+  onSelect: (item: SimpleLikeItem) => void;
 }
 
 function ActiveSimpleTypesList({ simpleTypes, selectedSimpleTypeId, onSelect }: Props) {

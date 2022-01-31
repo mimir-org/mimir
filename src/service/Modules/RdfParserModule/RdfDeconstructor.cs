@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -9,11 +9,11 @@ using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using RdfParserModule.Models;
 using RdfParserModule.Properties;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
-using VDS.RDF.Writing;
 using INode = VDS.RDF.INode;
 
 namespace RdfParserModule
@@ -95,7 +95,7 @@ namespace RdfParserModule
             //Store.AddInferenceEngine(new RdfsReasoner());
 
         }
-        
+
 
 
         private ParserNode GetNode(string iri)
@@ -109,10 +109,10 @@ namespace RdfParserModule
         }
         private ParserConnector GetConnector(string iri)
         {
-            var c = 
+            var c =
                 (from connector in ParserConnectors
-                where connector.Iri == iri
-                select connector).ToList();
+                 where connector.Iri == iri
+                 select connector).ToList();
 
             if (c.Count != 1)
             {
@@ -219,7 +219,7 @@ namespace RdfParserModule
         {
             var p = RdfGraph.CreateUriNode(Resources.isAspectOf);
             var list = Store.GetTriplesWithPredicate(p).Select(t => t.Subject).ToList();
-            
+
 
             var roots = list.Select(node => new ParserNode
             {
@@ -236,7 +236,7 @@ namespace RdfParserModule
             foreach (var node in roots)
             {
                 var label = GetLabel(node.Iri);
-                
+
                 if (label.ToLower().Contains("function"))
                 {
                     node.Label = "Function";
@@ -381,7 +381,7 @@ namespace RdfParserModule
 
             if (inputTerminalNodes is not null)
             {
-                var inputTerminals = inputTerminalNodes.Select(obj => new ParserTerminal
+                var inputTerminals = inputTerminalNodes.Select(obj => new ParserConnector
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -390,14 +390,14 @@ namespace RdfParserModule
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString()),
                     Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
-                    Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible")))
+                    //Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
                 }).ToList();
 
                 connectors.AddRange(inputTerminals);
             }
             if (outputTerminalNodes is not null)
             {
-                var outputTerminals = outputTerminalNodes.Select(obj => new ParserTerminal
+                var outputTerminals = outputTerminalNodes.Select(obj => new ParserConnector
                 {
                     Id = obj.ToString(),
                     Iri = obj.ToString(),
@@ -406,7 +406,7 @@ namespace RdfParserModule
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString()),
                     Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
-                    Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible")))
+                    //Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
                 }).ToList();
 
                 connectors.AddRange(outputTerminals);
@@ -421,7 +421,7 @@ namespace RdfParserModule
 
             foreach (var connector in connectors)
             {
-                
+
                 var label = GetLabel(connector.Id);
 
                 if (label != null)
@@ -459,7 +459,7 @@ namespace RdfParserModule
             return connectors;
         }
 
-        private (string termCatId, string termTypeId) GetTerminalCategoryIdAndTerminalTypeId(ParserTerminal terminal)
+        private (string termCatId, string termTypeId) GetTerminalCategoryIdAndTerminalTypeId(ParserConnector terminal)
         {
             var terminalTypes = GetObjects(terminal.Iri, Resources.type);
 
@@ -491,7 +491,7 @@ namespace RdfParserModule
             return node;
         }
 
-        
+
 
         private string GetLabel(string iri)
         {
@@ -591,7 +591,7 @@ namespace RdfParserModule
             if (pos is not ILiteralNode literal) throw new Exception($"Could not find any {errorPos} on node {node}");
             try
             {
-                return decimal.Parse(literal.Value.Replace(',','.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo);
+                return decimal.Parse(literal.Value.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo);
             }
             catch (Exception e)
             {
@@ -615,7 +615,7 @@ namespace RdfParserModule
             var aspectNode = aspects.First();
 
             var aspectString = aspectNode.ToString().Split("#")[^1];
-            
+
             try
             {
                 return Enum.Parse<Aspect>(aspectString);
@@ -626,7 +626,7 @@ namespace RdfParserModule
             }
         }
 
-        private ParserTerminal GetTransportInTerminal(string transportIri)
+        private ParserConnector GetTransportInTerminal(string transportIri)
         {
             var inTerminals = GetObjects(transportIri, Resources.hasInputTerminal);
 
@@ -674,7 +674,7 @@ namespace RdfParserModule
             return inTerminal;
         }
 
-        private ParserTerminal GetTransportOutTerminal(string transportIri)
+        private ParserConnector GetTransportOutTerminal(string transportIri)
         {
             var outTerminals = GetObjects(transportIri, Resources.hasOutputTerminal);
 
@@ -704,7 +704,7 @@ namespace RdfParserModule
             if (toConnectors.Count != 1) throw new Exception("A terminal can only be connected to one, 1, other terminal");
 
             var toConnector = toConnectors.First().ToString();
-            outTerminal.ToConnectorIri= toConnector;
+            outTerminal.ToConnectorIri = toConnector;
 
             var toNodes = GetSubjects(Resources.hasInputTerminal, outTerminal.ToConnectorIri);
             if (toNodes.Count != 1) throw new Exception("A connector can only belong to one, 1, aspect object");
@@ -741,9 +741,9 @@ namespace RdfParserModule
             {
                 var inTerminal = GetTransportInTerminal(transport.Iri);
                 var outTerminal = GetTransportOutTerminal(transport.Iri);
-                
+
                 transport.Name = GetLabel(transport.Iri);
-                
+
                 transport.Aspect = GetAspect(transport.Iri);
 
                 transport.InputTerminal = inTerminal;
@@ -832,7 +832,7 @@ namespace RdfParserModule
 
             }).ToList();
 
-            
+
             foreach (var attribute in attributes)
             {
                 var attributeTypeId = GetAttributeTypeId(attribute.Iri);
@@ -936,7 +936,7 @@ namespace RdfParserModule
         public List<ParserNode> GetAllFunctionObjectsWithTerminals()
         {
             var subs = GetFunctionalSystemBlocks();
-            
+
             var nodes = subs.Select(node => new ParserNode
             {
                 Prefix = "",

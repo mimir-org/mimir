@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Attributes;
@@ -8,7 +8,7 @@ using Mb.Models.Extensions;
 
 namespace Mb.Models.Application
 {
-    public class NodeAm
+    public class NodeAm : IValidatableObject
     {
         public string Id { get; set; }
         public string Iri { get; set; }
@@ -52,7 +52,7 @@ namespace Mb.Models.Application
 
         [ValidatePositiveDecimal]
         public decimal? Height { get; set; }
-        
+
         [ValidatePositiveDecimal]
         public decimal? Cost { get; set; }
 
@@ -61,27 +61,30 @@ namespace Mb.Models.Application
 
         [Required]
         public string MasterProjectId { get; set; }
-        
+
         public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
 
         public Purpose Purpose { get; set; }
 
+        [Required]
         public DateTime? Created { get; set; }
-        
+
+        [Required]
         public string CreatedBy { get; set; }
 
+        [Required]
         public string LibraryTypeId { get; set; }
 
         public DateTime? Updated { get; set; }
-        
+
         public string UpdatedBy { get; set; }
 
         public ICollection<ConnectorAm> Connectors { get; set; }
 
         public ICollection<AttributeAm> Attributes { get; set; }
-        
+
         public ICollection<SimpleAm> Simples { get; set; }
 
         [Required]
@@ -89,5 +92,21 @@ namespace Mb.Models.Application
 
         [Required]
         public bool IsRoot { get; set; }
+
+        #region Validate
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (string.IsNullOrWhiteSpace(Rds) && !IsRoot)
+                yield return new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { GetType().Name });
+
+            if (Aspect == Aspect.None)
+                yield return new ValidationResult("Aspect 'None' is not allowed", new List<string> { GetType().Name });
+
+            if (Aspect == Aspect.NotSet)
+                yield return new ValidationResult($"Aspect {nameof(Aspect.NotSet)} is not allowed", new List<string> { GetType().Name });
+        }
+
+        #endregion Validate
     }
 }

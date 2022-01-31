@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { ParametersContent } from "../parameters";
 import { TerminalsWrapper } from "./styled/TerminalsWrapper";
 import { TerminalsParametersWrapper } from "./styled/TerminalsParametersWrapper";
-import { useAppSelector, terminalTypeSelector } from "../../../../redux/store";
+import { terminalTypeSelector, useAppSelector } from "../../../../redux/store";
 import { GetFilteredTerminalsList } from "../../../../typeEditor/helpers";
 import { InspectorElement, SelectedTerminalIdentifier, TerminalLikeItem } from "../../types";
 import { GetTerminalParentElement, GetTerminals } from "./helpers";

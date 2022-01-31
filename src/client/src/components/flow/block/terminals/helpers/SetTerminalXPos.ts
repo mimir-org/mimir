@@ -35,8 +35,8 @@ const SetTerminalXPos = (
 };
 
 function SetOffPageTerminalXPos(position: Position) {
-  if (position === Position.Right) return 35;
-  if (position === Position.Left) return -12;
+  if (position === Position.Right) return 33;
+  if (position === Position.Left) return -17;
 }
 
 function SetElectroTerminalXPos(
@@ -59,7 +59,7 @@ function SetElectroTerminalXPos(
 /**
  * Function to calculate a terminal's X position. Terminals are positioned middle-out.
  * @param count the count of input or output terminals for a node.
- * @param isParent+
+ * @param isParent
  * @param nodeWidth
  * @returns a number used by the styled component HandleBox.
  */

@@ -1,4 +1,4 @@
-const OnMouseLeave = (setVisible: any) => {
+const OnMouseLeave = (setVisible: (visibility: boolean) => void) => {
   setVisible(false);
 };
 

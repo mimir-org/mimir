@@ -7,7 +7,7 @@ interface Props {
   handleSave: () => void;
   handleNoSave: () => void;
   showConfirm: boolean;
-  setConfirm: any;
+  setConfirm: (confirm: boolean) => void;
   text: string;
 }
 

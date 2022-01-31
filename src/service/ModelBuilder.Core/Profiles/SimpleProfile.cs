@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Mb.Data.Contracts;
@@ -23,7 +23,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Node, opt => opt.Ignore());
 
             CreateMap<Simple, SimpleAm>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src =>src.Id))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
@@ -36,7 +36,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => CreateAttributeTypes(src.AttributeTypes.ToList()).ToList()))
                 .ForMember(dest => dest.NodeTypes, opt => opt.Ignore());
         }
-        
+
         private static IEnumerable<AttributeType> CreateAttributeTypes(IReadOnlyCollection<string> attributeTypes)
         {
             if (attributeTypes == null || !attributeTypes.Any())

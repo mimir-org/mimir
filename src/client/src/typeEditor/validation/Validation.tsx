@@ -1,4 +1,4 @@
-import { ValidationMessage, ValidationContainer } from "./styled";
+import { ValidationContainer, ValidationMessage } from "./styled";
 
 interface ValidatorContainerProps {
   visible: boolean;

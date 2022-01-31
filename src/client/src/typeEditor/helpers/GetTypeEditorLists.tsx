@@ -11,24 +11,28 @@ import Validation from "../validation/Validation";
  * @param state State of the TypeEditor at render
  * @param dispatch General dispatch function for the application
  */
-export function GetTypeEditorLists(state: TypeEditorState, dispatch: Dispatch<any>) {
+export function GetTypeEditorLists(state: TypeEditorState, dispatch: Dispatch) {
   return Object.values(ListType).map((type, key) => {
-    let listTypeEnum = ListType[type as keyof typeof ListType];
-    let listDescriptor = GetTypeEditorListDescriptor(listTypeEnum, state, dispatch);
+    const listTypeEnum = ListType[type as keyof typeof ListType];
+    const listDescriptor = GetTypeEditorListDescriptor(listTypeEnum, state, dispatch);
 
-    return (listDescriptor.isVisible &&
-      <Validation key={key}
-        flex={GetFlexForListType(listDescriptor.listType)}
-        visible={listDescriptor.validation.visible}
-        message={listDescriptor.validation.message}>
-        <TypeEditorList
-          items={listDescriptor.items}
-          createLibraryType={listDescriptor.createLibraryType}
-          listType={listDescriptor.listType}
-          onPropertyChange={listDescriptor.onPropertyChange}
-          onTerminalCategoryChange={listDescriptor?.onTerminalCategoryChange}
-        />
-      </Validation>
+    return (
+      listDescriptor.isVisible && (
+        <Validation
+          key={key}
+          flex={GetFlexForListType(listDescriptor.listType)}
+          visible={listDescriptor.validation.visible}
+          message={listDescriptor.validation.message}
+        >
+          <TypeEditorList
+            items={listDescriptor.items}
+            createLibraryType={listDescriptor.createLibraryType}
+            listType={listDescriptor.listType}
+            onPropertyChange={listDescriptor.onPropertyChange}
+            onTerminalCategoryChange={listDescriptor?.onTerminalCategoryChange}
+          />
+        </Validation>
+      )
     );
   });
 }

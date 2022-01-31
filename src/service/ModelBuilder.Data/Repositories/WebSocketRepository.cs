@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Const;

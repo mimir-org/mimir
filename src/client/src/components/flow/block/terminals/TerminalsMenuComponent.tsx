@@ -1,54 +1,49 @@
-import { GetAspectColor } from "../../../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../models";
-import { GetTerminalColor, SetMenuXPos } from "./helpers";
-import { TerminalsBox, TerminalsElement, ColorTag } from "./styled";
-import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
-import { Color } from "../../../../compLibrary/colors";
-import { BlockNodeSize } from "../../../../models/project";
+import * as Click from "./handlers";
+import { TerminalsMenu, TerminalsMenuButton } from ".";
+import { Connector, Node } from "../../../../models";
+import { useState } from "react";
+import { TerminalMenuWrapper } from "./styled";
+import { IsConnectorVisible } from "../../../../helpers";
 
 interface Props {
   node: Node;
-  size: BlockNodeSize;
-  isParent: boolean;
-  IsInput?: boolean;
   terminals: Connector[];
-  electro: boolean;
-  hasActiveTerminals: boolean;
-  onClick: (conn: Connector) => void;
-  onBlur: () => void;
+  onClick: (conn: Connector, isInput: boolean) => void;
+  isParent?: boolean;
+  isInput?: boolean;
+  showMenuButton?: boolean;
 }
 
 /**
- * Component for the drop-down menu of terminals.
+ * Component for the terminals menu on the nodes in BlockView.
  * @param interface
- * @returns a drop-down menu with a node's input or output terminals.
+ * @returns a button to active the menu, and a drop-down menu containing available terminals.
  */
-const TerminalsMenuComponent = ({
-  node,
-  size,
-  isParent,
-  IsInput,
-  terminals,
-  electro,
-  hasActiveTerminals,
-  onClick,
-  onBlur,
-}: Props) => (
-  <TerminalsBox
-    id={"terminals-dropdown-" + node.id}
-    tabIndex={0}
-    isParent={isParent}
-    isInput={IsInput}
-    onBlur={onBlur}
-    color={GetAspectColor(node, AspectColorType.Selected)}
-    xPos={SetMenuXPos(isParent, electro, hasActiveTerminals, size)}
-  >
-    {terminals.map((conn) => (
-      <TerminalsElement key={conn.id}>
-        <Checkbox isChecked={conn.visible} onChange={() => onClick(conn)} color={Color.GreyDark} id={conn.id} />
-        <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
-      </TerminalsElement>
-    ))}
-  </TerminalsBox>
-);
+const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, showMenuButton = true }: Props) => {
+  const [showMenu, setShowMenu] = useState(false);
+
+  return (
+    <TerminalMenuWrapper>
+      <TerminalsMenuButton
+        node={node}
+        isParent={isParent}
+        showMenuButton={showMenuButton}
+        terminals={terminals}
+        onClick={() => Click.OnInputMenu(setShowMenu, showMenu)}
+        isInput={isInput}
+      />
+      {showMenu && (
+        <TerminalsMenu
+          node={node}
+          isInput={isInput}
+          terminals={terminals}
+          hasActiveTerminals={terminals.some((conn) => IsConnectorVisible(conn))}
+          onClick={onClick}
+          onBlur={() => Click.OnBlur(setShowMenu, showMenu)}
+        />
+      )}
+    </TerminalMenuWrapper>
+  );
+};
+
 export default TerminalsMenuComponent;

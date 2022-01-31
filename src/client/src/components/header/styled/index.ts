@@ -1,5 +1,5 @@
 export { default as HeaderBox } from "./HeaderBox";
-export { default as ProjectHeaderBox } from "./ProjectHeaderBox";
+export { default as ProjectHeaderButton } from "./ProjectHeaderButton";
 
 export { default as ToolBarBox } from "./ToolBarBox";
 export { default as ToolBarBody } from "./ToolBarBody";

@@ -118,6 +118,14 @@ const TextResources = {
   // LibraryModule
   Library_SearchBox_Placeholder: "Search the Library",
 
+  // ExplorerModule
+  Explorer_Lock_Node: "Lock node",
+  Explorer_Unlock_Node: "Unlock node",
+  Explorer_Hide_Node: "Hide node",
+  Explorer_Show_Node: "Show node",
+  Explorer_Open_Group: "Open group",
+  Explorer_Close_Group: "Close group",
+
   // TypeEditorModule
   TypeEditor: "Type Editor",
   TypeEditor_New_Type: "New Type",
@@ -141,6 +149,8 @@ const TextResources = {
   TypeEditor_Preview_Info: "Click on preview objects to see inspector info",
   TypeEditor_Button_Add: "Add to Library",
   TypeEditor_Button_Edit: "Save Type Edit",
+  TypeEditor_Button_Cancel_Add: "Cancel New Type",
+  TypeEditor_Button_Cancel_Edit: "Cancel Edit",
   TypeEditor_Type_Placeholder: "Write type name",
   TypeEditor_Aspect_Placeholder: "Choose Aspect",
   TypeEditor_Object_Placeholder: "Select Object Type",
@@ -185,7 +195,9 @@ const TextResources = {
   Project_Import: "Import project",
   Project_Import_LibraryTypes: "Import library types",
   Project_Import_Library: "Import library",
-  Project_Browse: "Browse file",
+  Project_Import_File: "File",
+  Project_Import_Select: "Please select a file",
+  Project_Browse: "Browse",
   Project_Parser: "Select data type",
 
   Project_Export_File: "Export file",
@@ -214,6 +226,7 @@ const TextResources = {
   Project_Create: "Create",
   Project_SubProject: "Save Sub-project",
   Project_Cancel: "Cancel",
+  Project_Menu_Instruction: "Please select an option from the project menu to continue using Mímir",
 
   // Error
   Error_Tile: "Something went wrong",
@@ -277,11 +290,15 @@ const TextResources = {
   Validation_BlockView: "Please selct a node before opening Block View.",
   Validation_BlockView_Project: "Please selct a project before opening Block View.",
   Validation_OffPage: "An off-page node can only be connected with a node of the same type.",
+  Validation_Connectors: "A terminal can only have one connection.",
   Validation_Cancel: "Cancel",
 
   // Version
   Mimir_Version: "Version 1.0",
   Validation_Ok: "Ok",
+
+  // Modal
+  Modal_Close: "Close menu",
 };
 
 export default TextResources;

@@ -1,8 +1,12 @@
 import * as Types from "./types";
 import { Edge, Node, ProjectItemCm } from "../../../models";
-import { GetUpdatedEdgeInnerWithTerminalAttributeIsLocked, TraverseTree, UpdateAttributeIsLocked } from "./helpers/";
 import { IsAspectNode, IsFamily } from "../../../helpers";
-import { GetUpdatedEdgeInnerWithTerminalAttributeValue } from "./helpers";
+import {
+  GetUpdatedEdgeInnerWithTerminalAttributeIsLocked,
+  GetUpdatedEdgeInnerWithTerminalAttributeValue,
+  TraverseTree,
+  UpdateAttributeIsLocked,
+} from "./helpers/";
 
 const initialState: Types.ProjectState = {
   fetching: false,
@@ -184,22 +188,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
-    case Types.SET_EDGE_ANIMATION:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((edge) =>
-            edge.id === action.payload.edge.id
-              ? {
-                  ...edge,
-                  animated: action.payload.animated,
-                }
-              : edge
-          ),
-        },
-      };
-
     case Types.SET_LOCATION_NODE_SIZE:
       return {
         ...state,
@@ -294,7 +282,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_ACTIVE_BLOCKNODE:
+    case Types.SET_ACTIVE_BLOCKNODE: {
       const blockId = action.payload.nodeId;
       const nodes = state.project.nodes;
 
@@ -306,8 +294,9 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           edges: state.project.edges,
         },
       };
+    }
 
-    case Types.CHANGE_SELECTED_PROJECT:
+    case Types.CHANGE_SELECTED_PROJECT: {
       const projectId = action.payload.projectId;
       const projects = state.projectList as ProjectItemCm[];
 
@@ -318,6 +307,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           project.id === projectId ? { ...project, selected: true } : { ...project, selected: false }
         ),
       };
+    }
 
     case Types.CHANGE_ALL_NODES:
       return {
@@ -540,8 +530,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
     }
-    case Types.CHANGE_COMPOSITE_ATTRIBUTE_VALUE: {
-      const { id, compositeId, nodeId, value, unitId } = action.payload;
+    case Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE: {
+      const { id, simpleId, nodeId, value, unitId } = action.payload;
 
       return {
         ...state,
@@ -551,11 +541,11 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
             n.id === nodeId
               ? {
                   ...n,
-                  composites: n.simples.map((comp) =>
-                    comp.id === compositeId
+                  simples: n.simples.map((simple) =>
+                    simple.id === simpleId
                       ? {
-                          ...comp,
-                          attributes: comp.attributes.map((attribute) =>
+                          ...simple,
+                          attributes: simple.attributes.map((attribute) =>
                             attribute.id === id
                               ? {
                                   ...attribute,
@@ -565,7 +555,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                               : attribute
                           ),
                         }
-                      : comp
+                      : simple
                   ),
                 }
               : n
@@ -587,9 +577,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                     conn.id === action.payload.connectorId
                       ? {
                           ...conn,
-                          visible: action.payload.visible,
-                          inputOrder: action.payload.inputOrder,
-                          outputOrder: action.payload.outputOrder,
+                          connectorVisibility: action.payload.connectorVisibility,
                         }
                       : conn
                   ),
@@ -842,8 +830,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_LOCK_COMPOSITE_ATTRIBUTE: {
-      const { id, compositeId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+    case Types.SET_LOCK_SIMPLE_ATTRIBUTE: {
+      const { id, simpleId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
       return {
         ...state,
@@ -853,17 +841,17 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
             n.id === nodeId
               ? {
                   ...n,
-                  composites: n.simples.map((comp) =>
-                    comp.id === compositeId
+                  simples: n.simples.map((simple) =>
+                    simple.id === simpleId
                       ? {
-                          ...comp,
-                          attributes: comp.attributes.map((attribute) =>
+                          ...simple,
+                          attributes: simple.attributes.map((attribute) =>
                             attribute.id === id
                               ? UpdateAttributeIsLocked(attribute, isLocked, isLockedStatusBy, isLockedStatusDate)
                               : attribute
                           ),
                         }
-                      : comp
+                      : simple
                   ),
                 }
               : n

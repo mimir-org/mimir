@@ -12,14 +12,18 @@ const DropdownList = styled.div`
   position: absolute;
   top: 23px;
   left: 0;
-  max-height: 40px;
-  width: 100%;
+  max-height: 60px;
+  width: 90px;
   z-index: 1;
 
   .dropdown_listitem {
     border-bottom: 1px solid ${Color.GreyDark};
     background-color: ${Color.White};
     padding: 2px 5px;
+
+    &:last-child {
+      border-bottom: 0px;
+    }
   }
 
   .dropdown_listitem:hover {

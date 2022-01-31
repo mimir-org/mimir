@@ -1,4 +1,4 @@
-export const SaveEventData = (state: object, key: string) => {
+export const SaveEventData = (state: unknown, key: string) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(`mb_event_${key}`, serializedState);
@@ -7,7 +7,7 @@ export const SaveEventData = (state: object, key: string) => {
   }
 };
 
-export const LoadEventData = (key: string): object => {
+export const LoadEventData = (key: string): unknown => {
   try {
     const serializedState = localStorage.getItem(`mb_event_${key}`);
 

@@ -15,7 +15,10 @@ export { default as IsProductConnection } from "./IsProductConnection";
 
 export { default as IsPartOf } from "./IsPartOf";
 export { IsInputTerminal } from "./IsInputTerminal";
-export { default as IsOutputTerminal } from "./IsOutputTerminal";
+export { IsOutputTerminal } from "./IsOutputTerminal";
+export { IsBidirectionalTerminal } from "./IsBidirectionalTerminal";
+export { IsInputVisible } from "./IsInputVisible";
+export { IsOutputVisible } from "./IsOutputVisible";
 
 export { default as GetCenter } from "./GetCenter";
 export { default as GetBlockNodeTypes } from "../block/helpers/GetBlockNodeTypes";

@@ -1,17 +1,18 @@
 import { useEffect, useRef } from "react";
 import { typeEditorStateSelector, useAppDispatch, useAppSelector } from "../redux/store";
+import { fetchBlobData, fetchInitialData, fetchSimpleTypes } from "./redux/typeEditorSlice";
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
 import { LibraryIcon } from "../assets/icons/modules";
 import { TextResources } from "../assets/text";
+import { Button } from "../compLibrary/buttons";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorInputs, TypePreview } from "./";
 import { OnCloseEditor, OnPropertyChange, OnSave } from "./handlers";
-import { getBlobData, getInitialData } from "./redux/actions";
-import { GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, GetTypeEditorLists, GetPropertiesHeight } from "./helpers";
+import { GetPropertiesHeight, GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, GetTypeEditorLists } from "./helpers";
 import {
+  ButtonsContainer,
   ChooseProperties,
-  SaveButton,
   TypeEditorContent,
   TypeEditorHeader,
   TypeEditorWrapper,
@@ -26,10 +27,12 @@ export const TypeEditorComponent = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector(typeEditorStateSelector);
   const typeEditorPropertiesRef = useRef(null);
+  const createMode = state.createLibraryType.id === null;
 
   useEffect(() => {
-    dispatch(getInitialData());
-    dispatch(getBlobData());
+    dispatch(fetchInitialData());
+    dispatch(fetchSimpleTypes());
+    dispatch(fetchBlobData());
   }, [dispatch]);
 
   return (
@@ -65,14 +68,17 @@ export const TypeEditorComponent = () => {
                 }
                 symbol={GetSelectedIcon(state?.createLibraryType, state?.icons)}
               />
-              <SaveButton onClick={() => OnSave(dispatch, state.createLibraryType)}>
-                <p>
-                  {state.createLibraryType.id === null
-                    ? TextResources.TypeEditor_Button_Add
-                    : TextResources.TypeEditor_Button_Edit}
-                </p>
-                <img src={state.createLibraryType.id === null ? LibraryIcon : CheckIcon} alt="icon" className="icon" />
-              </SaveButton>
+              <ButtonsContainer>
+                <Button
+                  onClick={() => OnSave(dispatch, state.createLibraryType)}
+                  text={createMode ? TextResources.TypeEditor_Button_Add : TextResources.TypeEditor_Button_Edit}
+                  icon={createMode ? LibraryIcon : CheckIcon}
+                />
+                <Button
+                  onClick={() => OnCloseEditor(dispatch)}
+                  text={createMode ? TextResources.TypeEditor_Button_Cancel_Add : TextResources.TypeEditor_Button_Cancel_Edit}
+                />
+              </ButtonsContainer>
             </TypePreviewColumn>
           </ChooseProperties>
 

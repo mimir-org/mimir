@@ -4,11 +4,11 @@ export const GetFilteredTerminalTypeExtendedList = (
   terminalTypeDict: TerminalTypeDict,
   terminalTypeItems: TerminalTypeItem[]
 ): TerminalTypeExtended[] => {
-  let terminals: TerminalTypeExtended[] = [];
-  let terminalTypes = terminalTypeDict.map((obj) => obj.value).flat();
+  const terminals: TerminalTypeExtended[] = [];
+  const terminalTypes = terminalTypeDict.map((obj) => obj.value).flat();
 
-  for (let terminalTypeItem of terminalTypeItems) {
-    let terminalType = terminalTypes.find((term) => terminalTypeItem.terminalTypeId === term.id);
+  for (const terminalTypeItem of terminalTypeItems) {
+    const terminalType = terminalTypes.find((term) => terminalTypeItem.terminalTypeId === term.id);
 
     if (!terminalType) continue;
 

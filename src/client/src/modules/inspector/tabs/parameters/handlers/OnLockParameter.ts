@@ -1,17 +1,17 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
 import { Attribute, LockAttributeAm, Project } from "../../../../../models";
+import { IsConnector, IsEdge, IsInterface, IsNode, IsSimple, IsTransport } from "../../../helpers/IsType";
+import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../types";
 import {
   lockAttribute,
-  setIsLockedCompositeAttribute,
   setIsLockedInterfaceAttribute,
   setIsLockedNodeAttribute,
   setIsLockedNodeTerminalAttribute,
+  setIsLockedSimpleAttribute,
   setIsLockedTransportAttribute,
   setIsLockedTransportTerminalAttribute,
 } from "../../../../../redux/store/project/actions";
-import { IsNode, IsTransport, IsEdge, IsInterface, IsConnector, IsComposite } from "../../../helpers/IsType";
-import { InspectorParametersElement, InspectorElement, InspectorTerminalsElement } from "../../../types";
 
 const OnLockParameter = (
   element: InspectorParametersElement,
@@ -88,8 +88,8 @@ const handleLockOffline = (
         terminalId: element.id,
       })
     );
-  } else if (IsComposite(element) && IsNode(inspectorParentElement)) {
-    dispatch(setIsLockedCompositeAttribute({ ...lockObj, nodeId: terminalParentElement.id, compositeId: element.id }));
+  } else if (IsSimple(element) && IsNode(inspectorParentElement)) {
+    dispatch(setIsLockedSimpleAttribute({ ...lockObj, nodeId: terminalParentElement.id, compositeId: element.id }));
   }
 };
 

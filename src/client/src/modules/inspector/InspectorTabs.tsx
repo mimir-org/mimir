@@ -1,10 +1,10 @@
 import { Project } from "../../models";
-import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
+import { AttributeLikeItem, InspectorElement, SimpleLikeItem, TerminalLikeItem } from "./types";
 import { Action } from "redux";
 import { InspectorTabWrapper } from "./";
-import { changeInspectorTab } from "./redux/tabs/actions";
+import { changeInspectorTab } from "./redux/inspectorSlice";
 import { ShouldShowTabs } from "./helpers";
-import { ParametersComponent, TerminalsComponent, RelationsComponent, SimpleTypesComponent, AdminComponent } from "./tabs";
+import { AdminComponent, ParametersComponent, RelationsComponent, SimpleTypesComponent, TerminalsComponent } from "./tabs";
 
 interface Props {
   project: Project;
@@ -12,7 +12,7 @@ interface Props {
   activeTabIndex: number;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
-  compositeLikeItems?: CompositeLikeItem[];
+  simpleLikeItems?: SimpleLikeItem[];
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
@@ -24,7 +24,7 @@ const InspectorTabs = ({
   activeTabIndex,
   attributeLikeItems,
   terminalLikeItems,
-  compositeLikeItems,
+  simpleLikeItems,
   changeInspectorTabAction = changeInspectorTab,
   inspectorRef,
   isInspectorOpen,
@@ -32,11 +32,11 @@ const InspectorTabs = ({
   const shouldShowTabs = ShouldShowTabs(element);
 
   const tabs = [
-    <AdminComponent element={element} project={project} />,
-    <ParametersComponent element={element} project={project} attributeLikeItems={attributeLikeItems} />,
-    <TerminalsComponent element={element} project={project} terminalLikeItems={terminalLikeItems} />,
-    <RelationsComponent element={element} />,
-    <SimpleTypesComponent element={element} project={project} compositeLikeItems={compositeLikeItems} />,
+    <AdminComponent key={0} element={element} project={project} />,
+    <ParametersComponent key={1} element={element} project={project} attributeLikeItems={attributeLikeItems} />,
+    <TerminalsComponent key={2} element={element} project={project} terminalLikeItems={terminalLikeItems} />,
+    <RelationsComponent key={3} element={element} />,
+    <SimpleTypesComponent key={4} element={element} project={project} simpleLikeItems={simpleLikeItems} />,
   ];
 
   return (

@@ -9,6 +9,7 @@ import { Dispatch } from "redux";
 import { GetFilteredLibCategories, GetLibCategories } from "./helpers";
 import { GetSelectedNode } from "../../helpers";
 import { LibraryCategory } from "../../models/project";
+import { ObjectType } from "../../models";
 
 interface Props {
   search: (text: string) => void;
@@ -17,9 +18,9 @@ interface Props {
   dispatch: Dispatch;
 }
 
-const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) => {
+const LibraryComponent = ({ search, searchString, dispatch }: Props) => {
   const [selectedElement, setSelectedElement] = useState("");
-  const [selectedElementType, setSelectedElementType] = useState(null);
+  const [selectedElementType, setSelectedElementType] = useState<ObjectType>(null);
   const legendOpen = useAppSelector(legendOpenSelector);
   const customCategory = useAppSelector(customCategorySelector);
   const libState = useAppSelector(librarySelector);
@@ -33,7 +34,7 @@ const LibraryComponent = ({ search, searchString, projectId, dispatch }: Props) 
     return searchString ? filteredCategories : libCategories;
   };
 
-  const onChange = (e: { target: { value: any } }) => search(e.target.value);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => search(e.target.value);
 
   const typeEditorOpen = () => {
     setSelectedElement("");

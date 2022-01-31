@@ -1,24 +1,24 @@
-import { MiniMap } from "react-flow-renderer";
+import { MiniMap, Node as FlowNode } from "react-flow-renderer";
 import { MapWrapper } from "./styled";
 import { Size } from "../../../compLibrary/size";
 import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } from "../../../redux/store";
 import { GetAspectColor } from "../../../helpers";
-import { AspectColorType } from "../../../models";
+import { AspectColorType, Node } from "../../../models";
 
 const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
-  let height = useAppSelector(heightSelector) as number;
+  let height = useAppSelector(heightSelector);
   if (!height) height = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
     <MapWrapper height={height} libOpen={libOpen}>
       <MiniMap
-        nodeStrokeColor={(node: any) => {
-          return GetAspectColor(node, AspectColorType.Selected);
+        nodeStrokeColor={(node: FlowNode<Node>) => {
+          return GetAspectColor(node.data, AspectColorType.Selected);
         }}
-        nodeColor={(node: any) => {
-          return GetAspectColor(node, AspectColorType.Header);
+        nodeColor={(node: FlowNode<Node>) => {
+          return GetAspectColor(node.data, AspectColorType.Header);
         }}
         nodeStrokeWidth={20}
       />

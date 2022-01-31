@@ -1,9 +1,11 @@
 import { ButtonContainer } from "./styled";
+import { Icon } from "../icon";
 
 interface Props {
   onClick: () => void;
   text: string;
   icon?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -11,10 +13,10 @@ interface Props {
  * @param interface
  * @returns a button with text and an optional icon.
  */
-const Button = ({ onClick, text, icon = null }: Props) => (
-  <ButtonContainer onClick={() => onClick()} icon={icon !== null}>
-    <div className="button-text">{text}</div>
-    {icon && <img src={icon} alt="icon" />}
+const Button = ({ onClick, text, icon = null, disabled = false }: Props) => (
+  <ButtonContainer disabled={disabled} onClick={() => onClick()} icon={icon !== null}>
+    <span>{text}</span>
+    {icon && <Icon size={15} src={icon} alt="" />}
   </ButtonContainer>
 );
 

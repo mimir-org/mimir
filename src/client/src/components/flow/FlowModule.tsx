@@ -1,6 +1,6 @@
 import { FlowTree } from "./tree";
 import { FlowBlock } from "./block";
-import { ViewType, VIEW_TYPE } from "../../models/project";
+import { VIEW_TYPE, ViewType } from "../../models/project";
 import { TypeEditorComponent } from "../../typeEditor";
 import { Project } from "../../models";
 

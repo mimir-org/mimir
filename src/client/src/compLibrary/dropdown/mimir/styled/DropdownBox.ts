@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../colors";
+import ParameterInputsWrapper from "../../../../modules/inspector/tabs/parameters/styled/parameter/ParameterInputsWrapper";
 
 interface Props {
   disabled: boolean;
@@ -9,7 +10,6 @@ interface Props {
 const DropdownBox = styled.div<Props>`
   display: flex;
   flex-direction: column;
-  flex: 1;
   position: relative;
   width: 100%;
   margin-bottom: 10px;
@@ -18,8 +18,8 @@ const DropdownBox = styled.div<Props>`
   font-size: ${(props) => props.fontSize};
   color: ${Color.Black};
 
-  .label {
-    margin-bottom: 4px;
+  ${ParameterInputsWrapper} & {
+    flex: 1;
   }
 `;
 

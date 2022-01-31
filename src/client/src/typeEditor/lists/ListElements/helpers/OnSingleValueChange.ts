@@ -1,10 +1,17 @@
 import { PredefinedAttribute } from "../../../../models";
+import { ChangeEvent } from "react";
 
-const OnSingleValueChange = (e, name: string, attributes: PredefinedAttribute[], isMultiSelect: boolean, onChange: Function) => {
+const OnSingleValueChange = (
+  e: ChangeEvent<HTMLInputElement>,
+  name: string,
+  attributes: PredefinedAttribute[],
+  isMultiSelect: boolean,
+  onChange: (label: string, attributes: PredefinedAttribute[]) => void
+) => {
   const targetKey = e.target.value;
   let attribute = attributes.find((a) => a.key === name);
 
-  let valueslist = attribute.values;
+  const valueslist = { ...attribute?.values };
   if (valueslist) valueslist[targetKey] = !valueslist[targetKey];
 
   const entries = Object.entries(valueslist).filter(([key, _value]) => key !== targetKey);
@@ -19,12 +26,12 @@ const OnSingleValueChange = (e, name: string, attributes: PredefinedAttribute[],
     isMultiSelect: isMultiSelect,
   };
 
-  let attributesList = attributes;
-  attributesList = attributesList.map((a) => {
+  const updateAttributes = attributes.map((a) => {
     if (a.key === attribute.key) a = attribute;
     return a;
   });
-  onChange("predefinedAttributes", attributesList);
+
+  onChange("predefinedAttributes", updateAttributes);
 };
 
 export default OnSingleValueChange;

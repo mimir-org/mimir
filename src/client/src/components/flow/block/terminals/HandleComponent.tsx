@@ -1,34 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Node, Connector } from "../../../../models";
+import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { IsValidBlockConnection, SetTerminalYPos, SetTerminalXPos, GetTerminalColor } from "./helpers";
-import { HandleBox } from "./styled";
-import { IsInputTerminal, IsPartOf } from "../../helpers";
-import { ConnectorIcon } from "../../../../assets/icons/connectors";
+import { GetTerminalColor, IsValidBlockConnection, ShowHandle } from "./helpers";
+import { HandleBox, HandleContainer } from "./styled";
+import { IsPartOf } from "../../helpers";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
-import { BlockNodeSize } from "../../../../models/project";
+import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { TerminalIcon } from ".";
 
 interface Props {
-  nodes: Node[];
   node: Node;
-  size: BlockNodeSize;
   terminals: Connector[];
-  dispatch: any;
-  isParent?: boolean;
-  electro?: boolean;
   offPage?: boolean;
-  isVisible?: boolean;
+  isInput?: boolean;
 }
 
 /**
  * Component for the terminals displayed on the nodes in BlockView.
  * @param interface
- * @returns a Mimir terminal in form of a Flow Handle element with an icon on top.
+ * @returns a Flow Handle element with an icon that corresponds with the terminal type.
  */
-const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, electro, offPage, isVisible = true }: Props) => {
-  const [visible, setVisible] = useState(isVisible);
+const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
+  const dispatch = useAppDispatch();
+  const project = useAppSelector(projectSelector);
+  const isElectro = useAppSelector(electroSelector);
+  const [visible, setVisible] = useState(!offPage);
   const className = "react-flow__handle-block";
   const updateNodeInternals = useUpdateNodeInternals();
 
@@ -36,42 +34,37 @@ const HandleComponent = ({ nodes, node, size, terminals, dispatch, isParent, ele
     setTimeout(() => {
       updateNodeInternals(node?.id);
     }, 200);
-  }, [electro, terminals]);
+  }, [isElectro, terminals]);
 
   return (
-    <>
+    <HandleContainer isElectro={isElectro}>
       {terminals.map((conn) => {
-        if (conn.visible) {
-          const [type, pos] = GetBlockHandleType(conn, electro);
-          const order = IsInputTerminal(conn) ? conn.inputOrder : conn.outputOrder;
-          const topPos = SetTerminalYPos(conn, pos, electro, isParent, order, size.height);
-          const leftPos = SetTerminalXPos(conn, pos, electro, offPage, isParent, order, size.width);
+        if (ShowHandle(conn, isInput)) {
+          const [type, pos] = GetBlockHandleType(conn, isElectro);
+          const color = GetTerminalColor(conn);
 
           return (
             <HandleBox
-              visible={visible && conn.visible && !IsPartOf(conn)}
+              visible={visible && !IsPartOf(conn)}
               id={"handle-" + conn.id}
-              top={topPos}
-              left={leftPos}
               key={conn.id}
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
             >
-              <ConnectorIcon style={{ fill: GetTerminalColor(conn) }} className={className} />
+              <TerminalIcon conn={conn} color={color} className={className} />
               <Handle
                 type={type}
-                style={electro ? { marginLeft: "7px" } : { marginTop: "9px" }}
                 position={pos}
                 id={conn.id}
                 className={className}
-                isValidConnection={(connection) => IsValidBlockConnection(connection, nodes, dispatch)}
+                isValidConnection={(connection) => IsValidBlockConnection(connection, project, dispatch)}
               />
             </HandleBox>
           );
         }
         return null;
       })}
-    </>
+    </HandleContainer>
   );
 };
 

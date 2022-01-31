@@ -1,29 +1,30 @@
-import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
-import { WorkerStatus, Node, Edge, LockNodeAm, LockEdgeAm, LockAttributeAm } from "..";
+import { Edge, LockAttributeAm, LockEdgeAm, LockNodeAm, Node, WorkerStatus } from "..";
 import {
   addNode,
   createEdge,
   removeEdge,
   removeNode,
-  updateNode,
-  updateEdge,
-  setIsLockedNodeTerminalAttribute,
-  setIsLockedTransportTerminalAttribute,
-  setIsLockedTransportAttribute,
-  setIsLockedCompositeAttribute,
-  setIsLockedNode,
   setIsLockedEdge,
-  setIsLockedNodeAttribute,
   setIsLockedInterfaceAttribute,
+  setIsLockedNode,
+  setIsLockedNodeAttribute,
+  setIsLockedNodeTerminalAttribute,
+  setIsLockedSimpleAttribute,
+  setIsLockedTransportAttribute,
+  setIsLockedTransportTerminalAttribute,
+  updateEdge,
+  updateNode,
 } from "../../redux/store/project/actions";
 import { ProjectState } from "../../redux/store/project/types";
+import Config from "../Config";
 
 let instance = null;
 class WebSocket {
   private _connection: HubConnection;
   private _running: boolean;
-  private _dispatch: Dispatch<any>;
+  private _dispatch: Dispatch;
   private _projectState: ProjectState;
   private _group: string;
 
@@ -36,7 +37,7 @@ class WebSocket {
     this._running = false;
 
     this._connection = new HubConnectionBuilder()
-      .withUrl(`${process.env.REACT_APP_SOCKET_BASE_URL}hub/modelbuilder`)
+      .withUrl(`${Config.SOCKET_BASE_URL}hub/modelbuilder`)
       .withAutomaticReconnect()
       .build();
 
@@ -66,7 +67,8 @@ class WebSocket {
           this._connection.on("ReceiveLockNodeData", this.handleReceiveLockNodeData);
           this._connection.on("ReceiveLockEdgeData", this.handleReceiveLockEdgeData);
         })
-        .catch((e: any) => {});
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        .catch((_e: unknown) => {});
     }
   }
 
@@ -77,7 +79,7 @@ class WebSocket {
     this._connection.send("JoinGroup", this._group);
   }
 
-  public setDispatcher(dispatch: Dispatch<any>) {
+  public setDispatcher(dispatch: Dispatch) {
     this._dispatch = dispatch;
   }
 
@@ -94,8 +96,7 @@ class WebSocket {
   }
 
   private handleReceivedNodeData = (eventType: WorkerStatus, data: string) => {
-    const jsonObject = JSON.parse(data);
-    const node = new Node(jsonObject);
+    const node = JSON.parse(data) as Node;
 
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
@@ -111,8 +112,7 @@ class WebSocket {
   };
 
   private handleReceivedEdgeData = (eventType: WorkerStatus, data: string) => {
-    const jsonObject = JSON.parse(data);
-    const edge = new Edge(jsonObject);
+    const edge = JSON.parse(data) as Edge;
 
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
@@ -147,7 +147,7 @@ class WebSocket {
       if (lockAttributeAm.terminalId) {
         this._dispatch(setIsLockedNodeTerminalAttribute(lockAttributeAm));
       } else if (lockAttributeAm.compositeId) {
-        this._dispatch(setIsLockedCompositeAttribute(lockAttributeAm));
+        this._dispatch(setIsLockedSimpleAttribute(lockAttributeAm));
       } else {
         this._dispatch(setIsLockedNodeAttribute(lockAttributeAm));
       }

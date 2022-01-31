@@ -1,7 +1,7 @@
 import { IsRelationEdge } from "../../../components/flow/helpers/IsRelationEdge";
 import { IsLocation } from "../../../typeEditor/helpers";
 import { InspectorElement } from "../types";
-import { IsCreateLibraryType, IsNode, IsEdge } from "./IsType";
+import { IsCreateLibraryType, IsEdge, IsNode } from "./IsType";
 import { IsProduct } from "../../../helpers";
 
 export const ShouldShowTabs = (element: InspectorElement) => {

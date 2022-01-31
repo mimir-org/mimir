@@ -1,8 +1,7 @@
-import { Edge, Node, Project } from "../../models";
-import { MODULE_TYPE, VIEW_TYPE } from "../../models/project";
+import { Node } from "../../models";
+import { MODULE_TYPE } from "../../models/project";
 import { AttributeLikeItem } from "../../modules/inspector/types";
-import { createAppSelector, combineAppSelectors, createParametricAppSelector } from "../../redux/store";
-import { ProjectState } from "./project/types";
+import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
 
 export const isProjectStateFetchingSelector = createAppSelector(
   (state) => state.projectState.fetching,
@@ -43,7 +42,7 @@ export const isFetchingSelector = combineAppSelectors(
 
 export const projectStateSelector = createAppSelector(
   (state) => state.projectState,
-  (projectState) => projectState as ProjectState
+  (projectState) => projectState
 );
 
 export const userStateSelector = createAppSelector(
@@ -59,6 +58,16 @@ export const usernameSelector = createAppSelector(
 export const commonStateSelector = createAppSelector(
   (state) => state.commonState,
   (commonState) => commonState
+);
+
+export const commonStateParsersSelector = createAppSelector(
+  (state) => state.commonState.parsers,
+  (parsers) => parsers
+);
+
+export const commonStateCollaborationPartnersSelector = createAppSelector(
+  (state) => state.commonState.collaborationPartners,
+  (collaborationPartners) => collaborationPartners
 );
 
 export const typeEditorStateSelector = createAppSelector(
@@ -126,14 +135,15 @@ export const productNodeSizeSelector = createAppSelector(
   (size) => size
 );
 
-export const treeSelector = createAppSelector(
-  (state) => state.flow.view,
-  (view) => view === VIEW_TYPE.TREEVIEW
-);
-
 export const flowViewSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view
+);
+
+export const isActiveViewSelector = createParametricAppSelector(
+  (state) => state.flow.view,
+  (_, viewType: string) => viewType,
+  (activeView, menuType) => activeView === menuType
 );
 
 export const validationSelector = createAppSelector(
@@ -188,7 +198,7 @@ export const inspectorActiveTabSelector = createAppSelector(
 );
 
 export const heightSelector = createAppSelector(
-  (state) => state.inspectorHeight.height,
+  (state) => state.inspector.height,
   (width) => width
 );
 
@@ -204,7 +214,22 @@ export const location3DSelector = createAppSelector(
 
 export const projectSelector = createAppSelector(
   (state) => state.projectState.project,
-  (project) => project as Project
+  (project) => project
+);
+
+export const projectIdSelector = createAppSelector(
+  (state) => state.projectState?.project?.id,
+  (projectId) => projectId
+);
+
+export const projectListSelector = createAppSelector(
+  (state) => state.projectState.projectList,
+  (projectList) => projectList
+);
+
+export const projectIsSubProjectSelector = createAppSelector(
+  (state) => state.projectState?.project?.isSubProject,
+  (isSubProject) => isSubProject
 );
 
 export const secondaryNodeSelector = createAppSelector(
@@ -224,7 +249,7 @@ export const electroSelector = createAppSelector(
 
 export const edgeSelector = createAppSelector(
   (state) => state.projectState.project?.edges,
-  (edges) => (edges ?? []) as Edge[]
+  (edges) => edges ?? []
 );
 
 export const attributeTypeSelector = createAppSelector(
@@ -266,7 +291,7 @@ export const makeFilterSelector = () =>
 
 export const makeSelectedFilterSelector = () =>
   createParametricAppSelector(
-    (state) => state.parametersReducer.selectedAttributeFilters,
+    (state) => state.parameters.selectedAttributeFilters,
     (_, parametersElementId: string) => parametersElementId,
     (selectedAttributeFilters, parametersElementId) => selectedAttributeFilters[parametersElementId] ?? {}
   );

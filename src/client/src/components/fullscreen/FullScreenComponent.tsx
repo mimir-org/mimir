@@ -1,14 +1,14 @@
 import { Size } from "../../compLibrary/size";
-import { ExpandIcon, CloseIcon } from "../../assets/icons/controls";
+import { CloseIcon, ExpandIcon } from "../../assets/icons/controls";
 import { OnToggleClick } from "./handlers";
 import { FullScreenButton } from "./styled";
 import {
-  useAppDispatch,
-  useAppSelector,
+  heightSelector,
+  inspectorSelector,
   isOpenSelector,
   libOpenSelector,
-  inspectorSelector,
-  heightSelector,
+  useAppDispatch,
+  useAppSelector,
 } from "../../redux/store";
 
 interface Props {

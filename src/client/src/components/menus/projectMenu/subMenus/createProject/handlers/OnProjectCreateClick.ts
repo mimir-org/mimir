@@ -1,9 +1,10 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../../../projectMenu/subMenus/redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { create } from "../../../../../../redux/store/project/actions";
-import { changeFlowView } from "../../../../../../redux/store/flow/actions";
-import { ViewType, VIEW_TYPE } from "../../../../../../models/project";
+import { changeFlowView } from "../../../../../../redux/store/flow/flowSlice";
+import { VIEW_TYPE, ViewType } from "../../../../../../models/project";
+import { Dispatch } from "redux";
 
-const OnProjectCreateClick = (dispatch: any, projectName: string) => {
+const OnProjectCreateClick = (dispatch: Dispatch, projectName: string) => {
   dispatch(create(projectName, projectName));
   dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
   dispatch(setProjectMenuVisibility(false));

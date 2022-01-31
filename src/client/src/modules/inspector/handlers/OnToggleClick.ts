@@ -1,4 +1,4 @@
-import { Action } from "redux";
+import { Action, Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
 import { SetPanelHeight } from "../helpers";
 
@@ -9,7 +9,7 @@ import { SetPanelHeight } from "../helpers";
  * @param open
  */
 const OnToggleClick = (
-  dispatch: any,
+  dispatch: Dispatch,
   open: boolean,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   changeInspectorVisibilityAction: (visibility: boolean) => Action,

@@ -1,33 +1,21 @@
-import { ExplorerIconLine } from "../aspectComponent/styled";
-import { Node } from "../../../models";
-import { useAppDispatch, useAppSelector, projectSelector } from "../../../redux/store";
-import { OnTreeChange } from "../handlers";
+import { AspectButton } from "../aspectComponent/styled";
 import { GetIcon } from "../helpers";
+import { Icon } from "../../../compLibrary/icon";
+import { VisuallyHidden } from "../../../compLibrary/util";
+import { TextResources } from "../../../assets/text";
 
 interface Props {
-  node: Node;
-  isAncestorVisible: boolean;
+  isHidden: boolean;
   isVisible: boolean;
-  onSetVisibleElement: (visible: boolean, nodeId: string) => void;
+  isAncestorVisible: boolean;
+  onToggleVisible: () => void;
 }
 
-export const VisibleComponent = ({ node, isAncestorVisible, isVisible, onSetVisibleElement }: Props) => {
-  const dispatch = useAppDispatch();
-  const project = useAppSelector(projectSelector);
-  const isHidden = node?.isHidden;
+export const VisibleComponent = ({ isHidden, isAncestorVisible, isVisible, onToggleVisible }: Props) => (
+  <AspectButton isHidden={isHidden} isVisible={isVisible} onClick={onToggleVisible}>
+    <VisuallyHidden>{isHidden ? TextResources.Explorer_Show_Node : TextResources.Explorer_Hide_Node}</VisuallyHidden>
+    <Icon size={15} src={GetIcon(isHidden, isAncestorVisible, isVisible)} alt="" />
+  </AspectButton>
+);
 
-  return (
-    <ExplorerIconLine isHidden={isHidden} isVisible={isVisible}>
-      <img
-        src={GetIcon(isHidden, isAncestorVisible, isVisible)}
-        alt="visible-icon"
-        className="visible-icon"
-        onClick={() => {
-          onSetVisibleElement(!isVisible, node.id);
-          OnTreeChange(node, project, dispatch);
-        }}
-      />
-    </ExplorerIconLine>
-  );
-};
 export default VisibleComponent;

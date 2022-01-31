@@ -1,51 +1,49 @@
-import { Dispatch } from "redux";
-import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { MENU_TYPE } from "../../../../../models/project";
 import { Button } from "../../../../../compLibrary/buttons";
-import { TextResources } from "../../../../../assets/text";
-import { ProjectItemCm } from "../../../../../models";
-import { ProjectState } from "../../../../../redux/store/project/types";
-import { OnOpen, OnReturn } from "./handlers";
-import { RightArrowIcon } from "../../../../../assets/icons/arrow";
+import { ButtonBox } from "../styled";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
 import { ProjectDetails } from ".";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonsContainer, OpenButton } from "../styled";
-import { IsStartPage } from "../../../../../helpers";
-
-interface Props {
-  projectState: ProjectState;
-  dispatch: Dispatch;
-}
+import { RightArrowIcon } from "../../../../../assets/icons/arrow";
+import { TextResources } from "../../../../../assets/text";
+import { MENU_TYPE, VIEW_TYPE } from "../../../../../models/project";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
+import { OnOpen, OnReturn } from "./handlers";
+import {
+  isActiveMenuSelector,
+  isActiveViewSelector,
+  projectListSelector,
+  projectSelector,
+  useAppDispatch,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../../../../redux/store";
 
 /**
  * Open project menu component
- * @param interface
  * @returns a menu for selecting a project or create a new one.
  */
-export const OpenProjectMenu = ({ projectState, dispatch }: Props) => {
-  const projects = projectState.projectList as ProjectItemCm[];
-  const project = projects?.find((x) => x.selected);
-  const projectId = project?.id;
-  const projectDescription = project?.description;
-  const hasProject = projectId && projectId !== "";
+export const OpenProjectMenu = () => {
+  const dispatch = useAppDispatch();
+  const currentProject = useAppSelector(projectSelector);
+  const projectList = useAppSelector(projectListSelector);
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
+  const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
+  const selectedProject = projectList?.find((x) => x.selected);
+  const projectId = selectedProject?.id;
+  const projectDescription = selectedProject?.description;
+  const onExit = () => OnReturn(dispatch);
+  const onAction = () => OnOpen(projectId, currentProject, dispatch);
+  const isActionDisabled = !projectId || projectId === "";
 
   return (
-    <ProjectBox large visible={isOpen} startPage={IsStartPage()}>
-      <ProjectBody large>
-        <HeaderBox>{TextResources.Project_Open_Label}</HeaderBox>
-        <ProjectDetails projects={projects} projectDescription={projectDescription} dispatch={dispatch} />
-        <ButtonsContainer>
-          <Button onClick={() => OnReturn(dispatch)} text={TextResources.Project_Cancel} />
-          <OpenButton hasProject={hasProject}>
-            <Button
-              onClick={hasProject ? () => OnOpen(projectId, dispatch) : () => null}
-              text={TextResources.Project_Open}
-              icon={RightArrowIcon}
-            />
-          </OpenButton>
-        </ButtonsContainer>
-      </ProjectBody>
-    </ProjectBox>
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_Open_Label} inset={isStartPage && "120px 0 0 0"}>
+        <ProjectDetails projects={projectList} projectDescription={projectDescription} />
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Open} icon={RightArrowIcon} />
+        </ButtonBox>
+      </InfoModalContent>
+    </Modal>
   );
 };
 

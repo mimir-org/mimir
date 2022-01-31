@@ -1,5 +1,3 @@
-import { Project, Node, Edge, CommitPackage, ProjectFileAm, ProjectConverterAm } from "../../../models";
-import { ApiError } from "../../../models/webclient";
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
 export const COMMIT_PROJECT_SUCCESS_OR_ERROR = "COMMIT_PROJECT_SUCCESS_OR_ERROR";
@@ -20,7 +18,6 @@ export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const SET_NODE_VISIBILITY = "SET_NODE_VISIBILITY";
 export const SET_EDGE_VISIBILITY = "SET_EDGE_VISIBILITY";
-export const SET_EDGE_ANIMATION = "SET_EDGE_ANIMATION";
 export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
 export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
 export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
@@ -36,7 +33,7 @@ export const CHANGE_INTERFACE_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_ATTRIBUTE_VALU
 export const CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE";
 export const CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE";
 export const CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE = "CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE";
-export const CHANGE_COMPOSITE_ATTRIBUTE_VALUE = "CHANGE_COMPOSITE_ATTRIBUTE_VALUE";
+export const CHANGE_SIMPLE_ATTRIBUTE_VALUE = "CHANGE_SIMPLE_ATTRIBUTE_VALUE";
 export const DELETE_PROJECT_ERROR = "DELETE_PROJECT_ERROR";
 export const CHANGE_ACTIVE_CONNECTOR = "CHANGE_ACTIVE_CONNECTOR";
 export const EXPORT_PROJECT_TO_FILE = "EXPORT_PROJECT_TO_FILE";
@@ -54,7 +51,7 @@ export const SET_LOCK_EDGE = "SET_LOCK_EDGE";
 export const SET_LOCK_NODE_ATTRIBUTE = "SET_LOCK_NODE_ATTRIBUTE";
 export const SET_LOCK_TRANSPORT_ATTRIBUTE = "SET_LOCK_TRANSPORT_ATTRIBUTE";
 export const SET_LOCK_INTERFACE_ATTRIBUTE = "SET_LOCK_INTERFACE_ATTRIBUTE";
-export const SET_LOCK_COMPOSITE_ATTRIBUTE = "SET_LOCK_COMPOSITE_ATTRIBUTE";
+export const SET_LOCK_SIMPLE_ATTRIBUTE = "SET_LOCK_SIMPLE_ATTRIBUTE";
 export const SET_LOCK_NODE_TERMINAL_ATTRIBUTE = "SET_LOCK_NODE_TERMINAL_ATTRIBUTE";
 export const SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE = "SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE";
 export const SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE = "SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE";
@@ -62,20 +59,34 @@ export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export const UPDATE_NODE = "UPDATE_NODE";
 export const UPDATE_EDGE = "UPDATE_EDGE";
 export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
+import { ApiError } from "../../../models/webclient";
+import {
+  CommitPackage,
+  ConnectorVisibility,
+  Edge,
+  Node,
+  Project,
+  ProjectConverterAm,
+  ProjectFileAm,
+  ProjectItemCm,
+} from "../../../models";
 
 // State types
 export interface ProjectState {
   fetching: boolean;
   creating: boolean;
   project: Project;
-  projectList: [];
+  projectList: ProjectItemCm[];
   apiError: ApiError[];
 }
 
 // Action types
 export interface FetchingProjectAction {
   type: typeof FETCHING_PROJECT;
-  payload: string;
+  payload: {
+    id: string;
+    project: Project;
+  };
 }
 
 export interface SearchProjectAction {
@@ -101,7 +112,7 @@ export interface FetchingProjectActionFinished {
 
 export interface CreatingProjectAction {
   type: typeof CREATING_PROJECT;
-  payload: object;
+  payload: Record<string, unknown>;
 }
 
 export interface CreatingProjectActionFinished {
@@ -162,14 +173,6 @@ export interface SetEdgeVisibility {
   payload: {
     edge: Edge;
     isHidden: boolean;
-  };
-}
-
-export interface SetEdgeAnimation {
-  type: typeof SET_EDGE_ANIMATION;
-  payload: {
-    edge: Edge;
-    animated: boolean;
   };
 }
 
@@ -239,6 +242,7 @@ export interface ChangeNodePropValue {
   payload: {
     nodeId: string;
     propName: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     propValue: any;
   };
 }
@@ -258,6 +262,7 @@ export interface ChangeTransportPropValue {
   payload: {
     edgeId: string;
     propName: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     propValue: any;
   };
 }
@@ -277,6 +282,7 @@ export interface ChangeInterfacePropValue {
   payload: {
     edgeId: string;
     propName: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     propValue: any;
   };
 }
@@ -321,14 +327,14 @@ export interface ChangeInterfaceTerminalAttributeValue {
     terminalId: string;
   };
 }
-export interface ChangeCompositeAttributeValue {
-  type: typeof CHANGE_COMPOSITE_ATTRIBUTE_VALUE;
+export interface ChangeSimpleAttributeValue {
+  type: typeof CHANGE_SIMPLE_ATTRIBUTE_VALUE;
   payload: {
     id: string;
     value: string;
     unitId: string;
     nodeId: string;
-    compositeId: string;
+    simpleId: string;
   };
 }
 
@@ -344,9 +350,7 @@ export interface ChangeActiveConnector {
   payload: {
     nodeId: string;
     connectorId: string;
-    visible: boolean;
-    inputOrder: number;
-    outputOrder: number;
+    connectorVisibility: ConnectorVisibility;
   };
 }
 export interface ExportProjectFileAction {
@@ -520,11 +524,11 @@ export interface SetLockInterfaceTerminalAttribute {
   };
 }
 
-export interface SetLockCompositeAttribute {
-  type: typeof SET_LOCK_COMPOSITE_ATTRIBUTE;
+export interface SetLockSimpleAttribute {
+  type: typeof SET_LOCK_SIMPLE_ATTRIBUTE;
   payload: {
     id: string;
-    compositeId: string;
+    simpleId: string;
     nodeId: string;
     isLocked: boolean;
     isLockedStatusBy: string;
@@ -589,7 +593,6 @@ export type ProjectActionTypes =
   | UpdatePositionAction
   | SetNodeVisibility
   | SetEdgeVisibility
-  | SetEdgeAnimation
   | SetActiveNode
   | SetActiveEdge
   | SetActiveBlockNode
@@ -608,7 +611,7 @@ export type ProjectActionTypes =
   | ChangeNodeTerminalAttributeValue
   | ChangeTransportTerminalAttributeValue
   | ChangeInterfaceTerminalAttributeValue
-  | ChangeCompositeAttributeValue
+  | ChangeSimpleAttributeValue
   | DeleteProjectErrorAction
   | ChangeActiveConnector
   | ExportProjectFileAction
@@ -627,7 +630,7 @@ export type ProjectActionTypes =
   | SetLockInterfaceTerminalAttribute
   | SetLockTransportAttribute
   | SetLockInterfaceAttribute
-  | SetLockCompositeAttribute
+  | SetLockSimpleAttribute
   | LockAttributeFinished
   | CommitProject
   | CommitProjectFinished

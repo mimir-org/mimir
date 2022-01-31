@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Aspect, Discipline } from "../../models";
 
 const GetFilteredAttributesList = (attributes: any[], aspect: Aspect): any[] => {

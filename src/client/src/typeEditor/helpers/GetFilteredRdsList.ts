@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Aspect } from "../../models";
 
 const GetFilteredRdsList = (rds: any[], aspect: Aspect): any[] => {

@@ -2,6 +2,7 @@ import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./styled";
 import { Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { GetCompanyLogoForNode } from "../../../../helpers";
+import Config from "../../../../models/Config";
 
 interface Props {
   node: Node;
@@ -13,7 +14,7 @@ interface Props {
  * @returns name,logo and symbol.
  */
 const TreeLogoComponent = ({ node }: Props) => {
-  const company = process.env.REACT_APP_COMPANY;
+  const company = Config.COMPANY;
 
   return (
     <TreeLogoWrapper>

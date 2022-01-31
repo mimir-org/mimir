@@ -1,17 +1,18 @@
+import { Action, Dispatch } from "redux";
 import {
-  Node,
-  Edge,
-  Interface,
-  Transport,
-  Composite,
-  Connector,
-  CreateLibraryType,
   Attribute,
   AttributeType,
   CombinedAttribute,
-  TerminalTypeExtended,
+  Connector,
   ConnectorType,
-  CompositeType,
+  CreateLibraryType,
+  Edge,
+  Interface,
+  Node,
+  Simple,
+  SimpleType,
+  TerminalTypeExtended,
+  Transport,
 } from "../../models";
 
 /**
@@ -29,9 +30,9 @@ export type InspectorTerminalsElement = Node | Transport | Interface | CreateLib
 
 /**
  * Union type of possible top elements chosen for parameters view in inspector, i.e. what element owns the attributes shown in parameters view.
- * This can either be attributes directly on the object itself (Node, Transport, Interface, Composite), or on it's terminals (via terminals view).
+ * This can either be attributes directly on the object itself (Node, Transport, Interface, Simple), or on its terminals (via terminals view).
  */
-export type InspectorParametersElement = InspectorTerminalsElement | TerminalLikeItem | CompositeLikeItem;
+export type InspectorParametersElement = InspectorTerminalsElement | TerminalLikeItem | SimpleLikeItem;
 
 export type AttributeLikeItem = Attribute | AttributeType;
 
@@ -39,10 +40,21 @@ export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
 
 export type TerminalLikeItem = Connector | TerminalTypeExtended;
 
-export type CompositeLikeItem = Composite | CompositeType;
+export type SimpleLikeItem = Simple | SimpleType;
 
 export type SelectedTerminalIdentifier = {
   id: string;
   connectorType: ConnectorType;
   index: number;
 };
+
+export type ChangeInspectorVisibilityAction = (visibility: boolean) => Action;
+export type ChangeInspectorHeightAction = (height: number) => Action;
+export type ChangeInspectorTabAction = (index: number) => Action;
+export type OnToogleHandler = (
+  dispatch: Dispatch,
+  open: boolean,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  changeInspectorVisibilityAction: ChangeInspectorVisibilityAction,
+  changeInspectorHeightAction: ChangeInspectorHeightAction
+) => void;

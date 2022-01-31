@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Application;
 

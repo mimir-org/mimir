@@ -1,15 +1,16 @@
+import { SetFlowElementFunction } from "../../../helpers";
 import { Node } from "../../../models";
 
 export const OnSelectActiveNode = (
   node: Node,
   nodes: Node[],
   selectedNodes: string[],
-  setActiveFlowElement: (element: any) => void
+  setActiveFlowElement: SetFlowElementFunction
 ) => {
   let tempArray: Node[] = [];
 
   selectedNodes?.forEach((n) => {
-    let selectedNode = nodes.find((x) => x.id === n);
+    const selectedNode = nodes.find((x) => x.id === n);
     tempArray.push(selectedNode);
   });
 
@@ -18,7 +19,7 @@ export const OnSelectActiveNode = (
   if (isInArray) {
     tempArray = tempArray.filter((n) => n !== node);
   } else {
-    let selectedNode = nodes.find((n) => n.id === node.id);
+    const selectedNode = nodes.find((n) => n.id === node.id);
     tempArray.push(selectedNode);
   }
 

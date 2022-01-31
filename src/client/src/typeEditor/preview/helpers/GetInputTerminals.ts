@@ -1,9 +1,9 @@
-import { ConnectorType, CreateLibraryType, TerminalType } from "../../../models";
+import { ConnectorType, CreateLibraryType, TerminalType, TerminalTypeDict } from "../../../models";
 
-const GetInputTerminals = (createLibraryType: CreateLibraryType, terminals: any[]): TerminalType[] => {
-  let terminalsArray: TerminalType[] = [];
+const GetInputTerminals = (createLibraryType: CreateLibraryType, terminals: TerminalTypeDict): TerminalType[] => {
+  const terminalsArray: TerminalType[] = [];
   createLibraryType?.terminalTypes
-    .filter((t) => t.connectorType === ConnectorType.Input)
+    .filter((t) => t.connectorType === ConnectorType.Input || t.connectorType === ConnectorType.Bidirectional)
     .forEach((t) => {
       terminals.forEach((x) => {
         x.value.forEach((y) => {

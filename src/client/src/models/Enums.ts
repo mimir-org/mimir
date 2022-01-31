@@ -5,9 +5,17 @@ export enum Aspect {
   Product = 4,
   Location = 8,
 }
+
 export enum ConnectorType {
   Input = 0,
   Output = 1,
+  Bidirectional = 2,
+}
+
+export enum ConnectorVisibility {
+  None = 0,
+  InputVisible = 1,
+  OutputVisible = 2,
 }
 
 export enum RelationType {
@@ -67,5 +75,5 @@ export enum WorkerStatus {
   None = 0,
   Create = 1,
   Update = 2,
-  Delete = 3
+  Delete = 3,
 }

@@ -4,6 +4,7 @@ import { InspectorElement } from "../../types";
 import { GetAdminContent } from "./GetAdminContent";
 import { statusSelector, useAppSelector } from "../../../../redux/store";
 import { GetCompanyLogoForInspector } from "../../../../helpers";
+import Config from "../../../../models/Config";
 
 interface Props {
   element: InspectorElement;
@@ -12,11 +13,11 @@ interface Props {
 
 const AdminComponent = ({ element, project }: Props) => {
   const statuses = useAppSelector(statusSelector);
-  const company = process.env.REACT_APP_COMPANY;
+  const company = Config.COMPANY;
 
   return (
     <>
-      <AdminLogo src={GetCompanyLogoForInspector(company, element)} alt="logo"/>
+      <AdminLogo src={GetCompanyLogoForInspector(company, element)} alt="logo" />
       {element && <AdminContentWrapper>{GetAdminContent(element, project, statuses)}</AdminContentWrapper>}
     </>
   );

@@ -1,4 +1,4 @@
-const OnBlur = (setListOpen: any, isOpen: boolean) => {
+const OnBlur = (setListOpen: (open: boolean) => void, isOpen: boolean) => {
   setListOpen(isOpen);
 };
 

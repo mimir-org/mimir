@@ -10,6 +10,7 @@ import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../helpers";
 import { GetReferenceDesignationEdge } from "../../../../helpers/GetReferenceDesignation";
+import { DropDownItem } from "../../../../compLibrary/dropdown/typeEditor/Dropdown";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -24,7 +25,7 @@ type Element = Transport | Interface;
 const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
   const onChange = <K extends keyof Element>(key: K, value: Element[K]) =>
-    !!edge.transport ? dispatch(changeTransportValue(edge.id, key, value)) : dispatch(changeInterfaceValue(edge.id, key, value));
+    edge.transport ? dispatch(changeTransportValue(edge.id, key, value)) : dispatch(changeInterfaceValue(edge.id, key, value));
 
   const element = edge.transport ?? edge.interface;
 
@@ -123,7 +124,7 @@ const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
             keyProp={"id"}
             defaultValue={element?.statusId}
             valueProp={null}
-            onChange={(value: any) => onChange("statusId", value.id)}
+            onChange={(value: DropDownItem<EnumBase>) => onChange("statusId", value.id)}
             listTop={31}
             borderRadius={5}
             disabled={edge.isLocked}

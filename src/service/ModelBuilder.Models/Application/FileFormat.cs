@@ -1,8 +1,8 @@
-﻿namespace Mb.Models.Application
+namespace Mb.Models.Application
 {
     public class FileFormat
     {
-       public string ContentType { get; set; }
-       public string FileExtension { get; set; }
+        public string ContentType { get; set; }
+        public string FileExtension { get; set; }
     }
 }

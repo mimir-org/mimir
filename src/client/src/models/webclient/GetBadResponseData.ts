@@ -1,12 +1,13 @@
-import { HttpResponse, BadRequestData } from ".";
+import { BadRequestData, HttpResponse } from ".";
 import { BadRequestDataItem } from "./Types";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const GetBadResponseData = (response: HttpResponse<any>): BadRequestData => {
   if (response.status !== 400) return null;
 
   const title = response?.data?.title ?? response?.statusText ?? "";
 
-  var data = {
+  const data = {
     title: title,
     items: [],
   } as BadRequestData;

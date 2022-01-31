@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
+using Mb.Models.Common;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 
@@ -53,7 +54,7 @@ namespace Mb.Data.Repositories
         public string GetDomain()
         {
             Init();
-            if(_currentCollaborationPartner == null)
+            if (_currentCollaborationPartner == null)
                 throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
 
             return _currentCollaborationPartner.Domain;
@@ -77,6 +78,25 @@ namespace Mb.Data.Repositories
         }
 
         /// <summary>
+        /// Check if Iri is valid
+        /// </summary>
+        /// <param name="iri">string</param>
+        /// <returns>bool</returns>
+        /// <remarks>
+        /// For an iri to be valid, it should be of this format: http(s)://xxx.yyy
+        /// </remarks> 
+        public bool HasValidIri(string iri)
+        {
+            if (!Uri.IsWellFormedUriString(iri, UriKind.Absolute))
+                return false;
+
+            if (!Uri.TryCreate(iri, UriKind.Absolute, out var tmp))
+                return false;
+
+            return tmp.Scheme == Uri.UriSchemeHttp || tmp.Scheme == Uri.UriSchemeHttps;
+        }
+
+        /// <summary>
         /// Create an id if the id is not valid
         /// </summary>
         /// <param name="id">The id to check for validity</param>
@@ -97,7 +117,52 @@ namespace Mb.Data.Repositories
                 return (ResolveId(iri), iri);
 
             var newId = CreateId();
+
             return (newId, ResolveIri(newId));
+        }
+
+        /// <summary>
+        /// Create an id if the id is not valid
+        /// </summary>
+        /// <param name="replacement"></param>
+        /// <returns>A valid id and iri</returns>
+        public ReplacementId CreateOrUseIdAndIri(ReplacementId replacement)
+        {
+            if (replacement == null)
+                throw new NullReferenceException("Replacement can't be null in CreateOrUseIdAndIri");
+
+            var data = new ReplacementId { FromId = replacement.FromId, FromIri = replacement.FromIri };
+            var hasValidId = HasValidId(replacement.FromId);
+            var hasValidIri = HasValidIri(replacement.FromIri);
+
+            if (!hasValidId && !string.IsNullOrWhiteSpace(replacement.FromId) && hasValidIri)
+            {
+                var domain = GetDomain();
+                if (replacement.FromIri.ToLower().Contains(domain.ToLower()))
+                {
+                    data.ToId = CreateId();
+                    data.ToIri = ResolveIri(data.ToId);
+                    return data;
+                }
+            }
+
+            if (hasValidId)
+            {
+                data.ToId = replacement.FromId;
+                data.ToIri = ResolveIri(replacement.FromId);
+                return data;
+            }
+
+            if (hasValidIri)
+            {
+                data.ToIri = data.FromIri;
+                data.ToId = ResolveId(data.FromIri);
+                return data;
+            }
+
+            data.ToId = CreateId();
+            data.ToIri = ResolveIri(data.ToId);
+            return data;
         }
 
         #endregion
@@ -109,7 +174,7 @@ namespace Mb.Data.Repositories
         /// </summary>
         private void Init()
         {
-            if(_collaborationPartners != null && _collaborationPartners.Any() && _currentCollaborationPartner != null)
+            if (_collaborationPartners != null && _collaborationPartners.Any() && _currentCollaborationPartner != null)
                 return;
 
             _collaborationPartners = _collaborationPartnerRepository?.GetAll()?.ToList();
@@ -136,9 +201,16 @@ namespace Mb.Data.Repositories
             if (collaborationPartner == null)
                 return null;
 
-            var idPart = string.IsNullOrEmpty(iriParsed.Fragment) ?
-                iriParsed.Segments.Last() :
-                iriParsed.Fragment[1..];
+            var idPart = string.IsNullOrEmpty(iriParsed.Fragment) ? iriParsed.Segments.Last() : iriParsed.Fragment[1..];
+
+            if (string.IsNullOrEmpty(idPart))
+                throw new InvalidOperationException("Can't resolve id-part from IRI. The IRI has wrong format");
+
+            if (idPart.Length < 2)
+                throw new InvalidOperationException("Can't resolve id-part from IRI. The IRI has wrong format");
+
+            if (idPart.StartsWith("ID"))
+                idPart = idPart.Remove(0, 2);
 
             return $"{collaborationPartner.Domain}_{idPart}";
         }
@@ -156,13 +228,13 @@ namespace Mb.Data.Repositories
                 throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
 
             var iri = _currentCollaborationPartner.Iris?.FirstOrDefault();
-            if(iri == null)
+            if (iri == null)
                 throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner default iri");
 
             if (iri.StartsWith("http"))
                 return $"{iri.TrimEnd('/')}/ID{SplitId(id)}";
 
-            return $"http://{iri.TrimEnd('/')}/ID{SplitId(id)}";
+            return $"https://{iri.TrimEnd('/')}/ID{SplitId(id)}";
         }
 
         /// <summary>
@@ -180,7 +252,7 @@ namespace Mb.Data.Repositories
                 return id;
 
             var lastSegment = split[^1];
-            return string.IsNullOrEmpty(lastSegment) ? id : lastSegment.Replace("ID","").Trim();
+            return string.IsNullOrEmpty(lastSegment) ? id : lastSegment.Replace("ID", "").Trim();
         }
 
         #endregion

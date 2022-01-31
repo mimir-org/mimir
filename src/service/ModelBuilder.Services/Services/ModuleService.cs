@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -60,12 +60,12 @@ namespace Mb.Services.Services
                 .Select(Activator.CreateInstance)
                 .FirstOrDefault()))
             {
-                if (instance is not T obj) 
+                if (instance is not T obj)
                     continue;
-                
+
                 data.Add(new Models.Application.Module
                 {
-                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescription {Id = Guid.Empty, Name = "Missing description"},
+                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescription { Id = Guid.Empty, Name = "Missing description" },
                     Instance = obj,
                     ModuleType = moduleType
                 });
@@ -87,7 +87,7 @@ namespace Mb.Services.Services
                 try
                 {
                     var hasModuleInterface = assembly.GetTypes().Any(x => x.GetInterfaces().Contains(typeof(IModuleInterface)) && x.GetConstructor(Type.EmptyTypes) != null);
-                    if (!hasModuleInterface) 
+                    if (!hasModuleInterface)
                         continue;
 
                     var ass = Assembly.LoadFrom(assembly.Location);

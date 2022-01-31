@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { ProjectData } from "./";
 import { ProjectItemCm } from "../../../../../models";
-import { ProjectListBox, ProjectDataContainer, ProjectListLabels } from "./styled";
+import { ProjectDataContainer, ProjectListBox, ProjectListLabels } from "./styled";
 import { TextResources } from "../../../../../assets/text";
 interface Props {
   projectList: ProjectItemCm[];

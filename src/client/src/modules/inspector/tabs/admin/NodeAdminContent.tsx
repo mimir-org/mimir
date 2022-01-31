@@ -8,7 +8,8 @@ import { EnumBase, Node, Project } from "../../../../models";
 import { changeNodeValue } from "../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../redux/store";
-import { IsAspectNode, IsProduct, GetRdsId, GetReferenceDesignation } from "../../../../helpers";
+import { GetRdsId, GetReferenceDesignation, IsAspectNode, IsProduct } from "../../../../helpers";
+import { DropDownItem } from "../../../../compLibrary/dropdown/typeEditor/Dropdown";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -105,7 +106,7 @@ const NodeAdminContent = ({ node, project, statuses }: Props) => {
             keyProp={"id"}
             defaultValue={node?.statusId}
             valueProp={null}
-            onChange={(value: any) => onChange("statusId", value.id)}
+            onChange={(value: DropDownItem<EnumBase>) => onChange("statusId", value.id)}
             borderRadius={5}
             disabled={IsAspectNode(node) || node.isLocked}
           ></Dropdown>

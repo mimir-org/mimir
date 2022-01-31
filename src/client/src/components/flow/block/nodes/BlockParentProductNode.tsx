@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ProductSelectors";
-import { memo, FC, useState, useEffect } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent, TerminalsContainerComponent } from "../terminals";
+import { HandleComponent } from "../terminals";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
-import { ParentContainerComponent } from "./parentContainer";
+import { BlockParentComponent } from "./parentContainer";
 import { FilterTerminals } from "../helpers";
-import { AspectColorType, Connector } from "../../../../models";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { GetAspectColor } from "../../../../helpers";
+import { Connector } from "../../../../models";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 import { SetParentNodeSize } from "./helpers";
+import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { BoxWrapper } from "./styled";
 
 /**
  * Component for a parent Product Node in BlockView.
@@ -19,18 +20,16 @@ import { SetParentNodeSize } from "./helpers";
  */
 const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [inTerminalMenu, showInTerminalMenu] = useState(false);
-  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const [terminals, setTerminals]: [Connector[], any] = useState([]);
+  const [terminals, setTerminals] = useState<Connector[]>([]);
 
   const elements = useAppSelector(selectors.blockElementsSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
-  const electro = useAppSelector(selectors.electroSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const node = nodes?.find((x) => x.id === data.id);
+  const isElectro = useAppSelector(selectors.electroSelector);
 
   // Set size
   useEffect(() => {
@@ -46,42 +45,26 @@ const BlockParentProductNode: FC<NodeProps> = ({ data }) => {
     setTerminals(FilterTerminals(node?.connectors, null));
   }, [node]);
 
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+
   if (!node) return null;
 
   return (
-    <>
-      <ParentContainerComponent
+    <BoxWrapper isElectro={isElectro}>
+      <HandleComponent node={node} terminals={inputTerminals} isInput />
+      <BlockParentComponent
         node={node}
         size={size}
-        color={GetAspectColor(node, AspectColorType.Header)}
-        hasTerminals={terminals.length > 0}
-        onParentClick={() => OnParentClick(dispatch, node)}
-        onChildClick={() => OnChildClick(dispatch, node, nodes, edges)}
-        dispatch={dispatch}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
+        onNavigateUpClick={() => OnParentClick(dispatch, node)}
+        onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
+        isNavigationActive
       />
-
-      <TerminalsContainerComponent
-        node={node}
-        size={size}
-        inputMenuOpen={inTerminalMenu}
-        outputMenuOpen={outTerminalMenu}
-        electro={electro}
-        terminals={terminals}
-        onClick={(conn) => OnConnectorClick(conn, dispatch, edges, nodes)}
-        showInTerminalMenu={showInTerminalMenu}
-        showOutTerminalMenu={showOutTerminalMenu}
-        isParent
-      />
-      <HandleComponent
-        nodes={nodes}
-        node={node}
-        size={size}
-        terminals={terminals}
-        electro={electro}
-        dispatch={dispatch}
-        isParent
-      />
-    </>
+      <HandleComponent node={node} terminals={outputTerminals} />
+    </BoxWrapper>
   );
 };
 

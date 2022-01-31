@@ -1,6 +1,6 @@
 import { BlobData, CreateLibraryType, TerminalType } from "../../models";
 import { GetBlockColor, GetBlockHeight } from "./helpers";
-import { PreviewObjectBlock, InfoWrapper, InfoText, InfoSymbolWrapper, InputOutputTerminals, Terminals } from "../styled";
+import { InfoSymbolWrapper, InfoText, InfoWrapper, InputOutputTerminals, PreviewObjectBlock, Terminals } from "../styled";
 import { ConnectorIcon } from "../../assets/icons/connectors";
 import { Symbol } from "../../compLibrary/symbol";
 
@@ -13,7 +13,7 @@ interface Props {
 }
 /**
  * Component to show an object block with input output terminals
- * @param param0
+ * @param params
  * @returns the visual block in Type Preview Info
  */
 export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outputTerminals, symbol }: Props) => {
@@ -21,8 +21,8 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
   const inputCount = inputTerminals?.length;
   const outputCount = outputTerminals?.length;
 
-  const showTerminals = (input: boolean): any[] => {
-    let terminalsArray = [];
+  const showTerminals = (input: boolean): React.ReactNodeArray => {
+    const terminalsArray = [];
     const inputOutputArray = input ? inputTerminals : outputTerminals;
     inputOutputArray?.forEach((t, index) => {
       terminalsArray.push(
@@ -40,14 +40,14 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
         {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
         {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
-      <InfoWrapper height={'100%'}>
+      <InfoWrapper height={"100%"}>
         <InfoText>{rdsLabel}</InfoText>
         <InfoText>{createLibraryType.name}</InfoText>
-        {symbol &&
+        {symbol && (
           <InfoSymbolWrapper>
             <Symbol base64={symbol.data} text={symbol.name} />
           </InfoSymbolWrapper>
-        }
+        )}
       </InfoWrapper>
     </PreviewObjectBlock>
   );

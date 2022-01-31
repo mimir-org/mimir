@@ -13,7 +13,7 @@ export const useDragResizePanel = (
   changeInspectorHeightAction: (height: number) => Action,
   maxHeight?: number
 ) => {
-  let prevYRef = useRef<number>();
+  const prevYRef = useRef<number>();
 
   const resizeCallback = useCallback(
     (e: MouseEvent) => resize(e, prevYRef, inspectorRef, siblingRef, maxHeight),
@@ -51,7 +51,7 @@ const resize = (
   const dy = prevYRef.current - e.clientY;
   prevYRef.current = e.clientY;
 
-  let prevHeight = getComputedHeight(inspectorRef);
+  const prevHeight = getComputedHeight(inspectorRef);
 
   let newHeight = prevHeight + dy;
 
@@ -64,9 +64,9 @@ const resize = (
   setHeightProperty(inspectorRef, newHeight);
 
   if (siblingRef) {
-    let prevSiblingHeight = getComputedHeight(siblingRef);
+    const prevSiblingHeight = getComputedHeight(siblingRef);
 
-    let newSiblingHeight = prevSiblingHeight - (newHeight - prevHeight);
+    const newSiblingHeight = prevSiblingHeight - (newHeight - prevHeight);
 
     setHeightProperty(siblingRef, newSiblingHeight);
   }

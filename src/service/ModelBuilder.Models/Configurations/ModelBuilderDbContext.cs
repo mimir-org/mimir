@@ -1,4 +1,4 @@
-﻿using Mb.Models.Data;
+using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
 using Microsoft.EntityFrameworkCore;

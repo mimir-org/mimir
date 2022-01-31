@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { CreateLibraryType } from "../../models";
 import { ResetRedux } from "../helpers";
-import { updateValue } from "../redux/actions";
+import { updateCreateLibraryType } from "../redux/typeEditorSlice";
 
 export const OnPropertyChange = <K extends keyof CreateLibraryType>(key: K, value: CreateLibraryType[K], dispatch: Dispatch) => {
   ResetRedux(dispatch, key, value);
-  dispatch(updateValue(key, value));
+  dispatch(updateCreateLibraryType({ key, value }));
 };

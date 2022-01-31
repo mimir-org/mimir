@@ -1,19 +1,19 @@
 import { TextResources } from "../../../../../../assets/text";
-import { ProjectState } from "../../../../../../redux/store/project/types";
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
 import { exportProjectToFile } from "../../../../../../redux/store/project/actions";
-import { ProjectConverterAm } from "../../../../../../models";
+import { Project, ProjectConverterAm } from "../../../../../../models";
 import { ConvertProject } from "../../../../../../redux/sagas/project";
+import { Dispatch } from "redux";
 
-const OnSaveClick = (dispatch: any, projectState: ProjectState, fileName: string, parserId: string) => {
-  if (!projectState.project) {
+const OnSaveClick = (dispatch: Dispatch, project: Project, fileName: string, parserId: string) => {
+  if (!project) {
     throw Error(TextResources.Error_ExportProject);
   }
 
-  const project = ConvertProject(projectState.project);
+  const convertedProject = ConvertProject(project);
 
   const converter = {
-    project: project,
+    project: convertedProject,
     filename: fileName,
     parserId: parserId,
   } as ProjectConverterAm;

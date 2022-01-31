@@ -1,4 +1,4 @@
-import { SET_SECONDARY_NODE, REMOVE_SECONDARY_NODE, SecondaryActionTypes } from "./types";
+import { REMOVE_SECONDARY_NODE, SET_SECONDARY_NODE, SecondaryActionTypes } from "./types";
 
 const initialState = {
   node: null,

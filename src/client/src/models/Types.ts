@@ -1,4 +1,4 @@
-import { Aspect, Connector, Attribute, ObjectType, Composite, Project } from ".";
+import { Aspect, Attribute, Connector, ObjectType, Project, Simple } from ".";
 import { ProjectAm } from "../redux/sagas/project/ConvertProject";
 import { CommitStatus, ConnectorType, Discipline, SelectType } from "./Enums";
 
@@ -46,7 +46,7 @@ export interface LibItem {
   aspect: Aspect;
   connectors: Connector[];
   attributes?: Attribute[] | null;
-  simples?: Composite[] | null;
+  simples?: Simple[] | null;
   semanticReference: string;
   statusId: string;
   version: string;
@@ -137,7 +137,7 @@ export interface Purpose {
 
 export interface PredefinedAttribute {
   key: string;
-  values: Object;
+  values: Record<string, boolean>;
   isMultiSelect: boolean;
 }
 
@@ -168,14 +168,14 @@ export interface BlobData {
   discipline: Discipline;
 }
 
-export interface CompositeTypeResponse {
+export interface SimpleTypeResponse {
   id: string;
   name: string;
   semanticReference: string;
   attributeTypes: AttributeType[];
 }
 
-export interface CompositeType {
+export interface SimpleType {
   id: string;
   name: string;
   semanticReference: string;
@@ -264,7 +264,7 @@ export interface LockEdgeAm {
 
 export interface ProjectResultAm {
   project: Project;
-  idChanges: { [id: string]: string }
+  idChanges: { [id: string]: string };
 }
 
 export const SETTING_KEY = {

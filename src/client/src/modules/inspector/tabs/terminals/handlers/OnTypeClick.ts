@@ -1,4 +1,4 @@
-import { TerminalType, ConnectorType } from "../../../../../models";
+import { ConnectorType, TerminalType } from "../../../../../models";
 import { FormatTypeId } from "../helpers/FormatTypeId";
 
 export const OnTypeClick = (

@@ -7,12 +7,13 @@ import { AspectKey, ObjectTypeKey } from "./types";
 import Validation from "./validation/Validation";
 import {
   IsAspectSelectionInvalid,
-  IsObjectSelectionInvalid,
   IsLocationSelectionInvalid,
+  IsObjectSelectionInvalid,
   IsPurposeSelectionInvalid,
   IsSymbolSelectionInvalid,
-  IsTypeNameInvalid
+  IsTypeNameInvalid,
 } from "./validators";
+import React from "react";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -26,9 +27,10 @@ interface Props {
 const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, purposes, isValidationVisible }: Props) => (
   <TypeInfo>
     <Validation
-      minWidth={'15%'}
+      minWidth={"15%"}
       visible={isValidationVisible && IsAspectSelectionInvalid(createLibraryType)}
-      message={TextResources.TypeEditor_Error_Aspect}>
+      message={TextResources.TypeEditor_Error_Aspect}
+    >
       <Dropdown
         label={TextResources.TypeEditor_Aspect}
         categories={GetAspects()}
@@ -40,9 +42,10 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
 
     {createLibraryType && !IsLocation(createLibraryType.aspect) && (
       <Validation
-        minWidth={'15%'}
+        minWidth={"15%"}
         visible={isValidationVisible && IsObjectSelectionInvalid(createLibraryType)}
-        message={TextResources.TypeEditor_Error_Object_Type}>
+        message={TextResources.TypeEditor_Error_Object_Type}
+      >
         <Dropdown
           label={TextResources.TypeEditor_Object_Type}
           categories={GetObjectTypes(createLibraryType.aspect)}
@@ -55,9 +58,10 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
 
     {createLibraryType && IsLocation(createLibraryType.aspect) && (
       <Validation
-        minWidth={'15%'}
+        minWidth={"15%"}
         visible={isValidationVisible && IsLocationSelectionInvalid(createLibraryType)}
-        message={TextResources.TypeEditor_Error_Location_Type}>
+        message={TextResources.TypeEditor_Error_Location_Type}
+      >
         <Dropdown
           label={TextResources.TypeEditor_Location_Type}
           categories={GetLocationTypes(locationTypes)}
@@ -70,9 +74,10 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
     )}
 
     <Validation
-      minWidth={'15%'}
+      minWidth={"15%"}
       visible={isValidationVisible && IsPurposeSelectionInvalid(createLibraryType)}
-      message={TextResources.TypeEditor_Error_Purpose}>
+      message={TextResources.TypeEditor_Error_Purpose}
+    >
       <Dropdown
         label={TextResources.TypeEditor_Purpose}
         categories={GetPurposes(purposes)}
@@ -83,16 +88,17 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
     </Validation>
 
     <Validation
-      minWidth={'15%'}
+      minWidth={"15%"}
       visible={isValidationVisible && IsTypeNameInvalid(createLibraryType)}
-      message={TextResources.TypeEditor_Error_Name}>
+      message={TextResources.TypeEditor_Error_Name}
+    >
       <TypeNameInput>
         <p className="label">{TextResources.TypeEditor_Type_Name}</p>
         <TextInput
           type="text"
           defaultValue={createLibraryType && createLibraryType.name}
           placeholder={TextResources.TypeEditor_Type_Placeholder}
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChange("name", e.target.value);
           }}
         />
@@ -100,9 +106,10 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
     </Validation>
 
     <Validation
-      minWidth={'15%'}
+      minWidth={"15%"}
       visible={isValidationVisible && IsSymbolSelectionInvalid(createLibraryType)}
-      message={TextResources.TypeEditor_Error_Symbol}>
+      message={TextResources.TypeEditor_Error_Symbol}
+    >
       <Dropdown
         label={TextResources.TypeEditor_Symbol}
         categories={GetFilteredBlobData(icons)}

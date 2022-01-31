@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +16,7 @@ namespace Mb.Models.Data
         public string Iri { get; set; }
 
         public string Domain => Id.ResolveDomain();
-        
+
         public string Kind => nameof(Node);
 
         public string Rds { get; set; }

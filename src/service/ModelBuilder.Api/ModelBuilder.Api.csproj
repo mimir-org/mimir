@@ -25,16 +25,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-    <PackageReference Include="Microsoft.Identity.Web" Version="1.21.1" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.22.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.2.3" />
@@ -45,9 +45,9 @@
     <ProjectReference Include="..\ModelBuilder.Core\ModelBuilder.Core.csproj" />
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
     <ProjectReference Include="..\ModelBuilder.TypeEditor.Core\ModelBuilder.TypeEditor.Core.csproj" />
-    <ProjectReference Include="..\Modules\AzureActiveDirectory\AzureActiveDirectoryModule.csproj" />
+    <ProjectReference Include="..\Modules\AzureActiveDirectoryModule\AzureActiveDirectoryModule.csproj" />
     <ProjectReference Include="..\Modules\DefaultParserModule\DefaultParserModule.csproj" />
-    <ProjectReference Include="..\Modules\FamModule\EventHubModule.csproj" />
+    <ProjectReference Include="..\Modules\EventHubModule\EventHubModule.csproj" />
     <ProjectReference Include="..\Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj" />
     <ProjectReference Include="..\Modules\RdfParserModule\RdfParserModule.csproj" />
   </ItemGroup>

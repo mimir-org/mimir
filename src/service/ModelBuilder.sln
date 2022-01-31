@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Api", "ModelBuilder.Api\ModelBuilder.Api.csproj", "{8B96CE58-9994-44D0-971F-9F69C068B00E}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Models", "Mode
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{C5359E03-91E7-405A-803A-11182980C4E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureActiveDirectoryModule", "Modules\AzureActiveDirectory\AzureActiveDirectoryModule.csproj", "{B94CCCE8-C799-45ED-8C5D-40FE33364B82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureActiveDirectoryModule", "Modules\AzureActiveDirectoryModule\AzureActiveDirectoryModule.csproj", "{B94CCCE8-C799-45ED-8C5D-40FE33364B82}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftSqlServerModule", "Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj", "{9A1495B9-6CD5-46F4-9DCB-D314103A7F1B}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultParserModule", "Modu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fixtures", "Fixtures", "{CF9AF418-0087-4C8C-82A6-4038AE7DC19E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\FamModule\EventHubModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\EventHubModule\EventHubModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdfParserModule", "Modules\RdfParserModule\RdfParserModule.csproj", "{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}"
 EndProject
@@ -131,7 +131,6 @@ Global
 		{B94CCCE8-C799-45ED-8C5D-40FE33364B82} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{9A1495B9-6CD5-46F4-9DCB-D314103A7F1B} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{4D50D267-00B1-4772-B042-7D999221937E} = {C5359E03-91E7-405A-803A-11182980C4E9}
-		{CF9AF418-0087-4C8C-82A6-4038AE7DC19E} = {7C74EBBC-C332-45D2-87C4-90B3FBB2D512}
 		{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{F5117706-7A8B-49FF-8CB1-C60983519046} = {7C74EBBC-C332-45D2-87C4-90B3FBB2D512}

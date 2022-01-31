@@ -1,12 +1,13 @@
 import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 import { App } from "./components/app";
 import { PersistGate } from "redux-persist/integration/react";
 import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
-import { PublicClientApplication, EventType, EventMessage, AuthenticationResult } from "@azure/msal-browser";
+import { AuthenticationResult, EventMessage, EventType, PublicClientApplication } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
+import Config from "./models/Config";
 
 const rootElement = document.getElementById("root");
 export const msalInstance = new PublicClientApplication(msalConfig);
@@ -29,13 +30,20 @@ msalInstance.addEventCallback((event: EventMessage) => {
   }
 });
 
+const appInsights = new ApplicationInsights({
+  config: {
+    connectionString: Config.APP_INSIGHTS_CONNECTION_STRING,
+  },
+});
+
+appInsights.loadAppInsights();
+appInsights.trackPageView();
+
 ReactDOM.render(
   <Provider store={red.store}>
     <ReactFlowProvider>
       <PersistGate loading={null} persistor={red.persistor}>
-        <BrowserRouter forceRefresh={true}>
-          <App pca={msalInstance} />
-        </BrowserRouter>
+        <App pca={msalInstance} />
       </PersistGate>
     </ReactFlowProvider>
   </Provider>,

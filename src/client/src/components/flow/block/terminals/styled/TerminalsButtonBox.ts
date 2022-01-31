@@ -2,16 +2,11 @@ import styled from "styled-components";
 
 interface Props {
   visible: boolean;
-  left: string;
-  right: string;
+  isInput: boolean;
 }
 
-const TerminalsButtonBox = styled.div<Props>`
+const TerminalsButtonBox = styled.span<Props>`
   opacity: ${(props) => (!props.visible ? 0 : 1)};
-  position: absolute;
-  top: 6px;
-  left: ${(props) => props.left};
-  right: ${(props) => props.right};
   cursor: pointer;
   transition: opacity 250ms ease-in-out;
   pointer-events: all;
@@ -19,6 +14,9 @@ const TerminalsButtonBox = styled.div<Props>`
 
   .menu-icon {
     pointer-events: none;
+    position: relative;
+    left: ${(props) => (props.isInput ? -1 : 1)}px;
+    right: ${(props) => (props.isInput ? 0 : 10)}px;
   }
 `;
 

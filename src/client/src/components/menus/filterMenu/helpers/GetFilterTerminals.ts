@@ -1,4 +1,6 @@
-import { Edge, Node, EDGE_KIND, Connector } from "../../../../models";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { IsConnectorVisible } from "../../../../helpers";
+import { Connector, EDGE_KIND, Edge, Node } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { IsTransport } from "../../../flow/helpers";
 
@@ -64,7 +66,7 @@ export const GetInactiveTerminals = (nodes: Node[]) => {
 
   nodes.forEach((n) => {
     n.connectors?.forEach((c) => {
-      if (!c.visible) terminals.push(c);
+      if (!IsConnectorVisible(c)) terminals.push(c);
     });
   });
 
