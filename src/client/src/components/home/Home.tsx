@@ -5,32 +5,29 @@ import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library";
-import { ProjectMenuComponent } from "../menus/projectMenu";
+import { ProjectMenuComponent, ProjectSubMenus } from "../menus/projectMenu";
 import { UserMenuComponent } from "../menus/userMenu";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
+import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
+import { HeaderComponent } from "../header";
+import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
+import { fetchUser } from "../../redux/store/user/userSlice";
+import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/menuSlice";
+import { MENU_TYPE, VIEW_TYPE, ViewType } from "../../models/project";
+import { SetDarkModeColor } from "../../helpers";
+import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
+import { InstructionBoxComponent } from "../start/instructionBox";
 import {
   fetchCollaborationPartners,
   fetchCombinedAttributeFilters,
   fetchParsers,
   fetchStatuses,
 } from "../../redux/store/common/commonSlice";
-import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
-import { HeaderComponent } from "../header";
-import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
-import { fetchUser } from "../../redux/store/user/userSlice";
-import { OpenProjectMenu } from "../menus/projectMenu/subMenus/openProject";
-import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/menuSlice";
-import { MENU_TYPE, VIEW_TYPE, ViewType } from "../../models/project";
-import { IsStartPage, SetDarkModeColor } from "../../helpers";
-import { CreateProjectMenu } from "../menus/projectMenu/subMenus/createProject";
-import { useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { ImportProjectFileMenu } from "../menus/projectMenu/subMenus/importProjectFile";
-import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
-import { InstructionBoxComponent } from "../start/instructionBox";
 
 interface Props {
   dispatch: Dispatch;
@@ -48,10 +45,8 @@ const Home = ({ dispatch }: Props) => {
   const flowView = useAppSelector(selectors.flowViewSelector);
   const darkMode = useAppSelector(selectors.darkModeSelector);
   const inspectorRef = useRef(null);
-  const openProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
-  const createProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
-  const importProject = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
   const instructionBox = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.INSTRUCTION_PROJECT_MENU);
+  const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
   const showInstructionBox = instructionBox && !projectState?.project;
 
   useEffect(() => {
@@ -86,12 +81,9 @@ const Home = ({ dispatch }: Props) => {
       <HeaderComponent project={projectState?.project} projectMenuOpen={projectMenuOpen} dispatch={dispatch} />
       {projectMenuOpen && <ProjectMenuComponent />}
       {userMenuOpen && <UserMenuComponent darkMode={darkMode} dispatch={dispatch} />}
-      {IsStartPage() ? (
+      {isStartPage ? (
         <>
           <StartPage />
-          {openProject && <OpenProjectMenu />}
-          {createProject && <CreateProjectMenu />}
-          {importProject && <ImportProjectFileMenu />}
           {showInstructionBox && <InstructionBoxComponent />}
         </>
       ) : (
@@ -103,8 +95,9 @@ const Home = ({ dispatch }: Props) => {
           <TypeEditorComponent />
         </>
       )}
-      <ErrorModule projectState={projectState} dispatch={dispatch} />
-      <ValidationModule dispatch={dispatch} />
+      <ProjectSubMenus />
+      <ValidationModule />
+      <ErrorModule />
     </>
   );
 };

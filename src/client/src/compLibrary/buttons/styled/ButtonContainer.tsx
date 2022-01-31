@@ -11,20 +11,18 @@ const ButtonContainer = styled.button<Props>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  min-width: 94px;
-  height: 34px;
+  gap: 10px;
+  height: 35px;
   background: ${Color.GreyLight};
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
-  padding-left: 5px;
+  padding: 10px 20px;
   cursor: pointer;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
 
   > span {
     max-width: 260px;
-    padding: 0 5px;
-    margin-right: ${(props) => (props.icon ? 14 : 0)}px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;

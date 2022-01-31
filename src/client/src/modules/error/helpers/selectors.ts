@@ -1,1 +1,7 @@
-export { commonStateSelector, librarySelector, typeEditorStateSelector, userStateSelector } from "../../../redux/store";
+export {
+  commonStateSelector,
+  librarySelector,
+  typeEditorStateSelector,
+  userStateSelector,
+  projectStateSelector,
+} from "../../../redux/store";

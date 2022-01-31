@@ -6,7 +6,8 @@ import { GetProjectFileData } from "./helpers";
 import { ImportProjectIcon } from "../../../../../assets/icons/project";
 import { Label } from "../../../../../compLibrary/input/text";
 import { MENU_TYPE } from "../../../../../models/project";
-import { Modal } from "../../../modal/Modal";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../assets/text";
 import { useFilePicker } from "use-file-picker";
 import { useState } from "react";
@@ -41,24 +42,26 @@ export const ImportProjectFileMenu = () => {
   const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
-    <Modal title={TextResources.Project_Import} isOpen={isOpen} onExit={onExit}>
-      <Label>{TextResources.Project_Parser}</Label>
-      <Dropdown
-        label=""
-        valueProp="name"
-        items={parsers}
-        keyProp="id"
-        fontSize={FontSize.Medium}
-        onChange={(item: ModuleDescription) => setParser(item)}
-      />
-      <Label>
-        {TextResources.Project_Import_File}: {selectedText}
-      </Label>
-      <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
-      <ButtonBox>
-        <Button onClick={onExit} text={TextResources.Project_Cancel} />
-        <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Import} icon={ImportProjectIcon} />
-      </ButtonBox>
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_Import}>
+        <Label>{TextResources.Project_Parser}</Label>
+        <Dropdown
+          label=""
+          valueProp="name"
+          items={parsers}
+          keyProp="id"
+          fontSize={FontSize.Medium}
+          onChange={(item: ModuleDescription) => setParser(item)}
+        />
+        <Label>
+          {TextResources.Project_Import_File}: {selectedText}
+        </Label>
+        <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Import} icon={ImportProjectIcon} />
+        </ButtonBox>
+      </InfoModalContent>
     </Modal>
   );
 };
