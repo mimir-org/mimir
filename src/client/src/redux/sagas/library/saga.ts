@@ -4,7 +4,6 @@ import { GetApiErrorForBadRequest, GetApiErrorForException, get, post, del } fro
 import { PayloadAction } from "@reduxjs/toolkit";
 import { CreateLibraryType } from "../../../models";
 import {
-  deleteLibraryError,
   deleteLibraryItemSuccessOrError,
   exportLibrarySuccessOrError,
   fetchLibraryInterfaceTypesSuccessOrError,

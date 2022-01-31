@@ -78,6 +78,7 @@ export const librarySlice = createSlice({
       action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
       action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     deleteLibraryItem: (state, action: PayloadAction<string>) => {
       return state;
     },
