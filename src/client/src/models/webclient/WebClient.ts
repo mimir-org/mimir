@@ -83,3 +83,15 @@ export async function put<T>(
   req.headers["Authorization"] = token;
   return http<T>(new Request(path, req));
 }
+
+export async function del<T>(
+  path: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body: any,
+  args: RequestInit = { method: "delete", body: JSON.stringify(body) }
+): Promise<HttpResponse<T>> {
+  const token = await Token();
+  const req = { ...RequestInitDefault, ...args };
+  req.headers["Authorization"] = token;
+  return http<T>(new Request(path, req));
+}

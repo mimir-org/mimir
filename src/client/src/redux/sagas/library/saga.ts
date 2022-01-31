@@ -1,9 +1,11 @@
 import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
-import { GetApiErrorForBadRequest, GetApiErrorForException, get, post } from "../../../models/webclient";
+import { GetApiErrorForBadRequest, GetApiErrorForException, get, post, del } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { CreateLibraryType } from "../../../models";
 import {
+  deleteLibraryError,
+  deleteLibraryItemSuccessOrError,
   exportLibrarySuccessOrError,
   fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibrarySuccessOrError,
@@ -113,5 +115,21 @@ export function* getInterfaceTypes() {
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryInterfaceTypesSuccessOrError.type);
     yield put(fetchLibraryInterfaceTypesSuccessOrError({ libraryItems: [], apiError }));
+  }
+}
+
+export function* deleteLibraryItem(action: PayloadAction<string>) {
+  try {
+    const url = `${Config.API_BASE_URL}librarytype`;
+    const response = yield call(del, url, { id: action.payload });
+
+    if (response.status === 400) {
+      const apiError = GetApiErrorForBadRequest(response, deleteLibraryItemSuccessOrError.type);
+      yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError }));
+      return;
+    }
+  } catch (error) {
+    const apiError = GetApiErrorForException(error, deleteLibraryItemSuccessOrError.type);
+    yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError }));
   }
 }

@@ -4,6 +4,7 @@ import { TextResources } from "../../assets/text";
 import { Button } from "../../compLibrary/buttons";
 import { CollectionsActions, LibraryTab, ObjectType } from "../../models";
 import { OnOpenTypeEditor } from "../../typeEditor/handlers";
+import { OnDeleteTypeClick } from "./handlers";
 import { LibFooter, LibFooterButtonsWrapper } from "./styled";
 // import { GetCollectionIcon } from "./tabs/Collections/helpers";
 
@@ -42,7 +43,12 @@ const ModuleFooter = ({
         />
       </LibFooterButtonsWrapper>
       <LibFooterButtonsWrapper>
-        <Button onClick={() => null} text={TextResources.Library_Delete_Type} icon={DeleteType} disabled={true} />
+        <Button
+          onClick={() => OnDeleteTypeClick(selectedElement, dispatch)}
+          text={TextResources.Library_Delete_Type}
+          icon={DeleteType}
+          disabled={selectedElement === ""}
+        />
         {/* <Button
           onClick={() => setCollectionState(CollectionsActions.Manage)}
           text={TextResources.Library_Manage_Collections_Button}

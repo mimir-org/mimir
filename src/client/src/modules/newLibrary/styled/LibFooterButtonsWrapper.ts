@@ -5,7 +5,8 @@ import { FontSize, FontType } from "../../../compLibrary/font";
 const LibFooterButtonsWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 41px;
+  justify-content: space-between;
+  margin: 10px 22px;
 
   button {
     background: transparent;
