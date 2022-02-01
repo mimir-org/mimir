@@ -2,6 +2,7 @@ import { CollectionsActions, LibraryTab, ObjectType } from "../../models";
 import { ModuleContent } from "./styled";
 import { CollectionsComponent } from "./tabs/Collections";
 import { SubProjectsComponent } from "./tabs/SubProjects";
+import { TemplatesComponent } from "./tabs/Templates";
 
 interface Props {
   libOpen: boolean;
@@ -36,8 +37,9 @@ const ModuleBody = ({
   productSort,
   locationSort,
 }: Props) => {
-  const showCollections = activeTab === LibraryTab.Library || activeTab === LibraryTab.Templates;
-  // const showSubProjects = activeTab === LibraryTab.SubProjects;
+  const showCollections = activeTab === LibraryTab.Library;
+  const showSubProjects = activeTab === LibraryTab.SubProjects;
+  const showTemplates = activeTab === LibraryTab.Templates;
   return (
     <ModuleContent libOpen={libOpen}>
       {showCollections ? (
@@ -53,8 +55,10 @@ const ModuleBody = ({
           productSort={productSort}
           locationSort={locationSort}
         />
-      ) : (
+      ) : showSubProjects ? (
         <SubProjectsComponent />
+      ) : (
+        showTemplates && <TemplatesComponent />
       )}
     </ModuleContent>
   );

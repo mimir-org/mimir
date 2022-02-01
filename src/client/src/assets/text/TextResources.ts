@@ -130,6 +130,7 @@ const TextResources = {
   Library_Manage_Collections_Update_Library: "Update Library",
   Library_Subprojects_Info: "Sub-Projects created in Project menu appear listed here.",
   Library_Subprojects_None: "There are currently no Sub-Projects for this Project.",
+  Library_Templates_None: "There are currently no Templates available for this Project.",
   Library_New_Type: "New Type",
   Library_Edit_Type: "Edit Type",
   Library_Delete_Type: "Delete Type",
