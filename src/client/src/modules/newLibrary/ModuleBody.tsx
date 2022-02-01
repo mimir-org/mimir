@@ -17,6 +17,12 @@ interface Props {
   locationSort: boolean;
 }
 
+/**
+ * Component for showing content in Library Module based on active tab
+ * @param interface
+ * @returns a component based on active tab
+ */
+
 const ModuleBody = ({
   libOpen,
   activeTab,

@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { ModuleHeader, ModuleBody, ModuleFooter } from ".";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
+import { ModuleHeader, ModuleBody, ModuleFooter } from ".";
 import { LibraryTab, CollectionsActions, ObjectType } from "../../models";
 import { useAppSelector, useParametricAppSelector, animatedModuleSelector, libOpenSelector } from "../../redux/store";
 import { useState } from "react";

@@ -19,6 +19,12 @@ interface Props {
   dispatch: Dispatch;
 }
 
+/**
+ * Footer component for Mimir's type library, templates and sub-projects
+ * @param interface
+ * @returns a footer with buttons based on activeTab
+ */
+
 const ModuleFooter = ({
   libOpen,
   // activeTab,

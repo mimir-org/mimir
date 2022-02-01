@@ -15,6 +15,12 @@ interface Props {
   dispatch: Dispatch;
 }
 
+/**
+ * Tabs component in library module
+ * @param interface
+ * @returns every tab in library module
+ */
+
 const ModuleTabs = ({ isOpen, activeTab, setActiveTab, dispatch }: Props) => {
   const lib = MODULE_TYPE.LIBRARY;
   const stringIsNumber = (v: any) => isNaN(Number(v)) === false;

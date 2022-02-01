@@ -21,6 +21,12 @@ interface Props {
   setLocationSort: (sort: boolean) => void;
 }
 
+/**
+ * Header component for library module
+ * @param interface
+ * @returns library module tabs, search input and filters
+ */
+
 const ModuleHeader = ({
   libOpen,
   dispatch,
@@ -43,7 +49,6 @@ const ModuleHeader = ({
         <>
           <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />
           <SearchArea activeTab={activeTab} search={search} />
-          {/* TO DO: disable cursor and hover if no collections */}
           <AspectBoxes
             functionSort={functionSort}
             productSort={productSort}

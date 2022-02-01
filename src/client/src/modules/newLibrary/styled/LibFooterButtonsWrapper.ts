@@ -10,7 +10,7 @@ const LibFooterButtonsWrapper = styled.div`
 
   button {
     background: transparent;
-    min-width: 131px;
+    min-width: 140px;
     max-width: 187px;
     white-space: nowrap;
     height: 34px;

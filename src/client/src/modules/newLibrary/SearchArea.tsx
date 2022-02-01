@@ -12,6 +12,12 @@ interface Props {
   search: (text: string) => void;
 }
 
+/**
+ * Component for search input and and filters in Library Module
+ * @param interface
+ * @returns a searchbar and checkboxes for filter options
+ */
+
 const SearchArea = ({ activeTab, search }: Props) => {
   // const [searchCollections, setSearchCollections] = useState(false);
   // const [searchLatest, setSearchLatest] = useState(false);

@@ -14,6 +14,12 @@ interface Props {
   setLocationSort: (sort: boolean) => void;
 }
 
+/**
+ * Component for filtering types by aspect in Library Module
+ * @param interface
+ * @returns filters of each aspect
+ */
+
 const AspectBoxes = ({ functionSort, productSort, locationSort, setFunctionSort, setProductSort, setLocationSort }: Props) => {
   const stringIsNumber = (value: any) => isNaN(Number(value)) === false;
 
