@@ -6,8 +6,9 @@ import { GetAspectColor, GetObjectIcon } from "../../helpers";
 import { AspectColorType, LibItem, ObjectType } from "../../models";
 import { LibraryCategory } from "../../models/project";
 import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
-import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
-import { AddFavoriteBox, LibElement, LibElementIcon, LibElementText, RemoveFavoriteBox } from "./styled";
+import { GetTypeIcon, SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
+import { Symbol } from "../../compLibrary/symbol";
+import { AddFavoriteBox, LibElement, LibElementIcon, LibElementIconWrapper, LibElementText, RemoveFavoriteBox } from "./styled";
 
 interface Props {
   item: LibItem;
@@ -52,7 +53,18 @@ const LibraryCategoryElement = ({
       draggable={item.libraryType === ObjectType.ObjectBlock}
       onDragStart={(event) => item.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(item))}
       key={item.id}
+      selectedColor={GetAspectColor(item, AspectColorType.Selected, false)}
+      hoverColor={GetAspectColor(item, AspectColorType.Header, false)}
     >
+      <LibElementIconWrapper color={GetAspectColor(item, AspectColorType.Main, false)}>
+        <LibElementIcon>
+          {item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport ? (
+            <img src={GetObjectIcon(item)} alt="aspect color" className="icon" draggable="false" />
+          ) : (
+            item.libraryType === ObjectType.ObjectBlock && <Symbol base64={GetTypeIcon(item?.symbolId)?.data} text={item?.name} />
+          )}
+        </LibElementIcon>
+      </LibElementIconWrapper>
       <LibElementText>{item.name}</LibElementText>
       <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
         <img src={CloseIcon} alt="remove" />
@@ -63,11 +75,6 @@ const LibraryCategoryElement = ({
       >
         <img src={AddIcon} alt="add" />
       </AddFavoriteBox>
-      <LibElementIcon color={GetAspectColor(item, AspectColorType.Main, false)}>
-        {(item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport) && (
-          <img src={GetObjectIcon(item)} alt="aspect color" className="icon" draggable="false" />
-        )}
-      </LibElementIcon>
     </LibElement>
   );
 };

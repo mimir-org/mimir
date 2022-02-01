@@ -6,9 +6,9 @@ const LibElementIcon = styled.div`
   width: 20px;
   max-width: 20px;
   height: 20px;
-  border: 1.8px solid ${Color.Black};
+  border: 1.5px solid ${Color.Black};
   border-radius: 3px;
-  background-color: ${(props: { color: string }) => props.color};
+  background: ${Color.White};
 
   .icon {
     width: 100%;

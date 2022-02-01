@@ -4,6 +4,8 @@ import { FontSize, FontType } from "../../../compLibrary/font";
 
 interface Props {
   active?: boolean;
+  selectedColor: string;
+  hoverColor: string;
 }
 
 const LibElement = styled.button<Props>`
@@ -12,16 +14,15 @@ const LibElement = styled.button<Props>`
   justify-content: space-between;
   gap: 5px;
   width: calc(100% - 20px);
-  height: 30px;
+  height: 32px;
   border: 1px;
-  border-color: ${(props) => (props.active ? Color.Black : Color.GreyDarker)} !important;
+  border-color: ${(props) => (props.active ? props.selectedColor : Color.GreyInactive)} !important;
   border-style: ${(props) => (props.active ? "dashed" : "revert")} !important;
-  border-radius: 3px;
-  background-color: ${Color.White};
-  margin: 5px 8px;
-  font-size: ${FontSize.Standard};
+  border-radius: 5px;
+  background-color: ${(props) => (props.active ? props.hoverColor : Color.White)} !important;
+  margin: 2px 1px;
+  font-size: ${FontSize.Medium};
   font-family: ${FontType.Standard};
-  padding-left: 10px;
   cursor: grab;
 
   &:hover {

@@ -9,3 +9,4 @@ export { default as SetNewSelectedElementType } from "./SetNewSelectedElementTyp
 export { default as GetFilterIcon } from "./GetFilterIcon";
 export { default as ConvertToLibTabName } from "./ConvertToLibTabName";
 export { default as GetSelectedElement } from "./GetSelectedElement";
+export { default as GetTypeIcon } from "./GetTypeIcon";
