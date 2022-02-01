@@ -119,14 +119,15 @@ export function* getInterfaceTypes() {
 
 export function* deleteLibraryItem(action: PayloadAction<string>) {
   try {
-    const url = `${Config.API_BASE_URL}librarytype`;
-    const response = yield call(del, url, { id: action.payload });
+    const url = `${Config.API_BASE_URL}librarytype/${action.payload}`;
+    const response = yield call(del, url);
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, deleteLibraryItemSuccessOrError.type);
       yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError }));
       return;
     }
+    yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError: null }));
   } catch (error) {
     const apiError = GetApiErrorForException(error, deleteLibraryItemSuccessOrError.type);
     yield put(deleteLibraryItemSuccessOrError({ id: action.payload, apiError }));
