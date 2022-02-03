@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
-import { LibraryModule } from "../../modules/library";
+import { LibraryModule } from "../../modules/newLibrary";
 import { ProjectMenuComponent, ProjectSubMenus } from "../menus/projectMenu";
 import { UserMenuComponent } from "../menus/userMenu";
 import { search } from "../../redux/store/project/actions";
@@ -91,7 +91,7 @@ const Home = ({ dispatch }: Props) => {
           <ExplorerModule dispatch={dispatch} />
           <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
-          <LibraryModule project={projectState?.project} dispatch={dispatch} />
+          <LibraryModule dispatch={dispatch} />
           <TypeEditorComponent />
         </>
       )}
