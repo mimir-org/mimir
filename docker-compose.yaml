@@ -27,6 +27,7 @@ services:
       - DatabaseConfiguration_InitialCatalog=ModelBuilder
       - DatabaseConfiguration_DbUser=sa
       - DatabaseConfiguration_Password=P4ssw0rd1
+      - CorsConfiguration_ValidOrigins=http://localhost:3000
     networks:
       - mimir_network
     depends_on:
