@@ -44,13 +44,6 @@ namespace Mb.Api
             var origins = Configuration.GetSection("CorsConfiguration")?
                 .GetValue<string>("ValidOrigins")?.Split(",");
 
-            if (NoOriginsAreProvided(origins))
-            {
-                startupLogger.LogInformation("No Cors origins provided in config file. Reading from environment");
-
-                origins = Environment.GetEnvironmentVariable("CorsConfiguration_ValidOrigins")?.Split(",");
-            }
-
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -62,7 +55,7 @@ namespace Mb.Api
                     }
                     else
                     {
-                        startupLogger.LogInformation($"Cors origins provided: {string.Join(",", origins)}. Restricting origins, enforcing credentials");
+                        startupLogger.LogInformation("Cors origins provided: {Policies}. Restricting origins, enforcing credentials", string.Join(",", origins));
                         builder.WithOrigins(origins)
                             .AllowCredentials();
                     }
@@ -95,7 +88,6 @@ namespace Mb.Api
             if (!env.IsDevelopment())
                 app.UseHttpsRedirection();
 
-
             app.UseCors("CorsPolicy");
             app.UseRouting();
 
@@ -103,16 +95,11 @@ namespace Mb.Api
             app.UseAzureActiveDirectoryModule(_activeDirectoryConfiguration, _swaggerConfiguration);
 
             app.UseModelBuilderModule().UseTypeEditorModule();
-
-            //    app.UseEndpoints(endpoints =>
-            //    {
-            //        endpoints.MapControllers();
-            //    });
         }
 
         private static bool NoOriginsAreProvided(string[] origins)
         {
-            return origins is null || origins.Length is 0 || string.IsNullOrWhiteSpace(origins.FirstOrDefault());
+            return origins is null || origins.Length == 0 || string.IsNullOrWhiteSpace(origins.FirstOrDefault());
         }
     }
 }
