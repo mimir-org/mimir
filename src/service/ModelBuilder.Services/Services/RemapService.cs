@@ -64,7 +64,7 @@ namespace Mb.Services.Services
 
             // We need to connect parentless edges to root nodes of same aspect
             RemapParentlessEdges(project);
-            
+
             // We need to remove edges that misses connected node
             var edgesToDelete = project.GetNotConnectedEdges().ToList();
             project.Edges = project.Edges.Where(x => edgesToDelete.All(y => x.Id != y.Id)).ToList();
@@ -256,7 +256,7 @@ namespace Mb.Services.Services
             {
                 var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = attribute.Id, FromIri = attribute.Iri };
                 var attributeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
-                
+
                 // Need to set this if there is a clone after new Id and Iri is created
                 attributeReplacement.FromId = attribute.Id;
                 attributeReplacement.FromIri = attribute.Iri;

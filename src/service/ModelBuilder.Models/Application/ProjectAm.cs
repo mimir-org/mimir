@@ -65,7 +65,7 @@ namespace Mb.Models.Application
             foreach (var edge in Edges)
             {
                 var fromNode = Nodes.FirstOrDefault(x => x.Id == edge.FromNodeId);
-                if (fromNode != null) 
+                if (fromNode != null)
                     continue;
 
                 yield return edge;

@@ -5,7 +5,7 @@ namespace ModelBuilder.Tests.Services
     public class ProjectServiceTests : IClassFixture<ProjectFixture>
     {
         private readonly ProjectFixture _projectFixture;
-        
+
         public ProjectServiceTests(ProjectFixture projectFixture)
         {
             _projectFixture = projectFixture;

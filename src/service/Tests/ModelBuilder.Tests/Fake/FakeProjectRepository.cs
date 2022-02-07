@@ -16,7 +16,7 @@ namespace ModelBuilder.Tests.Fake
     {
         public ModelBuilderDbContext Context { get; set; }
         public DbSet<Project> DbSet { get; set; }
-        
+
         public IQueryable<Project> GetAll(bool noTracking = true)
         {
             throw new NotImplementedException();

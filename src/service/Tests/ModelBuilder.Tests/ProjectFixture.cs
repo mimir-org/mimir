@@ -23,7 +23,7 @@ namespace ModelBuilder.Tests
         public ICollaborationPartnerRepository CollaborationPartnerRepository { get; set; }
         public IMapper Mapper { get; set; }
         public IRemapService RemapService { get; set; }
-        
+
         public ProjectAm ProjectA { get; set; }
         public ProjectAm ProjectB { get; set; }
 
