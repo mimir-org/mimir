@@ -34,7 +34,7 @@ jobs:
           echo "Tag: ${{ steps.release.outputs.new_tag }}"
           echo "Version: ${{ steps.release.outputs.new_version }}"
 
-  build-client-latest:
+  build-client-release:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
@@ -50,12 +50,16 @@ jobs:
         ENVIR=prod
       hash_files_template: "**/package-lock.json"
       push: true
+      use_dockerhub: true
     secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
+      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
+      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
+      DOCKERHUB_ORG: mimirorg
+      DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+      DOCKERHUB_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
 
-  build-server-latest:
+  build-server-release:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
@@ -69,45 +73,11 @@ jobs:
       target: final
       hash_files_template: "**/*.csproj"
       push: true
+      use_dockerhub: true
     secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-
-  build-client-dockerhub:
-    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
-    needs: [create-release, build-client-latest]
-    if: ${{needs.create-release.outputs.tag!=''}}
-    with:
-      repository: mimirorg/mimir-client
-      tags: |
-        latest
-        ${{needs.create-release.outputs.tag}}
-      context: ./src/client
-      file: ./src/client/Dockerfile
-      target: final
-      build_args: |
-        ENVIR=prod
-      hash_files_template: "**/package-lock.json"
-      push: true
-    secrets:
-      REGISTRY_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
-
-  build-server-dockerhub:
-    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
-    needs: [create-release, build-server-latest]
-    if: ${{needs.create-release.outputs.tag!=''}}
-    with:
-      repository: mimirorg/mimir-server
-      tags: |
-        latest
-        ${{needs.create-release.outputs.tag}}
-      context: ./src/service
-      file: ./src/service/Dockerfile
-      target: final
-      hash_files_template: "**/*.csproj"
-      push: true
-    secrets:
-      REGISTRY_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
+      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
+      DOCKERHUB_ORG: mimirorg
+      DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+      DOCKERHUB_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
