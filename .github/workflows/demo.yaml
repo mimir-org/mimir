@@ -14,7 +14,7 @@ jobs:
   build-client:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
-      repository: ${{secrets.REGISTRY_SERVER_URL}}/mimir-client
+      repository: mimir-client
       tags: |
         demo
         demoaibel
@@ -31,7 +31,7 @@ jobs:
   build-server:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
-      repository: ${{secrets.REGISTRY_SERVER_URL}}/mimir-server
+      repository: mimir-server
       tags: |
         demo
         demoaibel
