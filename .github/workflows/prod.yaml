@@ -4,9 +4,6 @@ on:
   push:
     branches: [main]
 
-env:
-  server_url: ${{secrets.REGISTRY_SERVER_URL}}
-
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -42,7 +39,7 @@ jobs:
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      repository: ${{env.server_url}}/mimir-client
+      repository: mimir-client
       tags: |
         latest
         ${{needs.create-release.outputs.tag}}
@@ -63,7 +60,7 @@ jobs:
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      repository: ${{env.server_url}}/mimir-server
+      repository: mimir-server
       tags: |
         latest
         ${{needs.create-release.outputs.tag}}
