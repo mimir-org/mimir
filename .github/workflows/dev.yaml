@@ -23,6 +23,7 @@ jobs:
       target: final
       hash_files_template: "**/package-lock.json"
       push: true
+      use_dockerhub: true
     secrets:
       REGISTRY_SERVER_URLS: |
         ${{ secrets.REGISTRY_SERVER_URL }}
@@ -46,6 +47,7 @@ jobs:
       target: final
       hash_files_template: "**/*.csproj"
       push: true
+      use_dockerhub: true
     secrets:
       REGISTRY_SERVER_URLS: |
         ${{ secrets.REGISTRY_SERVER_URL }}
