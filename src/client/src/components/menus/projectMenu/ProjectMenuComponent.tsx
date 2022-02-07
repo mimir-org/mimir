@@ -8,6 +8,7 @@ import { activeMenuSelector, projectSelector, useAppDispatch, useAppSelector } f
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { setProjectMenuVisibility } from "./subMenus/redux/menuSlice";
 import { useCallback, useRef } from "react";
+import { useSelectedFlowElements } from "../../../helpers";
 
 /**
  * Component for the Project Menu.
@@ -18,7 +19,7 @@ const ProjectMenuComponent = () => {
   const project = useAppSelector(projectSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
   const isNoActiveProject = !project;
-
+  const [selectedNodeIds] = useSelectedFlowElements();
   const menuRef = useRef(null);
   const onOutsideClick = useCallback(() => !activeMenu && dispatch(setProjectMenuVisibility(false)), [activeMenu, dispatch]);
   useOutsideClick(menuRef, onOutsideClick);
@@ -61,12 +62,12 @@ const ProjectMenuComponent = () => {
           onClick={() => Click.OnCommit(dispatch)}
           disabled={!projectState?.project?.isSubProject}
         /> */}
-        {/* <MenuElement
+        <MenuElement
           text={TextResources.Project_SubProject_Save}
           icon={Icons.CreateSubProjectIcon}
           onClick={() => Click.OnCreateSubProject(dispatch)}
           disabled={!selectedNodeIds}
-        /> */}
+        />
         <MenuElement
           text={TextResources.Project_Import_LibraryTypes}
           icon={Icons.ImportLibraryIcon}

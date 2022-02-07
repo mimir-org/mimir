@@ -23,7 +23,7 @@ export const menuSlice = createSlice({
     },
     setFilterMenuVisibility: (state, action: PayloadAction<boolean>) => {
       state.filterMenuVisibility = action.payload;
-    },
+    }
   },
 });
 

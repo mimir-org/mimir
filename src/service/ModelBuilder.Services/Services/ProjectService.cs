@@ -224,8 +224,6 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
-            string newCreatedProject = null;
-
             try
             {
                 if (subProjectAm == null)
@@ -235,53 +233,31 @@ namespace Mb.Services.Services
                 if (!validation.IsValid)
                     throw new ModelBuilderBadRequestException($"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
-                var fromProject = await GetProject(subProjectAm.FromProjectId, true);
+                var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId);
                 if (fromProject == null)
                     throw new ModelBuilderInvalidOperationException("The original project does not exist");
 
-                // Create a new initial project
-                var subProjectToCreate = new CreateProject
-                {
-                    Name = subProjectAm.Name,
-                    Description = subProjectAm.Description
-                };
+                fromProject.Nodes = fromProject.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
+                fromProject.Edges = fromProject.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
 
-                var toProject = CreateInitProject(subProjectToCreate, true);
-                await _projectRepository.CreateAsync(toProject);
+                var projectAm = _mapper.Map<ProjectAm>(fromProject);
+                projectAm.Name = subProjectAm.Name;
+                projectAm.Description = subProjectAm.Description;
+                projectAm.IsSubProject = true;
+
+                _ = _remapService.Clone(projectAm);
+
+                var newSubProject = _mapper.Map<Project>(projectAm);
+                await _projectRepository.CreateAsync(newSubProject);
                 await _projectRepository.SaveAsync();
-                newCreatedProject = toProject.Id;
 
-                // Remap project
-                var subProject = _remapService.Remap(fromProject, toProject, subProjectAm.Nodes, subProjectAm.Edges);
+                return newSubProject;
 
-                // Clean the change tracker
-                ClearAllChangeTracker();
-
-                var projectResult = await UpdateProject(toProject.Id, subProject, _commonRepository.GetDomain());
-
-                // Clean the change tracker
-                ClearAllChangeTracker();
-
-                return projectResult.Project;
+                
             }
             catch (Exception e)
             {
-                try
-                {
-                    // Project is already created, delete the project from db
-                    if (!string.IsNullOrEmpty(newCreatedProject))
-                    {
-                        ClearAllChangeTracker();
-                        await DeleteProject(newCreatedProject);
-                        await _projectRepository.SaveAsync();
-                    }
-                }
-                catch
-                {
-                    // ignored
-                }
-
-                _logger.LogError($"Can not create sub project with name: {subProjectAm?.Name}. Error: {e.Message}");
+                _logger.LogError($"Can not create sub project from project id: {subProjectAm.FromProjectId}. Error: {e.Message}");
                 throw;
             }
             finally

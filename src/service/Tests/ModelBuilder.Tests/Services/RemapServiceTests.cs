@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Models.Common;
-using Mb.Models.Const;
-using Newtonsoft.Json;
 using Xunit;
 
-namespace ModelBuilder.Services.Tests
+namespace ModelBuilder.Tests.Services
 {
     public class RemapServiceTests : IClassFixture<ProjectFixture>
     {
