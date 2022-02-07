@@ -73,3 +73,42 @@ jobs:
       REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
       REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
+
+  build-client-dockerhub:
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    needs: [create-release, build-client-latest]
+    if: ${{needs.create-release.outputs.tag!=''}}
+    with:
+      repository: mimir-client
+      tags: |
+        latest
+        ${{needs.create-release.outputs.tag}}
+      context: ./src/client
+      file: ./src/client/Dockerfile
+      target: final
+      build_args: |
+        ENVIR=prod
+      hash_files_template: "**/package-lock.json"
+      push: true
+    secrets:
+      REGISTRY_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+      REGISTRY_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+
+  build-server-dockerhub:
+    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
+    needs: [create-release, build-server-latest]
+    if: ${{needs.create-release.outputs.tag!=''}}
+    with:
+      repository: mimir-server
+      tags: |
+        latest
+        ${{needs.create-release.outputs.tag}}
+      context: ./src/service
+      file: ./src/service/Dockerfile
+      target: final
+      hash_files_template: "**/*.csproj"
+      push: true
+    secrets:
+      REGISTRY_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+      REGISTRY_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+
