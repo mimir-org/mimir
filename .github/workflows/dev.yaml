@@ -15,12 +15,12 @@ jobs:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
-      tags: dev
+      tags: |
+        dev
+        test
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
-      build_args: |
-        ENVIR=dev
       hash_files_template: "**/package-lock.json"
       push: true
     secrets:
@@ -32,7 +32,9 @@ jobs:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-server
-      tags: dev
+      tags: |
+        dev
+        test
       context: ./src/service
       file: ./src/service/Dockerfile
       target: final

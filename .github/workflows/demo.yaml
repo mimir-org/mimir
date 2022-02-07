@@ -11,33 +11,16 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build-client-1:
+  build-client:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
-      tags: demo
+      tags: |
+        demo
+        demoaibel
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
-      build_args: |
-        ENVIR=demo
-      hash_files_template: "**/package-lock.json"
-      push: true
-    secrets:
-      REGISTRY_SERVER_URL: ${{secrets.REGISTRY_SERVER_URL}}
-      REGISTRY_USERNAME: ${{secrets.REGISTRY_USERNAME}}
-      REGISTRY_PASSWORD: ${{secrets.REGISTRY_PASSWORD}}
-
-  build-client-2:
-    uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
-    with:
-      repository: mimir-client
-      tags: demoaibel
-      context: ./src/client
-      file: ./src/client/Dockerfile
-      target: final
-      build_args: |
-        ENVIR=demoaibel
       hash_files_template: "**/package-lock.json"
       push: true
     secrets:

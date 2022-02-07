@@ -19,8 +19,6 @@ jobs:
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
-      build_args: |
-        ENVIR=stage
       hash_files_template: "**/package-lock.json"
       push: true
     secrets:
