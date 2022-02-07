@@ -1,15 +1,15 @@
-import { TerminalTypeItem, ConnectorType, TerminalType } from "../../../../models";
+import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../models";
 import { TerminalElementWrapper } from "../../../styled";
 import { TextResources } from "../../../../assets/text";
 import { CloseIcon } from "../../../../assets/icons/close";
-import { OnTerminalIdChange, OnDirectionChange, OnQuantityChange } from "./handlers";
-import { SearchDropDown, DirectionalDropdown } from "../../../../compLibrary";
+import { OnDirectionChange, OnQuantityChange, OnTerminalIdChange } from "./handlers";
+import { DirectionalDropdown, SearchDropDown } from "../../../../compLibrary";
 import { NumericValueInput } from "../../../../compLibrary/input/text";
-import { SearchDropDownItem } from "../../../../compLibrary/dropdown/SearchDropDown";
 
 interface Props {
   terminals: TerminalType[];
   defaultTerminal: TerminalTypeItem;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   onChange: Function;
 }
 
@@ -17,13 +17,13 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => (
   <TerminalElementWrapper>
     <NumericValueInput
       value={defaultTerminal.number.toString()}
-      onChange={(item: number) => OnQuantityChange(item, defaultTerminal, onchange)}
+      onChange={(item: number) => OnQuantityChange(item, defaultTerminal, onChange)}
     />
     <SearchDropDown
       value={defaultTerminal.terminalTypeId}
       onChange={(item) => OnTerminalIdChange(item, defaultTerminal, onChange)}
       placeHolder={TextResources.TypeEditor_Search}
-      list={terminals as SearchDropDownItem[]}
+      list={terminals}
     />
     <DirectionalDropdown
       onChange={(item: number) => OnDirectionChange(item, defaultTerminal, onChange)}

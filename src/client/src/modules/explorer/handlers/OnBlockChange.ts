@@ -1,8 +1,9 @@
 import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../redux/store/project/actions";
 import { Node } from "../../../models";
-import { setSecondaryNode, removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
+import { removeSecondaryNode, setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../components/flow/helpers";
-import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
+import { IsDirectChild, IsFamily, IsProduct } from "../../../helpers";
+import { Dispatch } from "redux";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -13,7 +14,7 @@ import { IsFamily, IsDirectChild, IsProduct } from "../../../helpers";
  * @param secondaryNode
  * @param dispatch
  */
-export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: any) => {
+export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: Dispatch) => {
   // Set selectNode
   if (!selectedNode) {
     dispatch(setActiveNode(node?.id, !node.isSelected));
@@ -62,7 +63,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
   if (node === secondaryNode) dispatch(removeSecondaryNode());
 };
 
-function validateSiblings(node: Node, selected: Node, secondary: Node, dispatch: any) {
+function validateSiblings(node: Node, selected: Node, secondary: Node, dispatch: Dispatch) {
   if (IsDirectChild(node, selected)) dispatch(setNodeVisibility(node, true));
   if (!IsDirectChild(node, selected) && !IsParentOf(node, selected)) dispatch(setSecondaryNode(node));
   if (!IsDirectChild(node, selected) && node === secondary) dispatch(removeSecondaryNode());

@@ -5,12 +5,19 @@ import { LibraryComponent } from "./index";
 import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
-import { ModuleBody, ModuleHeader, LegendHeader } from "./styled";
+import { Icon } from "../../compLibrary/icon";
+import { LegendHeader } from "../legend/styled";
+import { LibHeader, ModuleBody, ModuleHeader } from "./styled";
 import { MODULE_TYPE } from "../../models/project";
-import { OnLibraryClick, OnLegendClick } from "./handlers";
+import { OnLegendClick, OnLibraryClick } from "./handlers";
 import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
-import { useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
-import { animatedModuleSelector, legendOpenSelector, libOpenSelector } from "../../redux/store";
+import {
+  animatedModuleSelector,
+  legendOpenSelector,
+  libOpenSelector,
+  useAppSelector,
+  useParametricAppSelector,
+} from "../../redux/store";
 import { Project } from "../../models";
 
 interface Props {
@@ -40,9 +47,11 @@ const LibraryModule = ({ dispatch, project }: Props) => {
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
-      <ModuleHeader isOpen={libOpen} onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)}>
-        <img className="icon" src={LibraryIcon} alt="toggle" />
-        <p className="text">{TextResources.Module_Library}</p>
+      <ModuleHeader>
+        <LibHeader isOpen={libOpen} onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)}>
+          <Icon size={24} src={LibraryIcon} alt="" />
+          <span>{TextResources.Module_Library}</span>
+        </LibHeader>
       </ModuleHeader>
 
       {libOpen && (
@@ -57,10 +66,10 @@ const LibraryModule = ({ dispatch, project }: Props) => {
       )}
 
       <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">
-        <ModuleHeader legend>
-          <LegendHeader open={legendOpen} onClick={() => OnLegendClick(dispatch, legendOpen, legend)}>
-            <img src={LegendIcon} alt="legend" className="legend-icon" />
-            <p className="legend-text">{TextResources.Module_Legend}</p>
+        <ModuleHeader>
+          <LegendHeader isOpen={legendOpen} onClick={() => OnLegendClick(dispatch, legendOpen, legend)}>
+            <Icon size={24} src={LegendIcon} alt="" />
+            <span>{TextResources.Module_Legend}</span>
           </LegendHeader>
         </ModuleHeader>
         {legendOpen && <LegendModule project={project} />}

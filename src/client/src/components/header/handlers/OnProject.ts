@@ -1,7 +1,8 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../menus/projectMenu/subMenus/redux/actions";
+import { Dispatch } from "redux";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../menus/projectMenu/subMenus/redux/menuSlice";
 
-const OnProject = (dispatch: any, open: boolean) => {
-  if (open) dispatch(changeActiveMenu(null));
+const OnProject = (dispatch: Dispatch, open: boolean) => {
+  dispatch(changeActiveMenu(null));
   dispatch(setProjectMenuVisibility(!open));
 };
 

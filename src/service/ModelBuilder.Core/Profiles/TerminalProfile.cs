@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;

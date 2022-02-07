@@ -1,4 +1,4 @@
-import { Node, Aspect } from "../models";
+import { Aspect, Node } from "../models";
 
 const IsOffPage = (node: Node) => {
   return node?.aspect === Aspect.None;

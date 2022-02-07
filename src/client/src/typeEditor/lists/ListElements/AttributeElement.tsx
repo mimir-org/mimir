@@ -1,6 +1,6 @@
 import { AttributeType, Discipline } from "../../../models";
 import { ListElem } from "../../../compLibrary/list";
-import { ListElementCategoryWrapper, ListCategoryElement } from "../../styled";
+import { ListCategoryElement, ListElementCategoryWrapper } from "../../styled";
 import { CheckboxContainer, Label } from "../../inputs/CheckboxContainer";
 import { OnPropertyChangeFunction } from "../../types";
 

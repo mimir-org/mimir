@@ -1,6 +1,6 @@
 import red from "../../../redux/store";
 import { IsPartOf } from ".";
-import { Node, Edge } from "../../../models";
+import { Node } from "../../../models";
 
 /**
  * Function to find a node's parentNode
@@ -10,7 +10,7 @@ import { Node, Edge } from "../../../models";
  * @returns the parentNode, if any
  */
 const GetParent = (childNode: Node) => {
-  const edges = red.store.getState().projectState.project?.edges as Edge[];
+  const edges = red.store.getState().projectState.project?.edges;
   const nodes = red.store.getState().projectState.project?.nodes;
 
   const parentEdge = edges?.find((e) => e.toNodeId === childNode?.id && IsPartOf(e.toConnector));

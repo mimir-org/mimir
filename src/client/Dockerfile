@@ -1,19 +1,27 @@
-# build environment
-# base image
-FROM node:13.12.0-alpine as build
-ARG ENVIR
+FROM node:13.12.0-alpine AS base
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY package-lock.json ./
-RUN apk add --update python make g++\ && rm -rf /var/cache/apk/*
+COPY package.json package-lock.json ./
 RUN npm ci --silent
-RUN npm install react-scripts@4.0.1 -g --silent
-COPY . ./
-RUN npm run build:$ENVIR
-# production environment
-FROM nginx:stable-alpine as final
+COPY . .
+
+FROM base as lint
+RUN npm run lint
+
+FROM base as format
+RUN npm run format:check
+
+FROM base as test
+ENV CI=true
+RUN npm test
+
+FROM base as build
+RUN npm run build
+
+FROM nginx:stable-alpine AS final
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY start.sh .
+RUN chmod +x start.sh
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT "./start.sh" "MIMIR_ENV" "__MIMIR_ENV__" "/usr/share/nginx/html/index.html"

@@ -1,4 +1,4 @@
-﻿namespace Mb.Models.Data.Enums
+namespace Mb.Models.Data.Enums
 {
     public class TypeAttribute : EnumBase
     {

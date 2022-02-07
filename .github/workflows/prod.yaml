@@ -111,3 +111,4 @@ jobs:
     secrets:
       REGISTRY_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+

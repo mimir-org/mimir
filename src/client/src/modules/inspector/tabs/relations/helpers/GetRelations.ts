@@ -1,5 +1,5 @@
 import { IsRelationEdge } from "../../../../../components/flow/helpers/IsRelationEdge";
-import { Node, Edge } from "../../../../../models";
+import { Edge, Node } from "../../../../../models";
 
 const GetRelations = (node: Node, edges: Edge[]): Edge[] =>
   edges

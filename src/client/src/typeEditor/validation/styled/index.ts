@@ -1,2 +1,2 @@
-export {default as ValidationContainer} from "./ValidationContainer";
-export {default as ValidationMessage} from "./ValidationMessage";
+export { default as ValidationContainer } from "./ValidationContainer";
+export { default as ValidationMessage } from "./ValidationMessage";

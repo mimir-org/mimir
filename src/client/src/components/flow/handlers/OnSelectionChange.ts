@@ -4,10 +4,9 @@ import { Size } from "../../../compLibrary/size";
 import { Project } from "../../../models";
 import { MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
-import { changeInspectorHeight } from "../../../modules/inspector/redux/height/actions";
-import { changeInspectorTab } from "../../../modules/inspector/redux/tabs/actions";
-import { setModuleVisibility } from "../../../redux/store/modules/actions";
-import { setActiveNode, setActiveEdge, setActiveBlockNode } from "../../../redux/store/project/actions";
+import { changeInspectorHeight, changeInspectorTab } from "../../../modules/inspector/redux/inspectorSlice";
+import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
+import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../redux/store/project/actions";
 
 export const handleNoSelect = (
   project: Project,
@@ -45,7 +44,7 @@ export const OpenInspector = (dispatch: Dispatch) => {
 };
 
 export const CloseInspector = (inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
-  dispatch(setModuleVisibility(MODULE_TYPE.INSPECTOR, false, true));
+  dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
   dispatch(changeInspectorHeight(Size.ModuleClosed));
   SetPanelHeight(inspectorRef, Size.ModuleClosed);
 };

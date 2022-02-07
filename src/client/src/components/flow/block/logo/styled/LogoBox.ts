@@ -5,6 +5,7 @@ const LogoBox = styled.div`
   width: 50px;
   align-self: flex-start;
   pointer-events: none;
+  margin-left: 10px;
 
   img {
     min-height: 100%;

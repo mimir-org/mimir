@@ -1,4 +1,4 @@
-﻿namespace Mb.Models.Common
+namespace Mb.Models.Common
 {
     public class ReplacementId
     {

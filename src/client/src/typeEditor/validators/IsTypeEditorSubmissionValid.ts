@@ -1,15 +1,15 @@
 import { CreateLibraryType } from "../../models";
 import {
   IsAspectSelectionInvalid,
+  IsAttributeTypesSelectionInvalid,
   IsLocationSelectionInvalid,
   IsObjectSelectionInvalid,
-  IsPurposeSelectionInvalid,
-  IsSymbolSelectionInvalid,
-  IsTypeNameInvalid,
-  IsRdsSelectionInvalid,
-  IsTerminalTypesSelectionInvalid,
-  IsAttributeTypesSelectionInvalid,
   IsPredefinedAttributesSelectionInvalid,
+  IsPurposeSelectionInvalid,
+  IsRdsSelectionInvalid,
+  IsSymbolSelectionInvalid,
+  IsTerminalTypesSelectionInvalid,
+  IsTypeNameInvalid,
 } from "../validators";
 
 export function IsTypeEditorSubmissionValid(createLibraryType: CreateLibraryType): boolean {
@@ -24,7 +24,7 @@ export function IsTypeEditorSubmissionValid(createLibraryType: CreateLibraryType
     IsTerminalTypesSelectionInvalid,
     IsAttributeTypesSelectionInvalid,
     IsPredefinedAttributesSelectionInvalid,
-  ].every(func => func(createLibraryType) === false)
+  ].every((func) => func(createLibraryType) === false);
 }
 
 export default IsTypeEditorSubmissionValid;

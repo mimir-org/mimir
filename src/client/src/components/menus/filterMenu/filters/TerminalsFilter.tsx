@@ -1,11 +1,13 @@
+import { Dispatch } from "redux";
 import { FilterElement } from "../";
 import { TextResources } from "../../../../assets/text";
+import { IsConnectorVisible } from "../../../../helpers";
 import { Connector } from "../../../../models";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "../handlers";
 interface Props {
   activeTerminals: Connector[];
   allTerminals: Connector[];
-  dispatch: any;
+  dispatch: Dispatch;
 }
 
 /**
@@ -14,8 +16,8 @@ interface Props {
  * @returns checkboxes to toggle terminals that exist in Mimir.
  */
 const TerminalsFilter = ({ activeTerminals, allTerminals, dispatch }: Props) => {
-  const activeTerminalsChecked = activeTerminals.some((c) => c?.visible);
-  const allTerminalsChecked = allTerminals.some((c) => c?.visible);
+  const activeTerminalsChecked = activeTerminals.some((c) => IsConnectorVisible(c));
+  const allTerminalsChecked = allTerminals.some((c) => IsConnectorVisible(c));
 
   return (
     <>

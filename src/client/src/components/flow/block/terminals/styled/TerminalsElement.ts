@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../compLibrary/font";
-import { ColorTag } from "./index";
 
 const TerminalsElement = styled.label`
   display: flex;
@@ -13,18 +12,13 @@ const TerminalsElement = styled.label`
   border-bottom: 1px solid ${Color.GreyDark};
   font-size: ${FontSize.Tiny};
   color: ${Color.Black};
-  z-index: 4;
 
-  ${ColorTag} {
-    z-index: 5;
-  }
-  
   &:hover {
     background-color: ${Color.BlueLight};
     text-decoration: underline;
     cursor: pointer;
   }
-  
+
   :first-child {
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;

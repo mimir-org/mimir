@@ -7,7 +7,7 @@ const initialState = {
 
 export function blockElementsReducer(state = initialState, action) {
   if (action.type === UPDATE_BLOCK_ELEMENTS) {
-    const elements = action.payload as Elements<any>;
+    const elements = action.payload as Elements;
 
     return {
       ...state,

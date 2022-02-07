@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { ExpandIcon, CollapseIcon } from "../../assets/icons/chevron";
+import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
 import { DropdownContainer, DropdownHeader, DropdownList } from "..";
 import { ConnectorType } from "../../models";
 
 interface Props {
   value: number;
-  onChange: Function;
+  onChange: (num: number) => void;
 }
 
 const DirectionalDropdown = ({ value, onChange }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const stringIsNumber = (v: any) => isNaN(Number(v)) === false;
+  const stringIsNumber = (v: string) => isNaN(Number(v)) === false;
 
   return (
     <DropdownContainer>
@@ -20,7 +20,7 @@ const DirectionalDropdown = ({ value, onChange }: Props) => {
         <img
           src={isListOpen ? ExpandIcon : CollapseIcon}
           alt="expand-icon"
-          onClick={(e) => setIsListOpen(!isListOpen)}
+          onClick={() => setIsListOpen(!isListOpen)}
           className="icon"
         />
       </DropdownHeader>

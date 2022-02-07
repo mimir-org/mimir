@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Mb.Models.Configurations.Converters;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;

@@ -1,5 +1,5 @@
 import { CreateId, GetDateNowUtc } from "../helpers";
-import { BlobData, LibItem, Node, User } from "../../../models";
+import { BlobData, LibItem, Node, User, NODE_KIND } from "../../../models";
 import { Size } from "../../../compLibrary/size";
 
 /**
@@ -11,10 +11,10 @@ import { Size } from "../../../compLibrary/size";
  * @param user
  * @returns a Node.
  */
-const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User) => {
+const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User): Node => {
   const now = GetDateNowUtc();
 
-  const node = new Node({
+  const node = {
     id: CreateId(),
     rds: data.rds,
     projectId: projectId,
@@ -42,7 +42,8 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     updated: now,
     updatedBy: user?.name,
     libraryTypeId: data.id,
-  } as Node);
+    kind: NODE_KIND,
+  } as Node;
 
   if (node.connectors) {
     node.connectors.forEach((x) => {

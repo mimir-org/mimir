@@ -47,6 +47,14 @@
   }
 }
 
+#react-flow__arrow {
+  :first-child {
+    fill: var(--arrow-color);
+    stroke: var(--arrow-color);
+    transform: rotate(180deg);
+  }
+}
+
 .path-transportEdge,
 .path-partEdge,
 .path-relationEdge,
@@ -85,22 +93,22 @@
 }
 
 .react-flow__node-AspectLocation,
-.react-flow__node-Location{
-  &.selected > div{
-    border-color: #A300A7 !important
+.react-flow__node-Location {
+  &.selected > div {
+    border-color: #a300a7 !important;
   }
 }
 
 .react-flow__node-AspectFunction,
-.react-flow__node-Function{
-  &.selected > div{
-    border-color: #FBC913 !important
+.react-flow__node-Function {
+  &.selected > div {
+    border-color: #fbc913 !important;
   }
 }
 
 .react-flow__node-AspectProduct,
-.react-flow__node-Product{
-  &.selected > div{
-    border-color: #069098 !important
+.react-flow__node-Product {
+  &.selected > div {
+    border-color: #069098 !important;
   }
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const TERMINALS_COLUMN_WIDTH: number = 440;
-export const TERMINALS_COLUMN_HORIZONTAL_PADDING: number = 20;
+export const TERMINALS_COLUMN_WIDTH = 440;
+export const TERMINALS_COLUMN_HORIZONTAL_PADDING = 20;
 
 export const TerminalsColumn = styled.div`
   display: flex;

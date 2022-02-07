@@ -1,8 +1,9 @@
+import { Dispatch } from "redux";
 import { SetDarkModeColor } from "../../../../helpers";
-import { setDarkMode } from "../../../../redux/store/darkMode/actions";
+import { toggleDarkMode } from "../../../../redux/store/darkMode/darkModeSlice";
 
-const OnDarkMode = (dispatch: any, darkMode: boolean) => {
-  dispatch(setDarkMode(!darkMode));
+const OnDarkMode = (dispatch: Dispatch, darkMode: boolean) => {
+  dispatch(toggleDarkMode());
   SetDarkModeColor(!darkMode);
 };
 

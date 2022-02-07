@@ -1,4 +1,4 @@
-﻿namespace Mb.Models.Application
+namespace Mb.Models.Application
 {
     public class RelationAm : ConnectorAm
     {

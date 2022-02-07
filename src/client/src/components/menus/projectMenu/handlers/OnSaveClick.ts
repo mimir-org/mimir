@@ -1,18 +1,19 @@
-import { ProjectState } from "../../../../redux/store/project/types";
-import { setProjectMenuVisibility } from "../../../menus/projectMenu/subMenus/redux/actions";
+import { Project } from "../../../../models";
+import { setProjectMenuVisibility } from "../subMenus/redux/menuSlice";
 import { save } from "../../../../redux/store/project/actions";
 import { IsOffPage } from "../../../../helpers";
+import { Dispatch } from "redux";
 
-const OnSaveClick = (dispatch: any, projectState: ProjectState) => {
+const OnSaveClick = (dispatch: Dispatch, project: Project): void => {
   dispatch(setProjectMenuVisibility(false));
 
-  const project = Object.assign({}, projectState.project);
+  const projectCopy = Object.assign({}, project);
 
-  // Remove all OffPage related
-  project.edges = project.edges.filter((edge) => !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode));
-  project.nodes = project.nodes.filter((n) => !IsOffPage(n));
+  // Remove everything OffPage related
+  projectCopy.edges = projectCopy.edges.filter((edge) => !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode));
+  projectCopy.nodes = projectCopy.nodes.filter((node) => !IsOffPage(node));
 
-  dispatch(save(project));
+  dispatch(save(projectCopy));
 };
 
 export default OnSaveClick;

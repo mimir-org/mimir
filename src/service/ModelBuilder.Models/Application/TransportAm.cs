@@ -1,4 +1,5 @@
-﻿using System;
+using Mb.Models.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,18 +9,15 @@ namespace Mb.Models.Application
     {
         public string Id { get; set; }
         public string Iri { get; set; }
+        public string Domain => Id.ResolveDomain();
         public string Version { get; set; }
+        [Required]
         public string Rds { get; set; }
-
         [Required]
         public string Name { get; set; }
-
         public string Label { get; set; }
         public string Description { get; set; }
-
-        //[Required]
         public string StatusId { get; set; }
-        
         public string SemanticReference { get; set; }
         public string InputTerminalId { get; set; }
         public TerminalAm InputTerminal { get; set; }
@@ -30,7 +28,9 @@ namespace Mb.Models.Application
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }
+        [Required]
         public string CreatedBy { get; set; }
+        [Required]
         public string LibraryTypeId { get; set; }
     }
 }

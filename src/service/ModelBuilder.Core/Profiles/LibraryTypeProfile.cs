@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -201,7 +201,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
-            
+
             CreateMap<InterfaceType, LibraryInterfaceItem>()
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -260,7 +260,7 @@ namespace Mb.Core.Profiles
                 await fulfilledByOutput
             };
 
-            if (nodeTypeTerminalTypes == null) 
+            if (nodeTypeTerminalTypes == null)
                 return connectors;
 
             Parallel.ForEach(nodeTypeTerminalTypes, nodeTypeTerminalType =>
@@ -317,7 +317,7 @@ namespace Mb.Core.Profiles
 
             foreach (var item in sortedTerminalTypes)
             {
-                var key = $"{item.Key}-{nodeId}"; 
+                var key = $"{item.Key}-{nodeId}";
                 yield return new NodeTypeTerminalType
                 {
                     Id = key.CreateMd5(),

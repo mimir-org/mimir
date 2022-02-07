@@ -1,6 +1,6 @@
 import { ButtonContainer } from "./styled";
-import { GetButtonText, GetButtonIcon, GetActiveButtonIcon } from "./helpers";
 import { useState } from "react";
+import { GetActiveButtonIcon, GetButtonIcon, GetButtonText } from "./helpers";
 
 interface Props {
   onClick: () => void;

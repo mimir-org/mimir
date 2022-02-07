@@ -1,11 +1,27 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Project, Node } from "../../../models";
+import { Node, Project } from "../../../models";
 import { IsOffPage } from "../../../helpers";
-import { GetParent, IsOutputTerminal } from "../helpers";
-import { CreateOffPageNode } from "../block/nodes/helpers";
+import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
+import { CreateRequiredOffPageNode } from "../block/nodes/helpers/offPage";
+import { Dispatch } from "redux";
 
-const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, secondaryNode: boolean, dispatch: any) => {
+/**
+ * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
+ * This is where an OffPage node can be created.
+ * @param e
+ * @param project
+ * @param parentNodeSize
+ * @param secondaryNode
+ * @param dispatch
+ */
+const useOnConnectStop = (
+  e: MouseEvent,
+  project: Project,
+  parentNodeSize: BlockNodeSize,
+  secondaryNode: boolean,
+  dispatch: Dispatch
+) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
 
@@ -13,9 +29,9 @@ const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, se
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
     const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
     const parentBlockNode = GetParent(sourceNode);
-    const isTarget = IsOutputTerminal(sourceConnector);
+    const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
-    const validDrop = IsValidDrop(
+    const isOffPageDrop = ValidateOffPageDrop(
       sourceNode,
       e.clientX,
       parentNodeSize,
@@ -24,14 +40,15 @@ const useOnConnectStop = (e, project: Project, parentNodeSize: BlockNodeSize, se
       parentBlockNode?.positionBlockX
     );
 
-    if (validDrop) {
-      CreateOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, true);
+    if (isOffPageDrop) {
+      const isRequired = true;
+      CreateRequiredOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, isRequired);
       SaveEventData(null, "edgeEvent");
     }
   }
 };
 
-function IsValidDrop(
+function ValidateOffPageDrop(
   sourceNode: Node,
   clientX: number,
   parentNodeSize: BlockNodeSize,
@@ -47,12 +64,12 @@ function IsValidDrop(
 
   const dropZoneWidth = 200;
   const rightBound = leftBound + dropZoneWidth;
-  const isValidPostion = ValidatePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
+  const isValidPostion = ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 
   return !IsOffPage(sourceNode) && isValidPostion;
 }
 
-function ValidatePosition(
+function ValidateOffPagePosition(
   clientX: number,
   leftBound: number,
   rightBound: number,

@@ -5,10 +5,10 @@ const OnMultipleValuesChange = (
   name: string,
   attributes: PredefinedAttribute[],
   isMultiSelect: boolean,
-  onChange: Function
+  onChange: (label: string, attributes: PredefinedAttribute[]) => void
 ) => {
   let attribute: PredefinedAttribute = attributes.find((a) => a.key === name);
-  const valueslist = attribute.values;
+  const valueslist = { ...attribute.values };
   if (valueslist) valueslist[param_key] = !param_value;
 
   attribute = {
@@ -16,13 +16,12 @@ const OnMultipleValuesChange = (
     values: valueslist,
     isMultiSelect: isMultiSelect,
   };
-  let attributesList = attributes;
 
-  attributesList = attributesList.map((a) => {
+  const updateAttributes = attributes.map((a) => {
     if (a.key === attribute.key) a = attribute;
     return a;
   });
-  onChange("predefinedAttributes", attributesList);
+  onChange("predefinedAttributes", updateAttributes);
 };
 
 export default OnMultipleValuesChange;

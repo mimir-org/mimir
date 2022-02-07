@@ -1,6 +1,6 @@
 import * as selectors from "./helpers/selectors";
 import { Node } from "../../models";
-import { TreeAspectComponent, BlockAspectComponent } from "./aspectComponent/";
+import { BlockAspectComponent, TreeAspectComponent } from "./aspectComponent/";
 import { HasChildren, IsAncestorInSet } from "./helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
@@ -45,6 +45,9 @@ const ProjectComponent = () => {
     <ModuleContent width={GetWidth(nodes)}>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
         if (!areAncestorsExpanded(node)) return null;
+        const expanded = !closedNodes.has(node.id);
+        const expandHandler = () => onExpandElement(!expanded, node.id);
+
         if (IsBlockView()) {
           return (
             <BlockAspectComponent
@@ -56,10 +59,10 @@ const ProjectComponent = () => {
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
               indent={indent}
-              expanded={!closedNodes.has(node.id)}
+              isExpanded={expanded}
               isLeaf={!HasChildren(node, project)}
               elements={elements}
-              onElementExpanded={onExpandElement}
+              onToggleExpanded={expandHandler}
               dispatch={dispatch}
             />
           );
@@ -72,11 +75,11 @@ const ProjectComponent = () => {
             node={node}
             nodes={nodes}
             indent={indent}
-            expanded={!closedNodes.has(node.id)}
+            isExpanded={expanded}
             isLeaf={!HasChildren(node, project)}
             isAncestorVisible={areAncestorsVisible(node)}
             isVisible={isVisible(node)}
-            onElementExpanded={onExpandElement}
+            onToggleExpanded={expandHandler}
             onSetVisibleElement={onSetVisibleElement}
             dispatch={dispatch}
           />

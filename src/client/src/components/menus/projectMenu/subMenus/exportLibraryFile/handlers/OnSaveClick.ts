@@ -1,7 +1,8 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/actions";
-import { exportLibrary } from "../../../../../../redux/store/library/actions";
+import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
+import { exportLibrary } from "../../../../../../redux/store/library/librarySlice";
+import { Dispatch } from "redux";
 
-const OnSaveClick = (dispatch: any, fileName: string) => {
+const OnSaveClick = (dispatch: Dispatch, fileName: string) => {
   dispatch(exportLibrary(fileName));
   dispatch(changeActiveMenu(null));
   dispatch(setProjectMenuVisibility(false));

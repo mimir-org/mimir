@@ -3,7 +3,6 @@ import { TextResources } from "../../../../assets/text";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
 import { SetMarginX } from "../nodes/helpers/SetParentNodeSize";
-import { SetConnectorOrder } from "./helpers";
 
 /**
  * Component to create a secondary parent node in BlockView.
@@ -13,7 +12,6 @@ import { SetConnectorOrder } from "./helpers";
  */
 const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) => {
   if (!primaryNode || !secondaryNode) return null;
-  SetConnectorOrder(secondaryNode);
 
   const type = TextResources.Type_BlockParentNode;
   const screenWidth = window.innerWidth / 2.4;
@@ -25,6 +23,7 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpe
     y: primaryNode.positionBlockY,
   };
 
+  // TODO: Remove state mutation outside store
   secondaryNode.positionBlockX = position.x;
   secondaryNode.positionBlockY = position.y;
 

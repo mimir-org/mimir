@@ -9,5 +9,4 @@ const BlockLogoWrapper = styled.div`
   padding: 0 8px;
 `;
 
-
 export default BlockLogoWrapper;

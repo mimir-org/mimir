@@ -1,10 +1,21 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
-import { BlobData, LibItem, Project, User, Node, LibrarySubProjectItem, Composite, Connector, Attribute } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
+import {
+  Attribute,
+  BlobData,
+  Connector,
+  ConnectorVisibility,
+  LibItem,
+  LibrarySubProjectItem,
+  Node,
+  Project,
+  Simple,
+  User,
+} from "../../../models";
 import {
   CreateId,
   GetProjectData,
@@ -68,7 +79,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
-  targetNode.simples?.forEach((composite) => initComposite(composite, targetNode));
+  targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
   targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
   targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
@@ -86,18 +97,18 @@ const handleCreatePartOfEdge = (
   targetNode.level = sourceNode.level + 1;
   const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library, false);
+  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
   dispatch(createEdge(partofEdge));
 };
 
-const initComposite = (composite: Composite, targetNode: Node) => {
-  var compositeId = CreateId();
-  composite.id = compositeId;
-  composite.nodeId = targetNode.id;
-  composite.attributes.forEach((a) => {
-    a.simpleId = compositeId;
+const initSimple = (simple: Simple, targetNode: Node) => {
+  const simpleId = CreateId();
+  simple.id = simpleId;
+  simple.nodeId = targetNode.id;
+  simple.attributes.forEach((a) => {
+    a.simpleId = simpleId;
   });
 };
 
@@ -107,6 +118,7 @@ const initConnector = (connector: Connector, targetNode: Node) => {
   connector.attributes?.forEach((a) => {
     a.id = CreateId();
   });
+  connector.connectorVisibility = ConnectorVisibility.None;
 };
 
 const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
@@ -117,7 +129,7 @@ const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-const getParentNode = (sourceNode: Node, project: Project, data: any) => {
+const getParentNode = (sourceNode: Node, project: Project, data: LibItem) => {
   if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
 };

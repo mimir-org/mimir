@@ -1,7 +1,9 @@
-import { changeTypeEditorValidationVisibility, closeTypeEditor } from "../redux/actions";
-const onCloseEditor = (dispatch: any) => {
+import { Dispatch } from "redux";
+import { changeTypeEditorValidationVisibility, changeTypeEditorVisibility } from "../redux/typeEditorSlice";
+
+const onCloseEditor = (dispatch: Dispatch) => {
   dispatch(changeTypeEditorValidationVisibility(false));
-  dispatch(closeTypeEditor());
+  dispatch(changeTypeEditorVisibility(false));
 };
 
 export default onCloseEditor;

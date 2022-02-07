@@ -1,4 +1,4 @@
-﻿using Mb.Models.Abstract;
+using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 
 namespace Mb.Data.Contracts

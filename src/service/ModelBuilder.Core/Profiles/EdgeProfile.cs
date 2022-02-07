@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Data;
 
@@ -19,6 +19,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ToConnector, opt => opt.Ignore())
                 .ForMember(dest => dest.FromNode, opt => opt.Ignore())
                 .ForMember(dest => dest.ToNode, opt => opt.Ignore())
+                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
                 .ForMember(dest => dest.FromConnectorIri, opt => opt.MapFrom(src => src.FromConnectorIri))
                 .ForMember(dest => dest.ToConnectorIri, opt => opt.MapFrom(src => src.ToConnectorIri))
                 .ForMember(dest => dest.FromNodeIri, opt => opt.MapFrom(src => src.FromNodeIri))
@@ -38,6 +41,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ToConnectorId, opt => opt.MapFrom(src => src.ToConnectorId))
                 .ForMember(dest => dest.FromNodeId, opt => opt.MapFrom(src => src.FromNodeId))
                 .ForMember(dest => dest.ToNodeId, opt => opt.MapFrom(src => src.ToNodeId))
+                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
                 .ForMember(dest => dest.FromConnectorIri, opt => opt.MapFrom(src => src.FromConnectorIri))
                 .ForMember(dest => dest.ToConnectorIri, opt => opt.MapFrom(src => src.ToConnectorIri))
                 .ForMember(dest => dest.FromNodeIri, opt => opt.MapFrom(src => src.FromNodeIri))

@@ -1,11 +1,11 @@
 import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
 import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../compLibrary/list";
-import { PreviewArea, InfoWrapper, InfoText } from "../styled";
+import { InfoText, InfoWrapper, PreviewArea } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
 import { TextResources } from "../../assets/text";
-import { TransportIcon, InterfaceIcon } from "../../assets/icons/type";
-import { IsFunction, IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface } from "../helpers";
+import { InterfaceIcon, TransportIcon } from "../../assets/icons/type";
+import { IsFunction, IsInterface, IsLocation, IsObjectBlock, IsProduct, IsTransport } from "../helpers";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -17,7 +17,7 @@ interface Props {
 }
 /**
  * Component to show Preview area with selected object type, type name, rds and symbol
- * @param param0
+ * @param params
  * @returns the visual type preview area
  */
 export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {
@@ -53,10 +53,10 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
             <InfoText>{rdsLabel}</InfoText>
             <InfoText>{createLibraryType?.name}</InfoText>
             {(IsFunction(aspect) || IsProduct(aspect)) && IsTransport(objectType) && (
-              <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
+              <TransportIcon style={{ stroke: terminal?.color, fill: terminal?.color }} />
             )}
             {(IsFunction(aspect) || IsProduct(aspect)) && IsInterface(objectType) && (
-              <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }}/>
+              <InterfaceIcon style={{ stroke: terminal?.color, fill: terminal?.color }} />
             )}
           </InfoWrapper>
         )}

@@ -1,6 +1,6 @@
-import { CreateLibraryType, TerminalType } from "../../models";
+import { CreateLibraryType, TerminalType, TerminalTypeDict } from "../../models";
 
-const GetSelectedTerminal = (createLibraryType: CreateLibraryType, terminals: any[]): TerminalType => {
+const GetSelectedTerminal = (createLibraryType: CreateLibraryType, terminals: TerminalTypeDict): TerminalType => {
   let selectedTerminal: TerminalType;
   terminals.forEach((t) => {
     t.value.forEach((element) => {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -75,7 +75,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetAllEnumsOfType([FromRoute]EnumType enumType)
+        public IActionResult GetAllEnumsOfType([FromRoute] EnumType enumType)
         {
             try
             {
@@ -113,5 +113,5 @@ namespace Mb.TypeEditor.Core.Controllers.V1
             }
         }
     }
-    
+
 }

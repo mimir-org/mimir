@@ -1,4 +1,4 @@
-import { ArrowHeadType, getMarkerEnd } from "react-flow-renderer";
+import { ArrowHeadType, ConnectionLineComponentProps, getMarkerEnd } from "react-flow-renderer";
 import { Connector } from "../../../../models";
 import { GetTerminalColor } from "../terminals/helpers";
 
@@ -7,7 +7,7 @@ import { GetTerminalColor } from "../terminals/helpers";
  * @param params
  * @returns a line from a Node's terminal.
  */
-const BlockConnectionLine = ({ sourceX, sourceY, targetX, targetY, connectionLineType, sourceHandle, sourceNode }) => {
+const BlockConnectionLine = ({ sourceX, sourceY, targetX, targetY, sourceHandle, sourceNode }: ConnectionLineComponentProps) => {
   const connector = sourceNode.data?.connectors?.find((conn: Connector) => conn.id === sourceHandle?.id) as Connector;
   const color = GetTerminalColor(connector);
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);

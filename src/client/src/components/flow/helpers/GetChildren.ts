@@ -1,5 +1,5 @@
 import { IsPartOf } from ".";
-import { Project, Node } from "../../../models";
+import { Node, Project } from "../../../models";
 
 export const GetChildren = (node: Node, project: Project) =>
   project?.nodes?.filter((otherNode) =>

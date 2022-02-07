@@ -2,20 +2,20 @@ import { TextResources } from "../../../../assets/text";
 import { Dropdown } from "./styled/dropdown/parameter";
 import { CombinedAttributeFilter, Project } from "../../../../models";
 import { GetAttributeCombinations, GetParametersColor } from "./helpers";
-import { Menu, Header, ParametersRowWrapper, ParametersContentWrapper } from "./styled";
+import { Header, Menu, ParametersContentWrapper, ParametersRowWrapper } from "./styled";
 import { ParameterButton } from "./styled/parameter";
-import { OnChangeFilterChoice, OnClearAllFilters, OnShowAllFilters, OnIsCreateLibraryType } from "./handlers";
+import { OnChangeFilterChoice, OnClearAllFilters, OnIsCreateLibraryType, OnShowAllFilters } from "./handlers";
 import { ParameterRow } from "./";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AttributeLikeItem, InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../types";
 import { GetAttributes } from "./helpers/GetAttributes";
 import { IsCreateLibraryType } from "../../helpers/IsType";
 import {
-  useAppDispatch,
-  useUniqueParametricAppSelector,
   makeFilterSelector,
   makeSelectedFilterSelector,
+  useAppDispatch,
   useAppSelector,
+  useUniqueParametricAppSelector,
   usernameSelector,
 } from "../../../../redux/store";
 
@@ -98,7 +98,7 @@ const ParametersContent = ({
           Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
             if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
 
-            let [headerColor, bodyColor] = colorMapping.get(filterName);
+            const [headerColor, bodyColor] = colorMapping.get(filterName);
 
             return (
               <ParameterRow

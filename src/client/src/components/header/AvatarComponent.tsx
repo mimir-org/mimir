@@ -1,3 +1,4 @@
+import { Dispatch } from "redux";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../assets/icons/chevron";
 import { AvatarBackground } from "../../assets/icons/header";
 import { UserState } from "../../redux/store/user/types";
@@ -8,7 +9,7 @@ import { AvatarBox, AvatarCircle, AvatarInitials } from "./styled";
 interface Props {
   userMenuOpen: boolean;
   userState: UserState;
-  dispatch: any;
+  dispatch: Dispatch;
 }
 /**
  * Component for the avatar icon in the header of Mimir.

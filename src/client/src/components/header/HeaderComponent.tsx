@@ -1,11 +1,13 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { MimirLogo } from "../../assets/icons/mimir";
-import { ToolBarComponent, AvatarComponent, ProjectMenuHeader } from ".";
+import { AvatarComponent, ProjectMenuHeader, ToolBarComponent } from ".";
 import { CompanyLogoBox, HeaderBox, LogoBox } from "./styled";
 import { GetCompanyLogoForHeader, GetSelectedNode, IsStartPage } from "../../helpers";
 import { Project } from "../../models";
-import { useAppSelector } from "../../redux/store";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { VIEW_TYPE } from "../../models/project";
+import Config from "../../models/Config";
 
 interface Props {
   project: Project;
@@ -23,11 +25,11 @@ const HeaderComponent = ({ project, projectMenuOpen, dispatch }: Props) => {
   const userMenuOpen = useAppSelector(selectors.userMenuSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
-  const treeView = useAppSelector(selectors.treeSelector);
+  const isTreeView = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.TREEVIEW);
   const electro = useAppSelector(selectors.electroSelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const location3DActive = useAppSelector(selectors.location3DSelector);
-  const company = process.env.REACT_APP_COMPANY;
+  const company = Config.COMPANY;
 
   return (
     <>
@@ -46,7 +48,7 @@ const HeaderComponent = ({ project, projectMenuOpen, dispatch }: Props) => {
           project={project}
           libOpen={libOpen}
           explorerOpen={explorerOpen}
-          isTreeView={treeView}
+          isTreeView={isTreeView}
           visualFilterOpen={filterOpen}
           isElectro={electro}
           location3DActive={location3DActive}

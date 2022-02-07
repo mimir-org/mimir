@@ -1,4 +1,4 @@
-import { getBezierPath, getMarkerEnd } from "react-flow-renderer";
+import { EdgeProps, getBezierPath, getMarkerEnd } from "react-flow-renderer";
 import { GetEdgeRelationStyle } from "../../helpers";
 
 /**
@@ -17,7 +17,7 @@ const TreeRelationEdge = ({
   data,
   arrowHeadType,
   markerEndId,
-}) => {
+}: EdgeProps) => {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
 
   const bezierPath = getBezierPath({

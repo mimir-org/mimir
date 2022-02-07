@@ -1,53 +1,39 @@
-import * as Handlers from "./handlers";
-import { Dispatch } from "redux";
-import { useState } from "react";
-import { isActiveMenuSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { MENU_TYPE } from "../../../../../models/project";
-import { CloseIcon } from "../../../../../assets/icons/close";
-import { TextResources } from "../../../../../assets/text";
-import { Input } from "../../../../../compLibrary/input/text";
 import { Button } from "../../../../../compLibrary/buttons";
-import { ProjectBody, ProjectBox, HeaderBox, ButtonBox, InputBox } from "../styled";
+import { ButtonBox } from "../styled";
 import { CreateProjectIcon } from "../../../../../assets/icons/project";
+import { MENU_TYPE } from "../../../../../models/project";
+import { Modal } from "../../../../../compLibrary/modal/Modal";
+import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
+import { TextResources } from "../../../../../assets/text";
+import { ChangeEvent, useState } from "react";
+import { Input, Label } from "../../../../../compLibrary/input/text";
+import { OnProjectCreateClick, OnReturnClick } from "./handlers";
+import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
 
-interface Props {
-  dispatch: Dispatch;
-}
-
-export const CreateProjectMenu = ({ dispatch }: Props) => {
-  const [projectName, setProjectName] = useState("");
+export const CreateProjectMenu = () => {
+  const dispatch = useAppDispatch();
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
+  const [projectName, setProjectName] = useState("");
+  const onExit = () => OnReturnClick(dispatch);
+  const onAction = () => OnProjectCreateClick(dispatch, projectName);
+  const isActionDisabled = !projectName;
 
   return (
-    <ProjectBox visible={isOpen}>
-      <ProjectBody>
-        <HeaderBox>
-          <img src={CloseIcon} alt="Close project" onClick={() => Handlers.OnReturnClick(dispatch)} className="icon" />
-          {TextResources.Project_CreateProject}
-        </HeaderBox>
-        <InputBox>
-          <div className="label">{TextResources.Project_Name}</div>
-          <Input
-            onChange={(e: any) => setProjectName(e.target.value)}
-            inputType="text"
-            placeholder={TextResources.Project_Name_Placeholder}
-            value={projectName}
-          />
-        </InputBox>
-        <ButtonBox left>
-          <Button onClick={() => Handlers.OnReturnClick(dispatch)} text={TextResources.Project_Cancel} />
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+      <InfoModalContent title={TextResources.Project_CreateProject}>
+        <Label>{TextResources.Project_Name}</Label>
+        <Input
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
+          inputType="text"
+          placeholder={TextResources.Project_Name_Placeholder}
+          value={projectName}
+        />
+        <ButtonBox>
+          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Create} icon={CreateProjectIcon} />
         </ButtonBox>
-        {projectName && (
-          <ButtonBox>
-            <Button
-              onClick={() => Handlers.OnProjectCreateClick(dispatch, projectName)}
-              text={TextResources.Project_Create}
-              icon={CreateProjectIcon}
-            />
-          </ButtonBox>
-        )}
-      </ProjectBody>
-    </ProjectBox>
+      </InfoModalContent>
+    </Modal>
   );
 };
 

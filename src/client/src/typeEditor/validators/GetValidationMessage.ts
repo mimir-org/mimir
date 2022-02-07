@@ -39,8 +39,7 @@ const GetValidationMessage = (state: TypeEditorState) => {
     }
     // Check interface terminal type
     if (IsInterface(objectType) || IsTransport(objectType)) {
-      if (state.createLibraryType.terminalTypeId === null)
-        messages.push(TextResources.TypeEditor_Error_Terminals_Interface);
+      if (state.createLibraryType.terminalTypeId === null) messages.push(TextResources.TypeEditor_Error_Terminals_Interface);
     }
   }
 

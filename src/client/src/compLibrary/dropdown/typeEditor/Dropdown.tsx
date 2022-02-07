@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
-import { ExpandIcon, CollapseIcon } from "../../../assets/icons/chevron";
+import { useCallback, useEffect, useState } from "react";
+import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
 import { LocationTypeCategory } from "../../../typeEditor/styled";
 import { Symbol } from "../../symbol";
-import { DropdownMenuWrapper, DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem } from "./styled";
+import { DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem, DropdownMenuWrapper } from "./styled";
 
 export interface DropDownCategoryItem<T> {
   id: string;
@@ -30,15 +30,7 @@ interface Props<T> {
   placeholder?: string;
 }
 
-const Dropdown = <T extends unknown>({
-  label,
-  categories,
-  onChange,
-  defaultValue,
-  disabled,
-  hasCategory,
-  placeholder,
-}: Props<T>) => {
+const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, hasCategory, placeholder }: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null as DropDownItem<T>);
 
@@ -66,7 +58,7 @@ const Dropdown = <T extends unknown>({
     }
   }, [defaultValue, findSelectedItem, categories]);
 
-  const handleChange = (_e: any, item: DropDownItem<T>) => {
+  const handleChange = (item: DropDownItem<T>) => {
     setSelectedItem(item);
     setIsListOpen(!isListOpen);
     onChange(item.value);
@@ -83,7 +75,7 @@ const Dropdown = <T extends unknown>({
   const getItems = (items: DropDownItem<T>[]) => {
     return items?.map((item) => {
       return (
-        <div onClick={(e) => handleChange(e, item)} key={item.id}>
+        <div onClick={() => handleChange(item)} key={item.id}>
           <DropdownMenuListItem>
             {item.image && <Symbol base64={item.image} text={item.description} />}
             <p>{item.description}</p>
@@ -97,7 +89,7 @@ const Dropdown = <T extends unknown>({
     <DropdownMenuWrapper disabled={disabled}>
       <label htmlFor={label} />
       <div className="dropdown-label">{label}</div>
-      <div onClick={disabled ? null : (e) => setIsListOpen(!isListOpen)}>
+      <div onClick={disabled ? null : () => setIsListOpen(!isListOpen)}>
         <DropdownMenuHeader>
           {selectedItem && selectedItem.image && <Symbol base64={selectedItem.image} text={selectedItem.description} />}
           <p>{selectedItem?.description ?? placeholder}</p>

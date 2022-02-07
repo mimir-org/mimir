@@ -1,13 +1,12 @@
-import { concat } from "lodash";
 import { ValidateLibComponent } from ".";
-import { Node } from "../../../models";
+import { LibItem, Node } from "../../../models";
 import { LibraryCategory } from "../../../models/project";
 import { LibraryState } from "../../../redux/store/library/types";
 import { IsBlockView } from "../../../helpers";
 
 const GetLibCategories = (selectedNode: Node, state: LibraryState) => {
-  var allCategories = [] as LibraryCategory[];
-  var items = concat(state.nodeTypes, state.interfaceTypes, state.transportTypes);
+  const allCategories: LibraryCategory[] = [];
+  const items: LibItem[] = [].concat(state.nodeTypes, state.interfaceTypes, state.transportTypes);
 
   const result = items.reduce((r, a) => {
     r[a?.category] = r[a?.category] || [];
@@ -18,11 +17,10 @@ const GetLibCategories = (selectedNode: Node, state: LibraryState) => {
   const objectArray = Object.entries(result);
 
   objectArray.forEach(([key, value]) => {
-    var libCategory = {
+    const libCategory: LibraryCategory = {
       name: key,
-      nodes: value,
-      visible: false,
-    } as LibraryCategory;
+      nodes: value as LibItem[],
+    };
 
     libCategory.nodes.length > 0 && allCategories.push(libCategory);
   });

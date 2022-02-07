@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,7 +32,7 @@ namespace ModelBuilder.Services.Tests
         /// </summary>
         public ProjectFixture()
         {
-            
+
             Setup();
             LoadData();
         }
@@ -42,7 +42,7 @@ namespace ModelBuilder.Services.Tests
         /// </summary>
         public void Dispose()
         {
-            
+
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Mb.Models.Const
@@ -13,7 +13,7 @@ namespace Mb.Models.Const
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                
+
             };
         }
     }

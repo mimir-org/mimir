@@ -1,6 +1,7 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using AutoMapper;
 using Mb.Models.Application;
+using RdfParserModule.Models;
 
 namespace RdfParserModule
 {
@@ -47,7 +48,7 @@ namespace RdfParserModule
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type))
-                .ForMember(dest => dest.Visible, opt => opt.MapFrom(src => src.Visible))
+                .ForMember(dest => dest.ConnectorVisibility, opt => opt.MapFrom(src => src.ConnectorVisibility))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => NormaliseId(src.NodeIri)));
 
             CreateMap<ParserTerminal, TerminalAm>()

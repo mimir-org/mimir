@@ -1,3 +1,4 @@
+import { Icon } from "../../../compLibrary/icon";
 import { ProjectMenuElementBox } from "../styled";
 
 interface Props {
@@ -10,10 +11,8 @@ interface Props {
 
 const MenuElement = ({ text, icon, onClick, disabled, bottomLine = false }: Props) => (
   <ProjectMenuElementBox onClick={() => !disabled && onClick()} disabled={disabled} bottomLine={bottomLine}>
-    <div className="icon">
-      <img src={icon} alt={text} />
-    </div>
-    <p className="text">{text}</p>
+    <Icon size={18} src={icon} alt="" />
+    <span>{text}</span>
   </ProjectMenuElementBox>
 );
 

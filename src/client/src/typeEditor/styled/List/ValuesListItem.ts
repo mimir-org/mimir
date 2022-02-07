@@ -8,12 +8,12 @@ interface Props {
 const ValuesListItem = styled.label<Props>`
   display: flex;
   align-items: center;
-  gap: ${(props) => (props.gap ? props.gap : '10px')};
+  gap: ${(props) => (props.gap ? props.gap : "10px")};
   padding: 2px 5px;
   border-bottom: 1px solid ${Color.GreyDarker};
   border-radius: 3px;
   height: 20px;
-  
+
   :last-child {
     border: 0;
   }

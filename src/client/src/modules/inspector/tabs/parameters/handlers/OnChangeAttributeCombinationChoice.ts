@@ -1,18 +1,18 @@
 import { Dispatch } from "redux";
 import { CombinedAttribute } from "../../../../../models";
-import { addCombinedAttribute, removeCombinedAttribute } from "../redux/actions";
+import { addCombinedAttribute, removeCombinedAttribute } from "../redux/parametersSlice";
 
 const OnChangeAttributeCombinationChoice = (
   elementId: string,
   filterName: string,
   combination: CombinedAttribute,
   selected: boolean,
-  dispatch: Dispatch<any>
+  dispatch: Dispatch
 ) => {
   if (!selected) {
-    dispatch(addCombinedAttribute(elementId, filterName, combination));
+    dispatch(addCombinedAttribute({ elementId, filterName, combination }));
   } else {
-    dispatch(removeCombinedAttribute(elementId, filterName, combination));
+    dispatch(removeCombinedAttribute({ elementId, filterName, combination }));
   }
 };
 

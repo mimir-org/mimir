@@ -1,7 +1,7 @@
 import { RelationsContent } from ".";
 import { RelationsBody } from "./styled";
 import { TextResources } from "../../../../assets/text";
-import { useAppSelector, edgeSelector } from "../../../../redux/store";
+import { edgeSelector, useAppSelector } from "../../../../redux/store";
 import { OnClickNode, OnClickRelation, OnClickTerminal, OnClickTransport } from "./handlers";
 import { GetRelations } from "./helpers/GetRelations";
 import { InspectorElement } from "../../types";
@@ -9,15 +9,15 @@ import { IsEdge, IsNode } from "../../helpers/IsType";
 import { useMemo } from "react";
 import { useSelectFlowElements } from "../../../../helpers";
 import {
-  GetTransports,
+  GetActiveRelationColor,
   GetConnectors,
+  GetListItemColor,
+  GetNameNode,
   GetNameRelation,
   GetNameTerminal,
   GetNameTransport,
   GetTerminals,
-  GetNameNode,
-  GetActiveRelationColor,
-  GetListItemColor,
+  GetTransports,
 } from "./helpers";
 
 interface Props {

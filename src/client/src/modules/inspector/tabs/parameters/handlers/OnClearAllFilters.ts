@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { removeAllAttributeFilters } from "../redux/actions";
+import { removeAllAttributeFilters } from "../redux/parametersSlice";
 
-const OnClearAllFilters = (elementId: string, dispatch: Dispatch<any>) => {
+const OnClearAllFilters = (elementId: string, dispatch: Dispatch) => {
   dispatch(removeAllAttributeFilters(elementId));
 };
 

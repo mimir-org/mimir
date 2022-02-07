@@ -1,4 +1,4 @@
-const OnMouseEnter = (setVisible: any) => {
+const OnMouseEnter = (setVisible: (visibility: boolean) => void) => {
   setVisible(true);
 };
 

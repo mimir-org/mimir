@@ -1,21 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CREATE_LIBRARY_KIND } from "../../../models/application/CreateLibraryType";
 import {
-  Edge,
-  Node,
-  NODE_KIND,
-  EDGE_KIND,
-  Transport,
-  Interface,
-  Connector,
-  TRANSPORT_KIND,
-  INTERFACE_KIND,
-  CONNECTOR_KIND,
-  Composite,
-  CreateLibraryType,
-  CREATE_LIBRARY_KIND,
-  Attribute,
   ATTRIBUTE_KIND,
+  CONNECTOR_KIND,
+  EDGE_KIND,
+  INTERFACE_KIND,
+  NODE_KIND,
+  SIMPLE_KIND,
+  TRANSPORT_KIND,
+  Attribute,
+  Connector,
+  Edge,
+  Interface,
+  Node,
+  Simple,
+  Transport,
+  CreateLibraryType,
 } from "../../../models";
-import { COMPOSITE_KIND } from "../../../models/classes/Composite";
 
 export const IsNode = (element: any): element is Node => element?.kind === NODE_KIND;
 
@@ -27,7 +28,7 @@ export const IsInterface = (element: any): element is Interface => element?.kind
 
 export const IsConnector = (element: any): element is Connector => element?.kind === CONNECTOR_KIND;
 
-export const IsComposite = (element: any): element is Composite => element?.kind === COMPOSITE_KIND;
+export const IsSimple = (element: any): element is Simple => element?.kind === SIMPLE_KIND;
 
 export const IsCreateLibraryType = (element: any): element is CreateLibraryType => element?.kind === CREATE_LIBRARY_KIND;
 

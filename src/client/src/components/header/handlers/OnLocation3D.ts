@@ -1,7 +1,8 @@
-import { setLocation3D } from "../../../modules/location/redux/actions";
+import { Dispatch } from "redux";
+import { toggleLocation3D } from "../../../modules/location/redux/location3DSlice";
 
-const OnLocation3D = (dispatch: any, active: boolean) => {
-  dispatch(setLocation3D(!active));
+const OnLocation3D = (dispatch: Dispatch) => {
+  dispatch(toggleLocation3D());
 };
 
 export default OnLocation3D;

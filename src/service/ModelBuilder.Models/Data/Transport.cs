@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data.Enums;
@@ -13,7 +13,7 @@ namespace Mb.Models.Data
         public string Iri { get; set; }
         public string Version { get; set; }
         public string Rds { get; set; }
-        
+
         public string Kind => nameof(Transport);
 
         [Required]
@@ -31,7 +31,7 @@ namespace Mb.Models.Data
         public virtual Terminal InputTerminal { get; set; }
         public string OutputTerminalId { get; set; }
         public virtual Terminal OutputTerminal { get; set; }
-        
+
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }

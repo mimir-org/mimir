@@ -1,5 +1,7 @@
 # .dockerignore
 
 Dockerfile
-[b|B]in
-[O|o]bj
+**/[b | B]in
+**/[O | o]bj
+
+**/appsettings.*.json

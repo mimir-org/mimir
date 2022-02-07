@@ -1,25 +1,26 @@
-import { IsLocation, IsProduct, IsObjectBlock, IsTransport, IsInterface } from ".";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { IsInterface, IsLocation, IsObjectBlock, IsProduct, IsTransport } from ".";
 import { CreateLibraryType } from "../../models";
-import { clearAllTerminalTypes, updateValue } from "../redux/actions";
+import { clearAllTerminalTypes, updateCreateLibraryType } from "../redux/typeEditorSlice";
 
 const ResetRedux = (dispatch: any, key: keyof CreateLibraryType, value: any) => {
   if (key === "aspect" && IsLocation(value)) {
-    dispatch(updateValue("terminalTypes", []));
-    dispatch(updateValue("attributeTypes", []));
+    dispatch(updateCreateLibraryType({ key: "terminalTypes", value: [] }));
+    dispatch(updateCreateLibraryType({ key: "attributeTypes", value: [] }));
   }
   if (key === "aspect" && !IsLocation(value)) {
-    dispatch(updateValue("locationType", ""));
-    dispatch(updateValue("predefinedAttributes", []));
-    dispatch(updateValue("attributeTypes", []));
+    dispatch(updateCreateLibraryType({ key: "locationType", value: "" }));
+    dispatch(updateCreateLibraryType({ key: "predefinedAttributes", value: [] }));
+    dispatch(updateCreateLibraryType({ key: "attributeTypes", value: [] }));
   }
   if (key === "aspect" && !IsProduct(value)) {
-    dispatch(updateValue("compositeTypes", []));
+    dispatch(updateCreateLibraryType({ key: "simpleTypes", value: [] }));
   }
   if (key === "objectType" && IsObjectBlock(value)) {
-    dispatch(updateValue("terminalTypeId", ""));
+    dispatch(updateCreateLibraryType({ key: "terminalTypeId", value: "" }));
   }
   if (key === "objectType" && (IsTransport(value) || IsInterface(value))) {
-    dispatch(updateValue("terminalTypes", []));
+    dispatch(updateCreateLibraryType({ key: "terminalTypes", value: [] }));
   }
   if (key === "terminalTypeId") {
     dispatch(clearAllTerminalTypes());

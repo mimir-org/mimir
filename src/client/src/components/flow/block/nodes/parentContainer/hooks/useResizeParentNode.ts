@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef } from "react";
+import { Dispatch } from "redux";
 import { GetFlowNodeByDataId } from "../../../helpers";
 
 const MIN_HEIGHT = 700;
@@ -11,7 +12,7 @@ const MIN_WIDTH = 700;
  * @param resizePanelRef
  * @param dispatch
  */
-const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: any) => {
+const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
   const parentProductNodeRef = useRef(null);
   const parentProductNodeFlowRef = useRef(null);
   const nodeHeightRef = useRef(window.innerHeight);
@@ -32,7 +33,7 @@ const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<
   );
 
   const onMouseUpCallback = useCallback(
-    () => onMouseUp(nodeHeightRef, nodeWidthRef, dispatch, onResizeCallback),
+    () => onMouseUp(onResizeCallback),
     [nodeHeightRef, nodeWidthRef, dispatch, onResizeCallback]
   );
 
@@ -89,11 +90,6 @@ const onMouseDown = (
   document.addEventListener("mouseup", onMouseUpCallback, { once: true });
 };
 
-const onMouseUp = (
-  nodeHeightRef: React.MutableRefObject<number>,
-  nodeWidthRef: React.MutableRefObject<number>,
-  dispatch: any,
-  resizeCallback: (e: MouseEvent) => void
-) => {
+const onMouseUp = (resizeCallback: (e: MouseEvent) => void) => {
   document.removeEventListener("mousemove", resizeCallback);
 };

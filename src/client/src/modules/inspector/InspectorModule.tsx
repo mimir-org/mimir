@@ -2,15 +2,15 @@ import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
-import { IsBlockView, GetSelectedNode } from "../../helpers";
+import { GetSelectedNode, IsBlockView } from "../../helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
 import { InspectorHeader } from ".";
 import { InspectorElement } from "./types";
-import { useDragResizePanel } from "./helpers/useDragResizePanel";
-import { changeInspectorHeight } from "./redux/height/actions";
-import { setModuleVisibility } from "../../redux/store/modules/actions";
+import { useDragResizePanel } from "./helpers";
+import { changeInspectorHeight } from "./redux/inspectorSlice";
+import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
 import { useCallback, useRef } from "react";
-import { useAppSelector, useParametricAppSelector } from "../../redux/store/hooks";
+import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { Project } from "../../models";
 
 interface Props {
@@ -45,7 +45,10 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const element: InspectorElement = node || edge;
 
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
-  const changeInspectorVisibilityAction = useCallback((open: boolean) => setModuleVisibility(type, open, true), [type]);
+  const changeInspectorVisibilityAction = useCallback(
+    (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
+    [type]
+  );
 
   return (
     <AnimatedInspector

@@ -1,13 +1,13 @@
 import { Dispatch } from "redux";
-import { TerminalTypeItem, ConnectorType } from "../../models";
+import { ConnectorType, TerminalTypeItem } from "../../models";
 import { TerminalCategoryChangeKey } from "../types";
 import {
   addTerminalType,
   removeTerminalType,
-  updateTerminalType,
   removeTerminalTypeByCategory,
-  updateValue,
-} from "../redux/actions";
+  updateCreateLibraryType,
+  updateTerminalType,
+} from "../redux/typeEditorSlice";
 
 export const OnTerminalCategoryChange = (
   key: TerminalCategoryChangeKey,
@@ -26,6 +26,6 @@ export const OnTerminalCategoryChange = (
     dispatch(removeTerminalTypeByCategory(terminalTypeItem.categoryId));
     dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Input }));
     dispatch(addTerminalType({ ...terminalTypeItem, connectorType: ConnectorType.Output }));
-    dispatch(updateValue(key, terminalTypeItem.terminalTypeId));
+    dispatch(updateCreateLibraryType({ key: key, value: terminalTypeItem.terminalTypeId }));
   }
 };

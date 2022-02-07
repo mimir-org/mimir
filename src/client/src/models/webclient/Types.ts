@@ -24,8 +24,7 @@ export const RequestInitDefault: RequestInit = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Methods": "DELETE, POST, GET, PUT, OPTIONS",
     "Access-Control-Allow-Origin": "http://localhost:3000",
-    "Access-Control-Allow-Headers":
-      "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+    "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
     Origin: "http://localhost:3000",
     "Cache-Control": "no-cache",
   },

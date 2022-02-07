@@ -1,4 +1,4 @@
-﻿using Mb.Models.Data;
+using Mb.Models.Data;
 
 namespace Mb.Models.Settings
 {

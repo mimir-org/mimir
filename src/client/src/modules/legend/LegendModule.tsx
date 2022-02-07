@@ -1,4 +1,4 @@
-import { LegendBody, LegendElement, LegendColor } from "./styled";
+import { LegendBody, LegendColor, LegendElement } from "./styled";
 import { LegendComponent } from "./";
 import { Project } from "../../models";
 
@@ -14,8 +14,8 @@ const LegendModule = ({ project }: Props) => {
       {legends?.map((legend) => {
         return (
           <LegendElement key={legend.key}>
-            <p>{legend.name}</p>
-            <LegendColor color={legend.color}></LegendColor>
+            <span>{legend.name}</span>
+            <LegendColor color={legend.color} />
           </LegendElement>
         );
       })}

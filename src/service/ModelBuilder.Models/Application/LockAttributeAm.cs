@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mb.Models.Application
@@ -7,7 +7,7 @@ namespace Mb.Models.Application
     {
         [Required]
         public string Id { get; set; }
-        
+
         [Required]
         public bool IsLocked { get; set; }
 

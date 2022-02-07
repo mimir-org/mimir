@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import { Connector, Edge, Node } from "../../../models";
+import { Connector } from "../../../models";
 import { FilterMenuBox, Header } from "./styled";
 import { MenuColumn } from "../styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./filters";
@@ -7,9 +7,10 @@ import { TextResources } from "../../../assets/text";
 import { IsLibrary } from "../../../helpers";
 import { GetFilterElements, PopulateFilterLists } from "./helpers";
 import { memo } from "react";
+import { Elements } from "react-flow-renderer";
 
 interface Props {
-  elements: any[];
+  elements: Elements;
   edgeAnimation: boolean;
 }
 
@@ -21,10 +22,7 @@ interface Props {
 const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const filterElements = GetFilterElements(elements);
-
-  const nodes = filterElements[0] as Node[];
-  const edges = filterElements[1] as Edge[];
+  const { nodes, edges } = GetFilterElements(elements);
 
   const transportItems = [] as Connector[];
   const relationItems = [] as Connector[];
@@ -36,7 +34,7 @@ const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
     <FilterMenuBox libraryOpen={libOpen}>
       <Header>{TextResources.Filter_Heading}</Header>
       <MenuColumn>
-        <AnimationFilter edges={edges} edgeAnimation={edgeAnimation} dispatch={dispatch} />
+        <AnimationFilter edgeAnimation={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter edges={edges} nodes={nodes} items={partOfItems} dispatch={dispatch} visible={!!partOfItems.length} />
         <RelationFilter edges={edges} items={relationItems} dispatch={dispatch} visible={!!relationItems.length} />
         <TransportFilter edges={edges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />

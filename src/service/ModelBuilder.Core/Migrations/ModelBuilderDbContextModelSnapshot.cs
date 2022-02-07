@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -205,6 +205,13 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<string>("ConnectorVisibility")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("None")
+                        .HasColumnName("ConnectorVisibility");
+
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -241,11 +248,6 @@ namespace Mb.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Type");
-
-                    b.Property<string>("Visible")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)")
-                        .HasColumnName("Visible");
 
                     b.HasKey("Id");
 

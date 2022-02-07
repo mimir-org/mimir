@@ -32,7 +32,7 @@ const TypeNameInput = styled.div<Props>`
 
   input {
     max-height: 27px;
-    padding: 5px 10px
+    padding: 5px 10px;
   }
 `;
 

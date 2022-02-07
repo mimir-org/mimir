@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../colors";
-import { FontType, FontSize, FontWeight } from "../font";
+import { FontSize, FontType, FontWeight } from "../font";
 
 interface Props {
   flex?: string | number;
@@ -19,9 +19,9 @@ const ListWrapper = styled.div<Props>`
   font-size: ${FontSize.Small};
   font-weight: ${FontWeight.Normal};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
-  height: ${(props) => (props.height === undefined ? 'auto' : props.height)};
-  min-height: ${(props) => (props.minHeight === undefined ? 'auto' : props.minHeight)};
-  overflow: ${(props) => (props.hideOverflow ? 'hidden' : 'revert')};
+  height: ${(props) => (props.height === undefined ? "auto" : props.height)};
+  min-height: ${(props) => (props.minHeight === undefined ? "auto" : props.minHeight)};
+  overflow: ${(props) => (props.hideOverflow ? "hidden" : "revert")};
 `;
 
 export default ListWrapper;

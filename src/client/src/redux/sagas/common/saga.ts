@@ -1,30 +1,31 @@
 import { call, put } from "redux-saga/effects";
-import { CombinedAttributeFilter, EnumBase, CollaborationPartner, ModuleDescription } from "../../../models";
-import { get, GetBadRequestPayload, GetErrorResponsePayload } from "../../../models/webclient";
-import * as types from "../../store/common/types";
+import Config from "../../../models/Config";
+import { GetApiErrorForBadRequest, GetApiErrorForException, get } from "../../../models/webclient";
+import {
+  fetchCollaborationPartnersSuccessOrError,
+  fetchCombinedAttributeFiltersSuccessOrError,
+  fetchParsersSuccessOrError,
+  fetchStatusesSuccessOrError,
+} from "../../store/common/commonSlice";
 
 /**
  * Get all registered collaboration partners
  */
 export function* getCollaborationPartners() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "common/collaboration-partner";
+    const url = `${Config.API_BASE_URL}common/collaboration-partner`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
-      yield put(GetBadRequestPayload(response, types.FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR));
+      const apiError = GetApiErrorForBadRequest(response, fetchCollaborationPartnersSuccessOrError.type);
+      yield put(fetchCollaborationPartnersSuccessOrError({ collaborationPartners: [], apiError }));
       return;
     }
 
-    yield put({
-      type: types.FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR,
-      payload: {
-        collaborationPartners: response.data as CollaborationPartner[],
-        apiError: null
-      }
-    });
+    yield put(fetchCollaborationPartnersSuccessOrError({ collaborationPartners: response.data, apiError: null }));
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, types.FETCHING_COLLABORATION_PARTNERS_SUCCESS_OR_ERROR, { collaborationPartners: [] as CollaborationPartner[] }))
+    const apiError = GetApiErrorForException(error, fetchCollaborationPartnersSuccessOrError.type);
+    yield put(fetchCollaborationPartnersSuccessOrError({ collaborationPartners: [], apiError }));
   }
 }
 
@@ -33,23 +34,19 @@ export function* getCollaborationPartners() {
  */
 export function* getStatuses() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "enum/7";
+    const url = `${Config.API_BASE_URL}enum/7`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
-      yield put(GetBadRequestPayload(response, types.FETCHING_STATUSES_SUCCESS_OR_ERROR));
+      const apiError = GetApiErrorForBadRequest(response, fetchStatusesSuccessOrError.type);
+      yield put(fetchStatusesSuccessOrError({ statuses: [], apiError }));
       return;
     }
 
-    yield put({
-      type: types.FETCHING_STATUSES_SUCCESS_OR_ERROR,
-      payload: {
-        statuses: response.data as EnumBase[],
-        apiError: null,
-      }
-    });
+    yield put(fetchStatusesSuccessOrError({ statuses: response.data, apiError: null }));
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, types.FETCHING_STATUSES_SUCCESS_OR_ERROR, { statuses: [] as EnumBase[] }))
+    const apiError = GetApiErrorForException(error, fetchStatusesSuccessOrError.type);
+    yield put(fetchStatusesSuccessOrError({ statuses: [], apiError }));
   }
 }
 
@@ -58,23 +55,19 @@ export function* getStatuses() {
  */
 export function* getAttributeFilters() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "common/attribute-filter";
+    const url = `${Config.API_BASE_URL}common/attribute-filter`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
-      yield put(GetBadRequestPayload(response, types.FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR));
+      const apiError = GetApiErrorForBadRequest(response, fetchCombinedAttributeFiltersSuccessOrError.type);
+      yield put(fetchCombinedAttributeFiltersSuccessOrError({ filters: [], apiError }));
       return;
     }
 
-    yield put({
-      type: types.FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR,
-      payload: {
-        filters: response.data as CombinedAttributeFilter[],
-        apiError: null,
-      }
-    });
+    yield put(fetchCombinedAttributeFiltersSuccessOrError({ filters: response.data, apiError: null }));
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, types.FETCHING_COMBINED_ATTRIBUTE_FILTERS_SUCCESS_OR_ERROR, { filters: [] as CombinedAttributeFilter[] }))
+    const apiError = GetApiErrorForException(error, fetchCombinedAttributeFiltersSuccessOrError.type);
+    yield put(fetchCombinedAttributeFiltersSuccessOrError({ filters: [], apiError }));
   }
 }
 
@@ -83,22 +76,18 @@ export function* getAttributeFilters() {
  */
 export function* getParsers() {
   try {
-    const url = process.env.REACT_APP_API_BASE_URL + "common/parser";
+    const url = `${Config.API_BASE_URL}common/parser`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
-      yield put(GetBadRequestPayload(response, types.FETCHING_PARSERS_SUCCESS_OR_ERROR));
+      const apiError = GetApiErrorForBadRequest(response, fetchParsersSuccessOrError.type);
+      yield put(fetchParsersSuccessOrError({ parsers: [], apiError }));
       return;
     }
 
-    yield put({
-      type: types.FETCHING_PARSERS_SUCCESS_OR_ERROR,
-      payload: {
-        parsers: response.data as ModuleDescription[],
-        apiError: null
-      }
-    });
+    yield put(fetchParsersSuccessOrError({ parsers: response.data, apiError: null }));
   } catch (error) {
-    yield put(GetErrorResponsePayload(error, types.FETCHING_PARSERS_SUCCESS_OR_ERROR, { parsers: [] as ModuleDescription[] }))
+    const apiError = GetApiErrorForException(error, fetchParsersSuccessOrError.type);
+    yield put(fetchParsersSuccessOrError({ parsers: [], apiError }));
   }
 }

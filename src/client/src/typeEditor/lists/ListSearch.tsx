@@ -1,15 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ListSearchBar } from "../../compLibrary";
 import { SearchIcon } from "../../assets/icons/common";
 import { ListType } from "../TypeEditorList";
 import { GetListFilter } from "./ListElements/helpers";
-import { Rds, AttributeType, CompositeType, PredefinedAttribute, TerminalTypeDict } from "../../models";
+import { AttributeType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../../models";
+
+//TODO: Refactor out the whole ListType argument to props.
+// If it is used to pick a strategy (for filtering), it should be renamed to "xxxStrategy" or something similar.
+type ListItemType = Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[];
 
 interface Props {
   listType: ListType;
   placeHolder: string;
-  list: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
-  setlistItems: any;
+  list: ListItemType;
+  setlistItems: (items: ListItemType) => void;
 }
 
 /** Searchbar component at the top of a list that filter the elements in the list
@@ -18,12 +22,12 @@ interface Props {
 const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
   const [searchString, setSearchString] = useState("");
 
-  const filterListItems = (): Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[] => {
+  const filterListItems = (): ListItemType => {
     return searchString ? GetListFilter(searchString, listType, list) : list;
   };
 
   useEffect(() => {
-    list && setlistItems(filterListItems);
+    list && setlistItems(filterListItems());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchString]);
 
@@ -34,7 +38,7 @@ const ListSearch = ({ listType, placeHolder, list, setlistItems }: Props) => {
         type="text"
         value={searchString}
         placeholder={placeHolder ?? ""}
-        onChange={(e: any) => setSearchString(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchString(e.target.value)}
       />
       <img src={SearchIcon} alt="search-icon" className="icon" />
     </ListSearchBar>

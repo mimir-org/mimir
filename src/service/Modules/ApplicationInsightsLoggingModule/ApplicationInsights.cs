@@ -1,9 +1,7 @@
-﻿namespace ApplicationInsightsLoggingModule
+namespace ApplicationInsightsLoggingModule
 {
     public class ApplicationInsights
     {
-        public string InstrumentationKey { get; set; }
-        public string EndpointAddress { get; set; }
         public string ConnectionString { get; set; }
         public bool EnableAdaptiveSampling { get; set; }
         public bool EnableQuickPulseMetricStream { get; set; }

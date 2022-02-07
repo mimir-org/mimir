@@ -1,4 +1,4 @@
-﻿using Mb.Models.Enums;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Data.TypeEditor
 {

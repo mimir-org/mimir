@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Mb.Models.Application;
 using Mb.Models.Common;
 using Mb.Models.Data;

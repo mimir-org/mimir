@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,9 +22,10 @@ namespace Mb.Services.Services
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly IConnectorRepository _connectorRepository;
         private readonly ICooperateService _cooperateService;
+        private readonly ISimpleRepository _simpleRepository;
 
-        public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IConnectorRepository connectorRepository, 
-            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository)
+        public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IConnectorRepository connectorRepository,
+            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository)
         {
             _nodeRepository = nodeRepository;
             _edgeRepository = edgeRepository;
@@ -33,6 +34,7 @@ namespace Mb.Services.Services
             _cooperateService = cooperateService;
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
+            _simpleRepository = simpleRepository;
         }
 
         /// <summary>
@@ -104,6 +106,14 @@ namespace Mb.Services.Services
             lockAttributeAm.CompositeId = attribute.SimpleId;
             lockAttributeAm.TerminalId = attribute.TerminalId;
 
+            if (!string.IsNullOrWhiteSpace(lockAttributeAm.CompositeId) && string.IsNullOrWhiteSpace(lockAttributeAm.NodeId))
+            {
+                var simple = _simpleRepository.FindBy(x => x.Id == lockAttributeAm.CompositeId)?.First();
+
+                if (simple != null)
+                    lockAttributeAm.NodeId = simple.NodeId;
+            }
+
             if (save)
             {
                 await _attributeRepository.SaveAsync();
@@ -149,18 +159,18 @@ namespace Mb.Services.Services
 
             //WebSocket - send edge to client
             await _cooperateService.SendLockEdgeUpdates(
-                new List<(LockEdgeAm am, WorkerStatus workerStatus)> 
+                new List<(LockEdgeAm am, WorkerStatus workerStatus)>
                     { (lockEdgeAm, WorkerStatus.Update) }, lockEdgeAm.ProjectId);
 
             //Find all edge attributes
             var edgeConnectors = _connectorRepository.GetAll(false).Where(x => x.Id == edge.FromConnectorId || x.Id == edge.ToConnectorId);
-            
+
             Transport transportObject = null;
-            if(!string.IsNullOrEmpty(edge.TransportId))
+            if (!string.IsNullOrEmpty(edge.TransportId))
                 transportObject = _transportRepository.FindBy(x => x.Id == edge.TransportId)?.FirstOrDefault();
 
             Interface interfaceObject = null;
-            if(!string.IsNullOrWhiteSpace(edge.InterfaceId))
+            if (!string.IsNullOrWhiteSpace(edge.InterfaceId))
                 interfaceObject = _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId)?.FirstOrDefault();
 
             IQueryable<Attribute> edgeAttributes;
@@ -200,11 +210,11 @@ namespace Mb.Services.Services
             //Edge attributes lock/unlock
             foreach (var attribute in edgeAttributes)
             {
-                var lockAttribute = new LockAttributeAm { Id = attribute.Id, IsLocked = lockEdgeAm.IsLocked};
+                var lockAttribute = new LockAttributeAm { Id = attribute.Id, IsLocked = lockEdgeAm.IsLocked };
                 await LockAttribute(lockAttribute, false, userName, dateTimeNow);
             }
 
-            if(save)
+            if (save)
                 await _attributeRepository.SaveAsync();
         }
 
@@ -221,14 +231,14 @@ namespace Mb.Services.Services
                 throw new ModelBuilderBadRequestException($"Error locking/unlocking Node: Id or projectId can't be null or empty.");
 
             var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ProjectId == lockNodeAm.ProjectId);
-            
-            if(!allEdgesInProject.Any())
+
+            if (!allEdgesInProject.Any())
                 return;
 
             var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.ProjectId == lockNodeAm.ProjectId);
             var node = allNodesInProject.FirstOrDefault(x => x.Id == lockNodeAm.Id);
 
-            if(node == null)
+            if (node == null)
                 return;
 
             var allConnectors = _connectorRepository.GetAll(false);
@@ -243,7 +253,7 @@ namespace Mb.Services.Services
 
         #region Private
 
-        
+
         private async void LockNodesRecursive(Node node, LockNodeAm lockNodeAm, string userName, DateTime dateTimeNow,
             IQueryable<Node> allNodesInProject, IQueryable<Connector> allConnectors, IQueryable<Attribute> allAttributes, IQueryable<Edge> allEdgesInProject)
         {
@@ -298,7 +308,7 @@ namespace Mb.Services.Services
 
                 if (childNode != null && childNode.Level <= node.Level)
                     continue;
-                
+
                 LockNodesRecursive(childNode, lockNodeAm, userName, dateTimeNow, allNodesInProject, allConnectors, allAttributes, allEdgesInProject);
             }
         }

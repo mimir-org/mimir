@@ -2,10 +2,18 @@ import * as Click from "./handlers";
 import { BlobData, Project } from "../../models";
 import { GetInspectorColor, GetInspectorHeaderText } from "./helpers";
 import { Menu } from "./styled";
-import { InspectorTabs } from ".";
-import { AttributeLikeItem, CompositeLikeItem, InspectorElement, TerminalLikeItem } from "./types";
-import { Action, Dispatch } from "redux";
-import { InspectorButtonRow } from "./";
+import { InspectorButtonRow, InspectorTabs } from ".";
+import { Dispatch } from "redux";
+import {
+  AttributeLikeItem,
+  ChangeInspectorHeightAction,
+  ChangeInspectorTabAction,
+  ChangeInspectorVisibilityAction,
+  InspectorElement,
+  OnToogleHandler,
+  SimpleLikeItem,
+  TerminalLikeItem,
+} from "./types";
 
 interface Props {
   project: Project;
@@ -16,13 +24,13 @@ interface Props {
   activeTabIndex: number;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
-  changeInspectorVisibilityAction: (visibility: boolean) => Action;
-  changeInspectorHeightAction: (height: number) => Action;
-  changeInspectorTabAction?: (index: number) => Action;
-  onToggle?: Function;
+  changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
+  changeInspectorHeightAction: ChangeInspectorHeightAction;
+  changeInspectorTabAction?: ChangeInspectorTabAction;
+  onToggle?: OnToogleHandler;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
-  compositeLikeItems?: CompositeLikeItem[];
+  simpleLikeItems?: SimpleLikeItem[];
   icons?: BlobData[];
 }
 
@@ -42,7 +50,7 @@ const InspectorHeader = ({
   icons,
   attributeLikeItems,
   terminalLikeItems,
-  compositeLikeItems,
+  simpleLikeItems,
 }: Props) => {
   return (
     <Menu id="InspectorHeader" color={GetInspectorColor(element)}>
@@ -52,7 +60,7 @@ const InspectorHeader = ({
         activeTabIndex={activeTabIndex}
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
-        compositeLikeItems={compositeLikeItems}
+        simpleLikeItems={simpleLikeItems}
         changeInspectorTabAction={changeInspectorTabAction}
         inspectorRef={inspectorRef}
         isInspectorOpen={isInspectorOpen}

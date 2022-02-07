@@ -1,17 +1,18 @@
 import * as selectors from "./helpers/selectors";
-import { Dispatch } from "redux";
-import { useState, useEffect } from "react";
-import { ErrorBody, ErrorBox, ErrorItem, ErrorHeaderBox } from "./styled";
-import { CloseIcon } from "../../assets/icons/close";
+import ExitButton from "../../compLibrary/modal/components/ExitButton";
+import { useEffect, useState } from "react";
 import { TextResources } from "../../assets/text";
 import { BadRequestData } from "../../models/webclient";
 import { deleteProjectError } from "../../redux/store/project/actions";
-import { deleteCommonError } from "../../redux/store/common/actions";
-import { deleteLibraryError } from "../../redux/store/library/actions";
-import { deleteUserError } from "../../redux/store/user/actions";
-import { deleteTypeEditorError } from "../../typeEditor/redux/actions";
-import { useAppSelector } from "../../redux/store/hooks";
-import { ProjectState } from "../../redux/store/project/types";
+import { deleteCommonError } from "../../redux/store/common/commonSlice";
+import { deleteLibraryError } from "../../redux/store/library/librarySlice";
+import { deleteUserError } from "../../redux/store/user/userSlice";
+import { deleteTypeEditorError } from "../../typeEditor/redux/typeEditorSlice";
+import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
+import { Modal } from "../../compLibrary/modal/Modal";
+import { Color } from "../../compLibrary/colors";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
 
 interface ErrorMessage {
   key: string;
@@ -20,19 +21,15 @@ interface ErrorMessage {
   errorData: BadRequestData;
 }
 
-interface Props {
-  projectState: ProjectState;
-  dispatch: Dispatch;
-}
-
 /**
  * Module to handle errors coming from the server.
- * @param interface
  * @returns a box with the error messages.
  */
-const ErrorModule = ({ projectState, dispatch }: Props) => {
-  const [visible, setVisible] = useState(false);
+const ErrorModule = () => {
+  const dispatch = useAppDispatch();
+  const [visible, setVisible] = useState(true);
   const [errors, setErrors] = useState([] as ErrorMessage[]);
+  const projectState = useAppSelector(selectors.projectStateSelector);
   const libraryState = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const commonState = useAppSelector(selectors.commonStateSelector);
@@ -121,31 +118,28 @@ const ErrorModule = ({ projectState, dispatch }: Props) => {
   }, [commonState.apiError, libraryState.apiError, projectState.apiError, userState.apiError, typeEditorState.apiError]);
 
   return (
-    <>
-      <ErrorBox visible={visible}>
-        <ErrorHeaderBox>
-          <img src={CloseIcon} alt="Close error message" onClick={() => closeHeader()} className="icon" />
-          {TextResources.Error_Tile}
-        </ErrorHeaderBox>
+    <Modal isBlurred isOpen={visible} onExit={closeHeader}>
+      <InfoModalContent title={TextResources.Error_Tile} color={Color.RedWarning}>
+        <ExitButton onClick={closeHeader} />
         <ErrorBody>
           {errors?.map((x, index) => {
             return (
               <ErrorItem key={x.module + index}>
-                <h3>{x.module}</h3>
-                <p>{x.message}</p>
+                <ErrorItemTitle>{x.module}</ErrorItemTitle>
+                <ErrorItemText>{x.message}</ErrorItemText>
                 {x.errorData?.items?.map((y) => {
                   return (
-                    <p key={y.key}>
+                    <ErrorItemText key={y.key}>
                       {y.key}: {JSON.stringify(y.value)}
-                    </p>
+                    </ErrorItemText>
                   );
                 })}
               </ErrorItem>
             );
           })}
         </ErrorBody>
-      </ErrorBox>
-    </>
+      </InfoModalContent>
+    </Modal>
   );
 };
 export default ErrorModule;

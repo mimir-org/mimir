@@ -1,12 +1,12 @@
-import { setElectroView } from "../../../redux/store/electro/actions";
+import { Dispatch } from "redux";
+import { toggleElectroView } from "../../../redux/store/electro/electroSlice";
 
 /**
  * Function to toggle Electro mode on/off. In Electro mode termials are displayed vertically.
  * @param dispatch
- * @param open
  */
-const OnElectro = (dispatch: any, open: boolean) => {
-  dispatch(setElectroView(!open));
+const OnElectro = (dispatch: Dispatch) => {
+  dispatch(toggleElectroView());
 };
 
 export default OnElectro;

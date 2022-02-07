@@ -1,4 +1,4 @@
-import { Node, Edge, Project } from "../../../models";
+import { Edge, Node, Project } from "../../../models";
 import { IsPartOf } from "../../../components/flow/helpers";
 
 const FindParentEdge = (node: Node, project: Project): Edge => {

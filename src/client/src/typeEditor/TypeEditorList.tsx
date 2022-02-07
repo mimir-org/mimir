@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ListWrapper } from "../compLibrary/list";
 import { ListContent, ListSearch } from "./lists/";
-import { GetListLabel, GetFlexForListType } from "./helpers";
-import { AttributeType, CompositeType, CreateLibraryType, PredefinedAttribute, Rds, TerminalTypeDict } from "../models";
+import { GetFlexForListType, GetListLabel } from "./helpers";
+import { AttributeType, CreateLibraryType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../models";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "./types";
 
 export enum ListType {
@@ -16,7 +16,7 @@ export enum ListType {
 
 export interface TypeEditorListProps {
   createLibraryType: CreateLibraryType;
-  items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  items: Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[];
   disabled?: boolean;
   listType: ListType;
   onPropertyChange?: OnPropertyChangeFunction;
@@ -37,7 +37,7 @@ export const TypeEditorList = ({
 }: TypeEditorListProps) => {
   const [filteredListItems, setListItems] = useState(items);
   return (
-    <ListWrapper flex={GetFlexForListType(listType)} disabled={disabled} minHeight={'100%'}>
+    <ListWrapper flex={GetFlexForListType(listType)} disabled={disabled} minHeight={"100%"}>
       <ListSearch
         listType={listType}
         placeHolder={GetListLabel(listType, createLibraryType)}

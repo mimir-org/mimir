@@ -2,22 +2,22 @@ import { ListElementsContainer } from "../../compLibrary/list";
 import { ListType } from "../TypeEditorList";
 import { useMemo } from "react";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../types";
-import { CreateLibraryType, Rds, PredefinedAttribute, AttributeType, CompositeType, TerminalTypeDict } from "../../models";
+import { AttributeType, CreateLibraryType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../../models";
 import {
-  RDSElement,
-  ObjectBlockElement,
-  TransportInterfaceElement,
-  PredefinedLocationElement,
   AttributeElement,
   LocationAttributeElement,
+  ObjectBlockElement,
+  PredefinedLocationElement,
+  RDSElement,
   SimpleTypeElement,
+  TransportInterfaceElement,
 } from ".";
 import {
-  IsTransport,
-  IsInterface,
-  GetFilteredList,
-  GetDefaultTerminals,
   GetDefaultTerminal,
+  GetDefaultTerminals,
+  GetFilteredList,
+  IsInterface,
+  IsTransport,
   RemoveBackground,
   RemoveHover,
   ShowObjectBlock,
@@ -27,8 +27,8 @@ import {
 interface Props {
   disabled?: boolean;
   listType: ListType;
-  items: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
-  listItems: Rds[] | TerminalTypeDict | AttributeType[] | CompositeType[] | PredefinedAttribute[];
+  items: Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[];
+  listItems: Rds[] | TerminalTypeDict | AttributeType[] | SimpleType[] | PredefinedAttribute[];
   createLibraryType: CreateLibraryType;
   onPropertyChange?: OnPropertyChangeFunction;
   onTerminalCategoryChange?: OnTerminalCategoryChangeFunction;

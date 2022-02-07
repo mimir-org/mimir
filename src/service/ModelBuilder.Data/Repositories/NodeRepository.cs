@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;

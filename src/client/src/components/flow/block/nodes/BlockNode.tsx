@@ -1,18 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { memo, FC, useState, useEffect } from "react";
+import * as selectors from "./helpers/BlockNodeSelectors";
+import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
-import { NodeBox } from "../../styled";
-import { TerminalsContainerComponent, HandleComponent } from "../terminals";
-import { HasOffPageNode, CreateOffPageNode, GetBlockNodeType, SetNodeSize } from "./helpers";
+import { HandleComponent } from "../terminals";
+import { HandleConnectedOffPageNode, HandleRequiredOffPageNode } from "./helpers/offPage";
 import { FilterTerminals } from "../helpers";
-import { OnHover, OnMouseOut, OnTerminalClick } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store/hooks";
-import { edgeSelector, electroSelector, nodeSelector, secondaryNodeSelector } from "../../../../redux/store";
+import { OnConnectorClick } from "./handlers";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
-import { BlockLogoComponent } from "../logo";
-import { GetAspectColor, GetSelectedBlockNode } from "../../../../helpers";
+import { GetAspectColor } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
+import { SetNodeSize } from "./helpers";
+import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { BoxWrapper } from "./styled";
+import { BlockChildComponent } from "./childContainer";
 
 /**
  * Component for a child Node in BlockView.
@@ -21,31 +23,22 @@ import { BlockNodeSize } from "../../../../models/project";
  */
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const [inTerminalMenu, showInTerminalMenu] = useState(false);
-  const [outTerminalMenu, showOutTerminalMenu] = useState(false);
-  const [terminalBox, showTerminalBox] = useState(false);
-  const [terminals, setTerminals]: [Connector[], any] = useState([]);
-  const [width, setWidth] = useState(Size.Node_Width);
-  const [height, setHeight] = useState(Size.Node_Height);
+  const [terminals, setTerminals] = useState<Connector[]>([]);
+  const initialSize = { width: Size.Node_Width, height: Size.Node_Height } as BlockNodeSize;
+  const [size, setSize] = useState<BlockNodeSize>(initialSize);
 
-  const size = { width: width, height: height } as BlockNodeSize;
-  const nodes = useAppSelector(nodeSelector);
-  const edges = useAppSelector(edgeSelector);
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
-  const electro = useAppSelector(electroSelector);
-  const type = GetBlockNodeType(data);
+  const nodes = useAppSelector(selectors.nodeSelector);
+  const edges = useAppSelector(selectors.edgeSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const electro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const hasActiveTerminals = terminals.some((conn) => conn.visible);
+  const isElectro = useAppSelector(selectors.electroSelector);
 
-  // Check for connectors that require OffPage
+  // Check for elements that require OffPage
   useEffect(() => {
-    node?.connectors.forEach((conn) => {
-      if (conn.isRequired) {
-        const offPageExists = HasOffPageNode(edges, conn);
-        if (!offPageExists) CreateOffPageNode(node, conn, { x: width, y: node?.positionBlockY }, dispatch, true);
-      }
-    });
-  }, []);
+    HandleConnectedOffPageNode(node, edges, size, dispatch);
+    HandleRequiredOffPageNode(node, edges, size, dispatch);
+  }, [secondaryNode]);
 
   useEffect(() => {
     setTerminals(FilterTerminals(node?.connectors, secondaryNode));
@@ -53,43 +46,27 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   useEffect(() => {
     const updatedSize = SetNodeSize(terminals, electro);
-    setWidth(updatedSize.width);
-    setHeight(updatedSize.height);
+    setSize({ width: updatedSize.width, height: updatedSize.height });
   }, [electro, terminals]);
+
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsInputTerminal(t) || IsBidirectionalTerminal(t)));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsOutputTerminal(t) || IsBidirectionalTerminal(t)));
 
   if (!node) return null;
 
-  node.width = size.width;
-  node.height = size.height;
-
   return (
-    <NodeBox
-      id={type + node.id}
-      node={node}
-      colorMain={GetAspectColor(data, AspectColorType.Main)}
-      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-      isSelected={node === GetSelectedBlockNode()}
-      onMouseEnter={() => OnHover(showTerminalBox)}
-      onMouseLeave={() => OnMouseOut(showTerminalBox)}
-    >
-      <BlockLogoComponent node={node} />
-
-      <TerminalsContainerComponent
+    <BoxWrapper isElectro={isElectro}>
+      <HandleComponent node={node} terminals={inputTerminals} isInput />
+      <BlockChildComponent
         node={node}
-        size={size}
-        inputMenuOpen={inTerminalMenu}
-        outputMenuOpen={outTerminalMenu}
-        terminals={terminals}
-        electro={electro}
-        onClick={(conn) => OnTerminalClick(conn, node, dispatch, edges)}
-        showMenuBox={terminalBox}
-        showInTerminalMenu={showInTerminalMenu}
-        showOutTerminalMenu={showOutTerminalMenu}
+        colorMain={GetAspectColor(data, AspectColorType.Main)}
+        colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
       />
-      {hasActiveTerminals && (
-        <HandleComponent nodes={nodes} node={node} size={size} terminals={terminals} electro={electro} dispatch={dispatch} />
-      )}
-    </NodeBox>
+      <HandleComponent node={node} terminals={outputTerminals} />
+    </BoxWrapper>
   );
 };
 

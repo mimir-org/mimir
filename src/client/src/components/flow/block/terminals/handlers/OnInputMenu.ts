@@ -1,4 +1,4 @@
-const OnInputMenu = (showTerminalMenu: any, terminalMenu: boolean) => {
+const OnInputMenu = (showTerminalMenu: (show: boolean) => void, terminalMenu: boolean) => {
   showTerminalMenu(!terminalMenu);
 };
 

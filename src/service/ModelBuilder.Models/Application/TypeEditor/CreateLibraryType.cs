@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
@@ -10,6 +10,8 @@ namespace Mb.Models.Application.TypeEditor
     {
         [Required]
         public string Name { get; set; }
+
+        public string Domain { get; set; }
 
         public string Description { get; set; }
 
@@ -24,7 +26,7 @@ namespace Mb.Models.Application.TypeEditor
         [Required]
         public string RdsId { get; set; }
 
-        [Required] 
+        [Required]
         public string StatusId { get; set; } = "4590637F39B6BA6F39C74293BE9138DF";
 
         [Required]
