@@ -41,6 +41,12 @@ jobs:
       hash_files_template: "**/*.csproj"
       push: true
     secrets:
-      REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      REGISTRY_SERVER_URLS: |
+        ${{ secrets.REGISTRY_SERVER_URL }}
+        docker.io/mimirorg
+      REGISTRY_USERNAMES: |
+        ${{ secrets.REGISTRY_USERNAME }}
+        ${{secrets.DOCKERHUB_USERNAME}}
+      REGISTRY_PASSWORDS: |
+        ${{ secrets.REGISTRY_PASSWORD }}
+        ${{secrets.DOCKERHUB_PASSWORD}}
