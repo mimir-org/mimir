@@ -43,7 +43,7 @@ const LibraryComponent = ({ search, searchString, dispatch }: Props) => {
 
   return (
     <>
-      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder} onChange={onChange} />
+      <SearchInput placeholder={TextResources.Library_SearchBox_Placeholder_Library} onChange={onChange} />
       <TypeEditorModule selectedElement={selectedElement} selectedElementType={selectedElementType} onChange={typeEditorOpen} />
       <LibraryCategoryComponent
         selectedElement={selectedElement}

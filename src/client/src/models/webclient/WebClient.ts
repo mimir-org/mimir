@@ -83,3 +83,10 @@ export async function put<T>(
   req.headers["Authorization"] = token;
   return http<T>(new Request(path, req));
 }
+
+export async function del<T>(path: string, args: RequestInit = { method: "delete" }): Promise<HttpResponse<T>> {
+  const token = await Token();
+  const req = { ...RequestInitDefault, ...args };
+  req.headers["Authorization"] = token;
+  return http<T>(new Request(path, req));
+}

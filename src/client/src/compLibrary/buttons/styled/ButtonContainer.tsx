@@ -4,6 +4,7 @@ import { FontSize } from "../../font";
 
 interface Props {
   icon: boolean;
+  disabled?: boolean;
 }
 
 const ButtonContainer = styled.button<Props>`
@@ -16,10 +17,11 @@ const ButtonContainer = styled.button<Props>`
   background: ${Color.GreyLight};
   border: 1px solid ${Color.BlueMagenta};
   border-radius: 2px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   padding: 10px 20px;
-  cursor: pointer;
   font-size: ${FontSize.Standard};
   color: ${Color.Black};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 
   > span {
     max-width: 260px;
