@@ -39,7 +39,7 @@ jobs:
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      repository: mimir-client
+      repository: ${{secrets.REGISTRY_SERVER_URL}}/mimir-client
       tags: |
         latest
         ${{needs.create-release.outputs.tag}}
@@ -60,7 +60,7 @@ jobs:
     needs: create-release
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      repository: mimir-server
+      repository: ${{secrets.REGISTRY_SERVER_URL}}/mimir-server
       tags: |
         latest
         ${{needs.create-release.outputs.tag}}
@@ -79,7 +79,7 @@ jobs:
     needs: [create-release, build-client-latest]
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      repository: mimir-client
+      repository: mimirorg/mimir-client
       tags: |
         latest
         ${{needs.create-release.outputs.tag}}
@@ -99,7 +99,7 @@ jobs:
     needs: [create-release, build-server-latest]
     if: ${{needs.create-release.outputs.tag!=''}}
     with:
-      repository: mimir-server
+      repository: mimirorg/mimir-server
       tags: |
         latest
         ${{needs.create-release.outputs.tag}}
@@ -111,4 +111,3 @@ jobs:
     secrets:
       REGISTRY_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
       REGISTRY_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
-
