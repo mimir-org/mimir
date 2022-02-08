@@ -15,7 +15,7 @@ using MockQueryable.Moq;
 using Moq;
 using Newtonsoft.Json;
 
-namespace ModelBuilder.Services.Tests
+namespace ModelBuilder.Tests
 {
     public class ProjectFixture : IDisposable
     {
@@ -51,9 +51,11 @@ namespace ModelBuilder.Services.Tests
         private void Setup()
         {
             SetupCollaborationPartnerRepository();
+            //SetupProjectRepository();
             SetupMapper();
             CommonRepository = new CommonRepository(CollaborationPartnerRepository);
-            RemapService = new RemapService(CommonRepository, Mapper);
+            RemapService = new RemapService(CommonRepository);
+            //ProjectService = new ProjectService(ProjectRepository, Mapper, null, null, null, CommonRepository, null, null, null, ILogger<>)
         }
 
         /// <summary>

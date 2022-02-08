@@ -3,7 +3,7 @@ using System.Linq;
 using Mb.Models.Common;
 using Xunit;
 
-namespace ModelBuilder.Services.Tests
+namespace ModelBuilder.Tests.Repositories
 {
     public class CommonRepositoryTests : IClassFixture<ProjectFixture>
     {

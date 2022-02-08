@@ -21,7 +21,7 @@ export const CreateSubProjectMenu = () => {
   const dispatch = useAppDispatch();
   const fromProjectId = useAppSelector(projectIdSelector);
   const [selectedNodeIds, selectedEdgeIds] = useSelectedFlowElements();
-  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU) && !selectedNodeIds;
+  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU);
   const [projectName, setProjectName] = useState("");
   const isActionDisabled = !projectName;
   const onExit = () => OnReturnClick(dispatch);
