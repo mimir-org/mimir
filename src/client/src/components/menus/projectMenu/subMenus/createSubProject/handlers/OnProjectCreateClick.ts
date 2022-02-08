@@ -1,4 +1,4 @@
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
+import { changeActiveMenu } from "../../redux/menuSlice";
 import { createSubProject } from "../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 
@@ -11,7 +11,6 @@ const OnSubProjectCreateClick = (
 ) => {
   dispatch(createSubProject(fromProjectId, projectName, projectName, nodeIds, edgeIds));
   dispatch(changeActiveMenu(null));
-  dispatch(setProjectMenuVisibility(false));
 };
 
 export default OnSubProjectCreateClick;

@@ -6,7 +6,9 @@ import { LibraryIcon } from "../../assets/icons/modules";
 import { OnLibraryClick } from "./handlers";
 import { ConvertToLibTabName } from "./helpers";
 import { MODULE_TYPE } from "../../models/project";
-import { LibraryTabHeader, LibraryTabsWrapper } from "./styled";
+import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
+import { TextResources } from "../../assets/text";
+import { LibExpandButton, LibraryTabHeader, LibraryTabsWrapper } from "./styled";
 
 interface Props {
   isOpen: boolean;
@@ -27,7 +29,11 @@ const ModuleTabs = ({ isOpen, activeTab, setActiveTab, dispatch }: Props) => {
 
   return (
     <LibraryTabsWrapper>
-      <Icon size={24} src={LibraryIcon} alt="" onClick={() => OnLibraryClick(dispatch, isOpen, lib)} />
+      <Tooltip content={TextResources.Library_Close_Panel} placement={"bottom"} offset={[0, 10]}>
+        <LibExpandButton isOpen={true} onClick={() => OnLibraryClick(dispatch, isOpen, lib)}>
+          <Icon size={24} src={LibraryIcon} alt="" />
+        </LibExpandButton>
+      </Tooltip>
 
       {Object.keys(LibraryTab)
         .filter(stringIsNumber)

@@ -7,14 +7,15 @@ import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info
 import { TextResources } from "../../../../../assets/text";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../compLibrary/input/text";
-import { OnProjectCreateClick, OnReturnClick } from "./handlers";
+import { OnReturnShowInstructionClick } from "../../handlers";
+import { OnProjectCreateClick } from "./handlers";
 import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
 
 export const CreateProjectMenu = () => {
   const dispatch = useAppDispatch();
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
   const [projectName, setProjectName] = useState("");
-  const onExit = () => OnReturnClick(dispatch);
+  const onExit = () => OnReturnShowInstructionClick(dispatch);
   const onAction = () => OnProjectCreateClick(dispatch, projectName);
   const isActionDisabled = !projectName;
 

@@ -1,12 +1,9 @@
 import { Project } from "../../../../models";
-import { setProjectMenuVisibility } from "../subMenus/redux/menuSlice";
 import { save } from "../../../../redux/store/project/actions";
 import { IsOffPage } from "../../../../helpers";
 import { Dispatch } from "redux";
 
 const OnSaveClick = (dispatch: Dispatch, project: Project): void => {
-  dispatch(setProjectMenuVisibility(false));
-
   const projectCopy = Object.assign({}, project);
 
   // Remove everything OffPage related

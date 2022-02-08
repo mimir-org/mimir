@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../../../assets/text";
-import { changeActiveMenu, setProjectMenuVisibility } from "../../redux/menuSlice";
+import { changeActiveMenu } from "../../redux/menuSlice";
 import { exportProjectToFile } from "../../../../../../redux/store/project/actions";
 import { Project, ProjectConverterAm } from "../../../../../../models";
 import { ConvertProject } from "../../../../../../redux/sagas/project";
@@ -20,7 +20,6 @@ const OnSaveClick = (dispatch: Dispatch, project: Project, fileName: string, par
 
   dispatch(exportProjectToFile(converter));
   dispatch(changeActiveMenu(null));
-  dispatch(setProjectMenuVisibility(false));
 };
 
 export default OnSaveClick;

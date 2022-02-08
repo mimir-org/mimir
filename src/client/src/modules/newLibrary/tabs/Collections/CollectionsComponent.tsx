@@ -1,6 +1,7 @@
 import { CollectionsWrapper } from "./styled";
 import { CollectionsList } from ".";
-import { CollectionsActions, LibraryTab, ObjectType } from "../../../../models";
+import { Aspect, CollectionsActions, LibraryTab, ObjectType } from "../../../../models";
+
 interface Props {
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
@@ -9,9 +10,7 @@ interface Props {
   selectedElement: string;
   setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
   setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
-  functionSort: boolean;
-  productSort: boolean;
-  locationSort: boolean;
+  aspectFilters: Aspect[];
 }
 
 const CollectionsComponent = ({
@@ -20,9 +19,7 @@ const CollectionsComponent = ({
   selectedElement,
   setSelectedElement,
   setSelectedElementType,
-  functionSort,
-  productSort,
-  locationSort,
+  aspectFilters,
 }: Props) => {
   const managingCollections = collectionState === CollectionsActions.Manage;
 
@@ -34,9 +31,7 @@ const CollectionsComponent = ({
           selectedElement={selectedElement}
           setSelectedElement={setSelectedElement}
           setSelectedElementType={setSelectedElementType}
-          functionSort={functionSort}
-          productSort={productSort}
-          locationSort={locationSort}
+          aspectFilters={aspectFilters}
         />
       )}
     </CollectionsWrapper>

@@ -1,4 +1,4 @@
-import { ObjectType } from "../../../../models";
+import { Aspect, ObjectType } from "../../../../models";
 import { CollectionsListWrapper } from "./styled";
 import { LibraryCategory } from "../../../../models/project";
 import { useMemo } from "react";
@@ -19,9 +19,7 @@ interface Props {
   selectedElement: string;
   setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
   setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
-  functionSort: boolean;
-  productSort: boolean;
-  locationSort: boolean;
+  aspectFilters: Aspect[];
 }
 
 const CollectionsList = ({
@@ -32,9 +30,7 @@ const CollectionsList = ({
   selectedElement,
   setSelectedElement,
   setSelectedElementType,
-  functionSort,
-  productSort,
-  locationSort,
+  aspectFilters,
 }: Props) => {
   const dispatch = useDispatch();
   // const isChecked = (id: string) => {
@@ -66,7 +62,7 @@ const CollectionsList = ({
         customCategory={customCategory}
         dispatch={dispatch}
       />
-      {FilterByAspect(functionSort, productSort, locationSort, filterCatBySearch()).map((category) => {
+      {FilterByAspect(filterCatBySearch(), aspectFilters).map((category) => {
         return (
           <LibraryCategoryComponent
             selectedElement={selectedElement}

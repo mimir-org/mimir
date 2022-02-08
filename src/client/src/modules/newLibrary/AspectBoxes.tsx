@@ -2,16 +2,13 @@
 import { Icon } from "../../compLibrary/icon";
 import { Aspect } from "../../models";
 import { GetFilterIcon } from "./helpers";
-import { AspectBoxesUnderline, AspectBoxesWrapper, AspectFilterWrapper } from "./styled";
-import { SortTypesByAspect } from "./tabs/Collections/helpers";
+import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
+import { AspectBoxesWrapper, AspectFilterButtonContainer } from "./styled";
+import { TextResources } from "../../assets/text";
 
 interface Props {
-  functionSort: boolean;
-  productSort: boolean;
-  locationSort: boolean;
-  setFunctionSort: (sort: boolean) => void;
-  setProductSort: (sort: boolean) => void;
-  setLocationSort: (sort: boolean) => void;
+  aspectFilters: Aspect[];
+  setAspectFilters: (value: Aspect[]) => void;
 }
 
 /**
@@ -20,29 +17,45 @@ interface Props {
  * @returns filters of each aspect
  */
 
-const AspectBoxes = ({ functionSort, productSort, locationSort, setFunctionSort, setProductSort, setLocationSort }: Props) => {
+const AspectBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
   const stringIsNumber = (value: any) => isNaN(Number(value)) === false;
 
-  const updateAspectFilters = (aspect: Aspect) => {
-    SortTypesByAspect(aspect, functionSort, productSort, locationSort, setFunctionSort, setProductSort, setLocationSort);
+  const isAspectSelected = (aspect: Aspect) => aspectFilters.includes(aspect);
+  const toggleAspectFilter = (aspect: Aspect) => {
+    const filters = [...aspectFilters];
+    const index = filters.indexOf(aspect);
+
+    index < 0 ? filters.push(aspect) : filters.splice(index, 1);
+    setAspectFilters(filters);
   };
+
   return (
-    <>
-      <AspectBoxesWrapper>
-        {Object.keys(Aspect)
-          .filter(stringIsNumber)
-          .filter((aspect) => Number(aspect) !== Aspect.None && Number(aspect) !== Aspect.NotSet)
-          .map((aspect, i) => {
-            return (
-              <AspectFilterWrapper key={i} onClick={() => updateAspectFilters(Number(aspect))}>
-                <Icon size={24} src={GetFilterIcon(Number(aspect), functionSort, productSort, locationSort)} alt="aspect-icon" />
+    <AspectBoxesWrapper>
+      {Object.keys(Aspect)
+        .filter(stringIsNumber)
+        .filter((aspect) => Number(aspect) !== Aspect.None && Number(aspect) !== Aspect.NotSet)
+        .map((aspect, i) => {
+          const aspectSelected = isAspectSelected(Number(aspect));
+          const aspectName = Aspect[aspect].toLowerCase();
+
+          return (
+            <Tooltip
+              key={i}
+              content={
+                aspectSelected
+                  ? `${TextResources.Library_Aspect_Toggle} ${aspectName} ${TextResources.Library_Aspect_Filter_Off}`
+                  : `${TextResources.Library_Aspect_Toggle} ${aspectName} ${TextResources.Library_Aspect_Filter_On}`
+              }
+              offset={[0, 10]}
+            >
+              <AspectFilterButtonContainer onClick={() => toggleAspectFilter(Number(aspect))}>
+                <Icon size={24} src={GetFilterIcon(Number(aspect), aspectSelected)} alt="aspect-icon" />
                 <span>{Aspect[aspect]}</span>
-              </AspectFilterWrapper>
-            );
-          })}
-      </AspectBoxesWrapper>
-      <AspectBoxesUnderline />
-    </>
+              </AspectFilterButtonContainer>
+            </Tooltip>
+          );
+        })}
+    </AspectBoxesWrapper>
   );
 };
 
