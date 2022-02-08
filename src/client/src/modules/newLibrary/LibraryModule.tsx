@@ -2,10 +2,11 @@ import { Dispatch } from "redux";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
-import { ModuleHeader, ModuleBody, ModuleFooter } from ".";
-import { LibraryTab, CollectionsActions, ObjectType } from "../../models";
-import { useAppSelector, useParametricAppSelector, animatedModuleSelector, libOpenSelector } from "../../redux/store";
+import { ModuleBody, ModuleFooter, ModuleHeader } from ".";
+import { Aspect, CollectionsActions, LibraryTab, ObjectType } from "../../models";
+import { animatedModuleSelector, libOpenSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { useState } from "react";
+
 interface Props {
   dispatch: Dispatch;
 }
@@ -22,9 +23,7 @@ const LibraryModule = ({ dispatch }: Props) => {
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState<ObjectType>(null);
-  const [functionSort, setFunctionSort] = useState(true);
-  const [productSort, setProductSort] = useState(true);
-  const [locationSort, setLocationSort] = useState(true);
+  const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
 
   const showFooter = collectionState !== CollectionsActions.Manage;
   const lib = MODULE_TYPE.LIBRARY;
@@ -47,12 +46,8 @@ const LibraryModule = ({ dispatch }: Props) => {
         activeTab={activeTab}
         setActiveTab={(tab: LibraryTab) => setActiveTab(tab)}
         search={(text: string) => setSearchString(text)}
-        functionSort={functionSort}
-        productSort={productSort}
-        locationSort={locationSort}
-        setFunctionSort={(sort: boolean) => setFunctionSort(sort)}
-        setProductSort={(sort: boolean) => setProductSort(sort)}
-        setLocationSort={(sort: boolean) => setLocationSort(sort)}
+        aspectFilters={aspectFilters}
+        setAspectFilters={setAspectFilters}
       />
       <ModuleBody
         libOpen={libOpen}
@@ -63,9 +58,7 @@ const LibraryModule = ({ dispatch }: Props) => {
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
         setSelectedElementType={setSelectedElementType}
-        functionSort={functionSort}
-        productSort={productSort}
-        locationSort={locationSort}
+        aspectFilters={aspectFilters}
       />
       {showFooter && (
         <ModuleFooter

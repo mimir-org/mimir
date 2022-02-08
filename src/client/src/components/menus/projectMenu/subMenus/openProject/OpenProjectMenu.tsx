@@ -6,7 +6,8 @@ import { RightArrowIcon } from "../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../assets/text";
 import { MENU_TYPE, VIEW_TYPE } from "../../../../../models/project";
 import { InfoModalContent } from "../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { OnOpen, OnReturn } from "./handlers";
+import { OnReturnShowInstructionClick } from "../../handlers";
+import { OnOpen } from "./handlers";
 import {
   isActiveMenuSelector,
   isActiveViewSelector,
@@ -30,7 +31,7 @@ export const OpenProjectMenu = () => {
   const selectedProject = projectList?.find((x) => x.selected);
   const projectId = selectedProject?.id;
   const projectDescription = selectedProject?.description;
-  const onExit = () => OnReturn(dispatch);
+  const onExit = () => OnReturnShowInstructionClick(dispatch);
   const onAction = () => OnOpen(projectId, currentProject, dispatch);
   const isActionDisabled = !projectId || projectId === "";
 

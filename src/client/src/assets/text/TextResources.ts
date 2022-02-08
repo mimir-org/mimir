@@ -29,6 +29,14 @@ const TextResources = {
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 
+  // Toolbar
+  Toolbar_TreeView: "Tree view",
+  Toolbar_BlockView: "Block view",
+  Toolbar_Electro_On: "Toggle electromode on",
+  Toolbar_Electro_Off: "Toggle electromode off",
+  Toolbar_VisualFilters_Open: "Open visual filters",
+  Toolbar_VisualFilters_Close: "Close visual filters",
+
   // InspectorModule
   Inspector_AdminInfo: "Admin",
   Inspector_Object: "Object",
@@ -115,6 +123,13 @@ const TextResources = {
   Inspector_Source: "Source",
   Inspector_Condition: "Condition",
 
+  Inspector_Delete_Object: "Delete object from drawing board",
+  Inspector_Lock_Object: "Lock object(s)",
+  Inspector_Unlock_Object: "Unlock object(s)",
+  Inspector_Resize: "Click/drag to resize",
+  Inspector_Expand_Panel: "Expand inspector panel",
+  Inspector_Close_Panel: "Close inspector panel",
+
   // LibraryModule
   Library_Templates: "Templates",
   Library_SubProjects: "Sub-Projects",
@@ -137,14 +152,25 @@ const TextResources = {
   Library_Delete_Type_Confirm: "Are you sure you want to delete ",
   Library_Delete_Type_Yes: "Yes",
   Library_Delete_Type_No: "No",
+  Library_Add_Favorite: "Add to favorites",
+  Library_Remove_Favorite: "Remove from favorites",
+  Library_Expand_Panel: "Expand library panel",
+  Library_Close_Panel: "Close library panel",
+  Library_Aspect_Toggle: "Toggle",
+  Library_Aspect_Filter_On: "filter on",
+  Library_Aspect_Filter_Off: "filter off",
 
   // ExplorerModule
-  Explorer_Lock_Node: "Lock node",
-  Explorer_Unlock_Node: "Unlock node",
-  Explorer_Hide_Node: "Hide node",
-  Explorer_Show_Node: "Show node",
+  Explorer_Lock_Object: "Lock object(s)",
+  Explorer_Unlock_Object: "Unlock object(s)",
+  Explorer_Hide_Object: "Hide object(s)",
+  Explorer_Show_Object: "Show object(s)",
   Explorer_Open_Group: "Open group",
   Explorer_Close_Group: "Close group",
+  Explorer_Select_Object: "Select object(s)",
+  Explorer_Unselect_Object: "Unselect object(s)",
+  Explorer_Expand_Panel: "Expand explorer panel",
+  Explorer_Close_Panel: "Close explorer panel",
 
   // TypeEditorModule
   TypeEditor: "Type Editor",
@@ -195,6 +221,7 @@ const TextResources = {
 
   // ProjectMenu
   Project: "Project",
+  Project_Description: "Project menu",
   Project_Heading: "Projects",
   Project_New: "Create project",
   Project_Search_Placeholder: "Search Projects",
@@ -297,6 +324,7 @@ const TextResources = {
   Filter_Category: "Category",
 
   // User Menu
+  UserMenu_Description: "User settings menu",
   UserMenu_Settings: "User Settings",
   UserMenu_Notifications: "Show all Notifications",
   UserMenu_DarkMode: "Turn on Dark mode",

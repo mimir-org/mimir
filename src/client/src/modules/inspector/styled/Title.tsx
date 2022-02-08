@@ -1,10 +1,9 @@
 import styled from "styled-components";
+import { FontSize } from "../../../compLibrary/font";
 
-const Title = styled.div`
+const Title = styled.span`
   pointer-events: initial;
-  margin: auto;
-  padding: 10px 0px 0px 10px;
-  font-size: 18px;
+  font-size: ${FontSize.Header};
   height: 100%;
 
   :hover {

@@ -6,6 +6,7 @@ import { TreeAspectElement } from ".";
 import { Dispatch } from "redux";
 import { GetWidth } from "../helpers";
 import { OnLockNode, OnTreeChange } from "../handlers";
+import { TextResources } from "../../../assets/text";
 
 interface Props {
   project: Project;
@@ -21,6 +22,7 @@ interface Props {
   onSetVisibleElement: (visible: boolean, nodeId: string) => void;
   dispatch: Dispatch;
 }
+
 export const TreeAspectComponent = ({
   project,
   username,
@@ -40,12 +42,19 @@ export const TreeAspectComponent = ({
       isHidden={node.isHidden}
       isAncestorVisible={isAncestorVisible}
       isVisible={isVisible}
+      showText={TextResources.Explorer_Show_Object}
+      hideText={TextResources.Explorer_Hide_Object}
       onToggleVisible={() => {
         onSetVisibleElement(!isVisible, node.id);
         OnTreeChange(node, project, dispatch);
       }}
     />
-    <LockComponent isLocked={node.isLocked} onToggleLocked={() => OnLockNode(node, project, username, dispatch)} />
+    <LockComponent
+      isLocked={node.isLocked}
+      unlockText={TextResources.Explorer_Unlock_Object}
+      lockText={TextResources.Explorer_Lock_Object}
+      onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
+    />
     <TreeAspectElement
       node={node}
       nodes={nodes}

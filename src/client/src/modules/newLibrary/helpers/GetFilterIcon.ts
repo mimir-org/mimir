@@ -8,10 +8,10 @@ import {
   LocationFilterOff,
 } from "../../../assets/icons/aspects";
 
-const GetFilterIcon = (aspect: Aspect, functionSort: boolean, productSort: boolean, locationSort: boolean) => {
-  if (aspect === Aspect.Function) return functionSort ? Function : FunctionFilterOff;
-  if (aspect === Aspect.Product) return productSort ? Product : ProductFilterOff;
-  if (aspect === Aspect.Location) return locationSort ? Location : LocationFilterOff;
+const GetFilterIcon = (aspect: Aspect, selected: boolean) => {
+  if (aspect === Aspect.Function) return selected ? Function : FunctionFilterOff;
+  if (aspect === Aspect.Product) return selected ? Product : ProductFilterOff;
+  if (aspect === Aspect.Location) return selected ? Location : LocationFilterOff;
 };
 
 export default GetFilterIcon;

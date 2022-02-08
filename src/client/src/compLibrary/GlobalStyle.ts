@@ -42,7 +42,6 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     display: flex;
     flex-direction: column;
-    --avatar-size: 2rem;
   }
 
   ::-webkit-scrollbar {

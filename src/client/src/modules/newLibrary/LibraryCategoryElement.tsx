@@ -1,14 +1,17 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Dispatch } from "redux";
+import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
+import { Symbol } from "../../compLibrary/symbol";
+import { Icon } from "../../compLibrary/icon";
 import { CloseIcon } from "../../assets/icons/close";
 import { AddIcon } from "../../assets/icons/type";
+import { TextResources } from "../../assets/text";
+import { LibraryCategory } from "../../models/project";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
 import { AspectColorType, LibItem, ObjectType } from "../../models";
-import { LibraryCategory } from "../../models/project";
 import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
 import { GetTypeIcon, SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
-import { Symbol } from "../../compLibrary/symbol";
-import { AddFavoriteBox, LibElement, LibElementIcon, LibElementIconWrapper, LibElementText, RemoveFavoriteBox } from "./styled";
+import { FavoriteBox, LibElement, LibElementIconWrapper, LibElementText } from "./styled";
 
 interface Props {
   item: LibItem;
@@ -57,24 +60,29 @@ const LibraryCategoryElement = ({
       hoverColor={GetAspectColor(item, AspectColorType.Header, false)}
     >
       <LibElementIconWrapper color={GetAspectColor(item, AspectColorType.Main, false)}>
-        <LibElementIcon>
-          {item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport ? (
-            <img src={GetObjectIcon(item)} alt="aspect color" className="icon" draggable="false" />
-          ) : (
-            item.libraryType === ObjectType.ObjectBlock && <Symbol base64={GetTypeIcon(item?.symbolId)?.data} text={item?.name} />
-          )}
-        </LibElementIcon>
+        {item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport ? (
+          <Icon size={20} src={GetObjectIcon(item)} alt="aspect color" draggable="false" />
+        ) : (
+          item.libraryType === ObjectType.ObjectBlock && <Symbol base64={GetTypeIcon(item?.symbolId)?.data} text={item?.name} />
+        )}
       </LibElementIconWrapper>
       <LibElementText>{item.name}</LibElementText>
-      <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
-        <img src={CloseIcon} alt="remove" />
-      </RemoveFavoriteBox>
-      <AddFavoriteBox
-        visible={!isCustomCategory && showAddButton}
-        onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}
-      >
-        <img src={AddIcon} alt="add" />
-      </AddFavoriteBox>
+
+      {isCustomCategory && (
+        <Tooltip content={TextResources.Library_Remove_Favorite} offset={[0, 5]}>
+          <FavoriteBox tabIndex={0} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
+            <Icon size={10} src={CloseIcon} alt="remove" />
+          </FavoriteBox>
+        </Tooltip>
+      )}
+
+      {!isCustomCategory && showAddButton && (
+        <Tooltip content={TextResources.Library_Add_Favorite} offset={[0, 5]}>
+          <FavoriteBox tabIndex={0} onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}>
+            <Icon size={10} src={AddIcon} alt="add" />
+          </FavoriteBox>
+        </Tooltip>
+      )}
     </LibElement>
   );
 };

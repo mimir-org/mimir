@@ -12,7 +12,7 @@ const LibElement = styled.button<Props>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 5px;
+  gap: 20px;
   width: calc(100% - 20px);
   height: 32px;
   border: 1px;

@@ -2,10 +2,12 @@ import { Icon } from "../../compLibrary/icon";
 import { LibraryIcon } from "../../assets/icons/modules";
 import { OnLibraryClick } from "./handlers";
 import { Dispatch } from "redux";
-import { LibraryTab } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
+import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
+import { TextResources } from "../../assets/text";
+import { Aspect, LibraryTab } from "../../models";
+import { LibExpandButton, LibHeader } from "./styled";
 import { AspectBoxes, ModuleTabs, SearchArea } from ".";
-import { LibHeader } from "./styled";
 
 interface Props {
   libOpen: boolean;
@@ -13,12 +15,8 @@ interface Props {
   activeTab: LibraryTab;
   setActiveTab: (tab: LibraryTab) => void;
   search: (text: string) => void;
-  functionSort: boolean;
-  productSort: boolean;
-  locationSort: boolean;
-  setFunctionSort: (sort: boolean) => void;
-  setProductSort: (sort: boolean) => void;
-  setLocationSort: (sort: boolean) => void;
+  aspectFilters: Aspect[];
+  setAspectFilters: (value: Aspect[]) => void;
 }
 
 /**
@@ -27,36 +25,23 @@ interface Props {
  * @returns library module tabs, search input and filters
  */
 
-const ModuleHeader = ({
-  libOpen,
-  dispatch,
-  activeTab,
-  setActiveTab,
-  search,
-  functionSort,
-  productSort,
-  locationSort,
-  setFunctionSort,
-  setProductSort,
-  setLocationSort,
-}: Props) => {
+const ModuleHeader = ({ libOpen, dispatch, activeTab, setActiveTab, search, aspectFilters, setAspectFilters }: Props) => {
   const lib = MODULE_TYPE.LIBRARY;
 
   return (
-    <LibHeader isOpen={libOpen}>
-      {!libOpen && <Icon size={24} src={LibraryIcon} alt="" onClick={() => OnLibraryClick(dispatch, libOpen, lib)} />}
+    <LibHeader>
+      {!libOpen && (
+        <Tooltip content={TextResources.Library_Expand_Panel} placement={"bottom"} offset={[0, 5]}>
+          <LibExpandButton isOpen={false} onClick={() => OnLibraryClick(dispatch, libOpen, lib)}>
+            <Icon size={24} src={LibraryIcon} alt="" />
+          </LibExpandButton>
+        </Tooltip>
+      )}
       {libOpen && (
         <>
           <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />
           <SearchArea activeTab={activeTab} search={search} />
-          <AspectBoxes
-            functionSort={functionSort}
-            productSort={productSort}
-            locationSort={locationSort}
-            setFunctionSort={setFunctionSort}
-            setProductSort={setProductSort}
-            setLocationSort={setLocationSort}
-          />
+          <AspectBoxes aspectFilters={aspectFilters} setAspectFilters={setAspectFilters} />
         </>
       )}
     </LibHeader>

@@ -5,24 +5,26 @@ interface Props {
   isOpen: boolean;
 }
 
-const ModuleHeader = styled.div<Props>`
+const ModuleHeader = styled.button<Props>`
   display: flex;
   position: relative;
   justify-content: center;
-  margin-top: 10px;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 24px 0;
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   cursor: pointer;
+  border: 0;
+  background: transparent;
 
-  .text {
-    position: relative;
-    display: flex;
-    margin-right: 15px;
+  span {
     opacity: ${(props) => (props.isOpen ? 1 : 0)};
     transition: opacity 0.2s ease-in-out;
   }
 
-  .icon {
+  img {
     position: relative;
     right: ${(props) => !props.isOpen && "40px"};
     transition: right 0.2s ease-in-out;

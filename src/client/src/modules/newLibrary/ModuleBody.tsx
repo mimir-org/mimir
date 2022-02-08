@@ -1,8 +1,9 @@
-import { CollectionsActions, LibraryTab, ObjectType } from "../../models";
+import { Aspect, CollectionsActions, LibraryTab, ObjectType } from "../../models";
 import { ModuleContent } from "./styled";
 import { CollectionsComponent } from "./tabs/Collections";
 import { SubProjectsComponent } from "./tabs/SubProjects";
 import { TemplatesComponent } from "./tabs/Templates";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   libOpen: boolean;
@@ -11,11 +12,9 @@ interface Props {
   setCollectionState: (action: CollectionsActions) => void;
   searchString;
   selectedElement: string;
-  setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
-  functionSort;
-  productSort;
-  locationSort: boolean;
+  setSelectedElement: Dispatch<SetStateAction<string>>;
+  setSelectedElementType: Dispatch<SetStateAction<ObjectType>>;
+  aspectFilters: Aspect[];
 }
 
 /**
@@ -33,16 +32,14 @@ const ModuleBody = ({
   selectedElement,
   setSelectedElement,
   setSelectedElementType,
-  functionSort,
-  productSort,
-  locationSort,
+  aspectFilters,
 }: Props) => {
   const showCollections = activeTab === LibraryTab.Library;
   const showSubProjects = activeTab === LibraryTab.SubProjects;
   const showTemplates = activeTab === LibraryTab.Templates;
   return (
     <ModuleContent libOpen={libOpen}>
-      {showCollections ? (
+      {showCollections && (
         <CollectionsComponent
           activeTab={activeTab}
           collectionState={collectionState}
@@ -51,15 +48,11 @@ const ModuleBody = ({
           selectedElement={selectedElement}
           setSelectedElement={setSelectedElement}
           setSelectedElementType={setSelectedElementType}
-          functionSort={functionSort}
-          productSort={productSort}
-          locationSort={locationSort}
+          aspectFilters={aspectFilters}
         />
-      ) : showSubProjects ? (
-        <SubProjectsComponent />
-      ) : (
-        showTemplates && <TemplatesComponent />
       )}
+      {showSubProjects && <SubProjectsComponent />}
+      {showTemplates && <TemplatesComponent />}
     </ModuleContent>
   );
 };
