@@ -10,3 +10,4 @@ export { default as SaveIcon } from "./save.svg";
 export { default as SaveInactiveIcon } from "./saveInactive.svg";
 export { default as CommitProjectIcon } from "./commitProject.svg";
 export { default as CreateSubProjectIcon } from "./createSubProject.svg";
+export { default as CreateSubProjectInactiveIcon } from "./createSubProjectInactive.svg";
