@@ -3,7 +3,7 @@ import { TraverseProductNodes } from ".";
 import { BuildBlockEdge, BuildProductChildNode } from "..";
 import { IsProduct } from "../../../../../helpers";
 import { Connector, Node, Project } from "../../../../../models";
-import { IsTransportConnection } from "../../../helpers";
+import { IsPartOf, IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
 
 /**
@@ -49,7 +49,7 @@ const DrawProductChildren = (
 };
 
 function ValidateProductEdge(fromNode: Node, toNode: Node, source: Connector, target: Connector) {
-  return IsProduct(fromNode) && IsProduct(toNode) && IsTransportConnection(source, target);
+  return true; //IsProduct(fromNode) && IsProduct(toNode) && IsTransportConnection(source, target);
 }
 
 export default DrawProductChildren;
