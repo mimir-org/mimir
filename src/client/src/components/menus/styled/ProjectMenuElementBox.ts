@@ -19,9 +19,10 @@ const ProjectMenuElementBox = styled.button<Props>`
   border-width: 0;
   color: ${Color.BlueMagenta};
   border-bottom: ${(props) => (props.bottomLine ? 1 : 0)}px solid ${Color.Grey};
+  text-align: left;
 
   :disabled {
-    cursor: default;
+    cursor: not-allowed;
   }
 
   :hover:not(:disabled) {

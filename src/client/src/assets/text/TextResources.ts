@@ -29,6 +29,14 @@ const TextResources = {
   MainHeader_Login_Heading: "Login",
   MainHeader_VisualFilter: "Visual Filter",
 
+  // Toolbar
+  Toolbar_TreeView: "Tree view",
+  Toolbar_BlockView: "Block view",
+  Toolbar_Electro_On: "Toggle electromode on",
+  Toolbar_Electro_Off: "Toggle electromode off",
+  Toolbar_VisualFilters_Open: "Open visual filters",
+  Toolbar_VisualFilters_Close: "Close visual filters",
+
   // InspectorModule
   Inspector_AdminInfo: "Admin",
   Inspector_Object: "Object",
@@ -115,16 +123,54 @@ const TextResources = {
   Inspector_Source: "Source",
   Inspector_Condition: "Condition",
 
+  Inspector_Delete_Object: "Delete object from drawing board",
+  Inspector_Lock_Object: "Lock object(s)",
+  Inspector_Unlock_Object: "Unlock object(s)",
+  Inspector_Resize: "Click/drag to resize",
+  Inspector_Expand_Panel: "Expand inspector panel",
+  Inspector_Close_Panel: "Close inspector panel",
+
   // LibraryModule
-  Library_SearchBox_Placeholder: "Search the Library",
+  Library_Templates: "Templates",
+  Library_SubProjects: "Subprojects",
+  Library_SearchBox_Placeholder_Library: "Search Library for types...",
+  Library_SearchBox_Placeholder_Templates: "Search for Templates...",
+  Library_SearchBox_Placeholder_Subprojects: "Search for Subprojects...",
+  Library_SearchFilter_Collections: "Search Collections",
+  Library_SearchFilter_Latest_Version: "Only latest version",
+  Library_SearchFilter_Other: "Other search filter",
+  Library_Manage_Collections: "Add collections to work with Types",
+  Library_Select_Collections: "Select Collections to add to Library",
+  Library_Manage_Collections_Button: "Manage Collections",
+  Library_Manage_Collections_Update_Library: "Update Library",
+  Library_Subprojects_Info: "Subprojects created in Project menu appear listed here.",
+  Library_Subprojects_None: "There are currently no Subprojects for this Project.",
+  Library_Templates_None: "There are currently no Templates available for this Project.",
+  Library_New_Type: "New Type",
+  Library_Edit_Type: "Edit Type",
+  Library_Delete_Type: "Delete Type",
+  Library_Delete_Type_Confirm: "Are you sure you want to delete ",
+  Library_Delete_Type_Yes: "Yes",
+  Library_Delete_Type_No: "No",
+  Library_Add_Favorite: "Add to favorites",
+  Library_Remove_Favorite: "Remove from favorites",
+  Library_Expand_Panel: "Expand library panel",
+  Library_Close_Panel: "Close library panel",
+  Library_Aspect_Toggle: "Toggle",
+  Library_Aspect_Filter_On: "filter on",
+  Library_Aspect_Filter_Off: "filter off",
 
   // ExplorerModule
-  Explorer_Lock_Node: "Lock node",
-  Explorer_Unlock_Node: "Unlock node",
-  Explorer_Hide_Node: "Hide node",
-  Explorer_Show_Node: "Show node",
+  Explorer_Lock_Object: "Lock object(s)",
+  Explorer_Unlock_Object: "Unlock object(s)",
+  Explorer_Hide_Object: "Hide object(s)",
+  Explorer_Show_Object: "Show object(s)",
   Explorer_Open_Group: "Open group",
   Explorer_Close_Group: "Close group",
+  Explorer_Select_Object: "Select object(s)",
+  Explorer_Unselect_Object: "Unselect object(s)",
+  Explorer_Expand_Panel: "Expand explorer panel",
+  Explorer_Close_Panel: "Close explorer panel",
 
   // TypeEditorModule
   TypeEditor: "Type Editor",
@@ -175,6 +221,7 @@ const TextResources = {
 
   // ProjectMenu
   Project: "Project",
+  Project_Description: "Project menu",
   Project_Heading: "Projects",
   Project_New: "Create project",
   Project_Search_Placeholder: "Search Projects",
@@ -189,7 +236,7 @@ const TextResources = {
   Project_Description_About: "About the project",
   Project_Description_Na: "No information currently available",
   Project_Description_Libraries: "Libraries",
-  Project_Description_SubProj: "Sub-projects",
+  Project_Description_SubProj: "Subprojects",
   Project_Description_Temps: "Templates",
 
   Project_Import: "Import project",
@@ -213,7 +260,7 @@ const TextResources = {
   Project_Logout: "Log out",
   Project_Start_Label: "Start a new project",
   Project_CreateProject: "Create project",
-  Project_SubProject_Save: "Save selection as sub-project",
+  Project_SubProject_Save: "Save selection as subproject",
   Project_Name: "Project name",
   Project_Name_Placeholder: "New project name...",
   Project_Confirm_Save: " Save this project before opening/starting another?",
@@ -224,7 +271,7 @@ const TextResources = {
   Project_Save: "Save",
   Project_Open: "Open",
   Project_Create: "Create",
-  Project_SubProject: "Save Sub-project",
+  Project_SubProject: "Save subproject",
   Project_Cancel: "Cancel",
   Project_Menu_Instruction: "Please select an option from the project menu to continue using Mímir",
 
@@ -277,6 +324,7 @@ const TextResources = {
   Filter_Category: "Category",
 
   // User Menu
+  UserMenu_Description: "User settings menu",
   UserMenu_Settings: "User Settings",
   UserMenu_Notifications: "Show all Notifications",
   UserMenu_DarkMode: "Turn on Dark mode",

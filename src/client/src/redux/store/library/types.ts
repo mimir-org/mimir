@@ -24,3 +24,8 @@ export interface FetchLibraryItems {
   libraryItems: LibItem[];
   apiError: ApiError;
 }
+
+export interface DeleteLibraryItem {
+  id: string;
+  apiError: ApiError;
+}

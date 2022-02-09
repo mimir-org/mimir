@@ -4,8 +4,6 @@ export {
   filterSelector,
   libOpenSelector,
   isActiveViewSelector,
-  userMenuSelector,
-  userStateSelector,
-  flowViewSelector,
+  usernameSelector,
   location3DSelector,
 } from "../../../redux/store/selectors";

@@ -1,6 +1,8 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
+import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
+import { TextResources } from "../../assets/text";
 import { MODULE_TYPE } from "../../models/project";
 import { GetSelectedNode, IsBlockView } from "../../helpers";
 import { AnimatedInspector, ResizePanel } from "./styled";
@@ -63,7 +65,9 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
       zIndex={5}
       forwardRef={inspectorRef}
     >
-      <ResizePanel id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
+      <Tooltip content={TextResources.Inspector_Resize} offset={[0, 10]} delay={150}>
+        <ResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
+      </Tooltip>
       <InspectorHeader
         project={project}
         element={element}

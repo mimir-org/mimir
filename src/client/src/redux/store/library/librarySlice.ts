@@ -1,6 +1,6 @@
 import { CreateLibraryType, LibItem, ObjectType } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
+import { DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
 
 const initialLibraryState: LibraryState = {
@@ -78,6 +78,20 @@ export const librarySlice = createSlice({
       action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
       action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    deleteLibraryItem: (state, action: PayloadAction<string>) => {
+      return state;
+    },
+    deleteLibraryItemSuccessOrError: (state, action: PayloadAction<DeleteLibraryItem>) => {
+      const { id, apiError } = action.payload;
+      if (apiError) {
+        state.apiError.push(apiError);
+      } else {
+        state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== id);
+        state.nodeTypes = state.nodeTypes.filter((x) => x.id !== id);
+        state.transportTypes = state.transportTypes.filter((x) => x.id !== id);
+      }
+    },
     removeLibraryItem: (state, action: PayloadAction<string>) => {
       state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== action.payload);
       state.nodeTypes = state.nodeTypes.filter((x) => x.id !== action.payload);
@@ -103,6 +117,8 @@ export const {
   addLibraryItem,
   removeLibraryItem,
   deleteLibraryError,
+  deleteLibraryItem,
+  deleteLibraryItemSuccessOrError,
 } = librarySlice.actions;
 
 export default librarySlice.reducer;

@@ -1,19 +1,21 @@
 import { LockClosed, LockOpen } from "../../../assets/icons/lock";
 import { AspectButton } from "../aspectComponent/styled";
 import { Icon } from "../../../compLibrary/icon";
-import { VisuallyHidden } from "../../../compLibrary/util";
-import { TextResources } from "../../../assets/text";
+import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 
 interface Props {
   isLocked: boolean;
   onToggleLocked: () => void;
+  unlockText: string;
+  lockText: string;
 }
 
-export const LockComponent = ({ isLocked, onToggleLocked }: Props) => (
-  <AspectButton isLocked={isLocked} onClick={onToggleLocked}>
-    <VisuallyHidden>{isLocked ? TextResources.Explorer_Unlock_Node : TextResources.Explorer_Lock_Node}</VisuallyHidden>
-    <Icon size={15} src={isLocked ? LockClosed : LockOpen} alt="" />
-  </AspectButton>
+export const LockComponent = ({ isLocked, onToggleLocked, unlockText, lockText }: Props) => (
+  <Tooltip content={isLocked ? unlockText : lockText} offset={[0, 5]}>
+    <AspectButton isLocked={isLocked} onClick={onToggleLocked}>
+      <Icon size={15} src={isLocked ? LockClosed : LockOpen} alt="" />
+    </AspectButton>
+  </Tooltip>
 );
 
 export default LockComponent;

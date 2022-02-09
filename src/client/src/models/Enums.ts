@@ -77,3 +77,15 @@ export enum WorkerStatus {
   Update = 2,
   Delete = 3,
 }
+
+export enum LibraryTab {
+  Library = 0,
+  SubProjects = 1,
+  Templates = 2,
+}
+
+export enum CollectionsActions {
+  NonSelectedAdmin = 0,
+  Manage = 1,
+  ReadOnly = 2,
+}

@@ -2,6 +2,8 @@ import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./styled";
 import { Node } from "../../../../models";
 import { Symbol } from "../../../../compLibrary/symbol";
 import { GetCompanyLogoForNode } from "../../../../helpers";
+import { Tooltip } from "../../../../compLibrary/tooltip/Tooltip";
+import { useIsOverflowing } from "../../../../hooks/useIsOverflowing";
 import Config from "../../../../models/Config";
 
 interface Props {
@@ -14,16 +16,21 @@ interface Props {
  * @returns name,logo and symbol.
  */
 const TreeLogoComponent = ({ node }: Props) => {
-  const company = Config.COMPANY;
+  const { overflowRef, isOverflowing } = useIsOverflowing<HTMLParagraphElement>();
+  const name = node.label ?? node.name;
 
   return (
     <TreeLogoWrapper>
-      <TreeNodeNameBox>{node.label ?? node.name}</TreeNodeNameBox>
+      <Tooltip content={name} disabled={!isOverflowing} offset={[0, 10]}>
+        <TreeNodeNameBox tabIndex={isOverflowing ? 0 : undefined} ref={overflowRef}>
+          {name}
+        </TreeNodeNameBox>
+      </Tooltip>
       <SymbolBox>
         <Symbol base64={node.symbol} text={node.name} />
       </SymbolBox>
       <LogoBox>
-        <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
+        <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
       </LogoBox>
     </TreeLogoWrapper>
   );

@@ -4,7 +4,7 @@ name: CI - DEV
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [julesprint]
+    branches: [dev]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,30 +15,32 @@ jobs:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
-      tags: dev
+      tags: |
+        dev
+        test
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
-      build_args: |
-        ENVIR=dev
       hash_files_template: "**/package-lock.json"
       push: true
     secrets:
-      REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
+      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
 
   build-server:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-server
-      tags: dev
+      tags: |
+        dev
+        test
       context: ./src/service
       file: ./src/service/Dockerfile
       target: final
       hash_files_template: "**/*.csproj"
       push: true
     secrets:
-      REGISTRY_SERVER_URL: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
+      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
