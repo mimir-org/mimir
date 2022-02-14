@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { TraverseProductNodes } from ".";
 import { BuildBlockEdge, BuildProductChildNode } from "..";
-import { IsAspectNode, IsProduct } from "../../../../../helpers";
+import { IsAspectNode, IsOffPage, IsProduct } from "../../../../../helpers";
 import { Connector, Node, Project } from "../../../../../models";
 import { IsPartOfConnection, IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
@@ -50,11 +50,11 @@ const DrawProductChildren = (
 
 function ValidateProductEdge(sourceNode: Node, targetNode: Node, sourceConn: Connector, targetConn: Connector) {
   return (
-    IsProduct(sourceNode) &&
-    IsProduct(targetNode) &&
+    ((IsProduct(sourceNode) && IsProduct(targetNode)) || IsOffPage(sourceNode) || IsOffPage(targetNode)) &&
     !IsAspectNode(sourceNode) &&
     !IsAspectNode(targetNode) &&
-    (IsTransportConnection(sourceConn, targetConn) || IsPartOfConnection(sourceConn, targetConn))
+    (IsTransportConnection(sourceConn, targetConn) ||
+      (IsPartOfConnection(sourceConn, targetConn) && !IsOffPage(sourceNode) && !IsOffPage(targetNode)))
   );
 }
 
