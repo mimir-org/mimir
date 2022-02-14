@@ -12,7 +12,7 @@ const HandleBox = styled.div<Props>`
   line-height: 0;
 
   .react-flow__handle-block {
-    visibility: ${(props) => (!props.visible ? "hidden" : "visible")};
+    visibility: ${(props) => (props.visible ? "visible" : "hidden")};
     transition: top 0.2s ease-out, left 0.2s ease-out;
 
     // Place handle within wrapper
