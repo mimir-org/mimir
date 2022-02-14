@@ -10,7 +10,6 @@ import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible, IsPartOf } fr
  */
 const ShowHandle = (conn: Connector, isInput: boolean) => {
   if (IsBidirectionalTerminal(conn)) {
-    // TODO: fix product bidirectional
     if (isInput) return IsInputVisible(conn);
     else return IsOutputVisible(conn);
   }
