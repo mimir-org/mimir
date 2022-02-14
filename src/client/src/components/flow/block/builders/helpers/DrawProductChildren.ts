@@ -7,7 +7,8 @@ import { IsPartOfConnection, IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
 
 /**
- * Component to draw all children of a selected Product Node in BlockView.
+ * Component to draw all children of a selected Product Node in BlockView. The Product Aspect has a different view than the other aspects,
+ * where the nodes are displayed in a tree stucture in BlockView.
  * @param project
  * @param selectedNode
  * @param elements
