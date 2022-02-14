@@ -12,6 +12,7 @@ export { default as IsLocationTerminal } from "./IsLocationTerminal";
 export { default as IsLocationConnection } from "./IsLocationConnection";
 export { default as IsProductTerminal } from "./IsProductTerminal";
 export { default as IsProductConnection } from "./IsProductConnection";
+export { default as IsPartOfConnection } from "./IsPartOfConnection";
 
 export { default as IsPartOf } from "./IsPartOf";
 export { IsInputTerminal } from "./IsInputTerminal";

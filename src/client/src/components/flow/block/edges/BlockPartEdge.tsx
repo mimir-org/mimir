@@ -25,7 +25,7 @@ function GetPartEdgeStyle(visible: boolean) {
   return {
     stroke: Color.ProductHeader,
     strokeWidth: "2px",
-    opacity: visible ? 0.7 : 0,
+    opacity: visible ? 0.4 : 0,
     transition: "opacity 250ms",
   };
 }

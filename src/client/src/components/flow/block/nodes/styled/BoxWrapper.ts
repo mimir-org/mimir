@@ -5,6 +5,7 @@ interface Props {
 }
 
 const BoxWrapper = styled.div<Props>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;

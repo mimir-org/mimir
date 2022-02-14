@@ -7,22 +7,22 @@ import { IsLocationConnection, IsProductConnection, IsTransportConnection } from
  * and the target node are in the elements array - meaning that the nodes are drawn to the screen.
  * @param selectedNode
  * @param splitNode
- * @param fromNode
- * @param toNode
- * @param source
- * @param target
+ * @param sourceNode
+ * @param targetNode
+ * @param sourceConn
+ * @param targetConn
  * @returns a boolean value.
  */
 const ValidateBlockEdge = (
   selectedNode: Node,
   splitNode: Node,
-  fromNode: Node,
-  toNode: Node,
-  source: Connector,
-  target: Connector
+  sourceNode: Node,
+  targetNode: Node,
+  sourceConn: Connector,
+  targetConn: Connector
 ) => {
   const splitView = splitNode !== null;
-  if (splitView) return ValidateSplitView(selectedNode, splitNode, fromNode, toNode, source, target);
+  if (splitView) return ValidateSplitView(selectedNode, splitNode, sourceNode, targetNode, sourceConn, targetConn);
   return true;
 };
 

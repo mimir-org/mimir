@@ -11,6 +11,7 @@ interface Props {
 const TreeHandleBox = styled.div<Props>`
   .function-treeview-handler {
     opacity: ${(props) => (props.visible ? 1 : 0)};
+    visibility: ${(props) => (props.visible ? "visible" : "hidden")};
     width: 19px;
     height: 19px;
     background: url(${ConnectorTreeViewIcon});

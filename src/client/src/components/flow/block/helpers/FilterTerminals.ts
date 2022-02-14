@@ -28,7 +28,9 @@ function validateTerminal(selected: Node, secondary: Node, c: Connector) {
   }
 
   if (IsLocation(selected)) return IsLocationTerminal(c);
-  if (IsProduct(selected)) return IsPartOf(c) || IsTransport(c); // Product has a separate view
+
+  // Product has a separate view
+  if (IsProduct(selected)) return IsPartOf(c) || IsTransport(c);
 
   return IsTransport(c);
 }
