@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Connector, Node } from "../../../../models";
-import { Handle, useUpdateNodeInternals, Position } from "react-flow-renderer";
+import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { GetTerminalColor, IsValidBlockConnection, ShowHandle } from "./helpers";
+import { GetTerminalColor, IsValidBlockConnection, SetPartOfXPos, SetPartOfYPos, ShowHandle } from "./helpers";
 import { HandleBox, HandleContainer } from "./styled";
 import { IsPartOf } from "../../helpers";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
@@ -36,19 +36,6 @@ const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
     }, 200);
   }, [isElectro, terminals]);
 
-  const setPartOfPosX = (pos: Position, isElectro: boolean) => {
-    if (isElectro) return "revert";
-    if (pos === Position.Bottom) return "-90px";
-    return "100px";
-  };
-
-  const setPartOfPosY = (pos: Position, isElectro: boolean) => {
-    if (!isElectro) return "0px";
-    if (pos === Position.Left) return "60px";
-    if (pos === Position.Right) return "-60px";
-    return "60px";
-  };
-
   return (
     <HandleContainer isElectro={isElectro}>
       {terminals.map((conn) => {
@@ -60,8 +47,8 @@ const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
             <HandleBox
               visible={visible && !IsPartOf(conn)}
               isPartOf={IsPartOf(conn)}
-              partOfPosX={setPartOfPosX(pos, isElectro)}
-              partOfPosY={setPartOfPosY(pos, isElectro)}
+              partOfPosX={SetPartOfXPos(pos, isElectro)}
+              partOfPosY={SetPartOfYPos(pos, isElectro)}
               id={"handle-" + conn.id}
               key={conn.id}
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}

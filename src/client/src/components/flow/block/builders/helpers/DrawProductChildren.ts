@@ -1,9 +1,9 @@
 import { Elements } from "react-flow-renderer";
 import { TraverseProductNodes } from ".";
 import { BuildBlockEdge, BuildProductChildNode } from "..";
-import { IsProduct } from "../../../../../helpers";
+import { IsAspectNode, IsProduct } from "../../../../../helpers";
 import { Connector, Node, Project } from "../../../../../models";
-import { IsPartOf, IsTransportConnection } from "../../../helpers";
+import { IsPartOfConnection, IsTransportConnection } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
 
 /**
@@ -48,8 +48,14 @@ const DrawProductChildren = (
   return elements;
 };
 
-function ValidateProductEdge(fromNode: Node, toNode: Node, source: Connector, target: Connector) {
-  return true; //IsProduct(fromNode) && IsProduct(toNode) && IsTransportConnection(source, target);
+function ValidateProductEdge(sourceNode: Node, targetNode: Node, sourceConn: Connector, targetConn: Connector) {
+  return (
+    IsProduct(sourceNode) &&
+    IsProduct(targetNode) &&
+    !IsAspectNode(sourceNode) &&
+    !IsAspectNode(targetNode) &&
+    (IsTransportConnection(sourceConn, targetConn) || IsPartOfConnection(sourceConn, targetConn))
+  );
 }
 
 export default DrawProductChildren;
