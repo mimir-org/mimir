@@ -31,9 +31,9 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const isOffPageNodeTarget = edge?.toNodeId === data.id;
   const offPageTerminal = isOffPageNodeTarget ? offPageInputTerminal : offPageOutputTerminal;
 
-  const isProductOffPageNode = IsProduct(edge?.fromNode);
+  const isProduct = isOffPageNodeTarget ? IsProduct(edge?.fromNode) : IsProduct(edge?.toNode);
   const offPageParent = GetParent(data);
-  const parentBlockNode = isProductOffPageNode ? GetSelectedNode() : GetParent(offPageParent);
+  const parentBlockNode = isProduct ? GetSelectedNode() : GetParent(offPageParent);
 
   const parentNodeTerminal = isOffPageNodeTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
