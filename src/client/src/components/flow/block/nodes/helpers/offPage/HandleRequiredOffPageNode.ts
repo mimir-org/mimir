@@ -5,6 +5,14 @@ import { Connector, Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsInputTerminal } from "../../../../helpers";
 
+/**
+ * Component to check if any terminals have a required OffPageNode flag. If so, an OffPageNode is created.
+ * OffPageNodes are not stored in our model, therefore this check is crucial to draw the needed OffPageNodes in Mimir.
+ * @param node
+ * @param edges
+ * @param size
+ * @param dispatch
+ */
 const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   const isRequired = true;
 
