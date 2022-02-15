@@ -9,18 +9,18 @@ interface Props {
 const LibraryTabHeader = styled.div<Props>`
   display: flex;
   min-width: 73px;
-  background-color: ${(props) => (props.isActive ? "transparent" : Color.GreyLibraryInactiveTab)};
+  background-color: ${(props) => !props.isActive && Color.GreyLibraryInactiveTab};
   pointer-events: initial;
   box-sizing: border-box;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
-  border: 1.5px solid ${Color.BlueMagenta};
-  border-bottom: ${(props) => (props.isActive ? "3px solid" + Color.GreyLighter : "0px")};
-  margin-right: 4px;
-  height: ${(props) => (props.isActive ? 41 : 32)}px;
-  margin-top: ${(props) => (props.isActive ? 3 : 7)}px;
-  padding: ${(props) => (props.isActive ? "12px 10px 0px 10px;" : "7px 9px 0px 9px")};
-  box-shadow: -4px 0 4px -5px rgba(0, 0, 0, 0.4), 4px 0 3px -5px rgba(0, 0, 0, 0.4);
+  border: ${(props) => (props.isActive ? "1px solid" : "0px")};
+  border-color: ${Color.GreyInactive};
+  border-bottom: ${(props) => (props.isActive ? "2px solid" + Color.GreyLighter : "0px")};
+  height: ${(props) => (props.isActive ? 39 : 32)}px;
+  margin-left: 5px;
+  margin-top: ${(props) => (props.isActive ? 3 : 8)}px;
+  padding: ${(props) => (props.isActive ? "10px 10px 0px 10px;" : "5px 9px 0px 9px")};
 
   p {
     color: ${Color.Black};

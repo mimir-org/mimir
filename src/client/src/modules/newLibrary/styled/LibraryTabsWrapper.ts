@@ -7,7 +7,7 @@ const LibraryTabsWrapper = styled.div`
   flex-direction: row;
   height: 40px;
   width: inherit;
-  border-bottom: 1.5px solid ${Color.BlueMagenta};
+  border-bottom: 1px solid ${Color.GreyDarker};
   align-items: center;
 
   > ${Icon} {

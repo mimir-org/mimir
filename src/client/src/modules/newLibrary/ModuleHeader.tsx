@@ -25,27 +25,22 @@ interface Props {
  * @returns library module tabs, search input and filters
  */
 
-const ModuleHeader = ({ libOpen, dispatch, activeTab, setActiveTab, search, aspectFilters, setAspectFilters }: Props) => {
-  const lib = MODULE_TYPE.LIBRARY;
-
-  return (
-    <LibHeader>
-      {!libOpen && (
-        <Tooltip content={TextResources.Library_Expand_Panel} placement={"bottom"} offset={[0, 5]}>
-          <LibExpandButton isOpen={false} onClick={() => OnLibraryClick(dispatch, libOpen, lib)}>
-            <Icon size={24} src={LibraryIcon} alt="" />
-          </LibExpandButton>
-        </Tooltip>
-      )}
-      {libOpen && (
-        <>
-          <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />
-          <SearchArea activeTab={activeTab} search={search} />
-          <AspectBoxes aspectFilters={aspectFilters} setAspectFilters={setAspectFilters} />
-        </>
-      )}
-    </LibHeader>
-  );
-};
+const ModuleHeader = ({ libOpen, dispatch, activeTab, setActiveTab, search, aspectFilters, setAspectFilters }: Props) => (
+  <LibHeader>
+    {!libOpen ? (
+      <Tooltip content={TextResources.Library_Expand_Panel} placement={"bottom"} offset={[0, 5]}>
+        <LibExpandButton isOpen={false} onClick={() => OnLibraryClick(dispatch, libOpen, MODULE_TYPE.LIBRARY)}>
+          <Icon size={24} src={LibraryIcon} alt="" />
+        </LibExpandButton>
+      </Tooltip>
+    ) : (
+      <>
+        <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />
+        <SearchArea activeTab={activeTab} search={search} />
+        <AspectBoxes aspectFilters={aspectFilters} setAspectFilters={setAspectFilters} />
+      </>
+    )}
+  </LibHeader>
+);
 
 export default ModuleHeader;

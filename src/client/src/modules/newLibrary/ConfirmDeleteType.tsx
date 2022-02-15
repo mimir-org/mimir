@@ -9,13 +9,14 @@ import { ModalButtonsWrapper } from "./styled";
 
 interface Props {
   isOpen: boolean;
-  onExit: (boolean) => void;
+  onExit: (isOpen: boolean) => void;
   selectedElement: string;
   dispatch: Dispatch;
 }
 
 const ConfirmDeleteType = ({ isOpen, onExit, selectedElement, dispatch }: Props) => {
   const modalDescription = TextResources.Library_Delete_Type_Confirm + GetSelectedElement(selectedElement) + "?";
+
   return (
     <Modal isBlurred isOpen={isOpen} onExit={() => onExit(!isOpen)}>
       <NotificationModalContent isWarning description={modalDescription}>
