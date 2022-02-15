@@ -34,7 +34,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const node = nodes?.find((x) => x.id === data.id);
   const isElectro = useAppSelector(selectors.electroSelector);
 
-  // Check for elements that require OffPage
+  // Check for elements that require OffPage nodes
   useEffect(() => {
     HandleConnectedOffPageNode(node, edges, size, dispatch);
     HandleRequiredOffPageNode(node, edges, size, dispatch);
@@ -49,6 +49,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     setSize({ width: updatedSize.width, height: updatedSize.height });
   }, [electro, terminals]);
 
+  if (!node) return null;
+
   let inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
   let outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
 
@@ -57,17 +59,15 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     outputTerminals = outputTerminals.filter((x) => !IsPartOf(x));
   }
 
-  if (!node) return null;
-
   return (
     <BoxWrapper isElectro={isElectro}>
       <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockChildComponent
         node={node}
-        colorMain={GetAspectColor(data, AspectColorType.Main)}
-        colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-        inputTerminals={inputTerminals.filter((x) => !IsPartOf(x))}
-        outputTerminals={outputTerminals.filter((x) => !IsPartOf(x))}
+        colorMain={GetAspectColor(node, AspectColorType.Main)}
+        colorSelected={GetAspectColor(node, AspectColorType.Selected)}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />
