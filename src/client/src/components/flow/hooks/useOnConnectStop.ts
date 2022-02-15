@@ -56,9 +56,6 @@ function ValidateOffPageDrop(
   secondaryNode: boolean,
   parentXPos: number
 ) {
-  const marginX = 90;
-  clientX += marginX;
-
   let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
   if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
