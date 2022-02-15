@@ -5,10 +5,8 @@ export { default as CreateConnectedOffPageNode } from "./CreateConnectedOffPageN
 export { default as HandleRequiredOffPageNode } from "./HandleRequiredOffPageNode";
 export { default as HandleConnectedOffPageNode } from "./HandleConnectedOffPageNode";
 
-export { default as HasConnectedOffPageNode } from "./HasConnectedOffPageNode";
-export { default as UpdateOffPagePosition } from "./UpdateOffPagePosition";
-
-export { default as GetOffPageIcon } from "./GetOffPageIcon";
-
 export { default as HandleOffPageDelete } from "./HandleOffPageDelete";
 export { default as HandleConnectedOffPageDelete } from "./HandleConnectedOffPageDelete";
+
+export { default as UpdateOffPagePosition } from "./UpdateOffPagePosition";
+export { default as GetOffPageIcon } from "./GetOffPageIcon";
