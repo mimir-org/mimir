@@ -332,6 +332,10 @@ const TextResources = {
   UserMenu_LogOut: "Log out",
   UserMenu_User: "User",
 
+  // Fullscreen
+  Fullscreen_Open: "Open all panels",
+  Fullscreen_Close: "Close all panels",
+
   // Validation
   Validation_Terminals: "A connection can only be made between two terminals of the same type.",
   Validation_Aspect: "A relation connection can only be made between two nodes of the same Aspect.",

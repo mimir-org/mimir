@@ -4,10 +4,10 @@ import * as selectors from "./helpers/selectors";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen";
 import { BuildTreeElements } from "../tree/builders";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { VisualFilterComponent } from "../../menus/filterMenu";
+import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { TreeConnectionLine } from "./edges";
 import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { Project } from "../../../models";
@@ -24,7 +24,7 @@ import ReactFlow, {
 
 interface Props {
   project: Project;
-  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  inspectorRef: MutableRefObject<HTMLDivElement>;
 }
 
 /**

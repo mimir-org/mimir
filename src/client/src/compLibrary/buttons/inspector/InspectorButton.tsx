@@ -1,4 +1,4 @@
-import { ButtonContainer } from "./styled";
+import { ButtonContainer } from "./InspectorButton.styled";
 import { useState } from "react";
 import { GetActiveButtonIcon, GetButtonIcon, GetButtonText } from "./helpers";
 import { Tooltip } from "../../tooltip/Tooltip";

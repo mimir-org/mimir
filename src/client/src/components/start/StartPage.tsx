@@ -1,9 +1,9 @@
-import { StartPageBackground } from "./styled/";
+import { StartPageBackground, StartPageImage, StartPageSliderContainer, StartPageVersionText } from "./StartPage.styled";
 import { MimirLogo } from "../../assets/icons/mimir";
 import { TextResources } from "../../assets/text";
 import { useAppDispatch } from "../../redux/store";
 import { MENU_TYPE } from "../../models/project";
-import { changeActiveMenu } from "../menus/projectMenu/subMenus/redux/menuSlice";
+import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { useEffectOnce } from "../../hooks/useEffectOnce";
 
 /**
@@ -19,10 +19,10 @@ const StartPage = () => {
 
   return (
     <StartPageBackground>
-      <div className="slider">
-        <img src={MimirLogo} alt="mimir-logo" className="logo" />
-        <p className="version-text">{TextResources.Mimir_Version}</p>
-      </div>
+      <StartPageSliderContainer>
+        <StartPageImage src={MimirLogo} alt="mimir-logo" />
+        <StartPageVersionText>{TextResources.Mimir_Version}</StartPageVersionText>
+      </StartPageSliderContainer>
     </StartPageBackground>
   );
 };

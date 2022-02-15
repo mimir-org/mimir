@@ -1,4 +1,4 @@
-import SymbolImage from "./styled/SymbolImage";
+import { SymbolImage } from "./Symbol.styled";
 
 interface Props {
   base64: string;

@@ -1,12 +1,11 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
-import { FilterMenuBox, Header } from "./styled";
-import { MenuColumn } from "../styled";
-import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./filters";
+import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
+import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text";
 import { IsLibrary } from "../../../helpers";
-import { GetFilterElements, PopulateFilterLists } from "./helpers";
-import { memo } from "react";
+import { GetFilterElements } from "./helpers/GetFilterElements";
+import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
 import { Elements } from "react-flow-renderer";
 
 interface Props {
@@ -19,28 +18,26 @@ interface Props {
  * @param interface
  * @returns a menu with multiple checkboxes to control visibility of items in Mimir.
  */
-const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
+export const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
   const dispatch = useAppDispatch();
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const { nodes, edges } = GetFilterElements(elements);
 
-  const transportItems = [] as Connector[];
-  const relationItems = [] as Connector[];
-  const partOfItems = [] as Connector[];
+  const transportItems: Connector[] = [];
+  const relationItems: Connector[] = [];
+  const partOfItems: Connector[] = [];
 
   PopulateFilterLists(edges, transportItems, relationItems, partOfItems);
 
   return (
-    <FilterMenuBox libraryOpen={libOpen}>
-      <Header>{TextResources.Filter_Heading}</Header>
-      <MenuColumn>
+    <VisualFilterContainer libraryOpen={libOpen}>
+      <VisualFilterHeader>{TextResources.Filter_Heading}</VisualFilterHeader>
+      <VisualFilterMenuColumn>
         <AnimationFilter edgeAnimation={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter edges={edges} nodes={nodes} items={partOfItems} dispatch={dispatch} visible={!!partOfItems.length} />
         <RelationFilter edges={edges} items={relationItems} dispatch={dispatch} visible={!!relationItems.length} />
         <TransportFilter edges={edges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
-      </MenuColumn>
-    </FilterMenuBox>
+      </VisualFilterMenuColumn>
+    </VisualFilterContainer>
   );
 };
-
-export default memo(VisualFilterComponent);

@@ -3,7 +3,8 @@ import { MENU_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { memo, useRef } from "react";
-import { OnDarkMode, OnLogOut } from "./handlers";
+import { OnDarkMode } from "./handlers/OnDarkMode";
+import { OnLogOutClick } from "./handlers/OnLogOutClick";
 import {
   UserMenuBox,
   UserMenuElement,
@@ -55,7 +56,7 @@ const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         <UserMenuElementText>{darkMode ? TextResources.UserMenu_LightMode : TextResources.UserMenu_DarkMode}</UserMenuElementText>
       </UserMenuElement>
 
-      <UserMenuElement onClick={() => OnLogOut()}>
+      <UserMenuElement onClick={() => OnLogOutClick()}>
         <Icon size={20} src={LogoutIcon} />
         <UserMenuElementText>{TextResources.UserMenu_LogOut}</UserMenuElementText>
       </UserMenuElement>

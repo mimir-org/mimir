@@ -1,4 +1,4 @@
-import { CheckboxWrapper } from "./styled";
+import { CheckboxWrapper } from "./CheckboxExplorer.styled";
 import { Icon } from "../../../icon";
 import { Tooltip } from "../../../tooltip/Tooltip";
 import { TextResources } from "../../../../assets/text";

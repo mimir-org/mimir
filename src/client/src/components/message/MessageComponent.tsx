@@ -1,6 +1,6 @@
 import { TextResources } from "../../assets/text";
 import { Button } from "../../compLibrary/buttons";
-import { ButtonWrap, MessageBox } from "./styled";
+import { ButtonWrap, MessageBox, MessageImage, MessageText } from "./MessageComponent.styled";
 import { CloseIcon } from "../../assets/icons/close";
 
 interface Props {
@@ -15,8 +15,8 @@ interface Props {
 const MessageComponent = ({ handleSave, handleNoSave, showConfirm, setConfirm, text }: Props) =>
   showConfirm && (
     <MessageBox>
-      <p className="message">{text}</p>
-      <img src={CloseIcon} alt="icon" onClick={() => setConfirm(!showConfirm)} className="icon" />
+      <MessageText>{text}</MessageText>
+      <MessageImage src={CloseIcon} alt="icon" onClick={() => setConfirm(!showConfirm)} />
       <ButtonWrap>
         <Button onClick={handleNoSave} text={TextResources.Project_NoSave_Button} />
         <Button onClick={handleSave} text={TextResources.Project_Save_Button} />

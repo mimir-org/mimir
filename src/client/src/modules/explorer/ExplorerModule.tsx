@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
-import { ProjectComponent } from "./";
+import { ProjectComponent } from "./components/ProjectComponent";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
-import { ModuleBody, ModuleHeader } from "./styled";
-import { OnToggleClick } from "./handlers";
+import { ExplorerModuleBody, ExplorerModuleHeader } from "./ExplorerModule.styled";
+import { OnToggleClick } from "./handlers/OnToggleClick";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { Icon } from "../../compLibrary/icon";
@@ -35,12 +35,12 @@ export const ExplorerModule = ({ dispatch }: Props) => {
         placement={"bottom"}
         offset={[0, -10]}
       >
-        <ModuleHeader isOpen={isOpen} onClick={() => OnToggleClick(dispatch, isOpen, type)}>
+        <ExplorerModuleHeader isOpen={isOpen} onClick={() => OnToggleClick(dispatch, isOpen, type)}>
           <span>{type}</span>
           <Icon size={24} src={ExplorerIcon} alt="toggle" />
-        </ModuleHeader>
+        </ExplorerModuleHeader>
       </Tooltip>
-      <ModuleBody visible>{isOpen && <ProjectComponent />}</ModuleBody>
+      <ExplorerModuleBody visible>{isOpen && <ProjectComponent />}</ExplorerModuleBody>
     </AnimatedModule>
   );
 };

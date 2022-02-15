@@ -3,7 +3,7 @@ import { save } from "../../../../redux/store/project/actions";
 import { IsOffPage } from "../../../../helpers";
 import { Dispatch } from "redux";
 
-const OnSaveClick = (dispatch: Dispatch, project: Project): void => {
+export const OnSaveClick = (dispatch: Dispatch, project: Project): void => {
   const projectCopy = Object.assign({}, project);
 
   // Remove everything OffPage related
@@ -12,5 +12,3 @@ const OnSaveClick = (dispatch: Dispatch, project: Project): void => {
 
   dispatch(save(projectCopy));
 };
-
-export default OnSaveClick;

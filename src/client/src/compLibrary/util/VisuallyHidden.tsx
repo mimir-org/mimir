@@ -1,5 +1,5 @@
 import React from "react";
-import VisuallyHiddenSpan from "./styled/VisuallyHiddenSpan";
+import { VisuallyHiddenSpan } from "./VisuallyHidden.styled";
 
 interface Props {
   delegated?: { [key: string]: unknown };

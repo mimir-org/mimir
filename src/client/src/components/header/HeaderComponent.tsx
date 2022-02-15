@@ -1,7 +1,8 @@
 import Config from "../../models/Config";
 import ToolbarComponent from "../toolbar/ToolbarComponent";
 import { MimirLogo } from "../../assets/icons/mimir";
-import { AvatarComponent, ProjectMenuHeader } from "./components";
+import { AvatarComponent } from "./components/AvatarComponent";
+import { ProjectMenuHeaderComponent } from "./components/ProjectMenuHeaderComponent";
 import { CompanyLogoBox, HeaderBox, LogoBox, HeaderRightSection } from "./HeaderComponent.styled";
 import { GetCompanyLogoForHeader, IsStartPage } from "../../helpers";
 
@@ -9,7 +10,7 @@ import { GetCompanyLogoForHeader, IsStartPage } from "../../helpers";
  * The top header in Mimir.
  * @returns a banner with the Mimir and company logo, and buttons for project/user menus.
  */
-const HeaderComponent = () => {
+export const HeaderComponent = () => {
   return (
     <>
       <HeaderBox id="Header">
@@ -17,7 +18,7 @@ const HeaderComponent = () => {
           <img src={MimirLogo} alt="mimir logo" />
         </LogoBox>
         <HeaderRightSection>
-          <ProjectMenuHeader />
+          <ProjectMenuHeaderComponent />
           <CompanyLogoBox>
             <img src={GetCompanyLogoForHeader(Config.COMPANY)} alt="company logo" />
           </CompanyLogoBox>
@@ -28,5 +29,3 @@ const HeaderComponent = () => {
     </>
   );
 };
-
-export default HeaderComponent;

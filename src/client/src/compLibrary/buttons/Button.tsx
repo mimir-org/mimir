@@ -1,4 +1,4 @@
-import { ButtonContainer } from "./styled";
+import { ButtonContainer } from "./Button.styled";
 import { Icon } from "../icon";
 
 interface Props {

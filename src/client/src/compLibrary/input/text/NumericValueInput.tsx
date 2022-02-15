@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NumericInput } from ".";
+import { NumericValueInputStyled } from "./NumericValueInput.styled";
 
 interface Props {
   value: string;
@@ -22,7 +22,7 @@ const NumericValueInput = ({ value, onChange }: Props) => {
   };
 
   return (
-    <NumericInput>
+    <NumericValueInputStyled>
       <label className={"quantity"}>
         <input
           type="number"
@@ -35,7 +35,7 @@ const NumericValueInput = ({ value, onChange }: Props) => {
         />
         <span className="number"></span>
       </label>
-    </NumericInput>
+    </NumericValueInputStyled>
   );
 };
 

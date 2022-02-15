@@ -4,7 +4,7 @@ import { Color } from "../../../compLibrary/colors";
 import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../components/flow/helpers";
 import { GetAspectColor } from "../../../helpers";
 
-const GetLegendInfo = (conn: Connector, node: Node) => {
+export const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";
   let name = "";
 
@@ -32,5 +32,3 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
     return [name, color];
   }
 };
-
-export default GetLegendInfo;
