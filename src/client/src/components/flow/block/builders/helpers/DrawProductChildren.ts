@@ -39,7 +39,7 @@ const DrawProductChildren = (
 
   edges?.forEach((edge) => {
     let productEdge = null;
-    if (ValidateProductEdge(edge.fromNode, edge.toNode, edge.fromConnector, edge.toConnector)) {
+    if (ValidateProductEdge(edge.fromNode, edge.toNode, selectedNode, edge.fromConnector, edge.toConnector)) {
       const edgeType = GetBlockEdgeType(edge.fromConnector);
       productEdge = BuildBlockEdge(nodes, edge, edgeType, null, animatedEdge);
     }
@@ -49,11 +49,18 @@ const DrawProductChildren = (
   return elements;
 };
 
-function ValidateProductEdge(sourceNode: Node, targetNode: Node, sourceConn: Connector, targetConn: Connector) {
+function ValidateProductEdge(
+  sourceNode: Node,
+  targetNode: Node,
+  selectedNode: Node,
+  sourceConn: Connector,
+  targetConn: Connector
+) {
   return (
     ((IsProduct(sourceNode) && IsProduct(targetNode)) || IsOffPage(sourceNode) || IsOffPage(targetNode)) &&
     !IsAspectNode(sourceNode) &&
     !IsAspectNode(targetNode) &&
+    sourceNode.id !== selectedNode?.id &&
     (IsTransportConnection(sourceConn, targetConn) ||
       (IsPartOfConnection(sourceConn, targetConn) && !IsOffPage(sourceNode) && !IsOffPage(targetNode)))
   );
