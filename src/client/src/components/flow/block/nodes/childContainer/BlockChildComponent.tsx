@@ -23,13 +23,14 @@ interface Props {
  */
 const BlockChildComponent = ({ node, colorMain, colorSelected, inputTerminals, outputTerminals, onConnectorClick }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
+  const isSelected = node.id === GetSelectedBlockNode()?.id;
 
   return (
     <NodeBox
       node={node}
       colorMain={colorMain}
       colorSelected={colorSelected}
-      isSelected={node === GetSelectedBlockNode()}
+      isSelected={isSelected}
       onMouseEnter={() => OnHover(setShowMenuButton)}
       onMouseLeave={() => OnMouseOut(setShowMenuButton)}
     >

@@ -9,7 +9,7 @@ import { FilterTerminals } from "../helpers";
 import { OnConnectorClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { Size } from "../../../../compLibrary/size";
-import { GetAspectColor, IsProduct } from "../../../../helpers";
+import { GetAspectColor } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 import { SetNodeSize } from "./helpers";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
@@ -34,7 +34,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const node = nodes?.find((x) => x.id === data.id);
   const isElectro = useAppSelector(selectors.electroSelector);
 
-  // Check for elements that require OffPage
+  // Check for elements that require OffPage nodes
   useEffect(() => {
     HandleConnectedOffPageNode(node, edges, size, dispatch);
     HandleRequiredOffPageNode(node, edges, size, dispatch);
@@ -49,25 +49,20 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     setSize({ width: updatedSize.width, height: updatedSize.height });
   }, [electro, terminals]);
 
-  let inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
-  let outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
-
-  if (!IsProduct(node)) {
-    inputTerminals = inputTerminals.filter((x) => !IsPartOf(x));
-    outputTerminals = outputTerminals.filter((x) => !IsPartOf(x));
-  }
-
   if (!node) return null;
+
+  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsInputTerminal(t) || IsBidirectionalTerminal(t)));
+  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsOutputTerminal(t) || IsBidirectionalTerminal(t)));
 
   return (
     <BoxWrapper isElectro={isElectro}>
       <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockChildComponent
         node={node}
-        colorMain={GetAspectColor(data, AspectColorType.Main)}
-        colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-        inputTerminals={inputTerminals.filter((x) => !IsPartOf(x))}
-        outputTerminals={outputTerminals.filter((x) => !IsPartOf(x))}
+        colorMain={GetAspectColor(node, AspectColorType.Main)}
+        colorSelected={GetAspectColor(node, AspectColorType.Selected)}
+        inputTerminals={inputTerminals}
+        outputTerminals={outputTerminals}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />

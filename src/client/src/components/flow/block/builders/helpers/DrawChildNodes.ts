@@ -56,12 +56,12 @@ function ValidateOffPageNode(node: Node, splitView: boolean, elements: Elements,
 
     if (edgeToOffPage) {
       const sourceNode = nodes.find((n) => n.id === edgeToOffPage?.fromNodeId);
-      terminal = sourceNode.connectors.find((c) => c.id === edgeToOffPage?.fromConnectorId);
+      terminal = sourceNode?.connectors?.find((c) => c.id === edgeToOffPage?.fromConnectorId);
     }
 
     if (edgeFromOffPage) {
       const targetNode = nodes.find((n) => n.id === edgeFromOffPage?.toNodeId);
-      terminal = targetNode.connectors.find((c) => c.id === edgeFromOffPage?.toConnectorId);
+      terminal = targetNode?.connectors?.find((c) => c.id === edgeFromOffPage?.toConnectorId);
     }
     return terminal?.isRequired;
   }
