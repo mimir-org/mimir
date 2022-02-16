@@ -12,7 +12,7 @@ import { Size } from "../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 import { SetNodeSize } from "./helpers";
-import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../helpers";
 import { BoxWrapper } from "./styled";
 import { BlockChildComponent } from "./childContainer";
 
@@ -51,8 +51,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   if (!node) return null;
 
-  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsInputTerminal(t) || IsBidirectionalTerminal(t)));
-  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && (IsOutputTerminal(t) || IsBidirectionalTerminal(t)));
+  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
+  const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
 
   return (
     <BoxWrapper isElectro={isElectro}>
