@@ -8,7 +8,7 @@ import { OffPageBox } from "./styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../helpers";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers/offPage";
 import { Connector } from "../../../../models";
-import { GetSelectedBlockNode, GetSelectedNode, IsProduct } from "../../../../helpers";
+import { GetSelectedBlockNode } from "../../../../helpers";
 
 /**
  * Component for an offpage node in BlockView
@@ -31,9 +31,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const isOffPageNodeTarget = edge?.toNodeId === data.id;
   const offPageTerminal = isOffPageNodeTarget ? offPageInputTerminal : offPageOutputTerminal;
 
-  const isProduct = isOffPageNodeTarget ? IsProduct(edge?.fromNode) : IsProduct(edge?.toNode);
   const offPageParent = GetParent(data);
-  const parentBlockNode = isProduct ? GetSelectedNode() : GetParent(offPageParent);
+  const parentBlockNode = GetParent(offPageParent);
 
   const parentNodeTerminal = isOffPageNodeTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
