@@ -9,7 +9,7 @@ import { Connector } from "../../../../models";
 import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../redux/store";
 import { OnChildClick, OnParentClick } from "./parentContainer/handlers";
 import { SetParentNodeSize } from "./helpers";
-import { IsInputTerminal, IsOutputTerminal, IsPartOf } from "../../helpers";
+import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../helpers";
 import { BlockParentComponent } from "./parentContainer";
 import { BoxWrapper } from "./styled";
 
@@ -45,8 +45,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
-  const inputTerminals = terminals.filter((t) => !IsPartOf(t) && IsInputTerminal(t));
-  const outputTerminals = terminals.filter((t) => !IsPartOf(t) && IsOutputTerminal(t));
+  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
+  const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
 
   if (!node) return null;
 
