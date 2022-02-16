@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { CloseIcon } from "../../assets/icons/close";
-import { AddIcon } from "../../assets/icons/type";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
+import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../assets/icons/favorites";
 import { AspectColorType, LibItem, ObjectType } from "../../models";
 import { LibraryCategory } from "../../models/project";
 import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
@@ -55,13 +54,13 @@ const LibraryCategoryElement = ({
     >
       <LibElementText>{item.name}</LibElementText>
       <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
-        <img src={CloseIcon} alt="remove" />
+        <img src={RemoveFavoriteIcon} alt="remove" />
       </RemoveFavoriteBox>
       <AddFavoriteBox
         visible={!isCustomCategory && showAddButton}
         onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}
       >
-        <img src={AddIcon} alt="add" />
+        <img src={AddFavoriteIcon} alt="add" />
       </AddFavoriteBox>
       <LibElementIcon color={GetAspectColor(item, AspectColorType.Main, false)}>
         {(item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport) && (
