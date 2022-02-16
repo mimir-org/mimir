@@ -14,7 +14,7 @@ const FilterTerminals = (connectors: Connector[], secondaryNode: Node) => {
   const terminals: Connector[] = [];
 
   connectors?.forEach((c) => {
-    validateTerminal(selectedNode, secondaryNode, c) && terminals.push(c);
+    if (!IsPartOf(c)) validateTerminal(selectedNode, secondaryNode, c) && terminals.push(c);
   });
 
   return terminals.sort((a, b) => a.name.localeCompare(b.name));
@@ -28,10 +28,6 @@ function validateTerminal(selected: Node, secondary: Node, c: Connector) {
   }
 
   if (IsLocation(selected)) return IsLocationTerminal(c);
-
-  // Product has a separate view
-  if (IsProduct(selected)) return IsPartOf(c) || IsTransport(c);
-
   return IsTransport(c);
 }
 
