@@ -45,10 +45,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
+  if (!node) return null;
+
   const inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
   const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
-
-  if (!node) return null;
 
   return (
     <BoxWrapper isElectro={isElectro}>
