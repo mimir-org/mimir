@@ -3,8 +3,6 @@ import { Dispatch } from "redux";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { Symbol } from "../../compLibrary/symbol";
 import { Icon } from "../../compLibrary/icon";
-import { CloseIcon } from "../../assets/icons/close";
-import { AddIcon } from "../../assets/icons/type";
 import { TextResources } from "../../assets/text";
 import { LibraryCategory } from "../../models/project";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
@@ -12,6 +10,7 @@ import { AspectColorType, LibItem, ObjectType } from "../../models";
 import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
 import { GetTypeIcon, SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
 import { FavoriteBox, LibElement, LibElementIconWrapper, LibElementText } from "./styled";
+import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../assets/icons/favorites";
 
 interface Props {
   item: LibItem;
@@ -71,7 +70,7 @@ const LibraryCategoryElement = ({
       {isCustomCategory && (
         <Tooltip content={TextResources.Library_Remove_Favorite} offset={[0, 5]}>
           <FavoriteBox tabIndex={0} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
-            <Icon size={10} src={CloseIcon} alt="remove" />
+            <Icon size={10} src={RemoveFavoriteIcon} alt="remove" />
           </FavoriteBox>
         </Tooltip>
       )}
@@ -79,7 +78,7 @@ const LibraryCategoryElement = ({
       {!isCustomCategory && showAddButton && (
         <Tooltip content={TextResources.Library_Add_Favorite} offset={[0, 5]}>
           <FavoriteBox tabIndex={0} onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}>
-            <Icon size={10} src={AddIcon} alt="add" />
+            <Icon size={10} src={AddFavoriteIcon} alt="add" />
           </FavoriteBox>
         </Tooltip>
       )}
