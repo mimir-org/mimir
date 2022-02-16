@@ -33,7 +33,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const isElectro = useAppSelector(selectors.electroSelector);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node?.connectors, secondaryNode));
+    setTerminals(FilterTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
