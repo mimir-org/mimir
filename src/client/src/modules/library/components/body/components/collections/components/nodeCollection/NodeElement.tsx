@@ -44,6 +44,7 @@ export const NodeElement = ({
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
   const isSelected = selectedTypes.some((x) => x.id === item.id);
+  const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
@@ -81,7 +82,7 @@ export const NodeElement = ({
       {isCustomCategory && (
         <FavoriteComponent item={item} dispatch={dispatch} onClick={() => OnRemoveFavoriteClick(item, dispatch)} />
       )}
-      {!isCustomCategory && showAddButton && (
+      {!isCustomCategory && showAddButton && !isItemFavorite && (
         <FavoriteComponent
           item={item}
           addFavorite
