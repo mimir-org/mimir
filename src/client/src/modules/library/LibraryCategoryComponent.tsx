@@ -1,12 +1,12 @@
 import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../models/project";
-import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
-import { LibCategoryButton, LibCategoryHeader } from "./styled";
+import { LibCategoryButton, LibCategoryHeader, LibCollectionWrapper } from "./styled";
 import { LibraryCategoryElement } from ".";
 import { Dispatch } from "redux";
-import { ObjectType } from "../../models";
+import { CollectionsActions, LibItem, ObjectType } from "../../models";
 
 interface Props {
+  collectionState: CollectionsActions;
   customCategory: LibraryCategory;
   category: LibraryCategory;
   selectedElement: string;
@@ -14,6 +14,8 @@ interface Props {
   setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
   dispatch: Dispatch;
   searchList?: LibraryCategory[];
+  selectedTypes: LibItem[];
+  setSelectedTypes: (array: LibItem[]) => void;
 }
 
 /**
@@ -22,6 +24,7 @@ interface Props {
  * @returns a drop-down menu of a given Category.
  */
 const LibraryCategoryComponent = ({
+  collectionState,
   category,
   customCategory,
   selectedElement,
@@ -29,9 +32,10 @@ const LibraryCategoryComponent = ({
   setSelectedElementType,
   dispatch,
   searchList,
+  selectedTypes,
+  setSelectedTypes,
 }: Props) => {
-  const [expanded, setExpanded] = useState(false);
-  const expandIcon = expanded ? ExpandIcon : CollapseIcon;
+  const [expanded, setExpanded] = useState(true);
   const isCustomCategory = category.name === "Favorites";
 
   useEffect(() => {
@@ -41,10 +45,9 @@ const LibraryCategoryComponent = ({
   }, [category, searchList]);
 
   return (
-    <>
-      <LibCategoryButton onClick={() => setExpanded(!expanded)}>
-        <LibCategoryHeader>{category.name}</LibCategoryHeader>
-        <img className="expandIcon" src={expandIcon} alt="expand-icon" />
+    <LibCollectionWrapper isOpen={expanded}>
+      <LibCategoryButton isOpen={expanded} onClick={() => setExpanded(!expanded)}>
+        <LibCategoryHeader isOpen={expanded}>{category.name}</LibCategoryHeader>
       </LibCategoryButton>
       {expanded &&
         category?.nodes.map((item) => {
@@ -58,10 +61,13 @@ const LibraryCategoryComponent = ({
               setSelectedElementType={setSelectedElementType}
               isCustomCategory={isCustomCategory}
               dispatch={dispatch}
+              selectedTypes={selectedTypes}
+              setSelectedTypes={setSelectedTypes}
+              collectionState={collectionState}
             />
           );
         })}
-    </>
+    </LibCollectionWrapper>
   );
 };
 

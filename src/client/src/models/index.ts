@@ -1,5 +1,6 @@
 export { WebSocket } from "./client/WebSocket";
 export type { FileData } from "./client/FileData";
+export type { Collection } from "./client/Collection";
 
 export type { Purpose } from "./enums/Purpose";
 export type { EnumBase } from "./enums/EnumBase";

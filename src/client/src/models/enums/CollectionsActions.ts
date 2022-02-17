@@ -1,5 +1,5 @@
 export enum CollectionsActions {
-  NonSelectedAdmin = 0,
-  Manage = 1,
-  ReadOnly = 2,
+  ReadOnly = 0,
+  ManageType = 1,
+  ManageCollection = 2,
 }

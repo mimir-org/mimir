@@ -1,12 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Dispatch } from "redux";
+import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
+import { Symbol } from "../../compLibrary/symbol";
+import { Icon } from "../../compLibrary/icon";
+import { Color } from "../../compLibrary/colors";
+import { TextResources } from "../../assets/text";
+import { Checkbox } from "../../compLibrary/input/checkbox/common";
+import { LibraryCategory } from "../../models/project";
 import { GetAspectColor, GetObjectIcon } from "../../helpers";
 import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../assets/icons/favorites";
-import { AspectColorType, LibItem, ObjectType } from "../../models";
-import { LibraryCategory } from "../../models/project";
 import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
-import { SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
-import { AddFavoriteBox, LibElement, LibElementIcon, LibElementText, RemoveFavoriteBox } from "./styled";
+import { AspectColorType, CollectionsActions, LibItem, ObjectType } from "../../models";
+import { GetTypeIcon, SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
+import { FavoriteBox, LibElementIconWrapper, LibElement, LibElementText } from "./styled";
 
 interface Props {
   item: LibItem;
@@ -16,6 +22,9 @@ interface Props {
   setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
   isCustomCategory: boolean;
   dispatch: Dispatch;
+  selectedTypes: LibItem[];
+  setSelectedTypes: (array: LibItem[]) => void;
+  collectionState: CollectionsActions;
 }
 
 /**
@@ -30,9 +39,21 @@ const LibraryCategoryElement = ({
   setSelectedElement,
   setSelectedElementType,
   isCustomCategory,
+  selectedTypes,
+  setSelectedTypes,
+  collectionState,
   dispatch,
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
+
+  const isSelected: boolean = selectedTypes.some((x) => x.id === item.id);
+
+  const onCheckboxChange = () => {
+    let temp: LibItem[] = [...selectedTypes];
+    if (isSelected) temp = temp.filter((a) => a !== item);
+    else if (!isSelected && temp) temp.push(item);
+    setSelectedTypes(temp);
+  };
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
@@ -51,22 +72,38 @@ const LibraryCategoryElement = ({
       draggable={item.libraryType === ObjectType.ObjectBlock}
       onDragStart={(event) => item.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(item))}
       key={item.id}
+      selectedColor={GetAspectColor(item, AspectColorType.Selected, false)}
+      hoverColor={GetAspectColor(item, AspectColorType.Header, false)}
     >
-      <LibElementText>{item.name}</LibElementText>
-      <RemoveFavoriteBox visible={isCustomCategory} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
-        <img src={RemoveFavoriteIcon} alt="remove" />
-      </RemoveFavoriteBox>
-      <AddFavoriteBox
-        visible={!isCustomCategory && showAddButton}
-        onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}
-      >
-        <img src={AddFavoriteIcon} alt="add" />
-      </AddFavoriteBox>
-      <LibElementIcon color={GetAspectColor(item, AspectColorType.Main, false)}>
-        {(item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport) && (
-          <img src={GetObjectIcon(item)} alt="aspect color" className="icon" draggable="false" />
+      <LibElementIconWrapper color={GetAspectColor(item, AspectColorType.Main, false)}>
+        {item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport ? (
+          <Icon size={20} src={GetObjectIcon(item)} alt="aspect color" draggable="false" />
+        ) : (
+          item.libraryType === ObjectType.ObjectBlock && <Symbol base64={GetTypeIcon(item?.symbolId)?.data} text={item?.name} />
         )}
-      </LibElementIcon>
+      </LibElementIconWrapper>
+      <LibElementText>{item.name}</LibElementText>
+      {/* <LibElementVersion>
+        {TextResources.Library_Type_Version}
+        {item.version}
+      </LibElementVersion> */}
+      {collectionState === CollectionsActions.ManageType && (
+        <Checkbox isChecked={isSelected} onChange={onCheckboxChange} color={Color.Black} />
+      )}
+      {isCustomCategory && (
+        <Tooltip content={TextResources.Library_Remove_Favorite} offset={[0, 5]}>
+          <FavoriteBox tabIndex={0} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
+            <Icon size={10} src={RemoveFavoriteIcon} alt="remove" />
+          </FavoriteBox>
+        </Tooltip>
+      )}
+      {!isCustomCategory && showAddButton && (
+        <Tooltip content={TextResources.Library_Add_Favorite} offset={[0, 5]}>
+          <FavoriteBox tabIndex={0} onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}>
+            <Icon size={10} src={AddFavoriteIcon} alt="add" />
+          </FavoriteBox>
+        </Tooltip>
+      )}
     </LibElement>
   );
 };

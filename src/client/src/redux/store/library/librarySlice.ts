@@ -1,6 +1,6 @@
-import { CreateLibraryType, LibItem, ObjectType } from "../../../models";
+import { Collection, CreateLibraryType, LibItem, ObjectType } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
+import { addToCollectionsTypes, DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
 
 const initialLibraryState: LibraryState = {
@@ -10,6 +10,7 @@ const initialLibraryState: LibraryState = {
   transportTypes: [],
   interfaceTypes: [],
   subProjectTypes: [],
+  collections: [],
 };
 
 export const librarySlice = createSlice({
@@ -100,6 +101,17 @@ export const librarySlice = createSlice({
     deleteLibraryError: (state, action: PayloadAction<string>) => {
       state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
     },
+    addCollection: (state, action: PayloadAction<Collection>) => {
+      state.collections?.push(action.payload);
+    },
+    addToCollections: (state, action: PayloadAction<addToCollectionsTypes>) => {
+      state.collections = state.collections.map((collection) => {
+        if (action.payload.collectionIds.includes(collection.id)) {
+          collection.libItems = collection.libItems.concat(action.payload.types);
+        }
+        return collection;
+      });
+    },
   },
 });
 
@@ -119,6 +131,8 @@ export const {
   deleteLibraryError,
   deleteLibraryItem,
   deleteLibraryItemSuccessOrError,
+  addCollection,
+  addToCollections,
 } = librarySlice.actions;
 
 export default librarySlice.reducer;
