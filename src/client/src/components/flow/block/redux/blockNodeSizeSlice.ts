@@ -1,7 +1,7 @@
 import { Size } from "../../../../compLibrary/size";
 import { BlockNodeSize } from "./types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Aspect } from "../../../../models/Enums";
+import { Aspect } from "../../../../models";
 
 const parent = {
   aspect: Aspect.NotSet,

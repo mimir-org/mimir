@@ -1,8 +1,9 @@
-import { Attribute, Connector } from ".";
+import { Attribute } from "./Attribute";
+import { Connector } from "./Connector";
 
-export const INTERFACE_KIND = "Interface";
+export const TRANSPORT_KIND = "Transport";
 
-interface Interface {
+export interface Transport {
   id: string;
   iri: string;
   version: string;
@@ -24,5 +25,3 @@ interface Interface {
   libraryTypeId: string;
   kind: string;
 }
-
-export default Interface;

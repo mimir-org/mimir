@@ -1,7 +1,7 @@
-import Edge from "./Edge";
-import Node from "./Node";
+import { Edge } from "./Edge";
+import { Node } from "./Node";
 
-interface Project {
+export interface Project {
   id: string;
   iri: string;
   domain: string;
@@ -15,5 +15,3 @@ interface Project {
   nodes: Node[];
   edges: Edge[];
 }
-
-export default Project;

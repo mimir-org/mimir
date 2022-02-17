@@ -1,6 +1,6 @@
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
-import { Edge, LockAttributeAm, LockEdgeAm, LockNodeAm, Node, WorkerStatus } from "..";
+import { Edge, LockAttributeAm, LockEdgeAm, LockNodeAm, Node, WorkerStatus } from "../index";
 import {
   addNode,
   createEdge,
@@ -21,7 +21,7 @@ import { ProjectState } from "../../redux/store/project/types";
 import Config from "../Config";
 
 let instance = null;
-class WebSocket {
+export class WebSocket {
   private _connection: HubConnection;
   private _running: boolean;
   private _dispatch: Dispatch;
@@ -166,5 +166,3 @@ class WebSocket {
     }
   };
 }
-
-export default WebSocket;

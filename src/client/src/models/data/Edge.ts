@@ -1,8 +1,11 @@
-import { Connector, Interface, Node, Transport } from "..";
+import { Node } from "./Node";
+import { Connector } from "./Connector";
+import { Transport } from "./Transport";
+import { Interface } from "./Interface";
 
 export const EDGE_KIND = "Edge";
 
-interface Edge {
+export interface Edge {
   id: string;
   iri: string;
   domain: string;
@@ -41,5 +44,3 @@ interface Edge {
 
   kind: string;
 }
-
-export default Edge;

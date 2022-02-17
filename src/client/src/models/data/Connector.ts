@@ -1,8 +1,12 @@
-import { Attribute, ConnectorType, ConnectorVisibility, EnumBase, RelationType } from "..";
+import { EnumBase } from "../enums/EnumBase";
+import { RelationType } from "../enums/RelationType";
+import { ConnectorType } from "../enums/ConnectorType";
+import { ConnectorVisibility } from "../enums/ConnectorVisibility";
+import { Attribute } from "./Attribute";
 
 export const CONNECTOR_KIND = "Connector";
 
-interface Connector {
+export interface Connector {
   id: string;
   iri: string;
   domain: string;
@@ -26,5 +30,3 @@ interface Connector {
 
   kind: string;
 }
-
-export default Connector;

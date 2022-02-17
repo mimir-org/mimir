@@ -1,9 +1,13 @@
-import { Aspect, ConnectorType, ObjectType, PredefinedAttribute, TerminalTypeItem } from "..";
+import { Aspect } from "../enums/Aspect";
+import { ObjectType } from "../enums/ObjectType";
+import { ConnectorType } from "../enums/ConnectorType";
+import { PredefinedAttribute } from "./PredefinedAttribute";
+import { TerminalTypeItem } from "./typeEditor/TerminalTypeItem";
 import { CreateId } from "../../components/flow/helpers";
 
 export const CREATE_LIBRARY_KIND = "CreateLibraryType";
 
-export default interface CreateLibraryType {
+export interface CreateLibraryType {
   id: string;
   name: string;
   aspect: Aspect;

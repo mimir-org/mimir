@@ -1,8 +1,10 @@
-import { Discipline, EnumBase, SelectType } from "..";
+import { EnumBase } from "../enums/EnumBase";
+import { SelectType } from "../enums/SelectType";
+import { Discipline } from "../enums/Discipline";
 
 export const ATTRIBUTE_KIND = "Attribute";
 
-interface Attribute {
+export interface Attribute {
   id: string;
   iri: string;
   domain: string;
@@ -35,5 +37,3 @@ interface Attribute {
   isLockedStatusDate: string;
   kind: string;
 }
-
-export default Attribute;

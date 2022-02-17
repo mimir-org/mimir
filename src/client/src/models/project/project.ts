@@ -1,12 +1,5 @@
 import { LibItem } from "../";
 
-// TODO : remove?
-export interface Dictionary {
-  key: string;
-  value: string;
-}
-
-export type AttributeTab = keyof typeof ATTRIBUTE_TAB;
 export const ATTRIBUTE_TAB = {
   ADMIN_INFO: "AdminInfo",
   PARAMETERS: "Parameters",
@@ -24,13 +17,6 @@ export const EDGE_TYPE = {
   TRANSPORT: "TransportEdgeType",
 };
 
-export type LineEdgeType = keyof typeof LINE_EDGE_TYPE;
-export const LINE_EDGE_TYPE = {
-  STEP: "SmoothStepPath",
-  BEZIER: "BezierPath",
-};
-
-export type ModuleType = keyof typeof MODULE_TYPE;
 export const MODULE_TYPE = {
   EXPLORER: "Explorer",
   INSPECTOR: "Inspector",
@@ -39,7 +25,6 @@ export const MODULE_TYPE = {
   LEGEND: "Legend",
 };
 
-export type MenuType = keyof typeof MENU_TYPE;
 export const MENU_TYPE = {
   USER_MENU: "UserMenu",
   PROJECT_MENU: "ProjectMenu",

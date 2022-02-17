@@ -1,9 +1,13 @@
-import { Aspect, Attribute, EnumBase, Purpose, Simple } from "..";
-import Connector from "./Connector";
+import { Purpose } from "../enums/Purpose";
+import { EnumBase } from "../enums/EnumBase";
+import { Aspect } from "../enums/Aspect";
+import { Connector } from "./Connector";
+import { Attribute } from "./Attribute";
+import { Simple } from "./Simple";
 
 export const NODE_KIND = "Node";
 
-interface Node {
+export interface Node {
   id: string;
   iri: string;
   domain: string;
@@ -53,5 +57,3 @@ interface Node {
   isBlockSelected?: boolean | false;
   isHidden?: boolean | false;
 }
-
-export default Node;

@@ -1,8 +1,8 @@
-import { Attribute } from ".";
+import { Attribute } from "./Attribute";
 
 export const SIMPLE_KIND = "Simple";
 
-interface Simple {
+export interface Simple {
   id: string;
   name: string;
   semanticReference: string;
@@ -10,5 +10,3 @@ interface Simple {
   nodeId: string;
   kind: string;
 }
-
-export default Simple;
