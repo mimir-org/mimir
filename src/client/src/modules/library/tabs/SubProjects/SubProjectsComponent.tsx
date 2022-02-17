@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../assets/text";
-import { SubProjectsWrapper } from "./styled";
+import { SubProjectsWrapper } from "./SubProjectsComponent.styled";
 
 const SubProjectsComponent = () => (
   <SubProjectsWrapper>

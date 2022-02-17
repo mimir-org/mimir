@@ -6,7 +6,7 @@ import { Button, ButtonVariant } from "../../compLibrary/buttons";
 import { OnOpenTypeEditor } from "../../typeEditor/handlers";
 import { Collection, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../models";
 import { NewType, EditType, DeleteType } from "../../assets/icons/library";
-import { LibFooter } from "./styled";
+import { LibFooter } from "./ModuleFooter.styled";
 import { GetCollectionIcon } from "./tabs/Collections/helpers";
 
 interface Props {

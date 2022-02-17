@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../assets/text";
-import { TemplatesWrapper } from "./styled";
+import { TemplatesWrapper } from "./TemplatesComponent.styled";
 
 const TemplatesComponent = () => (
   <TemplatesWrapper>

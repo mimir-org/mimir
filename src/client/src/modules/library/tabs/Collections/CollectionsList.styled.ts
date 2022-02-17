@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
-import { FontSize, FontType } from "../../../../../compLibrary/font";
+import { Color } from "../../../../compLibrary/colors";
+import { FontSize, FontType } from "../../../../compLibrary/font";
 
-const CollectionsListWrapper = styled.div`
+export const CollectionsListWrapper = styled.div`
   display: flex;
   height: 90%;
   flex-direction: column;
@@ -19,5 +19,3 @@ const CollectionsListWrapper = styled.div`
     }
   }
 `;
-
-export default CollectionsListWrapper;

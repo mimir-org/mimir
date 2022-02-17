@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
-import { FontSize, FontType } from "../../../../../compLibrary/font";
+import { Color } from "../../../../compLibrary/colors";
+import { FontSize, FontType } from "../../../../compLibrary/font";
 
-interface Props {
+interface CollectionsWrapperProps {
   manageCollections: boolean;
 }
 
-const CollectionsWrapper = styled.div<Props>`
+export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
   display: flex;
   width: inherit;
   height: ${(props) => (props.manageCollections ? "calc(100% - 60px)" : "inherit")};
@@ -18,7 +18,7 @@ const CollectionsWrapper = styled.div<Props>`
     color: ${Color.Black};
     font-size: ${FontSize.Medium};
     font-family:${FontType.Standard}
-    padding: 10px 0px;
+    padding: 10px 0;
   }
 
   button {
@@ -37,5 +37,3 @@ const CollectionsWrapper = styled.div<Props>`
       }
   }
 `;
-
-export default CollectionsWrapper;

@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
-import { FontSize, FontType } from "../../../../../compLibrary/font";
+import { Color } from "../../../../compLibrary/colors";
+import { FontSize, FontType } from "../../../../compLibrary/font";
 
-const SubProjectsWrapper = styled.div`
+export const SubProjectsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: inherit;
@@ -16,5 +16,3 @@ const SubProjectsWrapper = styled.div`
   }
 
 `;
-
-export default SubProjectsWrapper;

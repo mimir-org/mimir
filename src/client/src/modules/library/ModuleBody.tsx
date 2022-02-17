@@ -1,5 +1,5 @@
 import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../models";
-import { ModuleContent } from "./styled";
+import { ModuleContent } from "./ModuleBody.styled";
 import { CollectionsComponent } from "./tabs/Collections";
 import { SubProjectsComponent } from "./tabs/SubProjects";
 import { TemplatesComponent } from "./tabs/Templates";

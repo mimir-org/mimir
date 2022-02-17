@@ -1,10 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../compLibrary/colors";
-import { FontSize, FontType, FontWeight } from "../../../../compLibrary/font";
-
-interface Props {
-  isSelected: boolean;
-}
+import { Color } from "../../../compLibrary/colors";
+import { FontSize, FontType, FontWeight } from "../../../compLibrary/font";
 
 export const ModalListContent = styled.div`
   display: flex;
@@ -66,7 +62,11 @@ export const ModalListElementsContainer = styled.div`
   }
 `;
 
-export const ModalListElement = styled.div<Props>`
+interface ModalListElementProps {
+  isSelected: boolean;
+}
+
+export const ModalListElement = styled.div<ModalListElementProps>`
   display: flex;
   flex-direction: row;
   align-items: center;

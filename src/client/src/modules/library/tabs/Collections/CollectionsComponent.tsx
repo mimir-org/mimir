@@ -1,6 +1,7 @@
-import { CollectionsWrapper } from "./styled";
+import { CollectionsWrapper } from "./CollectionsComponent.styled";
 import { CollectionsList, OldLibraryComponent } from ".";
 import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
+
 interface Props {
   activeTab: LibraryTab;
   collectionState: CollectionsActions;

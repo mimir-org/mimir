@@ -1,11 +1,7 @@
 import { SearchInput } from "../../compLibrary/input/text";
 import { GetLibrarySearchBoxPlaceholder } from "./helpers";
-import { SearchAreaWrapper } from "./styled"; // SearchFilter, SearchFilterLabel, SearchFilters
+import { SearchAreaWrapper } from "./SearchArea.styled";
 import { LibraryTab } from "../../models";
-// import { useState } from "react";
-// import { Checkbox } from "../../compLibrary/input/checkbox/common";
-// import { Color } from "../../compLibrary/colors";
-// import { TextResources } from "../../assets/text";
 
 interface Props {
   activeTab: LibraryTab;
@@ -13,7 +9,7 @@ interface Props {
 }
 
 /**
- * Component for search input and and filters in Library Module
+ * Component for search input and filters in Library Module
  * @param interface
  * @returns a searchbar and checkboxes for filter options
  */

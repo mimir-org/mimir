@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// import { Collections, ColoredCollections } from "../../assets/icons/library";
 import { Icon } from "../../compLibrary/icon";
 import { GetFilterIcon } from "./helpers";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
-import { Aspect } from "../../models"; // CollectionsActions
-import { FilterBoxesWrapper, FilterBoxButton } from "./styled";
+import { Aspect } from "../../models";
+import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
 import { TextResources } from "../../assets/text";
 
 interface Props {

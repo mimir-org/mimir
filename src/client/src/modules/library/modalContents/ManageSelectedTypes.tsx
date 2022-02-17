@@ -12,8 +12,8 @@ import { CreateId } from "../../../components/flow/helpers";
 import { Collection, CollectionsActions, LibItem } from "../../../models";
 import { addCollection } from "../../../redux/store/library/librarySlice";
 import { OnManageCollection } from "../handlers";
-import { CreateCollectionWrapper, CollectionNameInput } from "../styled";
-import { ModalButtonsWrapper, ModalListHeader } from "./styled";
+import { CreateCollectionWrapper, CollectionNameInput, ModalListHeader } from "./ManageSelectedTypes.styled";
+import { ModalButtonsWrapper } from "./styled";
 
 interface Props {
   isOpen: boolean;

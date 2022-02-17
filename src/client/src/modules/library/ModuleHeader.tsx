@@ -6,7 +6,8 @@ import { MODULE_TYPE } from "../../models/project";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../assets/text";
 import { Aspect, LibraryTab } from "../../models";
-import { LibExpandButton, LibHeader } from "./styled";
+import { LibExpandButton } from "./styled";
+import { LibHeader } from "./ModuleHeader.styled";
 import { FilterBoxes, ModuleTabs, SearchArea } from ".";
 
 interface Props {

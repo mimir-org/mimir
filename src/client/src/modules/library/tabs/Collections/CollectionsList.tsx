@@ -1,4 +1,4 @@
-import { CollectionsListWrapper } from "./styled";
+import { CollectionsListWrapper } from "./CollectionsList.styled";
 import { librarySelector, useAppSelector } from "../../../../redux/store";
 import { CollectionComponent } from ".";
 

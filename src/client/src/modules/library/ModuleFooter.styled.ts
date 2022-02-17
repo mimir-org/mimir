@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../compLibrary/colors";
 
-interface Props {
+interface LibFooterProps {
   libOpen: boolean;
 }
 
-const LibFooter = styled.div<Props>`
+export const LibFooter = styled.div<LibFooterProps>`
   flex: 0 0 200px;
   padding: 25px 20px;
 
@@ -19,5 +19,3 @@ const LibFooter = styled.div<Props>`
   box-shadow: 0px -4px 10px 1px rgba(0, 0, 0, 0.05);
   opacity: ${(props) => (props.libOpen ? 1 : 0)};
 `;
-
-export default LibFooter;

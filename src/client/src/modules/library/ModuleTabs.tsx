@@ -8,7 +8,8 @@ import { ConvertToLibTabName } from "./helpers";
 import { MODULE_TYPE } from "../../models/project";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../assets/text";
-import { LibExpandButton, LibraryTabHeader, LibraryTabsWrapper } from "./styled";
+import { LibExpandButton } from "./styled";
+import { LibraryTabsWrapper, LibraryTabHeader } from "./ModuleTabs.styled";
 
 interface Props {
   isOpen: boolean;

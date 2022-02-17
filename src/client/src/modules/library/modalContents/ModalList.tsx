@@ -2,7 +2,7 @@ import Moment from "react-moment";
 import { TextResources } from "../../../assets/text";
 import { Collection } from "../../../models";
 import MultiSelectCheckbox from "./MultiSelectCheckbox";
-import { ModalListContent, ModalListColumnText, ModalListElementsContainer, ModalListElement } from "./styled/ModalListContent";
+import { ModalListContent, ModalListColumnText, ModalListElementsContainer, ModalListElement } from "./ModalList.styled";
 
 interface Props {
   collections: Collection[];

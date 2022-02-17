@@ -12,7 +12,7 @@ import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../assets/icons/favorite
 import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
 import { AspectColorType, CollectionsActions, LibItem, ObjectType } from "../../models";
 import { GetTypeIcon, SetNewSelectedElement, SetNewSelectedElementType } from "./helpers";
-import { FavoriteBox, LibElementIconWrapper, LibElement, LibElementText } from "./styled";
+import { FavoriteBox, LibElementIconWrapper, LibElement, LibElementText } from "./LibraryCategoryElement.styled";
 
 interface Props {
   item: LibItem;

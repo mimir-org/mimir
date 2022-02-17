@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
-import { FontSize, FontType } from "../../../../../compLibrary/font";
+import { Color } from "../../../../compLibrary/colors";
+import { FontSize, FontType } from "../../../../compLibrary/font";
 
-const TemplatesWrapper = styled.div`
+export const TemplatesWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: inherit;
@@ -14,7 +14,4 @@ const TemplatesWrapper = styled.div`
     font-family:${FontType.Standard}
     padding: 10px 50px;
   }
-
 `;
-
-export default TemplatesWrapper;

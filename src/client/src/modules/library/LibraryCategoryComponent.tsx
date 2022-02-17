@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../models/project";
-import { LibCategoryButton, LibCategoryHeader, LibCollectionWrapper } from "./styled";
+import { LibCategoryButton, LibCategoryHeader, LibCollectionWrapper } from "./LibraryCategoryComponent.styled";
 import { LibraryCategoryElement } from ".";
 import { Dispatch } from "redux";
 import { CollectionsActions, LibItem, ObjectType } from "../../models";

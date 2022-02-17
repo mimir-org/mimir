@@ -1,12 +1,30 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
-import { FontSize, FontType } from "../../../compLibrary/font";
+import { Color } from "../../compLibrary/colors";
+import { FontSize, FontType } from "../../compLibrary/font";
+import { Icon } from "../../compLibrary/icon";
 
-interface Props {
+export const LibraryTabsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  width: inherit;
+  border-bottom: 1px solid ${Color.GreyDarker};
+  align-items: center;
+
+  > ${Icon} {
+    align-self: center;
+    margin: 4px 14px 0 10px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+  }
+`;
+
+interface LibraryTabHeaderProps {
   isActive: boolean;
 }
 
-const LibraryTabHeader = styled.div<Props>`
+export const LibraryTabHeader = styled.div<LibraryTabHeaderProps>`
   display: flex;
   min-width: 73px;
   background-color: ${(props) => !props.isActive && Color.GreyLibraryInactiveTab};
@@ -36,5 +54,3 @@ const LibraryTabHeader = styled.div<Props>`
     cursor: pointer;
   }
 `;
-
-export default LibraryTabHeader;
