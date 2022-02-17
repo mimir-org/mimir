@@ -1,12 +1,13 @@
-import { Aspect, CollectionsActions, LibItem, ObjectType } from "../../../../../../../models";
 import { LibraryCategory } from "../../../../../../../models/project";
 import { useMemo } from "react";
-import { GetFilteredLibCategories, GetLibCategories } from "../../../../../helpers";
-import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../redux/store";
+import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
+import { GetLibCategories } from "./helpers/GetLibCategories";
 import { GetSelectedNode } from "../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { LibraryCategoryComponent } from "./LibraryCategoryComponent";
-import { FilterByAspect } from "../helpers/FilterByAspect";
+import { FilterByAspect } from "./helpers/FilterByAspect";
+import { Aspect, CollectionsActions, LibItem, ObjectType } from "../../../../../../../models";
+import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../redux/store";
 
 interface Props {
   collectionState: CollectionsActions;

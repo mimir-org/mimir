@@ -1,4 +1,4 @@
-import red from "../../../redux/store";
+import red from "../../../../../../../redux/store";
 
 export const GetSelectedElement = (elementId: string): string => {
   const library = red.store.getState().library;

@@ -5,7 +5,7 @@ import { OnOpenTypeEditor } from "../../../../typeEditor/handlers";
 import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
-import { GetCollectionIcon } from "../body/components/collections/helpers/GetCollectionIcon";
+import { GetCollectionIcon } from "./helpers/GetCollectionIcon";
 import { Button, ButtonVariant } from "../../../../compLibrary/buttons";
 import { NewType, EditType, DeleteType } from "../../../../assets/icons/library";
 import { Collection, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";

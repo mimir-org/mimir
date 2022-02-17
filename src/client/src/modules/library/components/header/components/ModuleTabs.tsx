@@ -4,7 +4,7 @@ import { LibraryTab } from "../../../../../models";
 import { Icon } from "../../../../../compLibrary/icon";
 import { LibraryIcon } from "../../../../../assets/icons/modules";
 import { OnLibraryClick } from "../../../handlers";
-import { ConvertToLibTabName } from "../../../helpers";
+import { ConvertToLibTabName } from "./helpers/ConvertToLibTabName";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text";

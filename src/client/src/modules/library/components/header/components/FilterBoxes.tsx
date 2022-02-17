@@ -1,5 +1,5 @@
 import { Icon } from "../../../../../compLibrary/icon";
-import { GetFilterIcon } from "../../../helpers";
+import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { Aspect } from "../../../../../models";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";

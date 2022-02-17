@@ -1,5 +1,5 @@
 import { SearchInput } from "../../../../../compLibrary/input/text";
-import { GetLibrarySearchBoxPlaceholder } from "../../../helpers";
+import { GetLibrarySearchBoxPlaceholder } from "./helpers/GetLibrarySearchBoxPlaceholder";
 import { SearchAreaWrapper } from "./SearchArea.styled";
 import { LibraryTab } from "../../../../../models";
 

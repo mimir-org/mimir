@@ -1,8 +1,7 @@
-import { ValidateLibComponent } from ".";
-import { LibItem, Node } from "../../../models";
-import { LibraryCategory } from "../../../models/project";
-import { LibraryState } from "../../../redux/store/library/types";
-import { IsBlockView } from "../../../helpers";
+import { LibItem, Node } from "../../../../../../../../models";
+import { LibraryCategory } from "../../../../../../../../models/project";
+import { LibraryState } from "../../../../../../../../redux/store/library/types";
+import { IsBlockView, IsFamily } from "../../../../../../../../helpers";
 
 export const GetLibCategories = (selectedNode: Node, state: LibraryState) => {
   const allCategories: LibraryCategory[] = [];
@@ -26,4 +25,9 @@ export const GetLibCategories = (selectedNode: Node, state: LibraryState) => {
   });
 
   return allCategories;
+};
+
+const ValidateLibComponent = (libNode: LibItem, selectedNode: Node, isBlockView: boolean) => {
+  if (!isBlockView) return true;
+  return IsFamily(selectedNode, libNode);
 };

@@ -1,5 +1,5 @@
-import { TextResources } from "../../../assets/text";
-import { LibraryTab } from "../../../models";
+import { TextResources } from "../../../../../../assets/text";
+import { LibraryTab } from "../../../../../../models";
 
 export const GetLibrarySearchBoxPlaceholder = (activeTab: LibraryTab): string => {
   if (activeTab === LibraryTab.Library) return TextResources.Library_SearchBox_Placeholder_Library;

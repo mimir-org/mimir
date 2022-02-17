@@ -7,11 +7,13 @@ import { Color } from "../../../../../../../compLibrary/colors";
 import { TextResources } from "../../../../../../../assets/text";
 import { Checkbox } from "../../../../../../../compLibrary/input/checkbox/common";
 import { LibraryCategory } from "../../../../../../../models/project";
+import { GetTypeIcon } from "./helpers/GetTypeIcon";
+import { SetNewSelectedElement } from "./helpers/SetNewSelectedElement";
+import { SetNewSelectedElementType } from "./helpers/SetNewSelectedElementType";
 import { GetAspectColor, GetObjectIcon } from "../../../../../../../helpers";
 import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../assets/icons/favorites";
 import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "../../../../../handlers";
 import { AspectColorType, CollectionsActions, LibItem, ObjectType } from "../../../../../../../models";
-import { GetTypeIcon, SetNewSelectedElement, SetNewSelectedElementType } from "../../../../../helpers";
 import { FavoriteBox, LibElementIconWrapper, LibElement, LibElementText } from "./LibraryCategoryElement.styled";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { Aspect } from "../../../models";
+import { Aspect } from "../../../../../../models";
 import {
   Function,
   FunctionFilterOff,
@@ -6,7 +6,7 @@ import {
   ProductFilterOff,
   Location,
   LocationFilterOff,
-} from "../../../assets/icons/aspects";
+} from "../../../../../../assets/icons/aspects";
 
 export const GetFilterIcon = (aspect: Aspect, selected: boolean) => {
   if (aspect === Aspect.Function) return selected ? Function : FunctionFilterOff;

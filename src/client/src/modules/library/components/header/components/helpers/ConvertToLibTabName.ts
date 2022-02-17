@@ -1,5 +1,5 @@
-import { TextResources } from "../../../assets/text";
-import { LibraryTab } from "../../../models";
+import { TextResources } from "../../../../../../assets/text";
+import { LibraryTab } from "../../../../../../models";
 
 export const ConvertToLibTabName = (tab: LibraryTab): string => {
   if (tab === LibraryTab.Library) return TextResources.Module_Library;

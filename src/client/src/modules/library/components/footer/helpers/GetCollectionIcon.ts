@@ -1,5 +1,5 @@
-import { CollectionsActions, LibraryTab } from "../../../../../../../models";
-import { AddToCollections, Collections, Templates } from "../../../../../../../assets/icons/library";
+import { CollectionsActions, LibraryTab } from "../../../../../models";
+import { AddToCollections, Collections, Templates } from "../../../../../assets/icons/library";
 
 export const GetCollectionIcon = (collectionState: CollectionsActions, activeTab: LibraryTab) => {
   if (activeTab === LibraryTab.Library) {
