@@ -1,6 +1,6 @@
 import { LibraryCategory } from "../../../models/project";
 
-const GetFilteredLibCategories = (libCategories: LibraryCategory[], searchString: string): LibraryCategory[] => {
+export const GetFilteredLibCategories = (libCategories: LibraryCategory[], searchString: string): LibraryCategory[] => {
   const searchStringLower = searchString.toLowerCase();
 
   if (searchString === "") return [];
@@ -11,5 +11,3 @@ const GetFilteredLibCategories = (libCategories: LibraryCategory[], searchString
     })
     .filter((cat) => cat.nodes.some((y) => y.name.toLowerCase().includes(searchStringLower)));
 };
-
-export default GetFilteredLibCategories;

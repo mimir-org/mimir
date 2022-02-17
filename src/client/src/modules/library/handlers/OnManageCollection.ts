@@ -3,7 +3,7 @@ import { CollectionsActions, LibItem } from "../../../models";
 import { addToCollections } from "../../../redux/store/library/librarySlice";
 import { addToCollectionsTypes } from "../../../redux/store/library/types";
 
-const OnManageCollection = (
+export const OnManageCollection = (
   selectedTypes: LibItem[],
   selectedCollections: string[],
   setCollectionState: (action: CollectionsActions) => void,
@@ -20,5 +20,3 @@ const OnManageCollection = (
   setCollectionState(CollectionsActions.ReadOnly);
   setSelectedTypes([]);
 };
-
-export default OnManageCollection;
