@@ -40,6 +40,7 @@ export const ModuleBody = ({
   const showCollections = activeTab === LibraryTab.Library;
   const showSubProjects = activeTab === LibraryTab.SubProjects;
   const showTemplates = activeTab === LibraryTab.Templates;
+
   return (
     <ModuleContent libOpen={libOpen}>
       {showCollections && (

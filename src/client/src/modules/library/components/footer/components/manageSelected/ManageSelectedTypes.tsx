@@ -7,9 +7,7 @@ import { Button } from "../../../../../../compLibrary/buttons";
 import { Input } from "../../../../../../compLibrary/input/text";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { CreateId } from "../../../../../../components/flow/helpers";
-import { addCollection } from "../../../../../../redux/store/library/librarySlice";
-import { OnManageCollection } from "./handlers/OnManageCollection";
+import { OnManageCollection, OnCreateCollection } from "./handlers/";
 import { ModalList } from "./components/ModalList";
 import { ModalButtonsWrapper } from "../styled/ModalButtonsWrapper";
 import { Collection, CollectionsActions, LibItem } from "../../../../../../models";
@@ -41,15 +39,6 @@ export const ManageSelectedTypes = ({
   const [collectionName, setCollectionName] = useState("");
   const [selectedCollections, setSelectedCollections] = useState([] as string[]);
 
-  const onCreateCollection = () => {
-    const collection: Collection = {
-      id: CreateId(),
-      name: collectionName,
-      libItems: selectedTypes,
-      created: new Date(),
-    };
-    dispatch(addCollection(collection));
-  };
   return (
     <Modal isBlurred isOpen={isOpen} onExit={() => onExit(!isOpen)}>
       <InfoModalContent title={TextResources.Library_Modal_Create_Collection} icon={ColoredCollections}>
@@ -62,7 +51,11 @@ export const ManageSelectedTypes = ({
               onChange={(e) => setCollectionName(e.target.value)}
             />
           </CollectionNameInput>
-          <Button onClick={onCreateCollection} text={"Create and add"} disabled={collectionName === ""} />
+          <Button
+            onClick={() => OnCreateCollection(collectionName, selectedTypes, dispatch)}
+            text={"Create and add"}
+            disabled={collectionName === ""}
+          />
         </CreateCollectionWrapper>
         <ModalListHeader>{TextResources.Library_Modal_Select_Collection}</ModalListHeader>
         <ModalList

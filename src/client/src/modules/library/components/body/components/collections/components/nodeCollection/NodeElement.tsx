@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 import { Dispatch } from "redux";
-import { Tooltip } from "../../../../../../../../compLibrary/tooltip/Tooltip";
-import { Symbol } from "../../../../../../../../compLibrary/symbol";
-import { Icon } from "../../../../../../../../compLibrary/icon";
 import { Color } from "../../../../../../../../compLibrary/colors";
-import { TextResources } from "../../../../../../../../assets/text";
 import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common";
 import { LibraryCategory } from "../../../../../../../../models/project";
-import { GetTypeIcon } from "./helpers/GetTypeIcon";
 import { SetNewSelectedElement } from "./helpers/SetNewSelectedElement";
 import { SetNewSelectedElementType } from "./helpers/SetNewSelectedElementType";
-import { OnAddFavoriteClick } from "./handlers/OnAddFavoriteClick";
-import { OnRemoveFavoriteClick } from "./handlers/OnRemoveFavoriteClick";
-import { GetAspectColor, GetObjectIcon } from "../../../../../../../../helpers";
-import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../../assets/icons/favorites";
+import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
-import { NodeElementFavoriteBox, NodeElementIconContainer, NodeElementButton, NodeElementText } from "./NodeElement.styled";
+import { NodeElementButton, NodeElementText } from "./NodeElement.styled";
+import { NodeElementIconComponent } from "./NodeElementIconComponent";
+import { OnCheckboxChange, OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
+import { FavoriteComponent } from "./FavoriteComponent";
 
 interface Props {
   item: LibItem;
@@ -48,15 +43,7 @@ export const NodeElement = ({
   dispatch,
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
-
-  const isSelected: boolean = selectedTypes.some((x) => x.id === item.id);
-
-  const onCheckboxChange = () => {
-    let temp: LibItem[] = [...selectedTypes];
-    if (isSelected) temp = temp.filter((a) => a !== item);
-    else if (!isSelected && temp) temp.push(item);
-    setSelectedTypes(temp);
-  };
+  const isSelected = selectedTypes.some((x) => x.id === item.id);
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
@@ -78,34 +65,30 @@ export const NodeElement = ({
       selectedColor={GetAspectColor(item, AspectColorType.Selected, false)}
       hoverColor={GetAspectColor(item, AspectColorType.Header, false)}
     >
-      <NodeElementIconContainer color={GetAspectColor(item, AspectColorType.Main, false)}>
-        {item.libraryType === ObjectType.Interface || item.libraryType === ObjectType.Transport ? (
-          <Icon size={20} src={GetObjectIcon(item)} alt="aspect color" draggable="false" />
-        ) : (
-          item.libraryType === ObjectType.ObjectBlock && <Symbol base64={GetTypeIcon(item?.symbolId)?.data} text={item?.name} />
-        )}
-      </NodeElementIconContainer>
+      <NodeElementIconComponent item={item} />
       <NodeElementText>{item.name}</NodeElementText>
       {/* <LibElementVersion>
         {TextResources.Library_Type_Version}
         {item.version}
       </LibElementVersion> */}
       {collectionState === CollectionsActions.ManageType && (
-        <Checkbox isChecked={isSelected} onChange={onCheckboxChange} color={Color.Black} />
+        <Checkbox
+          isChecked={isSelected}
+          onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, isSelected)}
+          color={Color.Black}
+        />
       )}
       {isCustomCategory && (
-        <Tooltip content={TextResources.Library_Remove_Favorite} offset={[0, 5]}>
-          <NodeElementFavoriteBox tabIndex={0} onClick={() => OnRemoveFavoriteClick(dispatch, item)}>
-            <Icon size={10} src={RemoveFavoriteIcon} alt="remove" />
-          </NodeElementFavoriteBox>
-        </Tooltip>
+        <FavoriteComponent item={item} dispatch={dispatch} onClick={() => OnRemoveFavoriteClick(item, dispatch)} />
       )}
       {!isCustomCategory && showAddButton && (
-        <Tooltip content={TextResources.Library_Add_Favorite} offset={[0, 5]}>
-          <NodeElementFavoriteBox tabIndex={0} onClick={() => OnAddFavoriteClick(dispatch, item, customCategory)}>
-            <Icon size={10} src={AddFavoriteIcon} alt="add" />
-          </NodeElementFavoriteBox>
-        </Tooltip>
+        <FavoriteComponent
+          item={item}
+          addFavorite
+          customCategory={customCategory}
+          dispatch={dispatch}
+          onClick={() => OnAddFavoriteClick(item, customCategory, dispatch)}
+        />
       )}
     </NodeElementButton>
   );
