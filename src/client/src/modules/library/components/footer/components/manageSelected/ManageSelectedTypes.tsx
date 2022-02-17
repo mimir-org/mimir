@@ -1,21 +1,18 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
 import { ColoredCollections } from "../../../../../../assets/icons/library";
 import { TextResources } from "../../../../../../assets/text";
-import { Button } from "../../../../../../compLibrary/buttons";
-import { Input } from "../../../../../../compLibrary/input/text";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { OnManageCollection, OnCreateCollection } from "./handlers/";
 import { ModalList } from "./components/ModalList";
-import { ModalButtonsWrapper } from "../styled/ModalButtonsWrapper";
 import { Collection, CollectionsActions, LibItem } from "../../../../../../models";
-import { CreateCollectionWrapper, CollectionNameInput, ModalListHeader } from "./ManageSelectedTypes.styled";
+import { ModalListHeader } from "./ManageSelectedTypes.styled";
+import { ModalButton } from "./components/ModalButton";
+import { CreateCollectionComponent } from "./components/CreateCollectionComponent";
 
 interface Props {
   isOpen: boolean;
-  onExit: (boolean) => void;
+  onExit: (isOpen: boolean) => void;
   selectedTypes: LibItem[];
   setSelectedTypes: (types: LibItem[]) => void;
   collections: Collection[];
@@ -42,47 +39,29 @@ export const ManageSelectedTypes = ({
   return (
     <Modal isBlurred isOpen={isOpen} onExit={() => onExit(!isOpen)}>
       <InfoModalContent title={TextResources.Library_Modal_Create_Collection} icon={ColoredCollections}>
-        <CreateCollectionWrapper>
-          <CollectionNameInput>
-            <Input
-              type="text"
-              value={collectionName}
-              placeholder="Type new Collection name"
-              onChange={(e) => setCollectionName(e.target.value)}
-            />
-          </CollectionNameInput>
-          <Button
-            onClick={() => OnCreateCollection(collectionName, selectedTypes, dispatch)}
-            text={"Create and add"}
-            disabled={collectionName === ""}
-          />
-        </CreateCollectionWrapper>
+        <CreateCollectionComponent
+          collectionName={collectionName}
+          setCollectionName={setCollectionName}
+          selectedTypes={selectedTypes}
+          dispatch={dispatch}
+        />
         <ModalListHeader>{TextResources.Library_Modal_Select_Collection}</ModalListHeader>
         <ModalList
           collections={collections}
           selectedCollections={selectedCollections}
           setSelectedCollections={setSelectedCollections}
         />
-        <ModalButtonsWrapper>
-          <Button onClick={() => onExit(!isOpen)} text={TextResources.Library_Modal_Cancel} />
-          {collectionState === CollectionsActions.ManageType && (
-            <Button
-              icon={RightArrowIcon}
-              onClick={() => {
-                OnManageCollection(
-                  selectedTypes,
-                  selectedCollections,
-                  setCollectionState,
-                  setSelectedTypes,
-                  setAddSelectedToCollection,
-                  dispatch
-                );
-                onExit(!isOpen);
-              }}
-              text={TextResources.Library_Modal_Add_Collection}
-            />
-          )}
-        </ModalButtonsWrapper>
+        <ModalButton
+          collectionState={collectionState}
+          isOpen={isOpen}
+          onExit={onExit}
+          selectedTypes={selectedTypes}
+          selectedCollections={selectedCollections}
+          setSelectedTypes={setSelectedTypes}
+          setCollectionState={setCollectionState}
+          setAddSelectedToCollection={setAddSelectedToCollection}
+          dispatch={dispatch}
+        />
       </InfoModalContent>
     </Modal>
   );
