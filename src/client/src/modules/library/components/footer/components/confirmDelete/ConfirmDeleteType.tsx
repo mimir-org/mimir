@@ -3,7 +3,7 @@ import { TextResources } from "../../../../../../assets/text";
 import { Button } from "../../../../../../compLibrary/buttons";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { GetSelectedElement } from "./helpers/GetSelectedElement";
-import { OnDeleteTypeClick } from "../../../../handlers";
+import { OnDeleteTypeClick } from "./handlers/OnDeleteTypeClick";
 import { NotificationModalContent } from "../../../../../../compLibrary/modal/variants/alert/NotificationModalContent";
 import { ModalButtonsWrapper } from "../styled/ModalButtonsWrapper";
 

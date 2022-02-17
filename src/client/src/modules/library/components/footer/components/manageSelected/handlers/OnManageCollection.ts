@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { CollectionsActions, LibItem } from "../../../models";
-import { addToCollections } from "../../../redux/store/library/librarySlice";
-import { addToCollectionsTypes } from "../../../redux/store/library/types";
+import { CollectionsActions, LibItem } from "../../../../../../../models";
+import { addToCollections } from "../../../../../../../redux/store/library/librarySlice";
+import { addToCollectionsTypes } from "../../../../../../../redux/store/library/types";
 
 export const OnManageCollection = (
   selectedTypes: LibItem[],

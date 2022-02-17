@@ -10,9 +10,10 @@ import { LibraryCategory } from "../../../../../../../models/project";
 import { GetTypeIcon } from "./helpers/GetTypeIcon";
 import { SetNewSelectedElement } from "./helpers/SetNewSelectedElement";
 import { SetNewSelectedElementType } from "./helpers/SetNewSelectedElementType";
+import { OnAddFavoriteClick } from "./handlers/OnAddFavoriteClick";
+import { OnRemoveFavoriteClick } from "./handlers/OnRemoveFavoriteClick";
 import { GetAspectColor, GetObjectIcon } from "../../../../../../../helpers";
 import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../assets/icons/favorites";
-import { OnAddFavoriteClick, OnRemoveFavoriteClick } from "../../../../../handlers";
 import { AspectColorType, CollectionsActions, LibItem, ObjectType } from "../../../../../../../models";
 import { FavoriteBox, LibElementIconWrapper, LibElement, LibElementText } from "./LibraryCategoryElement.styled";
 

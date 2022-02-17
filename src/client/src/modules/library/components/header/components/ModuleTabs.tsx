@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch } from "redux";
 import { LibraryTab } from "../../../../../models";
 import { Icon } from "../../../../../compLibrary/icon";
 import { LibraryIcon } from "../../../../../assets/icons/modules";
-import { OnLibraryClick } from "../../../handlers";
+import { OnLibraryClick } from "../handlers/OnLibraryClick";
 import { ConvertToLibTabName } from "./helpers/ConvertToLibTabName";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
@@ -26,7 +25,7 @@ interface Props {
 
 export const ModuleTabs = ({ isOpen, activeTab, setActiveTab, dispatch }: Props) => {
   const lib = MODULE_TYPE.LIBRARY;
-  const stringIsNumber = (v: any) => isNaN(Number(v)) === false;
+  const stringIsNumber = (v: string) => isNaN(Number(v)) === false;
 
   return (
     <LibraryTabsWrapper>

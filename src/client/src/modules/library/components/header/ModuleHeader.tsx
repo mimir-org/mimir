@@ -1,6 +1,6 @@
 import { Icon } from "../../../../compLibrary/icon";
 import { LibraryIcon } from "../../../../assets/icons/modules";
-import { OnLibraryClick } from "../../handlers";
+import { OnLibraryClick } from "./handlers/OnLibraryClick";
 import { Dispatch } from "redux";
 import { MODULE_TYPE } from "../../../../models/project";
 import { Tooltip } from "../../../../compLibrary/tooltip/Tooltip";

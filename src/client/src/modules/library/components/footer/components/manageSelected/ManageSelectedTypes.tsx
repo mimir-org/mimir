@@ -8,12 +8,12 @@ import { Input } from "../../../../../../compLibrary/input/text";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { CreateId } from "../../../../../../components/flow/helpers";
-import { Collection, CollectionsActions, LibItem } from "../../../../../../models";
 import { addCollection } from "../../../../../../redux/store/library/librarySlice";
-import { OnManageCollection } from "../../../../handlers";
-import { CreateCollectionWrapper, CollectionNameInput, ModalListHeader } from "./ManageSelectedTypes.styled";
+import { OnManageCollection } from "./handlers/OnManageCollection";
 import { ModalList } from "./components/ModalList";
 import { ModalButtonsWrapper } from "../styled/ModalButtonsWrapper";
+import { Collection, CollectionsActions, LibItem } from "../../../../../../models";
+import { CreateCollectionWrapper, CollectionNameInput, ModalListHeader } from "./ManageSelectedTypes.styled";
 
 interface Props {
   isOpen: boolean;
