@@ -7,8 +7,8 @@ import { ConvertToLibTabName } from "./helpers/ConvertToLibTabName";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text";
-import { LibraryTabsWrapper, LibraryTabHeader } from "./ModuleTabs.styled";
 import { LibExpandButton } from "../styled/LibExpandButton";
+import { LibraryTabsWrapper, LibraryTabHeader, LibraryTabHeaderText } from "./ModuleTabs.styled";
 
 interface Props {
   isOpen: boolean;
@@ -41,7 +41,7 @@ export const ModuleTabs = ({ isOpen, activeTab, setActiveTab, dispatch }: Props)
           return (
             <div key={key} onClick={() => setActiveTab(Number(key) as LibraryTab)}>
               <LibraryTabHeader key={key} isActive={activeTab === Number(key)}>
-                <p>{ConvertToLibTabName(Number(key) as LibraryTab)}</p>
+                <LibraryTabHeaderText>{ConvertToLibTabName(Number(key) as LibraryTab)}</LibraryTabHeaderText>
               </LibraryTabHeader>
             </div>
           );

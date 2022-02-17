@@ -1,7 +1,7 @@
 import { CollectionsWrapper } from "./CollectionsComponent.styled";
 import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../../../models";
-import { OldLibraryComponent } from "./components/OldLibraryComponent";
-import { CollectionsList } from "./components/CollectionsList";
+import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
+import { CollectionsList } from "./components/generalCollection/CollectionsList";
 
 interface Props {
   activeTab: LibraryTab;
@@ -33,7 +33,7 @@ export const CollectionsComponent = ({
       {managingCollections ? (
         <CollectionsList />
       ) : (
-        <OldLibraryComponent
+        <NodeCollectionList
           searchString={searchString}
           selectedElement={selectedElement}
           setSelectedElement={setSelectedElement}

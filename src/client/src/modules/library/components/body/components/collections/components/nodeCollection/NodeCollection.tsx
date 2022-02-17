@@ -1,9 +1,9 @@
 import { memo, useEffect, useState } from "react";
-import { LibraryCategory } from "../../../../../../../models/project";
-import { LibCategoryButton, LibCategoryHeader, LibCollectionWrapper } from "./LibraryCategoryComponent.styled";
+import { LibraryCategory } from "../../../../../../../../models/project";
 import { Dispatch } from "redux";
-import { CollectionsActions, LibItem, ObjectType } from "../../../../../../../models";
-import { LibraryCategoryElement } from "./LibraryCategoryElement";
+import { NodeElement } from "./NodeElement";
+import { CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
+import { NodeCollectionButton, LibCategoryHeader, NodeCollectionContainer } from "./NodeCollection.styled";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -23,7 +23,7 @@ interface Props {
  * @param interface
  * @returns a drop-down menu of a given Category.
  */
-export const LibraryCategoryComponent = ({
+export const NodeCollection = ({
   collectionState,
   category,
   customCategory,
@@ -45,14 +45,14 @@ export const LibraryCategoryComponent = ({
   }, [category, searchList]);
 
   return (
-    <LibCollectionWrapper isOpen={expanded}>
-      <LibCategoryButton isOpen={expanded} onClick={() => setExpanded(!expanded)}>
+    <NodeCollectionContainer isOpen={expanded}>
+      <NodeCollectionButton isOpen={expanded} onClick={() => setExpanded(!expanded)}>
         <LibCategoryHeader isOpen={expanded}>{category.name}</LibCategoryHeader>
-      </LibCategoryButton>
+      </NodeCollectionButton>
       {expanded &&
         category?.nodes.map((item) => {
           return (
-            <LibraryCategoryElement
+            <NodeElement
               key={item.id}
               item={item}
               customCategory={customCategory}
@@ -67,8 +67,8 @@ export const LibraryCategoryComponent = ({
             />
           );
         })}
-    </LibCollectionWrapper>
+    </NodeCollectionContainer>
   );
 };
 
-export default memo(LibraryCategoryComponent);
+export default memo(NodeCollection);

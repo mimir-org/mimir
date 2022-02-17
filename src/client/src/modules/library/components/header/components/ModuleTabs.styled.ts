@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors";
 import { FontSize, FontType } from "../../../../../compLibrary/font";
-import { Icon } from "../../../../../compLibrary/icon";
 
 export const LibraryTabsWrapper = styled.div`
   display: flex;
@@ -10,14 +9,6 @@ export const LibraryTabsWrapper = styled.div`
   width: inherit;
   border-bottom: 1px solid ${Color.GreyDarker};
   align-items: center;
-
-  > ${Icon} {
-    align-self: center;
-    margin: 4px 14px 0 10px;
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-  }
 `;
 
 interface LibraryTabHeaderProps {
@@ -40,17 +31,17 @@ export const LibraryTabHeader = styled.div<LibraryTabHeaderProps>`
   margin-top: ${(props) => (props.isActive ? 3 : 8)}px;
   padding: ${(props) => (props.isActive ? "10px 10px 0px 10px;" : "5px 9px 0px 9px")};
 
-  p {
-    color: ${Color.Black};
-    font-size: ${FontSize.SubHeader};
-    font-family: ${FontType.Standard};
-    white-space: nowrap;
-    margin: 0;
-    text-align: center;
-    width: 100%;
-  }
-
   :hover {
     cursor: pointer;
   }
+`;
+
+export const LibraryTabHeaderText = styled.p`
+  color: ${Color.Black};
+  font-size: ${FontSize.SubHeader};
+  font-family: ${FontType.Standard};
+  white-space: nowrap;
+  margin: 0;
+  text-align: center;
+  width: 100%;
 `;

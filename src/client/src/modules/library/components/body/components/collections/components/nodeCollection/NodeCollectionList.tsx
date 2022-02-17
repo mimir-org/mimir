@@ -1,13 +1,13 @@
-import { LibraryCategory } from "../../../../../../../models/project";
+import { LibraryCategory } from "../../../../../../../../models/project";
 import { useMemo } from "react";
 import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
 import { GetLibCategories } from "./helpers/GetLibCategories";
-import { GetSelectedNode } from "../../../../../../../helpers";
+import { GetSelectedNode } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
-import { LibraryCategoryComponent } from "./LibraryCategoryComponent";
+import { NodeCollection } from "./NodeCollection";
 import { FilterByAspect } from "./helpers/FilterByAspect";
-import { Aspect, CollectionsActions, LibItem, ObjectType } from "../../../../../../../models";
-import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../redux/store";
+import { Aspect, CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
+import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -20,7 +20,7 @@ interface Props {
   aspectFilters: Aspect[];
 }
 
-export const OldLibraryComponent = ({
+export const NodeCollectionList = ({
   collectionState,
   selectedTypes,
   setSelectedTypes,
@@ -46,7 +46,7 @@ export const OldLibraryComponent = ({
 
   return (
     <>
-      <LibraryCategoryComponent
+      <NodeCollection
         selectedTypes={selectedTypes}
         setSelectedTypes={setSelectedTypes}
         selectedElement={selectedElement}
@@ -60,7 +60,7 @@ export const OldLibraryComponent = ({
       />
       {FilterByAspect(filterCatBySearch(), aspectFilters).map((category) => {
         return (
-          <LibraryCategoryComponent
+          <NodeCollection
             collectionState={collectionState}
             selectedTypes={selectedTypes}
             setSelectedTypes={setSelectedTypes}

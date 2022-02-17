@@ -45,22 +45,10 @@ export const ModalListElementsContainer = styled.div`
   border-top: 2px solid ${Color.BlueMagenta};
   border-bottom: 1px solid ${Color.Black};
   min-height: 370px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  overflow-y: overlay;
-
-  div:nth-child(even) {
-    background-color: ${Color.White};
-  }
-
-  div:nth-child(odd) {
-    background-color: ${Color.PurpleLight};
-  }
-
-  div:nth-child(n):hover {
-    background-color: ${Color.BlueLight};
-  }
+  overflow: auto;
 `;
+
+export const ModalListElementText = styled.span``;
 
 interface ModalListElementProps {
   isSelected: boolean;
@@ -74,7 +62,19 @@ export const ModalListElement = styled.div<ModalListElementProps>`
   height: 30px;
   padding: 2px 10px;
 
-  label {
+  :nth-child(even) {
+    background-color: ${Color.White};
+  }
+
+  :nth-child(odd) {
+    background-color: ${Color.PurpleLight};
+  }
+
+  :nth-child(n):hover {
+    background-color: ${Color.BlueLight};
+  }
+
+  > ${ModalListElementText} {
     text-decoration: ${(props) => props.isSelected && "underline"};
     font-weight: ${(props) => props.isSelected && FontWeight.Bold};
   }

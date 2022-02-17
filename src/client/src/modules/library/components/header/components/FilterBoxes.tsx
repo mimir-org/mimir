@@ -61,7 +61,7 @@ export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
               offset={[0, 10]}
             >
               <FilterBoxButton onClick={() => toggleAspectFilter(Number(aspect))}>
-                <Icon size={24} src={GetFilterIcon(Number(aspect), aspectSelected)} alt="aspect-icon" />
+                <Icon size={24} src={GetFilterIcon(Number(aspect), aspectSelected)} alt="" />
               </FilterBoxButton>
             </Tooltip>
           );

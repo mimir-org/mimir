@@ -1,5 +1,5 @@
 import { CollectionsListWrapper } from "./CollectionsList.styled";
-import { librarySelector, useAppSelector } from "../../../../../../../redux/store";
+import { librarySelector, useAppSelector } from "../../../../../../../../redux/store";
 import { CollectionComponent } from "./CollectionComponent";
 
 export const CollectionsList = () => {

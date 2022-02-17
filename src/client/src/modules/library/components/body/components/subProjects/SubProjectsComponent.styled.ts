@@ -6,13 +6,12 @@ export const SubProjectsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: inherit;
+`;
 
-  p {
-    text-align: center;
-    color: ${Color.Black};
-    font-size: ${FontSize.Medium};
-    font-family:${FontType.Standard}
-    padding: 10px 50px;
-  }
-
+export const SubProjectsText = styled.p`
+  text-align: center;
+  color: ${Color.Black};
+  font-size: ${FontSize.Medium};
+  font-family: ${FontType.Standard};
+  padding: 10px 50px;
 `;

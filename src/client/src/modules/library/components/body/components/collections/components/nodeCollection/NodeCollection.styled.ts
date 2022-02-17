@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
-import { FontSize, FontType, FontWeight } from "../../../../../../../compLibrary/font";
+import { Color } from "../../../../../../../../compLibrary/colors";
+import { FontSize, FontType, FontWeight } from "../../../../../../../../compLibrary/font";
 
-interface LibCollectionWrapperProps {
+interface NodeCollectionContainerProps {
   isOpen: boolean;
 }
 
-export const LibCollectionWrapper = styled.div<LibCollectionWrapperProps>`
+export const NodeCollectionContainer = styled.div<NodeCollectionContainerProps>`
   display: flex;
   background-color: ${Color.GreyLight};
   margin: ${(props) => (props.isOpen ? "2px 0px 2px 0px" : "2px 0px 5px 0px")};
@@ -19,7 +19,7 @@ interface LibCategoryButtonProps {
   isOpen: boolean;
 }
 
-export const LibCategoryButton = styled.button<LibCategoryButtonProps>`
+export const NodeCollectionButton = styled.button<LibCategoryButtonProps>`
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -39,10 +39,6 @@ export const LibCategoryButton = styled.button<LibCategoryButtonProps>`
   -ms-user-select: none;
   user-select: none;
 
-  .expandIcon {
-    position: relative;
-    left: 3px;
-  }
   :hover {
     text-decoration: underline;
     font-weight: bold;

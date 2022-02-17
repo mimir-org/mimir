@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
-import { FontSize, FontType } from "../../../../../../../compLibrary/font";
+import { Color } from "../../../../../../../../compLibrary/colors";
+import { FontSize, FontType } from "../../../../../../../../compLibrary/font";
 
-interface LibElementProps {
+interface NodeElementButtonProps {
   active?: boolean;
   selectedColor?: string;
   hoverColor?: string;
 }
 
-export const LibElement = styled.button<LibElementProps>`
+export const NodeElementButton = styled.button<NodeElementButtonProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,11 +40,11 @@ export const LibElement = styled.button<LibElementProps>`
   }
 `;
 
-interface LibElementIconWrapperProps {
+interface NodeElementIconContainerProps {
   color: string;
 }
 
-export const LibElementIconWrapper = styled.span<LibElementIconWrapperProps>`
+export const NodeElementIconContainer = styled.span<NodeElementIconContainerProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +57,7 @@ export const LibElementIconWrapper = styled.span<LibElementIconWrapperProps>`
   border-radius: 5px;
 `;
 
-export const LibElementText = styled.span`
+export const NodeElementText = styled.span`
   flex: 1;
   text-align: left;
   white-space: nowrap;
@@ -65,7 +65,7 @@ export const LibElementText = styled.span`
   text-overflow: ellipsis;
 `;
 
-export const LibElementVersion = styled.span`
+export const NodeElementVersionText = styled.span`
   flex: 1;
   position: absolute;
   right: 55px;
@@ -75,7 +75,7 @@ export const LibElementVersion = styled.span`
   text-overflow: ellipsis;
 `;
 
-export const FavoriteBox = styled.span`
+export const NodeElementFavoriteBox = styled.span`
   margin-left: auto;
   padding: 5px;
 

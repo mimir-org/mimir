@@ -1,4 +1,4 @@
-import { LibraryCategory } from "../../../../../../../../models/project";
+import { LibraryCategory } from "../../../../../../../../../models/project";
 
 export const GetFilteredLibCategories = (libCategories: LibraryCategory[], searchString: string): LibraryCategory[] => {
   const searchStringLower = searchString.toLowerCase();

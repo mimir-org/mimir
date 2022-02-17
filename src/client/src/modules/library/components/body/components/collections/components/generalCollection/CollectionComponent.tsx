@@ -1,4 +1,4 @@
-import { Collection } from "../../../../../../../models";
+import { Collection } from "../../../../../../../../models";
 
 interface Props {
   collection: Collection;

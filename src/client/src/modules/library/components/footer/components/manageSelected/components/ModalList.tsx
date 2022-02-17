@@ -1,8 +1,14 @@
 import Moment from "react-moment";
 import { TextResources } from "../../../../../../../assets/text";
 import { Collection } from "../../../../../../../models";
-import { ModalListContent, ModalListColumnText, ModalListElementsContainer, ModalListElement } from "./ModalList.styled";
 import { MultiSelectCheckbox } from "./MultiSelectCheckbox";
+import {
+  ModalListContent,
+  ModalListColumnText,
+  ModalListElementsContainer,
+  ModalListElement,
+  ModalListElementText,
+} from "./ModalList.styled";
 
 interface Props {
   collections: Collection[];
@@ -29,11 +35,11 @@ export const ModalList = ({ collections, selectedCollections, setSelectedCollect
           return (
             <ModalListElement key={c.id} isSelected={isSelected(c.id)}>
               <MultiSelectCheckbox id={c.id} isChecked={isSelected(c.id)} onChange={() => onCheckboxChange(c.id)} />
-              <label>{c.name}</label>
-              <label>{c.name}</label>
-              <label>
+              <ModalListElementText>{c.name}</ModalListElementText>
+              <ModalListElementText>{c.name}</ModalListElementText>
+              <ModalListElementText>
                 <Moment format="DD/MM/YYYY ">{c.created}</Moment>
-              </label>
+              </ModalListElementText>
             </ModalListElement>
           );
         })}
