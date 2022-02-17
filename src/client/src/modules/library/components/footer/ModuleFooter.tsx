@@ -5,7 +5,7 @@ import { OnOpenTypeEditor } from "../../../../typeEditor/handlers";
 import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
-import { GetCollectionIcon } from "./helpers/GetCollectionIcon";
+import { GetCollectionIcon, SetCollectionButtonText } from "./helpers/";
 import { Button, ButtonVariant } from "../../../../compLibrary/buttons";
 import { NewType, EditType, DeleteType } from "../../../../assets/icons/library";
 import { Collection, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
@@ -45,10 +45,6 @@ export const ModuleFooter = ({
 }: Props) => {
   const [confirmDeleteBox, setConfirmDeleteBox] = useState(false);
   const [addSelectedToCollection, setAddSelectedToCollection] = useState(false);
-  const setCollectionsButtonText = (): string => {
-    if (collectionState === CollectionsActions.ManageType) return TextResources.Library_Manage_Collections_Button_Add;
-    else return TextResources.Library_Manage_Collections_Button_Manage;
-  };
   const showCollectionButton = collectionState === CollectionsActions.ManageType;
 
   return (
@@ -77,7 +73,7 @@ export const ModuleFooter = ({
         <Button
           variant={ButtonVariant.WhiteButton}
           onClick={() => setAddSelectedToCollection(true)}
-          text={setCollectionsButtonText()}
+          text={SetCollectionButtonText(collectionState)}
           icon={GetCollectionIcon(collectionState, activeTab)}
         />
       )}
