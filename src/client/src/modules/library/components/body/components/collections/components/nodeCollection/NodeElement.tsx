@@ -79,17 +79,9 @@ export const NodeElement = ({
           color={Color.Black}
         />
       )}
-      {isCustomCategory && (
-        <FavoriteComponent item={item} dispatch={dispatch} onClick={() => OnRemoveFavoriteClick(item, dispatch)} />
-      )}
+      {isCustomCategory && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}
       {!isCustomCategory && showAddButton && !isItemFavorite && (
-        <FavoriteComponent
-          item={item}
-          addFavorite
-          customCategory={customCategory}
-          dispatch={dispatch}
-          onClick={() => OnAddFavoriteClick(item, customCategory, dispatch)}
-        />
+        <FavoriteComponent addFavorite onClick={() => OnAddFavoriteClick(item, customCategory, dispatch)} />
       )}
     </NodeElementButton>
   );
