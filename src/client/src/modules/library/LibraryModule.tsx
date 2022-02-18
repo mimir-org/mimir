@@ -20,7 +20,7 @@ interface Props {
 }
 
 /**
- * Component for Mimir's type library, templates and sub-projects
+ * Component for Mimir's type library, templates and subprojects
  * @param interface
  * @returns a module with tabs and its contents
  */

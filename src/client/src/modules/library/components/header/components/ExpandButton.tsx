@@ -1,6 +1,6 @@
 import { LibraryIcon } from "../../../../../assets/icons/modules";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
-import { LibExpandButton } from "../styled/LibExpandButton";
+import { ExpandButtonContainer } from "./ExpandButton.styled";
 import { Icon } from "../../../../../compLibrary/icon";
 import { OnLibraryClick } from "../handlers/OnLibraryClick";
 import { MODULE_TYPE } from "../../../../../models/project";
@@ -15,8 +15,8 @@ interface Props {
 
 export const ExpandButton = ({ isOpen, text, offset, dispatch }: Props) => (
   <Tooltip content={text} placement={"bottom"} offset={offset}>
-    <LibExpandButton isOpen onClick={() => OnLibraryClick(dispatch, isOpen, MODULE_TYPE.LIBRARY)}>
+    <ExpandButtonContainer isOpen={isOpen} onClick={() => OnLibraryClick(dispatch, isOpen, MODULE_TYPE.LIBRARY)}>
       <Icon size={24} src={LibraryIcon} alt="" />
-    </LibExpandButton>
+    </ExpandButtonContainer>
   </Tooltip>
 );

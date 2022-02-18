@@ -2,7 +2,7 @@ import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../../ass
 import { TextResources } from "../../../../../../../../assets/text";
 import { Icon } from "../../../../../../../../compLibrary/icon";
 import { Tooltip } from "../../../../../../../../compLibrary/tooltip/Tooltip";
-import { NodeElementFavoriteBox } from "./NodeElement.styled";
+import { FavoriteButton } from "./FavoriteComponent.styled";
 
 interface Props {
   addFavorite?: boolean;
@@ -20,9 +20,9 @@ export const FavoriteComponent = ({ addFavorite, onClick }: Props) => {
 
   return (
     <Tooltip content={text} offset={[0, 5]}>
-      <NodeElementFavoriteBox tabIndex={0} onClick={() => onClick()}>
+      <FavoriteButton tabIndex={0} onClick={() => onClick()}>
         <Icon size={10} src={icon} alt={text} />
-      </NodeElementFavoriteBox>
+      </FavoriteButton>
     </Tooltip>
   );
 };

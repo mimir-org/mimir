@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { Button } from "../../../../../../../compLibrary/buttons";
 import { Input } from "../../../../../../../compLibrary/input/text";
 import { LibItem } from "../../../../../../../models";
-import { CreateCollectionWrapper, CollectionNameInput } from "../ManageSelectedTypes.styled";
+import { CreateCollectionWrapper, CollectionNameInput } from "./CreateCollectionComponent.styled";
 import { OnCreateCollection } from "../handlers";
 
 interface Props {

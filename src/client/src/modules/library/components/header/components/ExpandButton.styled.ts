@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-interface Props {
+interface ExpandButtonContainerProps {
   isOpen?: boolean;
 }
 
-export const LibExpandButton = styled.button<Props>`
+export const ExpandButtonContainer = styled.button<ExpandButtonContainerProps>`
   line-height: 0;
   background: transparent;
   border: 0;

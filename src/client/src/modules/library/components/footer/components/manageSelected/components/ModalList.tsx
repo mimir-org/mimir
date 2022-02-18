@@ -1,7 +1,7 @@
 import Moment from "react-moment";
+import { Checkbox } from "../../../../../../../compLibrary/input/checkbox/common";
 import { TextResources } from "../../../../../../../assets/text";
 import { Collection } from "../../../../../../../models";
-import { MultiSelectCheckbox } from "./MultiSelectCheckbox";
 import { OnCheckboxChange } from "../handlers";
 import {
   ModalListContent,
@@ -29,7 +29,7 @@ export const ModalList = ({ collections, selectedCollections, setSelectedCollect
         {collections?.map((c) => {
           return (
             <ModalListElement key={c.id} isSelected={isSelected(c.id)}>
-              <MultiSelectCheckbox
+              <Checkbox
                 id={c.id}
                 isChecked={isSelected(c.id)}
                 onChange={() => OnCheckboxChange(c.id, isSelected, selectedCollections, setSelectedCollections)}

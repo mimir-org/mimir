@@ -3,7 +3,7 @@ import { LibraryCategory } from "../../../../../../../../models/project";
 import { Dispatch } from "redux";
 import { NodeElement } from "./NodeElement";
 import { CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
-import { NodeCollectionButton, LibCategoryHeader, NodeCollectionContainer } from "./NodeCollection.styled";
+import { NodeCollectionButton, NodeCollectionButtonText, NodeCollectionContainer } from "./NodeCollection.styled";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -47,7 +47,7 @@ export const NodeCollection = ({
   return (
     <NodeCollectionContainer isOpen={expanded}>
       <NodeCollectionButton isOpen={expanded} onClick={() => setExpanded(!expanded)}>
-        <LibCategoryHeader isOpen={expanded}>{category.name}</LibCategoryHeader>
+        <NodeCollectionButtonText isOpen={expanded}>{category.name}</NodeCollectionButtonText>
       </NodeCollectionButton>
       {expanded &&
         category?.nodes.map((item) => {

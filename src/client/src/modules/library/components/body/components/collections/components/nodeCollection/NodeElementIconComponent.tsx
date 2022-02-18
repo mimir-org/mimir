@@ -3,7 +3,7 @@ import { GetAspectColor, GetObjectIcon } from "../../../../../../../../helpers";
 import { AspectColorType, LibItem, ObjectType } from "../../../../../../../../models";
 import { GetTypeIcon } from "./helpers/GetTypeIcon";
 import { Icon } from "../../../../../../../../compLibrary/icon";
-import { NodeElementIconContainer } from "./NodeElement.styled";
+import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
 
 interface Props {
   item: LibItem;

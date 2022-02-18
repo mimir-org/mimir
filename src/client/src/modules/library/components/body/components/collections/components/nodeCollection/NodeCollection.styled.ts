@@ -15,11 +15,11 @@ export const NodeCollectionContainer = styled.div<NodeCollectionContainerProps>`
   flex-direction: column;
 `;
 
-interface LibCategoryButtonProps {
+interface NodeCollectionButtonProps {
   isOpen: boolean;
 }
 
-export const NodeCollectionButton = styled.button<LibCategoryButtonProps>`
+export const NodeCollectionButton = styled.button<NodeCollectionButtonProps>`
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -45,11 +45,11 @@ export const NodeCollectionButton = styled.button<LibCategoryButtonProps>`
   }
 `;
 
-interface LibCategoryHeaderProps {
+interface NodeCollectionButtonTextProps {
   isOpen: boolean;
 }
 
-export const LibCategoryHeader = styled.span<LibCategoryHeaderProps>`
+export const NodeCollectionButtonText = styled.span<NodeCollectionButtonTextProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
