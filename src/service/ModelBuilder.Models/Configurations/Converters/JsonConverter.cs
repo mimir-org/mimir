@@ -26,7 +26,7 @@ namespace Mb.Models.Configurations.Converters
             propertyBuilder.HasConversion(converter);
             propertyBuilder.Metadata.SetValueConverter(converter);
             propertyBuilder.Metadata.SetValueComparer(comparer);
-            propertyBuilder.HasColumnType("jsonb");
+            propertyBuilder.HasColumnType("varchar(max)");
 
             return propertyBuilder;
         }

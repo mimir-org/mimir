@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using Mb.Models.Attributes;
 using VDS.RDF;
 
@@ -8,7 +8,8 @@ namespace RdfParserModule.Repositories
     public interface IOntologyRepository
     {
         IGraph Graph { get; }
-        Dictionary<string, string> Namespaces { get; }
-        string BuildIri(string prefix, string suffix, string midFix = "");
+        TripleStore Store { get; }
+        Uri BuildUri(string value);
+        void LoadData(string data);
     }
 }

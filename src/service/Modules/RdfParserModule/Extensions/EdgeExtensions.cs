@@ -13,20 +13,20 @@ namespace RdfParserModule.Extensions
             if (edge.FromConnector is Relation { RelationType: not RelationType.PartOf } fromRelation)
             {
                 var relationString = fromRelation.RelationType.ToString().LowerCaseFirstCharacter();
-                ontologyService.AssertNode(edge.FromNodeIri, $"imf__{relationString}", edge.ToNodeIri);
+                ontologyService.AssertNode(edge.FromNodeIri, $"imf:{relationString}", edge.ToNodeIri);
             }
 
             if (edge.ToConnector is Relation { RelationType: not RelationType.PartOf } toRelation)
             {
                 var relationString = toRelation.RelationType.ToString().LowerCaseFirstCharacter();
-                ontologyService.AssertNode(edge.ToNodeIri, $"imf__{relationString}", edge.FromNodeIri);
+                ontologyService.AssertNode(edge.ToNodeIri, $"imf:{relationString}", edge.FromNodeIri);
             }
 
             if (edge.Transport != null)
             {
-                ontologyService.AssertNode(edge.Transport.Iri, Resources.type, Resources.Transport);
-                ontologyService.AssertNode(edge.Transport.Iri, Resources.label, edge.Transport.Name, true);
-                ontologyService.AssertNode(edge.Transport.Iri, Resources.hasAspect, $"imf:{edge.FromNode.Aspect}");
+                ontologyService.AssertNode(edge.Transport.Iri, Resources.Type, Resources.Transport);
+                ontologyService.AssertNode(edge.Transport.Iri, Resources.Label, edge.Transport.Name, true);
+                ontologyService.AssertNode(edge.Transport.Iri, Resources.HasAspect, $"imf:{edge.FromNode.Aspect}");
                 //ontologyService.AssertNode(edge.transport.Iri, Resources.hasParent, $"imf:{edge.FromNode.Aspect}");
 
                 if (edge.Transport.InputTerminal != null)
@@ -38,9 +38,9 @@ namespace RdfParserModule.Extensions
 
             if (edge.Interface != null)
             {
-                ontologyService.AssertNode(edge.Interface.Iri, Resources.type, Resources.Interface);
-                ontologyService.AssertNode(edge.Interface.Iri, Resources.label, edge.Interface.Name, true);
-                ontologyService.AssertNode(edge.Interface.Iri, Resources.hasAspect, $"imf:{edge.FromNode.Aspect}");
+                ontologyService.AssertNode(edge.Interface.Iri, Resources.Type, Resources.Interface);
+                ontologyService.AssertNode(edge.Interface.Iri, Resources.Label, edge.Interface.Name, true);
+                ontologyService.AssertNode(edge.Interface.Iri, Resources.HasAspect, $"imf:{edge.FromNode.Aspect}");
                 //ontologyService.AssertNode(edge.Interface.Iri, Resources.hasParent, $"imf:{edge.FromNode.Aspect}");
 
                 if (edge.Interface.InputTerminal != null)
@@ -53,8 +53,9 @@ namespace RdfParserModule.Extensions
 
         private static void AssertStreamTerminal(this Edge edge, string iri, Terminal terminal, IOntologyService ontologyService)
         {
-            ontologyService.AssertTransmitter(terminal.Iri, terminal.TerminalCategoryId, terminal.Name);
-            ontologyService.AssertNode(terminal.Iri, "mimir__domain", terminal.Domain, true);
+            ontologyService.AssertNode($"eq:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
+            ontologyService.AssertNode(terminal.Iri, Resources.Type, $"eq:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}");
+            ontologyService.AssertNode(terminal.Iri, Resources.Domain, terminal.Domain, true);
 
             string hasTerminal = null;
             string terminalType = null;
@@ -63,12 +64,12 @@ namespace RdfParserModule.Extensions
             switch (terminal.Type)
             {
                 case ConnectorType.Input:
-                    hasTerminal = Resources.hasInputTerminal;
+                    hasTerminal = Resources.HasInputTerminal;
                     terminalType = Resources.InputTerminal;
                     edgeConnector = edge.FromConnector;
                     break;
                 case ConnectorType.Output:
-                    hasTerminal = Resources.hasOutputTerminal;
+                    hasTerminal = Resources.HasOutputTerminal;
                     terminalType = Resources.OutputTerminal;
                     edgeConnector = edge.ToConnector;
                     break;
@@ -77,16 +78,16 @@ namespace RdfParserModule.Extensions
             }
 
             if (!string.IsNullOrWhiteSpace(terminalType))
-                ontologyService.AssertNode(terminal.Iri, Resources.type, terminalType);
+                ontologyService.AssertNode(terminal.Iri, Resources.Type, terminalType);
 
             if (!string.IsNullOrWhiteSpace(hasTerminal))
                 ontologyService.AssertNode(iri, hasTerminal, terminal.Iri);
 
-            ontologyService.AssertNode(terminal.Iri, Resources.type, Resources.StreamTerminal);
-            ontologyService.AssertNode(terminal.Iri, Resources.type, $"{terminal.Name} {terminal.Type}", true);
+            ontologyService.AssertNode(terminal.Iri, Resources.Type, Resources.StreamTerminal);
+            ontologyService.AssertNode(terminal.Iri, Resources.Type, $"{terminal.Name} {terminal.Type}", true);
 
             if (edgeConnector != null)
-                ontologyService.AssertNode(terminal.Iri, Resources.label, edgeConnector.Iri);
+                ontologyService.AssertNode(terminal.Iri, Resources.Label, edgeConnector.Iri);
         }
     }
 }

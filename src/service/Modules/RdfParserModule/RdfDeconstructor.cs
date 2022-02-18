@@ -177,7 +177,7 @@ namespace RdfParserModule
         public void GetProjectInformation()
         {
             var integratedObject = RdfGraph.CreateUriNode("imf:IntegratedObject");
-            var type = RdfGraph.CreateUriNode(Resources.type);
+            var type = RdfGraph.CreateUriNode(Resources.Type);
             var projectId = Store.GetTriplesWithPredicateObject(type, integratedObject).Select(t => t.Subject).SingleOrDefault();
             if (projectId is null)
             {
@@ -198,7 +198,7 @@ namespace RdfParserModule
         public INode GetParent(string nodeId)
         {
             var node = GetOrCreateUriNode(nodeId);
-            var hasParent = RdfGraph.CreateUriNode(Resources.hasParent);
+            var hasParent = RdfGraph.CreateUriNode(Resources.HasParent);
 
             // There should always only be one parent, so we can just get the first element via Single
             var parent = Store.GetTriplesWithSubjectPredicate(node, hasParent).FirstOrDefault()?.Object;
@@ -209,7 +209,7 @@ namespace RdfParserModule
         public List<INode> GetChildren(string nodeId)
         {
             var node = GetOrCreateUriNode(nodeId);
-            var hasChild = RdfGraph.CreateUriNode(Resources.hasChild);
+            var hasChild = RdfGraph.CreateUriNode(Resources.HasChild);
 
             var children = Store.GetTriplesWithSubjectPredicate(node, hasChild).Select(t => t.Subject).ToList();
             return children;
@@ -217,7 +217,7 @@ namespace RdfParserModule
 
         public List<ParserNode> GetRootNodes()
         {
-            var p = RdfGraph.CreateUriNode(Resources.isAspectOf);
+            var p = RdfGraph.CreateUriNode(Resources.IsAspectOf);
             var list = Store.GetTriplesWithPredicate(p).Select(t => t.Subject).ToList();
 
 
@@ -316,13 +316,13 @@ namespace RdfParserModule
             switch (relation)
             {
                 case "Has Location":
-                    predicate = RdfGraph.CreateUriNode(Resources.hasLocation);
+                    predicate = RdfGraph.CreateUriNode(Resources.HasLocation);
                     break;
                 case "Part Of":
-                    predicate = RdfGraph.CreateUriNode(Resources.hasParent);
+                    predicate = RdfGraph.CreateUriNode(Resources.HasParent);
                     break;
                 case "Fulfilled By":
-                    predicate = RdfGraph.CreateUriNode(Resources.fulfilledBy);
+                    predicate = RdfGraph.CreateUriNode(Resources.FulfilledBy);
                     break;
                 default:
                     return;
@@ -376,8 +376,8 @@ namespace RdfParserModule
         {
             var connectors = new List<ParserConnector>();
 
-            var inputTerminalNodes = GetObjects(nodeId, Resources.hasInputTerminal);
-            var outputTerminalNodes = GetObjects(nodeId, Resources.hasOutputTerminal);
+            var inputTerminalNodes = GetObjects(nodeId, Resources.HasInputTerminal);
+            var outputTerminalNodes = GetObjects(nodeId, Resources.HasOutputTerminal);
 
             if (inputTerminalNodes is not null)
             {
@@ -390,7 +390,7 @@ namespace RdfParserModule
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString()),
                     Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
-                    //Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
+                    //Visible = bool.Parse(GetValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
                 }).ToList();
 
                 connectors.AddRange(inputTerminals);
@@ -406,7 +406,7 @@ namespace RdfParserModule
                     Domain = GetDomain(obj.ToString()),
                     Attributes = GetAttributesOnNode(obj.ToString()),
                     Color = GetLiteralValue(obj.ToString(), BuildIri("mimir", "color")),
-                    //Visible = bool.Parse(GetLiteralValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
+                    //Visible = bool.Parse(GetValue(obj.ToString(), BuildIri("mimir", "visible"))) // TODO: Fix this cast to enum
                 }).ToList();
 
                 connectors.AddRange(outputTerminals);
@@ -440,7 +440,7 @@ namespace RdfParserModule
                     }
                 }
 
-                var connection = GetObjects(connector.Id, Resources.connectedTo);
+                var connection = GetObjects(connector.Id, Resources.ConnectedTo);
 
                 if (connection is null) continue;
                 switch (connector.Type)
@@ -461,7 +461,7 @@ namespace RdfParserModule
 
         private (string termCatId, string termTypeId) GetTerminalCategoryIdAndTerminalTypeId(ParserConnector terminal)
         {
-            var terminalTypes = GetObjects(terminal.Iri, Resources.type);
+            var terminalTypes = GetObjects(terminal.Iri, Resources.Type);
 
             if (terminalTypes is null) return (null, null);
 
@@ -485,7 +485,7 @@ namespace RdfParserModule
         public INode GetMasterProject(string nodeId)
         {
             var sub = RdfGraph.CreateUriNode(new Uri(nodeId));
-            var pred = RdfGraph.CreateUriNode(Resources.hasMasterProject);
+            var pred = RdfGraph.CreateUriNode(Resources.HasMasterProject);
             var node = Store.GetTriplesWithSubjectPredicate(sub, pred).Select(t => t.Object).First();
 
             return node;
@@ -496,7 +496,7 @@ namespace RdfParserModule
         private string GetLabel(string iri)
         {
             var node = RdfGraph.GetUriNode(new Uri(iri));
-            var labelPredicate = RdfGraph.CreateUriNode(Resources.label);
+            var labelPredicate = RdfGraph.CreateUriNode(Resources.Label);
 
             var labels = Store.GetTriplesWithSubjectPredicate(node, labelPredicate).Select(t => t.Object).ToList();
 
@@ -517,7 +517,7 @@ namespace RdfParserModule
         private string GetDomain(string iri)
         {
             var node = GetOrCreateUriNode(iri);
-            var domainPredicate = GetOrCreateUriNode(Resources.domain);
+            var domainPredicate = GetOrCreateUriNode(Resources.Domain);
 
             var domains = Store.GetTriplesWithSubjectPredicate(node, domainPredicate).Select(t => t.Object).ToList();
 
@@ -602,7 +602,7 @@ namespace RdfParserModule
         private Aspect GetAspect(string iri)
         {
             var node = RdfGraph.GetUriNode(new Uri(iri));
-            var hasAspectPredicate = RdfGraph.CreateUriNode(Resources.hasAspect);
+            var hasAspectPredicate = RdfGraph.CreateUriNode(Resources.HasAspect);
 
             var aspects = Store.GetTriplesWithSubjectPredicate(node, hasAspectPredicate).Select(t => t.Object).ToList();
 
@@ -628,7 +628,7 @@ namespace RdfParserModule
 
         private ParserConnector GetTransportInTerminal(string transportIri)
         {
-            var inTerminals = GetObjects(transportIri, Resources.hasInputTerminal);
+            var inTerminals = GetObjects(transportIri, Resources.HasInputTerminal);
 
             if (inTerminals is null) throw new Exception("All transports need one, 1, input terminal");
             if (inTerminals.Count != 1) throw new Exception("A transport should only ever have one, 1, input terminal");
@@ -653,7 +653,7 @@ namespace RdfParserModule
             }
 
 
-            var fromConnectors = GetObjects(inTerminal.Iri, Resources.connectedTo);
+            var fromConnectors = GetObjects(inTerminal.Iri, Resources.ConnectedTo);
             if (fromConnectors is null || fromConnectors.Count != 1) throw new Exception($"A terminal can only be connected to one, 1, other terminal | {inTerminal}");
 
             var fromConnector = fromConnectors.First().ToString();
@@ -661,7 +661,7 @@ namespace RdfParserModule
             inTerminal.FromConnectorId = fromConnector;
 
 
-            var fromNodes = GetSubjects(Resources.hasOutputTerminal, inTerminal.FromConnectorIri);
+            var fromNodes = GetSubjects(Resources.HasOutputTerminal, inTerminal.FromConnectorIri);
             if (fromNodes is null || fromNodes.Count != 1) throw new Exception($"A connector can only belong to one, 1, aspect object | {inTerminal}");
 
             var fromNode = fromNodes.First().ToString();
@@ -676,7 +676,7 @@ namespace RdfParserModule
 
         private ParserConnector GetTransportOutTerminal(string transportIri)
         {
-            var outTerminals = GetObjects(transportIri, Resources.hasOutputTerminal);
+            var outTerminals = GetObjects(transportIri, Resources.HasOutputTerminal);
 
 
             if (outTerminals is null) throw new Exception("All transports need one, 1, output terminal");
@@ -699,14 +699,14 @@ namespace RdfParserModule
                 outTerminal.TerminalTypeId = termTypeId;
             }
 
-            var toConnectors = GetObjects(outTerminal.Iri, Resources.connectedTo);
+            var toConnectors = GetObjects(outTerminal.Iri, Resources.ConnectedTo);
             if (toConnectors is null) throw new Exception("A transport should always be connected to something");
             if (toConnectors.Count != 1) throw new Exception("A terminal can only be connected to one, 1, other terminal");
 
             var toConnector = toConnectors.First().ToString();
             outTerminal.ToConnectorIri = toConnector;
 
-            var toNodes = GetSubjects(Resources.hasInputTerminal, outTerminal.ToConnectorIri);
+            var toNodes = GetSubjects(Resources.HasInputTerminal, outTerminal.ToConnectorIri);
             if (toNodes.Count != 1) throw new Exception("A connector can only belong to one, 1, aspect object");
 
             var toNode = toNodes.First().ToString();
@@ -722,7 +722,7 @@ namespace RdfParserModule
 
         public List<ParserEdge> GetTransports()
         {
-            var transports = GetSubjects(Resources.type, Resources.Transport);
+            var transports = GetSubjects(Resources.Type, Resources.Transport);
 
             var transportNodes = transports.Select(transport => new ParserTransport
             {
@@ -775,7 +775,7 @@ namespace RdfParserModule
 
         public List<ParserNode> GetAllLocationObjects()
         {
-            var pred = RdfGraph.CreateUriNode(Resources.hasLocation);
+            var pred = RdfGraph.CreateUriNode(Resources.HasLocation);
 
             var subs = Store.GetTriplesWithPredicate(pred).Select(t => t.Object).ToList();
 
@@ -807,7 +807,7 @@ namespace RdfParserModule
 
         public List<INode> GetFunctionalSystemBlocks()
         {
-            var type = GetOrCreateUriNode(Resources.type);
+            var type = GetOrCreateUriNode(Resources.Type);
             var fsb = GetOrCreateUriNode(Resources.FSB);
 
             return Store.GetTriplesWithPredicateObject(type, fsb).Select(t => t.Subject).ToList();

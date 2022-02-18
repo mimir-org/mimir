@@ -1,14 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Mb.Data.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using RdfParserModule.Extensions;
-using RdfParserModule.Properties;
 using RdfParserModule.Repositories;
 using VDS.RDF;
-using VDS.RDF.Writing;
+using StringWriter = VDS.RDF.Writing.StringWriter;
 
 namespace RdfParserModule.Services
 {
@@ -44,6 +47,15 @@ namespace RdfParserModule.Services
             BuildEdges(project);
         }
 
+        public ProjectAm BuildProject(string rdf)
+        {
+            _ontologyRepository.LoadData(rdf);
+            var project = new ProjectAm();
+            project.ResolveProjectInformation(this);
+            project.ResolveRootNodes(this);
+            return null;
+        }
+
         /// <summary>
         /// Convert RDF graph to bytes
         /// Call BuildProject before this method
@@ -70,27 +82,6 @@ namespace RdfParserModule.Services
         }
 
         /// <summary>
-        /// Assert a transmitter to the graph 
-        /// </summary>
-        /// <param name="iri"></param>
-        /// <param name="terminalCategoryId"></param>
-        /// <param name="terminalName"></param>
-        public void AssertTransmitter(string iri, string terminalCategoryId, string terminalName)
-        {
-            if (string.IsNullOrEmpty(iri) || string.IsNullOrEmpty(terminalCategoryId) || string.IsNullOrEmpty(terminalName))
-                return;
-
-            var node = _ontologyRepository.Graph.GetOrCreateUriNode(iri);
-            var type = _ontologyRepository.Graph.GetOrCreateUriNode(Resources.type);
-            var subclass = _ontologyRepository.Graph.GetOrCreateUriNode(Resources.subClassOf);
-            var transmitterIri = _ontologyRepository.BuildIri("eq", $"Transmitter-{terminalCategoryId}-{terminalName}");
-            var transmitter = _ontologyRepository.Graph.GetOrCreateUriNode(transmitterIri);
-
-            _ontologyRepository.Graph.Assert(new Triple(transmitter, subclass, _ontologyRepository.Graph.GetOrCreateUriNode(_ontologyRepository.BuildIri("mimir", "Transmitter"))));
-            _ontologyRepository.Graph.Assert(new Triple(node, type, transmitter));
-        }
-
-        /// <summary>
         /// Assert a node to the graph
         /// </summary>
         /// <param name="subject"></param>
@@ -110,20 +101,6 @@ namespace RdfParserModule.Services
             if (s == null || p == null || o == null)
                 throw new ModelBuilderModuleException($"Can't create nodes from data: {subject} - {predicate} - {obj}");
             _ontologyRepository.Graph.Assert(s, p, o);
-        }
-
-        /// <summary>
-        /// Assert a node to the graph
-        /// </summary>
-        /// <param name="subject"></param>
-        /// <param name="predicate"></param>
-        /// <param name="obj"></param>
-        /// <exception cref="ModelBuilderModuleException"></exception>
-        public void AssertNode(INode subject, INode predicate, INode obj)
-        {
-            if (subject == null || predicate == null || obj == null)
-                throw new ModelBuilderModuleException($"Can't create nodes from data: Subject: {subject == null} - Predicate: {predicate == null} - Object {obj == null}");
-            _ontologyRepository.Graph.Assert(subject, predicate, obj);
         }
 
         /// <summary>
@@ -169,15 +146,140 @@ namespace RdfParserModule.Services
         }
 
         /// <summary>
-        /// Build Iri
+        /// Create a literal node
         /// </summary>
-        /// <param name="prefix"></param>
-        /// <param name="suffix"></param>
-        /// <param name="midFix"></param>
+        /// <param name="literal"></param>
+        /// <param name="dataType"></param>
         /// <returns></returns>
-        public string BuildIri(string prefix, string suffix, string midFix = "")
+        public INode CreateLiteralNode(string literal, string dataType)
         {
-            return _ontologyRepository.BuildIri(prefix, suffix, midFix);
+            var uri = _ontologyRepository.BuildUri(dataType);
+            return _ontologyRepository.Graph.CreateLiteralNode(literal, uri);
+        }
+
+        /// <summary>
+        /// Build uri from prefix or iri string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>URI</returns>
+        public Uri BuildUri(string value)
+        {
+            return _ontologyRepository.BuildUri(value);
+        }
+
+
+        public INode GetOrCreateUriNode(string type)
+        {
+            return _ontologyRepository.Graph.GetOrCreateUriNode(type);
+        }
+
+        public IEnumerable<Triple> GetTriplesWithPredicateObject(string predicate, string obj)
+        {
+            if (string.IsNullOrWhiteSpace(predicate) || string.IsNullOrWhiteSpace(obj))
+                throw new NullReferenceException("Can't get triples from null reference objects");
+
+            var p = GetOrCreateUriNode(predicate);
+            var o = GetOrCreateUriNode(obj);
+
+            return _ontologyRepository.Store.GetTriplesWithPredicateObject(p, o);
+        }
+
+        public IEnumerable<Triple> GetTriplesWithSubjectPredicate(string subject, string predicate)
+        {
+            if (string.IsNullOrWhiteSpace(predicate) || string.IsNullOrWhiteSpace(subject))
+                throw new NullReferenceException("Can't get triples from null reference objects");
+
+            var s = GetOrCreateUriNode(subject);
+            var p = GetOrCreateUriNode(predicate);
+
+            return _ontologyRepository.Store.GetTriplesWithSubjectPredicate(s, p);
+        }
+
+        public IEnumerable<Triple> GetTriplesWithPredicate(string predicate)
+        {
+            if (string.IsNullOrWhiteSpace(predicate))
+                throw new NullReferenceException("Can't get triples from null reference objects");
+
+            var p = GetOrCreateUriNode(predicate);
+            return _ontologyRepository.Store.GetTriplesWithPredicate(p);
+        }
+
+        public string GetValue(string iri, string predicate, bool allowMany = true)
+        {
+            var objects = GetTriplesWithSubjectPredicate(iri, predicate).Select(t => t.Object).ToList();
+
+            if (!objects.Any())
+                return null;
+
+            if (allowMany && objects.Count < 1)
+                throw new InvalidDataException($"There should always be at least one, 1, {predicate} | Iri: {iri}");
+
+            if (!allowMany && objects.Count != 1)
+                throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
+
+            return objects.First()?.ResolveValue();
+        }
+
+        public DateTime GetDateTimeValue(string iri, string predicate, bool allowMany = true)
+        {
+            var objects = GetTriplesWithSubjectPredicate(iri, predicate).Select(t => t.Object).ToList();
+
+            if (!objects.Any())
+                return DateTime.MinValue;
+
+            if (allowMany && objects.Count < 1)
+                throw new InvalidDataException($"There should always be at least one, 1, {predicate} | Iri: {iri}");
+
+            if (!allowMany && objects.Count != 1)
+                throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
+
+            var value = objects.First()?.ResolveValue();
+
+            if(!DateTime.TryParse(value, out var data))
+                throw new InvalidDataException($"{predicate} should always be a datetime | Iri: {iri}");
+
+            return data;
+        }
+
+        public decimal GetDecimalValue(string iri, string predicate, bool allowMany = true)
+        {
+            var objects = GetTriplesWithSubjectPredicate(iri, predicate).Select(t => t.Object).ToList();
+
+            if (!objects.Any())
+                return 0.0m;
+
+            if (allowMany && objects.Count < 1)
+                throw new InvalidDataException($"There should always be at least one, 1, {predicate} | Iri: {iri}");
+
+            if (!allowMany && objects.Count != 1)
+                throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
+
+            var value = objects.First()?.ResolveValue();
+
+            if(!decimal.TryParse(value.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo, out var data))
+                throw new InvalidDataException($"{predicate} should always point to a decimal value | Iri: {iri}");
+
+            return data;
+        }
+
+        public T GetEnumValue<T>(string iri, string predicate, bool allowMany = true) where T : struct
+        {
+            var objects = GetTriplesWithSubjectPredicate(iri, predicate).Select(t => t.Object).ToList();
+
+            if (!objects.Any())
+                return default;
+
+            if (allowMany && objects.Count < 1)
+                throw new InvalidDataException($"There should always be at least one, 1, {predicate} | Iri: {iri}");
+
+            if (!allowMany && objects.Count != 1)
+                throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
+
+            var value = objects.First()?.ResolveValue();
+            if(!Enum.TryParse<T>(value, true, out var val))
+                throw new InvalidDataException($"{predicate} should always point to an enum value | Iri: {iri}");
+
+            return val;
         }
 
         #endregion
@@ -196,14 +298,9 @@ namespace RdfParserModule.Services
             if (string.IsNullOrWhiteSpace(value))
                 return null;
 
-            var split = value.Split("__", StringSplitOptions.RemoveEmptyEntries);
-            return split.Length switch
-            {
-                1 => isLiteral ? _ontologyRepository.Graph.CreateLiteralNode(value) : _ontologyRepository.Graph.GetOrCreateUriNode(value),
-                2 => _ontologyRepository.Graph.GetOrCreateUriNode(_ontologyRepository.BuildIri(split[0], split[1])),
-                3 => _ontologyRepository.Graph.GetOrCreateUriNode(_ontologyRepository.BuildIri(split[0], split[2], split[1])),
-                _ => throw new ModelBuilderModuleException("There is only support for maximum 3 segments in create uri")
-            };
+            return isLiteral
+                ? _ontologyRepository.Graph.CreateLiteralNode(value)
+                : _ontologyRepository.Graph.GetOrCreateUriNode(value);
         }
 
         /// <summary>

@@ -19,9 +19,9 @@ namespace RdfParserModule.Extensions
             var rootIri = new Uri(attribute.Iri).GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
 
             // Asserts
-            ontologyService.AssertNode(attribute.Iri, "mimir__domain", attribute.Domain, true);
-            ontologyService.AssertNode(attribute.Iri, Resources.type, "lis__PhysicalQuantity");
-            ontologyService.AssertNode(parentIri, "lis__hasPhysicalQuantity", attribute.Iri);
+            ontologyService.AssertNode(attribute.Iri, Resources.Domain, attribute.Domain, true);
+            ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
+            ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
 
             // TODO: Add AttributeTypeIri etc. to missing types
             //if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
@@ -30,10 +30,10 @@ namespace RdfParserModule.Extensions
             //    ontologyService.AssertNode(attribute.Iri, Resources.type, attribute.AttributeTypeIri);
             //}
 
-            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/qualifier", $"{rootIri}/qualifier/ID{attribute.QualifierId}");
-            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/source", $"{rootIri}/source/ID{attribute.SourceId}");
-            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/condition", $"{rootIri}/condition/ID{attribute.ConditionId}");
-            ontologyService.AssertNode(attribute.Iri + "-datum", $"{rootIri}/format", $"{rootIri}/format/ID{attribute.FormatId}");
+            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/qualifier", $"{rootIri}/qualifier/ID{attribute.QualifierId}");
+            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/source", $"{rootIri}/source/ID{attribute.SourceId}");
+            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/condition", $"{rootIri}/condition/ID{attribute.ConditionId}");
+            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/format", $"{rootIri}/format/ID{attribute.FormatId}");
         }
 
         public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
@@ -46,19 +46,19 @@ namespace RdfParserModule.Extensions
 
             // Asserts
             if (!string.IsNullOrEmpty(selectedUnit?.Name))
-                ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumValue", ontologyService.CreateLiteralNode(attribute.Value, new Uri(ontologyService.BuildIri("xsd", selectedUnit.Name))));
+                ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, $"xsd:{selectedUnit.Name}"));
             else
-                ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumValue", attribute.Value);
+                ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, attribute.Value);
 
-            ontologyService.AssertNode($"{attribute.Iri}-datum", Resources.type, "lis__ScalarQuantityDatum");
-            ontologyService.AssertNode(attribute.Iri, "lis__qualityQuantifiedAs", $"{attribute.Iri}-datum");
+            ontologyService.AssertNode(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
+            ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
 
             if (string.IsNullOrWhiteSpace(attribute.SelectedUnitId) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
                 return;
 
-            ontologyService.AssertNode($"eq__{attribute.SelectedUnitId}", Resources.type, "lis__Scale");
-            ontologyService.AssertNode($"eq__{attribute.SelectedUnitId}", Resources.label, selectedUnit.Name, true);
-            ontologyService.AssertNode($"{attribute.Iri}-datum", "lis__datumUOM", $"eq__{attribute.SelectedUnitId}");
+            ontologyService.AssertNode($"eq:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
+            ontologyService.AssertNode($"eq:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
+            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"eq:{attribute.SelectedUnitId}");
 
             // TODO: Add all allowed units
         }
@@ -79,6 +79,11 @@ namespace RdfParserModule.Extensions
                 return null;
 
             return JsonConvert.DeserializeObject<List<Unit>>(attribute.UnitString, DefaultSettings.SerializerSettings);
+        }
+
+        public static string IriDatum(this Attribute attribute)
+        {
+            return $"{attribute.Iri}-datum";
         }
     }
 }

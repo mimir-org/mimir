@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Reflection;
 using RdfParserModule.Extensions;
@@ -11,35 +11,43 @@ namespace RdfParserModule.Repositories
     public class OntologyRepository : IOntologyRepository
     {
         public IGraph Graph => _graph ??= CreateOntologyGraph();
-        public Dictionary<string, string> Namespaces => _namespaces ??= CreateNamespaces();
+        public TripleStore Store => _store ??= CreateTripleStore();
 
         #region Public methods
 
         /// <summary>
-        /// Build an iri from segments
+        /// Build uri from IRI or a namespace
         /// </summary>
-        /// <param name="prefix"></param>
-        /// <param name="suffix"></param>
-        /// <param name="midFix"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public string BuildIri(string prefix, string suffix, string midFix = "")
+        /// <exception cref="NotSupportedException"></exception>
+        public Uri BuildUri(string value)
         {
-            if (Namespaces.TryGetValue(prefix, out var fullNamespace))
-            {
-                return $"{fullNamespace}{midFix}{suffix}";
-            }
+            if (value.IsValidIri())
+                return new Uri(value);
 
-            if (prefix.ValidPrefix(Graph))
-            {
-                return $"{prefix}{midFix}{suffix}";
-            }
+            var split = value.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            if (split.Length != 2)
+                throw new NotSupportedException($"There is noe support for building Uri from {value}");
 
-            if (prefix.ValidNamespace())
-            {
-                return $"{prefix}/{midFix}{suffix}";
-            }
+            var hasNameSpace = Graph.NamespaceMap.HasNamespace(split[0]);
+            if (!hasNameSpace)
+                throw new NotSupportedException($"There is noe support for building Uri from {value}. Namespace {split[0]} is missing.");
 
-            return $"{prefix}{midFix}{suffix}";
+            var iri = $"{Graph.NamespaceMap.GetNamespaceUri(split[0])}{split[1]}";
+            return new Uri(iri);
+        }
+
+        /// <summary>
+        /// Load graph data into TripleStore
+        /// </summary>
+        /// <param name="data"></param>
+        public void LoadData(string data)
+        {
+            IGraph graph = new Graph();
+            graph.LoadFromString(data);
+            Graph.Merge(graph);
+            Store.Add(Graph);
         }
 
         #endregion
@@ -59,24 +67,13 @@ namespace RdfParserModule.Repositories
         }
 
         /// <summary>
-        /// Initialize namespaces
+        /// Create a new instance of a TripleStore
         /// </summary>
-        /// <returns></returns>
-        private static Dictionary<string, string> CreateNamespaces()
+        /// <returns>TripleStore</returns>
+        private static TripleStore CreateTripleStore()
         {
-            return new Dictionary<string, string>
-            {
-                {"owl", "http://www.w3.org/2002/07/owl#"},
-                {"rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#"},
-                {"rdfs", "http://www.w3.org/2000/01/rdf-schema#"},
-                {"xml", "http://www.w3.org/XML/1998/namespace"},
-                {"xsd", "http://www.w3.org/2001/XMLSchema#"},
-                {"imf", "http://example.com/imf#"},
-                {"mimir", "http://example.com/mimir#"},
-                {"lis", "http://standards.iso.org/iso/15926/part14/"},
-                {"sor", "https://rdf.equinor.com/sor/mimir/"},
-                {"eq", "https://rdf.equinor.com/raw/mimir/"}
-            };
+            var store = new TripleStore();
+            return store;
         }
 
         #endregion
@@ -84,7 +81,7 @@ namespace RdfParserModule.Repositories
         #region Private members
 
         private IGraph _graph;
-        private Dictionary<string, string> _namespaces;
+        private TripleStore _store;
 
         #endregion
 

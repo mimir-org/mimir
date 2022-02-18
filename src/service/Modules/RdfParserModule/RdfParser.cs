@@ -56,10 +56,11 @@ namespace RdfParserModule
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
 
-            var rdf = new RdfDeconstructor(_mapper);
-            rdf.MakeProject(valueAsString);
+            //var rdf = new RdfDeconstructor(_mapper);
+            //rdf.MakeProject(valueAsString);
+            var project = _ontologyService.BuildProject(valueAsString);
 
-            return Task.FromResult(rdf.Project);
+            return Task.FromResult(project);
         }
 
         public FileFormat GetFileFormat()

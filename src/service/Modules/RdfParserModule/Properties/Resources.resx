@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,163 +117,148 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="allowedUnit" xml:space="preserve">
-    <value>imf:allowedUnit</value>
-  </data>
-  <data name="Aspect" xml:space="preserve">
-    <value>imf:Aspect</value>
-  </data>
-  <data name="AspectObject" xml:space="preserve">
-    <value>imf:AspectObject</value>
-  </data>
-  <data name="Attribute" xml:space="preserve">
-    <value>imf:Attribute</value>
-  </data>
-  <data name="BiTerminal" xml:space="preserve">
-    <value>imf:BiTerminal</value>
-  </data>
-  <data name="connectedTo" xml:space="preserve">
+  <data name="ConnectedTo" xml:space="preserve">
     <value>imf:connectedTo</value>
   </data>
-  <data name="context" xml:space="preserve">
-    <value>imf:context</value>
+  <data name="DateTime" xml:space="preserve">
+    <value>xsd:dateTime</value>
   </data>
-  <data name="desc" xml:space="preserve">
+  <data name="DatumUOM" xml:space="preserve">
+    <value>lis:datumUOM</value>
+  </data>
+  <data name="DatumValue" xml:space="preserve">
+    <value>lis:datumValue</value>
+  </data>
+  <data name="Desc" xml:space="preserve">
     <value>rdfs:comment</value>
   </data>
-  <data name="domain" xml:space="preserve">
+  <data name="Domain" xml:space="preserve">
     <value>mimir:domain</value>
   </data>
-  <data name="equinorPrefix" xml:space="preserve">
-    <value>eq:</value>
+  <data name="Float" xml:space="preserve">
+    <value>xsd:float</value>
   </data>
   <data name="FSB" xml:space="preserve">
-    <value>http://example.com/imf#FunctionalSystemBlock</value>
+    <value>imf:FunctionalSystemBlock</value>
   </data>
   <data name="FSBTerminal" xml:space="preserve">
-    <value>http://example.com/imf#FunctionalSystemBlockTerminal</value>
+    <value>imf:FunctionalSystemBlockTerminal</value>
   </data>
-  <data name="fulfilledBy" xml:space="preserve">
+  <data name="FulfilledBy" xml:space="preserve">
     <value>imf:fulfilledBy</value>
   </data>
-  <data name="Function" xml:space="preserve">
-    <value>imf:Function</value>
-  </data>
-  <data name="FunctionAspectObject" xml:space="preserve">
-    <value>imf:FunctionAspectObject</value>
-  </data>
-  <data name="hasActivity" xml:space="preserve">
-    <value>imf:hasActivity</value>
-  </data>
-  <data name="hasAspect" xml:space="preserve">
+  <data name="HasAspect" xml:space="preserve">
     <value>imf:hasAspect</value>
   </data>
-  <data name="hasAttribute" xml:space="preserve">
-    <value>imf:hasAttribute</value>
+  <data name="HasBlockPositionX" xml:space="preserve">
+    <value>mimir:hasBlockPosX</value>
   </data>
-  <data name="hasChild" xml:space="preserve">
+  <data name="HasBlockPositionY" xml:space="preserve">
+    <value>mimir:hasBlockPosY</value>
+  </data>
+  <data name="HasChild" xml:space="preserve">
     <value>imf:hasChild</value>
   </data>
-  <data name="hasInputTerminal" xml:space="preserve">
-    <value>http://example.com/imf#hasInTerminal</value>
+  <data name="HasColor" xml:space="preserve">
+    <value>mimir:color</value>
   </data>
-  <data name="hasLocation" xml:space="preserve">
+  <data name="HasInputTerminal" xml:space="preserve">
+    <value>imf:hasInTerminal</value>
+  </data>
+  <data name="HasLocation" xml:space="preserve">
     <value>imf:hasLocation</value>
   </data>
-  <data name="hasMasterProject" xml:space="preserve">
+  <data name="HasMasterProject" xml:space="preserve">
     <value>mimir:hasMasterProject</value>
   </data>
-  <data name="hasOutputTerminal" xml:space="preserve">
-    <value>http://example.com/imf#hasOutTerminal</value>
+  <data name="HasOutputTerminal" xml:space="preserve">
+    <value>imf:hasOutTerminal</value>
   </data>
-  <data name="hasParent" xml:space="preserve">
+  <data name="HasOwner" xml:space="preserve">
+    <value>imf:hasOwner</value>
+  </data>
+  <data name="HasParent" xml:space="preserve">
     <value>imf:hasParent</value>
   </data>
-  <data name="hasTerminal" xml:space="preserve">
-    <value>imf:hasTerminal</value>
+  <data name="HasPhysicalQuantity" xml:space="preserve">
+    <value>lis:hasPhysicalQuantity</value>
   </data>
-  <data name="hasValue" xml:space="preserve">
-    <value>imf:hasValue</value>
+  <data name="HasPositionX" xml:space="preserve">
+    <value>mimir:hasPosX</value>
   </data>
-  <data name="imfPrefix" xml:space="preserve">
-    <value>imf:</value>
+  <data name="HasPositionY" xml:space="preserve">
+    <value>mimir:hasPosY</value>
+  </data>
+  <data name="HasPurpose" xml:space="preserve">
+    <value>mimir:hasPurpose</value>
+  </data>
+  <data name="HasSymbol" xml:space="preserve">
+    <value>mimir:symbol</value>
   </data>
   <data name="InputTerminal" xml:space="preserve">
-    <value>imf:InTerminal</value>
-  </data>
-  <data name="Installed" xml:space="preserve">
-    <value>imf:Installed</value>
-  </data>
-  <data name="installedAs" xml:space="preserve">
-    <value>imf:installedAs</value>
-  </data>
-  <data name="InstalledAspectObject" xml:space="preserve">
-    <value>imf:InstalledAspectObject</value>
+    <value>imf:inTerminal</value>
   </data>
   <data name="IntegratedObject" xml:space="preserve">
-    <value>imf:IntegratedObject</value>
+    <value>imf:integratedObject</value>
   </data>
   <data name="Interface" xml:space="preserve">
-    <value>imf:Interface</value>
+    <value>imf:interface</value>
   </data>
-  <data name="isAspectOf" xml:space="preserve">
+  <data name="IsAspectOf" xml:space="preserve">
     <value>imf:isAspectOf</value>
   </data>
-  <data name="label" xml:space="preserve">
+  <data name="Label" xml:space="preserve">
     <value>rdfs:label</value>
   </data>
-  <data name="Location" xml:space="preserve">
-    <value>imf:Location</value>
+  <data name="LastUpdated" xml:space="preserve">
+    <value>imf:lastUpdated</value>
   </data>
-  <data name="LocationAspectObject" xml:space="preserve">
-    <value>imf:LocationAspectObject</value>
-  </data>
-  <data name="mimirPrefix" xml:space="preserve">
-    <value>mimir:</value>
+  <data name="Name" xml:space="preserve">
+    <value>mimir:name</value>
   </data>
   <data name="OutputTerminal" xml:space="preserve">
-    <value>imf:OutTerminal</value>
+    <value>imf:outTerminal</value>
   </data>
-  <data name="PrimaryAspect" xml:space="preserve">
-    <value>imf:PrimaryAspect</value>
+  <data name="PhysicalQuantity" xml:space="preserve">
+    <value>lis:PhysicalQuantity</value>
   </data>
-  <data name="Product" xml:space="preserve">
-    <value>imf:Product</value>
+  <data name="Project" xml:space="preserve">
+    <value>mimir:project</value>
   </data>
-  <data name="ProductAspectObject" xml:space="preserve">
-    <value>imf:ProductAspectObject</value>
+  <data name="QualityQuantifiedAs" xml:space="preserve">
+    <value>lis:qualityQuantifiedAs</value>
   </data>
-  <data name="project" xml:space="preserve">
-    <value>mimir:Project</value>
+  <data name="RDS" xml:space="preserve">
+    <value>imf:rds</value>
   </data>
-  <data name="RDSCodeIndex" xml:space="preserve">
-    <value>imf:RDSCodeIndex</value>
+  <data name="ScalarQuantityDatum" xml:space="preserve">
+    <value>lis:ScalarQuantityDatum</value>
   </data>
-  <data name="RDSCodePrefix" xml:space="preserve">
-    <value>imf:RDSCodePrefix</value>
-  </data>
-  <data name="SecondaryAspect" xml:space="preserve">
-    <value>imf:SecondaryAspect</value>
-  </data>
-  <data name="selectedUnit" xml:space="preserve">
-    <value>imf:selectedUnit</value>
-  </data>
-  <data name="sorPrefix" xml:space="preserve">
-    <value>sor:</value>
+  <data name="Scale" xml:space="preserve">
+    <value>lis:Scale</value>
   </data>
   <data name="StreamTerminal" xml:space="preserve">
-    <value>http://example.com/imf#StreamTerminal</value>
+    <value>imf:streamTerminal</value>
   </data>
-  <data name="subClassOf" xml:space="preserve">
+  <data name="SubClassOf" xml:space="preserve">
     <value>rdfs:subClassOf</value>
   </data>
-  <data name="Terminal" xml:space="preserve">
-    <value>http://example.com/imf#Terminal</value>
+  <data name="Transmitter" xml:space="preserve">
+    <value>mimir:Transmitter</value>
   </data>
   <data name="Transport" xml:space="preserve">
-    <value>http://example.com/imf#Transport</value>
+    <value>imf:transport</value>
   </data>
-  <data name="type" xml:space="preserve">
+  <data name="Type" xml:space="preserve">
     <value>rdf:type</value>
+  </data>
+  <data name="UpdatedBy" xml:space="preserve">
+    <value>imf:updatedBy</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>owl:versionInfo</value>
+  </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>mimir:visibility</value>
   </data>
 </root>

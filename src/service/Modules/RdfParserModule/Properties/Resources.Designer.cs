@@ -19,7 +19,7 @@ namespace RdfParserModule.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -61,97 +61,70 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:allowedUnit.
-        /// </summary>
-        internal static string allowedUnit {
-            get {
-                return ResourceManager.GetString("allowedUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:Aspect.
-        /// </summary>
-        internal static string Aspect {
-            get {
-                return ResourceManager.GetString("Aspect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:AspectObject.
-        /// </summary>
-        internal static string AspectObject {
-            get {
-                return ResourceManager.GetString("AspectObject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:Attribute.
-        /// </summary>
-        internal static string Attribute {
-            get {
-                return ResourceManager.GetString("Attribute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:BiTerminal.
-        /// </summary>
-        internal static string BiTerminal {
-            get {
-                return ResourceManager.GetString("BiTerminal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to imf:connectedTo.
         /// </summary>
-        internal static string connectedTo {
+        internal static string ConnectedTo {
             get {
-                return ResourceManager.GetString("connectedTo", resourceCulture);
+                return ResourceManager.GetString("ConnectedTo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:context.
+        ///   Looks up a localized string similar to xsd:dateTime.
         /// </summary>
-        internal static string context {
+        internal static string DateTime {
             get {
-                return ResourceManager.GetString("context", resourceCulture);
+                return ResourceManager.GetString("DateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lis:datumUOM.
+        /// </summary>
+        internal static string DatumUOM {
+            get {
+                return ResourceManager.GetString("DatumUOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lis:datumValue.
+        /// </summary>
+        internal static string DatumValue {
+            get {
+                return ResourceManager.GetString("DatumValue", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to rdfs:comment.
         /// </summary>
-        internal static string desc {
+        internal static string Desc {
             get {
-                return ResourceManager.GetString("desc", resourceCulture);
+                return ResourceManager.GetString("Desc", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to mimir:domain.
         /// </summary>
-        internal static string domain {
+        internal static string Domain {
             get {
-                return ResourceManager.GetString("domain", resourceCulture);
+                return ResourceManager.GetString("Domain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eq:.
+        ///   Looks up a localized string similar to xsd:float.
         /// </summary>
-        internal static string equinorPrefix {
+        internal static string Float {
             get {
-                return ResourceManager.GetString("equinorPrefix", resourceCulture);
+                return ResourceManager.GetString("Float", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://example.com/imf#FunctionalSystemBlock.
+        ///   Looks up a localized string similar to imf:FunctionalSystemBlock.
         /// </summary>
         internal static string FSB {
             get {
@@ -160,7 +133,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://example.com/imf#FunctionalSystemBlockTerminal.
+        ///   Looks up a localized string similar to imf:FunctionalSystemBlockTerminal.
         /// </summary>
         internal static string FSBTerminal {
             get {
@@ -171,140 +144,158 @@ namespace RdfParserModule.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:fulfilledBy.
         /// </summary>
-        internal static string fulfilledBy {
+        internal static string FulfilledBy {
             get {
-                return ResourceManager.GetString("fulfilledBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:Function.
-        /// </summary>
-        internal static string Function {
-            get {
-                return ResourceManager.GetString("Function", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:FunctionAspectObject.
-        /// </summary>
-        internal static string FunctionAspectObject {
-            get {
-                return ResourceManager.GetString("FunctionAspectObject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:hasActivity.
-        /// </summary>
-        internal static string hasActivity {
-            get {
-                return ResourceManager.GetString("hasActivity", resourceCulture);
+                return ResourceManager.GetString("FulfilledBy", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to imf:hasAspect.
         /// </summary>
-        internal static string hasAspect {
+        internal static string HasAspect {
             get {
-                return ResourceManager.GetString("hasAspect", resourceCulture);
+                return ResourceManager.GetString("HasAspect", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasAttribute.
+        ///   Looks up a localized string similar to mimir:hasBlockPosX.
         /// </summary>
-        internal static string hasAttribute {
+        internal static string HasBlockPositionX {
             get {
-                return ResourceManager.GetString("hasAttribute", resourceCulture);
+                return ResourceManager.GetString("HasBlockPositionX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:hasBlockPosY.
+        /// </summary>
+        internal static string HasBlockPositionY {
+            get {
+                return ResourceManager.GetString("HasBlockPositionY", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to imf:hasChild.
         /// </summary>
-        internal static string hasChild {
+        internal static string HasChild {
             get {
-                return ResourceManager.GetString("hasChild", resourceCulture);
+                return ResourceManager.GetString("HasChild", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://example.com/imf#hasInTerminal.
+        ///   Looks up a localized string similar to mimir:color.
         /// </summary>
-        internal static string hasInputTerminal {
+        internal static string HasColor {
             get {
-                return ResourceManager.GetString("hasInputTerminal", resourceCulture);
+                return ResourceManager.GetString("HasColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:hasInTerminal.
+        /// </summary>
+        internal static string HasInputTerminal {
+            get {
+                return ResourceManager.GetString("HasInputTerminal", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to imf:hasLocation.
         /// </summary>
-        internal static string hasLocation {
+        internal static string HasLocation {
             get {
-                return ResourceManager.GetString("hasLocation", resourceCulture);
+                return ResourceManager.GetString("HasLocation", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasMasterProject.
         /// </summary>
-        internal static string hasMasterProject {
+        internal static string HasMasterProject {
             get {
-                return ResourceManager.GetString("hasMasterProject", resourceCulture);
+                return ResourceManager.GetString("HasMasterProject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://example.com/imf#hasOutTerminal.
+        ///   Looks up a localized string similar to imf:hasOutTerminal.
         /// </summary>
-        internal static string hasOutputTerminal {
+        internal static string HasOutputTerminal {
             get {
-                return ResourceManager.GetString("hasOutputTerminal", resourceCulture);
+                return ResourceManager.GetString("HasOutputTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:hasOwner.
+        /// </summary>
+        internal static string HasOwner {
+            get {
+                return ResourceManager.GetString("HasOwner", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to imf:hasParent.
         /// </summary>
-        internal static string hasParent {
+        internal static string HasParent {
             get {
-                return ResourceManager.GetString("hasParent", resourceCulture);
+                return ResourceManager.GetString("HasParent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasTerminal.
+        ///   Looks up a localized string similar to lis:hasPhysicalQuantity.
         /// </summary>
-        internal static string hasTerminal {
+        internal static string HasPhysicalQuantity {
             get {
-                return ResourceManager.GetString("hasTerminal", resourceCulture);
+                return ResourceManager.GetString("HasPhysicalQuantity", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:hasValue.
+        ///   Looks up a localized string similar to mimir:hasPosX.
         /// </summary>
-        internal static string hasValue {
+        internal static string HasPositionX {
             get {
-                return ResourceManager.GetString("hasValue", resourceCulture);
+                return ResourceManager.GetString("HasPositionX", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:.
+        ///   Looks up a localized string similar to mimir:hasPosY.
         /// </summary>
-        internal static string imfPrefix {
+        internal static string HasPositionY {
             get {
-                return ResourceManager.GetString("imfPrefix", resourceCulture);
+                return ResourceManager.GetString("HasPositionY", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:InTerminal.
+        ///   Looks up a localized string similar to mimir:hasPurpose.
+        /// </summary>
+        internal static string HasPurpose {
+            get {
+                return ResourceManager.GetString("HasPurpose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:symbol.
+        /// </summary>
+        internal static string HasSymbol {
+            get {
+                return ResourceManager.GetString("HasSymbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:inTerminal.
         /// </summary>
         internal static string InputTerminal {
             get {
@@ -313,34 +304,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:Installed.
-        /// </summary>
-        internal static string Installed {
-            get {
-                return ResourceManager.GetString("Installed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:installedAs.
-        /// </summary>
-        internal static string installedAs {
-            get {
-                return ResourceManager.GetString("installedAs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:InstalledAspectObject.
-        /// </summary>
-        internal static string InstalledAspectObject {
-            get {
-                return ResourceManager.GetString("InstalledAspectObject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:IntegratedObject.
+        ///   Looks up a localized string similar to imf:integratedObject.
         /// </summary>
         internal static string IntegratedObject {
             get {
@@ -349,7 +313,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:Interface.
+        ///   Looks up a localized string similar to imf:interface.
         /// </summary>
         internal static string Interface {
             get {
@@ -360,50 +324,41 @@ namespace RdfParserModule.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:isAspectOf.
         /// </summary>
-        internal static string isAspectOf {
+        internal static string IsAspectOf {
             get {
-                return ResourceManager.GetString("isAspectOf", resourceCulture);
+                return ResourceManager.GetString("IsAspectOf", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to rdfs:label.
         /// </summary>
-        internal static string label {
+        internal static string Label {
             get {
-                return ResourceManager.GetString("label", resourceCulture);
+                return ResourceManager.GetString("Label", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:Location.
+        ///   Looks up a localized string similar to imf:lastUpdated.
         /// </summary>
-        internal static string Location {
+        internal static string LastUpdated {
             get {
-                return ResourceManager.GetString("Location", resourceCulture);
+                return ResourceManager.GetString("LastUpdated", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:LocationAspectObject.
+        ///   Looks up a localized string similar to mimir:name.
         /// </summary>
-        internal static string LocationAspectObject {
+        internal static string Name {
             get {
-                return ResourceManager.GetString("LocationAspectObject", resourceCulture);
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:.
-        /// </summary>
-        internal static string mimirPrefix {
-            get {
-                return ResourceManager.GetString("mimirPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:OutTerminal.
+        ///   Looks up a localized string similar to imf:outTerminal.
         /// </summary>
         internal static string OutputTerminal {
             get {
@@ -412,88 +367,61 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:PrimaryAspect.
+        ///   Looks up a localized string similar to lis:PhysicalQuantity.
         /// </summary>
-        internal static string PrimaryAspect {
+        internal static string PhysicalQuantity {
             get {
-                return ResourceManager.GetString("PrimaryAspect", resourceCulture);
+                return ResourceManager.GetString("PhysicalQuantity", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:Product.
+        ///   Looks up a localized string similar to mimir:project.
         /// </summary>
-        internal static string Product {
+        internal static string Project {
             get {
-                return ResourceManager.GetString("Product", resourceCulture);
+                return ResourceManager.GetString("Project", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:ProductAspectObject.
+        ///   Looks up a localized string similar to lis:qualityQuantifiedAs.
         /// </summary>
-        internal static string ProductAspectObject {
+        internal static string QualityQuantifiedAs {
             get {
-                return ResourceManager.GetString("ProductAspectObject", resourceCulture);
+                return ResourceManager.GetString("QualityQuantifiedAs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:Project.
+        ///   Looks up a localized string similar to imf:rds.
         /// </summary>
-        internal static string project {
+        internal static string RDS {
             get {
-                return ResourceManager.GetString("project", resourceCulture);
+                return ResourceManager.GetString("RDS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:RDSCodeIndex.
+        ///   Looks up a localized string similar to lis:ScalarQuantityDatum.
         /// </summary>
-        internal static string RDSCodeIndex {
+        internal static string ScalarQuantityDatum {
             get {
-                return ResourceManager.GetString("RDSCodeIndex", resourceCulture);
+                return ResourceManager.GetString("ScalarQuantityDatum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:RDSCodePrefix.
+        ///   Looks up a localized string similar to lis:Scale.
         /// </summary>
-        internal static string RDSCodePrefix {
+        internal static string Scale {
             get {
-                return ResourceManager.GetString("RDSCodePrefix", resourceCulture);
+                return ResourceManager.GetString("Scale", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:SecondaryAspect.
-        /// </summary>
-        internal static string SecondaryAspect {
-            get {
-                return ResourceManager.GetString("SecondaryAspect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to imf:selectedUnit.
-        /// </summary>
-        internal static string selectedUnit {
-            get {
-                return ResourceManager.GetString("selectedUnit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to sor:.
-        /// </summary>
-        internal static string sorPrefix {
-            get {
-                return ResourceManager.GetString("sorPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to http://example.com/imf#StreamTerminal.
+        ///   Looks up a localized string similar to imf:streamTerminal.
         /// </summary>
         internal static string StreamTerminal {
             get {
@@ -504,23 +432,23 @@ namespace RdfParserModule.Properties {
         /// <summary>
         ///   Looks up a localized string similar to rdfs:subClassOf.
         /// </summary>
-        internal static string subClassOf {
+        internal static string SubClassOf {
             get {
-                return ResourceManager.GetString("subClassOf", resourceCulture);
+                return ResourceManager.GetString("SubClassOf", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://example.com/imf#Terminal.
+        ///   Looks up a localized string similar to mimir:Transmitter.
         /// </summary>
-        internal static string Terminal {
+        internal static string Transmitter {
             get {
-                return ResourceManager.GetString("Terminal", resourceCulture);
+                return ResourceManager.GetString("Transmitter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://example.com/imf#Transport.
+        ///   Looks up a localized string similar to imf:transport.
         /// </summary>
         internal static string Transport {
             get {
@@ -531,9 +459,36 @@ namespace RdfParserModule.Properties {
         /// <summary>
         ///   Looks up a localized string similar to rdf:type.
         /// </summary>
-        internal static string type {
+        internal static string Type {
             get {
-                return ResourceManager.GetString("type", resourceCulture);
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:updatedBy.
+        /// </summary>
+        internal static string UpdatedBy {
+            get {
+                return ResourceManager.GetString("UpdatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to owl:versionInfo.
+        /// </summary>
+        internal static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:visibility.
+        /// </summary>
+        internal static string Visibility {
+            get {
+                return ResourceManager.GetString("Visibility", resourceCulture);
             }
         }
     }
