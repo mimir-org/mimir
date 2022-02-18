@@ -1,6 +1,5 @@
 import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
 import { ModuleContent } from "./ModuleBody.styled";
-import { Dispatch, SetStateAction } from "react";
 import { CollectionsComponent } from "./components/collections/CollectionsComponent";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
 import { TemplatesComponent } from "./components/templates/TemplatesComponent";
@@ -14,8 +13,8 @@ interface Props {
   setCollectionState: (action: CollectionsActions) => void;
   searchString;
   selectedElement: string;
-  setSelectedElement: Dispatch<SetStateAction<string>>;
-  setSelectedElementType: Dispatch<SetStateAction<ObjectType>>;
+  setSelectedElement: (value: string) => void;
+  setSelectedElementType: (value: ObjectType) => void;
   aspectFilters: Aspect[];
 }
 

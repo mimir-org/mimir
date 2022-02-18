@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dispatch } from "redux";
 import { Color } from "../../../../../../../../compLibrary/colors";
 import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common";
@@ -16,8 +16,8 @@ interface Props {
   item: LibItem;
   customCategory: LibraryCategory;
   selectedElement: string;
-  setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
+  setSelectedElement: (value: string) => void;
+  setSelectedElementType: (value: ObjectType) => void;
   isCustomCategory: boolean;
   dispatch: Dispatch;
   selectedTypes: LibItem[];

@@ -10,8 +10,8 @@ interface Props {
   customCategory: LibraryCategory;
   category: LibraryCategory;
   selectedElement: string;
-  setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
+  setSelectedElement: (value: string) => void;
+  setSelectedElementType: (value: ObjectType) => void;
   dispatch: Dispatch;
   searchList?: LibraryCategory[];
   selectedTypes: LibItem[];

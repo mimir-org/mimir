@@ -7,7 +7,7 @@ import { OnCreateCollection } from "../handlers";
 
 interface Props {
   collectionName: string;
-  setCollectionName: (value: React.SetStateAction<string>) => void;
+  setCollectionName: (value: string) => void;
   selectedTypes: LibItem[];
   dispatch: Dispatch;
 }

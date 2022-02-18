@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import { SearchInput } from "../../../../../compLibrary/input/text";
 import { GetLibrarySearchBoxPlaceholder } from "./helpers/GetLibrarySearchBoxPlaceholder";
 import { SearchAreaWrapper } from "./SearchArea.styled";
@@ -18,7 +19,7 @@ export const SearchArea = ({ activeTab, search }: Props) => {
   // const [searchCollections, setSearchCollections] = useState(false);
   // const [searchLatest, setSearchLatest] = useState(false);
   // const [searchOther, setSearchOther] = useState(false);
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => search(e.target.value);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => search(e.target.value);
 
   return (
     <SearchAreaWrapper>

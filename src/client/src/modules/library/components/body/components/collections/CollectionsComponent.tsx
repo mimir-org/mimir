@@ -11,8 +11,8 @@ interface Props {
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
   selectedElement: string;
-  setSelectedElement: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedElementType: React.Dispatch<React.SetStateAction<ObjectType>>;
+  setSelectedElement: (value: string) => void;
+  setSelectedElementType: (value: ObjectType) => void;
   aspectFilters: Aspect[];
 }
 
