@@ -3,7 +3,9 @@ import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
 import { MODULE_TYPE } from "../../models/project";
-import { ModuleHeader, ModuleBody, ModuleFooter } from ".";
+import { ModuleHeader } from "./components/header/ModuleHeader";
+import { ModuleBody } from "./components/body/ModuleBody";
+import { ModuleFooter } from "./components/footer/ModuleFooter";
 import { LibraryTab, CollectionsActions, ObjectType, LibItem, Aspect } from "../../models";
 import {
   useAppSelector,
@@ -12,17 +14,18 @@ import {
   libOpenSelector,
   librarySelector,
 } from "../../redux/store";
+
 interface Props {
   dispatch: Dispatch;
 }
 
 /**
- * Component for Mimir's type library, templates and sub-projects
+ * Component for Mimir's type library, templates and subprojects
  * @param interface
  * @returns a module with tabs and its contents
  */
 
-const LibraryModule = ({ dispatch }: Props) => {
+export const LibraryModule = ({ dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
@@ -87,5 +90,3 @@ const LibraryModule = ({ dispatch }: Props) => {
     </AnimatedModule>
   );
 };
-
-export default LibraryModule;
