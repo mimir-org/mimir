@@ -38,6 +38,7 @@ const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, s
           isInput={isInput}
           terminals={terminals}
           hasActiveTerminals={terminals.some((conn) => IsConnectorVisible(conn))}
+          isParent={isParent}
           onClick={onClick}
           onBlur={() => Click.OnBlur(setShowMenu, showMenu)}
         />

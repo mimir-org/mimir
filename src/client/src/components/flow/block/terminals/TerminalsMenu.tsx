@@ -13,6 +13,7 @@ interface Props {
   isInput?: boolean;
   terminals: Connector[];
   hasActiveTerminals: boolean;
+  isParent: boolean;
   onClick: (conn: Connector, isInput: boolean) => void;
   onBlur: () => void;
 }
@@ -22,9 +23,10 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, onClick, onBlur }: Props) => {
+const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
   const isElectroViewEnabled = useAppSelector(electroSelector);
-  const menuOffset = !isElectroViewEnabled && hasActiveTerminals ? "25px" : "8px";
+  let menuOffset = !isElectroViewEnabled && hasActiveTerminals ? "25px" : "8px";
+  if (isParent) menuOffset = "-195px";
 
   return (
     <TerminalsBox

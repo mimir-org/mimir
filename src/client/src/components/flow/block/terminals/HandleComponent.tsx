@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType } from "../../block/helpers";
-import { GetTerminalColor, IsValidBlockConnection, SetPartOfXPos, SetPartOfYPos, ShowHandle } from "./helpers";
+import { GetTerminalColor, IsValidBlockConnection, ShowHandle } from "./helpers";
 import { HandleBox, HandleContainer } from "./styled";
 import { IsPartOf } from "../../helpers";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
@@ -46,15 +46,12 @@ const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
           return (
             <HandleBox
               visible={visible && !IsPartOf(conn)}
-              isPartOf={IsPartOf(conn)}
-              partOfPosX={SetPartOfXPos(pos, isElectro)}
-              partOfPosY={SetPartOfYPos(pos, isElectro)}
               id={"handle-" + conn.id}
               key={conn.id}
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
             >
-              {!IsPartOf(conn) && <TerminalIcon conn={conn} color={color} className={className} />}
+              <TerminalIcon conn={conn} color={color} className={className} />
               <Handle
                 type={type}
                 position={pos}
