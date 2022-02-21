@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
-import { GetBlockHandleType } from "../../block/helpers";
+import { GetBlockHandleType } from "../helpers";
 import { GetTerminalColor, IsValidBlockConnection, ShowHandle } from "./helpers";
 import { HandleBox, HandleContainer } from "./styled";
 import { IsPartOf } from "../../helpers";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { TerminalIcon } from ".";
+import { TerminalIcon } from "../terminals/components";
 
 interface Props {
   node: Node;

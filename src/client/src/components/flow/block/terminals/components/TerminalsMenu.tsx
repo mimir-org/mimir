@@ -1,8 +1,8 @@
-import { GetAspectColor } from "../../../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../models";
-import { SetTerminalsMenuOffset } from "./helpers";
-import { TerminalsBox } from "./styled";
-import { electroSelector, useAppSelector } from "../../../../redux/store";
+import { GetAspectColor } from "../../../../../helpers";
+import { AspectColorType, Connector, Node } from "../../../../../models";
+import { SetTerminalsMenuOffset } from "../helpers";
+import { TerminalsBox } from "../styled";
+import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { TerminalsMenuElement } from ".";
 
 interface Props {

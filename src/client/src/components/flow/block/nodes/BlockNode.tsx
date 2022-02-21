@@ -3,7 +3,7 @@ import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../models";
-import { HandleComponent } from "../terminals";
+import { HandleComponent } from "../terminals/components";
 import { HandleConnectedOffPageNode, HandleRequiredOffPageNode } from "./helpers/offPage";
 import { FilterTerminals } from "../helpers";
 import { OnConnectorClick } from "./handlers";

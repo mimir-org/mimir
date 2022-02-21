@@ -1,4 +1,4 @@
-import { TerminalsMenuComponent } from "../../terminals";
+import { TerminalsMenuComponent } from "../../terminals/TerminalsMenuComponent";
 import { BlockNodeNameBox } from "../../logo/styled";
 import { NodeBoxHeader } from "./styled";
 import { Connector, Node } from "../../../../../models";

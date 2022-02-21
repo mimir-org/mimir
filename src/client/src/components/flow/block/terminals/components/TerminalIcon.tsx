@@ -1,7 +1,7 @@
-import { Connector } from "../../../../models";
-import { IsBidirectionalTerminal } from "../../helpers";
-import { BidirectionalTerminal } from "../../../../assets/icons/bidirectional";
-import { ConnectorIcon } from "../../../../assets/icons/connectors";
+import { Connector } from "../../../../../models";
+import { IsBidirectionalTerminal } from "../../../helpers";
+import { BidirectionalTerminal } from "../../../../../assets/icons/bidirectional";
+import { ConnectorIcon } from "../../../../../assets/icons/connectors";
 
 interface Props {
   conn: Connector;

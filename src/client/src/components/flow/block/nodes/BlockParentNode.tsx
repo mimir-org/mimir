@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent } from "../terminals";
+import { HandleComponent } from "../terminals/components";
 import { OnConnectorClick, ResizeHandler } from "./handlers";
 import { FilterTerminals } from "../helpers";
 import { Connector } from "../../../../models";

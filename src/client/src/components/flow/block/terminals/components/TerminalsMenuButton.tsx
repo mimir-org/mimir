@@ -1,7 +1,7 @@
-import { IsAspectNode } from "../../../../helpers";
-import { GetMenuIcon } from "./helpers";
-import { TerminalsButtonBox } from "./styled";
-import { Connector, Node } from "../../../../models";
+import { IsAspectNode } from "../../../../../helpers";
+import { GetMenuIcon } from "../helpers";
+import { TerminalsButtonBox } from "../styled";
+import { Connector, Node } from "../../../../../models";
 
 interface Props {
   node: Node;
