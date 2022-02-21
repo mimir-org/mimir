@@ -58,7 +58,7 @@ namespace AzureActiveDirectoryModule
                     }
                 }
             };
-            
+
             services.AddApiVersioning(o =>
             {
                 o.AssumeDefaultVersionWhenUnspecified = false;
