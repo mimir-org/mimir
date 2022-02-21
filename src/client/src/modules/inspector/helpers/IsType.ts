@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CREATE_LIBRARY_KIND } from "../../../models/application/CreateLibraryType";
+import { CREATE_LIBRARY_KIND } from "../../../models/data/CreateLibraryType";
 import {
   ATTRIBUTE_KIND,
   CONNECTOR_KIND,

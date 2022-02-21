@@ -41,7 +41,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node?.connectors, secondaryNode));
+    setTerminals(FilterTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {

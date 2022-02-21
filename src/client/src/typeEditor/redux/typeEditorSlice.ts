@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Size } from "../../compLibrary/size";
 import { ApiError } from "../../models/webclient";
-import { defaultCreateLibraryType, fromJsonCreateLibraryType } from "../../models/application/CreateLibraryType";
+import { defaultCreateLibraryType, fromJsonCreateLibraryType } from "../../models/data/CreateLibraryType";
 import {
   FetchingBlobDataActionFinished,
   FetchingSimpleTypesActionFinished,

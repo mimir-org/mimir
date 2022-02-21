@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/";
 import { InspectorModule } from "../../modules/inspector";
-import { LibraryModule } from "../../modules/newLibrary";
+import { LibraryModule } from "../../modules/library/LibraryModule";
 import { ProjectSubMenus } from "../menus/projectMenu";
 import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
