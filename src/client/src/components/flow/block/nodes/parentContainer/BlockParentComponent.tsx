@@ -16,6 +16,7 @@ interface Props {
   inputTerminals: Connector[];
   outputTerminals: Connector[];
   isNavigationActive: boolean;
+  explorerOpen: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
   onConnectorClick: (conn: Connector, isInput: boolean) => void;
@@ -33,6 +34,7 @@ const BlockParentComponent = ({
   inputTerminals,
   outputTerminals,
   isNavigationActive,
+  explorerOpen,
   onNavigateUpClick,
   onNavigateDownClick,
   onConnectorClick,
@@ -43,7 +45,7 @@ const BlockParentComponent = ({
   const isLocation = IsLocation(node);
 
   return (
-    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
+    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size} explorerOpen={explorerOpen}>
       <BlockParentBanner
         node={node}
         inputTerminals={inputTerminals}

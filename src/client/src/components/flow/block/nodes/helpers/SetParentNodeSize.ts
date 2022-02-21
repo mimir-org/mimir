@@ -19,9 +19,9 @@ const SetParentNodeSize = (secondaryNode: boolean, libOpen: boolean, explorerOpe
 };
 
 export function SetMarginX(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
-  if (libOpen && explorerOpen) return secondaryNode ? 170 : Size.ModuleOpen + 250;
-  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 40 : Size.ModuleOpen - 60;
-  if (!libOpen && !explorerOpen) return secondaryNode ? -120 : -40;
+  if (libOpen && explorerOpen) return secondaryNode ? 170 : Size.ModuleOpen + 410;
+  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 40 : Size.ModuleOpen + 20;
+  if (!libOpen && !explorerOpen) return secondaryNode ? -120 : 40;
 }
 
 export default SetParentNodeSize;
