@@ -1,12 +1,9 @@
-import { GetAspectColor, IsConnectorVisible } from "../../../../helpers";
+import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../models";
-import { GetTerminalColor } from "./helpers";
-import { BidirectionalBox, ColorTag, TerminalsBox, TerminalsElement } from "./styled";
-import { Checkbox } from "../../../../compLibrary/input/checkbox/common";
-import { Color } from "../../../../compLibrary/colors";
+import { SetTerminalsMenuOffset } from "./helpers";
+import { TerminalsBox } from "./styled";
 import { electroSelector, useAppSelector } from "../../../../redux/store";
-import { IsBidirectionalTerminal } from "../../helpers";
-import { BidirectionalIcon } from "../../../../assets/icons/bidirectional";
+import { TerminalsMenuElement } from ".";
 
 interface Props {
   node: Node;
@@ -25,8 +22,7 @@ interface Props {
  */
 const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
   const isElectroViewEnabled = useAppSelector(electroSelector);
-  let menuOffset = !isElectroViewEnabled && hasActiveTerminals ? "25px" : "8px";
-  if (isParent) menuOffset = "-195px";
+  const menuOffset = SetTerminalsMenuOffset(isElectroViewEnabled, hasActiveTerminals, isParent);
 
   return (
     <TerminalsBox
@@ -38,22 +34,7 @@ const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, isParent,
       menuOffset={menuOffset}
     >
       {terminals.map((conn) => (
-        <TerminalsElement key={conn.id}>
-          <Checkbox
-            isChecked={IsConnectorVisible(conn)}
-            onChange={() => onClick(conn, isInput)}
-            color={Color.GreyDark}
-            id={conn.id}
-          />
-          {!IsBidirectionalTerminal(conn) ? (
-            <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
-          ) : (
-            <BidirectionalBox>
-              <BidirectionalIcon fill={GetTerminalColor(conn)} className="icon" />
-              {conn.name}
-            </BidirectionalBox>
-          )}
-        </TerminalsElement>
+        <TerminalsMenuElement key={conn.id} conn={conn} isInput={isInput} onClick={onClick} />
       ))}
     </TerminalsBox>
   );
