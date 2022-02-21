@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using AzureActiveDirectoryModule.Models;
 using Mb.Models.Const;
@@ -39,10 +40,24 @@ namespace AzureActiveDirectoryModule
             services.Configure<AzureActiveDirectoryConfiguration>(activeDirectorySection.Bind);
 
             // Swagger configurations
-            var swaggerConfigurationSection = configuration.GetSection(nameof(SwaggerConfiguration));
-            var swaggerConfiguration = new SwaggerConfiguration();
-            swaggerConfigurationSection.Bind(swaggerConfiguration);
-            services.Configure<SwaggerConfiguration>(swaggerConfigurationSection.Bind);
+            var swaggerConfiguration = new SwaggerConfiguration
+            {
+                Title = "Mimir Services",
+                Description = "Mimir Rest API",
+                Contact = new SwaggerContact
+                {
+                    Name = "Mimir",
+                    Email = "orgmimir@gmail.com"
+                },
+                Scopes = new List<Scope>
+                {
+                    new()
+                    {
+                        Name = $@"api://{activeDirectoryConfiguration.ClientId}/access_as_user",
+                        Description = "User impersonation scope"
+                    }
+                }
+            };
 
             services.AddApiVersioning(o =>
             {
