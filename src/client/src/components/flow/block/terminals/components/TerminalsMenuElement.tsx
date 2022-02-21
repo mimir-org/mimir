@@ -3,8 +3,7 @@ import { Color } from "../../../../../compLibrary/colors";
 import { Checkbox } from "../../../../../compLibrary/input/checkbox/common";
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
-import { IsBidirectionalTerminal } from "../../../helpers";
-import { GetTerminalColor } from "../helpers";
+import { GetTerminalColor, IsBidirectionalTerminal } from "../../../helpers";
 import { BidirectionalBox, ColorTag, TerminalsElementBox } from "../styled";
 
 interface Props {

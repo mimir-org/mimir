@@ -3,7 +3,7 @@ import { Handle, NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector, Node } from "../../../../../models";
 import { TreeHandleBox, TreeNodeBox } from "./styled";
 import { GetHandleType, IsPartOf } from "../../../helpers";
-import { TreeLogoComponent } from "../../logo";
+import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 import { IsValidTreeConnection, SetTopPos } from "./helpers";
 import { nodeSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";

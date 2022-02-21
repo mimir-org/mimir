@@ -18,6 +18,7 @@ export { default as IsPartOf } from "./IsPartOf";
 export { IsInputTerminal } from "./IsInputTerminal";
 export { IsOutputTerminal } from "./IsOutputTerminal";
 export { IsBidirectionalTerminal } from "./IsBidirectionalTerminal";
+export { default as GetTerminalColor } from "./GetTerminalColor";
 export { IsInputVisible } from "./IsInputVisible";
 export { IsOutputVisible } from "./IsOutputVisible";
 

@@ -3,7 +3,7 @@ import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage"
 import { Node, Project } from "../../../models";
 import { GetSelectedNode, IsOffPage, IsProduct } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
-import { CreateRequiredOffPageNode } from "../block/nodes/helpers/offPage";
+import { CreateRequiredOffPageNode } from "../block/nodes/blockOffPageNode/helpers";
 import { Dispatch } from "redux";
 
 /**

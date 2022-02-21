@@ -15,7 +15,7 @@ interface Props {
 }
 
 /**
- * The main component for the terminals menu on the nodes in BlockView.
+ * The main component for the terminals menu on BlockView nodes.
  * @param interface
  * @returns a button to active the menu, and a drop-down menu containing available terminals.
  */
