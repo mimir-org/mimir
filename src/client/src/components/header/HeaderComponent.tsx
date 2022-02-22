@@ -10,22 +10,20 @@ import { GetCompanyLogoForHeader, IsStartPage } from "../../helpers";
  * The top header in Mimir.
  * @returns a banner with the Mimir and company logo, and buttons for project/user menus.
  */
-export const HeaderComponent = () => {
-  return (
-    <>
-      <HeaderBox id="Header">
-        <LogoBox>
-          <img src={MimirLogo} alt="mimir logo" />
-        </LogoBox>
-        <HeaderRightSection>
-          <ProjectMenuHeaderComponent />
-          <CompanyLogoBox>
-            <img src={GetCompanyLogoForHeader(Config.COMPANY)} alt="company logo" />
-          </CompanyLogoBox>
-          <AvatarComponent />
-        </HeaderRightSection>
-      </HeaderBox>
-      {!IsStartPage() && <ToolbarComponent />}
-    </>
-  );
-};
+export const HeaderComponent = () => (
+  <>
+    <HeaderBox id="Header">
+      <LogoBox>
+        <img src={MimirLogo} alt="mimir logo" />
+      </LogoBox>
+      <HeaderRightSection>
+        <ProjectMenuHeaderComponent />
+        <CompanyLogoBox>
+          <img src={GetCompanyLogoForHeader(Config.COMPANY)} alt="company logo" />
+        </CompanyLogoBox>
+        <AvatarComponent />
+      </HeaderRightSection>
+    </HeaderBox>
+    {!IsStartPage() && <ToolbarComponent />}
+  </>
+);

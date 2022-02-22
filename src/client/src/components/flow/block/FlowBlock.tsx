@@ -10,7 +10,7 @@ import { GetBlockNodeTypes } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
-import { BlockConnectionLine } from "./edges";
+import { BlockConnectionLine } from "./edges/components/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size";
 import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";

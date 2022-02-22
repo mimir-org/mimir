@@ -3,8 +3,8 @@ import { Handle, NodeProps } from "react-flow-renderer";
 import { TreeHandleBox } from "../treeNode/styled";
 import { AspectColorType, Connector, Node } from "../../../../../models";
 import { GetFlowAspectIcon, GetHandleType } from "../../../helpers";
-import { OnMouseLeave } from "./handlers";
-import { AspectNodeBox } from "./styled";
+import { OnMouseLeave } from "./handlers/OnMouseLeave";
+import { AspectNodeBox } from "./styled/AspectNodeBox";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 import { SetTopPos } from "../treeNode/helpers";
 
