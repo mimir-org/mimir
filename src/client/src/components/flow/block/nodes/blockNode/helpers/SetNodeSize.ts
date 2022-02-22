@@ -1,14 +1,14 @@
-import { Size } from "../../../../../compLibrary/size";
-import { IsConnectorVisible } from "../../../../../helpers";
-import { Connector } from "../../../../../models";
-import { IsInputTerminal } from "../../../helpers";
+import { Size } from "../../../../../../compLibrary/size";
+import { IsConnectorVisible } from "../../../../../../helpers";
+import { Connector } from "../../../../../../models";
+import { IsInputTerminal } from "../../../../helpers";
 
 /**
  * Component to resize a Node based on the amount of active terminals.
  * @param terminals
  * @param electro
  */
-const SetNodeSize = (terminals: Connector[], electro: boolean) => {
+export const SetNodeSize = (terminals: Connector[], electro: boolean) => {
   const maximum = 5;
   const increaseY = 25;
   const increaseX = 30;
@@ -33,5 +33,3 @@ const SetNodeSize = (terminals: Connector[], electro: boolean) => {
 
   return { width: width, height: height };
 };
-
-export default SetNodeSize;

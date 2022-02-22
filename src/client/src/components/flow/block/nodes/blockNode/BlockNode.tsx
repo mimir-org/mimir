@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "../helpers/BlockNodeSelectors";
+import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector } from "../../../../../models";
 import { HandleComponent } from "../../terminals/components";
 import { HandleConnectedOffPageNode, HandleRequiredOffPageNode } from "../blockOffPageNode/helpers";
 import { FilterTerminals } from "../../helpers";
-import { OnConnectorClick } from "../handlers";
+import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
-import { SetNodeSize } from "../helpers";
+import { SetNodeSize } from "./helpers/SetNodeSize";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";

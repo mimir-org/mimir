@@ -1,7 +1,7 @@
 export {
   projectSelector,
-  secondaryNodeSelector,
   libOpenSelector,
   explorerSelector,
   nodeSizeSelector,
-} from "../../../../../redux/store/";
+  secondaryNodeSelector,
+} from "../../../../../../redux/store";

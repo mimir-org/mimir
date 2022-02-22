@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as selectors from "../helpers/ParentSelectors";
+import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../terminals/components";
-import { OnConnectorClick, ResizeHandler, OnChildClick, OnParentClick } from "../handlers";
+import { OnConnectorClick } from "../handlers/OnConnectorClick";
+import { OnParentClick, OnChildClick } from "./handlers/";
 import { FilterTerminals } from "../../helpers";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
-import { SetParentNodeSize } from "../helpers";
+import { SetParentNodeSize } from "./helpers/SetParentNodeSize";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
+import { ResizeHandler } from "./handlers/ResizeHandler";
 
 /**
  * Component for the large parent block in BlockView.

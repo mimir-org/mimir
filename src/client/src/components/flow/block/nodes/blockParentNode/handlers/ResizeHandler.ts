@@ -1,11 +1,11 @@
 import { Elements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../../../compLibrary/size";
-import { IsDirectChild } from "../../../../../helpers";
-import { Node } from "../../../../../models";
-import { updateBlockPosition } from "../../../../../redux/store/project/actions";
-import { GetFlowNodeByDataId } from "../../helpers";
-import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
+import { Size } from "../../../../../../compLibrary/size";
+import { IsDirectChild } from "../../../../../../helpers";
+import { Node } from "../../../../../../models";
+import { updateBlockPosition } from "../../../../../../redux/store/project/actions";
+import { GetFlowNodeByDataId } from "../../../helpers";
+import { setBlockNodeSize } from "../../../redux/blockNodeSizeSlice";
 import { SetMarginX } from "../helpers/SetParentNodeSize";
 
 /**
@@ -17,7 +17,7 @@ import { SetMarginX } from "../helpers/SetParentNodeSize";
  * @param elements
  * @param dispatch
  */
-const ResizeHandler = (
+export const ResizeHandler = (
   node: Node,
   secondaryNode: Node,
   libOpen: boolean,
@@ -57,5 +57,3 @@ const ResizeHandler = (
     parentNode.style.width = `${width}px`;
   }
 };
-
-export default ResizeHandler;

@@ -2,7 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { SetMarginX } from "../nodes/helpers/SetParentNodeSize";
+import { SetMarginX } from "../nodes/blockParentNode/helpers/SetParentNodeSize";
 
 /**
  * Component to create a secondary parent node in BlockView.

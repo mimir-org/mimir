@@ -1,6 +1,6 @@
 import { GetCompanyLogoForNode, GetSelectedBlockNode } from "../../../../../../helpers";
 import { Connector, Node } from "../../../../../../models";
-import { OnHover, OnMouseOut } from "../../handlers";
+import { OnHover, OnMouseOut } from "./handlers";
 import { NodeBox, SymbolBox, LogoBox } from "./styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";

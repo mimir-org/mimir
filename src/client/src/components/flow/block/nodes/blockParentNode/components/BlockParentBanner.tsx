@@ -29,7 +29,6 @@ export const BlockParentBanner = ({
   onConnectorClick,
 }: Props) => {
   const prefix = GetRdsPrefix(node);
-  const company = Config.COMPANY;
 
   return (
     <HeaderContainer color={GetAspectColor(node, AspectColorType.Header)}>
@@ -43,7 +42,7 @@ export const BlockParentBanner = ({
         />
         {!node.isRoot && (
           <LogoBox>
-            <img src={GetCompanyLogoForNode(company, node)} alt="logo" />
+            <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
           </LogoBox>
         )}
       </HeaderGroup>
