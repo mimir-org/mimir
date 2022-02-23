@@ -4,7 +4,6 @@ import { LockComponent } from "../shared/components/LockComponent";
 import { Node, Project } from "../../../../models";
 import { TreeAspectElement } from "./TreeAspectElement";
 import { Dispatch } from "redux";
-import { GetWidth } from "../shared/helpers/GetWidth";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
 import { OnTreeChange } from "./handlers/OnTreeChange";
 import { TextResources } from "../../../../assets/text";
@@ -38,7 +37,7 @@ export const TreeAspectComponent = ({
   onToggleExpanded,
   dispatch,
 }: Props) => (
-  <AspectContainer width={GetWidth(nodes)} node={node}>
+  <AspectContainer node={node}>
     <VisibleComponent
       isHidden={node.isHidden}
       isAncestorVisible={isAncestorVisible}

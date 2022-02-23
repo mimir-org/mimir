@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const AspectButton = styled.button<Props>`
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   padding: 5px 10px;
