@@ -10,12 +10,13 @@ export const OffPageBox = styled.div<Props>`
   position: relative;
   align-items: center;
   z-index: 5 !important;
-  bottom: 31px;
+  bottom: 45px;
   border: 1.5px solid;
   border-radius: 5px;
   border-color: ${(props) => (props.isSelected ? props.color : "transparent")};
+  /* background: #fff; */
 
-  .logo {
+  .icon {
     display: flex;
     height: 25px;
     width: 35px;

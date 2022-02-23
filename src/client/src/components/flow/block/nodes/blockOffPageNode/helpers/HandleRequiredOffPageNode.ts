@@ -3,7 +3,7 @@ import { CreateRequiredOffPageNode } from ".";
 import { IsOffPage } from "../../../../../../helpers";
 import { Connector, Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { IsInputTerminal } from "../../../../helpers";
+import { IsInputTerminal, IsInputVisible } from "../../../../helpers";
 
 /**
  * Component to check if any terminals have a required OffPageNode flag. If so, an OffPageNode is created.
@@ -25,9 +25,10 @@ const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSiz
 };
 
 function RequiredOffPageNodeExists(edges: Edge[], connector: Connector) {
-  const existingEdge = IsInputTerminal(connector)
-    ? edges?.find((edge) => edge?.toConnector?.id === connector.id && IsOffPage(edge?.fromNode))
-    : edges?.find((edge) => edge?.fromConnector?.id === connector.id && IsOffPage(edge?.toNode));
+  const existingEdge =
+    IsInputTerminal(connector) || IsInputVisible(connector)
+      ? edges?.find((edge) => edge?.toConnector?.id === connector.id && IsOffPage(edge?.fromNode))
+      : edges?.find((edge) => edge?.fromConnector?.id === connector.id && IsOffPage(edge?.toNode));
 
   return existingEdge !== undefined;
 }

@@ -51,7 +51,8 @@ const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
             >
-              <TerminalIcon conn={conn} color={color} className={className} />
+              {!IsPartOf(conn) && <TerminalIcon conn={conn} color={color} className={className} />}
+
               <Handle
                 type={type}
                 position={pos}

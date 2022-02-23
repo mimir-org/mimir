@@ -22,7 +22,6 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
-  const type = "BlockOffPageNode-";
 
   const offPageInputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
   const offPageOutputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
@@ -52,9 +51,9 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const outputTerminals = data.connectors.filter((t) => IsOutputTerminal(t));
 
   return (
-    <OffPageBox id={type + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>
+    <OffPageBox id={"BlockOffPageNode-" + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>
       <HandleComponent node={data} terminals={inputTerminals} offPage />
-      <OffPageIcon style={{ fill: iconColor }} className="logo" />
+      <OffPageIcon style={{ fill: iconColor }} className="icon" />
       <HandleComponent node={data} terminals={outputTerminals} offPage />
     </OffPageBox>
   );

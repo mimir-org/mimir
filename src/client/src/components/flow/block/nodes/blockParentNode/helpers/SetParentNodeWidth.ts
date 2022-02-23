@@ -19,7 +19,7 @@ export const SetParentNodeWidth = (secondaryNode: boolean, libOpen: boolean, exp
 };
 
 export function SetParentBlockMarginRight(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
-  if (libOpen && explorerOpen) return secondaryNode ? 170 : 730;
-  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 40 : 370;
-  if (!libOpen && !explorerOpen) return secondaryNode ? -120 : 0;
+  if (libOpen && explorerOpen) return secondaryNode ? 230 : 730;
+  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 20 : 370;
+  if (!libOpen && !explorerOpen) return secondaryNode ? -160 : -30;
 }
