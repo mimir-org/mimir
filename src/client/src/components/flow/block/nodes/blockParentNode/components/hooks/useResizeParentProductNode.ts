@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef } from "react";
 import { Dispatch } from "redux";
+import { Node } from "../../../../../../../models";
 import { GetFlowNodeByDataId } from "../../../../helpers";
 
 const MIN_HEIGHT = 700;
@@ -8,11 +9,15 @@ const MIN_WIDTH = 700;
 
 /**
  * Hook to resize Product parentNode in BlockView.
- * @param id
+ * @param node
  * @param resizePanelRef
  * @param dispatch
  */
-export const useResizeParentNode = (id: string, resizePanelRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
+export const useResizeParentProductNode = (
+  node: Node,
+  resizePanelRef: React.MutableRefObject<HTMLDivElement>,
+  dispatch: Dispatch
+) => {
   const parentProductNodeRef = useRef(null);
   const parentProductNodeFlowRef = useRef(null);
   const nodeHeightRef = useRef(window.innerHeight);
@@ -22,8 +27,8 @@ export const useResizeParentNode = (id: string, resizePanelRef: React.MutableRef
   const prevXRef = useRef(nodeWidthRef.current);
 
   useEffect(() => {
-    parentProductNodeRef.current = document.getElementById("parent-block-" + id);
-    parentProductNodeFlowRef.current = GetFlowNodeByDataId(id);
+    parentProductNodeRef.current = document.getElementById("parent-block-" + node.id);
+    parentProductNodeFlowRef.current = GetFlowNodeByDataId(node.id);
   }, []);
 
   const onResizeCallback = useCallback(

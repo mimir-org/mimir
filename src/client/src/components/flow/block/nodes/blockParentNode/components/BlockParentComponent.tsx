@@ -5,7 +5,7 @@ import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../../compLibrary/colors";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
-import { useResizeParentNode } from "./hooks/useResizeParentNode";
+import { useResizeParentProductNode } from "./hooks/useResizeParentProductNode";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { useAppDispatch } from "../../../../../../redux/store";
@@ -16,7 +16,6 @@ interface Props {
   inputTerminals: Connector[];
   outputTerminals: Connector[];
   isNavigationActive: boolean;
-  explorerOpen: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
   onConnectorClick: (conn: Connector, isInput: boolean) => void;
@@ -34,18 +33,17 @@ export const BlockParentComponent = ({
   inputTerminals,
   outputTerminals,
   isNavigationActive,
-  explorerOpen,
   onNavigateUpClick,
   onNavigateDownClick,
   onConnectorClick,
 }: Props) => {
   const dispatch = useAppDispatch();
   const resizePanelRef = useRef(null);
-  useResizeParentNode(node.id, resizePanelRef, dispatch);
+  useResizeParentProductNode(node, resizePanelRef, dispatch);
   const isLocation = IsLocation(node);
 
   return (
-    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size} explorerOpen={explorerOpen}>
+    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
       <BlockParentBanner
         node={node}
         inputTerminals={inputTerminals}

@@ -9,17 +9,17 @@ import { setBlockNodeSize } from "../../../redux/blockNodeSizeSlice";
  * @param explorerOpen
  * @param dispatch
  */
-export const SetParentNodeSize = (secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean, dispatch: Dispatch) => {
+export const SetParentNodeWidth = (secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean, dispatch: Dispatch) => {
   const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
-  const marginX = SetMarginX(secondaryNode, libOpen, explorerOpen);
+  const marginX = SetParentBlockMarginRight(secondaryNode, libOpen, explorerOpen);
   let width = screenWidth - marginX;
 
   if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
   dispatch(setBlockNodeSize({ width, height: window.innerHeight }));
 };
 
-export function SetMarginX(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
-  if (libOpen && explorerOpen) return secondaryNode ? 170 : Size.ModuleOpen + 410;
-  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 40 : Size.ModuleOpen + 20;
-  if (!libOpen && !explorerOpen) return secondaryNode ? -120 : 40;
+export function SetParentBlockMarginRight(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
+  if (libOpen && explorerOpen) return secondaryNode ? 170 : 730;
+  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 40 : 370;
+  if (!libOpen && !explorerOpen) return secondaryNode ? -120 : 0;
 }

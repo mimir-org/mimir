@@ -2,7 +2,7 @@ import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { SetMarginX } from "../nodes/blockParentNode/helpers/SetParentNodeSize";
+import { SetParentBlockMarginRight } from "../nodes/blockParentNode/helpers/SetParentNodeWidth";
 
 /**
  * Component to create a secondary parent node in BlockView.
@@ -16,7 +16,7 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpe
   const type = TextResources.Type_BlockParentNode;
   const screenWidth = window.innerWidth / 2.4;
   const distanceToPrimaryNode = 150;
-  const marginX = SetMarginX(true, libOpen, explorerOpen);
+  const marginX = SetParentBlockMarginRight(true, libOpen, explorerOpen);
 
   const position = {
     x: primaryNode.positionBlockX + screenWidth - marginX + distanceToPrimaryNode,

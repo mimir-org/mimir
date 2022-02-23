@@ -1,12 +1,10 @@
 import { Elements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../../../../compLibrary/size";
 import { IsDirectChild } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
 import { updateBlockPosition } from "../../../../../../redux/store/project/actions";
 import { GetFlowNodeByDataId } from "../../../helpers";
-import { setBlockNodeSize } from "../../../redux/blockNodeSizeSlice";
-import { SetMarginX } from "../helpers/SetParentNodeSize";
+import { SetParentNodeWidth } from "../helpers/SetParentNodeWidth";
 
 /**
  * Component to handle responsive size of a ParentNode in BlockView.
@@ -26,25 +24,18 @@ export const ResizeHandler = (
   dispatch: Dispatch
 ) => {
   let screenWidth: number;
-  let marginX: number;
   let width: number;
 
   const updateScreenSize = () => {
-    screenWidth = secondaryNode ? window.innerWidth / 2.5 : window.innerWidth;
-    marginX = SetMarginX(secondaryNode !== null, libOpen, explorerOpen);
-    width = screenWidth - marginX;
-
-    if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
-    dispatch(setBlockNodeSize({ width, height: window.innerHeight }));
+    SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
     updateChildXPosition();
   };
 
   const updateChildXPosition = () => {
     // Adjust X position relative to parent width
     elements.forEach((elem) => {
-      if (IsDirectChild(elem.data, node)) {
-        if (elem.data.positionBlockX > screenWidth - 100)
-          dispatch(updateBlockPosition(elem.id, elem.data.positionBlockX - 5, elem.data.positionBlockY));
+      if (IsDirectChild(elem.data, node) && elem.data.positionBlockX > screenWidth - 100) {
+        dispatch(updateBlockPosition(elem.id, elem.data.positionBlockX - 5, elem.data.positionBlockY));
       }
     });
   };
@@ -53,7 +44,5 @@ export const ResizeHandler = (
 
   // Update the Flow parentNode
   const parentNode = GetFlowNodeByDataId(node?.id);
-  if (parentNode) {
-    parentNode.style.width = `${width}px`;
-  }
+  if (parentNode) parentNode.style.width = `${width}px`;
 };

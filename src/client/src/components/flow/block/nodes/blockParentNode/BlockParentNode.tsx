@@ -8,7 +8,7 @@ import { OnParentClick, OnChildClick } from "./handlers/";
 import { FilterTerminals } from "../../helpers";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
-import { SetParentNodeSize } from "./helpers/SetParentNodeSize";
+import { SetParentNodeWidth } from "./helpers/SetParentNodeWidth";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
@@ -38,7 +38,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    SetParentNodeSize(secondaryNode !== null, libOpen, explorerOpen, dispatch);
+    SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing
@@ -60,7 +60,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}
-        explorerOpen={explorerOpen}
         onNavigateUpClick={() => OnParentClick(dispatch, node)}
         onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
