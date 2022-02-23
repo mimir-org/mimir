@@ -4,7 +4,6 @@ import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BlockAspectElement } from "./BlockAspectElement";
 import { Dispatch } from "redux";
-import { GetWidth } from "../shared/helpers/GetWidth";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
 import { TextResources } from "../../../../assets/text";
 
@@ -12,7 +11,6 @@ interface Props {
   project: Project;
   username: string;
   node: Node;
-  nodes: Node[];
   selectedNode: Node;
   secondaryNode: Node;
   indent: number;
@@ -26,7 +24,6 @@ export const BlockAspectComponent = ({
   project,
   username,
   node,
-  nodes,
   selectedNode,
   secondaryNode,
   isExpanded,
@@ -36,7 +33,7 @@ export const BlockAspectComponent = ({
   dispatch,
   onToggleExpanded,
 }: Props) => (
-  <AspectContainer width={GetWidth(nodes)} node={node}>
+  <AspectContainer node={node}>
     <LockComponent
       isLocked={node.isLocked}
       unlockText={TextResources.Explorer_Unlock_Object}

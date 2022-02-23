@@ -8,7 +8,6 @@ import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { GetSelectedNode, IsBlockView, IsOffPage } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
-import { GetWidth } from "./shared/helpers/GetWidth";
 
 /**
  * Component for a singe Project in Mimir, displayed in the Explorer Module.
@@ -43,7 +42,7 @@ export const ProjectComponent = () => {
   if (!project || !nodes) return null;
 
   return (
-    <ProjectContentContainer width={GetWidth(nodes)}>
+    <ProjectContentContainer>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
         if (!areAncestorsExpanded(node)) return null;
         const expanded = !closedNodes.has(node.id);
@@ -56,7 +55,6 @@ export const ProjectComponent = () => {
               project={project}
               username={username}
               node={node}
-              nodes={nodes}
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
               indent={indent}

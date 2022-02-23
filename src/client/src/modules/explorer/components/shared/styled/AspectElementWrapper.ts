@@ -8,5 +8,5 @@ export const AspectElementWrapper = styled.div<Props>`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: ${(props) => props.indent && props.indent};
+  margin-left: ${(props) => props.indent};
 `;

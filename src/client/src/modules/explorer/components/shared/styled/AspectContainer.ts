@@ -1,22 +1,17 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors";
 import { FontSize } from "../../../../../compLibrary/font";
-import { Size } from "../../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType, Node } from "../../../../../models";
 
 interface Props {
   node: Node;
-  width: number;
 }
 
 export const AspectContainer = styled.div<Props>`
   display: flex;
   height: 30px;
-  min-width: ${Size.ModuleOpen}px;
-  max-width: 500px;
   font-size: ${FontSize.Standard};
-  position: relative;
   margin-top: ${(props) => props.node.isRoot && "15px"};
   background-color: ${(props) =>
     props.node.isRoot ? Color.GreyLighter : GetAspectColor(props.node, AspectColorType.Main, true)};
