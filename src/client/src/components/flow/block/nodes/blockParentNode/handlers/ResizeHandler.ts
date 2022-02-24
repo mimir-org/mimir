@@ -3,7 +3,6 @@ import { Dispatch } from "redux";
 import { IsDirectChild } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
 import { updateBlockPosition } from "../../../../../../redux/store/project/actions";
-import { GetFlowNodeByDataId } from "../helpers/GetFlowNodeByDataId";
 import { SetParentNodeWidth } from "../../../builders/helpers/SetParentNodeWidth";
 
 /**
@@ -23,8 +22,7 @@ export const ResizeHandler = (
   elements: Elements<Node>,
   dispatch: Dispatch
 ) => {
-  let screenWidth: number;
-  let width: number;
+  const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
 
   const updateScreenSize = () => {
     SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
@@ -41,8 +39,4 @@ export const ResizeHandler = (
   };
 
   window.onresize = updateScreenSize;
-
-  // Update the Flow parentNode
-  const parentNode = GetFlowNodeByDataId(node?.id);
-  if (parentNode) parentNode.style.width = `${width}px`;
 };

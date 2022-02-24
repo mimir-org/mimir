@@ -16,6 +16,7 @@ export const SetParentNodeWidth = (secondaryNode: boolean, libOpen: boolean, exp
 
   if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
   dispatch(setBlockNodeSize({ width, height: window.innerHeight }));
+  return width;
 };
 
 export function SetParentBlockMarginRight(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
