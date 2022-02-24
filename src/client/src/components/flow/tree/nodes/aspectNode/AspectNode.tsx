@@ -1,12 +1,12 @@
 import { FC, memo, useEffect, useState } from "react";
 import { Handle, NodeProps } from "react-flow-renderer";
-import { TreeHandleBox } from "../treeNode/styled";
+import { HandleBox } from "../styled/HandleBox";
 import { AspectColorType, Connector, Node } from "../../../../../models";
 import { GetFlowAspectIcon, GetHandleType } from "../../../helpers";
 import { OnMouseLeave } from "./handlers/OnMouseLeave";
 import { AspectNodeBox } from "./styled/AspectNodeBox";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
-import { SetTopPos } from "../treeNode/helpers";
+import { SetTopPos } from "../helpers/SetTopPos";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -34,7 +34,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
       {data.connectors?.map((conn: Connector) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
         return (
-          <TreeHandleBox
+          <HandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={conn.id}
@@ -49,7 +49,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
               key={conn.id}
               className="function-treeview-handler"
             />
-          </TreeHandleBox>
+          </HandleBox>
         );
       })}
 
