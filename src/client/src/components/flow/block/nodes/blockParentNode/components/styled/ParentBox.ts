@@ -19,7 +19,7 @@ const ParentBox = styled.div<Props>`
   border: 2px solid;
   border-color: ${Color.GreyDark};
   box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.2);
-  transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
 `;
 
 export default ParentBox;
