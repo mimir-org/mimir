@@ -2,7 +2,6 @@ import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { App } from "./components/app";
-import { PersistGate } from "redux-persist/integration/react";
 import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
 import { AuthenticationResult, EventMessage, EventType, PublicClientApplication } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";
@@ -44,9 +43,7 @@ if (Config.APP_INSIGHTS_CONNECTION_STRING) {
 ReactDOM.render(
   <Provider store={red.store}>
     <ReactFlowProvider>
-      <PersistGate loading={null} persistor={red.persistor}>
-        <App pca={msalInstance} />
-      </PersistGate>
+      <App pca={msalInstance} />
     </ReactFlowProvider>
   </Provider>,
   rootElement
