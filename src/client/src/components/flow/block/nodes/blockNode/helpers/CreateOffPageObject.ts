@@ -29,7 +29,7 @@ export interface OffPageData {
  * @param data
  * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
-const CreateOffPageObject = (data: OffPageData) => {
+export const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
@@ -131,5 +131,3 @@ const CreateOffPageObject = (data: OffPageData) => {
     transportEdge: transportEdge,
   } as OffPageObject;
 };
-
-export default CreateOffPageObject;

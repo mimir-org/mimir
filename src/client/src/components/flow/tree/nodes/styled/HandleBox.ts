@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Position } from "react-flow-renderer";
-import { ConnectorTreeViewIcon } from "../../../../../../assets/icons/connectors";
+import { ConnectorTreeViewIcon } from "../../../../../assets/icons/connectors";
 
 interface Props {
   visible: boolean;
@@ -8,7 +8,7 @@ interface Props {
   topPos: string;
 }
 
-const TreeHandleBox = styled.div<Props>`
+export const HandleBox = styled.div<Props>`
   .function-treeview-handler {
     opacity: ${(props) => (props.visible ? 1 : 0)};
     visibility: ${(props) => (props.visible ? "visible" : "hidden")};
@@ -24,5 +24,3 @@ const TreeHandleBox = styled.div<Props>`
     transition: opacity 0.5s ease-in-out;
   }
 `;
-
-export default TreeHandleBox;

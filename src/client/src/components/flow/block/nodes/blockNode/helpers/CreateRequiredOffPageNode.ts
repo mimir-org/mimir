@@ -1,7 +1,6 @@
 import { Connector, Node } from "../../../../../../models";
 import { addNode, createEdge, setOffPageStatus } from "../../../../../../redux/store/project/actions";
-import { OffPageData } from "./CreateOffPageObject";
-import { CreateOffPageObject } from ".";
+import { CreateOffPageObject, OffPageData } from "./CreateOffPageObject";
 import { Position } from "../../../../../../models/project";
 import { Dispatch } from "redux";
 
@@ -13,7 +12,7 @@ import { Dispatch } from "redux";
  * @param dispatch
  * @param isRequired
  */
-const CreateRequiredOffPageNode = (
+export const CreateRequiredOffPageNode = (
   sourceNode: Node,
   sourceConnector: Connector,
   position: Position,

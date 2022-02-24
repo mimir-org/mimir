@@ -10,13 +10,11 @@ interface Props {
 }
 
 /**
- * Component for the terminal icon in BlockView.
+ * Component for the handle (terminal) icon in BlockView.
  * @param params
  * @returns an icon.
  */
-const TerminalsIcon = ({ conn, color, className }: Props) => {
+export const HandleIcon = ({ conn, color, className }: Props) => {
   if (IsBidirectionalTerminal(conn)) return <BidirectionalTerminal style={{ fill: color }} className={className} />;
   return <ConnectorIcon style={{ fill: color }} className={className} />;
 };
-
-export default TerminalsIcon;

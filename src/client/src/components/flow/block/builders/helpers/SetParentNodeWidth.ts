@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { Size } from "../../../../../../compLibrary/size";
-import { setBlockNodeSize } from "../../../redux/blockNodeSizeSlice";
+import { Size } from "../../../../../compLibrary/size";
+import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
 
 /**
  * Set the size of the ParentNode in BlockView. The size is dependent on other modules being open/closed.

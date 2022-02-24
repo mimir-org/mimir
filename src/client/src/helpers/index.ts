@@ -22,6 +22,7 @@ export { default as GetAspectIcon } from "./GetAspectIcon";
 export { default as GetCompanyLogoForNode } from "./GetCompanyLogoForNode";
 export { default as GetCompanyLogoForInspector } from "./GetCompanyLogoForInspector";
 export { default as GetCompanyLogoForHeader } from "./GetCompanyLogoForHeader";
+export { default as GetDateNowUtc } from "./GetDateNowUtc";
 
 export { default as SetDarkModeColor } from "./SetDarkModeColor";
 export { default as SetIndentLevel } from "./SetIndentLevel";

@@ -1,6 +1,6 @@
 import { ArrowHeadType, ConnectionLineComponentProps, getMarkerEnd } from "react-flow-renderer";
-import { Connector } from "../../../../../models";
-import { GetTerminalColor } from "../../../helpers";
+import { Connector } from "../../../../models";
+import { GetTerminalColor } from "../helpers";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in BlockView.

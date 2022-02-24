@@ -1,6 +1,5 @@
 import { FlowElement } from "react-flow-renderer";
-import { Node } from "../../../models";
-import { GetNodeType } from "../helpers";
+import { Aspect, Node } from "../../../models";
 
 /**
  * Component to convert a Mimir Node to a FlowElement that interacts with the Flow library.
@@ -22,6 +21,12 @@ const ConvertNodeToFlow = (node: Node) => {
     selectable: true,
     connectable: true,
   } as FlowElement;
+};
+
+const GetNodeType = (node: Node) => {
+  let typeName = node.isRoot ? "Aspect" : "";
+  typeName += Aspect[node.aspect];
+  return typeName;
 };
 
 export default ConvertNodeToFlow;
