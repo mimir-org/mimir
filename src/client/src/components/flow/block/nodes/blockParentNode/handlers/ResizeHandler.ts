@@ -3,8 +3,8 @@ import { Dispatch } from "redux";
 import { IsDirectChild } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
 import { updateBlockPosition } from "../../../../../../redux/store/project/actions";
-import { GetFlowNodeByDataId } from "../../../helpers";
-import { SetParentNodeWidth } from "../helpers/SetParentNodeWidth";
+import { GetFlowNodeByDataId } from "../helpers/GetFlowNodeByDataId";
+import { SetParentNodeWidth } from "../../../builders/helpers/SetParentNodeWidth";
 
 /**
  * Component to handle responsive size of a ParentNode in BlockView.

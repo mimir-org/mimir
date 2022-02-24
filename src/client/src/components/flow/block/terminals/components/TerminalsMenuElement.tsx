@@ -17,7 +17,7 @@ interface Props {
  * @param interface
  * @returns a clickable terminal with a checkbox.
  */
-const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
+export const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
   <TerminalsElementBox key={conn.id}>
     <Checkbox isChecked={IsConnectorVisible(conn)} onChange={() => onClick(conn, isInput)} color={Color.GreyDark} id={conn.id} />
     {IsBidirectionalTerminal(conn) ? (
@@ -30,5 +30,3 @@ const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
     )}
   </TerminalsElementBox>
 );
-
-export default TerminalsMenuElement;

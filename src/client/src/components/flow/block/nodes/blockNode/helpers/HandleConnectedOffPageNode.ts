@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CreateConnectedOffPageNode } from ".";
+import { CreateConnectedOffPageNode } from "./CreateConnectedOffPageNode";
 import { IsOffPage } from "../../../../../../helpers";
 import { Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
@@ -14,7 +14,7 @@ import { GetParent, IsTransportConnection } from "../../../../helpers";
  * @param size
  * @param dispatch
  */
-const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
+export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   edges.forEach((edge) => {
     if (IsValidTransport(edge, node)) {
       const isNodeTarget = edge.toNodeId === node.id;
@@ -62,5 +62,3 @@ function OnlyOneNodeVisible(edge: Edge, isNodeTarget: boolean) {
 
   return !targetNodeVisible;
 }
-
-export default HandleConnectedOffPageNode;

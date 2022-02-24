@@ -17,7 +17,7 @@ interface Props {
  * @param interface
  * @returns a clickable button that toggles the display of the terminals menu.
  */
-const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminals, onClick }: Props) => (
+export const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminals, onClick }: Props) => (
   <TerminalsButtonBox
     id={"terminals-menu-button-" + node.id}
     visible={showMenuButton && !IsAspectNode(node) && !!terminals.length}
@@ -27,5 +27,3 @@ const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminal
     <img src={GetMenuIcon(node, isParent, isInput)} className="menu-icon" alt="menu" />
   </TerminalsButtonBox>
 );
-
-export default TerminalsMenuButton;

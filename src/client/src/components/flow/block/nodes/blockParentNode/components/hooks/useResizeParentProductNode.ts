@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { Dispatch } from "redux";
 import { Node } from "../../../../../../../models";
-import { GetFlowNodeByDataId } from "../../../../helpers";
+import { GetFlowNodeByDataId } from "../../helpers/GetFlowNodeByDataId";
 
 const MIN_HEIGHT = 700;
 const MIN_WIDTH = 700;
