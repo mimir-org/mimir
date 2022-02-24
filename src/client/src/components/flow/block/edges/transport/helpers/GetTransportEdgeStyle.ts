@@ -1,4 +1,4 @@
-const GetEdgeStyle = (color: string, visible: boolean) => {
+export const GetTransportEdgeStyle = (color: string, visible: boolean) => {
   return {
     stroke: color,
     strokeWidth: "2px",
@@ -6,5 +6,3 @@ const GetEdgeStyle = (color: string, visible: boolean) => {
     transition: "opacity 250ms",
   };
 };
-
-export default GetEdgeStyle;

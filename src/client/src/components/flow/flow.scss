@@ -55,39 +55,6 @@
   }
 }
 
-.path-transportEdge,
-.path-partEdge,
-.path-relationEdge,
-.path-blockEdge {
-  stroke-width: 2px !important;
-  fill: none;
-  pointer-events: all;
-  cursor: grab;
-}
-
-.react-flow__edge-PartEdgeType,
-.react-flow__edge-RelationEdgeType,
-.react-flow__edge-TransportEdgeType,
-.react-flow__edge-BlockEdgeType {
-  &:hover {
-    .path-relationEdge,
-    .path-transportEdge,
-    .path-partEdge,
-    .path-blockEdge {
-      stroke: #d9d9d9 !important;
-    }
-  }
-
-  &.selected {
-    .path-relationEdge,
-    .path-transportEdge,
-    .path-partEdge,
-    .path-blockEdge {
-      stroke: black !important;
-    }
-  }
-}
-
 .react-flow__node-AspectLocation,
 .react-flow__node-Location {
   &.selected > div {
@@ -106,5 +73,59 @@
 .react-flow__node-Product {
   &.selected > div {
     border-color: #069098 !important;
+  }
+}
+
+// EDGES
+.path-transportEdge,
+.path-partEdge,
+.path-relationEdge,
+.path-blockTransportEdge {
+  stroke-width: 2px !important;
+  fill: none;
+  pointer-events: all;
+  cursor: grab;
+}
+
+.path-blockOffPageEdge {
+  stroke-width: 2px !important;
+  stroke-dasharray: 16.5 !important;
+  fill: none;
+  pointer-events: all;
+  cursor: grab;
+}
+
+.react-flow__edge-PartEdgeType,
+.react-flow__edge-RelationEdgeType,
+.react-flow__edge-TransportEdgeType,
+.react-flow__edge-BlockTransportEdgeType {
+  &:hover {
+    .path-relationEdge,
+    .path-transportEdge,
+    .path-partEdge,
+    .path-blockTransportEdge,
+    .path-blockOffPageEdge {
+      stroke: #d9d9d9 !important;
+    }
+  }
+
+  &.selected {
+    .path-relationEdge,
+    .path-transportEdge,
+    .path-partEdge,
+    .path-blockTransportEdge,
+    .path-blockOffPageEdge {
+      stroke: black !important;
+    }
+  }
+
+  &.selected {
+    .path-transportEdge,
+    .react-flow__edge-TransportEdgeType,
+    .path-blockTransportEdge,
+    .path-blockOffPageEdge {
+      stroke: black !important;
+      stroke-width: 4px !important;
+    }
   }
 }

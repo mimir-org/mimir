@@ -1,8 +1,8 @@
-import { Color } from "../../../compLibrary/colors";
-import { IsProduct } from "../../../helpers";
-import { Node } from "../../../models";
+import { Color } from "../../../../../../compLibrary/colors";
+import { IsProduct } from "../../../../../../helpers";
+import { Node } from "../../../../../../models";
 
-const GetEdgeRelationStyle = (source: Node, visible: boolean) => {
+export const GetEdgeRelationStyle = (source: Node, visible: boolean) => {
   const getColor = () => {
     if (IsProduct(source)) return Color.ProductSelected;
     return Color.LocationSelected;
@@ -16,5 +16,3 @@ const GetEdgeRelationStyle = (source: Node, visible: boolean) => {
     transition: "opacity 250ms",
   };
 };
-
-export default GetEdgeRelationStyle;

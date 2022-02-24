@@ -10,7 +10,7 @@ import { GetBlockNodeTypes } from "../helpers";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
-import { BlockConnectionLine } from "./edges/components/BlockConnectionLine";
+import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size";
 import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
@@ -65,7 +65,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    const edgeType = EDGE_TYPE.BLOCK as EdgeType;
+    const edgeType = EDGE_TYPE.BLOCK_TRANSPORT as EdgeType;
     return hooks.useOnConnect({ connection, project, edgeType, library, animatedEdge, setElements, dispatch });
   };
 

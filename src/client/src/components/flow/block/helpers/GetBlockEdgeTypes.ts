@@ -1,7 +1,9 @@
-import { BlockEdge } from "../edges/BlockEdge";
+import { BlockTransportEdge } from "../edges/transport/BlockTransportEdge";
+import { BlockOffPageEdge } from "../edges/offpage/BlockOffPageEdge";
 
 const GetBlockEdgeTypes = {
-  BlockEdgeType: BlockEdge,
+  BlockTransportEdgeType: BlockTransportEdge,
+  BlockOffPageEdgeType: BlockOffPageEdge,
 };
 
 export default GetBlockEdgeTypes;

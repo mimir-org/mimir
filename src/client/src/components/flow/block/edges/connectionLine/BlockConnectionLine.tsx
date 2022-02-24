@@ -3,7 +3,7 @@ import { Connector } from "../../../../../models";
 import { GetTerminalColor } from "../../../helpers";
 
 /**
- * Component to give custom styling to the edge dragged from a Terminal in BlockView.
+ * Component to give custom styling to the  edge dragged from a Terminal in BlockView.
  * @param params
  * @returns a line from a Node's terminal.
  */
