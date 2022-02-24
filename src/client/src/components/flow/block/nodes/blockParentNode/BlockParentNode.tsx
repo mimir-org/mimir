@@ -2,13 +2,13 @@
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { HandleComponent } from "../../terminals/components";
+import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
-import { FilterTerminals } from "../../helpers";
+import { FilterTerminals } from "../helpers";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
-import { SetParentNodeWidth } from "./helpers/SetParentNodeWidth";
+import { SetParentNodeWidth } from "../../builders/helpers/SetParentNodeWidth";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";

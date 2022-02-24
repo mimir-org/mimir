@@ -1,5 +1,5 @@
 import { Edge, Node } from "../../../../../../models";
-import { GetChild } from "../../../../helpers";
+import { GetChild } from "../helpers/GetChild";
 import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 

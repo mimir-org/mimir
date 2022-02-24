@@ -1,6 +1,5 @@
 import { Connector, Edge, Node } from "../../../../../../../models";
 import { GetRelationName } from "../../shared/helpers/GetRelationName";
-import { GetOtherNodeFromEdgeViaConnector, GetOtherNodeFromEdgeViaNode } from "../../../../../../../components/flow/helpers";
 
 export const GetNameRelation = (edge: Edge, node: Node): string => {
   const name = GetRelationName(edge.fromConnector.relationType);
@@ -27,3 +26,11 @@ export const GetNameNode = (edge: Edge, node: Node): string => {
 
   return `${prefix}: ${node.label}`;
 };
+
+function GetOtherNodeFromEdgeViaConnector(edge: Edge, conn: Connector) {
+  return edge?.fromConnector.id === conn.id ? edge.toNode : edge?.fromNode;
+}
+
+function GetOtherNodeFromEdgeViaNode(edge: Edge, node: Node) {
+  return edge?.fromNode.id === node.id ? edge.toNode : edge?.fromNode;
+}

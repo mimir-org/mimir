@@ -1,6 +1,6 @@
-import { IsFunction, IsLocation, IsProduct } from "../../../../helpers";
-import { Connector, Node } from "../../../../models";
-import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../helpers";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
+import { Connector, Node } from "../../../../../models";
+import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../helpers";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
@@ -9,7 +9,7 @@ import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "..
  * @param secondaryNode selected secondaryNode, if any
  * @returns a filtered list of connectors sorted by type and name.
  */
-const FilterTerminals = (selectedNode: Node, secondaryNode: Node) => {
+export const FilterTerminals = (selectedNode: Node, secondaryNode: Node) => {
   return selectedNode?.connectors
     .filter((c) => !IsPartOf(c) && validateTerminal(selectedNode, secondaryNode, c))
     .sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
@@ -31,5 +31,3 @@ function validateFunctionTerminal(secondary: Node, c: Connector) {
   if (IsProduct(secondary)) return IsProductTerminal(c);
   if (IsLocation(secondary)) return IsLocationTerminal(c);
 }
-
-export default FilterTerminals;

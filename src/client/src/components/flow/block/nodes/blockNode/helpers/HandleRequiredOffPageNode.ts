@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CreateRequiredOffPageNode } from ".";
+import { CreateRequiredOffPageNode } from "./CreateRequiredOffPageNode";
 import { IsOffPage } from "../../../../../../helpers";
 import { Connector, Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
@@ -13,7 +13,7 @@ import { IsInputTerminal, IsInputVisible } from "../../../../helpers";
  * @param size
  * @param dispatch
  */
-const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
+export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   const isRequired = true;
 
   node?.connectors.forEach((conn) => {

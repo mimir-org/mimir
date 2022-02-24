@@ -3,7 +3,8 @@ import { Color } from "../../../../../compLibrary/colors";
 import { Checkbox } from "../../../../../compLibrary/input/checkbox/common";
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
-import { GetTerminalColor, IsBidirectionalTerminal } from "../../../helpers";
+import { IsBidirectionalTerminal } from "../../../helpers";
+import { GetTerminalColor } from "../../helpers";
 import { BidirectionalBox, ColorTag, TerminalsElementBox } from "../styled";
 
 interface Props {
@@ -17,7 +18,7 @@ interface Props {
  * @param interface
  * @returns a clickable terminal with a checkbox.
  */
-const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
+export const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
   <TerminalsElementBox key={conn.id}>
     <Checkbox isChecked={IsConnectorVisible(conn)} onChange={() => onClick(conn, isInput)} color={Color.GreyDark} id={conn.id} />
     {IsBidirectionalTerminal(conn) ? (
@@ -30,5 +31,3 @@ const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
     )}
   </TerminalsElementBox>
 );
-
-export default TerminalsMenuElement;

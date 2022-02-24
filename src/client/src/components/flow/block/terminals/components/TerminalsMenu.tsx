@@ -3,7 +3,7 @@ import { AspectColorType, Connector, Node } from "../../../../../models";
 import { SetTerminalsMenuOffset } from "../helpers";
 import { TerminalsBox } from "../styled";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
-import { TerminalsMenuElement } from ".";
+import { TerminalsMenuElement } from "./TerminalsMenuElement";
 
 interface Props {
   node: Node;
@@ -20,7 +20,7 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
+export const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
   const isElectroViewEnabled = useAppSelector(electroSelector);
   const menuOffset = SetTerminalsMenuOffset(isElectroViewEnabled, hasActiveTerminals, isParent);
 
@@ -39,4 +39,3 @@ const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, isParent,
     </TerminalsBox>
   );
 };
-export default TerminalsMenu;
