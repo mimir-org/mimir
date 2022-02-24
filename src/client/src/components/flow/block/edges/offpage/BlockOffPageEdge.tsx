@@ -38,6 +38,8 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
 
   return (
     <path
+      strokeDasharray="2,10"
+      strokeLinecap="round"
       id={id}
       style={GetOffPageEdgeStyle(color, visible)}
       className="path-blockOffPageEdge"
@@ -63,7 +65,6 @@ function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targe
 const GetOffPageEdgeStyle = (color: string, visible: boolean) => {
   return {
     stroke: color,
-    strokeWidth: "2px",
     opacity: visible ? 1 : 0,
     transition: "opacity 250ms",
   };
