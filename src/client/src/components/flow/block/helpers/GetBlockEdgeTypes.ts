@@ -1,8 +1,7 @@
-import { BlockEdge, BlockPartEdge } from "../edges";
+import { BlockEdge } from "../edges/BlockEdge";
 
 const GetBlockEdgeTypes = {
   BlockEdgeType: BlockEdge,
-  BlockPartEdgeType: BlockPartEdge,
 };
 
 export default GetBlockEdgeTypes;

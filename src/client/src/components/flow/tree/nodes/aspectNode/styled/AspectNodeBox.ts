@@ -5,7 +5,7 @@ interface Props {
   isSelected: boolean;
 }
 
-const AspectNodeBox = styled.div<Props>`
+export const AspectNodeBox = styled.div<Props>`
   padding-top: 10px;
   width: 90px;
   height: 55px;
@@ -21,5 +21,3 @@ const AspectNodeBox = styled.div<Props>`
     border-color: ${(props) => props.colorMain};
   }
 `;
-
-export default AspectNodeBox;

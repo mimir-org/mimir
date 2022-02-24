@@ -1,4 +1,4 @@
-import { Home } from "../home/";
+import { Home } from "../home/Home";
 import { GlobalStyle } from "../../compLibrary";
 import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
 import { LoginBox } from "./App.styled";

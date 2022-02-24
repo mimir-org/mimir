@@ -10,7 +10,7 @@ interface Props {
 const TerminalsBox = styled.div<Props>`
   position: absolute;
   width: 175px;
-  top: 0;
+  top: -2px;
   right: ${(props) => (props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
   left: ${(props) => (!props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
   border: 1px solid ${(props) => props.color};
@@ -18,6 +18,7 @@ const TerminalsBox = styled.div<Props>`
   border-radius: 5px;
   transition: right 250ms ease-in-out, left 250ms ease-in-out, top 250ms ease-in-out;
   pointer-events: all;
+  z-index: 1;
 `;
 
 export default TerminalsBox;

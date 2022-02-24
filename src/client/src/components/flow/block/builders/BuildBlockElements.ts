@@ -35,7 +35,7 @@ const BuildBlockElements = (
     DrawSecondaryChildren(project, secondaryNode, elements, libOpen, explorerOpen);
   }
 
-  DrawChildNodes(project, selectedNode, elements, libOpen, explorerOpen, splitView);
+  DrawChildNodes(project, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
   DrawBlockEdges(project, elements, secondaryNode, animatedEdge);
 
   return elements;

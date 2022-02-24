@@ -36,7 +36,7 @@ interface Props {
  * @param interface
  * @returns all the modules and components in the Mimir application.
  */
-const Home = ({ dispatch }: Props) => {
+export const Home = ({ dispatch }: Props) => {
   const projectState = useAppSelector(selectors.projectStateSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const darkMode = useAppSelector(selectors.darkModeSelector);
@@ -90,5 +90,3 @@ const Home = ({ dispatch }: Props) => {
     </>
   );
 };
-
-export default Home;

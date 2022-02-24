@@ -13,7 +13,7 @@ import { setValidation } from "../../../../../../redux/store/validation/validati
  * @param dispatch
  * @returns a boolean value.
  */
-const IsValidTreeConnection = (node: Node, conn: Connection, nodes: Node[], dispatch: Dispatch) => {
+export const IsValidTreeConnection = (node: Node, conn: Connection, nodes: Node[], dispatch: Dispatch) => {
   const parentNode = nodes.find((x) => x.id === conn.source);
   const isValidAspect = IsFamily(node, parentNode);
 
@@ -23,8 +23,6 @@ const IsValidTreeConnection = (node: Node, conn: Connection, nodes: Node[], disp
 
   return isValidAspect;
 };
-
-export default IsValidTreeConnection;
 
 const onMouseUp = (isValidAspect: boolean, dispatch: Dispatch) => {
   if (!isValidAspect) dispatch(setValidation({ valid: false, message: TextResources.Validation_Aspect }));

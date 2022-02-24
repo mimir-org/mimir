@@ -1,11 +1,13 @@
-import * as Nodes from "../nodes";
+import { BlockOffPageNode } from "../nodes/blockOffPageNode";
+import { BlockNode } from "../nodes/blockNode/";
+import { BlockParentNode } from "../nodes/blockParentNode";
 
 const GetBlockNodeTypes = {
-  BlockParentNode: Nodes.BlockParentNode,
-  BlockFunctionNode: Nodes.BlockNode,
-  BlockProductNode: Nodes.BlockNode,
-  BlockLocationNode: Nodes.BlockNode,
-  BlockOffPageNode: Nodes.BlockOffPageNode,
+  BlockParentNode: BlockParentNode,
+  BlockFunctionNode: BlockNode,
+  BlockProductNode: BlockNode,
+  BlockLocationNode: BlockNode,
+  BlockOffPageNode: BlockOffPageNode,
 };
 
 export default GetBlockNodeTypes;
