@@ -7,7 +7,7 @@ const OnCheckboxChange = (
   isSelected: boolean
 ) => {
   let temp: LibItem[] = [...selectedTypes];
-  if (isSelected) temp = temp.filter((a) => a !== item);
+  if (isSelected) temp = temp.filter((a) => a.id !== item.id);
   else if (!isSelected && temp) temp.push(item);
   setSelectedTypes(temp);
 };
