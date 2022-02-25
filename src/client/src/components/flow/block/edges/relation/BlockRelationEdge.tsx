@@ -1,5 +1,7 @@
 import { ArrowHeadType, EdgeProps, getBezierPath, getMarkerEnd } from "react-flow-renderer";
-import { GetEdgeRelationStyle } from "./helpers/GetEdgeRelationStyle";
+import { Color } from "../../../../../compLibrary/colors";
+import { IsProduct } from "../../../../../helpers";
+import { Node } from "../../../../../models";
 
 /**
  * Component for a RelationEdge.
@@ -32,9 +34,24 @@ export const BlockRelationEdge = ({
     <path
       id={id}
       style={GetEdgeRelationStyle(data.target, visible)}
-      className="path-blockEdge"
+      className="path-blockRelationEdge"
       d={bezierPath}
       markerEnd={markerEnd}
     />
   );
 };
+
+function GetEdgeRelationStyle(source: Node, visible: boolean) {
+  const getColor = () => {
+    if (IsProduct(source)) return Color.ProductSelected;
+    return Color.LocationSelected;
+  };
+
+  return {
+    stroke: getColor(),
+    strokeDasharray: 2.5,
+    strokeWidth: "2px",
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
+}

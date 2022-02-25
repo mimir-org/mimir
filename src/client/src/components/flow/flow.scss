@@ -81,11 +81,13 @@
 .path-partEdge,
 .path-relationEdge,
 .path-blockTransportEdge,
+.path-blockRelationEdge,
 .path-blockOffPageEdge {
   stroke-width: 2px !important;
   fill: none;
   pointer-events: all;
   cursor: grab;
+  z-index: 100 !important;
 }
 
 .react-flow__edge-PartEdgeType,
@@ -93,24 +95,14 @@
 .react-flow__edge-TransportEdgeType,
 .react-flow__edge-BlockTransportEdgeType,
 .react-flow__edge-BlockOffPageEdgeType {
-  &:hover {
-    .path-relationEdge,
-    .path-transportEdge,
-    .path-partEdge,
-    .path-blockTransportEdge,
-    .path-blockOffPageEdge {
-      stroke: #d9d9d9 !important;
-    }
-  }
-
   &.selected {
     .path-transportEdge,
     .path-relationEdge,
     .path-partEdge,
     .path-blockTransportEdge,
+    .path-blockRelationEdge,
     .path-blockOffPageEdge {
-      // stroke: black !important;
-      stroke-width: 4px !important;
+      stroke-width: 6px !important;
     }
   }
 }

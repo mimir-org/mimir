@@ -38,8 +38,8 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
 
   return (
     <path
-      strokeDasharray="2,10"
-      strokeLinecap="round"
+      strokeDasharray="0.3,10"
+      strokeLinecap="square"
       id={id}
       style={GetOffPageEdgeStyle(color, visible)}
       className="path-blockOffPageEdge"
