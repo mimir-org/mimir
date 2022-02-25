@@ -25,7 +25,6 @@ export const BlockConnectionLine = ({
         strokeDasharray="0.3,10"
         strokeLinecap="square"
         style={GetStyle(color)}
-        className="animated"
         d={`M${sourceX},${sourceY} C ${sourceX} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY}`}
         markerEnd={markerEnd}
       />
