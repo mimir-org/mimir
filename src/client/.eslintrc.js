@@ -35,6 +35,7 @@ module.exports = {
         allowSeparatedGroups: false,
       },
     ],
+    "react/jsx-key": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unused-vars": [
       "warn",
