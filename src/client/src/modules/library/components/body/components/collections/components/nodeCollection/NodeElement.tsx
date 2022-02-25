@@ -45,6 +45,7 @@ export const NodeElement = ({
   const [showAddButton, setShowAddButton] = useState(false);
   const isSelected = selectedTypes.some((x) => x.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
+  const managingType = collectionState === CollectionsActions.ManageType;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
@@ -72,15 +73,15 @@ export const NodeElement = ({
         {TextResources.Library_Type_Version}
         {item.version}
       </LibElementVersion> */}
-      {collectionState === CollectionsActions.ManageType && (
+      {managingType && (
         <Checkbox
           isChecked={isSelected}
           onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, isSelected)}
           color={Color.Black}
         />
       )}
-      {isCustomCategory && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}
-      {!isCustomCategory && showAddButton && !isItemFavorite && (
+      {isCustomCategory && !managingType && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}
+      {!isCustomCategory && showAddButton && !isItemFavorite && !managingType && (
         <FavoriteComponent addFavorite onClick={() => OnAddFavoriteClick(item, customCategory, dispatch)} />
       )}
     </NodeElementButton>
