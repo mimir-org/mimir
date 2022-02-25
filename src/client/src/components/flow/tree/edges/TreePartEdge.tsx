@@ -1,7 +1,6 @@
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { GetAspectColor } from "../../../../helpers";
 import { AspectColorType } from "../../../../models";
-import { GetEdgeStyle } from "../../helpers";
 
 /**
  * Component for PartOfEdges in TreeView.
@@ -22,6 +21,15 @@ const TreePartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, 
   });
 
   return <path id={id} style={style} className="path-partEdge" d={edgePathSmoothStep} markerEnd={null} />;
+};
+
+const GetEdgeStyle = (color: string, visible: boolean) => {
+  return {
+    stroke: color,
+    strokeWidth: "2px",
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
 };
 
 export default TreePartEdge;

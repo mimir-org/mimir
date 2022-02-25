@@ -1,9 +1,9 @@
 import { ArrowHeadType, ConnectionLineComponentProps, getMarkerEnd } from "react-flow-renderer";
-import { Connector } from "../../../../models";
-import { GetTerminalColor } from "../helpers";
+import { Connector } from "../../../../../models";
+import { GetTerminalColor } from "../../helpers";
 
 /**
- * Component to give custom styling to the edge dragged from a Terminal in BlockView.
+ * Component to give custom styling to the  edge dragged from a Terminal in BlockView.
  * @param params
  * @returns a line from a Node's terminal.
  */
@@ -22,8 +22,9 @@ export const BlockConnectionLine = ({
   return (
     <g>
       <path
+        strokeDasharray="0.3,10"
+        strokeLinecap="square"
         style={GetStyle(color)}
-        className="animated"
         d={`M${sourceX},${sourceY} C ${sourceX} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY}`}
         markerEnd={markerEnd}
       />

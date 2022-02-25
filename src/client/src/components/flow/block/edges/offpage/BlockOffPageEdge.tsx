@@ -1,38 +1,28 @@
-import { ArrowHeadType, EdgeProps, getBezierPath, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
-import { IsOffPage } from "../../../../helpers";
-import { Connector } from "../../../../models";
-import { electroSelector, useAppSelector } from "../../../../redux/store";
-import {
-  GetEdgeStyle,
-  GetEdgeRelationStyle,
-  IsLocationTerminal,
-  IsProductTerminal,
-  IsBidirectionalTerminal,
-} from "../../helpers";
+import { ArrowHeadType, EdgeProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { Connector } from "../../../../../models";
+import { electroSelector, useAppSelector } from "../../../../../redux/store";
+import { IsBidirectionalTerminal } from "../../../helpers";
 
 /**
- * Component for an Edge in BlockView.
+ * Component for an OffPageEdge.
  * @param params
- * @returns a TransportEdge or RelationEdge in BlockView.
+ * @returns an OffPageEdge in BlockView.
  */
-export const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
+export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
   const electro = useAppSelector(electroSelector);
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
-  const sourceNode = data.source;
-  const targetNode = data.target;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
 
   const markerStart = isBidirectional ? getMarkerEnd(ArrowHeadType.Arrow, null) : null;
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
-  const isTransport = !IsLocationTerminal(sourceConn) && !IsProductTerminal(sourceConn);
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
   const offPageMargin = 15;
 
-  if (IsOffPage(targetNode)) targetX += offPageMargin;
-  if (IsOffPage(sourceNode)) sourceX -= offPageMargin;
+  targetX += offPageMargin;
+  sourceX -= offPageMargin;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
@@ -44,32 +34,17 @@ export const BlockEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePositi
     borderRadius,
   });
 
-  const bezierPath = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
-
   const transportPath = electro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
-  return isTransport ? (
+  return (
     <path
+      strokeDasharray="0.3,10"
+      strokeLinecap="square"
       id={id}
-      style={GetEdgeStyle(color, visible)}
-      className="path-blockEdge"
+      style={GetOffPageEdgeStyle(color, visible)}
+      className="path-blockOffPageEdge"
       d={transportPath}
       markerStart={markerStart}
-      markerEnd={markerEnd}
-    />
-  ) : (
-    <path
-      id={id}
-      style={GetEdgeRelationStyle(data.target, visible)}
-      className="path-blockEdge"
-      d={bezierPath}
       markerEnd={markerEnd}
     />
   );
@@ -86,3 +61,11 @@ function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targe
 
   return `${start} ${pathSource} ${pathTarget} ${stop}`;
 }
+
+const GetOffPageEdgeStyle = (color: string, visible: boolean) => {
+  return {
+    stroke: color,
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
+};

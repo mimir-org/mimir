@@ -1,6 +1,5 @@
 import { ArrowHeadType, EdgeProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../models";
-import { GetEdgeStyle } from "../../helpers";
 
 /**
  * Component for TransportEdges in TreeView.
@@ -41,4 +40,14 @@ const TreeTransportEdge = ({
     />
   );
 };
+
+export const GetEdgeStyle = (color: string, visible: boolean) => {
+  return {
+    stroke: color,
+    strokeWidth: "2px",
+    opacity: visible ? 1 : 0,
+    transition: "opacity 250ms",
+  };
+};
+
 export default TreeTransportEdge;

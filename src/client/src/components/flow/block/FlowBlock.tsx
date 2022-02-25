@@ -4,12 +4,12 @@ import * as hooks from "../hooks/";
 import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection } from "react-flow-renderer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreenComponent } from "../../fullscreen";
-import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "../block/helpers";
 import { BuildBlockElements } from "./builders";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
-import { BlockConnectionLine } from "./edges/BlockConnectionLine";
+import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size";
 import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
@@ -64,7 +64,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    const edgeType = EDGE_TYPE.BLOCK as EdgeType;
+    const edgeType = EDGE_TYPE.BLOCK_TRANSPORT as EdgeType;
     return hooks.useOnConnect({ connection, project, edgeType, library, animatedEdge, setElements, dispatch });
   };
 
