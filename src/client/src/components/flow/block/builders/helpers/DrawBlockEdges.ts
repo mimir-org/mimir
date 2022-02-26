@@ -1,9 +1,8 @@
 import { Elements } from "react-flow-renderer";
 import { BuildBlockEdge } from "..";
-import { IsOffPage } from "../../../../../helpers";
 import { Edge, Node, Project } from "../../../../../models";
-import { EDGE_TYPE, EdgeType } from "../../../../../models/project";
 import { IsPartOf } from "../../../helpers";
+import { GetBlockEdgeType } from "../../helpers";
 
 /**
  * Component to draw all edges in BlockView. PartOf edges are not displayed in BlockView.
@@ -22,10 +21,7 @@ const DrawBlockEdges = (project: Project, elements: Elements<Edge>, secondaryNod
       const targetNodeIsDisplayed = elements.some((x) => x.id === edge.toNodeId);
 
       if (sourceNodeIsDisplayed && targetNodeIsDisplayed) {
-        const edgeType =
-          IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)
-            ? (EDGE_TYPE.BLOCK_OFFPAGE as EdgeType)
-            : (EDGE_TYPE.BLOCK_TRANSPORT as EdgeType);
+        const edgeType = GetBlockEdgeType(edge);
         const blockEdge = BuildBlockEdge(nodes, edge, edgeType, secondaryNode, animatedEdge);
         if (blockEdge) elements.push(blockEdge);
       }
