@@ -1,4 +1,5 @@
-import { ArrowHeadType, EdgeProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
+import { Color } from "../../../../../compLibrary/colors";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers";
@@ -6,7 +7,7 @@ import { IsBidirectionalTerminal } from "../../../helpers";
 /**
  * Component for a TransportEdge.
  * @param params
- * @returns a TransportEdge in BlockView.
+ * @returns an edge between two transport terminals in BlockView.
  */
 export const BlockTransportEdge = ({
   id,
@@ -18,16 +19,18 @@ export const BlockTransportEdge = ({
   targetPosition,
   data,
 }: EdgeProps) => {
-  const electro = useAppSelector(electroSelector);
+  const isElectro = useAppSelector(electroSelector);
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
-
-  const markerStart = isBidirectional ? getMarkerEnd(ArrowHeadType.Arrow, null) : null;
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
+
+  // Adjust to make room for marker arrow
+  const margin = 6;
+  sourceX += isBidirectional ? margin / 2 : 0;
+  targetX -= !isElectro ? margin : 0;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
@@ -39,17 +42,31 @@ export const BlockTransportEdge = ({
     borderRadius,
   });
 
-  const transportPath = electro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
+  const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return (
-    <path
-      id={id}
-      style={GetTransportEdgeStyle(color, visible)}
-      className="path-blockTransportEdge"
-      d={transportPath}
-      markerStart={markerStart}
-      markerEnd={markerEnd}
-    />
+    <>
+      <marker
+        id="arrow"
+        viewBox="0 0 10 20"
+        refX="5"
+        refY="5"
+        markerUnits="userSpaceOnUse"
+        markerWidth="10"
+        markerHeight="20"
+        orient={!isElectro ? "auto-start-reverse" : "auto"}
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+      </marker>
+      <path
+        id={id}
+        style={GetTransportEdgeStyle(color, visible)}
+        className="path-blockTransportEdge"
+        d={transportPath}
+        markerStart={isBidirectional ? "url(#arrow)" : null}
+        markerEnd="url(#arrow)"
+      />
+    </>
   );
 };
 
@@ -66,10 +83,10 @@ function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targe
   const margin = 20;
   const marginSmall = 15;
 
-  const start = `M${sourceX} ${sourceY}`;
+  const start = `M${sourceX} ${sourceY + 5}`;
   const pathSource = `S${sourceX} ${sourceY - margin * 3} ${sourceX} ${sourceY + marginSmall}`;
-  const pathTarget = `${targetX} ${targetY - margin * 4}  ${targetX} ${targetY - marginSmall} ${targetX} ${targetY - margin}`;
-  const stop = `${targetX} ${targetY}`;
+  const pathTarget = `${targetX} ${targetY - margin * 4}  ${targetX} ${targetY - margin} ${targetX} ${targetY - margin * 2}`;
+  const stop = `${targetX} ${targetY - 5}`;
 
   return `${start} ${pathSource} ${pathTarget} ${stop}`;
 }

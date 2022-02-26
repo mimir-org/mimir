@@ -87,13 +87,13 @@
   fill: none;
   pointer-events: all;
   cursor: grab;
-  z-index: 100 !important;
 }
 
 .react-flow__edge-PartEdgeType,
 .react-flow__edge-RelationEdgeType,
 .react-flow__edge-TransportEdgeType,
 .react-flow__edge-BlockTransportEdgeType,
+.react-flow__edge-BlockRelationEdgeType,
 .react-flow__edge-BlockOffPageEdgeType {
   &.selected {
     .path-transportEdge,
@@ -102,7 +102,7 @@
     .path-blockTransportEdge,
     .path-blockRelationEdge,
     .path-blockOffPageEdge {
-      stroke-width: 6px !important;
+      stroke-width: 5px !important;
     }
   }
 }
