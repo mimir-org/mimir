@@ -1,4 +1,5 @@
-import { ArrowHeadType, EdgeProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
+import { Color } from "../../../../../compLibrary/colors";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers";
@@ -23,8 +24,6 @@ export const BlockTransportEdge = ({
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
 
-  const markerStart = isBidirectional ? getMarkerEnd(ArrowHeadType.Arrow, null) : null;
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
@@ -42,14 +41,28 @@ export const BlockTransportEdge = ({
   const transportPath = electro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return (
-    <path
-      id={id}
-      style={GetTransportEdgeStyle(color, visible)}
-      className="path-blockTransportEdge"
-      d={transportPath}
-      markerStart={markerStart}
-      markerEnd={markerEnd}
-    />
+    <>
+      <marker
+        id="arrow"
+        viewBox="0 0 5 10"
+        refX="9"
+        refY="5"
+        markerUnits="userSpaceOnUse"
+        markerWidth="10"
+        markerHeight="10"
+        orient="auto"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+      </marker>
+      <path
+        id={id}
+        style={GetTransportEdgeStyle(color, visible)}
+        className="path-blockTransportEdge"
+        d={transportPath}
+        markerStart={isBidirectional ? "url(#arrow)" : null}
+        markerEnd="url(#arrow)"
+      />
+    </>
   );
 };
 
