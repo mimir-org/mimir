@@ -1,4 +1,5 @@
-import { ArrowHeadType, EdgeProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
+import { Color } from "../../../../../compLibrary/colors";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers";
@@ -9,20 +10,13 @@ import { IsBidirectionalTerminal } from "../../../helpers";
  * @returns an OffPageEdge in BlockView.
  */
 export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
-  const electro = useAppSelector(electroSelector);
+  const isElectro = useAppSelector(electroSelector);
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
-
-  const markerStart = isBidirectional ? getMarkerEnd(ArrowHeadType.Arrow, null) : null;
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
-  const offPageMargin = 15;
-
-  targetX += offPageMargin;
-  sourceX -= offPageMargin;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
@@ -34,19 +28,33 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
     borderRadius,
   });
 
-  const transportPath = electro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
+  const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return (
-    <path
-      strokeDasharray="0.3,10"
-      strokeLinecap="square"
-      id={id}
-      style={GetOffPageEdgeStyle(color, visible)}
-      className="path-blockOffPageEdge"
-      d={transportPath}
-      markerStart={markerStart}
-      markerEnd={markerEnd}
-    />
+    <>
+      <marker
+        id="arrow"
+        viewBox="0 0 10 20"
+        refX="8"
+        refY="5"
+        markerUnits="userSpaceOnUse"
+        markerWidth="10"
+        markerHeight="20"
+        orient={!isElectro ? "auto-start-reverse" : "auto"}
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+      </marker>
+      <path
+        strokeDasharray="0.3,10"
+        strokeLinecap="square"
+        id={id}
+        style={GetOffPageEdgeStyle(color, visible)}
+        className="path-blockOffPageEdge"
+        d={transportPath}
+        markerStart={isBidirectional ? "url(#arrow)" : null}
+        markerEnd="url(#arrow)"
+      />
+    </>
   );
 };
 
