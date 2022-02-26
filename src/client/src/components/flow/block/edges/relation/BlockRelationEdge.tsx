@@ -1,12 +1,13 @@
-import { ArrowHeadType, EdgeProps, getBezierPath, getMarkerEnd } from "react-flow-renderer";
+import { EdgeProps, getBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { IsProduct } from "../../../../../helpers";
 import { Node } from "../../../../../models";
+import { useAppSelector, electroSelector } from "../../../../../redux/store";
 
 /**
  * Component for a RelationEdge.
  * @param params
- * @returns a RelationEdge in BlockView.
+ * @returns a partOf- or fullfilledBy edge in BlockView.
  */
 export const BlockRelationEdge = ({
   id,
@@ -18,8 +19,12 @@ export const BlockRelationEdge = ({
   targetPosition,
   data,
 }: EdgeProps) => {
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
   const visible = !data?.edge?.isHidden;
+  const isElectro = useAppSelector(electroSelector);
+
+  // Adjust to make room for marker arrow
+  const margin = 6;
+  targetX -= !isElectro ? margin : 0;
 
   const bezierPath = getBezierPath({
     sourceX,
@@ -31,13 +36,27 @@ export const BlockRelationEdge = ({
   });
 
   return (
-    <path
-      id={id}
-      style={GetEdgeRelationStyle(data.target, visible)}
-      className="path-blockRelationEdge"
-      d={bezierPath}
-      markerEnd={markerEnd}
-    />
+    <>
+      <marker
+        id="arrow"
+        viewBox="0 0 10 20"
+        refX="5"
+        refY="5"
+        markerUnits="userSpaceOnUse"
+        markerWidth="10"
+        markerHeight="20"
+        orient={!isElectro ? "auto-start-reverse" : "auto"}
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+      </marker>
+      <path
+        id={id}
+        style={GetEdgeRelationStyle(data.target, visible)}
+        className="path-blockRelationEdge"
+        d={bezierPath}
+        markerEnd="url(#arrow)"
+      />
+    </>
   );
 };
 
@@ -49,8 +68,6 @@ function GetEdgeRelationStyle(source: Node, visible: boolean) {
 
   return {
     stroke: getColor(),
-    strokeDasharray: 2.5,
-    strokeWidth: "2px",
     opacity: visible ? 1 : 0,
     transition: "opacity 250ms",
   };
