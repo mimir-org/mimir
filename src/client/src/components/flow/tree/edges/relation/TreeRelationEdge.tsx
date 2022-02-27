@@ -1,14 +1,14 @@
 import { EdgeProps, getBezierPath, getMarkerEnd } from "react-flow-renderer";
-import { Color } from "../../../../compLibrary/colors";
-import { IsProduct } from "../../../../helpers";
-import { Node } from "../../../../models";
+import { Color } from "../../../../../compLibrary/colors";
+import { IsProduct } from "../../../../../helpers";
+import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 
 /**
  * Component for RelationEdges in TreeView.
  * @param params
  * @returns a horizontal hasLocation/fulfilledBy edge.
  */
-const TreeRelationEdge = ({
+export const TreeRelationEdge = ({
   id,
   sourceX,
   sourceY,
@@ -21,6 +21,7 @@ const TreeRelationEdge = ({
   markerEndId,
 }: EdgeProps) => {
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
+  const color = IsProduct(data.target) ? Color.ProductSelected : Color.LocationSelected;
 
   const bezierPath = getBezierPath({
     sourceX,
@@ -34,27 +35,10 @@ const TreeRelationEdge = ({
   return (
     <path
       id={id}
-      style={GetEdgeRelationStyle(data.target, !data?.edge.isHidden)}
+      style={GetTreeEdgeStyle(color, !data?.edge.isHidden)}
       className={"path-relationEdge"}
       d={bezierPath}
       markerEnd={markerEnd}
     />
   );
 };
-
-const GetEdgeRelationStyle = (source: Node, visible: boolean) => {
-  const getColor = () => {
-    if (IsProduct(source)) return Color.ProductSelected;
-    return Color.LocationSelected;
-  };
-
-  return {
-    stroke: getColor(),
-    strokeDasharray: 2.5,
-    strokeWidth: "2px",
-    opacity: visible ? 1 : 0,
-    transition: "opacity 250ms",
-  };
-};
-
-export default TreeRelationEdge;

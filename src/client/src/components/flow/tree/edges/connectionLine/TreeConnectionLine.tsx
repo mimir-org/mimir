@@ -1,13 +1,13 @@
 import { ArrowHeadType, ConnectionLineComponentProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
-import { GetAspectColor } from "../../../../helpers";
-import { AspectColorType } from "../../../../models";
+import { GetAspectColor } from "../../../../../helpers";
+import { AspectColorType } from "../../../../../models";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in TreeView.
  * @param params
  * @returns a line from a Node's terminal.
  */
-const TreeConnectionLine = ({
+export const TreeConnectionLine = ({
   sourceX,
   sourceY,
   targetX,
@@ -41,5 +41,3 @@ function GetStyle(color: string) {
     strokeWidth: 1.5,
   };
 }
-
-export default TreeConnectionLine;
