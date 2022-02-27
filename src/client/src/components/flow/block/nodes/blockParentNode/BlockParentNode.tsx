@@ -5,7 +5,7 @@ import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
-import { FilterTerminals } from "../helpers";
+import { FilterTerminals } from "../helpers/FilterTerminals";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
 import { SetParentNodeWidth } from "../../builders/helpers/SetParentNodeWidth";
