@@ -1,4 +1,4 @@
-import * as selectors from "../helpers/selectors";
+import * as selectors from "./helpers/selectors";
 import { Node } from "../../../models";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
 
 /**
- * Component for a singe Project in Mimir, displayed in the Explorer Module.
+ * Component for a single Project in Mimir, displayed in the Explorer Module.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
 export const ProjectComponent = () => {

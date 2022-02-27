@@ -2,7 +2,7 @@ import { AspectContainer } from "../shared/styled/AspectContainer";
 import { VisibleComponent } from "../shared/components/VisibleComponent";
 import { LockComponent } from "../shared/components/LockComponent";
 import { Node, Project } from "../../../../models";
-import { TreeAspectElement } from "./TreeAspectElement";
+import { TreeAspectElement } from "./components/TreeAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
 import { OnTreeChange } from "./handlers/OnTreeChange";
@@ -23,6 +23,11 @@ interface Props {
   dispatch: Dispatch;
 }
 
+/**
+ * The main component for a TreeView Aspect in the ExplorerModule.
+ * @param interface
+ * @returns a TreeAspectElement.
+ */
 export const TreeAspectComponent = ({
   project,
   username,

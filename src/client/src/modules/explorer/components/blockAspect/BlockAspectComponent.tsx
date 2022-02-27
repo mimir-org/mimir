@@ -2,7 +2,7 @@ import { AspectContainer } from "../shared/styled/AspectContainer";
 import { LockComponent } from "../shared/components/LockComponent";
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
-import { BlockAspectElement } from "./BlockAspectElement";
+import { BlockAspectElement } from "./components/BlockAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
 import { TextResources } from "../../../../assets/text";
@@ -20,6 +20,12 @@ interface Props {
   onToggleExpanded: () => void;
   dispatch: Dispatch;
 }
+
+/**
+ * The main component for a BlockView Aspect in the ExplorerModule.
+ * @param interface
+ * @returns a BlockAspectElement.
+ */
 export const BlockAspectComponent = ({
   project,
   username,

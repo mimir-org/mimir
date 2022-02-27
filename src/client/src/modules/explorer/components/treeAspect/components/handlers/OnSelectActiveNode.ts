@@ -1,5 +1,5 @@
-import { SetFlowElementFunction } from "../../../../../helpers";
-import { Node } from "../../../../../models";
+import { SetFlowElementFunction } from "../../../../../../helpers";
+import { Node } from "../../../../../../models";
 
 export const OnSelectActiveNode = (
   node: Node,

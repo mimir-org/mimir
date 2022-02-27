@@ -1,10 +1,10 @@
-import { AspectExpandButton } from "../shared/components/AspectExpandButton";
-import { AspectColorType, Node } from "../../../../models";
-import { CheckboxExplorer } from "../../../../compLibrary/input/checkbox/explorer";
+import { AspectExpandButton } from "../../shared/components/AspectExpandButton";
+import { AspectColorType, Node } from "../../../../../models";
+import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsCheckedTree } from "./helpers/IsCheckedTree";
-import { AspectElementWrapper } from "../shared/styled/AspectElementWrapper";
-import { Icon } from "../../../../compLibrary/icon";
+import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
+import { Icon } from "../../../../../compLibrary/icon";
 import {
   GetAspectColor,
   GetAspectIcon,
@@ -12,7 +12,8 @@ import {
   UseIndentLevel,
   UseSetSelectNodes,
   useSelectedNodes,
-} from "../../../../helpers";
+  SetFlowElementFunction,
+} from "../../../../../helpers";
 
 interface Props {
   node: Node;
@@ -33,8 +34,8 @@ export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExp
   const [setActiveNodeElement] = UseSetSelectNodes();
 
   const aspectElementContent = IsAspectNode(node)
-    ? GetAspectHeaderContent(node)
-    : GetAspectChildContent(node, nodes, selectedNodes, isExpanded, setActiveNodeElement);
+    ? AspectHeaderContent(node)
+    : AspectChildContent(node, nodes, selectedNodes, setActiveNodeElement);
 
   return (
     <AspectElementWrapper indent={UseIndentLevel(indent)}>
@@ -44,20 +45,17 @@ export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExp
   );
 };
 
-const GetAspectHeaderContent = (node) => (
+const AspectHeaderContent = (node: Node) => (
   <>
     <Icon size={22} src={GetAspectIcon(node)} alt="" />
     <span>{node.label}</span>
   </>
 );
 
-const GetAspectChildContent = (node, nodes, selectedNodes, expanded, setActiveNodeElement) => (
+const AspectChildContent = (node: Node, nodes: Node[], selectedNodes: string[], setActiveNodeElement: SetFlowElementFunction) => (
   <CheckboxExplorer
     color={GetAspectColor(node, AspectColorType.Selected)}
     isChecked={IsCheckedTree(node, selectedNodes)}
-    isMiniCheckbox={false}
-    isBlockView={false}
-    isAspectNode={false}
     onChange={() => OnSelectActiveNode(node, nodes, selectedNodes, setActiveNodeElement)}
     label={node.label}
   />

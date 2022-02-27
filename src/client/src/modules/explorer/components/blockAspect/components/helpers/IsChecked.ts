@@ -1,8 +1,8 @@
 import { Elements } from "react-flow-renderer";
-import { Node } from "../../../../../models";
-import { EDGE_TYPE } from "../../../../../models/project";
+import { Node } from "../../../../../../models";
+import { EDGE_TYPE } from "../../../../../../models/project";
 
-export const IsChecked = (elements: Elements, node: Node) => {
+const IsChecked = (elements: Elements, node: Node) => {
   if (!node) return false;
 
   const edgeTypes = Object.values(EDGE_TYPE);
@@ -16,3 +16,5 @@ export const IsChecked = (elements: Elements, node: Node) => {
   });
   return checked;
 };
+
+export default IsChecked;

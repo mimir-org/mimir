@@ -6,9 +6,9 @@ import { TextResources } from "../../../../assets/text";
 interface Props {
   onChange: () => void;
   isChecked: boolean;
-  isMiniCheckbox?: boolean | false;
-  isBlockView: boolean;
-  isAspectNode: boolean;
+  isMiniCheckbox?: boolean;
+  isBlockView?: boolean;
+  isAspectNode?: boolean;
   color: string;
   label?: string;
   icon?: string;
@@ -19,7 +19,16 @@ interface Props {
  * @param interface
  * @returns a checkbox.
  */
-const CheckboxExplorer = ({ onChange, isChecked, isMiniCheckbox, isBlockView, isAspectNode, color, icon, label }: Props) => (
+export const CheckboxExplorer = ({
+  onChange,
+  isChecked,
+  isMiniCheckbox,
+  isBlockView,
+  isAspectNode,
+  color,
+  icon,
+  label,
+}: Props) => (
   <Tooltip
     content={isChecked ? TextResources.Explorer_Unselect_Object : TextResources.Explorer_Select_Object}
     placement={"right"}
@@ -32,5 +41,3 @@ const CheckboxExplorer = ({ onChange, isChecked, isMiniCheckbox, isBlockView, is
     </CheckboxWrapper>
   </Tooltip>
 );
-
-export default CheckboxExplorer;
