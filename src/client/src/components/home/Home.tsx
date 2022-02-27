@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
-import { StartPage } from "../start/";
+import { StartPage } from "../start/StartPage";
 import { InspectorModule } from "../../modules/inspector";
 import { LibraryModule } from "../../modules/library/LibraryModule";
 import { ProjectSubMenus } from "../menus/projectMenu";

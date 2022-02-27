@@ -2,7 +2,7 @@
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
-import { FullScreenComponent } from "../../fullscreen";
+import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildTreeElements } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";

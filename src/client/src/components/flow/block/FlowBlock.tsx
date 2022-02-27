@@ -3,7 +3,7 @@ import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
 import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection } from "react-flow-renderer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FullScreenComponent } from "../../fullscreen";
+import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildBlockElements } from "./builders";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";

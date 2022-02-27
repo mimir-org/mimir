@@ -3,7 +3,7 @@ import { Size } from "../../compLibrary/size";
 import { VisuallyHidden } from "../../compLibrary/util";
 import { CloseIcon, ExpandIcon } from "../../assets/icons/controls";
 import { TextResources } from "../../assets/text";
-import { OnToggleClick } from "./handlers";
+import { OnToggleClick } from "./handlers/OnToggleClick";
 import { FullScreenButton } from "./FullScreenComponent.styled";
 import {
   heightSelector,
@@ -18,7 +18,12 @@ interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
 }
 
-const FullScreenComponent = ({ inspectorRef }: Props) => {
+/**
+ * Component for the fullscreen functionality in Mimir.
+ * @param interface
+ * @returns a fullscreen button.
+ */
+export const FullScreenComponent = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(isOpenSelector);
   const isLibOpen = useAppSelector(libOpenSelector);
@@ -34,5 +39,3 @@ const FullScreenComponent = ({ inspectorRef }: Props) => {
     </FullScreenButton>
   );
 };
-
-export default FullScreenComponent;

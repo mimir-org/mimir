@@ -10,7 +10,7 @@ import { useEffectOnce } from "../../hooks/useEffectOnce";
  * The start page for Mimir
  * @returns a splash page with Mimir logo
  */
-const StartPage = () => {
+export const StartPage = () => {
   const dispatch = useAppDispatch();
 
   useEffectOnce(() => {
@@ -26,5 +26,3 @@ const StartPage = () => {
     </StartPageBackground>
   );
 };
-
-export default StartPage;
