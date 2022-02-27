@@ -1,6 +1,6 @@
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
-import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible, IsPartOf } from "../../../helpers";
+import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible } from "../../../helpers";
 
 /**
  * Component to determine if a handle/connector should be displayed in BlockView.
@@ -9,8 +9,6 @@ import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible, IsPartOf } fr
  * @returns a boolean value.
  */
 const ShowHandle = (conn: Connector, isInput: boolean) => {
-  if (IsPartOf(conn)) return false;
-
   if (IsBidirectionalTerminal(conn)) {
     if (isInput) return IsInputVisible(conn);
     else return IsOutputVisible(conn);

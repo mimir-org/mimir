@@ -3,6 +3,7 @@ import { Color } from "../../../../../compLibrary/colors";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers";
+import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
 
 /**
  * Component for an OffPageEdge.
@@ -48,7 +49,7 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
         strokeDasharray="0.3,10"
         strokeLinecap="square"
         id={id}
-        style={GetOffPageEdgeStyle(color, visible)}
+        style={GetEdgeStyle(color, visible)}
         className="path-blockOffPageEdge"
         d={transportPath}
         markerStart={isBidirectional ? "url(#arrow)" : null}
@@ -69,11 +70,3 @@ function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targe
 
   return `${start} ${pathSource} ${pathTarget} ${stop}`;
 }
-
-const GetOffPageEdgeStyle = (color: string, visible: boolean) => {
-  return {
-    stroke: color,
-    opacity: visible ? 1 : 0,
-    transition: "opacity 250ms",
-  };
-};

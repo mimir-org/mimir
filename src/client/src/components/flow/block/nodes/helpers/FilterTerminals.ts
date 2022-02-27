@@ -23,6 +23,7 @@ function validateTerminal(selected: Node, secondary: Node, c: Connector) {
   }
 
   if (IsLocation(selected)) return IsLocationTerminal(c);
+  if (IsProduct(selected)) return IsProductTerminal(c);
   return IsTransport(c);
 }
 
