@@ -8,7 +8,7 @@ import { MutableRefObject, useCallback, useEffect, useRef, useState } from "reac
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
-import { TreeConnectionLine } from "./edges";
+import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
