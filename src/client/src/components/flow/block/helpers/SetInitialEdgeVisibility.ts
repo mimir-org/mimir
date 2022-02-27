@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { setEdgeVisibility } from "../../../../redux/store/project/actions";
-import { IsTransport } from "../../helpers";
+import { IsLocationTerminal, IsProductTerminal, IsTransport } from "../../helpers";
 
 /**
  * Component to set the visibility of transport edges on first render of BlockView.
@@ -9,8 +9,12 @@ import { IsTransport } from "../../helpers";
  * @param dispatch
  */
 const SetInitialEdgeVisibility = (project: Project, dispatch: Dispatch) => {
+  const isHidden = false;
+
   project?.edges?.forEach((edge) => {
-    if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, false));
+    if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, isHidden));
+    if (IsProductTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, isHidden));
+    if (IsLocationTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, isHidden));
   });
 };
 

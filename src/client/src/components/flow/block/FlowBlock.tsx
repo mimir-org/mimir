@@ -125,6 +125,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   useEffect(() => {
+    console.log("Her");
     SetInitialEdgeVisibility(project, dispatch);
   }, []);
 
