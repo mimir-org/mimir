@@ -1,8 +1,8 @@
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors";
 import { IsProduct } from "../../../../../helpers";
-import { Node } from "../../../../../models";
 import { useAppSelector, electroSelector } from "../../../../../redux/store";
+import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
 
 /**
  * Component for a RelationEdge.
@@ -21,6 +21,7 @@ export const BlockRelationEdge = ({
 }: EdgeProps) => {
   const visible = !data?.edge?.isHidden;
   const isElectro = useAppSelector(electroSelector);
+  const color = IsProduct(data.target) ? Color.ProductSelected : Color.LocationSelected;
 
   // Adjust to make room for marker arrow
   const margin = 6;
@@ -51,7 +52,7 @@ export const BlockRelationEdge = ({
       </marker>
       <path
         id={id}
-        style={GetEdgeRelationStyle(data.target, visible)}
+        style={GetEdgeStyle(color, visible)}
         className="path-blockRelationEdge"
         d={bezierPath}
         markerEnd="url(#arrow)"
@@ -59,16 +60,3 @@ export const BlockRelationEdge = ({
     </>
   );
 };
-
-function GetEdgeRelationStyle(source: Node, visible: boolean) {
-  const getColor = () => {
-    if (IsProduct(source)) return Color.ProductSelected;
-    return Color.LocationSelected;
-  };
-
-  return {
-    stroke: getColor(),
-    opacity: visible ? 1 : 0,
-    transition: "opacity 250ms",
-  };
-}

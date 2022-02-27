@@ -3,6 +3,7 @@ import { Color } from "../../../../../compLibrary/colors";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers";
+import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
 
 /**
  * Component for a TransportEdge.
@@ -60,7 +61,7 @@ export const BlockTransportEdge = ({
       </marker>
       <path
         id={id}
-        style={GetTransportEdgeStyle(color, visible)}
+        style={GetEdgeStyle(color, visible)}
         className="path-blockTransportEdge"
         d={transportPath}
         markerStart={isBidirectional ? "url(#arrow)" : null}
@@ -69,14 +70,6 @@ export const BlockTransportEdge = ({
     </>
   );
 };
-
-function GetTransportEdgeStyle(color: string, visible: boolean) {
-  return {
-    stroke: color,
-    opacity: visible ? 1 : 0,
-    transition: "opacity 250ms",
-  };
-}
 
 // TODO: fix this in next Edge update
 function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
