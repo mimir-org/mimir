@@ -1,9 +1,11 @@
 import { Color } from "../compLibrary/colors";
 
-const SetDarkModeColor = (dark: boolean) => {
-  let mainColor: string;
-  let moduleColor: string;
-
+/**
+ * Component to toggle Mimir's color profile between light and dark.
+ * Note: the dark color scheme is temporary, the UX-approved version is pending.
+ * @param isDarkMode
+ */
+const ToggleDarkModeColor = (isDarkMode: boolean) => {
   const root = document.getElementById("root");
   const menuBar = document.getElementById("ToolBar");
   const explorer = document.getElementById("ExplorerModule");
@@ -12,13 +14,8 @@ const SetDarkModeColor = (dark: boolean) => {
   const inspector = document.getElementById("InspectorModule");
   const inspectorBody = document.getElementById("InspectorBody");
 
-  if (dark) {
-    mainColor = Color.DarkModeMain;
-    moduleColor = Color.DarkModeModule;
-  } else {
-    mainColor = Color.White;
-    moduleColor = Color.GreyLighter;
-  }
+  const mainColor = isDarkMode ? Color.DarkModeMain : Color.White;
+  const moduleColor = isDarkMode ? Color.DarkModeModule : Color.GreyLighter;
 
   if (root) root.style.background = mainColor;
   if (explorer) explorer.style.background = moduleColor;
@@ -29,4 +26,4 @@ const SetDarkModeColor = (dark: boolean) => {
   if (menuBar) menuBar.style.background = mainColor;
 };
 
-export default SetDarkModeColor;
+export default ToggleDarkModeColor;

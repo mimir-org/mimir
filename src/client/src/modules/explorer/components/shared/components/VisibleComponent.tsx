@@ -20,9 +20,9 @@ export const VisibleComponent = ({ isHidden, isAncestorVisible, isVisible, onTog
   </Tooltip>
 );
 
-const GetIcon = (isHidden: boolean, isAncestorVisible: boolean, isVisible: boolean) => {
+function GetIcon(isHidden: boolean, isAncestorVisible: boolean, isVisible: boolean) {
   if (isVisible && !isHidden) return VisibleOnIcon;
   if (!isVisible && isHidden) return VisibleOffIcon;
   if (isVisible && !isAncestorVisible) return VisibleSubOffIcon;
   return VisibleOnIcon;
-};
+}

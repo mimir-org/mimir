@@ -17,7 +17,7 @@ import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE, ViewType } from "../../models/project";
-import { SetDarkModeColor } from "../../helpers";
+import { ToggleDarkModeColor } from "../../helpers";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import {
@@ -39,7 +39,7 @@ interface Props {
 export const Home = ({ dispatch }: Props) => {
   const projectState = useAppSelector(selectors.projectStateSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
-  const darkMode = useAppSelector(selectors.darkModeSelector);
+  const isDarkMode = useAppSelector(selectors.darkModeSelector);
   const inspectorRef = useRef(null);
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
 
@@ -67,8 +67,8 @@ export const Home = ({ dispatch }: Props) => {
   }, []);
 
   useEffect(() => {
-    SetDarkModeColor(darkMode);
-  }, [darkMode]);
+    ToggleDarkModeColor(isDarkMode);
+  }, [isDarkMode]);
 
   return (
     <>

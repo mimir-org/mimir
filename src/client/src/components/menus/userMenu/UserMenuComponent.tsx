@@ -3,8 +3,10 @@ import { MENU_TYPE } from "../../../models/project";
 import { TextResources } from "../../../assets/text";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { memo, useRef } from "react";
-import { OnDarkMode } from "./handlers/OnDarkMode";
+import { OnToggleDarkMode } from "./handlers/OnToggleDarkMode";
 import { OnLogOutClick } from "./handlers/OnLogOutClick";
+import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
+import { useAppDispatch, useAppSelector, userStateSelector } from "../../../redux/store";
 import {
   UserMenuBox,
   UserMenuElement,
@@ -13,8 +15,7 @@ import {
   UserNameRoleText,
   UserNameText,
 } from "./UserMenuComponent.styled";
-import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
-import { useAppDispatch, useAppSelector, userStateSelector } from "../../../redux/store";
+
 import { Icon } from "../../../compLibrary/icon";
 
 interface Props {
@@ -29,7 +30,7 @@ interface Props {
 const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const dispatch = useAppDispatch();
   const userState = useAppSelector(userStateSelector);
-  const darkMode = useAppSelector(selectors.darkModeSelector);
+  const isDarkMode = useAppSelector(selectors.darkModeSelector);
 
   const menuRef = useRef(null);
   useOutsideClick(menuRef, () => setIsUserMenuOpen(false));
@@ -51,9 +52,11 @@ const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         <p className="text">{TextResources.UserMenu_Notifications}</p>
       </UserMenuElement> */}
 
-      <UserMenuElement onClick={() => OnDarkMode(dispatch, darkMode)}>
-        <Icon size={20} src={darkMode ? LightMode : DarkMode} />
-        <UserMenuElementText>{darkMode ? TextResources.UserMenu_LightMode : TextResources.UserMenu_DarkMode}</UserMenuElementText>
+      <UserMenuElement onClick={() => OnToggleDarkMode(dispatch, isDarkMode)}>
+        <Icon size={20} src={isDarkMode ? LightMode : DarkMode} />
+        <UserMenuElementText>
+          {isDarkMode ? TextResources.UserMenu_LightMode : TextResources.UserMenu_DarkMode}
+        </UserMenuElementText>
       </UserMenuElement>
 
       <UserMenuElement onClick={() => OnLogOutClick()}>

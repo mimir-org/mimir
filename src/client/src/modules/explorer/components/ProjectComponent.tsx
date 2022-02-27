@@ -35,9 +35,9 @@ export const ProjectComponent = () => {
     setInvisibleNodes((_) => new Set(invisibleNodes));
   };
 
-  const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes, project);
-  const areAncestorsVisible = (elem: Node): boolean => !IsAncestorInSet(elem, invisibleNodes, project);
-  const isVisible = (elem: Node): boolean => !invisibleNodes.has(elem.id);
+  const areAncestorsExpanded = (elem: Node) => !IsAncestorInSet(elem, closedNodes, project);
+  const areAncestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
+  const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
   if (!project || !nodes) return null;
 
