@@ -10,6 +10,7 @@ import { BidirectionalBox, ColorTag, TerminalsElementBox } from "../styled";
 interface Props {
   conn: Connector;
   isInput: boolean;
+
   onClick: (conn: Connector, isInput: boolean) => void;
 }
 

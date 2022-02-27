@@ -9,11 +9,13 @@ import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible, IsPartOf } fr
  * @returns a boolean value.
  */
 const ShowHandle = (conn: Connector, isInput: boolean) => {
+  if (IsPartOf(conn)) return false;
+
   if (IsBidirectionalTerminal(conn)) {
     if (isInput) return IsInputVisible(conn);
     else return IsOutputVisible(conn);
   }
-  return IsConnectorVisible(conn) || IsPartOf(conn);
+  return IsConnectorVisible(conn);
 };
 
 export default ShowHandle;

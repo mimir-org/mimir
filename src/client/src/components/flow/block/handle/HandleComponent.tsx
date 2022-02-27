@@ -4,7 +4,6 @@ import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType, IsValidBlockConnection, ShowHandle } from "./helpers";
 import { HandleBox, HandleContainer } from "./styled";
-import { IsPartOf } from "../../helpers";
 import { GetTerminalColor } from "../helpers";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
@@ -45,14 +44,13 @@ export const HandleComponent = ({ node, terminals, offPage, isInput }: Props) =>
 
           return (
             <HandleBox
-              visible={visible && !IsPartOf(conn)}
+              visible={visible}
               id={"handle-" + conn.id}
               key={conn.id}
               onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
               onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
             >
-              {!IsPartOf(conn) && <HandleIcon conn={conn} color={color} className={className} />}
-
+              <HandleIcon conn={conn} color={color} className={className} />
               <Handle
                 type={type}
                 position={pos}
