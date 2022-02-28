@@ -1,3 +1,3 @@
-export { default as GetNodeTypes } from "./GetNodeTypes";
-export { default as GetEdgeTypes } from "./GetEdgeTypes";
-export { default as GetEdgeType } from "./GetEdgeType";
+export { default as GetTreeNodeTypes } from "./GetTreeNodeTypes";
+export { default as GetTreeEdgeTypes } from "./GetTreeEdgeTypes";
+export { default as GetTreeEdgeType } from "./GetTreeEdgeType";

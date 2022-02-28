@@ -13,9 +13,9 @@ export const EDGE_TYPE = {
   BLOCK_TRANSPORT: "BlockTransportEdgeType",
   BLOCK_OFFPAGE: "BlockOffPageEdgeType",
   BLOCK_RELATION: "BlockRelationEdgeType",
-  PART: "PartEdgeType",
-  RELATION: "RelationEdgeType",
-  TRANSPORT: "TransportEdgeType",
+  TREE_PARTOF: "TreePartOfEdgeType",
+  TREE_RELATION: "TreeRelationEdgeType",
+  TREE_TRANSPORT: "TreeTransportEdgeType",
 };
 
 export const MODULE_TYPE = {

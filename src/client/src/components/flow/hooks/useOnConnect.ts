@@ -62,7 +62,7 @@ const useOnConnect = (params: UseOnConnectParams) => {
         type: edgeType,
         arrowHeadType: null,
         label: "",
-        animated: edgeType === EDGE_TYPE.TRANSPORT && animatedEdge,
+        animated: edgeType === EDGE_TYPE.TREE_TRANSPORT && animatedEdge,
         data: {
           source: sourceNode,
           target: targetNode,
@@ -129,7 +129,7 @@ function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode:
         type: edgeType,
         arrowHeadType: null,
         label: "",
-        animated: edgeType === EDGE_TYPE.TRANSPORT && animatedEdge,
+        animated: edgeType === EDGE_TYPE.TREE_TRANSPORT && animatedEdge,
         data: {
           source: sourceParent,
           target: targetParent,

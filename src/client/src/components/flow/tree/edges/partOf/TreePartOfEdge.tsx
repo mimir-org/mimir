@@ -8,7 +8,7 @@ import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
  * @param params
  * @returns a vertical edge between nodes of the same Aspect.
  */
-export const TreePartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
+export const TreePartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
   const color = GetAspectColor(data.edge.fromNode, AspectColorType.Main);
   const style = GetTreeEdgeStyle(color, !data.edge.isHidden);
 
