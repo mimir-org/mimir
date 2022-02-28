@@ -1,7 +1,7 @@
 import { TreeNode } from "../nodes/treeNode";
 import { AspectNode } from "../nodes/aspectNode";
 
-const GetNodeTypes = {
+const GetTreeNodeTypes = {
   AspectFunction: AspectNode,
   AspectLocation: AspectNode,
   AspectProduct: AspectNode,
@@ -10,4 +10,4 @@ const GetNodeTypes = {
   Location: TreeNode,
 };
 
-export default GetNodeTypes;
+export default GetTreeNodeTypes;
