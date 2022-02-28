@@ -76,9 +76,9 @@
   }
 }
 
-// TREE EDGE
-.path-treeTransportEdge,
+// TREE EDGES
 .path-treePartOfEdge,
+.path-treeTransportEdge,
 .path-treeRelationSourceEdge,
 .path-treeRelationTargetEdge {
   stroke-width: 2px !important;
@@ -88,13 +88,13 @@
 }
 
 .react-flow__edge-TreePartOfEdgeType,
-.react-flow__edge-TreeRelationEdgeType,
-.react-flow__edge-TreeTransportEdgeType {
+.react-flow__edge-TreeTransportEdgeType,
+.react-flow__edge-TreeRelationEdgeType {
   &.selected {
+    .path-treePartOfEdge,
     .path-treeTransportEdge,
     .path-treeRelationSourceEdge,
-    .path-treeRelationTargetEdge,
-    .path-treePartOfEdge {
+    .path-treeRelationTargetEdge {
       stroke-width: 5px !important;
     }
     .path-treeRelationTargetEdge {
@@ -103,7 +103,7 @@
   }
 }
 
-// BLOCK EDGE
+// BLOCK EDGES
 .path-blockTransportEdge,
 .path-blockRelationSourceEdge,
 .path-blockRelationTargetEdge,
