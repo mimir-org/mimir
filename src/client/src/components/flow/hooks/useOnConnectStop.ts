@@ -21,6 +21,7 @@ const useOnConnectStop = (
   project: Project,
   parentNodeSize: BlockNodeSize,
   secondaryNode: boolean,
+  zoomLevel: number,
   dispatch: Dispatch
 ) => {
   e.preventDefault();

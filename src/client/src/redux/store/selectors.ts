@@ -135,6 +135,11 @@ export const nodeSizeSelector = createAppSelector(
   (size) => size
 );
 
+export const zoomLevelSelector = createAppSelector(
+  (state) => state.zoom.level,
+  (level) => level
+);
+
 export const productNodeSizeSelector = createAppSelector(
   (state) => state.blockNodeSize.blockParents[1].size,
   (size) => size

@@ -44,6 +44,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
+  const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
   const node = GetSelectedNode();
 
   const OnLoad = useCallback(
@@ -74,12 +75,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, zoomLevel, dispatch);
   };
 
-  const OnMove = (flowTransform: FlowTransform) => {
-    if (flowTransform) dispatch(changeZoomLevel(flowTransform.zoom));
-  };
+  const OnMove = (flowTransform: FlowTransform) => flowTransform && dispatch(changeZoomLevel(flowTransform.zoom));
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
