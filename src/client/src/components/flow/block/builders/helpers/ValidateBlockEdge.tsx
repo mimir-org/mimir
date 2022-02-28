@@ -1,4 +1,4 @@
-import { IsFamily, IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
 import { Connector, Node } from "../../../../../models";
 import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers";
 
@@ -23,14 +23,8 @@ const ValidateBlockEdge = (
 ) => {
   const splitView = splitNode !== null;
   if (splitView) return ValidateSplitView(selectedNode, splitNode, sourceNode, targetNode, sourceConn, targetConn);
-  return ValidateSingleView(sourceNode, targetNode, sourceConn, targetConn);
-};
-
-function ValidateSingleView(sourceNode: Node, targetNode: Node, sourceConn: Connector, targetConn: Connector) {
-  if (!IsFamily(sourceNode, targetNode)) return false;
-  if (!IsTransportConnection(sourceConn, targetConn)) return false;
   return true;
-}
+};
 
 function ValidateSplitView(
   selectedNode: Node,
