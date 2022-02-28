@@ -6,5 +6,3 @@ export interface ChangeZoomLevel {
     level: number;
   };
 }
-
-export type ChangeZoomLevelTypes = ChangeZoomLevel;

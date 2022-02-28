@@ -46,6 +46,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
   const node = GetSelectedNode();
+  const defaultZoom = 0.9;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -130,6 +131,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
+    dispatch(changeZoomLevel(defaultZoom));
   }, []);
 
   return (
@@ -155,7 +157,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           deleteKeyCode={"Delete"}
           defaultPosition={[0, Size.BlockMarginY]}
           zoomOnDoubleClick={false}
-          defaultZoom={0.9}
+          defaultZoom={defaultZoom}
+          minZoom={0.7}
           maxZoom={3}
           zoomOnScroll
           paneMoveable

@@ -1,10 +1,10 @@
-import { CHANGE_ZOOM_LEVEL, ChangeZoomLevelTypes } from "./types";
+import { CHANGE_ZOOM_LEVEL, ChangeZoomLevel } from "./types";
 
 const initialState = {
   level: 0.9,
 };
 
-export function zoomLevelReducer(state = initialState, action: ChangeZoomLevelTypes) {
+export function zoomLevelReducer(state = initialState, action: ChangeZoomLevel) {
   if (action.type === CHANGE_ZOOM_LEVEL) {
     return {
       ...state,

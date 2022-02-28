@@ -37,6 +37,7 @@ const useOnConnectStop = (
       sourceNode,
       e.clientX,
       parentNodeSize,
+      zoomLevel,
       isTarget,
       secondaryNode,
       parentBlockNode?.positionBlockX
@@ -54,6 +55,7 @@ function ValidateOffPageDrop(
   sourceNode: Node,
   clientX: number,
   parentNodeSize: BlockNodeSize,
+  zoomLevel: number,
   isTarget: boolean,
   secondaryNode: boolean,
   parentXPos: number
