@@ -21,5 +21,5 @@ export const TreePartEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePos
     targetPosition,
   });
 
-  return <path id={id} style={style} className="path-partEdge" d={edgePathSmoothStep} markerEnd={null} />;
+  return <path id={id} style={style} className="path-treePartOfEdge" d={edgePathSmoothStep} />;
 };

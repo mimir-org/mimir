@@ -1,6 +1,6 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Node, Project } from "../../../models";
+import { Project, Node } from "../../../models";
 import { GetSelectedNode, IsOffPage, IsProduct } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
@@ -56,14 +56,18 @@ function ValidateOffPageDrop(
   secondaryNode: boolean,
   parentXPos: number
 ) {
+  if (IsOffPage(sourceNode)) return false;
+
+  // Correct value of clientX to match the nodes
+  clientX += 100;
+
   let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
   if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
-  const dropZoneWidth = 200;
+  const dropZoneWidth = secondaryNode ? 100 : 200;
   const rightBound = leftBound + dropZoneWidth;
-  const isValidPostion = ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 
-  return !IsOffPage(sourceNode) && isValidPostion;
+  return ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 }
 
 function ValidateOffPagePosition(

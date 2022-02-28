@@ -77,11 +77,13 @@
 }
 
 // EDGES
-.path-transportEdge,
-.path-partEdge,
-.path-relationEdge,
+.path-treeTransportEdge,
+.path-treePartOfEdge,
+.path-treeRelationSourceEdge,
+.path-treeRelationTargetEdge,
 .path-blockTransportEdge,
-.path-blockRelationEdge,
+.path-blockRelationSourceEdge,
+.path-blockRelationTargetEdge,
 .path-blockOffPageEdge {
   stroke-width: 2px !important;
   fill: none;
@@ -96,13 +98,19 @@
 .react-flow__edge-BlockRelationEdgeType,
 .react-flow__edge-BlockOffPageEdgeType {
   &.selected {
-    .path-transportEdge,
-    .path-relationEdge,
-    .path-partEdge,
+    .path-treeTransportEdge,
+    .path-treeRelationSourceEdge,
+    .path-treeRelationTargetEdge,
+    .path-treePartOfEdge,
     .path-blockTransportEdge,
-    .path-blockRelationEdge,
+    .path-blockRelationSourceEdge,
+    .path-blockRelationTargetEdge,
     .path-blockOffPageEdge {
       stroke-width: 5px !important;
+    }
+    .path-blockRelationTargetEdge,
+    .path-treeRelationTargetEdge {
+      stroke-dasharray: 5, 15;
     }
   }
 }
