@@ -1,14 +1,15 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
 import { Project, Node } from "../../../models";
-import { GetSelectedNode, IsOffPage, IsProduct } from "../../../helpers";
+import { IsOffPage } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
 
 /**
  * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
- * This is where an OffPage node can be created.
+ * If a connection is completed between two terminals, the hook useOnConnect runs.
+ * An OffPageNode is created if the connection is released within the dropzone for an OffPageNode.
  * @param e
  * @param project
  * @param parentNodeSize
@@ -28,7 +29,7 @@ const useOnConnectStop = (
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
     const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
-    const parentBlockNode = IsProduct(sourceNode) ? GetSelectedNode() : GetParent(sourceNode);
+    const parentBlockNode = GetParent(sourceNode);
     const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
     const isOffPageDrop = ValidateOffPageDrop(

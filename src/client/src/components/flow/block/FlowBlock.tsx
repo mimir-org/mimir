@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
-import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection } from "react-flow-renderer";
+import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildBlockElements } from "./builders";
@@ -17,6 +17,7 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, ha
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
+import { changeZoomLevel } from "../../../redux/store/zoom/actions";
 
 interface Props {
   project: Project;
@@ -74,6 +75,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnConnectStop = (e: MouseEvent) => {
     return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, dispatch);
+  };
+
+  const OnMove = (flowTransform: FlowTransform) => {
+    if (flowTransform) dispatch(changeZoomLevel(flowTransform.zoom));
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -143,14 +148,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          zoomOnDoubleClick={false}
-          defaultZoom={0.9}
-          defaultPosition={[0, Size.BlockMarginY]}
+          onMove={OnMove}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
+          defaultPosition={[0, Size.BlockMarginY]}
+          zoomOnDoubleClick={false}
+          defaultZoom={0.9}
+          maxZoom={3}
           zoomOnScroll
           paneMoveable
         >

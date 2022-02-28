@@ -19,6 +19,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
+import { zoomLevelReducer } from "./zoom/reducers";
 import { rootSaga } from "../sagas";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 
@@ -42,6 +43,7 @@ const rootReducers = combineReducers({
   location3D: location3DReducer,
   blockElements: blockElementsReducer,
   validation: validationReducer,
+  zoom: zoomLevelReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
