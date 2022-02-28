@@ -1,18 +1,16 @@
 import { Dispatch } from "redux";
 import { Button } from "../../../../../../../compLibrary/buttons";
 import { Input } from "../../../../../../../compLibrary/input/text";
-import { LibItem } from "../../../../../../../models";
 import { CreateCollectionWrapper, CollectionNameInput } from "./CreateCollectionComponent.styled";
 import { OnCreateCollection } from "../handlers";
 
 interface Props {
   collectionName: string;
   setCollectionName: (value: string) => void;
-  selectedTypes: LibItem[];
   dispatch: Dispatch;
 }
 
-export const CreateCollectionComponent = ({ collectionName, setCollectionName, selectedTypes, dispatch }: Props) => (
+export const CreateCollectionComponent = ({ collectionName, setCollectionName, dispatch }: Props) => (
   <CreateCollectionWrapper>
     <CollectionNameInput>
       <Input
@@ -23,7 +21,7 @@ export const CreateCollectionComponent = ({ collectionName, setCollectionName, s
       />
     </CollectionNameInput>
     <Button
-      onClick={() => OnCreateCollection(collectionName, selectedTypes, dispatch)}
+      onClick={() => OnCreateCollection(collectionName, dispatch)}
       text={"Create and add"}
       disabled={collectionName === ""}
     />

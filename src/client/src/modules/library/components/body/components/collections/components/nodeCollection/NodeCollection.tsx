@@ -14,8 +14,8 @@ interface Props {
   setSelectedElementType: (value: ObjectType) => void;
   dispatch: Dispatch;
   searchList?: LibraryCategory[];
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: string[];
+  setSelectedTypes: (array: string[]) => void;
 }
 
 /**

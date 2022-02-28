@@ -20,8 +20,8 @@ interface Props {
   setSelectedElementType: (value: ObjectType) => void;
   isCustomCategory: boolean;
   dispatch: Dispatch;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: string[];
+  setSelectedTypes: (array: string[]) => void;
   collectionState: CollectionsActions;
 }
 
@@ -43,7 +43,7 @@ export const NodeElement = ({
   dispatch,
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
-  const isSelected = selectedTypes.some((x) => x.id === item.id);
+  const isSelected = selectedTypes.some((x) => x === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
   const managingType = collectionState === CollectionsActions.ManageType;
 

@@ -1,4 +1,4 @@
-import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
+import { Aspect, CollectionsActions, LibraryTab, ObjectType } from "../../../../models";
 import { ModuleContent } from "./ModuleBody.styled";
 import { CollectionsComponent } from "./components/collections/CollectionsComponent";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
@@ -7,8 +7,8 @@ import { TemplatesComponent } from "./components/templates/TemplatesComponent";
 interface Props {
   libOpen: boolean;
   activeTab: LibraryTab;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: string[];
+  setSelectedTypes: (array: string[]) => void;
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
   searchString;

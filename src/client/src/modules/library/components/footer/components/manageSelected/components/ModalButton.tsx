@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { RightArrowIcon } from "../../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../../assets/text";
 import { Button } from "../../../../../../../compLibrary/buttons";
-import { CollectionsActions, LibItem } from "../../../../../../../models";
+import { CollectionsActions } from "../../../../../../../models";
 import { OnManageCollection } from "../handlers";
 import { ModalButtonsWrapper } from "../../styled/ModalButtonsWrapper";
 
@@ -10,9 +10,9 @@ interface Props {
   collectionState: CollectionsActions;
   isOpen: boolean;
   onExit: (isOpen: boolean) => void;
-  selectedTypes: LibItem[];
+  selectedTypes: string[];
   selectedCollections: string[];
-  setSelectedTypes: (types: LibItem[]) => void;
+  setSelectedTypes: (types: string[]) => void;
   setCollectionState: (action: CollectionsActions) => void;
   setAddSelectedToCollection: (open: boolean) => void;
   dispatch: Dispatch;

@@ -6,7 +6,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { ModuleFooter } from "./components/footer/ModuleFooter";
-import { LibraryTab, CollectionsActions, ObjectType, LibItem, Aspect } from "../../models";
+import { LibraryTab, CollectionsActions, ObjectType, Aspect } from "../../models";
 import {
   useAppSelector,
   useParametricAppSelector,
@@ -28,8 +28,8 @@ interface Props {
 export const LibraryModule = ({ dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
-  const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
-  const [selectedTypes, setSelectedTypes] = useState([] as LibItem[]);
+  const [collectionState, setCollectionState] = useState(CollectionsActions.ShowTypes);
+  const [selectedTypes, setSelectedTypes] = useState([] as string[]);
   const [selectedElement, setSelectedElement] = useState("");
   const [selectedElementType, setSelectedElementType] = useState<ObjectType>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
@@ -58,6 +58,8 @@ export const LibraryModule = ({ dispatch }: Props) => {
         search={(text: string) => setSearchString(text)}
         aspectFilters={aspectFilters}
         setAspectFilters={setAspectFilters}
+        collectionState={collectionState}
+        setCollectionState={setCollectionState}
       />
       <ModuleBody
         libOpen={libOpen}

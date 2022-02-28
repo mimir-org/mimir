@@ -17,8 +17,8 @@ interface Props {
   setCollectionState: (action: CollectionsActions) => void;
   selectedElement: string;
   selectedElementType: ObjectType;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (types: LibItem[]) => void;
+  selectedTypes: string[];
+  setSelectedTypes: (types: string[]) => void;
   collections: Collection[];
   onChange: () => void;
   dispatch: Dispatch;
