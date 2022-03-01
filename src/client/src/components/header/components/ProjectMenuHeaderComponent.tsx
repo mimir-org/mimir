@@ -14,7 +14,7 @@ import { useAppSelector, useParametricAppSelector, isActiveMenuSelector } from "
  * Component for the ProjectMenu element in the header of Mimir.
  * @returns a clickable element that toggles the ProjectMenuComponent.
  */
-const ProjectMenuHeaderComponent = () => {
+export const ProjectMenuHeaderComponent = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const projectName = useAppSelector(selectors.projectNameSelector);
   const isInstructionOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.INSTRUCTION_PROJECT_MENU) && !isUserMenuOpen;
@@ -32,4 +32,3 @@ const ProjectMenuHeaderComponent = () => {
     </ProjectHeaderButtonContainer>
   );
 };
-export default ProjectMenuHeaderComponent;

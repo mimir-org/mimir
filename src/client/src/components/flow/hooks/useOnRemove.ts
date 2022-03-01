@@ -7,10 +7,10 @@ import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
-import { HandleOffPageDelete } from "../block/nodes/helpers/offPage";
+import { HandleOffPageDelete } from "../block/nodes/blockOffPageNode/helpers";
 import { GetParent, IsPartOf } from "../helpers";
 import { GetSelectedBlockNode, GetSelectedNode, IsAspectNode, IsBlockView, IsOffPage } from "../../../helpers";
-import { getParentNodeConnector } from "../block/nodes/helpers/offPage/HandleOffPageDelete";
+import { getParentNodeConnector } from "../block/nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 
 const useOnRemove = (
   elements: Elements,

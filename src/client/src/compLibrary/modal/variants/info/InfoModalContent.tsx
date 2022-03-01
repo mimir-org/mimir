@@ -1,23 +1,29 @@
 import { FunctionComponent } from "react";
 import { Dialog } from "@headlessui/react";
+import { Icon } from "../../../icon";
 import {
   InfoModalContentContainer,
   InfoModalHeader,
   InfoModalHeaderDescription,
   InfoModalHeaderTitle,
 } from "./InfoModalContent.styled";
-
 interface Props {
   title?: string;
   description?: string;
   inset?: string;
   color?: string;
+  icon?: string;
 }
 
-export const InfoModalContent: FunctionComponent<Props> = ({ title, description, inset, color, children }) => (
+export const InfoModalContent: FunctionComponent<Props> = ({ title, description, inset, color, icon, children }) => (
   <InfoModalContentContainer inset={inset} color={color}>
     <InfoModalHeader>
-      {title && <Dialog.Title as={InfoModalHeaderTitle}>{title}</Dialog.Title>}
+      {title && (
+        <Dialog.Title as={InfoModalHeaderTitle}>
+          {icon && <Icon size={24} src={icon} alt="" />}
+          {title}
+        </Dialog.Title>
+      )}
       {description && <Dialog.Description as={InfoModalHeaderDescription}>{description}</Dialog.Description>}
     </InfoModalHeader>
     {children}

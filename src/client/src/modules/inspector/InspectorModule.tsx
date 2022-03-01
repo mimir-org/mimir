@@ -4,20 +4,20 @@ import { Size } from "../../compLibrary/size";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../assets/text";
 import { MODULE_TYPE } from "../../models/project";
-import { GetSelectedNode, IsBlockView } from "../../helpers";
-import { AnimatedInspector, ResizePanel } from "./styled";
-import { InspectorHeader } from ".";
 import { InspectorElement } from "./types";
-import { useDragResizePanel } from "./helpers";
+import { InspectorResizePanel } from "./InpectorModule.styled";
+import { Project } from "../../models";
+import { useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
-import { useCallback, useRef } from "react";
+import { GetSelectedNode, IsBlockView } from "../../helpers";
+import { AnimatedInspector, InspectorHeader } from "./components";
+import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { Project } from "../../models";
 
 interface Props {
   project: Project;
-  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  inspectorRef: MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
 
@@ -66,7 +66,7 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
       forwardRef={inspectorRef}
     >
       <Tooltip content={TextResources.Inspector_Resize} offset={[0, 10]} delay={150}>
-        <ResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
+        <InspectorResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       </Tooltip>
       <InspectorHeader
         project={project}

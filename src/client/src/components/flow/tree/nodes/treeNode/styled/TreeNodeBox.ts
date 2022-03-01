@@ -8,7 +8,7 @@ interface Props {
   visible: boolean;
 }
 
-const TreeNodeBox = styled.div<Props>`
+export const TreeNodeBox = styled.div<Props>`
   border-radius: 10px;
   width: ${Size.Node_Width}px;
   height: ${Size.Node_Height}px;
@@ -29,5 +29,3 @@ const TreeNodeBox = styled.div<Props>`
     border-color: ${(props) => props.colorSelected} !important;
   }
 `;
-
-export default TreeNodeBox;

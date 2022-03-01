@@ -1,81 +1,92 @@
 import { Dispatch } from "redux";
-import { TextResources } from "../../assets/text";
-import { LegendModule } from "../../modules/legend";
-import { LibraryComponent } from "./index";
 import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size";
-import { Icon } from "../../compLibrary/icon";
-import { LegendHeader } from "../legend/styled";
-import { LibHeader, ModuleBody, ModuleHeader } from "./styled";
 import { MODULE_TYPE } from "../../models/project";
-import { OnLegendClick, OnLibraryClick } from "./handlers";
-import { LegendIcon, LibraryIcon } from "../../assets/icons/modules";
+import { ModuleHeader } from "./components/header/ModuleHeader";
+import { ModuleBody } from "./components/body/ModuleBody";
+import { ModuleFooter } from "./components/footer/ModuleFooter";
+import { LibraryTab, CollectionsActions, ObjectType, LibItem, Aspect } from "../../models";
 import {
-  animatedModuleSelector,
-  legendOpenSelector,
-  libOpenSelector,
   useAppSelector,
   useParametricAppSelector,
+  animatedModuleSelector,
+  libOpenSelector,
+  librarySelector,
 } from "../../redux/store";
-import { Project } from "../../models";
 
 interface Props {
-  project: Project;
   dispatch: Dispatch;
 }
 
 /**
- * Component for Mimir's type library and Legend Module (to be moved).
+ * Component for Mimir's type library, templates and subprojects
  * @param interface
- * @returns  a module with a drop-down of Types and a search input.
+ * @returns a module with tabs and its contents
  */
-const LibraryModule = ({ dispatch, project }: Props) => {
-  const [searchString, setSearchString] = useState("");
-  const lib = MODULE_TYPE.LIBRARY;
-  const legend = MODULE_TYPE.LEGEND;
 
-  const legendOpen = useAppSelector(legendOpenSelector);
+export const LibraryModule = ({ dispatch }: Props) => {
+  const [activeTab, setActiveTab] = useState(LibraryTab.Library);
+  const [searchString, setSearchString] = useState("");
+  const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
+  const [selectedTypes, setSelectedTypes] = useState([] as LibItem[]);
+  const [selectedElement, setSelectedElement] = useState("");
+  const [selectedElementType, setSelectedElementType] = useState<ObjectType>(null);
+  const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
+
+  const showFooter = collectionState !== CollectionsActions.ManageCollection;
+  const lib = MODULE_TYPE.LIBRARY;
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
-  const animateLegend = useParametricAppSelector(animatedModuleSelector, legend);
+  const collections = useAppSelector(librarySelector).collections;
 
   const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;
   const stopLib = libOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const startLegend = legendOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stopLegend = legendOpen ? Size.ModuleOpen : Size.ModuleClosed;
+
+  const typeEditorOpen = () => {
+    setSelectedElement("");
+    setSelectedElementType(null);
+  };
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
-      <ModuleHeader>
-        <LibHeader isOpen={libOpen} onClick={() => OnLibraryClick(dispatch, libOpen, lib, legend)}>
-          <Icon size={24} src={LibraryIcon} alt="" />
-          <span>{TextResources.Module_Library}</span>
-        </LibHeader>
-      </ModuleHeader>
-
-      {libOpen && (
-        <ModuleBody visible={libOpen}>
-          <LibraryComponent
-            search={(text: string) => setSearchString(text)}
-            searchString={searchString}
-            projectId={project?.id}
-            dispatch={dispatch}
-          />
-        </ModuleBody>
+      <ModuleHeader
+        libOpen={libOpen}
+        dispatch={dispatch}
+        activeTab={activeTab}
+        setActiveTab={(tab: LibraryTab) => setActiveTab(tab)}
+        search={(text: string) => setSearchString(text)}
+        aspectFilters={aspectFilters}
+        setAspectFilters={setAspectFilters}
+      />
+      <ModuleBody
+        libOpen={libOpen}
+        activeTab={activeTab}
+        selectedTypes={selectedTypes}
+        setSelectedTypes={setSelectedTypes}
+        collectionState={collectionState}
+        setCollectionState={setCollectionState}
+        searchString={searchString}
+        selectedElement={selectedElement}
+        setSelectedElement={setSelectedElement}
+        setSelectedElementType={setSelectedElementType}
+        aspectFilters={aspectFilters}
+      />
+      {showFooter && (
+        <ModuleFooter
+          libOpen={libOpen}
+          activeTab={activeTab}
+          collectionState={collectionState}
+          setCollectionState={setCollectionState}
+          selectedElement={selectedElement}
+          selectedElementType={selectedElementType}
+          selectedTypes={selectedTypes}
+          setSelectedTypes={setSelectedTypes}
+          collections={collections}
+          onChange={typeEditorOpen}
+          dispatch={dispatch}
+        />
       )}
-
-      <AnimatedModule start={startLegend} stop={stopLegend} run={animateLegend} type={legend} id="LegendModule">
-        <ModuleHeader>
-          <LegendHeader isOpen={legendOpen} onClick={() => OnLegendClick(dispatch, legendOpen, legend)}>
-            <Icon size={24} src={LegendIcon} alt="" />
-            <span>{TextResources.Module_Legend}</span>
-          </LegendHeader>
-        </ModuleHeader>
-        {legendOpen && <LegendModule project={project} />}
-      </AnimatedModule>
     </AnimatedModule>
   );
 };
-
-export default LibraryModule;

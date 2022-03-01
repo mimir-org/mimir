@@ -2,7 +2,7 @@ import * as selectors from "../helpers/selectors";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text";
 import { AvatarBackground } from "../../../assets/icons/header";
-import { GetAvatarInitials } from "../../menus/userMenu/helpers";
+import { GetAvatarInitials } from "../helpers/GetAvatarInitials";
 import { useAppSelector } from "../../../redux/store";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
 import { AvatarButton, AvatarCircle, AvatarComponentContainer, AvatarInitials } from "./AvatarComponent.styled";
@@ -14,7 +14,7 @@ import { UserMenuComponent } from "../../menus/userMenu";
  * Component for the avatar icon in the header of Mimir.
  * @returns an avatar.
  */
-const AvatarComponent = () => {
+export const AvatarComponent = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const username = useAppSelector(selectors.usernameSelector);
 
@@ -33,4 +33,3 @@ const AvatarComponent = () => {
     </AvatarComponentContainer>
   );
 };
-export default AvatarComponent;

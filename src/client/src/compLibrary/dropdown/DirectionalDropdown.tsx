@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
-import { DropdownContainer, DropdownHeader, DropdownList } from "..";
+import { DropdownContainer, DropdownHeader, DropdownList } from "./DirectionalDropdown.styled";
 import { ConnectorType } from "../../models";
 
 interface Props {

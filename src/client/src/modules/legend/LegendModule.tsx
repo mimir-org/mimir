@@ -1,5 +1,5 @@
-import { LegendBody, LegendColor, LegendElement } from "./styled";
-import { LegendComponent } from "./";
+import { LegendBody, LegendColor, LegendElement } from "./LegendModule.styled";
+import { LegendComponent } from "./helpers/LegendComponent";
 import { Project } from "../../models";
 
 interface Props {

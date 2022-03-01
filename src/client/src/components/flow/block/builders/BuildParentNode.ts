@@ -15,7 +15,7 @@ const BuildParentNode = (node: Node, libOpen: boolean, explorerOpen: boolean) =>
 
   const type = TextResources.Type_BlockParentNode;
   // TODO: fix magic numbers and remove state mutation outside store
-  const position = { x: explorerOpen ? 420 : 110, y: 0 };
+  const position = { x: explorerOpen ? 480 : 90, y: 0 };
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 

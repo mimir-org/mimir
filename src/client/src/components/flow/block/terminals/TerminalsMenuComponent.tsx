@@ -1,5 +1,5 @@
 import * as Click from "./handlers";
-import { TerminalsMenu, TerminalsMenuButton } from ".";
+import { TerminalsMenu, TerminalsMenuButton } from "./components";
 import { Connector, Node } from "../../../../models";
 import { useState } from "react";
 import { TerminalMenuWrapper } from "./styled";
@@ -15,11 +15,11 @@ interface Props {
 }
 
 /**
- * Component for the terminals menu on the nodes in BlockView.
+ * The main component for the terminals menu on BlockView nodes.
  * @param interface
  * @returns a button to active the menu, and a drop-down menu containing available terminals.
  */
-const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, showMenuButton = true }: Props) => {
+export const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, showMenuButton = true }: Props) => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -38,6 +38,7 @@ const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, s
           isInput={isInput}
           terminals={terminals}
           hasActiveTerminals={terminals.some((conn) => IsConnectorVisible(conn))}
+          isParent={isParent}
           onClick={onClick}
           onBlur={() => Click.OnBlur(setShowMenu, showMenu)}
         />
@@ -45,5 +46,3 @@ const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, s
     </TerminalMenuWrapper>
   );
 };
-
-export default TerminalsMenuComponent;

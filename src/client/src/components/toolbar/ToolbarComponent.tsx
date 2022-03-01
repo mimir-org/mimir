@@ -1,7 +1,9 @@
-import * as Click from "../header/handlers";
 import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
-import ToolbarElement from "./components/ToolbarElement";
+import { ToolbarElement } from "./components/ToolbarElement";
+import { OnElectro } from "./handlers/OnElectro";
+import { OnFilter } from "./handlers/OnFilter";
+import { OnView } from "./handlers/OnView";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { ToolBarBody, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text";
@@ -26,31 +28,31 @@ const ToolbarComponent = () => {
           active={isTreeView}
           label={TextResources.Toolbar_TreeView}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
-          onClick={() => Click.OnView(VIEW_TYPE.TREEVIEW as ViewType, dispatch)}
+          onClick={() => OnView(VIEW_TYPE.TREEVIEW as ViewType, dispatch)}
         />
         <ToolbarElement
           active={isTreeView}
           label={TextResources.Toolbar_BlockView}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => Click.OnView(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}
+          onClick={() => OnView(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}
         />
         {!isTreeView && (
           <ToolbarElement
             label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
             icon={isElectro ? Icons.Vertical : Icons.Horizontal}
-            onClick={() => Click.OnElectro(dispatch)}
+            onClick={() => OnElectro(dispatch)}
           />
         )}
         <ToolbarElement
           active={IsVisualFilterOpen}
           label={IsVisualFilterOpen ? TextResources.Toolbar_VisualFilters_Close : TextResources.Toolbar_VisualFilters_Open}
           icon={IsVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
-          onClick={() => Click.OnFilter(dispatch, IsVisualFilterOpen)}
+          onClick={() => OnFilter(dispatch, IsVisualFilterOpen)}
         />
       </ToolBarBody>
 
       {/* {IsBlockView() && IsLocation(selectedNode) && (
-        <LocationBox onClick={() => Click.OnLocation3D(dispatch, location3DActive)} active={location3DActive}>
+        <LocationBox onClick={() => OnLocation3D(dispatch, location3DActive)} active={location3DActive}>
           <img src={Location} alt={"location3D"} className="logo" />
         </LocationBox>
       )} */}

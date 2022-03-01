@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Color } from "../../compLibrary/colors";
 
 interface Props {
-  background: boolean;
-  hover: boolean;
-  switchBackground: boolean;
+  background?: boolean;
+  hover?: boolean;
+  switchBackground?: boolean;
 }
 
 const ListElementsContainer = styled.div<Props>`

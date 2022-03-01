@@ -1,9 +1,10 @@
 import { Connector, Edge, Node } from "../../../models";
-import { GetLegendInfo } from ".";
+import { GetLegendInfo } from "./GetLegendInfo";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOf, Legend } from "../../../components/flow/helpers";
+import { IsPartOf } from "../../../components/flow/helpers";
+import { Legend } from "./types";
 
-const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
+export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
   const IsActive = (conn: Connector) => {
     let found = false;
 
@@ -29,5 +30,3 @@ const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
       };
     });
 };
-
-export default AddLegend;

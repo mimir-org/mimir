@@ -15,7 +15,7 @@ const Color = {
   GreyInspector: "#FAFAFA",
   GreyInspectorDisabled: "#C5C5C5",
   GreyToolBarSelected: "#6F6F6F",
-  GreyLibraryInactiveTab: "#EFEFEF",
+  GreyLibraryInactiveTab: "#D4D4D4",
   GreyLibraryCollectionBorder: "#BCBCBC",
 
   CyanLight: "#CFDADB",
