@@ -79,7 +79,11 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, zoomLevel, dispatch);
   };
 
-  const OnMove = (flowTransform: FlowTransform) => flowTransform && dispatch(changeZoomLevel(flowTransform.zoom));
+  const OnMove = (flowTransform: FlowTransform) => {
+    if (flowTransform?.zoom !== zoomLevel) {
+      dispatch(changeZoomLevel(flowTransform.zoom));
+    }
+  };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -104,19 +108,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  useEffect(() => {
-    CloseInspector(inspectorRef, dispatch);
-  }, [inspectorRef, dispatch]);
-
-  // Rerender
-  useEffect(() => {
-    OnLoad(flowInstance);
-  }, [OnLoad, flowInstance]);
-
-  useEffect(() => {
-    dispatch(updateBlockElements(elements));
-  }, [elements, dispatch]);
-
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch, true);
@@ -128,6 +119,18 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       handleMultiSelect(dispatch, true);
     }
   };
+
+  useEffect(() => {
+    CloseInspector(inspectorRef, dispatch);
+  }, [inspectorRef, dispatch]);
+
+  useEffect(() => {
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    dispatch(updateBlockElements(elements));
+  }, [elements, dispatch]);
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);

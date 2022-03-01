@@ -48,7 +48,7 @@ export const BlockTransportEdge = ({
   return (
     <>
       <marker
-        id="arrow"
+        id={"arrow"}
         viewBox="0 0 10 20"
         refX="5"
         refY="5"
@@ -71,7 +71,7 @@ export const BlockTransportEdge = ({
   );
 };
 
-// TODO: fix this in next Edge update
+// TODO: fix this on next Edge update
 function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
   const margin = 20;
   const marginSmall = 15;

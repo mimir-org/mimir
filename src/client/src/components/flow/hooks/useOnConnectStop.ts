@@ -65,13 +65,30 @@ function ValidateOffPageDrop(
   // Correct value of clientX to match the nodes
   clientX += 100;
 
-  let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
-  if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
-
+  const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos, secondaryNode);
   const dropZoneWidth = secondaryNode ? 100 : 200;
   const rightBound = leftBound + dropZoneWidth;
 
   return ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
+}
+
+function CalculateLeftBound(
+  zoom: number,
+  isTarget: boolean,
+  parentNodeSize: BlockNodeSize,
+  parentXPos: number,
+  secondaryNode: boolean
+) {
+  const defaultZoom = 0.9;
+  let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
+  if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+
+  if (zoom !== defaultZoom) {
+    const updateLeftBound = 100 * zoom;
+    leftBound += updateLeftBound;
+  }
+
+  return leftBound;
 }
 
 function ValidateOffPagePosition(
