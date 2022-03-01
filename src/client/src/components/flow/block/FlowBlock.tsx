@@ -79,10 +79,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, zoomLevel, dispatch);
   };
 
-  const OnMove = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== zoomLevel) {
-      dispatch(changeZoomLevel(flowTransform.zoom));
-    }
+  const OnMoveEnd = (flowTransform: FlowTransform) => {
+    if (flowTransform?.zoom !== zoomLevel) dispatch(changeZoomLevel(flowTransform.zoom));
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -152,7 +150,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          onMove={OnMove}
+          onMoveEnd={OnMoveEnd}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
