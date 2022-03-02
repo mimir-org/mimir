@@ -62,10 +62,6 @@ function ValidateOffPageDrop(
   parentXPos: number
 ) {
   const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos);
-  console.log({ clientX });
-  console.log({ leftBound });
-  console.log({ zoomLevel });
-
   const dropZoneWidth = secondaryNode ? 100 : 200;
   const rightBound = leftBound + dropZoneWidth;
 

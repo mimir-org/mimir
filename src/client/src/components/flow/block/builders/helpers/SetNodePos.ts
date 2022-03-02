@@ -18,7 +18,7 @@ const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, 
   const yMin = 30;
   const yMax = window.innerHeight - 180;
   const xMin = SetXMin(explorerOpen, marginLarge);
-  const xMax = SetXMax(libOpen, explorerOpen, splitView, width, marginLarge);
+  const xMax = splitView ? SetSplitViewXMax(libOpen, explorerOpen, width, marginLarge) : SetXMax(libOpen, explorerOpen, width);
 
   let nodeX = nodePos.x;
   let nodeY = nodePos.y;
@@ -26,20 +26,20 @@ const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, 
   if (nodeX < xMin) nodeX = xMin + margin;
   if (nodeX > xMax) nodeX = xMax - margin;
   if (nodeY < yMin) nodeY = yMin + 20;
-  if (nodeY > yMax) nodeY = yMax - margin * 1.5;
+  if (nodeY > yMax) nodeY = yMax - margin * 3.5;
 
   return { x: nodeX, y: nodeY };
 };
 
-function SetXMax(libOpen: boolean, explorerOpen: boolean, splitView: boolean, width: number, marginLarge: number) {
-  if (splitView) {
-    if (libOpen && !explorerOpen) return width - marginLarge;
-    if (!libOpen && explorerOpen) return width + 220;
-    return width;
-  }
-
+function SetXMax(libOpen: boolean, explorerOpen: boolean, width: number) {
   if ((libOpen && explorerOpen) || (libOpen && !explorerOpen)) return width - Size.ModuleOpen;
   if ((!libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return width - 30;
+}
+
+function SetSplitViewXMax(libOpen: boolean, explorerOpen: boolean, width: number, marginLarge: number) {
+  if (libOpen && !explorerOpen) return width - marginLarge;
+  if (!libOpen && explorerOpen) return width + 150;
+  if ((libOpen && explorerOpen) || (!libOpen && !explorerOpen)) return width - 30;
 }
 
 function SetXMin(explorerOpen: boolean, marginLarge: number) {
