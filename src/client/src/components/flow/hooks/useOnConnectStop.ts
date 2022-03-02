@@ -1,8 +1,8 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Project, Node } from "../../../models";
+import { Project } from "../../../models";
 import { IsOffPage } from "../../../helpers";
-import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
+import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
@@ -31,11 +31,12 @@ const useOnConnectStop = (
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
     const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
+    if (!IsTransport(sourceConnector) || IsOffPage(sourceNode)) return;
+
     const parentBlockNode = GetParent(sourceNode);
     const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
     const isOffPageDrop = ValidateOffPageDrop(
-      sourceNode,
       e.clientX,
       parentNodeSize,
       zoomLevel,
@@ -53,7 +54,6 @@ const useOnConnectStop = (
 };
 
 function ValidateOffPageDrop(
-  sourceNode: Node,
   clientX: number,
   parentNodeSize: BlockNodeSize,
   zoomLevel: number,
@@ -61,9 +61,7 @@ function ValidateOffPageDrop(
   secondaryNode: boolean,
   parentXPos: number
 ) {
-  if (IsOffPage(sourceNode)) return false;
-
-  const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos, secondaryNode);
+  const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos);
   console.log({ clientX });
   console.log({ leftBound });
   console.log({ zoomLevel });
@@ -74,29 +72,24 @@ function ValidateOffPageDrop(
   return ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 }
 
-function CalculateLeftBound(
-  zoom: number,
-  isTarget: boolean,
-  parentNodeSize: BlockNodeSize,
-  parentXPos: number,
-  secondaryNode: boolean
-) {
+function CalculateLeftBound(zoom: number, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
   const defaultZoom = Size.Block_DefaultZoomLevel;
+  const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
-  let leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
-  // if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
-
-  if (zoom !== defaultZoom) {
-    let diff = 0;
-
-    if (zoom < defaultZoom) {
-      const width = parentNodeSize?.width * zoom;
-      leftBound = parentXPos + width;
-    } else {
-      diff = zoom - defaultZoom;
-      leftBound += leftBound * diff;
-    }
+  if (zoom < defaultZoom) {
+    const parentNodeWidthScaled = parentNodeSize?.width * zoom;
+    const canvasCenterX = window.innerWidth / 2;
+    const targetLeftBound = canvasCenterX + parentNodeWidthScaled / 2;
+    const sourceLeftBound = canvasCenterX - parentNodeWidthScaled / 2;
+    return isTarget ? targetLeftBound : sourceLeftBound;
   }
+  if (zoom > defaultZoom) {
+    const diff = zoom - defaultZoom;
+    const targetLeftBound = leftBound * diff;
+    const sourceLeftBound = parentXPos - leftBound * zoom;
+    return isTarget ? targetLeftBound : sourceLeftBound;
+  }
+
   return leftBound;
 }
 

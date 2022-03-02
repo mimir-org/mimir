@@ -87,12 +87,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, zoomLevel, dispatch);
   };
 
-  const OnZoomScrollEnd = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== zoomLevel) {
-      dispatch(changeZoomLevel(flowTransform.zoom));
-    }
-  };
-
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
@@ -100,6 +94,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
+  };
+
+  const OnZoomScrollEnd = (flowTransform: FlowTransform) => {
+    if (flowTransform?.zoom !== zoomLevel) dispatch(changeZoomLevel(flowTransform.zoom));
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
