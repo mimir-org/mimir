@@ -84,14 +84,14 @@ function CalculateLeftBound(
   const defaultZoom = Size.Block_DefaultZoomLevel;
 
   let leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
-  if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+  // if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
   if (zoom !== defaultZoom) {
     let diff = 0;
 
     if (zoom < defaultZoom) {
-      diff = defaultZoom - zoom;
-      leftBound -= leftBound * diff;
+      const width = parentNodeSize?.width * zoom;
+      leftBound = parentXPos + width;
     } else {
       diff = zoom - defaultZoom;
       leftBound += leftBound * diff;

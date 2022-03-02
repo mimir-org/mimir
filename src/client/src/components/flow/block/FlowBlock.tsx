@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
-import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildBlockElements } from "./builders";
@@ -18,6 +17,14 @@ import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
 import { changeZoomLevel } from "../../../redux/store/zoom/actions";
+import ReactFlow, {
+  Elements,
+  Node as FlowNode,
+  Edge as FlowEdge,
+  Connection,
+  FlowTransform,
+  useZoomPanHelper,
+} from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -47,6 +54,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
   const node = GetSelectedNode();
   const defaultZoom = Size.Block_DefaultZoomLevel;
+  const { setCenter } = useZoomPanHelper();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -80,7 +88,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnZoomScrollEnd = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== zoomLevel) dispatch(changeZoomLevel(flowTransform.zoom));
+    if (flowTransform?.zoom !== zoomLevel) {
+      dispatch(changeZoomLevel(flowTransform.zoom));
+    }
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -117,6 +127,14 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       handleMultiSelect(dispatch, true);
     }
   };
+
+  useEffect(() => {
+    if (zoomLevel < defaultZoom) {
+      const x = window.innerWidth / 2;
+      const y = window.innerHeight / 2;
+      setCenter(x, y, zoomLevel);
+    }
+  }, [zoomLevel]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -163,6 +181,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           maxZoom={3}
           zoomOnScroll
           paneMoveable
+          snapToGrid={true}
+          snapGrid={[25, 25]}
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>

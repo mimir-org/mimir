@@ -1,6 +1,6 @@
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId, GetParent, IsPartOf, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
+import { CreateId, GetParent, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
 import { Connector, Edge, Node, Project } from "../../../models";
@@ -23,7 +23,6 @@ const useOnConnect = (params: UseOnConnectParams) => {
   SaveEventData(null, "edgeEvent");
 
   const { project, connection, library, edgeType, animatedEdge, setElements, dispatch } = params;
-
   const createdId = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === connection.source);
   const targetNode = project.nodes.find((node) => node.id === connection.target);
@@ -45,7 +44,7 @@ const useOnConnect = (params: UseOnConnectParams) => {
     });
   });
 
-  if (IsPartOf(sourceConn) && IsPartOf(targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
+  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
 
   if (!existingEdge) {
     currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
