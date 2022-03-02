@@ -32,7 +32,7 @@ export const ProjectListBox = styled.div`
 export const ProjectListLabels = styled.div`
   display: flex;
   justify-content: space-between;
-  font-weight: ${FontWeight.Normal};
+  font-weight: ${FontWeight.NORMAL};
   font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   border-bottom: 2px solid ${Color.BLUE_MAGENTA};

@@ -29,7 +29,7 @@ export const InspectorTabHeader = styled.div<InspectorTabHeaderProps>`
 export const InspectorTabHeaderTitle = styled.p`
   position: relative;
   bottom: ${(props: { active: boolean }) => (props.active ? 20 : 16)}px;
-  font-weight: ${(props: { active: boolean }) => props.active && FontWeight.Bold};
+  font-weight: ${(props: { active: boolean }) => props.active && FontWeight.BOLD};
   text-align: center;
 `;
 

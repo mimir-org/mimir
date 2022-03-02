@@ -102,7 +102,7 @@ export const DropdownListItem = styled.div<DropdownListItemProps>`
   p {
     padding: 5px 10px;
     margin-left: ${(props) => props.hasCategory && "10px"};
-    font-weight: ${FontWeight.Normal};
+    font-weight: ${FontWeight.NORMAL};
   }
 
   img {

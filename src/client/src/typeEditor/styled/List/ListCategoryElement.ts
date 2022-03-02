@@ -11,7 +11,7 @@ const ListCategoryElement = styled.div`
     margin: 0px 7px;
     height: 30px;
     line-height: 30px;
-    font-weight: ${FontWeight.Bold};
+    font-weight: ${FontWeight.BOLD};
     text-transform: uppercase;
   }
 `;

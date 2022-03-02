@@ -34,6 +34,6 @@ export const ElementLabel = styled.span<ElementLabelProps>`
   position: relative;
   bottom: 0.5px;
   font-size: ${FontSize.STANDARD};
-  font-weight: ${(props) => (props.isHeader || props.isSubHeader) && FontWeight.Bold};
+  font-weight: ${(props) => (props.isHeader || props.isSubHeader) && FontWeight.BOLD};
   width: 220px;
 `;

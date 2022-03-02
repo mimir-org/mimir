@@ -37,7 +37,7 @@ export const ModalListContent = styled.div`
 
 export const ModalListColumnText = styled.span`
   font-size: ${FontSize.STANDARD};
-  font-weight: ${FontWeight.Normal};
+  font-weight: ${FontWeight.NORMAL};
   text-align: right;
 `;
 
@@ -76,6 +76,6 @@ export const ModalListElement = styled.div<ModalListElementProps>`
 
   > ${ModalListElementText} {
     text-decoration: ${(props) => props.isSelected && "underline"};
-    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    font-weight: ${(props) => props.isSelected && FontWeight.BOLD};
   }
 `;

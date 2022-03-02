@@ -12,7 +12,7 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   align-items: center;
   height: 30px;
   padding: 0 10px 0 6px;
-  font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
+  font-weight: ${(props) => (props.isSelected ? FontWeight.BOLD : FontWeight.NORMAL)};
   text-decoration: ${(props) => props.isSelected && "underline"};
   font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};

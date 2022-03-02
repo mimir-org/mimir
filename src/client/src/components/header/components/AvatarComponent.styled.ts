@@ -21,7 +21,7 @@ export const AvatarButton = styled.button<AvatarBoxProps>`
   padding: 0;
   border: 0;
   color: ${Color.WHITE};
-  font-weight: ${(props) => props.isOpen && FontWeight.Bold};
+  font-weight: ${(props) => props.isOpen && FontWeight.BOLD};
   cursor: pointer;
   background: transparent;
 `;
@@ -38,5 +38,5 @@ export const AvatarInitials = styled.p`
   margin: 0;
   color: ${Color.TEXT_AVATAR};
   font-size: ${FontSize.STANDARD};
-  font-weight: ${FontWeight.Normal};
+  font-weight: ${FontWeight.NORMAL};
 `;

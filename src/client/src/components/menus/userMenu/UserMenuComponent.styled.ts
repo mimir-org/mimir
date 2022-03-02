@@ -26,13 +26,13 @@ export const UserNameBox = styled.div`
 export const UserNameText = styled.p`
   margin: 0;
   font-size: ${FontSize.SUBHEADER};
-  font-weight: ${FontWeight.Bold};
+  font-weight: ${FontWeight.BOLD};
 `;
 
 export const UserNameRoleText = styled.p`
   margin: 0;
   font-size: ${FontSize.MEDIUM};
-  font-weight: ${FontWeight.Normal};
+  font-weight: ${FontWeight.NORMAL};
   color: ${Color.GREY_INACTIVE};
 `;
 

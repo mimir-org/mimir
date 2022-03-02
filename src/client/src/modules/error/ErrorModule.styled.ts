@@ -18,6 +18,6 @@ export const ErrorItemText = styled.p`
 
 export const ErrorItemTitle = styled.h2`
   margin: 0;
-  font-weight: ${FontWeight.Bold};
+  font-weight: ${FontWeight.BOLD};
   font-size: ${FontSize.SUBHEADER};
 `;

@@ -21,5 +21,5 @@ export const ProjectHeaderButton = styled.button<ProjectHeaderButtonProps>`
   border: 0;
   cursor: pointer;
   color: ${Color.WHITE};
-  font-weight: ${(props) => props.isOpen && FontWeight.Bold};
+  font-weight: ${(props) => props.isOpen && FontWeight.BOLD};
 `;

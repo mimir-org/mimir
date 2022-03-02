@@ -55,5 +55,5 @@ export const NodeCollectionButtonText = styled.span<NodeCollectionButtonTextProp
   text-overflow: ellipsis;
   cursor: pointer;
   font-size: ${FontSize.STANDARD};
-  font-weight: ${(props) => (props.isOpen ? FontWeight.Bold : FontWeight.Normal)};
+  font-weight: ${(props) => (props.isOpen ? FontWeight.BOLD : FontWeight.NORMAL)};
 `;

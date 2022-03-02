@@ -16,7 +16,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
   border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.GREY_DARK : 0)};
 
   .terminal-name {
-    font-weight: ${(props) => props.expanded && FontWeight.Bold};
+    font-weight: ${(props) => props.expanded && FontWeight.BOLD};
     text-decoration: ${(props) => props.expanded && "underline"};
     font-size: ${FontSize.SMALL};
   }
@@ -34,7 +34,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
     background: transparent;
     border: none;
     cursor: pointer;
-    font-weight: ${FontWeight.Bold};
+    font-weight: ${FontWeight.BOLD};
     font-family: ${FontType.Standard};
     font-size: ${FontSize.TINY};
     color: ${Color.BLACK};
@@ -68,7 +68,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
 
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};
-    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    font-weight: ${(props) => props.isSelected && FontWeight.BOLD};
   }
 `;
 

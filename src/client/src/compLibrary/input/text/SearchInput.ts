@@ -7,7 +7,7 @@ const SearchInput = styled.input`
   width: 100%;
   height: 30px;
   padding: 0 5px;
-  font-style: ${FontWeight.Italic};
+  font-style: ${FontWeight.ITALIC};
   font-size: ${FontSize.STANDARD};
   border: 1px solid ${Color.BLACK};
   border-radius: 5px;

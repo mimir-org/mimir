@@ -10,7 +10,7 @@ interface Props {
 const ListLabel = styled.div<Props>`
   font-family: ${FontType.Standard};
   font-size: ${FontSize.STANDARD};
-  font-weight: ${FontWeight.Bold};
+  font-weight: ${FontWeight.BOLD};
   color: ${Color.BLUE_MAGENTA};
   padding-bottom: ${(props) => (props.removeBorderBottom ? 0 : 8)}px;
   border-width: 0;
