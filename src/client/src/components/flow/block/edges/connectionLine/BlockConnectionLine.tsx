@@ -22,7 +22,7 @@ export const BlockConnectionLine = ({
   return (
     <g>
       <marker id="arrow" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="20" orient="auto"></marker>
-      <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+      <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
       <path
         strokeDasharray="0.3,10"
         strokeLinecap="square"

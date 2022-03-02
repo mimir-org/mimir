@@ -9,7 +9,7 @@ export const ParameterDescriptorsWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: ${FontSize.Tiny};
-    color: ${Color.GreyHeader};
+    color: ${Color.GREY_HEADER};
   }
 
   .descriptors-bottom {
@@ -17,13 +17,13 @@ export const ParameterDescriptorsWrapper = styled.div`
     font-size: ${FontSize.Small};
     justify-content: space-between;
     margin-top: 1px;
-    border-top: 1px solid ${Color.ParamsPurple};
+    border-top: 1px solid ${Color.PARAMS_PURPLE};
 
     div:not(:first-child)::after {
       content: "";
       width: 1px;
       height: 6px;
-      background: ${Color.ParamsPurple};
+      background: ${Color.PARAMS_PURPLE};
       border-radius: 1px;
       position: absolute;
       top: -1.5px;

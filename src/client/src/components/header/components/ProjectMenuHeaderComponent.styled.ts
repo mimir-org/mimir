@@ -20,6 +20,6 @@ export const ProjectHeaderButton = styled.button<ProjectHeaderButtonProps>`
   background: transparent;
   border: 0;
   cursor: pointer;
-  color: ${Color.White};
+  color: ${Color.WHITE};
   font-weight: ${(props) => props.isOpen && FontWeight.Bold};
 `;

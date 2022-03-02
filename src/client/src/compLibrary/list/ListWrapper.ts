@@ -14,7 +14,7 @@ const ListWrapper = styled.div<Props>`
   display: flex;
   flex-direction: column;
   flex: ${(props) => (props.flex === undefined ? 1 : props.flex)};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Small};
   font-weight: ${FontWeight.Normal};

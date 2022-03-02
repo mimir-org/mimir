@@ -5,7 +5,7 @@ import { FontSize } from "../../../../../../../compLibrary/font";
 export const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${Color.BlueMagenta};
+  border-bottom: 1px solid ${Color.BLUE_MAGENTA};
   margin: 20px 0;
 `;
 
@@ -20,7 +20,7 @@ export const SearchBarInput = styled.input.attrs(() => ({ type: "text" }))`
   }
 
   ::placeholder {
-    color: ${Color.GreyDarker};
+    color: ${Color.GREY_DARKER};
     font-style: italic;
     opacity: 0.5;
   }

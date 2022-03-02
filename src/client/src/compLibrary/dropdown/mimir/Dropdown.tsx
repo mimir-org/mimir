@@ -41,7 +41,7 @@ const Dropdown = ({
   valueImageProp,
   disabled,
   borderRadius = 5,
-  borderColor = Color.Black,
+  borderColor = Color.BLACK,
   fontSize = FontSize.Standard,
   height = 28,
   listTop = 33,

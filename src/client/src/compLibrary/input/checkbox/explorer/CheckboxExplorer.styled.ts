@@ -21,8 +21,8 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
     cursor: pointer;
     height: 20px;
     width: 20px;
-    border: 2px solid ${Color.GreyHeader};
-    background-color: ${Color.White};
+    border: 2px solid ${Color.GREY_HEADER};
+    background-color: ${Color.WHITE};
     border-radius: 3px;
     margin: 0;
   }

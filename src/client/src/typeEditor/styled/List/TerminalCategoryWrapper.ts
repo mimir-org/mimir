@@ -13,7 +13,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
   gap: 15px;
   padding: 3px 15px 3px 5px;
   min-height: 30px;
-  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.GreyDark : 0)};
+  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.GREY_DARK : 0)};
 
   .terminal-name {
     font-weight: ${(props) => props.expanded && FontWeight.Bold};
@@ -37,7 +37,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
     font-weight: ${FontWeight.Bold};
     font-family: ${FontType.Standard};
     font-size: ${FontSize.Tiny};
-    color: ${Color.Black};
+    color: ${Color.BLACK};
 
     .add-text {
       margin-left: 3px;

@@ -16,9 +16,9 @@ export const LegendElement = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: ${Color.White};
+  background: ${Color.WHITE};
   padding: 10px;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   font-size: ${FontSize.Medium};
   width: auto;
 

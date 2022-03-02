@@ -13,11 +13,11 @@ const TypeEditorButton = styled.button<Props>`
   justify-content: space-evenly;
   height: 30px;
   padding: 0 10px;
-  border: 1px solid ${Color.BlueMagenta};
+  border: 1px solid ${Color.BLUE_MAGENTA};
   border-radius: 3px;
-  background-color: ${(props) => (props.disabled ? Color.Grey : Color.White)};
+  background-color: ${(props) => (props.disabled ? Color.GREY : Color.WHITE)};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   font-size: ${FontSize.Standard};
   white-space: nowrap;
 `;

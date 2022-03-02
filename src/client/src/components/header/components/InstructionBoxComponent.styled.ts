@@ -17,7 +17,7 @@ export const InstructionArrowContainer = styled.div`
 `;
 
 export const InstructionArrowCurve = styled.div`
-  border-right: 1px solid ${Color.White};
+  border-right: 1px solid ${Color.WHITE};
   border-bottom: 1px solid transparent;
   height: 136px;
   width: 90px;
@@ -31,7 +31,7 @@ export const InstructionArrowPoint = styled.div`
 
   :before,
   :after {
-    border: 0.5px solid ${Color.White};
+    border: 0.5px solid ${Color.WHITE};
     height: 8px;
     content: "";
     position: absolute;
@@ -60,13 +60,13 @@ export const InstructionTextBox = styled.div`
   margin-top: -25px;
   margin-right: -50px;
   width: 235px;
-  background-color: ${Color.BlueDark};
-  border: ${Color.White} solid 1px;
+  background-color: ${Color.BLUE_DARK};
+  border: ${Color.WHITE} solid 1px;
   border-radius: 5px;
 `;
 
 export const InstructionText = styled.p`
-  color: ${Color.White};
+  color: ${Color.WHITE};
   font-family: ${FontType.Standard};
   font-size: ${FontSize.Header};
   padding: 18px;

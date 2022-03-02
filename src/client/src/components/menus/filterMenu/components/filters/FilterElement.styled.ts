@@ -16,11 +16,11 @@ export const ElementBox = styled.label<ElementBoxProps>`
   height: 30px;
   margin-top: ${(props) => (props.isHeader || props.isSubHeader) && "7px"};
   padding-left: ${(props) => props.indent * 8}px;
-  background-color: ${(props) => (props.isHeader ? Color.GreyLight : Color.White)};
+  background-color: ${(props) => (props.isHeader ? Color.GREY_LIGHT : Color.WHITE)};
 
   &:hover {
     cursor: pointer;
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     text-decoration: underline;
   }
 `;

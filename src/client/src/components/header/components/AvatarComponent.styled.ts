@@ -20,7 +20,7 @@ export const AvatarButton = styled.button<AvatarBoxProps>`
   height: 100%;
   padding: 0;
   border: 0;
-  color: ${Color.White};
+  color: ${Color.WHITE};
   font-weight: ${(props) => props.isOpen && FontWeight.Bold};
   cursor: pointer;
   background: transparent;
@@ -36,7 +36,7 @@ export const AvatarCircle = styled.div`
 export const AvatarInitials = styled.p`
   position: absolute;
   margin: 0;
-  color: ${Color.TextAvatar};
+  color: ${Color.TEXT_AVATAR};
   font-size: ${FontSize.Standard};
   font-weight: ${FontWeight.Normal};
 `;

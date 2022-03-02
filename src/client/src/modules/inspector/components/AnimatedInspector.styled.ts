@@ -13,7 +13,7 @@ interface AnimatedInspectorContainerProps {
 
 export const AnimatedInspectorContainer = styled.div<AnimatedInspectorContainerProps>`
   pointer-events: ${(props) => (props.isInspectorOpen ? "initial" : "none")};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   height: ${(props) => props.stop}px;
   max-height: 89vh;
   min-height: ${Size.MODULE_CLOSED}px;
@@ -22,7 +22,7 @@ export const AnimatedInspectorContainer = styled.div<AnimatedInspectorContainerP
   z-index: ${(props) => props.zIndex};
   position: absolute;
   bottom: 0;
-  background-color: ${Color.GreyInspector};
+  background-color: ${Color.GREY_INSPECTOR};
   right: ${(props) => (props.isLibraryOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
   left: ${(props) => (props.isExplorerOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
   overflow-x: auto;

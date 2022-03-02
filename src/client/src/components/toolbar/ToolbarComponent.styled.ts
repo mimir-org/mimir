@@ -8,11 +8,11 @@ interface ToolBarBoxProps {
 }
 
 export const ToolBarBox = styled.div<ToolBarBoxProps>`
-  background-color: ${Color.White};
-  color: ${Color.Black};
+  background-color: ${Color.WHITE};
+  color: ${Color.BLACK};
   height: 40px;
   width: auto;
-  border-bottom: 1px solid ${Color.Grey};
+  border-bottom: 1px solid ${Color.GREY};
   position: absolute;
   top: ${Size.TOPMENU_HEIGHT}px;
   display: inline;

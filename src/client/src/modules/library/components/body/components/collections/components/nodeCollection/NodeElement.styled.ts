@@ -16,10 +16,10 @@ export const NodeElementButton = styled.button<NodeElementButtonProps>`
   width: calc(100% - 20px);
   height: 32px;
   border: 1px;
-  border-color: ${(props) => (props.active ? props.selectedColor : Color.GreyInactive)} !important;
+  border-color: ${(props) => (props.active ? props.selectedColor : Color.GREY_INACTIVE)} !important;
   border-style: ${(props) => (props.active ? "dashed" : "revert")} !important;
   border-radius: 5px;
-  background-color: ${(props) => (props.active ? props.hoverColor : Color.White)} !important;
+  background-color: ${(props) => (props.active ? props.hoverColor : Color.WHITE)} !important;
   margin: 3px 1px;
   font-size: ${FontSize.Medium};
   font-family: ${FontType.Standard};
@@ -35,7 +35,7 @@ export const NodeElementButton = styled.button<NodeElementButtonProps>`
   }
 
   &:hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     text-decoration: underline;
   }
 `;

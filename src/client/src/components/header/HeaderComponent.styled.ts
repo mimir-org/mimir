@@ -7,7 +7,7 @@ export const HeaderBox = styled.div`
   justify-content: space-between;
   align-items: center;
   min-height: ${Size.TOPMENU_HEIGHT}px;
-  background-color: ${Color.BlueMagenta};
+  background-color: ${Color.BLUE_MAGENTA};
 `;
 
 export const HeaderRightSection = styled.div`

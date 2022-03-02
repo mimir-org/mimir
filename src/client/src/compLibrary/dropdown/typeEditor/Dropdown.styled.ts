@@ -7,10 +7,10 @@ export const DropdownMenuWrapper = styled.div`
   flex-direction: column;
   min-width: 15%;
   margin-right: 25px;
-  background-color: ${Color.White};
+  background-color: ${Color.WHITE};
   opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
   font-size: ${FontSize.Tiny};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   position: relative;
 
   .dropdown-label {
@@ -24,11 +24,11 @@ export const DropdownMenuHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 27px;
-  background: ${Color.White};
-  border: 1.5px solid ${Color.Black};
+  background: ${Color.WHITE};
+  border: 1.5px solid ${Color.BLACK};
   border-radius: 5px;
   font-size: ${FontSize.Standard};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   padding: 5px 10px;
 `;
 
@@ -37,7 +37,7 @@ export const DropdownMenuList = styled.div`
   flex-direction: column;
   border-width: 1px;
   border-style: solid;
-  border-color: ${Color.Black};
+  border-color: ${Color.BLACK};
   border-radius: 5px;
   background-color: inherit;
   position: absolute;
@@ -61,10 +61,10 @@ export const DropdownMenuListItem = styled.div`
   align-items: center;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: ${Color.GreyDark};
+  border-color: ${Color.GREY_DARK};
   font-size: ${FontSize.Standard};
-  color: ${Color.Black};
-  background-color: ${Color.White};
+  color: ${Color.BLACK};
+  background-color: ${Color.WHITE};
   cursor: pointer;
   z-index: 1;
 
@@ -79,7 +79,7 @@ export const DropdownMenuListItem = styled.div`
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     p {
       text-decoration: underline;
     }

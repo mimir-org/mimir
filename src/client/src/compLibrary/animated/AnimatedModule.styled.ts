@@ -11,9 +11,9 @@ interface ModuleBoxProps {
 export const ModuleBox = styled.div<ModuleBoxProps>`
   display: flex;
   flex-direction: column;
-  border-right: 1px solid ${Color.Grey};
-  border-left: ${(props) => props.type !== MODULE_TYPE.LEGEND && "1px solid" + Color.Grey};
-  background-color: ${Color.GreyLighter};
+  border-right: 1px solid ${Color.GREY};
+  border-left: ${(props) => props.type !== MODULE_TYPE.LEGEND && "1px solid" + Color.GREY};
+  background-color: ${Color.GREY_LIGHTER};
   width: ${(props) => props.type !== MODULE_TYPE.LEGEND && props.stop}px;
   height: ${(props) => (props.type === MODULE_TYPE.LEGEND ? props.stop + "px" : "100%")};
   bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};

@@ -34,7 +34,7 @@ export const ProjectOptionsButtons = styled.div`
     width: 175px;
     height: 34px;
     margin-top: 20px;
-    background: ${Color.White};
+    background: ${Color.WHITE};
     font-weight: ${FontWeight.Normal};
     justify-content: start;
   }

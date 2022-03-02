@@ -57,7 +57,7 @@ export const BlockTransportEdge = ({
         markerHeight="20"
         orient={!isElectro ? "auto-start-reverse" : "auto"}
       >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
       </marker>
       <path
         id={id}

@@ -10,8 +10,8 @@ const TypeEditorWrapper = styled.div`
   left: calc(1.6px + ${Size.MODULE_CLOSED}px);
   width: 95%;
   height: calc(100% - ${Size.TOPMENU_HEIGHT}px - ${Size.MODULE_CLOSED}px);
-  background: ${Color.White};
-  border: 2px solid ${Color.BlueMagenta};
+  background: ${Color.WHITE};
+  border: 2px solid ${Color.BLUE_MAGENTA};
   border-radius: 5px;
   z-index: 100;
 `;

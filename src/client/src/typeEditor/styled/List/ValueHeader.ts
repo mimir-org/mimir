@@ -13,11 +13,11 @@ const ValueHeader = styled.div<Props>`
   flex: 1;
   width: 307px;
   min-height: 20px;
-  border: 1px solid ${Color.Black};
+  border: 1px solid ${Color.BLACK};
   border-radius: 5px;
   margin: 5px 0 5px 30px;
   padding: 2px 5px;
-  background-color: ${Color.White};
+  background-color: ${Color.WHITE};
 
   .selectedValues {
     max-height: 20px;
@@ -29,7 +29,7 @@ const ValueHeader = styled.div<Props>`
 
     //margin: 2px 13px 2px 13px;
     font-size: ${FontSize.Medium};
-    color: ${Color.Black};
+    color: ${Color.BLACK};
   }
 
   .selectedValues::first-letter {

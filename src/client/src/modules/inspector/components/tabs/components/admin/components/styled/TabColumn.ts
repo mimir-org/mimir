@@ -15,7 +15,7 @@ export const TabColumn = styled.div<Props>`
 
   & > div {
     font-size: ${FontSize.Tiny};
-    color: ${Color.GreyHeader};
+    color: ${Color.GREY_HEADER};
   }
 
   & > div > :first-child {

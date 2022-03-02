@@ -10,7 +10,7 @@ export const ListSearchBar = styled.div`
   border-width: 0;
   border-bottom-width: 2px;
   border-style: solid;
-  border-color: ${Color.BlueMagenta};
+  border-color: ${Color.BLUE_MAGENTA};
 
   input:focus,
   textarea:focus,
@@ -30,7 +30,7 @@ export const ListSearchBar = styled.div`
     font-size: ${FontSize.Standard};
     font-weight: ${FontWeight.Bold};
     font-style: italic;
-    color: ${Color.BlueMagenta};
+    color: ${Color.BLUE_MAGENTA};
   }
 
   .icon {

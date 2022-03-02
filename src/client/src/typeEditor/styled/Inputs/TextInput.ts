@@ -3,11 +3,11 @@ import { Color } from "../../../compLibrary/colors";
 import { FontSize } from "../../../compLibrary/font";
 
 const TextInput = styled.input`
-  border: 1.5px solid ${Color.Black};
+  border: 1.5px solid ${Color.BLACK};
   border-radius: 5px;
-  background: ${Color.White};
+  background: ${Color.WHITE};
   font-size: ${FontSize.Standard};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
 `;
 
 export default TextInput;

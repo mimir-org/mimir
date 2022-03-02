@@ -11,7 +11,7 @@ const TypeNameInput = styled.div<Props>`
   flex-direction: column;
   min-width: 15%;
   margin-right: 25px;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   font-size: ${FontSize.Tiny};
   font-family: ${FontType.Standard};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
@@ -25,7 +25,7 @@ const TypeNameInput = styled.div<Props>`
   }
 
   input::placeholder {
-    color: ${Color.Black};
+    color: ${Color.BLACK};
     font-size: ${FontSize.Standard};
     font-family: ${FontType.Standard};
   }

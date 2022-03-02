@@ -8,7 +8,7 @@ interface BodyProps {
 
 export const Body = styled.div<BodyProps>`
   display: flex;
-  border-bottom: 1px solid ${Color.GreyDark};
+  border-bottom: 1px solid ${Color.GREY_DARK};
   width: max(100%, ${(props) => props.width}px);
   min-height: 120px;
 `;

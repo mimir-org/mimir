@@ -23,7 +23,7 @@ export const TerminalListElement = styled.div<TerminalListElementProps>`
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     cursor: pointer;
     text-decoration: underline;
   }
@@ -46,7 +46,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
     content: "";
     width: 1px;
     height: 10px;
-    background: ${Color.TerminalsPurple};
+    background: ${Color.TERMINALS_PURPLE};
     border-radius: 1px;
     position: absolute;
     bottom: 3px;
@@ -57,7 +57,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
     content: "";
     width: 385px;
     height: 1px;
-    background: ${Color.TerminalsPurple};
+    background: ${Color.TERMINALS_PURPLE};
     border-radius: 1px;
     position: absolute;
     bottom: 3px;
@@ -75,7 +75,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     cursor: pointer;
     text-decoration: underline;
   }

@@ -22,13 +22,13 @@ export const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsLocationTerminal(conn)) {
     name = conn.name;
-    color = Color.LocationHeader;
+    color = Color.LOCATION_HEADER;
     return [name, color];
   }
 
   if (IsProductTerminal(conn)) {
     name = conn.name;
-    color = Color.ProductMain;
+    color = Color.PRODUCT_MAIN;
     return [name, color];
   }
 };

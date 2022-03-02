@@ -11,7 +11,7 @@ const TypeEditorHeader = styled.div`
     margin: 13px 0px 0px 20px;
     font-weight: bold;
     font-size: ${FontSize.Header};
-    color: ${Color.Black};
+    color: ${Color.BLACK};
   }
 
   img {

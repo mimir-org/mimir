@@ -8,7 +8,7 @@ export const ModalListContent = styled.div`
   min-width: 447px;
   min-height: 370px;
   max-height: 400px;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   font-family: ${FontType.Standard};
   position: relative;
 
@@ -16,7 +16,7 @@ export const ModalListContent = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BlueMagenta};
+    background: ${Color.BLUE_MAGENTA};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -27,7 +27,7 @@ export const ModalListContent = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BlueMagenta};
+    background: ${Color.BLUE_MAGENTA};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -42,8 +42,8 @@ export const ModalListColumnText = styled.span`
 `;
 
 export const ModalListElementsContainer = styled.div`
-  border-top: 2px solid ${Color.BlueMagenta};
-  border-bottom: 1px solid ${Color.Black};
+  border-top: 2px solid ${Color.BLUE_MAGENTA};
+  border-bottom: 1px solid ${Color.BLACK};
   min-height: 370px;
   overflow: auto;
 `;
@@ -63,15 +63,15 @@ export const ModalListElement = styled.div<ModalListElementProps>`
   padding: 2px 10px;
 
   :nth-child(even) {
-    background-color: ${Color.White};
+    background-color: ${Color.WHITE};
   }
 
   :nth-child(odd) {
-    background-color: ${Color.PurpleLight};
+    background-color: ${Color.PURPLE_LIGHT};
   }
 
   :nth-child(n):hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
   }
 
   > ${ModalListElementText} {

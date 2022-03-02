@@ -10,7 +10,7 @@ export const MenuWrapper = styled.div`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   font-size: ${FontSize.Standard};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
 
   .label {
     margin-bottom: 4px;
@@ -32,7 +32,7 @@ export const MenuHeader = styled.div<MenuHeaderProps>`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   font-size: ${FontSize.Tiny};
-  color: ${Color.White};
+  color: ${Color.WHITE};
 
   p {
     padding: 10px;
@@ -79,8 +79,8 @@ export const MenuListItem = styled.label`
   padding-left: 5px;
   height: 25px;
   font-size: ${FontSize.Small};
-  color: ${Color.Black};
-  background-color: ${Color.White};
+  color: ${Color.BLACK};
+  background-color: ${Color.WHITE};
   cursor: pointer;
   overflow: hidden;
 

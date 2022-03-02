@@ -15,7 +15,7 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
   text-decoration: ${(props) => props.isSelected && "underline"};
   font-size: ${FontSize.Small};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   cursor: pointer;
 
   p {
@@ -44,10 +44,10 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   }
 
   &:nth-of-type(odd) {
-    background: ${Color.PurpleLight};
+    background: ${Color.PURPLE_LIGHT};
   }
 
   &:hover {
-    background: ${Color.BlueLight};
+    background: ${Color.BLUE_LIGHT};
   }
 `;

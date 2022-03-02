@@ -8,7 +8,7 @@ export const StartPageBackground = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: ${Color.BlueDark};
+  background-color: ${Color.BLUE_DARK};
 `;
 
 const slideUp = keyframes`
@@ -35,7 +35,7 @@ export const StartPageImage = styled.img`
 `;
 
 export const StartPageVersionText = styled.p`
-  color: ${Color.White};
+  color: ${Color.WHITE};
   font-family: ${FontType.Standard};
   font-size: ${FontSize.SubHeader};
   text-align: right;

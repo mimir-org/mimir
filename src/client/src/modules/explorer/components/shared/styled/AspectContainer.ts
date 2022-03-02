@@ -14,11 +14,11 @@ export const AspectContainer = styled.div<Props>`
   font-size: ${FontSize.Standard};
   margin-top: ${(props) => props.node.isRoot && "15px"};
   background-color: ${(props) =>
-    props.node.isRoot ? Color.GreyLighter : GetAspectColor(props.node, AspectColorType.Main, true)};
+    props.node.isRoot ? Color.GREY_LIGHTER : GetAspectColor(props.node, AspectColorType.Main, true)};
   border-bottom: ${(props) => props.node.isRoot && "2px solid" + GetAspectColor(props.node, AspectColorType.Selected)}};
 
   &:hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
   }
 
   &:first-child {
