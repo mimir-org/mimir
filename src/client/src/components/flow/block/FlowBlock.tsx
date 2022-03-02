@@ -53,7 +53,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
   const node = GetSelectedNode();
-  const defaultZoom = Size.Block_DefaultZoomLevel;
+  const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
   const { setCenter } = useZoomPanHelper();
 
   const OnLoad = useCallback(
@@ -172,7 +172,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
-          defaultPosition={[0, Size.BlockMarginY]}
+          defaultPosition={[0, Size.BLOCK_MARGIN_Y]}
           zoomOnDoubleClick={false}
           defaultZoom={defaultZoom}
           minZoom={0.7}

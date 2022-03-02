@@ -3,7 +3,7 @@ import { Action, Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
 
 const BORDER_SIZE = 44;
-const MIN_HEIGHT = Size.ModuleClosed;
+const MIN_HEIGHT = Size.MODULE_CLOSED;
 
 export const useDragResizePanel = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
@@ -93,7 +93,7 @@ const onMouseUp = (
 ) => {
   if (inspectorRef.current) {
     const height = getComputedHeight(inspectorRef);
-    if (height !== Size.ModuleClosed && height !== Size.ModuleOpen) dispatch(changeInspectorHeightAction(height));
+    if (height !== Size.MODULE_CLOSED && height !== Size.MODULE_OPEN) dispatch(changeInspectorHeightAction(height));
   }
 
   document.removeEventListener("mousemove", resizeCallback);

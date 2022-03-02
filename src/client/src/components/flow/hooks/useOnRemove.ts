@@ -29,8 +29,8 @@ const useOnRemove = (
 
   if (hasDeletedElement) {
     dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-    SetPanelHeight(inspectorRef, Size.ModuleClosed);
-    dispatch(changeInspectorHeight(Size.ModuleClosed));
+    SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
+    dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
     return setElements((els) => removeElements(elementsToRemove, els));
   }
 };

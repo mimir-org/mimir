@@ -24,8 +24,8 @@ export const OnDeleteClick = (
   }
 
   dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  dispatch(changeInspectorHeight(Size.ModuleClosed));
-  SetPanelHeight(inspectorRef, Size.ModuleClosed);
+  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
+  SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 };
 
 const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {

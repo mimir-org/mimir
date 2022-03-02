@@ -25,7 +25,7 @@ import { BlockChildComponent } from "./components/BlockChildComponent";
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const initialSize = { width: Size.Node_Width, height: Size.Node_Height } as BlockNodeSize;
+  const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
 
   const nodes = useAppSelector(selectors.nodeSelector);

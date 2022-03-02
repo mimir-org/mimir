@@ -23,7 +23,7 @@ export const ResizeHandler = (
   elements: Elements<Node>,
   dispatch: Dispatch
 ) => {
-  let screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth - Size.BlockMarginX;
+  let screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth - Size.BLOCK_MARGIN_X;
 
   const updateScreenSize = () => {
     screenWidth = SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);

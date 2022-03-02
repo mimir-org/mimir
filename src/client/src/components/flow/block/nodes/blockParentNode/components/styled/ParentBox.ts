@@ -13,8 +13,8 @@ const ParentBox = styled.div<Props>`
   cursor: ${(props) => (props.selected ? "grab" : "pointer")};
   width: ${(props) => props.size.width}px;
   height: ${(props) => props.size.height}px;
-  min-width: ${Size.BlockParentNode_MinWidth}px;
-  max-width: ${Size.BlockParentNode_MaxWidth}px;
+  min-width: ${Size.BLOCK_PARENT_MIN_WIDTH}px;
+  max-width: ${Size.BLOCK_PARENT_MAX_WIDTH}px;
   border-radius: 10px;
   border: 2px solid;
   border-color: ${Color.GreyDark};

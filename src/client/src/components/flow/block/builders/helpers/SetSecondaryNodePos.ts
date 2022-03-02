@@ -38,7 +38,7 @@ function SetXMax(width: number, explorerOpen: boolean, libOpen: boolean) {
 
 function SetXMin(width: number, explorerOpen: boolean, libOpen: boolean) {
   if (!explorerOpen && libOpen) return width + 100;
-  if (explorerOpen && !libOpen) return width + Size.ModuleOpen + 70;
+  if (explorerOpen && !libOpen) return width + Size.MODULE_OPEN + 70;
   return width + 300;
 }
 

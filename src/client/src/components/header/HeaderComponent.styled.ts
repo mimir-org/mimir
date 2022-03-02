@@ -6,7 +6,7 @@ export const HeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: ${Size.TopMenu_Height}px;
+  min-height: ${Size.TOPMENU_HEIGHT}px;
   background-color: ${Color.BlueMagenta};
 `;
 

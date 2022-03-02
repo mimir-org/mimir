@@ -35,8 +35,8 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
 
-  const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
+  const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];

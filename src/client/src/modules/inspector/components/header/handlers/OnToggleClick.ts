@@ -16,6 +16,6 @@ export const OnToggleClick = (
   changeInspectorHeightAction: (height: number) => Action
 ) => {
   dispatch(changeInspectorVisibilityAction(!open));
-  dispatch(changeInspectorHeightAction(open ? Size.ModuleClosed : Size.ModuleOpen));
-  SetPanelHeight(inspectorRef, open ? Size.ModuleClosed : Size.ModuleOpen);
+  dispatch(changeInspectorHeightAction(open ? Size.MODULE_CLOSED : Size.MODULE_OPEN));
+  SetPanelHeight(inspectorRef, open ? Size.MODULE_CLOSED : Size.MODULE_OPEN);
 };

@@ -5,7 +5,7 @@ import { changeInspectorHeight } from "../../../modules/inspector/redux/inspecto
 import { setModulesVisibility } from "../../../redux/store/modules/modulesSlice";
 
 export const OnToggleClick = (dispatch: Dispatch, isOpen: boolean, inspectorRef: React.MutableRefObject<HTMLDivElement>) => {
-  SetPanelHeight(inspectorRef, isOpen ? Size.ModuleClosed : Size.ModuleOpen);
-  dispatch(changeInspectorHeight(isOpen ? Size.ModuleClosed : Size.ModuleOpen));
+  SetPanelHeight(inspectorRef, isOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN);
+  dispatch(changeInspectorHeight(isOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN));
   dispatch(setModulesVisibility({ visible: !isOpen, animate: true }));
 };

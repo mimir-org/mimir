@@ -1,41 +1,40 @@
 const Size = {
   // Nodes
-  Node_Width: 160,
-  Node_Height: 95,
+  NODE_WIDTH: 160,
+  NODE_HEIGHT: 95,
 
   // BlockView
-  BlockMarginY: 40,
-  BlockMarginX: 250,
-  BlockMarginBottom: 200,
-  BlockParentNode_MaxWidth: 2650,
-  BlockParentNode_MinWidth: 500,
-  BlockParentNode_Width: window.innerWidth - 250,
-  BlockParentNode_Height: window.innerHeight - 140,
+  BLOCK_MARGIN_Y: 40,
+  BLOCK_MARGIN_X: 250,
+  BLOCK_MARGIN_BOTTOM: 200,
+  BLOCK_PARENT_MAX_WIDTH: 2650,
+  BLOCK_PARENT_MIN_WIDTH: 500,
+  BLOCK_PARENT_WIDTH: window.innerWidth - 250,
+  BLOCK_PARENT_HEIGHT: window.innerHeight - 140,
 
   // Zoom
-  Block_DefaultZoomLevel: 1,
+  DEFAULT_ZOOM_LEVEL: 1,
 
   // Terminals
-  Terminals_Interval: 22.5,
+  TERMINALS_INTERVAL: 22.5,
 
   // Modules
-  ModuleOpen: 400,
-  ModuleClosed: 45,
-  Margin: 1,
+  MODULE_OPEN: 400,
+  MODULE_CLOSED: 45,
 
   // TypeEditor
-  TypeEditorInspectorOpen: 355, // TO BE REMOVED
-  TypeEditorPropertiesFull_BASELINE: -362, // TO BE REMOVED
-  TypeEditorPropertiesShrunk_BASELINE: -672, // TO BE REMOVED
+  TYPEEDITOR_INSPECTOR_OPEN: 355, // TO BE REMOVED
+  TYPEEDITOR_PROPERTIES_FULL_BASELINE: -362, // TO BE REMOVED
+  TYPEEDITOR_PROPERTIES_SHRUNK_BASELINE: -672, // TO BE REMOVED
 
   // Menus
-  TopMenu_Height: 54,
-  MenuSmall_Width: 330,
-  MenuSmall_Height: 200,
-  OpenProjectMenu_Small_Width: 519,
-  OpenProjectMenu_Small_Height: 330,
-  OpenProjectMenu_Large_Width: 1038,
-  OpenProjectMenu_Large_Height: 660,
+  TOPMENU_HEIGHT: 54,
+  MENU_SMALL_WIDTH: 330,
+  MENU_SMALL_HEIGHT: 200,
+  OPENPROJECT_MENU_SMALL_WIDTH: 519,
+  OPENPROJECT_MENU_SMALL_HEIGHT: 330,
+  OPENPROJECT_MENU_LARGE_WIDTH: 1038,
+  OPENPROJECT_MENU_LARGE_HEIGHT: 660,
 };
 
 export default Size;

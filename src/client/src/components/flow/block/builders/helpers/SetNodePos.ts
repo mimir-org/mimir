@@ -13,7 +13,7 @@ import { Position } from "../../../../../models/project";
 const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, splitView: boolean) => {
   const margin = 30;
   const marginLarge = 80;
-  const width = splitView ? window.innerWidth / 2.4 : window.innerWidth - Size.BlockMarginX;
+  const width = splitView ? window.innerWidth / 2.4 : window.innerWidth - Size.BLOCK_MARGIN_X;
 
   const yMin = 30;
   const yMax = window.innerHeight - 180;
@@ -32,7 +32,7 @@ const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, 
 };
 
 function SetXMax(libOpen: boolean, explorerOpen: boolean, width: number) {
-  if ((libOpen && explorerOpen) || (libOpen && !explorerOpen)) return width - Size.ModuleOpen;
+  if ((libOpen && explorerOpen) || (libOpen && !explorerOpen)) return width - Size.MODULE_OPEN;
   if ((!libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return width - 30;
 }
 
@@ -43,7 +43,7 @@ function SetSplitViewXMax(libOpen: boolean, explorerOpen: boolean, width: number
 }
 
 function SetXMin(explorerOpen: boolean, marginLarge: number) {
-  if (explorerOpen) return Size.ModuleOpen + 30;
+  if (explorerOpen) return Size.MODULE_OPEN + 30;
   return marginLarge;
 }
 

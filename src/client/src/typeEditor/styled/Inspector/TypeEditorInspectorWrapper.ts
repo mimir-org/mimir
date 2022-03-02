@@ -8,8 +8,8 @@ const TypeEditorInspectorWrapper = styled.div`
   position: relative;
   background-color: ${Color.White};
   z-index: 105;
-  min-height: ${Size.ModuleClosed}px;
-  height: ${Size.ModuleClosed}px;
+  min-height: ${Size.MODULE_CLOSED}px;
+  height: ${Size.MODULE_CLOSED}px;
 
   & > div {
     background: ${Color.GreyLighter};

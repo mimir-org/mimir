@@ -4,7 +4,7 @@ import { Color } from "../../compLibrary/colors";
 import { FontSize } from "../../compLibrary/font";
 
 export const LegendBody = styled.div`
-  width: ${Size.ModuleOpen}px;
+  width: ${Size.MODULE_OPEN}px;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;

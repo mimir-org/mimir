@@ -14,13 +14,13 @@ export const ToolBarBox = styled.div<ToolBarBoxProps>`
   width: auto;
   border-bottom: 1px solid ${Color.Grey};
   position: absolute;
-  top: ${Size.TopMenu_Height}px;
+  top: ${Size.TOPMENU_HEIGHT}px;
   display: inline;
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
   z-index: 5;
 
-  right: ${(props) => (props.libOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
-  left: ${(props) => (props.explorerOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
+  right: ${(props) => (props.libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
+  left: ${(props) => (props.explorerOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
 `;
 
 export const ToolBarBody = styled.div`

@@ -10,7 +10,7 @@ interface Props {
 export const VisualFilterContainer = styled.div<Props>`
   position: absolute;
   top: 94px;
-  right: ${(props) => (!props.libraryOpen ? Size.ModuleClosed : Size.ModuleOpen)}px;
+  right: ${(props) => (!props.libraryOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN)}px;
   background: ${Color.White};
   padding: 8px 0 6px 0;
   width: 350px;

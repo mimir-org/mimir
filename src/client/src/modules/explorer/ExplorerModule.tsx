@@ -24,8 +24,8 @@ export const ExplorerModule = ({ dispatch }: Props) => {
   const isOpen = useAppSelector(explorerSelector);
   const type = MODULE_TYPE.EXPLORER;
 
-  const start = isOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stop = isOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const start = isOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
+  const stop = isOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   return (
     <AnimatedModule type={type} start={start} stop={stop} run={true} id="ExplorerModule">

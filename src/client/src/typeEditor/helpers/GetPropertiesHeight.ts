@@ -7,7 +7,7 @@ import { Size } from "../../compLibrary/size";
  */
 export const GetPropertiesHeight = (isFull: boolean): number => {
   return (
-    document.body.clientHeight + (isFull ? Size.TypeEditorPropertiesFull_BASELINE : Size.TypeEditorPropertiesShrunk_BASELINE)
+    document.body.clientHeight + (isFull ? Size.TYPEEDITOR_PROPERTIES_FULL_BASELINE : Size.TYPEEDITOR_PROPERTIES_SHRUNK_BASELINE)
   );
 };
 

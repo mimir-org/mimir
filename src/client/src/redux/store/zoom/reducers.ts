@@ -1,7 +1,8 @@
+import { Size } from "../../../compLibrary/size";
 import { CHANGE_ZOOM_LEVEL, ChangeZoomLevel } from "./types";
 
 const initialState = {
-  level: 1,
+  level: Size.DEFAULT_ZOOM_LEVEL,
 };
 
 export function zoomLevelReducer(state = initialState, action: ChangeZoomLevel) {

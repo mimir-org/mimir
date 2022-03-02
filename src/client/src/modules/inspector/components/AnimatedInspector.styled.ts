@@ -16,15 +16,15 @@ export const AnimatedInspectorContainer = styled.div<AnimatedInspectorContainerP
   color: ${Color.Black};
   height: ${(props) => props.stop}px;
   max-height: 89vh;
-  min-height: ${Size.ModuleClosed}px;
+  min-height: ${Size.MODULE_CLOSED}px;
   width: auto;
   min-width: 650px;
   z-index: ${(props) => props.zIndex};
   position: absolute;
   bottom: 0;
   background-color: ${Color.GreyInspector};
-  right: ${(props) => (props.isLibraryOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
-  left: ${(props) => (props.isExplorerOpen ? Size.ModuleOpen : Size.ModuleClosed)}px;
+  right: ${(props) => (props.isLibraryOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
+  left: ${(props) => (props.isExplorerOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
   overflow-x: auto;
   overflow-y: hidden;
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;

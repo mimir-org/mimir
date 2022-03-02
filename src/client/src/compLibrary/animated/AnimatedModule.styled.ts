@@ -18,7 +18,7 @@ export const ModuleBox = styled.div<ModuleBoxProps>`
   height: ${(props) => (props.type === MODULE_TYPE.LEGEND ? props.stop + "px" : "100%")};
   bottom: ${(props) => props.type === MODULE_TYPE.LEGEND && "0"};
   right: ${(props) => props.type === MODULE_TYPE.LIBRARY && "0"};
-  top: ${(props) => props.type !== MODULE_TYPE.LEGEND && Size.TopMenu_Height}px;
+  top: ${(props) => props.type !== MODULE_TYPE.LEGEND && Size.TOPMENU_HEIGHT}px;
   z-index: 5;
   overflow: hidden;
   position: fixed;

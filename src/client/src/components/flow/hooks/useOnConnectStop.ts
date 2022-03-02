@@ -69,7 +69,7 @@ function ValidateOffPageDrop(
 }
 
 function CalculateLeftBound(zoom: number, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
-  const defaultZoom = Size.Block_DefaultZoomLevel;
+  const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
   const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
   if (zoom < defaultZoom) {

@@ -6,10 +6,10 @@ const TypeEditorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: ${Size.TopMenu_Height}px;
-  left: calc(1.6px + ${Size.ModuleClosed}px);
+  top: ${Size.TOPMENU_HEIGHT}px;
+  left: calc(1.6px + ${Size.MODULE_CLOSED}px);
   width: 95%;
-  height: calc(100% - ${Size.TopMenu_Height}px - ${Size.ModuleClosed}px);
+  height: calc(100% - ${Size.TOPMENU_HEIGHT}px - ${Size.MODULE_CLOSED}px);
   background: ${Color.White};
   border: 2px solid ${Color.BlueMagenta};
   border-radius: 5px;
