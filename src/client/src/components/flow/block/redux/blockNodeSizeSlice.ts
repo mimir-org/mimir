@@ -6,15 +6,15 @@ import { Aspect } from "../../../../models";
 const parent = {
   aspect: Aspect.NotSet,
   size: {
-    width: window.innerWidth,
-    height: window.innerHeight - Size.BlockMarginY,
+    width: Size.BlockParentNode_Width,
+    height: window.innerHeight - Size.BlockMarginBottom,
   },
 };
 
 const parentProduct = {
   aspect: Aspect.Product,
   size: {
-    width: window.innerWidth,
+    width: Size.BlockParentNode_Width,
     height: window.innerHeight - Size.BlockMarginY,
   },
 };

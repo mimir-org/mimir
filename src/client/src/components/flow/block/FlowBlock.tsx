@@ -46,7 +46,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
   const node = GetSelectedNode();
-  const defaultZoom = 0.9;
+  const defaultZoom = Size.Block_DefaultZoomLevel;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -79,7 +79,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, zoomLevel, dispatch);
   };
 
-  const OnMoveEnd = (flowTransform: FlowTransform) => {
+  const OnZoomScrollEnd = (flowTransform: FlowTransform) => {
     if (flowTransform?.zoom !== zoomLevel) dispatch(changeZoomLevel(flowTransform.zoom));
   };
 
@@ -150,7 +150,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          onMoveEnd={OnMoveEnd}
+          onMoveEnd={OnZoomScrollEnd}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}

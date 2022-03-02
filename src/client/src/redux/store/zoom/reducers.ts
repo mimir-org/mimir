@@ -1,7 +1,7 @@
 import { CHANGE_ZOOM_LEVEL, ChangeZoomLevel } from "./types";
 
 const initialState = {
-  level: 0.9,
+  level: 1,
 };
 
 export function zoomLevelReducer(state = initialState, action: ChangeZoomLevel) {

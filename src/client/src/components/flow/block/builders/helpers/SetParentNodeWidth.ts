@@ -10,17 +10,17 @@ import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
  * @param dispatch
  */
 export const SetParentNodeWidth = (secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean, dispatch: Dispatch) => {
-  const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth;
+  const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth - Size.BlockMarginX;
   const marginX = SetParentBlockMarginRight(secondaryNode, libOpen, explorerOpen);
   let width = screenWidth - marginX;
 
-  if (width > Size.BlockMaxWidth) width = Size.BlockMaxWidth;
-  dispatch(setBlockNodeSize({ width, height: window.innerHeight }));
+  if (width > Size.BlockParentNode_MaxWidth) width = Size.BlockParentNode_MaxWidth;
+  dispatch(setBlockNodeSize({ width, height: Size.BlockParentNode_Height }));
   return width;
 };
 
 export function SetParentBlockMarginRight(secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean) {
-  if (libOpen && explorerOpen) return secondaryNode ? 230 : 730;
-  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 20 : 370;
+  if (libOpen && explorerOpen) return secondaryNode ? 230 : 680;
+  if ((libOpen && !explorerOpen) || (!libOpen && explorerOpen)) return secondaryNode ? 20 : 330;
   if (!libOpen && !explorerOpen) return secondaryNode ? -160 : -30;
 }

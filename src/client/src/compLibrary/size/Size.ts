@@ -1,11 +1,19 @@
 const Size = {
   // Nodes
-  Node_Width: 170,
-  Node_Height: 100,
+  Node_Width: 160,
+  Node_Height: 95,
 
   // BlockView
-  BlockMarginY: 60,
-  BlockMaxWidth: 2650,
+  BlockMarginY: 40,
+  BlockMarginX: 250,
+  BlockMarginBottom: 200,
+  BlockParentNode_MaxWidth: 2650,
+  BlockParentNode_MinWidth: 500,
+  BlockParentNode_Width: window.innerWidth - 250,
+  BlockParentNode_Height: window.innerHeight - 140,
+
+  // Zoom
+  Block_DefaultZoomLevel: 1,
 
   // Terminals
   Terminals_Interval: 22.5,
@@ -15,10 +23,10 @@ const Size = {
   ModuleClosed: 45,
   Margin: 1,
 
-  //TypeEditor
-  TypeEditorInspectorOpen: 355,
-  TypeEditorPropertiesFull_BASELINE: -362,
-  TypeEditorPropertiesShrunk_BASELINE: -672,
+  // TypeEditor
+  TypeEditorInspectorOpen: 355, // TO BE REMOVED
+  TypeEditorPropertiesFull_BASELINE: -362, // TO BE REMOVED
+  TypeEditorPropertiesShrunk_BASELINE: -672, // TO BE REMOVED
 
   // Menus
   TopMenu_Height: 54,

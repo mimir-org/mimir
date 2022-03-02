@@ -5,6 +5,7 @@ import { IsOffPage } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
+import { Size } from "../../../compLibrary/size";
 
 /**
  * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
@@ -62,10 +63,11 @@ function ValidateOffPageDrop(
 ) {
   if (IsOffPage(sourceNode)) return false;
 
-  // Correct value of clientX to match the nodes
-  clientX += 100;
-
   const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos, secondaryNode);
+  console.log({ clientX });
+  console.log({ leftBound });
+  console.log({ zoomLevel });
+
   const dropZoneWidth = secondaryNode ? 100 : 200;
   const rightBound = leftBound + dropZoneWidth;
 
@@ -79,15 +81,22 @@ function CalculateLeftBound(
   parentXPos: number,
   secondaryNode: boolean
 ) {
-  const defaultZoom = 0.9;
-  let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
+  const defaultZoom = Size.Block_DefaultZoomLevel;
+
+  let leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
   if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
   if (zoom !== defaultZoom) {
-    const updateLeftBound = 100 * zoom;
-    leftBound += updateLeftBound;
-  }
+    let diff = 0;
 
+    if (zoom < defaultZoom) {
+      diff = defaultZoom - zoom;
+      leftBound -= leftBound * diff;
+    } else {
+      diff = zoom - defaultZoom;
+      leftBound += leftBound * diff;
+    }
+  }
   return leftBound;
 }
 
