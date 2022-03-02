@@ -27,7 +27,7 @@ export const VisualFilterContainer = styled.div<Props>`
 
 export const VisualFilterHeader = styled.div`
   margin: 5px 0 0 20px;
-  font-size: ${FontSize.SubHeader};
+  font-size: ${FontSize.SUBHEADER};
   font-weight: ${FontWeight.Bold};
 `;
 

@@ -11,7 +11,7 @@ export const SubProjectsWrapper = styled.div`
 export const SubProjectsText = styled.p`
   text-align: center;
   color: ${Color.BLACK};
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   font-family: ${FontType.Standard};
   padding: 10px 50px;
 `;

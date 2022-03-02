@@ -25,13 +25,13 @@ export const UserNameBox = styled.div`
 
 export const UserNameText = styled.p`
   margin: 0;
-  font-size: ${FontSize.SubHeader};
+  font-size: ${FontSize.SUBHEADER};
   font-weight: ${FontWeight.Bold};
 `;
 
 export const UserNameRoleText = styled.p`
   margin: 0;
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   font-weight: ${FontWeight.Normal};
   color: ${Color.GREY_INACTIVE};
 `;
@@ -59,7 +59,7 @@ export const UserMenuElement = styled.button`
 `;
 
 export const UserMenuElementText = styled.span`
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
 
   :hover {
     text-decoration: underline;

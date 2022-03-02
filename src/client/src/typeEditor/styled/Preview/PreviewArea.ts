@@ -15,7 +15,7 @@ const PreviewArea = styled.div`
 
   p {
     font-family: ${FontType.Standard};
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     color: ${Color.BLACK};
   }
 `;

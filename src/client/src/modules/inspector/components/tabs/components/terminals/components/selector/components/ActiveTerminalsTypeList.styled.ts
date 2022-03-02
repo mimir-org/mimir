@@ -9,7 +9,7 @@ interface TerminalListElementProps {
 export const TerminalListElement = styled.div<TerminalListElementProps>`
   padding: 5px 10px 5px 60px;
   min-width: 250px;
-  font-size: ${FontSize.Tiny};
+  font-size: ${FontSize.TINY};
   display: flex;
   background-color: ${(props) => props.color};
 
@@ -37,7 +37,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
   position: relative;
   padding: 5px 10px 5px 20px;
   min-width: 250px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
   display: flex;
   background-color: ${(props) => props.color};
   font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};

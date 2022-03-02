@@ -10,7 +10,7 @@ const TerminalsElementBox = styled.label`
   padding-left: 5px;
   height: 25px;
   border-bottom: 1px solid ${Color.GREY_DARK};
-  font-size: ${FontSize.Tiny};
+  font-size: ${FontSize.TINY};
   color: ${Color.BLACK};
 
   &:hover {

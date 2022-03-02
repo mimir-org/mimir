@@ -18,7 +18,7 @@ const TypeEditorButton = styled.button<Props>`
   background-color: ${(props) => (props.disabled ? Color.GREY : Color.WHITE)};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   color: ${Color.BLACK};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   white-space: nowrap;
 `;
 

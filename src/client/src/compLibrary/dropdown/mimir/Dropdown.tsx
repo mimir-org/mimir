@@ -42,7 +42,7 @@ const Dropdown = ({
   disabled,
   borderRadius = 5,
   borderColor = Color.BLACK,
-  fontSize = FontSize.Standard,
+  fontSize = FontSize.STANDARD,
   height = 28,
   listTop = 33,
 }: Props) => {

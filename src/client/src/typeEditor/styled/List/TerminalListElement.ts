@@ -8,7 +8,7 @@ const TerminalListElement = styled.div`
   width: inherit;
   padding: 2px 1px;
   font-family: ${FontType.Standard};
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
 
   :nth-child(odd) {
@@ -27,7 +27,7 @@ const TerminalListElement = styled.div`
     background-color: ${Color.WHITE};
     color: ${Color.BLACK};
     font-family: ${FontType.Standard};
-    font-size: ${FontSize.Standard};
+    font-size: ${FontSize.STANDARD};
   }
 `;
 

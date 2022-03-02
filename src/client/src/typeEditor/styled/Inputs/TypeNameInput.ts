@@ -12,7 +12,7 @@ const TypeNameInput = styled.div<Props>`
   min-width: 15%;
   margin-right: 25px;
   color: ${Color.BLACK};
-  font-size: ${FontSize.Tiny};
+  font-size: ${FontSize.TINY};
   font-family: ${FontType.Standard};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 
@@ -26,7 +26,7 @@ const TypeNameInput = styled.div<Props>`
 
   input::placeholder {
     color: ${Color.BLACK};
-    font-size: ${FontSize.Standard};
+    font-size: ${FontSize.STANDARD};
     font-family: ${FontType.Standard};
   }
 

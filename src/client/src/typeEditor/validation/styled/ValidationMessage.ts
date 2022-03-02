@@ -5,7 +5,7 @@ import styled from "styled-components";
 const ValidationMessage = styled.span`
   margin-top: 5px;
   color: ${Color.RED_WARNING};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
 
   :empty:before {
     content: "\\200b";

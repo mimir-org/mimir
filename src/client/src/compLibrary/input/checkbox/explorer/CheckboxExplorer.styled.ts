@@ -44,7 +44,7 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
 
   > span {
     max-width: 175px;
-    font-size: ${FontSize.Standard};
+    font-size: ${FontSize.STANDARD};
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;

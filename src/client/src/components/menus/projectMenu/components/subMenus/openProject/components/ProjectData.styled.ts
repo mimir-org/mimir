@@ -14,7 +14,7 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   padding: 0 10px 0 6px;
   font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
   text-decoration: ${(props) => props.isSelected && "underline"};
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
   cursor: pointer;
 

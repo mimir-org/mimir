@@ -36,7 +36,7 @@ export const ModalListContent = styled.div`
 `;
 
 export const ModalListColumnText = styled.span`
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   font-weight: ${FontWeight.Normal};
   text-align: right;
 `;

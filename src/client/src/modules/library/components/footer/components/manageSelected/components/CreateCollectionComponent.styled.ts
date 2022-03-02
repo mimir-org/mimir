@@ -28,7 +28,7 @@ export const CollectionNameInput = styled.div`
     width: 331px;
     height: 36px;
     font-family: ${FontType.Standard};
-    font-size: ${FontSize.SubHeader};
+    font-size: ${FontSize.SUBHEADER};
   }
 
   input[type="text"]::placeholder {

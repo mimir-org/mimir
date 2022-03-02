@@ -50,7 +50,7 @@ export const ImportProjectFileMenu = () => {
           valueProp="name"
           items={parsers}
           keyProp="id"
-          fontSize={FontSize.Medium}
+          fontSize={FontSize.MEDIUM}
           onChange={(item: ModuleDescription) => setParser(item)}
         />
         <Label>

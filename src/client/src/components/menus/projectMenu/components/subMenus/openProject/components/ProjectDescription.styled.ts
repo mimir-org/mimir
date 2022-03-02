@@ -19,7 +19,7 @@ export const ProjectDescriptionBody = styled.div`
 
   .text-about {
     font-weight: normal;
-    font-size: ${FontSize.Small};
+    font-size: ${FontSize.SMALL};
   }
 
   .libraries,

@@ -15,7 +15,7 @@ export const ButtonContainer = styled.button`
   pointer-events: initial;
   box-shadow: inset 0 0 0 1.5px ${Color.GREY_INACTIVE};
   border-radius: 4px;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   background-color: ${Color.WHITE};
 
   :disabled {

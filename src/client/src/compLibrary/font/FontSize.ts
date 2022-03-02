@@ -1,11 +1,11 @@
 const FontSize = {
-  Header: "18px",
-  SubHeader: "16px",
-  Standard: "14px",
-  Medium: "12px",
-  Small: "11px",
-  Tiny: "10px",
-  ToolTip: "8px",
+  HEADER: "18px",
+  SUBHEADER: "16px",
+  STANDARD: "14px",
+  MEDIUM: "12px",
+  SMALL: "11px",
+  TINY: "10px",
+  TOOLTIP: "8px",
 };
 
 export default FontSize;

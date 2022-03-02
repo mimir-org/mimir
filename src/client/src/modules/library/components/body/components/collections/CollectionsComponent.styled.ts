@@ -16,7 +16,7 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
   p {
     text-align: center;
     color: ${Color.BLACK};
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     font-family:${FontType.Standard}
     padding: 10px 0;
   }
@@ -32,7 +32,7 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
       border-radius: 5px;
 
       .button-text {
-        font-size: ${FontSize.Standard};
+        font-size: ${FontSize.STANDARD};
         font-family:${FontType.Standard}
       }
   }

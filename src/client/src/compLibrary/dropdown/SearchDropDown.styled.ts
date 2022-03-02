@@ -25,13 +25,13 @@ export const SearchBar = styled.div`
   input[type="text"] {
     width: 100%;
     height: 12px;
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     border: 0;
   }
 
   input[type="text"]::placeholder {
     color: ${Color.GREY_DARKER};
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     font-style: italic;
     opacity: 0.5;
   }

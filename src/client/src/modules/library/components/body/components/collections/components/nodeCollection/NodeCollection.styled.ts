@@ -31,7 +31,7 @@ export const NodeCollectionButton = styled.button<NodeCollectionButtonProps>`
   border-width: ${(props) => (props.isOpen ? "0px 0px 1px 0px" : "0px")} !important;
   border-radius: 3px;
   background-color: ${Color.WHITE} !important;
-  font-size: ${FontSize.SubHeader};
+  font-size: ${FontSize.SUBHEADER};
   font-family: ${FontType.Standard};
   padding-left: 10px;
   padding-right: 14px;
@@ -54,6 +54,6 @@ export const NodeCollectionButtonText = styled.span<NodeCollectionButtonTextProp
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   font-weight: ${(props) => (props.isOpen ? FontWeight.Bold : FontWeight.Normal)};
 `;

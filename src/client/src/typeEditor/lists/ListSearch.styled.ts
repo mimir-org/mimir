@@ -21,13 +21,13 @@ export const ListSearchBar = styled.div`
   input[type="text"] {
     width: 100%;
     height: 12px;
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     border: 0;
   }
 
   input[type="text"]::placeholder {
     font-family: ${FontType.Standard};
-    font-size: ${FontSize.Standard};
+    font-size: ${FontSize.STANDARD};
     font-weight: ${FontWeight.Bold};
     font-style: italic;
     color: ${Color.BLUE_MAGENTA};

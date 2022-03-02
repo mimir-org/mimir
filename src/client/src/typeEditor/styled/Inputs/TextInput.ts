@@ -6,7 +6,7 @@ const TextInput = styled.input`
   border: 1.5px solid ${Color.BLACK};
   border-radius: 5px;
   background: ${Color.WHITE};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
 `;
 

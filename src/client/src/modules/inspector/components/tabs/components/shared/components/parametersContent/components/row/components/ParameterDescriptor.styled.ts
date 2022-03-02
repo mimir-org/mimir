@@ -8,13 +8,13 @@ export const ParameterDescriptorsWrapper = styled.div`
   .descriptors-top {
     display: flex;
     justify-content: space-between;
-    font-size: ${FontSize.Tiny};
+    font-size: ${FontSize.TINY};
     color: ${Color.GREY_HEADER};
   }
 
   .descriptors-bottom {
     display: flex;
-    font-size: ${FontSize.Small};
+    font-size: ${FontSize.SMALL};
     justify-content: space-between;
     margin-top: 1px;
     border-top: 1px solid ${Color.PARAMS_PURPLE};

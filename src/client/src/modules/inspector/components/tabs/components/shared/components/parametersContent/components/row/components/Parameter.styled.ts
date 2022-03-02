@@ -13,7 +13,7 @@ export const ParameterHeader = styled.div<ParameterHeaderProps>`
   background-color: ${(props) => props.color};
 
   span {
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     font-weight: 500;
     margin-right: auto;
   }

@@ -8,7 +8,7 @@ const SearchInput = styled.input`
   height: 30px;
   padding: 0 5px;
   font-style: ${FontWeight.Italic};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   border: 1px solid ${Color.BLACK};
   border-radius: 5px;
   background-image: url(${SearchIcon});

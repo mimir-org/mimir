@@ -19,7 +19,7 @@ export const LegendElement = styled.div`
   background: ${Color.WHITE};
   padding: 10px;
   color: ${Color.BLACK};
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   width: auto;
 
   :first-child {

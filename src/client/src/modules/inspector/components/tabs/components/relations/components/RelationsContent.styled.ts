@@ -10,7 +10,7 @@ export const RelationsContainer = styled.div`
 
 export const RelationsHeader = styled.span`
   color: ${Color.GREY_HEADER};
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
 `;
 
 interface RelationsTerminalListProps {
@@ -44,7 +44,7 @@ export const RelationsTerminalListElement = styled.div<RelationsTerminalListElem
   padding: 8px 10px;
   min-width: 250px;
   height: 30px;
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   display: flex;
   align-items: center;
   background-color: ${(props) => props.color};

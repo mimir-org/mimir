@@ -21,7 +21,7 @@ export const Box = styled.div`
   background-color: ${(props) => props.color};
   border-radius: 9px;
   margin: 20px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
 
   .text {
     display: flex;

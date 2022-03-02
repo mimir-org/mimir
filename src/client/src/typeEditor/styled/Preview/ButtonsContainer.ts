@@ -25,7 +25,7 @@ const ButtonsContainer = styled.div<Props>`
   white-space: nowrap;
   cursor: pointer;
   font-family: ${FontType.Standard};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 

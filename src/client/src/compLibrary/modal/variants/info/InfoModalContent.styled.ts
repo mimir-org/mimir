@@ -34,7 +34,7 @@ export const InfoModalHeader = styled.header`
 
 export const InfoModalHeaderTitle = styled.h1`
   font-weight: bold;
-  font-size: ${FontSize.Header};
+  font-size: ${FontSize.HEADER};
   margin: 0;
 `;
 

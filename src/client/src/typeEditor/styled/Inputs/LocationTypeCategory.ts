@@ -9,7 +9,7 @@ const LocationTypeCategory = styled.div`
   border-width: 1px 0px 1px 0px;
   border-style: solid;
   border-color: ${Color.GREY};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   font-weight: bold;
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};

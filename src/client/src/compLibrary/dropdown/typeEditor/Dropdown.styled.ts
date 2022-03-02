@@ -9,7 +9,7 @@ export const DropdownMenuWrapper = styled.div`
   margin-right: 25px;
   background-color: ${Color.WHITE};
   opacity: ${(props: { disabled: boolean }) => (props.disabled ? 0.4 : 1)};
-  font-size: ${FontSize.Tiny};
+  font-size: ${FontSize.TINY};
   color: ${Color.BLACK};
   position: relative;
 
@@ -27,7 +27,7 @@ export const DropdownMenuHeader = styled.div`
   background: ${Color.WHITE};
   border: 1.5px solid ${Color.BLACK};
   border-radius: 5px;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   padding: 5px 10px;
 `;
@@ -62,7 +62,7 @@ export const DropdownMenuListItem = styled.div`
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: ${Color.GREY_DARK};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};
   cursor: pointer;

@@ -17,7 +17,7 @@ const Textarea = styled.textarea<Props>`
   height: ${(props) => props.height}px;
   background-color: ${(props) => (props.readOnly ? Color.GREY : Color.WHITE)};
   font-family: inherit;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
 `;
 
 export default Textarea;

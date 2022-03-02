@@ -11,7 +11,7 @@ interface Props {
 export const AspectContainer = styled.div<Props>`
   display: flex;
   height: 30px;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   margin-top: ${(props) => props.node.isRoot && "15px"};
   background-color: ${(props) =>
     props.node.isRoot ? Color.GREY_LIGHTER : GetAspectColor(props.node, AspectColorType.Main, true)};

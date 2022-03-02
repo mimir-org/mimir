@@ -8,7 +8,7 @@ export const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${Color.WHITE};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
 `;
 
@@ -24,7 +24,7 @@ export const MenuHeader = styled.button`
   background: ${Color.WHITE};
   border: 1px solid ${Color.BLACK};
   border-radius: 5px;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
 
   img {
@@ -66,7 +66,7 @@ export const MenuListItem = styled.label`
   border-width: 1px 0 1px 0;
   border-style: solid;
   border-color: ${Color.GREY_DARK};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};
   cursor: pointer;

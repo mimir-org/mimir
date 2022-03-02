@@ -11,7 +11,7 @@ interface Props {
 export const TerminalsCategoryListElement = styled.div<Props>`
   padding: 10px;
   min-width: 250px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
   display: flex;
   background-color: ${(props) => props.color};
   border-bottom: 1px solid ${Color.GREY_DARK};

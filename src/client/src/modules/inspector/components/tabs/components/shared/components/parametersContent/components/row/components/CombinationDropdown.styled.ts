@@ -9,7 +9,7 @@ export const MenuWrapper = styled.div`
   left: 20px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
 
   .label {
@@ -31,7 +31,7 @@ export const MenuHeader = styled.div<MenuHeaderProps>`
   background-color: ${(props) => props.color};
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  font-size: ${FontSize.Tiny};
+  font-size: ${FontSize.TINY};
   color: ${Color.WHITE};
 
   p {
@@ -78,7 +78,7 @@ export const MenuListItem = styled.label`
   gap: 5px;
   padding-left: 5px;
   height: 25px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};
   cursor: pointer;

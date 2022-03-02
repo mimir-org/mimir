@@ -37,6 +37,6 @@ export const AvatarInitials = styled.p`
   position: absolute;
   margin: 0;
   color: ${Color.TEXT_AVATAR};
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   font-weight: ${FontWeight.Normal};
 `;

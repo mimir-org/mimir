@@ -18,7 +18,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
   .terminal-name {
     font-weight: ${(props) => props.expanded && FontWeight.Bold};
     text-decoration: ${(props) => props.expanded && "underline"};
-    font-size: ${FontSize.Small};
+    font-size: ${FontSize.SMALL};
   }
 
   .terminal-name:hover {
@@ -36,7 +36,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
     cursor: pointer;
     font-weight: ${FontWeight.Bold};
     font-family: ${FontType.Standard};
-    font-size: ${FontSize.Tiny};
+    font-size: ${FontSize.TINY};
     color: ${Color.BLACK};
 
     .add-text {

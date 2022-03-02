@@ -37,7 +37,7 @@ export const ParametersContentMenu = styled.div`
   max-width: 550px;
 
   .link {
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     text-decoration: underline;
     cursor: pointer;
   }

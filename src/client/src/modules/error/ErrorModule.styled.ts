@@ -12,12 +12,12 @@ export const ErrorItem = styled.div`
 `;
 
 export const ErrorItemText = styled.p`
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   margin: 5px 0 0;
 `;
 
 export const ErrorItemTitle = styled.h2`
   margin: 0;
   font-weight: ${FontWeight.Bold};
-  font-size: ${FontSize.SubHeader};
+  font-size: ${FontSize.SUBHEADER};
 `;

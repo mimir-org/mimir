@@ -11,7 +11,7 @@ export const SearchBarContainer = styled.div`
 
 export const SearchBarInput = styled.input.attrs(() => ({ type: "text" }))`
   width: 100%;
-  font-size: ${FontSize.SubHeader};
+  font-size: ${FontSize.SUBHEADER};
   padding: 5px;
   border: 0;
 

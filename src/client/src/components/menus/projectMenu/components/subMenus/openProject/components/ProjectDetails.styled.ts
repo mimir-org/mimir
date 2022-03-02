@@ -47,6 +47,6 @@ export const ProjectOptionsButtons = styled.div`
   .button-text {
     text-align: left;
     white-space: nowrap;
-    font-size: ${FontSize.Standard};
+    font-size: ${FontSize.STANDARD};
   }
 `;

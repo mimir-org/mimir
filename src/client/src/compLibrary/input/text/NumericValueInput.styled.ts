@@ -17,7 +17,7 @@ export const NumericValueInputStyled = styled.div`
   }
 
   input[type="number"] {
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
   }
 
   input::-webkit-outer-spin-button,

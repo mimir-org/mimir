@@ -33,7 +33,7 @@ interface ElementLabelProps {
 export const ElementLabel = styled.span<ElementLabelProps>`
   position: relative;
   bottom: 0.5px;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   font-weight: ${(props) => (props.isHeader || props.isSubHeader) && FontWeight.Bold};
   width: 220px;
 `;

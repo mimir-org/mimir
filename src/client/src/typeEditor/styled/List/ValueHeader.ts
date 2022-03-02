@@ -28,7 +28,7 @@ const ValueHeader = styled.div<Props>`
     text-transform: ${(props) => props.multiSelect && "capitalize"};
 
     //margin: 2px 13px 2px 13px;
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     color: ${Color.BLACK};
   }
 

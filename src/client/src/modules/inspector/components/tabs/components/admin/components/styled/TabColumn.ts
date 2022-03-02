@@ -8,13 +8,13 @@ interface Props {
 
 export const TabColumn = styled.div<Props>`
   width: ${(props) => getWidth(props.width)};
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   display: flex;
   gap: 10px;
   flex-direction: column;
 
   & > div {
-    font-size: ${FontSize.Tiny};
+    font-size: ${FontSize.TINY};
     color: ${Color.GREY_HEADER};
   }
 

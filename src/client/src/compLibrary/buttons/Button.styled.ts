@@ -10,7 +10,7 @@ export const ButtonBase = styled.button`
   gap: 10px;
   height: 35px;
   padding: 10px 20px;
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   border-color: ${Color.BLUE_MAGENTA};
   border-style: solid;

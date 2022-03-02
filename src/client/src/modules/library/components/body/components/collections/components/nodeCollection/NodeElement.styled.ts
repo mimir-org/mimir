@@ -21,7 +21,7 @@ export const NodeElementButton = styled.button<NodeElementButtonProps>`
   border-radius: 5px;
   background-color: ${(props) => (props.active ? props.hoverColor : Color.WHITE)} !important;
   margin: 3px 1px;
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   font-family: ${FontType.Standard};
   font-weight: ${(props) => (props.active ? "bold" : "normal")};
   cursor: grab;
