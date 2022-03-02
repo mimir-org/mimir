@@ -179,8 +179,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           maxZoom={3}
           zoomOnScroll
           paneMoveable
-          snapToGrid={true}
-          snapGrid={[25, 25]}
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>
