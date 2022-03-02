@@ -36,7 +36,7 @@ export const StartPageImage = styled.img`
 
 export const StartPageVersionText = styled.p`
   color: ${Color.WHITE};
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   font-size: ${FontSize.SUBHEADER};
   text-align: right;
   padding-right: 14px;

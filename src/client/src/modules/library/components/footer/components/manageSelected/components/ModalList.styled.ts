@@ -9,7 +9,7 @@ export const ModalListContent = styled.div`
   min-height: 370px;
   max-height: 400px;
   color: ${Color.BLACK};
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   position: relative;
 
   :before {

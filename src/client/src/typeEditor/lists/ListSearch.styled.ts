@@ -26,7 +26,7 @@ export const ListSearchBar = styled.div`
   }
 
   input[type="text"]::placeholder {
-    font-family: ${FontType.Standard};
+    font-family: ${FontType.STANDARD};
     font-size: ${FontSize.STANDARD};
     font-weight: ${FontWeight.BOLD};
     font-style: italic;

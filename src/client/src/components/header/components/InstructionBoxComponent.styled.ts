@@ -67,7 +67,7 @@ export const InstructionTextBox = styled.div`
 
 export const InstructionText = styled.p`
   color: ${Color.WHITE};
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   font-size: ${FontSize.HEADER};
   padding: 18px;
   margin: 0;

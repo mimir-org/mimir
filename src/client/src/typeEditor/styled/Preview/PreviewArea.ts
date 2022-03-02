@@ -14,7 +14,7 @@ const PreviewArea = styled.div`
   overflow: hidden;
 
   p {
-    font-family: ${FontType.Standard};
+    font-family: ${FontType.STANDARD};
     font-size: ${FontSize.MEDIUM};
     color: ${Color.BLACK};
   }

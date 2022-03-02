@@ -32,7 +32,7 @@ export const NodeCollectionButton = styled.button<NodeCollectionButtonProps>`
   border-radius: 3px;
   background-color: ${Color.WHITE} !important;
   font-size: ${FontSize.SUBHEADER};
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   padding-left: 10px;
   padding-right: 14px;
   -webkit-user-select: none;

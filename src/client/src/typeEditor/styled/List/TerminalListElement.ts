@@ -7,7 +7,7 @@ const TerminalListElement = styled.div`
   flex-direction: column;
   width: inherit;
   padding: 2px 1px;
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
 
@@ -26,7 +26,7 @@ const TerminalListElement = styled.div`
   Input {
     background-color: ${Color.WHITE};
     color: ${Color.BLACK};
-    font-family: ${FontType.Standard};
+    font-family: ${FontType.STANDARD};
     font-size: ${FontSize.STANDARD};
   }
 `;

@@ -27,7 +27,7 @@ export const CollectionNameInput = styled.div`
     background: transparent;
     width: 331px;
     height: 36px;
-    font-family: ${FontType.Standard};
+    font-family: ${FontType.STANDARD};
     font-size: ${FontSize.SUBHEADER};
   }
 

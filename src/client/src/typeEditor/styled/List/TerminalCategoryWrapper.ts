@@ -35,7 +35,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
     border: none;
     cursor: pointer;
     font-weight: ${FontWeight.BOLD};
-    font-family: ${FontType.Standard};
+    font-family: ${FontType.STANDARD};
     font-size: ${FontSize.TINY};
     color: ${Color.BLACK};
 

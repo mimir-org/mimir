@@ -12,6 +12,6 @@ export const TemplatesText = styled.p`
   text-align: center;
   color: ${Color.BLACK};
   font-size: ${FontSize.MEDIUM};
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   padding: 10px 50px;
 `;

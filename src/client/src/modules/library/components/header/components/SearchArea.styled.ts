@@ -15,7 +15,7 @@ export const SearchFilter = styled.label`
 `;
 
 export const SearchFilterLabel = styled.span`
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   font-size: ${FontSize.MEDIUM};
   color: ${Color.BLACK};
   padding: 0 5px 0 2px;

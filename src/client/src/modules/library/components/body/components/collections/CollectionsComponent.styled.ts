@@ -17,7 +17,7 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
     text-align: center;
     color: ${Color.BLACK};
     font-size: ${FontSize.MEDIUM};
-    font-family:${FontType.Standard}
+    font-family:${FontType.STANDARD}
     padding: 10px 0;
   }
 
@@ -33,7 +33,7 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
 
       .button-text {
         font-size: ${FontSize.STANDARD};
-        font-family:${FontType.Standard}
+        font-family:${FontType.STANDARD}
       }
   }
 `;

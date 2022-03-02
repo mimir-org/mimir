@@ -39,7 +39,7 @@ export const LibraryTabHeader = styled.div<LibraryTabHeaderProps>`
 export const LibraryTabHeaderText = styled.p`
   color: ${Color.BLACK};
   font-size: ${FontSize.SUBHEADER};
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   white-space: nowrap;
   margin: 0;
   text-align: center;

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ListLabel = styled.div<Props>`
-  font-family: ${FontType.Standard};
+  font-family: ${FontType.STANDARD};
   font-size: ${FontSize.STANDARD};
   font-weight: ${FontWeight.BOLD};
   color: ${Color.BLUE_MAGENTA};
