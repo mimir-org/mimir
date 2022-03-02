@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ListSearchBar } from "../../compLibrary";
+import { ListSearchBar } from "./ListSearch.styled";
 import { SearchIcon } from "../../assets/icons/common";
 import { ListType } from "../TypeEditorList";
 import { GetListFilter } from "./ListElements/helpers";

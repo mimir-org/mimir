@@ -1,4 +1,4 @@
-FROM node:13.12.0-alpine AS base
+FROM node:16.14.0-alpine AS base
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json package-lock.json ./

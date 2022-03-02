@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CollapseIcon, ExpandIcon } from "../../assets/icons/chevron";
 import { AttributeType } from "../../models";
-import { SearchBar, SearchBarContainer, SearchBarList, SearchBarListItem } from "..";
+import { SearchBar, SearchBarContainer, SearchBarList, SearchBarListItem } from "./SearchDropDown.styled";
 
 interface Props<T extends SearchDropDownItem> {
   value?: string;

@@ -1,7 +1,10 @@
+import { MutableRefObject } from "react";
 import { Size } from "../../compLibrary/size";
+import { VisuallyHidden } from "../../compLibrary/util";
 import { CloseIcon, ExpandIcon } from "../../assets/icons/controls";
-import { OnToggleClick } from "./handlers";
-import { FullScreenButton } from "./styled";
+import { TextResources } from "../../assets/text";
+import { OnToggleClick } from "./handlers/OnToggleClick";
+import { FullScreenButton } from "./FullScreenComponent.styled";
 import {
   heightSelector,
   inspectorSelector,
@@ -12,10 +15,15 @@ import {
 } from "../../redux/store";
 
 interface Props {
-  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  inspectorRef: MutableRefObject<HTMLDivElement>;
 }
 
-const FullScreenComponent = ({ inspectorRef }: Props) => {
+/**
+ * Component for the fullscreen functionality in Mimir.
+ * @param interface
+ * @returns a fullscreen button.
+ */
+export const FullScreenComponent = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(isOpenSelector);
   const isLibOpen = useAppSelector(libOpenSelector);
@@ -25,10 +33,9 @@ const FullScreenComponent = ({ inspectorRef }: Props) => {
   if (height === undefined) height = isInspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
 
   return (
-    <FullScreenButton libraryOpen={isLibOpen} height={height}>
-      <img src={isOpen ? ExpandIcon : CloseIcon} alt="fullscreen" onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)} />
+    <FullScreenButton libraryOpen={isLibOpen} height={height} onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)}>
+      <VisuallyHidden>{isOpen ? TextResources.Fullscreen_Close : TextResources.Fullscreen_Open}</VisuallyHidden>
+      <img src={isOpen ? ExpandIcon : CloseIcon} alt="" />
     </FullScreenButton>
   );
 };
-
-export default FullScreenComponent;

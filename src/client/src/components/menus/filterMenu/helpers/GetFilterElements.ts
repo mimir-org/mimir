@@ -2,7 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { IsOffPage } from "../../../../helpers";
 import { Edge, Node } from "../../../../models";
 
-const GetFilterElements = (elements: Elements): { nodes: Node[]; edges: Edge[] } => {
+export const GetFilterElements = (elements: Elements): { nodes: Node[]; edges: Edge[] } => {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 
@@ -19,5 +19,3 @@ const GetFilterElements = (elements: Elements): { nodes: Node[]; edges: Edge[] }
 
   return { nodes, edges };
 };
-
-export default GetFilterElements;

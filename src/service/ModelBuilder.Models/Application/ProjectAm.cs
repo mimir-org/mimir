@@ -54,5 +54,42 @@ namespace Mb.Models.Application
         }
 
         #endregion Validate
+
+        #region Public Methods
+
+        public IEnumerable<EdgeAm> GetParentlessEdges()
+        {
+            if (Edges == null || !Edges.Any())
+                yield break;
+
+            foreach (var edge in Edges)
+            {
+                var fromNode = Nodes.FirstOrDefault(x => x.Id == edge.FromNodeId);
+                if (fromNode != null)
+                    continue;
+
+                yield return edge;
+            }
+        }
+
+        public IEnumerable<EdgeAm> GetNotConnectedEdges()
+        {
+            if (Edges == null || !Edges.Any())
+                yield break;
+
+            foreach (var edge in Edges)
+            {
+                var fromNode = Nodes.FirstOrDefault(x => x.Id == edge.FromNodeId);
+                if (fromNode == null)
+                    yield return edge;
+
+                var toNode = Nodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
+                if (toNode == null)
+                    yield return edge;
+
+            }
+        }
+
+        #endregion
     }
 }

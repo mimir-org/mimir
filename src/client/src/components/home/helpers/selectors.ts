@@ -1,7 +1,7 @@
 export {
   projectStateSelector,
-  projectMenuSelector,
-  userMenuSelector,
+  projectNameSelector,
+  projectSelector,
   flowViewSelector,
   isActiveMenuSelector,
   darkModeSelector,

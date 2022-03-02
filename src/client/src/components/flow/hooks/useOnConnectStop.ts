@@ -1,9 +1,9 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Node, Project } from "../../../models";
-import { IsOffPage } from "../../../helpers";
+import { Project, Node } from "../../../models";
+import { GetSelectedNode, IsOffPage, IsProduct } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
-import { CreateRequiredOffPageNode } from "../block/nodes/helpers/offPage";
+import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
 
 /**
@@ -28,7 +28,7 @@ const useOnConnectStop = (
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
     const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
-    const parentBlockNode = GetParent(sourceNode);
+    const parentBlockNode = IsProduct(sourceNode) ? GetSelectedNode() : GetParent(sourceNode);
     const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
     const isOffPageDrop = ValidateOffPageDrop(
@@ -56,17 +56,18 @@ function ValidateOffPageDrop(
   secondaryNode: boolean,
   parentXPos: number
 ) {
-  const marginX = 90;
-  clientX += marginX;
+  if (IsOffPage(sourceNode)) return false;
+
+  // Correct value of clientX to match the nodes
+  clientX += 100;
 
   let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
   if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
-  const dropZoneWidth = 200;
+  const dropZoneWidth = secondaryNode ? 100 : 200;
   const rightBound = leftBound + dropZoneWidth;
-  const isValidPostion = ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 
-  return !IsOffPage(sourceNode) && isValidPostion;
+  return ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
 }
 
 function ValidateOffPagePosition(

@@ -2,13 +2,13 @@
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
 import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
-import { FullScreenComponent } from "../../fullscreen";
+import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildTreeElements } from "../tree/builders";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { VisualFilterComponent } from "../../menus/filterMenu";
-import { TreeConnectionLine } from "./edges";
+import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
+import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
@@ -24,7 +24,7 @@ import ReactFlow, {
 
 interface Props {
   project: Project;
-  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  inspectorRef: MutableRefObject<HTMLDivElement>;
 }
 
 /**
@@ -66,7 +66,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const OnConnect = (connection: FlowEdge | Connection) => {
     const fromNode = project.nodes.find((x) => x.id === connection.source);
     const fromConnector = fromNode.connectors.find((x) => x.id === connection.sourceHandle);
-    const edgeType = helpers.GetEdgeType(fromConnector);
+    const edgeType = helpers.GetTreeEdgeType(fromConnector);
     return useOnConnect({ connection, project, setElements, dispatch, edgeType, library, animatedEdge });
   };
 
@@ -87,9 +87,9 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetNodeTypes[selectedElements[0]?.type]) {
+    } else if (selectedElements.length === 1 && helpers.GetTreeNodeTypes[selectedElements[0]?.type]) {
       handleNodeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetEdgeTypes[selectedElements[0]?.type]) {
+    } else if (selectedElements.length === 1 && helpers.GetTreeEdgeTypes[selectedElements[0]?.type]) {
       handleEdgeSelect(selectedElements[0], dispatch);
     } else if (selectedElements.length > 1) {
       handleMultiSelect(dispatch);
@@ -118,8 +118,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        nodeTypes={helpers.GetNodeTypes}
-        edgeTypes={helpers.GetEdgeTypes}
+        nodeTypes={helpers.GetTreeNodeTypes}
+        edgeTypes={helpers.GetTreeEdgeTypes}
         defaultZoom={0.7}
         defaultPosition={[800, Size.BlockMarginY]}
         zoomOnDoubleClick={false}

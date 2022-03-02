@@ -1,2 +1,3 @@
-export { default as Button } from "./Button";
+export { Button } from "./Button";
+export { ButtonVariant } from "./Button";
 export { default as InspectorButton } from "./inspector/InspectorButton";

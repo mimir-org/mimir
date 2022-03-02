@@ -1,4 +1,5 @@
 import { FlowElement } from "react-flow-renderer";
+import { IsOffPage } from "../../../helpers";
 import { Edge, Node } from "../../../models";
 import { EdgeType } from "../../../models/project";
 import { IsTransport } from "../helpers";
@@ -13,6 +14,8 @@ import { IsTransport } from "../helpers";
  * @returns a Flow Element.
  */
 const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node, animated: boolean) => {
+  const isAnimated = animated && IsTransport(edge.fromConnector) && !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode);
+
   return {
     id: edge.id,
     type: edgeType,
@@ -21,7 +24,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
     sourceHandle: edge.fromConnectorId,
     targetHandle: edge.toConnectorId,
     arrowHeadType: null,
-    animated: animated && IsTransport(edge.fromConnector),
+    animated: isAnimated,
     label: "",
     data: {
       source: sourceNode,

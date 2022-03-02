@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Mb.Models.Application;
 using Mb.Models.Common;
-using Mb.Models.Data;
 
 namespace Mb.Services.Contracts
 {
@@ -24,10 +23,6 @@ namespace Mb.Services.Contracts
         /// <remarks>The clone function will create a new project and sub objects, based on
         /// the predefined object.</remarks>
         IDictionary<string, string> Clone(ProjectAm project);
-
-
-        ProjectAm Remap(Project fromProject, Project toProject, ICollection<string> nodes, ICollection<string> edges);
-        (ICollection<Node> nodes, ICollection<Edge> edges) CreateRemap(string projectId, ICollection<Node> nodes, ICollection<Edge> edges);
 
         /// <summary>
         /// Remap a collection of nodes and all sub objects.
@@ -53,5 +48,13 @@ namespace Mb.Services.Contracts
         /// <remarks>If id is not correct, it will create new unique id's for all edges and children objects.
         /// The createCopy parameter will always create new id's for all objects, and make a deep copy. The remap function will also create iri.</remarks>
         IEnumerable<EdgeAm> RemapEdges(ReplacementId project, ICollection<EdgeAm> edges, Dictionary<string, string> remap, bool createCopy);
+
+        /// <summary>
+        /// Remap all parentless edges to root nodes
+        /// </summary>
+        /// <param name="project">ProjectAm</param>
+        /// <remarks>If there is some edges that is not connected to a parent, we need to find
+        /// a root node in same aspect, and connect the part of relation to that node.</remarks>
+        void RemapParentlessEdges(ProjectAm project);
     }
 }

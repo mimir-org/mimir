@@ -1,7 +1,7 @@
 import * as types from "../../store/project/types";
 import { put } from "redux-saga/effects";
 import { msalInstance } from "../../..";
-import { GetDateNowUtc } from "../../../components/flow/helpers";
+import { GetDateNowUtc } from "../../../helpers";
 
 /**
  * Function to update a node with date and the user that made the update.

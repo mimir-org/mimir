@@ -1,4 +1,4 @@
-import { CheckboxWrapper } from "./styled";
+import { CheckboxWrapper } from "./Checkbox.styled";
 import { Color } from "../../../colors";
 import { CheckmarkCheckedComponent, CheckmarkEmptyComponent } from "../../../../assets/icons/checkmark";
 

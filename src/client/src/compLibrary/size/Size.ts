@@ -11,7 +11,7 @@ const Size = {
   Terminals_Interval: 22.5,
 
   // Modules
-  ModuleOpen: 331,
+  ModuleOpen: 400,
   ModuleClosed: 45,
   Margin: 1,
 

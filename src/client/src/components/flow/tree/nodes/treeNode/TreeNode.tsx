@@ -1,11 +1,14 @@
 import { FC, memo, useEffect, useState } from "react";
 import { Handle, NodeProps } from "react-flow-renderer";
 import { AspectColorType, Connector, Node } from "../../../../../models";
-import { TreeHandleBox, TreeNodeBox } from "./styled";
-import { GetHandleType, IsPartOf } from "../../../helpers";
-import { TreeLogoComponent } from "../../logo";
+import { TreeNodeBox } from "./styled/TreeNodeBox";
+import { HandleBox } from "../styled/HandleBox";
+import { GetHandleType } from "../helpers/GetHandleType";
+import { IsPartOf } from "../../../helpers";
+import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
-import { IsValidTreeConnection, SetTopPos } from "./helpers";
+import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
+import { SetTopPos } from "../helpers/SetTopPos";
 import { nodeSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
 
 /**
@@ -46,7 +49,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
         const [typeHandler, positionHandler] = GetHandleType(conn);
 
         return (
-          <TreeHandleBox
+          <HandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={"handle-treeview-" + conn.id}
@@ -61,7 +64,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
               className="function-treeview-handler"
               isValidConnection={(connection) => IsValidTreeConnection(data, connection, nodes, dispatch)}
             />
-          </TreeHandleBox>
+          </HandleBox>
         );
       })}
       <TreeLogoComponent node={data} />

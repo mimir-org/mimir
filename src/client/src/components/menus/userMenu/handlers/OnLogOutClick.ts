@@ -1,7 +1,5 @@
 import { msalInstance } from "../../../../index";
 
-const OnLogOutClick = () => {
+export const OnLogOutClick = () => {
   msalInstance.logoutRedirect();
 };
-
-export default OnLogOutClick;

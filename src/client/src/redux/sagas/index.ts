@@ -2,7 +2,14 @@ import { all, spawn, takeEvery } from "redux-saga/effects";
 import { commonSaga } from "./common";
 import { nodeSaga } from "./node";
 import { webSocketSaga } from "../../modules/cooperate/saga";
-import { exportLibrary, getInterfaceTypes, getTransportTypes, importLibrary, searchLibrary } from "./library/saga";
+import {
+  deleteLibraryItem,
+  exportLibrary,
+  getInterfaceTypes,
+  getTransportTypes,
+  importLibrary,
+  searchLibrary,
+} from "./library/saga";
 import { getUser } from "./user/saga";
 import { fetchUser } from "../store/user/userSlice";
 import {
@@ -11,6 +18,7 @@ import {
   fetchLibraryInterfaceTypes,
   fetchLibraryTransportTypes,
   importLibrary as importLibraryAction,
+  deleteLibraryItem as deleteLibraryAction,
 } from "../store/library/librarySlice";
 import {
   COMMIT_PROJECT,
@@ -88,6 +96,7 @@ function* sagas() {
     takeEvery(fetchBlobData, getBlobData),
     takeEvery(fetchCreateLibraryType, getSelectedCreateLibraryType),
     takeEvery(saveLibraryType, saveType),
+    takeEvery(deleteLibraryAction, deleteLibraryItem),
   ]);
 }
 

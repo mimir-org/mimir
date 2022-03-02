@@ -4,7 +4,12 @@ import { ListType, RadioButtonContainer } from "../../inputs/RadioButtonContaine
 import { TerminalCategoryWrapper, TerminalListElement } from "../../styled";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
 import { TextResources } from "../../../assets/text";
-import { SearchBar, SearchBarContainer, SearchBarList, SearchBarListItem } from "../../../compLibrary/";
+import {
+  SearchBar,
+  SearchBarContainer,
+  SearchBarList,
+  SearchBarListItem,
+} from "../../../compLibrary/dropdown/SearchDropDown.styled";
 import { CreateId } from "../../../components/flow/helpers";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../../types";
 

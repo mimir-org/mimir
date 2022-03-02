@@ -27,6 +27,9 @@ export const InfoModalContentContainer = styled.div<InfoModalContentContainerPro
 
 export const InfoModalHeader = styled.header`
   margin-bottom: 10px;
+  img {
+    margin: 0px 10px -5px 0px;
+  }
 `;
 
 export const InfoModalHeaderTitle = styled.h1`

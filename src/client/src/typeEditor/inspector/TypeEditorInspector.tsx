@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { Action, Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
-import { InspectorHeader } from "../../modules/inspector";
+import { AnimatedInspector, InspectorHeader } from "../../modules/inspector/components";
+import { InspectorResizePanel } from "../../modules/inspector/InpectorModule.styled";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
-import { useDragResizePanel } from "../../modules/inspector/helpers/useDragResizePanel";
-import { AnimatedInspector, ResizePanel } from "../../modules/inspector/styled";
+import { useDragResizePanel } from "../../modules/inspector/hooks";
 import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../helpers";
 import {
   changeTypeEditorInspectorHeight,
@@ -30,7 +30,7 @@ import {
 
 interface Props {
   createLibraryType: CreateLibraryType;
-  typeEditorPropertiesRef: React.MutableRefObject<HTMLDivElement>;
+  typeEditorPropertiesRef: MutableRefObject<HTMLDivElement>;
 }
 
 export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef }: Props) => {
@@ -86,7 +86,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
     (
       _dispatch: Dispatch,
       open: boolean,
-      _inspectorRef: React.MutableRefObject<HTMLDivElement>,
+      _inspectorRef: MutableRefObject<HTMLDivElement>,
       changeInspectorVisibilityAction: (visibility: boolean) => Action,
       changeInspectorHeightAction: (height: number) => Action
     ) => {
@@ -111,7 +111,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       zIndex={110}
       forwardRef={inspectorRef}
     >
-      <ResizePanel ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
+      <InspectorResizePanel ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       <InspectorHeader
         project={project}
         element={createLibraryType}

@@ -45,8 +45,16 @@ export const modulesSlice = createSlice({
         type.animate = action.payload.animate;
       });
     },
+    toggleModuleVisibility: (state, action: PayloadAction<string>) => {
+      state.types.forEach((type) => {
+        if (type.type === action.payload) {
+          type.visible = !type.visible;
+          type.animate = true;
+        }
+      });
+    },
   },
 });
 
-export const { setModuleVisibility, setModulesVisibility } = modulesSlice.actions;
+export const { setModuleVisibility, setModulesVisibility, toggleModuleVisibility } = modulesSlice.actions;
 export default modulesSlice.reducer;

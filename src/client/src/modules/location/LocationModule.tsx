@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { OnRender, OnWindowResize } from "./handlers";
 import { CreateCamera, CreateControls, CreateCubes, CreateLights, CreateRenderer, CreateScene } from "./creators";
-import { LocationModuleBox } from "./styled";
+import { LocationModuleContainer } from "./LocationModule.styled";
 import { Node } from "../../models";
 import { RenderCubes } from "./helpers";
 
@@ -38,9 +38,9 @@ const LocationModule = ({ visible, rootNode, nodes }: Props) => {
 
   return (
     visible && (
-      <LocationModuleBox id="Location3D">
+      <LocationModuleContainer id="Location3D">
         <div ref={mountRef} />
-      </LocationModuleBox>
+      </LocationModuleContainer>
     )
   );
 };

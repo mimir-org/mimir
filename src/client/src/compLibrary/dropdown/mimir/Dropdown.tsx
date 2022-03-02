@@ -3,7 +3,7 @@ import { Color } from "../../colors";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
 import { FontSize } from "../../font";
 import { Symbol } from "../../symbol";
-import { DropdownBox, DropdownHeader, DropdownList, DropdownListItem } from "./styled";
+import { DropdownBox, DropdownHeader, DropdownList, DropdownListItem } from "./Dropdown.styled";
 
 interface Props {
   label: string;
