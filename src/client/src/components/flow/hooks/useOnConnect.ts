@@ -91,7 +91,7 @@ function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch
 }
 
 function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode: Node) {
-  const { project, connection, edgeType, animatedEdge, library, dispatch, setElements } = params;
+  const { project, connection, edgeType, library, dispatch, setElements } = params;
 
   const id = CreateId();
   const sourceParent = GetParent(sourceNode);
@@ -128,7 +128,7 @@ function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode:
         type: edgeType,
         arrowHeadType: null,
         label: "",
-        animated: edgeType === EDGE_TYPE.TREE_TRANSPORT && animatedEdge,
+        animated: false,
         data: {
           source: sourceParent,
           target: targetParent,

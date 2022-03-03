@@ -61,7 +61,6 @@ const handleDeleteElements = (
     } else {
       const node = findProjectNodeByElementId(project, elem);
       if (node?.isLocked) continue;
-
       if (IsOffPage(node)) HandleOffPageDelete(project, node, dispatch);
 
       hasDeletedElement = true;
@@ -69,7 +68,6 @@ const handleDeleteElements = (
       verifiedList.push(elem);
     }
   }
-
   return hasDeletedElement;
 };
 
@@ -106,7 +104,6 @@ const handleRelatedOffPageElements = (project: Project, edge: Edge, dispatch: Di
       if (!offPageTransportEdge) return;
 
       const offPagePartOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
-
       const offPagePartOfEdge = project.edges.find(
         (x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === offPagePartOfTerminal?.id
       );

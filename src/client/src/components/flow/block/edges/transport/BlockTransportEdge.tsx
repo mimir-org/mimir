@@ -49,7 +49,6 @@ export const BlockTransportEdge = ({
     <>
       <marker
         id={"arrow"}
-        viewBox="0 0 10 20"
         refX="5"
         refY="5"
         markerUnits="userSpaceOnUse"
