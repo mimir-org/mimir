@@ -27,6 +27,7 @@ export const BlockTransportEdge = ({
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
+  const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
   const margin = 6;
@@ -48,7 +49,7 @@ export const BlockTransportEdge = ({
   return (
     <>
       <marker
-        id={"arrow"}
+        id={arrowId}
         refX="5"
         refY="5"
         markerUnits="userSpaceOnUse"
@@ -63,8 +64,8 @@ export const BlockTransportEdge = ({
         style={GetEdgeStyle(color, visible)}
         className="path-blockTransportEdge"
         d={transportPath}
-        markerStart={isBidirectional ? "url(#arrow)" : null}
-        markerEnd="url(#arrow)"
+        markerStart={isBidirectional ? `url(#${arrowId})` : null}
+        markerEnd={`url(#${arrowId})`}
       />
     </>
   );

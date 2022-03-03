@@ -18,6 +18,7 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
+  const arrowId = `arrow-${id}`;
 
   const smoothPath = getSmoothStepPath({
     sourceX,
@@ -34,8 +35,7 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
   return (
     <>
       <marker
-        id="arrow"
-        viewBox="0 0 10 20"
+        id={arrowId}
         refX="8"
         refY="5"
         markerUnits="userSpaceOnUse"
@@ -52,8 +52,8 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
         style={GetEdgeStyle(color, visible)}
         className="path-blockOffPageEdge"
         d={transportPath}
-        markerStart={isBidirectional ? "url(#arrow)" : null}
-        markerEnd="url(#arrow)"
+        markerStart={isBidirectional ? `url(#${arrowId})` : null}
+        markerEnd={`url(#${arrowId})`}
       />
     </>
   );
