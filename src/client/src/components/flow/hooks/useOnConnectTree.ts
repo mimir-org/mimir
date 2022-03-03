@@ -7,7 +7,7 @@ import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { GetTreeEdgeType } from "../tree/helpers";
-import { GetExistingEdge } from "./helpers";
+import { GetExistingEdge } from "./helpers/";
 
 interface Params {
   connection: FlowEdge | Connection;
