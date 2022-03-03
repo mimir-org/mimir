@@ -18,7 +18,7 @@ export const BlockConnectionLine = ({
 }: ConnectionLineComponentProps) => {
   const connector = sourceNode.data?.connectors?.find((conn: Connector) => conn.id === sourceHandle?.id) as Connector;
   const color = GetTerminalColor(connector);
-  const arrowId = "arrow-" + connector.id;
+  const arrowId = `arrow-${connector.id}`;
 
   return (
     <g>
@@ -30,7 +30,7 @@ export const BlockConnectionLine = ({
         strokeLinecap="square"
         style={GetStyle(color)}
         d={`M${sourceX},${sourceY} C ${sourceX} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY}`}
-        markerEnd={"url(#" + arrowId + ")"}
+        markerEnd={`url(#${arrowId})`}
       />
     </g>
   );

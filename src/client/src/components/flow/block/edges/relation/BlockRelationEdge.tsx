@@ -10,11 +10,21 @@ import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
  * @param params
  * @returns a hasLocation or fullfilledBy edge in BlockView.
  */
-export const BlockRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
+export const BlockRelationEdge = ({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  data,
+}: EdgeProps) => {
   const visible = !data?.edge?.isHidden;
   const isElectro = useAppSelector(electroSelector);
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
+  const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
   const margin = 6;
@@ -32,7 +42,7 @@ export const BlockRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePo
   return (
     <>
       <marker
-        id="arrow"
+        id={arrowId}
         refX="5"
         refY="5"
         markerUnits="userSpaceOnUse"
@@ -51,7 +61,7 @@ export const BlockRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePo
         strokeLinecap="square"
         className="path-blockRelationTargetEdge"
         d={bezierPath}
-        markerEnd="url(#arrow)"
+        markerEnd={`url(#${arrowId})`}
       />
     </>
   );
