@@ -38,8 +38,8 @@ const useOnConnectBlock = (params: Params) => {
     return;
   }
 
-  const currentEdge = ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
-  dispatch(createEdge(currentEdge));
+  const edge = ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  dispatch(createEdge(edge));
 
   return setElements((els) => {
     return addEdge(
@@ -51,7 +51,7 @@ const useOnConnectBlock = (params: Params) => {
         data: {
           source: sourceNode,
           target: targetNode,
-          edge: currentEdge,
+          edge: edge,
         },
       },
       els
