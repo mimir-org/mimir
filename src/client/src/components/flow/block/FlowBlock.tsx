@@ -4,7 +4,6 @@ import * as hooks from "../hooks/";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildBlockElements } from "./builders";
-import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
@@ -75,8 +74,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    const edgeType = EDGE_TYPE.BLOCK_TRANSPORT as EdgeType;
-    return hooks.useOnConnect({ connection, project, edgeType, library, animatedEdge, setElements, dispatch });
+    return hooks.useOnConnectBlock({ connection, project, library, animatedEdge, setElements, dispatch });
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -97,7 +95,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnMoveEnd = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== transform.zoom) dispatch(changeFlowTransform(flowTransform));
+    if (flowTransform?.zoom !== transform.zoom || flowTransform?.x !== 0) dispatch(changeFlowTransform(flowTransform));
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {

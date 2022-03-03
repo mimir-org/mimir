@@ -16,7 +16,7 @@ const ConvertToEdge = (
   targetNode: Node,
   projectId: string,
   library: LibraryState
-): Edge => {
+) => {
   return {
     id: id,
     projectId: projectId,

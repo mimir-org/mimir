@@ -1,31 +1,38 @@
-import { EDGE_TYPE, EdgeType } from "../../../models/project";
+import { EDGE_TYPE } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId, GetParent, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
+import { CreateId, GetParent, IsPartOf, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
-import { Connector, Edge, Node, Project } from "../../../models";
+import { Node, Project } from "../../../models";
 import { ConvertToEdge } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
 import { IsOffPage } from "../../../helpers";
 import { Dispatch } from "redux";
+import { GetBlockEdgeType } from "../block/helpers";
+import { GetExistingEdge } from "./helpers";
 
-interface UseOnConnectParams {
+interface Params {
   connection: FlowEdge | Connection;
   project: Project;
   setElements: React.Dispatch<React.SetStateAction<Elements>>;
   dispatch: Dispatch;
-  edgeType: EdgeType;
   library: LibraryState;
   animatedEdge: boolean;
 }
 
-const useOnConnect = (params: UseOnConnectParams) => {
+/**
+ * Hook that runs when two nodes connect via an Edge in BlockView.
+ * @param interface
+ * @returns an Edge connection.
+ */
+const useOnConnectBlock = (params: Params) => {
   SaveEventData(null, "edgeEvent");
-
-  const { project, connection, library, edgeType, animatedEdge, setElements, dispatch } = params;
-  const createdId = CreateId();
+  const { project, connection, library, animatedEdge, setElements, dispatch } = params;
+  const id = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === connection.source);
+  const sourceConn = sourceNode.connectors.find((c) => c.id === connection.sourceHandle);
   const targetNode = project.nodes.find((node) => node.id === connection.target);
+  const targetConn = targetNode.connectors.find((c) => c.id === connection.targetHandle);
   const existingEdge = GetExistingEdge(project, connection, sourceNode, targetNode);
 
   if (IsOffPage(sourceNode) && IsOffPage(targetNode)) {
@@ -33,23 +40,8 @@ const useOnConnect = (params: UseOnConnectParams) => {
     return;
   }
 
-  let sourceConn: Connector;
-  let targetConn: Connector;
-  let currentEdge: Edge;
-
-  project.nodes?.forEach((node) => {
-    node.connectors?.forEach((conn) => {
-      if (conn.id === connection.sourceHandle) sourceConn = conn;
-      if (conn.id === connection.targetHandle) targetConn = conn;
-    });
-  });
-
-  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
-
-  if (!existingEdge) {
-    currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
-    dispatch(createEdge(currentEdge));
-  } else currentEdge = existingEdge;
+  const currentEdge = existingEdge ?? ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  if (!existingEdge) dispatch(createEdge(currentEdge));
 
   if (IsPartOf(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
 
@@ -57,11 +49,9 @@ const useOnConnect = (params: UseOnConnectParams) => {
     return addEdge(
       {
         ...connection,
-        id: createdId,
-        type: edgeType,
-        arrowHeadType: null,
-        label: "",
-        animated: edgeType === EDGE_TYPE.TREE_TRANSPORT && animatedEdge,
+        id: id,
+        type: GetBlockEdgeType(sourceConn, sourceNode, targetNode),
+        animated: animatedEdge && IsTransport(sourceConn),
         data: {
           source: sourceNode,
           target: targetNode,
@@ -73,25 +63,8 @@ const useOnConnect = (params: UseOnConnectParams) => {
   });
 };
 
-function GetExistingEdge(project: Project, connection: FlowEdge | Connection, sourceNode: Node, targetNode: Node) {
-  return project.edges?.find(
-    (edge) =>
-      edge.fromConnectorId === connection.sourceHandle &&
-      edge.toConnectorId === connection.targetHandle &&
-      edge.fromNodeId === sourceNode.id &&
-      edge.toNodeId === targetNode.id &&
-      edge.isHidden === targetNode.isHidden
-  );
-}
-
-function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch) {
-  //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
-  const existingPartOfEdge = project.edges?.find((edge) => edge.toNodeId === targetNode.id && IsPartOf(edge?.fromConnector));
-  if (existingPartOfEdge) dispatch(removeEdge(existingPartOfEdge.id));
-}
-
-function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode: Node) {
-  const { project, connection, edgeType, library, dispatch, setElements } = params;
+function HandleOffPage(params: Params, sourceNode: Node, targetNode: Node) {
+  const { project, connection, library, dispatch, setElements } = params;
 
   const id = CreateId();
   const sourceParent = GetParent(sourceNode);
@@ -125,10 +98,7 @@ function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode:
       {
         ...connection,
         id: id,
-        type: edgeType,
-        arrowHeadType: null,
-        label: "",
-        animated: false,
+        type: EDGE_TYPE.BLOCK_OFFPAGE,
         data: {
           source: sourceParent,
           target: targetParent,
@@ -140,4 +110,4 @@ function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode:
   });
 }
 
-export default useOnConnect;
+export default useOnConnectBlock;

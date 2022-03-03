@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
+import { useOnConnectTree, useOnDrop, useOnRemove } from "../hooks";
 import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildTreeElements } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
@@ -64,10 +64,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   );
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    const fromNode = project.nodes.find((x) => x.id === connection.source);
-    const fromConnector = fromNode.connectors.find((x) => x.id === connection.sourceHandle);
-    const edgeType = helpers.GetTreeEdgeType(fromConnector);
-    return useOnConnect({ connection, project, setElements, dispatch, edgeType, library, animatedEdge });
+    return useOnConnectTree({ connection, project, setElements, dispatch, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {

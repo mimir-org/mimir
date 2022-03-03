@@ -77,6 +77,7 @@ function ValidateOffPagePosition(
   isTarget: boolean
 ) {
   const leftBound = CalculateLeftBound(flowTransform, isTarget, parentNodeSize, parentXPos);
+  console.log({ clientX });
 
   if (secondaryNode) {
     const dropZoneWidth = 100;
@@ -92,23 +93,48 @@ function ValidateOffPagePosition(
 
 function CalculateLeftBound(flowTransform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
+  const defaultX = 0;
   const zoom = flowTransform.zoom;
-  const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+  const x = flowTransform.x;
+  let leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
-  if (zoom < defaultZoom) {
-    const parentNodeWidthScaled = parentNodeSize?.width * zoom;
+  if (zoom !== defaultZoom) leftBound = HandleZoomChange(zoom, defaultZoom, leftBound, parentNodeSize, parentXPos, isTarget);
+  if (x !== defaultX) leftBound = HandleMove(flowTransform, leftBound);
+
+  return leftBound;
+}
+
+function HandleZoomChange(
+  currentZoom: number,
+  defaultZoom: number,
+  leftBound: number,
+  parentNodeSize: BlockNodeSize,
+  parentXPos: number,
+  isTarget: boolean
+) {
+  let targetLeftBound = 0;
+  let sourceLeftBound = 0;
+
+  if (currentZoom < defaultZoom) {
+    const parentNodeWidthScaled = parentNodeSize?.width * currentZoom;
     const canvasCenterX = window.innerWidth / 2;
-    const targetLeftBound = canvasCenterX + parentNodeWidthScaled / 2;
-    const sourceLeftBound = canvasCenterX - parentNodeWidthScaled / 2;
-    return isTarget ? targetLeftBound : sourceLeftBound;
+    targetLeftBound = canvasCenterX + parentNodeWidthScaled / 2;
+    sourceLeftBound = canvasCenterX - parentNodeWidthScaled / 2;
   }
-  if (zoom > defaultZoom) {
-    const diff = zoom - defaultZoom;
-    const targetLeftBound = leftBound * diff;
-    const sourceLeftBound = parentXPos - leftBound * zoom;
-    return isTarget ? targetLeftBound : sourceLeftBound;
+  if (currentZoom > defaultZoom) {
+    const diff = currentZoom - defaultZoom;
+    targetLeftBound = leftBound * diff;
+    sourceLeftBound = parentXPos - leftBound * currentZoom;
   }
 
+  return isTarget ? targetLeftBound : sourceLeftBound;
+}
+
+function HandleMove(flowTransform: FlowTransform, leftBound: number) {
+  const diff = flowTransform.x;
+  leftBound += diff;
+  console.log({ diff });
+  console.log({ leftBound });
   return leftBound;
 }
 
