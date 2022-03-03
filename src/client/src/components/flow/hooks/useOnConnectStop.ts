@@ -8,6 +8,7 @@ import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text";
+import { FlowTransform } from "react-flow-renderer";
 
 /**
  * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
@@ -17,6 +18,7 @@ import { TextResources } from "../../../assets/text";
  * @param project
  * @param parentNodeSize
  * @param secondaryNode
+ * @param flowTransform
  * @param dispatch
  */
 const useOnConnectStop = (
@@ -24,7 +26,7 @@ const useOnConnectStop = (
   project: Project,
   parentNodeSize: BlockNodeSize,
   secondaryNode: boolean,
-  zoomLevel: number,
+  flowTransform: FlowTransform,
   dispatch: Dispatch
 ) => {
   e.preventDefault();
@@ -51,7 +53,7 @@ const useOnConnectStop = (
 
     const isValidOffPageDrop = ValidateOffPagePosition(
       e.clientX,
-      zoomLevel,
+      flowTransform,
       parentNodeSize,
       parentBlockNode?.positionBlockX,
       secondaryNode,
@@ -68,13 +70,13 @@ const useOnConnectStop = (
 
 function ValidateOffPagePosition(
   clientX: number,
-  zoomLevel: number,
+  flowTransform: FlowTransform,
   parentNodeSize: BlockNodeSize,
   parentXPos: number,
   secondaryNode: boolean,
   isTarget: boolean
 ) {
-  const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos);
+  const leftBound = CalculateLeftBound(flowTransform, isTarget, parentNodeSize, parentXPos);
 
   if (secondaryNode) {
     const dropZoneWidth = 100;
@@ -88,8 +90,9 @@ function ValidateOffPagePosition(
   return clientX < leftBound;
 }
 
-function CalculateLeftBound(zoom: number, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
+function CalculateLeftBound(flowTransform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
+  const zoom = flowTransform.zoom;
   const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
   if (zoom < defaultZoom) {
