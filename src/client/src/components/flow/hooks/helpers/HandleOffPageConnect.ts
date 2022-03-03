@@ -9,12 +9,13 @@ import { Params } from "../useOnConnectBlock";
 
 /**
  * Component to handle a connection between two OffPageNodes.
+ * After the connection is complete the OffPageNodes are deleted, and one new transport edge is created.
  * @param params
  * @param sourceNode
  * @param targetNode
  * @returns a transport edge between the parents of the OffPageNodes.
  */
-const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
+export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
   const { project, connection, library, dispatch, setElements } = params;
   const id = CreateId();
   const sourceParent = GetParent(sourceNode);
@@ -59,5 +60,3 @@ const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node
     );
   });
 };
-
-export default HandleOffPageConnect;

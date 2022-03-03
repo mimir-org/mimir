@@ -20,7 +20,7 @@ interface Params {
 
 /**
  * Hook that runs when two nodes connect via an Edge in TreeView.
- * @param interface
+ * @param params
  * @returns an Edge connection.
  */
 const useOnConnectTree = (params: Params) => {
