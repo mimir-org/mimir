@@ -15,11 +15,11 @@ import validationReducer from "./validation/validationSlice";
 import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import libraryReducer from "./library/librarySlice";
 import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
+import zoomLevelReducer from "./zoom/zoomSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
-import { zoomLevelReducer } from "./zoom/reducers";
 import { rootSaga } from "../sagas";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 

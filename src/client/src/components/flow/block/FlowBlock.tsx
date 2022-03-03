@@ -16,7 +16,7 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, ha
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
-import { changeZoomLevel } from "../../../redux/store/zoom/actions";
+import { changeZoomLevel } from "../../../redux/store/zoom/zoomSlice";
 import ReactFlow, {
   Elements,
   Node as FlowNode,
