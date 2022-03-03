@@ -43,6 +43,10 @@ interface OnDropParameters {
   dispatch: Dispatch;
 }
 
+/**
+ * Hook that runs when an object is dropped from the LibaryModule onto the stage.
+ * @param params
+ */
 const useOnDrop = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
 
@@ -53,8 +57,9 @@ const useOnDrop = (params: OnDropParameters) => {
 
   const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
+  const isBlockView = IsBlockView();
 
-  if (isSubProject && !IsBlockView()) handleSubProjectDrop(event, project, dispatch);
+  if (isSubProject && !isBlockView) handleSubProjectDrop(event, project, dispatch);
   else if (!isSubProject) handleNodeDrop(params, sourceNode);
 };
 
@@ -77,7 +82,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   // TODO: fix when implementing auto-position
   const treeMarginY = 220;
   const blockMarginY = 120;
-  const position = IsBlockView()
+  const position = IsBlockView
     ? { x: event.clientX, y: event.clientY - blockMarginY }
     : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
 

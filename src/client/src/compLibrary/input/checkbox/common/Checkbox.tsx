@@ -6,7 +6,7 @@ interface Props {
   isChecked: boolean;
   onChange: () => void;
   color?: string;
-  readOnly?: boolean | false;
+  readOnly?: boolean;
   id?: string;
   marginLeft?: number;
 }

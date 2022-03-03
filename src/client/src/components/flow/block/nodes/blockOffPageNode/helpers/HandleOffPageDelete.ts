@@ -6,7 +6,7 @@ import { removeEdge, setOffPageStatus } from "../../../../../../redux/store/proj
 import { GetParent, IsPartOf, IsTransport } from "../../../../helpers";
 
 /**
- * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected
+ * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected.
  * A Connected OffPage node is pointing to another node that is not visible on the screen, this is handled by
  * the HandleConnectedOffPageDelete component.
  * @param project
@@ -15,20 +15,18 @@ import { GetParent, IsPartOf, IsTransport } from "../../../../helpers";
  */
 const HandleOffPageDelete = (project: Project, node: Node, dispatch: Dispatch) => {
   const parentNode = GetParent(node);
-  const offPageTransportEdge = getOffPageTransportEdge(node, parentNode, project);
-  const offPagePartOfEdge = getOffPagePartOfEdge(node, parentNode, project);
-  const parentNodeConnector = getParentNodeConnector(offPageTransportEdge, node);
-  const offPageConnectedReferenceEdge = getOffPageConnectedReferenceEdge(parentNodeConnector, project);
+  const transportEdge = getOffPageTransportEdge(node, parentNode, project);
+  const partOfEdge = getOffPagePartOfEdge(node, parentNode, project);
+  const parentConnector = getParentNodeConnector(transportEdge, node);
+  const connectedReferenceEdge = getOffPageConnectedReferenceEdge(parentConnector, project);
 
-  if (offPageTransportEdge && !offPageConnectedReferenceEdge) {
+  if (transportEdge && !connectedReferenceEdge) {
     const parentConnectorIsRequired = false;
-    dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, parentConnectorIsRequired));
+    dispatch(setOffPageStatus(parentNode.id, parentConnector.id, parentConnectorIsRequired));
   }
 
-  if (offPageConnectedReferenceEdge)
-    HandleConnectedOffPageDelete(project, offPageTransportEdge, offPageConnectedReferenceEdge, dispatch);
-
-  if (offPagePartOfEdge) dispatch(removeEdge(offPagePartOfEdge.id));
+  if (connectedReferenceEdge) HandleConnectedOffPageDelete(project, transportEdge, connectedReferenceEdge, dispatch);
+  if (partOfEdge) dispatch(removeEdge(partOfEdge.id));
 };
 
 function getOffPageTransportEdge(node: Node, parentNode: Node, project: Project) {

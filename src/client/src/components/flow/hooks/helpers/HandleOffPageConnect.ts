@@ -33,9 +33,7 @@ export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNod
   dispatch(createEdge(edge));
 
   project.edges.forEach((x) => {
-    if (IsOffPage(x.fromNode) || IsOffPage(x.toNode)) {
-      dispatch(removeEdge(x.id));
-    }
+    if (IsOffPage(x.fromNode) || IsOffPage(x.toNode)) dispatch(removeEdge(x.id));
   });
 
   const isRequired = false;

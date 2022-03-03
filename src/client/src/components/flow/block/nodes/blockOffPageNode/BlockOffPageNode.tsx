@@ -23,17 +23,17 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
 
-  const offPageInputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
-  const offPageOutputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
+  const inputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
+  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
 
   const edge = project?.edges?.find((x) => IsTransport(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
-  const isOffPageNodeTarget = edge?.toNodeId === data.id;
-  const offPageTerminal = isOffPageNodeTarget ? offPageInputTerminal : offPageOutputTerminal;
+  const isTarget = edge?.toNodeId === data.id;
+  const offPageTerminal = isTarget ? inputTerminal : outputTerminal;
 
   const offPageParent = GetParent(data);
   const parentBlockNode = GetParent(offPageParent);
 
-  const parentNodeTerminal = isOffPageNodeTarget
+  const parentTerminal = isTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
     : offPageParent?.connectors.find((c) => c.id === edge?.toConnectorId);
 
@@ -45,10 +45,10 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
 
   if (!data) return null;
-  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
-  const inputTerminals = data.connectors.filter((t) => IsInputTerminal(t));
-  const outputTerminals = data.connectors.filter((t) => IsOutputTerminal(t));
+  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentTerminal);
+  const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));
+  const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
 
   return (
     <OffPageBox id={"BlockOffPageNode-" + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>

@@ -76,22 +76,21 @@ function ValidateOffPagePosition(
   secondaryNode: boolean,
   isTarget: boolean
 ) {
-  const leftBound = CalculateLeftBound(flowTransform, isTarget, parentNodeSize, parentXPos);
-  console.log({ clientX });
+  const dropZone = CalculateDropZone(flowTransform, isTarget, parentNodeSize, parentXPos);
 
   if (secondaryNode) {
     const dropZoneWidth = 100;
-    const rightBound = leftBound + dropZoneWidth;
+    const rightBound = dropZone + dropZoneWidth;
 
-    if (isTarget) return clientX > leftBound && clientX < rightBound;
-    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
+    if (isTarget) return clientX > dropZone && clientX < rightBound;
+    return clientX < dropZone && clientX > dropZone - dropZoneWidth;
   }
 
-  if (isTarget) return clientX > leftBound;
-  return clientX < leftBound;
+  if (isTarget) return clientX > dropZone;
+  return clientX < dropZone;
 }
 
-function CalculateLeftBound(flowTransform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
+function CalculateDropZone(flowTransform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
   const defaultX = 0;
   const zoom = flowTransform.zoom;
@@ -133,8 +132,7 @@ function HandleZoomChange(
 function HandleMove(flowTransform: FlowTransform, leftBound: number) {
   const diff = flowTransform.x;
   leftBound += diff;
-  console.log({ diff });
-  console.log({ leftBound });
+
   return leftBound;
 }
 

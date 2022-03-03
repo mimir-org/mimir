@@ -31,15 +31,16 @@ interface Props {
 }
 
 /**
- * Component for the Flow library in BlockView
+ * Component for the Flow library in BlockView.
  * @param interface
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
-  const flowWrapper = useRef(null);
+  const { setCenter } = useZoomPanHelper();
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
+  const flowWrapper = useRef(null);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
@@ -53,7 +54,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
-  const { setCenter } = useZoomPanHelper();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -73,16 +73,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnRemove(elementsToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
   };
 
-  const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnConnectBlock({ connection, project, library, animatedEdge, setElements, dispatch });
-  };
-
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
     return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
   };
 
   const OnConnectStop = (e: MouseEvent) => {
     return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, transform, dispatch);
+  };
+
+  const OnConnect = (connection: FlowEdge | Connection) => {
+    return hooks.useOnConnectBlock({ connection, project, library, animatedEdge, setElements, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
