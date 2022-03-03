@@ -49,16 +49,16 @@ const useOnConnectStop = (
     const parentBlockNode = GetParent(sourceNode);
     const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
-    const isOffPageDrop = ValidateOffPageDrop(
+    const isValidOffPageDrop = ValidateOffPagePosition(
       e.clientX,
-      parentNodeSize,
       zoomLevel,
-      isTarget,
+      parentNodeSize,
+      parentBlockNode?.positionBlockX,
       secondaryNode,
-      parentBlockNode?.positionBlockX
+      isTarget
     );
 
-    if (isOffPageDrop) {
+    if (isValidOffPageDrop) {
       const isRequired = true;
       CreateRequiredOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, isRequired);
       SaveEventData(null, "edgeEvent");
@@ -66,19 +66,26 @@ const useOnConnectStop = (
   }
 };
 
-function ValidateOffPageDrop(
+function ValidateOffPagePosition(
   clientX: number,
-  parentNodeSize: BlockNodeSize,
   zoomLevel: number,
-  isTarget: boolean,
+  parentNodeSize: BlockNodeSize,
+  parentXPos: number,
   secondaryNode: boolean,
-  parentXPos: number
+  isTarget: boolean
 ) {
   const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos);
-  const dropZoneWidth = secondaryNode ? 100 : 200;
-  const rightBound = leftBound + dropZoneWidth;
 
-  return ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
+  if (secondaryNode) {
+    const dropZoneWidth = 100;
+    const rightBound = leftBound + dropZoneWidth;
+
+    if (isTarget) return clientX > leftBound && clientX < rightBound;
+    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
+  }
+
+  if (isTarget) return clientX > leftBound;
+  return clientX < leftBound;
 }
 
 function CalculateLeftBound(zoom: number, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
@@ -100,23 +107,6 @@ function CalculateLeftBound(zoom: number, isTarget: boolean, parentNodeSize: Blo
   }
 
   return leftBound;
-}
-
-function ValidateOffPagePosition(
-  clientX: number,
-  leftBound: number,
-  rightBound: number,
-  dropZoneWidth: number,
-  secondaryNode: boolean,
-  isTarget: boolean
-) {
-  if (secondaryNode) {
-    if (isTarget) return clientX > leftBound && clientX < rightBound;
-    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
-  }
-
-  if (isTarget) return clientX > leftBound;
-  return clientX < leftBound;
 }
 
 export default useOnConnectStop;
