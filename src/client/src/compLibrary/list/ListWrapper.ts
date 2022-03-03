@@ -14,10 +14,10 @@ const ListWrapper = styled.div<Props>`
   display: flex;
   flex-direction: column;
   flex: ${(props) => (props.flex === undefined ? 1 : props.flex)};
-  color: ${Color.Black};
-  font-family: ${FontType.Standard};
-  font-size: ${FontSize.Small};
-  font-weight: ${FontWeight.Normal};
+  color: ${Color.BLACK};
+  font-family: ${FontType.STANDARD};
+  font-size: ${FontSize.SMALL};
+  font-weight: ${FontWeight.NORMAL};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   height: ${(props) => (props.height === undefined ? "auto" : props.height)};
   min-height: ${(props) => (props.minHeight === undefined ? "auto" : props.minHeight)};

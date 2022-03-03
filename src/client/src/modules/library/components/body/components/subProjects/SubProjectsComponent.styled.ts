@@ -10,8 +10,8 @@ export const SubProjectsWrapper = styled.div`
 
 export const SubProjectsText = styled.p`
   text-align: center;
-  color: ${Color.Black};
-  font-size: ${FontSize.Medium};
-  font-family: ${FontType.Standard};
+  color: ${Color.BLACK};
+  font-size: ${FontSize.MEDIUM};
+  font-family: ${FontType.STANDARD};
   padding: 10px 50px;
 `;

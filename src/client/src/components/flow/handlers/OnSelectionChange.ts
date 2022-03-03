@@ -45,6 +45,6 @@ export const OpenInspector = (dispatch: Dispatch) => {
 
 export const CloseInspector = (inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
   dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  dispatch(changeInspectorHeight(Size.ModuleClosed));
-  SetPanelHeight(inspectorRef, Size.ModuleClosed);
+  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
+  SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 };

@@ -18,15 +18,15 @@ const ButtonsContainer = styled.div<Props>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: ${Color.White};
-  border: 2px solid ${Color.BlueMagenta};
+  background: ${Color.WHITE};
+  border: 2px solid ${Color.BLUE_MAGENTA};
   border-radius: 5px;
   padding: 0px 16px;
   white-space: nowrap;
   cursor: pointer;
-  font-family: ${FontType.Standard};
-  font-size: ${FontSize.Standard};
-  color: ${Color.Black};
+  font-family: ${FontType.STANDARD};
+  font-size: ${FontSize.STANDARD};
+  color: ${Color.BLACK};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 
   .button-text {

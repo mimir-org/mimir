@@ -28,16 +28,16 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
           <Input
-            fontSize={FontSize.Standard}
+            fontSize={FontSize.STANDARD}
             readOnly={true}
             value={node.semanticReference ?? ""}
             onChange={() => null}
@@ -49,7 +49,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         <div>
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
-            fontSize={FontSize.Standard}
+            fontSize={FontSize.STANDARD}
             readOnly={IsAspectNode(node) || node.isLocked}
             value={node.label ?? ""}
             onChange={(e: Event) => onChange("label", e.target.value)}
@@ -58,18 +58,18 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.name} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.name} onChange={() => null} inputType="" />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_Date}</div>
           <Input
-            fontSize={FontSize.Standard}
+            fontSize={FontSize.STANDARD}
             readOnly={true}
             value={moment(node.updated).format("DD/MM/YYYY") ?? ""}
             onChange={() => null}
@@ -79,7 +79,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         <div>
           <div>{TextResources.Inspector_Admin_Created_Date}</div>
           <Input
-            fontSize={FontSize.Standard}
+            fontSize={FontSize.STANDARD}
             readOnly={true}
             onChange={() => null}
             inputType=""
@@ -89,7 +89,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         <div>
           <div>{TextResources.Inspector_Admin_Designation}</div>
           <Input
-            fontSize={FontSize.Standard}
+            fontSize={FontSize.STANDARD}
             readOnly={true}
             value={GetReferenceDesignation(node, project) ?? ""}
             onChange={() => null}
@@ -113,13 +113,13 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input fontSize={FontSize.Standard} readOnly={true} value={node.version ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.version ?? ""} onChange={() => null} inputType="" />
         </div>
         {IsProduct(node) && (
           <div>
             <div>{TextResources.Inspector_Admin_Cost}</div>
             <Input
-              fontSize={FontSize.Standard}
+              fontSize={FontSize.STANDARD}
               readOnly={IsAspectNode(node) || node.isLocked}
               value={node.cost ?? ""}
               onChange={(e: Event) => onChange("cost", Number(e.target.value))}

@@ -11,10 +11,10 @@ interface Props {
 export const TerminalsCategoryListElement = styled.div<Props>`
   padding: 10px;
   min-width: 250px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
   display: flex;
   background-color: ${(props) => props.color};
-  border-bottom: 1px solid ${Color.GreyDark};
+  border-bottom: 1px solid ${Color.GREY_DARK};
 
   text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
   font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
@@ -34,7 +34,7 @@ export const TerminalsCategoryListElement = styled.div<Props>`
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     cursor: pointer;
     text-decoration: underline;
   }

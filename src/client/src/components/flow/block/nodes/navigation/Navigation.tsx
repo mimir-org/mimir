@@ -11,7 +11,7 @@ interface Props {
   onNavigateDownClick: () => void;
 }
 
-const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: Props) => {
+export const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: Props) => {
   const canNavigateUp = HasChildren(node);
   const canNavigateDown = !IsAspectNode(node);
 
@@ -28,5 +28,3 @@ const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: 
     )
   );
 };
-
-export default Navigation;

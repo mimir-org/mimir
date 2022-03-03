@@ -76,7 +76,7 @@ export const NodeElement = ({
         <Checkbox
           isChecked={isSelected}
           onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, isSelected)}
-          color={Color.Black}
+          color={Color.BLACK}
         />
       )}
       {isCustomCategory && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}

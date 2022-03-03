@@ -7,5 +7,5 @@ interface EntityProps {
 
 export const Entity = styled.div<EntityProps>`
   width: ${(props) => props.width}px;
-  border-right: 1px solid ${Color.GreyDark};
+  border-right: 1px solid ${Color.GREY_DARK};
 `;

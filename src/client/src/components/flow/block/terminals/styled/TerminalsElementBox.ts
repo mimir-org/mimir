@@ -9,12 +9,12 @@ const TerminalsElementBox = styled.label`
   gap: 5px;
   padding-left: 5px;
   height: 25px;
-  border-bottom: 1px solid ${Color.GreyDark};
-  font-size: ${FontSize.Tiny};
-  color: ${Color.Black};
+  border-bottom: 1px solid ${Color.GREY_DARK};
+  font-size: ${FontSize.TINY};
+  color: ${Color.BLACK};
 
   &:hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     text-decoration: underline;
     cursor: pointer;
   }

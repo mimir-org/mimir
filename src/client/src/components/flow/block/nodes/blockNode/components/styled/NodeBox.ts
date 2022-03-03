@@ -16,8 +16,8 @@ const NodeBox = styled.div<Props>`
   flex-direction: column;
   justify-content: space-between;
   align-self: stretch;
-  min-height: ${Size.Node_Height}px;
-  min-width: ${Size.Node_Width}px;
+  min-height: ${Size.NODE_HEIGHT}px;
+  min-width: ${Size.NODE_WIDTH}px;
   padding: 5px 0;
   opacity: ${(props) => (!props.node.isHidden ? 1 : 0)};
   border-radius: 10px;
@@ -38,7 +38,7 @@ const NodeBox = styled.div<Props>`
   .line {
     height: 1px;
     width: auto;
-    background-color: ${(props) => (IsProduct(props.node) ? Color.ProductSelected : Color.FunctionSelected)};
+    background-color: ${(props) => (IsProduct(props.node) ? Color.PRODUCT_SELECTED : Color.FUNCTION_SELECTED)};
     position: relative;
     bottom: 15px;
     left: 0;

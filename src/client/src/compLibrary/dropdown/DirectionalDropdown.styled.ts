@@ -4,7 +4,7 @@ import { Color } from "../colors";
 export const DropdownContainer = styled.div`
   display: flex;
   flex-direction: column;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   position: relative;
   max-height: 20px;
 `;
@@ -15,11 +15,11 @@ export const DropdownHeader = styled.div`
   align-items: center;
   flex-direction: row;
   width: 90px;
-  border: 1px solid ${Color.BlueMagenta};
+  border: 1px solid ${Color.BLUE_MAGENTA};
   border-radius: 5px;
   padding: 0 5px;
   font-size: 11px;
-  background-color: ${Color.White} !important;
+  background-color: ${Color.WHITE} !important;
 
   p {
     margin: 0;
@@ -35,8 +35,8 @@ export const DropdownHeader = styled.div`
 export const DropdownList = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${Color.White};
-  border: 1px solid ${Color.BlueMagenta};
+  background-color: ${Color.WHITE};
+  border: 1px solid ${Color.BLUE_MAGENTA};
   border-radius: 5px;
   padding: 1px;
   font-size: 11px;
@@ -48,8 +48,8 @@ export const DropdownList = styled.div`
   z-index: 1;
 
   .dropdown_listitem {
-    border-bottom: 1px solid ${Color.GreyDark};
-    background-color: ${Color.White};
+    border-bottom: 1px solid ${Color.GREY_DARK};
+    background-color: ${Color.WHITE};
     padding: 2px 5px;
 
     &:last-child {

@@ -14,7 +14,7 @@ const TerminalsBox = styled.div<Props>`
   right: ${(props) => (props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
   left: ${(props) => (!props.isInput ? `calc(100% + ${props.menuOffset})` : "revert")};
   border: 1px solid ${(props) => props.color};
-  background-color: ${Color.White};
+  background-color: ${Color.WHITE};
   border-radius: 5px;
   transition: right 250ms ease-in-out, left 250ms ease-in-out, top 250ms ease-in-out;
   pointer-events: all;

@@ -10,7 +10,7 @@ const HeaderContainer = styled.div<Props>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5px;
+  padding: 0px 10px;
   height: 30px;
   width: 100%;
   border-radius: 8px 8px 0 0;
