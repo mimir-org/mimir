@@ -6,6 +6,8 @@ import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../he
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
+import { setValidation } from "../../../redux/store/validation/validationSlice";
+import { TextResources } from "../../../assets/text";
 
 /**
  * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
@@ -30,8 +32,19 @@ const useOnConnectStop = (
 
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
-    const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
+    const sourceConnector = sourceNode?.connectors.find((conn) => conn.id === edgeEvent.sourceId);
     if (!IsTransport(sourceConnector) || IsOffPage(sourceNode)) return;
+
+    const existingEdge = project.edges.find(
+      (edge) =>
+        (edge.fromConnectorId === sourceConnector?.id && IsTransport(edge.fromConnector)) ||
+        (edge.toConnectorId === sourceConnector?.id && IsTransport(edge.toConnector))
+    );
+
+    if (existingEdge !== undefined) {
+      dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+      return;
+    }
 
     const parentBlockNode = GetParent(sourceNode);
     const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
