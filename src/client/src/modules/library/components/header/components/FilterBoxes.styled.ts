@@ -7,7 +7,8 @@ export const FilterBoxesWrapper = styled.div`
   justify-content: center;
   gap: 100px;
   padding: 15px 0 10px 0;
-  background: linear-gradient(to right, ${Color.FunctionMain}, ${Color.ProductMain}, ${Color.LocationMain}) left bottom no-repeat;
+  background: linear-gradient(to right, ${Color.FUNCTION_MAIN}, ${Color.PRODUCT_MAIN}, ${Color.LOCATION_MAIN}) left bottom
+    no-repeat;
   background-size: 100% 2px;
 `;
 

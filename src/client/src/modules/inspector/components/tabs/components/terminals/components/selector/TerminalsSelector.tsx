@@ -32,7 +32,7 @@ export const TerminalsSelector = ({
   return (
     <TerminalsColumn>
       <Input
-        fontSize={FontSize.Standard}
+        fontSize={FontSize.STANDARD}
         fontStyle={"italic"}
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}

@@ -25,7 +25,7 @@ const BuildBlockElements = (
   const elements: Elements = [];
   const splitView = secondaryNode !== null;
 
-  const parentBlock = BuildParentNode(selectedNode, libOpen, explorerOpen);
+  const parentBlock = BuildParentNode(selectedNode, explorerOpen);
   if (parentBlock) elements.push(parentBlock);
 
   if (splitView) {

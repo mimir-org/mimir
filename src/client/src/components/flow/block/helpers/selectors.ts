@@ -9,4 +9,5 @@ export {
   libOpenSelector,
   explorerSelector,
   nodeSizeSelector,
+  zoomLevelSelector,
 } from "../../../../redux/store/selectors";

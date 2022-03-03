@@ -7,15 +7,15 @@ const TerminalListElement = styled.div`
   flex-direction: column;
   width: inherit;
   padding: 2px 1px;
-  font-family: ${FontType.Standard};
-  font-size: ${FontSize.Small};
-  color: ${Color.Black};
+  font-family: ${FontType.STANDARD};
+  font-size: ${FontSize.SMALL};
+  color: ${Color.BLACK};
 
   :nth-child(odd) {
-    background-color: ${Color.PurpleLight};
+    background-color: ${Color.PURPLE_LIGHT};
   }
   :nth-child(even) {
-    background-color: ${Color.White};
+    background-color: ${Color.WHITE};
   }
 
   p {
@@ -24,10 +24,10 @@ const TerminalListElement = styled.div`
 
   Input::placeholder,
   Input {
-    background-color: ${Color.White};
-    color: ${Color.Black};
-    font-family: ${FontType.Standard};
-    font-size: ${FontSize.Standard};
+    background-color: ${Color.WHITE};
+    color: ${Color.BLACK};
+    font-family: ${FontType.STANDARD};
+    font-size: ${FontSize.STANDARD};
   }
 `;
 

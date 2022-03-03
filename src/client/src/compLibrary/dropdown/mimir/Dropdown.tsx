@@ -41,8 +41,8 @@ const Dropdown = ({
   valueImageProp,
   disabled,
   borderRadius = 5,
-  borderColor = Color.Black,
-  fontSize = FontSize.Standard,
+  borderColor = Color.BLACK,
+  fontSize = FontSize.STANDARD,
   height = 28,
   listTop = 33,
 }: Props) => {

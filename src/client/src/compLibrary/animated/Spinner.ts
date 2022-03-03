@@ -7,8 +7,8 @@ const spin = keyframes`
 `;
 
 const Spinner = styled.div`
-  border: 16px solid ${Color.GreyLighter};
-  border-top: 16px solid ${Color.BlueMagenta};
+  border: 16px solid ${Color.GREY_LIGHTER};
+  border-top: 16px solid ${Color.BLUE_MAGENTA};
   border-radius: 50%;
   width: 100%;
   height: 100%;

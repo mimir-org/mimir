@@ -12,7 +12,7 @@ const CreateCube = (scene: THREE.Scene, node: Node): THREE.Object3D[] => {
   const mesh = new THREE.Mesh(
     cubeGeometry,
     new THREE.MeshPhongMaterial({
-      color: Color.LocationMain,
+      color: Color.LOCATION_MAIN,
       emissive: 0x072534,
       side: THREE.DoubleSide,
       shading: THREE.FlatShading,

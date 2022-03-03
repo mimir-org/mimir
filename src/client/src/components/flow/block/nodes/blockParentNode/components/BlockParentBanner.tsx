@@ -2,7 +2,7 @@ import { GetAspectColor, GetCompanyLogoForNode, GetRdsPrefix } from "../../../..
 import { AspectColorType, Connector, Node } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
-import Navigation from "../../navigation/Navigation";
+import { Navigation } from "../../navigation/Navigation";
 import Config from "../../../../../../models/Config";
 
 interface Props {
@@ -27,43 +27,39 @@ export const BlockParentBanner = ({
   onNavigateUpClick,
   onNavigateDownClick,
   onConnectorClick,
-}: Props) => {
-  const prefix = GetRdsPrefix(node);
-
-  return (
-    <HeaderContainer color={GetAspectColor(node, AspectColorType.Header)}>
-      <HeaderGroup gap={"10px"}>
-        <TerminalsMenuComponent
-          node={node}
-          terminals={inputTerminals}
-          onClick={(c, isInput) => onConnectorClick(c, isInput)}
-          isInput
-          isParent
-        />
-        {!node.isRoot && (
-          <LogoBox>
-            <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
-          </LogoBox>
-        )}
-      </HeaderGroup>
-      <HeaderGroup gap={"5px"}>
-        <HeaderTitle>
-          {prefix}
-          {node.label ?? node.name}
-        </HeaderTitle>
-        <Navigation
-          isActive={isNavigationActive}
-          node={node}
-          onNavigateUpClick={() => onNavigateUpClick()}
-          onNavigateDownClick={() => onNavigateDownClick()}
-        />
-      </HeaderGroup>
+}: Props) => (
+  <HeaderContainer color={GetAspectColor(node, AspectColorType.Header)}>
+    <HeaderGroup gap={"10px"}>
       <TerminalsMenuComponent
         node={node}
-        terminals={outputTerminals}
+        terminals={inputTerminals}
         onClick={(c, isInput) => onConnectorClick(c, isInput)}
+        isInput
         isParent
       />
-    </HeaderContainer>
-  );
-};
+      {!node.isRoot && (
+        <LogoBox>
+          <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
+        </LogoBox>
+      )}
+    </HeaderGroup>
+    <HeaderGroup gap={"5px"}>
+      <HeaderTitle>
+        {GetRdsPrefix(node)}
+        {node.label ?? node.name}
+      </HeaderTitle>
+      <Navigation
+        isActive={isNavigationActive}
+        node={node}
+        onNavigateUpClick={() => onNavigateUpClick()}
+        onNavigateDownClick={() => onNavigateDownClick()}
+      />
+    </HeaderGroup>
+    <TerminalsMenuComponent
+      node={node}
+      terminals={outputTerminals}
+      onClick={(c, isInput) => onConnectorClick(c, isInput)}
+      isParent
+    />
+  </HeaderContainer>
+);

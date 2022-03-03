@@ -18,7 +18,7 @@ export const ActiveSimpleTypesList = ({ simpleTypes, selectedSimpleTypeId, onSel
             radius={0}
             isSelected={selectedSimpleTypeId === type.id}
             onClick={() => onSelect(type)}
-            color={i % 2 ? undefined : Color.PurpleLight}
+            color={i % 2 ? undefined : Color.PURPLE_LIGHT}
           >
             {type.name}
           </TerminalsCategoryListElement>

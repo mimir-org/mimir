@@ -6,16 +6,16 @@ import { Aspect } from "../../../../models";
 const parent = {
   aspect: Aspect.NotSet,
   size: {
-    width: window.innerWidth,
-    height: window.innerHeight - Size.BlockMarginY,
+    width: Size.BLOCK_PARENT_WIDTH,
+    height: window.innerHeight - Size.BLOCK_MARGIN_BOTTOM,
   },
 };
 
 const parentProduct = {
   aspect: Aspect.Product,
   size: {
-    width: window.innerWidth,
-    height: window.innerHeight - Size.BlockMarginY,
+    width: Size.BLOCK_PARENT_WIDTH,
+    height: window.innerHeight - Size.BLOCK_MARGIN_Y,
   },
 };
 
@@ -28,7 +28,7 @@ export const blockNodeSizeSlice = createSlice({
     setBlockNodeSize: (state, action: PayloadAction<BlockNodeSize>) => {
       const { width, height } = action.payload;
       state.blockParents.forEach((x) => {
-        x.aspect !== Aspect.Product && (x.size = { width, height: height - Size.BlockMarginY });
+        x.aspect !== Aspect.Product && (x.size = { width, height: height - Size.BLOCK_MARGIN_Y });
       });
     },
   },

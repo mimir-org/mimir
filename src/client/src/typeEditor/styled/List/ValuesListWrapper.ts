@@ -6,7 +6,7 @@ const ValuesListWrapper = styled.div`
   flex-direction: column;
   margin: 0px 15px 0px 5px;
   border-width: 1px 1px 1px 1px;
-  border-color: ${Color.Black};
+  border-color: ${Color.BLACK};
   border-style: solid;
   border-radius: 5px;
   position: absolute;
@@ -15,7 +15,7 @@ const ValuesListWrapper = styled.div`
   left: 27px;
   right: 0;
   z-index: 1;
-  background-color: ${Color.White};
+  background-color: ${Color.WHITE};
 `;
 
 export default ValuesListWrapper;

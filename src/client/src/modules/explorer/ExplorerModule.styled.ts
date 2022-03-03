@@ -7,7 +7,7 @@ export const ExplorerModuleHeader = styled.button`
   align-items: center;
   gap: 15px;
   padding: 24px 0;
-  font-size: ${FontSize.Header};
+  font-size: ${FontSize.HEADER};
   cursor: pointer;
   border: 0;
   background: transparent;

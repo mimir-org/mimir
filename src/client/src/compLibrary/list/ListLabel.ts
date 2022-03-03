@@ -8,15 +8,15 @@ interface Props {
 }
 
 const ListLabel = styled.div<Props>`
-  font-family: ${FontType.Standard};
-  font-size: ${FontSize.Standard};
-  font-weight: ${FontWeight.Bold};
-  color: ${Color.BlueMagenta};
+  font-family: ${FontType.STANDARD};
+  font-size: ${FontSize.STANDARD};
+  font-weight: ${FontWeight.BOLD};
+  color: ${Color.BLUE_MAGENTA};
   padding-bottom: ${(props) => (props.removeBorderBottom ? 0 : 8)}px;
   border-width: 0;
   border-bottom-width: ${(props) => (props.removeBorderBottom || props.preview ? 0 : 2)}px;
   border-style: solid;
-  border-color: ${Color.BlueMagenta};
+  border-color: ${Color.BLUE_MAGENTA};
 `;
 
 export default ListLabel;

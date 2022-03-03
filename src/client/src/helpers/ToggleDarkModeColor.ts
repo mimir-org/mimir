@@ -14,8 +14,8 @@ const ToggleDarkModeColor = (isDarkMode: boolean) => {
   const inspector = document.getElementById("InspectorModule");
   const inspectorBody = document.getElementById("InspectorBody");
 
-  const mainColor = isDarkMode ? Color.DarkModeMain : Color.White;
-  const moduleColor = isDarkMode ? Color.DarkModeModule : Color.GreyLighter;
+  const mainColor = isDarkMode ? Color.DARKMODE_MAIN : Color.WHITE;
+  const moduleColor = isDarkMode ? Color.DARKMODE_MODULE : Color.GREY_LIGHTER;
 
   if (root) root.style.background = mainColor;
   if (explorer) explorer.style.background = moduleColor;

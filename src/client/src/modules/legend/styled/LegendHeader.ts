@@ -11,7 +11,7 @@ const LegendHeader = styled.button<Props>`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: ${Size.ModuleOpen}px;
+  width: ${Size.MODULE_OPEN}px;
   padding: ${(props) => (props.isOpen ? "20px 0" : "10px 0")};
 
   background: transparent;
@@ -20,7 +20,7 @@ const LegendHeader = styled.button<Props>`
   font: inherit;
   cursor: inherit;
 
-  border-top: 1px solid ${Color.Grey};
+  border-top: 1px solid ${Color.GREY};
 `;
 
 export default LegendHeader;

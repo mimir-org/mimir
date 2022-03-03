@@ -9,7 +9,7 @@ const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
-  if (!height) height = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  if (!height) height = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   return (
     <MapWrapper height={height} libOpen={libOpen}>

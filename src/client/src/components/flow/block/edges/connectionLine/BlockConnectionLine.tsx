@@ -18,17 +18,19 @@ export const BlockConnectionLine = ({
 }: ConnectionLineComponentProps) => {
   const connector = sourceNode.data?.connectors?.find((conn: Connector) => conn.id === sourceHandle?.id) as Connector;
   const color = GetTerminalColor(connector);
+  const arrowId = "arrow-" + connector.id;
 
   return (
     <g>
-      <marker id="arrow" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="20" orient="auto"></marker>
-      <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+      <marker id={arrowId} refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="20" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
+      </marker>
       <path
         strokeDasharray="0.3,10"
         strokeLinecap="square"
         style={GetStyle(color)}
         d={`M${sourceX},${sourceY} C ${sourceX} ${targetY} ${sourceX} ${targetY} ${targetX},${targetY}`}
-        markerEnd="url(#arrow)"
+        markerEnd={"url(#" + arrowId + ")"}
       />
     </g>
   );

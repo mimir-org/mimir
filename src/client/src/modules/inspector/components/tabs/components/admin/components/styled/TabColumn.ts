@@ -8,14 +8,14 @@ interface Props {
 
 export const TabColumn = styled.div<Props>`
   width: ${(props) => getWidth(props.width)};
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   display: flex;
   gap: 10px;
   flex-direction: column;
 
   & > div {
-    font-size: ${FontSize.Tiny};
-    color: ${Color.GreyHeader};
+    font-size: ${FontSize.TINY};
+    color: ${Color.GREY_HEADER};
   }
 
   & > div > :first-child {

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
-import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection } from "react-flow-renderer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildBlockElements } from "./builders";
@@ -17,6 +16,15 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, ha
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
+import { changeZoomLevel } from "../../../redux/store/zoom/zoomSlice";
+import ReactFlow, {
+  Elements,
+  Node as FlowNode,
+  Edge as FlowEdge,
+  Connection,
+  FlowTransform,
+  useZoomPanHelper,
+} from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -43,7 +51,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
+  const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
   const node = GetSelectedNode();
+  const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
+  const { setCenter } = useZoomPanHelper();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -73,7 +84,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, zoomLevel, dispatch);
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -83,6 +94,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
+  };
+
+  const OnZoomScrollEnd = (flowTransform: FlowTransform) => {
+    if (flowTransform?.zoom !== zoomLevel) dispatch(changeZoomLevel(flowTransform.zoom));
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -99,19 +114,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  useEffect(() => {
-    CloseInspector(inspectorRef, dispatch);
-  }, [inspectorRef, dispatch]);
-
-  // Rerender
-  useEffect(() => {
-    OnLoad(flowInstance);
-  }, [OnLoad, flowInstance]);
-
-  useEffect(() => {
-    dispatch(updateBlockElements(elements));
-  }, [elements, dispatch]);
-
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch, true);
@@ -125,7 +127,28 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   useEffect(() => {
+    if (zoomLevel < defaultZoom) {
+      const x = window.innerWidth / 2;
+      const y = window.innerHeight / 2;
+      setCenter(x, y, zoomLevel);
+    }
+  }, [zoomLevel]);
+
+  useEffect(() => {
+    CloseInspector(inspectorRef, dispatch);
+  }, [inspectorRef, dispatch]);
+
+  useEffect(() => {
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    dispatch(updateBlockElements(elements));
+  }, [elements, dispatch]);
+
+  useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
+    dispatch(changeZoomLevel(defaultZoom));
   }, []);
 
   return (
@@ -143,14 +166,17 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          zoomOnDoubleClick={false}
-          defaultZoom={0.9}
-          defaultPosition={[0, Size.BlockMarginY]}
+          onMoveEnd={OnZoomScrollEnd}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
+          defaultPosition={[0, Size.BLOCK_MARGIN_Y]}
+          zoomOnDoubleClick={false}
+          defaultZoom={defaultZoom}
+          minZoom={0.7}
+          maxZoom={3}
           zoomOnScroll
           paneMoveable
         >

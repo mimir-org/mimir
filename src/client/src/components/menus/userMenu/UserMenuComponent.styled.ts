@@ -5,10 +5,10 @@ import { FontSize, FontWeight } from "../../../compLibrary/font";
 export const UserMenuBox = styled.div`
   position: absolute;
   right: 0;
-  background: ${Color.White};
+  background: ${Color.WHITE};
   width: 250px;
   border-style: solid;
-  border-color: ${Color.BlueMagenta};
+  border-color: ${Color.BLUE_MAGENTA};
   border-width: 0 1px 1px 1px;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
@@ -25,15 +25,15 @@ export const UserNameBox = styled.div`
 
 export const UserNameText = styled.p`
   margin: 0;
-  font-size: ${FontSize.SubHeader};
-  font-weight: ${FontWeight.Bold};
+  font-size: ${FontSize.SUBHEADER};
+  font-weight: ${FontWeight.BOLD};
 `;
 
 export const UserNameRoleText = styled.p`
   margin: 0;
-  font-size: ${FontSize.Medium};
-  font-weight: ${FontWeight.Normal};
-  color: ${Color.TextSecondary};
+  font-size: ${FontSize.MEDIUM};
+  font-weight: ${FontWeight.NORMAL};
+  color: ${Color.GREY_INACTIVE};
 `;
 
 export const UserMenuElement = styled.button`
@@ -43,23 +43,23 @@ export const UserMenuElement = styled.button`
   border: 0;
   width: 100%;
   padding: 10px 15px;
-  color: ${Color.BlueMagenta};
+  color: ${Color.BLUE_MAGENTA};
   cursor: pointer;
   text-align: left;
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
   }
 
   & + & {
     margin-top: 10px;
-    border-top: 1px solid ${Color.Grey};
+    border-top: 1px solid ${Color.GREY};
     border-radius: 0 0 10px 10px;
   }
 `;
 
 export const UserMenuElementText = styled.span`
-  font-size: ${FontSize.Standard};
+  font-size: ${FontSize.STANDARD};
 
   :hover {
     text-decoration: underline;

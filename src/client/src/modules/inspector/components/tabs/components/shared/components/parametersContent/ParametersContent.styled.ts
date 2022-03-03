@@ -26,8 +26,8 @@ export const ParametersContentHeader = styled.div`
   top: 0;
   z-index: 5;
 
-  background-color: ${Color.GreyInspector};
-  border-bottom: 1px solid ${Color.Grey};
+  background-color: ${Color.GREY_INSPECTOR};
+  border-bottom: 1px solid ${Color.GREY};
 `;
 
 export const ParametersContentMenu = styled.div`
@@ -37,7 +37,7 @@ export const ParametersContentMenu = styled.div`
   max-width: 550px;
 
   .link {
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     text-decoration: underline;
     cursor: pointer;
   }

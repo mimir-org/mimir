@@ -10,7 +10,7 @@ export const ProjectListBox = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BlueMagenta};
+    background: ${Color.BLUE_MAGENTA};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -21,7 +21,7 @@ export const ProjectListBox = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BlueMagenta};
+    background: ${Color.BLUE_MAGENTA};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -32,10 +32,10 @@ export const ProjectListBox = styled.div`
 export const ProjectListLabels = styled.div`
   display: flex;
   justify-content: space-between;
-  font-weight: ${FontWeight.Normal};
-  font-size: ${FontSize.Standard};
-  color: ${Color.Black};
-  border-bottom: 2px solid ${Color.BlueMagenta};
+  font-weight: ${FontWeight.NORMAL};
+  font-size: ${FontSize.STANDARD};
+  color: ${Color.BLACK};
+  border-bottom: 2px solid ${Color.BLUE_MAGENTA};
   padding-right: 10px;
 
   p {
@@ -67,6 +67,6 @@ export const ProjectDataContainer = styled.div`
   max-height: 280px;
   overflow-y: auto;
   overflow-x: hidden;
-  border-bottom: 1px solid ${Color.BlueMagenta};
+  border-bottom: 1px solid ${Color.BLUE_MAGENTA};
   box-shadow: 0 0, 0 -3px 3px -3px rgba(0, 0, 0, 0.2) inset, 0 0, 0 0;
 `;

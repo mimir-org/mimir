@@ -12,10 +12,10 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   align-items: center;
   height: 30px;
   padding: 0 10px 0 6px;
-  font-weight: ${(props) => (props.isSelected ? FontWeight.Bold : FontWeight.Normal)};
+  font-weight: ${(props) => (props.isSelected ? FontWeight.BOLD : FontWeight.NORMAL)};
   text-decoration: ${(props) => props.isSelected && "underline"};
-  font-size: ${FontSize.Small};
-  color: ${Color.Black};
+  font-size: ${FontSize.SMALL};
+  color: ${Color.BLACK};
   cursor: pointer;
 
   p {
@@ -44,10 +44,10 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   }
 
   &:nth-of-type(odd) {
-    background: ${Color.PurpleLight};
+    background: ${Color.PURPLE_LIGHT};
   }
 
   &:hover {
-    background: ${Color.BlueLight};
+    background: ${Color.BLUE_LIGHT};
   }
 `;

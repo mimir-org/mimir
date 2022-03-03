@@ -40,8 +40,8 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const libOpen = useAppSelector(libOpenSelector);
   const collections = useAppSelector(librarySelector).collections;
 
-  const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stopLib = libOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
+  const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   const typeEditorOpen = () => {
     setSelectedElement("");

@@ -14,5 +14,5 @@ export const AdminContentWrapper = styled.div`
   min-width: 1400px;
   padding: 10px 20px;
   overflow-y: hidden;
-  border-top: 1px solid ${Color.Grey};
+  border-top: 1px solid ${Color.GREY};
 `;

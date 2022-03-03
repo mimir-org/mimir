@@ -30,7 +30,7 @@ export const FullScreenComponent = ({ inspectorRef }: Props) => {
   const isInspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
 
-  if (height === undefined) height = isInspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  if (height === undefined) height = isInspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   return (
     <FullScreenButton libraryOpen={isLibOpen} height={height} onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)}>

@@ -3,24 +3,24 @@ import { Color } from "../../../../../../../../../compLibrary/colors";
 export const GetParametersColor = (index: number): [string, string] => {
   switch (index % 6) {
     case 0:
-      return [Color.ParamsCyan, Color.ParamsLightCyan];
+      return [Color.PARAMS_CYAN, Color.PARAMS_CYAN_LIGHT];
 
     case 1:
-      return [Color.ParamsPurple, Color.ParamsLightPurple];
+      return [Color.PARAMS_PURPLE, Color.PARAMS_PURPLE_LIGHT];
 
     case 2:
-      return [Color.ParamsPink, Color.ParamsLightPink];
+      return [Color.PARAMS_PINK, Color.PARAMS_PINK_LIGHT];
 
     case 3:
-      return [Color.ParamsOrange, Color.ParamsLightOrange];
+      return [Color.PARAMS_ORANGE, Color.PARAMS_ORANGE_LIGHT];
 
     case 4:
-      return [Color.ParamsGreen, Color.ParamsLightGreen];
+      return [Color.PARAMS_GREEN, Color.PARAMS_GREEN_LIGHT];
 
     case 5:
-      return [Color.ParamsYellow, Color.ParamsLightYellow];
+      return [Color.PARAMS_YELLOW, Color.PARAMS_YELLOW_LIGHT];
 
     default:
-      return [Color.ParamsPurple, Color.ParamsLightPurple];
+      return [Color.PARAMS_PURPLE, Color.PARAMS_PURPLE_LIGHT];
   }
 };
