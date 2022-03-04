@@ -51,8 +51,7 @@ const handleDeleteElements = (
   blockView: boolean,
   dispatch: Dispatch
 ) => {
-  const selectedNode = GetSelectedNode();
-  const selectedBlockNode = GetSelectedBlockNode();
+  const selectedNode = blockView ? GetSelectedBlockNode() : GetSelectedNode();
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
 
@@ -60,7 +59,7 @@ const handleDeleteElements = (
     const isEdge = isElementEdge(edgeTypes, elem);
 
     if (isEdge) {
-      if (!IsAspectNode(blockView ? selectedBlockNode : selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
+      if (!IsAspectNode(selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
         hasDeletedElement = true;
 
         handleRelatedOffPageElements(project, elem?.data?.edge, dispatch);
