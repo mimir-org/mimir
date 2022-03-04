@@ -27,7 +27,7 @@ interface Props {
  * @param interface
  * @returns a menu for the user in the header of Mimir.
  */
-const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
+export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const dispatch = useAppDispatch();
   const userState = useAppSelector(userStateSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);

@@ -17,7 +17,7 @@ type AppProps = {
   pca: IPublicClientApplication;
 };
 
-const App = ({ pca }: AppProps) => {
+export const App = ({ pca }: AppProps) => {
   const isFetching = useAppSelector(isFetchingSelector);
   const projectState = useAppSelector(projectStateSelector);
 
@@ -51,5 +51,3 @@ const App = ({ pca }: AppProps) => {
     </MsalProvider>
   );
 };
-
-export default App;

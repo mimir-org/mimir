@@ -1,7 +1,7 @@
 import red from "./redux/store/index";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { App } from "./components/app";
+import { App } from "./components/app/App";
 import { loginRequest, msalConfig } from "./models/webclient/MsalConfig";
 import { AuthenticationResult, EventMessage, EventType, PublicClientApplication } from "@azure/msal-browser";
 import { ReactFlowProvider } from "react-flow-renderer";

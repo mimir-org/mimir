@@ -8,7 +8,7 @@ import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevro
 import { AvatarButton, AvatarCircle, AvatarComponentContainer, AvatarInitials } from "./AvatarComponent.styled";
 import { Icon } from "../../../compLibrary/icon";
 import { useState } from "react";
-import { UserMenuComponent } from "../../menus/userMenu";
+import { UserMenuComponent } from "../../menus/userMenu/";
 
 /**
  * Component for the avatar icon in the header of Mimir.
