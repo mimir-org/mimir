@@ -7,7 +7,7 @@ import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text";
 import { Dispatch } from "redux";
 
-export const OnView = (view: ViewType, dispatch: Dispatch) => {
+export const OnViewTypeClick = (view: ViewType, dispatch: Dispatch) => {
   const selectedNode = GetSelectedNode();
 
   // BlockView can only be opened when a node is selected

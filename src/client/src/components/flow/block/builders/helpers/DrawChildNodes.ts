@@ -55,11 +55,11 @@ function ValidateOffPageNode(
 
   if (secondaryNode !== null) {
     if (!IsFamily(selectedNode, secondaryNode)) return false;
-    const offPageInputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
-    const offPageOutputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
+    const inputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
+    const outputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
 
-    const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === offPageInputTerminal?.id);
-    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === offPageOutputTerminal?.id);
+    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === outputTerminal?.id);
+    const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === inputTerminal?.id);
 
     let terminal: Connector;
 
