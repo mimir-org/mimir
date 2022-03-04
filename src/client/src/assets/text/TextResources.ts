@@ -1,14 +1,7 @@
 /* All static text for Mimir */
 
 const TextResources = {
-  // Aspects
-  Aspect_Function: "Function",
-  Aspect_Location: "Location",
-  Aspect_Product: "Product",
-
-  // Modules
-  Module_Legend: "Legend",
-  Module_Explorer: "Explorer",
+  // MODULES
   Module_Library: "Library",
   Module_Inspector: "Inspector",
 

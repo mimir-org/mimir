@@ -2,7 +2,7 @@ import { Connector, ConnectorType, Interface, INTERFACE_KIND } from "../../../mo
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
-const ConvertToInterface = (sourceConn: Connector, library: LibraryState): Interface => {
+const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
   const interfaceType = library?.interfaceTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
 
   if (interfaceType) {
@@ -50,7 +50,7 @@ const ConvertToInterface = (sourceConn: Connector, library: LibraryState): Inter
       created: interfaceType.created,
       libraryTypeId: interfaceType.id,
       kind: INTERFACE_KIND,
-    };
+    } as Interface;
   }
   return null;
 };

@@ -4,6 +4,8 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsProduct } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
+import { Position } from "../../../models/project";
+
 import {
   Attribute,
   BlobData,
@@ -82,7 +84,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   // TODO: fix when implementing auto-position
   const treeMarginY = 220;
   const blockMarginY = 120;
-  const position = IsBlockView
+  const position: Position = IsBlockView
     ? { x: event.clientX, y: event.clientY - blockMarginY }
     : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
 
