@@ -20,7 +20,7 @@ const IsValidBlockConnection = (connection: Connection, project: Project, dispat
 
   const isOffPage = IsOffPage(sourceNode) || IsOffPage(targetNode);
   const isValidTerminalType = ValidateTerminalType(sourceTerminal, targetTerminal);
-  const isValidConnector = ValidateConnectors(sourceTerminal, targetTerminal, project);
+  const isValidConnector = ValidateTerminalHasNoEdge(sourceTerminal, targetTerminal, project);
   const isValidOffPage = isOffPage ? ValidateOffPageNode(sourceNode, targetNode) : true;
 
   document.addEventListener(
@@ -40,7 +40,7 @@ function ValidateTerminalType(sourceTerminal: Connector, targetTerminal: Connect
   return sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
 }
 
-function ValidateConnectors(source: Connector, target: Connector, project: Project) {
+function ValidateTerminalHasNoEdge(source: Connector, target: Connector, project: Project) {
   return !project.edges.some(
     (edge) =>
       edge.fromConnectorId === source.id ||
@@ -61,7 +61,7 @@ const onMouseUp = (
   if (!sourceTerminal || !targetTerminal) return;
   if (!validTerminalType) dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals }));
   if (!validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_OffPage }));
-  if (!validConnectors) dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+  if (!validConnectors) dispatch(setValidation({ valid: false, message: TextResources.Validation_One_Connector }));
 
   return document.removeEventListener("mouseup", () =>
     onMouseUp(sourceTerminal, targetTerminal, validTerminalType, validOffPageNode, validConnectors, dispatch)

@@ -1,4 +1,4 @@
-const Size = {
+export const Size = {
   // Nodes
   NODE_WIDTH: 160,
   NODE_HEIGHT: 95,
@@ -36,5 +36,3 @@ const Size = {
   OPENPROJECT_MENU_LARGE_WIDTH: 1038,
   OPENPROJECT_MENU_LARGE_HEIGHT: 660,
 };
-
-export default Size;

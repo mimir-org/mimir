@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { Color } from "../../../compLibrary/colors";
 
 interface AnimatedInspectorContainerProps {

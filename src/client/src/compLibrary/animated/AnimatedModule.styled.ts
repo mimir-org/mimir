@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MODULE_TYPE } from "../../models/project";
-import { Size } from "../size";
+import { Size } from "../size/Size";
 import { Color } from "../colors/";
 
 interface ModuleBoxProps {

@@ -1,6 +1,6 @@
 import { Elements, FlowElement, removeElements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { EDGE_KIND, Edge, Project } from "../../../models";
 import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";

@@ -1,6 +1,6 @@
 import { FlowElement } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { Project } from "../../../models";
 import { MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";

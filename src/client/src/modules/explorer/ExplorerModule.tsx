@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { ProjectComponent } from "./components/ProjectComponent";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
-import { Size } from "../../compLibrary/size";
+import { Size } from "../../compLibrary/size/Size";
 import { OnToggleClick } from "./handlers/OnToggleClick";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";

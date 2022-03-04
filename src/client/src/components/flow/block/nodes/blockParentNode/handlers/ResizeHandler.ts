@@ -1,6 +1,6 @@
 import { Elements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../../../../compLibrary/size";
+import { Size } from "../../../../../../compLibrary/size/Size";
 import { IsDirectChild } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
 import { updateBlockPosition } from "../../../../../../redux/store/project/actions";

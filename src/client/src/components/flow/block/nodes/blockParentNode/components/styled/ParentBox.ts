@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../../compLibrary/colors";
-import { Size } from "../../../../../../../compLibrary/size";
+import { Size } from "../../../../../../../compLibrary/size/Size";
 import { BlockNodeSize } from "../../../../../../../models/project";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { Size } from "../../../../../compLibrary/size";
+import { Size } from "../../../../../compLibrary/size/Size";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { useAppDispatch } from "../../../../../redux/store";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";

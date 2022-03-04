@@ -5,7 +5,7 @@ import { IsOffPage } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text";
 import { FlowTransform } from "react-flow-renderer";
@@ -44,7 +44,7 @@ const useOnConnectStop = (
     );
 
     if (existingEdge !== undefined) {
-      dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+      dispatch(setValidation({ valid: false, message: TextResources.Validation_One_Connector }));
       return;
     }
 

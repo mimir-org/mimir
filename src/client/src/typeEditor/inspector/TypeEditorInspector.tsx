@@ -1,6 +1,6 @@
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { Action, Dispatch } from "redux";
-import { Size } from "../../compLibrary/size";
+import { Size } from "../../compLibrary/size/Size";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedInspector, InspectorHeader } from "../../modules/inspector/components";
