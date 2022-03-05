@@ -2,7 +2,7 @@ export const Size = {
   // BlockView dimensions
   BLOCK_MARGIN_Y: 40,
   BLOCK_MARGIN_X: 250,
-  BLOCK_SPLITVIEW_DIVISOR: 2.3,
+  BLOCK_SPLITVIEW_DIVISOR: 2.4,
 
   // Nodes
   BLOCK_CHILD_NODE_WIDTH: 160,
