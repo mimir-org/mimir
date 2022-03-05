@@ -18,7 +18,6 @@ export const FilterTerminals = (selectedNode: Node, secondaryNode: Node) => {
 function ValidateTerminal(selected: Node, secondary: Node, c: Connector) {
   if (secondary) return ValidateSecondaryNodeTerminal(selected, secondary, c);
   if (IsLocation(selected)) return IsLocationTerminal(c);
-  if (IsProduct(selected)) return IsProductTerminal(c);
   return IsTransport(c);
 }
 
