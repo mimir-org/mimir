@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ParameterDescriptor } from "./ParameterDescriptor";
 import { Entity } from "../styled/Entity";
-import { Color } from "../../../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../../../compLibrary/colors/Color";
 import { ParameterButton } from "../../../styled/ParameterButton";
 import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
 import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir";

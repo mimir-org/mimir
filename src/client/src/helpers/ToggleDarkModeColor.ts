@@ -1,4 +1,4 @@
-import { Color } from "../compLibrary/colors";
+import { Color } from "../compLibrary/colors/Color";
 
 /**
  * Component to toggle Mimir's color profile between light and dark.

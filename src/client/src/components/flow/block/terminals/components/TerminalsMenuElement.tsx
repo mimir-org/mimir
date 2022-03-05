@@ -1,5 +1,5 @@
 import { BidirectionalIcon } from "../../../../../assets/icons/bidirectional";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 import { Checkbox } from "../../../../../compLibrary/input/checkbox/common";
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../colors";
+import { Color } from "../../colors/Color";
 import { FontWeight } from "../../font";
 import { ParameterInputsWrapper } from "../../../modules/inspector/components/tabs/components/shared/components/parametersContent/components/row/components/Parameter.styled";
 

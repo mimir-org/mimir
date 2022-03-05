@@ -1,5 +1,5 @@
 import { CheckboxWrapper } from "./Checkbox.styled";
-import { Color } from "../../../colors";
+import { Color } from "../../../colors/Color";
 import { CheckmarkCheckedComponent, CheckmarkEmptyComponent } from "../../../../assets/icons/checkmark";
 
 interface Props {

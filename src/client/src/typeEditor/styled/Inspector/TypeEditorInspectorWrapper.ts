@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Size } from "../../../compLibrary/size/Size";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 
 const TypeEditorInspectorWrapper = styled.div`
   display: flex;

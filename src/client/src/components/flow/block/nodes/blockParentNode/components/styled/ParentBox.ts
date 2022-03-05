@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { Size } from "../../../../../../../compLibrary/size/Size";
 import { BlockNodeSize } from "../../../../../../../models/project";
 

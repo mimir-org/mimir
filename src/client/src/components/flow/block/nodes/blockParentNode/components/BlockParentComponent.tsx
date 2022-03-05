@@ -2,7 +2,7 @@ import { Connector, Node } from "../../../../../../models";
 import { ParentBox, ResizeButton } from "./styled";
 import { IsLocation, IsProduct } from "../../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
-import { Color } from "../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../compLibrary/colors/Color";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
 import { useResizeParentProductNode } from "./hooks/useResizeParentProductNode";

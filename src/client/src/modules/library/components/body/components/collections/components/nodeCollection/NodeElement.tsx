@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { Color } from "../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { SetNewSelectedElement } from "./helpers/SetNewSelectedElement";

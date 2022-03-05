@@ -1,4 +1,4 @@
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { IsLocationTerminal, IsProductTerminal } from "../../../../../../../components/flow/helpers";
 import { Connector } from "../../../../../../../models";
 
