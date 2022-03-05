@@ -11,7 +11,7 @@ import { Position } from "../../../../../models/project";
 
 const SetSecondaryNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean) => {
   const margin = 20;
-  const width = window.innerWidth / 2.4;
+  const width = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
 
   const yMin = 30;
   const yMax = window.innerHeight - 180;

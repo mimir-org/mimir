@@ -7,7 +7,7 @@ const parent = {
   aspect: Aspect.NotSet,
   size: {
     width: Size.BLOCK_PARENT_WIDTH,
-    height: window.innerHeight - Size.BLOCK_MARGIN_BOTTOM,
+    height: window.innerHeight - 140,
   },
 };
 

@@ -16,8 +16,8 @@ const NodeBox = styled.div<Props>`
   flex-direction: column;
   justify-content: space-between;
   align-self: stretch;
-  min-height: ${Size.NODE_HEIGHT}px;
-  min-width: ${Size.NODE_WIDTH}px;
+  min-height: ${Size.BLOCK_CHILD_NODE_HEIGHT}px;
+  min-width: ${Size.BLOCK_CHILD_NODE_WIDTH}px;
   padding: 5px 0;
   opacity: ${(props) => (!props.node.isHidden ? 1 : 0)};
   border-radius: 10px;

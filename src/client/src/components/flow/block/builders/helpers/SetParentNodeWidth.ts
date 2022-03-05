@@ -10,7 +10,7 @@ import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
  * @param dispatch
  */
 export const SetParentNodeWidth = (secondaryNode: boolean, libOpen: boolean, explorerOpen: boolean, dispatch: Dispatch) => {
-  const screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth - Size.BLOCK_MARGIN_X;
+  const screenWidth = secondaryNode ? window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR : window.innerWidth - Size.BLOCK_MARGIN_X;
   const marginX = SetParentBlockMarginRight(secondaryNode, libOpen, explorerOpen);
   let width = screenWidth - marginX;
 

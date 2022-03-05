@@ -1,5 +1,6 @@
 import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
+import { Size } from "../../../../compLibrary/size/Size";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
 import { SetParentBlockMarginRight } from "./helpers/SetParentNodeWidth";
@@ -14,7 +15,7 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpe
   if (!primaryNode || !secondaryNode) return null;
 
   const type = TextResources.Type_BlockParentNode;
-  const screenWidth = window.innerWidth / 2.4;
+  const screenWidth = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
   const distanceToPrimaryNode = 150;
   const marginX = SetParentBlockMarginRight(true, libOpen, explorerOpen);
 

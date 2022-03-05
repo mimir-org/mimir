@@ -13,7 +13,7 @@ import { Position } from "../../../../../models/project";
 const SetNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean, splitView: boolean) => {
   const margin = 30;
   const marginLarge = 80;
-  const width = splitView ? window.innerWidth / 2.4 : window.innerWidth - Size.BLOCK_MARGIN_X;
+  const width = splitView ? window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR : window.innerWidth - Size.BLOCK_MARGIN_X;
 
   const yMin = 30;
   const yMax = window.innerHeight - 180;
