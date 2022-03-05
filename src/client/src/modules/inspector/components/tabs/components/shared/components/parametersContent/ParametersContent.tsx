@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { CombinedAttributeFilter, Project } from "../../../../../../../../models";
 import { GetAttributeCombinations } from "./helpers/GetAttributeCombinations";
 import { GetParametersColor } from "./helpers/GetParametersColor";

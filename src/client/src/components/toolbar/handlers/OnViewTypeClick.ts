@@ -4,7 +4,7 @@ import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions"
 import { GetSelectedNode } from "../../../helpers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { Dispatch } from "redux";
 
 export const OnViewTypeClick = (view: ViewType, dispatch: Dispatch) => {

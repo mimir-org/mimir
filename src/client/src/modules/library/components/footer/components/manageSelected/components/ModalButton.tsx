@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { RightArrowIcon } from "../../../../../../../assets/icons/arrow";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Button } from "../../../../../../../compLibrary/buttons";
 import { CollectionsActions, LibItem } from "../../../../../../../models";
 import { OnManageCollection } from "../handlers";

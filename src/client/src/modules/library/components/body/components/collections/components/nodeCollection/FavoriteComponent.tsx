@@ -1,5 +1,5 @@
 import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../../assets/icons/favorites";
-import { TextResources } from "../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Icon } from "../../../../../../../../compLibrary/icon";
 import { Tooltip } from "../../../../../../../../compLibrary/tooltip/Tooltip";
 import { FavoriteButton } from "./FavoriteComponent.styled";

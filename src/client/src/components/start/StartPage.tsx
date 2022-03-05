@@ -1,6 +1,6 @@
 import { StartPageBackground, StartPageImage, StartPageSliderContainer, StartPageVersionText } from "./StartPage.styled";
 import { MimirLogo } from "../../assets/icons/mimir";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch } from "../../redux/store";
 import { MENU_TYPE } from "../../models/project";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";

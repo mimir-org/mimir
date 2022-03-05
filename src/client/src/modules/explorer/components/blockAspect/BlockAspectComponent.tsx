@@ -5,7 +5,7 @@ import { Node, Project } from "../../../../models";
 import { BlockAspectElement } from "./components/BlockAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
   project: Project;

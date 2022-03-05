@@ -1,6 +1,6 @@
 /* All static text for Mimir */
 
-const TextResources = {
+export const TextResources = {
   // MODULES
   Module_Library: "Library",
   Module_Inspector: "Inspector",
@@ -353,5 +353,3 @@ const TextResources = {
   // Modal
   Modal_Close: "Close menu",
 };
-
-export default TextResources;

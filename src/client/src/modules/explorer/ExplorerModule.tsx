@@ -7,7 +7,7 @@ import { OnToggleClick } from "./handlers/OnToggleClick";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { Icon } from "../../compLibrary/icon";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./ExplorerModule.styled";
 import { useAppSelector, explorerSelector } from "../../redux/store";
 

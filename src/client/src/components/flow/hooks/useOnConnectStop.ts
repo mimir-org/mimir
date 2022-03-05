@@ -7,7 +7,7 @@ import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/Crea
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size/Size";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { FlowTransform } from "react-flow-renderer";
 
 /**

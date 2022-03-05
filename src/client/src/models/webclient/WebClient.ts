@@ -1,7 +1,7 @@
 import { msalInstance } from "../../index";
 import { loginRequest } from "./MsalConfig";
 import { HttpResponse, RequestInitDefault } from ".";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 
 export const Token = async () => {
   const account = msalInstance.getActiveAccount();

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
 import { ColoredCollections } from "../../../../../../assets/icons/library";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModalList } from "./components/ModalList";

@@ -1,6 +1,6 @@
 import { RelationsContent } from "./components/RelationsContent";
 import { RelationsBody } from "./RelationsComponent.styled";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { edgeSelector, useAppSelector } from "../../../../../../redux/store";
 import { InspectorElement } from "../../../../types";
 import { IsEdge, IsNode } from "../../../../helpers/IsType";

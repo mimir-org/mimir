@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Connector } from "../../../../../../models";
 import { TerminalCategory } from "../TransportFilter";
 

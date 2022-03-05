@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { SubProjectsText, SubProjectsWrapper } from "./SubProjectsComponent.styled";
 
 export const SubProjectsComponent = () => (

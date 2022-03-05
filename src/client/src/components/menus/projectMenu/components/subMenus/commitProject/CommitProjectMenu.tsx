@@ -6,7 +6,7 @@ import { Label } from "../../../../../../compLibrary/input/text";
 import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useState } from "react";
 import { CollaborationPartner, ModuleDescription } from "../../../../../../models";
 import { OnCommitProjectClick, OnReturnClick } from "./handlers";

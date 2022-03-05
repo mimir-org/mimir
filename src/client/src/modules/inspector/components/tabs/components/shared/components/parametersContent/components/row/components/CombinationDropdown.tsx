@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { TextResources } from "../../../../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../../../../../../../../../assets/icons/chevron";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { MenuHeader, MenuList, MenuListItem, MenuWrapper } from "./CombinationDropdown.styled";

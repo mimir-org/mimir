@@ -3,7 +3,7 @@ import { ObjectBlock } from "./ObjectBlock";
 import { ListLabel, ListWrapper } from "../../compLibrary/list";
 import { InfoText, InfoWrapper, PreviewArea } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { InterfaceIcon, TransportIcon } from "../../assets/icons/type";
 import { IsFunction, IsInterface, IsLocation, IsObjectBlock, IsProduct, IsTransport } from "../helpers";
 

@@ -2,7 +2,7 @@ import { TabColumn } from "./styled/TabColumn";
 import { Input } from "../../../../../../../compLibrary/input/text";
 import { Edge } from "../../../../../../../models";
 import { GetRelationName } from "../../shared/helpers/GetRelationName";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 
 interface Props {
   edge: Edge;

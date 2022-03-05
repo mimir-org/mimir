@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { CollectionsActions } from "../../../../../models";
 
 const SetCollectionButtonText = (collectionState: CollectionsActions) => {

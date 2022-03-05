@@ -3,7 +3,7 @@ import { Edge, Node, Project } from "..";
 import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { IsAspectNode, IsFamily } from "../../helpers";
 import Config from "../Config";
 import { ConnectorType } from "../enums/ConnectorType";

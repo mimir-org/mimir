@@ -4,7 +4,7 @@ import { CreateSubProjectIcon } from "../../../../../../assets/icons/project";
 import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useSelectedFlowElements } from "../../../../../../helpers";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";

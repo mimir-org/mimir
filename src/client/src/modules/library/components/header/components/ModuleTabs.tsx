@@ -3,7 +3,7 @@ import { LibraryTab } from "../../../../../models";
 import { ConvertToLibTabName } from "./helpers/ConvertToLibTabName";
 import { LibraryTabsWrapper, LibraryTabHeader, LibraryTabHeaderText } from "./ModuleTabs.styled";
 import { ExpandButton } from "./ExpandButton";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
   isOpen: boolean;

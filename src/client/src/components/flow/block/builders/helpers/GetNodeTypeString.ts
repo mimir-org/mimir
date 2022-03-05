@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { Node } from "../../../../../models";
 import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
 

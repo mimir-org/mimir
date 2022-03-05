@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 export const GetTabId = (index: number) => {
   if (index === 1) return TextResources.Inspector_Parameters;

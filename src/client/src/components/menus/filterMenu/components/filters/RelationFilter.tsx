@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { FilterElement } from "./FilterElement";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { Connector, Edge } from "../../../../../models";
 import { OnAllRelationsChange, OnFilterChange } from "./handlers";
 import { AllRelationsChecked } from "./helpers";

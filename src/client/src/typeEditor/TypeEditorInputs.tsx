@@ -1,4 +1,4 @@
-import { TextResources } from "../assets/text";
+import { TextResources } from "../assets/text/TextResources";
 import { TextInput, TypeInfo, TypeNameInput } from "./styled";
 import { Dropdown } from "../compLibrary/dropdown/typeEditor";
 import { Aspect, BlobData, CreateLibraryType, LocationType, ObjectType, Purpose } from "../models";

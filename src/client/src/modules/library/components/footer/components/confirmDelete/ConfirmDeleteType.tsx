@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Button } from "../../../../../../compLibrary/buttons";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { GetSelectedElement } from "./helpers/GetSelectedElement";

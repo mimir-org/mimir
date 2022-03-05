@@ -3,7 +3,7 @@ import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { ProjectDetails } from "./components/ProjectDetails";
 import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { MENU_TYPE, VIEW_TYPE } from "../../../../../../models/project";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnReturnShowInstructionClick } from "../../../handlers";

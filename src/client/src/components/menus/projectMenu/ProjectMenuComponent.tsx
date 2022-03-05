@@ -3,7 +3,7 @@ import * as Icons from "../../../assets/icons/project";
 import { MenuElement } from "./components/MenuElement";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { useRef } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { useSelectedFlowElements } from "../../../helpers";

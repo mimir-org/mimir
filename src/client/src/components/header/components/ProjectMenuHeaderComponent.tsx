@@ -2,7 +2,7 @@ import * as selectors from "../../home/helpers/selectors";
 import InstructionBoxComponent from "./InstructionBoxComponent";
 import { useState } from "react";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { Icon } from "../../../compLibrary/icon";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuComponent } from "../../menus/projectMenu";

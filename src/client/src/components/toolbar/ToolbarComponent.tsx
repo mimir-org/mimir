@@ -6,7 +6,7 @@ import { OnFilterClick } from "./handlers/OnFilterClick";
 import { OnViewTypeClick } from "./handlers/OnViewTypeClick";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { ToolBarBody, ToolBarBox } from "./ToolbarComponent.styled";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 
 /**

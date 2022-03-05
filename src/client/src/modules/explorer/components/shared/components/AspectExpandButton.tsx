@@ -2,7 +2,7 @@ import { AspectExpandButtonContainer } from "./AspectExpandButton.styled";
 import { CollapseIcon, ExpandIcon } from "../../../../../assets/icons/chevron";
 import { Icon } from "../../../../../compLibrary/icon";
 import { VisuallyHidden } from "../../../../../compLibrary/util";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
   onClick: () => void;

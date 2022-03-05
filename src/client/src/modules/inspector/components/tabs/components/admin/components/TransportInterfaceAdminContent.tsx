@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment/moment.js";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../compLibrary/font";

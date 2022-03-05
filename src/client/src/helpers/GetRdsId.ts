@@ -1,6 +1,6 @@
 import { Edge, Node } from "../models";
 import { IsFunction, IsLocation, IsProduct } from "../helpers";
-import { TextResources } from "../assets/text";
+import { TextResources } from "../assets/text/TextResources";
 
 export const GetRdsId = (node: Node) => {
   if (!node || !node.rds) return "";

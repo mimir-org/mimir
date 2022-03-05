@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { FilterElement } from "./FilterElement";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";

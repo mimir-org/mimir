@@ -1,5 +1,5 @@
 import { AspectColorType, Connector, Node } from "../../../models";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { Color } from "../../../compLibrary/colors/Color";
 import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../components/flow/helpers";
 import { GetAspectColor } from "../../../helpers";

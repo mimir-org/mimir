@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { RelationType } from "../../../../../../../models";
 
 export const GetRelationName = (type: RelationType) => {

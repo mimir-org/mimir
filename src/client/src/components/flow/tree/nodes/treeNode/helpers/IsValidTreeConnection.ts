@@ -1,6 +1,6 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { IsFamily } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
 import { setValidation } from "../../../../../../redux/store/validation/validationSlice";

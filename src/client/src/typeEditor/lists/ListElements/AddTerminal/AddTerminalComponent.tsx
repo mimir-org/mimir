@@ -1,6 +1,6 @@
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../models";
 import { TerminalElementWrapper } from "../../../styled";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { OnDirectionChange, OnQuantityChange, OnTerminalIdChange } from "./handlers";
 import { DirectionalDropdown, SearchDropDown } from "../../../../compLibrary";

@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 export const GetInspectorText = (index: number) => {
   if (index === 0) return TextResources.Inspector_AdminInfo;

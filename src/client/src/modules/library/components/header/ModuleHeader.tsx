@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 import { Aspect, LibraryTab } from "../../../../models";
 import { LibHeader } from "./ModuleHeader.styled";
 import { ModuleTabs } from "./components/ModuleTabs";

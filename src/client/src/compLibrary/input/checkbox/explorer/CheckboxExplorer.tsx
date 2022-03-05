@@ -1,7 +1,7 @@
 import { CheckboxWrapper } from "./CheckboxExplorer.styled";
 import { Icon } from "../../../icon";
 import { Tooltip } from "../../../tooltip/Tooltip";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
   onChange: () => void;

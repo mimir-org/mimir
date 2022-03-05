@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { changeActiveMenu } from "../../redux/menuSlice";
 import { exportProjectToFile } from "../../../../../../../redux/store/project/actions";
 import { Project, ProjectConverterAm } from "../../../../../../../models";

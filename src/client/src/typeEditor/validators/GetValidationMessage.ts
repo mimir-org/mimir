@@ -1,4 +1,4 @@
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { TypeEditorState } from "../redux/types";
 import { IsFunction, IsInterface, IsLocation, IsNotSet, IsObjectBlock, IsTransport } from "../helpers";
 

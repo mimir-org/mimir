@@ -1,5 +1,5 @@
 import { ObjectType } from "../models";
-import { TextResources } from "../assets/text";
+import { TextResources } from "../assets/text/TextResources";
 import { EditTypeIcon, NewTypeIcon } from "../assets/icons/type";
 import { useAppDispatch } from "../redux/store";
 import { OnOpenTypeEditor } from "./handlers";

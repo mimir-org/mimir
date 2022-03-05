@@ -1,6 +1,6 @@
 import * as selectors from "../helpers/selectors";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { AvatarBackground } from "../../../assets/icons/header";
 import { GetAvatarInitials } from "../helpers/GetAvatarInitials";
 import { useAppSelector } from "../../../redux/store";

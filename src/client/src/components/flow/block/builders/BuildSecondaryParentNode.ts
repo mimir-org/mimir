@@ -1,5 +1,5 @@
 import { FlowElement } from "react-flow-renderer";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";

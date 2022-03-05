@@ -1,4 +1,4 @@
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { Aspect, ObjectType } from "../../models";
 
 const GetDefaultValue = (type: Aspect | ObjectType | "typeName") => {

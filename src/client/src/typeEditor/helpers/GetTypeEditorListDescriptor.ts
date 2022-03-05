@@ -1,7 +1,7 @@
 import { ListType, TypeEditorListProps } from "../TypeEditorList";
 import { TypeEditorState } from "../redux/types";
 import { Dispatch } from "redux";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { OnPropertyChange, OnTerminalCategoryChange } from "../handlers";
 import { IsLocation, IsProduct } from "./index";
 import {

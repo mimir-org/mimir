@@ -3,7 +3,7 @@ import { ActiveSimpleTypesList } from "./ActiveSimpleTypesList";
 import { TerminalsColumn } from "../../shared/styled/TerminalsColumn";
 import { SimpleLikeItem } from "../../../../../types";
 import { FontSize } from "../../../../../../../compLibrary/font";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../compLibrary/input/text";
 
 interface Props {

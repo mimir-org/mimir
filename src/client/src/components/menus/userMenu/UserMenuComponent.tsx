@@ -1,10 +1,11 @@
 import * as selectors from "../../home/helpers/selectors";
 import { MENU_TYPE } from "../../../models/project";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { memo, useRef } from "react";
 import { OnToggleDarkMode } from "./handlers/OnToggleDarkMode";
 import { OnLogOutClick } from "./handlers/OnLogOutClick";
+import { Icon } from "../../../compLibrary/icon";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { useAppDispatch, useAppSelector, userStateSelector } from "../../../redux/store";
 import {
@@ -15,8 +16,6 @@ import {
   UserNameRoleText,
   UserNameText,
 } from "./UserMenuComponent.styled";
-
-import { Icon } from "../../../compLibrary/icon";
 
 interface Props {
   setIsUserMenuOpen: (value: boolean) => void;

@@ -3,7 +3,7 @@ import { GlobalStyle } from "../../compLibrary";
 import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
 import { LoginBox } from "./App.styled";
 import { LogoutIcon } from "../../assets/icons/header";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { WebSocket } from "../../models";
 import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";

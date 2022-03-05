@@ -5,7 +5,7 @@ import { Action, Dispatch } from "redux";
 import { Icon } from "../../../../../compLibrary/icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton } from "../../../../../compLibrary/buttons";
 import { InspectorButtonType } from "../../../../../compLibrary/buttons/inspector/InspectorButton";
 import { Project } from "../../../../../models";

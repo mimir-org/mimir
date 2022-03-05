@@ -1,7 +1,7 @@
 import * as selectors from "./helpers/selectors";
 import ExitButton from "../../compLibrary/modal/components/ExitButton";
 import { useEffect, useState } from "react";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { BadRequestData } from "../../models/webclient";
 import { deleteProjectError } from "../../redux/store/project/actions";
 import { deleteCommonError } from "../../redux/store/common/commonSlice";

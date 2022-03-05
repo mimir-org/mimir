@@ -2,7 +2,7 @@ import { MutableRefObject } from "react";
 import { Size } from "../../compLibrary/size/Size";
 import { VisuallyHidden } from "../../compLibrary/util";
 import { CloseIcon, ExpandIcon } from "../../assets/icons/controls";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { OnToggleClick } from "./handlers/OnToggleClick";
 import { FullScreenButton } from "./FullScreenComponent.styled";
 import {

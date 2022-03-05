@@ -3,7 +3,7 @@ import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { Aspect } from "../../../../../models";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
   // collectionState: CollectionsActions;

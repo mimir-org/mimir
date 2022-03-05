@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MenuHeader, MenuList, MenuListItem, MenuWrapper } from "./Dropdown.styled";
 import { CollapseIcon, ExpandIcon } from "../../../../../../../../../../assets/icons/chevron";
-import { TextResources } from "../../../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../../../assets/text/TextResources";
 import { CombinedAttributeFilter } from "../../../../../../../../../../models";
 import { FilterDict } from "../../../../../parameters/redux/types";
 import { Checkbox } from "../../../../../../../../../../compLibrary/input/checkbox/common";

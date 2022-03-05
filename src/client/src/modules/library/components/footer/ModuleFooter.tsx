@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 import { OnOpenTypeEditor } from "../../../../typeEditor/handlers";
 import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";

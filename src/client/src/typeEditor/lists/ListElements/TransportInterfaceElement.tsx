@@ -3,7 +3,7 @@ import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
 import { ListType, RadioButtonContainer } from "../../inputs/RadioButtonContainer";
 import { TerminalCategoryWrapper, TerminalListElement } from "../../styled";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import {
   SearchBar,
   SearchBarContainer,
