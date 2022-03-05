@@ -45,7 +45,7 @@ export const App = ({ pca }: AppProps) => {
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
         <LoginBox>
-          <Button text={TextResources.Login_Label} onClick={login} icon={LogoutIcon} />
+          <Button text={TextResources.LOGIN_LABEL} onClick={login} icon={LogoutIcon} />
         </LoginBox>
       </UnauthenticatedTemplate>
     </MsalProvider>

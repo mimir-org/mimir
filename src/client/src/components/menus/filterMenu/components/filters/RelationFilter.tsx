@@ -21,7 +21,7 @@ export const RelationFilter = ({ edges, items, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement
-        label={TextResources.Filter_Relations}
+        label={TextResources.FILTER_RELATIONS}
         onChange={() => OnAllRelationsChange(edges, dispatch)}
         isChecked={AllRelationsChecked(edges)}
         visible={visible}

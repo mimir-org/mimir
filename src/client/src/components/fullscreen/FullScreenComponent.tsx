@@ -34,7 +34,7 @@ export const FullScreenComponent = ({ inspectorRef }: Props) => {
 
   return (
     <FullScreenButton libraryOpen={isLibOpen} height={height} onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)}>
-      <VisuallyHidden>{isOpen ? TextResources.Fullscreen_Close : TextResources.Fullscreen_Open}</VisuallyHidden>
+      <VisuallyHidden>{isOpen ? TextResources.FULLSCREEN_CLOSE : TextResources.FULLSCREEN_OPEN}</VisuallyHidden>
       <img src={isOpen ? ExpandIcon : CloseIcon} alt="" />
     </FullScreenButton>
   );

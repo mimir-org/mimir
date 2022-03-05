@@ -21,7 +21,7 @@ const ValidationModule = () => {
   return (
     <Modal isOpen={!validation.valid} onExit={onClick}>
       <NotificationModalContent isWarning description={validation.message}>
-        <Button onClick={onClick} text={TextResources.Validation_Ok} />
+        <Button onClick={onClick} text={TextResources.OK} />
       </NotificationModalContent>
     </Modal>
   );

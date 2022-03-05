@@ -4,11 +4,11 @@ import { ProjectDescriptionBody, ProjectDescriptionBox } from "./ProjectDescript
 export const ProjectDescription = () => (
   <ProjectDescriptionBox>
     <ProjectDescriptionBody>
-      <p className="about">{TextResources.Project_Description_About}</p>
-      <span className="text-about">{TextResources.Project_Description_Na}</span>
-      <p className="libraries">{TextResources.Project_Description_Libraries}</p>
-      <p className="sub-proj">{TextResources.Project_Description_SubProj}</p>
-      <p className="templates">{TextResources.Project_Description_Temps}</p>
+      <p className="about">{TextResources.PROJECT_DESC_ABOUT}</p>
+      <span className="text-about">{TextResources.PROJECT_DESC_NA}</span>
+      <p className="libraries">{TextResources.PROJECT_DESC_LIB}</p>
+      <p className="sub-proj">{TextResources.PROJECT_DESC_SUB_PROJ}</p>
+      <p className="templates">{TextResources.PROJECT_DESC_TEMPS}</p>
     </ProjectDescriptionBody>
   </ProjectDescriptionBox>
 );

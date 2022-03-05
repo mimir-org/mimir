@@ -12,21 +12,21 @@ export const RelationEdgeAdminContent = ({ edge }: Props) => (
   <>
     <TabColumn>
       <div>
-        <div>{TextResources.Inspector_EdgeAdmin_Id}</div>
+        <div>{TextResources.ID}</div>
         <Input readOnly={true} value={edge.id ?? ""} onChange={() => null} inputType="" />
       </div>
       <div>
-        <div>{TextResources.Inspector_EdgeAdmin_Relation}</div>
+        <div>{TextResources.INSPECTOR_EDGEADMIN_RELATION}</div>
         <Input readOnly={true} value={GetRelationName(edge.fromConnector?.relationType)} onChange={() => null} inputType="" />
       </div>
       <div>
-        <div>{TextResources.Inspector_EdgeAdmin_Template}</div>
+        <div>{TextResources.INSPECTOR_EDGEADMIN_TEMPLATE}</div>
         <Input readOnly={true} onChange={() => null} inputType="" />
       </div>
     </TabColumn>
     <TabColumn>
       <div>
-        <div>{TextResources.Inspector_EdgeAdmin_Source}</div>
+        <div>{TextResources.INSPECTOR_EDGEADMIN_SOURCE}</div>
         <Input
           readOnly={true}
           value={(edge.fromNode.label ?? edge.fromNode.name) + " - " + edge.fromNodeId}
@@ -35,7 +35,7 @@ export const RelationEdgeAdminContent = ({ edge }: Props) => (
         />
       </div>
       <div>
-        <div>{TextResources.Inspector_EdgeAdmin_Target}</div>
+        <div>{TextResources.INSPECTOR_EDGEADMIN_TARGET}</div>
         <Input
           readOnly={true}
           value={(edge.toNode.label ?? edge.toNode.name) + " - " + edge.toNodeId}
@@ -44,7 +44,7 @@ export const RelationEdgeAdminContent = ({ edge }: Props) => (
         />
       </div>
       <div>
-        <div>{TextResources.Inspector_EdgeAdmin_Project}</div>
+        <div>{TextResources.INSPECTOR_EDGEADMIN_PROJECT}</div>
         <Input readOnly={true} value={edge.masterProjectId} onChange={() => null} inputType="" />
       </div>
     </TabColumn>

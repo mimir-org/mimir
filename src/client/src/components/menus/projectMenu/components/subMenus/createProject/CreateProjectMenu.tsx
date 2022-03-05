@@ -21,17 +21,17 @@ export const CreateProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_CreateProject}>
-        <Label>{TextResources.Project_Name}</Label>
+      <InfoModalContent title={TextResources.PROJECT_CREATEPROJECT}>
+        <Label>{TextResources.PROJECT_NAME}</Label>
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.Project_Name_Placeholder}
+          placeholder={TextResources.PROJECT_NAME_PLACEHOLDER}
           value={projectName}
         />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
-          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Create} icon={CreateProjectIcon} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.CREATE} icon={CreateProjectIcon} />
         </ButtonBox>
       </InfoModalContent>
     </Modal>

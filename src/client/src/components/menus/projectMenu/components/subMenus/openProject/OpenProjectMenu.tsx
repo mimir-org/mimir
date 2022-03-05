@@ -37,11 +37,11 @@ export const OpenProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_Open_Label} inset={isStartPage && "120px 0 0 0"}>
+      <InfoModalContent title={TextResources.PROJECT_OPEN_LABEL} inset={isStartPage && "120px 0 0 0"}>
         <ProjectDetails projects={projectList} projectDescription={projectDescription} />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
-          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Open} icon={RightArrowIcon} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.OPEN} icon={RightArrowIcon} />
         </ButtonBox>
       </InfoModalContent>
     </Modal>

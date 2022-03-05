@@ -23,16 +23,16 @@ export const TerminalsFilter = ({ activeTerminals, allTerminals, dispatch }: Pro
     <>
       <FilterElement
         isChecked={allTerminalsChecked}
-        label={TextResources.Filter_Terminals}
+        label={TextResources.FILTER_TERMINALS}
         onChange={() => OnAllTerminalsChange(allTerminals, dispatch, allTerminalsChecked)}
-        visible={true}
-        isHeader={true}
+        visible
+        isHeader
       />
       <FilterElement
         isChecked={activeTerminalsChecked}
-        label={TextResources.Filter_Show_Active_Terminals}
+        label={TextResources.FILTER_SHOW_ACTIVE_TERMINALS}
         onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
-        visible={true}
+        visible
       />
     </>
   );

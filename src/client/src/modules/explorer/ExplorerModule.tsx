@@ -30,7 +30,7 @@ export const ExplorerModule = ({ dispatch }: Props) => {
   return (
     <AnimatedModule type={type} start={start} stop={stop} run={true} id="ExplorerModule">
       <Tooltip
-        content={isOpen ? TextResources.Explorer_Close_Panel : TextResources.Explorer_Expand_Panel}
+        content={isOpen ? TextResources.EXPLORER_CLOSE_PANEL : TextResources.EXPLORER_EXPAND_PANEL}
         placement={"bottom"}
         offset={[0, -10]}
       >

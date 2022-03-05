@@ -59,23 +59,23 @@ export const InspectorButtonRow = ({
           <InspectorButton
             onClick={() => OnLockClick(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
-            description={element?.isLocked ? TextResources.Inspector_Unlock_Object : TextResources.Inspector_Lock_Object}
+            description={element?.isLocked ? TextResources.INSPECTOR_UNLOCK_OBJECT : TextResources.INSPECTOR_LOCK_OBJECT}
           />
           <InspectorButton
             onClick={() => !deleteDisabled && OnDeleteClick(project, element, dispatch, inspectorRef)}
             type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
-            description={TextResources.Inspector_Delete_Object}
+            description={TextResources.INSPECTOR_DELETE_OBJECT}
             disabled={deleteDisabled}
           />
         </>
       )}
-      <Tooltip content={open ? TextResources.Inspector_Close_Panel : TextResources.Inspector_Expand_Panel}>
+      <Tooltip content={open ? TextResources.INSPECTOR_CLOSE : TextResources.INSPECTOR_EXPAND}>
         <InspectorButtonRowToggleContainer
           onClick={() =>
             OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
           }
         >
-          <InspectorButtonRowToggleTitle>{TextResources.Module_Inspector}</InspectorButtonRowToggleTitle>
+          <InspectorButtonRowToggleTitle>{TextResources.MODULE_INSPECTOR}</InspectorButtonRowToggleTitle>
           <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
         </InspectorButtonRowToggleContainer>
       </Tooltip>

@@ -24,7 +24,7 @@ export const ModalList = ({ collections, selectedCollections, setSelectedCollect
 
   return (
     <ModalListContent>
-      <ModalListColumnText>{TextResources.Library_Modal_Collection_Created}</ModalListColumnText>
+      <ModalListColumnText>{TextResources.LIBRARY_MODAL_COLLECTION_CREATED}</ModalListColumnText>
       <ModalListElementsContainer>
         {collections?.map((c) => {
           return (

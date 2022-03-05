@@ -20,7 +20,7 @@ const InstructionBoxComponent = () => (
       <InstructionArrowPoint />
     </InstructionArrowContainer>
     <InstructionTextBox>
-      <InstructionText>{TextResources.Project_Menu_Instruction}</InstructionText>
+      <InstructionText>{TextResources.PROJECT_MENU_SELECT}</InstructionText>
     </InstructionTextBox>
   </InstructionProjectMenu>
 );

@@ -21,7 +21,7 @@ export const StartPage = () => {
     <StartPageBackground>
       <StartPageSliderContainer>
         <StartPageImage src={MimirLogo} alt="mimir-logo" />
-        <StartPageVersionText>{TextResources.Mimir_Version}</StartPageVersionText>
+        <StartPageVersionText>{TextResources.MIMIR_VERSION}</StartPageVersionText>
       </StartPageSliderContainer>
     </StartPageBackground>
   );

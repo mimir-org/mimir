@@ -7,7 +7,7 @@ import { Dispatch } from "redux";
 
 const OnSaveClick = (dispatch: Dispatch, project: Project, fileName: string, parserId: string) => {
   if (!project) {
-    throw Error(TextResources.Error_ExportProject);
+    throw Error(TextResources.ERROR_EXPORT_PROJECT);
   }
 
   const convertedProject = ConvertProject(project);

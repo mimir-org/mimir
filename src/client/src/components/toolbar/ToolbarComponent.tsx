@@ -26,26 +26,26 @@ const ToolbarComponent = () => {
       <ToolBarBody>
         <ToolbarElement
           active={isTreeView}
-          label={TextResources.Toolbar_TreeView}
+          label={TextResources.TOOLBAR_VISUALFILTERS_CLOSE}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
           onClick={() => OnViewTypeClick(VIEW_TYPE.TREEVIEW as ViewType, dispatch)}
         />
         <ToolbarElement
           active={isTreeView}
-          label={TextResources.Toolbar_BlockView}
+          label={TextResources.TOOLBAR_BLOCKVIEW}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
           onClick={() => OnViewTypeClick(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}
         />
         {!isTreeView && (
           <ToolbarElement
-            label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
+            label={isElectro ? TextResources.TOOLBAR_ELECTRO_OFF : TextResources.TOOLBAR_ELECTRO_ON}
             icon={isElectro ? Icons.Vertical : Icons.Horizontal}
             onClick={() => OnElectroClick(dispatch)}
           />
         )}
         <ToolbarElement
           active={IsVisualFilterOpen}
-          label={IsVisualFilterOpen ? TextResources.Toolbar_VisualFilters_Close : TextResources.Toolbar_VisualFilters_Open}
+          label={IsVisualFilterOpen ? TextResources.TOOLBAR_VISUALFILTERS_CLOSE : TextResources.TOOLBAR_VISUALFILTERS_OPEN}
           icon={IsVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
           onClick={() => OnFilterClick(dispatch, IsVisualFilterOpen)}
         />

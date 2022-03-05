@@ -14,7 +14,7 @@ import { SetParentBlockMarginRight } from "./helpers/SetParentNodeWidth";
 const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) => {
   if (!primaryNode || !secondaryNode) return null;
 
-  const type = TextResources.Type_BlockParentNode;
+  const type = TextResources.BLOCK_PARENTNODE;
   const screenWidth = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
   const distanceToPrimaryNode = 150;
   const marginX = SetParentBlockMarginRight(true, libOpen, explorerOpen);

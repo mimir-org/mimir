@@ -59,9 +59,9 @@ const onMouseUp = (
   dispatch: Dispatch
 ) => {
   if (!sourceTerminal || !targetTerminal) return;
-  if (!validTerminalType) dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals }));
-  if (!validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_OffPage }));
-  if (!validConnectors) dispatch(setValidation({ valid: false, message: TextResources.Validation_One_Connector }));
+  if (!validTerminalType) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TERMINALS }));
+  if (!validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_OFFPAGE }));
+  if (!validConnectors) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_ONE_CONNECTION }));
 
   return document.removeEventListener("mouseup", () =>
     onMouseUp(sourceTerminal, targetTerminal, validTerminalType, validOffPageNode, validConnectors, dispatch)

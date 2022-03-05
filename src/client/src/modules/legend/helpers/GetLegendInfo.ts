@@ -15,7 +15,7 @@ export const GetLegendInfo = (conn: Connector, node: Node) => {
   }
 
   if (IsPartOf(conn)) {
-    name = TextResources.Relations_PartOf_Relationship;
+    name = TextResources.RELATIONS_PARTOF_RELATIONSHIP;
     color = GetAspectColor(node, AspectColorType.Main);
     return [name, color];
   }

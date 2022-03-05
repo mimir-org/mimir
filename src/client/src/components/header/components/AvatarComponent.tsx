@@ -20,7 +20,7 @@ export const AvatarComponent = () => {
 
   return (
     <AvatarComponentContainer>
-      <Tooltip content={TextResources.UserMenu_Description} placement={"bottom"} offset={[0, 8]}>
+      <Tooltip content={TextResources.USERMENU_DESC} placement={"bottom"} offset={[0, 8]}>
         <AvatarButton isOpen={isUserMenuOpen} onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
           <AvatarCircle>
             <Icon size={35} src={AvatarBackground} alt="avatar" />

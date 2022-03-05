@@ -30,7 +30,7 @@ export const CheckboxExplorer = ({
   label,
 }: Props) => (
   <Tooltip
-    content={isChecked ? TextResources.Explorer_Unselect_Object : TextResources.Explorer_Select_Object}
+    content={isChecked ? TextResources.EXPLORER_UNSELECT_OBJECT : TextResources.EXPLORER_SELECT_OBJECT}
     placement={"right"}
     offset={[0, 15]}
   >

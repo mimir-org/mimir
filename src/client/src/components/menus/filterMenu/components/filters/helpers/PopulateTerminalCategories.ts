@@ -14,7 +14,7 @@ export const PopulateTerminalCategories = (transportItems: Connector[]) => {
     if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory?.name)) {
       const category = {
         id: item.terminalCategoryId,
-        name: item.terminalCategory?.name ?? TextResources.Filter_Category,
+        name: item.terminalCategory?.name ?? TextResources.FILTER_CATEGORY,
       } as TerminalCategory;
       categories.push(category);
     }

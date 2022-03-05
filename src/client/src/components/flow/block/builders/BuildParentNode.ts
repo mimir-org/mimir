@@ -12,7 +12,7 @@ import { CreateId } from "../../helpers";
 const BuildParentNode = (node: Node, explorerOpen: boolean) => {
   if (!node) return null;
 
-  const type = TextResources.Type_BlockParentNode;
+  const type = TextResources.BLOCK_PARENTNODE;
   // TODO: fix magic numbers and remove state mutation outside store
   const position = { x: explorerOpen ? 450 : 90, y: 0 };
   node.positionBlockX = position.x;

@@ -17,7 +17,7 @@ export const SearchBar = () => {
     <SearchBarContainer>
       <SearchBarInput
         value={searchbarInput}
-        placeholder={TextResources.Project_Search_Placeholder}
+        placeholder={TextResources.PROJECT_SEARCH_PLACEHOLDER}
         onChange={onChange}
         autoFocus
       />

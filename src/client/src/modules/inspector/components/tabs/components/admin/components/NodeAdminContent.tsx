@@ -27,15 +27,15 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
     <>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.Inspector_Admin_Id}</div>
+          <div>{TextResources.ID}</div>
           <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_RDS}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_RDS}</div>
           <Input fontSize={FontSize.STANDARD} readOnly={true} value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_SEMANTIC_ID}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={true}
@@ -47,7 +47,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
       </TabColumn>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.Inspector_Admin_Service}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_SERVICE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={IsAspectNode(node) || node.isLocked}
@@ -57,17 +57,17 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Type}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_TYPE}</div>
           <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.name} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Updated_By}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_BY}</div>
           <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
-          <div>{TextResources.Inspector_Admin_Updated_Date}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={true}
@@ -77,7 +77,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Created_Date}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_CREATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={true}
@@ -87,7 +87,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Designation}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_DESIGNATION}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={true}
@@ -99,7 +99,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
       </TabColumn>
       <TabColumn width={125}>
         <div className="statusDropdown">
-          <div>{TextResources.Inspector_Admin_Status}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_STATUS}</div>
           <Dropdown
             label=""
             items={statuses}
@@ -112,12 +112,12 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           ></Dropdown>
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Version}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_VERSION}</div>
           <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.version ?? ""} onChange={() => null} inputType="" />
         </div>
         {IsProduct(node) && (
           <div>
-            <div>{TextResources.Inspector_Admin_Cost}</div>
+            <div>{TextResources.INSPECTOR_ADMIN_COST}</div>
             <Input
               fontSize={FontSize.STANDARD}
               readOnly={IsAspectNode(node) || node.isLocked}
@@ -130,7 +130,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
       </TabColumn>
       <TabColumn width={465}>
         <div>
-          <div>{TextResources.Inspector_Admin_Description}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_DESCRIPTION}</div>
           <TextArea
             height={200}
             value={node.description ?? ""}

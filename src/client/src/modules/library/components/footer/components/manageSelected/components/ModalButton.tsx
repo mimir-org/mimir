@@ -30,7 +30,7 @@ export const ModalButton = ({
   dispatch,
 }: Props) => (
   <ModalButtonsWrapper>
-    <Button onClick={() => onExit(!isOpen)} text={TextResources.Library_Modal_Cancel} />
+    <Button onClick={() => onExit(!isOpen)} text={TextResources.CANCEL} />
     {collectionState === CollectionsActions.ManageType && (
       <Button
         icon={RightArrowIcon}
@@ -45,7 +45,7 @@ export const ModalButton = ({
           );
           onExit(!isOpen);
         }}
-        text={TextResources.Library_Modal_Add_Collection}
+        text={TextResources.LIBRARY_MODAL_ADD_COLLECTION}
       />
     )}
   </ModalButtonsWrapper>

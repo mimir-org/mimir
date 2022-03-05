@@ -7,7 +7,7 @@ export const Token = async () => {
   const account = msalInstance.getActiveAccount();
 
   if (!account) {
-    throw Error(TextResources.Error_NoActiveAccount);
+    throw Error(TextResources.ERROR_NOACCOUNT);
   }
 
   const response = await msalInstance.acquireTokenSilent({
@@ -43,14 +43,14 @@ const hasContent = <T>(response: HttpResponse<T>) => response.status !== 204;
 
 const errorMessage = <T>(response: HttpResponse<T>) => {
   if (response.status >= 401 && response.status <= 403) {
-    return TextResources.Error_Forbidden;
+    return TextResources.ERROR_FORBIDDEN;
   }
 
   if (response.status >= 500) {
-    return TextResources.Error_Server;
+    return TextResources.ERROR_SERVER;
   }
 
-  return TextResources.Error_ServerUnavailable;
+  return TextResources.ERROR_SERVER_UNAVAILABLE;
 };
 
 export async function get<T>(path: string, args: RequestInit = { method: "get" }): Promise<HttpResponse<T>> {

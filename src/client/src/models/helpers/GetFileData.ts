@@ -47,11 +47,11 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
     const response = await post(url, loadedProject);
 
     if (response.status !== 200) {
-      throw Error(TextResources.Error_SaveUpdateProject);
+      throw Error(TextResources.ERROR_SAVE_UPDATE_PROJECT);
     }
 
     const subProject = response.data as Project;
-    if (!subProject) throw Error(TextResources.Error_SaveUpdateProject);
+    if (!subProject) throw Error(TextResources.ERROR_SAVE_UPDATE_PROJECT);
 
     // Add data to current project
     // Find the rootnode for current location
@@ -89,7 +89,7 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
 
     return [nodesToCreate, edgesToCreate];
   } catch (error) {
-    throw Error(TextResources.Error_GetFileData);
+    throw Error(TextResources.ERROR_GETFILEDATA);
   }
 };
 

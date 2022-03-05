@@ -26,7 +26,7 @@ interface Props {
 export const ModuleHeader = ({ libOpen, dispatch, activeTab, setActiveTab, search, aspectFilters, setAspectFilters }: Props) => (
   <LibHeader>
     {!libOpen ? (
-      <ExpandButton text={TextResources.Library_Expand_Panel} offset={[0, 5]} dispatch={dispatch} />
+      <ExpandButton text={TextResources.LIBRARY_EXPAND_PANEL} offset={[0, 5]} dispatch={dispatch} />
     ) : (
       <>
         <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />

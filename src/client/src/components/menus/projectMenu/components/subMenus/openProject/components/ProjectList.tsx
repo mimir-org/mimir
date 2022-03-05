@@ -12,10 +12,10 @@ interface Props {
 export const ProjectList = ({ projectList, dispatch }: Props) => (
   <ProjectListBox>
     <ProjectListLabels>
-      <p className="name">{TextResources.Project}</p>
-      <p className="owner">{TextResources.Project_Recent_Owner}</p>
-      <p className="version">{TextResources.Project_Recent_Version}</p>
-      <p className="edited">{TextResources.Project_Recent_Edited}</p>
+      <p className="name">{TextResources.PROJECT}</p>
+      <p className="owner">{TextResources.PROJECT_RECENT_OWNER}</p>
+      <p className="version">{TextResources.PROJECT_RECENT_VERSION}</p>
+      <p className="edited">{TextResources.PROJECT_RECENT_EDITED}</p>
     </ProjectListLabels>
     <ProjectDataContainer>
       {projectList?.map((project) => {

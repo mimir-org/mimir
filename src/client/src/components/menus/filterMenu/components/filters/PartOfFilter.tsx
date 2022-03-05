@@ -21,7 +21,7 @@ export const PartOfFilter = ({ edges, nodes, items, dispatch, visible }: Props) 
   visible && (
     <>
       <FilterElement
-        label={TextResources.Filter_PartOf}
+        label={TextResources.FILTER_PARTOF}
         onChange={() => OnAllPartOfChange(edges, dispatch)}
         isChecked={AllPartOfChecked(edges)}
         visible={visible}

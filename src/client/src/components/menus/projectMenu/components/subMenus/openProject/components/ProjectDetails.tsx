@@ -37,12 +37,12 @@ export const ProjectDetails = ({ projects }: Props) => {
         <ProjectOptionsButtons>
           <Button
             onClick={() => Click.OnCreateClick(dispatch)}
-            text={TextResources.Project_Start_Label}
+            text={TextResources.PROJECT_START_LABEL}
             icon={CreateProjectIcon}
           />
           <Button
             onClick={() => Click.OnImportProjectFile(dispatch)}
-            text={TextResources.Project_Import}
+            text={TextResources.PROJECT_IMPORT}
             icon={ImportProjectIcon}
           />
         </ProjectOptionsButtons>

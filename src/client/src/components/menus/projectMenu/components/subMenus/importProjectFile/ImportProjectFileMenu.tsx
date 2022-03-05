@@ -36,15 +36,15 @@ export const ImportProjectFileMenu = () => {
     limitFilesConfig: { min: 1, max: 1 },
   });
 
-  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
+  const selectedText = plainFiles?.[0]?.name ?? TextResources.PROJECT_IMPORT_SELECT;
   const data = GetProjectFileData(filesContent, parser);
   const onAction = () => OnProjectSaveClick(dispatch, data);
   const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_Import}>
-        <Label>{TextResources.Project_Parser}</Label>
+      <InfoModalContent title={TextResources.PROJECT_IMPORT}>
+        <Label>{TextResources.PROJECT_PARSER}</Label>
         <Dropdown
           label=""
           valueProp="name"
@@ -54,12 +54,12 @@ export const ImportProjectFileMenu = () => {
           onChange={(item: ModuleDescription) => setParser(item)}
         />
         <Label>
-          {TextResources.Project_Import_File}: {selectedText}
+          {TextResources.PROJECT_IMPORT_FILE}: {selectedText}
         </Label>
-        <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
+        <Button onClick={() => openFileSelector()} text={TextResources.PROJECT_BROWSE} />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
-          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Import} icon={ImportProjectIcon} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.PROJECT_IMPORT} icon={ImportProjectIcon} />
         </ButtonBox>
       </InfoModalContent>
     </Modal>

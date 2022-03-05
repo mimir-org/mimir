@@ -12,7 +12,7 @@ export const OnViewTypeClick = (view: ViewType, dispatch: Dispatch) => {
 
   // BlockView can only be opened when a node is selected
   if (view === VIEW_TYPE.BLOCKVIEW && !selectedNode) {
-    dispatch(setValidation({ valid: false, message: TextResources.Validation_BlockView }));
+    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_BLOCKVIEW }));
     return;
   }
 
