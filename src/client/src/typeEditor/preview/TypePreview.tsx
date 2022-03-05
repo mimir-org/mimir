@@ -45,7 +45,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
 
   return (
     <ListWrapper flex={1.5}>
-      <ListLabel preview={true}>{TextResources.TypeEditor_New_Type_Preview}</ListLabel>
+      <ListLabel preview>{TextResources.TypeEditor_New_Type_Preview}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (

@@ -65,7 +65,7 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
         <Dropdown
           label={TextResources.TypeEditor_Location_Type}
           categories={GetLocationTypes(locationTypes)}
-          hasCategory={true}
+          hasCategory
           onChange={(data: LocationType) => onChange("locationType", data.id)}
           defaultValue={createLibraryType && createLibraryType.locationType && createLibraryType.locationType.toString()}
           placeholder={TextResources.TypeEditor_Location_Placeholder}

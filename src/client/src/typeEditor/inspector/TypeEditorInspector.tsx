@@ -101,10 +101,8 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   return (
     <AnimatedInspector
       type={type}
-      isLibraryOpen={false}
-      isExplorerOpen={false}
       isInspectorOpen={inspectorOpen}
-      isTypeEditor={true}
+      isTypeEditor
       start={start}
       stop={stop}
       run={initialRenderCompleted.current ? animate : false}

@@ -18,6 +18,6 @@ export const AnimationFilter = ({ edgeAnimation, dispatch }: Props) => (
     label={TextResources.FILTER_ANIMATION}
     onChange={() => dispatch(toggleEdgeAnimation())}
     isChecked={edgeAnimation}
-    visible={true}
+    visible
   />
 );

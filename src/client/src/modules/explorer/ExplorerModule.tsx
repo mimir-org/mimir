@@ -28,7 +28,7 @@ export const ExplorerModule = ({ dispatch }: Props) => {
   const stop = isOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   return (
-    <AnimatedModule type={type} start={start} stop={stop} run={true} id="ExplorerModule">
+    <AnimatedModule type={type} start={start} stop={stop} run id="ExplorerModule">
       <Tooltip
         content={isOpen ? TextResources.EXPLORER_CLOSE_PANEL : TextResources.EXPLORER_EXPAND_PANEL}
         placement={"bottom"}

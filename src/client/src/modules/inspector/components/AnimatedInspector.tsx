@@ -6,8 +6,8 @@ interface Props {
   start: number;
   stop: number;
   run: boolean;
-  library: boolean;
-  explorer: boolean;
+  library?: boolean;
+  explorer?: boolean;
   inspectorOpen: boolean;
   isTypeEditor: boolean;
   height: number;

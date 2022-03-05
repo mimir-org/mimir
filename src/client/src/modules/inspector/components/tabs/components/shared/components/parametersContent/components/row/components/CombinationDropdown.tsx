@@ -36,7 +36,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
 
     return (
       <MenuListItem color={bodyColor}>
-        <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly={true} />
+        <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly />
         <span>{TextResources.INSPECTOR_PARAMS_SELECT_ALL}</span>
       </MenuListItem>
     );
@@ -46,7 +46,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     return (
       <Tooltip key={item[keyProp]} content={item.combined} placement={"right"} offset={[0, 10]}>
         <MenuListItem color={bodyColor}>
-          <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
+          <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly />
           <span>{item.combined}</span>
         </MenuListItem>
       </Tooltip>

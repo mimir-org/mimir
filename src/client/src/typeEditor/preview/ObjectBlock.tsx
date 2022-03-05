@@ -37,8 +37,8 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
   return (
     <PreviewObjectBlock minHeight={GetBlockHeight(inputCount, outputCount)} color={GetBlockColor(aspect)}>
       <InputOutputTerminals>
-        {inputTerminals && <Terminals input={true}>{showTerminals(true)}</Terminals>}
-        {outputTerminals && <Terminals input={false}>{showTerminals(false)}</Terminals>}
+        {inputTerminals && <Terminals input>{showTerminals(true)}</Terminals>}
+        {outputTerminals && <Terminals>{showTerminals(false)}</Terminals>}
       </InputOutputTerminals>
       <InfoWrapper height={"100%"}>
         <InfoText>{rdsLabel}</InfoText>
