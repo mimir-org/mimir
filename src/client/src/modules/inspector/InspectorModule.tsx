@@ -26,7 +26,7 @@ interface Props {
  * @param interface
  * @returns a module with multiple tabs for different operations.
  */
-const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
+export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
   const username = useAppSelector(selectors.usernameSelector);
   const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
@@ -83,5 +83,3 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
     </AnimatedInspector>
   );
 };
-
-export default InspectorModule;
