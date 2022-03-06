@@ -4,7 +4,7 @@ import { CollapseIcon, ExpandIcon } from "../../../../../../../../../../assets/i
 import { TextResources } from "../../../../../../../../../../assets/text/TextResources";
 import { CombinedAttributeFilter } from "../../../../../../../../../../models";
 import { FilterDict } from "../../../../../parameters/redux/types";
-import { Checkbox } from "../../../../../../../../../../compLibrary/input/checkbox/common";
+import { Checkbox } from "../../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 
 interface Props {
   items: CombinedAttributeFilter[];

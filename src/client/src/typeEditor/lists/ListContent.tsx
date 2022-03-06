@@ -1,7 +1,7 @@
-import { ListElementsContainer } from "../../compLibrary/list";
 import { ListType } from "../TypeEditorList";
 import { useMemo } from "react";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../types";
+import { ListElementsContainer } from "../styled";
 import { AttributeType, CreateLibraryType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../../models";
 import {
   AttributeElement,

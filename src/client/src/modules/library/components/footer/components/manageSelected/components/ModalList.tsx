@@ -1,5 +1,5 @@
 import Moment from "react-moment";
-import { Checkbox } from "../../../../../../../compLibrary/input/checkbox/common";
+import { Checkbox } from "../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Collection } from "../../../../../../../models";
 import { OnCheckboxChange } from "../handlers";

@@ -3,7 +3,7 @@ import { TextResources } from "../../../../../../../../../../../assets/text/Text
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../../../../../../../../../assets/icons/chevron";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { MenuHeader, MenuList, MenuListItem, MenuWrapper } from "./CombinationDropdown.styled";
-import { Checkbox } from "../../../../../../../../../../../compLibrary/input/checkbox/common";
+import { Checkbox } from "../../../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { Tooltip } from "../../../../../../../../../../../compLibrary/tooltip/Tooltip";
 
 interface Props {
