@@ -4,7 +4,7 @@ import { Entity } from "../styled/Entity";
 import { Color } from "../../../../../../../../../../../compLibrary/colors/Color";
 import { ParameterButton } from "../../../styled/ParameterButton";
 import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
-import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
 import { HelpIcon, WarningIcon } from "../../../../../../../../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";

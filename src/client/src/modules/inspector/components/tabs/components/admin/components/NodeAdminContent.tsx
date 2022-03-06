@@ -6,7 +6,7 @@ import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../compLibrary/font";
 import { EnumBase, Node, Project } from "../../../../../../../models";
 import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
-import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsId, GetReferenceDesignation, IsAspectNode, IsProduct } from "../../../../../../../helpers";
 import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";

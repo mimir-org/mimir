@@ -1,6 +1,6 @@
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
-import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { FontSize } from "../../../../../../compLibrary/font";
 import { GetProjectFileData } from "./helpers";
 import { ImportProjectIcon } from "../../../../../../assets/icons/project";

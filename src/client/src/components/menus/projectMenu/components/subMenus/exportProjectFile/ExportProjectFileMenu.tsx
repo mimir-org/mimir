@@ -1,6 +1,6 @@
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
-import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { ExportProjectIcon } from "../../../../../../assets/icons/project";
 import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";

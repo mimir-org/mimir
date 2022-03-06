@@ -1,7 +1,7 @@
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CommitProjectIcon } from "../../../../../../assets/icons/project";
-import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { Label } from "../../../../../../compLibrary/input/text";
 import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
