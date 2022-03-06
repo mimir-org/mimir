@@ -5,7 +5,7 @@ import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } fr
 import { GetAspectColor } from "../../../helpers";
 import { AspectColorType, Node } from "../../../models";
 
-const MiniMapComponent = () => {
+export const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
@@ -25,5 +25,3 @@ const MiniMapComponent = () => {
     </MapWrapper>
   );
 };
-
-export default MiniMapComponent;

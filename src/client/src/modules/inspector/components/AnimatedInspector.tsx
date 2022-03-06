@@ -8,8 +8,8 @@ interface Props {
   run: boolean;
   library?: boolean;
   explorer?: boolean;
-  inspectorOpen: boolean;
-  isTypeEditor: boolean;
+  inspectorOpen?: boolean;
+  isTypeEditor?: boolean;
   height: number;
   zIndex: number;
   forwardRef: React.MutableRefObject<HTMLDivElement>;
