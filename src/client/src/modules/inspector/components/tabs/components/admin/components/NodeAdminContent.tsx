@@ -51,7 +51,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             fontSize={FontSize.STANDARD}
-            readOnly={IsAspectNode(node) || node.isLocked}
+            readOnly={node.isLocked}
             value={nodeLabel}
             onChange={(e: Event) => setNodeLabel(e.target.value)}
           />
