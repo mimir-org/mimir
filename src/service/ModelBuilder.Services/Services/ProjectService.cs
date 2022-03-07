@@ -300,7 +300,7 @@ namespace Mb.Services.Services
                 // Nodes
                 var originalNodes = originalProject.Nodes.ToList();
                 var deleteNodes = originalNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
-                var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain);
+                var nodeChangeMap = await _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain);
 
                 //Determine if project version should be incremented
                 SetProjectVersion(originalProject, projectAm);
