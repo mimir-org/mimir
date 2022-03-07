@@ -42,7 +42,6 @@ function ValidateSplitView(
     return IsProductConnection(source, target);
   }
 
-  if (IsProduct(splitNode)) return IsProductConnection(source, target);
   if (IsLocation(splitNode)) return IsLocationConnection(source, target);
   if (IsFunction(splitNode)) return IsTransportConnection(source, target) || IsOffPage(fromNode) || IsOffPage(toNode);
 }

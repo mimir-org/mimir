@@ -6,7 +6,6 @@ import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "..
  * Component to filter the terminals displayed on the nodes in BlockView.
  * Different node types allow different terminal types.
  * @param actualNode
- 
  * @param secondaryNode
  * @returns a filtered list of connectors sorted by type and name.
  */
@@ -20,22 +19,16 @@ export const FilterTerminals = (actualNode: Node, secondaryNode: Node) => {
 
 function ValidateTerminal(selectedNode: Node, secondary: Node, c: Connector) {
   if (secondary) {
-    if (IsLocation(selectedNode)) return IsLocationTerminal(c);
-    if (IsProduct(selectedNode)) return ValidateProductTerminal(selectedNode, secondary, c);
-    if (IsFunction(selectedNode)) return ValidateFunctionTerminal(secondary, c);
+    if (IsFunction(selectedNode) || IsProduct(selectedNode)) return ValidateSplitViewTerminal(secondary, c);
+    return IsLocationTerminal(c);
   }
 
   if (IsLocation(selectedNode)) return IsLocationTerminal(c);
   return IsTransport(c);
 }
 
-function ValidateFunctionTerminal(secondary: Node, c: Connector) {
+function ValidateSplitViewTerminal(secondary: Node, c: Connector) {
   if (IsFunction(secondary)) return IsTransport(c);
   if (IsProduct(secondary)) return IsProductTerminal(c);
   if (IsLocation(secondary)) return IsLocationTerminal(c);
-}
-
-function ValidateProductTerminal(selectedNode: Node, secondary: Node, c: Connector) {
-  if (IsLocation(selectedNode) && IsProduct(secondary)) return IsLocationTerminal(c);
-  if (IsFunction(selectedNode) && IsProduct(secondary)) return IsProductTerminal(c);
 }
