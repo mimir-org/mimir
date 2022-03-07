@@ -22,7 +22,6 @@ import { ResizeHandler } from "./handlers/ResizeHandler";
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const nodes = useAppSelector(selectors.nodeSelector);
