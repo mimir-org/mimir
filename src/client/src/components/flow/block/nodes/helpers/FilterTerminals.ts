@@ -18,17 +18,16 @@ export const FilterTerminals = (actualNode: Node, secondaryNode: Node) => {
 };
 
 function ValidateTerminal(selectedNode: Node, secondary: Node, c: Connector) {
-  if (secondary) {
-    if (IsFunction(selectedNode) || IsProduct(selectedNode)) return ValidateSplitViewTerminal(secondary, c);
-    return IsLocationTerminal(c);
-  }
-
+  if (secondary) return ValidateSplitViewTerminal(selectedNode, secondary, c);
   if (IsLocation(selectedNode)) return IsLocationTerminal(c);
   return IsTransport(c);
 }
 
-function ValidateSplitViewTerminal(secondary: Node, c: Connector) {
-  if (IsFunction(secondary)) return IsTransport(c);
-  if (IsProduct(secondary)) return IsProductTerminal(c);
-  if (IsLocation(secondary)) return IsLocationTerminal(c);
+function ValidateSplitViewTerminal(selectedNode: Node, secondary: Node, c: Connector) {
+  if (!IsLocation(selectedNode)) {
+    if (IsFunction(secondary)) return IsTransport(c);
+    if (IsProduct(secondary)) return IsProductTerminal(c);
+    if (IsLocation(secondary)) return IsLocationTerminal(c);
+  }
+  return IsLocationTerminal(c);
 }
