@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment/moment.js";
 import { TextResources } from "../../../../../../../assets/text";
 import { TabColumn } from "./styled/TabColumn";
@@ -10,6 +10,7 @@ import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsId, GetReferenceDesignation, IsAspectNode, IsProduct } from "../../../../../../../helpers";
 import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
+import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -21,6 +22,12 @@ interface Props {
 
 export const NodeAdminContent = ({ node, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
+  const [nodeLabel, setNodeLabel, debouncedNodeLabel] = useDebounceState(node.label);
+
+  useEffect(() => {
+    dispatch(changeNodeValue(node.id, "label", debouncedNodeLabel));
+  }, [debouncedNodeLabel, dispatch, node.id]);
+
   const onChange = <K extends keyof Node>(key: K, value: Node[K]) => dispatch(changeNodeValue(node.id, key, value));
 
   return (
@@ -28,21 +35,15 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.id ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.id ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={GetRdsId(node) ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
-          <Input
-            fontSize={FontSize.STANDARD}
-            readOnly={true}
-            value={node.semanticReference ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.semanticReference ?? ""} />
         </div>
       </TabColumn>
       <TabColumn width={250}>
@@ -50,51 +51,32 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <div>{TextResources.Inspector_Admin_Service}</div>
           <Input
             fontSize={FontSize.STANDARD}
-            readOnly={IsAspectNode(node) || node.isLocked}
-            value={node.label ?? ""}
-            onChange={(e: Event) => onChange("label", e.target.value)}
-            inputType=""
+            readOnly={node.isLocked}
+            value={nodeLabel}
+            onChange={(e: Event) => setNodeLabel(e.target.value)}
           />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.name} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.name} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.updatedBy ?? ""} />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_Date}</div>
-          <Input
-            fontSize={FontSize.STANDARD}
-            readOnly={true}
-            value={moment(node.updated).format("DD/MM/YYYY") ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={moment(node.updated).format("DD/MM/YYYY") ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Created_Date}</div>
-          <Input
-            fontSize={FontSize.STANDARD}
-            readOnly={true}
-            onChange={() => null}
-            inputType=""
-            value={moment(node.created).format("DD/MM/YYYY") ?? ""}
-          />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={moment(node.created).format("DD/MM/YYYY") ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Designation}</div>
-          <Input
-            fontSize={FontSize.STANDARD}
-            readOnly={true}
-            value={GetReferenceDesignation(node, project) ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={GetReferenceDesignation(node, project) ?? ""} />
         </div>
       </TabColumn>
       <TabColumn width={125}>
@@ -113,7 +95,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.version ?? ""} onChange={() => null} inputType="" />
+          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.version ?? ""} />
         </div>
         {IsProduct(node) && (
           <div>
