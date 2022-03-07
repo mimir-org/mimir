@@ -9,8 +9,8 @@ export const useIsOverflowing = <T extends HTMLElement>() => {
   const overflowRef = useRef<T>(null);
 
   useEffect(() => {
-    overflowRef?.current?.offsetWidth < overflowRef?.current?.scrollWidth && setIsOverflowing(true);
-  }, [overflowRef]);
+    overflowRef?.current?.offsetWidth < overflowRef?.current?.scrollWidth ? setIsOverflowing(true) : setIsOverflowing(false);
+  }, [overflowRef?.current?.offsetWidth, overflowRef?.current?.scrollWidth]);
 
   return {
     overflowRef,
