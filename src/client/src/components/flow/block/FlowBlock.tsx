@@ -15,7 +15,7 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, ha
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
-import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransfromSlice";
+import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
 import ReactFlow, {
   Elements,
   Node as FlowNode,
