@@ -7,7 +7,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { InspectorElement } from "./types";
 import { InspectorResizePanel } from "./InpectorModule.styled";
 import { Project } from "../../models";
-import { useDragResizePanel } from "./hooks";
+import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
 import { GetSelectedNode, IsBlockView } from "../../helpers";
@@ -46,6 +46,7 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const resizePanelRef = useRef(null);
   const element: InspectorElement = node || edge;
 
+  useAutoMinimizeInspector(inspectorRef);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
   const changeInspectorVisibilityAction = useCallback(
     (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
