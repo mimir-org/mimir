@@ -92,13 +92,11 @@ function ValidateOffPagePosition(
 
 function CalculateDropZone(flowTransform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
-  const defaultX = 0;
   const zoom = flowTransform.zoom;
-  const x = flowTransform.x;
   let leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
   if (zoom !== defaultZoom) leftBound = HandleZoomChange(zoom, defaultZoom, leftBound, parentNodeSize, parentXPos, isTarget);
-  if (x !== defaultX) leftBound = HandleMove(flowTransform, leftBound);
+  // if (x !== defaultX) leftBound = HandleMove(flowTransform, leftBound);
 
   return leftBound;
 }
@@ -129,11 +127,11 @@ function HandleZoomChange(
   return isTarget ? targetLeftBound : sourceLeftBound;
 }
 
-function HandleMove(flowTransform: FlowTransform, leftBound: number) {
-  const diff = flowTransform.x;
-  leftBound += diff;
+// function HandleMove(flowTransform: FlowTransform, leftBound: number) {
+//   const diff = flowTransform.x;
+//   leftBound += diff;
 
-  return leftBound;
-}
+//   return leftBound;
+// }
 
 export default useOnConnectStop;
