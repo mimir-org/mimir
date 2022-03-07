@@ -22,13 +22,13 @@ interface Props {
 
 export const NodeAdminContent = ({ node, project, statuses }: Props) => {
   const dispatch = useAppDispatch();
-  const [nodeLabel, setNodeLabel, debouncedNodeLabel] = useDebounceState(node.label);
+  const [nodeLabel, setNodeLabel, debouncedNodeLabel] = useDebounceState("");
+  const onChange = <K extends keyof Node>(key: K, value: Node[K]) => dispatch(changeNodeValue(node.id, key, value));
 
   useEffect(() => {
-    dispatch(changeNodeValue(node.id, "label", debouncedNodeLabel));
-  }, [debouncedNodeLabel, dispatch, node.id]);
-
-  const onChange = <K extends keyof Node>(key: K, value: Node[K]) => dispatch(changeNodeValue(node.id, key, value));
+    debouncedNodeLabel && dispatch(changeNodeValue(node.id, "label", debouncedNodeLabel));
+    return () => setNodeLabel(""); // Reset debounced state on cleanup
+  }, [debouncedNodeLabel, node.id, dispatch, setNodeLabel]);
 
   return (
     <>
@@ -52,7 +52,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={node.isLocked}
-            value={nodeLabel}
+            value={nodeLabel ? nodeLabel : node.label}
             onChange={(e: Event) => setNodeLabel(e.target.value)}
           />
         </div>
