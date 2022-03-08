@@ -1,13 +1,12 @@
 import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
 import { ToolbarElement } from "./components/ToolbarElement";
-import { OnElectro } from "./handlers/OnElectro";
-import { OnFilter } from "./handlers/OnFilter";
-import { OnView } from "./handlers/OnView";
+import { OnElectroClick, OnFilterClick, OnViewClick } from "./handlers/";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { ToolBarBody, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { useStoreState } from "react-flow-renderer";
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
@@ -20,6 +19,7 @@ const ToolbarComponent = () => {
   const isTreeView = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.TREEVIEW);
   const IsVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
+  const numberOfSelectedElements = useStoreState((x) => x.selectedElements?.length);
 
   return (
     <ToolBarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
@@ -28,26 +28,26 @@ const ToolbarComponent = () => {
           active={isTreeView}
           label={TextResources.Toolbar_TreeView}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
-          onClick={() => OnView(VIEW_TYPE.TREEVIEW as ViewType, dispatch)}
+          onClick={() => OnViewClick(VIEW_TYPE.TREEVIEW as ViewType, numberOfSelectedElements, dispatch)}
         />
         <ToolbarElement
           active={isTreeView}
           label={TextResources.Toolbar_BlockView}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => OnView(VIEW_TYPE.BLOCKVIEW as ViewType, dispatch)}
+          onClick={() => OnViewClick(VIEW_TYPE.BLOCKVIEW as ViewType, numberOfSelectedElements, dispatch)}
         />
         {!isTreeView && (
           <ToolbarElement
             label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
             icon={isElectro ? Icons.Vertical : Icons.Horizontal}
-            onClick={() => OnElectro(dispatch)}
+            onClick={() => OnElectroClick(dispatch)}
           />
         )}
         <ToolbarElement
           active={IsVisualFilterOpen}
           label={IsVisualFilterOpen ? TextResources.Toolbar_VisualFilters_Close : TextResources.Toolbar_VisualFilters_Open}
           icon={IsVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
-          onClick={() => OnFilter(dispatch, IsVisualFilterOpen)}
+          onClick={() => OnFilterClick(dispatch, IsVisualFilterOpen)}
         />
       </ToolBarBody>
 
