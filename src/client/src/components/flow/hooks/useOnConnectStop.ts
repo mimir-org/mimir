@@ -8,6 +8,7 @@ import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text";
+import { FlowTransform } from "react-flow-renderer";
 
 /**
  * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
@@ -24,7 +25,7 @@ const useOnConnectStop = (
   project: Project,
   parentNodeSize: BlockNodeSize,
   secondaryNode: boolean,
-  zoomLevel: number,
+  transform: FlowTransform,
   dispatch: Dispatch
 ) => {
   e.preventDefault();
@@ -51,7 +52,7 @@ const useOnConnectStop = (
 
     const isValidOffPageDrop = ValidateOffPagePosition(
       e.clientX,
-      zoomLevel,
+      transform,
       parentNodeSize,
       parentBlockNode?.positionBlockX,
       secondaryNode,
@@ -68,13 +69,13 @@ const useOnConnectStop = (
 
 function ValidateOffPagePosition(
   clientX: number,
-  zoomLevel: number,
+  transform: FlowTransform,
   parentNodeSize: BlockNodeSize,
   parentXPos: number,
   secondaryNode: boolean,
   isTarget: boolean
 ) {
-  const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos);
+  const leftBound = CalculateDropZone(transform, isTarget, parentNodeSize, parentXPos);
 
   if (secondaryNode) {
     const dropZoneWidth = 100;
@@ -88,21 +89,21 @@ function ValidateOffPagePosition(
   return clientX < leftBound;
 }
 
-function CalculateLeftBound(zoom: number, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
+function CalculateDropZone(transform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
   const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
-  if (zoom < defaultZoom) {
-    const parentNodeWidthScaled = parentNodeSize?.width * zoom;
+  if (transform.zoom < defaultZoom) {
+    const parentNodeWidthScaled = parentNodeSize?.width * transform.zoom;
     const canvasCenterX = window.innerWidth / 2;
     const targetLeftBound = canvasCenterX + parentNodeWidthScaled / 2;
     const sourceLeftBound = canvasCenterX - parentNodeWidthScaled / 2;
     return isTarget ? targetLeftBound : sourceLeftBound;
   }
-  if (zoom > defaultZoom) {
-    const diff = zoom - defaultZoom;
+  if (transform.zoom > defaultZoom) {
+    const diff = transform.zoom - defaultZoom;
     const targetLeftBound = leftBound * diff;
-    const sourceLeftBound = parentXPos - leftBound * zoom;
+    const sourceLeftBound = parentXPos - leftBound * transform.zoom;
     return isTarget ? targetLeftBound : sourceLeftBound;
   }
 

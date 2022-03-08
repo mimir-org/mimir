@@ -33,7 +33,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const elements = useAppSelector(blockElementsSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
-  const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
   const node = nodes?.find((x) => x.id === data.id);
   const isProduct = IsProduct(node);
   let size = useAppSelector(selectors.nodeSizeSelector);
@@ -44,7 +43,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     const marginTop = 70;
     const x = window.innerWidth / 2;
     const y = window.innerHeight / 2 - marginTop;
-    setCenter(x, y, zoomLevel);
+    setCenter(x, y, Size.DEFAULT_ZOOM_LEVEL);
   }, []);
 
   useEffect(() => {
