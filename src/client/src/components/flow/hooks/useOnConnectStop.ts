@@ -1,7 +1,7 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
 import { Project } from "../../../models";
-import { IsOffPage } from "../../../helpers";
+import { IsOffPage, IsProduct } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
@@ -60,7 +60,9 @@ const useOnConnectStop = (
 
     if (isValidOffPageDrop) {
       const isRequired = true;
-      CreateRequiredOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, isRequired);
+      let position = { x: e.clientX, y: e.clientY };
+      if (IsProduct(parentBlockNode)) position = { x: isTarget ? Size.BLOCK_PRODUCT_WIDTH + 90 : 55, y: e.clientY };
+      CreateRequiredOffPageNode(sourceNode, sourceConnector, position, dispatch, isRequired);
       SaveEventData(null, "edgeEvent");
     }
   }

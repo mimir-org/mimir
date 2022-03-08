@@ -8,7 +8,7 @@ import { OffPageBox } from "./styled/OffPageBox";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";
-import { GetSelectedBlockNode } from "../../../../../helpers";
+import { GetSelectedBlockNode, IsProduct } from "../../../../../helpers";
 
 /**
  * Component for an offpage node in BlockView
@@ -41,7 +41,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
+    if (!IsProduct(parentBlockNode)) UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
   }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
 
   if (!data) return null;
