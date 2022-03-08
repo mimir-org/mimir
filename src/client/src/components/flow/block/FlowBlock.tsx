@@ -129,7 +129,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   useEffect(() => {
     if (zoomLevel < defaultZoom) {
       const x = window.innerWidth / 2;
-      const y = window.innerHeight / 2;
+      const y = window.innerHeight / 2 + 180;
       setCenter(x, y, zoomLevel);
     }
   }, [zoomLevel]);

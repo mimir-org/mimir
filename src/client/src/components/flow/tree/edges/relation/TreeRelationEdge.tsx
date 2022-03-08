@@ -14,10 +14,6 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
 
-  // Adjust to match connector
-  targetX += 8;
-  sourceX -= 8;
-
   const bezierPath = getBezierPath({
     sourceX,
     sourceY,
