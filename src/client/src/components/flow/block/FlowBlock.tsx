@@ -178,7 +178,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           minZoom={0.7}
           maxZoom={3}
           zoomOnScroll
-          paneMoveable
+          paneMoveable={false}
         >
           <FullScreenComponent inspectorRef={inspectorRef} />
         </ReactFlow>

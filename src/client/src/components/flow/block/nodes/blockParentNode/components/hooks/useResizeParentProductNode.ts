@@ -63,21 +63,38 @@ const onResize = (
   parentNodeFlowRef: React.MutableRefObject<HTMLElement>
 ) => {
   const dy = prevY.current - e.clientY;
-  const dx = prevX.current - e.clientX;
   prevY.current = e.clientY;
-  prevX.current = e.clientX;
-
   nodeHeightRef.current = parseInt(getComputedStyle(parentRef.current).height) - dy;
-  nodeWidthRef.current = parseInt(getComputedStyle(parentRef.current).width) - dx;
 
   if (nodeHeightRef.current > MIN_HEIGHT) {
     parentRef.current.style.height = nodeHeightRef.current + "px";
     parentNodeFlowRef.current.style.height = nodeHeightRef.current + "px";
   }
-  if (nodeWidthRef.current > MIN_WIDTH) {
-    parentRef.current.style.width = nodeWidthRef.current + "px";
-    parentNodeFlowRef.current.style.width = nodeWidthRef.current + "px";
-  }
+
+  // const test = e.clientX;
+  // // test += 40;
+
+  // console.log(prevX.current);
+  // console.log(test);
+
+  // const dy = prevY.current - e.clientY;
+  // // const dx = e.clientX > prevX.current ? prevX.current + e.clientX : prevX.current + e.clientX;
+  // const dx = test - prevX.current;
+
+  // prevY.current = e.clientY;
+  // prevX.current = test;
+
+  // nodeHeightRef.current = parseInt(getComputedStyle(parentRef.current).height) - dy;
+  // nodeWidthRef.current += dx;
+
+  // if (nodeHeightRef.current > MIN_HEIGHT) {
+  //   parentRef.current.style.height = nodeHeightRef.current + "px";
+  //   parentNodeFlowRef.current.style.height = nodeHeightRef.current + "px";
+  // }
+  // if (nodeWidthRef.current > MIN_WIDTH) {
+  //   parentRef.current.style.width = nodeWidthRef.current + "px";
+  //   parentNodeFlowRef.current.style.width = nodeWidthRef.current + "px";
+  // }
 };
 
 const onMouseDown = (
@@ -87,6 +104,7 @@ const onMouseDown = (
   resizeCallback: (e: MouseEvent) => void,
   onMouseUpCallback: () => void
 ) => {
+  console.log("mousedown");
   prevXRef.current = e.clientX;
   prevYRef.current = e.clientY;
   document.addEventListener("mousemove", resizeCallback);
