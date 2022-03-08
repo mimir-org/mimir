@@ -135,9 +135,9 @@ export const nodeSizeSelector = createAppSelector(
   (size) => size
 );
 
-export const zoomLevelSelector = createAppSelector(
-  (state) => state.zoom.level,
-  (level) => level
+export const flowTransformSelector = createAppSelector(
+  (state) => state.flowTransform,
+  (flowTransform) => flowTransform
 );
 
 export const productNodeSizeSelector = createAppSelector(
