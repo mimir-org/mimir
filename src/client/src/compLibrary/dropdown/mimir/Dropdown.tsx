@@ -3,7 +3,7 @@ import { Color } from "../../colors";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
 import { FontSize } from "../../font";
 import { Symbol } from "../../symbol";
-import { DropdownBox, DropdownHeader, DropdownList, DropdownListItem } from "./styled";
+import { DropdownBox, DropdownHeader, DropdownList, DropdownListItem } from "./Dropdown.styled";
 
 interface Props {
   label: string;
@@ -41,8 +41,8 @@ const Dropdown = ({
   valueImageProp,
   disabled,
   borderRadius = 5,
-  borderColor = Color.Black,
-  fontSize = FontSize.Standard,
+  borderColor = Color.BLACK,
+  fontSize = FontSize.STANDARD,
   height = 28,
   listTop = 33,
 }: Props) => {

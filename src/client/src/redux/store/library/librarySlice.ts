@@ -1,6 +1,6 @@
-import { CreateLibraryType, LibItem, ObjectType } from "../../../models";
+import { Collection, CreateLibraryType, LibItem, ObjectType } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
+import { addToCollectionsTypes, DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
 
 const initialLibraryState: LibraryState = {
@@ -10,6 +10,7 @@ const initialLibraryState: LibraryState = {
   transportTypes: [],
   interfaceTypes: [],
   subProjectTypes: [],
+  collections: [],
 };
 
 export const librarySlice = createSlice({
@@ -78,6 +79,20 @@ export const librarySlice = createSlice({
       action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
       action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    deleteLibraryItem: (state, action: PayloadAction<string>) => {
+      return state;
+    },
+    deleteLibraryItemSuccessOrError: (state, action: PayloadAction<DeleteLibraryItem>) => {
+      const { id, apiError } = action.payload;
+      if (apiError) {
+        state.apiError.push(apiError);
+      } else {
+        state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== id);
+        state.nodeTypes = state.nodeTypes.filter((x) => x.id !== id);
+        state.transportTypes = state.transportTypes.filter((x) => x.id !== id);
+      }
+    },
     removeLibraryItem: (state, action: PayloadAction<string>) => {
       state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== action.payload);
       state.nodeTypes = state.nodeTypes.filter((x) => x.id !== action.payload);
@@ -85,6 +100,17 @@ export const librarySlice = createSlice({
     },
     deleteLibraryError: (state, action: PayloadAction<string>) => {
       state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
+    },
+    addCollection: (state, action: PayloadAction<Collection>) => {
+      state.collections?.push(action.payload);
+    },
+    addToCollections: (state, action: PayloadAction<addToCollectionsTypes>) => {
+      state.collections = state.collections.map((collection) => {
+        if (action.payload.collectionIds.includes(collection.id)) {
+          collection.libItems = collection.libItems.concat(action.payload.types);
+        }
+        return collection;
+      });
     },
   },
 });
@@ -103,6 +129,10 @@ export const {
   addLibraryItem,
   removeLibraryItem,
   deleteLibraryError,
+  deleteLibraryItem,
+  deleteLibraryItemSuccessOrError,
+  addCollection,
+  addToCollections,
 } = librarySlice.actions;
 
 export default librarySlice.reducer;

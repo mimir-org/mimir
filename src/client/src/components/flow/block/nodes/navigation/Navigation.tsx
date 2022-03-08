@@ -1,7 +1,7 @@
-import { NavigationButton } from "../parentContainer/styled";
+import { NavigationButton } from "./styled/NavigationButton";
 import { ArrowDownIcon, ArrowDownInactiveIcon, ArrowUpIcon, ArrowUpInactiveIcon } from "../../../../../assets/icons/arrow";
 import { Node } from "../../../../../models";
-import { HasChildren } from "../../../helpers";
+import { HasChildren } from "./helpers/HasChildren";
 import { IsAspectNode } from "../../../../../helpers";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
   onNavigateDownClick: () => void;
 }
 
-const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: Props) => {
+export const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: Props) => {
   const canNavigateUp = HasChildren(node);
   const canNavigateDown = !IsAspectNode(node);
 
@@ -28,5 +28,3 @@ const Navigation = ({ isActive, node, onNavigateUpClick, onNavigateDownClick }: 
     )
   );
 };
-
-export default Navigation;

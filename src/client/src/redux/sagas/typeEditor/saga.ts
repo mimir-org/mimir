@@ -2,7 +2,8 @@ import { call, put as statePut } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { addLibraryItem, removeLibraryItem } from "../../store/library/librarySlice";
 import { ApiError, GetBadResponseData, get, post, HttpResponse } from "../../../models/webclient";
-import { Aspect, CreateLibraryType, SimpleType, SimpleTypeResponse } from "../../../models";
+import { Aspect, CreateLibraryType, SimpleType } from "../../../models";
+import { SimpleTypeResponse } from "./types";
 import { FetchingTypeAction } from "../../../typeEditor/redux/types";
 import {
   fetchAttributesSuccessOrError,

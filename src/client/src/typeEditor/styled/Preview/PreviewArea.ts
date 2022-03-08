@@ -9,14 +9,14 @@ const PreviewArea = styled.div`
   justify-content: center;
   height: calc(100% - 50px);
   background: #f7f7f7;
-  border: 1px solid ${Color.Black};
+  border: 1px solid ${Color.BLACK};
   border-radius: 5px;
   overflow: hidden;
 
   p {
-    font-family: ${FontType.Standard};
-    font-size: ${FontSize.Medium};
-    color: ${Color.Black};
+    font-family: ${FontType.STANDARD};
+    font-size: ${FontSize.MEDIUM};
+    color: ${Color.BLACK};
   }
 `;
 

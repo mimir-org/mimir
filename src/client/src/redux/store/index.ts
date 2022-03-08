@@ -3,18 +3,19 @@ import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
 import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
 import userReducer from "./user/userSlice";
 import modulesReducer from "./modules/modulesSlice";
-import menuReducer from "../../components/menus/projectMenu/subMenus/redux/menuSlice";
+import menuReducer from "../../components/menus/projectMenu/components/subMenus/redux/menuSlice";
 import flowReducer from "./flow/flowSlice";
 import electroReducer from "./electro/electroSlice";
 import commonReducer from "./common/commonSlice";
 import darkModeReducer from "./darkMode/darkModeSlice";
-import parametersReducer from "../../modules/inspector/tabs/parameters/redux/parametersSlice";
+import parametersReducer from "../../modules/inspector/components/tabs/components/parameters/redux/parametersSlice";
 import customCategoryReducer from "./customCategory/customCategorySlice";
 import location3DReducer from "../../modules/location/redux/location3DSlice";
 import validationReducer from "./validation/validationSlice";
 import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import libraryReducer from "./library/librarySlice";
 import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
+import flowTransformReducer from "./flowTransform/flowTransformSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
@@ -42,6 +43,7 @@ const rootReducers = combineReducers({
   location3D: location3DReducer,
   blockElements: blockElementsReducer,
   validation: validationReducer,
+  flowTransform: flowTransformReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

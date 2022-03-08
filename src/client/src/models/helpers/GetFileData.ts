@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Edge, Node, Project } from "..";
 import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
-import { ConnectorType, RelationType } from "../Enums";
-import { post } from "../../models/webclient";
+import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text";
 import { IsAspectNode, IsFamily } from "../../helpers";
 import Config from "../Config";
+import { ConnectorType } from "../enums/ConnectorType";
+import { RelationType } from "../enums/RelationType";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {

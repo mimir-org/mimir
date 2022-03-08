@@ -1,8 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
-import { BuildParentNode, BuildProductParentNode, BuildSecondaryParentNode } from ".";
-import { DrawBlockEdges, DrawChildNodes, DrawProductChildren, DrawSecondaryChildren } from "./helpers";
-import { IsProduct } from "../../../../helpers";
+import { BuildParentNode, BuildSecondaryParentNode } from ".";
+import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers";
 
 /**
  * Component to draw all nodes and edges in BlockView.
@@ -26,15 +25,7 @@ const BuildBlockElements = (
   const elements: Elements = [];
   const splitView = secondaryNode !== null;
 
-  // Product nodes have a different view
-  if (IsProduct(selectedNode)) {
-    const parentProduct = BuildProductParentNode(selectedNode, explorerOpen);
-    if (!parentProduct) return;
-    elements.push(parentProduct);
-    return DrawProductChildren(project, selectedNode, elements, animatedEdge, libOpen, explorerOpen, splitView);
-  }
-
-  const parentBlock = BuildParentNode(selectedNode, libOpen, explorerOpen);
+  const parentBlock = BuildParentNode(selectedNode, explorerOpen);
   if (parentBlock) elements.push(parentBlock);
 
   if (splitView) {
@@ -44,7 +35,7 @@ const BuildBlockElements = (
     DrawSecondaryChildren(project, secondaryNode, elements, libOpen, explorerOpen);
   }
 
-  DrawChildNodes(project, selectedNode, elements, libOpen, explorerOpen, splitView);
+  DrawChildNodes(project, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
   DrawBlockEdges(project, elements, secondaryNode, animatedEdge);
 
   return elements;

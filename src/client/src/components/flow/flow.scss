@@ -55,43 +55,6 @@
   }
 }
 
-.path-transportEdge,
-.path-partEdge,
-.path-relationEdge,
-.path-blockEdge,
-.path-blockPartEdge {
-  stroke-width: 2px !important;
-  fill: none;
-  pointer-events: all;
-  cursor: grab;
-}
-
-.react-flow__edge-PartEdgeType,
-.react-flow__edge-RelationEdgeType,
-.react-flow__edge-TransportEdgeType,
-.react-flow__edge-BlockEdgeType,
-.react-flow__edge-BlockPartEdgeType {
-  &:hover {
-    .path-relationEdge,
-    .path-transportEdge,
-    .path-partEdge,
-    .path-blockEdge,
-    .path-blockPartEdge {
-      stroke: #d9d9d9 !important;
-    }
-  }
-
-  &.selected {
-    .path-relationEdge,
-    .path-transportEdge,
-    .path-partEdge,
-    .path-blockEdge,
-    .path-blockPartEdge {
-      stroke: black !important;
-    }
-  }
-}
-
 .react-flow__node-AspectLocation,
 .react-flow__node-Location {
   &.selected > div {
@@ -110,5 +73,59 @@
 .react-flow__node-Product {
   &.selected > div {
     border-color: #069098 !important;
+  }
+}
+
+// TREE EDGES
+.path-treePartOfEdge,
+.path-treeTransportEdge,
+.path-treeRelationSourceEdge,
+.path-treeRelationTargetEdge {
+  stroke-width: 2px !important;
+  fill: none;
+  pointer-events: all;
+  cursor: grab;
+}
+
+.react-flow__edge-TreePartOfEdgeType,
+.react-flow__edge-TreeTransportEdgeType,
+.react-flow__edge-TreeRelationEdgeType {
+  &.selected {
+    .path-treePartOfEdge,
+    .path-treeTransportEdge,
+    .path-treeRelationSourceEdge,
+    .path-treeRelationTargetEdge {
+      stroke-width: 5px !important;
+    }
+    .path-treeRelationTargetEdge {
+      stroke-dasharray: 5, 15;
+    }
+  }
+}
+
+// BLOCK EDGES
+.path-blockTransportEdge,
+.path-blockRelationSourceEdge,
+.path-blockRelationTargetEdge,
+.path-blockOffPageEdge {
+  stroke-width: 2px !important;
+  fill: none;
+  pointer-events: all;
+  cursor: grab;
+}
+
+.react-flow__edge-BlockTransportEdgeType,
+.react-flow__edge-BlockRelationEdgeType,
+.react-flow__edge-BlockOffPageEdgeType {
+  &.selected {
+    .path-blockTransportEdge,
+    .path-blockRelationSourceEdge,
+    .path-blockRelationTargetEdge,
+    .path-blockOffPageEdge {
+      stroke-width: 6px !important;
+    }
+    .path-blockRelationTargetEdge {
+      stroke-dasharray: 5, 15;
+    }
   }
 }

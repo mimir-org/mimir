@@ -14,7 +14,7 @@ const ListElem = styled.div<Props>`
 
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};
-    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    font-weight: ${(props) => props.isSelected && FontWeight.BOLD};
   }
 `;
 

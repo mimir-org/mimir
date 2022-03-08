@@ -45,7 +45,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
                 .ForMember(dest => dest.Format, opt => opt.MapFrom(src => src.Format))
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.Id))
-                //.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.Id)) // TODO: Convert
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.TerminalId, opt => opt.Ignore())
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
@@ -55,6 +54,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags));
+            /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.Id)) // TODO: Convert*/
 
             CreateMap<AttributeAm, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -72,7 +72,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
                 .ForMember(dest => dest.Format, opt => opt.Ignore())
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
-                //.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri)) // TODO: Logic if null?
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
@@ -94,33 +93,34 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SimpleId, opt => opt.MapFrom(src => src.SimpleId))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
+            /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri)) // TODO: Logic if null?*/
 
             CreateMap<Attribute, AttributeAm>()
-               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-               .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
-               .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
-               .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
-               .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
-               .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
-               .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
-               //.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
-               .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-               .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
-               .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
-               .ForMember(dest => dest.QualifierId, opt => opt.MapFrom(src => src.QualifierId))
-               .ForMember(dest => dest.SourceId, opt => opt.MapFrom(src => src.SourceId))
-               .ForMember(dest => dest.ConditionId, opt => opt.MapFrom(src => src.ConditionId))
-               .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
-               .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
-               .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
-               .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
-               .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
-               .ForMember(dest => dest.SimpleId, opt => opt.MapFrom(src => src.SimpleId))
-               .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
-               .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
-               .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
-               .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
-               .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Value))
+                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.SelectedUnitId, opt => opt.MapFrom(src => src.SelectedUnitId))
+                .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
+                .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => src.IsLockedStatusBy))
+                .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
+                .ForMember(dest => dest.QualifierId, opt => opt.MapFrom(src => src.QualifierId))
+                .ForMember(dest => dest.SourceId, opt => opt.MapFrom(src => src.SourceId))
+                .ForMember(dest => dest.ConditionId, opt => opt.MapFrom(src => src.ConditionId))
+                .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
+                .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
+                .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
+                .ForMember(dest => dest.TransportId, opt => opt.MapFrom(src => src.TransportId))
+                .ForMember(dest => dest.InterfaceId, opt => opt.MapFrom(src => src.InterfaceId))
+                .ForMember(dest => dest.SimpleId, opt => opt.MapFrom(src => src.SimpleId))
+                .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
+                .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
+                .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
+            /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))*/
 
             CreateMap<UnitAm, Unit>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

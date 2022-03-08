@@ -1,74 +1,74 @@
 const Color = {
   // Common
-  White: "#fff",
-  Black: "#000",
-  BlueMagenta: "#272738",
-  BlueDark: "#1D2635",
-  BlueLight: "#D9E6FF",
-  Grey: "#d9d9d9",
-  GreyDark: "#c4c4c4",
-  GreyDarker: "#898787",
-  GreyInactive: "#8C8C8C",
-  GreyLighter: "#FBFBFF",
-  GreyLight: "#F2F2F2",
-  GreyHeader: "#4F4F4F",
-  GreyInspector: "#FAFAFA",
-  GreyInspectorDisabled: "#C5C5C5",
-  GreyToolBarSelected: "#6F6F6F",
+  WHITE: "#FFFFFF",
+  BLACK: "#000000",
+  BLUE_MAGENTA: "#272738",
+  BLUE_DARK: "#1D2635",
+  BLUE_LIGHT: "#D9E6FF",
+  GREY: "#D9D9D9",
+  GREY_DARK: "#C4C4C4",
+  GREY_DARKER: "#898787",
+  GREY_INACTIVE: "#8C8C8C",
+  GREY_LIGHT: "#F2F2F2",
+  GREY_LIGHTER: "#FBFBFF",
+  GREY_HEADER: "#4F4F4F",
+  GREY_INSPECTOR: "#FAFAFA",
+  GREY_INSPECTOR_DISABLED: "#C5C5C5",
+  GREY_TOOLBAR_SELECTED: "#6F6F6F",
+  GREY_LIBRARY_INACTIVE_TAB: "#D4D4D4",
+  GREY_LIBRARY_COLLECTION_BORDER: "#BCBCBC",
 
-  CyanLight: "#CFDADB",
-  PurpleLight: "#D8D8EC",
-  RedWarning: "#FF708A",
+  CYAN_LIGHT: "#CFDADB",
+  PURPLE_LIGHT: "#D8D8EC",
+  RED_WARNING: "#FF708A",
 
   // Text
-  TextSecondary: "#8C8C8C",
-  TextAvatar: "#272838",
+  TEXT_AVATAR: "#272838",
 
   // DarkMode
-  DarkModeMain: "#888",
-  DarkModeModule: "#A8A8A8",
+  DARKMODE_MAIN: "#888",
+  DARKMODE_MODULE: "#A8A8A8",
 
   // Function aspect
-  FunctionMain: "#FEF445",
-  FunctionHeader: "#FFFAA9",
-  FunctionTab: "#FFDE7A",
-  FunctionSelected: "#FBC913",
+  FUNCTION_MAIN: "#FEF445",
+  FUNCTION_HEADER: "#FFFAA9",
+  FUNCTION_TAB: "#FFDE7A",
+  FUNCTION_SELECTED: "#FBC913",
 
   // Product aspect
-  ProductMain: "#00F0FF",
-  ProductHeader: "#B9F5F9",
-  ProductTab: "#47DDE6",
-  ProductSelected: "#069098",
+  PRODUCT_MAIN: "#00F0FF",
+  PRODUCT_HEADER: "#B9F5F9",
+  PRODUCT_TAB: "#47DDE6",
+  PRODUCT_SELECTED: "#069098",
 
   // Location aspect
-  LocationMain: "#FA00FF",
-  LocationHeader: "#FDCCFE",
-  LocationTab: "#F083F1",
-  LocationSelected: "#A300A7",
+  LOCATION_MAIN: "#FA00FF",
+  LOCATION_HEADER: "#FDCCFE",
+  LOCATION_TAB: "#F083F1",
+  LOCATION_SELECTED: "#A300A7",
 
   // Terminals
-  TransportConnection: "#606060",
+  TRANSPORT_CONNECTION: "#606060",
 
   // Inspector
-  InspectorGreyBorder: "#8C8C8C",
-  InspectorDarkBorder: "#3D113F",
+  INSPECTOR_DARK_BORDER: "#3D113F",
 
   // Inspector Parameters
-  ParamsLightCyan: "#D9EAEB",
-  ParamsCyan: "#65A8AD",
-  ParamsLightPurple: "#ECEDFD",
-  ParamsPurple: "#8088FF",
-  ParamsLightPink: "#F7DEF8",
-  ParamsPink: "#D06BD4",
-  ParamsLightOrange: "#FFEEE1",
-  ParamsOrange: "#DF6A10",
-  ParamsLightGreen: "#DFF1CC",
-  ParamsGreen: "#7A9F53",
-  ParamsLightYellow: "#FCF7C7",
-  ParamsYellow: "#E3A814",
+  PARAMS_CYAN: "#65A8AD",
+  PARAMS_CYAN_LIGHT: "#D9EAEB",
+  PARAMS_PURPLE: "#8088FF",
+  PARAMS_PURPLE_LIGHT: "#ECEDFD",
+  PARAMS_PINK: "#D06BD4",
+  PARAMS_PINK_LIGHT: "#F7DEF8",
+  PARAMS_ORANGE: "#DF6A10",
+  PARAMS_ORANGE_LIGHT: "#FFEEE1",
+  PARAMS_GREEN: "#7A9F53",
+  PARAMS_GREEN_LIGHT: "#DFF1CC",
+  PARAMS_YELLOW: "#E3A814",
+  PARAMS_YELLOW_LIGHT: "#FCF7C7",
 
   // Inspector Terminals
-  TerminalsPurple: "#A5A5DC",
+  TERMINALS_PURPLE: "#A5A5DC",
 };
 
 export default Color;

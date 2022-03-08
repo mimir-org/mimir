@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { Action, Dispatch } from "redux";
 import { Size } from "../../compLibrary/size";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
-import { InspectorHeader } from "../../modules/inspector";
+import { AnimatedInspector, InspectorHeader } from "../../modules/inspector/components";
+import { InspectorResizePanel } from "../../modules/inspector/InpectorModule.styled";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
-import { useDragResizePanel } from "../../modules/inspector/helpers/useDragResizePanel";
-import { AnimatedInspector, ResizePanel } from "../../modules/inspector/styled";
+import { useDragResizePanel } from "../../modules/inspector/hooks";
 import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../helpers";
 import {
   changeTypeEditorInspectorHeight,
@@ -30,7 +30,7 @@ import {
 
 interface Props {
   createLibraryType: CreateLibraryType;
-  typeEditorPropertiesRef: React.MutableRefObject<HTMLDivElement>;
+  typeEditorPropertiesRef: MutableRefObject<HTMLDivElement>;
 }
 
 export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef }: Props) => {
@@ -46,8 +46,8 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const attributeTypes = useAppSelector(attributeTypeSelector);
   const terminalTypes = useAppSelector(terminalTypeSelector);
   const simpleTypes = useAppSelector(simpleTypeSelector);
-  const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
+  const stop = inspectorOpen ? Size.TYPEEDITOR_INSPECTOR_OPEN : Size.MODULE_CLOSED;
+  const start = inspectorOpen ? Size.MODULE_CLOSED : Size.TYPEEDITOR_INSPECTOR_OPEN;
 
   const attributeLikeItems = useMemo(
     () => attributeTypes.filter((attr) => createLibraryType.attributeTypes.find((attrId) => attrId === attr.id)),
@@ -79,20 +79,20 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
     typeEditorPropertiesRef,
     dispatch,
     changeTypeEditorInspectorHeight,
-    Size.TypeEditorInspectorOpen
+    Size.TYPEEDITOR_INSPECTOR_OPEN
   );
 
   const onToggleWrapped = useCallback(
     (
       _dispatch: Dispatch,
       open: boolean,
-      _inspectorRef: React.MutableRefObject<HTMLDivElement>,
+      _inspectorRef: MutableRefObject<HTMLDivElement>,
       changeInspectorVisibilityAction: (visibility: boolean) => Action,
       changeInspectorHeightAction: (height: number) => Action
     ) => {
       _dispatch(changeInspectorVisibilityAction(!open));
-      _dispatch(changeInspectorHeightAction(open ? Size.ModuleClosed : Size.TypeEditorInspectorOpen));
-      SetPanelHeight(_inspectorRef, open ? Size.ModuleClosed : Size.TypeEditorInspectorOpen);
+      _dispatch(changeInspectorHeightAction(open ? Size.MODULE_CLOSED : Size.TYPEEDITOR_INSPECTOR_OPEN));
+      SetPanelHeight(_inspectorRef, open ? Size.MODULE_CLOSED : Size.TYPEEDITOR_INSPECTOR_OPEN);
       SetPanelHeight(typeEditorPropertiesRef, GetPropertiesHeight(open));
     },
     [typeEditorPropertiesRef]
@@ -111,7 +111,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       zIndex={110}
       forwardRef={inspectorRef}
     >
-      <ResizePanel ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
+      <InspectorResizePanel ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       <InspectorHeader
         project={project}
         element={createLibraryType}

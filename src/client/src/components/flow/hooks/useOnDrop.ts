@@ -1,7 +1,7 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
+import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsProduct } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import {
@@ -21,9 +21,12 @@ import {
   GetProjectData,
   GetSubProject,
   IsInputTerminal,
+  IsOutputTerminal,
+  IsLocationTerminal,
   IsPartOf,
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
+  IsProductTerminal,
 } from "../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -72,10 +75,11 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   const parentNode = getParentNode(sourceNode, project, data);
 
   // TODO: fix when implementing auto-position
-  const marginY = 220;
+  const treeMarginY = 220;
+  const blockMarginY = 120;
   const position = IsBlockView()
-    ? { x: event.clientX, y: event.clientY }
-    : { x: parentNode.positionX, y: parentNode.positionY + marginY };
+    ? { x: event.clientX, y: event.clientY - blockMarginY }
+    : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
@@ -118,7 +122,8 @@ const initConnector = (connector: Connector, targetNode: Node) => {
   connector.attributes?.forEach((a) => {
     a.id = CreateId();
   });
-  connector.connectorVisibility = ConnectorVisibility.None;
+
+  setInitConnectorVisibility(connector, targetNode);
 };
 
 const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
@@ -132,6 +137,16 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
 const getParentNode = (sourceNode: Node, project: Project, data: LibItem) => {
   if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
+};
+
+const setInitConnectorVisibility = (connector: Connector, targetNode: Node) => {
+  const isLocationConnector = IsLocation(targetNode) && IsLocationTerminal(connector);
+  const isProductConnector = IsProduct(targetNode) && IsProductTerminal(connector);
+
+  if (isLocationConnector || isProductConnector) {
+    if (IsInputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.InputVisible;
+    if (IsOutputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.OutputVisible;
+  } else connector.connectorVisibility = ConnectorVisibility.None;
 };
 
 export default useOnDrop;

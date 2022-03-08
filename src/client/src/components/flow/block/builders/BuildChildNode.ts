@@ -2,7 +2,7 @@ import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage, IsProduct } from "../../../../helpers";
 
 /**
  * Component to create a child node in BlockView.
@@ -16,10 +16,12 @@ const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, spl
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
+  const isProduct = IsProduct(node);
+  const isOffPage = IsOffPage(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
 
   // Force node to fit Block
-  const position = !IsOffPage(node) ? SetNodePos(nodePos, libOpen, explorerOpen, splitView) : nodePos;
+  const position = !isOffPage ? SetNodePos(nodePos, libOpen, explorerOpen, splitView, isProduct) : nodePos;
 
   return {
     key: CreateId(),

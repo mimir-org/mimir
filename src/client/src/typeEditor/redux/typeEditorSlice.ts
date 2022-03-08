@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Size } from "../../compLibrary/size";
 import { ApiError } from "../../models/webclient";
-import { defaultCreateLibraryType, fromJsonCreateLibraryType } from "../../models/application/CreateLibraryType";
+import { defaultCreateLibraryType, fromJsonCreateLibraryType } from "../../models/data/CreateLibraryType";
 import {
   FetchingBlobDataActionFinished,
   FetchingSimpleTypesActionFinished,
@@ -38,7 +38,7 @@ const initialTypeEditorState: TypeEditorState = {
   icons: [] as BlobData[],
   inspector: {
     visibility: false,
-    height: Size.ModuleClosed,
+    height: Size.MODULE_CLOSED,
     activeTabIndex: null,
   },
 };
@@ -84,7 +84,7 @@ export const typeEditorSlice = createSlice({
       state.visible = true;
       state.createLibraryType = fromJsonCreateLibraryType(action.payload);
       state.inspector.visibility = false;
-      state.inspector.height = Size.ModuleClosed;
+      state.inspector.height = Size.MODULE_CLOSED;
       state.inspector.activeTabIndex = null;
     },
     fetchBlobData: (state) => {

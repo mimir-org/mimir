@@ -1,4 +1,4 @@
-import { RadioButtonWrapper } from "./styled";
+import { RadioButtonWrapper } from "./RadioButton.styled";
 
 interface Props {
   isChecked: boolean;

@@ -35,14 +35,13 @@ const GlobalStyle = createGlobalStyle`
 
   // APPLICATION SPECIFIC GLOBALS
   html, body {
-    font-family: ${FontType.Standard};
+    font-family: ${FontType.STANDARD};
   };
 
   #root {
     height: 100%;
     display: flex;
     flex-direction: column;
-    --avatar-size: 2rem;
   }
 
   ::-webkit-scrollbar {

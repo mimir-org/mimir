@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Input = styled.input<Props>`
-  border: 1px solid ${Color.Black};
+  border: 1px solid ${Color.BLACK};
   width: 100%;
   box-sizing: border-box;
   border-radius: 5px;
@@ -17,7 +17,7 @@ const Input = styled.input<Props>`
   height: 30px;
   text-align: left;
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
-  background-color: ${(props) => (props.readOnly ? Color.GreyLight : Color.White)};
+  background-color: ${(props) => (props.readOnly ? Color.GREY_LIGHT : Color.WHITE)};
   font-size: ${(props) => GetFontSize(props.fontSize)};
   font-style: ${(props) => (props.fontStyle ? props.fontStyle : "revert")};
 

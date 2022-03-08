@@ -1,4 +1,4 @@
-import { CheckboxWrapper } from "./styled";
+import { CheckboxWrapper } from "./Checkbox.styled";
 import { Color } from "../../../colors";
 import { CheckmarkCheckedComponent, CheckmarkEmptyComponent } from "../../../../assets/icons/checkmark";
 
@@ -16,7 +16,7 @@ interface Props {
  * @param interface
  * @returns a checkbox.
  */
-const Checkbox = ({ isChecked, onChange, color = Color.GreyHeader, readOnly, id, marginLeft = 0 }: Props) => (
+const Checkbox = ({ isChecked, onChange, color = Color.GREY_HEADER, readOnly, id, marginLeft = 0 }: Props) => (
   <CheckboxWrapper color={color} marginLeft={marginLeft}>
     {isChecked ? <CheckmarkCheckedComponent /> : <CheckmarkEmptyComponent />}
     <input id={id} type="checkbox" readOnly={readOnly} key={id} checked={isChecked} onChange={() => onChange()} />

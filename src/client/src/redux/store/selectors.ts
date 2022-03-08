@@ -45,6 +45,11 @@ export const projectStateSelector = createAppSelector(
   (projectState) => projectState
 );
 
+export const projectNameSelector = createAppSelector(
+  (state) => state.projectState?.project?.name,
+  (name) => name
+);
+
 export const userStateSelector = createAppSelector(
   (state) => state.userState,
   (userState) => userState
@@ -130,6 +135,11 @@ export const nodeSizeSelector = createAppSelector(
   (size) => size
 );
 
+export const flowTransformSelector = createAppSelector(
+  (state) => state.flowTransform,
+  (flowTransform) => flowTransform
+);
+
 export const productNodeSizeSelector = createAppSelector(
   (state) => state.blockNodeSize.blockParents[1].size,
   (size) => size
@@ -154,16 +164,6 @@ export const validationSelector = createAppSelector(
 export const filterSelector = createAppSelector(
   (state) => state.menu.filterMenuVisibility,
   (filterMenuVisibility) => filterMenuVisibility
-);
-
-export const projectMenuSelector = createAppSelector(
-  (state) => state.menu.projectMenuVisibility,
-  (projectMenuVisibility) => projectMenuVisibility
-);
-
-export const userMenuSelector = createAppSelector(
-  (state) => state.menu.userMenuVisibility,
-  (userMenuVisibility) => userMenuVisibility
 );
 
 export const activeMenuSelector = createAppSelector(

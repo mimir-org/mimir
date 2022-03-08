@@ -1,11 +1,14 @@
 import { FC, memo, useEffect, useState } from "react";
 import { Handle, NodeProps } from "react-flow-renderer";
-import { AspectColorType, Connector, Node } from "../../../../../models";
-import { TreeHandleBox, TreeNodeBox } from "./styled";
-import { GetHandleType, IsPartOf } from "../../../helpers";
-import { TreeLogoComponent } from "../../logo";
+import { AspectColorType, Node } from "../../../../../models";
+import { TreeNodeBox } from "./styled/TreeNodeBox";
+import { HandleBox } from "../styled/HandleBox";
+import { GetHandleType } from "../helpers/GetHandleType";
+import { IsPartOf } from "../../../helpers";
+import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
-import { IsValidTreeConnection, SetTopPos } from "./helpers";
+import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
+import { SetTopPos } from "../helpers/SetTopPos";
 import { nodeSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
 
 /**
@@ -18,6 +21,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
   const nodes = useAppSelector(nodeSelector);
+  const node = nodes?.find((x) => x.id === data.id);
 
   useEffect(() => {
     if (timer) {
@@ -31,40 +35,42 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     }
   }, [timer]);
 
+  if (!node) return null;
+
   const mouseNodeLeave = () => setTimer(true);
 
   return (
     <TreeNodeBox
-      colorMain={GetAspectColor(data, AspectColorType.Main)}
-      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-      isSelected={data === GetSelectedNode()}
-      visible={!data.isHidden}
+      colorMain={GetAspectColor(node, AspectColorType.Main)}
+      colorSelected={GetAspectColor(node, AspectColorType.Selected)}
+      isSelected={node === GetSelectedNode()}
+      visible={!node.isHidden}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => mouseNodeLeave()}
     >
-      {data.connectors?.map((conn: Connector) => {
-        const [typeHandler, positionHandler] = GetHandleType(conn);
+      {node.connectors?.map((conn) => {
+        const [type, pos] = GetHandleType(conn);
 
         return (
-          <TreeHandleBox
+          <HandleBox
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={"handle-treeview-" + conn.id}
             visible={IsPartOf(conn) && isHover}
-            position={positionHandler}
-            topPos={SetTopPos(positionHandler)}
+            position={pos}
+            topPos={SetTopPos(pos)}
           >
             <Handle
-              type={typeHandler}
-              position={positionHandler}
+              type={type}
+              position={pos}
               id={conn.id}
               className="function-treeview-handler"
-              isValidConnection={(connection) => IsValidTreeConnection(data, connection, nodes, dispatch)}
+              isValidConnection={(connection) => IsValidTreeConnection(node, connection, nodes, dispatch)}
             />
-          </TreeHandleBox>
+          </HandleBox>
         );
       })}
-      <TreeLogoComponent node={data} />
+      <TreeLogoComponent node={node} />
     </TreeNodeBox>
   );
 };

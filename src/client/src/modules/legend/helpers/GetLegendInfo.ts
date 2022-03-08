@@ -4,7 +4,7 @@ import { Color } from "../../../compLibrary/colors";
 import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../components/flow/helpers";
 import { GetAspectColor } from "../../../helpers";
 
-const GetLegendInfo = (conn: Connector, node: Node) => {
+export const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";
   let name = "";
 
@@ -22,15 +22,13 @@ const GetLegendInfo = (conn: Connector, node: Node) => {
 
   if (IsLocationTerminal(conn)) {
     name = conn.name;
-    color = Color.LocationHeader;
+    color = Color.LOCATION_HEADER;
     return [name, color];
   }
 
   if (IsProductTerminal(conn)) {
     name = conn.name;
-    color = Color.ProductMain;
+    color = Color.PRODUCT_MAIN;
     return [name, color];
   }
 };
-
-export default GetLegendInfo;

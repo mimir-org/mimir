@@ -1,9 +1,7 @@
 import { Dispatch } from "redux";
 import { MENU_TYPE } from "../../../../models/project";
-import { changeActiveMenu } from "../subMenus/redux/menuSlice";
+import { changeActiveMenu } from "../components/subMenus/redux/menuSlice";
 
-const OnImportLibraryFile = (dispatch: Dispatch) => {
+export const OnImportLibraryFile = (dispatch: Dispatch) => {
   dispatch(changeActiveMenu(MENU_TYPE.IMPORT_LIBRARY_FILE_MENU));
 };
-
-export default OnImportLibraryFile;

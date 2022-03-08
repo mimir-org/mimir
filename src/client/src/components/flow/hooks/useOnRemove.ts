@@ -7,10 +7,10 @@ import { SetPanelHeight } from "../../../modules/inspector/helpers";
 import { changeInspectorHeight } from "../../../modules/inspector/redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
-import { HandleOffPageDelete } from "../block/nodes/helpers/offPage";
+import { HandleOffPageDelete } from "../block/nodes/blockOffPageNode/helpers";
 import { GetParent, IsPartOf } from "../helpers";
 import { GetSelectedBlockNode, GetSelectedNode, IsAspectNode, IsBlockView, IsOffPage } from "../../../helpers";
-import { getParentNodeConnector } from "../block/nodes/helpers/offPage/HandleOffPageDelete";
+import { getParentNodeConnector } from "../block/nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 
 const useOnRemove = (
   elements: Elements,
@@ -29,8 +29,8 @@ const useOnRemove = (
 
   if (hasDeletedElement) {
     dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-    SetPanelHeight(inspectorRef, Size.ModuleClosed);
-    dispatch(changeInspectorHeight(Size.ModuleClosed));
+    SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
+    dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
     return setElements((els) => removeElements(elementsToRemove, els));
   }
 };
@@ -61,7 +61,6 @@ const handleDeleteElements = (
     } else {
       const node = findProjectNodeByElementId(project, elem);
       if (node?.isLocked) continue;
-
       if (IsOffPage(node)) HandleOffPageDelete(project, node, dispatch);
 
       hasDeletedElement = true;
@@ -69,7 +68,6 @@ const handleDeleteElements = (
       verifiedList.push(elem);
     }
   }
-
   return hasDeletedElement;
 };
 
@@ -106,7 +104,6 @@ const handleRelatedOffPageElements = (project: Project, edge: Edge, dispatch: Di
       if (!offPageTransportEdge) return;
 
       const offPagePartOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
-
       const offPagePartOfEdge = project.edges.find(
         (x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === offPagePartOfTerminal?.id
       );
