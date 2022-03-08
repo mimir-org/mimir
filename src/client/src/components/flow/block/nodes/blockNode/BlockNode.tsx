@@ -6,7 +6,7 @@ import { AspectColorType, Connector } from "../../../../../models";
 import { HandleComponent } from "../../handle";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
-import { FilterTerminals } from "../helpers/FilterTerminals";
+import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary/size/Size";
@@ -42,7 +42,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node, secondaryNode));
+    setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {

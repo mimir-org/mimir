@@ -22,6 +22,9 @@ export const TreeTransportEdge = ({
   const sourceConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id) as Connector;
   const color = sourceConnector?.color;
 
+  // Adjust to match connector
+  targetX -= 6;
+
   const smoothStep = getSmoothStepPath({
     sourceX,
     sourceY,
