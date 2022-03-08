@@ -15,9 +15,9 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
 
   p {
     text-align: center;
-    color: ${Color.Black};
-    font-size: ${FontSize.Medium};
-    font-family:${FontType.Standard}
+    color: ${Color.BLACK};
+    font-size: ${FontSize.MEDIUM};
+    font-family:${FontType.STANDARD}
     padding: 10px 0;
   }
 
@@ -28,12 +28,12 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
       background: transparent;
       min-width: 200px;
       height: 34px;
-      border: 1.5px solid ${Color.BlueMagenta};
+      border: 1.5px solid ${Color.BLUE_MAGENTA};
       border-radius: 5px;
 
       .button-text {
-        font-size: ${FontSize.Standard};
-        font-family:${FontType.Standard}
+        font-size: ${FontSize.STANDARD};
+        font-family:${FontType.STANDARD}
       }
   }
 `;

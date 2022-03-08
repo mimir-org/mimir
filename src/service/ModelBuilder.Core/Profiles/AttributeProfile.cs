@@ -56,6 +56,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags));
+            /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.Id)) // TODO: Convert*/
 
             CreateMap<AttributeAm, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -105,6 +106,7 @@ namespace Mb.Core.Profiles
 
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
+            /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri)) // TODO: Logic if null?*/
 
             CreateMap<Attribute, AttributeAm>()
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

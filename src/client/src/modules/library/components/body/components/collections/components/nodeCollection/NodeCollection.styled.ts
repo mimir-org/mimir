@@ -8,9 +8,9 @@ interface NodeCollectionContainerProps {
 
 export const NodeCollectionContainer = styled.div<NodeCollectionContainerProps>`
   display: flex;
-  background-color: ${Color.GreyLight};
+  background-color: ${Color.GREY_LIGHT};
   margin: ${(props) => (props.isOpen ? "2px 0px 2px 0px" : "2px 0px 5px 0px")};
-  border: 1px solid ${(props) => (props.isOpen ? Color.BlueMagenta : Color.GreyLibraryCollectionBorder)};
+  border: 1px solid ${(props) => (props.isOpen ? Color.BLUE_MAGENTA : Color.GREY_LIBRARY_COLLECTION_BORDER)};
   border-radius: 5px;
   flex-direction: column;
 `;
@@ -27,12 +27,12 @@ export const NodeCollectionButton = styled.button<NodeCollectionButtonProps>`
   width: 100%;
   height: 30px;
   border-style: solid;
-  border-color: ${(props) => (props.isOpen ? Color.BlueMagenta : Color.GreyLibraryCollectionBorder)};
+  border-color: ${(props) => (props.isOpen ? Color.BLUE_MAGENTA : Color.GREY_LIBRARY_COLLECTION_BORDER)};
   border-width: ${(props) => (props.isOpen ? "0px 0px 1px 0px" : "0px")} !important;
   border-radius: 3px;
-  background-color: ${Color.White} !important;
-  font-size: ${FontSize.SubHeader};
-  font-family: ${FontType.Standard};
+  background-color: ${Color.WHITE} !important;
+  font-size: ${FontSize.SUBHEADER};
+  font-family: ${FontType.STANDARD};
   padding-left: 10px;
   padding-right: 14px;
   -webkit-user-select: none;
@@ -54,6 +54,6 @@ export const NodeCollectionButtonText = styled.span<NodeCollectionButtonTextProp
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
-  font-size: ${FontSize.Standard};
-  font-weight: ${(props) => (props.isOpen ? FontWeight.Bold : FontWeight.Normal)};
+  font-size: ${FontSize.STANDARD};
+  font-weight: ${(props) => (props.isOpen ? FontWeight.BOLD : FontWeight.NORMAL)};
 `;

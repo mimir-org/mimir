@@ -5,11 +5,11 @@ export const ProjectMenuBox = styled.div`
   display: block;
   position: absolute;
   right: 0;
-  background: ${Color.White};
+  background: ${Color.WHITE};
   height: auto;
   width: 250px;
   border-style: solid;
-  border-color: ${Color.BlueMagenta};
+  border-color: ${Color.BLUE_MAGENTA};
   border-width: 0 1px 1px 1px;
   border-radius: 0 0 10px 10px;
   z-index: 6;

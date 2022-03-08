@@ -304,7 +304,7 @@ namespace Mb.Services.Services
                 // Nodes
                 var originalNodes = originalProject.Nodes.ToList();
                 var deleteNodes = originalNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
-                var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain);
+                var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain).ToList();
 
                 //Determine if project version should be incremented
                 SetProjectVersion(originalProject, projectAm);
@@ -363,7 +363,7 @@ namespace Mb.Services.Services
                 throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
 
             _ = await _edgeRepository.DeleteEdges(existingProject.Edges, projectId, _commonRepository.GetDomain());
-            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _commonRepository.GetDomain());
+            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _commonRepository.GetDomain()).ToList();
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();
         }

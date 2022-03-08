@@ -15,6 +15,7 @@ import validationReducer from "./validation/validationSlice";
 import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import libraryReducer from "./library/librarySlice";
 import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
+import zoomLevelReducer from "./zoom/zoomSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
@@ -42,6 +43,7 @@ const rootReducers = combineReducers({
   location3D: location3DReducer,
   blockElements: blockElementsReducer,
   validation: validationReducer,
+  zoom: zoomLevelReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

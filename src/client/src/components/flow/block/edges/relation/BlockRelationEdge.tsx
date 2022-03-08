@@ -10,11 +10,21 @@ import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
  * @param params
  * @returns a hasLocation or fullfilledBy edge in BlockView.
  */
-export const BlockRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
+export const BlockRelationEdge = ({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  data,
+}: EdgeProps) => {
   const visible = !data?.edge?.isHidden;
   const isElectro = useAppSelector(electroSelector);
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
+  const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
   const margin = 6;
@@ -32,7 +42,7 @@ export const BlockRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePo
   return (
     <>
       <marker
-        id="arrow"
+        id={arrowId}
         refX="5"
         refY="5"
         markerUnits="userSpaceOnUse"
@@ -40,7 +50,7 @@ export const BlockRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePo
         markerHeight="20"
         orient={!isElectro ? "auto-start-reverse" : "auto"}
       >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
       </marker>
 
       <path style={GetEdgeStyle(sourceColor, visible)} className="path-blockRelationSourceEdge" d={bezierPath} />
@@ -51,14 +61,14 @@ export const BlockRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePo
         strokeLinecap="square"
         className="path-blockRelationTargetEdge"
         d={bezierPath}
-        markerEnd="url(#arrow)"
+        markerEnd={`url(#${arrowId})`}
       />
     </>
   );
 };
 
 function GetRelationColor(node: Node) {
-  if (IsFunction(node)) return Color.FunctionSelected;
-  if (IsLocation(node)) return Color.LocationMain;
-  if (IsProduct(node)) return Color.ProductMain;
+  if (IsFunction(node)) return Color.FUNCTION_SELECTED;
+  if (IsLocation(node)) return Color.LOCATION_MAIN;
+  if (IsProduct(node)) return Color.PRODUCT_MAIN;
 }

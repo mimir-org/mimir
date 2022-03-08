@@ -1,7 +1,8 @@
-import { Connector, RelationType } from "../../../models";
+import { IsPartOf } from ".";
+import { Connector } from "../../../models";
 
 const IsPartOfConnection = (sourceConn: Connector, targetConn: Connector) => {
-  return sourceConn?.relationType === RelationType.PartOf && targetConn?.relationType === RelationType.PartOf;
+  return IsPartOf(sourceConn) && IsPartOf(targetConn);
 };
 
 export default IsPartOfConnection;

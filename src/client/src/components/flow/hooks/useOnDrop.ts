@@ -75,10 +75,11 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   const parentNode = getParentNode(sourceNode, project, data);
 
   // TODO: fix when implementing auto-position
-  const marginY = 220;
+  const treeMarginY = 220;
+  const blockMarginY = 120;
   const position = IsBlockView()
-    ? { x: event.clientX, y: event.clientY }
-    : { x: parentNode.positionX, y: parentNode.positionY + marginY };
+    ? { x: event.clientX, y: event.clientY - blockMarginY }
+    : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 

@@ -10,9 +10,9 @@ export const ButtonBase = styled.button`
   gap: 10px;
   height: 35px;
   padding: 10px 20px;
-  font-size: ${FontSize.Standard};
-  color: ${Color.Black};
-  border-color: ${Color.BlueMagenta};
+  font-size: ${FontSize.STANDARD};
+  color: ${Color.BLACK};
+  border-color: ${Color.BLUE_MAGENTA};
   border-style: solid;
   cursor: pointer;
 
@@ -40,13 +40,13 @@ export const ButtonBase = styled.button`
 `;
 
 export const GreyButton = styled(ButtonBase)`
-  background: ${Color.GreyLight};
+  background: ${Color.GREY_LIGHT};
   border-width: 1px;
   border-radius: 2px;
 `;
 
 export const WhiteButton = styled(ButtonBase)`
-  background: ${Color.White};
+  background: ${Color.WHITE};
   border-width: 1.5px;
   border-radius: 5px;
 `;

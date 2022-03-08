@@ -13,11 +13,11 @@ export const InspectorTabHeader = styled.div<InspectorTabHeaderProps>`
   min-width: 120px;
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   margin-right: 7px;
   height: ${(props) => (props.active ? 44 : 35)}px;
   margin-top: ${(props) => (props.active ? 0 : 9)}px;
-  background-color: ${(props) => (props.active ? Color.GreyLighter : props.color)};
+  background-color: ${(props) => (props.active ? Color.GREY_LIGHTER : props.color)};
   padding: ${(props) => (props.active ? "17px 5px 0px 5px;" : "8px 5px 0px 5px")};
   box-shadow: -4px 0 4px -5px rgba(0, 0, 0, 0.4), 4px 0 3px -5px rgba(0, 0, 0, 0.4);
 
@@ -29,7 +29,7 @@ export const InspectorTabHeader = styled.div<InspectorTabHeaderProps>`
 export const InspectorTabHeaderTitle = styled.p`
   position: relative;
   bottom: ${(props: { active: boolean }) => (props.active ? 20 : 16)}px;
-  font-weight: ${(props: { active: boolean }) => props.active && FontWeight.Bold};
+  font-weight: ${(props: { active: boolean }) => props.active && FontWeight.BOLD};
   text-align: center;
 `;
 

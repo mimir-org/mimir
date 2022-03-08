@@ -8,7 +8,7 @@ interface AppBoxProps {
 export const AppBox = styled.div<AppBoxProps>`
   width: 100%;
   height: 100%;
-  background: ${(props) => props.fetching && Color.Grey};
+  background: ${(props) => props.fetching && Color.GREY};
   opacity: ${(props) => props.fetching && 0.2};
 `;
 

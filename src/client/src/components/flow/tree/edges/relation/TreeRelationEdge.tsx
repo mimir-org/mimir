@@ -39,7 +39,7 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
 };
 
 function GetRelationColor(node: Node) {
-  if (IsFunction(node)) return Color.FunctionSelected;
-  if (IsLocation(node)) return Color.LocationMain;
-  if (IsProduct(node)) return Color.ProductMain;
+  if (IsFunction(node)) return Color.FUNCTION_SELECTED;
+  if (IsLocation(node)) return Color.LOCATION_MAIN;
+  if (IsProduct(node)) return Color.PRODUCT_MAIN;
 }

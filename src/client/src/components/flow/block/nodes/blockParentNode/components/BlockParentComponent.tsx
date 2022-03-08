@@ -60,7 +60,7 @@ export const BlockParentComponent = ({
       )}
       <Background
         variant={isLocation ? BackgroundVariant.Lines : BackgroundVariant.Dots}
-        color={isLocation ? Color.Grey : Color.BlueDark}
+        color={isLocation ? Color.GREY : Color.BLUE_DARK}
         gap={isLocation ? 20 : 15}
         style={{ zIndex: 0 }}
       />

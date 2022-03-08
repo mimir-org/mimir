@@ -8,8 +8,8 @@ export const ProjectDescriptionBox = styled.div`
   min-height: 415px;
   overflow-y: auto;
   overflow-x: hidden;
-  border: 1px solid ${Color.Black};
-  background-color: ${Color.White};
+  border: 1px solid ${Color.BLACK};
+  background-color: ${Color.WHITE};
   border-radius: 5px;
   margin-top: 44px;
 `;
@@ -19,7 +19,7 @@ export const ProjectDescriptionBody = styled.div`
 
   .text-about {
     font-weight: normal;
-    font-size: ${FontSize.Small};
+    font-size: ${FontSize.SMALL};
   }
 
   .libraries,

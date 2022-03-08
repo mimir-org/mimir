@@ -32,7 +32,7 @@ export const InspectorButtonRowToggleContainer = styled.button`
 
 export const InspectorButtonRowToggleTitle = styled.span`
   pointer-events: initial;
-  font-size: ${FontSize.Header};
+  font-size: ${FontSize.HEADER};
   height: 100%;
 
   :hover {

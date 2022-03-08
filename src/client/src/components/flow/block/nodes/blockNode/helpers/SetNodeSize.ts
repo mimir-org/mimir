@@ -15,8 +15,8 @@ export const SetNodeSize = (terminals: Connector[], electro: boolean) => {
 
   let inTerminals = 0;
   let outTerminals = 0;
-  let height = Size.Node_Height;
-  let width = Size.Node_Width;
+  let height = Size.NODE_HEIGHT;
+  let width = Size.NODE_WIDTH;
 
   terminals?.forEach((t) => {
     IsConnectorVisible(t) && IsInputTerminal(t) && inTerminals++;

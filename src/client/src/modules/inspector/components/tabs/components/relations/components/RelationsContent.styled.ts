@@ -9,15 +9,15 @@ export const RelationsContainer = styled.div`
 `;
 
 export const RelationsHeader = styled.span`
-  color: ${Color.GreyHeader};
-  font-size: ${FontSize.Medium};
+  color: ${Color.GREY_HEADER};
+  font-size: ${FontSize.MEDIUM};
 `;
 
 interface RelationsTerminalListProps {
   hasItems: boolean;
 }
 
-const getBorder = (hasItems: boolean) => (hasItems ? `1px solid ${Color.Black}` : "none");
+const getBorder = (hasItems: boolean) => (hasItems ? `1px solid ${Color.BLACK}` : "none");
 
 export const RelationsTerminalList = styled.div<RelationsTerminalListProps>`
   display: flex;
@@ -44,11 +44,11 @@ export const RelationsTerminalListElement = styled.div<RelationsTerminalListElem
   padding: 8px 10px;
   min-width: 250px;
   height: 30px;
-  font-size: ${FontSize.Medium};
+  font-size: ${FontSize.MEDIUM};
   display: flex;
   align-items: center;
   background-color: ${(props) => props.color};
-  border-bottom: 1px solid ${Color.GreyDark};
+  border-bottom: 1px solid ${Color.GREY_DARK};
 
   .icon {
     display: flex;
@@ -56,7 +56,7 @@ export const RelationsTerminalListElement = styled.div<RelationsTerminalListElem
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     cursor: pointer;
     text-decoration: underline;
   }

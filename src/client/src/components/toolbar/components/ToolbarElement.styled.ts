@@ -14,21 +14,21 @@ export const ToolElementBox = styled.div<ToolElementBoxProps>`
   cursor: pointer;
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
   }
 
   &:first-child {
-    background-color: ${(props) => props.active && Color.GreyToolBarSelected};
-    border-left: 1px solid ${Color.Grey};
-    border-right: 1px solid ${Color.Grey};
+    background-color: ${(props) => props.active && Color.GREY_TOOLBAR_SELECTED};
+    border-left: 1px solid ${Color.GREY};
+    border-right: 1px solid ${Color.GREY};
   }
 
   &:nth-child(2) {
-    background-color: ${(props) => !props.active && Color.GreyToolBarSelected};
+    background-color: ${(props) => !props.active && Color.GREY_TOOLBAR_SELECTED};
   }
 
   &:last-child {
-    border-left: 1px solid ${Color.Grey};
-    background-color: ${(props) => props.active && Color.GreyToolBarSelected};
+    border-left: 1px solid ${Color.GREY};
+    background-color: ${(props) => props.active && Color.GREY_TOOLBAR_SELECTED};
   }
 `;

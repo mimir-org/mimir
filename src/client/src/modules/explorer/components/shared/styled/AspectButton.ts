@@ -16,7 +16,7 @@ export const AspectButton = styled.button<Props>`
   background-color: transparent;
   margin: 0;
   border: 0;
-  border-right: 2px solid ${Color.InspectorGreyBorder};
+  border-right: 2px solid ${Color.GREY_INACTIVE};
   opacity: ${(props) => (props.isLocked || props.isHidden ? 0.5 : 1)};
 
   :hover {

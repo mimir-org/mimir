@@ -27,6 +27,7 @@ export const BlockTransportEdge = ({
   const visible = !data?.edge?.isHidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
+  const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
   const margin = 6;
@@ -48,8 +49,7 @@ export const BlockTransportEdge = ({
   return (
     <>
       <marker
-        id="arrow"
-        viewBox="0 0 10 20"
+        id={arrowId}
         refX="5"
         refY="5"
         markerUnits="userSpaceOnUse"
@@ -57,21 +57,21 @@ export const BlockTransportEdge = ({
         markerHeight="20"
         orient={!isElectro ? "auto-start-reverse" : "auto"}
       >
-        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.Black} />
+        <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
       </marker>
       <path
         id={id}
         style={GetEdgeStyle(color, visible)}
         className="path-blockTransportEdge"
         d={transportPath}
-        markerStart={isBidirectional ? "url(#arrow)" : null}
-        markerEnd="url(#arrow)"
+        markerStart={isBidirectional ? `url(#${arrowId})` : null}
+        markerEnd={`url(#${arrowId})`}
       />
     </>
   );
 };
 
-// TODO: fix this in next Edge update
+// TODO: fix this on next Edge update
 function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
   const margin = 20;
   const marginSmall = 15;

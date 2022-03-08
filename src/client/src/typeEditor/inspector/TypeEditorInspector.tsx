@@ -46,8 +46,8 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
   const attributeTypes = useAppSelector(attributeTypeSelector);
   const terminalTypes = useAppSelector(terminalTypeSelector);
   const simpleTypes = useAppSelector(simpleTypeSelector);
-  const stop = inspectorOpen ? Size.TypeEditorInspectorOpen : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.TypeEditorInspectorOpen;
+  const stop = inspectorOpen ? Size.TYPEEDITOR_INSPECTOR_OPEN : Size.MODULE_CLOSED;
+  const start = inspectorOpen ? Size.MODULE_CLOSED : Size.TYPEEDITOR_INSPECTOR_OPEN;
 
   const attributeLikeItems = useMemo(
     () => attributeTypes.filter((attr) => createLibraryType.attributeTypes.find((attrId) => attrId === attr.id)),
@@ -79,7 +79,7 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
     typeEditorPropertiesRef,
     dispatch,
     changeTypeEditorInspectorHeight,
-    Size.TypeEditorInspectorOpen
+    Size.TYPEEDITOR_INSPECTOR_OPEN
   );
 
   const onToggleWrapped = useCallback(
@@ -91,8 +91,8 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
       changeInspectorHeightAction: (height: number) => Action
     ) => {
       _dispatch(changeInspectorVisibilityAction(!open));
-      _dispatch(changeInspectorHeightAction(open ? Size.ModuleClosed : Size.TypeEditorInspectorOpen));
-      SetPanelHeight(_inspectorRef, open ? Size.ModuleClosed : Size.TypeEditorInspectorOpen);
+      _dispatch(changeInspectorHeightAction(open ? Size.MODULE_CLOSED : Size.TYPEEDITOR_INSPECTOR_OPEN));
+      SetPanelHeight(_inspectorRef, open ? Size.MODULE_CLOSED : Size.TYPEEDITOR_INSPECTOR_OPEN);
       SetPanelHeight(typeEditorPropertiesRef, GetPropertiesHeight(open));
     },
     [typeEditorPropertiesRef]

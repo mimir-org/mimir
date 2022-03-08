@@ -8,7 +8,7 @@ interface InspectorHeaderContainerProps {
 
 export const InspectorHeaderContainer = styled.div<InspectorHeaderContainerProps>`
   display: flex;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   height: 44px;
   width: 100%;
   overflow: hidden;

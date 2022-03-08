@@ -1,5 +1,5 @@
 const FontType = {
-  Standard: "roboto",
+  STANDARD: "roboto",
 };
 
 export default FontType;

@@ -1,14 +1,18 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Project, Node } from "../../../models";
-import { GetSelectedNode, IsOffPage, IsProduct } from "../../../helpers";
-import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
+import { Project } from "../../../models";
+import { IsOffPage } from "../../../helpers";
+import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
+import { Size } from "../../../compLibrary/size";
+import { setValidation } from "../../../redux/store/validation/validationSlice";
+import { TextResources } from "../../../assets/text";
 
 /**
  * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
- * This is where an OffPage node can be created.
+ * If a connection is completed between two terminals, the hook useOnConnect runs.
+ * An OffPageNode is created if the connection is released within the dropzone for an OffPageNode.
  * @param e
  * @param project
  * @param parentNodeSize
@@ -20,6 +24,7 @@ const useOnConnectStop = (
   project: Project,
   parentNodeSize: BlockNodeSize,
   secondaryNode: boolean,
+  zoomLevel: number,
   dispatch: Dispatch
 ) => {
   e.preventDefault();
@@ -27,20 +32,33 @@ const useOnConnectStop = (
 
   if (edgeEvent) {
     const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
-    const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
-    const parentBlockNode = IsProduct(sourceNode) ? GetSelectedNode() : GetParent(sourceNode);
-    const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
+    const sourceConnector = sourceNode?.connectors.find((conn) => conn.id === edgeEvent.sourceId);
+    if (!IsTransport(sourceConnector) || IsOffPage(sourceNode)) return;
 
-    const isOffPageDrop = ValidateOffPageDrop(
-      sourceNode,
-      e.clientX,
-      parentNodeSize,
-      isTarget,
-      secondaryNode,
-      parentBlockNode?.positionBlockX
+    const existingEdge = project.edges.find(
+      (edge) =>
+        (edge.fromConnectorId === sourceConnector?.id && IsTransport(edge.fromConnector)) ||
+        (edge.toConnectorId === sourceConnector?.id && IsTransport(edge.toConnector))
     );
 
-    if (isOffPageDrop) {
+    if (existingEdge !== undefined) {
+      dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+      return;
+    }
+
+    const parentBlockNode = GetParent(sourceNode);
+    const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
+
+    const isValidOffPageDrop = ValidateOffPagePosition(
+      e.clientX,
+      zoomLevel,
+      parentNodeSize,
+      parentBlockNode?.positionBlockX,
+      secondaryNode,
+      isTarget
+    );
+
+    if (isValidOffPageDrop) {
       const isRequired = true;
       CreateRequiredOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, isRequired);
       SaveEventData(null, "edgeEvent");
@@ -48,43 +66,47 @@ const useOnConnectStop = (
   }
 };
 
-function ValidateOffPageDrop(
-  sourceNode: Node,
-  clientX: number,
-  parentNodeSize: BlockNodeSize,
-  isTarget: boolean,
-  secondaryNode: boolean,
-  parentXPos: number
-) {
-  if (IsOffPage(sourceNode)) return false;
-
-  // Correct value of clientX to match the nodes
-  clientX += 100;
-
-  let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
-  if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
-
-  const dropZoneWidth = secondaryNode ? 100 : 200;
-  const rightBound = leftBound + dropZoneWidth;
-
-  return ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
-}
-
 function ValidateOffPagePosition(
   clientX: number,
-  leftBound: number,
-  rightBound: number,
-  dropZoneWidth: number,
+  zoomLevel: number,
+  parentNodeSize: BlockNodeSize,
+  parentXPos: number,
   secondaryNode: boolean,
   isTarget: boolean
 ) {
+  const leftBound = CalculateLeftBound(zoomLevel, isTarget, parentNodeSize, parentXPos);
+
   if (secondaryNode) {
+    const dropZoneWidth = 100;
+    const rightBound = leftBound + dropZoneWidth;
+
     if (isTarget) return clientX > leftBound && clientX < rightBound;
     return clientX < leftBound && clientX > leftBound - dropZoneWidth;
   }
 
   if (isTarget) return clientX > leftBound;
   return clientX < leftBound;
+}
+
+function CalculateLeftBound(zoom: number, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
+  const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
+  const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+
+  if (zoom < defaultZoom) {
+    const parentNodeWidthScaled = parentNodeSize?.width * zoom;
+    const canvasCenterX = window.innerWidth / 2;
+    const targetLeftBound = canvasCenterX + parentNodeWidthScaled / 2;
+    const sourceLeftBound = canvasCenterX - parentNodeWidthScaled / 2;
+    return isTarget ? targetLeftBound : sourceLeftBound;
+  }
+  if (zoom > defaultZoom) {
+    const diff = zoom - defaultZoom;
+    const targetLeftBound = leftBound * diff;
+    const sourceLeftBound = parentXPos - leftBound * zoom;
+    return isTarget ? targetLeftBound : sourceLeftBound;
+  }
+
+  return leftBound;
 }
 
 export default useOnConnectStop;
