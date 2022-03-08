@@ -115,7 +115,7 @@
     "Code": "JD",
     "Name": "Electrical power transport/distribution system",
     "Aspect": "Function, Product, Location",
-    "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",
+    "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5", // Mechanical
     "SemanticReference": null
   },
   {
@@ -127,7 +127,7 @@
   },
   {
     "Code": "JE",
-    "Name": "Mechanical energy transport/distribution system",
+    "Name": "Mechanical energy transport/distribution system", // Electrical
     "Aspect": "Function, Product, Location",
     "RdsCategoryId": "227AB28ACD889CCDDF6D430F716142D5",
     "SemanticReference": null

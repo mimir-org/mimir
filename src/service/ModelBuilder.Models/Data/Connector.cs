@@ -18,7 +18,6 @@ namespace Mb.Models.Data
         public string Kind => nameof(Connector);
         public string Name { get; set; }
         public ConnectorType Type { get; set; }
-        public string SemanticReference { get; set; }
         public ConnectorVisibility ConnectorVisibility { get; set; }
         public virtual string NodeId { get; set; }
         public virtual string NodeIri { get; set; }

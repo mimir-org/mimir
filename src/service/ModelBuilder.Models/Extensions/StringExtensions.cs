@@ -95,6 +95,11 @@ namespace Mb.Models.Extensions
             return idSplit?.Length != 2 ? null : idSplit[0];
         }
 
+        public static bool IsValidIri(this string iri)
+        {
+            return Uri.IsWellFormedUriString(iri, UriKind.Absolute);
+        }
+
         #region Private
 
         private static string IncrementVersion(string version, bool incrementMajor, bool incrementMinor, bool incrementCommit)

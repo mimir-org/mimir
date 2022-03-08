@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using RdfParserModule.Extensions;
+using Mb.Models.Extensions;
 using VDS.RDF;
 using VDS.RDF.Ontology;
 using VDS.RDF.Parsing;
@@ -44,10 +44,16 @@ namespace RdfParserModule.Repositories
         /// <param name="data"></param>
         public void LoadData(string data)
         {
+            _graph = CreateOntologyGraph();
+            _store = CreateTripleStore();
+
+            if (string.IsNullOrWhiteSpace(data))
+                return;
+
             IGraph graph = new Graph();
             graph.LoadFromString(data);
-            Graph.Merge(graph);
-            Store.Add(Graph);
+            _graph.Merge(graph);
+            _store.Add(_graph);
         }
 
         #endregion
@@ -57,7 +63,7 @@ namespace RdfParserModule.Repositories
         /// <summary>
         /// Create an ontology graph
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IGraph</returns>
         private static IGraph CreateOntologyGraph()
         {
             var graph = new OntologyGraph();

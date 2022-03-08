@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220305105557_Attribute_Iris_2")]
+    partial class Attribute_Iris_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,13 +333,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
-
-                    b.Property<string>("ProjectIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ProjectIri");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
@@ -603,7 +599,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
                     b.Property<int>("Order")
@@ -628,13 +624,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
-
-                    b.Property<string>("ProjectIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectIri");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PurposeString")
                         .HasColumnType("nvarchar(max)")
@@ -677,11 +667,7 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
-
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("ProjectIri");
 
                     b.HasIndex("StatusId");
 

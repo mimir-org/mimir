@@ -147,9 +147,9 @@ namespace EventHubModule
                     return;
                 }
 
-                var hasProject = projectService.ProjectExist(project.Id);
+                var hasProject = projectService.ProjectExist(project.Id, project.Iri);
                 _ = hasProject ?
-                    projectService.UpdateProject(project.Id, project, e.SenderDomain).Result?.Project :
+                    projectService.UpdateProject(project.Id, project.Iri, project, e.SenderDomain).Result?.Project :
                     projectService.CreateProject(project).Result;
             }
             catch (Exception ex)

@@ -16,7 +16,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Type).HasColumnName("Type").IsRequired().HasConversion<string>();
             builder.Property(p => p.ConnectorVisibility).HasColumnName("ConnectorVisibility").IsRequired().HasConversion<string>().HasDefaultValue(ConnectorVisibility.None);
-            builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
             builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
             builder.Property(p => p.IsRequired).HasColumnName("IsRequired").IsRequired().HasDefaultValue(false);

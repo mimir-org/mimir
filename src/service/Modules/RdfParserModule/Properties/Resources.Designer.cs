@@ -61,11 +61,38 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:allowedUnit.
+        /// </summary>
+        internal static string AllowedUnit {
+            get {
+                return ResourceManager.GetString("AllowedUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:connectedTo.
         /// </summary>
         internal static string ConnectedTo {
             get {
                 return ResourceManager.GetString("ConnectedTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:created.
+        /// </summary>
+        internal static string Created {
+            get {
+                return ResourceManager.GetString("Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:createdBy.
+        /// </summary>
+        internal static string CreatedBy {
+            get {
+                return ResourceManager.GetString("CreatedBy", resourceCulture);
             }
         }
         
@@ -196,6 +223,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:discipline.
+        /// </summary>
+        internal static string HasDiscipline {
+            get {
+                return ResourceManager.GetString("HasDiscipline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:hasInTerminal.
         /// </summary>
         internal static string HasInputTerminal {
@@ -219,6 +255,24 @@ namespace RdfParserModule.Properties {
         internal static string HasMasterProject {
             get {
                 return ResourceManager.GetString("HasMasterProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:hasNodeFromConnection.
+        /// </summary>
+        internal static string HasNodeFromConnection {
+            get {
+                return ResourceManager.GetString("HasNodeFromConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:hasNodeToConnection.
+        /// </summary>
+        internal static string HasNodeToConnection {
+            get {
+                return ResourceManager.GetString("HasNodeToConnection", resourceCulture);
             }
         }
         
@@ -313,7 +367,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:interface.
+        ///   Looks up a localized string similar to imf:Interface.
         /// </summary>
         internal static string Interface {
             get {
@@ -327,6 +381,15 @@ namespace RdfParserModule.Properties {
         internal static string IsAspectOf {
             get {
                 return ResourceManager.GetString("IsAspectOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:isRequired.
+        /// </summary>
+        internal static string IsRequired {
+            get {
+                return ResourceManager.GetString("IsRequired", resourceCulture);
             }
         }
         
@@ -345,6 +408,24 @@ namespace RdfParserModule.Properties {
         internal static string LastUpdated {
             get {
                 return ResourceManager.GetString("LastUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:type.
+        /// </summary>
+        internal static string LibraryType {
+            get {
+                return ResourceManager.GetString("LibraryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:rds.
+        /// </summary>
+        internal static string MimirRds {
+            get {
+                return ResourceManager.GetString("MimirRds", resourceCulture);
             }
         }
         
@@ -421,6 +502,24 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:selectType.
+        /// </summary>
+        internal static string SelectType {
+            get {
+                return ResourceManager.GetString("SelectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mimir:selectValue.
+        /// </summary>
+        internal static string SelectValue {
+            get {
+                return ResourceManager.GetString("SelectValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:streamTerminal.
         /// </summary>
         internal static string StreamTerminal {
@@ -439,6 +538,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:terminalDirection.
+        /// </summary>
+        internal static string TerminalDirectionType {
+            get {
+                return ResourceManager.GetString("TerminalDirectionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to mimir:Transmitter.
         /// </summary>
         internal static string Transmitter {
@@ -448,7 +556,7 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:transport.
+        ///   Looks up a localized string similar to imf:Transport.
         /// </summary>
         internal static string Transport {
             get {

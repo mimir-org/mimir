@@ -24,6 +24,7 @@ export interface Connector {
   terminalCategory: EnumBase;
   attributes: Attribute[];
   terminalTypeId: string;
+  terminalTypeIri: string;
 
   // Relation
   relationType: RelationType;

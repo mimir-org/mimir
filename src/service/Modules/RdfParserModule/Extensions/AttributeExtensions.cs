@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
+using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data.Enums;
+using Mb.Models.Enums;
+using Mb.Models.Records;
 using Newtonsoft.Json;
 using RdfParserModule.Properties;
 using RdfParserModule.Services;
@@ -13,38 +16,60 @@ namespace RdfParserModule.Extensions
 {
     public static class AttributeExtensions
     {
+        /// <summary>
+        /// Assert attribute to graph
+        /// </summary>
+        /// <param name="attribute">Attribute that should be asserted</param>
+        /// <param name="parentIri">The ID of the parent</param>
+        /// <param name="ontologyService">Ontology Service</param>
         public static void AssertAttribute(this Attribute attribute, string parentIri, IOntologyService ontologyService)
         {
-            // TODO: Extend attribute to get iri for qualifier, source, condition and format
-            var rootIri = new Uri(attribute.Iri).GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped);
-
             // Asserts
             ontologyService.AssertNode(attribute.Iri, Resources.Domain, attribute.Domain, true);
             ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
             ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
+            ontologyService.AssertNode(attribute.Iri, Resources.Label, attribute.Entity, true);
+            ontologyService.AssertNode(attribute.Iri, Resources.HasDiscipline, $"mimir:{attribute.Discipline}");
+            ontologyService.AssertNode(attribute.Iri, Resources.SelectType, $"mimir:{attribute.SelectType}");
 
-            // TODO: Add AttributeTypeIri etc. to missing types
-            //if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
-            //{
-            //    ontologyService.AssertNode(attribute.AttributeTypeIri, Resources.label, attribute.Entity, true);
-            //    ontologyService.AssertNode(attribute.Iri, Resources.type, attribute.AttributeTypeIri);
-            //}
+            if (attribute.SelectValues != null && attribute.SelectValues.Any())
+                foreach (var value in attribute.SelectValues)
+                    ontologyService.AssertNode(attribute.Iri, Resources.SelectValue, $"mimir:{value}");
 
-            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/qualifier", $"{rootIri}/qualifier/ID{attribute.QualifierId}");
-            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/source", $"{rootIri}/source/ID{attribute.SourceId}");
-            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/condition", $"{rootIri}/condition/ID{attribute.ConditionId}");
-            ontologyService.AssertNode(attribute.IriDatum(), $"{rootIri}/format", $"{rootIri}/format/ID{attribute.FormatId}");
+
+            if (!string.IsNullOrEmpty(attribute.AttributeTypeIri))
+            {
+                ontologyService.AssertNode(attribute.AttributeTypeIri, Resources.Label, attribute.Entity, true);
+                ontologyService.AssertNode(attribute.Iri, Resources.LibraryType, attribute.AttributeTypeIri);
+            }
+
+            var allowedUnits = attribute.GetAllowedUnits();
+            if (allowedUnits != null && allowedUnits.Any())
+                foreach (var value in allowedUnits)
+                    ontologyService.AssertNode(attribute.Iri, Resources.AllowedUnit, $"mimir:{value.Id}-{value.Name}");
+
+            var ado = attribute.AttributeDatumObject();
+            var adp = attribute.Iri.AttributeDatumPredicate();
+            ontologyService.AssertNode(attribute.IriDatum(), adp.QualifierPredicate, ado.QualifierObject);
+            ontologyService.AssertNode(attribute.IriDatum(), adp.SourcePredicate, ado.SourceObject);
+            ontologyService.AssertNode(attribute.IriDatum(), adp.ConditionPredicate, ado.ConditionObject);
+            ontologyService.AssertNode(attribute.IriDatum(), adp.FormatPredicate, ado.FormatObject);
         }
 
+        /// <summary>
+        /// Assert attribute value to graph
+        /// </summary>
+        /// <param name="attribute">Attribute that should have asserted value</param>
+        /// <param name="ontologyService">Ontology Service</param>
+        /// <param name="libRepository">Library repository</param>
+        /// TODO: Library repository should not be here in the future
         public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
         {
             if (string.IsNullOrEmpty(attribute?.Value))
                 return;
 
             var selectedUnit = attribute.GetSelectedUnit(libRepository);
-            var allowedUnits = attribute.GetAllowedUnits();
 
-            // Asserts
             if (!string.IsNullOrEmpty(selectedUnit?.Name))
                 ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, $"xsd:{selectedUnit.Name}"));
             else
@@ -59,10 +84,14 @@ namespace RdfParserModule.Extensions
             ontologyService.AssertNode($"eq:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
             ontologyService.AssertNode($"eq:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
             ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"eq:{attribute.SelectedUnitId}");
-
-            // TODO: Add all allowed units
         }
 
+        /// <summary>
+        /// Get the selected unit
+        /// </summary>
+        /// <param name="attribute">Attribute selected unit</param>
+        /// <param name="libraryRepository">Library Repository</param>
+        /// <returns>The selected unit, if not it returns null</returns>
         public static Unit GetSelectedUnit(this Attribute attribute, ILibRepository libraryRepository)
         {
             var allUnits = libraryRepository.GetUnits().ToList();
@@ -73,17 +102,95 @@ namespace RdfParserModule.Extensions
             return allUnits.FirstOrDefault(x => x.Id == attribute.SelectedUnitId);
         }
 
+        /// <summary>
+        /// Get all allowed units for attribute
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <returns>A list of allowed units</returns>
         public static List<Unit> GetAllowedUnits(this Attribute attribute)
         {
-            if (string.IsNullOrEmpty(attribute.UnitString))
-                return null;
-
-            return JsonConvert.DeserializeObject<List<Unit>>(attribute.UnitString, DefaultSettings.SerializerSettings);
+            return string.IsNullOrWhiteSpace(attribute.UnitString) ?
+                null :
+                JsonConvert.DeserializeObject<List<Unit>>(attribute.UnitString, DefaultSettings.SerializerSettings);
         }
 
+        /// <summary>
+        /// Get the datum iri
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <returns>A datum iri</returns>
         public static string IriDatum(this Attribute attribute)
         {
-            return $"{attribute.Iri}-datum";
+            return attribute.Iri.IriDatum();
+        }
+
+        /// <summary>
+        /// Get attribute datum objects
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <returns>A AttributeDatumObject record</returns>
+        public static AttributeDatumObject AttributeDatumObject(this Attribute attribute)
+        {
+            var rootIri = attribute.Iri.RootIri();
+
+            return new AttributeDatumObject
+            {
+                QualifierObject = $"{rootIri}/qualifier/ID{attribute.QualifierId}",
+                SourceObject = $"{rootIri}/source/ID{attribute.SourceId}",
+                ConditionObject = $"{rootIri}/condition/ID{attribute.ConditionId}",
+                FormatObject = $"{rootIri}/format/ID{attribute.FormatId}"
+            };
+        }
+
+        /// <summary>
+        /// Resolve attribute values from RDF graph
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <param name="ontologyService"></param>
+        /// <param name="iri"></param>
+        /// <param name="nodeIri"></param>
+        /// <param name="interfaceIri"></param>
+        /// <param name="terminalIri"></param>
+        /// <param name="transportIri"></param>
+        /// <param name="simpleIri"></param>
+        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri, string simpleIri)
+        {
+            attribute.Iri = iri;
+            attribute.Entity = ontologyService.GetValue(iri, Resources.Label);
+            attribute.Value = ontologyService.GetValue(iri.IriDatum(), Resources.DatumValue, false);
+            attribute.SelectedUnitId = ontologyService.GetValue(iri.IriDatum(), Resources.DatumUOM);
+            attribute.AttributeTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
+            attribute.AttributeTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
+
+            var adp = iri.AttributeDatumPredicate();
+            attribute.QualifierId = ontologyService.GetValue(iri.IriDatum(), adp.QualifierPredicate, false);
+            attribute.SourceId = ontologyService.GetValue(iri.IriDatum(), adp.SourcePredicate, false);
+            attribute.ConditionId = ontologyService.GetValue(iri.IriDatum(), adp.ConditionPredicate, false);
+            attribute.FormatId = ontologyService.GetValue(iri.IriDatum(), adp.FormatPredicate, false);
+
+            attribute.NodeIri = nodeIri;
+            attribute.InterfaceIri = interfaceIri;
+            attribute.TerminalIri = terminalIri;
+            attribute.TransportIri = transportIri;
+            attribute.SimpleIri = simpleIri;
+
+            // TODO: AttributeAm should have a list of attribute id's
+            var allowedUnitNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
+            attribute.Units = allowedUnitNodes.Select(x =>
+            {
+                var value = x.ResolveValue()?.Split('-', StringSplitOptions.RemoveEmptyEntries);
+                return new UnitAm
+                {
+                    Id = value?[0].Trim(),
+                    Name = value?[1].Trim()
+                };
+            }).ToList();
+
+            var selectValueNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.SelectValue).Select(x => x.Object).ToList();
+            attribute.SelectValues = selectValueNodes.Select(x => x.ResolveValue()).ToList();
+
+            attribute.SelectType = ontologyService.GetEnumValue<SelectType>(iri, Resources.SelectType, false);
+            attribute.Discipline = ontologyService.GetEnumValue<Discipline>(iri, Resources.HasDiscipline, false);
         }
     }
 }

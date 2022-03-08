@@ -14,6 +14,7 @@ using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -76,7 +77,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
         {
-            var project = await _projectRepository.GetAsyncComplete(id);
+            var project = await _projectRepository.GetAsyncComplete(id, null);
 
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
@@ -199,6 +200,8 @@ namespace Mb.Services.Services
                 // Map data
                 _mapper.Map(project, newProject);
 
+                var p = JsonConvert.SerializeObject(newProject);
+
                 await _projectRepository.CreateAsync(newProject);
                 await _projectRepository.SaveAsync();
 
@@ -233,7 +236,7 @@ namespace Mb.Services.Services
                 if (!validation.IsValid)
                     throw new ModelBuilderBadRequestException($"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
-                var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId);
+                var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId, null);
                 if (fromProject == null)
                     throw new ModelBuilderInvalidOperationException("The original project does not exist");
 
@@ -272,8 +275,9 @@ namespace Mb.Services.Services
         /// <param name="id"></param>
         /// <param name="projectAm"></param>
         /// <param name="invokedByDomain"></param>
+        /// <param name="iri"></param>
         /// <returns></returns>
-        public async Task<ProjectResultAm> UpdateProject(string id, ProjectAm projectAm, string invokedByDomain)
+        public async Task<ProjectResultAm> UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
         {
             IDictionary<string, string> remap;
 
@@ -281,7 +285,7 @@ namespace Mb.Services.Services
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try
             {
-                var originalProject = await _projectRepository.GetAsyncComplete(id);
+                var originalProject = await _projectRepository.GetAsyncComplete(id, iri);
 
                 if (originalProject == null)
                     throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
@@ -318,6 +322,10 @@ namespace Mb.Services.Services
                 ResolveLevelAndOrder(updatedProject);
 
                 _projectRepository.Update(updatedProject);
+
+                var added = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Added);
+                var changed = _projectRepository.Context.ChangeTracker.Entries<Edge>().Where(x => x.State == EntityState.Modified);
+                var deleted = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
 
                 await _projectRepository.SaveAsync();
                 await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
@@ -432,10 +440,13 @@ namespace Mb.Services.Services
         /// Check if project exists
         /// </summary>
         /// <param name="projectId"></param>
+        /// <param name="projectIri"></param>
         /// <returns></returns>
-        public bool ProjectExist(string projectId)
+        public bool ProjectExist(string projectId, string projectIri)
         {
-            return _projectRepository.Context.Projects.Any(x => x.Id == projectId);
+            return 
+                _projectRepository.Context.Projects.Any(x => x.Id == projectId) || 
+                _projectRepository.Context.Projects.Any(x => x.Iri == projectIri);
         }
 
         #region Private
@@ -501,6 +512,7 @@ namespace Mb.Services.Services
                 UpdatedBy = userName,
                 LibraryTypeId = name,
                 ProjectId = projectId,
+                ProjectIri = projectIri,
                 MasterProjectIri = projectIri
             };
 

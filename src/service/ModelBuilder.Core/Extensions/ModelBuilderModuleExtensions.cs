@@ -110,7 +110,7 @@ namespace Mb.Core.Extensions
             // Auto-mapper
             var cfg = new MapperConfigurationExpression();
             cfg.AddProfile(new AttributeProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new ConnectorProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new EdgeProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));

@@ -21,10 +21,10 @@ namespace Mb.Data.Repositories
             _mapper = mapper;
         }
 
-        public async Task<Project> GetAsyncComplete(string id)
+        public async Task<Project> GetAsyncComplete(string id, string iri)
         {
             var project = await
-                FindBy(x => x.Id == id)
+                FindBy(x => x.Id == id || x.Iri == iri)
                 .Include(x => x.Edges)
                 .Include("Edges.FromNode")
                 .Include("Edges.ToNode")

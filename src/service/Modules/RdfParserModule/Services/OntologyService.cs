@@ -19,13 +19,15 @@ namespace RdfParserModule.Services
     {
         private readonly IOntologyRepository _ontologyRepository;
         private readonly ILibRepository _libRepository;
+        private readonly IEdgeRepository _edgeRepository;
 
         #region Constructors
 
-        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository)
+        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository, IEdgeRepository edgeRepository)
         {
             _ontologyRepository = ontologyRepository;
             _libRepository = libRepository;
+            _edgeRepository = edgeRepository;
         }
 
         #endregion
@@ -41,7 +43,8 @@ namespace RdfParserModule.Services
         {
             if (project == null)
                 throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
-
+            
+            _ontologyRepository.LoadData(null);
             project.AssertGraph(this);
             BuildNodes(project);
             BuildEdges(project);
@@ -50,10 +53,22 @@ namespace RdfParserModule.Services
         public ProjectAm BuildProject(string rdf)
         {
             _ontologyRepository.LoadData(rdf);
+            
             var project = new ProjectAm();
             project.ResolveProjectInformation(this);
-            project.ResolveRootNodes(this);
-            return null;
+            
+            var existingEdgesFromProject = _edgeRepository.FindBy(x => x.ProjectIri == project.Iri).ToList();
+            foreach (var edge in existingEdgesFromProject)
+            {
+                _edgeRepository.Detach(edge);
+            }
+            
+            project.ResolveNodes(this);
+            project.ResolveTransports(this, existingEdgesFromProject);
+            project.ResolveInterfaces(this, existingEdgesFromProject);
+            project.ResolveRelationEdges(this, existingEdgesFromProject);
+            
+            return project;
         }
 
         /// <summary>
@@ -256,7 +271,7 @@ namespace RdfParserModule.Services
 
             var value = objects.First()?.ResolveValue();
 
-            if(!decimal.TryParse(value.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo, out var data))
+            if(!decimal.TryParse(value?.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo, out var data))
                 throw new InvalidDataException($"{predicate} should always point to a decimal value | Iri: {iri}");
 
             return data;
@@ -329,7 +344,7 @@ namespace RdfParserModule.Services
                 {
                     foreach (var connector in node.Connectors)
                     {
-                        connector.AssertConnector(this, _libRepository);
+                        connector.AssertConnector(this, node.Iri, _libRepository, null);
                     }
                 }
             }
@@ -346,7 +361,7 @@ namespace RdfParserModule.Services
 
             foreach (var edge in project.Edges)
             {
-                edge.AssertEdge(this);
+                edge.AssertEdge(this, _libRepository);
 
                 if (edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
                 {

@@ -288,8 +288,7 @@ namespace Mb.Core.Profiles
                 Type = connectorType,
                 RelationType = relationType,
                 NodeId = null,
-                Node = null,
-                SemanticReference = null
+                Node = null
             };
 
             return await Task.Run(() => relation);

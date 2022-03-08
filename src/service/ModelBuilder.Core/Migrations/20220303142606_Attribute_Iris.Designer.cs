@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220303142606_Attribute_Iris")]
+    partial class Attribute_Iris
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,6 +258,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NodeIri");
 
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -331,13 +337,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
-
-                    b.Property<string>("ProjectIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ProjectIri");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
@@ -603,7 +603,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
                     b.Property<int>("Order")
@@ -628,13 +628,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectId");
-
-                    b.Property<string>("ProjectIri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("ProjectIri");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PurposeString")
                         .HasColumnType("nvarchar(max)")
@@ -677,11 +671,7 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
-
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("ProjectIri");
 
                     b.HasIndex("StatusId");
 
@@ -1146,6 +1136,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
                     b.Property<string>("TerminalCategoryId")
                         .HasColumnType("nvarchar(450)");
 
@@ -1384,10 +1378,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("TerminalTypeId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TerminalTypeId");
-
-                    b.Property<string>("TerminalTypeIri")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("TerminalTypeIri");
 
                     b.HasIndex("TerminalCategoryId");
 

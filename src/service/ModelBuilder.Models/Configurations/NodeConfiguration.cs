@@ -12,6 +12,8 @@ namespace Mb.Models.Configurations
             builder.ToTable("Node");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
+            builder.Property(p => p.ProjectId).HasColumnName("ProjectId").IsRequired();
+            builder.Property(p => p.ProjectIri).HasColumnName("ProjectIri").IsRequired();
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference");
@@ -43,6 +45,10 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Symbol).HasColumnName("Symbol").IsRequired(false);
             builder.Property(p => p.Cost).HasColumnName("Cost").IsRequired(false).HasColumnType("decimal(10,4)");
             builder.Property(p => p.PurposeString).HasColumnName("PurposeString").IsRequired(false);
+
+            builder.HasIndex(x => x.ProjectId).IsUnique(false);
+            builder.HasIndex(x => x.ProjectIri).IsUnique(false);
+            builder.HasIndex(x => x.Name).IsUnique(false);
 
             builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
         }
