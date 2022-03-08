@@ -129,6 +129,7 @@ const TextResources = {
   Inspector_Resize: "Click/drag to resize",
   Inspector_Expand_Panel: "Expand inspector panel",
   Inspector_Close_Panel: "Close inspector panel",
+  Inspector_Inactive_Panel: "Select an object to activate the inspector",
 
   // LibraryModule
   Library_Collections: "Collections",
