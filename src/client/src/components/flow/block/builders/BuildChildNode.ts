@@ -3,7 +3,6 @@ import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage, IsProduct } from "../../../../helpers";
-import { Size } from "../../../../compLibrary/size";
 
 /**
  * Component to create a child node in BlockView.
@@ -19,8 +18,7 @@ const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, spl
   const type = GetNodeTypeString(node);
   const isProduct = IsProduct(node);
   const isOffPage = IsOffPage(node);
-  let nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-  if (isProduct && isOffPage) nodePos = { x: Size.BLOCK_PRODUCT_WIDTH, y: node.positionBlockY };
+  const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
 
   // Force node to fit Block
   const position = !isOffPage ? SetNodePos(nodePos, libOpen, explorerOpen, splitView, isProduct) : nodePos;

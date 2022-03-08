@@ -1,4 +1,4 @@
-import { ArrowHeadType, EdgeProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { Connector } from "../../../../../models";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 
@@ -16,9 +16,7 @@ export const TreeTransportEdge = ({
   sourcePosition,
   targetPosition,
   data,
-  markerEndId,
 }: EdgeProps) => {
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
   const sourceConnector = data.source.connectors?.find((x: Connector) => x.id === data.edge.fromConnector.id) as Connector;
   const color = sourceConnector?.color;
 
@@ -31,13 +29,5 @@ export const TreeTransportEdge = ({
     targetPosition,
   });
 
-  return (
-    <path
-      id={id}
-      style={GetTreeEdgeStyle(color, !data?.edge.isHidden)}
-      className="path-treeTransportEdge"
-      d={smoothStep}
-      markerEnd={markerEnd}
-    />
-  );
+  return <path id={id} style={GetTreeEdgeStyle(color, !data?.edge.isHidden)} className="path-treeTransportEdge" d={smoothStep} />;
 };
