@@ -10,6 +10,8 @@ import { Node } from "../../../models";
 
 const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch: Dispatch) => {
   const selectedNode = GetSelectedNode();
+  console.log(selectedNode?.name);
+  console.log(numberOfSelectedElements);
 
   if (!ValidateBlockViewClick(view, selectedNode, numberOfSelectedElements, dispatch)) return;
 
@@ -21,15 +23,15 @@ const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch:
 export default OnViewClick;
 
 function ValidateBlockViewClick(view: ViewType, selectedNode: Node, numberOfSelectedElements: number, dispatch: Dispatch) {
-  // BlockView can only be opened when a node is selected
-  if (view === VIEW_TYPE.BLOCKVIEW && !selectedNode) {
-    dispatch(setValidation({ valid: false, message: TextResources.Validation_BlockView }));
-    return false;
-  }
-
   // BlockView can not be opened if multiple nodes are selected
   if (numberOfSelectedElements > 1) {
     dispatch(setValidation({ valid: false, message: TextResources.Validation_BlockView_Multiselect }));
+    return false;
+  }
+
+  // BlockView can only be opened when a node is selected
+  if (view === VIEW_TYPE.BLOCKVIEW && !selectedNode) {
+    dispatch(setValidation({ valid: false, message: TextResources.Validation_BlockView }));
     return false;
   }
 
