@@ -32,7 +32,6 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
         strokeLinecap="square"
         className="path-treeRelationTargetEdge"
         d={bezierPath}
-        markerEnd="url(#arrow)"
       />
     </>
   );

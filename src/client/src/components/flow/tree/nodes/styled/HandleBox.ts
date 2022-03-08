@@ -18,8 +18,8 @@ export const HandleBox = styled.div<Props>`
     border-radius: 0;
     bottom: -18px;
     z-index: 1;
-    right: ${(props) => props.position === Position.Right && -6}px;
-    left: ${(props) => props.position === Position.Left && -6}px;
+    right: ${(props) => props.position === Position.Right && 50}%;
+    left: ${(props) => props.position === Position.Left && 50}%;
     top: ${(props) => props.topPos};
     transition: opacity 0.5s ease-in-out;
   }

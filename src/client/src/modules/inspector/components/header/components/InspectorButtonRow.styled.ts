@@ -1,12 +1,8 @@
 import styled from "styled-components";
 import { FontSize } from "../../../../../compLibrary/font";
+import { Color } from "../../../../../compLibrary/colors";
 
-interface InspectorButtonRowContainerProps {
-  visible: boolean;
-}
-
-export const InspectorButtonRowContainer = styled.div<InspectorButtonRowContainerProps>`
-  visibility: ${(props: { visible: boolean }) => !props.visible && "hidden"};
+export const InspectorButtonRowContainer = styled.div`
   display: flex;
   margin-left: auto;
   justify-content: space-evenly;
@@ -24,9 +20,12 @@ export const InspectorButtonRowToggleContainer = styled.button`
   pointer-events: initial;
   border: 0;
   background: transparent;
+  cursor: pointer;
 
-  :hover {
-    cursor: pointer;
+  :disabled {
+    color: ${Color.BLACK};
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 
@@ -34,8 +33,4 @@ export const InspectorButtonRowToggleTitle = styled.span`
   pointer-events: initial;
   font-size: ${FontSize.HEADER};
   height: 100%;
-
-  :hover {
-    cursor: pointer;
-  }
 `;

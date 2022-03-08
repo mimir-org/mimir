@@ -7,7 +7,7 @@ import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModuleDescription } from "../../../../../../models";
 import { TextResources } from "../../../../../../assets/text";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnSaveClick } from "./handlers";
 import {
@@ -23,13 +23,14 @@ export const ExportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const parsers = useAppSelector(commonStateParsersSelector);
-  const [parser, setParser] = useState(parsers[0]);
+  const [parser, setParser] = useState(parsers?.[0]);
   const [fileName, setFileName] = useState("");
-  const hasParser = parser !== null;
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
   const onAction = () => OnSaveClick(dispatch, project, fileName, parser.id);
-  const isActionDisabled = !(fileName && hasParser);
+  const isActionDisabled = !(fileName && parser);
+
+  useEffect(() => setParser(parsers?.[0]), [parsers]);
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>

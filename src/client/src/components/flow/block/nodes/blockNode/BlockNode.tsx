@@ -6,7 +6,7 @@ import { AspectColorType, Connector } from "../../../../../models";
 import { HandleComponent } from "../../handle";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
-import { FilterTerminals } from "../helpers/FilterTerminals";
+import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary/size";
@@ -27,7 +27,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [terminals, setTerminals] = useState<Connector[]>([]);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
-
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -42,7 +41,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node, secondaryNode));
+    setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
