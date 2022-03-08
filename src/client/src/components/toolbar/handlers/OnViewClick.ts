@@ -10,9 +10,6 @@ import { Node } from "../../../models";
 
 const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch: Dispatch) => {
   const selectedNode = GetSelectedNode();
-  console.log(selectedNode?.name);
-  console.log(numberOfSelectedElements);
-
   if (!ValidateBlockViewClick(view, selectedNode, numberOfSelectedElements, dispatch)) return;
 
   dispatch(removeSecondaryNode());
@@ -24,7 +21,7 @@ export default OnViewClick;
 
 function ValidateBlockViewClick(view: ViewType, selectedNode: Node, numberOfSelectedElements: number, dispatch: Dispatch) {
   // BlockView can not be opened if multiple nodes are selected
-  if (numberOfSelectedElements > 1) {
+  if (view === VIEW_TYPE.BLOCKVIEW && numberOfSelectedElements > 1) {
     dispatch(setValidation({ valid: false, message: TextResources.Validation_BlockView_Multiselect }));
     return false;
   }
