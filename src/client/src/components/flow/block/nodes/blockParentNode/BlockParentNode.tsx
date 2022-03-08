@@ -15,6 +15,7 @@ import { BoxWrapper } from "../styled/BoxWrapper";
 import { ResizeHandler } from "./handlers/ResizeHandler";
 import { IsProduct } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
+import { Size } from "../../../../../compLibrary/size";
 
 /**
  * Component for the large parent block in BlockView.
@@ -36,7 +37,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const node = nodes?.find((x) => x.id === data.id);
   const isProduct = IsProduct(node);
   let size = useAppSelector(selectors.nodeSizeSelector);
-  if (isProduct) size = { width: 2500, height: 1600 } as BlockNodeSize;
+  if (isProduct) size = { width: Size.BLOCK_PRODUCT_WIDTH, height: Size.BLOCK_PRODUCT_HEIGHT } as BlockNodeSize;
 
   // Set default zoom on first render
   useEffect(() => {
