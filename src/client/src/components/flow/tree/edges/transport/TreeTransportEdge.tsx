@@ -19,8 +19,11 @@ export const TreeTransportEdge = ({
   markerEndId,
 }: EdgeProps) => {
   const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, markerEndId);
-  const sourceConnector = data.source.connectors?.find((x) => x.id === data.edge.fromConnector.id) as Connector;
+  const sourceConnector = data.source.connectors?.find((x: Connector) => x.id === data.edge.fromConnector.id) as Connector;
   const color = sourceConnector?.color;
+
+  // Adjust to match connector
+  targetX -= 6;
 
   const smoothStep = getSmoothStepPath({
     sourceX,

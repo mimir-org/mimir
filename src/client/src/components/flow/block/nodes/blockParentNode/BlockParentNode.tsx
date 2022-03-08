@@ -5,7 +5,7 @@ import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
-import { FilterTerminals } from "../helpers/FilterTerminals";
+import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
 import { SetParentNodeWidth } from "../../builders/helpers/SetParentNodeWidth";
@@ -22,7 +22,6 @@ import { ResizeHandler } from "./handlers/ResizeHandler";
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const nodes = useAppSelector(selectors.nodeSelector);
@@ -34,7 +33,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const isElectro = useAppSelector(selectors.electroSelector);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node, secondaryNode));
+    setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
