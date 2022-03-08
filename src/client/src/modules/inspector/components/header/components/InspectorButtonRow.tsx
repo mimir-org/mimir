@@ -11,7 +11,7 @@ import { InspectorButtonType } from "../../../../../compLibrary/buttons/inspecto
 import { Project } from "../../../../../models";
 import { IsCreateLibraryType, IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
-import { MutableRefObject, useState } from "react";
+import { MutableRefObject } from "react";
 import { GetSelectedNode, IsAspectNode, IsBlockView } from "../../../../../helpers";
 import {
   InspectorButtonRowContainer,
@@ -40,22 +40,18 @@ export const InspectorButtonRow = ({
   changeInspectorHeightAction,
   dispatch,
 }: Props) => {
-  const [validated, setValidated] = useState(false);
-
   const isLocked = IsCreateLibraryType(element) ? true : element?.isLocked;
+  const isElementSelected = !!element;
   const deleteDisabled =
     isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === GetSelectedNode());
 
+  let inspectorToggleText = open ? TextResources.INSPECTOR_CLOSE : TextResources.INSPECTOR_EXPAND;
+  if (!isElementSelected) inspectorToggleText = TextResources.INSPECTOR_INACTIVE_PANEL;
+
   return (
-    <InspectorButtonRowContainer visible={!!element}>
-      {!IsCreateLibraryType(element) && (
+    <InspectorButtonRowContainer>
+      {!IsCreateLibraryType(element) && isElementSelected && (
         <>
-          {false && ( //TODO: Add validation button back when validation logic has been implemented.
-            <InspectorButton
-              onClick={() => setValidated(!validated)}
-              type={validated ? InspectorButtonType.ValidateCorrect : InspectorButtonType.Validate}
-            />
-          )}
           <InspectorButton
             onClick={() => OnLockClick(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
@@ -69,15 +65,18 @@ export const InspectorButtonRow = ({
           />
         </>
       )}
-      <Tooltip content={open ? TextResources.INSPECTOR_CLOSE : TextResources.INSPECTOR_EXPAND}>
-        <InspectorButtonRowToggleContainer
-          onClick={() =>
-            OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
-          }
-        >
-          <InspectorButtonRowToggleTitle>{TextResources.MODULE_INSPECTOR}</InspectorButtonRowToggleTitle>
-          <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
-        </InspectorButtonRowToggleContainer>
+      <Tooltip content={inspectorToggleText}>
+        <span tabIndex={isElementSelected ? -1 : 0}>
+          <InspectorButtonRowToggleContainer
+            disabled={!isElementSelected}
+            onClick={() =>
+              OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+            }
+          >
+            <InspectorButtonRowToggleTitle>{TextResources.MODULE_INSPECTOR}</InspectorButtonRowToggleTitle>
+            <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
+          </InspectorButtonRowToggleContainer>
+        </span>
       </Tooltip>
     </InspectorButtonRowContainer>
   );

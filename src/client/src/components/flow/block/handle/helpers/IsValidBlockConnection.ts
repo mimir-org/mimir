@@ -1,7 +1,7 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { IsOffPage } from "../../../../../helpers";
+import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
 import { Connector, Node, Project } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
 
@@ -20,7 +20,8 @@ const IsValidBlockConnection = (connection: Connection, project: Project, dispat
 
   const isOffPage = IsOffPage(sourceNode) || IsOffPage(targetNode);
   const isValidTerminalType = ValidateTerminalType(sourceTerminal, targetTerminal);
-  const isValidConnector = ValidateTerminalHasNoEdge(sourceTerminal, targetTerminal, project);
+  const isRelation = IsLocation(sourceNode) || IsLocation(targetNode) || IsProduct(sourceNode) || IsProduct(targetNode);
+  const isValidConnector = !isRelation ? ValidateTerminalHasNoEdge(sourceTerminal, targetTerminal, project) : true;
   const isValidOffPage = isOffPage ? ValidateOffPageNode(sourceNode, targetNode) : true;
 
   document.addEventListener(

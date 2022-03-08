@@ -128,6 +128,7 @@ export const TextResources = {
   INSPECTOR_RESIZE: "Click/drag to resize",
   INSPECTOR_EXPAND: "Expand inspector panel",
   INSPECTOR_CLOSE: "Close inspector panel",
+  INSPECTOR_INACTIVE_PANEL: "Select an object to activate the inspector",
 
   // LibraryModule
   LIBRARY_COLLECTIONS: "Collections",
@@ -289,8 +290,9 @@ export const TextResources = {
   // Validation
   VALIDATION_TERMINALS: "A connection can only be made between two terminals of the same type.",
   VALIDATION_ASPECT: "A relation connection can only be made between two nodes of the same Aspect.",
-  VALIDATION_BLOCKVIEW: "Please selct a node before opening Block View.",
-  VALIDATION_BLOCKVIEW_PROJECT: "Please selct a project before opening Block View.",
+  VALIDATION_BLOCKVIEW: "Please select a node before opening Block View.",
+  VALIDATION_BLOCKVIEW_MULTISELECT: "Please select only one node before opening Block View.",
+  VALIDATION_BLOCKVIEW_PROJECT: "Please select a project before opening Block View.",
   VALIDATION_OFFPAGE: "An off-page node can only be connected with a node of the same type.",
   VALIDATION_ONE_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",

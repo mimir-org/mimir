@@ -1,14 +1,10 @@
 import { Connector, Node } from "../../../../../../models";
-import { ParentBox, ResizeButton } from "./styled";
-import { IsLocation, IsProduct } from "../../../../../../helpers";
+import { ParentBox } from "./styled";
+import { IsLocation } from "../../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../../compLibrary/colors/Color";
-import { ResizeIcon } from "../../../../../../assets/icons/resize";
-import { useRef } from "react";
-import { useResizeParentProductNode } from "./hooks/useResizeParentProductNode";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { useAppDispatch } from "../../../../../../redux/store";
 
 interface Props {
   node: Node;
@@ -37,9 +33,6 @@ export const BlockParentComponent = ({
   onNavigateDownClick,
   onConnectorClick,
 }: Props) => {
-  const dispatch = useAppDispatch();
-  const resizePanelRef = useRef(null);
-  useResizeParentProductNode(node, resizePanelRef, dispatch);
   const isLocation = IsLocation(node);
 
   return (
@@ -53,11 +46,6 @@ export const BlockParentComponent = ({
         onNavigateDownClick={() => onNavigateDownClick()}
         onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
       />
-      {IsProduct(node) && (
-        <ResizeButton ref={resizePanelRef}>
-          <img src={ResizeIcon} alt="resize" />
-        </ResizeButton>
-      )}
       <Background
         variant={isLocation ? BackgroundVariant.Lines : BackgroundVariant.Dots}
         color={isLocation ? Color.GREY : Color.BLUE_DARK}

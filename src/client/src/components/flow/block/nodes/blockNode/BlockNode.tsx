@@ -27,7 +27,6 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [terminals, setTerminals] = useState<Connector[]>([]);
   const initialSize = { width: Size.BLOCK_CHILD_NODE_WIDTH, height: Size.BLOCK_CHILD_NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
-
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);

@@ -95,7 +95,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnMoveEnd = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== transform.zoom || flowTransform?.x !== 0) dispatch(changeFlowTransform(flowTransform));
+    if (flowTransform?.zoom !== transform.zoom) dispatch(changeFlowTransform(flowTransform));
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -127,7 +127,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   useEffect(() => {
     if (transform.zoom < defaultZoom) {
       const x = window.innerWidth / 2;
-      const y = window.innerHeight / 2;
+      const y = window.innerHeight / (transform.zoom + 0.95);
       setCenter(x, y, transform.zoom);
     }
   }, [transform]);
@@ -146,7 +146,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
-    dispatch(changeFlowTransform({ x: 0, y: 0, zoom: defaultZoom }));
   }, []);
 
   return (

@@ -18,7 +18,7 @@ import { FlowTransform } from "react-flow-renderer";
  * @param project
  * @param parentNodeSize
  * @param secondaryNode
- * @param flowTransform
+ * @param transform
  * @param dispatch
  */
 const useOnConnectStop = (
@@ -26,7 +26,7 @@ const useOnConnectStop = (
   project: Project,
   parentNodeSize: BlockNodeSize,
   secondaryNode: boolean,
-  flowTransform: FlowTransform,
+  transform: FlowTransform,
   dispatch: Dispatch
 ) => {
   e.preventDefault();
@@ -53,7 +53,7 @@ const useOnConnectStop = (
 
     const isValidOffPageDrop = ValidateOffPagePosition(
       e.clientX,
-      flowTransform,
+      transform,
       parentNodeSize,
       parentBlockNode?.positionBlockX,
       secondaryNode,
@@ -70,68 +70,45 @@ const useOnConnectStop = (
 
 function ValidateOffPagePosition(
   clientX: number,
-  flowTransform: FlowTransform,
+  transform: FlowTransform,
   parentNodeSize: BlockNodeSize,
   parentXPos: number,
   secondaryNode: boolean,
   isTarget: boolean
 ) {
-  const dropZone = CalculateDropZone(flowTransform, isTarget, parentNodeSize, parentXPos);
+  const leftBound = CalculateDropZone(transform, isTarget, parentNodeSize, parentXPos);
 
   if (secondaryNode) {
     const dropZoneWidth = 100;
-    const rightBound = dropZone + dropZoneWidth;
+    const rightBound = leftBound + dropZoneWidth;
 
-    if (isTarget) return clientX > dropZone && clientX < rightBound;
-    return clientX < dropZone && clientX > dropZone - dropZoneWidth;
+    if (isTarget) return clientX > leftBound && clientX < rightBound;
+    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
   }
 
-  if (isTarget) return clientX > dropZone;
-  return clientX < dropZone;
+  if (isTarget) return clientX > leftBound;
+  return clientX < leftBound;
 }
 
-function CalculateDropZone(flowTransform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
+function CalculateDropZone(transform: FlowTransform, isTarget: boolean, parentNodeSize: BlockNodeSize, parentXPos: number) {
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
-  const zoom = flowTransform.zoom;
-  let leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+  const leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
 
-  if (zoom !== defaultZoom) leftBound = HandleZoomChange(zoom, defaultZoom, leftBound, parentNodeSize, parentXPos, isTarget);
-  // if (x !== defaultX) leftBound = HandleMove(flowTransform, leftBound);
+  if (transform.zoom < defaultZoom) {
+    const parentNodeWidthScaled = parentNodeSize?.width * transform.zoom;
+    const canvasCenterX = window.innerWidth / 2;
+    const targetLeftBound = canvasCenterX + parentNodeWidthScaled / 2;
+    const sourceLeftBound = canvasCenterX - parentNodeWidthScaled / 2;
+    return isTarget ? targetLeftBound : sourceLeftBound;
+  }
+  if (transform.zoom > defaultZoom) {
+    const diff = transform.zoom - defaultZoom;
+    const targetLeftBound = leftBound * diff;
+    const sourceLeftBound = parentXPos - leftBound * transform.zoom;
+    return isTarget ? targetLeftBound : sourceLeftBound;
+  }
 
   return leftBound;
 }
-
-function HandleZoomChange(
-  currentZoom: number,
-  defaultZoom: number,
-  leftBound: number,
-  parentNodeSize: BlockNodeSize,
-  parentXPos: number,
-  isTarget: boolean
-) {
-  let targetLeftBound = 0;
-  let sourceLeftBound = 0;
-
-  if (currentZoom < defaultZoom) {
-    const parentNodeWidthScaled = parentNodeSize?.width * currentZoom;
-    const canvasCenterX = window.innerWidth / 2;
-    targetLeftBound = canvasCenterX + parentNodeWidthScaled / 2;
-    sourceLeftBound = canvasCenterX - parentNodeWidthScaled / 2;
-  }
-  if (currentZoom > defaultZoom) {
-    const diff = currentZoom - defaultZoom;
-    targetLeftBound = leftBound * diff;
-    sourceLeftBound = parentXPos - leftBound * currentZoom;
-  }
-
-  return isTarget ? targetLeftBound : sourceLeftBound;
-}
-
-// function HandleMove(flowTransform: FlowTransform, leftBound: number) {
-//   const diff = flowTransform.x;
-//   leftBound += diff;
-
-//   return leftBound;
-// }
 
 export default useOnConnectStop;
