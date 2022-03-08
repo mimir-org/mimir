@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
@@ -13,6 +13,8 @@ import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../.
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { ResizeHandler } from "./handlers/ResizeHandler";
+import { IsProduct } from "../../../../../helpers";
+import { BlockNodeSize } from "../../../../../models/project";
 
 /**
  * Component for the large parent block in BlockView.
@@ -21,6 +23,7 @@ import { ResizeHandler } from "./handlers/ResizeHandler";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
+  const { setCenter } = useZoomPanHelper();
   const [terminals, setTerminals] = useState<Connector[]>([]);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
@@ -28,21 +31,32 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const elements = useAppSelector(blockElementsSelector);
-  const size = useAppSelector(selectors.nodeSizeSelector);
-  const node = nodes?.find((x) => x.id === data.id);
   const isElectro = useAppSelector(selectors.electroSelector);
+  const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
+  const node = nodes?.find((x) => x.id === data.id);
+  const isProduct = IsProduct(node);
+  let size = useAppSelector(selectors.nodeSizeSelector);
+  if (isProduct) size = { width: 2500, height: 1600 } as BlockNodeSize;
+
+  // Set default zoom on first render
+  useEffect(() => {
+    const marginTop = 70;
+    const x = window.innerWidth / 2;
+    const y = window.innerHeight / 2 - marginTop;
+    setCenter(x, y, zoomLevel);
+  }, []);
 
   useEffect(() => {
     setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
+    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing
   useEffect(() => {
-    ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
+    if (!isProduct) ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   if (!node) return null;
