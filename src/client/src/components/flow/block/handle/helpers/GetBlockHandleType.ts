@@ -1,6 +1,6 @@
 import { Connector } from "../../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
-import { IsInputTerminal, IsInputVisible, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../helpers";
+import { IsInputTerminal, IsInputVisible, IsOutputTerminal, IsOutputVisible } from "../../../helpers";
 
 /**
  * Function to give a handle/terminal a position and type.
@@ -9,14 +9,8 @@ import { IsInputTerminal, IsInputVisible, IsOutputTerminal, IsOutputVisible, IsP
  * @returns a tuple with type and position.
  */
 const GetBlockHandleType = (conn: Connector, electro: boolean): [HandleType, Position] => {
-  let sourcePosition = electro || IsPartOf(conn) ? Position.Bottom : Position.Right;
-  let targetPosition = electro || IsPartOf(conn) ? Position.Top : Position.Left;
-
-  if (electro && IsPartOf(conn)) sourcePosition = Position.Right;
-  if (electro && IsPartOf(conn)) targetPosition = Position.Left;
-
-  if (!electro && IsPartOf(conn)) sourcePosition = Position.Bottom;
-  if (!electro && IsPartOf(conn)) targetPosition = Position.Top;
+  const sourcePosition = electro ? Position.Bottom : Position.Right;
+  const targetPosition = electro ? Position.Top : Position.Left;
 
   if (IsInputTerminal(conn) || IsInputVisible(conn)) return ["target", targetPosition];
   if (IsOutputTerminal(conn) || IsOutputVisible(conn)) return ["source", sourcePosition];

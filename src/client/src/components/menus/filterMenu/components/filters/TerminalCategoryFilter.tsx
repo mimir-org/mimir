@@ -4,6 +4,7 @@ import { Connector, Edge } from "../../../../../models";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
 import { TerminalCategory } from "./TransportFilter";
+
 interface Props {
   category: TerminalCategory;
   edges: Edge[];
