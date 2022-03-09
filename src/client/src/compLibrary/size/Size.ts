@@ -11,6 +11,8 @@ const Size = {
   BLOCK_PARENT_MIN_WIDTH: 500,
   BLOCK_PARENT_WIDTH: window.innerWidth - 250,
   BLOCK_PARENT_HEIGHT: window.innerHeight - 140,
+  BLOCK_PRODUCT_WIDTH: 2500,
+  BLOCK_PRODUCT_HEIGHT: 1600,
 
   // Zoom
   DEFAULT_ZOOM_LEVEL: 1,

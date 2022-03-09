@@ -1,14 +1,19 @@
 import { HandleType, Position } from "react-flow-renderer";
 import { Connector } from "../../../../../models";
-import { IsInputTerminal, IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../helpers";
+import {
+  IsInputTerminal,
+  IsOutputTerminal,
+  IsInputVisible,
+  IsOutputVisible,
+  IsBidirectionalTerminal,
+  IsPartOf,
+} from "../../../helpers";
 
 export const GetHandleType = (conn: Connector): [HandleType, Position] => {
-  if (IsInputTerminal(conn) && IsPartOf(conn)) return ["target", Position.Top];
-  if (!IsInputTerminal(conn) && IsPartOf(conn)) return ["source", Position.Bottom];
+  const sourcePosition = IsPartOf(conn) ? Position.Bottom : Position.Right;
+  const targetPosition = IsPartOf(conn) ? Position.Top : Position.Left;
 
-  if (IsInputTerminal(conn) && IsTransport(conn)) return ["target", Position.Left];
-  if (!IsInputTerminal(conn) && IsTransport(conn)) return ["source", Position.Right];
-
-  if (IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn))) return ["target", Position.Left];
-  if (!IsInputTerminal(conn) && (IsLocationTerminal(conn) || IsProductTerminal(conn))) return ["source", Position.Right];
+  if (IsInputTerminal(conn) || (IsBidirectionalTerminal(conn) && IsInputVisible(conn))) return ["target", targetPosition];
+  if (IsOutputTerminal(conn) || (IsBidirectionalTerminal(conn) && IsOutputVisible(conn))) return ["source", sourcePosition];
+  return ["source", sourcePosition];
 };

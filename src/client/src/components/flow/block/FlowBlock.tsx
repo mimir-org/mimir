@@ -16,7 +16,7 @@ import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, ha
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
-import { changeZoomLevel } from "../../../redux/store/zoom/zoomSlice";
+import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
 import ReactFlow, {
   Elements,
   Node as FlowNode,
@@ -51,7 +51,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
-  const zoomLevel = useAppSelector(selectors.zoomLevelSelector);
+  const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
   const { setCenter } = useZoomPanHelper();
@@ -84,7 +84,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, zoomLevel, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, transform, dispatch);
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -96,8 +96,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 
-  const OnZoomScrollEnd = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== zoomLevel) dispatch(changeZoomLevel(flowTransform.zoom));
+  const OnMoveEnd = (flowTransform: FlowTransform) => {
+    if (flowTransform?.zoom !== transform.zoom) dispatch(changeFlowTransform(flowTransform));
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -127,12 +127,12 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   useEffect(() => {
-    if (zoomLevel < defaultZoom) {
+    if (transform.zoom < defaultZoom) {
       const x = window.innerWidth / 2;
-      const y = window.innerHeight / 2;
-      setCenter(x, y, zoomLevel);
+      const y = window.innerHeight / (transform.zoom + 0.95);
+      setCenter(x, y, transform.zoom);
     }
-  }, [zoomLevel]);
+  }, [transform]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -148,7 +148,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
-    dispatch(changeZoomLevel(defaultZoom));
   }, []);
 
   return (
@@ -166,7 +165,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          onMoveEnd={OnZoomScrollEnd}
+          onMoveEnd={OnMoveEnd}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}

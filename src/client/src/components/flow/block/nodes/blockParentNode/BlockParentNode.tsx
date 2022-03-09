@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
-import { FilterTerminals } from "../helpers/FilterTerminals";
+import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
 import { SetParentNodeWidth } from "../../builders/helpers/SetParentNodeWidth";
@@ -13,6 +13,9 @@ import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../.
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { ResizeHandler } from "./handlers/ResizeHandler";
+import { IsProduct } from "../../../../../helpers";
+import { BlockNodeSize } from "../../../../../models/project";
+import { Size } from "../../../../../compLibrary/size";
 
 /**
  * Component for the large parent block in BlockView.
@@ -21,29 +24,39 @@ import { ResizeHandler } from "./handlers/ResizeHandler";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
+  const { setCenter } = useZoomPanHelper();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const elements = useAppSelector(blockElementsSelector);
-  const size = useAppSelector(selectors.nodeSizeSelector);
-  const node = nodes?.find((x) => x.id === data.id);
   const isElectro = useAppSelector(selectors.electroSelector);
+  const node = nodes?.find((x) => x.id === data.id);
+  const isProduct = IsProduct(node);
+  let size = useAppSelector(selectors.nodeSizeSelector);
+  if (isProduct) size = { width: Size.BLOCK_PRODUCT_WIDTH, height: Size.BLOCK_PRODUCT_HEIGHT } as BlockNodeSize;
+
+  // Set default zoom on first render
+  useEffect(() => {
+    const marginTop = 70;
+    const x = window.innerWidth / 2;
+    const y = window.innerHeight / 2 - marginTop;
+    setCenter(x, y, Size.DEFAULT_ZOOM_LEVEL);
+  }, []);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node, secondaryNode));
+    setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
+    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   // Responsive resizing
   useEffect(() => {
-    ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
+    if (!isProduct) ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
   }, [secondaryNode, libOpen, explorerOpen]);
 
   if (!node) return null;
