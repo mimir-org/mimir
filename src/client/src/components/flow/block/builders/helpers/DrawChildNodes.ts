@@ -9,18 +9,9 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
  * @param project
  * @param selectedNode
  * @param elements
- * @param libOpen
- * @param explorerOpen
  * @param secondaryNode
  */
-const DrawChildNodes = (
-  project: Project,
-  selectedNode: Node,
-  elements: Elements,
-  libOpen: boolean,
-  explorerOpen: boolean,
-  secondaryNode: Node
-) => {
+const DrawChildNodes = (project: Project, selectedNode: Node, elements: Elements, secondaryNode: Node) => {
   const nodes = project.nodes;
   const edges = project.edges;
   const splitView = secondaryNode !== null;
@@ -32,8 +23,8 @@ const DrawChildNodes = (
 
       if (IsOffPage(targetNode)) {
         const isValidOffPage = ValidateOffPageNode(targetNode, selectedNode, secondaryNode, elements, edges, nodes);
-        if (isValidOffPage) elements.push(BuildChildNode(targetNode, libOpen, explorerOpen, splitView));
-      } else elements.push(BuildChildNode(targetNode, libOpen, explorerOpen, splitView));
+        if (isValidOffPage) elements.push(BuildChildNode(targetNode, splitView));
+      } else elements.push(BuildChildNode(targetNode, splitView));
     }
   });
 };

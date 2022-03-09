@@ -10,23 +10,14 @@ import { SetParentNodeWidth } from "../../../builders/helpers/SetParentNodeWidth
  * Component to handle responsive size of a ParentNode in BlockView.
  * @param node
  * @param secondaryNode
- * @param libOpen
- * @param explorerOpen
  * @param elements
  * @param dispatch
  */
-export const ResizeHandler = (
-  node: Node,
-  secondaryNode: Node,
-  libOpen: boolean,
-  explorerOpen: boolean,
-  elements: Elements<Node>,
-  dispatch: Dispatch
-) => {
-  let screenWidth = secondaryNode ? window.innerWidth / 2.4 : window.innerWidth - Size.BLOCK_MARGIN_X;
+export const ResizeHandler = (node: Node, secondaryNode: Node, elements: Elements<Node>, dispatch: Dispatch) => {
+  let screenWidth = secondaryNode ? window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR : window.innerWidth - Size.BLOCK_MARGIN_X;
 
   const updateScreenSize = () => {
-    screenWidth = SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
+    screenWidth = SetParentNodeWidth(secondaryNode !== null, dispatch);
     updateChildXPosition();
   };
 

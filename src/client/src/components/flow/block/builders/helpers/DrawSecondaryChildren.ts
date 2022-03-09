@@ -8,16 +8,8 @@ import { Node, Project } from "../../../../../models";
  * @param project
  * @param secondary
  * @param elements
- * @param libOpen
- * @param explorerOpen
  */
-const DrawSecondaryChildren = (
-  project: Project,
-  secondary: Node,
-  elements: Elements,
-  libOpen: boolean,
-  explorerOpen: boolean
-) => {
+const DrawSecondaryChildren = (project: Project, secondary: Node, elements: Elements) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
@@ -25,7 +17,7 @@ const DrawSecondaryChildren = (
     edges?.forEach((edge) => {
       if (edge.fromNodeId === secondary.id && IsFamily(secondary, edge.toNode)) {
         const targetNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
-        if (targetNode) elements.push(BuildSecondaryChildNode(targetNode, libOpen, explorerOpen));
+        if (targetNode) elements.push(BuildSecondaryChildNode(targetNode));
       }
     });
   }

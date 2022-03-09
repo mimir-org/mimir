@@ -26,8 +26,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const { setCenter } = useZoomPanHelper();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const libOpen = useAppSelector(selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -51,13 +49,13 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode, node?.connectors]);
 
   useEffect(() => {
-    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, libOpen, explorerOpen, dispatch);
-  }, [secondaryNode, libOpen, explorerOpen]);
+    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, dispatch);
+  }, [secondaryNode]);
 
   // Responsive resizing
   useEffect(() => {
-    if (!isProduct) ResizeHandler(node, secondaryNode, libOpen, explorerOpen, elements, dispatch);
-  }, [secondaryNode, libOpen, explorerOpen]);
+    if (!isProduct) ResizeHandler(node, secondaryNode, elements, dispatch);
+  }, [secondaryNode]);
 
   if (!node) return null;
 

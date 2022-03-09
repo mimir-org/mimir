@@ -4,19 +4,16 @@ import { Position } from "../../../../../models/project";
 /**
  * Function to force a secondary child node to fit within the parent block in BlockView.
  * @param nodePos
- * @param libOpen
- * @param explorerOpen
  * @returns an updated position, containing X and Y values.
  */
-
-const SetSecondaryNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean) => {
+const SetSecondaryNodePos = (nodePos: Position) => {
   const margin = 20;
-  const width = window.innerWidth / 2.4;
+  const width = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
 
   const yMin = 30;
   const yMax = window.innerHeight - 180;
-  const xMin = SetXMin(width, explorerOpen, libOpen);
-  const xMax = SetXMax(width, explorerOpen, libOpen);
+  const xMin = width + 300;
+  const xMax = width * 2.1;
 
   let nodeY = nodePos.y;
   let nodeX = nodePos.x;
@@ -28,18 +25,5 @@ const SetSecondaryNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: 
 
   return { x: nodeX, y: nodeY };
 };
-
-function SetXMax(width: number, explorerOpen: boolean, libOpen: boolean) {
-  if (!explorerOpen && libOpen) return width * 1.8;
-  if (explorerOpen && !libOpen) return width * 2.2;
-  if (explorerOpen && libOpen) return width * 1.8;
-  if (!explorerOpen && !libOpen) return width * 2.1;
-}
-
-function SetXMin(width: number, explorerOpen: boolean, libOpen: boolean) {
-  if (!explorerOpen && libOpen) return width + 100;
-  if (explorerOpen && !libOpen) return width + Size.MODULE_OPEN + 70;
-  return width + 300;
-}
 
 export default SetSecondaryNodePos;
