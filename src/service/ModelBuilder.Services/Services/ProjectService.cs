@@ -73,11 +73,12 @@ namespace Mb.Services.Services
         /// The method wil throw a ModelBuilderNotFoundException if not exist
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="iri"></param>
         /// <param name="ignoreNotFound"></param>
         /// <returns></returns>
-        public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
+        public async Task<Project> GetProject(string id, string iri, bool ignoreNotFound = false)
         {
-            var project = await _projectRepository.GetAsyncComplete(id, null);
+            var project = await _projectRepository.GetAsyncComplete(id, iri);
 
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
@@ -168,7 +169,7 @@ namespace Mb.Services.Services
         {
             try
             {
-                var existingProject = await GetProject(project.Id, true);
+                var existingProject = await GetProject(project.Id, null, true);
 
                 if (existingProject != null)
                     throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
@@ -205,7 +206,7 @@ namespace Mb.Services.Services
                 await _projectRepository.CreateAsync(newProject);
                 await _projectRepository.SaveAsync();
 
-                var updatedProject = await GetProject(newProject.Id);
+                var updatedProject = await GetProject(newProject.Id, null);
                 ClearAllChangeTracker();
                 return updatedProject;
             }
@@ -279,6 +280,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<ProjectResultAm> UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
         {
+            ClearAllChangeTracker();
             IDictionary<string, string> remap;
 
             if (string.IsNullOrWhiteSpace(invokedByDomain))
@@ -323,11 +325,22 @@ namespace Mb.Services.Services
 
                 _projectRepository.Update(updatedProject);
 
-                var added = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Added);
-                var changed = _projectRepository.Context.ChangeTracker.Entries<Edge>().Where(x => x.State == EntityState.Modified);
-                var deleted = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+                var added = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Added).ToList();
+                var changed = _projectRepository.Context.ChangeTracker.Entries<Node>().Where(x => x.State == EntityState.Modified).ToList();
+                var deleted = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted).ToList();
 
-                await _projectRepository.SaveAsync();
+                try
+                {
+
+                    await _projectRepository.SaveAsync();
+
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    var error = e.Message;
+                    var entries = e.Entries.ToList();
+                }
+
                 await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
                 await _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), updatedProject.Id);
             }
@@ -341,7 +354,7 @@ namespace Mb.Services.Services
                 ClearAllChangeTracker();
             }
 
-            var project = await GetProject(id);
+            var project = await GetProject(id, iri);
 
             // Return project from database
             return new ProjectResultAm
@@ -358,7 +371,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task DeleteProject(string projectId)
         {
-            var existingProject = await GetProject(projectId);
+            var existingProject = await GetProject(projectId, null);
             if (existingProject == null)
                 throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
 
@@ -376,7 +389,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id)
         {
-            var project = await GetProject(projectId);
+            var project = await GetProject(projectId, null);
 
             if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with id: {id}");
@@ -408,7 +421,7 @@ namespace Mb.Services.Services
 
             var parser = _moduleService.Resolve<IModelBuilderParser>(new Guid(package.Parser));
 
-            var project = await GetProject(package.ProjectId);
+            var project = await GetProject(package.ProjectId, null);
             project.IsSubProject = true;
 
             var data = await parser.SerializeProject(project);
@@ -444,9 +457,13 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public bool ProjectExist(string projectId, string projectIri)
         {
-            return 
+            var exist = 
                 _projectRepository.Context.Projects.Any(x => x.Id == projectId) || 
                 _projectRepository.Context.Projects.Any(x => x.Iri == projectIri);
+
+            ClearAllChangeTracker();
+
+            return exist;
         }
 
         #region Private

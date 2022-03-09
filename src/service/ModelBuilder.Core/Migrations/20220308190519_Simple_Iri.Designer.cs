@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220308190519_Simple_Iri")]
+    partial class Simple_Iri
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

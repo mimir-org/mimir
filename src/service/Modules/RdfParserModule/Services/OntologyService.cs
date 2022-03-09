@@ -4,29 +4,36 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using RdfParserModule.Extensions;
+using RdfParserModule.Models;
 using RdfParserModule.Repositories;
 using VDS.RDF;
 using StringWriter = VDS.RDF.Writing.StringWriter;
 
 namespace RdfParserModule.Services
 {
-    public class OntologyService : IOntologyService
+    public class OntologyService : IOntologyService, IDisposable
     {
         private readonly IOntologyRepository _ontologyRepository;
         private readonly ILibRepository _libRepository;
+        private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
+        private readonly IMapper _mapper;
 
         #region Constructors
 
-        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository, IEdgeRepository edgeRepository)
+        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository, INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository)
         {
             _ontologyRepository = ontologyRepository;
             _libRepository = libRepository;
+            _nodeRepository = nodeRepository;
+            _mapper = mapper;
             _edgeRepository = edgeRepository;
         }
 
@@ -50,6 +57,11 @@ namespace RdfParserModule.Services
             BuildEdges(project);
         }
 
+        /// <summary>
+        /// Build 
+        /// </summary>
+        /// <param name="rdf"></param>
+        /// <returns></returns>
         public ProjectAm BuildProject(string rdf)
         {
             _ontologyRepository.LoadData(rdf);
@@ -57,17 +69,16 @@ namespace RdfParserModule.Services
             var project = new ProjectAm();
             project.ResolveProjectInformation(this);
             
-            var existingEdgesFromProject = _edgeRepository.FindBy(x => x.ProjectIri == project.Iri).ToList();
-            foreach (var edge in existingEdgesFromProject)
-            {
-                _edgeRepository.Detach(edge);
-            }
+            if (string.IsNullOrWhiteSpace(project.Iri))
+                throw new InvalidDataException("Can't parse a project with missing project IRI");
+
+            var applicationData = GetApplicationData(project.Iri); 
             
-            project.ResolveNodes(this);
-            project.ResolveTransports(this, existingEdgesFromProject);
-            project.ResolveInterfaces(this, existingEdgesFromProject);
-            project.ResolveRelationEdges(this, existingEdgesFromProject);
-            
+            project.ResolveNodes(this, applicationData);
+            project.ResolveTransports(this, applicationData);
+            project.ResolveInterfaces(this, applicationData);
+            project.ResolveRelationEdges(this, applicationData);
+
             return project;
         }
 
@@ -301,6 +312,26 @@ namespace RdfParserModule.Services
 
         #region private methods
 
+        private ProjectData GetApplicationData(string projectIri)
+        {
+            var edgeData = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
+            var nodeData = _nodeRepository.GetAll().Include(x => x.Connectors).Where(x => x.ProjectIri == projectIri).ToList();
+            var unitData = _libRepository.GetUnits().ToList();
+
+            var projectData = new ProjectData
+            {
+                Edges = _mapper.Map<List<EdgeAm>>(edgeData),
+                Nodes = _mapper.Map<List<NodeAm>>(nodeData),
+                Units = _mapper.Map<List<UnitAm>>(unitData)
+            };
+
+            _edgeRepository.Context.ChangeTracker.Clear();
+            _nodeRepository.Context.ChangeTracker.Clear();
+            _libRepository.Untrack();
+
+            return projectData;
+        }
+
         /// <summary>
         /// Create a node
         /// </summary>
@@ -345,6 +376,14 @@ namespace RdfParserModule.Services
                     foreach (var connector in node.Connectors)
                     {
                         connector.AssertConnector(this, node.Iri, _libRepository, null);
+                    }
+                }
+
+                if (node.Simples != null && node.Simples.Any())
+                {
+                    foreach (var simple in node.Simples)
+                    {
+                        simple.AssertSimple(this, node.Iri, _libRepository);
                     }
                 }
             }
@@ -392,6 +431,11 @@ namespace RdfParserModule.Services
         {
             var writer = new T();
             return StringWriter.Write(_ontologyRepository.Graph, writer);
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

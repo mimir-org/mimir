@@ -16,19 +16,17 @@ namespace RdfParserModule
     public class RdfParser : IModelBuilderParser
     {
         private ServiceProvider _provider;
-        private IMapper _mapper;
         private IOntologyService _ontologyService;
 
         public void CreateModule(IServiceCollection services, IConfiguration configuration)
         {
             _provider = services.BuildServiceProvider();
-            _mapper = _provider.GetService<IMapper>();
             _ontologyService = _provider.GetService<IOntologyService>();
         }
 
         public ICollection<Profile> GetProfiles()
         {
-            return new List<Profile> { new RdfProfile() };
+            return new List<Profile>();
         }
 
         public ModuleDescription GetModuleDescription()
@@ -55,11 +53,7 @@ namespace RdfParserModule
         public Task<ProjectAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-
-            //var rdf = new RdfDeconstructor(_mapper);
-            //rdf.MakeProject(valueAsString);
             var project = _ontologyService.BuildProject(valueAsString);
-
             return Task.FromResult(project);
         }
 

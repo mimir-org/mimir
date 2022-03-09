@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Models.Application;
-using Mb.Models.Data;
+using RdfParserModule.Models;
 using RdfParserModule.Properties;
 using RdfParserModule.Services;
 
@@ -9,7 +9,7 @@ namespace RdfParserModule.Extensions
 {
     public static class TransportExtensions
     {
-        public static EdgeAm ResolveTransport(this TransportAm transport, IOntologyService ontologyService, ProjectAm project, string iri, IReadOnlyCollection<Edge> existingEdges)
+        public static EdgeAm ResolveTransport(this TransportAm transport, IOntologyService ontologyService, ProjectAm project, string iri, ProjectData projectData)
         {
             var nodeFromConnector = string.Empty;
             var nodeToConnector = string.Empty;
@@ -66,6 +66,12 @@ namespace RdfParserModule.Extensions
                     .Select(x => x.Object).SingleOrDefault()?.ToString();
             }
 
+            //if (inputTerminalNode == null && outputTerminalNode == null)
+            //{
+            //    var inputTerminalNode = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasInputTerminal).Select(x => x.Object).SingleOrDefault();
+            //    var outputTerminalNode = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasOutputTerminal).Select(x => x.Object).SingleOrDefault();
+            //}
+
             foreach (var node in project.Nodes)
             {
                 if (node.Connectors == null)
@@ -84,7 +90,7 @@ namespace RdfParserModule.Extensions
                     break;
             }
 
-            var existingEdge = existingEdges.FirstOrDefault(x =>
+            var existingEdge = projectData?.Edges?.FirstOrDefault(x =>
                 x.FromConnectorIri == nodeFromConnector &&
                 x.ToConnectorIri == nodeToConnector &&
                 x.FromNodeIri == nodeFrom?.Iri &&

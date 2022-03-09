@@ -70,6 +70,15 @@ namespace RdfParserModule.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to imf:bidirectionalTerminal.
+        /// </summary>
+        internal static string BidirectionalTerminal {
+            get {
+                return ResourceManager.GetString("BidirectionalTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:connectedTo.
         /// </summary>
         internal static string ConnectedTo {
@@ -183,6 +192,15 @@ namespace RdfParserModule.Properties {
         internal static string HasAspect {
             get {
                 return ResourceManager.GetString("HasAspect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:hasBidirectionalTerminal.
+        /// </summary>
+        internal static string HasBidirectionalTerminal {
+            get {
+                return ResourceManager.GetString("HasBidirectionalTerminal", resourceCulture);
             }
         }
         
@@ -336,6 +354,15 @@ namespace RdfParserModule.Properties {
         internal static string HasPurpose {
             get {
                 return ResourceManager.GetString("HasPurpose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:hasSimpleType.
+        /// </summary>
+        internal static string HasSimpleType {
+            get {
+                return ResourceManager.GetString("HasSimpleType", resourceCulture);
             }
         }
         
@@ -516,6 +543,15 @@ namespace RdfParserModule.Properties {
         internal static string SelectValue {
             get {
                 return ResourceManager.GetString("SelectValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:simpleType.
+        /// </summary>
+        internal static string SimpleType {
+            get {
+                return ResourceManager.GetString("SimpleType", resourceCulture);
             }
         }
         

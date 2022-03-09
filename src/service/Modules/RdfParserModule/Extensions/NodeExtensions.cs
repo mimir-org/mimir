@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Mb.Data.Contracts;
@@ -8,6 +9,7 @@ using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using RdfParserModule.Models;
 using RdfParserModule.Properties;
 using RdfParserModule.Services;
 using INode = VDS.RDF.INode;
@@ -105,7 +107,6 @@ namespace RdfParserModule.Extensions
             return null;
         }
 
-        // TODO: This is not correct. We have more values ex. ++ etc.
         /// <summary>
         /// Generate RDS string recursively
         /// </summary>
@@ -113,6 +114,7 @@ namespace RdfParserModule.Extensions
         /// <param name="project"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
+        /// TODO: This is not correct. We have more values ex. ++ etc.
         public static string RdsString(this Node node, Project project)
         {
             if (node.IsRoot)
@@ -146,17 +148,18 @@ namespace RdfParserModule.Extensions
         /// <summary>
         /// Resolve aspect node and all references
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="ontologyService"></param>
-        /// <param name="iri"></param>
-        /// <param name="projectIri"></param>
-        /// <param name="isRootNode"></param>
-        /// <exception cref="NullReferenceException"></exception>
-        public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, bool isRootNode)
+        /// <param name="node">The node that should be resolved</param>
+        /// <param name="ontologyService">Ontology Service</param>
+        /// <param name="iri">The IRI of the node</param>
+        /// <param name="projectIri">The IRI of the project</param>
+        /// <param name="isRootNode">Is the node a root node</param>
+        /// <param name="projectData">Existing project data</param>
+        /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
+        public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, bool isRootNode, ProjectData projectData)
         {
-            if(node == null || ontologyService == null)
-                throw new NullReferenceException($"{nameof(node)} or {nameof(ontologyService)} is null.");
-
+            if(node == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
+                throw new InvalidDataException($"Can't resolve a node without required parameters.");
+            
             node.Iri = iri;
             node.ProjectIri = projectIri;
             node.Name = ontologyService.GetValue(iri, Resources.Name, false);
@@ -200,7 +203,18 @@ namespace RdfParserModule.Extensions
             }
 
             // Create all relation nodes
-            node.Connectors = CreateDefaultConnectors(node.Iri, isRootNode);
+            var existingNode = projectData?.Nodes?.FirstOrDefault(x => x.Iri == iri);
+            var existingRelations = existingNode?.Connectors.OfType<RelationAm>().ToList();
+            if (existingRelations != null && existingRelations.Any())
+            {
+                node.Connectors = new List<ConnectorAm>();
+                foreach (var relation in existingRelations)
+                    node.Connectors.Add(relation);
+            }
+            else
+            {
+                node.Connectors = CreateDefaultConnectors(iri, isRootNode);
+            }
 
             // Create all input terminals
             var inputTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasInputTerminal).Select(x => x.Object).ToList();
@@ -212,7 +226,21 @@ namespace RdfParserModule.Extensions
             var outputTerminals = ResolveTerminals(outputTerminalNodes, iri, ontologyService).ToList();
             node.Connectors = node.Connectors.Union(outputTerminals).ToList();
 
+            // Create all bidirectional terminals
+            var bidirectionalTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasBidirectionalTerminal).Select(x => x.Object).ToList();
+            var bidirectionalTerminals = ResolveTerminals(bidirectionalTerminalNodes, iri, ontologyService).ToList();
+            node.Connectors = node.Connectors.Union(bidirectionalTerminals).ToList();
+
+            // Resolve simples
             node.Simples = new List<SimpleAm>();
+            var simples = ontologyService.GetTriplesWithSubjectPredicate(node.Iri, Resources.HasSimpleType).Select(x => x.Object).ToList();
+            
+            foreach (var s in simples)
+            {
+                var simple = new SimpleAm();
+                simple.ResolveSimple(ontologyService, s.ToString(), node.Iri);
+                node.Simples.Add(simple);
+            }
         }
 
         /// <summary>
@@ -251,7 +279,8 @@ namespace RdfParserModule.Extensions
                     Name = RelationType.PartOf.GetDisplayName(),
                     Type = ConnectorType.Output,
                     NodeIri = iri,
-                    RelationType = RelationType.PartOf
+                    RelationType = RelationType.PartOf,
+                    ConnectorVisibility = ConnectorVisibility.None
                 }
             };
 
@@ -264,7 +293,8 @@ namespace RdfParserModule.Extensions
                 Name = RelationType.PartOf.GetDisplayName(),
                 Type = ConnectorType.Input,
                 NodeIri = iri,
-                RelationType = RelationType.PartOf
+                RelationType = RelationType.PartOf,
+                ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
@@ -273,7 +303,8 @@ namespace RdfParserModule.Extensions
                 Name = RelationType.HasLocation.GetDisplayName(),
                 Type = ConnectorType.Input,
                 NodeIri = iri,
-                RelationType = RelationType.HasLocation
+                RelationType = RelationType.HasLocation,
+                ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
@@ -282,7 +313,8 @@ namespace RdfParserModule.Extensions
                 Name = RelationType.HasLocation.GetDisplayName(),
                 Type = ConnectorType.Output,
                 NodeIri = iri,
-                RelationType = RelationType.HasLocation
+                RelationType = RelationType.HasLocation,
+                ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
@@ -291,7 +323,8 @@ namespace RdfParserModule.Extensions
                 Name = RelationType.FulfilledBy.GetDisplayName(),
                 Type = ConnectorType.Input,
                 NodeIri = iri,
-                RelationType = RelationType.FulfilledBy
+                RelationType = RelationType.FulfilledBy,
+                ConnectorVisibility = ConnectorVisibility.None
             });
 
             connectors.Add(new RelationAm
@@ -300,7 +333,8 @@ namespace RdfParserModule.Extensions
                 Name = RelationType.FulfilledBy.GetDisplayName(),
                 Type = ConnectorType.Output,
                 NodeIri = iri,
-                RelationType = RelationType.FulfilledBy
+                RelationType = RelationType.FulfilledBy,
+                ConnectorVisibility = ConnectorVisibility.None
             });
 
             return connectors;

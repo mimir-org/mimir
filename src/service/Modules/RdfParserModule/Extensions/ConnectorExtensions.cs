@@ -12,6 +12,15 @@ namespace RdfParserModule.Extensions
 {
     public static class ConnectorExtensions
     {
+        /// <summary>
+        /// Assert terminal
+        /// </summary>
+        /// <param name="connector">The terminal to be asserted</param>
+        /// <param name="ontologyService">Ontology Service</param>
+        /// <param name="ownerIri">The terminal owner IRI</param>
+        /// <param name="libRepository">Library repository</param>
+        /// <param name="edge">Connected Mimir edge</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ILibRepository libRepository, Edge edge)
         {
             ontologyService.AssertNode(connector.Iri, Resources.Domain, connector.Domain, true);
@@ -44,8 +53,15 @@ namespace RdfParserModule.Extensions
                             if (edge != null)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, edge.ToConnectorIri);
                             break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        //case ConnectorType.Bidirectional:
+                        //    ontologyService.AssertNode(ownerIri, Resources.HasBidirectionalTerminal, terminal.Iri);
+                        //    ontologyService.AssertNode(terminal.Iri, Resources.Type, Resources.BidirectionalTerminal);
+
+                        //    if (edge != null)
+                        //        ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, edge.ToConnectorIri);
+                        //    break;
+                        //default:
+                        //    throw new ArgumentOutOfRangeException();
                     }
 
                     if (terminal.Attributes != null && terminal.Attributes.Any())
@@ -60,35 +76,22 @@ namespace RdfParserModule.Extensions
             }
         }
 
+        /// <summary>
+        /// Check if connector is of type part of
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
         public static bool IsPartOf(this Connector c)
         {
             return c is Relation { RelationType: RelationType.PartOf };
         }
 
-        public static Connector GetParentConnector(this Connector c, Project project)
-        {
-            if (c.IsChildConnector() && c.IsConnected(project))
-            {
-                return (from edge in project.Edges where edge.ToConnectorId == c.Id select edge.FromConnector).FirstOrDefault();
-            }
-            return null;
-        }
-
-        public static bool IsChildConnector(this Connector c)
-        {
-            return c is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Input };
-        }
-
-        public static bool IsParentConnector(this Connector c)
-        {
-            return c is Relation { RelationType: RelationType.PartOf, Type: ConnectorType.Output };
-        }
-
-        public static Connector ConnectedTo(this Connector c, Project project)
-        {
-            return (from edge in project.Edges where edge.FromConnectorId == c.Id select edge.ToConnector).FirstOrDefault();
-        }
-
+        /// <summary>
+        /// Check if connector is connected
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="project"></param>
+        /// <returns></returns>
         public static bool IsConnected(this Connector c, Project project)
         {
             return project.Edges.Any(edge => edge.FromConnectorId == c.Id || edge.ToConnectorId == c.Id);

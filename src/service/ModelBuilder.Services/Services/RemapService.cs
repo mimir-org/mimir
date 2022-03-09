@@ -164,6 +164,21 @@ namespace Mb.Services.Services
                 edge.ProjectId = project.ToId;
                 edge.ProjectIri = project.ToIri;
 
+                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToConnectorId, FromIri = edge.ToConnectorIri });
+                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromConnectorId, FromIri = edge.FromConnectorIri });
+                var toNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToNodeId, FromIri = edge.ToNodeIri });
+                var fromNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromNodeId, FromIri = edge.FromNodeIri });
+
+                edge.ToConnectorId = toConnectorReplacement.ToId;
+                edge.FromConnectorId = fromConnectorReplacement.ToId;
+                edge.ToNodeId = toNodeReplacement.ToId;
+                edge.FromNodeId = fromNodeReplacement.ToId;
+
+                edge.ToConnectorIri = toConnectorReplacement.ToIri;
+                edge.FromConnectorIri = fromConnectorReplacement.ToIri;
+                edge.ToNodeIri = toNodeReplacement.ToIri;
+                edge.FromNodeIri = fromNodeReplacement.ToIri;
+
                 if (string.IsNullOrWhiteSpace(edge.MasterProjectId))
                     edge.MasterProjectId = project.ToId;
 
@@ -355,16 +370,19 @@ namespace Mb.Services.Services
 
             foreach (var simple in simples)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = simple.Id };
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = simple.Id, FromIri = simple.Iri };
                 var simpleReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
                 simpleReplacement.FromId = simple.Id;
+                simpleReplacement.FromIri = simple.Iri;
 
                 var attr = RemapAttributes(simpleReplacement, simple.Attributes, createCopy).ToList();
                 simple.Attributes = attr.Any() ? attr : null;
                 simple.Id = simpleReplacement.ToId;
+                simple.Iri = simpleReplacement.ToIri;
                 simple.NodeId = replacement.ToId;
+                simple.NodeIri = replacement.ToIri;
 
                 yield return simple;
             }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
@@ -8,7 +7,6 @@ using Mb.Models.Exceptions;
 using RdfParserModule.Models;
 using RdfParserModule.Properties;
 using RdfParserModule.Services;
-using VDS.RDF.Query.Expressions.Conditional;
 
 namespace RdfParserModule.Extensions
 {
@@ -109,7 +107,7 @@ namespace RdfParserModule.Extensions
             }
         }
 
-        public static void ResolveEdge(this EdgeAm edge, IOntologyService ontologyService, ProjectAm project, RelationEdge relation, IReadOnlyCollection<Edge> existingEdges)
+        public static void ResolveEdge(this EdgeAm edge, IOntologyService ontologyService, ProjectAm project, RelationEdge relation, ProjectData projectData)
         {
             var fromNode = project.Nodes?.FirstOrDefault(x => x.Iri == relation.ParentIri);
             var toNode = project.Nodes?.FirstOrDefault(x => x.Iri == relation.ChildIri);
@@ -123,16 +121,12 @@ namespace RdfParserModule.Extensions
             if (fromConnector == null || toConnector == null)
                 throw new ModelBuilderBadRequestException($"Can't create an edge. Can't find connectors from IRI. From: {fromConnector?.Iri} to {toConnector?.Iri}");
 
-            var existingEdge = existingEdges.FirstOrDefault(x =>
-                x.FromNodeIri == fromNode.Iri && 
-                x.ToNodeIri == toNode.Iri
+            var existingEdge = projectData?.Edges?.FirstOrDefault(x =>
+                x.FromConnectorIri == fromConnector?.Iri &&
+                x.ToConnectorIri == toConnector?.Iri &&
+                x.FromNodeIri == fromNode?.Iri &&
+                x.ToNodeIri == toNode?.Iri
             );
-
-            if (existingEdge != null)
-            {
-                fromConnector.Iri = existingEdge.FromConnectorIri;
-                toConnector.Iri = existingEdge.ToConnectorIri;
-            }
 
             edge.Iri = existingEdge != null ? existingEdge.Iri : toNode.Iri.StripAndCreateIdIri();
             edge.MasterProjectIri = toNode.MasterProjectIri;

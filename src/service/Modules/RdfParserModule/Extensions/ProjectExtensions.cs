@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -73,9 +74,10 @@ namespace RdfParserModule.Extensions
         /// </summary>
         /// <param name="project">Extended project</param>
         /// <param name="ontologyService">Ontology service</param>
+        /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
         /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
         /// <exception cref="ModelBuilderBadRequestException">Throws if missing root nodes in rdf file, or bad rdf declaration</exception>
-        public static void ResolveNodes(this ProjectAm project, IOntologyService ontologyService)
+        public static void ResolveNodes(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
@@ -91,7 +93,7 @@ namespace RdfParserModule.Extensions
             foreach (var n in rootNodes)
             {
                 var node = new NodeAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, true);
+                node.ResolveNode(ontologyService, n.ToString(), project.Iri, true, projectData);
                 project.Nodes.Add(node);
             }
 
@@ -103,12 +105,12 @@ namespace RdfParserModule.Extensions
             foreach (var n in nodes)
             {
                 var node = new NodeAm();
-                node.ResolveNode(ontologyService, n.ToString(), project.Iri, false);
+                node.ResolveNode(ontologyService, n.ToString(), project.Iri, false, projectData);
                 project.Nodes.Add(node);
             }
         }
 
-        public static void ResolveTransports(this ProjectAm project, IOntologyService ontologyService, IReadOnlyCollection<Edge> existingEdges)
+        public static void ResolveTransports(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             var transportNodes = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.Transport).Select(x => x.Subject).ToList();
 
@@ -116,12 +118,12 @@ namespace RdfParserModule.Extensions
             foreach (var t in transportNodes)
             {
                 var transport = new TransportAm();
-                var edge = transport.ResolveTransport(ontologyService, project, t.ToString(), existingEdges);
+                var edge = transport.ResolveTransport(ontologyService, project, t.ToString(), projectData);
                 project.Edges.Add(edge);
             }
         }
 
-        public static void ResolveInterfaces(this ProjectAm project, IOntologyService ontologyService, IReadOnlyCollection<Edge> existingEdges)
+        public static void ResolveInterfaces(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             var interfaceNodes = ontologyService.GetTriplesWithPredicateObject(Resources.Type, Resources.Interface).Select(x => x.Subject).ToList();
 
@@ -129,12 +131,12 @@ namespace RdfParserModule.Extensions
             foreach (var i in interfaceNodes)
             {
                 var inter = new InterfaceAm();
-                var edge = inter.ResolveInterface(ontologyService, project, i.ToString(), existingEdges);
+                var edge = inter.ResolveInterface(ontologyService, project, i.ToString(), projectData);
                 project.Edges.Add(edge);
             }
         }
 
-        public static void ResolveRelationEdges(this ProjectAm project, IOntologyService ontologyService, IReadOnlyCollection<Edge> existingEdges)
+        public static void ResolveRelationEdges(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             if (project == null || ontologyService == null)
                 throw new NullReferenceException($"{nameof(project)} or {nameof(ontologyService)} is null.");
@@ -158,7 +160,7 @@ namespace RdfParserModule.Extensions
             foreach (var relation in relations)
             {
                 var edge = new EdgeAm();
-                edge.ResolveEdge(ontologyService, project, relation, existingEdges);
+                edge.ResolveEdge(ontologyService, project, relation, projectData);
                 project.Edges.Add(edge);
             }
         }

@@ -222,8 +222,8 @@ namespace Mb.Core.Profiles
 
             CreateMap<SimpleType, Simple>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateId()))
+                .ForMember(dest => dest.Iri, opt => opt.Ignore())
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
                 .ForMember(dest => dest.NodeId, opt => opt.Ignore());
 

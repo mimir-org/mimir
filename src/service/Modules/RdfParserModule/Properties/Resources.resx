@@ -120,6 +120,9 @@
   <data name="AllowedUnit" xml:space="preserve">
     <value>mimir:allowedUnit</value>
   </data>
+  <data name="BidirectionalTerminal" xml:space="preserve">
+    <value>imf:bidirectionalTerminal</value>
+  </data>
   <data name="ConnectedTo" xml:space="preserve">
     <value>imf:connectedTo</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="HasAspect" xml:space="preserve">
     <value>imf:hasAspect</value>
+  </data>
+  <data name="HasBidirectionalTerminal" xml:space="preserve">
+    <value>imf:hasBidirectionalTerminal</value>
   </data>
   <data name="HasBlockPositionX" xml:space="preserve">
     <value>mimir:hasBlockPosX</value>
@@ -209,6 +215,9 @@
   </data>
   <data name="HasPurpose" xml:space="preserve">
     <value>mimir:hasPurpose</value>
+  </data>
+  <data name="HasSimpleType" xml:space="preserve">
+    <value>imf:hasSimpleType</value>
   </data>
   <data name="HasSymbol" xml:space="preserve">
     <value>mimir:symbol</value>
@@ -269,6 +278,9 @@
   </data>
   <data name="SelectValue" xml:space="preserve">
     <value>mimir:selectValue</value>
+  </data>
+  <data name="SimpleType" xml:space="preserve">
+    <value>imf:simpleType</value>
   </data>
   <data name="StreamTerminal" xml:space="preserve">
     <value>imf:streamTerminal</value>

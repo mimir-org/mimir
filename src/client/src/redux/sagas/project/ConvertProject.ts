@@ -173,10 +173,11 @@ export interface TransportAm {
 
 export interface SimpleAm {
   id: string;
+  iri: string;
   name: string;
-  semanticReference: string;
   attributes: AttributeAm[];
   nodeId: string;
+  nodeIri: string;
 }
 
 export interface InterfaceAm {
@@ -318,9 +319,10 @@ const ConvertSimples = (simples: Simple[]): SimpleAm[] => {
   simples.forEach((simple) => {
     converted.push({
       id: simple.id,
+      iri: simple.iri,
       name: simple.name,
-      semanticReference: simple.semanticReference,
       nodeId: simple.nodeId,
+      nodeIri: simple.nodeIri,
       attributes: ConvertAttributes(simple.attributes),
     });
   });

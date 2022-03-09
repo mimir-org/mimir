@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Models.Application;
-using Mb.Models.Data;
+using RdfParserModule.Models;
 using RdfParserModule.Properties;
 using RdfParserModule.Services;
 
@@ -9,7 +9,7 @@ namespace RdfParserModule.Extensions
 {
     public static class InterfaceExtensions
     {
-        public static EdgeAm ResolveInterface(this InterfaceAm inter, IOntologyService ontologyService, ProjectAm project, string iri, IReadOnlyCollection<Edge> existingEdges)
+        public static EdgeAm ResolveInterface(this InterfaceAm inter, IOntologyService ontologyService, ProjectAm project, string iri, ProjectData projectData)
         {
             var nodeFromConnector = string.Empty;
             var nodeToConnector = string.Empty;
@@ -83,8 +83,7 @@ namespace RdfParserModule.Extensions
                 if (nodeFrom != null && nodeTo != null)
                     break;
             }
-
-            var existingEdge = existingEdges.FirstOrDefault(x =>
+            var existingEdge = projectData?.Edges?.FirstOrDefault(x =>
                 x.FromConnectorIri == nodeFromConnector &&
                 x.ToConnectorIri == nodeToConnector &&
                 x.FromNodeIri == nodeFrom?.Iri &&
