@@ -16,11 +16,11 @@ namespace Mb.Models.Attributes
         {
             if (!TryGetProperty(_field1, validationContext, out var property1))
                 return new ValidationResult($"Unknown property: {_field1}", new[] { _field1 });
-            
+
 
             if (!TryGetProperty(_field2, validationContext, out var property2))
                 return new ValidationResult($"Unknown property: {_field2}", new[] { _field1 });
-            
+
 
             if (property1.GetValue(validationContext.ObjectInstance) != null || property2.GetValue(validationContext.ObjectInstance) != null)
                 return ValidationResult.Success;

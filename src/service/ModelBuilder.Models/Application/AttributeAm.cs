@@ -40,16 +40,16 @@ namespace Mb.Models.Application
 
         public string NodeId { get; set; }
         public string NodeIri { get; set; }
-        
+
         public string TransportId { get; set; }
         public string TransportIri { get; set; }
-        
+
         public string InterfaceId { get; set; }
         public string InterfaceIri { get; set; }
 
         public string SimpleId { get; set; }
         public string SimpleIri { get; set; }
-        
+
         public ICollection<string> SelectValues { get; set; }
         public SelectType SelectType { get; set; }
         public Discipline Discipline { get; set; }

@@ -42,7 +42,7 @@ namespace ModelBuilder.Rdf.Extensions
                             ontologyService.AssertNode(ownerIri, Resources.HasInputTerminal, terminal.Iri);
                             ontologyService.AssertNode(terminal.Iri, Resources.Type, Resources.InputTerminal);
 
-                            if(flowDirection != DefaultFlowDirection.NotSet)
+                            if (flowDirection != DefaultFlowDirection.NotSet)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 
                             if (edge != null)
@@ -61,7 +61,7 @@ namespace ModelBuilder.Rdf.Extensions
                         case ConnectorType.Bidirectional:
                             ontologyService.AssertNode(ownerIri, Resources.HasBidirectionalTerminal, terminal.Iri);
                             ontologyService.AssertNode(terminal.Iri, Resources.Type, Resources.BidirectionalTerminal);
-                            
+
                             if (flowDirection != DefaultFlowDirection.NotSet)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasDefaultFlowDirection, flowDirection.ToString(), true);
 

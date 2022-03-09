@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    [Migration("20220305105557_Attribute_Iris_2")]
-    partial class Attribute_Iris_2
+    [Migration("20220309214404_RdfModules")]
+    partial class RdfModules
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -333,7 +333,13 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ProjectId");
+
+                    b.Property<string>("ProjectIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ProjectIri");
 
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
@@ -599,7 +605,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.Property<int>("Order")
@@ -624,7 +630,13 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ProjectId");
+
+                    b.Property<string>("ProjectIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ProjectIri");
 
                     b.Property<string>("PurposeString")
                         .HasColumnType("nvarchar(max)")
@@ -667,7 +679,11 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name");
+
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("ProjectIri");
 
                     b.HasIndex("StatusId");
 
@@ -747,18 +763,23 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
                     b.Property<string>("NodeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("NodeId");
 
-                    b.Property<string>("SemanticReference")
+                    b.Property<string>("NodeIri")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
+                        .HasColumnName("NodeIri");
 
                     b.HasKey("Id");
 

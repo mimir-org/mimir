@@ -31,7 +31,7 @@ namespace ModelBuilder.Rdf.Extensions
             transport.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);
             transport.Label = ontologyService.GetValue(iri, Resources.Label, false);
             transport.Description = ontologyService.GetValue(iri, Resources.Desc, false);
-            
+
             transport.UpdatedBy = ontologyService.GetValue(iri, Resources.UpdatedBy, false);
             transport.Updated = ontologyService.GetDateTimeValue(iri, Resources.LastUpdated, false);
             transport.CreatedBy = ontologyService.GetValue(iri, Resources.CreatedBy, false);
@@ -40,7 +40,7 @@ namespace ModelBuilder.Rdf.Extensions
 
             transport.Attributes = new List<AttributeAm>();
             var attributes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
-            
+
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();

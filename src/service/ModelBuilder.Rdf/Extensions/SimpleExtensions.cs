@@ -21,9 +21,9 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(parentIri, Resources.HasSimpleType, simple.Iri);
             ontologyService.AssertNode(simple.Iri, Resources.Label, simple.Name, true);
 
-            if (simple.Attributes == null || !simple.Attributes.Any()) 
+            if (simple.Attributes == null || !simple.Attributes.Any())
                 return;
-            
+
             foreach (var attribute in simple.Attributes)
             {
                 attribute.AssertAttribute(simple.Iri, ontologyService);

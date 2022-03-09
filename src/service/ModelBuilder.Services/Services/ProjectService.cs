@@ -457,8 +457,8 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public bool ProjectExist(string projectId, string projectIri)
         {
-            var exist = 
-                _projectRepository.Context.Projects.Any(x => x.Id == projectId) || 
+            var exist =
+                _projectRepository.Context.Projects.Any(x => x.Id == projectId) ||
                 _projectRepository.Context.Projects.Any(x => x.Iri == projectIri);
 
             ClearAllChangeTracker();

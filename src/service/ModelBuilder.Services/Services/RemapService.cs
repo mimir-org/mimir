@@ -302,7 +302,7 @@ namespace Mb.Services.Services
 
         private static bool ShouldReplace(string id, string fromId, string iri, string fromIri)
         {
-            if(id == fromId && !string.IsNullOrWhiteSpace(id))
+            if (id == fromId && !string.IsNullOrWhiteSpace(id))
                 return true;
 
             if (iri == fromIri && !string.IsNullOrWhiteSpace(iri))

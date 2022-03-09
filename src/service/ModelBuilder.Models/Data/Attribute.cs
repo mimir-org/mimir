@@ -27,7 +27,7 @@ namespace Mb.Models.Data
 
         // Unit
         public string SelectedUnitId { get; set; }
-        
+
         [NotMapped]
         public virtual ICollection<Unit> Units { get; set; }
 
@@ -81,7 +81,7 @@ namespace Mb.Models.Data
 
         public SelectType SelectType { get; set; }
         public Discipline Discipline { get; set; }
-        
+
         public virtual HashSet<string> Tags { get; set; }
 
         public bool IsLocked { get; set; }

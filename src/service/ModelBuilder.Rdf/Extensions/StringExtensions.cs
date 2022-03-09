@@ -75,8 +75,8 @@ namespace ModelBuilder.Rdf.Extensions
                 return null;
 
             var parsedIri = new Uri(iri);
-            return string.IsNullOrEmpty(parsedIri.Fragment) ? 
-                parsedIri.Segments.Last().Replace("ID", string.Empty).Trim() : 
+            return string.IsNullOrEmpty(parsedIri.Fragment) ?
+                parsedIri.Segments.Last().Replace("ID", string.Empty).Trim() :
                 parsedIri.Fragment[1..].Replace("ID", string.Empty).Trim();
         }
 

@@ -12,7 +12,7 @@ namespace Mb.Models
 
         [Required]
         public string Name { get; set; }
-        
+
         [Required]
         public Aspect Aspect { get; set; }
 
@@ -29,7 +29,7 @@ namespace Mb.Models
 
         [Required]
         public string AttributeQualifier { get; set; }
-        
+
         [Required]
         public string AttributeSource { get; set; }
 

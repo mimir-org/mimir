@@ -16,7 +16,7 @@ namespace ModelBuilder.Tests.Extensions
             var domain = iri.FindDomain();
             Assert.Equal("equinor.com", domain);
         }
-        
+
         [Theory]
         [InlineData(@"https://rdf .equinor. com /raw/mimir/")]
         [InlineData(@"rdf.equinor.com/raw/mimir/")]

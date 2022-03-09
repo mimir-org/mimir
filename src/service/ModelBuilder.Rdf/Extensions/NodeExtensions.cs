@@ -153,9 +153,9 @@ namespace ModelBuilder.Rdf.Extensions
         /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
         public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, bool isRootNode, ProjectData projectData)
         {
-            if(node == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
+            if (node == null || ontologyService == null || string.IsNullOrWhiteSpace(iri) || string.IsNullOrWhiteSpace(projectIri))
                 throw new InvalidDataException($"Can't resolve a node without required parameters.");
-            
+
             node.Iri = iri;
             node.ProjectIri = projectIri;
             node.Name = ontologyService.GetValue(iri, Resources.Name, false);
@@ -182,7 +182,7 @@ namespace ModelBuilder.Rdf.Extensions
 
             // TODO: NodeAm should only have purpose id or name
             var purposeId = ontologyService.GetValue(iri, Resources.HasPurpose, false);
-            node.Purpose = string.IsNullOrWhiteSpace(purposeId) ? null : new Purpose {Id = purposeId};
+            node.Purpose = string.IsNullOrWhiteSpace(purposeId) ? null : new Purpose { Id = purposeId };
 
             node.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
             node.IsRoot = isRootNode;
@@ -190,7 +190,7 @@ namespace ModelBuilder.Rdf.Extensions
             // Resolve Attributes
             node.Attributes = new List<AttributeAm>();
             var attributes = ontologyService.GetTriplesWithSubjectPredicate(node.Iri, Resources.HasPhysicalQuantity).Select(x => x.Object).ToList();
-            
+
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
@@ -230,7 +230,7 @@ namespace ModelBuilder.Rdf.Extensions
             // Resolve simples
             node.Simples = new List<SimpleAm>();
             var simples = ontologyService.GetTriplesWithSubjectPredicate(node.Iri, Resources.HasSimpleType).Select(x => x.Object).ToList();
-            
+
             foreach (var s in simples)
             {
                 var simple = new SimpleAm();
@@ -248,9 +248,9 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static IEnumerable<TerminalAm> ResolveTerminals(List<INode> nodes, string nodeIri, IOntologyService ontologyService)
         {
-            if (!nodes.Any()) 
+            if (!nodes.Any())
                 yield break;
-            
+
             foreach (var node in nodes)
             {
                 var terminal = new TerminalAm();
@@ -280,9 +280,9 @@ namespace ModelBuilder.Rdf.Extensions
                 }
             };
 
-            if (isRoot) 
+            if (isRoot)
                 return connectors;
-            
+
             connectors.Add(new RelationAm
             {
                 Iri = iri.StripAndCreateIdIri(),

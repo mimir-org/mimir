@@ -46,7 +46,7 @@ namespace ModelBuilder.Rdf.Services
         {
             if (project == null)
                 throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
-            
+
             _ontologyRepository.LoadData(null);
             project.AssertGraph(this);
             BuildNodes(project);
@@ -61,15 +61,15 @@ namespace ModelBuilder.Rdf.Services
         public ProjectAm BuildProject(string rdf)
         {
             _ontologyRepository.LoadData(rdf);
-            
+
             var project = new ProjectAm();
             project.ResolveProjectInformation(this);
-            
+
             if (string.IsNullOrWhiteSpace(project.Iri))
                 throw new InvalidDataException("Can't parse a project with missing project IRI");
 
-            var applicationData = GetApplicationData(project.Iri); 
-            
+            var applicationData = GetApplicationData(project.Iri);
+
             project.ResolveNodes(this, applicationData);
             project.ResolveTransports(this, applicationData);
             project.ResolveInterfaces(this, applicationData);
@@ -257,7 +257,7 @@ namespace ModelBuilder.Rdf.Services
 
             var value = objects.First()?.ResolveValue();
 
-            if(!DateTime.TryParse(value, out var data))
+            if (!DateTime.TryParse(value, out var data))
                 throw new InvalidDataException($"{predicate} should always be a datetime | Iri: {iri}");
 
             return data;
@@ -278,7 +278,7 @@ namespace ModelBuilder.Rdf.Services
 
             var value = objects.First()?.ResolveValue();
 
-            if(!decimal.TryParse(value?.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo, out var data))
+            if (!decimal.TryParse(value?.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo, out var data))
                 throw new InvalidDataException($"{predicate} should always point to a decimal value | Iri: {iri}");
 
             return data;
@@ -298,7 +298,7 @@ namespace ModelBuilder.Rdf.Services
                 throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
 
             var value = objects.First()?.ResolveValue();
-            if(!Enum.TryParse<T>(value, true, out var val))
+            if (!Enum.TryParse<T>(value, true, out var val))
                 throw new InvalidDataException($"{predicate} should always point to an enum value | Iri: {iri}");
 
             return val;
