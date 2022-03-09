@@ -21,7 +21,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
   inputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Input;
   inputTerminal.nodeId = null;
   outputTerminal.id = CreateId();
-  outputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Output;;
+  outputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Output;
   outputTerminal.nodeId = null;
 
   if (inputTerminal?.attributes) {
