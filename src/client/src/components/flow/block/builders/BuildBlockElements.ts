@@ -13,6 +13,7 @@ import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers
  */
 const BuildBlockElements = (project: Project, selectedNode: Node, secondaryNode: Node, animatedEdge: boolean) => {
   if (!project) return;
+
   const elements: Elements = [];
   const splitView = secondaryNode !== null;
 

@@ -38,6 +38,8 @@ interface Props {
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
+  const { setCenter } = useZoomPanHelper();
+
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
@@ -52,7 +54,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
   const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
-  const { setCenter } = useZoomPanHelper();
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
