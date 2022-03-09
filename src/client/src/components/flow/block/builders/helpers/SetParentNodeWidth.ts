@@ -8,11 +8,9 @@ import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
  * @param dispatch
  */
 export const SetParentNodeWidth = (secondaryNode: boolean, dispatch: Dispatch) => {
-  const screenWidth = secondaryNode ? window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR : window.innerWidth - Size.BLOCK_MARGIN_X;
-  const marginX = -30;
-  let width = screenWidth - marginX;
-
+  let width = !secondaryNode ? window.innerWidth - Size.BLOCK_MARGIN_X : window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
   if (width > Size.BLOCK_PARENT_MAX_WIDTH) width = Size.BLOCK_PARENT_MAX_WIDTH;
+
   dispatch(setBlockNodeSize({ width, height: Size.BLOCK_PARENT_HEIGHT }));
   return width;
 };

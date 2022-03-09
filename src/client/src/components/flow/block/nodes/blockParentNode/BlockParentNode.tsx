@@ -48,13 +48,13 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
-  useEffect(() => {
-    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, dispatch);
-  }, [secondaryNode]);
-
   // Responsive resizing
   useEffect(() => {
     if (!isProduct) ResizeHandler(node, secondaryNode, elements, dispatch);
+  }, []);
+
+  useEffect(() => {
+    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, dispatch);
   }, [secondaryNode]);
 
   if (!node) return null;

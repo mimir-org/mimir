@@ -5,8 +5,7 @@ const Size = {
 
   // BlockView
   BLOCK_MARGIN_Y: 40,
-  BLOCK_MARGIN_X: 250,
-  BLOCK_MARGIN_BOTTOM: 200,
+  BLOCK_MARGIN_X: 220,
   BLOCK_PARENT_MAX_WIDTH: 2650,
   BLOCK_PARENT_MIN_WIDTH: 500,
   BLOCK_PARENT_MIN_HEIGHT: 900,
@@ -19,9 +18,6 @@ const Size = {
 
   // Zoom
   DEFAULT_ZOOM_LEVEL: 1,
-
-  // Terminals
-  TERMINALS_INTERVAL: 22.5,
 
   // Modules
   MODULE_OPEN: 400,

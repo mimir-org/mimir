@@ -3,7 +3,7 @@ import { BlockNodeSize } from "./types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  size: { width: Size.BLOCK_PARENT_WIDTH, height: window.innerHeight - Size.BLOCK_MARGIN_BOTTOM },
+  size: { width: Size.BLOCK_PARENT_WIDTH, height: window.innerHeight - Size.BLOCK_MARGIN_Y },
 };
 
 export const blockNodeSizeSlice = createSlice({

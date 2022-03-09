@@ -17,8 +17,9 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
   const screenWidth = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
   const distanceToPrimaryNode = Size.BLOCK_SPLITVIEW_DISTANCE;
 
+  // The secondaryNode is positioned to the right of the primaryNode
   const position = {
-    x: primaryNode.positionBlockX + screenWidth + distanceToPrimaryNode,
+    x: primaryNode.positionBlockX + distanceToPrimaryNode + screenWidth,
     y: primaryNode.positionBlockY,
   };
 

@@ -14,12 +14,10 @@ const BuildChildNode = (node: Node, splitView: boolean) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
-  const isProduct = IsProduct(node);
-  const isOffPage = IsOffPage(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
 
   // Force node to fit Block
-  const position = !isOffPage ? SetNodePos(nodePos, splitView, isProduct) : nodePos;
+  const position = !IsOffPage(node) ? SetNodePos(nodePos, splitView, IsProduct(node)) : nodePos;
 
   return {
     key: CreateId(),
