@@ -3,7 +3,6 @@ import { TextResources } from "../../../../assets/text";
 import { Size } from "../../../../compLibrary/size";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { SetParentBlockMarginRight } from "./helpers/SetParentNodeWidth";
 
 /**
  * Component to create a secondary parent node in BlockView.
@@ -16,11 +15,10 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
 
   const type = TextResources.Type_BlockParentNode;
   const screenWidth = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
-  const distanceToPrimaryNode = 150;
-  const marginX = SetParentBlockMarginRight(true);
+  const distanceToPrimaryNode = 100;
 
   const position = {
-    x: primaryNode.positionBlockX + screenWidth - marginX + distanceToPrimaryNode,
+    x: primaryNode.positionBlockX + screenWidth + distanceToPrimaryNode,
     y: primaryNode.positionBlockY,
   };
 
