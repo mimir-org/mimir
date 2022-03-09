@@ -1,5 +1,5 @@
 using System;
-using RdfParserModule.Extensions;
+using ModelBuilder.Rdf.Extensions;
 using Xunit;
 
 namespace ModelBuilder.Tests.Extensions

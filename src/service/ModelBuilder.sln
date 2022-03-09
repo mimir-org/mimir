@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultParserModule", "Modu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\EventHubModule\EventHubModule.csproj", "{AA11C55D-75F7-4BF8-8FB1-E12D0664D57D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdfParserModule", "Modules\RdfParserModule\RdfParserModule.csproj", "{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdfNTriplesParser", "Modules\RdfNTriplesParser\RdfNTriplesParser.csproj", "{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.TypeEditor.Core", "ModelBuilder.TypeEditor.Core\ModelBuilder.TypeEditor.Core.csproj", "{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}"
 EndProject
@@ -36,6 +36,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Tests", "Tests\ModelBuilder.Tests\ModelBuilder.Tests.csproj", "{F5117706-7A8B-49FF-8CB1-C60983519046}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationInsightsLoggingModule", "Modules\ApplicationInsightsLoggingModule\ApplicationInsightsLoggingModule.csproj", "{1B5795E6-6A4D-4E00-8051-BD565BB51021}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Rdf", "ModelBuilder.Rdf\ModelBuilder.Rdf.csproj", "{F577256B-8EBF-4DBA-9485-0CACD58FD08B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdfTurtleParser", "RdfTurtleParser\RdfTurtleParser.csproj", "{F5D89D14-5525-4476-9AFE-460AE1E1CE74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdfJsonLdParser", "RdfJsonLdParser\RdfJsonLdParser.csproj", "{F660CFDA-50B9-44EE-B22B-083381A163E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +109,18 @@ Global
 		{1B5795E6-6A4D-4E00-8051-BD565BB51021}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B5795E6-6A4D-4E00-8051-BD565BB51021}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B5795E6-6A4D-4E00-8051-BD565BB51021}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F577256B-8EBF-4DBA-9485-0CACD58FD08B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F577256B-8EBF-4DBA-9485-0CACD58FD08B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F577256B-8EBF-4DBA-9485-0CACD58FD08B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F577256B-8EBF-4DBA-9485-0CACD58FD08B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5D89D14-5525-4476-9AFE-460AE1E1CE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5D89D14-5525-4476-9AFE-460AE1E1CE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5D89D14-5525-4476-9AFE-460AE1E1CE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5D89D14-5525-4476-9AFE-460AE1E1CE74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F660CFDA-50B9-44EE-B22B-083381A163E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F660CFDA-50B9-44EE-B22B-083381A163E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F660CFDA-50B9-44EE-B22B-083381A163E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F660CFDA-50B9-44EE-B22B-083381A163E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +133,8 @@ Global
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{F5117706-7A8B-49FF-8CB1-C60983519046} = {7C74EBBC-C332-45D2-87C4-90B3FBB2D512}
 		{1B5795E6-6A4D-4E00-8051-BD565BB51021} = {C5359E03-91E7-405A-803A-11182980C4E9}
+		{F5D89D14-5525-4476-9AFE-460AE1E1CE74} = {C5359E03-91E7-405A-803A-11182980C4E9}
+		{F660CFDA-50B9-44EE-B22B-083381A163E4} = {C5359E03-91E7-405A-803A-11182980C4E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61D7DEB6-5F0A-42C7-BDD9-B863F85B57F4}
