@@ -5,10 +5,8 @@ import { Project, ProjectConverterAm } from "../../../../../../../models";
 import { ConvertProject } from "../../../../../../../redux/sagas/project";
 import { Dispatch } from "redux";
 
-const OnSaveClick = (dispatch: Dispatch, project: Project, fileName: string, parserId: string) => {
-  if (!project) {
-    throw Error(TextResources.ERROR_EXPORT_PROJECT);
-  }
+const OnExportProjectFileClick = (dispatch: Dispatch, project: Project, fileName: string, parserId: string) => {
+  if (!project) throw Error(TextResources.ERROR_EXPORT_PROJECT);
 
   const convertedProject = ConvertProject(project);
 
@@ -22,4 +20,4 @@ const OnSaveClick = (dispatch: Dispatch, project: Project, fileName: string, par
   dispatch(changeActiveMenu(null));
 };
 
-export default OnSaveClick;
+export default OnExportProjectFileClick;

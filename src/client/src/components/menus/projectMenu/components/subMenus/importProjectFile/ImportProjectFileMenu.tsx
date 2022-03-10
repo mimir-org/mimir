@@ -12,7 +12,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useFilePicker } from "use-file-picker";
 import { useEffect, useState } from "react";
 import { ModuleDescription } from "../../../../../../models";
-import { OnProjectSaveClick, OnReturnClick } from "./handlers";
+import { OnImportProjectFileClick, OnReturnClick } from "./handlers";
 import {
   commonStateParsersSelector,
   isActiveMenuSelector,
@@ -40,7 +40,7 @@ export const ImportProjectFileMenu = () => {
 
   const selectedText = plainFiles?.[0]?.name ?? TextResources.PROJECT_IMPORT_SELECT;
   const data = GetProjectFileData(filesContent, parser);
-  const onAction = () => OnProjectSaveClick(clear, dispatch, data);
+  const onAction = () => OnImportProjectFileClick(clear, dispatch, data);
   const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (

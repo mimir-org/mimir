@@ -7,7 +7,7 @@ import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/i
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
-import { OnReturnClick, OnSaveClick } from "./handlers";
+import { OnReturnClick, OnExportLibraryClick } from "./handlers";
 import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../../redux/store";
 
 export const ExportLibraryFileMenu = () => {
@@ -15,7 +15,7 @@ export const ExportLibraryFileMenu = () => {
   const [fileName, setFileName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
-  const onAction = () => OnSaveClick(dispatch, fileName);
+  const onAction = () => OnExportLibraryClick(dispatch, fileName);
   const isActionDisabled = !fileName;
 
   return (
