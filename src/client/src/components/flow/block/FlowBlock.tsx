@@ -56,10 +56,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge));
+      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge]
+    [project, node, secondaryNode, animatedEdge, parentNodeSize]
   );
 
   const OnElementsRemove = (elementsToRemove: Elements) => {

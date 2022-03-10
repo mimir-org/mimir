@@ -3,21 +3,21 @@ import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage, IsProduct } from "../../../../helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to create a child node in BlockView.
  * @param node
- * @param splitView
  * @returns a node of the type FlowElement.
  */
-const BuildChildNode = (node: Node, splitView: boolean) => {
+const BuildChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
 
   // Force node to fit Block
-  const position = !IsOffPage(node) ? SetNodePos(nodePos, splitView, IsProduct(node)) : nodePos;
+  const position = !IsOffPage(node) ? SetNodePos(nodePos, IsProduct(node), parentNodeSize) : nodePos;
 
   return {
     key: CreateId(),

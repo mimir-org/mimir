@@ -2,6 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentNode, BuildSecondaryParentNode } from ".";
 import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to draw all nodes and edges in BlockView.
@@ -9,9 +10,16 @@ import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers
  * @param selectedNode
  * @param secondaryNode
  * @param animatedEdge
+ * @param parentNodeSize
  * @returns all Elements.
  */
-const BuildBlockElements = (project: Project, selectedNode: Node, secondaryNode: Node, animatedEdge: boolean) => {
+const BuildBlockElements = (
+  project: Project,
+  selectedNode: Node,
+  secondaryNode: Node,
+  animatedEdge: boolean,
+  parentNodeSize: BlockNodeSize
+) => {
   if (!project) return;
 
   const elements: Elements = [];
@@ -24,10 +32,10 @@ const BuildBlockElements = (project: Project, selectedNode: Node, secondaryNode:
     const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
     const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary);
     if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
-    DrawSecondaryChildren(project, secondaryNode, elements);
+    DrawSecondaryChildren(project, secondaryNode, elements, parentNodeSize);
   }
 
-  DrawChildNodes(project, selectedNode, elements, secondaryNode);
+  DrawChildNodes(project, selectedNode, elements, secondaryNode, parentNodeSize);
   DrawBlockEdges(project, elements, secondaryNode, animatedEdge);
 
   return elements;
