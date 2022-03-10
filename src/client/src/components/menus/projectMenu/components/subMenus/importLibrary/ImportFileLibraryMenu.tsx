@@ -22,7 +22,7 @@ export const ImportFileLibraryMenu = () => {
     limitFilesConfig: { min: 1, max: 1 },
   });
 
-  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
+  const selectedText = plainFiles?.[0]?.name ?? TextResources.PROJECT_IMPORT_SELECT;
   const onAction = () => OnImportLibraryClick(clear, dispatch, plainFiles[0]);
   const isActionDisabled = filesContent?.length <= 0 || plainFiles?.length <= 0;
 
