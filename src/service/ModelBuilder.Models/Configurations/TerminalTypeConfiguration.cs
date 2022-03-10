@@ -13,7 +13,6 @@ namespace Mb.Models.Configurations
             builder.ToTable("TerminalType");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
-            builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
 
             builder.HasOne(x => x.TerminalCategory).WithMany(y => y.TerminalTypes).HasForeignKey(x => x.TerminalCategoryId).OnDelete(DeleteBehavior.Cascade);
 

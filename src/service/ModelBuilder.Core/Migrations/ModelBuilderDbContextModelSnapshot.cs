@@ -47,6 +47,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("AttributeTypeId");
 
+                    b.Property<string>("AttributeTypeIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AttributeTypeIri");
+
                     b.Property<string>("ConditionId")
                         .HasColumnType("nvarchar(450)");
 
@@ -66,6 +70,10 @@ namespace Mb.Core.Migrations
                     b.Property<string>("InterfaceId")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("InterfaceId");
+
+                    b.Property<string>("InterfaceIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("InterfaceIri");
 
                     b.Property<string>("Iri")
                         .IsRequired()
@@ -110,13 +118,13 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SelectedUnitId");
 
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
                     b.Property<string>("SimpleId")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("SimpleId");
+
+                    b.Property<string>("SimpleIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SimpleIri");
 
                     b.Property<string>("SourceId")
                         .HasColumnType("nvarchar(450)");
@@ -129,9 +137,17 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("TerminalId");
 
+                    b.Property<string>("TerminalIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalIri");
+
                     b.Property<string>("TransportId")
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("TransportId");
+
+                    b.Property<string>("TransportIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TransportIri");
 
                     b.Property<string>("UnitString")
                         .HasColumnType("nvarchar(max)")
@@ -240,10 +256,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NodeIri");
 
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -319,7 +331,13 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ProjectId");
+
+                    b.Property<string>("ProjectIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ProjectIri");
 
                     b.Property<string>("ToConnectorId")
                         .IsRequired()
@@ -585,7 +603,7 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Name");
 
                     b.Property<int>("Order")
@@ -610,7 +628,13 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("ProjectId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ProjectId");
+
+                    b.Property<string>("ProjectIri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("ProjectIri");
 
                     b.Property<string>("PurposeString")
                         .HasColumnType("nvarchar(max)")
@@ -653,7 +677,11 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name");
+
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("ProjectIri");
 
                     b.HasIndex("StatusId");
 
@@ -733,18 +761,23 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
+                    b.Property<string>("Iri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Iri");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
                     b.Property<string>("NodeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("NodeId");
 
-                    b.Property<string>("SemanticReference")
+                    b.Property<string>("NodeIri")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
+                        .HasColumnName("NodeIri");
 
                     b.HasKey("Id");
 
@@ -1118,10 +1151,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
                     b.Property<string>("TerminalCategoryId")
                         .HasColumnType("nvarchar(450)");
 
@@ -1360,6 +1389,10 @@ namespace Mb.Core.Migrations
                     b.Property<string>("TerminalTypeId")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TerminalTypeId");
+
+                    b.Property<string>("TerminalTypeIri")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TerminalTypeIri");
 
                     b.HasIndex("TerminalCategoryId");
 

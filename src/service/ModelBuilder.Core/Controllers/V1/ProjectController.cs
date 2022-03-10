@@ -122,7 +122,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _projectService.GetProject(id);
+                var data = await _projectService.GetProject(id, null);
                 return Ok(data);
             }
             catch (ModelBuilderNotFoundException)
@@ -245,7 +245,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var projectResult = await _projectService.UpdateProject(id, projectAm, _commonRepository.GetDomain());
+                var projectResult = await _projectService.UpdateProject(id, null, projectAm, _commonRepository.GetDomain());
                 return Ok(projectResult);
             }
             catch (ModelBuilderDuplicateException e)

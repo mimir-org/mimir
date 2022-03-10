@@ -1,6 +1,5 @@
 using System;
 using AutoMapper;
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Services.Extensions;
@@ -50,12 +49,15 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
+                .ForMember(dest => dest.ProjectIri, opt => opt.MapFrom(src => src.ProjectIri))
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.PurposeString, opt => opt.MapFrom(src => SerializePurpose(src)));
 
             CreateMap<Node, NodeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
+                .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
+                .ForMember(dest => dest.ProjectIri, opt => opt.MapFrom(src => src.ProjectIri))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))

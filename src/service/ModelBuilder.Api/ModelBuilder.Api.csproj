@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ModelBuilder.Rdf\ModelBuilder.Rdf.csproj" />
     <ProjectReference Include="..\Modules\ApplicationInsightsLoggingModule\ApplicationInsightsLoggingModule.csproj" />
     <ProjectReference Include="..\ModelBuilder.Core\ModelBuilder.Core.csproj" />
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
@@ -49,7 +50,8 @@
     <ProjectReference Include="..\Modules\DefaultParserModule\DefaultParserModule.csproj" />
     <ProjectReference Include="..\Modules\EventHubModule\EventHubModule.csproj" />
     <ProjectReference Include="..\Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj" />
-    <ProjectReference Include="..\Modules\RdfParserModule\RdfParserModule.csproj" />
+    <ProjectReference Include="..\Modules\RdfNTriplesParser\RdfNTriplesParser.csproj" />
+    <ProjectReference Include="..\Modules\RdfTurtleParser\RdfTurtleParser.csproj" />
   </ItemGroup>
 
 </Project>

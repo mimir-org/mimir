@@ -10,6 +10,7 @@ namespace Mb.Models.Configurations
         {
             builder.Property(p => p.TerminalCategoryId).HasColumnName("Terminal_CategoryId").IsRequired();
             builder.Property(p => p.TerminalTypeId).HasColumnName("TerminalTypeId").IsRequired(false);
+            builder.Property(p => p.TerminalTypeIri).HasColumnName("TerminalTypeIri").IsRequired(false);
             builder.HasOne(x => x.TerminalCategory).WithMany(y => y.Terminals).HasForeignKey(x => x.TerminalCategoryId).OnDelete(DeleteBehavior.Cascade);
         }
     }
