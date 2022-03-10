@@ -1,8 +1,8 @@
 import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text";
+import { Size } from "../../../../compLibrary/size";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { SetParentBlockMarginRight } from "./helpers/SetParentNodeWidth";
 
 /**
  * Component to create a secondary parent node in BlockView.
@@ -10,16 +10,16 @@ import { SetParentBlockMarginRight } from "./helpers/SetParentNodeWidth";
  * @param secondaryNode
  * @returns a FlowElement, the big box in BlockView.
  */
-const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) => {
+const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
   if (!primaryNode || !secondaryNode) return null;
 
   const type = TextResources.Type_BlockParentNode;
-  const screenWidth = window.innerWidth / 2.4;
-  const distanceToPrimaryNode = 150;
-  const marginX = SetParentBlockMarginRight(true, libOpen, explorerOpen);
+  const screenWidth = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
+  const distanceToPrimaryNode = Size.BLOCK_SPLITVIEW_DISTANCE;
 
+  // The secondaryNode is positioned to the right of the primaryNode
   const position = {
-    x: primaryNode.positionBlockX + screenWidth - marginX + distanceToPrimaryNode,
+    x: primaryNode.positionBlockX + distanceToPrimaryNode + screenWidth,
     y: primaryNode.positionBlockY,
   };
 

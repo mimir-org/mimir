@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllowedUnit" xml:space="preserve">
+    <value>mimir:allowedUnit</value>
+  </data>
+  <data name="BidirectionalTerminal" xml:space="preserve">
+    <value>imf:bidirectionalTerminal</value>
+  </data>
+  <data name="ConnectedTo" xml:space="preserve">
+    <value>imf:connectedTo</value>
+  </data>
+  <data name="Created" xml:space="preserve">
+    <value>imf:created</value>
+  </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>imf:createdBy</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>xsd:dateTime</value>
+  </data>
+  <data name="DatumUOM" xml:space="preserve">
+    <value>lis:datumUOM</value>
+  </data>
+  <data name="DatumValue" xml:space="preserve">
+    <value>lis:datumValue</value>
+  </data>
+  <data name="Desc" xml:space="preserve">
+    <value>rdfs:comment</value>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>mimir:domain</value>
+  </data>
+  <data name="Float" xml:space="preserve">
+    <value>xsd:float</value>
+  </data>
+  <data name="FSB" xml:space="preserve">
+    <value>imf:FunctionalSystemBlock</value>
+  </data>
+  <data name="FSBTerminal" xml:space="preserve">
+    <value>imf:FunctionalSystemBlockTerminal</value>
+  </data>
+  <data name="FulfilledBy" xml:space="preserve">
+    <value>imf:fulfilledBy</value>
+  </data>
+  <data name="HasAspect" xml:space="preserve">
+    <value>imf:hasAspect</value>
+  </data>
+  <data name="HasBidirectionalTerminal" xml:space="preserve">
+    <value>imf:hasBidirectionalTerminal</value>
+  </data>
+  <data name="HasBlockPositionX" xml:space="preserve">
+    <value>mimir:hasBlockPosX</value>
+  </data>
+  <data name="HasBlockPositionY" xml:space="preserve">
+    <value>mimir:hasBlockPosY</value>
+  </data>
+  <data name="HasChild" xml:space="preserve">
+    <value>imf:hasChild</value>
+  </data>
+  <data name="HasColor" xml:space="preserve">
+    <value>mimir:color</value>
+  </data>
+  <data name="HasDefaultFlowDirection" xml:space="preserve">
+    <value>mimir:defaultFlowDirection</value>
+  </data>
+  <data name="HasDiscipline" xml:space="preserve">
+    <value>mimir:discipline</value>
+  </data>
+  <data name="HasInputTerminal" xml:space="preserve">
+    <value>imf:hasInTerminal</value>
+  </data>
+  <data name="HasLocation" xml:space="preserve">
+    <value>imf:hasLocation</value>
+  </data>
+  <data name="HasMasterProject" xml:space="preserve">
+    <value>mimir:hasMasterProject</value>
+  </data>
+  <data name="HasNodeFromConnection" xml:space="preserve">
+    <value>mimir:hasNodeFromConnection</value>
+  </data>
+  <data name="HasNodeToConnection" xml:space="preserve">
+    <value>mimir:hasNodeToConnection</value>
+  </data>
+  <data name="HasOutputTerminal" xml:space="preserve">
+    <value>imf:hasOutTerminal</value>
+  </data>
+  <data name="HasOwner" xml:space="preserve">
+    <value>imf:hasOwner</value>
+  </data>
+  <data name="HasParent" xml:space="preserve">
+    <value>imf:hasParent</value>
+  </data>
+  <data name="HasPhysicalQuantity" xml:space="preserve">
+    <value>lis:hasPhysicalQuantity</value>
+  </data>
+  <data name="HasPositionX" xml:space="preserve">
+    <value>mimir:hasPosX</value>
+  </data>
+  <data name="HasPositionY" xml:space="preserve">
+    <value>mimir:hasPosY</value>
+  </data>
+  <data name="HasPurpose" xml:space="preserve">
+    <value>mimir:hasPurpose</value>
+  </data>
+  <data name="HasSimpleType" xml:space="preserve">
+    <value>imf:hasSimpleType</value>
+  </data>
+  <data name="HasSymbol" xml:space="preserve">
+    <value>mimir:symbol</value>
+  </data>
+  <data name="InputTerminal" xml:space="preserve">
+    <value>imf:inTerminal</value>
+  </data>
+  <data name="IntegratedObject" xml:space="preserve">
+    <value>imf:integratedObject</value>
+  </data>
+  <data name="Interface" xml:space="preserve">
+    <value>imf:Interface</value>
+  </data>
+  <data name="IsAspectOf" xml:space="preserve">
+    <value>imf:isAspectOf</value>
+  </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>mimir:isRequired</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>rdfs:label</value>
+  </data>
+  <data name="LastUpdated" xml:space="preserve">
+    <value>imf:lastUpdated</value>
+  </data>
+  <data name="LibraryType" xml:space="preserve">
+    <value>mimir:type</value>
+  </data>
+  <data name="MimirRds" xml:space="preserve">
+    <value>mimir:rds</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>mimir:name</value>
+  </data>
+  <data name="OutputTerminal" xml:space="preserve">
+    <value>imf:outTerminal</value>
+  </data>
+  <data name="PhysicalQuantity" xml:space="preserve">
+    <value>lis:PhysicalQuantity</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>mimir:project</value>
+  </data>
+  <data name="QualityQuantifiedAs" xml:space="preserve">
+    <value>lis:qualityQuantifiedAs</value>
+  </data>
+  <data name="RDS" xml:space="preserve">
+    <value>imf:rds</value>
+  </data>
+  <data name="ScalarQuantityDatum" xml:space="preserve">
+    <value>lis:ScalarQuantityDatum</value>
+  </data>
+  <data name="Scale" xml:space="preserve">
+    <value>lis:Scale</value>
+  </data>
+  <data name="SelectType" xml:space="preserve">
+    <value>mimir:selectType</value>
+  </data>
+  <data name="SelectValue" xml:space="preserve">
+    <value>mimir:selectValue</value>
+  </data>
+  <data name="SimpleType" xml:space="preserve">
+    <value>imf:simpleType</value>
+  </data>
+  <data name="StreamTerminal" xml:space="preserve">
+    <value>imf:streamTerminal</value>
+  </data>
+  <data name="SubClassOf" xml:space="preserve">
+    <value>rdfs:subClassOf</value>
+  </data>
+  <data name="TerminalDirectionType" xml:space="preserve">
+    <value>mimir:terminalDirection</value>
+  </data>
+  <data name="Transmitter" xml:space="preserve">
+    <value>mimir:Transmitter</value>
+  </data>
+  <data name="Transport" xml:space="preserve">
+    <value>imf:Transport</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>rdf:type</value>
+  </data>
+  <data name="UpdatedBy" xml:space="preserve">
+    <value>imf:updatedBy</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>owl:versionInfo</value>
+  </data>
+  <data name="Visibility" xml:space="preserve">
+    <value>mimir:visibility</value>
+  </data>
+</root>

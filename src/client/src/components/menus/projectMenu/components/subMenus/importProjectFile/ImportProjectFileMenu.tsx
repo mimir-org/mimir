@@ -10,7 +10,7 @@ import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../../assets/text";
 import { useFilePicker } from "use-file-picker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModuleDescription } from "../../../../../../models";
 import { OnProjectSaveClick, OnReturnClick } from "./handlers";
 import {
@@ -24,21 +24,23 @@ import {
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
   const parsers = useAppSelector(commonStateParsersSelector);
-  const [parser, setParser] = useState(parsers[0]);
+  const [parser, setParser] = useState(parsers?.[0]);
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
   const hasParser = parser !== null;
 
-  const [openFileSelector, { filesContent, plainFiles }] = useFilePicker({
+  useEffect(() => setParser(parsers?.[0]), [parsers]);
+
+  const [openFileSelector, { filesContent, plainFiles, clear }] = useFilePicker({
     multiple: false,
     readAs: "Text",
-    accept: [".json", ".nt"],
+    accept: [".json", ".nt", ".ttl", ".jsonld"],
     limitFilesConfig: { min: 1, max: 1 },
   });
 
   const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
   const data = GetProjectFileData(filesContent, parser);
-  const onAction = () => OnProjectSaveClick(dispatch, data);
+  const onAction = () => OnProjectSaveClick(clear, dispatch, data);
   const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (

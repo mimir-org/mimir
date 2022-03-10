@@ -5,13 +5,14 @@ namespace Mb.Models.Application
 {
     public class SimpleAm
     {
-        [Required]
         public string Id { get; set; }
+        public string Iri { get; set; }
+
         [Required]
         public string Name { get; set; }
-        public string SemanticReference { get; set; }
         public virtual ICollection<AttributeAm> Attributes { get; set; }
-        [Required]
+
+        public virtual string NodeIri { get; set; }
         public virtual string NodeId { get; set; }
     }
 }

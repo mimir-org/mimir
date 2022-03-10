@@ -4,16 +4,16 @@ namespace Mb.Models.Enums
 {
     public enum RelationType
     {
-        [Display(Name = "Not Set")]
+        [Display(Name = "NotSet")]
         NotSet = 0,
 
-        [Display(Name = "Has Location")]
+        [Display(Name = "HasLocation")]
         HasLocation = 1,
 
-        [Display(Name = "Part Of")]
+        [Display(Name = "PartOf")]
         PartOf = 2,
 
-        [Display(Name = "Fulfilled By")]
+        [Display(Name = "FulfilledBy")]
         FulfilledBy = 3
     }
 }

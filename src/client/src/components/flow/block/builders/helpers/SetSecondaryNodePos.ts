@@ -1,45 +1,31 @@
-import { Size } from "../../../../../compLibrary/size";
-import { Position } from "../../../../../models/project";
+import { BlockNodeSize, Position } from "../../../../../models/project";
 
 /**
  * Function to force a secondary child node to fit within the parent block in BlockView.
  * @param nodePos
- * @param libOpen
- * @param explorerOpen
+ * @param parentNodeSize
  * @returns an updated position, containing X and Y values.
  */
+const SetSecondaryNodePos = (nodePos: Position, parentNodeSize: BlockNodeSize) => {
+  const width = parentNodeSize.width;
+  const height = parentNodeSize.height;
+  const margin = 30;
+  const marginLarge = 100;
 
-const SetSecondaryNodePos = (nodePos: Position, libOpen: boolean, explorerOpen: boolean) => {
-  const margin = 20;
-  const width = window.innerWidth / 2.4;
-
-  const yMin = 30;
-  const yMax = window.innerHeight - 180;
-  const xMin = SetXMin(width, explorerOpen, libOpen);
-  const xMax = SetXMax(width, explorerOpen, libOpen);
+  const xMin = width + marginLarge * 2;
+  const xMax = width * 2.1;
+  const yMin = margin;
+  const yMax = height - marginLarge * 2;
 
   let nodeY = nodePos.y;
   let nodeX = nodePos.x;
 
-  if (nodeX < xMin) nodeX = xMin;
-  if (nodeX > xMax) nodeX = xMax;
+  if (nodeX < xMin) nodeX = xMin + margin;
+  if (nodeX > xMax) nodeX = xMax - marginLarge;
   if (nodeY < yMin) nodeY = yMin + margin;
-  if (nodeY > yMax) nodeY = yMax - margin * 4.5;
+  if (nodeY > yMax) nodeY = yMax - margin * 2;
 
   return { x: nodeX, y: nodeY };
 };
-
-function SetXMax(width: number, explorerOpen: boolean, libOpen: boolean) {
-  if (!explorerOpen && libOpen) return width * 1.8;
-  if (explorerOpen && !libOpen) return width * 2.2;
-  if (explorerOpen && libOpen) return width * 1.8;
-  if (!explorerOpen && !libOpen) return width * 2.1;
-}
-
-function SetXMin(width: number, explorerOpen: boolean, libOpen: boolean) {
-  if (!explorerOpen && libOpen) return width + 100;
-  if (explorerOpen && !libOpen) return width + Size.MODULE_OPEN + 70;
-  return width + 300;
-}
 
 export default SetSecondaryNodePos;

@@ -77,13 +77,12 @@ function ValidateOffPagePosition(
   isTarget: boolean
 ) {
   const leftBound = CalculateDropZone(transform, isTarget, parentNodeSize, parentXPos);
-
   if (secondaryNode) {
-    const dropZoneWidth = 100;
+    const dropZoneWidth = Size.BLOCK_SPLITVIEW_DISTANCE;
     const rightBound = leftBound + dropZoneWidth;
 
     if (isTarget) return clientX > leftBound && clientX < rightBound;
-    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
+    return clientX < leftBound + dropZoneWidth && clientX > leftBound - dropZoneWidth;
   }
 
   if (isTarget) return clientX > leftBound;

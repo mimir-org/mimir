@@ -47,6 +47,7 @@ namespace Mb.Models.Data
 
         [Required]
         public virtual string ProjectId { get; set; }
+        public virtual string ProjectIri { get; set; }
 
         [JsonIgnore]
         public virtual Project Project { get; set; }

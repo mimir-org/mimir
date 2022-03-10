@@ -1,12 +1,11 @@
 import { changeActiveMenu } from "../../redux/menuSlice";
 import { importLibrary } from "../../../../../../../redux/store/library/librarySlice";
-import { CreateLibraryType } from "../../../../../../../models";
 import { Dispatch } from "redux";
 
-const OnSaveClick = (dispatch: Dispatch, data: () => CreateLibraryType[]) => {
-  const libraryTypes = data();
-  dispatch(importLibrary(libraryTypes));
+const OnSaveClick = (clear: () => void, dispatch: Dispatch, libraryTypeFile: File) => {
+  dispatch(importLibrary(libraryTypeFile));
   dispatch(changeActiveMenu(null));
+  clear();
 };
 
 export default OnSaveClick;

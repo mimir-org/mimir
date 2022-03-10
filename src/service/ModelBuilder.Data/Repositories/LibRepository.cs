@@ -26,5 +26,10 @@ namespace Mb.Data.Repositories
             var result = (IEnumerable<Unit>) generic?.Invoke(null, new object[] { _enumBaseRepository.GetAll() });
             return result?.ToList();
         }
+
+        public void Untrack()
+        {
+            _enumBaseRepository.Context.ChangeTracker.Clear();
+        }
     }
 }

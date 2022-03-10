@@ -76,14 +76,14 @@ namespace Mb.Services.Services
 
             var project = await ResolveProject(projectFile);
 
-            if (project == null || string.IsNullOrEmpty(project.Id))
+            if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Iri)))
                 throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
 
-            var exist = _projectService.ProjectExist(project.Id);
+            var exist = _projectService.ProjectExist(project.Id, project.Iri);
 
             if (exist)
             {
-                var projectResult = await _projectService.UpdateProject(project.Id, project, _commonRepository.GetDomain());
+                var projectResult = await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
                 return projectResult.Project;
             }
 
@@ -119,7 +119,7 @@ namespace Mb.Services.Services
             if (par == null)
                 throw new ModelBuilderInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            var projectResult = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project, _commonRepository.GetDomain());
+            var projectResult = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri, projectConverter.Project, _commonRepository.GetDomain());
             if (projectResult?.Project == null)
                 throw new ModelBuilderNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 

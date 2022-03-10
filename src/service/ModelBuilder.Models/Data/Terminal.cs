@@ -10,6 +10,7 @@ namespace Mb.Models.Data
         public string TerminalCategoryId { get; set; }
         public TerminalCategory TerminalCategory { get; set; }
         public string TerminalTypeId { get; set; }
+        public string TerminalTypeIri { get; set; }
 
         public virtual ICollection<Attribute> Attributes { get; set; }
 

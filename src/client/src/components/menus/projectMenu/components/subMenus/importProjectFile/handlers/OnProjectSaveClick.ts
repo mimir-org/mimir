@@ -3,9 +3,10 @@ import { importProjectAction } from "../../../../../../../redux/store/project/ac
 import { ProjectFileAm } from "../../../../../../../models";
 import { Dispatch } from "redux";
 
-const OnProjectSaveClick = (dispatch: Dispatch, data: ProjectFileAm) => {
+const OnProjectSaveClick = (clear: () => void, dispatch: Dispatch, data: ProjectFileAm) => {
   dispatch(importProjectAction(data));
   dispatch(changeActiveMenu(null));
+  clear();
 };
 
 export default OnProjectSaveClick;
