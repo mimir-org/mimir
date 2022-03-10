@@ -14,7 +14,6 @@ using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -201,8 +200,6 @@ namespace Mb.Services.Services
                 // Map data
                 _mapper.Map(project, newProject);
 
-                var p = JsonConvert.SerializeObject(newProject);
-
                 await _projectRepository.CreateAsync(newProject);
                 await _projectRepository.SaveAsync();
 
@@ -257,11 +254,10 @@ namespace Mb.Services.Services
 
                 return newSubProject;
 
-
             }
             catch (Exception e)
             {
-                _logger.LogError($"Can not create sub project from project id: {subProjectAm.FromProjectId}. Error: {e.Message}");
+                _logger.LogError($"Can not create sub project from project id: {subProjectAm?.FromProjectId}. Error: {e.Message}");
                 throw;
             }
             finally
@@ -281,7 +277,6 @@ namespace Mb.Services.Services
         public async Task<ProjectResultAm> UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
         {
             ClearAllChangeTracker();
-            IDictionary<string, string> remap;
 
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
@@ -296,7 +291,7 @@ namespace Mb.Services.Services
                 CastConnectors(projectAm);
 
                 // Remap and create new id's
-                remap = _remapService.Remap(projectAm);
+                var remap = _remapService.Remap(projectAm);
 
                 // Edges
                 var originalEdges = originalProject.Edges.ToList();
@@ -324,25 +319,15 @@ namespace Mb.Services.Services
                 ResolveLevelAndOrder(updatedProject);
 
                 _projectRepository.Update(updatedProject);
+                _ = _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
+                _ = _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), updatedProject.Id);
+                await _projectRepository.SaveAsync();
 
-                var added = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Added).ToList();
-                var changed = _projectRepository.Context.ChangeTracker.Entries<Node>().Where(x => x.State == EntityState.Modified).ToList();
-                var deleted = _projectRepository.Context.ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted).ToList();
-
-                try
+                return new ProjectResultAm
                 {
-
-                    await _projectRepository.SaveAsync();
-
-                }
-                catch (DbUpdateConcurrencyException e)
-                {
-                    var error = e.Message;
-                    var entries = e.Entries.ToList();
-                }
-
-                await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
-                await _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), updatedProject.Id);
+                    Project = updatedProject,
+                    IdChanges = remap
+                };
             }
             catch (Exception e)
             {
@@ -353,15 +338,6 @@ namespace Mb.Services.Services
             {
                 ClearAllChangeTracker();
             }
-
-            var project = await GetProject(id, iri);
-
-            // Return project from database
-            return new ProjectResultAm
-            {
-                Project = project,
-                IdChanges = remap
-            };
         }
 
         /// <summary>
