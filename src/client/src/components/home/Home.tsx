@@ -47,7 +47,7 @@ export const Home = ({ dispatch }: Props) => {
     dispatch(fetchLibraryInterfaceTypes());
     dispatch(fetchLibraryTransportTypes());
     dispatch(search(""));
-    dispatch(fetchLibrary(""));
+    dispatch(fetchLibrary());
     dispatch(fetchCollaborationPartners());
     dispatch(fetchParsers());
     dispatch(fetchStatuses());

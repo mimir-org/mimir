@@ -18,8 +18,6 @@ import { GetSelectedBlockNode, IsProduct } from "../../../../../helpers";
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
-  const libOpen = useAppSelector(selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
 
@@ -42,13 +40,13 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   // Update position relative to ParentBlockNode
   useEffect(() => {
     if (!IsProduct(parentBlockNode)) UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
-  }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
+  }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, secondaryNode]);
 
   if (!data) return null;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
-  const inputTerminals = data.connectors.filter((t) => IsInputTerminal(t));
-  const outputTerminals = data.connectors.filter((t) => IsOutputTerminal(t));
+  const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));
+  const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
 
   return (
     <OffPageBox id={"BlockOffPageNode-" + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>

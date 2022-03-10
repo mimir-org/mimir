@@ -4,6 +4,7 @@ import { TextResources } from "../../../../../assets/text";
 import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
 import { Connector, Node, Project } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
+import { IsLocationTerminal, IsProductTerminal } from "../../../helpers";
 
 /**
  * Function to check if a connection/edge in BlockView is valid.
@@ -18,30 +19,41 @@ const IsValidBlockConnection = (connection: Connection, project: Project, dispat
   const targetNode = project.nodes.find((x) => x.id === connection.target);
   const targetTerminal = targetNode?.connectors.find((x) => x.id === connection.targetHandle);
 
-  const isOffPage = IsOffPage(sourceNode) || IsOffPage(targetNode);
-  const isRelation = IsLocation(sourceNode) || IsLocation(targetNode) || IsProduct(sourceNode) || IsProduct(targetNode);
-  const isValidNode = ValidateNode(sourceTerminal, targetTerminal);
-  const isValidConnector = !isRelation ? ValidateConnectors(sourceTerminal, targetTerminal, project) : true;
-  const isValidOffPage = isOffPage ? ValidateOffPageNode(sourceNode, targetNode) : true;
+  const isValidTerminalType = ValidateTerminalType(sourceTerminal, targetTerminal);
+  const isValidOffPage = ValidateOffPageNode(sourceNode, targetNode);
+  const isValidTransport = ValidateTransport(sourceTerminal, targetTerminal, sourceNode, targetNode, project);
+  const isValidRelation = ValidateRelation(sourceTerminal, targetTerminal, sourceNode, targetNode, project);
 
   document.addEventListener(
     "mouseup",
-    () => onMouseUp(sourceTerminal, targetTerminal, isValidNode, isValidOffPage, isValidConnector, dispatch),
+    () =>
+      onMouseUp(sourceTerminal, targetTerminal, isValidTerminalType, isValidOffPage, isValidTransport, isValidRelation, dispatch),
     { once: true }
   );
 
-  return isValidNode && isValidOffPage && isValidConnector;
+  return isValidTerminalType && isValidOffPage && isValidTransport && isValidRelation;
 };
 
+function IsRelationNode(node: Node) {
+  return IsLocation(node) || IsProduct(node);
+}
+
+function IsRelationTerminal(connector: Connector) {
+  return IsLocationTerminal(connector) || IsProductTerminal(connector);
+}
+
 function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {
+  if (!IsOffPage(sourceNode) || !IsOffPage(targetNode)) return true;
   return IsOffPage(sourceNode) && IsOffPage(targetNode);
 }
 
-function ValidateNode(sourceTerminal: Connector, targetTerminal: Connector) {
+function ValidateTerminalType(sourceTerminal: Connector, targetTerminal: Connector) {
   return sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
 }
 
-function ValidateConnectors(source: Connector, target: Connector, project: Project) {
+function ValidateTransport(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, project: Project) {
+  if (IsRelationNode(sourceNode) || IsRelationNode(targetNode)) return true;
+
   return !project.edges.some(
     (edge) =>
       edge.fromConnectorId === source.id ||
@@ -51,21 +63,34 @@ function ValidateConnectors(source: Connector, target: Connector, project: Proje
   );
 }
 
+function ValidateRelation(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, project: Project) {
+  if (IsRelationNode(sourceNode)) {
+    const existingEdge = project.edges.find((x) => x.toConnectorId === target.id && IsRelationTerminal(x.toConnector));
+    if (existingEdge) return false;
+  }
+  if (IsRelationNode(targetNode)) {
+    const existingEdge = project.edges.find((x) => x.fromConnectorId === source.id && IsRelationTerminal(x.fromConnector));
+    if (existingEdge) return false;
+  }
+  return true;
+}
+
 const onMouseUp = (
   sourceTerminal: Connector,
   targetTerminal: Connector,
-  validNode: boolean,
+  validTerminalType: boolean,
   validOffPageNode: boolean,
-  validConnectors: boolean,
+  validTransport: boolean,
+  validRelation: boolean,
   dispatch: Dispatch
 ) => {
   if (!sourceTerminal || !targetTerminal) return;
-  if (!validNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals }));
+  if (!validTerminalType) dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals }));
   if (!validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_OffPage }));
-  if (!validConnectors) dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+  if (!validTransport || !validRelation) dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
 
   return document.removeEventListener("mouseup", () =>
-    onMouseUp(sourceTerminal, targetTerminal, validNode, validOffPageNode, validConnectors, dispatch)
+    onMouseUp(sourceTerminal, targetTerminal, validTerminalType, validOffPageNode, validTransport, validRelation, dispatch)
   );
 };
 

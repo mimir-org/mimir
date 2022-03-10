@@ -1,7 +1,1 @@
-export {
-  projectSelector,
-  libOpenSelector,
-  explorerSelector,
-  nodeSizeSelector,
-  secondaryNodeSelector,
-} from "../../../../../../redux/store";
+export { projectSelector, nodeSizeSelector, secondaryNodeSelector } from "../../../../../../redux/store";

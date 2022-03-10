@@ -4,6 +4,7 @@ import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { IsPartOf } from "../../../components/flow/helpers";
+import { search } from "../../store/project/actions";
 import {
   ApiError,
   GetApiErrorForBadRequest,
@@ -401,6 +402,7 @@ export function* importProject(action: ImportProjectAction) {
       type: IMPORT_PROJECT_SUCCESS_OR_ERROR,
       payload: payload,
     });
+    yield put(search(""));
   } catch (error) {
     const apiError = {
       key: IMPORT_PROJECT_SUCCESS_OR_ERROR,

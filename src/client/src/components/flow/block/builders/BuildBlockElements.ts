@@ -2,6 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildParentNode, BuildSecondaryParentNode } from ".";
 import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers";
+import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to draw all nodes and edges in BlockView.
@@ -9,8 +10,7 @@ import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers
  * @param selectedNode
  * @param secondaryNode
  * @param animatedEdge
- * @param libOpen
- * @param explorerOpen
+ * @param parentNodeSize
  * @returns all Elements.
  */
 const BuildBlockElements = (
@@ -18,24 +18,24 @@ const BuildBlockElements = (
   selectedNode: Node,
   secondaryNode: Node,
   animatedEdge: boolean,
-  libOpen: boolean,
-  explorerOpen: boolean
+  parentNodeSize: BlockNodeSize
 ) => {
   if (!project) return;
+
   const elements: Elements = [];
   const splitView = secondaryNode !== null;
 
-  const parentBlock = BuildParentNode(selectedNode, explorerOpen);
+  const parentBlock = BuildParentNode(selectedNode);
   if (parentBlock) elements.push(parentBlock);
 
   if (splitView) {
     const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
-    const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary, libOpen, explorerOpen);
+    const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary);
     if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
-    DrawSecondaryChildren(project, secondaryNode, elements, libOpen, explorerOpen);
+    DrawSecondaryChildren(project, secondaryNode, elements, parentNodeSize);
   }
 
-  DrawChildNodes(project, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
+  DrawChildNodes(project, selectedNode, elements, secondaryNode, parentNodeSize);
   DrawBlockEdges(project, elements, secondaryNode, animatedEdge);
 
   return elements;
