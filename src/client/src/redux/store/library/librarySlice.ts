@@ -1,4 +1,4 @@
-import { Collection, CreateLibraryType, LibItem, ObjectType } from "../../../models";
+import { Collection, LibItem, ObjectType } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { addToCollectionsTypes, DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
@@ -17,7 +17,7 @@ export const librarySlice = createSlice({
   name: "library",
   initialState: initialLibraryState,
   reducers: {
-    fetchLibrary: (state, _action: PayloadAction<string>) => {
+    fetchLibrary: (state) => {
       state.fetching = true;
       state.nodeTypes = [];
       state.transportTypes = [];
@@ -42,7 +42,7 @@ export const librarySlice = createSlice({
       state.fetching = false;
       action.payload && state.apiError.push(action.payload);
     },
-    importLibrary: (state, _action: PayloadAction<CreateLibraryType[]>) => {
+    importLibrary: (state, _action: PayloadAction<File>) => {
       state.fetching = true;
       state.apiError = state.apiError
         ? state.apiError.filter((elem) => elem.key !== importLibrarySuccessOrError.type)
