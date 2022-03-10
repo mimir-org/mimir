@@ -45,7 +45,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         onClick={() => projectMenuAction(() => Click.OnCreateClick(dispatch))}
       />
       <MenuElement
-        text={TextResources.PROJECT_SAVE_LABEL}
+        text={TextResources.PROJECT_SAVE}
         icon={isNoActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
         onClick={() => projectMenuAction(() => Click.OnSaveClick(dispatch, project))}
         disabled={isNoActiveProject}

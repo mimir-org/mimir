@@ -13,9 +13,9 @@ export const ProjectList = ({ projectList, dispatch }: Props) => (
   <ProjectListBox>
     <ProjectListLabels>
       <p className="name">{TextResources.PROJECT}</p>
-      <p className="owner">{TextResources.PROJECT_RECENT_OWNER}</p>
-      <p className="version">{TextResources.PROJECT_RECENT_VERSION}</p>
-      <p className="edited">{TextResources.PROJECT_RECENT_EDITED}</p>
+      <p className="owner">{TextResources.PROJECT_OWNER}</p>
+      <p className="version">{TextResources.PROJECT_VERSION}</p>
+      <p className="edited">{TextResources.PROJECT_EDITED}</p>
     </ProjectListLabels>
     <ProjectDataContainer>
       {projectList?.map((project) => {

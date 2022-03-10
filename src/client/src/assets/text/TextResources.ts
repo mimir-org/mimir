@@ -14,6 +14,8 @@ export const TextResources = {
   TERMINALS: "Terminals",
   PROJECT: "Project",
   LOGOUT: "Log out",
+  TEMPLATES: "Templates",
+  SUBPROJECTS: "Subprojects",
 
   // MODULES
   MODULE_LIBRARY: "Library",
@@ -131,8 +133,6 @@ export const TextResources = {
 
   // LibraryModule
   LIBRARY_COLLECTIONS: "Collections",
-  LIBRARY_TEMPLATES: "Templates",
-  LIBRARY_SUBPROJECTS: "Subprojects",
   LIBRARY_SEARCHBOX_PLACEHOLDER_LIBRARY: "Search Library for types...",
   LIBRARY_SEARCHBOX_PLACEHOLDER_TEMPLATES: "Search for Templates...",
   LIBRARY_SEARCHBOX_PLACEHOLDER_SUBPROJECTS: "Search for Subprojects...",
@@ -183,17 +183,15 @@ export const TextResources = {
   PROJECT_SEARCH: "Search Projects",
   PROJECT_OPEN: "Open project",
   PROJECT_RECENT: "Recent projects",
-  PROJECT_RECENT_OWNER: "Owner",
-  PROJECT_RECENT_VERSION: "Version",
-  PROJECT_RECENT_EDITED: "Last edited",
+  PROJECT_OWNER: "Owner",
+  PROJECT_VERSION: "Version",
+  PROJECT_EDITED: "Last edited",
 
   PROJECT_OPEN_LABEL: "Open or start a new project",
-  PROJECT_SAVE_LABEL: "Save project",
-  PROJECT_DESC_ABOUT: "About the project",
+  PROJECT_SAVE: "Save project",
+  PROJECT_ABOUT: "About the project",
   PROJECT_DESC_NA: "No information currently available",
-  PROJECT_DESC_LIB: "Libraries",
-  PROJECT_DESC_SUB_PROJ: "Subprojects",
-  PROJECT_DESC_TEMPS: "Templates",
+  PROJECT_LIB: "Libraries",
 
   PROJECT_IMPORT: "Import project",
   PROJECT_IMPORT_LIB_TYPES: "Import library types",
