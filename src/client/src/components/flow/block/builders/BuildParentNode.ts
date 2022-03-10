@@ -1,21 +1,19 @@
 import { FlowElement } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text/TextResources";
-import { IsProduct } from "../../../../helpers";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
 
 /**
  * Component to create a parent node in BlockView.
  * @param node
- * @param explorerOpen
  * @returns a FlowElement, the large box in BlockView.
  */
-const BuildParentNode = (node: Node, explorerOpen: boolean) => {
+const BuildParentNode = (node: Node) => {
   if (!node) return null;
 
   const type = TextResources.BLOCK_PARENTNODE;
   // TODO: fix magic numbers and remove state mutation outside store
-  const position = { x: explorerOpen && !IsProduct(node) ? 450 : 90, y: 0 };
+  const position = { x: 90, y: 0 };
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 

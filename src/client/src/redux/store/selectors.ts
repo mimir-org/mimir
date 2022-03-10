@@ -131,18 +131,13 @@ export const blockElementsSelector = createAppSelector(
 );
 
 export const nodeSizeSelector = createAppSelector(
-  (state) => state.blockNodeSize.blockParents[0].size,
+  (state) => state.blockNodeSize.size,
   (size) => size
 );
 
 export const flowTransformSelector = createAppSelector(
   (state) => state.flowTransform,
   (flowTransform) => flowTransform
-);
-
-export const productNodeSizeSelector = createAppSelector(
-  (state) => state.blockNodeSize.blockParents[1].size,
-  (size) => size
 );
 
 export const flowViewSelector = createAppSelector(

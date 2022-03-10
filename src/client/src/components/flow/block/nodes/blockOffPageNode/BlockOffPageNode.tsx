@@ -18,22 +18,20 @@ import { GetSelectedBlockNode, IsProduct } from "../../../../../helpers";
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
-  const libOpen = useAppSelector(selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
 
-  const inputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
-  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
+  const offPageInputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
+  const offPageOutputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
 
   const edge = project?.edges?.find((x) => IsTransport(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
-  const isTarget = edge?.toNodeId === data.id;
-  const offPageTerminal = isTarget ? inputTerminal : outputTerminal;
+  const isOffPageNodeTarget = edge?.toNodeId === data.id;
+  const offPageTerminal = isOffPageNodeTarget ? offPageInputTerminal : offPageOutputTerminal;
 
   const offPageParent = GetParent(data);
   const parentBlockNode = GetParent(offPageParent);
 
-  const parentTerminal = isTarget
+  const parentNodeTerminal = isOffPageNodeTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
     : offPageParent?.connectors.find((c) => c.id === edge?.toConnectorId);
 
@@ -42,11 +40,11 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   // Update position relative to ParentBlockNode
   useEffect(() => {
     if (!IsProduct(parentBlockNode)) UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
-  }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, libOpen, explorerOpen, secondaryNode]);
+  }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, secondaryNode]);
 
   if (!data) return null;
+  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
-  const OffPageIcon = GetOffPageIcon(offPageTerminal, parentTerminal);
   const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));
   const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
 

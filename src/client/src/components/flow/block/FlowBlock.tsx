@@ -38,9 +38,9 @@ interface Props {
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const { setCenter } = useZoomPanHelper();
+  const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
-  const flowWrapper = useRef(null);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
@@ -48,8 +48,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const showLocation3D = useAppSelector(selectors.location3DSelector);
-  const libOpen = useAppSelector(selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
@@ -57,10 +55,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, libOpen, explorerOpen));
+      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge, libOpen, explorerOpen]
+    [project, node, secondaryNode, animatedEdge, parentNodeSize]
   );
 
   const OnElementsRemove = (elementsToRemove: Elements) => {

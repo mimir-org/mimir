@@ -294,7 +294,7 @@ export const TextResources = {
   VALIDATION_BLOCKVIEW_MULTISELECT: "Please select only one node before opening Block View.",
   VALIDATION_BLOCKVIEW_PROJECT: "Please select a project before opening Block View.",
   VALIDATION_OFFPAGE: "An off-page node can only be connected with a node of the same type.",
-  VALIDATION_ONE_CONNECTION: "A terminal can only have one connection.",
+  VALIDATION_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",
 
   // Version

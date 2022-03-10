@@ -2,6 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { BuildChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Connector, Edge, Node, Project } from "../../../../../models";
+import { BlockNodeSize } from "../../../../../models/project";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } from "../../../helpers";
 
 /**
@@ -9,21 +10,18 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
  * @param project
  * @param selectedNode
  * @param elements
- * @param libOpen
- * @param explorerOpen
  * @param secondaryNode
+ * @param parentNodeSize
  */
 const DrawChildNodes = (
   project: Project,
   selectedNode: Node,
   elements: Elements,
-  libOpen: boolean,
-  explorerOpen: boolean,
-  secondaryNode: Node
+  secondaryNode: Node,
+  parentNodeSize: BlockNodeSize
 ) => {
   const nodes = project.nodes;
   const edges = project.edges;
-  const splitView = secondaryNode !== null;
 
   edges?.forEach((edge) => {
     if (ValidateEdge(edge, selectedNode)) {
@@ -32,8 +30,8 @@ const DrawChildNodes = (
 
       if (IsOffPage(targetNode)) {
         const isValidOffPage = ValidateOffPageNode(targetNode, selectedNode, secondaryNode, elements, edges, nodes);
-        if (isValidOffPage) elements.push(BuildChildNode(targetNode, libOpen, explorerOpen, splitView));
-      } else elements.push(BuildChildNode(targetNode, libOpen, explorerOpen, splitView));
+        if (isValidOffPage) elements.push(BuildChildNode(targetNode, parentNodeSize));
+      } else elements.push(BuildChildNode(targetNode, parentNodeSize));
     }
   });
 };

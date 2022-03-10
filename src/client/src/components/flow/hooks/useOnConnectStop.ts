@@ -44,7 +44,7 @@ const useOnConnectStop = (
     );
 
     if (existingEdge !== undefined) {
-      dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_ONE_CONNECTION }));
+      dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
       return;
     }
 
