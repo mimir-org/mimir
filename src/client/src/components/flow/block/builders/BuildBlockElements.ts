@@ -9,33 +9,25 @@ import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers
  * @param selectedNode
  * @param secondaryNode
  * @param animatedEdge
- * @param libOpen
- * @param explorerOpen
  * @returns all Elements.
  */
-const BuildBlockElements = (
-  project: Project,
-  selectedNode: Node,
-  secondaryNode: Node,
-  animatedEdge: boolean,
-  libOpen: boolean,
-  explorerOpen: boolean
-) => {
+const BuildBlockElements = (project: Project, selectedNode: Node, secondaryNode: Node, animatedEdge: boolean) => {
   if (!project) return;
+
   const elements: Elements = [];
   const splitView = secondaryNode !== null;
 
-  const parentBlock = BuildParentNode(selectedNode, explorerOpen);
+  const parentBlock = BuildParentNode(selectedNode);
   if (parentBlock) elements.push(parentBlock);
 
   if (splitView) {
     const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
-    const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary, libOpen, explorerOpen);
+    const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary);
     if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
-    DrawSecondaryChildren(project, secondaryNode, elements, libOpen, explorerOpen);
+    DrawSecondaryChildren(project, secondaryNode, elements);
   }
 
-  DrawChildNodes(project, selectedNode, elements, libOpen, explorerOpen, secondaryNode);
+  DrawChildNodes(project, selectedNode, elements, secondaryNode);
   DrawBlockEdges(project, elements, secondaryNode, animatedEdge);
 
   return elements;

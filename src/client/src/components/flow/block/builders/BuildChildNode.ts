@@ -7,21 +7,17 @@ import { IsOffPage, IsProduct } from "../../../../helpers";
 /**
  * Component to create a child node in BlockView.
  * @param node
- * @param libOpen
- * @param explorerOpen
  * @param splitView
  * @returns a node of the type FlowElement.
  */
-const BuildChildNode = (node: Node, libOpen: boolean, explorerOpen: boolean, splitView: boolean) => {
+const BuildChildNode = (node: Node, splitView: boolean) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
-  const isProduct = IsProduct(node);
-  const isOffPage = IsOffPage(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
 
   // Force node to fit Block
-  const position = !isOffPage ? SetNodePos(nodePos, libOpen, explorerOpen, splitView, isProduct) : nodePos;
+  const position = !IsOffPage(node) ? SetNodePos(nodePos, splitView, IsProduct(node)) : nodePos;
 
   return {
     key: CreateId(),
