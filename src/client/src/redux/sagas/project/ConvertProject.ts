@@ -36,12 +36,17 @@ export interface AttributeAm {
   conditionId: string;
   formatId: string;
   terminalId: string;
+  terminalIri: string;
   nodeId: string;
   nodeIri: string;
   transportId: string;
+  transportIri: string;
   interfaceId: string;
+  interfaceIri: string;
   simpleId: string;
+  simpleIri: string;
   attributeTypeId: string;
+  attributeTypeIri: string;
   units: UnitAm[];
   selectValues: string[];
   selectType: SelectType;
@@ -71,6 +76,7 @@ export interface ConnectorAm {
   terminalCategoryId: string;
   attributes: AttributeAm[];
   terminalTypeId: string;
+  terminalTypeIri: string;
 }
 
 export interface NodeAm {
@@ -78,6 +84,7 @@ export interface NodeAm {
   iri: string;
   domain: string;
   projectId: string;
+  projectIri: string;
   name: string;
   version: string;
   label: string;
@@ -116,6 +123,7 @@ export interface EdgeAm {
   iri: string;
   domain: string;
   projectId: string;
+  projectIri: string;
   fromConnectorId: string;
   toConnectorId: string;
   fromNodeId: string;
@@ -165,10 +173,11 @@ export interface TransportAm {
 
 export interface SimpleAm {
   id: string;
+  iri: string;
   name: string;
-  semanticReference: string;
   attributes: AttributeAm[];
   nodeId: string;
+  nodeIri: string;
 }
 
 export interface InterfaceAm {
@@ -227,12 +236,17 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       conditionId: attribute.conditionId,
       formatId: attribute.formatId,
       terminalId: attribute.terminalId,
+      terminalIri: attribute.terminalIri,
       nodeId: attribute.nodeId,
       nodeIri: attribute.nodeIri,
       transportId: attribute.transportId,
+      transportIri: attribute.transportIri,
       interfaceId: attribute.interfaceId,
+      interfaceIri: attribute.interfaceIri,
       attributeTypeId: attribute.attributeTypeId,
+      attributeTypeIri: attribute.attributeTypeIri,
       simpleId: attribute.simpleId,
+      simpleIri: attribute.simpleIri,
       units: ConvertUnits(attribute.units),
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
@@ -267,6 +281,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       terminalCategoryId: connector.terminalCategoryId,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
+      terminalTypeIri: connector.terminalTypeIri,
       isRequired: connector.isRequired,
     });
   });
@@ -291,6 +306,7 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
     terminalCategoryId: connector.terminalCategoryId,
     attributes: ConvertAttributes(connector.attributes),
     terminalTypeId: connector.terminalTypeId,
+    terminalTypeIri: connector.terminalTypeIri,
     isRequired: connector.isRequired,
   };
 };
@@ -303,9 +319,10 @@ const ConvertSimples = (simples: Simple[]): SimpleAm[] => {
   simples.forEach((simple) => {
     converted.push({
       id: simple.id,
+      iri: simple.iri,
       name: simple.name,
-      semanticReference: simple.semanticReference,
       nodeId: simple.nodeId,
+      nodeIri: simple.nodeIri,
       attributes: ConvertAttributes(simple.attributes),
     });
   });
@@ -374,6 +391,7 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       iri: node.iri,
       domain: node.domain,
       projectId: node.projectId,
+      projectIri: node.projectIri,
       name: node.name,
       version: node.version,
       label: node.label,
@@ -422,6 +440,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
       iri: edge.iri,
       domain: edge.domain,
       projectId: edge.projectId,
+      projectIri: edge.projectIri,
       fromConnectorId: edge.fromConnectorId,
       fromNodeId: edge.fromNodeId,
       toConnectorId: edge.toConnectorId,

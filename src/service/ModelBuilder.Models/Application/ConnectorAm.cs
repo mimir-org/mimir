@@ -26,6 +26,7 @@ namespace Mb.Models.Application
         public string Color { get; set; }
         public string TerminalCategoryId { get; set; }
         public string TerminalTypeId { get; set; }
+        public string TerminalTypeIri { get; set; }
         public virtual ICollection<AttributeAm> Attributes { get; set; }
     }
 }

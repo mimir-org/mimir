@@ -34,7 +34,7 @@ export const ImportProjectFileMenu = () => {
   const [openFileSelector, { filesContent, plainFiles, clear }] = useFilePicker({
     multiple: false,
     readAs: "Text",
-    accept: [".json", ".nt"],
+    accept: [".json", ".nt", ".ttl", ".jsonld"],
     limitFilesConfig: { min: 1, max: 1 },
   });
 

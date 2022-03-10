@@ -12,6 +12,7 @@ export interface Node {
   iri: string;
   domain: string;
   projectId: string;
+  projectIri: string;
   rds: string;
   description: string;
   semanticReference: string;

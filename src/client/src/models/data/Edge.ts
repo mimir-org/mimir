@@ -10,6 +10,7 @@ export interface Edge {
   iri: string;
   domain: string;
   projectId: string;
+  projectIri: string;
   fromConnectorId: string;
   fromConnector: Connector;
 

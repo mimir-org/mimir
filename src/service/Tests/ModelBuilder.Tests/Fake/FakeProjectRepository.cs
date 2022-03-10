@@ -77,7 +77,7 @@ namespace ModelBuilder.Tests.Fake
             throw new NotImplementedException();
         }
 
-        public Task<Project> GetAsyncComplete(string id)
+        public Task<Project> GetAsyncComplete(string id, string iri)
         {
             throw new NotImplementedException();
         }

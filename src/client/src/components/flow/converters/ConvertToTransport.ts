@@ -18,10 +18,10 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
 
   inputTerminal.id = CreateId();
-  inputTerminal.type = ConnectorType.Input;
+  inputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Input;
   inputTerminal.nodeId = null;
   outputTerminal.id = CreateId();
-  outputTerminal.type = ConnectorType.Output;
+  outputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Output;
   outputTerminal.nodeId = null;
 
   if (inputTerminal?.attributes) {
