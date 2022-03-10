@@ -6,5 +6,6 @@ namespace Mb.Data.Contracts
     public interface ILibRepository
     {
         IEnumerable<Unit> GetUnits();
+        void Untrack();
     }
 }

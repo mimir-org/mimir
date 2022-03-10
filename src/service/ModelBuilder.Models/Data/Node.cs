@@ -93,8 +93,8 @@ namespace Mb.Models.Data
 
         public virtual ICollection<Simple> Simples { get; set; }
 
-        [Required]
         public virtual string ProjectId { get; set; }
+        public virtual string ProjectIri { get; set; }
 
         [JsonIgnore]
         public virtual Project Project { get; set; }

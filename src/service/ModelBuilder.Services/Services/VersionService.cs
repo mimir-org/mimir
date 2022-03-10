@@ -84,7 +84,7 @@ namespace Mb.Services.Services
             if (string.IsNullOrWhiteSpace(projectId))
                 throw new ModelBuilderInvalidOperationException("ProjectId can't be null or empty");
 
-            var project = await _projectService.GetProject(projectId);
+            var project = await _projectService.GetProject(projectId, null);
 
             if (string.IsNullOrWhiteSpace(project?.Id))
                 throw new ModelBuilderInvalidOperationException("Project not found");

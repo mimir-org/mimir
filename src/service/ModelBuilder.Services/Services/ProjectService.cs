@@ -72,11 +72,12 @@ namespace Mb.Services.Services
         /// The method wil throw a ModelBuilderNotFoundException if not exist
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="iri"></param>
         /// <param name="ignoreNotFound"></param>
         /// <returns></returns>
-        public async Task<Project> GetProject(string id, bool ignoreNotFound = false)
+        public async Task<Project> GetProject(string id, string iri, bool ignoreNotFound = false)
         {
-            var project = await _projectRepository.GetAsyncComplete(id);
+            var project = await _projectRepository.GetAsyncComplete(id, iri);
 
             if (!ignoreNotFound && project == null)
                 throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
@@ -167,7 +168,7 @@ namespace Mb.Services.Services
         {
             try
             {
-                var existingProject = await GetProject(project.Id, true);
+                var existingProject = await GetProject(project.Id, null, true);
 
                 if (existingProject != null)
                     throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
@@ -202,7 +203,7 @@ namespace Mb.Services.Services
                 await _projectRepository.CreateAsync(newProject);
                 await _projectRepository.SaveAsync();
 
-                var updatedProject = await GetProject(newProject.Id);
+                var updatedProject = await GetProject(newProject.Id, null);
                 ClearAllChangeTracker();
                 return updatedProject;
             }
@@ -233,7 +234,7 @@ namespace Mb.Services.Services
                 if (!validation.IsValid)
                     throw new ModelBuilderBadRequestException($"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
-                var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId);
+                var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId, null);
                 if (fromProject == null)
                     throw new ModelBuilderInvalidOperationException("The original project does not exist");
 
@@ -253,11 +254,10 @@ namespace Mb.Services.Services
 
                 return newSubProject;
 
-
             }
             catch (Exception e)
             {
-                _logger.LogError($"Can not create sub project from project id: {subProjectAm.FromProjectId}. Error: {e.Message}");
+                _logger.LogError($"Can not create sub project from project id: {subProjectAm?.FromProjectId}. Error: {e.Message}");
                 throw;
             }
             finally
@@ -272,16 +272,17 @@ namespace Mb.Services.Services
         /// <param name="id"></param>
         /// <param name="projectAm"></param>
         /// <param name="invokedByDomain"></param>
+        /// <param name="iri"></param>
         /// <returns></returns>
-        public async Task<ProjectResultAm> UpdateProject(string id, ProjectAm projectAm, string invokedByDomain)
+        public async Task<ProjectResultAm> UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
         {
-            IDictionary<string, string> remap;
+            ClearAllChangeTracker();
 
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
             try
             {
-                var originalProject = await _projectRepository.GetAsyncComplete(id);
+                var originalProject = await _projectRepository.GetAsyncComplete(id, iri);
 
                 if (originalProject == null)
                     throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
@@ -290,7 +291,7 @@ namespace Mb.Services.Services
                 CastConnectors(projectAm);
 
                 // Remap and create new id's
-                remap = _remapService.Remap(projectAm);
+                var remap = _remapService.Remap(projectAm);
 
                 // Edges
                 var originalEdges = originalProject.Edges.ToList();
@@ -300,7 +301,7 @@ namespace Mb.Services.Services
                 // Nodes
                 var originalNodes = originalProject.Nodes.ToList();
                 var deleteNodes = originalNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
-                var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain);
+                var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain).ToList();
 
                 //Determine if project version should be incremented
                 SetProjectVersion(originalProject, projectAm);
@@ -318,10 +319,15 @@ namespace Mb.Services.Services
                 ResolveLevelAndOrder(updatedProject);
 
                 _projectRepository.Update(updatedProject);
-
+                _ = _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
+                _ = _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), updatedProject.Id);
                 await _projectRepository.SaveAsync();
-                await _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
-                await _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), updatedProject.Id);
+
+                return new ProjectResultAm
+                {
+                    Project = updatedProject,
+                    IdChanges = remap
+                };
             }
             catch (Exception e)
             {
@@ -332,15 +338,6 @@ namespace Mb.Services.Services
             {
                 ClearAllChangeTracker();
             }
-
-            var project = await GetProject(id);
-
-            // Return project from database
-            return new ProjectResultAm
-            {
-                Project = project,
-                IdChanges = remap
-            };
         }
 
         /// <summary>
@@ -350,12 +347,12 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task DeleteProject(string projectId)
         {
-            var existingProject = await GetProject(projectId);
+            var existingProject = await GetProject(projectId, null);
             if (existingProject == null)
                 throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
 
             _ = await _edgeRepository.DeleteEdges(existingProject.Edges, projectId, _commonRepository.GetDomain());
-            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _commonRepository.GetDomain());
+            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _commonRepository.GetDomain()).ToList();
             await _projectRepository.Delete(projectId);
             await _projectRepository.SaveAsync();
         }
@@ -368,7 +365,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id)
         {
-            var project = await GetProject(projectId);
+            var project = await GetProject(projectId, null);
 
             if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with id: {id}");
@@ -400,7 +397,7 @@ namespace Mb.Services.Services
 
             var parser = _moduleService.Resolve<IModelBuilderParser>(new Guid(package.Parser));
 
-            var project = await GetProject(package.ProjectId);
+            var project = await GetProject(package.ProjectId, null);
             project.IsSubProject = true;
 
             var data = await parser.SerializeProject(project);
@@ -432,10 +429,17 @@ namespace Mb.Services.Services
         /// Check if project exists
         /// </summary>
         /// <param name="projectId"></param>
+        /// <param name="projectIri"></param>
         /// <returns></returns>
-        public bool ProjectExist(string projectId)
+        public bool ProjectExist(string projectId, string projectIri)
         {
-            return _projectRepository.Context.Projects.Any(x => x.Id == projectId);
+            var exist =
+                _projectRepository.Context.Projects.Any(x => x.Id == projectId) ||
+                _projectRepository.Context.Projects.Any(x => x.Iri == projectIri);
+
+            ClearAllChangeTracker();
+
+            return exist;
         }
 
         #region Private
@@ -501,6 +505,7 @@ namespace Mb.Services.Services
                 UpdatedBy = userName,
                 LibraryTypeId = name,
                 ProjectId = projectId,
+                ProjectIri = projectIri,
                 MasterProjectIri = projectIri
             };
 

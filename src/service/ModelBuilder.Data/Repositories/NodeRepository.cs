@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
@@ -85,8 +87,10 @@ namespace Mb.Data.Repositories
 
         public IEnumerable<(Node node, WorkerStatus status)> DeleteNodes(ICollection<Node> delete, string projectId, string invokedByDomain)
         {
+            var returnValues = new List<(Node edge, WorkerStatus status)>();
+
             if (delete == null || projectId == null || !delete.Any())
-                yield break;
+                return returnValues;
 
             foreach (var node in delete)
             {
@@ -101,8 +105,11 @@ namespace Mb.Data.Repositories
                 _simpleRepository.AttachWithAttributes(node.Simples, EntityState.Deleted);
                 _connectorRepository.AttachWithAttributes(node.Connectors, EntityState.Deleted);
                 Attach(node, EntityState.Deleted);
-                yield return (node, WorkerStatus.Delete);
+
+                returnValues.Add((node, WorkerStatus.Delete));
             }
+
+            return returnValues;
         }
 
         #region Private
