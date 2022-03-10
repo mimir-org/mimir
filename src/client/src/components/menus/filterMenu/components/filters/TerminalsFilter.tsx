@@ -4,6 +4,7 @@ import { TextResources } from "../../../../../assets/text/TextResources";
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";
+
 interface Props {
   activeTerminals: Connector[];
   allTerminals: Connector[];
@@ -23,7 +24,7 @@ export const TerminalsFilter = ({ activeTerminals, allTerminals, dispatch }: Pro
     <>
       <FilterElement
         isChecked={allTerminalsChecked}
-        label={TextResources.FILTER_TERMINALS}
+        label={TextResources.TERMINALS}
         onChange={() => OnAllTerminalsChange(allTerminals, dispatch, allTerminalsChecked)}
         visible
         isHeader

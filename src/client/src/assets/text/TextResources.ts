@@ -10,13 +10,16 @@ export const TextResources = {
   YES: "Yes",
   NO: "No",
   OK: "Ok",
+  RELATIONS: "Relations",
+  TERMINALS: "Terminals",
+  PROJECT: "Project",
+  LOGOUT: "Log out",
 
   // MODULES
   MODULE_LIBRARY: "Library",
   MODULE_INSPECTOR: "Inspector",
 
   // Relations
-  RELATIONS: "Relations",
   RELATIONS_PARTOF_RELATIONSHIP: "Part of Relationship",
   RELATION_PARTOF: "Part of",
   RELATIONS_HASLOCATION: "Has Location",
@@ -44,14 +47,11 @@ export const TextResources = {
   INSPECTOR_ADMININFO: "Admin",
   INSPECTOR_OBJECT: "Object",
   INSPECTOR_PARAMETERS: "Parameters",
-  INSPECTOR_RELATIONS: "Relations",
-  INSPECTOR_TERMINALS: "Terminals",
   INSPECTOR_SIMPLETYPES: "Simple Types",
 
   INSPECTOR_RELATIONS_NAME: "Relation name",
   INSPECTOR_RELATIONS_UPDATED_BY: "Updated by",
   INSPECTOR_RELATIONS_CONNECTED_TO: "Connected to",
-  INSPECTOR_RELATIONS_PROJECT: "Project",
   INSPECTOR_RELATIONS_UPDATED_DATE: "Updated Date",
   INSPECTOR_RELATIONS_RELATION_OUT: "Relation out",
   INSPECTOR_RELATIONS_PART_LOCATION: "Part of Location",
@@ -79,7 +79,6 @@ export const TextResources = {
   INSPECTOR_ADMIN_COST: "Cost: USD/NOK",
   INSPECTOR_ADMIN_KIND: "Kind",
   INSPECTOR_ADMIN_STATUS: "Status",
-  INSPECTOR_ADMIN_PROJECT: "Project",
   INSPECTOR_ADMIN_DESCRIPTION: "Description",
   INSPECTOR_ADMIN_LONG_DESCRIPTION: "Long Description",
   INSPECTOR_ADMIN_INTERFACE: "Interface",
@@ -178,12 +177,11 @@ export const TextResources = {
   EXPLORER_CLOSE_PANEL: "Close explorer panel",
 
   // ProjectMenu
-  PROJECT: "Project",
   PROJECT_DESCRIPTION: "Project menu",
   PROJECT_HEADING: "Projects",
-  PROJECT_NEW: "Create project",
-  PROJECT_SEARCH_PLACEHOLDER: "Search Projects",
-  PROJECT_OPENPROJECT: "Open project",
+  PROJECT_CREATE: "Create project",
+  PROJECT_SEARCH: "Search Projects",
+  PROJECT_OPEN: "Open project",
   PROJECT_RECENT: "Recent projects",
   PROJECT_RECENT_OWNER: "Owner",
   PROJECT_RECENT_VERSION: "Version",
@@ -215,9 +213,7 @@ export const TextResources = {
   PROJECT_COMMIT_PARSER: "Data type",
   PROJECT_COMMIT: "Commit",
 
-  PROJECT_LOGOUT: "Log out",
   PROJECT_START_LABEL: "Start a new project",
-  PROJECT_CREATEPROJECT: "Create project",
   PROJECT_SUBPROJECT_SAVE: "Save selection as subproject",
   PROJECT_NAME: "Project name",
   PROJECT_NAME_PLACEHOLDER: "New project name...",
@@ -252,7 +248,6 @@ export const TextResources = {
   // Visual Filter
   FILTER_HEADING: "Visual Filter",
   FILTER_SHOW_ALL: "Show all",
-  FILTER_TERMINALS: "Terminals",
   FILTER_MATERIALFLUID: "Material Fluid",
   FILTER_ENERGYELECTRICAL: "Energy Electrical",
   FILTER_SHOW_TERMINALS: "Show all terminals",
@@ -261,17 +256,12 @@ export const TextResources = {
   FILTER_SHOW_TRANSPORT: "Show all transport edges",
   FILTER_ANIMATION: "Transport animation",
 
-  FILTER_SHOW_OIL: "Show all oil transports",
-  FILTER_SHOW_HOTWATER: "Show all hot water transports",
-  FILTER_SHOW_MULTIPHASE: "Show all multiphase transports",
-
   FILTER_PARTOF: "Part of relationship",
   FILTER_PARTOF_FUNCTION: "Show part of Function",
   FILTER_PARTOF_LOCATION: "Show part of Location",
   FILTER_PARTOF_PRODUCT: "Show part of Product",
 
   FILTER_TRANSPORTS: "Transports",
-  FILTER_RELATIONS: "Relations",
   FILTER_CATEGORY: "Category",
 
   // User Menu
@@ -280,7 +270,6 @@ export const TextResources = {
   USERMENU_NOTIFICATION: "Show all Notifications",
   USERMENU_DARKMODE: "Turn on Dark mode",
   USERMENU_LIGHTMODE: "Turn on Light mode",
-  USERMENU_LOGOUT: "Log out",
   USERMENU_USER: "User",
 
   // Fullscreen

@@ -21,7 +21,7 @@ export const CreateProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.PROJECT_CREATEPROJECT}>
+      <InfoModalContent title={TextResources.PROJECT_CREATE}>
         <Label>{TextResources.PROJECT_NAME}</Label>
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}

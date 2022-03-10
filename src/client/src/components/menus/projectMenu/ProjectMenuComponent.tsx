@@ -35,12 +35,12 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   return (
     <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} hidden={!!activeMenu}>
       <MenuElement
-        text={TextResources.PROJECT_OPENPROJECT}
+        text={TextResources.PROJECT_OPEN}
         icon={Icons.OpenProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnOpenClick(dispatch))}
       />
       <MenuElement
-        text={TextResources.PROJECT_CREATEPROJECT}
+        text={TextResources.PROJECT_CREATE}
         icon={Icons.CreateProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateClick(dispatch))}
       />

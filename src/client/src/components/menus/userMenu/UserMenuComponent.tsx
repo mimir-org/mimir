@@ -60,7 +60,7 @@ export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
 
       <UserMenuElement onClick={() => OnLogOutClick()}>
         <Icon size={20} src={LogoutIcon} />
-        <UserMenuElementText>{TextResources.USERMENU_LOGOUT}</UserMenuElementText>
+        <UserMenuElementText>{TextResources.LOGOUT}</UserMenuElementText>
       </UserMenuElement>
     </UserMenuBox>
   );
