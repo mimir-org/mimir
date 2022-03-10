@@ -51,7 +51,7 @@
     <ProjectReference Include="..\Modules\EventHubModule\EventHubModule.csproj" />
     <ProjectReference Include="..\Modules\MicrosoftSqlServerModule\MicrosoftSqlServerModule.csproj" />
     <ProjectReference Include="..\Modules\RdfNTriplesParser\RdfNTriplesParser.csproj" />
-    <ProjectReference Include="..\RdfTurtleParser\RdfTurtleParser.csproj" />
+    <ProjectReference Include="..\Modules\RdfTurtleParser\RdfTurtleParser.csproj" />
   </ItemGroup>
 
 </Project>
