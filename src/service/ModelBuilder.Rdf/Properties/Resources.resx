@@ -229,7 +229,7 @@
     <value>imf:inTerminal</value>
   </data>
   <data name="IntegratedObject" xml:space="preserve">
-    <value>imf:integratedObject</value>
+    <value>imf:IntegratedObject</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>imf:Interface</value>
@@ -256,7 +256,7 @@
     <value>mimir:name</value>
   </data>
   <data name="OutputTerminal" xml:space="preserve">
-    <value>imf:outTerminal</value>
+    <value>imf:OutTerminal</value>
   </data>
   <data name="PhysicalQuantity" xml:space="preserve">
     <value>lis:PhysicalQuantity</value>
