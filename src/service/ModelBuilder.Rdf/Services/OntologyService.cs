@@ -47,7 +47,7 @@ namespace ModelBuilder.Rdf.Services
             if (project == null)
                 throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
 
-            _ontologyRepository.LoadData(null);
+            _ontologyRepository.LoadData(new Graph());
             project.AssertGraph(this);
             BuildNodes(project);
             BuildEdges(project);
