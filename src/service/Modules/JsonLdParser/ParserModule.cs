@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,10 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 using ModelBuilder.Rdf.Repositories;
 using ModelBuilder.Rdf.Services;
 using VDS.RDF;
+using VDS.RDF.Ontology;
+using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
 
-namespace RdfTurtleParser
+namespace JsonLdParserModule
 {
+
     public class ParserModule : IModelBuilderParser
     {
         private ServiceProvider _provider;
@@ -41,15 +46,15 @@ namespace RdfTurtleParser
         {
             return new ModuleDescription
             {
-                Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6"),
-                Name = "Mimir RDF Turtle"
+                Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943"),
+                Name = "Mimir IMF JSON-LD"
             };
         }
 
         public Task<byte[]> SerializeProject(Project project)
         {
             _ontologyService.BuildProject(project);
-            var bytes = _ontologyService.GetBytes<CompressingTurtleWriter>();
+            var bytes = _ontologyService.GetBytes<ImfJsonLdWriter>();
             return Task.FromResult(bytes);
         }
 
@@ -63,18 +68,33 @@ namespace RdfTurtleParser
         public Task<ProjectAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            IGraph graph = new Graph();
-            graph.LoadFromString(valueAsString);
+            var graph = LoadGraph(valueAsString);
             var project = _ontologyService.BuildProject(graph);
             return Task.FromResult(project);
+        }
+
+        public IGraph LoadGraph(string valueAsString)
+        {
+            var parser = new JsonLdParser();
+            var Store = new TripleStore();
+            using (TextReader reader = new StringReader(valueAsString))
+            {
+                parser.Load(Store, reader);
+            }
+            if (Store.Graphs.Count != 1)
+            {
+                throw new InvalidDataException("Input JSON contained more than one graph, this is an error");
+            }
+            return Store.Graphs.First();
+
         }
 
         public FileFormat GetFileFormat()
         {
             return new FileFormat
             {
-                ContentType = @"text/turtle",
-                FileExtension = "ttl"
+                ContentType = @"application/ld+json",
+                FileExtension = "jsonld"
             };
         }
     }

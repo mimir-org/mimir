@@ -28,6 +28,6 @@ namespace ModelBuilder.Rdf.Repositories
         /// Load graph data into TripleStore
         /// </summary>
         /// <param name="data">Data to be loaded</param>
-        void LoadData(string data);
+        void LoadData(IGraph data);
     }
 }

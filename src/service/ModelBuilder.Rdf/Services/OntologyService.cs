@@ -58,7 +58,7 @@ namespace ModelBuilder.Rdf.Services
         /// </summary>
         /// <param name="rdf"></param>
         /// <returns></returns>
-        public ProjectAm BuildProject(string rdf)
+        public ProjectAm BuildProject(IGraph rdf)
         {
             _ontologyRepository.LoadData(rdf);
 
