@@ -10,10 +10,10 @@ namespace Mb.Models.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("BlobData");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired().HasMaxLength(127);
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired().HasMaxLength(63);
             builder.Property(p => p.Data).HasColumnName("Data").IsRequired();
-            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>().HasMaxLength(31);
         }
     }
 }

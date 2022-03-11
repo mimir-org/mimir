@@ -14,32 +14,32 @@ namespace Mb.Models.Configurations
 
             builder.HasKey(x => x.Id);
             builder.ToTable("Attribute");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired().HasMaxLength(127);
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired().HasMaxLength(255);
+            builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired().HasMaxLength(63);
             builder.Property(p => p.Value).HasColumnName("Value");
-            builder.Property(p => p.SelectedUnitId).HasColumnName("SelectedUnitId");
-            builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId");
-            builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
+            builder.Property(p => p.SelectedUnitId).HasColumnName("SelectedUnitId").HasMaxLength(127);
+            builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId").HasMaxLength(127);
+            builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri").HasMaxLength(255);
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
 
-            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
-            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
-            builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
-            builder.Property(p => p.TerminalIri).HasColumnName("TerminalIri").IsRequired(false);
-            builder.Property(p => p.TransportId).HasColumnName("TransportId").IsRequired(false);
-            builder.Property(p => p.TransportIri).HasColumnName("TransportIri").IsRequired(false);
-            builder.Property(p => p.InterfaceId).HasColumnName("InterfaceId").IsRequired(false);
-            builder.Property(p => p.InterfaceIri).HasColumnName("InterfaceIri").IsRequired(false);
-            builder.Property(p => p.SimpleId).HasColumnName("SimpleId").IsRequired(false);
-            builder.Property(p => p.SimpleIri).HasColumnName("SimpleIri").IsRequired(false);
+            builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false).HasMaxLength(127);
+            builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false).HasMaxLength(255);
+            builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false).HasMaxLength(127);
+            builder.Property(p => p.TerminalIri).HasColumnName("TerminalIri").IsRequired(false).HasMaxLength(255);
+            builder.Property(p => p.TransportId).HasColumnName("TransportId").IsRequired(false).HasMaxLength(127);
+            builder.Property(p => p.TransportIri).HasColumnName("TransportIri").IsRequired(false).HasMaxLength(255);
+            builder.Property(p => p.InterfaceId).HasColumnName("InterfaceId").IsRequired(false).HasMaxLength(127);
+            builder.Property(p => p.InterfaceIri).HasColumnName("InterfaceIri").IsRequired(false).HasMaxLength(255);
+            builder.Property(p => p.SimpleId).HasColumnName("SimpleId").IsRequired(false).HasMaxLength(127);
+            builder.Property(p => p.SimpleIri).HasColumnName("SimpleIri").IsRequired(false).HasMaxLength(255);
 
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
-            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
+            builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false).HasMaxLength(63);
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
-            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
-            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
+            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>().HasMaxLength(31);
+            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>().HasMaxLength(31);
             builder.Property(p => p.Tags).HasColumnName("Tags").IsRequired(false).HasConversion(stringConverter, stringComparer);
 
             builder.HasOne(x => x.Terminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
