@@ -4,7 +4,7 @@ import { fetchBlobData, fetchInitialData, fetchSimpleTypes } from "./redux/typeE
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
 import { LibraryIcon } from "../assets/icons/modules";
-import { TextResources } from "../assets/text";
+import { TextResources } from "../assets/text/TextResources";
 import { Button } from "../compLibrary/buttons";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorInputs, TypePreview } from "./";

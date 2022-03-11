@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Size } from "../../../../../compLibrary/size";
+import { Size } from "../../../../../compLibrary/size/Size";
 import { setBlockNodeSize } from "../../redux/blockNodeSizeSlice";
 
 /**

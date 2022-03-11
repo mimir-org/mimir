@@ -1,4 +1,4 @@
-const Size = {
+export const Size = {
   // Nodes
   NODE_WIDTH: 160,
   NODE_HEIGHT: 95,
@@ -31,5 +31,3 @@ const Size = {
   TYPEEDITOR_PROPERTIES_FULL_BASELINE: -362, // TO BE REMOVED
   TYPEEDITOR_PROPERTIES_SHRUNK_BASELINE: -672, // TO BE REMOVED
 };
-
-export default Size;

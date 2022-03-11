@@ -19,7 +19,6 @@ import {
  * Union type of possible top elements chosen in inspector, i.e. what can be selected in by the inspector.
  */
 export type InspectorElement = Node | Edge | CreateLibraryType;
-
 export type InspectorAdminElement = Node | Transport | Interface;
 
 /**
@@ -33,13 +32,9 @@ export type InspectorTerminalsElement = Node | Transport | Interface | CreateLib
  * This can either be attributes directly on the object itself (Node, Transport, Interface, Simple), or on its terminals (via terminals view).
  */
 export type InspectorParametersElement = InspectorTerminalsElement | TerminalLikeItem | SimpleLikeItem;
-
 export type AttributeLikeItem = Attribute | AttributeType;
-
 export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
-
 export type TerminalLikeItem = Connector | TerminalTypeExtended;
-
 export type SimpleLikeItem = Simple | SimpleType;
 
 export type SelectedTerminalIdentifier = {

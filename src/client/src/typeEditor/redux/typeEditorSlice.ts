@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Size } from "../../compLibrary/size";
+import { Size } from "../../compLibrary/size/Size";
 import { ApiError } from "../../models/webclient";
 import { defaultCreateLibraryType, fromJsonCreateLibraryType } from "../../models/data/CreateLibraryType";
 import {

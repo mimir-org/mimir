@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AddTerminalComponent } from "../";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { CreateId } from "../../../components/flow/helpers";
 import { AddIcon } from "../../../assets/icons/type";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";

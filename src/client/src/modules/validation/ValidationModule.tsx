@@ -2,7 +2,7 @@ import { memo } from "react";
 import { setValidation } from "../../redux/store/validation/validationSlice";
 import { Modal } from "../../compLibrary/modal/Modal";
 import { Button } from "../../compLibrary/buttons";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { NotificationModalContent } from "../../compLibrary/modal/variants/alert/NotificationModalContent";
 import { useAppDispatch, useAppSelector, validationSelector } from "../../redux/store";
 
@@ -21,7 +21,7 @@ const ValidationModule = () => {
   return (
     <Modal isOpen={!validation.valid} onExit={onClick}>
       <NotificationModalContent isWarning description={validation.message}>
-        <Button onClick={onClick} text={TextResources.Validation_Ok} />
+        <Button onClick={onClick} text={TextResources.OK} />
       </NotificationModalContent>
     </Modal>
   );

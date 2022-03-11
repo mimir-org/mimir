@@ -4,7 +4,7 @@ import { ToolbarElement } from "./components/ToolbarElement";
 import { OnElectroClick, OnFilterClick, OnViewClick } from "./handlers/";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { ToolBarBody, ToolBarBox } from "./ToolbarComponent.styled";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { useStoreState } from "react-flow-renderer";
 
@@ -26,26 +26,26 @@ const ToolbarComponent = () => {
       <ToolBarBody>
         <ToolbarElement
           active={isTreeView}
-          label={TextResources.Toolbar_TreeView}
+          label={TextResources.TOOLBAR_TREEVIEW}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
           onClick={() => OnViewClick(VIEW_TYPE.TREEVIEW as ViewType, numberOfSelectedElements, dispatch)}
         />
         <ToolbarElement
           active={isTreeView}
-          label={TextResources.Toolbar_BlockView}
+          label={TextResources.TOOLBAR_BLOCKVIEW}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
           onClick={() => OnViewClick(VIEW_TYPE.BLOCKVIEW as ViewType, numberOfSelectedElements, dispatch)}
         />
         {!isTreeView && (
           <ToolbarElement
-            label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
+            label={isElectro ? TextResources.TOOLBAR_ELECTRO_OFF : TextResources.TOOLBAR_ELECTRO_ON}
             icon={isElectro ? Icons.Vertical : Icons.Horizontal}
             onClick={() => OnElectroClick(dispatch)}
           />
         )}
         <ToolbarElement
           active={IsVisualFilterOpen}
-          label={IsVisualFilterOpen ? TextResources.Toolbar_VisualFilters_Close : TextResources.Toolbar_VisualFilters_Open}
+          label={IsVisualFilterOpen ? TextResources.TOOLBAR_VISUALFILTERS_CLOSE : TextResources.TOOLBAR_VISUALFILTERS_OPEN}
           icon={IsVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
           onClick={() => OnFilterClick(dispatch, IsVisualFilterOpen)}
         />

@@ -4,3 +4,4 @@ export { default as HeaderContainer } from "./HeaderContainer";
 export { default as HeaderGroup } from "./HeaderGroup";
 export { default as ResizeButton } from "./ResizeButton";
 export { default as LogoBox } from "./LogoBox";
+export { default as NavigationButton } from "./NavigationButton";

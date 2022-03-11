@@ -1,4 +1,4 @@
-const Color = {
+export const Color = {
   // Common
   WHITE: "#FFFFFF",
   BLACK: "#000000",
@@ -70,5 +70,3 @@ const Color = {
   // Inspector Terminals
   TERMINALS_PURPLE: "#A5A5DC",
 };
-
-export default Color;

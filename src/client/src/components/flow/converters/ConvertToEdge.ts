@@ -4,8 +4,13 @@ import { ConvertToInterface, ConvertToTransport } from ".";
 
 /**
  * Function to convert data to a Mimir Edge.
- * @param node
- * @param position
+ * @param id
+ * @param sourceConn
+ * @param targetConn
+ * @param sourceNode
+ * @param targetNode
+ * @param projectId
+ * @param library
  * @returns an Edge.
  */
 const ConvertToEdge = (
@@ -16,7 +21,7 @@ const ConvertToEdge = (
   targetNode: Node,
   projectId: string,
   library: LibraryState
-): Edge => {
+) => {
   return {
     id: id,
     projectId: projectId,

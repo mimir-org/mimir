@@ -1,6 +1,6 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { IsFamily } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
 import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
@@ -25,6 +25,6 @@ export const IsValidTreeConnection = (node: Node, conn: Connection, nodes: Node[
 };
 
 const onMouseUp = (isValidAspect: boolean, dispatch: Dispatch) => {
-  if (!isValidAspect) dispatch(setValidation({ valid: false, message: TextResources.Validation_Aspect }));
+  if (!isValidAspect) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_ASPECT }));
   return document.removeEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch));
 };

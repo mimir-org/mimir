@@ -1,6 +1,6 @@
 import { SimpleType } from "../../../models";
-import { ListElem } from "../../../compLibrary/list";
 import { CheckboxContainer, Label } from "../../inputs/CheckboxContainer";
+import { ListElem } from "../../styled";
 import { OnPropertyChangeFunction } from "../../types";
 
 interface Props {

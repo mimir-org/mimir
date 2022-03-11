@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 
 const ValuesListWrapper = styled.div`
   display: flex;

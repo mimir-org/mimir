@@ -5,7 +5,7 @@ import { Label } from "../../../../../../compLibrary/input/text";
 import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useFilePicker } from "use-file-picker";
 import { OnReturnClick, OnImportLibraryClick } from "./handlers";
 import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../../redux/store";
@@ -22,23 +22,23 @@ export const ImportFileLibraryMenu = () => {
     limitFilesConfig: { min: 1, max: 1 },
   });
 
-  const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
+  const selectedText = plainFiles?.[0]?.name ?? TextResources.PROJECT_IMPORT_SELECT;
   const onAction = () => OnImportLibraryClick(clear, dispatch, plainFiles[0]);
   const isActionDisabled = filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_Import_LibraryTypes}>
+      <InfoModalContent title={TextResources.PROJECT_IMPORT_LIB_TYPES}>
         <Label>
-          {TextResources.Project_Import_File}: {selectedText}
+          {TextResources.PROJECT_IMPORT_FILE}: {selectedText}
         </Label>
-        <Button onClick={() => openFileSelector()} text={TextResources.Project_Browse} />
+        <Button onClick={() => openFileSelector()} text={TextResources.PROJECT_BROWSE} />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
           <Button
             disabled={isActionDisabled}
             onClick={onAction}
-            text={TextResources.Project_Import_Library}
+            text={TextResources.PROJECT_IMPORT_LIB}
             icon={ImportLibraryIcon}
           />
         </ButtonBox>

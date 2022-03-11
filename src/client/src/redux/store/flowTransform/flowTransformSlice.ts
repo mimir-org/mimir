@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FlowTransform } from "react-flow-renderer";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 
 const initialState: FlowTransform = {
   x: 0,

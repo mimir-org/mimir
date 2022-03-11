@@ -34,7 +34,7 @@ export interface Edge {
   interfaceId: string;
   interface: Interface;
 
-  isHidden: boolean | false;
+  isHidden: boolean;
   masterProjectId: string;
   masterProjectIri: string;
   isSelected: boolean;

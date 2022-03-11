@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { RightArrowIcon } from "../../../../../../../assets/icons/arrow";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Button } from "../../../../../../../compLibrary/buttons";
 import { CollectionsActions, LibItem } from "../../../../../../../models";
 import { OnManageCollection } from "../handlers";
@@ -30,7 +30,7 @@ export const ModalButton = ({
   dispatch,
 }: Props) => (
   <ModalButtonsWrapper>
-    <Button onClick={() => onExit(!isOpen)} text={TextResources.Library_Modal_Cancel} />
+    <Button onClick={() => onExit(!isOpen)} text={TextResources.CANCEL} />
     {collectionState === CollectionsActions.ManageType && (
       <Button
         icon={RightArrowIcon}
@@ -45,7 +45,7 @@ export const ModalButton = ({
           );
           onExit(!isOpen);
         }}
-        text={TextResources.Library_Modal_Add_Collection}
+        text={TextResources.LIBRARY_MODAL_ADD_COLLECTION}
       />
     )}
   </ModalButtonsWrapper>

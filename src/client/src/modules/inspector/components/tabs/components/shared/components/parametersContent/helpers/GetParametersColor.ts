@@ -1,4 +1,4 @@
-import { Color } from "../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 
 export const GetParametersColor = (index: number): [string, string] => {
   switch (index % 6) {

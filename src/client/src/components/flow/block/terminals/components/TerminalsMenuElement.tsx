@@ -1,6 +1,6 @@
 import { BidirectionalIcon } from "../../../../../assets/icons/bidirectional";
-import { Color } from "../../../../../compLibrary/colors";
-import { Checkbox } from "../../../../../compLibrary/input/checkbox/common";
+import { Color } from "../../../../../compLibrary/colors/Color";
+import { Checkbox } from "../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
 import { IsBidirectionalTerminal } from "../../../helpers";

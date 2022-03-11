@@ -1,12 +1,12 @@
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
-import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { ExportProjectIcon } from "../../../../../../assets/icons/project";
 import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModuleDescription } from "../../../../../../models";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
@@ -34,15 +34,15 @@ export const ExportProjectFileMenu = () => {
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_Export}>
-        <Label>{TextResources.Project_File_Name}</Label>
+      <InfoModalContent title={TextResources.PROJECT_EXPORT}>
+        <Label>{TextResources.PROJECT_FILE_NAME}</Label>
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.Project_File_Name}
+          placeholder={TextResources.PROJECT_FILE_NAME}
           value={fileName}
         />
-        <Label>{TextResources.Project_Parser}</Label>
+        <Label>{TextResources.PROJECT_PARSER}</Label>
         <Dropdown
           label="Parser"
           valueProp="name"
@@ -51,11 +51,11 @@ export const ExportProjectFileMenu = () => {
           onChange={(item: ModuleDescription) => setParser(item)}
         />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
           <Button
             disabled={isActionDisabled}
             onClick={onAction}
-            text={TextResources.Project_Export_File}
+            text={TextResources.PROJECT_EXPORT_FILE}
             icon={ExportProjectIcon}
           />
         </ButtonBox>

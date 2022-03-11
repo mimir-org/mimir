@@ -5,7 +5,7 @@ import { ProjectDescription } from "./ProjectDescription";
 import { ProjectItemCm } from "../../../../../../../models";
 import { CreateProjectIcon, ImportProjectIcon } from "../../../../../../../assets/icons/project";
 import { Button } from "../../../../../../../compLibrary/buttons";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import {
   ProjectDetailsContainer,
@@ -37,12 +37,12 @@ export const ProjectDetails = ({ projects }: Props) => {
         <ProjectOptionsButtons>
           <Button
             onClick={() => Click.OnCreateClick(dispatch)}
-            text={TextResources.Project_Start_Label}
+            text={TextResources.PROJECT_START_LABEL}
             icon={CreateProjectIcon}
           />
           <Button
             onClick={() => Click.OnImportProjectFile(dispatch)}
-            text={TextResources.Project_Import}
+            text={TextResources.PROJECT_IMPORT}
             icon={ImportProjectIcon}
           />
         </ProjectOptionsButtons>

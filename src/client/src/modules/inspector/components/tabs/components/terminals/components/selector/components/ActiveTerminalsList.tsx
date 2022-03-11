@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Color } from "../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { ConnectorType, TerminalType } from "../../../../../../../../../models";
 import { ActiveTerminalsTypeList } from "./ActiveTerminalsTypeList";

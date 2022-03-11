@@ -4,6 +4,8 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsProduct } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
+import { Position } from "../../../models/project";
+
 import {
   Attribute,
   BlobData,
@@ -43,6 +45,10 @@ interface OnDropParameters {
   dispatch: Dispatch;
 }
 
+/**
+ * Hook that runs when an object is dropped from the LibaryModule onto the stage.
+ * @param params
+ */
 const useOnDrop = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
 
@@ -53,8 +59,9 @@ const useOnDrop = (params: OnDropParameters) => {
 
   const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
+  const isBlockView = IsBlockView();
 
-  if (isSubProject && !IsBlockView()) handleSubProjectDrop(event, project, dispatch);
+  if (isSubProject && !isBlockView) handleSubProjectDrop(event, project, dispatch);
   else if (!isSubProject) handleNodeDrop(params, sourceNode);
 };
 
@@ -77,7 +84,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   // TODO: fix when implementing auto-position
   const treeMarginY = 220;
   const blockMarginY = 120;
-  const position = IsBlockView()
+  const position: Position = IsBlockView
     ? { x: event.clientX, y: event.clientY - blockMarginY }
     : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
 
@@ -101,10 +108,10 @@ const handleCreatePartOfEdge = (
   targetNode.level = sourceNode.level + 1;
   const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  const partOfEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
-  dispatch(createEdge(partofEdge));
+  dispatch(createEdge(partOfEdge));
 };
 
 const initSimple = (simple: Simple, targetNode: Node) => {
@@ -139,14 +146,14 @@ const getParentNode = (sourceNode: Node, project: Project, data: LibItem) => {
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
 };
 
-const setInitConnectorVisibility = (connector: Connector, targetNode: Node) => {
-  const isLocationConnector = IsLocation(targetNode) && IsLocationTerminal(connector);
-  const isProductConnector = IsProduct(targetNode) && IsProductTerminal(connector);
+const setInitConnectorVisibility = (conn: Connector, targetNode: Node) => {
+  const isLocationConnector = IsLocation(targetNode) && IsLocationTerminal(conn);
+  const isProductConnector = IsProduct(targetNode) && IsProductTerminal(conn);
 
   if (isLocationConnector || isProductConnector) {
-    if (IsInputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.InputVisible;
-    if (IsOutputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.OutputVisible;
-  } else connector.connectorVisibility = ConnectorVisibility.None;
+    if (IsInputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.InputVisible;
+    if (IsOutputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.OutputVisible;
+  } else conn.connectorVisibility = ConnectorVisibility.None;
 };
 
 export default useOnDrop;

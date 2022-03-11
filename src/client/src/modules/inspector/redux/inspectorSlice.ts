@@ -1,6 +1,6 @@
 import { ATTRIBUTE_TAB } from "../../../models/project";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 
 const initialInspectorState = {
   height: Size.MODULE_CLOSED,

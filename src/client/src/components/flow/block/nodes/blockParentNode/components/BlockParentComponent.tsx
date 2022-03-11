@@ -2,7 +2,7 @@ import { Connector, Node } from "../../../../../../models";
 import { ParentBox } from "./styled";
 import { IsLocation } from "../../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
-import { Color } from "../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../compLibrary/colors/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { BlockNodeSize } from "../../../../../../models/project";
 

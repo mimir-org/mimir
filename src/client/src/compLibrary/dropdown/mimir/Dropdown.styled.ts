@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../colors";
+import { Color } from "../../colors/Color";
 import { FontWeight } from "../../font";
 import { ParameterInputsWrapper } from "../../../modules/inspector/components/tabs/components/shared/components/parametersContent/components/row/components/Parameter.styled";
 
@@ -24,14 +24,14 @@ export const DropdownBox = styled.div<DropdownBoxProps>`
   }
 `;
 
-interface DropdownHeaderProps {
+interface DropdownHeaderBoxProps {
   height: number;
   borderColor: string;
   borderRadius: number;
   fontSize: string;
 }
 
-export const DropdownHeader = styled.div<DropdownHeaderProps>`
+export const DropdownHeaderBox = styled.div<DropdownHeaderBoxProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -55,13 +55,13 @@ export const DropdownHeader = styled.div<DropdownHeaderProps>`
   }
 `;
 
-interface DropdownListProps {
+interface DropdownListBoxProps {
   top: number;
   borderColor: string;
   borderRadius: number;
 }
 
-export const DropdownList = styled.div<DropdownListProps>`
+export const DropdownListBox = styled.div<DropdownListBoxProps>`
   display: flex;
   flex-direction: column;
   position: absolute;

@@ -1,7 +1,8 @@
 import { CreateId } from "../helpers";
 import { BlobData, LibItem, Node, User, NODE_KIND } from "../../../models";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
+import { Position } from "../../../models/project";
 
 /**
  * Function to convert data to a Mimir Node.
@@ -12,7 +13,7 @@ import { GetDateNowUtc } from "../../../helpers";
  * @param user
  * @returns a Node.
  */
-const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User): Node => {
+const ConvertToNode = (data: LibItem, position: Position, projectId: string, icons: BlobData[], user: User) => {
   const now = GetDateNowUtc();
 
   const node = {

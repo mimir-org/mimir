@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
-import { TextResources } from "../../../../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../../../../../../../../../assets/icons/chevron";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { MenuHeader, MenuList, MenuListItem, MenuWrapper } from "./CombinationDropdown.styled";
-import { Checkbox } from "../../../../../../../../../../../compLibrary/input/checkbox/common";
+import { Checkbox } from "../../../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { Tooltip } from "../../../../../../../../../../../compLibrary/tooltip/Tooltip";
 
 interface Props {
@@ -36,8 +36,8 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
 
     return (
       <MenuListItem color={bodyColor}>
-        <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly={true} />
-        <span>{TextResources.Inspector_Params_Combinations_Select_All}</span>
+        <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly />
+        <span>{TextResources.INSPECTOR_PARAMS_SELECT_ALL}</span>
       </MenuListItem>
     );
   };
@@ -46,7 +46,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     return (
       <Tooltip key={item[keyProp]} content={item.combined} placement={"right"} offset={[0, 10]}>
         <MenuListItem color={bodyColor}>
-          <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly={true} />
+          <Checkbox isChecked={IsItemSelected(item)} onChange={() => onChange(item, IsItemSelected(item))} readOnly />
           <span>{item.combined}</span>
         </MenuListItem>
       </Tooltip>
@@ -57,7 +57,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)}>
       <div onClick={() => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen} color={headerColor}>
-          <p>{TextResources.Inspector_Params_Combinations}</p>
+          <p>{TextResources.INSPECTOR_PARAMS_COMBINATION}</p>
           <img src={isListOpen ? CollapseWhiteIcon : ExpandWhiteIcon} alt="expand-icon" />
         </MenuHeader>
       </div>

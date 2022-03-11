@@ -5,9 +5,9 @@ import { IsOffPage } from "../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../helpers";
 import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { FlowTransform } from "react-flow-renderer";
 
 /**
@@ -44,7 +44,7 @@ const useOnConnectStop = (
     );
 
     if (existingEdge !== undefined) {
-      dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+      dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
       return;
     }
 
@@ -77,12 +77,13 @@ function ValidateOffPagePosition(
   isTarget: boolean
 ) {
   const leftBound = CalculateDropZone(transform, isTarget, parentNodeSize, parentXPos);
+
   if (secondaryNode) {
-    const dropZoneWidth = Size.BLOCK_SPLITVIEW_DISTANCE;
+    const dropZoneWidth = 100;
     const rightBound = leftBound + dropZoneWidth;
 
     if (isTarget) return clientX > leftBound && clientX < rightBound;
-    return clientX < leftBound + dropZoneWidth && clientX > leftBound - dropZoneWidth;
+    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
   }
 
   if (isTarget) return clientX > leftBound;

@@ -15,7 +15,7 @@ import { BoxWrapper } from "../styled/BoxWrapper";
 import { ResizeHandler } from "./handlers/ResizeHandler";
 import { IsProduct } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
-import { Size } from "../../../../../compLibrary/size";
+import { Size } from "../../../../../compLibrary/size/Size";
 
 /**
  * Component for the large parent block in BlockView.

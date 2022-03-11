@@ -1,5 +1,5 @@
 import { ListType } from "../TypeEditorList";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { CreateLibraryType } from "../../models";
 import { IsInterface, IsLocation, IsTransport } from ".";
 

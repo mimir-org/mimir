@@ -1,4 +1,4 @@
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize } from "../../../compLibrary/font";
 import styled from "styled-components";
 

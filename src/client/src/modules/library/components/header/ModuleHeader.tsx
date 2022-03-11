@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 import { Aspect, LibraryTab } from "../../../../models";
 import { LibHeader } from "./ModuleHeader.styled";
 import { ModuleTabs } from "./components/ModuleTabs";
@@ -26,7 +26,7 @@ interface Props {
 export const ModuleHeader = ({ libOpen, dispatch, activeTab, setActiveTab, search, aspectFilters, setAspectFilters }: Props) => (
   <LibHeader>
     {!libOpen ? (
-      <ExpandButton text={TextResources.Library_Expand_Panel} offset={[0, 5]} dispatch={dispatch} />
+      <ExpandButton text={TextResources.LIBRARY_EXPAND_PANEL} offset={[0, 5]} dispatch={dispatch} />
     ) : (
       <>
         <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />

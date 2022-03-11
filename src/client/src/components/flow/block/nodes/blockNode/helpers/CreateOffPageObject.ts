@@ -1,7 +1,7 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { IsProduct } from "../../../../../../helpers";
-import { Size } from "../../../../../../compLibrary/size";
+import { Size } from "../../../../../../compLibrary/size/Size";
 import {
   Aspect,
   CONNECTOR_KIND,

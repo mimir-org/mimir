@@ -1,4 +1,4 @@
-import { Size } from "../../../../../../compLibrary/size";
+import { Size } from "../../../../../../compLibrary/size/Size";
 import { IsConnectorVisible } from "../../../../../../helpers";
 import { Connector } from "../../../../../../models";
 import { IsInputTerminal } from "../../../../helpers";

@@ -1,12 +1,12 @@
 import React from "react";
 import moment from "moment/moment.js";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../compLibrary/font";
 import { Edge, EnumBase, Interface, Project, Transport } from "../../../../../../../models";
 import { changeInterfaceValue, changeTransportValue } from "../../../../../../../redux/store/project/actions";
-import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../../../../helpers";
 import { GetReferenceDesignationEdge } from "../../../../../../../helpers/GetReferenceDesignation";
@@ -33,24 +33,18 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
     <>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={element.id ?? ""} onChange={() => null} inputType="" />
+          <div>{TextResources.ID}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={element.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input
-            fontSize={FontSize.STANDARD}
-            readOnly={true}
-            value={GetRdsIdEdge(edge) ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <div>{TextResources.INSPECTOR_ADMIN_RDS}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsIdEdge(edge) ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_SEMANTIC_ID}</div>
           <Input
             fontSize={FontSize.STANDARD}
-            readOnly={true}
+            readOnly
             value={element.semanticReference ?? ""}
             onChange={() => null}
             inputType=""
@@ -59,7 +53,7 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
       </TabColumn>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.Inspector_Admin_Service}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_SERVICE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={edge.isLocked}
@@ -69,46 +63,40 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={element.name} onChange={() => null} inputType="" />
+          <div>{TextResources.INSPECTOR_ADMIN_TYPE}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={element.name} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input
-            fontSize={FontSize.STANDARD}
-            readOnly={true}
-            value={element.updatedBy ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
+          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_BY}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={element.updatedBy ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
-          <div>{TextResources.Inspector_Admin_Updated_Date}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
-            readOnly={true}
+            readOnly
             value={moment(element.updated).format("DD/MM/YYYY") ?? ""}
             onChange={() => null}
             inputType=""
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Created_Date}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_CREATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
-            readOnly={true}
+            readOnly
             onChange={() => null}
             inputType=""
             value={moment(element.created).format("DD/MM/YYYY") ?? ""}
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Designation}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_DESIGNATION}</div>
           <Input
             fontSize={FontSize.STANDARD}
-            readOnly={true}
+            readOnly
             value={GetReferenceDesignationEdge(edge, project) ?? ""}
             onChange={() => null}
             inputType=""
@@ -117,7 +105,7 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
       </TabColumn>
       <TabColumn width={125}>
         <div className="statusDropdown">
-          <div>{TextResources.Inspector_Admin_Status}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_STATUS}</div>
           <Dropdown
             label=""
             items={statuses}
@@ -131,13 +119,13 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
           ></Dropdown>
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={element.version ?? ""} onChange={() => null} inputType="" />
+          <div>{TextResources.INSPECTOR_ADMIN_VERSION}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={element.version ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={465}>
         <div>
-          <div>{TextResources.Inspector_Admin_Description}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_DESCRIPTION}</div>
           <TextArea
             height={200}
             value={element.description ?? ""}
