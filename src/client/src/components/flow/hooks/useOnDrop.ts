@@ -5,7 +5,6 @@ import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsPro
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import { Position } from "../../../models/project";
-
 import {
   Attribute,
   BlobData,

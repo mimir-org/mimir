@@ -27,6 +27,15 @@ export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: Bloc
   });
 };
 
+function AddConnectedOffPageNode(node: Node, isNodeTarget: boolean, edge: Edge, dispatch: Dispatch, size: BlockNodeSize) {
+  const nodeParent = GetParent(node);
+  const xPos = isNodeTarget ? nodeParent?.positionBlockX : size.width;
+  const connector = node?.connectors.find((c) => (isNodeTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
+
+  CreateConnectedOffPageNode(node, connector, { x: xPos, y: node?.positionBlockY }, dispatch);
+}
+
+//#region Helpers
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
   const existingOffPageEdge = isTargetNode
     ? edges?.find((x) => x?.toConnectorId === edge.toConnectorId && IsOffPage(x?.fromNode))
@@ -44,14 +53,6 @@ function IsValidTransport(edge: Edge, node: Node) {
   );
 }
 
-function AddConnectedOffPageNode(node: Node, isNodeTarget: boolean, edge: Edge, dispatch: Dispatch, size: BlockNodeSize) {
-  const nodeParent = GetParent(node);
-  const xPos = isNodeTarget ? nodeParent?.positionBlockX : size.width;
-  const connector = node?.connectors.find((c) => (isNodeTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
-
-  CreateConnectedOffPageNode(node, connector, { x: xPos, y: node?.positionBlockY }, dispatch);
-}
-
 function OnlyOneNodeVisible(edge: Edge, isNodeTarget: boolean) {
   const sourceNode = isNodeTarget ? edge.fromNode : edge.toNode;
   const targetNode = isNodeTarget ? edge.toNode : edge.fromNode;
@@ -62,3 +63,4 @@ function OnlyOneNodeVisible(edge: Edge, isNodeTarget: boolean) {
 
   return !targetNodeVisible;
 }
+//#endregion
