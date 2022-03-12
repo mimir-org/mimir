@@ -68,6 +68,7 @@ const useOnConnectStop = (
   }
 };
 
+//#region OffPage Functions
 function ValidateOffPagePosition(
   clientX: number,
   transform: FlowTransform,
@@ -110,5 +111,6 @@ function CalculateDropZone(transform: FlowTransform, isTarget: boolean, parentNo
 
   return leftBound;
 }
+//#endregion
 
 export default useOnConnectStop;
