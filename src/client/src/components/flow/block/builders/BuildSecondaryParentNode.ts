@@ -8,18 +8,18 @@ import { CreateId } from "../../helpers";
  * Component to create a secondary parent node in BlockView.
  * @param primaryNode
  * @param secondaryNode
- * @returns a FlowElement, the big box in BlockView.
+ * @returns the second ParentNode in SpliView.
  */
 const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
   if (!primaryNode || !secondaryNode) return null;
 
   const type = TextResources.Type_BlockParentNode;
-  const screenWidth = window.innerWidth / Size.BLOCK_SPLITVIEW_DIVISOR;
+  const width = Size.BLOCK_NODE_WIDTH;
   const distanceToPrimaryNode = Size.BLOCK_SPLITVIEW_DISTANCE;
 
   // The secondaryNode is positioned to the right of the primaryNode
   const position = {
-    x: primaryNode.positionBlockX + distanceToPrimaryNode + screenWidth,
+    x: primaryNode.positionBlockX + distanceToPrimaryNode + width,
     y: primaryNode.positionBlockY,
   };
 
@@ -36,7 +36,7 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
     isHidden: secondaryNode.isHidden,
     isSelected: secondaryNode.isSelected,
     draggable: false,
-    selectable: true,
+    selectable: false,
   } as FlowElement;
 };
 
