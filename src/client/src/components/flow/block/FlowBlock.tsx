@@ -44,7 +44,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
-  const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
+  const defaultZoom = Size.DEFAULT_ZOOM;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {

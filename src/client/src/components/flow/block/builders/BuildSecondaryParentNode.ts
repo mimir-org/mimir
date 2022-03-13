@@ -15,7 +15,7 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
 
   const type = TextResources.Type_BlockParentNode;
   const width = Size.BLOCK_NODE_WIDTH;
-  const distanceToPrimaryNode = Size.BLOCK_SPLITVIEW_DISTANCE;
+  const distanceToPrimaryNode = Size.SPLITVIEW_DISTANCE;
 
   // The secondaryNode is positioned to the right of the primaryNode
   const position = {

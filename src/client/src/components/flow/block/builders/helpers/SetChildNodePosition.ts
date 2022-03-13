@@ -12,7 +12,7 @@ import { BlockNodeSize } from "../../redux/types";
 const SetChildNodePosition = (nodePos: Position, parentNodeSize: BlockNodeSize, isSecondaryNode?: boolean) => {
   const width = parentNodeSize.width;
   const height = parentNodeSize.height;
-  const splitViewMargin = Size.BLOCK_SPLITVIEW_DISTANCE;
+  const splitViewMargin = Size.SPLITVIEW_DISTANCE;
   const margin = 30;
   const marginLarge = 130;
   const marginY = Size.BLOCK_MARGIN_Y + margin;

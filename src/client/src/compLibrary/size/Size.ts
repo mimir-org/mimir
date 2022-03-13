@@ -1,3 +1,6 @@
+/**
+ * Component for static size types in Mimir.
+ */
 const Size = {
   NODE_WIDTH: 160,
   NODE_HEIGHT: 95,
@@ -8,12 +11,12 @@ const Size = {
   BLOCK_MARGIN_Y: 70,
   BLOCK_MARGIN_X: 45,
 
-  BLOCK_SPLITVIEW_DISTANCE: 120,
-  BLOCK_SPLITVIEW_ZOOM: 0.7,
-  BLOCK_SPLITVIEW_DIVISOR: 1.6,
+  SPLITVIEW_DISTANCE: 120,
+  SPLITVIEW_DIVISOR: 1.6,
 
   // Zoom
-  DEFAULT_ZOOM_LEVEL: 1,
+  DEFAULT_ZOOM: 1,
+  SPLITVIEW_ZOOM: 0.7,
 
   // Modules
   MODULE_OPEN: 400,

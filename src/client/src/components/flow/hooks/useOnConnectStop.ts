@@ -103,8 +103,8 @@ function CalculateDropZone(
 
   // Handle splitView
   if (isSecondaryNode) {
-    const targetDropZone = transform.x + Size.BLOCK_SPLITVIEW_DISTANCE + parentNodeWidthScaled * 2;
-    const sourceDropZone = transform.x + Size.BLOCK_SPLITVIEW_DISTANCE + parentNodeWidthScaled;
+    const targetDropZone = transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled * 2;
+    const sourceDropZone = transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled;
     return isTarget ? targetDropZone : sourceDropZone;
   }
 

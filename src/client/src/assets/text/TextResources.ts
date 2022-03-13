@@ -1,5 +1,6 @@
-/* All static text for Mimir */
-
+/**
+ * Component for all static text in Mimir.
+ */
 const TextResources = {
   // Aspects
   Aspect_Function: "Function",

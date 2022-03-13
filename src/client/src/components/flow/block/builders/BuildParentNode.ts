@@ -13,9 +13,10 @@ const BuildParentNode = (node: Node) => {
 
   const type = TextResources.Type_BlockParentNode;
   const position = { x: 0, y: 0 };
+
+  // TODO: remove state mutation outside store
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
-  // TODO: remove state mutation outside store
 
   return {
     key: CreateId(),
