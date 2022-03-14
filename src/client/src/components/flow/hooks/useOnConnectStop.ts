@@ -11,9 +11,10 @@ import { TextResources } from "../../../assets/text";
 import { FlowTransform } from "react-flow-renderer";
 
 /**
- * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
+ * Hook that runs when a user drags a connection from a terminal and releases the mouse button.
  * If a connection is completed between two terminals, the hook useOnConnect runs.
  * An OffPageNode is created if the connection is released within the dropzone for an OffPageNode.
+ * The dropzone is located to the left or right of the ParentBlockNode, depending on the OffPageNode type.
  * @param e
  * @param project
  * @param parentNodeSize
@@ -51,10 +52,9 @@ const useOnConnectStop = (
 
   const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn, parentNodeSize);
 
-  if (isValidOffPageDrop) {
-    CreateRequiredOffPageNode(sourceNode, sourceConn, { x: e.clientX, y: e.clientY }, dispatch, true);
-    SaveEventData(null, "edgeEvent");
-  }
+  if (!isValidOffPageDrop) return;
+  CreateRequiredOffPageNode(sourceNode, sourceConn, { x: e.clientX, y: e.clientY }, dispatch, true);
+  SaveEventData(null, "edgeEvent");
 };
 
 //#region OffPage Functions
