@@ -44,7 +44,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
-  const defaultZoom = Size.DEFAULT_ZOOM;
+  const defaultZoom = Size.ZOOM_DEFAULT;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -89,12 +89,14 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnDrop({
+    return hooks.useOnDropBlock({
       event,
       project,
       user: userState.user,
       icons,
-      library: library,
+      library,
+      secondaryNode,
+      flowTransform: transform,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,
       setElements,
@@ -153,7 +155,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           deleteKeyCode={"Delete"}
           zoomOnDoubleClick={false}
           defaultZoom={defaultZoom}
-          minZoom={0.4}
+          minZoom={0.3}
           maxZoom={3}
           zoomOnScroll
           paneMoveable

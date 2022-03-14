@@ -1,30 +1,17 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
+import { Size } from "../../../compLibrary/size";
 import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsProduct } from "../../../helpers";
+import { GetSelectedNode, IsFamily, IsLocation, IsProduct } from "../../../helpers";
 import { Dispatch } from "redux";
-import { Elements, OnLoadParams } from "react-flow-renderer";
-import {
-  Attribute,
-  BlobData,
-  Connector,
-  ConnectorVisibility,
-  LibItem,
-  LibrarySubProjectItem,
-  Node,
-  Project,
-  Simple,
-  User,
-} from "../../../models";
+import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
+import { Attribute, BlobData, Connector, ConnectorVisibility, LibItem, Node, Project, Simple, User } from "../../../models";
 import {
   CreateId,
-  GetProjectData,
-  GetSubProject,
   IsInputTerminal,
   IsOutputTerminal,
   IsLocationTerminal,
   IsPartOf,
-  IsSubProject,
   SetSiblingIndexOnNodeDrop,
   IsProductTerminal,
 } from "../helpers";
@@ -37,6 +24,8 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
+  secondaryNode: Node;
+  flowTransform: FlowTransform;
   reactFlowInstance: OnLoadParams;
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
   setElements: React.Dispatch<React.SetStateAction<Elements>>;
@@ -44,49 +33,32 @@ interface OnDropParameters {
 }
 
 /**
- * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas.
+ * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas in BlockView.
  * A partOf Edge is created from the dropped Node to its parent.
- * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
+ * The parent is the selectedBlockNode or the secondaryParentNode.
  * @param params
  */
 const useOnDrop = (params: OnDropParameters) => {
-  const { event, project, dispatch } = params;
+  const { event } = params;
 
   event.stopPropagation();
   event.preventDefault();
 
   if (DoesNotContainApplicationData(event)) return;
 
-  const sourceNode = GetSelectedNode();
-  const isSubProject = IsSubProject(event);
-
-  if (isSubProject && !IsBlockView()) handleSubProjectDrop(event, project, dispatch);
-  else if (!isSubProject) handleNodeDrop(params, sourceNode);
+  handleNodeDrop(params);
 };
 
-const handleSubProjectDrop = (event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) => {
-  const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibrarySubProjectItem;
-
-  (async () => {
-    const subProject = await GetSubProject(eventData.id);
-    const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, subProject);
-
-    nodesToCreate.forEach((node) => dispatch(addNode(node)));
-    edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
-  })();
-};
-
-const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) => {
+const handleNodeDrop = ({ event, project, user, icons, library, secondaryNode, flowTransform, dispatch }: OnDropParameters) => {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  const parentNode = getParentNode(sourceNode, project, data);
+  let parentNode = GetSelectedNode();
 
-  // TODO: fix when implementing auto-position
-  const treeMarginY = 220;
-  const blockMarginY = 120;
-  const position = IsBlockView()
-    ? { x: event.clientX, y: event.clientY - blockMarginY }
-    : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
+  if (secondaryNode) {
+    const dropZone = CalculateSecondaryNodeDropZone(flowTransform);
+    parentNode = FindParent(parentNode, secondaryNode, dropZone, event.clientX);
+  }
 
+  const position = { x: event.clientX, y: event.clientY };
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
   targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
@@ -96,6 +68,20 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
 
   dispatch(addNode(targetNode));
 };
+
+/**
+ * A Node will have the SecondaryNode as parent if dropped over its area.
+ * @param transform
+ * @returns an X position where the SecondaryNode is placed.
+ */
+function CalculateSecondaryNodeDropZone(transform: FlowTransform) {
+  const parentNodeWidthScaled = Size.BLOCK_NODE_WIDTH * transform.zoom;
+  return transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled;
+}
+
+function FindParent(selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
+  return clientX < dropZone ? selectedNode : secondaryNode;
+}
 
 const handleCreatePartOfEdge = (
   sourceNode: Node,
@@ -140,12 +126,7 @@ const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-const getParentNode = (sourceNode: Node, project: Project, data: LibItem) => {
-  if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
-  return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
-};
-
-const setInitConnectorVisibility = (connector: Connector, targetNode: Node) => {
+function setInitConnectorVisibility(connector: Connector, targetNode: Node) {
   const isLocationConnector = IsLocation(targetNode) && IsLocationTerminal(connector);
   const isProductConnector = IsProduct(targetNode) && IsProductTerminal(connector);
 
@@ -153,6 +134,6 @@ const setInitConnectorVisibility = (connector: Connector, targetNode: Node) => {
     if (IsInputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.InputVisible;
     if (IsOutputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.OutputVisible;
   } else connector.connectorVisibility = ConnectorVisibility.None;
-};
+}
 
 export default useOnDrop;
