@@ -5,8 +5,6 @@ import { Node } from "../../../models";
 /**
  * Function to find a node's parentNode
  * @param childNode - the child node
- * @param nodes - all nodes
- * @param edges  - all edges
  * @returns the parentNode, if any
  */
 const GetParent = (childNode: Node) => {

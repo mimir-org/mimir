@@ -6,6 +6,8 @@ import { ProjectMenuHeaderComponent } from "./components/ProjectMenuHeaderCompon
 import { CompanyLogoBox, HeaderBox, LogoBox, HeaderRightSection } from "./HeaderComponent.styled";
 import { GetCompanyLogoForHeader, IsBlockView, IsStartPage } from "../../helpers";
 import { useZoomPanHelper } from "react-flow-renderer";
+import { secondaryNodeSelector, useAppSelector } from "../../redux/store";
+import { SetZoomCenterLevel } from "../flow/block/nodes/blockParentNode/helpers/SetZoomCenterLevel";
 
 /**
  * The top header in Mimir.
@@ -13,12 +15,12 @@ import { useZoomPanHelper } from "react-flow-renderer";
  */
 export const HeaderComponent = () => {
   const { setCenter } = useZoomPanHelper();
+  const secondaryNode = useAppSelector(secondaryNodeSelector);
 
   const onResetZoom = () => {
     if (!IsBlockView()) return;
-    const x = window.innerWidth / 2;
-    const y = window.innerHeight / 2 - 67;
-    setCenter(x, y, 1);
+    const canvasData = SetZoomCenterLevel(secondaryNode !== null);
+    setCenter(canvasData.x, canvasData.y, canvasData.zoom);
   };
 
   return (
