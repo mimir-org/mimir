@@ -1,6 +1,6 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetSecondaryNodePos } from "./helpers";
+import { GetNodeTypeString, SetChildNodePosition } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
@@ -10,9 +10,7 @@ const BuildSecondaryChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
 
   const type = GetNodeTypeString(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-
-  // Force node to fit Block
-  const position = !IsOffPage(node) ? SetSecondaryNodePos(nodePos, parentNodeSize) : nodePos;
+  const position = !IsOffPage(node) ? SetChildNodePosition(nodePos, parentNodeSize, true) : nodePos;
 
   return {
     key: CreateId(),

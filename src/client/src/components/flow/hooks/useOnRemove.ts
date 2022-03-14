@@ -14,6 +14,9 @@ import { getParentNodeConnector } from "../block/nodes/blockOffPageNode/helpers/
 
 /**
  * Hook that runs when an element is deleted from Mimir.
+ * If a Node is deleted the connected Edges are also deleted.
+ * If an Edge is deleted the connect Nodes will not be deleted, except an edge between OffPageNodes.
+ * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
  * @param elements
  * @param blockEdgesToRemove
  * @param inspectorRef

@@ -1,5 +1,6 @@
-/* All static text for Mimir */
-
+/**
+ * Component for all static text in Mimir.
+ */
 export const TextResources = {
   // COMMON
   ID: "ID",
