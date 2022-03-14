@@ -15,8 +15,8 @@ interface Props {
   search: (text: string) => void;
   aspectFilters: Aspect[];
   setAspectFilters: (value: Aspect[]) => void;
-  collectionState: CollectionsActions;
-  setCollectionState: (action: CollectionsActions) => void;
+  // collectionState: CollectionsActions;
+  // setCollectionState: (action: CollectionsActions) => void;
 }
 
 /**
@@ -33,9 +33,9 @@ export const ModuleHeader = ({
   search,
   aspectFilters,
   setAspectFilters,
-  collectionState,
-  setCollectionState,
-}: Props) => (
+}: // collectionState,
+// setCollectionState,
+Props) => (
   <LibHeader>
     {!libOpen ? (
       <ExpandButton text={TextResources.LIBRARY_EXPAND_PANEL} offset={[0, 5]} dispatch={dispatch} />
@@ -44,10 +44,10 @@ export const ModuleHeader = ({
         <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />
         <SearchArea activeTab={activeTab} search={search} />
         <FilterBoxes
-          collectionState={collectionState}
           aspectFilters={aspectFilters}
           setAspectFilters={setAspectFilters}
-          setCollectionState={setCollectionState}
+          // collectionState={collectionState}
+          // setCollectionState={setCollectionState}
         />
       </>
     )}

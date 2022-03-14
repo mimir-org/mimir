@@ -58,8 +58,8 @@ export const LibraryModule = ({ dispatch }: Props) => {
         search={(text: string) => setSearchString(text)}
         aspectFilters={aspectFilters}
         setAspectFilters={setAspectFilters}
-        collectionState={collectionState}
-        setCollectionState={setCollectionState}
+        // collectionState={collectionState}
+        // setCollectionState={setCollectionState}
       />
       <ModuleBody
         libOpen={libOpen}

@@ -2,15 +2,15 @@ import { Icon } from "../../../../../compLibrary/icon";
 import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { Aspect, CollectionsActions } from "../../../../../models";
-import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
+// import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
 import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
-  collectionState: CollectionsActions;
+  // collectionState: CollectionsActions;
   aspectFilters: Aspect[];
   setAspectFilters: (value: Aspect[]) => void;
-  setCollectionState: (action: CollectionsActions) => void;
+  // setCollectionState: (action: CollectionsActions) => void;
 }
 /**
  * Component for filtering types by aspect in Library Module
@@ -18,12 +18,12 @@ interface Props {
  * @returns filters of each aspect
  */
 
-export const FilterBoxes = ({ collectionState, aspectFilters, setAspectFilters, setCollectionState }: Props) => {
+export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
   const stringIsNumber = (value: string) => isNaN(Number(value)) === false;
-  const onCollectionsClick = () => {
-    if (collectionState === CollectionsActions.ManageType) setCollectionState(CollectionsActions.ShowTypes);
-    else setCollectionState(CollectionsActions.ManageType);
-  };
+  // const onCollectionsClick = () => {
+  //   if (collectionState === CollectionsActions.ManageType) setCollectionState(CollectionsActions.ShowTypes);
+  //   else setCollectionState(CollectionsActions.ManageType);
+  // };
 
   const isAspectSelected = (aspect: Aspect) => aspectFilters.includes(aspect);
   const toggleAspectFilter = (aspect: Aspect) => {
@@ -34,16 +34,16 @@ export const FilterBoxes = ({ collectionState, aspectFilters, setAspectFilters, 
     setAspectFilters(filters);
   };
 
-  const getCollectionIcon = () => {
-    if (collectionState === CollectionsActions.ManageType) return ColoredCollections;
-    else return Collections;
-  };
+  // const getCollectionIcon = () => {
+  //   if (collectionState === CollectionsActions.ManageType) return ColoredCollections;
+  //   else return Collections;
+  // };
 
   return (
     <FilterBoxesWrapper>
-      <FilterBoxButton onClick={onCollectionsClick}>
+      {/* <FilterBoxButton onClick={onCollectionsClick}>
         <Icon size={24} src={getCollectionIcon()} alt="collection" />
-      </FilterBoxButton>
+      </FilterBoxButton> */}
       {Object.keys(Aspect)
         .filter(stringIsNumber)
         .filter((aspect) => Number(aspect) !== Aspect.None && Number(aspect) !== Aspect.NotSet)
