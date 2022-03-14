@@ -262,7 +262,7 @@
     <value>lis:PhysicalQuantity</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>mimir:project</value>
+    <value>mimir:Project</value>
   </data>
   <data name="QualityQuantifiedAs" xml:space="preserve">
     <value>lis:qualityQuantifiedAs</value>

@@ -493,7 +493,7 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:project.
+        ///   Looks up a localized string similar to mimir:Project.
         /// </summary>
         internal static string Project {
             get {
