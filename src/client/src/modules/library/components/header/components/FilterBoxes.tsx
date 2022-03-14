@@ -2,6 +2,7 @@ import { Icon } from "../../../../../compLibrary/icon";
 import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { Aspect } from "../../../../../models";
+// import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
 import { TextResources } from "../../../../../assets/text/TextResources";
 
@@ -20,7 +21,7 @@ interface Props {
 export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
   const stringIsNumber = (value: string) => isNaN(Number(value)) === false;
   // const onCollectionsClick = () => {
-  //   if (collectionState === CollectionsActions.ManageType) setCollectionState(CollectionsActions.ReadOnly);
+  //   if (collectionState === CollectionsActions.ManageType) setCollectionState(CollectionsActions.ShowTypes);
   //   else setCollectionState(CollectionsActions.ManageType);
   // };
 
@@ -40,9 +41,9 @@ export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
 
   return (
     <FilterBoxesWrapper>
-      {/* <FilterWrapper onClick={onCollectionsClick}>
+      {/* <FilterBoxButton onClick={onCollectionsClick}>
         <Icon size={24} src={getCollectionIcon()} alt="collection" />
-      </FilterWrapper> */}
+      </FilterBoxButton> */}
       {Object.keys(Aspect)
         .filter(stringIsNumber)
         .filter((aspect) => Number(aspect) !== Aspect.None && Number(aspect) !== Aspect.NotSet)
