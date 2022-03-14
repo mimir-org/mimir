@@ -9,7 +9,7 @@ import { ModuleDescription } from "../../../../../../models";
 import { TextResources } from "../../../../../../assets/text";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
-import { OnReturnClick, OnSaveClick } from "./handlers";
+import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
 import {
   commonStateParsersSelector,
   isActiveMenuSelector,
@@ -27,7 +27,7 @@ export const ExportProjectFileMenu = () => {
   const [fileName, setFileName] = useState("");
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
-  const onAction = () => OnSaveClick(dispatch, project, fileName, parser.id);
+  const onAction = () => OnExportProjectFileClick(dispatch, project, fileName, parser.id);
   const isActionDisabled = !(fileName && parser);
 
   useEffect(() => setParser(parsers?.[0]), [parsers]);

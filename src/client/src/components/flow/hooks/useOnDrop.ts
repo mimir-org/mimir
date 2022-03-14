@@ -43,6 +43,12 @@ interface OnDropParameters {
   dispatch: Dispatch;
 }
 
+/**
+ * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas.
+ * A partOf Edge is created from the dropped Node to its parent.
+ * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
+ * @param params
+ */
 const useOnDrop = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
 

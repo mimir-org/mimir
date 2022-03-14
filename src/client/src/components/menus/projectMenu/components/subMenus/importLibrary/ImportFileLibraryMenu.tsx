@@ -7,7 +7,7 @@ import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../../assets/text";
 import { useFilePicker } from "use-file-picker";
-import { OnReturnClick, OnSaveClick } from "./handlers";
+import { OnReturnClick, OnImportLibraryClick } from "./handlers";
 import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../../redux/store";
 
 export const ImportFileLibraryMenu = () => {
@@ -23,7 +23,7 @@ export const ImportFileLibraryMenu = () => {
   });
 
   const selectedText = plainFiles?.[0]?.name ?? TextResources.Project_Import_Select;
-  const onAction = () => OnSaveClick(clear, dispatch, plainFiles[0]);
+  const onAction = () => OnImportLibraryClick(clear, dispatch, plainFiles[0]);
   const isActionDisabled = filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (

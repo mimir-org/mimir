@@ -44,6 +44,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
     setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
+  // Update node size based on active terminals
   useEffect(() => {
     const updatedSize = SetNodeSize(terminals, electro);
     setSize({ width: updatedSize.width, height: updatedSize.height });

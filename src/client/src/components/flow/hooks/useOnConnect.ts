@@ -19,6 +19,10 @@ interface UseOnConnectParams {
   animatedEdge: boolean;
 }
 
+/**
+ * Hook that runs when a successful connection has been made between two Nodes via an Edge.
+ * @param params
+ */
 const useOnConnect = (params: UseOnConnectParams) => {
   SaveEventData(null, "edgeEvent");
 
