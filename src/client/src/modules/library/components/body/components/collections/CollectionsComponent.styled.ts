@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../../../../compLibrary/font";
 
 interface CollectionsWrapperProps {
@@ -15,9 +15,9 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
 
   p {
     text-align: center;
-    color: ${Color.Black};
-    font-size: ${FontSize.Medium};
-    font-family:${FontType.Standard}
+    color: ${Color.BLACK};
+    font-size: ${FontSize.MEDIUM};
+    font-family:${FontType.STANDARD}
     padding: 10px 0;
   }
 `;
@@ -33,15 +33,15 @@ export const CollectionsUpdateButtonWrapper = styled.div`
     position: absolute;
     bottom: 5%;
     align-self: center;
-    background: ${Color.White};
+    background: ${Color.WHITE};
     min-width: 140px;
     height: 34px;
-    border: 1.5px solid ${Color.BlueMagenta};
+    border: 1.5px solid ${Color.BLUE_MAGENTA};
     border-radius: 5px;
 
     .button-text {
-      font-size: ${FontSize.Standard};
-      font-family: ${FontType.Standard};
+      font-size: ${FontSize.STANDARD};
+      font-family: ${FontType.STANDARD};
     }
   }
 `;

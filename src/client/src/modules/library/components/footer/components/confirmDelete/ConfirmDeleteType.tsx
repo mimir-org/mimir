@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Button } from "../../../../../../compLibrary/buttons";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { GetSelectedElement } from "./helpers/GetSelectedElement";
@@ -15,19 +15,19 @@ interface Props {
 }
 
 export const ConfirmDeleteType = ({ isOpen, onExit, selectedElement, dispatch }: Props) => {
-  const modalDescription = TextResources.Library_Delete_Type_Confirm + GetSelectedElement(selectedElement) + "?";
+  const modalDescription = TextResources.LIBRARY_DELETE_TYPE_CONFIRM + GetSelectedElement(selectedElement) + "?";
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={() => onExit(!isOpen)}>
       <NotificationModalContent isWarning description={modalDescription}>
         <ModalButtonsWrapper>
-          <Button onClick={() => onExit(!isOpen)} text={TextResources.Library_Delete_Type_No} />
+          <Button onClick={() => onExit(!isOpen)} text={TextResources.NO} />
           <Button
             onClick={() => {
               OnDeleteTypeClick(selectedElement, dispatch);
               onExit(!isOpen);
             }}
-            text={TextResources.Library_Delete_Type_Yes}
+            text={TextResources.YES}
           />
         </ModalButtonsWrapper>
       </NotificationModalContent>

@@ -1,86 +1,115 @@
 import { BlockNodeSize, EdgeEvent } from "../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Node, Project } from "../../../models";
-import { GetSelectedNode, IsOffPage, IsProduct } from "../../../helpers";
-import { GetParent, IsOutputTerminal, IsOutputVisible } from "../helpers";
-import { CreateRequiredOffPageNode } from "../block/nodes/helpers/offPage";
+import { Connector, Node, Project } from "../../../models";
+import { IsOffPage } from "../../../helpers";
+import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../helpers";
+import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
+import { Size } from "../../../compLibrary/size/Size";
+import { setValidation } from "../../../redux/store/validation/validationSlice";
+import { TextResources } from "../../../assets/text/TextResources";
+import { FlowTransform } from "react-flow-renderer";
 
 /**
- * Hook that runs when a user drags a connection from a terminal, and releases the mouse button.
- * This is where an OffPage node can be created.
+ * Hook that runs when a user drags a connection from a terminal and releases the mouse button.
+ * If a connection is completed between two terminals, the hook useOnConnect runs.
+ * An OffPageNode is created if the connection is released within the dropzone for an OffPageNode.
+ * The dropzone is located to the left or right of the ParentBlockNode, depending on the OffPageNode type.
  * @param e
  * @param project
  * @param parentNodeSize
  * @param secondaryNode
+ * @param transform
  * @param dispatch
  */
 const useOnConnectStop = (
   e: MouseEvent,
   project: Project,
   parentNodeSize: BlockNodeSize,
-  secondaryNode: boolean,
+  secondaryNode: Node,
+  transform: FlowTransform,
   dispatch: Dispatch
 ) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
+  if (!edgeEvent) return;
 
-  if (edgeEvent) {
-    const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
-    const sourceConnector = sourceNode.connectors.find((conn) => conn.id === edgeEvent.sourceId);
-    const parentBlockNode = IsProduct(sourceNode) ? GetSelectedNode() : GetParent(sourceNode);
-    const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
+  const sourceNode = project.nodes.find((n) => n.id === edgeEvent.nodeId);
+  const sourceConn = sourceNode?.connectors.find((conn) => conn.id === edgeEvent.sourceId);
 
-    const isOffPageDrop = ValidateOffPageDrop(
-      sourceNode,
-      e.clientX,
-      parentNodeSize,
-      isTarget,
-      secondaryNode,
-      parentBlockNode?.positionBlockX
-    );
+  if (!IsTransport(sourceConn) || IsOffPage(sourceNode)) return;
 
-    if (isOffPageDrop) {
-      const isRequired = true;
-      CreateRequiredOffPageNode(sourceNode, sourceConnector, { x: e.clientX, y: e.clientY }, dispatch, isRequired);
-      SaveEventData(null, "edgeEvent");
-    }
+  const existingEdge = project.edges.find(
+    (x) =>
+      (x.fromConnectorId === sourceConn.id && IsTransport(x.fromConnector)) ||
+      (x.toConnectorId === sourceConn.id && IsTransport(x.toConnector))
+  );
+
+  if (existingEdge) {
+    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
+    return;
   }
+
+  const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn, parentNodeSize);
+
+  if (!isValidOffPageDrop) return;
+  CreateRequiredOffPageNode(sourceNode, sourceConn, { x: e.clientX, y: e.clientY }, dispatch, true);
+  SaveEventData(null, "edgeEvent");
 };
 
+//#region OffPage Functions
 function ValidateOffPageDrop(
-  sourceNode: Node,
   clientX: number,
-  parentNodeSize: BlockNodeSize,
-  isTarget: boolean,
-  secondaryNode: boolean,
-  parentXPos: number
+  transform: FlowTransform,
+  sourceNode: Node,
+  secondaryNode: Node,
+  sourceConn: Connector,
+  parentNodeSize: BlockNodeSize
 ) {
-  let leftBound = isTarget ? parentNodeSize?.width : parentXPos;
-  if (secondaryNode) leftBound = isTarget ? parentXPos + parentNodeSize?.width : parentXPos;
+  const isTarget = IsOutputTerminal(sourceConn) || IsOutputVisible(sourceConn);
+  const dropZone = CalculateDropZone(transform, sourceNode, secondaryNode, parentNodeSize, isTarget);
 
-  const dropZoneWidth = 200;
-  const rightBound = leftBound + dropZoneWidth;
-  const isValidPostion = ValidateOffPagePosition(clientX, leftBound, rightBound, dropZoneWidth, secondaryNode, isTarget);
-
-  return !IsOffPage(sourceNode) && isValidPostion;
+  if (isTarget) return clientX > dropZone;
+  return clientX < dropZone;
 }
 
-function ValidateOffPagePosition(
-  clientX: number,
-  leftBound: number,
-  rightBound: number,
-  dropZoneWidth: number,
-  secondaryNode: boolean,
+/**
+ * The dropzone for an OffPageNode depends on the canvas' zoom level and position. This function handles those calculations.
+ * If the OffPageNode is a source, the dropzone is located to the left of the ParentNode, else the dropzone is to the right of the ParentNode.
+ * @param transform
+ * @param sourceNode
+ * @param secondaryNode
+ * @param parentNodeSize
+ * @param isTarget
+ * @returns an X value that represents the dropzone on the canvas.
+ */
+function CalculateDropZone(
+  transform: FlowTransform,
+  sourceNode: Node,
+  secondaryNode: Node,
+  parentNodeSize: BlockNodeSize,
   isTarget: boolean
 ) {
-  if (secondaryNode) {
-    if (isTarget) return clientX > leftBound && clientX < rightBound;
-    return clientX < leftBound && clientX > leftBound - dropZoneWidth;
+  const parentNode = GetParent(sourceNode);
+  const parentPosX = parentNode?.positionBlockX;
+  const isSecondaryNode = parentNode?.id === secondaryNode?.id;
+  const parentNodeWidthScaled = parentNodeSize.width * transform.zoom;
+  const defaultX = Size.BLOCK_MARGIN_X;
+
+  let dropZone = isTarget ? parentPosX + parentNodeWidthScaled : parentPosX;
+
+  // Handle canvas scroll
+  if (transform.x !== defaultX) dropZone += transform.x;
+
+  // Handle splitView
+  if (isSecondaryNode) {
+    const targetDropZone = transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled * 2;
+    const sourceDropZone = transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled;
+    return isTarget ? targetDropZone : sourceDropZone;
   }
 
-  if (isTarget) return clientX > leftBound;
-  return clientX < leftBound;
+  return dropZone;
 }
+//#endregion
 
 export default useOnConnectStop;

@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { FilterElement } from "./FilterElement";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { Connector, Edge, Node } from "../../../../../models";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
 import { AllPartOfChecked, GetPartOfName } from "./helpers";
@@ -21,7 +21,7 @@ export const PartOfFilter = ({ edges, nodes, items, dispatch, visible }: Props) 
   visible && (
     <>
       <FilterElement
-        label={TextResources.Filter_PartOf}
+        label={TextResources.FILTER_PARTOF}
         onChange={() => OnAllPartOfChange(edges, dispatch)}
         isChecked={AllPartOfChecked(edges)}
         visible={visible}

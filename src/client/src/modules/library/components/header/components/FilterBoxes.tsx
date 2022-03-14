@@ -2,9 +2,9 @@ import { Icon } from "../../../../../compLibrary/icon";
 import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { Aspect, CollectionsActions } from "../../../../../models";
-import { FilterBoxButton, FilterBoxesWrapper } from "./FilterBoxes.styled";
-import { TextResources } from "../../../../../assets/text";
 import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
+import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -56,8 +56,8 @@ export const FilterBoxes = ({ collectionState, aspectFilters, setAspectFilters, 
               key={i}
               content={
                 aspectSelected
-                  ? `${TextResources.Library_Aspect_Toggle} ${aspectName} ${TextResources.Library_Aspect_Filter_Off}`
-                  : `${TextResources.Library_Aspect_Toggle} ${aspectName} ${TextResources.Library_Aspect_Filter_On}`
+                  ? `${TextResources.LIBRARY_ASPECT_TOGGLE} ${aspectName} ${TextResources.LIBRARY_ASPECT_FILTER_OFF}`
+                  : `${TextResources.LIBRARY_ASPECT_TOGGLE} ${aspectName} ${TextResources.LIBRARY_ASPECT_FILTER_ON}`
               }
               offset={[0, 10]}
             >

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Color } from "../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { ConnectorType, TerminalType } from "../../../../../../../../../models";
 import { ActiveTerminalsTypeList } from "./ActiveTerminalsTypeList";
@@ -38,14 +38,17 @@ export const ActiveTerminalsList = ({
       .map((type) => [FormatTypeId(type, ConnectorType.Input), FormatTypeId(type, ConnectorType.Output)])
       .flat()
   );
+
   const filteredCategories = useMemo(
     () => FilterTerminalCategories(terminalCategories, terminals),
     [terminalCategories, terminals]
   );
+
   const [inputTerminalsByTerminalType, outputTerminalsByTerminalType] = useMemo(
     () => GetInputAndOutputTerminalsByTerminalType(terminals),
     [terminals]
   );
+
   const numTerminalsByCategoryId = useMemo(() => GetNumTerminalsByCategory(terminals), [terminals]);
 
   const isCategoryExpanded = (category: TerminalCategory) => expandedCategoriesIds.includes(category.id);
@@ -66,7 +69,7 @@ export const ActiveTerminalsList = ({
               onClick={() =>
                 OnCategoryClick(category, isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)
               }
-              color={i % 2 ? undefined : Color.PurpleLight}
+              color={i % 2 ? undefined : Color.PURPLE_LIGHT}
             >
               <div className="numCategoryTerminals">{numCategoryTerminals}</div>
 

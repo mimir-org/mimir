@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../../../../../compLibrary/font";
 
 export const CreateCollectionWrapper = styled.div`
@@ -12,8 +12,8 @@ export const CreateCollectionWrapper = styled.div`
     min-width: 125px;
     white-space: nowrap;
     border-radius: 5px;
-    background: ${Color.White};
-    border: 1.5px solid ${Color.BlueMagenta};
+    background: ${Color.WHITE};
+    border: 1.5px solid ${Color.BLUE_MAGENTA};
     margin-left: 25px;
     height: 36px;
   }
@@ -23,12 +23,12 @@ export const CollectionNameInput = styled.div`
   input[type="text"] {
     border-width: 0 0 1px 0;
     border-radius: 0;
-    border-color: ${Color.BlueMagenta};
+    border-color: ${Color.BLUE_MAGENTA};
     background: transparent;
     width: 331px;
     height: 36px;
-    font-family: ${FontType.Standard};
-    font-size: ${FontSize.SubHeader};
+    font-family: ${FontType.STANDARD};
+    font-size: ${FontSize.SUBHEADER};
   }
 
   input[type="text"]::placeholder {

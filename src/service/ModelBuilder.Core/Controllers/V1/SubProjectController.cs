@@ -102,7 +102,7 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var data = await _projectService.GetProject(id);
+                var data = await _projectService.GetProject(id, null);
 
                 if (data is { IsSubProject: false })
                     return BadRequest("This is not a subProject");

@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../assets/text";
 import { Aspect, CollectionsActions, LibraryTab } from "../../../../models";
+import { TextResources } from "../../../../assets/text/TextResources";
 import { LibHeader } from "./ModuleHeader.styled";
 import { ModuleTabs } from "./components/ModuleTabs";
 import { SearchArea } from "./components/SearchArea";
@@ -38,7 +38,7 @@ export const ModuleHeader = ({
 }: Props) => (
   <LibHeader>
     {!libOpen ? (
-      <ExpandButton text={TextResources.Library_Expand_Panel} offset={[0, 5]} dispatch={dispatch} />
+      <ExpandButton text={TextResources.LIBRARY_EXPAND_PANEL} offset={[0, 5]} dispatch={dispatch} />
     ) : (
       <>
         <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />

@@ -1,4 +1,4 @@
-import { Color } from "../compLibrary/colors";
+import { Color } from "../compLibrary/colors/Color";
 import { AspectColorType, LibItem, Node } from "../models";
 import { IsFunction, IsLocation, IsProduct } from ".";
 
@@ -23,27 +23,27 @@ const GetAspectColor = (node: Node | LibItem, colorType: AspectColorType, isTran
 };
 
 function GetMainColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FunctionMain;
-  if (IsProduct(node)) return Color.ProductMain;
-  if (IsLocation(node)) return Color.LocationMain;
+  if (IsFunction(node)) return Color.FUNCTION_MAIN;
+  if (IsProduct(node)) return Color.PRODUCT_MAIN;
+  if (IsLocation(node)) return Color.LOCATION_MAIN;
 }
 
 function GetSelectedColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FunctionSelected;
-  if (IsProduct(node)) return Color.ProductSelected;
-  if (IsLocation(node)) return Color.LocationSelected;
+  if (IsFunction(node)) return Color.FUNCTION_SELECTED;
+  if (IsProduct(node)) return Color.PRODUCT_SELECTED;
+  if (IsLocation(node)) return Color.LOCATION_SELECTED;
 }
 
 function GetHeaderColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FunctionHeader;
-  if (IsProduct(node)) return Color.ProductHeader;
-  if (IsLocation(node)) return Color.LocationHeader;
+  if (IsFunction(node)) return Color.FUNCTION_HEADER;
+  if (IsProduct(node)) return Color.PRODUCT_HEADER;
+  if (IsLocation(node)) return Color.LOCATION_HEADER;
 }
 
 function GetTabColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FunctionTab;
-  if (IsProduct(node)) return Color.ProductTab;
-  if (IsLocation(node)) return Color.LocationTab;
+  if (IsFunction(node)) return Color.FUNCTION_TAB;
+  if (IsProduct(node)) return Color.PRODUCT_TAB;
+  if (IsLocation(node)) return Color.LOCATION_TAB;
 }
 
 export default GetAspectColor;

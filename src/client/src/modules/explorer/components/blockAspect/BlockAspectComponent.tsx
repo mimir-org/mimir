@@ -2,17 +2,15 @@ import { AspectContainer } from "../shared/styled/AspectContainer";
 import { LockComponent } from "../shared/components/LockComponent";
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
-import { BlockAspectElement } from "./BlockAspectElement";
+import { BlockAspectElement } from "./components/BlockAspectElement";
 import { Dispatch } from "redux";
-import { GetWidth } from "../shared/helpers/GetWidth";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
   project: Project;
   username: string;
   node: Node;
-  nodes: Node[];
   selectedNode: Node;
   secondaryNode: Node;
   indent: number;
@@ -22,11 +20,16 @@ interface Props {
   onToggleExpanded: () => void;
   dispatch: Dispatch;
 }
+
+/**
+ * The main component for a BlockView Aspect in the ExplorerModule.
+ * @param interface
+ * @returns a BlockAspectElement.
+ */
 export const BlockAspectComponent = ({
   project,
   username,
   node,
-  nodes,
   selectedNode,
   secondaryNode,
   isExpanded,
@@ -36,11 +39,11 @@ export const BlockAspectComponent = ({
   dispatch,
   onToggleExpanded,
 }: Props) => (
-  <AspectContainer width={GetWidth(nodes)} node={node}>
+  <AspectContainer node={node}>
     <LockComponent
       isLocked={node.isLocked}
-      unlockText={TextResources.Explorer_Unlock_Object}
-      lockText={TextResources.Explorer_Lock_Object}
+      unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
+      lockText={TextResources.EXPLORER_LOCK_OBJECT}
       onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
     />
     <BlockAspectElement

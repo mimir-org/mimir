@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../colors";
+import { Color } from "../../colors/Color";
 
 export const RadioButtonWrapper = styled.label`
   position: relative;
@@ -19,8 +19,8 @@ export const RadioButtonWrapper = styled.label`
     justify-content: center;
     height: var(--radioButtonSize);
     width: var(--radioButtonSize);
-    background-color: ${Color.White} !important;
-    border: 1px solid ${Color.BlueMagenta};
+    background-color: ${Color.WHITE} !important;
+    border: 1px solid ${Color.BLUE_MAGENTA};
     border-radius: 10px;
   }
 
@@ -34,7 +34,7 @@ export const RadioButtonWrapper = styled.label`
     width: calc(var(--radioButtonSize) / 2);
     height: calc(var(--radioButtonSize) / 2);
     border-radius: 50%;
-    background-color: ${Color.BlueMagenta};
-    border: 1px solid ${Color.BlueMagenta};
+    background-color: ${Color.BLUE_MAGENTA};
+    border: 1px solid ${Color.BLUE_MAGENTA};
   }
 `;

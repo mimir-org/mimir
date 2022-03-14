@@ -2,8 +2,8 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
-import { StartPage } from "../start/";
-import { InspectorModule } from "../../modules/inspector";
+import { StartPage } from "../start/StartPage";
+import { InspectorModule } from "../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../modules/library/LibraryModule";
 import { ProjectSubMenus } from "../menus/projectMenu";
 import { search } from "../../redux/store/project/actions";
@@ -17,7 +17,7 @@ import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE, ViewType } from "../../models/project";
-import { SetDarkModeColor } from "../../helpers";
+import { ToggleDarkModeColor } from "../../helpers";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import {
@@ -36,10 +36,10 @@ interface Props {
  * @param interface
  * @returns all the modules and components in the Mimir application.
  */
-const Home = ({ dispatch }: Props) => {
+export const Home = ({ dispatch }: Props) => {
   const projectState = useAppSelector(selectors.projectStateSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
-  const darkMode = useAppSelector(selectors.darkModeSelector);
+  const isDarkMode = useAppSelector(selectors.darkModeSelector);
   const inspectorRef = useRef(null);
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
 
@@ -47,7 +47,7 @@ const Home = ({ dispatch }: Props) => {
     dispatch(fetchLibraryInterfaceTypes());
     dispatch(fetchLibraryTransportTypes());
     dispatch(search(""));
-    dispatch(fetchLibrary(""));
+    dispatch(fetchLibrary());
     dispatch(fetchCollaborationPartners());
     dispatch(fetchParsers());
     dispatch(fetchStatuses());
@@ -67,8 +67,8 @@ const Home = ({ dispatch }: Props) => {
   }, []);
 
   useEffect(() => {
-    SetDarkModeColor(darkMode);
-  }, [darkMode]);
+    ToggleDarkModeColor(isDarkMode);
+  }, [isDarkMode]);
 
   return (
     <>
@@ -90,5 +90,3 @@ const Home = ({ dispatch }: Props) => {
     </>
   );
 };
-
-export default Home;

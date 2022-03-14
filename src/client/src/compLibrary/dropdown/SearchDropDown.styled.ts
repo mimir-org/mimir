@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../colors";
+import { Color } from "../colors/Color";
 import { FontSize } from "../font";
 
 export const SearchBarContainer = styled.div`
@@ -12,9 +12,9 @@ export const SearchBar = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  border: 1px solid ${Color.BlueMagenta};
+  border: 1px solid ${Color.BLUE_MAGENTA};
   border-radius: 5px;
-  background-color: ${Color.White} !important;
+  background-color: ${Color.WHITE} !important;
   padding: 0 5px 0 10px;
   input:focus,
   textarea:focus,
@@ -25,13 +25,13 @@ export const SearchBar = styled.div`
   input[type="text"] {
     width: 100%;
     height: 12px;
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
     border: 0;
   }
 
   input[type="text"]::placeholder {
-    color: ${Color.GreyDarker};
-    font-size: ${FontSize.Medium};
+    color: ${Color.GREY_DARKER};
+    font-size: ${FontSize.MEDIUM};
     font-style: italic;
     opacity: 0.5;
   }
@@ -45,8 +45,8 @@ export const SearchBar = styled.div`
 export const SearchBarList = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${Color.White};
-  border: 1px solid ${Color.BlueMagenta};
+  background-color: ${Color.WHITE};
+  border: 1px solid ${Color.BLUE_MAGENTA};
   border-radius: 5px;
   padding: 1px;
   font-size: 11px;
@@ -59,15 +59,15 @@ export const SearchBarList = styled.div`
 
 export const SearchBarListItem = styled.div`
   height: 18px;
-  border-bottom: 1px solid ${Color.GreyDark};
-  background-color: ${Color.White};
+  border-bottom: 1px solid ${Color.GREY_DARK};
+  background-color: ${Color.WHITE};
 
   p {
     padding: 3px 13px;
   }
 
   &:hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     text-decoration: underline;
     cursor: pointer;
   }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 
 export const FilterBoxesWrapper = styled.div`
   display: flex;
@@ -7,8 +7,8 @@ export const FilterBoxesWrapper = styled.div`
   justify-content: center;
   gap: 80px;
   padding: 15px 0 10px 0;
-  background: linear-gradient(to right, ${Color.BlueMagenta}, ${Color.FunctionMain}, ${Color.ProductMain}, ${Color.LocationMain})
-    left bottom no-repeat;
+  background: linear-gradient(to right, ${Color.FUNCTION_MAIN}, ${Color.PRODUCT_MAIN}, ${Color.LOCATION_MAIN}) left bottom
+    no-repeat;
   background-size: 100% 2px;
 `;
 

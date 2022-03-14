@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../compLibrary/font";
 
 interface Props {
@@ -11,9 +11,9 @@ const TypeNameInput = styled.div<Props>`
   flex-direction: column;
   min-width: 15%;
   margin-right: 25px;
-  color: ${Color.Black};
-  font-size: ${FontSize.Tiny};
-  font-family: ${FontType.Standard};
+  color: ${Color.BLACK};
+  font-size: ${FontSize.TINY};
+  font-family: ${FontType.STANDARD};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
 
   p {
@@ -25,9 +25,9 @@ const TypeNameInput = styled.div<Props>`
   }
 
   input::placeholder {
-    color: ${Color.Black};
-    font-size: ${FontSize.Standard};
-    font-family: ${FontType.Standard};
+    color: ${Color.BLACK};
+    font-size: ${FontSize.STANDARD};
+    font-family: ${FontType.STANDARD};
   }
 
   input {

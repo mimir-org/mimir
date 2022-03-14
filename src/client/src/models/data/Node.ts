@@ -12,6 +12,7 @@ export interface Node {
   iri: string;
   domain: string;
   projectId: string;
+  projectIri: string;
   rds: string;
   description: string;
   semanticReference: string;
@@ -35,7 +36,7 @@ export interface Node {
   updated: Date;
   version: string;
   aspect: Aspect;
-  isRoot: boolean | false;
+  isRoot: boolean;
   masterProjectId: string;
   masterProjectIri: string;
   symbol: string;
@@ -53,7 +54,7 @@ export interface Node {
   cost: number;
 
   // Only for client
-  isSelected?: boolean | false;
-  isBlockSelected?: boolean | false;
-  isHidden?: boolean | false;
+  isSelected?: boolean;
+  isBlockSelected?: boolean;
+  isHidden?: boolean;
 }

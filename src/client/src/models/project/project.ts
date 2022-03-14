@@ -10,11 +10,12 @@ export const ATTRIBUTE_TAB = {
 
 export type EdgeType = keyof typeof EDGE_TYPE;
 export const EDGE_TYPE = {
-  BLOCK: "BlockEdgeType",
-  BLOCK_PART: "BlockPartEdgeType",
-  PART: "PartEdgeType",
-  RELATION: "RelationEdgeType",
-  TRANSPORT: "TransportEdgeType",
+  BLOCK_TRANSPORT: "BlockTransportEdgeType",
+  BLOCK_OFFPAGE: "BlockOffPageEdgeType",
+  BLOCK_RELATION: "BlockRelationEdgeType",
+  TREE_PARTOF: "TreePartOfEdgeType",
+  TREE_RELATION: "TreeRelationEdgeType",
+  TREE_TRANSPORT: "TreeTransportEdgeType",
 };
 
 export const MODULE_TYPE = {

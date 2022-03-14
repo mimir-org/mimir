@@ -1,11 +1,11 @@
 import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
-import { GetApiErrorForBadRequest, GetApiErrorForException, get, post, del } from "../../../models/webclient";
+import { GetApiErrorForBadRequest, GetApiErrorForException, get, del, post, HeadersInitDefault } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { CreateLibraryType } from "../../../models";
 import {
   deleteLibraryItemSuccessOrError,
   exportLibrarySuccessOrError,
+  fetchLibrary,
   fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibrarySuccessOrError,
   fetchLibraryTransportTypesSuccessOrError,
@@ -13,11 +13,11 @@ import {
 } from "../../store/library/librarySlice";
 import Config from "../../../models/Config";
 
-export function* searchLibrary(action: PayloadAction<string>) {
+export function* searchLibrary() {
   const emptyPayload = { nodeTypes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
 
   try {
-    const url = `${Config.API_BASE_URL}library?name=${action.payload}`;
+    const url = `${Config.API_BASE_URL}library`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -63,10 +63,20 @@ export function* exportLibrary(action: PayloadAction<string>) {
   }
 }
 
-export function* importLibrary(action: PayloadAction<CreateLibraryType[]>) {
+export function* importLibrary(action: PayloadAction<File>) {
   try {
     const url = `${Config.API_BASE_URL}librarytypefile/import`;
-    const response = yield call(post, url, action.payload);
+
+    const formData = new FormData();
+    formData.append("file", action.payload);
+
+    const { ["Content-Type"]: _, ...formPostHeaders } = HeadersInitDefault;
+
+    const response = yield call(post, url, formData, {
+      method: "post",
+      body: formData,
+      headers: { ...formPostHeaders },
+    });
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, importLibrarySuccessOrError.type);
@@ -75,6 +85,7 @@ export function* importLibrary(action: PayloadAction<CreateLibraryType[]>) {
     }
 
     yield put(importLibrarySuccessOrError(null));
+    yield put(fetchLibrary());
   } catch (error) {
     const apiError = GetApiErrorForException(error, importLibrarySuccessOrError.type);
     yield put(importLibrarySuccessOrError(apiError));

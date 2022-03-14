@@ -11,7 +11,7 @@ interface Props {
   setSelectedTypes: (array: string[]) => void;
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
-  searchString;
+  searchString: string;
   selectedElement: string;
   setSelectedElement: (value: string) => void;
   setSelectedElementType: (value: ObjectType) => void;

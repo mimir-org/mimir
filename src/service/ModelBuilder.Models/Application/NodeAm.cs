@@ -14,8 +14,8 @@ namespace Mb.Models.Application
         public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
 
-        [Required]
         public string ProjectId { get; set; }
+        public string ProjectIri { get; set; }
 
         [Required]
         public string Name { get; set; }

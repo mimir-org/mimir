@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType, FontWeight } from "../../../../../../../compLibrary/font";
 
 export const ModalListContent = styled.div`
@@ -8,15 +8,15 @@ export const ModalListContent = styled.div`
   min-width: 447px;
   min-height: 370px;
   max-height: 400px;
-  color: ${Color.Black};
-  font-family: ${FontType.Standard};
+  color: ${Color.BLACK};
+  font-family: ${FontType.STANDARD};
   position: relative;
 
   :before {
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BlueMagenta};
+    background: ${Color.BLUE_MAGENTA};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -27,7 +27,7 @@ export const ModalListContent = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BlueMagenta};
+    background: ${Color.BLUE_MAGENTA};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -36,14 +36,14 @@ export const ModalListContent = styled.div`
 `;
 
 export const ModalListColumnText = styled.span`
-  font-size: ${FontSize.Standard};
-  font-weight: ${FontWeight.Normal};
+  font-size: ${FontSize.STANDARD};
+  font-weight: ${FontWeight.NORMAL};
   text-align: right;
 `;
 
 export const ModalListElementsContainer = styled.div`
-  border-top: 2px solid ${Color.BlueMagenta};
-  border-bottom: 1px solid ${Color.Black};
+  border-top: 2px solid ${Color.BLUE_MAGENTA};
+  border-bottom: 1px solid ${Color.BLACK};
   min-height: 370px;
   overflow: auto;
 `;
@@ -63,19 +63,19 @@ export const ModalListElement = styled.div<ModalListElementProps>`
   padding: 2px 10px;
 
   :nth-child(even) {
-    background-color: ${Color.White};
+    background-color: ${Color.WHITE};
   }
 
   :nth-child(odd) {
-    background-color: ${Color.PurpleLight};
+    background-color: ${Color.PURPLE_LIGHT};
   }
 
   :nth-child(n):hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
   }
 
   > ${ModalListElementText} {
     text-decoration: ${(props) => props.isSelected && "underline"};
-    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    font-weight: ${(props) => props.isSelected && FontWeight.BOLD};
   }
 `;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../colors";
+import { Color } from "../../colors/Color";
 import { FontSize } from "../../font";
 
 export const NumericValueInputStyled = styled.div`
@@ -9,7 +9,7 @@ export const NumericValueInputStyled = styled.div`
     max-height: 20px;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid ${Color.BlueMagenta};
+    border: 1px solid ${Color.BLUE_MAGENTA};
   }
   textarea:focus,
   input:focus {
@@ -17,7 +17,7 @@ export const NumericValueInputStyled = styled.div`
   }
 
   input[type="number"] {
-    font-size: ${FontSize.Medium};
+    font-size: ${FontSize.MEDIUM};
   }
 
   input::-webkit-outer-spin-button,

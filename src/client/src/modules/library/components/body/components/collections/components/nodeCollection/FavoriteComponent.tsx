@@ -1,5 +1,5 @@
 import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../../assets/icons/favorites";
-import { TextResources } from "../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Icon } from "../../../../../../../../compLibrary/icon";
 import { Tooltip } from "../../../../../../../../compLibrary/tooltip/Tooltip";
 import { FavoriteButton } from "./FavoriteComponent.styled";
@@ -16,7 +16,7 @@ interface Props {
  */
 export const FavoriteComponent = ({ addFavorite, onClick }: Props) => {
   const icon = addFavorite ? AddFavoriteIcon : RemoveFavoriteIcon;
-  const text = addFavorite ? TextResources.Library_Add_Favorite : TextResources.Library_Remove_Favorite;
+  const text = addFavorite ? TextResources.LIBRARY_ADD_FAVORITE : TextResources.LIBRARY_REMOVE_FAVORITE;
 
   return (
     <Tooltip content={text} offset={[0, 5]}>

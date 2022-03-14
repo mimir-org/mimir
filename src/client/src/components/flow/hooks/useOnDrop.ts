@@ -1,9 +1,10 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily } from "../../../helpers";
+import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsProduct } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
+import { Position } from "../../../models/project";
 import {
   Attribute,
   BlobData,
@@ -21,9 +22,12 @@ import {
   GetProjectData,
   GetSubProject,
   IsInputTerminal,
+  IsOutputTerminal,
+  IsLocationTerminal,
   IsPartOf,
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
+  IsProductTerminal,
 } from "../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -40,6 +44,12 @@ interface OnDropParameters {
   dispatch: Dispatch;
 }
 
+/**
+ * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas.
+ * A partOf Edge is created from the dropped Node to its parent.
+ * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
+ * @param params
+ */
 const useOnDrop = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
 
@@ -50,8 +60,9 @@ const useOnDrop = (params: OnDropParameters) => {
 
   const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
+  const isBlockView = IsBlockView();
 
-  if (isSubProject && !IsBlockView()) handleSubProjectDrop(event, project, dispatch);
+  if (isSubProject && !isBlockView) handleSubProjectDrop(event, project, dispatch);
   else if (!isSubProject) handleNodeDrop(params, sourceNode);
 };
 
@@ -72,10 +83,11 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   const parentNode = getParentNode(sourceNode, project, data);
 
   // TODO: fix when implementing auto-position
-  const marginY = 220;
-  const position = IsBlockView()
-    ? { x: event.clientX, y: event.clientY }
-    : { x: parentNode.positionX, y: parentNode.positionY + marginY };
+  const treeMarginY = 220;
+  const blockMarginY = 120;
+  const position: Position = IsBlockView
+    ? { x: event.clientX, y: event.clientY - blockMarginY }
+    : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
@@ -97,10 +109,10 @@ const handleCreatePartOfEdge = (
   targetNode.level = sourceNode.level + 1;
   const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  const partOfEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
-  dispatch(createEdge(partofEdge));
+  dispatch(createEdge(partOfEdge));
 };
 
 const initSimple = (simple: Simple, targetNode: Node) => {
@@ -118,7 +130,8 @@ const initConnector = (connector: Connector, targetNode: Node) => {
   connector.attributes?.forEach((a) => {
     a.id = CreateId();
   });
-  connector.connectorVisibility = ConnectorVisibility.None;
+
+  setInitConnectorVisibility(connector, targetNode);
 };
 
 const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
@@ -132,6 +145,16 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
 const getParentNode = (sourceNode: Node, project: Project, data: LibItem) => {
   if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
+};
+
+const setInitConnectorVisibility = (conn: Connector, targetNode: Node) => {
+  const isLocationConnector = IsLocation(targetNode) && IsLocationTerminal(conn);
+  const isProductConnector = IsProduct(targetNode) && IsProductTerminal(conn);
+
+  if (isLocationConnector || isProductConnector) {
+    if (IsInputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.InputVisible;
+    if (IsOutputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.OutputVisible;
+  } else conn.connectorVisibility = ConnectorVisibility.None;
 };
 
 export default useOnDrop;

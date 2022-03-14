@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../colors";
+import { Color } from "../../../colors/Color";
 import { FontSize } from "../../../font";
 
 interface CheckboxWrapperProps {
@@ -21,8 +21,8 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
     cursor: pointer;
     height: 20px;
     width: 20px;
-    border: 2px solid ${Color.GreyHeader};
-    background-color: ${Color.White};
+    border: 2px solid ${Color.GREY_HEADER};
+    background-color: ${Color.WHITE};
     border-radius: 3px;
     margin: 0;
   }
@@ -44,7 +44,7 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
 
   > span {
     max-width: 175px;
-    font-size: ${FontSize.Standard};
+    font-size: ${FontSize.STANDARD};
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;

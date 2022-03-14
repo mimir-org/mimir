@@ -1,4 +1,3 @@
-import storage from "redux-persist/lib/storage/session";
 import createSagaMiddleware from "redux-saga";
 import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
 import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
@@ -16,13 +15,13 @@ import validationReducer from "./validation/validationSlice";
 import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import libraryReducer from "./library/librarySlice";
 import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
+import flowTransformReducer from "./flowTransform/flowTransformSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
 import { rootSaga } from "../sagas";
 import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
-import { persistReducer, persistStore } from "redux-persist";
 
 const rootReducers = combineReducers({
   library: libraryReducer,
@@ -44,19 +43,13 @@ const rootReducers = combineReducers({
   location3D: location3DReducer,
   blockElements: blockElementsReducer,
   validation: validationReducer,
+  flowTransform: flowTransformReducer,
 });
 
-const persistConfig = {
-  key: "root",
-  storage,
-  blacklist: ["typeEditor", "inspectorHeight"],
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducers);
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducers,
   devTools: process.env.NODE_ENV !== "production" && window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"],
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -69,14 +62,10 @@ const store = configureStore({
     }).concat(sagaMiddleware),
 });
 
-const persistor = persistStore(store);
-
 export type RootState = ReturnType<typeof rootReducers>;
 export type AppDispatch = typeof store.dispatch;
 export * from "./hooks";
 export * from "./selectors";
-
-// eslint-disable-next-line import/no-anonymous-default-export
-export default { store, persistor };
+export default { store };
 
 sagaMiddleware.run(rootSaga);

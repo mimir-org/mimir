@@ -2,6 +2,7 @@ import { Elements } from "react-flow-renderer";
 import { BuildChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Connector, Edge, Node, Project } from "../../../../../models";
+import { BlockNodeSize } from "../../../../../models/project";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } from "../../../helpers";
 
 /**
@@ -9,30 +10,28 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
  * @param project
  * @param selectedNode
  * @param elements
- * @param libOpen
- * @param explorerOpen
- * @param splitView
+ * @param secondaryNode
+ * @param parentNodeSize
  */
 const DrawChildNodes = (
   project: Project,
   selectedNode: Node,
   elements: Elements,
-  libOpen: boolean,
-  explorerOpen: boolean,
-  splitView: boolean
+  secondaryNode: Node,
+  parentNodeSize: BlockNodeSize
 ) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
   edges?.forEach((edge) => {
     if (ValidateEdge(edge, selectedNode)) {
-      const toNode = nodes.find((n) => n.id === edge.toNode.id);
-      if (!toNode) return;
+      const targetNode = nodes.find((n) => n.id === edge.toNode.id);
+      if (!targetNode) return;
 
-      if (IsOffPage(toNode)) {
-        const isValidOffPage = ValidateOffPageNode(toNode, splitView, elements, edges, nodes);
-        if (isValidOffPage) elements.push(BuildChildNode(toNode, libOpen, explorerOpen, splitView));
-      } else elements.push(BuildChildNode(toNode, libOpen, explorerOpen, splitView));
+      if (IsOffPage(targetNode)) {
+        const isValidOffPage = ValidateOffPageNode(targetNode, selectedNode, secondaryNode, elements, edges, nodes);
+        if (isValidOffPage) elements.push(BuildChildNode(targetNode, parentNodeSize));
+      } else elements.push(BuildChildNode(targetNode, parentNodeSize));
     }
   });
 };
@@ -42,15 +41,23 @@ function ValidateEdge(edge: Edge, selectedNode: Node) {
   return IsPartOf(edge.toConnector) && IsFamily(selectedNode, edge.toNode) && edge.fromNodeId === selectedNode?.id;
 }
 
-function ValidateOffPageNode(node: Node, splitView: boolean, elements: Elements, edges: Edge[], nodes: Node[]) {
-  const offPageParent = GetParent(node);
+function ValidateOffPageNode(
+  offPageNode: Node,
+  selectedNode: Node,
+  secondaryNode: Node,
+  elements: Elements,
+  edges: Edge[],
+  nodes: Node[]
+) {
+  const offPageParent = GetParent(offPageNode);
 
-  if (splitView) {
-    const offPageInputTerminal = node.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
-    const offPageOutputTerminal = node.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
+  if (secondaryNode !== null) {
+    if (!IsFamily(selectedNode, secondaryNode)) return false;
+    const inputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
+    const outputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
 
-    const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === offPageInputTerminal?.id);
-    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === offPageOutputTerminal?.id);
+    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === outputTerminal?.id);
+    const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === inputTerminal?.id);
 
     let terminal: Connector;
 

@@ -1,23 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
-import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection } from "react-flow-renderer";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FullScreenComponent } from "../../fullscreen";
-import { GetBlockEdgeTypes, SetInitialEdgeVisibility } from "../block/helpers";
+import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildBlockElements } from "./builders";
-import { GetBlockNodeTypes } from "../helpers";
-import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
-import { BlockConnectionLine } from "./edges";
-import { Size } from "../../../compLibrary/size";
+import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
+import { Size } from "../../../compLibrary/size/Size";
 import { GetSelectedNode, IsLocation } from "../../../helpers";
 import { LocationModule } from "../../../modules/location";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
+import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
+import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -25,7 +24,7 @@ interface Props {
 }
 
 /**
- * Component for the Flow library in BlockView
+ * Component for the Flow library in BlockView.
  * @param interface
  * @returns a scene with Flow elements and Mimir nodes, transports and edges.
  */
@@ -41,17 +40,17 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const showLocation3D = useAppSelector(selectors.location3DSelector);
-  const libOpen = useAppSelector(selectors.libOpenSelector);
-  const explorerOpen = useAppSelector(selectors.explorerSelector);
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
+  const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
+  const defaultZoom = Size.DEFAULT_ZOOM;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, libOpen, explorerOpen));
+      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge, libOpen, explorerOpen]
+    [project, node, secondaryNode, animatedEdge, parentNodeSize]
   );
 
   const OnElementsRemove = (elementsToRemove: Elements) => {
@@ -64,17 +63,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnRemove(elementsToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
   };
 
-  const OnConnect = (connection: FlowEdge | Connection) => {
-    const edgeType = EDGE_TYPE.BLOCK as EdgeType;
-    return hooks.useOnConnect({ connection, project, edgeType, library, animatedEdge, setElements, dispatch });
-  };
-
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
     return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode, transform, dispatch);
+  };
+
+  const OnConnect = (connection: FlowEdge | Connection) => {
+    return hooks.useOnConnectBlock({ connection, project, library, animatedEdge, setElements, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -85,6 +83,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
+
+  const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({
@@ -100,19 +100,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  useEffect(() => {
-    CloseInspector(inspectorRef, dispatch);
-  }, [inspectorRef, dispatch]);
-
-  // Rerender
-  useEffect(() => {
-    OnLoad(flowInstance);
-  }, [OnLoad, flowInstance]);
-
-  useEffect(() => {
-    dispatch(updateBlockElements(elements));
-  }, [elements, dispatch]);
-
   const onSelectionChange = (selectedElements: Elements) => {
     if (selectedElements === null) {
       handleNoSelect(project, inspectorRef, dispatch, true);
@@ -124,6 +111,18 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       handleMultiSelect(dispatch, true);
     }
   };
+
+  useEffect(() => {
+    CloseInspector(inspectorRef, dispatch);
+  }, [inspectorRef, dispatch]);
+
+  useEffect(() => {
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance]);
+
+  useEffect(() => {
+    dispatch(updateBlockElements(elements));
+  }, [elements, dispatch]);
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
@@ -144,14 +143,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          zoomOnDoubleClick={false}
-          defaultZoom={0.9}
-          defaultPosition={[0, Size.BlockMarginY]}
+          onMoveEnd={OnMoveEnd}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
+          zoomOnDoubleClick={false}
+          defaultZoom={defaultZoom}
+          minZoom={0.4}
+          maxZoom={3}
           zoomOnScroll
           paneMoveable
         >

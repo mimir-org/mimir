@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Size } from "../../../compLibrary/size";
-import { Color } from "../../../compLibrary/colors";
+import { Size } from "../../../compLibrary/size/Size";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../compLibrary/font";
 
 interface Props {
@@ -10,14 +10,14 @@ interface Props {
 export const VisualFilterContainer = styled.div<Props>`
   position: absolute;
   top: 94px;
-  right: ${(props) => (!props.libraryOpen ? Size.ModuleClosed : Size.ModuleOpen)}px;
-  background: ${Color.White};
+  right: ${(props) => (!props.libraryOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN)}px;
+  background: ${Color.WHITE};
   padding: 8px 0 6px 0;
   width: 350px;
   min-height: 140px;
   height: auto;
   border-style: solid;
-  border-color: ${Color.BlueMagenta};
+  border-color: ${Color.BLUE_MAGENTA};
   border-width: 0 0 1px 1px;
   border-bottom-left-radius: 10px;
   z-index: 5;
@@ -27,13 +27,13 @@ export const VisualFilterContainer = styled.div<Props>`
 
 export const VisualFilterHeader = styled.div`
   margin: 5px 0 0 20px;
-  font-size: ${FontSize.SubHeader};
-  font-weight: ${FontWeight.Bold};
+  font-size: ${FontSize.SUBHEADER};
+  font-weight: ${FontWeight.BOLD};
 `;
 
 export const VisualFilterMenuColumn = styled.div`
   width: 100%;
   margin-top: 10px;
   padding: 5px 0;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
 `;

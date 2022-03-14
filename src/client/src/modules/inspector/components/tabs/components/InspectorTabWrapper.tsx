@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { Size } from "../../../../../compLibrary/size";
+import { Size } from "../../../../../compLibrary/size/Size";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { useAppDispatch } from "../../../../../redux/store";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
@@ -35,8 +35,8 @@ export const InspectorTabWrapper = ({
     dispatch(changeInspectorTabAction(index));
     if (!isInspectorOpen) {
       dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
-      dispatch(changeInspectorHeight(Size.ModuleOpen));
-      SetPanelHeight(inspectorRef, Size.ModuleOpen);
+      dispatch(changeInspectorHeight(Size.MODULE_OPEN));
+      SetPanelHeight(inspectorRef, Size.MODULE_OPEN);
     }
   }, [dispatch, changeInspectorTabAction, index, isInspectorOpen, inspectorRef]);
 

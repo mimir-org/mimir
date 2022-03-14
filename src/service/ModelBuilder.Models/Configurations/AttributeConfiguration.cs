@@ -18,18 +18,22 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
             builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
             builder.Property(p => p.Value).HasColumnName("Value");
-            builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
             builder.Property(p => p.SelectedUnitId).HasColumnName("SelectedUnitId");
             builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId");
-            //builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
+            builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
 
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
             builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
             builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
+            builder.Property(p => p.TerminalIri).HasColumnName("TerminalIri").IsRequired(false);
             builder.Property(p => p.TransportId).HasColumnName("TransportId").IsRequired(false);
+            builder.Property(p => p.TransportIri).HasColumnName("TransportIri").IsRequired(false);
             builder.Property(p => p.InterfaceId).HasColumnName("InterfaceId").IsRequired(false);
+            builder.Property(p => p.InterfaceIri).HasColumnName("InterfaceIri").IsRequired(false);
             builder.Property(p => p.SimpleId).HasColumnName("SimpleId").IsRequired(false);
+            builder.Property(p => p.SimpleIri).HasColumnName("SimpleIri").IsRequired(false);
+
             builder.Property(p => p.IsLocked).HasColumnName("IsLocked").IsRequired().HasDefaultValue(false);
             builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);

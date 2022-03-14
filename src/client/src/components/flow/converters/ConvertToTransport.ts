@@ -2,7 +2,7 @@ import { Attribute, Connector, ConnectorType, Transport, TRANSPORT_KIND } from "
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
-const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Transport => {
+const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const transportType = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   if (!transportType) return null;
 
@@ -18,10 +18,10 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
   const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
 
   inputTerminal.id = CreateId();
-  inputTerminal.type = ConnectorType.Input;
+  inputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Input;
   inputTerminal.nodeId = null;
   outputTerminal.id = CreateId();
-  outputTerminal.type = ConnectorType.Output;
+  outputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Output;
   outputTerminal.nodeId = null;
 
   if (inputTerminal?.attributes) {
@@ -59,7 +59,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
     created: transportType.created,
     libraryTypeId: transportType.id,
     kind: TRANSPORT_KIND,
-  };
+  } as Transport;
 };
 
 export default ConvertToTransport;

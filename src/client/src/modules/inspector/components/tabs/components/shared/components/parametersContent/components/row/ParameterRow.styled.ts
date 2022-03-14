@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../../../../compLibrary/font";
 
 interface BodyProps {
@@ -8,7 +8,7 @@ interface BodyProps {
 
 export const Body = styled.div<BodyProps>`
   display: flex;
-  border-bottom: 1px solid ${Color.GreyDark};
+  border-bottom: 1px solid ${Color.GREY_DARK};
   width: max(100%, ${(props) => props.width}px);
   min-height: 120px;
 `;
@@ -21,7 +21,7 @@ export const Box = styled.div`
   background-color: ${(props) => props.color};
   border-radius: 9px;
   margin: 20px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
 
   .text {
     display: flex;

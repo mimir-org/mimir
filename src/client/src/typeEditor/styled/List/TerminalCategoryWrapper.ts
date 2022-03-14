@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontType, FontWeight } from "../../../compLibrary/font";
 
 interface Props {
@@ -13,12 +13,12 @@ const TerminalCategoryWrapper = styled.div<Props>`
   gap: 15px;
   padding: 3px 15px 3px 5px;
   min-height: 30px;
-  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.GreyDark : 0)};
+  border-bottom: ${(props) => (props.expanded ? "dashed 1px" + Color.GREY_DARK : 0)};
 
   .terminal-name {
-    font-weight: ${(props) => props.expanded && FontWeight.Bold};
+    font-weight: ${(props) => props.expanded && FontWeight.BOLD};
     text-decoration: ${(props) => props.expanded && "underline"};
-    font-size: ${FontSize.Small};
+    font-size: ${FontSize.SMALL};
   }
 
   .terminal-name:hover {
@@ -34,10 +34,10 @@ const TerminalCategoryWrapper = styled.div<Props>`
     background: transparent;
     border: none;
     cursor: pointer;
-    font-weight: ${FontWeight.Bold};
-    font-family: ${FontType.Standard};
-    font-size: ${FontSize.Tiny};
-    color: ${Color.Black};
+    font-weight: ${FontWeight.BOLD};
+    font-family: ${FontType.STANDARD};
+    font-size: ${FontSize.TINY};
+    color: ${Color.BLACK};
 
     .add-text {
       margin-left: 3px;
@@ -68,7 +68,7 @@ const TerminalCategoryWrapper = styled.div<Props>`
 
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};
-    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    font-weight: ${(props) => props.isSelected && FontWeight.BOLD};
   }
 `;
 

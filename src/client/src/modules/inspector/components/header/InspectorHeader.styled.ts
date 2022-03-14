@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../compLibrary/colors";
+import { Color } from "../../../../compLibrary/colors/Color";
 
 interface InspectorHeaderContainerProps {
   top?: number;
@@ -8,7 +8,7 @@ interface InspectorHeaderContainerProps {
 
 export const InspectorHeaderContainer = styled.div<InspectorHeaderContainerProps>`
   display: flex;
-  color: ${Color.Black};
+  color: ${Color.BLACK};
   height: 44px;
   width: 100%;
   overflow: hidden;

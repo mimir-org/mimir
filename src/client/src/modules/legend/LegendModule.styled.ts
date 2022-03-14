@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Size } from "../../compLibrary/size";
-import { Color } from "../../compLibrary/colors";
+import { Size } from "../../compLibrary/size/Size";
+import { Color } from "../../compLibrary/colors/Color";
 import { FontSize } from "../../compLibrary/font";
 
 export const LegendBody = styled.div`
-  width: ${Size.ModuleOpen}px;
+  width: ${Size.MODULE_OPEN}px;
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
@@ -16,10 +16,10 @@ export const LegendElement = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: ${Color.White};
+  background: ${Color.WHITE};
   padding: 10px;
-  color: ${Color.Black};
-  font-size: ${FontSize.Medium};
+  color: ${Color.BLACK};
+  font-size: ${FontSize.MEDIUM};
   width: auto;
 
   :first-child {

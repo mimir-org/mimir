@@ -35,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
 
   // APPLICATION SPECIFIC GLOBALS
   html, body {
-    font-family: ${FontType.Standard};
+    font-family: ${FontType.STANDARD};
   };
 
   #root {

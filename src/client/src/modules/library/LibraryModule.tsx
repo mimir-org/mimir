@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated";
-import { Size } from "../../compLibrary/size";
+import { Size } from "../../compLibrary/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
@@ -40,8 +40,8 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const libOpen = useAppSelector(libOpenSelector);
   const collections = useAppSelector(librarySelector).collections;
 
-  const startLib = libOpen ? Size.ModuleClosed : Size.ModuleOpen;
-  const stopLib = libOpen ? Size.ModuleOpen : Size.ModuleClosed;
+  const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
+  const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   const typeEditorOpen = () => {
     setSelectedElement("");

@@ -1,33 +1,27 @@
-const Size = {
-  // Nodes
-  Node_Width: 170,
-  Node_Height: 100,
+/**
+ * Component for static size types in Mimir.
+ */
+export const Size = {
+  NODE_WIDTH: 160,
+  NODE_HEIGHT: 95,
 
-  // BlockView
-  BlockMarginY: 60,
-  BlockMaxWidth: 2650,
+  BLOCK_NODE_WIDTH: 2450,
+  BLOCK_NODE_HEIGHT: 1800,
 
-  // Terminals
-  Terminals_Interval: 22.5,
+  BLOCK_MARGIN_Y: 70,
+  BLOCK_MARGIN_X: 45,
+
+  SPLITVIEW_DISTANCE: 120,
+  SPLITVIEW_DIVISOR: 1.6,
+
+  // Zoom
+  DEFAULT_ZOOM: 1,
+  SPLITVIEW_ZOOM: 0.7,
 
   // Modules
-  ModuleOpen: 400,
-  ModuleClosed: 45,
-  Margin: 1,
-
-  //TypeEditor
-  TypeEditorInspectorOpen: 355,
-  TypeEditorPropertiesFull_BASELINE: -362,
-  TypeEditorPropertiesShrunk_BASELINE: -672,
+  MODULE_OPEN: 400,
+  MODULE_CLOSED: 45,
 
   // Menus
-  TopMenu_Height: 54,
-  MenuSmall_Width: 330,
-  MenuSmall_Height: 200,
-  OpenProjectMenu_Small_Width: 519,
-  OpenProjectMenu_Small_Height: 330,
-  OpenProjectMenu_Large_Width: 1038,
-  OpenProjectMenu_Large_Height: 660,
+  TOPMENU_HEIGHT: 54,
 };
-
-export default Size;

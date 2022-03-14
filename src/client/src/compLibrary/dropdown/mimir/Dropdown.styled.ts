@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../colors";
+import { Color } from "../../colors/Color";
 import { FontWeight } from "../../font";
 import { ParameterInputsWrapper } from "../../../modules/inspector/components/tabs/components/shared/components/parametersContent/components/row/components/Parameter.styled";
 
@@ -14,35 +14,35 @@ export const DropdownBox = styled.div<DropdownBoxProps>`
   position: relative;
   width: 100%;
   margin-bottom: 10px;
-  background-color: ${Color.White};
+  background-color: ${Color.WHITE};
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   font-size: ${(props) => props.fontSize};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
 
   ${ParameterInputsWrapper} & {
     flex: 1;
   }
 `;
 
-interface DropdownHeaderProps {
+interface DropdownHeaderBoxProps {
   height: number;
   borderColor: string;
   borderRadius: number;
   fontSize: string;
 }
 
-export const DropdownHeader = styled.div<DropdownHeaderProps>`
+export const DropdownHeaderBox = styled.div<DropdownHeaderBoxProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   height: ${(props) => props.height}px;
   width: inherit;
-  background: ${Color.White};
+  background: ${Color.WHITE};
   border: 1px solid ${(props) => props.borderColor};
   border-radius: ${(props) => props.borderRadius}px;
   font-size: ${(props) => props.fontSize};
-  color: ${Color.Black};
+  color: ${Color.BLACK};
 
   p {
     margin: 0;
@@ -55,13 +55,13 @@ export const DropdownHeader = styled.div<DropdownHeaderProps>`
   }
 `;
 
-interface DropdownListProps {
+interface DropdownListBoxProps {
   top: number;
   borderColor: string;
   borderRadius: number;
 }
 
-export const DropdownList = styled.div<DropdownListProps>`
+export const DropdownListBox = styled.div<DropdownListBoxProps>`
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -92,17 +92,17 @@ export const DropdownListItem = styled.div<DropdownListItemProps>`
   align-items: center;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: ${Color.GreyDark};
+  border-color: ${Color.GREY_DARK};
   font-size: ${(props) => props.fontSize};
-  color: ${Color.Black};
-  background-color: ${Color.White};
+  color: ${Color.BLACK};
+  background-color: ${Color.WHITE};
   cursor: pointer;
   z-index: 1;
 
   p {
     padding: 5px 10px;
     margin-left: ${(props) => props.hasCategory && "10px"};
-    font-weight: ${FontWeight.Normal};
+    font-weight: ${FontWeight.NORMAL};
   }
 
   img {
@@ -112,7 +112,7 @@ export const DropdownListItem = styled.div<DropdownListItemProps>`
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
 
     p {
       text-decoration: underline;

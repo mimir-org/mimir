@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../compLibrary/font";
 
 interface AvatarBoxProps {
@@ -20,8 +20,8 @@ export const AvatarButton = styled.button<AvatarBoxProps>`
   height: 100%;
   padding: 0;
   border: 0;
-  color: ${Color.White};
-  font-weight: ${(props) => props.isOpen && FontWeight.Bold};
+  color: ${Color.WHITE};
+  font-weight: ${(props) => props.isOpen && FontWeight.BOLD};
   cursor: pointer;
   background: transparent;
 `;
@@ -36,7 +36,7 @@ export const AvatarCircle = styled.div`
 export const AvatarInitials = styled.p`
   position: absolute;
   margin: 0;
-  color: ${Color.TextAvatar};
-  font-size: ${FontSize.Standard};
-  font-weight: ${FontWeight.Normal};
+  color: ${Color.TEXT_AVATAR};
+  font-size: ${FontSize.STANDARD};
+  font-weight: ${FontWeight.NORMAL};
 `;

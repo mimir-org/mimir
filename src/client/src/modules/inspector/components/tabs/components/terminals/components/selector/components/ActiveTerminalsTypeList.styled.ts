@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FontSize } from "../../../../../../../../../compLibrary/font";
-import { Color } from "../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 
 interface TerminalListElementProps {
   isSelected: boolean;
@@ -9,7 +9,7 @@ interface TerminalListElementProps {
 export const TerminalListElement = styled.div<TerminalListElementProps>`
   padding: 5px 10px 5px 60px;
   min-width: 250px;
-  font-size: ${FontSize.Tiny};
+  font-size: ${FontSize.TINY};
   display: flex;
   background-color: ${(props) => props.color};
 
@@ -23,7 +23,7 @@ export const TerminalListElement = styled.div<TerminalListElementProps>`
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     cursor: pointer;
     text-decoration: underline;
   }
@@ -37,7 +37,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
   position: relative;
   padding: 5px 10px 5px 20px;
   min-width: 250px;
-  font-size: ${FontSize.Small};
+  font-size: ${FontSize.SMALL};
   display: flex;
   background-color: ${(props) => props.color};
   font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
@@ -46,7 +46,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
     content: "";
     width: 1px;
     height: 10px;
-    background: ${Color.TerminalsPurple};
+    background: ${Color.TERMINALS_PURPLE};
     border-radius: 1px;
     position: absolute;
     bottom: 3px;
@@ -57,7 +57,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
     content: "";
     width: 385px;
     height: 1px;
-    background: ${Color.TerminalsPurple};
+    background: ${Color.TERMINALS_PURPLE};
     border-radius: 1px;
     position: absolute;
     bottom: 3px;
@@ -75,7 +75,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
   }
 
   :hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     cursor: pointer;
     text-decoration: underline;
   }

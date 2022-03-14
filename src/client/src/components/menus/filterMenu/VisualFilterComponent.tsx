@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers";
 import { GetFilterElements } from "./helpers/GetFilterElements";
 import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
@@ -31,7 +31,7 @@ export const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
-      <VisualFilterHeader>{TextResources.Filter_Heading}</VisualFilterHeader>
+      <VisualFilterHeader>{TextResources.FILTER_HEADING}</VisualFilterHeader>
       <VisualFilterMenuColumn>
         <AnimationFilter edgeAnimation={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter edges={edges} nodes={nodes} items={partOfItems} dispatch={dispatch} visible={!!partOfItems.length} />

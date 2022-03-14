@@ -1,10 +1,12 @@
-import { Connector } from "../../../../models";
+import { IsOffPage } from "../../../../helpers";
+import { Connector, Node } from "../../../../models";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
-import { IsPartOf, IsProductTerminal, IsTransport } from "../../helpers";
+import { IsTransport, IsLocationTerminal, IsProductTerminal } from "../../helpers";
 
-const GetBlockEdgeType = (conn: Connector): EdgeType => {
-  if (IsPartOf(conn)) return EDGE_TYPE.BLOCK_PART as EdgeType;
-  if (IsTransport(conn) || IsProductTerminal(conn)) return EDGE_TYPE.BLOCK as EdgeType;
+const GetBlockEdgeType = (connector: Connector, sourceNode: Node, targetNode: Node): EdgeType => {
+  if (IsOffPage(sourceNode) || IsOffPage(targetNode)) return EDGE_TYPE.BLOCK_OFFPAGE as EdgeType;
+  if (IsTransport(connector)) return EDGE_TYPE.BLOCK_TRANSPORT as EdgeType;
+  if (IsLocationTerminal(connector) || IsProductTerminal(connector)) return EDGE_TYPE.BLOCK_RELATION as EdgeType;
 };
 
 export default GetBlockEdgeType;

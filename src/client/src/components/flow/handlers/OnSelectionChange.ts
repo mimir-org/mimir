@@ -1,6 +1,6 @@
 import { FlowElement } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { Project } from "../../../models";
 import { MODULE_TYPE } from "../../../models/project";
 import { SetPanelHeight } from "../../../modules/inspector/helpers";
@@ -45,6 +45,6 @@ export const OpenInspector = (dispatch: Dispatch) => {
 
 export const CloseInspector = (inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
   dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  dispatch(changeInspectorHeight(Size.ModuleClosed));
-  SetPanelHeight(inspectorRef, Size.ModuleClosed);
+  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
+  SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 };

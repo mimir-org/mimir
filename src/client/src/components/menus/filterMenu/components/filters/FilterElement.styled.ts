@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../../../compLibrary/font";
 
 interface ElementBoxProps {
@@ -16,11 +16,11 @@ export const ElementBox = styled.label<ElementBoxProps>`
   height: 30px;
   margin-top: ${(props) => (props.isHeader || props.isSubHeader) && "7px"};
   padding-left: ${(props) => props.indent * 8}px;
-  background-color: ${(props) => (props.isHeader ? Color.GreyLight : Color.White)};
+  background-color: ${(props) => (props.isHeader ? Color.GREY_LIGHT : Color.WHITE)};
 
   &:hover {
     cursor: pointer;
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
     text-decoration: underline;
   }
 `;
@@ -33,7 +33,7 @@ interface ElementLabelProps {
 export const ElementLabel = styled.span<ElementLabelProps>`
   position: relative;
   bottom: 0.5px;
-  font-size: ${FontSize.Standard};
-  font-weight: ${(props) => (props.isHeader || props.isSubHeader) && FontWeight.Bold};
+  font-size: ${FontSize.STANDARD};
+  font-weight: ${(props) => (props.isHeader || props.isSubHeader) && FontWeight.BOLD};
   width: 220px;
 `;

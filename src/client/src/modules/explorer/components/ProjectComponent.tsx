@@ -1,4 +1,4 @@
-import * as selectors from "../helpers/selectors";
+import * as selectors from "./helpers/selectors";
 import { Node } from "../../../models";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
@@ -8,10 +8,9 @@ import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { GetSelectedNode, IsBlockView, IsOffPage } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
-import { GetWidth } from "./shared/helpers/GetWidth";
 
 /**
- * Component for a singe Project in Mimir, displayed in the Explorer Module.
+ * Component for a single Project in Mimir, displayed in the Explorer Module.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
 export const ProjectComponent = () => {
@@ -36,14 +35,14 @@ export const ProjectComponent = () => {
     setInvisibleNodes((_) => new Set(invisibleNodes));
   };
 
-  const areAncestorsExpanded = (elem: Node): boolean => !IsAncestorInSet(elem, closedNodes, project);
-  const areAncestorsVisible = (elem: Node): boolean => !IsAncestorInSet(elem, invisibleNodes, project);
-  const isVisible = (elem: Node): boolean => !invisibleNodes.has(elem.id);
+  const areAncestorsExpanded = (elem: Node) => !IsAncestorInSet(elem, closedNodes, project);
+  const areAncestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
+  const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
   if (!project || !nodes) return null;
 
   return (
-    <ProjectContentContainer width={GetWidth(nodes)}>
+    <ProjectContentContainer>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
         if (!areAncestorsExpanded(node)) return null;
         const expanded = !closedNodes.has(node.id);
@@ -56,7 +55,6 @@ export const ProjectComponent = () => {
               project={project}
               username={username}
               node={node}
-              nodes={nodes}
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
               indent={indent}

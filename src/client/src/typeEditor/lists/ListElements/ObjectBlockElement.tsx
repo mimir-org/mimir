@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { AddTerminalComponent } from "../";
-import { TextResources } from "../../../assets/text";
 import { CreateId } from "../../../components/flow/helpers";
 import { AddIcon } from "../../../assets/icons/type";
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
 import { AddTerminalWrapper, TerminalCategoryWrapper, TerminalListElement } from "../../styled";
 import { OnTerminalCategoryChangeFunction, TerminalCategoryChangeKey } from "../../types";
+import { TypeEditorTextResources } from "../../assets/TypeEditorTextResources";
 
 interface Props {
   name: string;
@@ -55,14 +55,14 @@ export const ObjectBlockElement = ({ name, categoryId, terminalTypes, onChange, 
       <TerminalCategoryWrapper expanded={terminalsQuantity > 0}>
         <button onClick={() => onCategoryAdd()}>
           <img src={AddIcon} alt="add-icon" className="add-icon" />
-          <p className="add-text">{TextResources.TypeEditor_Properties_Add_Terminal}</p>
+          <p className="add-text">{TypeEditorTextResources.PROPERTIES_ADD_TERMINAL}</p>
         </button>
         <p className="terminal-name" onClick={() => terminalsQuantity > 0 && setExpandCategory(!expandCategory)}>
           {name}
         </p>
         {terminalsQuantity > 0 && (
           <button className="delete-button" onClick={() => onChange("removeAll", defaultTerminals[0])}>
-            <p className="delete-text">{TextResources.TypeEditor_Properties_Clear_All_Terminal}</p>
+            <p className="delete-text">{TypeEditorTextResources.PROPERTIES_CLEAR_ALL_TERMINAL}</p>
           </button>
         )}
       </TerminalCategoryWrapper>

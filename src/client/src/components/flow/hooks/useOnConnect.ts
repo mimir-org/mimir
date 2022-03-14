@@ -1,6 +1,6 @@
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId, GetParent, IsPartOf, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
+import { CreateId, GetParent, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
 import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
 import { Connector, Edge, Node, Project } from "../../../models";
@@ -19,11 +19,14 @@ interface UseOnConnectParams {
   animatedEdge: boolean;
 }
 
+/**
+ * Hook that runs when a successful connection has been made between two Nodes via an Edge.
+ * @param params
+ */
 const useOnConnect = (params: UseOnConnectParams) => {
   SaveEventData(null, "edgeEvent");
 
   const { project, connection, library, edgeType, animatedEdge, setElements, dispatch } = params;
-
   const createdId = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === connection.source);
   const targetNode = project.nodes.find((node) => node.id === connection.target);
@@ -45,7 +48,7 @@ const useOnConnect = (params: UseOnConnectParams) => {
     });
   });
 
-  if (IsPartOf(sourceConn) && IsPartOf(targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
+  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
 
   if (!existingEdge) {
     currentEdge = ConvertToEdge(createdId, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
@@ -62,7 +65,7 @@ const useOnConnect = (params: UseOnConnectParams) => {
         type: edgeType,
         arrowHeadType: null,
         label: "",
-        animated: edgeType === EDGE_TYPE.TRANSPORT && animatedEdge,
+        animated: edgeType === EDGE_TYPE.TREE_TRANSPORT && animatedEdge,
         data: {
           source: sourceNode,
           target: targetNode,
@@ -92,7 +95,7 @@ function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch
 }
 
 function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode: Node) {
-  const { project, connection, edgeType, animatedEdge, library, dispatch, setElements } = params;
+  const { project, connection, edgeType, library, dispatch, setElements } = params;
 
   const id = CreateId();
   const sourceParent = GetParent(sourceNode);
@@ -129,7 +132,7 @@ function HandleOffPage(params: UseOnConnectParams, sourceNode: Node, targetNode:
         type: edgeType,
         arrowHeadType: null,
         label: "",
-        animated: edgeType === EDGE_TYPE.TRANSPORT && animatedEdge,
+        animated: false,
         data: {
           source: sourceParent,
           target: targetParent,

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { Color } from "../../../../../../../../compLibrary/colors";
-import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common";
+import { Color } from "../../../../../../../../compLibrary/colors/Color";
+import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { SetNewSelectedElement } from "./helpers/SetNewSelectedElement";
 import { SetNewSelectedElementType } from "./helpers/SetNewSelectedElementType";
@@ -77,7 +77,7 @@ export const NodeElement = ({
         <Checkbox
           isChecked={isSelected}
           onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, isSelected)}
-          color={Color.Black}
+          color={Color.BLACK}
         />
       )}
       {isCustomCategory && !managingType && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}

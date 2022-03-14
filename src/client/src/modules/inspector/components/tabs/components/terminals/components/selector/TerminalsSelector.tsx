@@ -5,7 +5,7 @@ import { FilterBySearchString } from "./helpers/FilterBySearchString";
 import { TerminalsColumn } from "../../../shared/styled/TerminalsColumn";
 import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../../../types";
 import { FontSize } from "../../../../../../../../compLibrary/font";
-import { TextResources } from "../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../../compLibrary/input/text";
 
 interface Props {
@@ -32,11 +32,11 @@ export const TerminalsSelector = ({
   return (
     <TerminalsColumn>
       <Input
-        fontSize={FontSize.Standard}
+        fontSize={FontSize.STANDARD}
         fontStyle={"italic"}
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}
-        placeholder={TextResources.Inspector_Terminals_Search}
+        placeholder={TextResources.INSPECTOR_TERMINALS_SEARCH}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchString(e.currentTarget.value)}
       />
       <ActiveTerminalsList

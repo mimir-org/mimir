@@ -1,6 +1,6 @@
 import { StartPageBackground, StartPageImage, StartPageSliderContainer, StartPageVersionText } from "./StartPage.styled";
 import { MimirLogo } from "../../assets/icons/mimir";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch } from "../../redux/store";
 import { MENU_TYPE } from "../../models/project";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
@@ -10,7 +10,7 @@ import { useEffectOnce } from "../../hooks/useEffectOnce";
  * The start page for Mimir
  * @returns a splash page with Mimir logo
  */
-const StartPage = () => {
+export const StartPage = () => {
   const dispatch = useAppDispatch();
 
   useEffectOnce(() => {
@@ -21,10 +21,8 @@ const StartPage = () => {
     <StartPageBackground>
       <StartPageSliderContainer>
         <StartPageImage src={MimirLogo} alt="mimir-logo" />
-        <StartPageVersionText>{TextResources.Mimir_Version}</StartPageVersionText>
+        <StartPageVersionText>{TextResources.MIMIR_VERSION}</StartPageVersionText>
       </StartPageSliderContainer>
     </StartPageBackground>
   );
 };
-
-export default StartPage;

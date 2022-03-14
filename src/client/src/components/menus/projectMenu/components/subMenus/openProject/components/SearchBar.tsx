@@ -2,7 +2,7 @@ import { useState } from "react";
 import { search } from "../../../../../../../redux/store/project/actions";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { SearchBarContainer, SearchBarInput } from "./SearchBar.styled";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 
 export const SearchBar = () => {
   const dispatch = useAppDispatch();
@@ -15,12 +15,7 @@ export const SearchBar = () => {
 
   return (
     <SearchBarContainer>
-      <SearchBarInput
-        value={searchbarInput}
-        placeholder={TextResources.Project_Search_Placeholder}
-        onChange={onChange}
-        autoFocus
-      />
+      <SearchBarInput value={searchbarInput} placeholder={TextResources.PROJECT_SEARCH} onChange={onChange} autoFocus />
     </SearchBarContainer>
   );
 };

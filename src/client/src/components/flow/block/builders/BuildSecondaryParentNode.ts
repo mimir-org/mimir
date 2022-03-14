@@ -1,25 +1,25 @@
 import { FlowElement } from "react-flow-renderer";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
+import { Size } from "../../../../compLibrary/size/Size";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
-import { SetMarginX } from "../nodes/helpers/SetParentNodeSize";
 
 /**
  * Component to create a secondary parent node in BlockView.
  * @param primaryNode
  * @param secondaryNode
- * @returns a FlowElement, the big box in BlockView.
+ * @returns the second ParentNode in SpliView.
  */
-const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpen: boolean, explorerOpen: boolean) => {
+const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
   if (!primaryNode || !secondaryNode) return null;
 
-  const type = TextResources.Type_BlockParentNode;
-  const screenWidth = window.innerWidth / 2.4;
-  const distanceToPrimaryNode = 150;
-  const marginX = SetMarginX(true, libOpen, explorerOpen);
+  const type = TextResources.BLOCK_PARENTNODE;
+  const width = Size.BLOCK_NODE_WIDTH;
+  const distanceToPrimaryNode = Size.SPLITVIEW_DISTANCE;
 
+  // The secondaryNode is positioned to the right of the primaryNode
   const position = {
-    x: primaryNode.positionBlockX + screenWidth - marginX + distanceToPrimaryNode,
+    x: primaryNode.positionBlockX + distanceToPrimaryNode + width,
     y: primaryNode.positionBlockY,
   };
 
@@ -36,7 +36,7 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node, libOpe
     isHidden: secondaryNode.isHidden,
     isSelected: secondaryNode.isSelected,
     draggable: false,
-    selectable: true,
+    selectable: false,
   } as FlowElement;
 };
 

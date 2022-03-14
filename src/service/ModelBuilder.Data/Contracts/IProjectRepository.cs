@@ -9,7 +9,7 @@ namespace Mb.Data.Contracts
 {
     public interface IProjectRepository : IGenericRepository<ModelBuilderDbContext, Project>
     {
-        Task<Project> GetAsyncComplete(string id);
+        Task<Project> GetAsyncComplete(string id, string iri);
         IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number);
     }
 }

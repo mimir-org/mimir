@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
@@ -10,7 +9,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using MicrosoftSqlServerModule;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -38,8 +36,6 @@ namespace Mb.Api
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
 
-            var startupLogger = services.BuildServiceProvider().GetRequiredService<ILogger<Startup>>();
-
             // Add Cors policy
             var origins = Configuration.GetSection("CorsConfiguration")?
                 .GetValue<string>("ValidOrigins")?.Split(",");
@@ -50,13 +46,11 @@ namespace Mb.Api
                 {
                     if (NoOriginsAreProvided(origins))
                     {
-                        startupLogger.LogInformation("No Cors origins provided. Allowing any origin");
                         builder.AllowAnyOrigin();
                     }
                     else
                     {
-                        startupLogger.LogInformation("Cors origins provided: {Policies}. Restricting origins, enforcing credentials", string.Join(",", origins));
-                        builder.WithOrigins(origins)
+                        builder.WithOrigins(origins!)
                             .AllowCredentials();
                     }
 

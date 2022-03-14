@@ -3,15 +3,15 @@ import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../models";
 import { ListType, RadioButtonContainer } from "../../inputs/RadioButtonContainer";
 import { TerminalCategoryWrapper, TerminalListElement } from "../../styled";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
-import { TextResources } from "../../../assets/text";
+import { CreateId } from "../../../components/flow/helpers";
+import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../../types";
+import { TypeEditorTextResources } from "../../assets/TypeEditorTextResources";
 import {
   SearchBar,
   SearchBarContainer,
   SearchBarList,
   SearchBarListItem,
 } from "../../../compLibrary/dropdown/SearchDropDown.styled";
-import { CreateId } from "../../../components/flow/helpers";
-import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../../types";
 
 interface Props {
   categoryName: string;
@@ -100,7 +100,7 @@ export const TransportInterfaceElement = ({
               <input
                 type="text"
                 value={searchbarInput}
-                placeholder={TextResources.TypeEditor_Search}
+                placeholder={TypeEditorTextResources.SEARCH}
                 onChange={handleChange}
                 onFocus={() => setExpandList(!expandList)}
               />

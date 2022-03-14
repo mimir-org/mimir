@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../../../../../compLibrary/font";
 
 export const ParameterDescriptorsWrapper = styled.div`
@@ -8,22 +8,22 @@ export const ParameterDescriptorsWrapper = styled.div`
   .descriptors-top {
     display: flex;
     justify-content: space-between;
-    font-size: ${FontSize.Tiny};
-    color: ${Color.GreyHeader};
+    font-size: ${FontSize.TINY};
+    color: ${Color.GREY_HEADER};
   }
 
   .descriptors-bottom {
     display: flex;
-    font-size: ${FontSize.Small};
+    font-size: ${FontSize.SMALL};
     justify-content: space-between;
     margin-top: 1px;
-    border-top: 1px solid ${Color.ParamsPurple};
+    border-top: 1px solid ${Color.PARAMS_PURPLE};
 
     div:not(:first-child)::after {
       content: "";
       width: 1px;
       height: 6px;
-      background: ${Color.ParamsPurple};
+      background: ${Color.PARAMS_PURPLE};
       border-radius: 1px;
       position: absolute;
       top: -1.5px;

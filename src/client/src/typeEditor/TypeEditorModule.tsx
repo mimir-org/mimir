@@ -1,9 +1,9 @@
 import { ObjectType } from "../models";
-import { TextResources } from "../assets/text";
 import { EditTypeIcon, NewTypeIcon } from "../assets/icons/type";
 import { useAppDispatch } from "../redux/store";
 import { OnOpenTypeEditor } from "./handlers";
 import { TypeEditorBox, TypeEditorButton } from "./styled";
+import { TypeEditorTextResources } from "./assets/TypeEditorTextResources";
 
 interface Props {
   selectedElement: string;
@@ -25,14 +25,14 @@ export const TypeEditorModule = ({ selectedElement, selectedElementType, onChang
         onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
       >
         <img src={NewTypeIcon} alt="new type" />
-        {TextResources.TypeEditor_New_Type}
+        {TypeEditorTextResources.NEW_TYPE}
       </TypeEditorButton>
       <TypeEditorButton
         disabled={selectedElement === ""}
         onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
       >
         <img src={EditTypeIcon} alt="edit type" />
-        {TextResources.TypeEditor_Edit_Type}
+        {TypeEditorTextResources.EDIT_TYPE}
       </TypeEditorButton>
     </TypeEditorBox>
   );

@@ -1,4 +1,4 @@
-import { Size } from "../../../../../compLibrary/size";
+import { Size } from "../../../../../compLibrary/size/Size";
 import { Edge, Node, Project } from "../../../../../models";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
@@ -24,8 +24,8 @@ export const OnDeleteClick = (
   }
 
   dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  dispatch(changeInspectorHeight(Size.ModuleClosed));
-  SetPanelHeight(inspectorRef, Size.ModuleClosed);
+  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
+  SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 };
 
 const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {

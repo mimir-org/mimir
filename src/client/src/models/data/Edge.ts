@@ -10,6 +10,7 @@ export interface Edge {
   iri: string;
   domain: string;
   projectId: string;
+  projectIri: string;
   fromConnectorId: string;
   fromConnector: Connector;
 
@@ -33,7 +34,7 @@ export interface Edge {
   interfaceId: string;
   interface: Interface;
 
-  isHidden: boolean | false;
+  isHidden: boolean;
   masterProjectId: string;
   masterProjectIri: string;
   isSelected: boolean;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontWeight } from "../../../compLibrary/font";
 
 interface Props {
@@ -15,12 +15,12 @@ const RdsListElement = styled.div<Props>`
   padding: 2px 5px;
 
   &:hover {
-    background-color: ${Color.BlueLight} !important;
+    background-color: ${Color.BLUE_LIGHT} !important;
   }
 
   label {
     text-decoration: ${(props) => props.isSelected && "underline"};
-    font-weight: ${(props) => props.isSelected && FontWeight.Bold};
+    font-weight: ${(props) => props.isSelected && FontWeight.BOLD};
   }
 `;
 

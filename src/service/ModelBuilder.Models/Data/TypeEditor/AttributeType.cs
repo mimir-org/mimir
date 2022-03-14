@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mb.Models.Const;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
@@ -12,6 +13,7 @@ namespace Mb.Models.Data.TypeEditor
         public string Id { get; set; }
         public string Entity { get; set; }
         public Aspect Aspect { get; set; }
+        public string Iri => GlobalSettings.IriAttributeTypePrefix + Id;
 
         public string QualifierId { get; set; }
         public AttributeQualifier Qualifier { get; set; }

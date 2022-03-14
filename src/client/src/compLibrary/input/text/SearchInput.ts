@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../colors";
+import { Color } from "../../colors/Color";
 import { FontSize, FontWeight } from "../../font";
 import { SearchIcon } from "../../../assets/icons/common";
 
@@ -7,9 +7,9 @@ const SearchInput = styled.input`
   width: 100%;
   height: 30px;
   padding: 0 5px;
-  font-style: ${FontWeight.Italic};
-  font-size: ${FontSize.Standard};
-  border: 1px solid ${Color.Black};
+  font-style: ${FontWeight.ITALIC};
+  font-size: ${FontSize.STANDARD};
+  border: 1px solid ${Color.BLACK};
   border-radius: 5px;
   background-image: url(${SearchIcon});
   background-origin: content-box;
@@ -17,11 +17,11 @@ const SearchInput = styled.input`
   background-repeat: no-repeat;
 
   &:hover {
-    background-color: ${Color.BlueLight};
+    background-color: ${Color.BLUE_LIGHT};
   }
 
   &:focus {
-    border-color: ${Color.BlueMagenta};
+    border-color: ${Color.BLUE_MAGENTA};
   }
 `;
 

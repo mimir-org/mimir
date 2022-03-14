@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../../../../../compLibrary/font";
 
 export const ProjectDetailsContainer = styled.div`
@@ -34,8 +34,8 @@ export const ProjectOptionsButtons = styled.div`
     width: 175px;
     height: 34px;
     margin-top: 20px;
-    background: ${Color.White};
-    font-weight: ${FontWeight.Normal};
+    background: ${Color.WHITE};
+    font-weight: ${FontWeight.NORMAL};
     justify-content: start;
   }
 
@@ -47,6 +47,6 @@ export const ProjectOptionsButtons = styled.div`
   .button-text {
     text-align: left;
     white-space: nowrap;
-    font-size: ${FontSize.Standard};
+    font-size: ${FontSize.STANDARD};
   }
 `;

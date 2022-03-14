@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Size } from "../../../../../../compLibrary/size";
+import { Size } from "../../../../../../compLibrary/size/Size";
 
 interface Props {
   colorMain: string;
@@ -8,10 +8,10 @@ interface Props {
   visible: boolean;
 }
 
-const TreeNodeBox = styled.div<Props>`
+export const TreeNodeBox = styled.div<Props>`
   border-radius: 10px;
-  width: ${Size.Node_Width}px;
-  height: ${Size.Node_Height}px;
+  width: ${Size.NODE_WIDTH}px;
+  height: ${Size.NODE_HEIGHT}px;
   font-size: 11px;
   text-align: center;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
@@ -29,5 +29,3 @@ const TreeNodeBox = styled.div<Props>`
     border-color: ${(props) => props.colorSelected} !important;
   }
 `;
-
-export default TreeNodeBox;

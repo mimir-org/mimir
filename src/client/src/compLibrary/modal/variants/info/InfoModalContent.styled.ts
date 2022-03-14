@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../colors";
+import { Color } from "../../../colors/Color";
 import { FontSize } from "../../../font";
 
 interface InfoModalContentContainerProps {
@@ -18,8 +18,8 @@ export const InfoModalContentContainer = styled.div<InfoModalContentContainerPro
   min-height: 350px;
   min-width: min(500px, 100%);
   max-width: 100%;
-  border: 2px solid ${(props) => props.color ?? Color.BlueMagenta};
-  background-color: ${Color.White};
+  border: 2px solid ${(props) => props.color ?? Color.BLUE_MAGENTA};
+  background-color: ${Color.WHITE};
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   padding: 30px;
@@ -34,7 +34,7 @@ export const InfoModalHeader = styled.header`
 
 export const InfoModalHeaderTitle = styled.h1`
   font-weight: bold;
-  font-size: ${FontSize.Header};
+  font-size: ${FontSize.HEADER};
   margin: 0;
 `;
 

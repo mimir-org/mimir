@@ -3,7 +3,9 @@ using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Common;
+using Mb.Models.Const;
 using Mb.Models.Enums;
+using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 
 namespace Mb.Services.Services
@@ -115,12 +117,13 @@ namespace Mb.Services.Services
                 node.Id = nodeReplacement.ToId;
                 node.Iri = nodeReplacement.ToIri;
                 node.ProjectId = project.ToId;
+                node.ProjectIri = project.ToIri;
 
                 if (string.IsNullOrWhiteSpace(node.MasterProjectId))
                     node.MasterProjectId = project.ToId;
 
-                if (string.IsNullOrEmpty(node.MasterProjectIri))
-                    node.MasterProjectIri = project.ToId;
+                if (string.IsNullOrEmpty(node.MasterProjectIri) || !node.MasterProjectIri.IsValidIri())
+                    node.MasterProjectIri = project.ToIri;
 
                 yield return node;
             }
@@ -150,7 +153,7 @@ namespace Mb.Services.Services
                 edgeReplacement.FromId = edge.Id;
                 edgeReplacement.FromIri = edge.Iri;
 
-                if (edgeReplacement.FromId != edgeReplacement.ToId)
+                if (edgeReplacement.FromId != edgeReplacement.ToId && !string.IsNullOrWhiteSpace(edgeReplacement.FromId) || edgeReplacement.FromIri != edgeReplacement.ToId && !string.IsNullOrWhiteSpace(edgeReplacement.FromIri))
                     remap.Add(edgeReplacement.ToId, edgeReplacement.FromId);
 
                 edge.Transport = RemapTransport(edge.Transport, createCopy);
@@ -158,12 +161,29 @@ namespace Mb.Services.Services
 
                 edge.Id = edgeReplacement.ToId;
                 edge.Iri = edgeReplacement.ToIri;
+                edge.ProjectId = project.ToId;
+                edge.ProjectIri = project.ToIri;
+
+                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToConnectorId, FromIri = edge.ToConnectorIri });
+                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromConnectorId, FromIri = edge.FromConnectorIri });
+                var toNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToNodeId, FromIri = edge.ToNodeIri });
+                var fromNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromNodeId, FromIri = edge.FromNodeIri });
+
+                edge.ToConnectorId = toConnectorReplacement.ToId;
+                edge.FromConnectorId = fromConnectorReplacement.ToId;
+                edge.ToNodeId = toNodeReplacement.ToId;
+                edge.FromNodeId = fromNodeReplacement.ToId;
+
+                edge.ToConnectorIri = toConnectorReplacement.ToIri;
+                edge.FromConnectorIri = fromConnectorReplacement.ToIri;
+                edge.ToNodeIri = toNodeReplacement.ToIri;
+                edge.FromNodeIri = fromNodeReplacement.ToIri;
 
                 if (string.IsNullOrWhiteSpace(edge.MasterProjectId))
                     edge.MasterProjectId = project.ToId;
 
-                if (string.IsNullOrEmpty(edge.MasterProjectIri))
-                    edge.MasterProjectIri = project.ToId;
+                if (string.IsNullOrEmpty(edge.MasterProjectIri) || !edge.MasterProjectIri.IsValidIri())
+                    edge.MasterProjectIri = project.ToIri;
 
                 yield return edge;
             }
@@ -212,23 +232,51 @@ namespace Mb.Services.Services
                 connectorReplacement.FromId = connector.Id;
                 connectorReplacement.FromIri = connector.Iri;
 
-                _ = edges?.Where(x => x.FromConnectorId == connectorReplacement.FromId).Select(y =>
+                if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
-                    y.FromConnectorIri = connectorReplacement.ToIri;
-                    y.FromConnectorId = connectorReplacement.ToId;
-                    y.FromNodeId = replacement.ToId;
-                    y.FromNodeIri = replacement.ToIri;
-                    return y;
-                }).ToList();
+                    _ = edges?.Where(x => x.FromConnectorIri == connectorReplacement.FromIri).Select(y =>
+                    {
+                        y.FromConnectorIri = connectorReplacement.ToIri;
+                        y.FromConnectorId = connectorReplacement.ToId;
+                        y.FromNodeId = replacement.ToId;
+                        y.FromNodeIri = replacement.ToIri;
+                        return y;
+                    }).ToList();
+                }
+                else
+                {
+                    _ = edges?.Where(x => x.FromConnectorId == connectorReplacement.FromId).Select(y =>
+                    {
+                        y.FromConnectorIri = connectorReplacement.ToIri;
+                        y.FromConnectorId = connectorReplacement.ToId;
+                        y.FromNodeId = replacement.ToId;
+                        y.FromNodeIri = replacement.ToIri;
+                        return y;
+                    }).ToList();
+                }
 
-                _ = edges?.Where(x => x.ToConnectorId == connectorReplacement.FromId).Select(y =>
+                if (string.IsNullOrWhiteSpace(connectorReplacement.FromId))
                 {
-                    y.ToConnectorIri = connectorReplacement.ToIri;
-                    y.ToConnectorId = connectorReplacement.ToId;
-                    y.ToNodeId = replacement.ToId;
-                    y.ToNodeIri = replacement.ToIri;
-                    return y;
-                }).ToList();
+                    _ = edges?.Where(x => x.ToConnectorIri == connectorReplacement.FromIri).Select(y =>
+                    {
+                        y.ToConnectorIri = connectorReplacement.ToIri;
+                        y.ToConnectorId = connectorReplacement.ToId;
+                        y.ToNodeId = replacement.ToId;
+                        y.ToNodeIri = replacement.ToIri;
+                        return y;
+                    }).ToList();
+                }
+                else
+                {
+                    _ = edges?.Where(x => x.ToConnectorId == connectorReplacement.FromId).Select(y =>
+                    {
+                        y.ToConnectorIri = connectorReplacement.ToIri;
+                        y.ToConnectorId = connectorReplacement.ToId;
+                        y.ToNodeId = replacement.ToId;
+                        y.ToNodeIri = replacement.ToIri;
+                        return y;
+                    }).ToList();
+                }
 
                 var attr = RemapAttributes(connectorReplacement, connector.Attributes, createCopy).ToList();
                 connector.Attributes = attr.Any() ? attr : null;
@@ -242,8 +290,25 @@ namespace Mb.Services.Services
                     connector.NodeIri = replacement.ToIri;
                 }
 
+                if (!string.IsNullOrWhiteSpace(connector.TerminalTypeId) && string.IsNullOrWhiteSpace(connector.TerminalTypeIri))
+                {
+                    connector.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + connector.TerminalTypeId;
+                }
+
+
                 yield return connector;
             }
+        }
+
+        private static bool ShouldReplace(string id, string fromId, string iri, string fromIri)
+        {
+            if (id == fromId && !string.IsNullOrWhiteSpace(id))
+                return true;
+
+            if (iri == fromIri && !string.IsNullOrWhiteSpace(iri))
+                return true;
+
+            return false;
         }
 
         // Remap attributes
@@ -261,23 +326,37 @@ namespace Mb.Services.Services
                 attributeReplacement.FromId = attribute.Id;
                 attributeReplacement.FromIri = attribute.Iri;
 
-                if (attribute.TerminalId == replacement.FromId)
+                if (ShouldReplace(attribute.TerminalId, replacement.FromId, attribute.TerminalIri, replacement.FromIri))
+                {
                     attribute.TerminalId = replacement.ToId;
+                    attribute.TerminalIri = replacement.ToIri;
+                }
 
-                if (attribute.NodeId == replacement.FromId)
+                if (ShouldReplace(attribute.NodeId, replacement.FromId, attribute.NodeIri, replacement.FromIri))
                 {
                     attribute.NodeId = replacement.ToId;
                     attribute.NodeIri = replacement.ToIri;
                 }
 
-                if (attribute.TransportId == replacement.FromId)
+                if (ShouldReplace(attribute.TransportId, replacement.FromId, attribute.TransportIri, replacement.FromIri))
+                {
                     attribute.TransportId = replacement.ToId;
+                    attribute.TransportIri = replacement.ToIri;
+                }
 
-                if (attribute.SimpleId == replacement.FromId)
+                if (ShouldReplace(attribute.SimpleId, replacement.FromId, attribute.SimpleIri, replacement.FromIri))
+                {
                     attribute.SimpleId = replacement.ToId;
+                    attribute.SimpleIri = replacement.ToIri;
+                }
 
                 attribute.Id = attributeReplacement.ToId;
                 attribute.Iri = attributeReplacement.ToIri;
+
+                if (!string.IsNullOrWhiteSpace(attribute.AttributeTypeId) && string.IsNullOrWhiteSpace(attribute.AttributeTypeIri))
+                {
+                    attribute.AttributeTypeIri = GlobalSettings.IriAttributeTypePrefix + attribute.AttributeTypeId;
+                }
 
                 yield return attribute;
             }
@@ -291,16 +370,19 @@ namespace Mb.Services.Services
 
             foreach (var simple in simples)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = simple.Id };
+                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = simple.Id, FromIri = simple.Iri };
                 var simpleReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
                 simpleReplacement.FromId = simple.Id;
+                simpleReplacement.FromIri = simple.Iri;
 
                 var attr = RemapAttributes(simpleReplacement, simple.Attributes, createCopy).ToList();
                 simple.Attributes = attr.Any() ? attr : null;
                 simple.Id = simpleReplacement.ToId;
+                simple.Iri = simpleReplacement.ToIri;
                 simple.NodeId = replacement.ToId;
+                simple.NodeIri = replacement.ToIri;
 
                 yield return simple;
             }
@@ -377,6 +459,11 @@ namespace Mb.Services.Services
             {
                 terminal.NodeId = replacement.FromId;
                 terminal.NodeIri = replacement.ToIri;
+            }
+
+            if (!string.IsNullOrWhiteSpace(terminal.TerminalTypeId) && string.IsNullOrWhiteSpace(terminal.TerminalTypeIri))
+            {
+                terminal.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + terminal.TerminalTypeId;
             }
 
             return terminal;

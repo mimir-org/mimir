@@ -1,11 +1,11 @@
 import { Elements } from "react-flow-renderer";
 import { BuildTreeEdge } from ".";
-import { GetEdgeType } from "../helpers";
+import { GetTreeEdgeType } from "../helpers";
 import { Project } from "../../../../models";
 import { IsOffPage } from "../../../../helpers";
 import { ConvertNodeToFlow } from "../../converters";
 
-const BuildTreeElements = (project: Project, animated: boolean): Elements => {
+const BuildTreeElements = (project: Project, animated: boolean) => {
   const elements: Elements = [];
 
   if (!project) return elements;
@@ -17,7 +17,7 @@ const BuildTreeElements = (project: Project, animated: boolean): Elements => {
   });
 
   project.edges?.forEach((edge) => {
-    const edgeType = GetEdgeType(edge.fromConnector);
+    const edgeType = GetTreeEdgeType(edge.fromConnector);
     let treeEdge = null;
     if (!IsOffPage(edge.toNode)) treeEdge = BuildTreeEdge(edge, edgeType, project.nodes, animated);
     if (treeEdge) elements.push(treeEdge);

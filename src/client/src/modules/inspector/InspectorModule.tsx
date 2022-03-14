@@ -1,13 +1,13 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
-import { Size } from "../../compLibrary/size";
+import { Size } from "../../compLibrary/size/Size";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { MODULE_TYPE } from "../../models/project";
 import { InspectorElement } from "./types";
 import { InspectorResizePanel } from "./InpectorModule.styled";
 import { Project } from "../../models";
-import { useDragResizePanel } from "./hooks";
+import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
 import { GetSelectedNode, IsBlockView } from "../../helpers";
@@ -26,7 +26,7 @@ interface Props {
  * @param interface
  * @returns a module with multiple tabs for different operations.
  */
-const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
+export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
   const username = useAppSelector(selectors.usernameSelector);
   const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
@@ -35,8 +35,8 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
 
-  const stop = inspectorOpen ? Size.ModuleOpen : Size.ModuleClosed;
-  const start = inspectorOpen ? Size.ModuleClosed : Size.ModuleOpen;
+  const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
+  const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
@@ -46,6 +46,7 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const resizePanelRef = useRef(null);
   const element: InspectorElement = node || edge;
 
+  useAutoMinimizeInspector(inspectorRef);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
   const changeInspectorVisibilityAction = useCallback(
     (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
@@ -65,7 +66,7 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
       zIndex={5}
       forwardRef={inspectorRef}
     >
-      <Tooltip content={TextResources.Inspector_Resize} offset={[0, 10]} delay={150}>
+      <Tooltip content={TextResources.INSPECTOR_RESIZE} offset={[0, 10]} delay={150}>
         <InspectorResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       </Tooltip>
       <InspectorHeader
@@ -83,5 +84,3 @@ const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
     </AnimatedInspector>
   );
 };
-
-export default InspectorModule;
