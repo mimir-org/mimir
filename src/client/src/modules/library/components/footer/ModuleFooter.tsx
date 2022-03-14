@@ -8,7 +8,7 @@ import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedT
 import { GetCollectionIcon, SetCollectionButtonText } from "./helpers/";
 import { Button, ButtonVariant } from "../../../../compLibrary/buttons";
 import { NewType, EditType, DeleteType } from "../../../../assets/icons/library";
-import { Collection, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
+import { Collection, CollectionsActions, LibraryTab, ObjectType } from "../../../../models";
 
 interface Props {
   libOpen: boolean;

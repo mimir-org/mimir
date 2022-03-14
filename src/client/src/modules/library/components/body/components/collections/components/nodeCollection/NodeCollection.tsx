@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { Dispatch } from "redux";
 import { NodeElement } from "./NodeElement";
-import { CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
+import { CollectionsActions, ObjectType } from "../../../../../../../../models";
 import { NodeCollectionButton, NodeCollectionButtonText, NodeCollectionContainer } from "./NodeCollection.styled";
 
 interface Props {

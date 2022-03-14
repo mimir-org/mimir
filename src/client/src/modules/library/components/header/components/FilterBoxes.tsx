@@ -1,7 +1,7 @@
 import { Icon } from "../../../../../compLibrary/icon";
 import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
-import { Aspect, CollectionsActions } from "../../../../../models";
+import { Aspect } from "../../../../../models";
 // import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
 import { TextResources } from "../../../../../assets/text/TextResources";
