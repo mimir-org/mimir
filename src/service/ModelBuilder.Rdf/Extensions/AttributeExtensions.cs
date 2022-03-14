@@ -51,6 +51,8 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(attribute.IriDatum(), adp.SourcePredicate, ado.SourceObject);
             ontologyService.AssertNode(attribute.IriDatum(), adp.ConditionPredicate, ado.ConditionObject);
             ontologyService.AssertNode(attribute.IriDatum(), adp.FormatPredicate, ado.FormatObject);
+
+            ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, attribute.IriDatum());
         }
 
         /// <summary>
