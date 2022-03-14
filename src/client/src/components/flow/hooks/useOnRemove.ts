@@ -54,7 +54,7 @@ const handleDeleteElements = (
   blockView: boolean,
   dispatch: Dispatch
 ) => {
-  const selectedNode = blockView ? GetSelectedNode() : GetSelectedBlockNode();
+  const selectedNode = blockView ? GetSelectedBlockNode() : GetSelectedNode();
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
 
