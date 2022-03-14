@@ -1,9 +1,9 @@
 import { CollectionsWrapper, CollectionsUpdateButtonWrapper } from "./CollectionsComponent.styled";
-import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../../../models";
+import { Aspect, CollectionsActions, LibraryTab, ObjectType } from "../../../../../../models";
 import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
 import { Button, ButtonVariant } from "../../../../../../compLibrary/buttons";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 
 interface Props {
   activeTab: LibraryTab;
@@ -38,7 +38,7 @@ export const CollectionsComponent = ({
           <CollectionsUpdateButtonWrapper>
             <Button
               onClick={() => null}
-              text={TextResources.Library_Manage_Collections_Update_Library}
+              text={TextResources.LIBRARY_MANAGE_COLLECTIONS_UPDATE_LIBRARY}
               variant={ButtonVariant.WhiteButton}
             />
           </CollectionsUpdateButtonWrapper>

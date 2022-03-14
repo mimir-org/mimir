@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../../../../../../compLibrary/font";
 
 interface CollectionComponentButtonProps {
@@ -14,13 +14,13 @@ export const CollectionComponentButton = styled.button<CollectionComponentButton
   width: calc(100% - 20px);
   height: 32px;
   border: 1px;
-  border-color: ${(props) => (props.active ? Color.BlueMagenta : Color.GreyLibraryCollectionBorder)};
+  border-color: ${(props) => (props.active ? Color.BLUE_MAGENTA : Color.GREY_LIBRARY_COLLECTION_BORDER)};
   border-style: solid;
   border-radius: 5px;
-  background-color: ${Color.White};
+  background-color: ${Color.WHITE};
   margin: 3px 1px;
-  font-size: ${FontSize.Medium};
-  font-family: ${FontType.Standard};
+  font-size: ${FontSize.MEDIUM};
+  font-family: ${FontType.STANDARD};
   font-weight: ${(props) => (props.active ? "bold" : "normal")};
 
   label {
