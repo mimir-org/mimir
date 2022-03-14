@@ -20,20 +20,28 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
     font-family:${FontType.Standard}
     padding: 10px 0;
   }
+`;
+
+export const CollectionsUpdateButtonWrapper = styled.div`
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
 
   button {
-      position:${(props) => (props.manageCollections ? "absolute" : "relative")};
-      bottom: ${(props) => (props.manageCollections ? "5%" : "")};
-      align-self: center;
-      background: transparent;
-      min-width: 200px;
-      height: 34px;
-      border: 1.5px solid ${Color.BlueMagenta};
-      border-radius: 5px;
+    position: absolute;
+    bottom: 5%;
+    align-self: center;
+    background: ${Color.White};
+    min-width: 140px;
+    height: 34px;
+    border: 1.5px solid ${Color.BlueMagenta};
+    border-radius: 5px;
 
-      .button-text {
-        font-size: ${FontSize.Standard};
-        font-family:${FontType.Standard}
-      }
+    .button-text {
+      font-size: ${FontSize.Standard};
+      font-family: ${FontType.Standard};
+    }
   }
 `;
