@@ -3,11 +3,13 @@ using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Mb.TypeEditor.Services.Contracts;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 using AttributeDatumObject = ModelBuilder.Rdf.Models.AttributeDatumObject;
+using EnumService = Mb.TypeEditor.Services.Services.EnumService;
 
 namespace ModelBuilder.Rdf.Extensions
 {
@@ -62,18 +64,14 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="libRepository">Library repository</param>
         /// TODO: Library repository should not be here in the future
-        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
+        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository, IEnumService enumService)
         {
             if (string.IsNullOrEmpty(attribute?.Value))
                 return;
 
             var selectedUnit = attribute.GetSelectedUnit(libRepository);
-
-            if (!string.IsNullOrEmpty(selectedUnit?.Name))
-                ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, $"xsd:{selectedUnit.Name}"));
-            else
-                ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, attribute.Value);
-
+            attribute.AssertAttributeFormat(ontologyService,libRepository,enumService);
+            
             ontologyService.AssertNode(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
             ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
 
@@ -84,6 +82,37 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode($"eq:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
             ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"eq:{attribute.SelectedUnitId}");
         }
+
+        public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository, IEnumService enumService)
+        {
+            IEnumerable<EnumBase> formats = enumService.GetAllOfType(EnumType.AttributeFormat);
+            Uri format_iri = new Uri("http://www.w3.org/2001/XMLSchema#string");
+            foreach (EnumBase format in formats)
+            {
+                if (format.Id == attribute.FormatId)
+                {
+                    format_iri = GetAttributeFormatXSD(format.Name);
+                    break;
+                }
+            }
+            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, format_iri));
+
+        }
+
+        public static Uri GetAttributeFormatXSD(string format_name) =>
+            new Uri(format_name switch
+            {
+                "Text and doc reference" => "http://www.w3.org/2001/XMLSchema#string",
+                "Table" => "http://www.w3.org/2001/XMLSchema#string",
+                "Float" => "http://www.w3.org/2001/XMLSchema#float",
+                "String" => "http://www.w3.org/2001/XMLSchema#string",
+                "Boolean" => "http://www.w3.org/2001/XMLSchema#boolean",
+                "Unsigned Integer" => "http://www.w3.org/2001/XMLSchema#unsignedInteger",
+                "Unsigned Float" => "http://www.w3.org/2001/XMLSchema#float",
+                "NotSet" => "http://www.w3.org/2001/XMLSchema#string",
+                "Selection" => "http://www.w3.org/2001/XMLSchema#string",
+                _ => throw new NotImplementedException($"Unrecognized format: {format_name}")
+            });
 
         /// <summary>
         /// Get the selected unit

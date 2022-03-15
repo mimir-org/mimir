@@ -2,6 +2,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.TypeEditor.Services.Contracts;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
@@ -16,7 +17,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="edge">The edge to assert</param>
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="libRepository">Lib repository</param>
-        public static void AssertEdge(this Edge edge, IOntologyService ontologyService, ILibRepository libRepository)
+        public static void AssertEdge(this Edge edge, IOntologyService ontologyService, ILibRepository libRepository, IEnumService enumService)
         {
             if (edge.FromConnector is Relation { RelationType: not RelationType.PartOf } fromRelation)
             {
@@ -58,8 +59,8 @@ namespace ModelBuilder.Rdf.Extensions
                 if (!string.IsNullOrWhiteSpace(edge.Transport.Description))
                     ontologyService.AssertNode(edge.Transport.Iri, Resources.Desc, edge.Transport.Description, true);
 
-                edge.Transport.InputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, libRepository, edge, DefaultFlowDirection.InputFlow);
-                edge.Transport.OutputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, libRepository, edge, DefaultFlowDirection.OutputFlow);
+                edge.Transport.InputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, libRepository, edge, DefaultFlowDirection.InputFlow, enumService);
+                edge.Transport.OutputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, libRepository, edge, DefaultFlowDirection.OutputFlow, enumService);
 
                 if (edge.Transport.Attributes != null)
                 {
@@ -98,8 +99,8 @@ namespace ModelBuilder.Rdf.Extensions
                 if (!string.IsNullOrWhiteSpace(edge.Interface.Description))
                     ontologyService.AssertNode(edge.Interface.Iri, Resources.Desc, edge.Interface.Description, true);
 
-                edge.Interface.InputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, libRepository, edge, DefaultFlowDirection.InputFlow);
-                edge.Interface.OutputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, libRepository, edge, DefaultFlowDirection.OutputFlow);
+                edge.Interface.InputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, libRepository, edge, DefaultFlowDirection.InputFlow, enumService);
+                edge.Interface.OutputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, libRepository, edge, DefaultFlowDirection.OutputFlow, enumService);
 
                 if (edge.Interface.Attributes != null)
                 {
