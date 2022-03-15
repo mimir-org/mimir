@@ -12,6 +12,18 @@ import { GetParent, IsPartOf } from "../helpers";
 import { GetSelectedBlockNode, GetSelectedNode, IsAspectNode, IsBlockView, IsOffPage } from "../../../helpers";
 import { getParentNodeConnector } from "../block/nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 
+/**
+ * Hook that runs when an element is deleted from Mimir.
+ * If a Node is deleted the connected Edges are also deleted.
+ * If an Edge is deleted the connect Nodes will not be deleted, except an edge between OffPageNodes.
+ * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
+ * @param elements
+ * @param blockEdgesToRemove
+ * @param inspectorRef
+ * @param project
+ * @param setElements
+ * @param dispatch
+ */
 const useOnRemove = (
   elements: Elements,
   blockEdgesToRemove: Edge[],
@@ -42,8 +54,7 @@ const handleDeleteElements = (
   blockView: boolean,
   dispatch: Dispatch
 ) => {
-  const selectedNode = GetSelectedNode();
-  const selectedBlockNode = GetSelectedBlockNode();
+  const selectedNode = blockView ? GetSelectedBlockNode() : GetSelectedNode();
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
 
@@ -51,7 +62,7 @@ const handleDeleteElements = (
     const isEdge = isElementEdge(edgeTypes, elem);
 
     if (isEdge) {
-      if (!IsAspectNode(blockView ? selectedBlockNode : selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
+      if (!IsAspectNode(selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
         hasDeletedElement = true;
 
         handleRelatedOffPageElements(project, elem?.data?.edge, dispatch);

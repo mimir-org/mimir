@@ -1,6 +1,11 @@
 import { EdgeEvent } from "../../../models/project";
 import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
 
+/**
+ * Hook that runs when a user starts dragging a connection from a terminal.
+ * @param e
+ * @param params
+ */
 const onConnectStart = (e, { nodeId, handleType, handleId }) => {
   e.preventDefault();
 

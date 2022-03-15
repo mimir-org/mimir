@@ -6,14 +6,15 @@ import { CreateId } from "../../helpers";
 /**
  * Component to create a parent node in BlockView.
  * @param node
- * @returns a FlowElement, the large box in BlockView.
+ * @returns a ParentNode - a large container that allows organizing of the child nodes.
  */
 const BuildParentNode = (node: Node) => {
   if (!node) return null;
 
   const type = TextResources.Type_BlockParentNode;
-  // TODO: fix magic numbers and remove state mutation outside store
-  const position = { x: 90, y: 0 };
+  const position = { x: 0, y: 0 };
+
+  // TODO: remove state mutation outside store
   node.positionBlockX = position.x;
   node.positionBlockY = position.y;
 

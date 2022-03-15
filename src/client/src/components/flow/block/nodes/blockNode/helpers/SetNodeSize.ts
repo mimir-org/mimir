@@ -4,7 +4,7 @@ import { Connector } from "../../../../../../models";
 import { IsInputTerminal } from "../../../../helpers";
 
 /**
- * Component to resize a Node based on the amount of active terminals.
+ * Component to resize a child BlockNode based on the amount of active terminals.
  * @param terminals
  * @param electro
  */
