@@ -1,13 +1,15 @@
-import { CollectionsWrapper } from "./CollectionsComponent.styled";
-import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../../../models";
+import { CollectionsWrapper, CollectionsUpdateButtonWrapper } from "./CollectionsComponent.styled";
+import { Aspect, CollectionsActions, LibraryTab, ObjectType } from "../../../../../../models";
 import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
+import { Button, ButtonVariant } from "../../../../../../compLibrary/buttons";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 
 interface Props {
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: string[];
+  setSelectedTypes: (array: string[]) => void;
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
   selectedElement: string;
@@ -31,7 +33,16 @@ export const CollectionsComponent = ({
   return (
     <CollectionsWrapper manageCollections={managingCollections}>
       {managingCollections ? (
-        <CollectionsList />
+        <>
+          <CollectionsList collectionState={collectionState} />
+          <CollectionsUpdateButtonWrapper>
+            <Button
+              onClick={() => null}
+              text={TextResources.LIBRARY_MANAGE_COLLECTIONS_UPDATE_LIBRARY}
+              variant={ButtonVariant.WhiteButton}
+            />
+          </CollectionsUpdateButtonWrapper>
+        </>
       ) : (
         <NodeCollectionList
           searchString={searchString}

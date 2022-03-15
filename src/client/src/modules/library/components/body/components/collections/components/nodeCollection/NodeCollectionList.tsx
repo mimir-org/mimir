@@ -6,13 +6,13 @@ import { GetSelectedNode } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
 import { FilterByAspect } from "./helpers/FilterByAspect";
-import { Aspect, CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
+import { Aspect, CollectionsActions, ObjectType } from "../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
 
 interface Props {
   collectionState: CollectionsActions;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: string[];
+  setSelectedTypes: (array: string[]) => void;
   searchString: string;
   selectedElement: string;
   setSelectedElement: (value: string) => void;

@@ -7,18 +7,14 @@ import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { Connector } from "../../../../../models";
-import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
-import { SetParentNodeWidth } from "../../builders/helpers/SetParentNodeWidth";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
-import { ResizeHandler } from "./handlers/ResizeHandler";
-import { IsProduct } from "../../../../../helpers";
-import { BlockNodeSize } from "../../../../../models/project";
-import { Size } from "../../../../../compLibrary/size/Size";
+import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
 
 /**
- * Component for the large parent block in BlockView.
+ * Component for a ParentNode in BlockView.
  * @param data the data for the node.
  * @returns a parent node of the Flow node type with Mimir styling and functionality.
  */
@@ -29,33 +25,18 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const nodes = useAppSelector(selectors.nodeSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const elements = useAppSelector(blockElementsSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const isProduct = IsProduct(node);
-  let size = useAppSelector(selectors.nodeSizeSelector);
-  if (isProduct) size = { width: Size.BLOCK_PRODUCT_WIDTH, height: Size.BLOCK_PRODUCT_HEIGHT } as BlockNodeSize;
+  const size = useAppSelector(selectors.nodeSizeSelector);
 
-  // Set default zoom on first render
   useEffect(() => {
-    const marginTop = 70;
-    const x = window.innerWidth / 2;
-    const y = window.innerHeight / 2 - marginTop;
-    setCenter(x, y, Size.DEFAULT_ZOOM_LEVEL);
-  }, []);
+    const canvasData = SetZoomCenterLevel(secondaryNode !== null);
+    setCenter(canvasData.x, canvasData.y, canvasData.zoom);
+  }, [secondaryNode]);
 
   useEffect(() => {
     setTerminals(FilterBlockTerminals(node, secondaryNode));
   }, [secondaryNode, node?.connectors]);
-
-  // Responsive resizing
-  useEffect(() => {
-    if (!isProduct) ResizeHandler(node, secondaryNode, elements, dispatch);
-  }, []);
-
-  useEffect(() => {
-    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, dispatch);
-  }, [secondaryNode]);
 
   if (!node) return null;
 

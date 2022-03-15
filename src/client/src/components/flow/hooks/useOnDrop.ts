@@ -5,7 +5,6 @@ import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsPro
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import { Position } from "../../../models/project";
-
 import {
   Attribute,
   BlobData,
@@ -46,7 +45,9 @@ interface OnDropParameters {
 }
 
 /**
- * Hook that runs when an object is dropped from the LibaryModule onto the stage.
+ * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas.
+ * A partOf Edge is created from the dropped Node to its parent.
+ * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
  * @param params
  */
 const useOnDrop = (params: OnDropParameters) => {

@@ -107,7 +107,9 @@ export const librarySlice = createSlice({
     addToCollections: (state, action: PayloadAction<addToCollectionsTypes>) => {
       state.collections = state.collections.map((collection) => {
         if (action.payload.collectionIds.includes(collection.id)) {
-          collection.libItems = collection.libItems.concat(action.payload.types);
+          action.payload.types.forEach((type) => {
+            return !collection.libItems.includes(type) ? collection.libItems.push(type) : null;
+          });
         }
         return collection;
       });

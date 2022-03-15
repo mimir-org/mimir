@@ -5,7 +5,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModalList } from "./components/ModalList";
-import { Collection, CollectionsActions, LibItem } from "../../../../../../models";
+import { Collection, CollectionsActions } from "../../../../../../models";
 import { ModalListHeader } from "./ManageSelectedTypes.styled";
 import { ModalButton } from "./components/ModalButton";
 import { CreateCollectionComponent } from "./components/CreateCollectionComponent";
@@ -13,8 +13,8 @@ import { CreateCollectionComponent } from "./components/CreateCollectionComponen
 interface Props {
   isOpen: boolean;
   onExit: (isOpen: boolean) => void;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (types: LibItem[]) => void;
+  selectedTypes: string[];
+  setSelectedTypes: (types: string[]) => void;
   collections: Collection[];
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
@@ -39,12 +39,7 @@ export const ManageSelectedTypes = ({
   return (
     <Modal isBlurred isOpen={isOpen} onExit={() => onExit(!isOpen)}>
       <InfoModalContent title={TextResources.LIBRARY_MODAL_CREATE_COLLECTION} icon={ColoredCollections}>
-        <CreateCollectionComponent
-          collectionName={collectionName}
-          setCollectionName={setCollectionName}
-          selectedTypes={selectedTypes}
-          dispatch={dispatch}
-        />
+        <CreateCollectionComponent collectionName={collectionName} setCollectionName={setCollectionName} dispatch={dispatch} />
         <ModalListHeader>{TextResources.LIBRARY_MODAL_SELECT_COLLECTION}</ModalListHeader>
         <ModalList
           collections={collections}

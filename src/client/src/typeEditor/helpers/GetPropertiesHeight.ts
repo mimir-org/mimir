@@ -1,4 +1,4 @@
-import { Size } from "../../compLibrary/size/Size";
+import { TypeEditorSize } from "../assets/TypeEditorSize";
 
 /**
  * Calculate and return height of Choose Properties lists in Type Editor.
@@ -7,7 +7,7 @@ import { Size } from "../../compLibrary/size/Size";
  */
 export const GetPropertiesHeight = (isFull: boolean) => {
   return (
-    document.body.clientHeight + (isFull ? Size.TYPEEDITOR_PROPERTIES_FULL_BASELINE : Size.TYPEEDITOR_PROPERTIES_SHRUNK_BASELINE)
+    document.body.clientHeight + (isFull ? TypeEditorSize.PROPERTIES_FULL_BASELINE : TypeEditorSize.PROPERTIES_SHRUNK_BASELINE)
   );
 };
 

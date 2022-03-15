@@ -16,14 +16,7 @@ import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
 import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
-import ReactFlow, {
-  Elements,
-  Node as FlowNode,
-  Edge as FlowEdge,
-  Connection,
-  FlowTransform,
-  useZoomPanHelper,
-} from "react-flow-renderer";
+import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -37,7 +30,6 @@ interface Props {
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
-  const { setCenter } = useZoomPanHelper();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
@@ -51,7 +43,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
-  const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
+  const defaultZoom = Size.DEFAULT_ZOOM;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -76,7 +68,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, transform, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode, transform, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -92,9 +84,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 
-  const OnMoveEnd = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== transform.zoom) dispatch(changeFlowTransform(flowTransform));
-  };
+  const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({
@@ -121,14 +111,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       handleMultiSelect(dispatch, true);
     }
   };
-
-  useEffect(() => {
-    if (transform.zoom < defaultZoom) {
-      const x = window.innerWidth / 2;
-      const y = window.innerHeight / (transform.zoom + 0.95);
-      setCenter(x, y, transform.zoom);
-    }
-  }, [transform]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -167,10 +149,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
-          defaultPosition={[0, Size.BLOCK_MARGIN_Y]}
           zoomOnDoubleClick={false}
           defaultZoom={defaultZoom}
-          minZoom={0.7}
+          minZoom={0.4}
           maxZoom={3}
           zoomOnScroll
           paneMoveable

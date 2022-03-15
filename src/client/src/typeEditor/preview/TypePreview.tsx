@@ -2,9 +2,9 @@ import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
 import { ObjectBlock } from "./ObjectBlock";
 import { InfoText, InfoWrapper, ListLabel, ListWrapper, PreviewArea } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
-import { TextResources } from "../../assets/text/TextResources";
 import { InterfaceIcon, TransportIcon } from "../../assets/icons/type";
 import { IsFunction, IsInterface, IsLocation, IsObjectBlock, IsProduct, IsTransport } from "../helpers";
+import { TypeEditorTextResources } from "../assets/TypeEditorTextResources";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -44,7 +44,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
 
   return (
     <ListWrapper flex={1.5}>
-      <ListLabel preview>{TextResources.TypeEditor_New_Type_Preview}</ListLabel>
+      <ListLabel preview>{TypeEditorTextResources.NEW_TYPE_PREVIEW}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (

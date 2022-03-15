@@ -1,7 +1,5 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
-import { IsProduct } from "../../../../../../helpers";
-import { Size } from "../../../../../../compLibrary/size/Size";
 import {
   Aspect,
   CONNECTOR_KIND,
@@ -36,17 +34,14 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
-
   const marginY = 80;
-  let positionX = data.position.x;
-  if (IsProduct(sourceNode)) positionX = isTarget ? Size.BLOCK_PRODUCT_WIDTH + 90 : 55;
 
   const offPageNode = {
     id: CreateId(),
     name: "OffPage-" + sourceNode.name,
     label: "OffPage-" + sourceNode.label,
     aspect: Aspect.None,
-    positionBlockX: positionX,
+    positionBlockX: data.position.x,
     positionBlockY: data.position.y - marginY,
     connectors: [],
     attributes: [],
@@ -56,6 +51,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     projectId: sourceNode.projectId,
   } as Node;
 
+  //#region Connectors
   const inputConnector = {
     id: CreateId(),
     name: "OffPageInput",
@@ -99,7 +95,9 @@ export const CreateOffPageObject = (data: OffPageData) => {
   offPageNode.connectors.push(inputConnector);
   offPageNode.connectors.push(outputConnector);
   offPageNode.connectors.push(partOfConnector);
+  //#endregion
 
+  //#region Edges
   const partofEdge = {
     id: CreateId(),
     fromConnector: sourcePartOfConnector,
@@ -129,6 +127,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     kind: EDGE_KIND,
     projectId: sourceNode.projectId,
   } as Edge;
+  //#endregion
 
   return {
     node: offPageNode,
