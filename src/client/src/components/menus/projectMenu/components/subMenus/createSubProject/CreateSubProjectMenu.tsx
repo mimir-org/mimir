@@ -1,3 +1,4 @@
+import * as selectors from "./helpers/selectors";
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CreateSubProjectIcon } from "../../../../../../assets/icons/project";
@@ -9,23 +10,17 @@ import { useSelectedFlowElements } from "../../../../../../helpers";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnSubProjectCreateClick } from "./handlers";
-import {
-  isActiveMenuSelector,
-  projectIdSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../../redux/store";
 
 export const CreateSubProjectMenu = () => {
   const dispatch = useAppDispatch();
-  const fromProjectId = useAppSelector(projectIdSelector);
+  const fromProjectId = useAppSelector(selectors.projectIdSelector);
   const [selectedNodeIds, selectedEdgeIds] = useSelectedFlowElements();
-  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU);
+  const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.CREATE_SUB_PROJECT_MENU);
   const [projectName, setProjectName] = useState("");
   const isActionDisabled = !projectName;
-  const onExit = () => OnReturnClick(dispatch);
   const onAction = () => OnSubProjectCreateClick(fromProjectId, projectName, selectedNodeIds, selectedEdgeIds, dispatch);
+  const onExit = () => OnReturnClick(dispatch);
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>

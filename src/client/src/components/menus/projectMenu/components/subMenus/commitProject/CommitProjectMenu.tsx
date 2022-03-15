@@ -1,3 +1,4 @@
+import * as selectors from "./helpers/selectors";
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CommitProjectIcon } from "../../../../../../assets/icons/project";
@@ -10,29 +11,20 @@ import { TextResources } from "../../../../../../assets/text";
 import { useState } from "react";
 import { CollaborationPartner, ModuleDescription } from "../../../../../../models";
 import { OnCommitProjectClick, OnReturnClick } from "./handlers";
-import {
-  commonStateCollaborationPartnersSelector,
-  commonStateParsersSelector,
-  isActiveMenuSelector,
-  projectIdSelector,
-  projectIsSubProjectSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../../redux/store";
 
 export const CommitProjectMenu = () => {
   const dispatch = useAppDispatch();
-  const parsers = useAppSelector(commonStateParsersSelector);
-  const projectId = useAppSelector(projectIdSelector);
-  const isSubProject = useAppSelector(projectIsSubProjectSelector);
-  const collaborationPartners = useAppSelector(commonStateCollaborationPartnersSelector);
+  const parsers = useAppSelector(selectors.commonStateParsersSelector);
+  const projectId = useAppSelector(selectors.projectIdSelector);
+  const isSubProject = useAppSelector(selectors.projectIsSubProjectSelector);
+  const collaborationPartners = useAppSelector(selectors.commonStateCollaborationPartnersSelector);
   const [parser, setParser] = useState(parsers[0]);
   const [collaborationPartner, setCollaborationPartner] = useState(collaborationPartners[0]);
-  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.COMMIT_PROJECT) && !isSubProject;
-  const onExit = () => OnReturnClick(dispatch);
-  const onAction = () => OnCommitProjectClick(dispatch, projectId, parser.id, collaborationPartner.domain);
+  const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.COMMIT_PROJECT) && !isSubProject;
   const isActionDisabled = !(collaborationPartner && parser && projectId);
+  const onAction = () => OnCommitProjectClick(dispatch, projectId, parser.id, collaborationPartner.domain);
+  const onExit = () => OnReturnClick(dispatch);
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>

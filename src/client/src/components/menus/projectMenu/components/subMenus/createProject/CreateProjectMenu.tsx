@@ -15,9 +15,9 @@ export const CreateProjectMenu = () => {
   const dispatch = useAppDispatch();
   const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
   const [projectName, setProjectName] = useState("");
-  const onExit = () => OnReturnShowInstructionClick(dispatch);
-  const onAction = () => OnProjectCreateClick(dispatch, projectName);
   const isActionDisabled = !projectName;
+  const onAction = () => OnProjectCreateClick(dispatch, projectName);
+  const onExit = () => OnReturnShowInstructionClick(dispatch);
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>

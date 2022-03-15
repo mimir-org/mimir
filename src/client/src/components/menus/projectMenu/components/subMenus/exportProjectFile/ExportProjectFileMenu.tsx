@@ -21,9 +21,8 @@ export const ExportProjectFileMenu = () => {
   const [fileName, setFileName] = useState("");
   const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
   const isActionDisabled = !(fileName && parser);
-
-  const onExit = () => OnReturnClick(dispatch);
   const onAction = () => OnExportProjectFileClick(dispatch, project, fileName, parser.id);
+  const onExit = () => OnReturnClick(dispatch);
 
   useEffect(() => setParser(parsers?.[0]), [parsers]);
 
