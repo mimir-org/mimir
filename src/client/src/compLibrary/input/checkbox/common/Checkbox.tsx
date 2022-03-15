@@ -16,7 +16,7 @@ interface Props {
  * @param interface
  * @returns a checkbox.
  */
-export const Checkbox = ({ isChecked, onChange, color = Color.GREY_HEADER, readOnly, id, marginLeft = 0 }: Props) => (
+export const Checkbox = ({ isChecked, onChange, color = Color.DAVYS_GREY, readOnly, id, marginLeft = 0 }: Props) => (
   <CheckboxWrapper color={color} marginLeft={marginLeft}>
     {isChecked ? <CheckmarkCheckedComponent /> : <CheckmarkEmptyComponent />}
     <input id={id} type="checkbox" readOnly={readOnly} key={id} checked={isChecked} onChange={() => onChange()} />

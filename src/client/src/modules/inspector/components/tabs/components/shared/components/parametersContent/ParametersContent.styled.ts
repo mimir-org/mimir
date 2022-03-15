@@ -26,8 +26,8 @@ export const ParametersContentHeader = styled.div`
   top: 0;
   z-index: 5;
 
-  background-color: ${Color.GREY_INSPECTOR};
-  border-bottom: 1px solid ${Color.GREY};
+  background-color: ${Color.CULTURED};
+  border-bottom: 1px solid ${Color.GAINSBORO};
 `;
 
 export const ParametersContentMenu = styled.div`

@@ -17,5 +17,5 @@ export const TerminalsParametersWrapper = styled.div`
 
   border-left-width: 1px;
   border-left-style: solid;
-  border-color: ${Color.GREY_DARK};
+  border-color: ${Color.LIGHT_SILVER};
 `;

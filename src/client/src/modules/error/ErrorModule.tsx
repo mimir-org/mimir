@@ -119,7 +119,7 @@ const ErrorModule = () => {
 
   return (
     <Modal isBlurred isOpen={visible} onExit={closeHeader}>
-      <InfoModalContent title={TextResources.ERROR_GENERIC} color={Color.RED_WARNING}>
+      <InfoModalContent title={TextResources.ERROR_GENERIC} color={Color.ULTRA_RED}>
         <ExitButton onClick={closeHeader} />
         <ErrorBody>
           {errors?.map((x, index) => {

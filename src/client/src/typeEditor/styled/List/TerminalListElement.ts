@@ -12,7 +12,7 @@ const TerminalListElement = styled.div`
   color: ${Color.BLACK};
 
   :nth-child(odd) {
-    background-color: ${Color.PURPLE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_LIST};
   }
   :nth-child(even) {
     background-color: ${Color.WHITE};

@@ -17,7 +17,7 @@ const Input = styled.input<Props>`
   height: 30px;
   text-align: left;
   margin-right: ${(props) => props.inputType === "tech" && "4px"};
-  background-color: ${(props) => (props.readOnly ? Color.GREY_LIGHT : Color.WHITE)};
+  background-color: ${(props) => (props.readOnly ? Color.WHITE_SMOKE : Color.WHITE)};
   font-size: ${(props) => GetFontSize(props.fontSize)};
   font-style: ${(props) => (props.fontStyle ? props.fontStyle : "revert")};
 

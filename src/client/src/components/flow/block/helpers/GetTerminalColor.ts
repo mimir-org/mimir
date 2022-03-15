@@ -4,8 +4,8 @@ import { Connector } from "../../../../models";
 
 const GetTerminalColor = (conn: Connector) => {
   if (conn?.color) return conn.color;
-  if (IsProductTerminal(conn)) return Color.PRODUCT_SELECTED;
-  if (IsLocationTerminal(conn)) return Color.LOCATION_SELECTED;
+  if (IsProductTerminal(conn)) return Color.VIRIDIAN_GREEN;
+  if (IsLocationTerminal(conn)) return Color.PURPLE_MUNSELL;
   return Color.BLACK;
 };
 

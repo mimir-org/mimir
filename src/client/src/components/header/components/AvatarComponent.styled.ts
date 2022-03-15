@@ -36,7 +36,7 @@ export const AvatarCircle = styled.div`
 export const AvatarInitials = styled.p`
   position: absolute;
   margin: 0;
-  color: ${Color.TEXT_AVATAR};
+  color: ${Color.BLACK_ROCK};
   font-size: ${FontSize.STANDARD};
   font-weight: ${FontWeight.NORMAL};
 `;

@@ -21,7 +21,12 @@ interface Props {
  */
 export const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
   <TerminalsElementBox key={conn.id}>
-    <Checkbox isChecked={IsConnectorVisible(conn)} onChange={() => onClick(conn, isInput)} color={Color.GREY_DARK} id={conn.id} />
+    <Checkbox
+      isChecked={IsConnectorVisible(conn)}
+      onChange={() => onClick(conn, isInput)}
+      color={Color.LIGHT_SILVER}
+      id={conn.id}
+    />
     {IsBidirectionalTerminal(conn) ? (
       <BidirectionalBox>
         <BidirectionalIcon fill={GetTerminalColor(conn)} className="icon" />

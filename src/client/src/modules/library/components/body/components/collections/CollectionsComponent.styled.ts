@@ -28,7 +28,7 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
       background: transparent;
       min-width: 200px;
       height: 34px;
-      border: 1.5px solid ${Color.BLUE_MAGENTA};
+      border: 1.5px solid ${Color.BASTILLE};
       border-radius: 5px;
 
       .button-text {
