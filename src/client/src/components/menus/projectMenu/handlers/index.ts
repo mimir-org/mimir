@@ -1,6 +1,6 @@
 export { OnOpenClick } from "./OnOpenClick";
 export { OnCreateClick } from "./OnCreateClick";
-export { OnSaveClick } from "./OnSaveClick";
+export { OnSaveProjectClick } from "./OnSaveProjectClick";
 export { OnSaveFile } from "./OnSaveFile";
 export { OnImportProjectFile } from "./OnImportProjectFile";
 export { OnSaveLibraryFile } from "./OnSaveLibraryFile";

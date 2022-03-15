@@ -35,7 +35,7 @@ interface OnDropParameters {
 /**
  * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas in BlockView.
  * A partOf Edge is created from the dropped Node to its parent.
- * The parent is the selectedBlockNode or the secondaryParentNode.
+ * The parent is the selectedNode or the secondaryParentNode.
  * @param params
  */
 const useOnDrop = (params: OnDropParameters) => {
@@ -70,6 +70,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, secondaryNode, f
 };
 
 /**
+ * Function to define the dropzone for a SecondaryNode.
  * A Node will have the SecondaryNode as parent if dropped over its area.
  * @param transform
  * @returns an X position where the SecondaryNode is placed.
@@ -79,6 +80,14 @@ function CalculateSecondaryNodeDropZone(transform: FlowTransform) {
   return transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled;
 }
 
+/**
+ * Function to determine which parentNode in SplitView that will the parent of a dropped Node.
+ * @param selectedNode
+ * @param secondaryNode
+ * @param dropZone
+ * @param clientX
+ * @returns a Node.
+ */
 function FindParent(selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
   return clientX < dropZone ? selectedNode : secondaryNode;
 }
@@ -91,7 +100,7 @@ const handleCreatePartOfEdge = (
   dispatch: Dispatch
 ) => {
   targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
+  const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
   const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
   const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
@@ -126,14 +135,15 @@ const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-function setInitConnectorVisibility(connector: Connector, targetNode: Node) {
-  const isLocationConnector = IsLocation(targetNode) && IsLocationTerminal(connector);
-  const isProductConnector = IsProduct(targetNode) && IsProductTerminal(connector);
+function setInitConnectorVisibility(conn: Connector, targetNode: Node) {
+  const isLocationConn = IsLocation(targetNode) && IsLocationTerminal(conn);
+  const isProductConn = IsProduct(targetNode) && IsProductTerminal(conn);
 
-  if (isLocationConnector || isProductConnector) {
-    if (IsInputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.InputVisible;
-    if (IsOutputTerminal(connector)) connector.connectorVisibility = ConnectorVisibility.OutputVisible;
-  } else connector.connectorVisibility = ConnectorVisibility.None;
+  // Location and Product terminals are visible by default.
+  if (isLocationConn || isProductConn) {
+    if (IsInputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.InputVisible;
+    if (IsOutputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.OutputVisible;
+  } else conn.connectorVisibility = ConnectorVisibility.None;
 }
 
 export default useOnDrop;
