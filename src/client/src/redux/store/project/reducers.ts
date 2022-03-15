@@ -586,6 +586,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ),
         },
       };
+
     case Types.EXPORT_PROJECT_TO_FILE:
       return {
         ...state,

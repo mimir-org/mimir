@@ -1,3 +1,4 @@
+import * as selectors from "./helpers/selectors";
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir";
@@ -10,25 +11,19 @@ import { TextResources } from "../../../../../../assets/text";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
-import {
-  commonStateParsersSelector,
-  isActiveMenuSelector,
-  projectSelector,
-  useAppDispatch,
-  useAppSelector,
-  useParametricAppSelector,
-} from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../../redux/store";
 
 export const ExportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector(projectSelector);
-  const parsers = useAppSelector(commonStateParsersSelector);
+  const project = useAppSelector(selectors.projectSelector);
+  const parsers = useAppSelector(selectors.commonStateParsersSelector);
   const [parser, setParser] = useState(parsers?.[0]);
   const [fileName, setFileName] = useState("");
-  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
+  const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.SAVE_PROJECT_FILE_MENU);
+  const isActionDisabled = !(fileName && parser);
+
   const onExit = () => OnReturnClick(dispatch);
   const onAction = () => OnExportProjectFileClick(dispatch, project, fileName, parser.id);
-  const isActionDisabled = !(fileName && parser);
 
   useEffect(() => setParser(parsers?.[0]), [parsers]);
 
