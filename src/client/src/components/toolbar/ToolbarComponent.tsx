@@ -33,14 +33,6 @@ const ToolbarComponent = () => {
   return (
     <ToolBarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
       <ToolBarBody>
-        {!isTreeView && (
-          <ToolbarElement
-            label={TextResources.Toolbar_FitScreen}
-            icon={Icons.FitScreenIcon}
-            onClick={() => onResetZoom()}
-            isLeft
-          />
-        )}
         <ToolbarElement
           active={isTreeView}
           label={TextResources.Toolbar_TreeView}
@@ -54,22 +46,33 @@ const ToolbarComponent = () => {
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
           onClick={() => OnViewClick(VIEW_TYPE.BLOCKVIEW as ViewType, numberOfSelectedElements, dispatch)}
           borderLeft
-          borderRight
         />
-        {!isTreeView && (
-          <ToolbarElement
-            label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
-            icon={isElectro ? Icons.Vertical : Icons.Horizontal}
-            onClick={() => OnElectroClick(dispatch)}
-            borderRight
-          />
-        )}
         <ToolbarElement
           active={IsVisualFilterOpen}
           label={IsVisualFilterOpen ? TextResources.Toolbar_VisualFilters_Close : TextResources.Toolbar_VisualFilters_Open}
           icon={IsVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
           onClick={() => OnFilterClick(dispatch, IsVisualFilterOpen)}
+          borderLeft
         />
+        {!isTreeView && (
+          <>
+            <ToolbarElement
+              label={TextResources.Toolbar_FitScreen}
+              icon={Icons.FitScreenIcon}
+              onClick={() => onResetZoom()}
+              isLeftMenu
+              borderRight
+            />
+            <ToolbarElement
+              label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
+              icon={isElectro ? Icons.Vertical : Icons.Horizontal}
+              onClick={() => OnElectroClick(dispatch)}
+              isLeftMenu
+              leftMargin={60}
+              borderRight
+            />
+          </>
+        )}
       </ToolBarBody>
     </ToolBarBox>
   );

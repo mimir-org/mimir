@@ -5,12 +5,13 @@ interface ToolElementBoxProps {
   active: boolean;
   borderLeft: boolean;
   borderRight: boolean;
-  isLeft: boolean;
+  isLeftMenu: boolean;
+  leftMargin: number;
 }
 
 export const ToolElementBox = styled.div<ToolElementBoxProps>`
-  position: ${(props) => props.isLeft && "absolute"};
-  left: 0;
+  position: ${(props) => props.isLeftMenu && "absolute"};
+  left: ${(props) => props.leftMargin}px;
   display: flex;
   justify-content: center;
   align-items: center;
