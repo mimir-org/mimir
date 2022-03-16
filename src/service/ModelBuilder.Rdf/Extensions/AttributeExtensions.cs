@@ -3,7 +3,6 @@ using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
-using Mb.TypeEditor.Services.Contracts;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;

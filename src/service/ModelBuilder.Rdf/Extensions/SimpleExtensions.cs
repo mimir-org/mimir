@@ -1,7 +1,6 @@
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.TypeEditor.Services.Contracts;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 
