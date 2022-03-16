@@ -20,7 +20,7 @@ const LegendHeader = styled.button<Props>`
   font: inherit;
   cursor: inherit;
 
-  border-top: 1px solid ${Color.GREY};
+  border-top: 1px solid ${Color.GAINSBORO};
 `;
 
 export default LegendHeader;

@@ -14,7 +14,7 @@ export const CollectionComponentButton = styled.button<CollectionComponentButton
   width: calc(100% - 20px);
   height: 32px;
   border: 1px;
-  border-color: ${(props) => (props.active ? Color.BLUE_MAGENTA : Color.GREY_LIBRARY_COLLECTION_BORDER)};
+  border-color: ${(props) => (props.active ? Color.BASTILLE : Color.SILVER)};
   border-style: solid;
   border-radius: 5px;
   background-color: ${Color.WHITE};

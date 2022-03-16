@@ -8,7 +8,7 @@ const LocationSubType = styled.div`
   align-items: center;
   border-width: 1px 0px 0px 0px;
   border-style: solid;
-  border-color: ${Color.GREY};
+  border-color: ${Color.GAINSBORO};
   font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};
@@ -21,7 +21,7 @@ const LocationSubType = styled.div`
   }
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     p {
       text-decoration: underline;
     }

@@ -82,7 +82,7 @@ export const Parameter = ({ attribute, combination, headerColor, bodyColor, onLo
           valueProp="value"
           onChange={(_unit: EnumBase) => onChange(attribute.id, value, _unit.id)}
           borderRadius={2}
-          borderColor={Color.GREY_INACTIVE}
+          borderColor={Color.BATTLESHIP_GREY}
           fontSize={FontSize.SMALL}
           height={22}
           listTop={27}

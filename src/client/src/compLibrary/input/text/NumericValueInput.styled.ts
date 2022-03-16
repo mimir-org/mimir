@@ -9,7 +9,7 @@ export const NumericValueInputStyled = styled.div`
     max-height: 20px;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid ${Color.BLUE_MAGENTA};
+    border: 1px solid ${Color.BASTILLE};
   }
   textarea:focus,
   input:focus {

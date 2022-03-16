@@ -44,10 +44,10 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   }
 
   &:nth-of-type(odd) {
-    background: ${Color.PURPLE_LIGHT};
+    background: ${Color.LAVANDER_WEB_LIST};
   }
 
   &:hover {
-    background: ${Color.BLUE_LIGHT};
+    background: ${Color.LAVANDER_WEB_HOVER};
   }
 `;

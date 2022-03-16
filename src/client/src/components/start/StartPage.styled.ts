@@ -8,7 +8,7 @@ export const StartPageBackground = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: ${Color.BLUE_DARK};
+  background-color: ${Color.MIDNIGHT_EXPRESS};
 `;
 
 const slideUp = keyframes`

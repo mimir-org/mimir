@@ -12,7 +12,7 @@ export const ToolBarBox = styled.div<ToolBarBoxProps>`
   color: ${Color.BLACK};
   height: 40px;
   width: auto;
-  border-bottom: 1px solid ${Color.GREY};
+  border-bottom: 1px solid ${Color.GAINSBORO};
   position: absolute;
   top: ${Size.TOPMENU_HEIGHT}px;
   display: inline;

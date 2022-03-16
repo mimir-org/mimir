@@ -61,7 +61,7 @@ export const DropdownMenuListItem = styled.div`
   align-items: center;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: ${Color.GREY_DARK};
+  border-color: ${Color.LIGHT_SILVER};
   font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};
@@ -79,7 +79,7 @@ export const DropdownMenuListItem = styled.div`
   }
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     p {
       text-decoration: underline;
     }

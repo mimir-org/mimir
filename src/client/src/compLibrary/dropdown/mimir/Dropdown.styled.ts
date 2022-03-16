@@ -92,7 +92,7 @@ export const DropdownListItem = styled.div<DropdownListItemProps>`
   align-items: center;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: ${Color.GREY_DARK};
+  border-color: ${Color.LIGHT_SILVER};
   font-size: ${(props) => props.fontSize};
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};
@@ -112,7 +112,7 @@ export const DropdownListItem = styled.div<DropdownListItemProps>`
   }
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
 
     p {
       text-decoration: underline;

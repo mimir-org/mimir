@@ -9,7 +9,7 @@ export const ProjectMenuBox = styled.div`
   height: auto;
   width: 250px;
   border-style: solid;
-  border-color: ${Color.BLUE_MAGENTA};
+  border-color: ${Color.BASTILLE};
   border-width: 0 1px 1px 1px;
   border-radius: 0 0 10px 10px;
   z-index: 6;

@@ -48,7 +48,7 @@ export const BlockParentComponent = ({
       />
       <Background
         variant={isLocation ? BackgroundVariant.Lines : BackgroundVariant.Dots}
-        color={isLocation ? Color.GREY : Color.BLUE_DARK}
+        color={isLocation ? Color.GAINSBORO : Color.MIDNIGHT_EXPRESS}
         gap={isLocation ? 20 : 15}
         style={{ zIndex: 0 }}
       />

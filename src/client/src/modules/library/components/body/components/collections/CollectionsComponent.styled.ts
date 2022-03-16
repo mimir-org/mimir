@@ -36,7 +36,7 @@ export const CollectionsUpdateButtonWrapper = styled.div`
     background: ${Color.WHITE};
     min-width: 140px;
     height: 34px;
-    border: 1.5px solid ${Color.BLUE_MAGENTA};
+    border: 1.5px solid ${Color.BASTILLE};
     border-radius: 5px;
 
     .button-text {

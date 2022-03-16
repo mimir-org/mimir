@@ -8,7 +8,7 @@ const PreviewArea = styled.div`
   align-items: center;
   justify-content: center;
   height: calc(100% - 50px);
-  background: #f7f7f7;
+  background: ${Color.DARK_WHITE_SMOKE};
   border: 1px solid ${Color.BLACK};
   border-radius: 5px;
   overflow: hidden;

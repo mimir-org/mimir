@@ -5,11 +5,11 @@ import { IsFunction, IsLocation, IsProduct } from "../../helpers";
 const GetBlockColor = (aspect: Aspect) => {
   let color = "";
   if (IsFunction(aspect)) {
-    color = Color.FUNCTION_MAIN;
+    color = Color.LEMON_YELLOW;
   } else if (IsLocation(aspect)) {
-    color = Color.LOCATION_MAIN;
+    color = Color.MAGENTA;
   } else if (IsProduct(aspect)) {
-    color = Color.PRODUCT_MAIN;
+    color = Color.ELECTRIC_BLUE;
   }
   return color;
 };
