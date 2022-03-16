@@ -5,7 +5,7 @@ import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { ProjectDetails } from "./components/ProjectDetails";
 import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../assets/text";
-import { MENU_TYPE, VIEW_TYPE } from "../../../../../../models/project";
+import { VIEW_TYPE } from "../../../../../../models/project";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnOpen } from "./handlers";
@@ -19,7 +19,6 @@ export const OpenProjectMenu = () => {
   const dispatch = useAppDispatch();
   const currentProject = useAppSelector(selectors.projectSelector);
   const projectList = useAppSelector(selectors.projectListSelector);
-  const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.OPEN_PROJECT_MENU);
   const isStartPage = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.STARTPAGE);
   const selectedProject = projectList?.find((x) => x.selected);
   const projectId = selectedProject?.id;
@@ -29,7 +28,7 @@ export const OpenProjectMenu = () => {
   const onExit = () => OnReturnShowInstructionClick(dispatch);
 
   return (
-    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+    <Modal isBlurred isOpen onExit={onExit}>
       <InfoModalContent title={TextResources.Project_Open_Label} inset={isStartPage && "120px 0 0 0"}>
         <ProjectDetails projects={projectList} projectDescription={projectDescription} />
         <ButtonBox>

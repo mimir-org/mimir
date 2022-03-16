@@ -6,25 +6,21 @@ import { FontSize } from "../../../../../../compLibrary/font";
 import { GetProjectFileData } from "./helpers/GetProjectFileData";
 import { ImportProjectIcon } from "../../../../../../assets/icons/project";
 import { Label } from "../../../../../../compLibrary/input/text";
-import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../../assets/text";
 import { useFilePicker } from "use-file-picker";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ModuleDescription } from "../../../../../../models";
 import { OnImportProjectFileClick, OnReturnClick } from "./handlers";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
   const parsers = useAppSelector(selectors.commonStateParsersSelector);
   const [parser, setParser] = useState(parsers?.[0]);
-  const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.IMPORT_PROJECT_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
   const hasParser = parser !== null;
-
-  useEffect(() => setParser(parsers?.[0]), [parsers]);
 
   const [openFileSelector, { filesContent, plainFiles, clear }] = useFilePicker({
     multiple: false,
@@ -39,7 +35,7 @@ export const ImportProjectFileMenu = () => {
   const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
-    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+    <Modal isBlurred isOpen onExit={onExit}>
       <InfoModalContent title={TextResources.Project_Import}>
         <Label>{TextResources.Project_Parser}</Label>
         <Dropdown
