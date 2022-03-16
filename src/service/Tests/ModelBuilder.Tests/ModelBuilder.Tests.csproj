@@ -1,15 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\miniproject.jsonld" />
     <None Remove="Data\ProjectA.json" />
     <None Remove="Data\ProjectB.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\miniproject.jsonld">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\ProjectA.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -35,6 +39,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ModelBuilder.Api\ModelBuilder.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Modules\" />
   </ItemGroup>
 
 </Project>

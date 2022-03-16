@@ -59,7 +59,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       <MenuElement
         text={TextResources.Project_Export}
         icon={isNoActiveProject ? Icons.ExportProjectInactiveIcon : Icons.ExportProjectIcon}
-        onClick={() => projectMenuAction(() => Click.OnSaveFile(dispatch))}
+        onClick={() => projectMenuAction(() => Click.OnExportProjectFile(dispatch))}
         disabled={isNoActiveProject}
         bottomLine
       />
