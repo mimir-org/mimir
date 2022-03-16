@@ -1,11 +1,10 @@
-import { memo } from "react";
 import { MENU_TYPE } from "../../../models/project";
 import { activeMenuSelector, useAppSelector } from "../../../redux/store";
 import { CommitProjectMenu } from "./components/subMenus/commitProject/CommitProjectMenu";
 import { CreateProjectMenu } from "./components/subMenus/createProject/CreateProjectMenu";
 import { CreateSubProjectMenu } from "./components/subMenus/createSubProject/CreateSubProjectMenu";
 import { ExportLibraryFileMenu } from "./components/subMenus/exportLibraryFile/ExportLibraryFileMenu";
-import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile";
+import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile/ExportProjectFileMenu";
 import { ImportFileLibraryMenu } from "./components/subMenus/importLibrary/ImportFileLibraryMenu";
 import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
 import { OpenProjectMenu } from "./components/subMenus/openProject/OpenProjectMenu";
@@ -15,7 +14,7 @@ import { OpenProjectMenu } from "./components/subMenus/openProject/OpenProjectMe
  * This component is called from the Home component.
  * @returns all sub-menus.
  */
-const ProjectSubMenus = () => {
+export const ProjectSubMenus = () => {
   const activeMenu = useAppSelector(activeMenuSelector);
   const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;
@@ -39,5 +38,3 @@ const ProjectSubMenus = () => {
     </>
   );
 };
-
-export default memo(ProjectSubMenus);

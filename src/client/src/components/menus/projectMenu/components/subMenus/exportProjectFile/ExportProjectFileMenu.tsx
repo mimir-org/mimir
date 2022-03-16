@@ -8,12 +8,12 @@ import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModuleDescription } from "../../../../../../models";
 import { TextResources } from "../../../../../../assets/text";
-import { ChangeEvent, memo, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../../redux/store";
 
-const ExportProjectFileMenu = () => {
+export const ExportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const parsers = useAppSelector(selectors.commonStateParsersSelector);
@@ -23,8 +23,6 @@ const ExportProjectFileMenu = () => {
   const isActionDisabled = !(fileName && parser);
   const onAction = () => OnExportProjectFileClick(dispatch, project, fileName, parser.id);
   const onExit = () => OnReturnClick(dispatch);
-
-  console.log(parser.name);
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
@@ -57,5 +55,3 @@ const ExportProjectFileMenu = () => {
     </Modal>
   );
 };
-
-export default memo(ExportProjectFileMenu);
