@@ -14,4 +14,4 @@ export { default as Settings } from "./settings.svg";
 export { default as Notifications } from "./notifications.svg";
 export { default as LogoutIcon } from "./logout.svg";
 
-export { default as FitScreenIcon } from "./fullscreen.svg";
+export { default as FitScreenIcon } from "./fitView.svg";
