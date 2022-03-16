@@ -9,7 +9,6 @@ using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
 using Attribute = Mb.Models.Data.Attribute;
 using AttributeDatumObject = ModelBuilder.Rdf.Models.AttributeDatumObject;
-using EnumService = Mb.TypeEditor.Services.Services.EnumService;
 
 namespace ModelBuilder.Rdf.Extensions
 {
@@ -64,13 +63,13 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="libRepository">Library repository</param>
         /// TODO: Library repository should not be here in the future
-        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository, IEnumService enumService)
+        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
         {
             if (string.IsNullOrEmpty(attribute?.Value))
                 return;
 
             var selectedUnit = attribute.GetSelectedUnit(libRepository);
-            attribute.AssertAttributeFormat(ontologyService,libRepository,enumService);
+            attribute.AssertAttributeFormat(ontologyService,libRepository);
             
             ontologyService.AssertNode(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
             ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
@@ -83,20 +82,11 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"eq:{attribute.SelectedUnitId}");
         }
 
-        public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository, IEnumService enumService)
+        public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
         {
-            IEnumerable<EnumBase> formats = enumService.GetAllOfType(EnumType.AttributeFormat);
-            Uri format_iri = new Uri("http://www.w3.org/2001/XMLSchema#string");
-            foreach (EnumBase format in formats)
-            {
-                if (format.Id == attribute.FormatId)
-                {
-                    format_iri = GetAttributeFormatXSD(format.Name);
-                    break;
-                }
-            }
+            AttributeFormat format = libRepository.GetAttributeFormat(attribute.FormatId);
+            Uri format_iri = GetAttributeFormatXSD(format.Name);
             ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, format_iri));
-
         }
 
         public static Uri GetAttributeFormatXSD(string format_name) =>
@@ -107,7 +97,7 @@ namespace ModelBuilder.Rdf.Extensions
                 "Float" => "http://www.w3.org/2001/XMLSchema#float",
                 "String" => "http://www.w3.org/2001/XMLSchema#string",
                 "Boolean" => "http://www.w3.org/2001/XMLSchema#boolean",
-                "Unsigned Integer" => "http://www.w3.org/2001/XMLSchema#unsignedInteger",
+                "Unsigned Integer" => "http://www.w3.org/2001/XMLSchema#unsignedInt",
                 "Unsigned Float" => "http://www.w3.org/2001/XMLSchema#float",
                 "NotSet" => "http://www.w3.org/2001/XMLSchema#string",
                 "Selection" => "http://www.w3.org/2001/XMLSchema#string",

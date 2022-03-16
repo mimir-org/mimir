@@ -5,7 +5,6 @@ using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
-using Mb.TypeEditor.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using ModelBuilder.Rdf.Extensions;
 using ModelBuilder.Rdf.Models;
@@ -22,18 +21,16 @@ namespace ModelBuilder.Rdf.Services
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
         private readonly IMapper _mapper;
-        private readonly IEnumService _enumService;
 
         #region Constructors
 
-        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository, INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository, IEnumService enumService)
+        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository, INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository)
         {
             _ontologyRepository = ontologyRepository;
             _libRepository = libRepository;
             _nodeRepository = nodeRepository;
             _mapper = mapper;
             _edgeRepository = edgeRepository;
-            _enumService = enumService;
         }
 
         #endregion
@@ -366,7 +363,7 @@ namespace ModelBuilder.Rdf.Services
                     foreach (var attribute in node.Attributes)
                     {
                         attribute.AssertAttribute(node.Iri, this);
-                        attribute.AssertAttributeValue(this, _libRepository, _enumService);
+                        attribute.AssertAttributeValue(this, _libRepository);
                     }
                 }
 
@@ -374,7 +371,7 @@ namespace ModelBuilder.Rdf.Services
                 {
                     foreach (var connector in node.Connectors)
                     {
-                        connector.AssertConnector(this, node.Iri, _libRepository, null, DefaultFlowDirection.NotSet, _enumService);
+                        connector.AssertConnector(this, node.Iri, _libRepository, null, DefaultFlowDirection.NotSet);
                     }
                 }
 
@@ -382,7 +379,7 @@ namespace ModelBuilder.Rdf.Services
                 {
                     foreach (var simple in node.Simples)
                     {
-                        simple.AssertSimple(this, node.Iri, _libRepository, _enumService);
+                        simple.AssertSimple(this, node.Iri, _libRepository);
                     }
                 }
             }
@@ -399,14 +396,14 @@ namespace ModelBuilder.Rdf.Services
 
             foreach (var edge in project.Edges)
             {
-                edge.AssertEdge(this, _libRepository, _enumService);
+                edge.AssertEdge(this, _libRepository);
 
                 if (edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
                 {
                     foreach (var attribute in edge.Transport.Attributes)
                     {
                         attribute.AssertAttribute(edge.Transport.Iri, this);
-                        attribute.AssertAttributeValue(this, _libRepository, _enumService);
+                        attribute.AssertAttributeValue(this, _libRepository);
                     }
                 }
 
@@ -415,7 +412,7 @@ namespace ModelBuilder.Rdf.Services
                     foreach (var attribute in edge.Interface.Attributes)
                     {
                         attribute.AssertAttribute(edge.Interface.Iri, this);
-                        attribute.AssertAttributeValue(this, _libRepository, _enumService);
+                        attribute.AssertAttributeValue(this, _libRepository);
                     }
                 }
             }

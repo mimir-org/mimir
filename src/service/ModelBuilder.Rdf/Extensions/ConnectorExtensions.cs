@@ -2,7 +2,6 @@ using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.TypeEditor.Services.Contracts;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
@@ -21,7 +20,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="edge">Connected Mimir edge</param>
         /// <param name="flowDirection">Default flow direction. Used to define the default flow direction when connector is bi-directional</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ILibRepository libRepository, Edge edge, DefaultFlowDirection flowDirection, IEnumService enumService)
+        public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ILibRepository libRepository, Edge edge, DefaultFlowDirection flowDirection)
         {
             ontologyService.AssertNode(connector.Iri, Resources.Domain, connector.Domain, true);
             switch (connector)
@@ -83,7 +82,7 @@ namespace ModelBuilder.Rdf.Extensions
                         foreach (var attribute in terminal.Attributes)
                         {
                             attribute.AssertAttribute(terminal.Iri, ontologyService);
-                            attribute.AssertAttributeValue(ontologyService, libRepository, enumService);
+                            attribute.AssertAttributeValue(ontologyService, libRepository);
                         }
                     }
                     break;
