@@ -13,7 +13,7 @@ import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "
 export const ExportLibraryFileMenu = () => {
   const dispatch = useAppDispatch();
   const [fileName, setFileName] = useState("");
-  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.SAVE_LIBRARY_FILE_MENU);
+  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.EXPORT_LIBRARY_FILE_MENU);
   const onExit = () => OnReturnClick(dispatch);
   const onAction = () => OnExportLibraryClick(dispatch, fileName);
   const isActionDisabled = !fileName;
