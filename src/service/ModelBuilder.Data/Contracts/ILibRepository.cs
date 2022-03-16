@@ -6,7 +6,7 @@ namespace Mb.Data.Contracts
     public interface ILibRepository
     {
         IEnumerable<Unit> GetUnits();
-        AttributeFormat GetAttributeFormat(string formatId);
+        T GetEnumById<T>(string id) where T : EnumBase;
         void Untrack();
     }
 }

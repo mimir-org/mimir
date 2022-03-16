@@ -83,7 +83,7 @@ namespace ModelBuilder.Rdf.Extensions
 
         public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
         {
-            AttributeFormat format = libRepository.GetAttributeFormat(attribute.FormatId);
+            AttributeFormat format = libRepository.GetEnumById<AttributeFormat>(attribute.FormatId);
             Uri format_iri = GetAttributeFormatXSD(format.Name);
             ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, format_iri));
         }

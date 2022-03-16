@@ -20,19 +20,18 @@ namespace Mb.Data.Repositories
             _enumBaseRepository = enumBaseRepository;
         }
 
-        public AttributeFormat GetAttributeFormat(string formatId)
+        public T GetEnumById<T>(string id) where T : EnumBase
         {
-            var result = _enumBaseRepository.FindBy(f => f.Id == formatId);
-            var first = result.First();
+            var result = _enumBaseRepository.FindBy(f => f.Id == id);
+            EnumBase first = result.First();
             if (first == null)
-                throw new ModelBuilderConfigurationException($"Could not find format id enum with id {formatId}");
-            if (first is AttributeFormat af)
-                return af;
-            else
-                throw new ModelBuilderConfigurationException($"The enum {first.Name} with id {formatId} did not have type AttributeFormat as expected");
+                throw new ModelBuilderConfigurationException($"Could not find format id enum with id {id}");
+            if (first is T value)
+                return value;
+            else 
+              throw new ModelBuilderConfigurationException($"The enum {first.Name} with id {id} did not have expected type");
             
         }
-
 
         public IEnumerable<Unit> GetUnits()
         {
