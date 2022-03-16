@@ -24,6 +24,8 @@ const ExportProjectFileMenu = () => {
   const onAction = () => OnExportProjectFileClick(dispatch, project, fileName, parser.id);
   const onExit = () => OnReturnClick(dispatch);
 
+  console.log(parser.name);
+
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
       <InfoModalContent title={TextResources.Project_Export}>

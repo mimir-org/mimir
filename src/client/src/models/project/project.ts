@@ -35,7 +35,7 @@ export const MENU_TYPE = {
   EXPORT_PROJECT_FILE_MENU: "ExportProjectFile",
   IMPORT_LIBRARY_FILE_MENU: "ImportLibraryFile",
   EXPORT_LIBRARY_FILE_MENU: "ExportLibraryFile",
-  COMMIT_PROJECT: "CommitProject",
+  COMMIT_PROJECT_MENU: "CommitProjectMenu",
   CREATE_SUB_PROJECT_MENU: "CreateSubProjectMenu",
   INSTRUCTION_PROJECT_MENU: "InstructionProjectMenu",
   VISUAL_FILTER_MENU: "VisualFilter",

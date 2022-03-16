@@ -21,7 +21,7 @@ export const CommitProjectMenu = () => {
   const collaborationPartners = useAppSelector(selectors.commonStateCollaborationPartnersSelector);
   const [parser, setParser] = useState(parsers[0]);
   const [collaborationPartner, setCollaborationPartner] = useState(collaborationPartners[0]);
-  const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.COMMIT_PROJECT) && !isSubProject;
+  const isOpen = useParametricAppSelector(selectors.isActiveMenuSelector, MENU_TYPE.COMMIT_PROJECT_MENU) && !isSubProject;
   const isActionDisabled = !(collaborationPartner && parser && projectId);
   const onAction = () => OnCommitProjectClick(dispatch, projectId, parser.id, collaborationPartner.domain);
   const onExit = () => OnReturnClick(dispatch);

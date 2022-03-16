@@ -19,19 +19,19 @@ const ProjectSubMenus = () => {
   const activeMenu = useAppSelector(activeMenuSelector);
   const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;
-  const isExportMenuOpen = activeMenu === MENU_TYPE.EXPORT_PROJECT_FILE_MENU;
-  const isImportMenuOpen = activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU;
-  const isExportLibraryFileMenuOpen = activeMenu === MENU_TYPE.EXPORT_LIBRARY_FILE_MENU;
+  const isImportProjectFileMenuOpen = activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU;
+  const isExportProjectFileMenuOpen = activeMenu === MENU_TYPE.EXPORT_PROJECT_FILE_MENU;
   const isImportLibraryFileMenuOpen = activeMenu === MENU_TYPE.IMPORT_LIBRARY_FILE_MENU;
-  const isCommitProjectMenuOpen = activeMenu === MENU_TYPE.COMMIT_PROJECT;
+  const isExportLibraryFileMenuOpen = activeMenu === MENU_TYPE.EXPORT_LIBRARY_FILE_MENU;
+  const isCommitProjectMenuOpen = activeMenu === MENU_TYPE.COMMIT_PROJECT_MENU;
   const isCreateSubProjectMenu = activeMenu === MENU_TYPE.CREATE_SUB_PROJECT_MENU;
 
   return (
     <>
       {isOpenProjectMenuOpen && <OpenProjectMenu />}
       {isCreateProjectMenuOpen && <CreateProjectMenu />}
-      {isExportMenuOpen && <ExportProjectFileMenu />}
-      {isImportMenuOpen && <ImportProjectFileMenu />}
+      {isImportProjectFileMenuOpen && <ImportProjectFileMenu />}
+      {isExportProjectFileMenuOpen && <ExportProjectFileMenu />}
       {isImportLibraryFileMenuOpen && <ImportFileLibraryMenu />}
       {isExportLibraryFileMenuOpen && <ExportLibraryFileMenu />}
       {isCommitProjectMenuOpen && <CommitProjectMenu />}
