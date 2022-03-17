@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
+import { useOnConnect, useOnDropTree, useOnRemove } from "../hooks";
 import { BuildTreeElements } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
@@ -70,7 +70,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnDrop({
+    return useOnDropTree({
       event,
       project,
       user: userState.user,
