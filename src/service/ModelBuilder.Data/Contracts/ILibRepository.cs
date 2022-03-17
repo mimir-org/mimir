@@ -5,8 +5,8 @@ namespace Mb.Data.Contracts
 {
     public interface ILibRepository
     {
-        T GetObjectById<T>(string id) where T : EnumBase;
-        IEnumerable<T> GetObject<T>() where T : EnumBase;
+        IEnumerable<Unit> GetUnits();
+        IEnumerable<AttributeFormat> GetAttributeFormats();
         void Untrack();
     }
 }

@@ -15,15 +15,14 @@ namespace Mb.Data.Repositories
             _enumBaseRepository = enumBaseRepository;
         }
 
-        public T GetObjectById<T>(string id) where T : EnumBase
+        public IEnumerable<Unit> GetUnits()
         {
-            return _enumBaseRepository.GetAll().OfType<T>().FirstOrDefault(x => x.Id == id);
-
+            return _enumBaseRepository.GetAll().OfType<Unit>().ToList();
         }
 
-        public IEnumerable<T> GetObject<T>() where T : EnumBase
+        public IEnumerable<AttributeFormat> GetAttributeFormats()
         {
-            return _enumBaseRepository.GetAll().OfType<T>().ToList();
+            return _enumBaseRepository.GetAll().OfType<AttributeFormat>().ToList();
         }
 
         public void Untrack()

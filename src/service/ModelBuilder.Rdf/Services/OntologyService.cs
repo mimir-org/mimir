@@ -320,8 +320,8 @@ namespace ModelBuilder.Rdf.Services
         {
             var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
             var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).Where(x => x.ProjectIri == projectIri).ToList();
-            var units = _libRepository.GetObject<Unit>().ToList();
-            var attributeFormats = _libRepository.GetObject<AttributeFormat>().ToList();
+            var units = _libRepository.GetUnits().ToList();
+            var attributeFormats = _libRepository.GetAttributeFormats().ToList();
 
             var projectData = new ProjectData
             {
