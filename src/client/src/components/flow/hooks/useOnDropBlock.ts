@@ -38,7 +38,7 @@ interface OnDropParameters {
  * The parent is the selectedNode or the secondaryParentNode.
  * @param params
  */
-const useOnDrop = (params: OnDropParameters) => {
+const useOnDropBlock = (params: OnDropParameters) => {
   const { event } = params;
 
   event.stopPropagation();
@@ -146,4 +146,4 @@ function setInitConnectorVisibility(conn: Connector, targetNode: Node) {
   } else conn.connectorVisibility = ConnectorVisibility.None;
 }
 
-export default useOnDrop;
+export default useOnDropBlock;
