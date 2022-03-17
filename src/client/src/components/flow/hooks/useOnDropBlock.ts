@@ -53,13 +53,17 @@ const handleNodeDrop = ({ event, project, user, icons, library, secondaryNode, f
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   let parentNode = GetSelectedNode();
 
-  if (secondaryNode) {
-    const dropZone = CalculateSecondaryNodeDropZone(flowTransform);
-    parentNode = FindParent(parentNode, secondaryNode, dropZone, event.clientX);
-  }
-
   const position = { x: event.clientX, y: event.clientY };
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
+
+  if (!secondaryNode && !IsFamily(parentNode, targetNode)) return;
+
+  // Handle drop in SplitView
+  if (secondaryNode) {
+    const dropZone = CalculateSecondaryNodeDropZone(flowTransform);
+    parentNode = FindParent(targetNode, parentNode, secondaryNode, dropZone, event.clientX);
+    if (!parentNode) return;
+  }
 
   targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
   targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
@@ -82,13 +86,17 @@ function CalculateSecondaryNodeDropZone(transform: FlowTransform) {
 
 /**
  * Function to determine which parentNode in SplitView that will the parent of a dropped Node.
+ * @param targetNode
  * @param selectedNode
  * @param secondaryNode
  * @param dropZone
  * @param clientX
  * @returns a Node.
  */
-function FindParent(selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
+function FindParent(targetNode: Node, selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
+  if (!IsFamily(targetNode, selectedNode) && !IsFamily(targetNode, secondaryNode)) return null;
+  if (!IsFamily(targetNode, selectedNode)) return secondaryNode;
+  if (!IsFamily(targetNode, secondaryNode)) return selectedNode;
   return clientX < dropZone ? selectedNode : secondaryNode;
 }
 
