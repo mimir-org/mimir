@@ -2,7 +2,6 @@
 import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
 import { BuildBlockElements } from "./builders";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -10,11 +9,9 @@ import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size";
-import { GetSelectedNode, IsLocation } from "../../../helpers";
-import { LocationModule } from "../../../modules/location";
+import { GetSelectedNode } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
-import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
 import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
 import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
@@ -40,7 +37,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const userState = useAppSelector(selectors.userStateSelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const showLocation3D = useAppSelector(selectors.location3DSelector);
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
@@ -153,17 +149,13 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           deleteKeyCode={"Delete"}
           zoomOnDoubleClick={false}
           defaultZoom={defaultZoom}
-          minZoom={0.4}
+          minZoom={0.2}
           maxZoom={3}
           zoomOnScroll
           paneMoveable
-        >
-          <FullScreenComponent inspectorRef={inspectorRef} />
-        </ReactFlow>
-
+        ></ReactFlow>
         {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
       </div>
-      <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />
     </>
   );
 };
