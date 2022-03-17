@@ -1,7 +1,6 @@
 import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CreateProjectIcon } from "../../../../../../assets/icons/project";
-import { MENU_TYPE } from "../../../../../../models/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../../assets/text/TextResources";
@@ -9,18 +8,17 @@ import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnProjectCreateClick } from "./handlers";
-import { isActiveMenuSelector, useAppDispatch, useParametricAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch } from "../../../../../../redux/store";
 
 export const CreateProjectMenu = () => {
   const dispatch = useAppDispatch();
-  const isOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.CREATE_PROJECT_MENU);
   const [projectName, setProjectName] = useState("");
-  const onExit = () => OnReturnShowInstructionClick(dispatch);
-  const onAction = () => OnProjectCreateClick(dispatch, projectName);
   const isActionDisabled = !projectName;
+  const onAction = () => OnProjectCreateClick(dispatch, projectName);
+  const onExit = () => OnReturnShowInstructionClick(dispatch);
 
   return (
-    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
+    <Modal isBlurred isOpen onExit={onExit}>
       <InfoModalContent title={TextResources.PROJECT_CREATE}>
         <Label>{TextResources.PROJECT_NAME}</Label>
         <Input

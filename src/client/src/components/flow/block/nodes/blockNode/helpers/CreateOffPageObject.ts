@@ -22,6 +22,7 @@ export interface OffPageData {
   sourceNode: Node;
   sourceConnector: Connector;
   position: Position;
+  splitView: boolean;
 }
 
 /**
@@ -34,7 +35,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
-  const marginY = 80;
+  const marginY = data.splitView ? 0 : 80;
 
   const offPageNode = {
     id: CreateId(),

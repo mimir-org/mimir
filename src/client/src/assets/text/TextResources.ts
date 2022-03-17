@@ -45,6 +45,7 @@ export const TextResources = {
   TOOLBAR_ELECTRO_OFF: "Toggle electromode off",
   TOOLBAR_VISUALFILTERS_OPEN: "Open visual filters",
   TOOLBAR_VISUALFILTERS_CLOSE: "Close visual filters",
+  TOOLBAR_FITSCREEN: "Fit to screen",
 
   // InspectorModule
   INSPECTOR_ADMININFO: "Admin",

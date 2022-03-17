@@ -8,6 +8,9 @@ interface ToolBarBoxProps {
 }
 
 export const ToolBarBox = styled.div<ToolBarBoxProps>`
+  display: flex;
+  justify-content: space-between;
+
   background-color: ${Color.WHITE};
   color: ${Color.BLACK};
   height: 40px;
@@ -15,7 +18,6 @@ export const ToolBarBox = styled.div<ToolBarBoxProps>`
   border-bottom: 1px solid ${Color.GAINSBORO};
   position: absolute;
   top: ${Size.TOPMENU_HEIGHT}px;
-  display: inline;
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
   z-index: 5;
 
@@ -23,10 +25,7 @@ export const ToolBarBox = styled.div<ToolBarBoxProps>`
   left: ${(props) => (props.explorerOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
 `;
 
-export const ToolBarBody = styled.div`
+export const ToolbarButtonGroup = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  width: auto;
-  height: 40px;
 `;

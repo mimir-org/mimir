@@ -15,8 +15,8 @@ export const Size = {
   SPLITVIEW_DIVISOR: 1.6,
 
   // Zoom
-  DEFAULT_ZOOM: 1,
-  SPLITVIEW_ZOOM: 0.7,
+  ZOOM_DEFAULT: 1,
+  ZOOM_SPLITVIEW: 0.7,
 
   // Modules
   MODULE_OPEN: 400,

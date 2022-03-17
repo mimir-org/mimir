@@ -33,11 +33,12 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const electro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
   const isElectro = useAppSelector(selectors.electroSelector);
+  const splitView = secondaryNode !== null;
 
   // Check for elements that require OffPage nodes
   useEffect(() => {
-    HandleConnectedOffPageNode(node, edges, size, dispatch);
-    HandleRequiredOffPageNode(node, edges, size, dispatch);
+    HandleConnectedOffPageNode(node, edges, size, splitView, dispatch);
+    HandleRequiredOffPageNode(node, edges, size, splitView, dispatch);
   }, [secondaryNode]);
 
   useEffect(() => {

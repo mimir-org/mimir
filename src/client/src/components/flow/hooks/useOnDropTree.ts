@@ -1,10 +1,9 @@
 import { addNode, createEdge } from "../../../redux/store/project/actions";
 import { ConvertToEdge, ConvertToNode } from "../converters";
 import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsAspectNode, IsBlockView, IsFamily, IsLocation, IsProduct } from "../../../helpers";
+import { GetSelectedNode, IsAspectNode, IsFamily, IsLocation, IsProduct } from "../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
-import { Position } from "../../../models/project";
 import {
   Attribute,
   BlobData,
@@ -45,12 +44,12 @@ interface OnDropParameters {
 }
 
 /**
- * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas.
+ * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas in TreeView.
  * A partOf Edge is created from the dropped Node to its parent.
  * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
  * @param params
  */
-const useOnDrop = (params: OnDropParameters) => {
+const useOnDropTree = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
 
   event.stopPropagation();
@@ -60,10 +59,9 @@ const useOnDrop = (params: OnDropParameters) => {
 
   const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
-  const isBlockView = IsBlockView();
 
-  if (isSubProject && !isBlockView) handleSubProjectDrop(event, project, dispatch);
-  else if (!isSubProject) handleNodeDrop(params, sourceNode);
+  if (isSubProject) handleSubProjectDrop(event, project, dispatch);
+  else handleNodeDrop(params, sourceNode);
 };
 
 const handleSubProjectDrop = (event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) => {
@@ -83,11 +81,8 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
   const parentNode = getParentNode(sourceNode, project, data);
 
   // TODO: fix when implementing auto-position
-  const treeMarginY = 220;
-  const blockMarginY = 120;
-  const position: Position = IsBlockView
-    ? { x: event.clientX, y: event.clientY - blockMarginY }
-    : { x: parentNode.positionX, y: parentNode.positionY + treeMarginY };
+  const marginY = 220;
+  const position = { x: parentNode.positionX, y: parentNode.positionY + marginY };
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
@@ -157,4 +152,4 @@ const setInitConnectorVisibility = (conn: Connector, targetNode: Node) => {
   } else conn.connectorVisibility = ConnectorVisibility.None;
 };
 
-export default useOnDrop;
+export default useOnDropTree;
