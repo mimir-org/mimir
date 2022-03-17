@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using VDS.RDF;
 using VDS.RDF.JsonLd;
 
-namespace JsonLdParserModule
+namespace JsonLdParser
 {
 
     public class ImfJsonLdWriter : IRdfWriter

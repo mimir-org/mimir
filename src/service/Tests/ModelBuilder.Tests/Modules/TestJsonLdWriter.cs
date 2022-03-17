@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
-using JsonLdParserModule;
+using JsonLdParser;
 using VDS.RDF;
-using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
 using Xunit;
 
@@ -14,20 +13,22 @@ public class TestJsonLdWriter
     public void TestWrite()
     {
         var reader = new StreamReader("Data/miniproject.jsonld");
-        JsonLdParser parser = new JsonLdParser();
-        TripleStore store = new TripleStore();
+        var parser = new VDS.RDF.Parsing.JsonLdParser();
+        var store = new TripleStore();
+
         parser.Load(store, reader);
+
         if (store.Graphs.Count != 1)
-        {
             throw new Exception("Input JSON contained more than one graph, this is an error");
-        }
+
         var g1 = store.Graphs.First();
         Assert.NotNull(g1);
         var writer = new ImfJsonLdWriter();
-        var jsonldString = VDS.RDF.Writing.StringWriter.Write(g1, writer);
-        using (var filewriter = new StreamWriter("Data/pumpout.jsonld"))
+        var jsonLdString = VDS.RDF.Writing.StringWriter.Write(g1, writer);
+        
+        using (var streamWriter = new StreamWriter("Data/pumpout.jsonld"))
         {
-            filewriter.Write(jsonldString);
+            streamWriter.Write(jsonLdString);
         }
 
     }
@@ -36,37 +37,38 @@ public class TestJsonLdWriter
     public void TestRead()
     {
         var reader = new StreamReader("Data/miniproject.jsonld");
-        JsonLdParser parser = new JsonLdParser();
-        TripleStore store = new TripleStore();
+        var parser = new VDS.RDF.Parsing.JsonLdParser();
+        var store = new TripleStore();
+        
         parser.Load(store, reader);
-        if (store.Graphs.Count != 1)
-        {
-            throw new Exception("Input JSON contained more than one graph, this is an error");
-        }
-        var g1 = store.Graphs.First();
 
+        if (store.Graphs.Count != 1)
+            throw new Exception("Input JSON contained more than one graph, this is an error");
+        
+        var g1 = store.Graphs.First();
         Assert.NotNull(g1);
-        var nwriter = new NTriplesWriter();
-        nwriter.Save(g1, "Data/pumpout.nt");
+        var nWriter = new NTriplesWriter();
+        nWriter.Save(g1, "Data/pumpout.nt");
     }
 
 
     [Fact]
     public void TestGetFsBs()
     {
-        TextReader reader = new StreamReader("Data/miniproject.jsonld");
-        var parser = new JsonLdParser();
+        var reader = new StreamReader("Data/miniproject.jsonld");
+        var parser = new VDS.RDF.Parsing.JsonLdParser();
         var store = new TripleStore();
+
         parser.Load(store, reader);
+
         Assert.Equal(1, store.Graphs.Count);
         var mel = store.Graphs.First();
         Assert.NotNull(mel);
 
         var type = mel.CreateUriNode("rdf:type");
         var fsb = mel.CreateUriNode(new Uri("http://example.com/imf¤FunctionalSystemBlock"));
-        var topnodes = mel.GetTriplesWithPredicateObject(type, fsb).Select(t => t.Subject).ToList();
+        var topNodes = mel.GetTriplesWithPredicateObject(type, fsb).Select(t => t.Subject).ToList();
         var wrongNode = mel.GetUriNode(new Uri("https://rdf.equinor.com/ID043f6dba-0d0e-48c6-a439-a42f228d80bb"));
-        Assert.DoesNotContain(wrongNode, topnodes);
-
+        Assert.DoesNotContain(wrongNode, topNodes);
     }
 }

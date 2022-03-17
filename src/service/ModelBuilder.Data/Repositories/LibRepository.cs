@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Mb.Data.Contracts;
 using Mb.Models.Data.Enums;
-using Mb.Models.Enums;
-using Mb.Models.Exceptions;
-using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
 
 namespace Mb.Data.Repositories
@@ -20,26 +15,15 @@ namespace Mb.Data.Repositories
             _enumBaseRepository = enumBaseRepository;
         }
 
-        public T GetEnumById<T>(string id) where T : EnumBase
+        public T GetObjectById<T>(string id) where T : EnumBase
         {
-            var result = _enumBaseRepository.FindBy(f => f.Id == id);
-            EnumBase first = result.First();
-            if (first == null)
-                throw new ModelBuilderConfigurationException($"Could not find format id enum with id {id}");
-            if (first is T value)
-                return value;
-            else 
-              throw new ModelBuilderConfigurationException($"The enum {first.Name} with id {id} did not have expected type");
-            
+            return _enumBaseRepository.GetAll().OfType<T>().FirstOrDefault(x => x.Id == id);
+
         }
 
-        public IEnumerable<Unit> GetUnits()
+        public IEnumerable<T> GetObject<T>() where T : EnumBase
         {
-            var enumT = EnumType.Unit.GetEnumTypeFromEnum();
-            var method = typeof(Queryable).GetMethod("OfType");
-            var generic = method?.MakeGenericMethod(new Type[] { enumT });
-            var result = (IEnumerable<Unit>) generic?.Invoke(null, new object[] { _enumBaseRepository.GetAll() });
-            return result?.ToList();
+            return _enumBaseRepository.GetAll().OfType<T>().ToList();
         }
 
         public void Untrack()

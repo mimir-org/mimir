@@ -13,13 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ModelBuilder.Rdf.Repositories;
 using ModelBuilder.Rdf.Services;
 using VDS.RDF;
-using VDS.RDF.Ontology;
-using VDS.RDF.Parsing;
-using VDS.RDF.Writing;
 
-namespace JsonLdParserModule
+namespace JsonLdParser
 {
-
     public class ParserModule : IModelBuilderParser
     {
         private ServiceProvider _provider;
@@ -75,17 +71,17 @@ namespace JsonLdParserModule
 
         public IGraph LoadGraph(string valueAsString)
         {
-            var parser = new JsonLdParser();
-            var Store = new TripleStore();
+            var parser = new VDS.RDF.Parsing.JsonLdParser();
+            var store = new TripleStore();
             using (TextReader reader = new StringReader(valueAsString))
             {
-                parser.Load(Store, reader);
+                parser.Load(store, reader);
             }
-            if (Store.Graphs.Count != 1)
+            if (store.Graphs.Count != 1)
             {
                 throw new InvalidDataException("Input JSON contained more than one graph, this is an error");
             }
-            return Store.Graphs.First();
+            return store.Graphs.First();
 
         }
 

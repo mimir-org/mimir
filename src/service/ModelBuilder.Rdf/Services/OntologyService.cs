@@ -4,6 +4,7 @@ using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Data.Enums;
 using Mb.Models.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using ModelBuilder.Rdf.Extensions;
@@ -47,10 +48,12 @@ namespace ModelBuilder.Rdf.Services
             if (project == null)
                 throw new ModelBuilderModuleException("OntologyService can't build project. Project is null");
 
+            var applicationData = GetApplicationData(project.Iri);
+
             _ontologyRepository.LoadData(new Graph());
             project.AssertGraph(this);
-            BuildNodes(project);
-            BuildEdges(project);
+            BuildNodes(project, applicationData);
+            BuildEdges(project, applicationData);
         }
 
         /// <summary>
@@ -308,17 +311,24 @@ namespace ModelBuilder.Rdf.Services
 
         #region private methods
 
+        /// <summary>
+        /// Get ProjectData (Record of ICollections)
+        /// </summary>
+        /// <param name="projectIri"></param>
+        /// <returns></returns>
         private ProjectData GetApplicationData(string projectIri)
         {
-            var edgeData = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
-            var nodeData = _nodeRepository.GetAll().Include(x => x.Connectors).Where(x => x.ProjectIri == projectIri).ToList();
-            var unitData = _libRepository.GetUnits().ToList();
+            var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
+            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).Where(x => x.ProjectIri == projectIri).ToList();
+            var units = _libRepository.GetObject<Unit>().ToList();
+            var attributeFormats = _libRepository.GetObject<AttributeFormat>().ToList();
 
             var projectData = new ProjectData
             {
-                Edges = _mapper.Map<List<EdgeAm>>(edgeData),
-                Nodes = _mapper.Map<List<NodeAm>>(nodeData),
-                Units = _mapper.Map<List<UnitAm>>(unitData)
+                Edges = _mapper.Map<List<EdgeAm>>(edges),
+                Nodes = _mapper.Map<List<NodeAm>>(nodes),
+                Units = units,
+                AttributeFormats = attributeFormats
             };
 
             _edgeRepository.Context.ChangeTracker.Clear();
@@ -349,21 +359,22 @@ namespace ModelBuilder.Rdf.Services
         /// Build project nodes
         /// </summary>
         /// <param name="project"></param>
-        private void BuildNodes(Project project)
+        /// <param name="projectData">Record of ICollections</param>
+        private void BuildNodes(Project project, ProjectData projectData)
         {
             if (project.Nodes == null || !project.Nodes.Any())
                 return;
 
             foreach (var node in project.Nodes)
             {
-                node.AssertNode(project, this, _libRepository);
+                node.AssertNode(project, this, projectData);
 
                 if (node.Attributes != null && node.Attributes.Any())
                 {
                     foreach (var attribute in node.Attributes)
                     {
                         attribute.AssertAttribute(node.Iri, this);
-                        attribute.AssertAttributeValue(this, _libRepository);
+                        attribute.AssertAttributeValue(this, projectData);
                     }
                 }
 
@@ -371,7 +382,7 @@ namespace ModelBuilder.Rdf.Services
                 {
                     foreach (var connector in node.Connectors)
                     {
-                        connector.AssertConnector(this, node.Iri, _libRepository, null, DefaultFlowDirection.NotSet);
+                        connector.AssertConnector(this, node.Iri, projectData, null, DefaultFlowDirection.NotSet);
                     }
                 }
 
@@ -379,7 +390,7 @@ namespace ModelBuilder.Rdf.Services
                 {
                     foreach (var simple in node.Simples)
                     {
-                        simple.AssertSimple(this, node.Iri, _libRepository);
+                        simple.AssertSimple(this, node.Iri, projectData);
                     }
                 }
             }
@@ -389,21 +400,22 @@ namespace ModelBuilder.Rdf.Services
         /// Build project edges
         /// </summary>
         /// <param name="project"></param>
-        private void BuildEdges(Project project)
+        /// <param name="projectData">Record of ICollections</param>
+        private void BuildEdges(Project project, ProjectData projectData)
         {
             if (project.Edges == null || !project.Edges.Any())
                 return;
 
             foreach (var edge in project.Edges)
             {
-                edge.AssertEdge(this, _libRepository);
+                edge.AssertEdge(this, projectData);
 
                 if (edge.Transport?.Attributes != null && edge.Transport.Attributes.Any())
                 {
                     foreach (var attribute in edge.Transport.Attributes)
                     {
                         attribute.AssertAttribute(edge.Transport.Iri, this);
-                        attribute.AssertAttributeValue(this, _libRepository);
+                        attribute.AssertAttributeValue(this, projectData);
                     }
                 }
 
@@ -412,7 +424,7 @@ namespace ModelBuilder.Rdf.Services
                     foreach (var attribute in edge.Interface.Attributes)
                     {
                         attribute.AssertAttribute(edge.Interface.Iri, this);
-                        attribute.AssertAttributeValue(this, _libRepository);
+                        attribute.AssertAttributeValue(this, projectData);
                     }
                 }
             }
