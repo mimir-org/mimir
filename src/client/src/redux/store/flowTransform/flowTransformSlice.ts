@@ -5,7 +5,7 @@ import { Size } from "../../../compLibrary/size";
 const initialState: FlowTransform = {
   x: 0,
   y: 0,
-  zoom: Size.DEFAULT_ZOOM,
+  zoom: Size.ZOOM_DEFAULT,
 };
 
 const flowTransformSlice = createSlice({

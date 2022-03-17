@@ -5,5 +5,5 @@ export {
   libOpenSelector,
   isActiveViewSelector,
   usernameSelector,
-  location3DSelector,
+  secondaryNodeSelector,
 } from "../../../redux/store/selectors";

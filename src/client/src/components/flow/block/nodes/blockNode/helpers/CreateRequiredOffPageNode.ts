@@ -9,20 +9,23 @@ import { Dispatch } from "redux";
  * @param sourceNode
  * @param sourceConnector
  * @param position
- * @param dispatch
+ * @param splitView
  * @param isRequired
+ * @param dispatch
  */
 export const CreateRequiredOffPageNode = (
   sourceNode: Node,
   sourceConnector: Connector,
   position: Position,
-  dispatch: Dispatch,
-  isRequired: boolean
+  splitView: boolean,
+  isRequired: boolean,
+  dispatch: Dispatch
 ) => {
   const offPageData = {
-    sourceNode: sourceNode,
-    sourceConnector: sourceConnector,
+    sourceNode,
+    sourceConnector,
     position: { x: position.x, y: position.y },
+    splitView,
   } as OffPageData;
 
   const offPageObject = CreateOffPageObject(offPageData);

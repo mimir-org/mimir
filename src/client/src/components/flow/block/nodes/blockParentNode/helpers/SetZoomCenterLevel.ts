@@ -11,13 +11,13 @@ export const SetZoomCenterLevel = (splitView: boolean) => {
     return {
       x: Size.BLOCK_NODE_WIDTH,
       y: window.innerHeight / Size.SPLITVIEW_DIVISOR,
-      zoom: Size.SPLITVIEW_ZOOM,
+      zoom: Size.ZOOM_SPLITVIEW,
     } as FlowTransform;
   }
 
   return {
     x: window.innerWidth / 2 - Size.BLOCK_MARGIN_X,
     y: window.innerHeight / 2 - Size.BLOCK_MARGIN_Y,
-    zoom: Size.DEFAULT_ZOOM,
+    zoom: Size.ZOOM_DEFAULT,
   } as FlowTransform;
 };

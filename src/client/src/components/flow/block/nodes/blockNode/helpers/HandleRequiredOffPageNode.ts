@@ -11,15 +11,23 @@ import { IsInputTerminal, IsInputVisible } from "../../../../helpers";
  * @param node
  * @param edges
  * @param size
+ * @param splitView
  * @param dispatch
  */
-export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
+export const HandleRequiredOffPageNode = (
+  node: Node,
+  edges: Edge[],
+  size: BlockNodeSize,
+  splitView: boolean,
+  dispatch: Dispatch
+) => {
   const isRequired = true;
 
   node?.connectors.forEach((conn) => {
     if (conn.isRequired) {
       const offPageExists = RequiredOffPageNodeExists(edges, conn);
-      if (!offPageExists) CreateRequiredOffPageNode(node, conn, { x: size.width, y: node?.positionBlockY }, dispatch, isRequired);
+      if (!offPageExists)
+        CreateRequiredOffPageNode(node, conn, { x: size.width, y: node?.positionBlockY }, splitView, isRequired, dispatch);
     }
   });
 };

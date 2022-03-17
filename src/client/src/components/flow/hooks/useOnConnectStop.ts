@@ -53,7 +53,7 @@ const useOnConnectStop = (
   const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn, parentNodeSize);
 
   if (!isValidOffPageDrop) return;
-  CreateRequiredOffPageNode(sourceNode, sourceConn, { x: e.clientX, y: e.clientY }, dispatch, true);
+  CreateRequiredOffPageNode(sourceNode, sourceConn, { x: e.clientX, y: e.clientY }, secondaryNode !== null, true, dispatch);
   SaveEventData(null, "edgeEvent");
 };
 
@@ -66,8 +66,15 @@ function ValidateOffPageDrop(
   sourceConn: Connector,
   parentNodeSize: BlockNodeSize
 ) {
+  const splitView = secondaryNode !== undefined;
   const isTarget = IsOutputTerminal(sourceConn) || IsOutputVisible(sourceConn);
   const dropZone = CalculateDropZone(transform, sourceNode, secondaryNode, parentNodeSize, isTarget);
+
+  if (splitView) {
+    const dropZoneWidth = Size.SPLITVIEW_DISTANCE;
+    if (isTarget) return clientX > dropZone && clientX < dropZone + dropZoneWidth;
+    return clientX < dropZone && clientX > dropZone - dropZoneWidth;
+  }
 
   if (isTarget) return clientX > dropZone;
   return clientX < dropZone;

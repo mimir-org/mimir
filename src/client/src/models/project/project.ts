@@ -31,14 +31,14 @@ export const MENU_TYPE = {
   PROJECT_MENU: "ProjectMenu",
   OPEN_PROJECT_MENU: "OpenProjectMenu",
   CREATE_PROJECT_MENU: "CreateProjectMenu",
-  VISUAL_FILTER_MENU: "VisualFilter",
-  SAVE_PROJECT_FILE_MENU: "SaveProjectFile",
   IMPORT_PROJECT_FILE_MENU: "ImportProjectFile",
-  SAVE_LIBRARY_FILE_MENU: "SaveLibraryFile",
+  EXPORT_PROJECT_FILE_MENU: "ExportProjectFile",
   IMPORT_LIBRARY_FILE_MENU: "ImportLibraryFile",
-  COMMIT_PROJECT: "CommitProject",
+  EXPORT_LIBRARY_FILE_MENU: "ExportLibraryFile",
+  COMMIT_PROJECT_MENU: "CommitProjectMenu",
   CREATE_SUB_PROJECT_MENU: "CreateSubProjectMenu",
   INSTRUCTION_PROJECT_MENU: "InstructionProjectMenu",
+  VISUAL_FILTER_MENU: "VisualFilter",
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;

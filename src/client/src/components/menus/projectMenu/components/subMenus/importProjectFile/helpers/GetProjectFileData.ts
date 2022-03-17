@@ -6,7 +6,7 @@ interface FileContent {
   content: string;
 }
 
-const GetProjectFileData = (filesContent: FileContent[], parser: ModuleDescription): ProjectFileAm => {
+export const GetProjectFileData = (filesContent: FileContent[], parser: ModuleDescription): ProjectFileAm => {
   if (!parser || !filesContent || filesContent.length <= 0) return null;
   const fileData = filesContent[0] as FileData;
 
@@ -16,4 +16,3 @@ const GetProjectFileData = (filesContent: FileContent[], parser: ModuleDescripti
     fileFormat: null,
   };
 };
-export default GetProjectFileData;
