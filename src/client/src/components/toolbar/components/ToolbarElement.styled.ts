@@ -19,7 +19,7 @@ export const ToolElementBox = styled.button<ToolElementBoxProps>`
   border-left: ${(props) => props.borderLeft && 1}px;
   border-right: ${(props) => props.borderRight && 1}px;
   border-style: solid;
-  border-color: ${Color.GREY};
+  border-color: ${Color.GAINSBORO};
 
   :hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
