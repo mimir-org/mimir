@@ -3,7 +3,7 @@ import * as selectors from "../header/helpers/selectors";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { OnElectroClick, OnFilterClick, OnViewClick } from "./handlers/";
 import { VIEW_TYPE, ViewType } from "../../models/project";
-import { ToolBarBody, ToolBarBox } from "./ToolbarComponent.styled";
+import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { useStoreState, useZoomPanHelper } from "react-flow-renderer";
@@ -32,7 +32,25 @@ const ToolbarComponent = () => {
 
   return (
     <ToolBarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
-      <ToolBarBody>
+      <ToolbarButtonGroup>
+        {!isTreeView && (
+          <>
+            <ToolbarElement
+              label={TextResources.Toolbar_FitScreen}
+              icon={Icons.FitScreenIcon}
+              onClick={() => onResetZoom()}
+              borderRight
+            />
+            <ToolbarElement
+              label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
+              icon={isElectro ? Icons.Vertical : Icons.Horizontal}
+              onClick={() => OnElectroClick(dispatch)}
+              borderRight
+            />
+          </>
+        )}
+      </ToolbarButtonGroup>
+      <ToolbarButtonGroup>
         <ToolbarElement
           active={isTreeView}
           label={TextResources.Toolbar_TreeView}
@@ -54,26 +72,7 @@ const ToolbarComponent = () => {
           onClick={() => OnFilterClick(dispatch, IsVisualFilterOpen)}
           borderLeft
         />
-        {!isTreeView && (
-          <>
-            <ToolbarElement
-              label={TextResources.Toolbar_FitScreen}
-              icon={Icons.FitScreenIcon}
-              onClick={() => onResetZoom()}
-              isLeftMenu
-              borderRight
-            />
-            <ToolbarElement
-              label={isElectro ? TextResources.Toolbar_Electro_Off : TextResources.Toolbar_Electro_On}
-              icon={isElectro ? Icons.Vertical : Icons.Horizontal}
-              onClick={() => OnElectroClick(dispatch)}
-              isLeftMenu
-              leftMargin={60}
-              borderRight
-            />
-          </>
-        )}
-      </ToolBarBody>
+      </ToolbarButtonGroup>
     </ToolBarBox>
   );
 };

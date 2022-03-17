@@ -5,20 +5,16 @@ interface ToolElementBoxProps {
   active: boolean;
   borderLeft: boolean;
   borderRight: boolean;
-  isLeftMenu: boolean;
-  leftMargin: number;
 }
 
-export const ToolElementBox = styled.div<ToolElementBoxProps>`
-  position: ${(props) => props.isLeftMenu && "absolute"};
-  left: ${(props) => props.leftMargin}px;
+export const ToolElementBox = styled.button<ToolElementBoxProps>`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40px;
   width: 60px;
   cursor: pointer;
-  background-color: ${(props) => props.active && Color.GREY_TOOLBAR_SELECTED};
+  background-color: ${(props) => (props.active ? Color.GREY_TOOLBAR_SELECTED : "transparent")};
   border-width: 0;
   border-left: ${(props) => props.borderLeft && 1}px;
   border-right: ${(props) => props.borderRight && 1}px;
