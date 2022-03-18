@@ -2,8 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using JsonLdParser;
-using VDS.RDF;
-using VDS.RDF.Writing;
 using Xunit;
 
 namespace ModelBuilder.Tests.Modules;
@@ -13,20 +11,19 @@ public class TestJsonLdWriter
     public void TestWrite()
     {
         using var reader = new StreamReader("Data/testproject.jsonld");
-        string json_text = reader.ReadToEnd();
-        IGraph g1 = ParserModule.LoadGraph(json_text);
-        
+        var json_text = reader.ReadToEnd();
+        var g1 = ParserModule.LoadGraph(json_text);
+
         Assert.NotNull(g1);
         var writer = new ImfJsonLdWriter();
         var jsonLdString = VDS.RDF.Writing.StringWriter.Write(g1, writer);
-        
-        using (var streamWriter = new StreamWriter("Data/pumpout.jsonld"))
-        {
-            streamWriter.Write(jsonLdString);
-        }
+
+        using var streamWriter = new StreamWriter("Data/pumpout.jsonld");
+        streamWriter.Write(jsonLdString);
+
         using var reader2 = new StreamReader("Data/pumpout.jsonld");
-        string json_text2 = reader.ReadToEnd();
-        IGraph g2 = ParserModule.LoadGraph(json_text);
+        var json_text2 = reader.ReadToEnd();
+        var g2 = ParserModule.LoadGraph(json_text);
 
         var type = g2.CreateUriNode("rdf:type");
         var fsb = g2.CreateUriNode(new Uri("http://ns.imfid.org/imf#FunctionalSystemBlock"));
@@ -37,10 +34,5 @@ public class TestJsonLdWriter
         var transport_class = g2.CreateUriNode(new Uri("http://ns.imfid.org/imf#Transport"));
         var transports = g2.GetTriplesWithPredicateObject(type, transport_class).Select(t => t.Subject).ToList();
         Assert.Single(transports);
-
     }
-
-
-
-
 }
