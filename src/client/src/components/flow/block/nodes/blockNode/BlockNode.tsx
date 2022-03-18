@@ -36,7 +36,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     HandleConnectedOffPageNode(node, edges, size, splitView, dispatch);
     HandleRequiredOffPageNode(node, edges, size, splitView, dispatch);
-  }, [dispatch, edges, node, secondaryNode, size, splitView]);
+  }, [dispatch, edges, node, size, splitView]);
 
   useEffect(() => {
     setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
