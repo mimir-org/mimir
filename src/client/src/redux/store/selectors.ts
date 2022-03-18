@@ -272,9 +272,15 @@ export const typeEditorInspectorActiveTabSelector = createAppSelector(
   (activeTabIndex) => activeTabIndex
 );
 
-export const nodeSelector = createAppSelector(
+export const nodesSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
   (nodes) => nodes ?? []
+);
+
+export const nodeSelector = createParametricAppSelector(
+  (state) => state.projectState?.project?.nodes,
+  (_, id: string) => id,
+  (nodes, id) => nodes.find((n) => n.id === id)
 );
 
 export const makeFilterSelector = () =>

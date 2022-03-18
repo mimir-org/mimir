@@ -45,7 +45,7 @@ function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolea
 function IsValidTransport(edge: Edge, node: Node) {
   return (
     IsTransportConnection(edge.fromConnector, edge.toConnector) &&
-    (node.id === edge.fromNodeId || node.id === edge.toNodeId) &&
+    (node?.id === edge.fromNodeId || node?.id === edge.toNodeId) &&
     !IsOffPage(edge.toNode) &&
     !IsOffPage(edge.fromNode)
   );

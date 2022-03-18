@@ -1,4 +1,5 @@
 import * as Types from "./types";
+import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
 import {
   CommitPackage,
   Connector,
@@ -550,6 +551,32 @@ export function setOffPageStatus(nodeId: string, connectorId: string, isRequired
       nodeId: nodeId,
       connectorId: connectorId,
       isRequired: isRequired,
+    },
+  };
+}
+
+export function createRequiredOffPageNode(
+  nodeId: string,
+  connectorId: string,
+  isRequired: boolean,
+  offPageObject: OffPageObject
+): Types.CreateRequiredOffPageNode {
+  return {
+    type: Types.CREATE_REQUIRED_OFFPAGE_NODE,
+    payload: {
+      nodeId: nodeId,
+      connectorId: connectorId,
+      isRequired: isRequired,
+      offPageObject: offPageObject,
+    },
+  };
+}
+
+export function createConnectedOffPageNode(offPageObject: OffPageObject): Types.CreateConnectedOffPageNode {
+  return {
+    type: Types.CREATE_CONNECTED_OFFPAGE_NODE,
+    payload: {
+      offPageObject: offPageObject,
     },
   };
 }
