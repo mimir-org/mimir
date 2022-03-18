@@ -25,7 +25,7 @@ public class TestJsonLdWriter
         Assert.NotNull(g1);
         var writer = new ImfJsonLdWriter();
         var jsonLdString = VDS.RDF.Writing.StringWriter.Write(g1, writer);
-        
+
         using (var streamWriter = new StreamWriter("Data/pumpout.jsonld"))
         {
             streamWriter.Write(jsonLdString);
@@ -39,12 +39,12 @@ public class TestJsonLdWriter
         var reader = new StreamReader("Data/miniproject.jsonld");
         var parser = new VDS.RDF.Parsing.JsonLdParser();
         var store = new TripleStore();
-        
+
         parser.Load(store, reader);
 
         if (store.Graphs.Count != 1)
             throw new Exception("Input JSON contained more than one graph, this is an error");
-        
+
         var g1 = store.Graphs.First();
         Assert.NotNull(g1);
         var nWriter = new NTriplesWriter();
