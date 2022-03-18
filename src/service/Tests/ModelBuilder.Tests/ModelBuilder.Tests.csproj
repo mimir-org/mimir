@@ -8,6 +8,7 @@
     <None Remove="Data\miniproject.jsonld" />
     <None Remove="Data\ProjectA.json" />
     <None Remove="Data\ProjectB.json" />
+    <None Remove="Data\testproject.jsonld" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +19,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\ProjectB.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\testproject.jsonld">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

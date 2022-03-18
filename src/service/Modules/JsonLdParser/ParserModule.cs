@@ -69,7 +69,7 @@ namespace JsonLdParser
             return Task.FromResult(project);
         }
 
-        public IGraph LoadGraph(string valueAsString)
+        public static IGraph LoadGraph(string valueAsString)
         {
             var parser = new VDS.RDF.Parsing.JsonLdParser();
             var store = new TripleStore();
