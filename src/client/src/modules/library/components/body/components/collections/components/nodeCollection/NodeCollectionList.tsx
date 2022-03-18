@@ -2,7 +2,7 @@ import { LibraryCategory } from "../../../../../../../../models/project";
 import { useMemo } from "react";
 import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
 import { GetLibCategories } from "./helpers/GetLibCategories";
-import { GetSelectedNode } from "../../../../../../../../helpers";
+import { GetSelectedNode, IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
 import { FilterByAspect } from "./helpers/FilterByAspect";
@@ -31,13 +31,15 @@ export const NodeCollectionList = ({
   aspectFilters,
 }: Props) => {
   const dispatch = useDispatch();
-
   const libState = useAppSelector(librarySelector);
   const customCategory = useAppSelector(customCategorySelector);
-
+  const isBlockView = IsBlockView();
   const selectedNode = GetSelectedNode();
 
-  const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
+  const libCategories = useMemo(
+    () => GetLibCategories(selectedNode, libState, isBlockView),
+    [selectedNode, libState, isBlockView]
+  );
   const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
 
   const filterCatBySearch = (): LibraryCategory[] => {
