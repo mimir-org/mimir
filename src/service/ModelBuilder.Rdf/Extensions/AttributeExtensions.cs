@@ -68,7 +68,7 @@ namespace ModelBuilder.Rdf.Extensions
 
             var selectedUnit = attribute.GetSelectedUnit(projectData);
             attribute.AssertAttributeFormat(ontologyService, projectData);
-            
+
             ontologyService.AssertNode(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
             ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
 
@@ -90,7 +90,7 @@ namespace ModelBuilder.Rdf.Extensions
         {
             var attributeFormat = projectData.AttributeFormats.FirstOrDefault(x => x.Id == attribute.FormatId);
 
-            if(attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.SemanticReference))
+            if (attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.SemanticReference))
                 return;
 
             ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, attributeFormat.SemanticReference));
