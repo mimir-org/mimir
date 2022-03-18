@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
@@ -22,7 +21,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const { setCenter } = useZoomPanHelper();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const nodes = useAppSelector(selectors.nodeSelector);
+  const nodes = useAppSelector(selectors.nodesSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
@@ -32,10 +31,10 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     const canvasData = SetZoomCenterLevel(secondaryNode !== null);
     setCenter(canvasData.x, canvasData.y, canvasData.zoom);
-  }, [secondaryNode]);
+  }, [setCenter, secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node, secondaryNode));
+    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   if (!node) return null;

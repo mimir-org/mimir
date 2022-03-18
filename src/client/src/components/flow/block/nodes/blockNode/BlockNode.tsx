@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
@@ -8,7 +7,7 @@ import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
@@ -25,13 +24,11 @@ import { BlockChildComponent } from "./components/BlockChildComponent";
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
+  const initialSize: BlockNodeSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT };
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
-  const nodes = useAppSelector(selectors.nodeSelector);
+  const node = useParametricAppSelector(selectors.nodeSelector, data.id);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const electro = useAppSelector(selectors.electroSelector);
-  const node = nodes?.find((x) => x.id === data.id);
   const isElectro = useAppSelector(selectors.electroSelector);
   const splitView = secondaryNode !== null;
 
@@ -39,17 +36,17 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     HandleConnectedOffPageNode(node, edges, size, splitView, dispatch);
     HandleRequiredOffPageNode(node, edges, size, splitView, dispatch);
-  }, [secondaryNode]);
+  }, [dispatch, edges, node, secondaryNode, size, splitView]);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node, secondaryNode));
+    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   // Update node size based on active terminals
   useEffect(() => {
-    const updatedSize = SetNodeSize(terminals, electro);
+    const updatedSize = SetNodeSize(terminals, isElectro);
     setSize({ width: updatedSize.width, height: updatedSize.height });
-  }, [electro, terminals]);
+  }, [isElectro, terminals]);
 
   if (!node) return null;
 
