@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Data.Enums;
-using Mb.Models.Enums;
-using Mb.Models.Extensions;
 using Mb.TypeEditor.Data.Contracts;
 
 namespace Mb.Data.Repositories
@@ -18,13 +15,15 @@ namespace Mb.Data.Repositories
             _enumBaseRepository = enumBaseRepository;
         }
 
-        public IEnumerable<Unit> GetUnits()
+        public T GetObjectById<T>(string id) where T : EnumBase
         {
-            var enumT = EnumType.Unit.GetEnumTypeFromEnum();
-            var method = typeof(Queryable).GetMethod("OfType");
-            var generic = method?.MakeGenericMethod(new Type[] { enumT });
-            var result = (IEnumerable<Unit>) generic?.Invoke(null, new object[] { _enumBaseRepository.GetAll() });
-            return result?.ToList();
+            return _enumBaseRepository.GetAll().OfType<T>().FirstOrDefault(x => x.Id == id);
+
+        }
+
+        public IEnumerable<T> GetObject<T>() where T : EnumBase
+        {
+            return _enumBaseRepository.GetAll().OfType<T>().ToList();
         }
 
         public void Untrack()

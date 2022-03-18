@@ -1,4 +1,3 @@
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -16,11 +15,11 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="connector">The terminal to be asserted</param>
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="ownerIri">The terminal owner IRI</param>
-        /// <param name="libRepository">Library repository</param>
+        /// <param name="projectData">Record of ICollections</param>
         /// <param name="edge">Connected Mimir edge</param>
         /// <param name="flowDirection">Default flow direction. Used to define the default flow direction when connector is bi-directional</param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ILibRepository libRepository, Edge edge, DefaultFlowDirection flowDirection)
+        public static void AssertConnector(this Connector connector, IOntologyService ontologyService, string ownerIri, ProjectData projectData, Edge edge, DefaultFlowDirection flowDirection)
         {
             ontologyService.AssertNode(connector.Iri, Resources.Domain, connector.Domain, true);
             switch (connector)
@@ -82,7 +81,7 @@ namespace ModelBuilder.Rdf.Extensions
                         foreach (var attribute in terminal.Attributes)
                         {
                             attribute.AssertAttribute(terminal.Iri, ontologyService);
-                            attribute.AssertAttributeValue(ontologyService, libRepository);
+                            attribute.AssertAttributeValue(ontologyService, projectData);
                         }
                     }
                     break;
