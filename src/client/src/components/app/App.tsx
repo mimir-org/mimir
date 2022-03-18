@@ -11,7 +11,6 @@ import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
-import { IsStartPage } from "../../helpers";
 
 type AppProps = {
   pca: IPublicClientApplication;
@@ -35,12 +34,9 @@ const App = ({ pca }: AppProps) => {
     <MsalProvider instance={pca}>
       <AuthenticatedTemplate>
         <GlobalStyle />
-        {!IsStartPage() && (
-          <SpinnerWrapper fetching={isFetching}>
-            <Spinner />
-          </SpinnerWrapper>
-        )}
-
+        <SpinnerWrapper fetching={isFetching}>
+          <Spinner />
+        </SpinnerWrapper>
         <Home dispatch={dispatch} />
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
