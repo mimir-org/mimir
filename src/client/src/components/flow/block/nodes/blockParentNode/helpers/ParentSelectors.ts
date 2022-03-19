@@ -1,7 +1,7 @@
 export {
   edgeSelector,
   electroSelector,
-  nodeSelector,
+  nodesSelector,
   secondaryNodeSelector,
   nodeSizeSelector,
 } from "../../../../../../redux/store";

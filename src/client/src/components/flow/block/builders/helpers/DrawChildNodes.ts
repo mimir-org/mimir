@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { BuildChildNode } from "..";
+import { BuildFlowChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Connector, Edge, Node, Project } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
@@ -13,7 +13,7 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
  * @param secondaryNode
  * @param parentNodeSize
  */
-const DrawChildNodes = (
+const DrawFlowChildNodes = (
   project: Project,
   selectedNode: Node,
   elements: Elements,
@@ -28,10 +28,11 @@ const DrawChildNodes = (
       const targetNode = nodes.find((n) => n.id === edge.toNode.id);
       if (!targetNode) return;
 
-      if (IsOffPage(targetNode)) {
-        const isValidOffPage = ValidateOffPageNode(targetNode, selectedNode, secondaryNode, elements, edges, nodes);
-        if (isValidOffPage) elements.push(BuildChildNode(targetNode, parentNodeSize));
-      } else elements.push(BuildChildNode(targetNode, parentNodeSize));
+      const childNode = BuildFlowChildNode(targetNode, parentNodeSize);
+      let isValid = true;
+
+      if (IsOffPage(targetNode)) isValid = ValidateOffPageNode(targetNode, selectedNode, secondaryNode, elements, edges, nodes);
+      if (isValid && childNode) elements.push(BuildFlowChildNode(targetNode, parentNodeSize));
     }
   });
 };
@@ -56,8 +57,8 @@ function ValidateOffPageNode(
     const inputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
     const outputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
 
-    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === outputTerminal?.id);
     const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === inputTerminal?.id);
+    const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === outputTerminal?.id);
 
     let terminal: Connector;
 
@@ -76,4 +77,4 @@ function ValidateOffPageNode(
   return elements?.some((elem) => elem?.id === offPageParent?.id);
 }
 
-export default DrawChildNodes;
+export default DrawFlowChildNodes;

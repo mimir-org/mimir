@@ -5,7 +5,14 @@ import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 import { BlockNodeSize } from "../../../../models/project";
 
-const BuildSecondaryChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
+/**
+ * Component to create a child node for the SecondaryParentNode in BlockView.
+ * This component creates a FlowElement that contains the basic data for a node.
+ * On top of the FlowNode a layer with Mimir functionality is created. See the BlockNode component.
+ * @param node
+ * @returns a node that sits inside the container of the ParentSecondaryNode.
+ */
+const BuildFlowSecondaryChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
@@ -26,4 +33,4 @@ const BuildSecondaryChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
   } as FlowElement;
 };
 
-export default BuildSecondaryChildNode;
+export default BuildFlowSecondaryChildNode;

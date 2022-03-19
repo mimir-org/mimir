@@ -919,6 +919,43 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.CREATE_REQUIRED_OFFPAGE_NODE: {
+      const nodesWithRequiredStatus = state.project.nodes.map((n) =>
+        n?.id === action.payload.nodeId
+          ? {
+              ...n,
+              connectors: n.connectors.map((conn) =>
+                conn.id === action.payload.connectorId
+                  ? {
+                      ...conn,
+                      isRequired: action.payload.isRequired,
+                    }
+                  : conn
+              ),
+            }
+          : n
+      );
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: [...nodesWithRequiredStatus, action.payload.offPageObject.node],
+          edges: [...state.project.edges, action.payload.offPageObject.partOfEdge, action.payload.offPageObject.transportEdge],
+        },
+      };
+    }
+
+    case Types.CREATE_CONNECTED_OFFPAGE_NODE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: [...state.project.nodes, action.payload.offPageObject.node],
+          edges: [...state.project.edges, action.payload.offPageObject.partOfEdge, action.payload.offPageObject.transportEdge],
+        },
+      };
+
     default:
       return state;
   }

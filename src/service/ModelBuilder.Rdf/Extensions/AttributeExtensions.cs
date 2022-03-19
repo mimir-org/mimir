@@ -1,8 +1,8 @@
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
@@ -21,7 +21,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology Service</param>
         public static void AssertAttribute(this Attribute attribute, string parentIri, IOntologyService ontologyService)
         {
-            // Asserts
+            // Asserts_libra
             ontologyService.AssertNode(attribute.Iri, Resources.Domain, attribute.Domain, true);
             ontologyService.AssertNode(attribute.Iri, Resources.Type, Resources.PhysicalQuantity);
             ontologyService.AssertNode(parentIri, Resources.HasPhysicalQuantity, attribute.Iri);
@@ -60,19 +60,14 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="attribute">Attribute that should have asserted value</param>
         /// <param name="ontologyService">Ontology Service</param>
-        /// <param name="libRepository">Library repository</param>
-        /// TODO: Library repository should not be here in the future
-        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ILibRepository libRepository)
+        /// <param name="projectData">Record of ICollections</param>
+        public static void AssertAttributeValue(this Attribute attribute, IOntologyService ontologyService, ProjectData projectData)
         {
             if (string.IsNullOrEmpty(attribute?.Value))
                 return;
 
-            var selectedUnit = attribute.GetSelectedUnit(libRepository);
-
-            if (!string.IsNullOrEmpty(selectedUnit?.Name))
-                ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, $"xsd:{selectedUnit.Name}"));
-            else
-                ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, attribute.Value);
+            var selectedUnit = attribute.GetSelectedUnit(projectData);
+            attribute.AssertAttributeFormat(ontologyService, projectData);
 
             ontologyService.AssertNode(attribute.IriDatum(), Resources.Type, Resources.ScalarQuantityDatum);
             ontologyService.AssertNode(attribute.Iri, Resources.QualityQuantifiedAs, $"{attribute.Iri}-datum");
@@ -86,19 +81,33 @@ namespace ModelBuilder.Rdf.Extensions
         }
 
         /// <summary>
+        /// Assert attribute format
+        /// </summary>
+        /// <param name="attribute">Attribute that should have asserted value</param>
+        /// <param name="ontologyService">Ontology Service</param>
+        /// <param name="projectData">Record of ICollections</param>
+        public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ProjectData projectData)
+        {
+            var attributeFormat = projectData.AttributeFormats.FirstOrDefault(x => x.Id == attribute.FormatId);
+
+            if (attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.SemanticReference))
+                return;
+
+            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, attributeFormat.SemanticReference));
+        }
+
+        /// <summary>
         /// Get the selected unit
         /// </summary>
         /// <param name="attribute">Attribute selected unit</param>
-        /// <param name="libraryRepository">Library Repository</param>
+        /// <param name="projectData">Record of ICollections</param>
         /// <returns>The selected unit, if not it returns null</returns>
-        public static Unit GetSelectedUnit(this Attribute attribute, ILibRepository libraryRepository)
+        public static Unit GetSelectedUnit(this Attribute attribute, ProjectData projectData)
         {
-            var allUnits = libraryRepository.GetUnits().ToList();
-
-            if (string.IsNullOrEmpty(attribute.SelectedUnitId) || !allUnits.Any())
+            if (string.IsNullOrEmpty(attribute.SelectedUnitId) || !projectData.Units.Any())
                 return null;
 
-            return allUnits.FirstOrDefault(x => x.Id == attribute.SelectedUnitId);
+            return projectData.Units.FirstOrDefault(x => x.Id == attribute.SelectedUnitId);
         }
 
         /// <summary>

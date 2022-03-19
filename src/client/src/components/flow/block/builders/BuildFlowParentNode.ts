@@ -5,10 +5,12 @@ import { CreateId } from "../../helpers";
 
 /**
  * Component to create a parent node in BlockView.
+ * This component creates a FlowElement that contains the basic data for a node.
+ * On top of the FlowNode a layer with Mimir functionality is created. See the BlockParentNode component.
  * @param node
  * @returns a ParentNode - a large container that allows organizing of the child nodes.
  */
-const BuildParentNode = (node: Node) => {
+const BuildFlowParentNode = (node: Node) => {
   if (!node) return null;
 
   const type = TextResources.BLOCK_PARENTNODE;
@@ -31,4 +33,4 @@ const BuildParentNode = (node: Node) => {
   } as FlowElement;
 };
 
-export default BuildParentNode;
+export default BuildFlowParentNode;

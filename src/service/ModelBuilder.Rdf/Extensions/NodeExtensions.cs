@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
@@ -21,8 +20,8 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="node"></param>
         /// <param name="project"></param>
         /// <param name="ontologyService"></param>
-        /// <param name="libRepository"></param>
-        public static void AssertNode(this Node node, Project project, IOntologyService ontologyService, ILibRepository libRepository)
+        /// <param name="projectData">Record of ICollections</param>
+        public static void AssertNode(this Node node, Project project, IOntologyService ontologyService, ProjectData projectData)
         {
             var parentNode = node.GetParent(project);
 
@@ -149,7 +148,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="iri">The IRI of the node</param>
         /// <param name="projectIri">The IRI of the project</param>
         /// <param name="isRootNode">Is the node a root node</param>
-        /// <param name="projectData">Existing project data</param>
+        /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
         public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, bool isRootNode, ProjectData projectData)
         {

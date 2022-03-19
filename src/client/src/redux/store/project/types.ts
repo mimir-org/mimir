@@ -1,3 +1,16 @@
+import { ApiError } from "../../../models/webclient";
+import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
+import {
+  CommitPackage,
+  ConnectorVisibility,
+  Edge,
+  Node,
+  Project,
+  ProjectConverterAm,
+  ProjectFileAm,
+  ProjectItemCm,
+} from "../../../models";
+
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
 export const COMMIT_PROJECT_SUCCESS_OR_ERROR = "COMMIT_PROJECT_SUCCESS_OR_ERROR";
@@ -59,17 +72,8 @@ export const CHANGE_NODE_UPDATED = "CHANGE_NODE_UPDATED";
 export const UPDATE_NODE = "UPDATE_NODE";
 export const UPDATE_EDGE = "UPDATE_EDGE";
 export const SET_OFFPAGE_STATUS = "SET_OFFPAGE_STATUS";
-import { ApiError } from "../../../models/webclient";
-import {
-  CommitPackage,
-  ConnectorVisibility,
-  Edge,
-  Node,
-  Project,
-  ProjectConverterAm,
-  ProjectFileAm,
-  ProjectItemCm,
-} from "../../../models";
+export const CREATE_REQUIRED_OFFPAGE_NODE = "CREATE_REQUIRED_OFFPAGE_NODE";
+export const CREATE_CONNECTED_OFFPAGE_NODE = "CREATE_CONNECTED_OFFPAGE_NODE";
 
 // State types
 export interface ProjectState {
@@ -570,12 +574,30 @@ export interface UpdateEdgeAction {
   type: typeof UPDATE_EDGE;
   payload: Edge;
 }
+
 export interface SetOffPageStatus {
   type: typeof SET_OFFPAGE_STATUS;
   payload: {
     nodeId: string;
     connectorId: string;
     isRequired: boolean;
+  };
+}
+
+export interface CreateRequiredOffPageNode {
+  type: typeof CREATE_REQUIRED_OFFPAGE_NODE;
+  payload: {
+    nodeId: string;
+    connectorId: string;
+    isRequired: boolean;
+    offPageObject: OffPageObject;
+  };
+}
+
+export interface CreateConnectedOffPageNode {
+  type: typeof CREATE_CONNECTED_OFFPAGE_NODE;
+  payload: {
+    offPageObject: OffPageObject;
   };
 }
 
@@ -639,4 +661,6 @@ export type ProjectActionTypes =
   | CreateSubProjectFinished
   | UpdateNodeAction
   | UpdateEdgeAction
-  | SetOffPageStatus;
+  | SetOffPageStatus
+  | CreateRequiredOffPageNode
+  | CreateConnectedOffPageNode;
