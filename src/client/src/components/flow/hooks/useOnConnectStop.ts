@@ -51,9 +51,10 @@ const useOnConnectStop = (
   }
 
   const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn, parentNodeSize);
-
   if (!isValidOffPageDrop) return;
-  CreateRequiredOffPageNode(sourceNode, sourceConn, { x: e.clientX, y: e.clientY }, true, dispatch);
+
+  const position = { x: e.clientX, y: e.clientY };
+  CreateRequiredOffPageNode(sourceNode, sourceConn, position, true, dispatch);
   SaveEventData(null, "edgeEvent");
 };
 

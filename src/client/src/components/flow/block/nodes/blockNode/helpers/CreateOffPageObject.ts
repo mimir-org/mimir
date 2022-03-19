@@ -43,7 +43,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     label: "OffPage-" + sourceNode.label,
     aspect: Aspect.None,
     positionBlockX: data.position.x,
-    positionBlockY: data.position.y + Size.BLOCK_NODE_HEIGHT, // Adjust relative to parent
+    positionBlockY: sourceNode.positionBlockY + Size.NODE_HEIGHT, // Adjust relative to parent
     connectors: [],
     attributes: [],
     isHidden: false,

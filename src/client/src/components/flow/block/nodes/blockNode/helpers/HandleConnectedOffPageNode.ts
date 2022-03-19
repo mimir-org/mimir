@@ -49,8 +49,9 @@ function AddConnectedOffPageNode(node: Node, isNodeTarget: boolean, edge: Edge, 
   const nodeParent = GetParent(node);
   const xPos = isNodeTarget ? nodeParent?.positionBlockX : size.width;
   const connector = node?.connectors.find((c) => (isNodeTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
+  const position = { x: xPos, y: node?.positionBlockY };
 
-  CreateConnectedOffPageNode(node, connector, { x: xPos, y: node?.positionBlockY }, dispatch);
+  CreateConnectedOffPageNode(node, connector, position, dispatch);
 }
 
 function OnlyOneNodeVisible(edge: Edge, isNodeTarget: boolean) {
