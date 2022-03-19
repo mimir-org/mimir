@@ -11,7 +11,7 @@ import { IsTransport } from "../helpers";
  * @param sourceNode
  * @param targetNode
  * @param animated
- * @returns a Flow Element.
+ * @returns a FlowElement.
  */
 const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node, animated: boolean) => {
   const isAnimated = animated && IsTransport(edge.fromConnector) && !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode);

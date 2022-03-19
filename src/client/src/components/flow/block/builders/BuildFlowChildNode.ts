@@ -7,10 +7,12 @@ import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to create a child node in BlockView.
+ * This component creates a FlowElement that contains the basic data for a node.
+ * On top of the FlowNode a layer with Mimir functionality is created. See the BlockNode component.
  * @param node
- * @returns a node thtat sits inside the container of the ParentNode.
+ * @returns a node that sits inside the container of the ParentNode.
  */
-const BuildChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
+const BuildFlowChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
@@ -31,4 +33,4 @@ const BuildChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
   } as FlowElement;
 };
 
-export default BuildChildNode;
+export default BuildFlowChildNode;

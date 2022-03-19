@@ -6,11 +6,13 @@ import { CreateId } from "../../helpers";
 
 /**
  * Component to create a secondary parent node in BlockView.
+ * This component creates a FlowElement that contains the basic data for a node.
+ * On top of the FlowNode a layer with Mimir functionality is created. See the BlockParentNode component.
  * @param primaryNode
  * @param secondaryNode
  * @returns the second ParentNode in SpliView.
  */
-const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
+const BuildFlowSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
   if (!primaryNode || !secondaryNode) return null;
 
   const type = TextResources.Type_BlockParentNode;
@@ -40,4 +42,4 @@ const BuildSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
   } as FlowElement;
 };
 
-export default BuildSecondaryParentNode;
+export default BuildFlowSecondaryParentNode;

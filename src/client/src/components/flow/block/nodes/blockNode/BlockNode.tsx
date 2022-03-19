@@ -18,8 +18,9 @@ import { BlockChildComponent } from "./components/BlockChildComponent";
 
 /**
  * Component for a child Node in BlockView.
+ * This component lives in conjunction with the FlowNode from BuildFlowChildNode.
  * @param data the data for the node.
- * @returns a child Node of the Flow node type with Mimir styling and functionality.
+ * @returns a Mimir Node.
  */
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();

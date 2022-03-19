@@ -4,7 +4,7 @@ import { ConvertEdgeToFlow } from "../../converters";
 import { GetSelectedNode } from "../../../../helpers";
 import { ValidateBlockEdge } from "./helpers";
 
-export const BuildBlockEdge = (nodes: Node[], edge: Edge, edgeType: EdgeType, secondaryNode: Node, animated: boolean) => {
+export const BuildFlowBlockEdge = (nodes: Node[], edge: Edge, edgeType: EdgeType, secondaryNode: Node, animated: boolean) => {
   const sourceNode = nodes.find((node) => node.id === edge.fromNodeId);
   const targetNode = nodes.find((node) => node.id === edge.toNodeId);
   const selectedNode = GetSelectedNode();
@@ -15,4 +15,4 @@ export const BuildBlockEdge = (nodes: Node[], edge: Edge, edgeType: EdgeType, se
   }
 };
 
-export default BuildBlockEdge;
+export default BuildFlowBlockEdge;

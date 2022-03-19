@@ -5,7 +5,9 @@ import { Position } from "../../../../../../models/project";
 import { Dispatch } from "redux";
 
 /**
- * Component to create a required OffPageNode. The OffPageNode is created with a partOf edge to its parent, and a transport edge.
+ * Component to create a required OffPageNode.
+ * The OffPageNode is created with a partOf edge to its parent, and a transport edge.
+ * This component is called from the HandleRequiredOffPageNode component or the useOnConnectStop hook.
  * @param sourceNode
  * @param sourceConnector
  * @param position

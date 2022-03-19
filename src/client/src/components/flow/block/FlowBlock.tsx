@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/selectors";
 import * as hooks from "../hooks/";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { BuildBlockElements } from "./builders";
+import { BuildFlowBlockElements } from "./builders";
 import { EDGE_TYPE, EdgeType } from "../../../models/project";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
@@ -44,7 +44,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
+      setElements(BuildFlowBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
       return setFlowInstance(_reactFlowInstance);
     },
     [project, node, secondaryNode, animatedEdge, parentNodeSize]

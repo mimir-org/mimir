@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { BuildSecondaryChildNode } from "..";
+import { BuildFlowSecondaryChildNode } from "..";
 import { IsDirectChild, IsFamily } from "../../../../../helpers";
 import { Node, Project } from "../../../../../models";
 import { BlockNodeSize } from "../../../../../models/project";
@@ -11,7 +11,7 @@ import { BlockNodeSize } from "../../../../../models/project";
  * @param elements
  * @param parentNodeSize
  */
-const DrawSecondaryChildren = (project: Project, secondary: Node, elements: Elements, parentNodeSize: BlockNodeSize) => {
+const DrawFlowSecondaryChildren = (project: Project, secondary: Node, elements: Elements, parentNodeSize: BlockNodeSize) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
@@ -19,10 +19,10 @@ const DrawSecondaryChildren = (project: Project, secondary: Node, elements: Elem
     edges?.forEach((edge) => {
       if (edge.fromNodeId === secondary.id && IsFamily(secondary, edge.toNode)) {
         const targetNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondary));
-        if (targetNode) elements.push(BuildSecondaryChildNode(targetNode, parentNodeSize));
+        if (targetNode) elements.push(BuildFlowSecondaryChildNode(targetNode, parentNodeSize));
       }
     });
   }
 };
 
-export default DrawSecondaryChildren;
+export default DrawFlowSecondaryChildren;

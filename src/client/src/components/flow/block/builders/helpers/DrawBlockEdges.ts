@@ -1,5 +1,5 @@
 import { Elements } from "react-flow-renderer";
-import { BuildBlockEdge } from "..";
+import { BuildFlowBlockEdge } from "..";
 import { Edge, Node, Project } from "../../../../../models";
 import { IsPartOf } from "../../../helpers";
 import { GetBlockEdgeType } from "../../helpers";
@@ -11,7 +11,7 @@ import { GetBlockEdgeType } from "../../helpers";
  * @param secondaryNode
  * @param animatedEdge
  */
-const DrawBlockEdges = (project: Project, elements: Elements<Edge>, secondaryNode: Node, animatedEdge: boolean) => {
+const DrawFlowBlockEdges = (project: Project, elements: Elements<Edge>, secondaryNode: Node, animatedEdge: boolean) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
@@ -22,11 +22,11 @@ const DrawBlockEdges = (project: Project, elements: Elements<Edge>, secondaryNod
 
       if (sourceNodeIsDisplayed && targetNodeIsDisplayed) {
         const edgeType = GetBlockEdgeType(edge);
-        const blockEdge = BuildBlockEdge(nodes, edge, edgeType, secondaryNode, animatedEdge);
+        const blockEdge = BuildFlowBlockEdge(nodes, edge, edgeType, secondaryNode, animatedEdge);
         if (blockEdge) elements.push(blockEdge);
       }
     }
   });
 };
 
-export default DrawBlockEdges;
+export default DrawFlowBlockEdges;

@@ -1,7 +1,7 @@
 import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
-import { BuildParentNode, BuildSecondaryParentNode } from ".";
-import { DrawBlockEdges, DrawChildNodes, DrawSecondaryChildren } from "./helpers";
+import { BuildFlowParentNode, BuildFlowSecondaryParentNode } from ".";
+import { DrawFlowBlockEdges, DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
 import { BlockNodeSize } from "../../../../models/project";
 
 /**
@@ -13,7 +13,7 @@ import { BlockNodeSize } from "../../../../models/project";
  * @param parentNodeSize
  * @returns all Elements.
  */
-const BuildBlockElements = (
+const BuildFlowBlockElements = (
   project: Project,
   selectedNode: Node,
   secondaryNode: Node,
@@ -25,20 +25,20 @@ const BuildBlockElements = (
   const elements: Elements = [];
   const splitView = secondaryNode !== null;
 
-  const parentBlock = BuildParentNode(selectedNode);
+  const parentBlock = BuildFlowParentNode(selectedNode);
   if (parentBlock) elements.push(parentBlock);
 
   if (splitView) {
     const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
-    const parentSecondaryBlock = BuildSecondaryParentNode(selectedNode, secondary);
+    const parentSecondaryBlock = BuildFlowSecondaryParentNode(selectedNode, secondary);
     if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
-    DrawSecondaryChildren(project, secondaryNode, elements, parentNodeSize);
+    DrawFlowSecondaryChildren(project, secondaryNode, elements, parentNodeSize);
   }
 
-  DrawChildNodes(project, selectedNode, elements, secondaryNode, parentNodeSize);
-  DrawBlockEdges(project, elements, secondaryNode, animatedEdge);
+  DrawFlowChildNodes(project, selectedNode, elements, secondaryNode, parentNodeSize);
+  DrawFlowBlockEdges(project, elements, secondaryNode, animatedEdge);
 
   return elements;
 };
 
-export default BuildBlockElements;
+export default BuildFlowBlockElements;

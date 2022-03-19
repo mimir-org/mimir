@@ -9,6 +9,7 @@ import { GetParent, IsTransportConnection } from "../../../../helpers";
  * Component to draw an OffPageNode that is connected.
  * This occurs if a targetNode or a sourceNode to a tranport edge is not displayed on the screen. The OffPageNode is only
  * a visual element, and is not part of the project's data model.
+ * This component is called from the BlockNode component.
  * @param node
  * @param edges
  * @param size
@@ -35,11 +36,11 @@ export const HandleConnectedOffPageNode = (
 };
 
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
-  const existingOffPageEdge = isTargetNode
+  const existingEdge = isTargetNode
     ? edges?.find((x) => x?.toConnectorId === edge.toConnectorId && IsOffPage(x?.fromNode))
     : edges?.find((x) => x?.fromConnectorId === edge.fromConnectorId && IsOffPage(x?.toNode));
 
-  return existingOffPageEdge !== undefined;
+  return existingEdge !== undefined;
 }
 
 function IsValidTransport(edge: Edge, node: Node) {

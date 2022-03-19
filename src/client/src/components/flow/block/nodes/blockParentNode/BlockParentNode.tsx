@@ -14,8 +14,9 @@ import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
 
 /**
  * Component for a ParentNode in BlockView.
+ * This component lives in conjunction with the FlowNode from BuildFlowParentNode.
  * @param data the data for the node.
- * @returns a parent node of the Flow node type with Mimir styling and functionality.
+ * @returns a Mimir ParentNode.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
