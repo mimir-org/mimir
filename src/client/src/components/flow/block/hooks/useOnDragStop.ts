@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
-import { setActiveBlockNode, updateBlockPosition } from "../../../redux/store/project/actions";
+import { setActiveBlockNode, updateBlockPosition } from "../../../../redux/store/project/actions";
 import { Node as FlowNode } from "react-flow-renderer";
 
 /**
- * Hook that runs when a Node has been dragged and moved in the canvas of Mimir.
+ * Hook that runs when a Node has been dragged and moved in the canvas of Mimir in BlockView.
  * @param _event
  * @param node
  * @param dispatch

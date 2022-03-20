@@ -1,5 +1,6 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
+import { Size } from "../../../../../../compLibrary/size/Size";
 import {
   Aspect,
   CONNECTOR_KIND,
@@ -22,7 +23,6 @@ export interface OffPageData {
   sourceNode: Node;
   sourceConnector: Connector;
   position: Position;
-  splitView: boolean;
 }
 
 /**
@@ -36,7 +36,6 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const sourceNode = data.sourceNode;
   const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
-  const marginY = data.splitView ? 0 : 80;
 
   const offPageNode = {
     id: CreateId(),
@@ -44,7 +43,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     label: "OffPage-" + sourceNode.label,
     aspect: Aspect.None,
     positionBlockX: data.position.x,
-    positionBlockY: data.position.y - marginY,
+    positionBlockY: sourceNode.positionBlockY + Size.NODE_HEIGHT, // Adjust relative to parent
     connectors: [],
     attributes: [],
     isHidden: false,

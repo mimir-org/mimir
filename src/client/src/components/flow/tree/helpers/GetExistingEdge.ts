@@ -1,7 +1,7 @@
 import { Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 
-export const GetExistingEdge = (project: Project, connection: FlowEdge | Connection, sourceNode: Node, targetNode: Node) => {
+const GetExistingEdge = (project: Project, connection: FlowEdge | Connection, sourceNode: Node, targetNode: Node) => {
   return project.edges?.find(
     (edge) =>
       edge.fromConnectorId === connection.sourceHandle &&
@@ -11,3 +11,5 @@ export const GetExistingEdge = (project: Project, connection: FlowEdge | Connect
       edge.isHidden === targetNode.isHidden
   );
 };
+
+export default GetExistingEdge;

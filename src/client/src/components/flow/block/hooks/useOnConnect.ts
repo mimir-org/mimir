@@ -1,14 +1,13 @@
-import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId, IsTransport } from "../helpers";
-import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
-import { createEdge } from "../../../redux/store/project/actions";
-import { Project } from "../../../models";
-import { ConvertToEdge } from "../converters";
-import { LibraryState } from "../../../redux/store/library/types";
-import { IsOffPage } from "../../../helpers";
 import { Dispatch } from "redux";
-import { GetBlockEdgeType } from "../block/helpers";
-import { HandleOffPageConnect } from "./helpers/HandleOffPageConnect";
+import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
+import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
+import { CreateId, IsTransport } from "../../helpers";
+import { createEdge } from "../../../../redux/store/project/actions";
+import { Project } from "../../../../models";
+import { ConvertToEdge } from "../../converters";
+import { LibraryState } from "../../../../redux/store/library/types";
+import { IsOffPage } from "../../../../helpers";
+import { GetBlockEdgeType, HandleOffPageConnect } from "../helpers";
 
 export interface Params {
   connection: FlowEdge | Connection;
@@ -24,7 +23,7 @@ export interface Params {
  * @param params
  * @returns an Edge connection.
  */
-const useOnConnectBlock = (params: Params) => {
+const useOnConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
   const { project, connection, library, animatedEdge, setElements, dispatch } = params;
   const id = CreateId();
@@ -59,4 +58,4 @@ const useOnConnectBlock = (params: Params) => {
   });
 };
 
-export default useOnConnectBlock;
+export default useOnConnect;

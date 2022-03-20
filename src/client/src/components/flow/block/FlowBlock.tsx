@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
-import * as hooks from "../hooks/";
+import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BuildFlowBlockElements } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -23,7 +23,7 @@ interface Props {
 /**
  * Component for the Flow library in BlockView.
  * @param interface
- * @returns a scene with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
@@ -49,14 +49,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     [project, node, secondaryNode, animatedEdge, parentNodeSize]
   );
 
-  const OnElementsRemove = (elementsToRemove: Elements) => {
-    const nodeToRemove = elementsToRemove[0];
+  const OnElementsRemove = (flowNodesToRemove: Elements) => {
+    const nodeToRemove = flowNodesToRemove[0];
+    if (!nodeToRemove) return;
     const edgesToRemove: Edge[] = [];
 
     project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === nodeToRemove?.id || edge.toNodeId === nodeToRemove?.id) edgesToRemove.push(edge);
+      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) edgesToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
+
+    return hooks.useOnRemove(flowNodesToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -68,7 +70,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnConnectBlock({ connection, project, library, animatedEdge, setElements, dispatch });
+    return hooks.useOnConnect({ connection, project, library, animatedEdge, setElements, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -83,7 +85,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnDropBlock({
+    return hooks.useOnDrop({
       event,
       project,
       user: userState.user,

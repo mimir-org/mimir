@@ -1,13 +1,12 @@
-import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
-import { CreateId, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../helpers";
+import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
+import { CreateId, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
 import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
-import { createEdge, removeEdge } from "../../../redux/store/project/actions";
-import { Node, Project } from "../../../models";
-import { ConvertToEdge } from "../converters";
-import { LibraryState } from "../../../redux/store/library/types";
+import { createEdge, removeEdge } from "../../../../redux/store/project/actions";
+import { Node, Project } from "../../../../models";
+import { ConvertToEdge } from "../../converters";
+import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { GetTreeEdgeType } from "../tree/helpers";
-import { GetExistingEdge } from "./helpers/GetExistingEdge";
+import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
 
 interface Params {
   connection: FlowEdge | Connection;
