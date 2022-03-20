@@ -66,7 +66,7 @@ function HandleDeleteElements(elements: Elements, elementsToRemove: Elements, pr
 }
 
 function HandleBlockEdges(edgesToRemove: Edge[], project: Project, dispatch: Dispatch) {
-  if (edgesToRemove.length !== 0) {
+  if (edgesToRemove.length) {
     edgesToRemove.forEach((edge) => {
       HandleRelatedOffPageElements(project, edge, dispatch);
       const node = project.nodes.find((n) => n.id === edge.toNodeId);
