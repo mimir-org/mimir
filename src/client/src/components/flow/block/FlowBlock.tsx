@@ -53,7 +53,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     const nodeToRemove = flowNodesToRemove[0];
     if (!nodeToRemove) return;
     const edgesToRemove: Edge[] = [];
-    console.log({ nodeToRemove });
+
     project.edges?.forEach((edge) => {
       if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) edgesToRemove.push(edge);
     });
