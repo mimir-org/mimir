@@ -11,6 +11,7 @@ import { HandleOffPageDelete } from "../nodes/blockOffPageNode/helpers";
 import { GetParent, IsPartOf } from "../../helpers";
 import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
 import { GetParentNodeConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
+import { IsOffPageEdge } from "../helpers";
 
 /**
  * Hook that runs when an element is deleted from Mimir in BlockView.
@@ -46,7 +47,7 @@ const useOnRemove = (
   }
 };
 
-const handleDeleteElements = (elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) => {
+const handleDeleteElements = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
   const selectedNode = GetSelectedBlockNode();
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
@@ -60,7 +61,7 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
 
         handleDeleteOffPageEdge(project, elem?.data?.edge, dispatch);
         dispatch(removeEdge(elem.id));
-        verifiedList.push(elem);
+        elementsToRemove.push(elem);
       }
     } else {
       const node = findProjectNodeByElementId(project, elem);
@@ -69,10 +70,19 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
 
       hasDeletedElement = true;
       dispatch(removeNode(elem.id));
-      verifiedList.push(elem);
+      elementsToRemove.push(elem);
     }
   }
   return hasDeletedElement;
+};
+
+const handleEdges = (edgesToRemove: Edge[], project: Project, dispatch: Dispatch) => {
+  if (edgesToRemove.length !== 0) {
+    edgesToRemove.forEach((edge) => {
+      handleDeleteOffPageEdge(project, edge, dispatch);
+      dispatch(removeEdge(edge.id));
+    });
+  }
 };
 
 const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
@@ -87,39 +97,28 @@ const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
   return project.nodes.find((node) => node.id === element.id);
 };
 
-const handleEdges = (edgesToRemove: Edge[], project: Project, dispatch: Dispatch) => {
-  if (edgesToRemove.length !== 0) {
-    edgesToRemove.forEach((edge) => {
-      handleDeleteOffPageEdge(project, edge, dispatch);
-      dispatch(removeEdge(edge.id));
-    });
-  }
-};
-
 const handleDeleteOffPageEdge = (project: Project, edge: Edge, dispatch: Dispatch) => {
-  project.nodes.forEach((node) => {
-    if (IsOffPage(node) && (node?.id === edge?.fromNodeId || node?.id === edge?.toNodeId)) {
+  project.nodes.forEach((n) => {
+    if (IsOffPage(n) && (n.id === edge.fromNodeId || n.id === edge.toNodeId)) {
       const transportEdge = project.edges.find(
-        (x) =>
-          (IsOffPage(x?.fromNode) || IsOffPage(x?.toNode)) &&
-          (x?.toConnectorId === edge?.toConnectorId || x?.fromConnectorId === edge?.fromConnectorId)
+        (e) => IsOffPageEdge(e) && (e?.toConnectorId === edge?.toConnectorId || e?.fromConnectorId === edge?.fromConnectorId)
       );
 
       if (!transportEdge) return;
 
-      const partOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
+      const partOfTerminal = n?.connectors?.find((c) => IsPartOf(c));
       const partOfEdge = project.edges.find(
-        (x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id
+        (x) => IsOffPage(x.toNode) && x.toNodeId === n.id && x.toConnectorId === partOfTerminal?.id
       );
 
-      const parentNode = GetParent(node);
-      const parentNodeConnector = GetParentNodeConnector(transportEdge, node);
+      const parentNode = GetParent(n);
+      const parentNodeConnector = GetParentNodeConnector(transportEdge, n);
       const parentConnectorIsRequired = false;
 
       dispatch(setOffPageStatus(parentNode?.id, parentNodeConnector?.id, parentConnectorIsRequired));
       dispatch(removeEdge(transportEdge?.id));
       dispatch(removeEdge(partOfEdge?.id));
-      dispatch(removeNode(node.id));
+      dispatch(removeNode(n.id));
     }
   });
 };

@@ -39,7 +39,7 @@ const useOnTreeRemove = (
   }
 };
 
-const handleDeleteElements = (elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) => {
+const handleDeleteElements = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
   const selectedNode = GetSelectedNode();
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
@@ -52,7 +52,7 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
         hasDeletedElement = true;
 
         dispatch(removeEdge(elem.id));
-        verifiedList.push(elem);
+        elementsToRemove.push(elem);
       }
     } else {
       const node = findProjectNodeByElementId(project, elem);
@@ -60,7 +60,7 @@ const handleDeleteElements = (elements: Elements, verifiedList: Elements, projec
 
       hasDeletedElement = true;
       dispatch(removeNode(elem.id));
-      verifiedList.push(elem);
+      elementsToRemove.push(elem);
     }
   }
   return hasDeletedElement;
