@@ -1,11 +1,11 @@
-import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { ConvertToEdge, ConvertToNode } from "../converters";
-import { Size } from "../../../compLibrary/size";
-import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsFamily, IsLocation, IsProduct } from "../../../helpers";
 import { Dispatch } from "redux";
+import { Size } from "../../../../compLibrary/size";
+import { addNode, createEdge } from "../../../../redux/store/project/actions";
+import { ConvertToEdge, ConvertToNode } from "../../converters";
+import { LibraryState } from "../../../../redux/store/library/types";
+import { GetSelectedNode, IsFamily, IsLocation, IsProduct } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
-import { Attribute, BlobData, Connector, ConnectorVisibility, LibItem, Node, Project, Simple, User } from "../../../models";
+import { Attribute, BlobData, Connector, ConnectorVisibility, LibItem, Node, Project, Simple, User } from "../../../../models";
 import {
   CreateId,
   IsInputTerminal,
@@ -14,7 +14,7 @@ import {
   IsPartOf,
   SetSiblingIndexOnNodeDrop,
   IsProductTerminal,
-} from "../helpers";
+} from "../../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 

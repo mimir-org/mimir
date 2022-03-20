@@ -1,32 +1,32 @@
 import { Elements, FlowElement, removeElements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
-import { EDGE_KIND, Edge, Project } from "../../../models";
-import { EDGE_TYPE, MODULE_TYPE } from "../../../models/project";
-import { SetPanelHeight } from "../../../modules/inspector/helpers";
-import { changeInspectorHeight } from "../../../modules/inspector/redux/inspectorSlice";
-import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
-import { removeEdge, removeNode, setOffPageStatus } from "../../../redux/store/project/actions";
-import { HandleOffPageDelete } from "../block/nodes/blockOffPageNode/helpers";
-import { GetParent, IsPartOf } from "../helpers";
-import { GetSelectedBlockNode, GetSelectedNode, IsAspectNode, IsBlockView, IsOffPage } from "../../../helpers";
-import { GetParentNodeConnector } from "../block/nodes/blockOffPageNode/helpers/HandleOffPageDelete";
+import { Size } from "../../../../compLibrary/size";
+import { EDGE_KIND, Edge, Project } from "../../../../models";
+import { EDGE_TYPE, MODULE_TYPE } from "../../../../models/project";
+import { SetPanelHeight } from "../../../../modules/inspector/helpers";
+import { changeInspectorHeight } from "../../../../modules/inspector/redux/inspectorSlice";
+import { setModuleVisibility } from "../../../../redux/store/modules/modulesSlice";
+import { removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
+import { HandleOffPageDelete } from "../nodes/blockOffPageNode/helpers";
+import { GetParent, IsPartOf } from "../../helpers";
+import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
+import { GetParentNodeConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 
 /**
- * Hook that runs when an element is deleted from Mimir.
+ * Hook that runs when an element is deleted from Mimir in BlockView.
  * If a Node is deleted the connected Edges are also deleted.
  * If an Edge is deleted the connect Nodes will not be deleted, except an edge between OffPageNodes.
  * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
  * @param elements
- * @param blockEdgesToRemove
+ * @param edgesToRemove
  * @param inspectorRef
  * @param project
  * @param setElements
  * @param dispatch
  */
-const useOnRemove = (
+const useOnRemoveBlock = (
   elements: Elements,
-  blockEdgesToRemove: Edge[],
+  edgesToRemove: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,
   setElements: React.Dispatch<React.SetStateAction<Elements>>,
@@ -34,10 +34,9 @@ const useOnRemove = (
 ) => {
   const elementsToRemove: Elements = [];
   elements = elements.filter((el) => !IsAspectNode(el.data));
-  const blockView = IsBlockView();
 
-  const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, blockView, dispatch);
-  if (blockView) handleBlockEdges(blockEdgesToRemove, project, dispatch);
+  const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
+  handleEdges(edgesToRemove, project, dispatch);
 
   if (hasDeletedElement) {
     dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
@@ -47,14 +46,8 @@ const useOnRemove = (
   }
 };
 
-const handleDeleteElements = (
-  elements: Elements,
-  verifiedList: Elements,
-  project: Project,
-  blockView: boolean,
-  dispatch: Dispatch
-) => {
-  const selectedNode = blockView ? GetSelectedBlockNode() : GetSelectedNode();
+const handleDeleteElements = (elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) => {
+  const selectedNode = GetSelectedBlockNode();
   const edgeTypes = Object.values(EDGE_TYPE);
   let hasDeletedElement = false;
 
@@ -94,7 +87,7 @@ const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
   return project.nodes.find((node) => node.id === element.id);
 };
 
-const handleBlockEdges = (edgesToRemove: Edge[], project: Project, dispatch: Dispatch) => {
+const handleEdges = (edgesToRemove: Edge[], project: Project, dispatch: Dispatch) => {
   if (edgesToRemove.length !== 0) {
     edgesToRemove.forEach((edge) => {
       handleRelatedOffPageElements(project, edge, dispatch);
@@ -131,4 +124,4 @@ const handleRelatedOffPageElements = (project: Project, edge: Edge, dispatch: Di
   });
 };
 
-export default useOnRemove;
+export default useOnRemoveBlock;
