@@ -1,3 +1,3 @@
-export { default as useOnDropTree } from "./useOnDropTree";
-export { default as useOnConnectTree } from "./useOnConnectTree";
-export { default as useOnRemoveTree } from "./useOnRemoveTree";
+export { default as useOnTreeDrop } from "./useOnTreeDrop";
+export { default as useOnTreeConnect } from "./useOnTreeConnect";
+export { default as useOnTreeRemove } from "./useOnTreeRemove";

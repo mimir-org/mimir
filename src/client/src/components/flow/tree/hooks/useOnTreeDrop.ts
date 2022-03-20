@@ -49,7 +49,7 @@ interface OnDropParameters {
  * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
  * @param params
  */
-const useOnDropTree = (params: OnDropParameters) => {
+const useOnTreeDrop = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
 
   event.stopPropagation();
@@ -152,4 +152,4 @@ const setInitConnectorVisibility = (connector: Connector, targetNode: Node) => {
   } else connector.connectorVisibility = ConnectorVisibility.None;
 };
 
-export default useOnDropTree;
+export default useOnTreeDrop;

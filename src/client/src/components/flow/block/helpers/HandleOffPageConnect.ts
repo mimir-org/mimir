@@ -5,7 +5,7 @@ import { EDGE_TYPE } from "../../../../models/project";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { ConvertToEdge } from "../../converters";
 import { CreateId, GetParent, IsTransport } from "../../helpers";
-import { Params } from "../hooks/useOnConnectBlock";
+import { Params } from "../hooks/useOnConnect";
 
 /**
  * Component to handle a connection between two OffPageNodes.

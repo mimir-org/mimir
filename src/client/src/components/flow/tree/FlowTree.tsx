@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import { useOnConnectTree, useOnDropTree, useOnRemoveTree } from "./hooks";
+import { useOnTreeConnect, useOnTreeDrop, useOnTreeRemove } from "./hooks";
 import { BuildTreeElements } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
@@ -51,7 +51,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: Elements) => {
-    return useOnRemoveTree(elementsToRemove, inspectorRef, project, setElements, dispatch);
+    return useOnTreeRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnLoad = useCallback(
@@ -63,11 +63,11 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   );
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return useOnConnectTree({ connection, project, setElements, dispatch, library, animatedEdge });
+    return useOnTreeConnect({ connection, project, setElements, dispatch, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnDropTree({
+    return useOnTreeDrop({
       event,
       project,
       user: userState.user,
