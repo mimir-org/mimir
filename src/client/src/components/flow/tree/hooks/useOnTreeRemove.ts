@@ -1,10 +1,11 @@
-import { Elements, FlowElement, removeElements } from "react-flow-renderer";
+import { Elements, removeElements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { EDGE_KIND, Project } from "../../../../models";
+import { Project } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
 import { GetSelectedNode, IsAspectNode } from "../../../../helpers";
 import { CloseInspector } from "../../handlers";
+import { FindProjectEdgeByElementId, FindProjectNodeByElementId, IsElementEdge } from "../../helpers";
 
 /**
  * Hook that runs when an element is deleted from Mimir in TreeView.
@@ -24,9 +25,8 @@ const useOnTreeRemove = (
   dispatch: Dispatch
 ) => {
   const elementsToRemove: Elements = [];
-  elements = elements.filter((el) => !IsAspectNode(el.data));
 
-  FindElementsToRemove(elements, elementsToRemove, project, dispatch);
+  HandleElementsToRemove(elements, elementsToRemove, project, dispatch);
 
   if (elementsToRemove.length) {
     CloseInspector(inspectorRef, dispatch);
@@ -34,38 +34,26 @@ const useOnTreeRemove = (
   }
 };
 
-const FindElementsToRemove = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
+const HandleElementsToRemove = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
   const selectedNode = GetSelectedNode();
   const edgeTypes = Object.values(EDGE_TYPE);
 
-  for (const elem of elements) {
-    const isEdge = isElementEdge(edgeTypes, elem);
+  elements.forEach((elem) => {
+    if (IsAspectNode(elem.data)) return;
 
-    if (isEdge) {
-      if (!IsAspectNode(selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
+    if (IsElementEdge(edgeTypes, elem)) {
+      if (!IsAspectNode(selectedNode) && !FindProjectEdgeByElementId(project, elem)?.isLocked) {
         dispatch(removeEdge(elem.id));
         elementsToRemove.push(elem);
       }
     } else {
-      const node = findProjectNodeByElementId(project, elem);
-      if (node?.isLocked) continue;
-
-      dispatch(removeNode(elem.id));
-      elementsToRemove.push(elem);
+      const node = FindProjectNodeByElementId(project, elem);
+      if (!node?.isLocked) {
+        dispatch(removeNode(elem.id));
+        elementsToRemove.push(elem);
+      }
     }
-  }
-};
-
-const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
-  return edgeTypes.some((x) => x === element.type?.toString() || element.data?.kind === EDGE_KIND);
-};
-
-const findProjectEdgeByElementId = (project: Project, element: FlowElement) => {
-  return project.edges.find((edge) => edge.id === element.id);
-};
-
-const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
-  return project.nodes.find((node) => node.id === element.id);
+  });
 };
 
 export default useOnTreeRemove;

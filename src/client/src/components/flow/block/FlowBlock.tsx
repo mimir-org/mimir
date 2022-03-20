@@ -49,14 +49,15 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     [project, node, secondaryNode, animatedEdge, parentNodeSize]
   );
 
-  const OnElementsRemove = (elementsToRemove: Elements) => {
-    const nodeToRemove = elementsToRemove[0];
+  const OnElementsRemove = (flowNodesToRemove: Elements) => {
+    const nodeToRemove = flowNodesToRemove[0];
+    if (!nodeToRemove) return;
     const edgesToRemove: Edge[] = [];
 
     project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === nodeToRemove?.id || edge.toNodeId === nodeToRemove?.id) edgesToRemove.push(edge);
+      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) edgesToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
+    return hooks.useOnRemove(flowNodesToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {

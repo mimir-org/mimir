@@ -1,13 +1,12 @@
-import { Elements, FlowElement, removeElements } from "react-flow-renderer";
+import { Elements, removeElements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { EDGE_KIND, Edge, Project } from "../../../../models";
+import { Edge, Project } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
-import { HandleOffPageDelete } from "../nodes/blockOffPageNode/helpers";
-import { GetParent, IsPartOf } from "../../helpers";
+import { HandleOffPageDelete } from "../../block/nodes/blockOffPageNode/helpers";
+import { FindProjectEdgeByElementId, FindProjectNodeByElementId, GetParent, IsElementEdge, IsPartOf } from "../../helpers";
 import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
-import { GetParentConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
-import { IsOffPageEdge } from "../helpers";
+import { GetParentConnector } from "../../block/nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 import { CloseInspector } from "../../handlers";
 
 /**
@@ -16,7 +15,7 @@ import { CloseInspector } from "../../handlers";
  * If an Edge is deleted the connect Nodes will not be deleted, except an edge between OffPageNodes.
  * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
  * @param elements
- * @param edgesToRemove
+ * @param blockEdgesToRemove
  * @param inspectorRef
  * @param project
  * @param setElements
@@ -24,17 +23,16 @@ import { CloseInspector } from "../../handlers";
  */
 const useOnRemove = (
   elements: Elements,
-  edgesToRemove: Edge[],
+  blockEdgesToRemove: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,
   setElements: React.Dispatch<React.SetStateAction<Elements>>,
   dispatch: Dispatch
 ) => {
   const elementsToRemove: Elements = [];
-  elements = elements.filter((el) => !IsAspectNode(el.data));
 
-  FindElementsToRemove(elements, elementsToRemove, project, dispatch);
-  HandleEdges(edgesToRemove, project, dispatch);
+  HandleDeleteElements(elements, elementsToRemove, project, dispatch);
+  HandleBlockEdges(blockEdgesToRemove, project, dispatch);
 
   if (elementsToRemove.length) {
     CloseInspector(inspectorRef, dispatch);
@@ -42,75 +40,66 @@ const useOnRemove = (
   }
 };
 
-function FindElementsToRemove(elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) {
+function HandleDeleteElements(elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) {
   const selectedNode = GetSelectedBlockNode();
   const edgeTypes = Object.values(EDGE_TYPE);
 
-  for (const elem of elements) {
+  elements.forEach((elem) => {
+    if (IsAspectNode(elem.data)) return;
     const isEdge = IsElementEdge(edgeTypes, elem);
 
     if (isEdge) {
       if (!IsAspectNode(selectedNode) && !FindProjectEdgeByElementId(project, elem)?.isLocked) {
-        HandleDeleteOffPageEdge(project, elem?.data?.edge, dispatch);
+        HandleRelatedOffPageElements(project, elem?.data?.edge, dispatch);
         dispatch(removeEdge(elem.id));
-        elementsToRemove.push(elem);
+        verifiedList.push(elem);
       }
     } else {
       const node = FindProjectNodeByElementId(project, elem);
-      if (node?.isLocked) continue;
-      if (IsOffPage(node)) HandleOffPageDelete(project, node, dispatch);
-
-      dispatch(removeNode(elem.id));
-      elementsToRemove.push(elem);
+      if (!node?.isLocked) {
+        if (IsOffPage(node)) HandleOffPageDelete(project, node, dispatch);
+        dispatch(removeNode(elem.id));
+        verifiedList.push(elem);
+      }
     }
-  }
+  });
 }
 
-function HandleEdges(edgesToRemove: Edge[], project: Project, dispatch: Dispatch) {
-  if (edgesToRemove.length) {
+function HandleBlockEdges(edgesToRemove: Edge[], project: Project, dispatch: Dispatch) {
+  if (edgesToRemove.length !== 0) {
     edgesToRemove.forEach((edge) => {
-      HandleDeleteOffPageEdge(project, edge, dispatch);
+      HandleRelatedOffPageElements(project, edge, dispatch);
       dispatch(removeEdge(edge.id));
     });
   }
 }
 
-function IsElementEdge(edgeTypes: string[], element: FlowElement) {
-  return edgeTypes.some((x) => x === element.type?.toString() || element.data?.kind === EDGE_KIND);
-}
+function HandleRelatedOffPageElements(project: Project, edge: Edge, dispatch: Dispatch) {
+  project.nodes.forEach((node) => {
+    const isOffPageElement = IsOffPage(node) && (node?.id === edge?.fromNodeId || node?.id === edge?.toNodeId);
 
-function FindProjectEdgeByElementId(project: Project, element: FlowElement) {
-  return project.edges.find((edge) => edge.id === element.id);
-}
-
-function FindProjectNodeByElementId(project: Project, element: FlowElement) {
-  return project.nodes.find((node) => node.id === element.id);
-}
-
-function HandleDeleteOffPageEdge(project: Project, edge: Edge, dispatch: Dispatch) {
-  const edges = project.edges;
-  const nodes = project.nodes;
-
-  nodes.forEach((n) => {
-    if (IsOffPage(n) && (n.id === edge.fromNodeId || n.id === edge.toNodeId)) {
-      const transportEdge = edges.find(
-        (e) => IsOffPageEdge(e) && (e?.toConnectorId === edge?.toConnectorId || e?.fromConnectorId === edge?.fromConnectorId)
+    if (isOffPageElement) {
+      const transportEdge = project.edges.find(
+        (x) =>
+          (IsOffPage(x?.fromNode) || IsOffPage(x?.toNode)) &&
+          (x?.toConnectorId === edge?.toConnectorId || x?.fromConnectorId === edge?.fromConnectorId)
       );
 
       if (!transportEdge) return;
 
-      const partOfTerminal = n?.connectors?.find((c) => IsPartOf(c));
+      const partOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
       const partOfEdge = project.edges.find(
-        (x) => IsOffPage(x.toNode) && x.toNodeId === n.id && x.toConnectorId === partOfTerminal?.id
+        (x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id
       );
 
-      const parentNode = GetParent(n);
-      const parentConnector = GetParentConnector(transportEdge, n);
+      const parentNode = GetParent(node);
+      const parentNodeConnector = GetParentConnector(transportEdge, node);
+      const parentConnectorIsRequired = false;
 
-      dispatch(setOffPageStatus(parentNode?.id, parentConnector?.id, false));
+      dispatch(setOffPageStatus(parentNode?.id, parentNodeConnector?.id, parentConnectorIsRequired));
       dispatch(removeEdge(transportEdge?.id));
       dispatch(removeEdge(partOfEdge?.id));
-      dispatch(removeNode(n.id));
+      dispatch(removeNode(node.id));
     }
   });
 }
