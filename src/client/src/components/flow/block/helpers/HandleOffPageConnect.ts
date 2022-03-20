@@ -9,7 +9,9 @@ import { IsOffPageEdge } from "./";
 
 /**
  * Component to handle a connection between two OffPageNodes.
- * After the connection is complete the OffPageNodes are deleted, and one new transport edge is created.
+ * When the connection is completed the OffPageNodes are deleted,
+ * and one new transport edge is created between the parents of the OffPageNodes.
+ * This component is called from the useOnConnect hook.
  * @param params
  * @param sourceNode
  * @param targetNode
