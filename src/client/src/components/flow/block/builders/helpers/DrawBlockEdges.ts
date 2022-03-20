@@ -21,7 +21,7 @@ const DrawFlowBlockEdges = (project: Project, elements: Elements<Edge>, secondar
       const targetNodeIsDisplayed = elements.some((x) => x.id === edge.toNodeId);
 
       if (sourceNodeIsDisplayed && targetNodeIsDisplayed) {
-        const edgeType = GetBlockEdgeType(edge);
+        const edgeType = GetBlockEdgeType(edge.fromConnector, edge.fromNode, edge.toNode);
         const blockEdge = BuildFlowBlockEdge(nodes, edge, edgeType, secondaryNode, animatedEdge);
         if (blockEdge) elements.push(blockEdge);
       }
