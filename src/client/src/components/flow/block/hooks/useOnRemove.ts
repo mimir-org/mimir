@@ -1,17 +1,14 @@
 import { Elements, FlowElement, removeElements } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Size } from "../../../../compLibrary/size";
 import { EDGE_KIND, Edge, Project } from "../../../../models";
-import { EDGE_TYPE, MODULE_TYPE } from "../../../../models/project";
-import { SetPanelHeight } from "../../../../modules/inspector/helpers";
-import { changeInspectorHeight } from "../../../../modules/inspector/redux/inspectorSlice";
-import { setModuleVisibility } from "../../../../redux/store/modules/modulesSlice";
+import { EDGE_TYPE } from "../../../../models/project";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { HandleOffPageDelete } from "../nodes/blockOffPageNode/helpers";
 import { GetParent, IsPartOf } from "../../helpers";
 import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
 import { GetParentConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 import { IsOffPageEdge } from "../helpers";
+import { CloseInspector } from "../../handlers";
 
 /**
  * Hook that runs when an element is deleted from Mimir in BlockView.
@@ -90,16 +87,13 @@ function FindProjectNodeByElementId(project: Project, element: FlowElement) {
   return project.nodes.find((node) => node.id === element.id);
 }
 
-function CloseInspector(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
-  dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
-  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
-}
-
 function HandleDeleteOffPageEdge(project: Project, edge: Edge, dispatch: Dispatch) {
-  project.nodes.forEach((n) => {
+  const edges = project.edges;
+  const nodes = project.nodes;
+
+  nodes.forEach((n) => {
     if (IsOffPage(n) && (n.id === edge.fromNodeId || n.id === edge.toNodeId)) {
-      const transportEdge = project.edges.find(
+      const transportEdge = edges.find(
         (e) => IsOffPageEdge(e) && (e?.toConnectorId === edge?.toConnectorId || e?.fromConnectorId === edge?.fromConnectorId)
       );
 
