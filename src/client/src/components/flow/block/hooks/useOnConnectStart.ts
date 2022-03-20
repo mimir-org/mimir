@@ -1,8 +1,8 @@
-import { EdgeEvent } from "../../../models/project";
-import { SaveEventData } from "../../../redux/store/localStorage/localStorage";
+import { EdgeEvent } from "../../../../models/project";
+import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 
 /**
- * Hook that runs when a user starts dragging a connection from a terminal.
+ * Hook that runs when a user starts dragging a connection from a terminal in BlockView.
  * @param e
  * @param params
  */

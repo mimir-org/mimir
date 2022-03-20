@@ -1,7 +1,7 @@
-import { addNode, createEdge } from "../../../redux/store/project/actions";
-import { ConvertToEdge, ConvertToNode } from "../converters";
-import { LibraryState } from "../../../redux/store/library/types";
-import { GetSelectedNode, IsAspectNode, IsFamily, IsLocation, IsProduct } from "../../../helpers";
+import { addNode, createEdge } from "../../../../redux/store/project/actions";
+import { ConvertToEdge, ConvertToNode } from "../../converters";
+import { LibraryState } from "../../../../redux/store/library/types";
+import { GetSelectedNode, IsAspectNode, IsFamily, IsLocation, IsProduct } from "../../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import {
@@ -15,7 +15,7 @@ import {
   Project,
   Simple,
   User,
-} from "../../../models";
+} from "../../../../models";
 import {
   CreateId,
   GetProjectData,
@@ -27,7 +27,7 @@ import {
   IsSubProject,
   SetSiblingIndexOnNodeDrop,
   IsProductTerminal,
-} from "../helpers";
+} from "../../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -49,7 +49,7 @@ interface OnDropParameters {
  * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
  * @param params
  */
-const useOnDropTree = (params: OnDropParameters) => {
+const useOnTreeDrop = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
 
   event.stopPropagation();
@@ -152,4 +152,4 @@ const setInitConnectorVisibility = (connector: Connector, targetNode: Node) => {
   } else connector.connectorVisibility = ConnectorVisibility.None;
 };
 
-export default useOnDropTree;
+export default useOnTreeDrop;

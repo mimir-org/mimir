@@ -3,7 +3,7 @@ import { IsOffPage } from "../../../../../../helpers";
 import { Edge, Project } from "../../../../../../models";
 import { removeEdge, removeNode } from "../../../../../../redux/store/project/actions";
 import { GetParent } from "../../../../helpers";
-import { getOffPagePartOfEdge } from "./HandleOffPageDelete";
+import { GetPartOfEdge } from "./HandleOffPageDelete";
 
 /**
  * Component to handle deleting a Connected OffPageNode. All related OffPage nodes and edges are removed.
@@ -28,7 +28,7 @@ const HandleConnectedOffPageDelete = (project: Project, transportEdge: Edge, ref
     ? oppositeTransportEdge.toNode
     : oppositeTransportEdge.fromNode;
 
-  const oppositePartOfEdge = getOffPagePartOfEdge(oppositeOffPageNode, GetParent(oppositeOffPageNode), project);
+  const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode, GetParent(oppositeOffPageNode), project);
 
   dispatch(removeNode(oppositeOffPageNode.id));
   dispatch(removeEdge(oppositeTransportEdge.id));

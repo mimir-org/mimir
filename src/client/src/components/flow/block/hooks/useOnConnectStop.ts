@@ -1,17 +1,17 @@
-import { BlockNodeSize, EdgeEvent } from "../../../models/project";
-import { LoadEventData, SaveEventData } from "../../../redux/store/localStorage";
-import { Connector, Node, Project } from "../../../models";
-import { IsOffPage } from "../../../helpers";
-import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../helpers";
-import { CreateRequiredOffPageNode } from "../block/nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
-import { setValidation } from "../../../redux/store/validation/validationSlice";
-import { TextResources } from "../../../assets/text";
 import { FlowTransform } from "react-flow-renderer";
+import { BlockNodeSize, EdgeEvent } from "../../../../models/project";
+import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
+import { Connector, Node, Project } from "../../../../models";
+import { IsOffPage } from "../../../../helpers";
+import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../../helpers";
+import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequiredOffPageNode";
+import { Size } from "../../../../compLibrary/size";
+import { setValidation } from "../../../../redux/store/validation/validationSlice";
+import { TextResources } from "../../../../assets/text";
 
 /**
- * Hook that runs when a user drags a connection from a terminal and releases the mouse button.
+ * Hook that runs when a user drags a connection from a terminal and releases the mouse button in BlockView.
  * If a connection is completed between two terminals, the hook useOnConnect runs.
  * An OffPageNode is created if the connection is released within the dropzone for an OffPageNode.
  * The dropzone is located to the left or right of the ParentBlockNode, depending on the OffPageNode type.
@@ -51,9 +51,10 @@ const useOnConnectStop = (
   }
 
   const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn, parentNodeSize);
-
   if (!isValidOffPageDrop) return;
-  CreateRequiredOffPageNode(sourceNode, sourceConn, { x: e.clientX, y: e.clientY }, secondaryNode !== null, true, dispatch);
+
+  const position = { x: e.clientX, y: e.clientY };
+  CreateRequiredOffPageNode(sourceNode, sourceConn, position, true, dispatch);
   SaveEventData(null, "edgeEvent");
 };
 
