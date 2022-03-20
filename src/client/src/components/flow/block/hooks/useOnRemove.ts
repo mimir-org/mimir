@@ -40,7 +40,7 @@ const useOnRemove = (
   }
 };
 
-function HandleDeleteElements(elements: Elements, verifiedList: Elements, project: Project, dispatch: Dispatch) {
+function HandleDeleteElements(elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) {
   const selectedNode = GetSelectedBlockNode();
   const edgeTypes = Object.values(EDGE_TYPE);
 
@@ -52,14 +52,14 @@ function HandleDeleteElements(elements: Elements, verifiedList: Elements, projec
       if (!IsAspectNode(selectedNode) && !FindProjectEdgeByElementId(project, elem)?.isLocked) {
         HandleRelatedOffPageElements(project, elem?.data?.edge, dispatch);
         dispatch(removeEdge(elem.id));
-        verifiedList.push(elem);
+        elementsToRemove.push(elem);
       }
     } else {
       const node = FindProjectNodeByElementId(project, elem);
       if (!node?.isLocked) {
         if (IsOffPage(node)) HandleOffPageDelete(project, node, dispatch);
         dispatch(removeNode(elem.id));
-        verifiedList.push(elem);
+        elementsToRemove.push(elem);
       }
     }
   });
@@ -69,7 +69,8 @@ function HandleBlockEdges(edgesToRemove: Edge[], project: Project, dispatch: Dis
   if (edgesToRemove.length !== 0) {
     edgesToRemove.forEach((edge) => {
       HandleRelatedOffPageElements(project, edge, dispatch);
-      dispatch(removeEdge(edge.id));
+      const node = project.nodes.find((n) => n.id === edge.toNodeId);
+      if (!node?.isLocked) dispatch(removeEdge(edge.id));
     });
   }
 }

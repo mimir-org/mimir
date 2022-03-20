@@ -25,7 +25,6 @@ const useOnTreeRemove = (
   dispatch: Dispatch
 ) => {
   const elementsToRemove: Elements = [];
-
   HandleElementsToRemove(elements, elementsToRemove, project, dispatch);
 
   if (elementsToRemove.length) {
@@ -40,8 +39,9 @@ const HandleElementsToRemove = (elements: Elements, elementsToRemove: Elements, 
 
   elements.forEach((elem) => {
     if (IsAspectNode(elem.data)) return;
+    const isEdge = IsElementEdge(edgeTypes, elem);
 
-    if (IsElementEdge(edgeTypes, elem)) {
+    if (isEdge) {
       if (!IsAspectNode(selectedNode) && !FindProjectEdgeByElementId(project, elem)?.isLocked) {
         dispatch(removeEdge(elem.id));
         elementsToRemove.push(elem);
