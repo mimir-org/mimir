@@ -10,7 +10,7 @@ import { removeEdge, removeNode, setOffPageStatus } from "../../../../redux/stor
 import { HandleOffPageDelete } from "../nodes/blockOffPageNode/helpers";
 import { GetParent, IsPartOf } from "../../helpers";
 import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
-import { GetParentNodeConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
+import { GetParentConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 import { IsOffPageEdge } from "../helpers";
 
 /**
@@ -36,68 +36,67 @@ const useOnRemove = (
   const elementsToRemove: Elements = [];
   elements = elements.filter((el) => !IsAspectNode(el.data));
 
-  const hasDeletedElement = handleDeleteElements(elements, elementsToRemove, project, dispatch);
-  handleEdges(edgesToRemove, project, dispatch);
+  FindElementsToRemove(elements, elementsToRemove, project, dispatch);
+  HandleEdges(edgesToRemove, project, dispatch);
 
-  if (hasDeletedElement) {
-    dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-    SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
-    dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
+  if (elementsToRemove.length) {
+    CloseInspector(inspectorRef, dispatch);
     return setElements((els) => removeElements(elementsToRemove, els));
   }
 };
 
-const handleDeleteElements = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
+function FindElementsToRemove(elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) {
   const selectedNode = GetSelectedBlockNode();
   const edgeTypes = Object.values(EDGE_TYPE);
-  let hasDeletedElement = false;
 
   for (const elem of elements) {
-    const isEdge = isElementEdge(edgeTypes, elem);
+    const isEdge = IsElementEdge(edgeTypes, elem);
 
     if (isEdge) {
-      if (!IsAspectNode(selectedNode) && !findProjectEdgeByElementId(project, elem)?.isLocked) {
-        hasDeletedElement = true;
-
-        handleDeleteOffPageEdge(project, elem?.data?.edge, dispatch);
+      if (!IsAspectNode(selectedNode) && !FindProjectEdgeByElementId(project, elem)?.isLocked) {
+        HandleDeleteOffPageEdge(project, elem?.data?.edge, dispatch);
         dispatch(removeEdge(elem.id));
         elementsToRemove.push(elem);
       }
     } else {
-      const node = findProjectNodeByElementId(project, elem);
+      const node = FindProjectNodeByElementId(project, elem);
       if (node?.isLocked) continue;
       if (IsOffPage(node)) HandleOffPageDelete(project, node, dispatch);
 
-      hasDeletedElement = true;
       dispatch(removeNode(elem.id));
       elementsToRemove.push(elem);
     }
   }
-  return hasDeletedElement;
-};
+}
 
-const handleEdges = (edgesToRemove: Edge[], project: Project, dispatch: Dispatch) => {
-  if (edgesToRemove.length !== 0) {
+function HandleEdges(edgesToRemove: Edge[], project: Project, dispatch: Dispatch) {
+  if (edgesToRemove.length) {
     edgesToRemove.forEach((edge) => {
-      handleDeleteOffPageEdge(project, edge, dispatch);
+      HandleDeleteOffPageEdge(project, edge, dispatch);
       dispatch(removeEdge(edge.id));
     });
   }
-};
+}
 
-const isElementEdge = (edgeTypes: string[], element: FlowElement) => {
+function IsElementEdge(edgeTypes: string[], element: FlowElement) {
   return edgeTypes.some((x) => x === element.type?.toString() || element.data?.kind === EDGE_KIND);
-};
+}
 
-const findProjectEdgeByElementId = (project: Project, element: FlowElement) => {
+function FindProjectEdgeByElementId(project: Project, element: FlowElement) {
   return project.edges.find((edge) => edge.id === element.id);
-};
+}
 
-const findProjectNodeByElementId = (project: Project, element: FlowElement) => {
+function FindProjectNodeByElementId(project: Project, element: FlowElement) {
   return project.nodes.find((node) => node.id === element.id);
-};
+}
 
-const handleDeleteOffPageEdge = (project: Project, edge: Edge, dispatch: Dispatch) => {
+function CloseInspector(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
+  dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
+  SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
+  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
+}
+
+function HandleDeleteOffPageEdge(project: Project, edge: Edge, dispatch: Dispatch) {
   project.nodes.forEach((n) => {
     if (IsOffPage(n) && (n.id === edge.fromNodeId || n.id === edge.toNodeId)) {
       const transportEdge = project.edges.find(
@@ -112,15 +111,14 @@ const handleDeleteOffPageEdge = (project: Project, edge: Edge, dispatch: Dispatc
       );
 
       const parentNode = GetParent(n);
-      const parentNodeConnector = GetParentNodeConnector(transportEdge, n);
-      const parentConnectorIsRequired = false;
+      const parentConnector = GetParentConnector(transportEdge, n);
 
-      dispatch(setOffPageStatus(parentNode?.id, parentNodeConnector?.id, parentConnectorIsRequired));
+      dispatch(setOffPageStatus(parentNode?.id, parentConnector?.id, false));
       dispatch(removeEdge(transportEdge?.id));
       dispatch(removeEdge(partOfEdge?.id));
       dispatch(removeNode(n.id));
     }
   });
-};
+}
 
 export default useOnRemove;

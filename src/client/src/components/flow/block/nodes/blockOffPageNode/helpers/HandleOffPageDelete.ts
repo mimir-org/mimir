@@ -17,11 +17,10 @@ const HandleOffPageDelete = (project: Project, node: Node, dispatch: Dispatch) =
   const parentNode = GetParent(node);
   const transportEdge = GetTransportEdge(node, parentNode, project);
   const partOfEdge = GetPartOfEdge(node, parentNode, project);
-  const parentNodeConnector = GetParentNodeConnector(transportEdge, node);
-  const connectedEdge = GetConnectedEdge(parentNodeConnector, project);
+  const parentConnector = GetParentConnector(transportEdge, node);
+  const connectedEdge = GetConnectedEdge(parentConnector, project);
 
-  if (transportEdge && !connectedEdge) dispatch(setOffPageStatus(parentNode.id, parentNodeConnector.id, false));
-
+  if (transportEdge && !connectedEdge) dispatch(setOffPageStatus(parentNode.id, parentConnector.id, false));
   if (connectedEdge) HandleConnectedOffPageDelete(project, transportEdge, connectedEdge, dispatch);
   if (partOfEdge) dispatch(removeEdge(partOfEdge.id));
 };
@@ -50,7 +49,7 @@ export function GetPartOfEdge(node: Node, parentNode: Node, project: Project) {
   );
 }
 
-export function GetParentNodeConnector(transportEdge: Edge, node: Node) {
+export function GetParentConnector(transportEdge: Edge, node: Node) {
   return transportEdge?.fromConnector?.nodeId === node.id ? transportEdge?.toConnector : transportEdge?.fromConnector;
 }
 
