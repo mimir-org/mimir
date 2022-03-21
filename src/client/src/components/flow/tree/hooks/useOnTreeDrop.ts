@@ -5,7 +5,6 @@ import { GetSelectedNode, IsAspectNode, IsFamily, IsLocation, IsProduct } from "
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import {
-  Attribute,
   BlobData,
   Connector,
   ConnectorVisibility,
@@ -13,7 +12,6 @@ import {
   LibrarySubProjectItem,
   Node,
   Project,
-  Simple,
   User,
 } from "../../../../models";
 import {
@@ -86,9 +84,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
-  targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
-  targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
-  targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
+  targetNode.connectors?.forEach((connector) => setInitConnectorVisibility(connector, targetNode));
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
@@ -108,30 +104,6 @@ const handleCreatePartOfEdge = (
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
   dispatch(createEdge(partofEdge));
-};
-
-const initSimple = (simple: Simple, targetNode: Node) => {
-  const simpleId = CreateId();
-  simple.id = simpleId;
-  simple.nodeId = targetNode.id;
-  simple.attributes.forEach((a) => {
-    a.simpleId = simpleId;
-  });
-};
-
-const initConnector = (connector: Connector, targetNode: Node) => {
-  connector.id = CreateId();
-  connector.nodeId = targetNode.id;
-  connector.attributes?.forEach((a) => {
-    a.id = CreateId();
-  });
-
-  setInitConnectorVisibility(connector, targetNode);
-};
-
-const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
-  attribute.nodeId = targetNode.id;
-  attribute.id = CreateId();
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
