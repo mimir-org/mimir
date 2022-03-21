@@ -8,6 +8,7 @@ import { FindProjectEdgeByElementId, FindProjectNodeByElementId, GetParent, IsEl
 import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
 import { GetParentConnector } from "../../block/nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 import { CloseInspector } from "../../handlers";
+import { IsOffPageEdge } from "../helpers";
 
 /**
  * Hook that runs when an element is deleted from Mimir in BlockView.
@@ -76,32 +77,30 @@ function HandleBlockEdges(edgesToRemove: Edge[], project: Project, dispatch: Dis
 }
 
 function HandleRelatedOffPageElements(project: Project, edge: Edge, dispatch: Dispatch) {
+  if (!edge) return;
+
   project.nodes.forEach((node) => {
-    const isOffPageElement = IsOffPage(node) && (node?.id === edge?.fromNodeId || node?.id === edge?.toNodeId);
+    const hasRelatedOffPageNode = IsOffPage(node) && (node.id === edge.fromNodeId || node.id === edge.toNodeId);
+    if (!hasRelatedOffPageNode) return;
 
-    if (isOffPageElement) {
-      const transportEdge = project.edges.find(
-        (x) =>
-          (IsOffPage(x?.fromNode) || IsOffPage(x?.toNode)) &&
-          (x?.toConnectorId === edge?.toConnectorId || x?.fromConnectorId === edge?.fromConnectorId)
-      );
+    const transportEdge = project.edges.find(
+      (x) => IsOffPageEdge(x) && (x.toConnectorId === edge.toConnectorId || x.fromConnectorId === edge.fromConnectorId)
+    );
 
-      if (!transportEdge) return;
+    if (!transportEdge) return;
 
-      const partOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
-      const partOfEdge = project.edges.find(
-        (x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id
-      );
+    const partOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
+    const partOfEdge = project.edges.find(
+      (x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id
+    );
 
-      const parentNode = GetParent(node);
-      const parentNodeConnector = GetParentConnector(transportEdge, node);
-      const parentConnectorIsRequired = false;
+    const parentNode = GetParent(node);
+    const parentNodeConnector = GetParentConnector(transportEdge, node);
 
-      dispatch(setOffPageStatus(parentNode?.id, parentNodeConnector?.id, parentConnectorIsRequired));
-      dispatch(removeEdge(transportEdge?.id));
-      dispatch(removeEdge(partOfEdge?.id));
-      dispatch(removeNode(node.id));
-    }
+    dispatch(setOffPageStatus(parentNode?.id, parentNodeConnector?.id, false));
+    dispatch(removeEdge(transportEdge?.id));
+    dispatch(removeEdge(partOfEdge?.id));
+    dispatch(removeNode(node.id));
   });
 }
 
