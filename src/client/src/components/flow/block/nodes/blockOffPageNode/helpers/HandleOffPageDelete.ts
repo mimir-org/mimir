@@ -15,6 +15,8 @@ import { GetParent, IsPartOf, IsTransport } from "../../../../helpers";
  */
 const HandleOffPageDelete = (project: Project, node: Node, dispatch: Dispatch) => {
   const parentNode = GetParent(node);
+  if (!parentNode) return;
+
   const transportEdge = GetTransportEdge(node, parentNode, project);
   const partOfEdge = GetPartOfEdge(node, parentNode, project);
   const parentConnector = GetParentConnector(transportEdge, node);
@@ -28,8 +30,8 @@ const HandleOffPageDelete = (project: Project, node: Node, dispatch: Dispatch) =
 function GetTransportEdge(node: Node, parentNode: Node, project: Project) {
   return project.edges.find(
     (x) =>
-      (x.fromConnector?.nodeId === parentNode?.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNode?.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNode.id && IsTransport(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsTransport(x?.toConnector) && x.fromConnector?.nodeId === node.id)
   );
 }
 
@@ -44,8 +46,8 @@ function GetConnectedEdge(connector: Connector, project: Project) {
 export function GetPartOfEdge(node: Node, parentNode: Node, project: Project) {
   return project.edges.find(
     (x) =>
-      (x.fromConnector?.nodeId === parentNode?.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNode?.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNode.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
   );
 }
 

@@ -3,25 +3,26 @@ import { IsOffPage } from "../../../../../../helpers";
 import { Edge, Project } from "../../../../../../models";
 import { removeEdge, removeNode } from "../../../../../../redux/store/project/actions";
 import { GetParent } from "../../../../helpers";
+import { IsOffPageEdge } from "../../../helpers";
 import { GetPartOfEdge } from "./HandleOffPageDelete";
 
 /**
  * Component to handle deleting a Connected OffPageNode. All related OffPage nodes and edges are removed.
+ * A Connected OffPageNode is a node that appears if a node is connected to a node that is not displayed on the screen.
+ * When deleting a Connected OffPageNode, the actual edge that the OffPageNode refers to is removed.
+ * The opposite Connected OffPageNode and edges are also removed.
  * @param project
  * @param transportEdge
  * @param referenceEdge
  * @param dispatch
  */
 const HandleConnectedOffPageDelete = (project: Project, transportEdge: Edge, referenceEdge: Edge, dispatch: Dispatch) => {
-  // When deleting a Connected OffPageNode, the actual edge that the OffPageNode refers to is also deleted
   dispatch(removeEdge(referenceEdge.id));
   dispatch(removeEdge(transportEdge.id));
 
-  // The opposite Connected OffPageNode and edges are also deleted
   const oppositeTransportEdge = project.edges.find(
     (x) =>
-      (IsOffPage(x.fromNode) || IsOffPage(x.toNode)) &&
-      (x.fromConnectorId === referenceEdge.fromConnectorId || x.toConnectorId === referenceEdge.toConnectorId)
+      IsOffPageEdge(x) && (x.fromConnectorId === referenceEdge.fromConnectorId || x.toConnectorId === referenceEdge.toConnectorId)
   );
 
   const oppositeOffPageNode = IsOffPage(oppositeTransportEdge.toNode)
