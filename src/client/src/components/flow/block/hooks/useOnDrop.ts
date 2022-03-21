@@ -5,7 +5,7 @@ import { ConvertToEdge, ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily, IsLocation, IsProduct } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
-import { Attribute, BlobData, Connector, ConnectorVisibility, LibItem, Node, Project, Simple, User } from "../../../../models";
+import { BlobData, Connector, ConnectorVisibility, LibItem, Node, Project, User } from "../../../../models";
 import {
   CreateId,
   IsInputTerminal,
@@ -65,9 +65,7 @@ const handleNodeDrop = ({ event, project, user, icons, library, secondaryNode, f
     if (!parentNode) return;
   }
 
-  targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
-  targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
-  targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
+  targetNode.connectors?.forEach((connector) => setInitConnectorVisibility(connector, targetNode));
   if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
@@ -114,30 +112,6 @@ const handleCreatePartOfEdge = (
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
   dispatch(createEdge(partofEdge));
-};
-
-const initSimple = (simple: Simple, targetNode: Node) => {
-  const simpleId = CreateId();
-  simple.id = simpleId;
-  simple.nodeId = targetNode.id;
-  simple.attributes.forEach((a) => {
-    a.simpleId = simpleId;
-  });
-};
-
-const initConnector = (connector: Connector, targetNode: Node) => {
-  connector.id = CreateId();
-  connector.nodeId = targetNode.id;
-  connector.attributes?.forEach((a) => {
-    a.id = CreateId();
-  });
-
-  setInitConnectorVisibility(connector, targetNode);
-};
-
-const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
-  attribute.nodeId = targetNode.id;
-  attribute.id = CreateId();
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>

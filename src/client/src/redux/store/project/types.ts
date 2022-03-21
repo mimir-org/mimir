@@ -222,7 +222,6 @@ export interface SaveProjectAction {
 export interface SaveProjectActionFinished {
   type: typeof SAVE_PROJECT_SUCCESS_OR_ERROR;
   payload: {
-    project: Project;
     apiError: ApiError;
   };
 }

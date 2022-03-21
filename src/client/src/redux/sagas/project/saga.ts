@@ -1,5 +1,5 @@
 import { call, put } from "redux-saga/effects";
-import { Project, ProjectFileAm, ProjectResultAm, WebSocket } from "../../../models";
+import { Project, ProjectFileAm, WebSocket } from "../../../models";
 import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
@@ -271,62 +271,20 @@ export function* createSubProject(action: CreateSubProject) {
 
 export function* updateProject(action: SaveProjectAction) {
   try {
-    const projId = action.payload.project.id;
+    const url = `${Config.API_BASE_URL}project/update/${action.payload.project.id}`;
     const proj = ConvertProject(action.payload.project);
-    const url = Config.API_BASE_URL + "project/update/" + projId;
     const response = yield call(post, url, proj);
 
-    // This is a bad request
     if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: SAVE_PROJECT_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      const payload = {
-        project: action.payload,
-        apiError: apiError,
-      };
-
-      yield put({
-        type: SAVE_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      const apiError = GetApiErrorForBadRequest(response, SAVE_PROJECT_SUCCESS_OR_ERROR);
+      yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
       return;
     }
 
-    const data: ProjectResultAm = response.data;
-
-    MapProperties(data.project, action.payload.project, data.idChanges);
-
-    const payload = {
-      project: data.project,
-      apiError: null,
-    };
-
-    yield put({
-      type: SAVE_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError: null } });
   } catch (error) {
-    const apiError = {
-      key: SAVE_PROJECT_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      project: null,
-      apiError: apiError,
-    };
-
-    yield put({
-      type: SAVE_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    const apiError = GetApiErrorForException(error, SAVE_PROJECT_SUCCESS_OR_ERROR);
+    yield put({ type: SAVE_PROJECT_SUCCESS_OR_ERROR, payload: { apiError } });
   }
 }
 
