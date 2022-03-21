@@ -2,7 +2,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace Mb.Services.Extensions
+namespace Mb.Data.Extensions
 {
     public static class HttpContextAccessorExtensions
     {

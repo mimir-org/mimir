@@ -11,8 +11,8 @@ namespace Mb.Models.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("TerminalType");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired().HasMaxLength(127);
-            builder.Property(p => p.Name).HasColumnName("Name").IsRequired().HasMaxLength(63);
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
 
             builder.HasOne(x => x.TerminalCategory).WithMany(y => y.TerminalTypes).HasForeignKey(x => x.TerminalCategoryId).OnDelete(DeleteBehavior.Cascade);
 

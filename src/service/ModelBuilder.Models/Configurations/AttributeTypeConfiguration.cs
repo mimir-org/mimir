@@ -16,12 +16,12 @@ namespace Mb.Models.Configurations
 
             builder.HasKey(x => x.Id);
             builder.ToTable("AttributeType");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired().HasMaxLength(127);
-            builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired().HasMaxLength(63);
-            builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>().HasMaxLength(31);
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Entity).HasColumnName("Entity").IsRequired();
+            builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
-            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>().HasMaxLength(31);
-            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>().HasMaxLength(31);
+            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
+            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
             builder.Property(p => p.Tags).HasColumnName("Tags").IsRequired(false).HasConversion(stringConverter, stringComparer);
 
             builder.HasOne(x => x.Condition).WithMany(y => y.AttributeTypes).HasForeignKey(x => x.ConditionId).OnDelete(DeleteBehavior.NoAction);

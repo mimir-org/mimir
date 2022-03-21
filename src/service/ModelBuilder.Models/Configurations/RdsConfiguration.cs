@@ -10,11 +10,11 @@ namespace Mb.Models.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("Rds");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired().HasMaxLength(127);
-            builder.Property(p => p.Code).HasColumnName("Code").IsRequired().HasMaxLength(15);
-            builder.Property(p => p.Name).HasColumnName("Name").IsRequired().HasMaxLength(63);
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Code).HasColumnName("Code").IsRequired();
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
-            builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>().HasMaxLength(31);
+            builder.Property(p => p.Aspect).HasColumnName("Aspect").IsRequired().HasConversion<string>();
 
             builder.HasOne(x => x.RdsCategory).WithMany(y => y.RdsList).HasForeignKey(x => x.RdsCategoryId).OnDelete(DeleteBehavior.NoAction);
         }

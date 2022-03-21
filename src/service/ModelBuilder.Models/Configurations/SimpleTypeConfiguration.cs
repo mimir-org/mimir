@@ -11,8 +11,8 @@ namespace Mb.Models.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.ToTable("SimpleType");
-            builder.Property(p => p.Id).HasColumnName("Id").IsRequired().HasMaxLength(127);
-            builder.Property(p => p.Name).HasColumnName("Name").IsRequired().HasMaxLength(63);
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false);
 
             builder.HasMany(x => x.AttributeTypes).WithMany(y => y.SimpleTypes).UsingEntity<Dictionary<string, object>>("SimpleType_AttributeType",

@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Common;
 using Mb.Models.Const;
+using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mb.Models.Records;
 using Mb.Services.Contracts;
 
 namespace Mb.Services.Services
@@ -13,17 +17,45 @@ namespace Mb.Services.Services
     public class RemapService : IRemapService
     {
         private readonly ICommonRepository _commonRepository;
+        private readonly IMapper _mapper;
 
         #region Constructors
 
-        public RemapService(ICommonRepository commonRepository)
+        public RemapService(ICommonRepository commonRepository, IMapper mapper)
         {
             _commonRepository = commonRepository;
+            _mapper = mapper;
         }
 
         #endregion
 
         #region Public methods
+
+        /// <summary>
+        /// Create edit data
+        /// </summary>
+        /// <param name="original">Original Mimir project</param>
+        /// <param name="updated">The updated Mimir project</param>
+        /// <returns>Data object with information about what data should be edited</returns>
+        public async Task<ProjectEditData> CreateEditData(Project original, Project updated)
+        {
+            var originalProjectData = new ProjectData();
+            var updatedProjectData = new ProjectData();
+
+            var tasks = new List<Task>
+            {
+                Task.Run(() => DeConstruct(original, originalProjectData)),
+                Task.Run(() => DeConstruct(updated, updatedProjectData))
+            };
+
+            await Task.WhenAll(tasks);
+
+            // Add Project edit data
+            var projectEditData = new ProjectEditData();
+            await projectEditData.ResolveEditData(originalProjectData, updatedProjectData);
+
+            return projectEditData;
+        }
 
         /// <summary>
         /// Remap a project
@@ -34,6 +66,8 @@ namespace Mb.Services.Services
         /// id is missing or legal.The function will also create iri for all objects.</remarks>
         public IDictionary<string, string> Remap(ProjectAm project)
         {
+            CastConnectors(project);
+
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
@@ -111,7 +145,7 @@ namespace Mb.Services.Services
 
                 node.Simples = RemapSimples(nodeReplacement, node.Simples, createCopy).ToList();
                 node.Connectors = RemapConnectors(nodeReplacement, node.Connectors, edges, createCopy).ToList();
-                var attr = RemapAttributes(nodeReplacement, node.Attributes, createCopy).ToList();
+                var attr = RemapAttributes(nodeReplacement, node.Attributes, createCopy, AttributeParent.Node).ToList();
                 node.Attributes = attr.Any() ? attr : null;
 
                 node.Id = nodeReplacement.ToId;
@@ -278,7 +312,7 @@ namespace Mb.Services.Services
                     }).ToList();
                 }
 
-                var attr = RemapAttributes(connectorReplacement, connector.Attributes, createCopy).ToList();
+                var attr = RemapAttributes(connectorReplacement, connector.Attributes, createCopy, AttributeParent.Connector).ToList();
                 connector.Attributes = attr.Any() ? attr : null;
 
                 connector.Id = connectorReplacement.ToId;
@@ -302,6 +336,9 @@ namespace Mb.Services.Services
 
         private static bool ShouldReplace(string id, string fromId, string iri, string fromIri)
         {
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                return true;
+
             if (id == fromId && !string.IsNullOrWhiteSpace(id))
                 return true;
 
@@ -312,7 +349,7 @@ namespace Mb.Services.Services
         }
 
         // Remap attributes
-        private IEnumerable<AttributeAm> RemapAttributes(ReplacementId replacement, ICollection<AttributeAm> attributes, bool createCopy)
+        private IEnumerable<AttributeAm> RemapAttributes(ReplacementId replacement, ICollection<AttributeAm> attributes, bool createCopy, AttributeParent parent)
         {
             if (attributes == null || !attributes.Any())
                 yield break;
@@ -326,28 +363,34 @@ namespace Mb.Services.Services
                 attributeReplacement.FromId = attribute.Id;
                 attributeReplacement.FromIri = attribute.Iri;
 
-                if (ShouldReplace(attribute.TerminalId, replacement.FromId, attribute.TerminalIri, replacement.FromIri))
+                if (ShouldReplace(attribute.TerminalId, replacement.FromId, attribute.TerminalIri, replacement.FromIri) && parent == AttributeParent.Connector)
                 {
                     attribute.TerminalId = replacement.ToId;
                     attribute.TerminalIri = replacement.ToIri;
                 }
 
-                if (ShouldReplace(attribute.NodeId, replacement.FromId, attribute.NodeIri, replacement.FromIri))
+                if (ShouldReplace(attribute.NodeId, replacement.FromId, attribute.NodeIri, replacement.FromIri) && parent == AttributeParent.Node)
                 {
                     attribute.NodeId = replacement.ToId;
                     attribute.NodeIri = replacement.ToIri;
                 }
 
-                if (ShouldReplace(attribute.TransportId, replacement.FromId, attribute.TransportIri, replacement.FromIri))
+                if (ShouldReplace(attribute.TransportId, replacement.FromId, attribute.TransportIri, replacement.FromIri) && parent == AttributeParent.Transport)
                 {
                     attribute.TransportId = replacement.ToId;
                     attribute.TransportIri = replacement.ToIri;
                 }
 
-                if (ShouldReplace(attribute.SimpleId, replacement.FromId, attribute.SimpleIri, replacement.FromIri))
+                if (ShouldReplace(attribute.SimpleId, replacement.FromId, attribute.SimpleIri, replacement.FromIri) && parent == AttributeParent.Simple)
                 {
                     attribute.SimpleId = replacement.ToId;
                     attribute.SimpleIri = replacement.ToIri;
+                }
+
+                if (ShouldReplace(attribute.InterfaceId, replacement.FromId, attribute.InterfaceIri, replacement.FromIri) && parent == AttributeParent.Interface)
+                {
+                    attribute.InterfaceId = replacement.ToId;
+                    attribute.InterfaceIri = replacement.ToIri;
                 }
 
                 attribute.Id = attributeReplacement.ToId;
@@ -377,7 +420,7 @@ namespace Mb.Services.Services
                 simpleReplacement.FromId = simple.Id;
                 simpleReplacement.FromIri = simple.Iri;
 
-                var attr = RemapAttributes(simpleReplacement, simple.Attributes, createCopy).ToList();
+                var attr = RemapAttributes(simpleReplacement, simple.Attributes, createCopy, AttributeParent.Simple).ToList();
                 simple.Attributes = attr.Any() ? attr : null;
                 simple.Id = simpleReplacement.ToId;
                 simple.Iri = simpleReplacement.ToIri;
@@ -401,7 +444,7 @@ namespace Mb.Services.Services
             transportReplacement.FromId = transport.Id;
             transportReplacement.FromIri = transport.Iri;
 
-            var attr = RemapAttributes(transportReplacement, transport.Attributes, createCopy).ToList();
+            var attr = RemapAttributes(transportReplacement, transport.Attributes, createCopy, AttributeParent.Transport).ToList();
             transport.Attributes = attr.Any() ? attr : null;
             transport.InputTerminal = RemapTerminal(transportReplacement, transport.InputTerminal, createCopy);
             transport.OutputTerminal = RemapTerminal(transportReplacement, transport.OutputTerminal, createCopy);
@@ -425,7 +468,7 @@ namespace Mb.Services.Services
             interfaceReplacement.FromId = interfaceAm.Id;
             interfaceReplacement.FromIri = interfaceAm.Iri;
 
-            var attr = RemapAttributes(interfaceReplacement, interfaceAm.Attributes, createCopy).ToList();
+            var attr = RemapAttributes(interfaceReplacement, interfaceAm.Attributes, createCopy, AttributeParent.Interface).ToList();
             interfaceAm.Attributes = attr.Any() ? attr : null;
             interfaceAm.InputTerminal = RemapTerminal(interfaceReplacement, interfaceAm.InputTerminal, createCopy);
             interfaceAm.OutputTerminal = RemapTerminal(interfaceReplacement, interfaceAm.OutputTerminal, createCopy);
@@ -449,7 +492,7 @@ namespace Mb.Services.Services
             terminalReplacement.FromId = terminal.Id;
             terminalReplacement.FromIri = terminal.Iri;
 
-            var attr = RemapAttributes(terminalReplacement, terminal.Attributes, createCopy).ToList();
+            var attr = RemapAttributes(terminalReplacement, terminal.Attributes, createCopy, AttributeParent.Connector).ToList();
             terminal.Attributes = attr.Any() ? attr : null;
 
             terminal.Id = terminalReplacement.ToId;
@@ -467,6 +510,51 @@ namespace Mb.Services.Services
             }
 
             return terminal;
+        }
+
+        private void CastConnectors(ProjectAm project)
+        {
+            foreach (var node in project.Nodes)
+            {
+                var connectors = new List<ConnectorAm>();
+                foreach (var connector in node.Connectors)
+                {
+                    if (string.IsNullOrEmpty(connector.TerminalCategoryId) && connector.RelationType != RelationType.NotSet)
+                    {
+                        var relationAm = new RelationAm();
+                        _mapper.Map(connector, relationAm);
+                        connectors.Add(relationAm);
+                    }
+                    else
+                    {
+                        var terminalAm = new TerminalAm();
+                        _mapper.Map(connector, terminalAm);
+                        connectors.Add(terminalAm);
+                    }
+                }
+
+                node.Connectors = connectors;
+            }
+        }
+
+        /// <summary>
+        /// Deconstruct a Mimir project
+        /// </summary>
+        /// <param name="project">The project to deconstruct</param>
+        /// <param name="data">Project Data object to fill with data</param>
+        /// <returns></returns>
+        private async Task DeConstruct(Project project, ProjectData data)
+        {
+            if (project == null || (project.Edges == null && project.Nodes == null))
+                return;
+
+            if (project.Nodes != null)
+                foreach (var node in project.Nodes)
+                    await data.DeconstructNode(node);
+
+            if (project.Edges != null)
+                foreach (var edge in project.Edges)
+                    await data.DeconstructEdge(edge);
         }
 
         #endregion

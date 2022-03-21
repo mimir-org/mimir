@@ -7,6 +7,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Records;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -83,6 +84,11 @@ namespace ModelBuilder.Tests.Fake
         }
 
         public IEnumerable<ProjectItemCm> GetProjectList(string name, int @from, int number)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
             throw new NotImplementedException();
         }

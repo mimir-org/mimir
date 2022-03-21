@@ -8,7 +8,7 @@ namespace Mb.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<InterfaceType> builder)
         {
-            builder.Property(p => p.TerminalTypeId).HasColumnName("InterfaceType_TerminalTypeId").IsRequired(false).HasMaxLength(127);
+            builder.Property(p => p.TerminalTypeId).HasColumnName("InterfaceType_TerminalTypeId").IsRequired(false);
             builder.HasOne(x => x.TerminalType).WithMany(y => y.InterfaceTypes).HasForeignKey(x => x.TerminalTypeId).OnDelete(DeleteBehavior.NoAction);
         }
     }

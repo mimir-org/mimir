@@ -6,23 +6,19 @@ using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Node
+    public class Node : IEquatable<Node>
     {
         public string Id { get; set; }
         public string Iri { get; set; }
-
         public string Domain => Id.ResolveDomain();
-
         public string Kind => nameof(Node);
-
         public string Rds { get; set; }
-
         public string Description { get; set; }
-
         public string SemanticReference { get; set; }
 
         [Required]
@@ -55,20 +51,14 @@ namespace Mb.Models.Data
         [Required]
         public string StatusId { get; set; }
 
+
         public BuildStatus Status { get; set; }
-
         public string UpdatedBy { get; set; }
-
         public DateTime Updated { get; set; }
-
         public DateTime? Created { get; set; }
-
         public string CreatedBy { get; set; }
-
         public string LibraryTypeId { get; set; }
-
         public string Version { get; set; }
-
         public Aspect Aspect { get; set; }
 
         [Required]
@@ -81,18 +71,14 @@ namespace Mb.Models.Data
         public string MasterProjectIri { get; set; }
 
         public string Symbol { get; set; }
-
         public string PurposeString { get; set; }
 
         [NotMapped]
         public virtual Purpose Purpose { get; set; }
 
         public virtual ICollection<Connector> Connectors { get; set; }
-
         public virtual ICollection<Attribute> Attributes { get; set; }
-
         public virtual ICollection<Simple> Simples { get; set; }
-
         public virtual string ProjectId { get; set; }
         public virtual string ProjectIri { get; set; }
 
@@ -107,11 +93,8 @@ namespace Mb.Models.Data
 
         // Required Only for location aspect
         public decimal? Length { get; set; }
-
         public decimal? Width { get; set; }
-
         public decimal? Height { get; set; }
-
         public decimal? Area => Length * Width;
 
         // Required only for product aspect
@@ -126,5 +109,98 @@ namespace Mb.Models.Data
         {
             Version = Version.IncrementMajorVersion();
         }
+
+        #region IEquatable
+
+        public bool Equals(Node other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id == other.Id &&
+                   Iri == other.Iri &&
+                   Rds == other.Rds &&
+                   Description == other.Description &&
+                   SemanticReference == other.SemanticReference &&
+                   Name == other.Name &&
+                   Label == other.Label &&
+                   PositionX == other.PositionX &&
+                   PositionY == other.PositionY &&
+                   IsLocked == other.IsLocked &&
+                   IsLockedStatusBy == other.IsLockedStatusBy &&
+                   Nullable.Equals(IsLockedStatusDate, other.IsLockedStatusDate) &&
+                   PositionBlockX == other.PositionBlockX &&
+                   PositionBlockY == other.PositionBlockY &&
+                   Level == other.Level &&
+                   Order == other.Order &&
+                   StatusId == other.StatusId &&
+                   UpdatedBy == other.UpdatedBy &&
+                   Updated.Equals(other.Updated) &&
+                   Nullable.Equals(Created, other.Created) &&
+                   CreatedBy == other.CreatedBy &&
+                   LibraryTypeId == other.LibraryTypeId &&
+                   Version == other.Version &&
+                   Aspect == other.Aspect &&
+                   IsRoot == other.IsRoot &&
+                   MasterProjectId == other.MasterProjectId &&
+                   MasterProjectIri == other.MasterProjectIri &&
+                   Symbol == other.Symbol &&
+                   PurposeString == other.PurposeString &&
+                   ProjectId == other.ProjectId &&
+                   ProjectIri == other.ProjectIri &&
+                   Length == other.Length &&
+                   Width == other.Width &&
+                   Height == other.Height &&
+                   Cost == other.Cost;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((Node) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            hashCode.Add(Iri);
+            hashCode.Add(Rds);
+            hashCode.Add(Description);
+            hashCode.Add(SemanticReference);
+            hashCode.Add(Name);
+            hashCode.Add(Label);
+            hashCode.Add(PositionX);
+            hashCode.Add(PositionY);
+            hashCode.Add(IsLocked);
+            hashCode.Add(IsLockedStatusBy);
+            hashCode.Add(IsLockedStatusDate);
+            hashCode.Add(PositionBlockX);
+            hashCode.Add(PositionBlockY);
+            hashCode.Add(Level);
+            hashCode.Add(Order);
+            hashCode.Add(StatusId);
+            hashCode.Add(UpdatedBy);
+            hashCode.Add(Updated);
+            hashCode.Add(Created);
+            hashCode.Add(CreatedBy);
+            hashCode.Add(LibraryTypeId);
+            hashCode.Add(Version);
+            hashCode.Add((int) Aspect);
+            hashCode.Add(IsRoot);
+            hashCode.Add(MasterProjectId);
+            hashCode.Add(MasterProjectIri);
+            hashCode.Add(Symbol);
+            hashCode.Add(PurposeString);
+            hashCode.Add(ProjectId);
+            hashCode.Add(ProjectIri);
+            hashCode.Add(Length);
+            hashCode.Add(Width);
+            hashCode.Add(Height);
+            hashCode.Add(Cost);
+            return hashCode.ToHashCode();
+        }
+
+        #endregion
     }
 }

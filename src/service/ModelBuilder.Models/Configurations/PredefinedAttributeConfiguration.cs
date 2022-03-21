@@ -14,8 +14,8 @@ namespace Mb.Models.Configurations
 
             builder.HasKey(x => x.Key);
             builder.ToTable("PredefinedAttribute");
-            builder.Property(p => p.Key).HasColumnName("Key").IsRequired().HasMaxLength(127);
-            builder.Property(p => p.Values).HasColumnName("Values").IsRequired(false).HasConversion(stringConverter, stringComparer).HasMaxLength(511);
+            builder.Property(p => p.Key).HasColumnName("Key").IsRequired();
+            builder.Property(p => p.Values).HasColumnName("Values").IsRequired(false).HasConversion(stringConverter, stringComparer);
             builder.Property(p => p.IsMultiSelect).HasColumnName("IsMultiSelect").IsRequired();
         }
     }

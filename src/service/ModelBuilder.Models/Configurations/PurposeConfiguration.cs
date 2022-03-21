@@ -8,7 +8,7 @@ namespace Mb.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Purpose> builder)
         {
-            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>().HasMaxLength(63);
+            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
         }
     }
 }

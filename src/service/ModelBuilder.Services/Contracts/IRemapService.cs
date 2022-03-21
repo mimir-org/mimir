@@ -1,11 +1,22 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Common;
+using Mb.Models.Data;
+using Mb.Models.Records;
 
 namespace Mb.Services.Contracts
 {
     public interface IRemapService
     {
+        /// <summary>
+        /// Create edit data
+        /// </summary>
+        /// <param name="original">Original Mimir project</param>
+        /// <param name="updated">The updated Mimir project</param>
+        /// <returns>Data object with information about what data should be edited</returns>
+        Task<ProjectEditData> CreateEditData(Project original, Project updated);
+
         /// <summary>
         /// Remap a project
         /// </summary>
