@@ -1,15 +1,15 @@
 import { LibItem, Node } from "../../../../../../../../../models";
 import { LibraryCategory } from "../../../../../../../../../models/project";
 import { LibraryState } from "../../../../../../../../../redux/store/library/types";
-import { IsBlockView, IsFamily } from "../../../../../../../../../helpers";
+import { IsFamily } from "../../../../../../../../../helpers";
 
-export const GetLibCategories = (selectedNode: Node, state: LibraryState) => {
+export const GetLibCategories = (selectedNode: Node, state: LibraryState, isBlockView: boolean) => {
   const allCategories: LibraryCategory[] = [];
   const items: LibItem[] = [].concat(state.nodeTypes, state.interfaceTypes, state.transportTypes);
 
   const result = items.reduce((r, a) => {
     r[a?.category] = r[a?.category] || [];
-    ValidateLibComponent(a, selectedNode, IsBlockView()) && r[a?.category].push(a);
+    ValidateLibComponent(a, selectedNode, isBlockView) && r[a?.category].push(a);
     return r;
   }, Object.create([]));
 

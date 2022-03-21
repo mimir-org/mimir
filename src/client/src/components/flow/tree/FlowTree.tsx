@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import { useOnConnect, useOnDrop, useOnRemove } from "../hooks";
-import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
+import { useOnTreeConnect, useOnTreeDrop, useOnTreeRemove } from "./hooks";
 import { BuildTreeElements } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
@@ -28,9 +27,9 @@ interface Props {
 }
 
 /**
- * Component for the Flow library in TreeView
+ * Component for the Flow library in TreeView.
  * @param interface
- * @returns a scene with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
@@ -52,7 +51,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
   const OnElementsRemove = (elementsToRemove: Elements) => {
-    return useOnRemove(elementsToRemove, [], inspectorRef, project, setElements, dispatch);
+    return useOnTreeRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnLoad = useCallback(
@@ -64,14 +63,11 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   );
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    const fromNode = project.nodes.find((x) => x.id === connection.source);
-    const fromConnector = fromNode.connectors.find((x) => x.id === connection.sourceHandle);
-    const edgeType = helpers.GetTreeEdgeType(fromConnector);
-    return useOnConnect({ connection, project, setElements, dispatch, edgeType, library, animatedEdge });
+    return useOnTreeConnect({ connection, project, setElements, dispatch, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnDrop({
+    return useOnTreeDrop({
       event,
       project,
       user: userState.user,
@@ -129,7 +125,6 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         deleteKeyCode={"Delete"}
       >
         <Background />
-        <FullScreenComponent inspectorRef={inspectorRef} />
       </ReactFlow>
       {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
     </>

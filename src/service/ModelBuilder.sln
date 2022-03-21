@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Rdf", "ModelBu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdfTurtleParser", "Modules\RdfTurtleParser\RdfTurtleParser.csproj", "{F5D89D14-5525-4476-9AFE-460AE1E1CE74}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonLdParser", "Modules\JsonLdParser\JsonLdParser.csproj", "{E95A4FA4-69B2-4C3C-8C44-1926084BB286}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -185,6 +187,14 @@ Global
 		{F5D89D14-5525-4476-9AFE-460AE1E1CE74}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5D89D14-5525-4476-9AFE-460AE1E1CE74}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5D89D14-5525-4476-9AFE-460AE1E1CE74}.Release|x86.Build.0 = Release|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Debug|x86.Build.0 = Debug|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Release|x86.ActiveCfg = Release|Any CPU
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,6 +208,7 @@ Global
 		{F5117706-7A8B-49FF-8CB1-C60983519046} = {7C74EBBC-C332-45D2-87C4-90B3FBB2D512}
 		{1B5795E6-6A4D-4E00-8051-BD565BB51021} = {C5359E03-91E7-405A-803A-11182980C4E9}
 		{F5D89D14-5525-4476-9AFE-460AE1E1CE74} = {C5359E03-91E7-405A-803A-11182980C4E9}
+		{E95A4FA4-69B2-4C3C-8C44-1926084BB286} = {C5359E03-91E7-405A-803A-11182980C4E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61D7DEB6-5F0A-42C7-BDD9-B863F85B57F4}

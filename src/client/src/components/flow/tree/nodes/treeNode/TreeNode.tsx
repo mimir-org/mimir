@@ -9,7 +9,7 @@ import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
 import { SetTopPos } from "../helpers/SetTopPos";
-import { nodeSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { nodesSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
 
 /**
  * Component to display a node in TreeView.
@@ -20,7 +20,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
-  const nodes = useAppSelector(nodeSelector);
+  const nodes = useAppSelector(nodesSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
   useEffect(() => {

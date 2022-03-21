@@ -1,6 +1,5 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
-import { IsProduct } from "../../../../../../helpers";
 import { Size } from "../../../../../../compLibrary/size";
 import {
   Aspect,
@@ -27,7 +26,8 @@ export interface OffPageData {
 }
 
 /**
- * Component to create an OffPage object.
+ * Component to create an OffPage object in BlockView.
+ * The component is called from either the CreateRequiredOffPageNode component or the CreateConnectedOffPageNode component.
  * @param data
  * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
@@ -37,17 +37,13 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
-  const marginY = 80;
-  let positionX = data.position.x;
-  if (IsProduct(sourceNode)) positionX = isTarget ? Size.BLOCK_PRODUCT_WIDTH + 90 : 55;
-
   const offPageNode = {
     id: CreateId(),
     name: "OffPage-" + sourceNode.name,
     label: "OffPage-" + sourceNode.label,
     aspect: Aspect.None,
-    positionBlockX: positionX,
-    positionBlockY: data.position.y - marginY,
+    positionBlockX: data.position.x,
+    positionBlockY: sourceNode.positionBlockY + Size.NODE_HEIGHT, // Adjust relative to parent
     connectors: [],
     attributes: [],
     isHidden: false,

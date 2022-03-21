@@ -1,5 +1,6 @@
-/* All static text for Mimir */
-
+/**
+ * Component for all static text in Mimir.
+ */
 const TextResources = {
   // Aspects
   Aspect_Function: "Function",
@@ -36,6 +37,7 @@ const TextResources = {
   Toolbar_Electro_Off: "Toggle electromode off",
   Toolbar_VisualFilters_Open: "Open visual filters",
   Toolbar_VisualFilters_Close: "Close visual filters",
+  Toolbar_FitScreen: "Fit to screen",
 
   // InspectorModule
   Inspector_AdminInfo: "Admin",

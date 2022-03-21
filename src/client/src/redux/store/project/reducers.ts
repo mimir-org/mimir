@@ -1,5 +1,5 @@
 import * as Types from "./types";
-import { Edge, Node, ProjectItemCm } from "../../../models";
+import { Edge, Node } from "../../../models";
 import { IsAspectNode, IsFamily } from "../../../helpers";
 import {
   GetUpdatedEdgeInnerWithTerminalAttributeIsLocked,
@@ -298,7 +298,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.CHANGE_SELECTED_PROJECT: {
       const projectId = action.payload.projectId;
-      const projects = state.projectList as ProjectItemCm[];
+      const projects = state.projectList;
 
       return {
         ...state,
@@ -586,16 +586,12 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ),
         },
       };
+
     case Types.EXPORT_PROJECT_TO_FILE:
       return {
         ...state,
+        fetching: true,
         apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.EXPORT_PROJECT_TO_FILE) : state.apiError,
-      };
-
-    case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
     case Types.IMPORT_PROJECT:
@@ -605,6 +601,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.IMPORT_PROJECT) : state.apiError,
       };
 
+    case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
     case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
     case Types.LOCK_NODE_SUCCESS_OR_ERROR:
     case Types.LOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
@@ -919,6 +916,43 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                 }
               : n
           ),
+        },
+      };
+
+    case Types.CREATE_REQUIRED_OFFPAGE_NODE: {
+      const nodesWithRequiredStatus = state.project.nodes.map((n) =>
+        n?.id === action.payload.nodeId
+          ? {
+              ...n,
+              connectors: n.connectors.map((conn) =>
+                conn.id === action.payload.connectorId
+                  ? {
+                      ...conn,
+                      isRequired: action.payload.isRequired,
+                    }
+                  : conn
+              ),
+            }
+          : n
+      );
+
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: [...nodesWithRequiredStatus, action.payload.offPageObject.node],
+          edges: [...state.project.edges, action.payload.offPageObject.partOfEdge, action.payload.offPageObject.transportEdge],
+        },
+      };
+    }
+
+    case Types.CREATE_CONNECTED_OFFPAGE_NODE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: [...state.project.nodes, action.payload.offPageObject.node],
+          edges: [...state.project.edges, action.payload.offPageObject.partOfEdge, action.payload.offPageObject.transportEdge],
         },
       };
 

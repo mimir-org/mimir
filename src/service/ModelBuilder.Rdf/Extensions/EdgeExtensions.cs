@@ -1,4 +1,3 @@
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -15,8 +14,8 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="edge">The edge to assert</param>
         /// <param name="ontologyService">Ontology Service</param>
-        /// <param name="libRepository">Lib repository</param>
-        public static void AssertEdge(this Edge edge, IOntologyService ontologyService, ILibRepository libRepository)
+        /// <param name="projectData">Record of ICollections</param>
+        public static void AssertEdge(this Edge edge, IOntologyService ontologyService, ProjectData projectData)
         {
             if (edge.FromConnector is Relation { RelationType: not RelationType.PartOf } fromRelation)
             {
@@ -58,8 +57,8 @@ namespace ModelBuilder.Rdf.Extensions
                 if (!string.IsNullOrWhiteSpace(edge.Transport.Description))
                     ontologyService.AssertNode(edge.Transport.Iri, Resources.Desc, edge.Transport.Description, true);
 
-                edge.Transport.InputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, libRepository, edge, DefaultFlowDirection.InputFlow);
-                edge.Transport.OutputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, libRepository, edge, DefaultFlowDirection.OutputFlow);
+                edge.Transport.InputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, projectData, edge, DefaultFlowDirection.InputFlow);
+                edge.Transport.OutputTerminal?.AssertConnector(ontologyService, edge.Transport.Iri, projectData, edge, DefaultFlowDirection.OutputFlow);
 
                 if (edge.Transport.Attributes != null)
                 {
@@ -98,8 +97,8 @@ namespace ModelBuilder.Rdf.Extensions
                 if (!string.IsNullOrWhiteSpace(edge.Interface.Description))
                     ontologyService.AssertNode(edge.Interface.Iri, Resources.Desc, edge.Interface.Description, true);
 
-                edge.Interface.InputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, libRepository, edge, DefaultFlowDirection.InputFlow);
-                edge.Interface.OutputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, libRepository, edge, DefaultFlowDirection.OutputFlow);
+                edge.Interface.InputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, projectData, edge, DefaultFlowDirection.InputFlow);
+                edge.Interface.OutputTerminal?.AssertConnector(ontologyService, edge.Interface.Iri, projectData, edge, DefaultFlowDirection.OutputFlow);
 
                 if (edge.Interface.Attributes != null)
                 {
@@ -118,7 +117,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology Service</param>
         /// <param name="project">Current project</param>
         /// <param name="relation">Relation edge data</param>
-        /// <param name="projectData">Project data</param>
+        /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if nodes and connectors is not defined in RDF file</exception>
         public static void ResolveEdge(this EdgeAm edge, IOntologyService ontologyService, ProjectAm project, RelationEdge relation, ProjectData projectData)
         {

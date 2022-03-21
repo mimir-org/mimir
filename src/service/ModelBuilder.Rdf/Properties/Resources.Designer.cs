@@ -394,7 +394,7 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:integratedObject.
+        ///   Looks up a localized string similar to imf:IntegratedObject.
         /// </summary>
         internal static string IntegratedObject {
             get {
@@ -475,7 +475,7 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:outTerminal.
+        ///   Looks up a localized string similar to imf:OutTerminal.
         /// </summary>
         internal static string OutputTerminal {
             get {
@@ -493,7 +493,7 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:project.
+        ///   Looks up a localized string similar to mimir:Project.
         /// </summary>
         internal static string Project {
             get {

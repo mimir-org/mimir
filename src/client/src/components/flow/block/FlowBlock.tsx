@@ -1,30 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
-import * as hooks from "../hooks/";
+import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FullScreenComponent } from "../../fullscreen/FullScreenComponent";
-import { BuildBlockElements } from "./builders";
-import { EDGE_TYPE, EdgeType } from "../../../models/project";
+import { BuildFlowBlockElements } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size";
-import { GetSelectedNode, IsLocation } from "../../../helpers";
-import { LocationModule } from "../../../modules/location";
+import { GetSelectedNode } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
-import { GetChildren } from "../helpers/GetChildren";
 import { Edge, Project } from "../../../models";
 import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
-import ReactFlow, {
-  Elements,
-  Node as FlowNode,
-  Edge as FlowEdge,
-  Connection,
-  FlowTransform,
-  useZoomPanHelper,
-} from "react-flow-renderer";
+import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -34,11 +23,10 @@ interface Props {
 /**
  * Component for the Flow library in BlockView
  * @param interface
- * @returns a scene with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
-  const { setCenter } = useZoomPanHelper();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
@@ -48,33 +36,29 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const userState = useAppSelector(selectors.userStateSelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const showLocation3D = useAppSelector(selectors.location3DSelector);
   const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
-  const defaultZoom = Size.DEFAULT_ZOOM_LEVEL;
+  const defaultZoom = Size.ZOOM_DEFAULT;
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
+      setElements(BuildFlowBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
       return setFlowInstance(_reactFlowInstance);
     },
     [project, node, secondaryNode, animatedEdge, parentNodeSize]
   );
 
-  const OnElementsRemove = (elementsToRemove: Elements) => {
-    const nodeToRemove = elementsToRemove[0];
+  const OnElementsRemove = (flowNodesToRemove: Elements) => {
+    const nodeToRemove = flowNodesToRemove[0];
+    if (!nodeToRemove) return;
     const edgesToRemove: Edge[] = [];
 
     project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === nodeToRemove?.id || edge.toNodeId === nodeToRemove?.id) edgesToRemove.push(edge);
+      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) edgesToRemove.push(edge);
     });
-    return hooks.useOnRemove(elementsToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
-  };
 
-  const OnConnect = (connection: FlowEdge | Connection) => {
-    const edgeType = EDGE_TYPE.BLOCK_TRANSPORT as EdgeType;
-    return hooks.useOnConnect({ connection, project, edgeType, library, animatedEdge, setElements, dispatch });
+    return hooks.useOnRemove(flowNodesToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
@@ -82,7 +66,11 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode !== null, transform, dispatch);
+    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode, transform, dispatch);
+  };
+
+  const OnConnect = (connection: FlowEdge | Connection) => {
+    return hooks.useOnConnect({ connection, project, library, animatedEdge, setElements, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -94,9 +82,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 
-  const OnMoveEnd = (flowTransform: FlowTransform) => {
-    if (flowTransform?.zoom !== transform.zoom) dispatch(changeFlowTransform(flowTransform));
-  };
+  const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({
@@ -104,7 +90,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       project,
       user: userState.user,
       icons,
-      library: library,
+      library,
+      secondaryNode,
+      flowTransform: transform,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,
       setElements,
@@ -123,14 +111,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       handleMultiSelect(dispatch, true);
     }
   };
-
-  useEffect(() => {
-    if (transform.zoom < defaultZoom) {
-      const x = window.innerWidth / 2;
-      const y = window.innerHeight / (transform.zoom + 0.95);
-      setCenter(x, y, transform.zoom);
-    }
-  }, [transform]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -169,20 +149,15 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           connectionLineComponent={BlockConnectionLine}
           onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
-          defaultPosition={[0, Size.BLOCK_MARGIN_Y]}
           zoomOnDoubleClick={false}
           defaultZoom={defaultZoom}
-          minZoom={0.7}
+          minZoom={0.2}
           maxZoom={3}
           zoomOnScroll
           paneMoveable
-        >
-          <FullScreenComponent inspectorRef={inspectorRef} />
-        </ReactFlow>
-
+        ></ReactFlow>
         {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
       </div>
-      <LocationModule visible={showLocation3D && IsLocation(node)} rootNode={node} nodes={GetChildren(node, project)} />
     </>
   );
 };

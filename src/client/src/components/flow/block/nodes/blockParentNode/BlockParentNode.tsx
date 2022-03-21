@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
@@ -7,55 +6,37 @@ import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { Connector } from "../../../../../models";
-import { useAppDispatch, useAppSelector, blockElementsSelector } from "../../../../../redux/store";
-import { SetParentNodeWidth } from "../../builders/helpers/SetParentNodeWidth";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
-import { ResizeHandler } from "./handlers/ResizeHandler";
-import { IsProduct } from "../../../../../helpers";
-import { BlockNodeSize } from "../../../../../models/project";
-import { Size } from "../../../../../compLibrary/size";
+import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
 
 /**
- * Component for the large parent block in BlockView.
+ * Component for a ParentNode in BlockView.
+ * This component lives in conjunction with the FlowNode from BuildFlowParentNode.
  * @param data the data for the node.
- * @returns a parent node of the Flow node type with Mimir styling and functionality.
+ * @returns a Mimir ParentNode.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const { setCenter } = useZoomPanHelper();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const nodes = useAppSelector(selectors.nodeSelector);
+  const nodes = useAppSelector(selectors.nodesSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const elements = useAppSelector(blockElementsSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const isProduct = IsProduct(node);
-  let size = useAppSelector(selectors.nodeSizeSelector);
-  if (isProduct) size = { width: Size.BLOCK_PRODUCT_WIDTH, height: Size.BLOCK_PRODUCT_HEIGHT } as BlockNodeSize;
-
-  // Set default zoom on first render
-  useEffect(() => {
-    const marginTop = 70;
-    const x = window.innerWidth / 2;
-    const y = window.innerHeight / 2 - marginTop;
-    setCenter(x, y, Size.DEFAULT_ZOOM_LEVEL);
-  }, []);
+  const size = useAppSelector(selectors.nodeSizeSelector);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node, secondaryNode));
+    const canvasData = SetZoomCenterLevel(secondaryNode !== null);
+    setCenter(canvasData.x, canvasData.y, canvasData.zoom);
+  }, [setCenter, secondaryNode]);
+
+  useEffect(() => {
+    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
-
-  // Responsive resizing
-  useEffect(() => {
-    if (!isProduct) ResizeHandler(node, secondaryNode, elements, dispatch);
-  }, []);
-
-  useEffect(() => {
-    if (!isProduct) SetParentNodeWidth(secondaryNode !== null, dispatch);
-  }, [secondaryNode]);
 
   if (!node) return null;
 
