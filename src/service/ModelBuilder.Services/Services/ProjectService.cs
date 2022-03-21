@@ -168,9 +168,9 @@ namespace Mb.Services.Services
         {
             try
             {
-                var existingProject = await GetProject(project.Id, null, true);
+                var existingProject = ProjectExist(project.Id, project.Iri);
 
-                if (existingProject != null)
+                if (existingProject)
                     throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
 
                 if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
@@ -341,8 +341,8 @@ namespace Mb.Services.Services
         /// <param name="projectAm"></param>
         /// <param name="invokedByDomain"></param>
         /// <param name="iri"></param>
-        /// <returns></returns>
-        public async Task<ProjectResultAm> UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
+        /// <returns>Update Project Task</returns>
+        public async Task UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
         {
             ClearAllChangeTracker();
 
@@ -361,6 +361,9 @@ namespace Mb.Services.Services
                 // Map updated project
                 var updated = _mapper.Map<Project>(projectAm);
 
+                // Sort nodes
+                ResolveLevelAndOrder(updated);
+
                 // Get create edit data
                 var projectEditData = await _remapService.CreateEditData(original, updated);
 
@@ -370,14 +373,6 @@ namespace Mb.Services.Services
                 // Send websocket data.
                 await _cooperateService.SendDataUpdates(projectEditData, id);
 
-                // TODO: Remove this when client create id is implemented
-                var pro = await _projectRepository.GetAsyncComplete(id, iri);
-
-                return new ProjectResultAm
-                {
-                    Project = pro,
-                    IdChanges = remap
-                };
             }
             catch (Exception e)
             {
@@ -483,12 +478,8 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public bool ProjectExist(string projectId, string projectIri)
         {
-            var exist =
-                _projectRepository.Context.Projects.Any(x => x.Id == projectId) ||
-                _projectRepository.Context.Projects.Any(x => x.Iri == projectIri);
-
+            var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId || x.Iri == projectIri);
             ClearAllChangeTracker();
-
             return exist;
         }
 

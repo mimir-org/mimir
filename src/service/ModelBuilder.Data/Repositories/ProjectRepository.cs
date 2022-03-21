@@ -70,6 +70,9 @@ namespace Mb.Data.Repositories
             await Task.WhenAll(projectTask, nodeTask, edgeTask);
 
             var project = projectTask.Result;
+            if (project == null)
+                return null;
+
             project.Nodes = nodeTask.Result;
             project.Edges = edgeTask.Result;
             return project;
@@ -180,7 +183,7 @@ namespace Mb.Data.Repositories
         /// <returns></returns>
         private async Task<Project> FindProjectAsync(string id, string iri)
         {
-            return await Task.Run(() => FindBy(x => x.Id == id || x.Id == iri)
+            return await Task.Run(() => FindBy(x => x.Id == id || x.Iri == iri)
                 .AsNoTracking()
                 .SingleOrDefaultAsync());
         }
