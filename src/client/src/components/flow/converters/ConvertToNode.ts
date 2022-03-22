@@ -34,7 +34,6 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     masterProjectId: projectId,
     symbol: icons?.find((x) => x.id === data.symbolId)?.data,
     level: 0,
-    cost: null,
     height: Size.NODE_HEIGHT,
     width: Size.NODE_WIDTH,
     purpose: data.purpose,

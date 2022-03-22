@@ -98,7 +98,6 @@ export interface NodeAm {
   positionBlockY: number;
   width: number;
   height: number;
-  cost: number;
   statusId: string;
   masterProjectId: string;
   masterProjectIri: string;
@@ -405,7 +404,6 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       positionBlockY: node.positionBlockY,
       width: node.width,
       height: node.height,
-      cost: node.cost,
       statusId: node.statusId,
       masterProjectId: node.masterProjectId,
       masterProjectIri: node.masterProjectIri,

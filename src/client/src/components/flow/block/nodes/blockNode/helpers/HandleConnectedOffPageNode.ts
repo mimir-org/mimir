@@ -16,22 +16,23 @@ import { GetParent, IsTransportConnection } from "../../../../helpers";
  * @param dispatch
  */
 export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
-  edges.forEach((edge) => {
-    if (IsValidTransport(edge, node)) {
-      const isNodeTarget = edge.toNodeId === node.id;
+  if (!edges.length || !node) return;
 
-      if (OnlyOneNodeVisible(edge, isNodeTarget)) {
-        const offPageExists = HasConnectedOffPageNode(edges, edge, isNodeTarget);
-        if (!offPageExists) AddConnectedOffPageNode(node, isNodeTarget, edge, size, dispatch);
-      }
-    }
+  edges.forEach((edge) => {
+    if (!IsValidTransport(edge, node)) return;
+    const isNodeTarget = edge.toNodeId === node.id;
+
+    if (!OnlyOneNodeVisible(edge, isNodeTarget)) return;
+
+    const offPageExists = HasConnectedOffPageNode(edges, edge, isNodeTarget);
+    if (!offPageExists) AddConnectedOffPageNode(node, isNodeTarget, edge, size, dispatch);
   });
 };
 
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
   const existingEdge = isTargetNode
-    ? edges?.find((x) => x?.toConnectorId === edge.toConnectorId && IsOffPage(x?.fromNode))
-    : edges?.find((x) => x?.fromConnectorId === edge.fromConnectorId && IsOffPage(x?.toNode));
+    ? edges.find((x) => IsOffPage(x?.fromNode) && x.toConnectorId === edge.toConnectorId)
+    : edges.find((x) => IsOffPage(x?.toNode) && x.fromConnectorId === edge.fromConnectorId);
 
   return existingEdge !== undefined;
 }
@@ -39,7 +40,7 @@ function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolea
 function IsValidTransport(edge: Edge, node: Node) {
   return (
     IsTransportConnection(edge.fromConnector, edge.toConnector) &&
-    (node?.id === edge.fromNodeId || node?.id === edge.toNodeId) &&
+    (node.id === edge.fromNodeId || node?.id === edge.toNodeId) &&
     !IsOffPage(edge.toNode) &&
     !IsOffPage(edge.fromNode)
   );
@@ -48,7 +49,7 @@ function IsValidTransport(edge: Edge, node: Node) {
 function AddConnectedOffPageNode(node: Node, isNodeTarget: boolean, edge: Edge, size: BlockNodeSize, dispatch: Dispatch) {
   const nodeParent = GetParent(node);
   const xPos = isNodeTarget ? nodeParent?.positionBlockX : size.width;
-  const connector = node?.connectors.find((c) => (isNodeTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
+  const connector = node.connectors.find((c) => (isNodeTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
   const position = { x: xPos, y: node?.positionBlockY };
 
   CreateConnectedOffPageNode(node, connector, position, dispatch);
