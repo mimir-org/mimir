@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.Models.Records;
 
 namespace Mb.Services.Contracts
 {
     public interface ICooperateService
     {
+        Task SendDataUpdates(ProjectEditData editData, string projectId);
         Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId);
         Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId);
         Task SendLockAttributeUpdates(IReadOnlyCollection<(LockAttributeAm lockAttributeAm, WorkerStatus workerStatus)> map, string projectId);

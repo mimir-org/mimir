@@ -2,6 +2,7 @@ import { CreateId } from "../helpers";
 import { BlobData, LibItem, Node, User, NODE_KIND } from "../../../models";
 import { Size } from "../../../compLibrary/size";
 import { GetDateNowUtc } from "../../../helpers";
+import { Position } from "../../../models/project";
 
 /**
  * Function to convert data to a Mimir Node.
@@ -12,7 +13,7 @@ import { GetDateNowUtc } from "../../../helpers";
  * @param user
  * @returns a Node.
  */
-const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User): Node => {
+const ConvertToNode = (data: LibItem, position: Position, projectId: string, icons: BlobData[], user: User) => {
   const now = GetDateNowUtc();
 
   const node = {
@@ -47,10 +48,13 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
 
   if (node.connectors) {
     node.connectors.forEach((x) => {
-      x.id = CreateId();
+      const connectorId = CreateId();
+      x.id = connectorId;
+      x.nodeId = node.id;
       if (x.attributes) {
         x.attributes.forEach((y) => {
           y.id = CreateId();
+          y.terminalId = connectorId;
         });
       }
     });
@@ -59,15 +63,19 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
   if (node.attributes) {
     node.attributes.forEach((x) => {
       x.id = CreateId();
+      x.nodeId = node.id;
     });
   }
 
   if (node.simples) {
     node.simples.forEach((x) => {
-      x.id = CreateId();
+      const simpleId = CreateId();
+      x.id = simpleId;
+      x.nodeId = node.id;
       if (x.attributes) {
         x.attributes.forEach((y) => {
           y.id = CreateId();
+          y.simpleId = simpleId;
         });
       }
     });

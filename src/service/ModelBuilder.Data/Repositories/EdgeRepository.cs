@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
@@ -8,8 +9,12 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using SqlBulkTools;
 
 namespace Mb.Data.Repositories
 {
@@ -21,8 +26,10 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ICommonRepository _commonRepository;
+        private readonly DatabaseConfiguration _databaseConfiguration;
+        private readonly ILogger<EdgeRepository> _logger;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<EdgeRepository> logger) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
@@ -30,6 +37,8 @@ namespace Mb.Data.Repositories
             _connectorRepository = connectorRepository;
             _contextAccessor = contextAccessor;
             _commonRepository = commonRepository;
+            _logger = logger;
+            _databaseConfiguration = databaseConfiguration?.Value;
         }
 
         public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
@@ -150,6 +159,158 @@ namespace Mb.Data.Repositories
             }
 
             return returnValues;
+        }
+
+        /// <summary>
+        /// Bulk update edges
+        /// </summary>
+        /// <param name="edges">The edges that should be updated</param>
+        /// <returns>A bulk update task</returns>
+        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
+        public async Task BulkUpdate(List<Edge> edges)
+        {
+            if (edges == null || !edges.Any())
+                return;
+
+            if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
+                throw new ModelBuilderConfigurationException("Database configuration missing");
+
+            var bulk = new BulkOperations();
+            var connection = new SqlConnection(_databaseConfiguration.ConnectionString);
+
+            try
+            {
+                bulk.Setup<Edge>(x => x.ForCollection(edges))
+                    .WithTable("Edge")
+                    .AddColumn(x => x.Id)
+                    .AddColumn(x => x.Iri)
+                    .AddColumn(x => x.FromConnectorId)
+                    .AddColumn(x => x.FromConnectorIri)
+                    .AddColumn(x => x.ToConnectorId)
+                    .AddColumn(x => x.ToConnectorIri)
+                    .AddColumn(x => x.FromNodeId)
+                    .AddColumn(x => x.FromNodeIri)
+                    .AddColumn(x => x.ToNodeId)
+                    .AddColumn(x => x.ToNodeIri)
+                    .AddColumn(x => x.TransportId)
+                    .AddColumn(x => x.InterfaceId)
+                    .AddColumn(x => x.IsLocked)
+                    .AddColumn(x => x.IsLockedStatusBy)
+                    .AddColumn(x => x.IsLockedStatusDate)
+                    .AddColumn(x => x.MasterProjectId)
+                    .AddColumn(x => x.MasterProjectIri)
+                    .AddColumn(x => x.ProjectId)
+                    .AddColumn(x => x.ProjectIri)
+                    .TmpDisableAllNonClusteredIndexes()
+                    .BulkUpdate()
+                    .MatchTargetOn(x => x.Id);
+
+                await bulk.CommitTransactionAsync(connection);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Error in Edge Repository. Can't update database. Error: {e.Message}");
+                throw;
+            }
+            finally
+            {
+                await connection.DisposeAsync();
+            }
+        }
+
+        /// <summary>
+        /// Bulk create or insert edges
+        /// </summary>
+        /// <param name="edges">The edges that should be created</param>
+        /// <returns>A bulk create task</returns>
+        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
+        public async Task BulkCreate(List<Edge> edges)
+        {
+            if (edges == null || !edges.Any())
+                return;
+
+            if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
+                throw new ModelBuilderConfigurationException("Database configuration missing");
+
+            var bulk = new BulkOperations();
+            var connection = new SqlConnection(_databaseConfiguration.ConnectionString);
+
+            try
+            {
+                bulk.Setup<Edge>(x => x.ForCollection(edges))
+                    .WithTable("Edge")
+                    .AddColumn(x => x.Id)
+                    .AddColumn(x => x.Iri)
+                    .AddColumn(x => x.FromConnectorId)
+                    .AddColumn(x => x.FromConnectorIri)
+                    .AddColumn(x => x.ToConnectorId)
+                    .AddColumn(x => x.ToConnectorIri)
+                    .AddColumn(x => x.FromNodeId)
+                    .AddColumn(x => x.FromNodeIri)
+                    .AddColumn(x => x.ToNodeId)
+                    .AddColumn(x => x.ToNodeIri)
+                    .AddColumn(x => x.TransportId)
+                    .AddColumn(x => x.InterfaceId)
+                    .AddColumn(x => x.IsLocked)
+                    .AddColumn(x => x.IsLockedStatusBy)
+                    .AddColumn(x => x.IsLockedStatusDate)
+                    .AddColumn(x => x.MasterProjectId)
+                    .AddColumn(x => x.MasterProjectIri)
+                    .AddColumn(x => x.ProjectId)
+                    .AddColumn(x => x.ProjectIri)
+                    .TmpDisableAllNonClusteredIndexes()
+                    .BulkInsert();
+
+                await bulk.CommitTransactionAsync(connection);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Error in Edge Repository. Can't insert into database. Error: {e.Message}");
+                throw;
+            }
+            finally
+            {
+                await connection.DisposeAsync();
+            }
+        }
+
+        /// <summary>
+        /// Bulk delete edges
+        /// </summary>
+        /// <param name="edges">The edges that should be deleted</param>
+        /// <returns>A bulk delete task</returns>
+        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
+        public async Task BulkDelete(List<Edge> edges)
+        {
+            if (edges == null || !edges.Any())
+                return;
+
+            if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
+                throw new ModelBuilderConfigurationException("Database configuration missing");
+
+            var bulk = new BulkOperations();
+            var connection = new SqlConnection(_databaseConfiguration.ConnectionString);
+
+            try
+            {
+                bulk.Setup<Edge>(x => x.ForCollection(edges))
+                    .WithTable("Edge")
+                    .AddColumn(x => x.Id)
+                    .TmpDisableAllNonClusteredIndexes()
+                    .BulkDelete()
+                    .MatchTargetOn(x => x.Id);
+
+                await bulk.CommitTransactionAsync(connection);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Error in Edge Repository. Can't delete from database. Error: {e.Message}");
+                throw;
+            }
+            finally
+            {
+                await connection.DisposeAsync();
+            }
         }
 
         private void ResetEdgeBeforeSave(Edge edge)

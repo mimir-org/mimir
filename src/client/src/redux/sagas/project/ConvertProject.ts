@@ -140,11 +140,11 @@ export interface EdgeAm {
 export interface ProjectAm {
   id: string;
   iri: string;
-  domain: string;
   name: string;
   isSubProject: boolean;
   version: string;
   description: string;
+  projectOwner: string;
   nodes: NodeAm[];
   edges: EdgeAm[];
 }
@@ -461,11 +461,11 @@ const ConvertProject = (project: Project): ProjectAm => {
   return {
     id: project.id,
     iri: project.iri,
-    domain: project.domain,
     name: project.name,
     isSubProject: project.isSubProject,
     version: project.version,
     description: project.description,
+    projectOwner: project.projectOwner,
     nodes: ConvertNodes(project.nodes),
     edges: ConvertEdges(project.edges),
   };

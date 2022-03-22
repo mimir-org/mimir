@@ -25,4 +25,8 @@
     <ProjectReference Include="..\ModelBuilder.TypeEditor.Data\ModelBuilder.TypeEditor.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

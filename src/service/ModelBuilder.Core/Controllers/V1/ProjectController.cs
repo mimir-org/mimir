@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
+using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
-using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,7 @@ namespace Mb.Core.Controllers.V1
         private readonly ILogger<ProjectController> _logger;
         private readonly IProjectFileService _projectFileService;
         private readonly ICommonRepository _commonRepository;
+        private readonly IModuleService _moduleService;
 
         /// <summary>
         /// Project Controller Constructor
@@ -40,12 +42,14 @@ namespace Mb.Core.Controllers.V1
         /// <param name="logger"></param>
         /// <param name="projectFileService"></param>
         /// <param name="commonRepository"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository)
+        /// <param name="moduleService"></param>
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository, IModuleService moduleService)
         {
             _projectService = projectService;
             _logger = logger;
             _projectFileService = projectFileService;
             _commonRepository = commonRepository;
+            _moduleService = moduleService;
         }
 
         /// <summary>
@@ -142,8 +146,8 @@ namespace Mb.Core.Controllers.V1
         /// <param name="fileData"></param>
         /// <returns></returns>
         [HttpPost("import")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -156,8 +160,8 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var project = await _projectFileService.ImportProject(fileData);
-                return Ok(project);
+                await _projectFileService.ImportProject(fileData);
+                return Ok(null);
             }
             catch (ModelBuilderBadRequestException e)
             {
@@ -231,8 +235,8 @@ namespace Mb.Core.Controllers.V1
         /// <param name="projectAm"></param>
         /// <returns></returns>
         [HttpPost("update/{id}")]
-        [ProducesResponseType(typeof(ProjectResultAm), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -245,8 +249,8 @@ namespace Mb.Core.Controllers.V1
 
             try
             {
-                var projectResult = await _projectService.UpdateProject(id, null, projectAm, _commonRepository.GetDomain());
-                return Ok(projectResult);
+                await _projectService.UpdateProject(id, null, projectAm, _commonRepository.GetDomain());
+                return Ok(null);
             }
             catch (ModelBuilderDuplicateException e)
             {
@@ -340,20 +344,24 @@ namespace Mb.Core.Controllers.V1
         /// <param name="parser"></param>
         /// <returns></returns>
         [HttpPost("upload/{parser}")]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Edit")]
+        [RequestSizeLimit(100_000_000)]
         public async Task<IActionResult> UploadProject(string parser, IFormFile file, CancellationToken cancellationToken)
         {
             try
             {
-                if (!(file.ValidateJsonFile() || file.ValidateNtFile()))
-                    return BadRequest("Invalid file extension. The file must be json or nt");
+                var fileParser = _moduleService.Resolve<IModelBuilderParser>(new Guid(parser));
+                var fileParserExtension = $".{fileParser.GetFileFormat().FileExtension}";
+                var submissionFileExtension = Path.GetExtension(file.FileName);
+                if (fileParserExtension != submissionFileExtension)
+                    return BadRequest($"Invalid file extension. The file must be {fileParserExtension}");
 
-                var createdProject = await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
-                return StatusCode(StatusCodes.Status201Created, createdProject);
+                await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
+                return StatusCode(StatusCodes.Status201Created);
             }
             catch (ModelBuilderBadRequestException e)
             {
