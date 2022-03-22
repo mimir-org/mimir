@@ -19,12 +19,12 @@ export const CreateConnectedOffPageNode = (
   position: Position,
   dispatch: Dispatch
 ) => {
-  const offPageData: OffPageData = {
+  const data = {
     sourceNode,
     sourceConnector,
     position,
-  };
+  } as OffPageData;
 
-  const offPageObject = CreateOffPageObject(offPageData);
+  const offPageObject = CreateOffPageObject(data);
   dispatch(createConnectedOffPageNode(offPageObject));
 };

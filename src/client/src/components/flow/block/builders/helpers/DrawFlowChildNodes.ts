@@ -25,7 +25,6 @@ const DrawFlowChildNodes = (
 
   edges?.forEach((edge) => {
     if (!ValidateEdge(edge, selectedNode)) return;
-
     const targetNode = nodes.find((n) => n.id === edge.toNode.id);
     if (!targetNode) return;
 

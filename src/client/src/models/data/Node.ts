@@ -35,7 +35,7 @@ export interface Node {
   updated: Date;
   version: string;
   aspect: Aspect;
-  isRoot: boolean | false;
+  isRoot: boolean;
   masterProjectId: string;
   masterProjectIri: string;
   symbol: string;
