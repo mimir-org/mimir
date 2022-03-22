@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -353,10 +354,11 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var par = _moduleService.Resolve<IModelBuilderParser>(new Guid(parser));
-                var extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-                if(par.GetFileFormat().FileExtension != extension)
-                    return BadRequest($"Invalid file extension. The file must be {par.GetFileFormat().FileExtension}");
+                var fileParser = _moduleService.Resolve<IModelBuilderParser>(new Guid(parser));
+                var fileParserExtension = $".{fileParser.GetFileFormat().FileExtension}";
+                var submissionFileExtension = Path.GetExtension(file.FileName);
+                if (fileParserExtension != submissionFileExtension)
+                    return BadRequest($"Invalid file extension. The file must be {fileParserExtension}");
 
                 await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
                 return StatusCode(StatusCodes.Status201Created);
