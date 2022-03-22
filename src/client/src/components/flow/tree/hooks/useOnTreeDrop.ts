@@ -30,16 +30,20 @@ interface OnDropParameters {
  */
 const useOnTreeDrop = (params: OnDropParameters) => {
   const { event, project, dispatch } = params;
+
   event.stopPropagation();
   event.preventDefault();
 
   if (DoesNotContainApplicationData(event)) return;
-  const sourceNode = GetSelectedNode();
 
-  IsSubProject(event) ? HandleSubProjectDrop(event, project, dispatch) : HandleNodeDrop(params, sourceNode);
+  const sourceNode = GetSelectedNode();
+  const isSubProject = IsSubProject(event);
+
+  if (isSubProject) HandleSubProjectDrop(event, project, dispatch);
+  else HandleNodeDrop(params, sourceNode);
 };
 
-export const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
+const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
 function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
@@ -56,7 +60,7 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
 
 function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  const parentNode = GetParentNode(sourceNode, project, data);
+  const parentNode = getParentNode(sourceNode, project, data);
 
   // TODO: fix when implementing auto-position
   const marginY = 220;
@@ -72,7 +76,7 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
   dispatch(addNode(targetNode));
 }
 
-function GetParentNode(sourceNode: Node, project: Project, data: LibItem) {
+function getParentNode(sourceNode: Node, project: Project, data: LibItem) {
   if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
 }

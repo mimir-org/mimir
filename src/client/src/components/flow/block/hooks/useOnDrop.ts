@@ -6,7 +6,6 @@ import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { DoesNotContainApplicationData } from "../../tree/hooks/useOnTreeDrop";
 import { HandleCreatePartOfEdge, InitConnector, InitNodeAttributes, InitSimple } from "../../helpers/LibraryDropHelpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -40,6 +39,9 @@ const useOnDrop = (params: OnDropParameters) => {
 
   HandleNodeDrop(params);
 };
+
+const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
+  !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
 function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, flowTransform, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
