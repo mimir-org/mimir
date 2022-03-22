@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -38,8 +39,9 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly ISimpleRepository _simpleRepository;
-
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IServiceProvider services, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<ProjectRepository> logger, IHttpContextAccessor contextAccessor, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository) : base(dbContext)
+        private readonly ICacheRepository _cacheRepository;
+        
+        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IServiceProvider services, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<ProjectRepository> logger, IHttpContextAccessor contextAccessor, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
         {
             _mapper = mapper;
             _nodeRepository = nodeRepository;
@@ -53,6 +55,7 @@ namespace Mb.Data.Repositories
             _connectorRepository = connectorRepository;
             _interfaceRepository = interfaceRepository;
             _simpleRepository = simpleRepository;
+            _cacheRepository = cacheRepository;
         }
 
         /// <summary>
@@ -63,19 +66,18 @@ namespace Mb.Data.Repositories
         /// <returns>Complete project</returns>
         public async Task<Project> GetAsyncComplete(string id, string iri)
         {
-            var projectTask = FindProjectAsync(id, iri);
-            var nodeTask = FindNodesAsync(id, iri);
-            var edgeTask = FindEdgesAsync(id, iri);
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                throw new ModelBuilderNullReferenceException("The ID and IRI can't both be null.");
 
-            await Task.WhenAll(projectTask, nodeTask, edgeTask);
+            var key = GetKey(id, iri);
 
-            var project = projectTask.Result;
-            if (project == null)
-                return null;
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                var project = await _cacheRepository.GetOrCreateAsync(key, async () => await GetProjectAsync(id, iri));
+                return project;
+            }
 
-            project.Nodes = nodeTask.Result;
-            project.Edges = edgeTask.Result;
-            return project;
+            return await GetProjectAsync(id, iri);
         }
 
         /// <summary>
@@ -173,6 +175,9 @@ namespace Mb.Data.Repositories
             await Task.WhenAll(
                 Task.Run(() => _nodeRepository.BulkDelete(data.NodeDelete))
             );
+
+            var key = GetKey(updated.Id, updated.Iri);
+            await _cacheRepository.CreateAsync(key, async () => await GetProjectAsync(updated.Id, updated.Iri));
         }
 
         /// <summary>
@@ -248,6 +253,23 @@ namespace Mb.Data.Repositories
 
         #region Private methods
 
+        private async Task<Project> GetProjectAsync(string id, string iri)
+        {
+            var projectTask = FindProjectAsync(id, iri);
+            var nodeTask = FindNodesAsync(id, iri);
+            var edgeTask = FindEdgesAsync(id, iri);
+
+            await Task.WhenAll(projectTask, nodeTask, edgeTask);
+
+            var project = projectTask.Result;
+            if (project == null)
+                return null;
+
+            project.Nodes = nodeTask.Result;
+            project.Edges = edgeTask.Result;
+            return project;
+        }
+
         /// <summary>
         /// Find a project async
         /// </summary>
@@ -256,7 +278,10 @@ namespace Mb.Data.Repositories
         /// <returns></returns>
         private async Task<Project> FindProjectAsync(string id, string iri)
         {
-            return await Task.Run(() => FindBy(x => x.Id == id || x.Iri == iri)
+            using var scope = _services.CreateScope();
+            var repo = scope.ServiceProvider.GetRequiredService<IProjectRepository>();
+            
+            return await Task.Run(() => repo.FindBy(x => x.Id == id || x.Iri == iri)
                 .AsNoTracking()
                 .SingleOrDefaultAsync());
         }
@@ -393,6 +418,26 @@ namespace Mb.Data.Repositories
             {
                 await connection.DisposeAsync();
             }
+        }
+
+        private string GetKey(string id, string iri)
+        {
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                return null;
+
+            string key;
+
+            if (!string.IsNullOrWhiteSpace(id))
+                key = id.Split('_').Last();
+            else
+            {
+                var uri = new Uri(iri);
+                key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
+                if (key.StartsWith("ID"))
+                    key = key.Remove(0, 2);
+            }
+
+            return key;
         }
 
         #endregion

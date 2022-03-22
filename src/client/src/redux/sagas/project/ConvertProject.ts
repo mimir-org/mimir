@@ -146,6 +146,7 @@ export interface ProjectAm {
   isSubProject: boolean;
   version: string;
   description: string;
+  projectOwner: string;
   nodes: NodeAm[];
   edges: EdgeAm[];
 }
@@ -468,6 +469,7 @@ const ConvertProject = (project: Project): ProjectAm => {
     isSubProject: project.isSubProject,
     version: project.version,
     description: project.description,
+    projectOwner: project.projectOwner,
     nodes: ConvertNodes(project.nodes),
     edges: ConvertEdges(project.edges),
   };
