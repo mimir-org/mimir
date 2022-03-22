@@ -25,34 +25,35 @@ const useOnTreeRemove = (
   dispatch: Dispatch
 ) => {
   const elementsToRemove: Elements = [];
-  HandleElementsToRemove(elements, elementsToRemove, project, dispatch);
+  HandleRemoveElements(elements, elementsToRemove, project, dispatch);
 
-  if (elementsToRemove.length) {
-    CloseInspector(inspectorRef, dispatch);
-    return setElements((els) => removeElements(elementsToRemove, els));
-  }
+  if (!elementsToRemove.length) return;
+
+  CloseInspector(inspectorRef, dispatch);
+  return setElements((els) => removeElements(elementsToRemove, els));
 };
 
-const HandleElementsToRemove = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
-  const selectedNode = GetSelectedNode();
-  const edgeTypes = Object.values(EDGE_TYPE);
-
+const HandleRemoveElements = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
   elements.forEach((elem) => {
     if (IsAspectNode(elem.data)) return;
-    const isEdge = IsElementEdge(edgeTypes, elem);
+    const isEdge = IsElementEdge(Object.values(EDGE_TYPE), elem);
 
     if (isEdge) {
-      if (!IsAspectNode(selectedNode) && !FindProjectEdgeByElementId(project, elem)?.isLocked) {
-        dispatch(removeEdge(elem.id));
-        elementsToRemove.push(elem);
-      }
-    } else {
-      const node = FindProjectNodeByElementId(project, elem);
-      if (!node?.isLocked) {
-        dispatch(removeNode(elem.id));
-        elementsToRemove.push(elem);
-      }
+      const selectedNode = GetSelectedNode();
+      if (IsAspectNode(selectedNode)) return;
+      const edge = FindProjectEdgeByElementId(project, elem);
+      if (edge?.isLocked) return;
+
+      dispatch(removeEdge(elem.id));
+      elementsToRemove.push(elem);
+      return;
     }
+
+    const node = FindProjectNodeByElementId(project, elem);
+    if (node?.isLocked) return;
+
+    dispatch(removeNode(elem.id));
+    elementsToRemove.push(elem);
   });
 };
 
