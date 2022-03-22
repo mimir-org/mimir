@@ -40,7 +40,7 @@ namespace Mb.Data.Repositories
         private readonly IInterfaceRepository _interfaceRepository;
         private readonly ISimpleRepository _simpleRepository;
         private readonly ICacheRepository _cacheRepository;
-        
+
         public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IServiceProvider services, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<ProjectRepository> logger, IHttpContextAccessor contextAccessor, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
         {
             _mapper = mapper;
@@ -280,7 +280,7 @@ namespace Mb.Data.Repositories
         {
             using var scope = _services.CreateScope();
             var repo = scope.ServiceProvider.GetRequiredService<IProjectRepository>();
-            
+
             return await Task.Run(() => repo.FindBy(x => x.Id == id || x.Iri == iri)
                 .AsNoTracking()
                 .SingleOrDefaultAsync());

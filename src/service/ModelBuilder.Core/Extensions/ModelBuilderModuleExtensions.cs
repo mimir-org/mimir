@@ -71,7 +71,7 @@ namespace Mb.Core.Extensions
             });
 
             // Dependency injection
-           
+
             services.AddMemoryCache();
             services.AddSingleton<ICacheRepository, InMemoryCacheRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();

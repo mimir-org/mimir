@@ -34,7 +34,7 @@ namespace Mb.Services.Services
         private readonly IRemapService _remapService;
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
-        
+
 
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,

@@ -65,7 +65,7 @@ namespace Mb.Services.Contracts
 
         Task<Project> CreateProject(CreateProject createProject);
 
-        
+
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
         Task CommitProject(CommitPackage package);

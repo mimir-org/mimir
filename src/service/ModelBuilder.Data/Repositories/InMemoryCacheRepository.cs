@@ -12,7 +12,7 @@ namespace Mb.Data.Repositories
         private const int Seconds = 86400;
         private readonly IMemoryCache _memoryCache;
         private readonly ConcurrentDictionary<string, SemaphoreSlim> _locks;
-        
+
 
         public InMemoryCacheRepository(IMemoryCache memoryCache)
         {
@@ -28,8 +28,8 @@ namespace Mb.Data.Repositories
 
         public Task<T> TryGetAsync<T>(string key)
         {
-            return _memoryCache.TryGetValue(key, out T cacheEntry) ? 
-                Task.FromResult(cacheEntry) : 
+            return _memoryCache.TryGetValue(key, out T cacheEntry) ?
+                Task.FromResult(cacheEntry) :
                 null;
         }
 
