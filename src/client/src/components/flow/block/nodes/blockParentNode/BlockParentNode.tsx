@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
@@ -5,12 +6,15 @@ import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
-import { Connector } from "../../../../../models";
+import { Connector, Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
+import { Size } from "../../../../../compLibrary/size";
+import { Dispatch } from "redux";
+import { updateBlockSize } from "../../../../../redux/store/project/actions";
 
 /**
  * Component for a ParentNode in BlockView.
@@ -27,12 +31,15 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const size = useAppSelector(selectors.nodeSizeSelector);
 
   useEffect(() => {
     const canvasData = SetZoomCenterLevel(secondaryNode !== null);
     setCenter(canvasData.x, canvasData.y, canvasData.zoom);
   }, [setCenter, secondaryNode]);
+
+  useEffect(() => {
+    SetInitSize(node, dispatch);
+  }, []);
 
   useEffect(() => {
     setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
@@ -48,7 +55,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockParentComponent
         node={node}
-        size={size}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}
@@ -60,5 +66,23 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     </BoxWrapper>
   );
 };
+
+/**
+ * Function to ensure that the ParentNode size has been initiated.
+ * @param node
+ * @param dispatch
+ */
+function SetInitSize(node: Node, dispatch: Dispatch) {
+  if (
+    node?.width == null ||
+    node?.height === null ||
+    node?.width === undefined ||
+    node?.height === undefined ||
+    node?.width < Size.BLOCK_NODE_MIN_WIDTH ||
+    node?.height < Size.BLOCK_NODE_MIN_HEIGHT
+  ) {
+    dispatch(updateBlockSize(node.id, { width: Size.BLOCK_NODE_WIDTH, height: Size.BLOCK_NODE_HEIGHT }));
+  }
+}
 
 export default memo(BlockParentNode);

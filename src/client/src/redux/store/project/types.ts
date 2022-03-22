@@ -1,5 +1,6 @@
 import { ApiError } from "../../../models/webclient";
 import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
+import { BlockNodeSize } from "../../../models/project";
 import {
   CommitPackage,
   ConnectorVisibility,
@@ -29,6 +30,7 @@ export const ADD_EDGE = "ADD_EDGE";
 export const REMOVE_EDGE = "REMOVE_EDGE";
 export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
+export const UPDATE_BLOCK_SIZE = "UPDATE_BLOCK_SIZE";
 export const SET_NODE_VISIBILITY = "SET_NODE_VISIBILITY";
 export const SET_EDGE_VISIBILITY = "SET_EDGE_VISIBILITY";
 export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
@@ -161,6 +163,14 @@ export interface UpdateBlockPositionAction {
     nodeId: string;
     x: number;
     y: number;
+  };
+}
+
+export interface UpdateBlockSizeAction {
+  type: typeof UPDATE_BLOCK_SIZE;
+  payload: {
+    nodeId: string;
+    size: BlockNodeSize;
   };
 }
 
@@ -613,6 +623,7 @@ export type ProjectActionTypes =
   | AddEdgeAction
   | RemoveEdgeAction
   | UpdatePositionAction
+  | UpdateBlockSizeAction
   | SetNodeVisibility
   | SetEdgeVisibility
   | SetActiveNode

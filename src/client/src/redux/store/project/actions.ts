@@ -1,5 +1,6 @@
 import * as Types from "./types";
 import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
+import { BlockNodeSize } from "../../../models/project";
 import {
   CommitPackage,
   Connector,
@@ -122,6 +123,16 @@ export function updateBlockPosition(nodeId: string, x: number, y: number): Types
       nodeId: nodeId,
       x: x,
       y: y,
+    },
+  };
+}
+
+export function updateBlockSize(nodeId: string, size: BlockNodeSize): Types.ProjectActionTypes {
+  return {
+    type: Types.UPDATE_BLOCK_SIZE,
+    payload: {
+      nodeId,
+      size,
     },
   };
 }

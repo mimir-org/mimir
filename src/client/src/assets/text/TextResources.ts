@@ -363,6 +363,9 @@ const TextResources = {
 
   // Modal
   Modal_Close: "Close menu",
+
+  // Resize
+  Resize_Node: "Resize node",
 };
 
 export default TextResources;

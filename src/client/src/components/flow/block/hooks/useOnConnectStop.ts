@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { FlowTransform } from "react-flow-renderer";
-import { BlockNodeSize, EdgeEvent } from "../../../../models/project";
+import { EdgeEvent } from "../../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
 import { Connector, Node, Project } from "../../../../models";
 import { IsOffPage } from "../../../../helpers";
@@ -17,19 +17,11 @@ import { TextResources } from "../../../../assets/text";
  * The dropzone is located to the left or right of the ParentBlockNode, depending on the OffPageNode type.
  * @param e
  * @param project
- * @param parentNodeSize
  * @param secondaryNode
  * @param transform
  * @param dispatch
  */
-const useOnConnectStop = (
-  e: MouseEvent,
-  project: Project,
-  parentNodeSize: BlockNodeSize,
-  secondaryNode: Node,
-  transform: FlowTransform,
-  dispatch: Dispatch
-) => {
+const useOnConnectStop = (e: MouseEvent, project: Project, secondaryNode: Node, transform: FlowTransform, dispatch: Dispatch) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
   if (!edgeEvent) return;
@@ -50,7 +42,7 @@ const useOnConnectStop = (
     return;
   }
 
-  const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn, parentNodeSize);
+  const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn);
   if (!isValidOffPageDrop) return;
 
   const position = { x: e.clientX, y: e.clientY };
@@ -64,12 +56,11 @@ function ValidateOffPageDrop(
   transform: FlowTransform,
   sourceNode: Node,
   secondaryNode: Node,
-  sourceConn: Connector,
-  parentNodeSize: BlockNodeSize
+  sourceConn: Connector
 ) {
   const splitView = secondaryNode !== undefined;
   const isTarget = IsOutputTerminal(sourceConn) || IsOutputVisible(sourceConn);
-  const dropZone = CalculateDropZone(transform, sourceNode, secondaryNode, parentNodeSize, isTarget);
+  const dropZone = CalculateDropZone(transform, sourceNode, secondaryNode, isTarget);
 
   if (splitView) {
     const dropZoneWidth = Size.SPLITVIEW_DISTANCE;
@@ -87,21 +78,14 @@ function ValidateOffPageDrop(
  * @param transform
  * @param sourceNode
  * @param secondaryNode
- * @param parentNodeSize
  * @param isTarget
  * @returns an X value that represents the dropzone on the canvas.
  */
-function CalculateDropZone(
-  transform: FlowTransform,
-  sourceNode: Node,
-  secondaryNode: Node,
-  parentNodeSize: BlockNodeSize,
-  isTarget: boolean
-) {
+function CalculateDropZone(transform: FlowTransform, sourceNode: Node, secondaryNode: Node, isTarget: boolean) {
   const parentNode = GetParent(sourceNode);
   const parentPosX = parentNode?.positionBlockX;
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;
-  const parentNodeWidthScaled = parentNodeSize.width * transform.zoom;
+  const parentNodeWidthScaled = parentNode.width * transform.zoom;
   const defaultX = Size.BLOCK_MARGIN_X;
 
   let dropZone = isTarget ? parentPosX + parentNodeWidthScaled : parentPosX;

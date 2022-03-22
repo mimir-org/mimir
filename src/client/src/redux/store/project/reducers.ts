@@ -172,6 +172,23 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         },
       };
 
+    case Types.UPDATE_BLOCK_SIZE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project?.nodes.map((x) =>
+            x.id === action.payload.nodeId
+              ? {
+                  ...x,
+                  width: action.payload.size.width,
+                  height: action.payload.size.height,
+                }
+              : x
+          ),
+        },
+      };
+
     case Types.SET_EDGE_VISIBILITY:
       return {
         ...state,
