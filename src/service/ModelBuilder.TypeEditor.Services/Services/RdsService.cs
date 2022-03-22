@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
-using Mb.Models.Enums;
 using Mb.TypeEditor.Data.Contracts;
 using Mb.TypeEditor.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
 
 namespace Mb.TypeEditor.Services.Services
 {
@@ -23,26 +21,13 @@ namespace Mb.TypeEditor.Services.Services
         }
 
         /// <summary>
-        /// Get all RDS by aspect
-        /// </summary>
-        /// <param name="aspect"></param>
-        /// <returns></returns>
-        public IEnumerable<Rds> GetRds(Aspect aspect)
-        {
-            var all = _rdsRepository.GetAll().Include(x => x.RdsCategory).ToList();
-            return aspect == Aspect.NotSet ?
-                all :
-                all.Where(x => x.Aspect.HasFlag(aspect));
-        }
-
-        /// <summary>
         /// Create a RDS
         /// </summary>
         /// <param name="createRds"></param>
         /// <returns></returns>
         public async Task<Rds> CreateRds(CreateRds createRds)
         {
-            var data = await CreateRdsAsync(new List<CreateRds> { createRds });
+            var data = await CreateRdsAsync(new List<CreateRds> {createRds});
             return data.SingleOrDefault();
         }
 
@@ -68,6 +53,7 @@ namespace Mb.TypeEditor.Services.Services
             {
                 await _rdsRepository.CreateAsync(entity);
             }
+
             await _rdsRepository.SaveAsync();
             return data;
         }
