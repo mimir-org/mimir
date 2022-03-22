@@ -268,19 +268,26 @@ namespace Mb.Services.Services
         /// Update a project
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="projectAm"></param>
+        /// <param name="project"></param>
         /// <param name="invokedByDomain"></param>
         /// <param name="iri"></param>
         /// <returns>Update Project Task</returns>
-        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
-        /// <exception cref="ModelBuilderNotFoundException"></exception>
-        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null</exception>
-        public async Task UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
+        /// <exception cref="ModelBuilderInvalidOperationException">Throws if invoking domain is not set.</exception>
+        /// <exception cref="ModelBuilderNotFoundException">Throws if project is missing from database.</exception>
+        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
+        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid.</exception>
+        /// TODO: We need to handle invokedByDomain in update process
+        public async Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            if ((string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri)) || project == null)
+                throw new ModelBuilderNullReferenceException("Id or Iri must have value. Project can't be null.");
 
-                if (string.IsNullOrWhiteSpace(invokedByDomain))
-                    throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
+            if (string.IsNullOrWhiteSpace(invokedByDomain))
+                throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
+
+            var validation = project.ValidateObject();
+            if (!validation.IsValid)
+                throw new ModelBuilderBadRequestException($"Couldn't update project with name: {project.Name}", validation);
 
             var original = await _projectRepository.GetAsyncComplete(id, iri);
             ClearAllChangeTracker();
@@ -289,10 +296,10 @@ namespace Mb.Services.Services
                 throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
 
             // Remap and create new id's
-            _ = _remapService.Remap(projectAm);
+            _ = _remapService.Remap(project);
 
             // Map updated project
-            var updated = _mapper.Map<Project>(projectAm);
+            var updated = _mapper.Map<Project>(project);
 
             // Sort nodes
             ResolveLevelAndOrder(updated);
@@ -321,12 +328,6 @@ namespace Mb.Services.Services
             var projectData = new ProjectData();
             await _remapService.DeConstruct(existingProject, projectData);
             await _projectRepository.DeleteProject(existingProject, projectData);
-
-
-            //_ = await _edgeRepository.DeleteEdges(existingProject.Edges, projectId, _commonRepository.GetDomain());
-            //_ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _commonRepository.GetDomain()).ToList();
-            //await _projectRepository.Delete(projectId);
-            //await _projectRepository.SaveAsync();
         }
 
         /// <summary>
@@ -560,44 +561,44 @@ namespace Mb.Services.Services
             return project;
         }
 
-        private void SetProjectVersion(Project originalProject, ProjectAm projectAm)
-        {
-            if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) ||
-                projectAm == null || string.IsNullOrWhiteSpace(projectAm.Id))
-                return;
+        //private void SetProjectVersion(Project originalProject, ProjectAm projectAm)
+        //{
+        //    if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) ||
+        //        projectAm == null || string.IsNullOrWhiteSpace(projectAm.Id))
+        //        return;
 
-            //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
+        //    //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
 
-            if (originalProject.IsSubProject != projectAm.IsSubProject)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
+        //    if (originalProject.IsSubProject != projectAm.IsSubProject)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-            if (originalProject.Name != projectAm.Name)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
+        //    if (originalProject.Name != projectAm.Name)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-            if (originalProject.Description != projectAm.Description)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
+        //    if (originalProject.Description != projectAm.Description)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-            if (originalProject.Nodes?.Count != projectAm.Nodes?.Count)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
+        //    if (originalProject.Nodes?.Count != projectAm.Nodes?.Count)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-            if (originalProject.Edges?.Count != projectAm.Edges?.Count)
-            {
-                originalProject.IncrementMinorVersion();
-            }
+        //    if (originalProject.Edges?.Count != projectAm.Edges?.Count)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //    }
 
-        }
+        //}
 
         private async Task SetProjectCommitVersion(string projectId)
         {

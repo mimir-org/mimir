@@ -47,13 +47,25 @@ namespace Mb.Services.Contracts
         /// <returns></returns>
         Task<Project> CreateProject(SubProjectAm subProjectAm);
 
-        
-        
-        
+        /// <summary>
+        /// Update a project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="project"></param>
+        /// <param name="invokedByDomain"></param>
+        /// <param name="iri"></param>
+        /// <returns>Update Project Task</returns>
+        /// <exception cref="ModelBuilderInvalidOperationException">Throws if invoking domain is not set.</exception>
+        /// <exception cref="ModelBuilderNotFoundException">Throws if project is missing from database.</exception>
+        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
+        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid.</exception>
+        Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain);
+
+
+
         Task<Project> CreateProject(CreateProject createProject);
 
         
-        Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain);
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
         Task CommitProject(CommitPackage package);
