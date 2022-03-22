@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
+using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
+using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Services.Contracts;
@@ -32,6 +34,7 @@ namespace Mb.Core.Controllers.V1
         private readonly ILogger<ProjectController> _logger;
         private readonly IProjectFileService _projectFileService;
         private readonly ICommonRepository _commonRepository;
+        private readonly IModuleService _moduleService;
 
         /// <summary>
         /// Project Controller Constructor
@@ -40,12 +43,13 @@ namespace Mb.Core.Controllers.V1
         /// <param name="logger"></param>
         /// <param name="projectFileService"></param>
         /// <param name="commonRepository"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository)
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository, IModuleService moduleService)
         {
             _projectService = projectService;
             _logger = logger;
             _projectFileService = projectFileService;
             _commonRepository = commonRepository;
+            _moduleService = moduleService;
         }
 
         /// <summary>
@@ -349,8 +353,10 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                if (!(file.ValidateJsonFile() || file.ValidateNtFile()))
-                    return BadRequest("Invalid file extension. The file must be json or nt");
+                var par = _moduleService.Resolve<IModelBuilderParser>(new Guid(parser));
+                var extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+                if(par.GetFileFormat().FileExtension != extension)
+                    return BadRequest($"Invalid file extension. The file must be {par.GetFileFormat().FileExtension}");
 
                 await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
                 return StatusCode(StatusCodes.Status201Created);

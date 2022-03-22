@@ -92,5 +92,15 @@ namespace ModelBuilder.Tests.Fake
         {
             throw new NotImplementedException();
         }
+
+        public Task CreateProject(Project original, ProjectData data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteProject(Project original, ProjectData data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

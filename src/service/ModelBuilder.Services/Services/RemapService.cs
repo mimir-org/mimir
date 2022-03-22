@@ -58,6 +58,26 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Deconstruct a project to array of elements
+        /// </summary>
+        /// <param name="project">The project to deconstruct</param>
+        /// <param name="data">Project Data object to fill with data</param>
+        /// <returns>A task that updates project data</returns>
+        public async Task DeConstruct(Project project, ProjectData data)
+        {
+            if (project == null || (project.Edges == null && project.Nodes == null))
+                return;
+
+            if (project.Nodes != null)
+                foreach (var node in project.Nodes)
+                    await data.DeconstructNode(node);
+
+            if (project.Edges != null)
+                foreach (var edge in project.Edges)
+                    await data.DeconstructEdge(edge);
+        }
+
+        /// <summary>
         /// Remap a project
         /// </summary>
         /// <param name="project">ProjectAm</param>
@@ -512,6 +532,7 @@ namespace Mb.Services.Services
             return terminal;
         }
 
+        // Cast connectors to relations and terminals
         private void CastConnectors(ProjectAm project)
         {
             foreach (var node in project.Nodes)
@@ -535,26 +556,6 @@ namespace Mb.Services.Services
 
                 node.Connectors = connectors;
             }
-        }
-
-        /// <summary>
-        /// Deconstruct a Mimir project
-        /// </summary>
-        /// <param name="project">The project to deconstruct</param>
-        /// <param name="data">Project Data object to fill with data</param>
-        /// <returns></returns>
-        private async Task DeConstruct(Project project, ProjectData data)
-        {
-            if (project == null || (project.Edges == null && project.Nodes == null))
-                return;
-
-            if (project.Nodes != null)
-                foreach (var node in project.Nodes)
-                    await data.DeconstructNode(node);
-
-            if (project.Edges != null)
-                foreach (var edge in project.Edges)
-                    await data.DeconstructEdge(edge);
         }
 
         #endregion

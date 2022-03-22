@@ -81,10 +81,10 @@ namespace Mb.Data.Repositories
         /// <summary>
         /// Get project list
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="from"></param>
-        /// <param name="number"></param>
-        /// <returns></returns>
+        /// <param name="name">The project to search for</param>
+        /// <param name="from">Get project from</param>
+        /// <param name="number">Get number of project</param>
+        /// <returns>A list of project information</returns>
         public IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number)
         {
             if (string.IsNullOrEmpty(name))
@@ -110,7 +110,7 @@ namespace Mb.Data.Repositories
         /// <param name="original"></param>
         /// <param name="updated"></param>
         /// <param name="data"></param>
-        /// <returns></returns>
+        /// <returns>A project update task</returns>
         public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
             if (!original.Equals(updated))
@@ -119,7 +119,7 @@ namespace Mb.Data.Repositories
                 updated.UpdatedBy = _contextAccessor?.GetName() ?? "System";
 
                 // Update project
-                await Task.WhenAny(Task.Run(() => UpsertProject(original, updated)));
+                await Task.WhenAny(Task.Run(() => UpsertProject(updated)));
             }
 
             // Update all objects and create new nodes
@@ -174,6 +174,79 @@ namespace Mb.Data.Repositories
                 Task.Run(() => _nodeRepository.BulkDelete(data.NodeDelete))
             );
         }
+
+        /// <summary>
+        /// Create a project
+        /// </summary>
+        /// <param name="project">The project that should be created</param>
+        /// <param name="data">Project data</param>
+        /// <returns>A project create task</returns>
+        public async Task CreateProject(Project project, ProjectData data)
+        {
+            await Task.WhenAny(Task.Run(() => UpsertProject(project)));
+
+            // Create all nodes
+            await Task.WhenAny(
+                Task.Run(() => _nodeRepository.BulkCreate(data.Nodes))
+            );
+
+            // Create all connectors and simples
+            await Task.WhenAll(
+                Task.Run(() => _connectorRepository.BulkCreate(data.Relations)),
+                Task.Run(() => _connectorRepository.BulkCreate(data.Terminals)),
+                Task.Run(() => _simpleRepository.BulkCreate(data.Simples))
+            );
+
+            // Create all transports and interfaces
+            await Task.WhenAll(
+                Task.Run(() => _transportRepository.BulkCreate(data.Transports)),
+                Task.Run(() => _interfaceRepository.BulkCreate(data.Interfaces))
+            );
+
+            // Create all attributes and edges
+            await Task.WhenAll(
+                Task.Run(() => _attributeRepository.BulkCreate(data.Attributes)),
+                Task.Run(() => _edgeRepository.BulkCreate(data.Edges))
+            );
+        }
+
+        /// <summary>
+        /// Delete a project
+        /// </summary>
+        /// <param name="project">The project that should be deleted</param>
+        /// <param name="data">Project data</param>
+        /// <returns>A project delete task</returns>
+        public async Task DeleteProject(Project project, ProjectData data)
+        {
+            // Delete all attributes and edges
+            await Task.WhenAll(
+                Task.Run(() => _attributeRepository.BulkDelete(data.Attributes)),
+                Task.Run(() => _edgeRepository.BulkDelete(data.Edges))
+            );
+
+            // Delete all transports and interfaces
+            await Task.WhenAll(
+                Task.Run(() => _transportRepository.BulkDelete(data.Transports)),
+                Task.Run(() => _interfaceRepository.BulkDelete(data.Interfaces))
+            );
+
+            // Delete all connectors and simples
+            await Task.WhenAll(
+                Task.Run(() => _connectorRepository.BulkDelete(data.Relations)),
+                Task.Run(() => _connectorRepository.BulkDelete(data.Terminals)),
+                Task.Run(() => _simpleRepository.BulkDelete(data.Simples))
+            );
+
+            // Delete all nodes
+            await Task.WhenAny(
+                Task.Run(() => _nodeRepository.BulkDelete(data.Nodes))
+            );
+
+            // Delete project
+            await Task.WhenAny(Task.Run(() => ProjectDelete(project)));
+        }
+
+        #region Private methods
 
         /// <summary>
         /// Find a project async
@@ -247,14 +320,10 @@ namespace Mb.Data.Repositories
         /// <summary>
         /// Insert or update a project
         /// </summary>
-        /// <param name="original">The original project</param>
-        /// <param name="updated">The updated project</param>
+        /// <param name="project">The original project</param>
         /// <returns></returns>
-        private async Task UpsertProject(Project original, Project updated)
+        private async Task UpsertProject(Project project)
         {
-            if (updated == null)
-                return;
-
             if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
                 throw new ModelBuilderConfigurationException("Database configuration missing");
 
@@ -263,7 +332,7 @@ namespace Mb.Data.Repositories
 
             try
             {
-                bulk.Setup<Project>(x => x.ForCollection(new List<Project> { updated }))
+                bulk.Setup<Project>(x => x.ForCollection(new List<Project> { project }))
                     .WithTable("Project")
                     .AddColumn(x => x.Id)
                     .AddColumn(x => x.Iri)
@@ -290,5 +359,42 @@ namespace Mb.Data.Repositories
                 await connection.DisposeAsync();
             }
         }
+
+        /// <summary>
+        /// Insert or update a project
+        /// </summary>
+        /// <param name="project">The original project</param>
+        /// <returns></returns>
+        private async Task ProjectDelete(Project project)
+        {
+            if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
+                throw new ModelBuilderConfigurationException("Database configuration missing");
+
+            var bulk = new BulkOperations();
+            var connection = new SqlConnection(_databaseConfiguration.ConnectionString);
+
+            try
+            {
+                bulk.Setup<Project>(x => x.ForCollection(new List<Project> { project }))
+                    .WithTable("Project")
+                    .AddColumn(x => x.Id)
+                    .TmpDisableAllNonClusteredIndexes()
+                    .BulkDelete()
+                    .MatchTargetOn(x => x.Id);
+
+                await bulk.CommitTransactionAsync(connection);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Error in project Repository. Can't delete project. Error: {e.Message}");
+                throw;
+            }
+            finally
+            {
+                await connection.DisposeAsync();
+            }
+        }
+
+        #endregion
     }
 }

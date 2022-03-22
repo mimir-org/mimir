@@ -88,7 +88,6 @@ namespace Mb.Services.Services
             }
 
             _ = await _projectService.CreateProject(project);
-            return;
         }
 
         /// <summary>
