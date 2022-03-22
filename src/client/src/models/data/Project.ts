@@ -11,7 +11,7 @@ export interface Project {
   description: string;
   projectOwner: string;
   updatedBy: string;
-  update: Date;
+  updated: Date;
   nodes: Node[];
   edges: Edge[];
 }

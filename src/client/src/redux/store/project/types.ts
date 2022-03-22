@@ -1,15 +1,6 @@
 import { ApiError } from "../../../models/webclient";
 import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
-import {
-  CommitPackage,
-  ConnectorVisibility,
-  Edge,
-  Node,
-  Project,
-  ProjectConverterAm,
-  ProjectFileAm,
-  ProjectItemCm,
-} from "../../../models";
+import { CommitPackage, ConnectorVisibility, Edge, Node, Project, ProjectConverterAm, ProjectItemCm } from "../../../models";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
@@ -362,7 +353,10 @@ export interface ExportProjectFileAction {
 }
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
-  payload: ProjectFileAm;
+  payload: {
+    file: File;
+    parserId: string;
+  };
 }
 
 export interface ExportProjectFileActionFinished {

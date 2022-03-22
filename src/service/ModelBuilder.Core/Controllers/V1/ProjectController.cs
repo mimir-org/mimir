@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,9 +8,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Enums;
 using Mb.Models.Exceptions;
-using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +42,7 @@ namespace Mb.Core.Controllers.V1
         /// <param name="logger"></param>
         /// <param name="projectFileService"></param>
         /// <param name="commonRepository"></param>
+        /// <param name="moduleService"></param>
         public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository, IModuleService moduleService)
         {
             _projectService = projectService;
@@ -349,14 +349,16 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Edit")]
+        [RequestSizeLimit(100_000_000)]
         public async Task<IActionResult> UploadProject(string parser, IFormFile file, CancellationToken cancellationToken)
         {
             try
             {
-                var par = _moduleService.Resolve<IModelBuilderParser>(new Guid(parser));
-                var extension = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-                if(par.GetFileFormat().FileExtension != extension)
-                    return BadRequest($"Invalid file extension. The file must be {par.GetFileFormat().FileExtension}");
+                var fileParser = _moduleService.Resolve<IModelBuilderParser>(new Guid(parser));
+                var fileParserExtension = $".{fileParser.GetFileFormat().FileExtension}";
+                var submissionFileExtension = Path.GetExtension(file.FileName);
+                if (fileParserExtension != submissionFileExtension)
+                    return BadRequest($"Invalid file extension. The file must be {fileParserExtension}");
 
                 await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
                 return StatusCode(StatusCodes.Status201Created);
