@@ -90,15 +90,10 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual ICollection<Edge> ToEdges { get; set; }
-
-        // Required Only for location aspect
-        public decimal? Length { get; set; }
-        public decimal? Width { get; set; }
-        public decimal? Height { get; set; }
-        public decimal? Area => Length * Width;
-
-        // Required only for product aspect
-        public decimal? Cost { get; set; }
+        
+        public int? Width { get; set; }
+        
+        public int? Height { get; set; }
 
         public void IncrementMinorVersion()
         {
@@ -147,10 +142,9 @@ namespace Mb.Models.Data
                    PurposeString == other.PurposeString &&
                    ProjectId == other.ProjectId &&
                    ProjectIri == other.ProjectIri &&
-                   Length == other.Length &&
                    Width == other.Width &&
-                   Height == other.Height &&
-                   Cost == other.Cost;
+                   Height == other.Height;
+                   
         }
 
         public override bool Equals(object obj)
@@ -194,10 +188,8 @@ namespace Mb.Models.Data
             hashCode.Add(PurposeString);
             hashCode.Add(ProjectId);
             hashCode.Add(ProjectIri);
-            hashCode.Add(Length);
             hashCode.Add(Width);
             hashCode.Add(Height);
-            hashCode.Add(Cost);
             return hashCode.ToHashCode();
         }
 

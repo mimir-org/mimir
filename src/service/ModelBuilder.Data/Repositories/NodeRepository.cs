@@ -422,13 +422,6 @@ namespace Mb.Data.Repositories
                 return;
             }
 
-            //Cost
-            if (originalNode.Cost != node.Cost)
-            {
-                node.Version = originalNode.Version.IncrementMinorVersion();
-                return;
-            }
-
             node.Version = originalNode.Version;
 
         }
