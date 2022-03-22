@@ -43,11 +43,9 @@ const useOnRemove = (
 };
 
 function HandleRemoveElements(elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) {
-  const edgeTypes = Object.values(EDGE_TYPE);
-
   elements.forEach((elem) => {
     if (IsAspectNode(elem.data)) return;
-    const isEdge = IsElementEdge(edgeTypes, elem);
+    const isEdge = IsElementEdge(Object.values(EDGE_TYPE), elem);
 
     if (isEdge) {
       const selectedNode = GetSelectedBlockNode();
