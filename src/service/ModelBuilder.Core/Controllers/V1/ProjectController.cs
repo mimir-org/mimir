@@ -350,6 +350,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Edit")]
+        [RequestSizeLimit(100_000_000)]
         public async Task<IActionResult> UploadProject(string parser, IFormFile file, CancellationToken cancellationToken)
         {
             try
