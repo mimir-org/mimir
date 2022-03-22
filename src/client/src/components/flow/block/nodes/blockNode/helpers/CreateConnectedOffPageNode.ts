@@ -7,7 +7,7 @@ import { Dispatch } from "redux";
 /**
  * Component to create an OffPageNode that is connected.
  * The OffPageNode is created with a partOf edge to its parent, and a transport edge.
- *
+ * This component is called from the HandleConnectedOffPageNode component.
  * @param sourceNode
  * @param sourceConnector
  * @param position
