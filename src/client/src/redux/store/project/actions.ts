@@ -11,7 +11,6 @@ import {
   Node,
   Project,
   ProjectConverterAm,
-  ProjectFileAm,
   Simple,
 } from "../../../models";
 
@@ -370,10 +369,13 @@ export function exportProjectToFile(projectConverter: ProjectConverterAm): Types
   };
 }
 
-export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTypes {
+export function importProjectAction(file: File, parserId: string): Types.ProjectActionTypes {
   return {
     type: Types.IMPORT_PROJECT,
-    payload: data,
+    payload: {
+      file: file,
+      parserId: parserId,
+    },
   };
 }
 
