@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../assets/text";
-import { OnOpenTypeEditor } from "../../../../typeEditor/handlers";
 import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
 import { onDeleteTypeClick } from "./components/confirmDelete/handlers/OnDeleteTypeClick";
+import { OnOpenTypeEditor, OnOpenTypeEditorWithItem } from "../../../../typeEditor/handlers";
 import { GetCollectionIcon, SetCollectionButtonText } from "./helpers/";
 import { Button, ButtonVariant } from "../../../../compLibrary/buttons";
 import { NewType, EditType, DeleteType } from "../../../../assets/icons/library";
-import { Collection, CollectionsActions, LibItem, LibraryTab } from "../../../../models";
+import { Collection, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
 
 interface Props {
   libOpen: boolean;
@@ -50,16 +50,18 @@ export const ModuleFooter = ({
     <LibFooter libOpen={libOpen}>
       <Button
         variant={ButtonVariant.WhiteButton}
-        onClick={() => OnOpenTypeEditor(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)}
+        onClick={() => OnOpenTypeEditor(resetSelectedElement, dispatch)}
         text={TextResources.Library_New_Type}
         icon={NewType}
       />
       <Button
         variant={ButtonVariant.WhiteButton}
-        onClick={() => OnOpenTypeEditor(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)}
+        onClick={() =>
+          OnOpenTypeEditorWithItem(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)
+        }
         text={TextResources.Library_Edit_Type}
         icon={EditType}
-        disabled={selectedElement === null}
+        disabled={selectedElement === null || selectedElement.libraryType === ObjectType.NotSet}
       />
       <Button
         variant={ButtonVariant.WhiteButton}
@@ -86,7 +88,7 @@ export const ModuleFooter = ({
               resetSelectedElement();
             })
           }
-          deleteTargetName={selectedElement.name}
+          deleteTargetName={selectedElement?.name}
           dispatch={dispatch}
         />
       )}
