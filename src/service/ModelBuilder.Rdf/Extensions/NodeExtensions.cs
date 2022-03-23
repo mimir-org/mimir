@@ -52,12 +52,12 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(node.Iri, Resources.Label, node.Label ?? node.Name, true);
 
             ontologyService.AssertNode(node.Iri, Resources.UpdatedBy, node.UpdatedBy, true);
-            ontologyService.AssertNode(node.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{node.Updated}", Resources.DateTime));
+            ontologyService.AssertNode(node.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{node.Updated.ToString("u")}", Resources.DateTime));
 
             if (node.Created != null && !string.IsNullOrWhiteSpace(node.CreatedBy))
             {
                 ontologyService.AssertNode(node.Iri, Resources.CreatedBy, node.CreatedBy, true);
-                ontologyService.AssertNode(node.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{node.Created}", Resources.DateTime));
+                ontologyService.AssertNode(node.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{node.Created?.ToString("u")}", Resources.DateTime));
             }
 
             // TODO: This should be an iri
