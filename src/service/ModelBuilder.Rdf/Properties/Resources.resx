@@ -183,6 +183,9 @@
   <data name="HasDiscipline" xml:space="preserve">
     <value>mimir:discipline</value>
   </data>
+  <data name="HasHeight" xml:space="preserve">
+    <value>mimir:hasHeight</value>
+  </data>
   <data name="HasInputTerminal" xml:space="preserve">
     <value>imf:hasInTerminal</value>
   </data>
@@ -225,8 +228,14 @@
   <data name="HasSymbol" xml:space="preserve">
     <value>mimir:symbol</value>
   </data>
+  <data name="HasWidth" xml:space="preserve">
+    <value>mimir:hasWidth</value>
+  </data>
   <data name="InputTerminal" xml:space="preserve">
     <value>imf:inTerminal</value>
+  </data>
+  <data name="Integer" xml:space="preserve">
+    <value>xsd:integer</value>
   </data>
   <data name="IntegratedObject" xml:space="preserve">
     <value>imf:IntegratedObject</value>

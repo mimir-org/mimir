@@ -90,9 +90,9 @@ namespace Mb.Models.Data
 
         [JsonIgnore]
         public virtual ICollection<Edge> ToEdges { get; set; }
-        
+
         public int? Width { get; set; }
-        
+
         public int? Height { get; set; }
 
         public void IncrementMinorVersion()
@@ -144,7 +144,7 @@ namespace Mb.Models.Data
                    ProjectIri == other.ProjectIri &&
                    Width == other.Width &&
                    Height == other.Height;
-                   
+
         }
 
         public override bool Equals(object obj)

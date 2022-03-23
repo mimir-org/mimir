@@ -467,6 +467,7 @@ namespace Mb.Services.Services
                 MasterProjectId = projectId,
                 Aspect = aspect,
                 Height = null,
+                Width = null,
                 Created = dateTimeNow,
                 CreatedBy = userName,
                 Updated = dateTimeNow,
