@@ -35,8 +35,8 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
     masterProjectId: projectId,
     symbol: icons?.find((x) => x.id === data.symbolId)?.data,
     level: 0,
-    height: Size.BLOCK_NODE_HEIGHT,
-    width: Size.BLOCK_NODE_WIDTH,
+    height: Size.BLOCK_NODE_HEIGHT, // Only used in BlockView
+    width: Size.BLOCK_NODE_WIDTH, // Only used in BlockView
     purpose: data.purpose,
     created: now,
     createdBy: user?.name,
