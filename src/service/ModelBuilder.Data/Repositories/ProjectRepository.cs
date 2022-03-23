@@ -206,6 +206,8 @@ namespace Mb.Data.Repositories
         /// <returns>A project create task</returns>
         public async Task CreateProject(Project project, ProjectData data)
         {
+            _logger.LogInformation("Starting creating");
+
             await Task.WhenAny(Task.Run(() => UpsertProject(project)));
 
             // Create all nodes
