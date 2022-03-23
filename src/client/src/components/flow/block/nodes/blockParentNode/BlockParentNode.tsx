@@ -38,7 +38,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, [setCenter, secondaryNode]);
 
   useEffect(() => {
-    SetInitSize(node, dispatch);
+    InitParentSize(node, dispatch);
   }, []);
 
   useEffect(() => {
@@ -55,6 +55,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockParentComponent
         node={node}
+        splitView={secondaryNode !== null}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}
@@ -68,11 +69,11 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 };
 
 /**
- * Function to ensure that the ParentNode size has been initiated.
+ * Function to ensure that the ParentNode size has been initialized.
  * @param node
  * @param dispatch
  */
-function SetInitSize(node: Node, dispatch: Dispatch) {
+function InitParentSize(node: Node, dispatch: Dispatch) {
   if (
     node?.width == null ||
     node?.height === null ||
@@ -80,9 +81,8 @@ function SetInitSize(node: Node, dispatch: Dispatch) {
     node?.height === undefined ||
     node?.width < Size.BLOCK_NODE_MIN_WIDTH ||
     node?.height < Size.BLOCK_NODE_MIN_HEIGHT
-  ) {
+  )
     dispatch(updateBlockSize(node.id, { width: Size.BLOCK_NODE_WIDTH, height: Size.BLOCK_NODE_HEIGHT }));
-  }
 }
 
 export default memo(BlockParentNode);

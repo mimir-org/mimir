@@ -13,6 +13,7 @@ import { useResizeParentNode } from "./hooks/useResizeParentNode";
 
 interface Props {
   node: Node;
+  splitView: boolean;
   inputTerminals: Connector[];
   outputTerminals: Connector[];
   isNavigationActive: boolean;
@@ -29,6 +30,7 @@ interface Props {
  */
 export const BlockParentComponent = ({
   node,
+  splitView,
   inputTerminals,
   outputTerminals,
   isNavigationActive,
@@ -53,7 +55,7 @@ export const BlockParentComponent = ({
         onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
       />
       <Tooltip content={TextResources.Resize_Node} placement={"bottom"} offset={[0, 10]}>
-        <ResizeButton ref={resizePanelRef}>
+        <ResizeButton ref={resizePanelRef} visible={!splitView}>
           <img src={ResizeIcon} alt="resize" />
         </ResizeButton>
       </Tooltip>

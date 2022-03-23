@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-const ResizeButton = styled.div`
+interface Props {
+  visible: boolean;
+}
+
+const ResizeButton = styled.div<Props>`
+visibility: ${(props) => (props.visible ? "visible" : "hidden")}
   position: absolute;
   bottom: 0;
   right: 0;
