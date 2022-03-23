@@ -1,4 +1,4 @@
-import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
+import { Aspect, CollectionsActions, LibItem, LibraryTab } from "../../../../models";
 import { ModuleContent } from "./ModuleBody.styled";
 import { CollectionsComponent } from "./components/collections/CollectionsComponent";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
@@ -12,9 +12,8 @@ interface Props {
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
-  selectedElement: string;
-  setSelectedElement: (value: string) => void;
-  setSelectedElementType: (value: ObjectType) => void;
+  selectedElement: LibItem | null;
+  setSelectedElement: (value: LibItem) => void;
   aspectFilters: Aspect[];
 }
 
@@ -33,7 +32,6 @@ export const ModuleBody = ({
   searchString,
   selectedElement,
   setSelectedElement,
-  setSelectedElementType,
   aspectFilters,
 }: Props) => {
   const showCollections = activeTab === LibraryTab.Library;
@@ -52,7 +50,6 @@ export const ModuleBody = ({
           searchString={searchString}
           selectedElement={selectedElement}
           setSelectedElement={setSelectedElement}
-          setSelectedElementType={setSelectedElementType}
           aspectFilters={aspectFilters}
         />
       )}
