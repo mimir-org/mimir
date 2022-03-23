@@ -44,10 +44,8 @@ namespace Mb.Models.Application
 
         public decimal PositionBlockY { get; set; }
 
-        [ValidatePositiveDecimal]
         public int? Width { get; set; }
 
-        [ValidatePositiveDecimal]
         public int? Height { get; set; }
 
         [Required]
