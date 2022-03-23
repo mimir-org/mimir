@@ -5,7 +5,7 @@ interface Props {
 }
 
 const ResizeButton = styled.div<Props>`
-visibility: ${(props) => (props.visible ? "visible" : "hidden")}
+  visibility: ${(props) => (props.visible ? "visible" : "hidden")};
   position: absolute;
   bottom: 0;
   right: 0;
