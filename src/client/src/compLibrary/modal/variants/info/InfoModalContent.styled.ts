@@ -5,13 +5,11 @@ import { FontSize } from "../../../font";
 interface InfoModalContentContainerProps {
   title?: string;
   description?: string;
-  inset?: string;
   color?: string;
 }
 
 export const InfoModalContentContainer = styled.div<InfoModalContentContainerProps>`
   position: relative;
-  inset: ${(props) => props.inset};
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -27,12 +25,11 @@ export const InfoModalContentContainer = styled.div<InfoModalContentContainerPro
 
 export const InfoModalHeader = styled.header`
   margin-bottom: 10px;
-  img {
-    margin: 0px 10px -5px 0px;
-  }
 `;
 
 export const InfoModalHeaderTitle = styled.h1`
+  display: flex;
+  gap: 10px;
   font-weight: bold;
   font-size: ${FontSize.HEADER};
   margin: 0;
