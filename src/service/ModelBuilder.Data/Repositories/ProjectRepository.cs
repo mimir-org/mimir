@@ -269,6 +269,9 @@ namespace Mb.Data.Repositories
 
             // Delete project
             await Task.WhenAny(Task.Run(() => ProjectDelete(project)));
+
+            var key = GetKey(project.Id, project.Iri);
+            await _cacheRepository.DeleteCacheAsync(key);
         }
 
         #region Private methods
