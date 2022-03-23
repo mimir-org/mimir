@@ -21,12 +21,12 @@ export const CreateRequiredOffPageNode = (
   isRequired: boolean,
   dispatch: Dispatch
 ) => {
-  const offPageData = {
+  const data = {
     sourceNode,
     sourceConnector,
     position,
   } as OffPageData;
 
-  const offPageObject = CreateOffPageObject(offPageData);
+  const offPageObject = CreateOffPageObject(data);
   dispatch(createRequiredOffPageNode(sourceNode.id, sourceConnector.id, isRequired, offPageObject));
 };

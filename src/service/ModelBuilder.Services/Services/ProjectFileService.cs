@@ -65,7 +65,7 @@ namespace Mb.Services.Services
         /// <param name="projectFile"></param>
         /// <returns></returns>
         /// <exception cref="ModelBuilderInvalidOperationException"></exception>
-        public async Task<Project> ImportProject(ProjectFileAm projectFile)
+        public async Task ImportProject(ProjectFileAm projectFile)
         {
             if (projectFile == null)
                 throw new ModelBuilderInvalidOperationException("ProjectFile is null");
@@ -83,11 +83,11 @@ namespace Mb.Services.Services
 
             if (exist)
             {
-                var projectResult = await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
-                return projectResult.Project;
+                await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
+                return;
             }
 
-            return await _projectService.CreateProject(project);
+            _ = await _projectService.CreateProject(project);
         }
 
         /// <summary>
@@ -98,12 +98,12 @@ namespace Mb.Services.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ModelBuilderModuleException"></exception>
-        public async Task<Project> ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id)
+        public async Task ImportProject(IFormFile file, CancellationToken cancellationToken, Guid id)
         {
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-            return await ImportProject(new ProjectFileAm { ParserId = id, FileContent = fileContent });
+            await ImportProject(new ProjectFileAm { ParserId = id, FileContent = fileContent });
         }
 
         /// <summary>
@@ -119,11 +119,12 @@ namespace Mb.Services.Services
             if (par == null)
                 throw new ModelBuilderInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
-            var projectResult = await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri, projectConverter.Project, _commonRepository.GetDomain());
-            if (projectResult?.Project == null)
+            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri, projectConverter.Project, _commonRepository.GetDomain());
+            var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Iri);
+            if (project == null)
                 throw new ModelBuilderNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
 
-            var bytes = await par.SerializeProject(projectResult.Project);
+            var bytes = await par.SerializeProject(project);
             var projectFile = new ProjectFileAm
             {
                 FileContent = Encoding.UTF8.GetString(bytes),

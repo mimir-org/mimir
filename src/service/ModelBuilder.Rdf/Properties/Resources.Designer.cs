@@ -259,6 +259,15 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:hasHeight.
+        /// </summary>
+        internal static string HasHeight {
+            get {
+                return ResourceManager.GetString("HasHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:hasInTerminal.
         /// </summary>
         internal static string HasInputTerminal {
@@ -385,11 +394,29 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:hasWidth.
+        /// </summary>
+        internal static string HasWidth {
+            get {
+                return ResourceManager.GetString("HasWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:inTerminal.
         /// </summary>
         internal static string InputTerminal {
             get {
                 return ResourceManager.GetString("InputTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to xsd:integer.
+        /// </summary>
+        internal static string Integer {
+            get {
+                return ResourceManager.GetString("Integer", resourceCulture);
             }
         }
         

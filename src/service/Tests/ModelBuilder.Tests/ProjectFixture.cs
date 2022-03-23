@@ -54,7 +54,7 @@ namespace ModelBuilder.Tests
             //SetupProjectRepository();
             SetupMapper();
             CommonRepository = new CommonRepository(CollaborationPartnerRepository);
-            RemapService = new RemapService(CommonRepository);
+            RemapService = new RemapService(CommonRepository, Mapper);
             //ProjectService = new ProjectService(ProjectRepository, Mapper, null, null, null, CommonRepository, null, null, null, ILogger<>)
         }
 

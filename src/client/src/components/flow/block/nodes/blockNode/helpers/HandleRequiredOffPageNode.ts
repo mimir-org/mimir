@@ -15,23 +15,24 @@ import { IsInputTerminal, IsInputVisible } from "../../../../helpers";
  * @param dispatch
  */
 export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
-  node?.connectors.forEach((conn) => {
-    if (conn.isRequired) {
-      const offPageExists = DoesOffPageNodeExist(edges, conn);
-      if (!offPageExists) {
-        const isRequired = true;
-        const position = { x: size.width, y: node?.positionBlockY };
-        CreateRequiredOffPageNode(node, conn, position, isRequired, dispatch);
-      }
-    }
+  if (!edges.length || !node) return;
+
+  node.connectors.forEach((conn) => {
+    if (!conn.isRequired) return;
+    const nodeExists = HasRequiredOffPageNode(edges, conn);
+    if (nodeExists) return;
+
+    const isRequired = true;
+    const position = { x: size.width, y: node.positionBlockY };
+    CreateRequiredOffPageNode(node, conn, position, isRequired, dispatch);
   });
 };
 
-function DoesOffPageNodeExist(edges: Edge[], connector: Connector) {
+function HasRequiredOffPageNode(edges: Edge[], connector: Connector) {
   const existingEdge =
     IsInputTerminal(connector) || IsInputVisible(connector)
-      ? edges?.find((edge) => edge?.toConnector?.id === connector.id && IsOffPage(edge?.fromNode))
-      : edges?.find((edge) => edge?.fromConnector?.id === connector.id && IsOffPage(edge?.toNode));
+      ? edges.find((edge) => IsOffPage(edge.fromNode) && edge.toConnector?.id === connector.id)
+      : edges.find((edge) => IsOffPage(edge.toNode) && edge.fromConnector?.id === connector.id);
 
   return existingEdge !== undefined;
 }

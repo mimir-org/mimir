@@ -48,7 +48,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         fetching: false,
         creating: false,
-        project: action.payload.project,
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
@@ -166,6 +165,23 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
                   ...x,
                   positionBlockX: action.payload.x,
                   positionBlockY: action.payload.y,
+                }
+              : x
+          ),
+        },
+      };
+
+    case Types.UPDATE_BLOCK_SIZE:
+      return {
+        ...state,
+        project: {
+          ...state.project,
+          nodes: state.project?.nodes.map((x) =>
+            x.id === action.payload.nodeId
+              ? {
+                  ...x,
+                  width: action.payload.size.width,
+                  height: action.payload.size.height,
                 }
               : x
           ),

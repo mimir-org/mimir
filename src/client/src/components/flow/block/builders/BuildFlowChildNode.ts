@@ -12,12 +12,12 @@ import { BlockNodeSize } from "../../../../models/project";
  * @param node
  * @returns a node that sits inside the container of the ParentNode.
  */
-const BuildFlowChildNode = (node: Node, parentNodeSize: BlockNodeSize) => {
+const BuildFlowChildNode = (node: Node, size: BlockNodeSize) => {
   if (!node) return null;
 
   const type = GetNodeTypeString(node);
   const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-  const position = !IsOffPage(node) ? SetChildNodePosition(nodePos, parentNodeSize) : nodePos;
+  const position = !IsOffPage(node) ? SetChildNodePosition(nodePos, size) : nodePos;
 
   return {
     key: CreateId(),
