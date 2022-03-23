@@ -46,7 +46,7 @@
   },
   {
     "Code": "HA",
-    "Name": "Fluid supply system",
+    "Name": "Fluid Supply System",
     "Iri": null
   },
   {
@@ -56,27 +56,27 @@
   },
   {
     "Code": "HD",
-    "Name": "Electrical power supply system",
+    "Name": "Electrical Power Supply System",
     "Iri": null
   },
   {
     "Code": "HF",
-    "Name": "Thermal energy supply system",
+    "Name": "Thermal Energy Supply System",
     "Iri": null
   },
   {
     "Code": "HE",
-    "Name": "Mechanical energy supply system",
+    "Name": "Mechanical Energy Supply System",
     "Iri": null
   },
   {
     "Code": "JA",
-    "Name": "Fluid transport/distribution system",
+    "Name": "Fluid Transportation System",
     "Iri": null
   },
   {
     "Code": "JC",
-    "Name": "Solid matter transport/distribution system",
+    "Name": "Solid Material Transportation System",
     "Iri": null
   },
   {
@@ -91,12 +91,12 @@
   },
   {
     "Code": "JE",
-    "Name": "Mechanical energy transport/distribution system", // Electrical
+    "Name": "Electrical Power Distribution System",
     "Iri": null
   },
   {
     "Code": "KA",
-    "Name": "Flow controlling system",
+    "Name": "Flow Controlling System",
     "Iri": null
   },
   {
@@ -106,7 +106,7 @@
   },
   {
     "Code": "KC",
-    "Name": "Separation system",
+    "Name": "Separation System",
     "Iri": null
   },
   {
@@ -116,7 +116,7 @@
   },
   {
     "Code": "KE",
-    "Name": "Pumping system",
+    "Name": "Pumping System",
     "Iri": null
   },
   {
@@ -226,7 +226,7 @@
   },
   {
     "Code": "EGC",
-    "Name": "Heat exchanger",
+    "Name": "Heat Exchange System",
     "Iri": null
   },
   {
@@ -266,72 +266,72 @@
   },
   {
     "Code": "GAA",
-    "Name": "AC generator",
+    "Name": "AC Generating System",
     "Iri": null
   },
   {
     "Code": "GAB",
-    "Name": "DC generator",
+    "Name": "DC Generating System",
     "Iri": null
   },
   {
     "Code": "GPA",
-    "Name": "Positive displacement pump",
+    "Name": "Positive Displacement Pumping System",
     "Iri": null
   },
   {
     "Code": "GPB",
-    "Name": "Liquid velocity pump",
+    "Name": "Centrifugal Pumping System",
     "Iri": null
   },
   {
     "Code": "GQA",
-    "Name": "Gas compressor",
+    "Name": "Reciprocating Compressing System",
     "Iri": null
   },
   {
     "Code": "HMA",
-    "Name": "Settling tank (gravity based separator)",
+    "Name": "Gravitational Separating System",
     "Iri": null
   },
   {
     "Code": "HMB",
-    "Name": "Centrifuge (centrifugal separator)",
+    "Name": "Centrifuge Separating System",
     "Iri": null
   },
   {
     "Code": "HMC",
-    "Name": "Cyclone (vortex separator)",
+    "Name": "Cyclone Separating System",
     "Iri": null
   },
   {
     "Code": "HPA",
-    "Name": "Dryer",
+    "Name": "Drying System",
     "Iri": null
   },
   {
     "Code": "HPB",
-    "Name": "Distillation column",
+    "Name": "Distillation System",
     "Iri": null
   },
   {
     "Code": "HRA",
-    "Name": "Electrostatic separator (Electrocoalescer)",
+    "Name": "Electrostatic Separation System",
     "Iri": null
   },
   {
     "Code": "HSA",
-    "Name": "Ion exchanger (Eletrolyser, Electrochlorinator)",
+    "Name": "Ion Exchange System",
     "Iri": null
   },
   {
     "Code": "HSB",
-    "Name": "Absorber",
+    "Name": "Absorbing System",
     "Iri": null
   },
   {
     "Code": "HSC",
-    "Name": "Adsorber",
+    "Name": "Adsorbing System",
     "Iri": null
   },
   {
@@ -341,7 +341,7 @@
   },
   {
     "Code": "HWA",
-    "Name": "Mixer",
+    "Name": "Kneading System",
     "Iri": null
   },
   {
@@ -351,17 +351,17 @@
   },
   {
     "Code": "MAA",
-    "Name": "Electric motor",
+    "Name": "AC Electric Motor System",
     "Iri": null
   },
   {
     "Code": "MLE",
-    "Name": "Gas turbine",
+    "Name": "Expander System",
     "Iri": null
   },
   {
     "Code": "MSB",
-    "Name": "Diesel cycle engine",
+    "Name": "Diesel Drive System",
     "Iri": null
   },
   {
@@ -411,12 +411,12 @@
   },
   {
     "Code": "TAA",
-    "Name": "Transformer, electrical",
+    "Name": "Electrical Transforming System",
     "Iri": null
   },
   {
     "Code": "TAB",
-    "Name": "DC/DC converter, electrical",
+    "Name": "DC/DC Converting System",
     "Iri": null
   },
   {
@@ -426,12 +426,12 @@
   },
   {
     "Code": "TBA",
-    "Name": "Rectifier, electrical",
+    "Name": "Electrical Rectifying System (AC-DC)",
     "Iri": null
   },
   {
     "Code": "TBB",
-    "Name": "Inverter, electrical",
+    "Name": "Electrical Inverting System (DC-AC)",
     "Iri": null
   },
   {
@@ -617,6 +617,281 @@
   {
     "Code": "D",
     "Name": "Interconnection complex",
+    "Iri": null
+  },
+  {
+    "Code": "EGD",
+    "Name": "Plate Heat Exchange System",
+    "Iri": null
+  },
+  {
+    "Code": "EGE",
+    "Name": "Spiral Heat Exchange System",
+    "Iri": null
+  },
+  {
+    "Code": "EGF",
+    "Name": "Tubular Heat Exchange System",
+    "Iri": null
+  },
+  {
+    "Code": "EMB",
+    "Name": "Furnace System",
+    "Iri": null
+  },
+  {
+    "Code": "EMC",
+    "Name": "Burner System",
+    "Iri": null
+  },
+  {
+    "Code": "EMD",
+    "Name": "Boiler System",
+    "Iri": null
+  },
+  {
+    "Code": "EME",
+    "Name": "Steam Generating System",
+    "Iri": null
+  },
+  {
+    "Code": "EMF",
+    "Name": "Flaring System",
+    "Iri": null
+  },
+  {
+    "Code": "GAX",
+    "Name": "Custom Generating System",
+    "Iri": null
+  },
+  {
+    "Code": "GBA",
+    "Name": "Electric battery generating system",
+    "Iri": null
+  },
+  {
+    "Code": "GBB",
+    "Name": "Fuel cell generating system",
+    "Iri": null
+  },
+  {
+    "Code": "GPC",
+    "Name": "Eductor Pumping System",
+    "Iri": null
+  },
+  {
+    "Code": "GPE",
+    "Name": "Rotary Pumping System",
+    "Iri": null
+  },
+  {
+    "Code": "GPF",
+    "Name": "Agitator, Stirrer, Impeller",
+    "Iri": null
+  },
+  {
+    "Code": "GPX",
+    "Name": "Custom Pumping System",
+    "Iri": null
+  },
+  {
+    "Code": "GQB",
+    "Name": "Fan System",
+    "Iri": null
+  },
+  {
+    "Code": "GQC",
+    "Name": "Gas Ejector System",
+    "Iri": null
+  },
+  {
+    "Code": "GQD",
+    "Name": "Centrifugal Compressing System",
+    "Iri": null
+  },
+  {
+    "Code": "GQE",
+    "Name": "Rotary Compressing System",
+    "Iri": null
+  },
+  {
+    "Code": "GQF",
+    "Name": "Axial Compressing System",
+    "Iri": null
+  },
+  {
+    "Code": "GQG",
+    "Name": "Blower System",
+    "Iri": null
+  },
+  {
+    "Code": "GQX",
+    "Name": "Custom Compression System",
+    "Iri": null
+  },
+  {
+    "Code": "HMD",
+    "Name": "Gas Liquid Separating System",
+    "Iri": null
+  },
+  {
+    "Code": "HMF",
+    "Name": "Coalescing System",
+    "Iri": null
+  },
+  {
+    "Code": "HMX",
+    "Name": "Custom Separating System",
+    "Iri": null
+  },
+  {
+    "Code": "HPC",
+    "Name": "Evaporating System",
+    "Iri": null
+  },
+  {
+    "Code": "HPD",
+    "Name": "Stripping Distillation System",
+    "Iri": null
+  },
+  {
+    "Code": "HPE",
+    "Name": "Vacuum Distillation System",
+    "Iri": null
+  },
+  {
+    "Code": "HPF",
+    "Name": "Stabilizing Distillation System",
+    "Iri": null
+  },
+  {
+    "Code": "HQA",
+    "Name": "Skimmer System",
+    "Iri": null
+  },
+  {
+    "Code": "HQB",
+    "Name": "Filter System",
+    "Iri": null
+  },
+  {
+    "Code": "HQC",
+    "Name": "Sieve System",
+    "Iri": null
+  },
+  {
+    "Code": "HQD",
+    "Name": "Mechanical Separation System",
+    "Iri": null
+  },
+  {
+    "Code": "HRB",
+    "Name": "Magnetic Separation System",
+    "Iri": null
+  },
+  {
+    "Code": "HSD",
+    "Name": "Contacting System",
+    "Iri": null
+  },
+  {
+    "Code": "HWB",
+    "Name": "Humidifying System",
+    "Iri": null
+  },
+  {
+    "Code": "HWC",
+    "Name": "Rotary Mixing System",
+    "Iri": null
+  },
+  {
+    "Code": "HWD",
+    "Name": "Static Mixing System",
+    "Iri": null
+  },
+  {
+    "Code": "HWX",
+    "Name": "Custom Mixing System",
+    "Iri": null
+  },
+  {
+    "Code": "MAB",
+    "Name": "Stepper Motor System",
+    "Iri": null
+  },
+  {
+    "Code": "MAC",
+    "Name": "DC Electric Motor System",
+    "Iri": null
+  },
+  {
+    "Code": "MAX",
+    "Name": "Custom Motor System",
+    "Iri": null
+  },
+  {
+    "Code": "MLC",
+    "Name": "Wind Turbine System",
+    "Iri": null
+  },
+  {
+    "Code": "MLD",
+    "Name": "Water Turbine System",
+    "Iri": null
+  },
+  {
+    "Code": "MMA",
+    "Name": "Hydraulic Moving System",
+    "Iri": null
+  },
+  {
+    "Code": "MSA",
+    "Name": "Otto Cycle Drive System",
+    "Iri": null
+  },
+  {
+    "Code": "MSC",
+    "Name": "Wankel Drive System",
+    "Iri": null
+  },
+  {
+    "Code": "MSD",
+    "Name": "Gas Turbine Drive System",
+    "Iri": null
+  },
+  {
+    "Code": "TAD",
+    "Name": "Phase Shifting System",
+    "Iri": null
+  },
+  {
+    "Code": "TBC",
+    "Name": "Electrical Bidirectional Converting System",
+    "Iri": null
+  },
+  {
+    "Code": "WPA",
+    "Name": "Fluid Transportation System",
+    "Iri": null
+  },
+  {
+    "Code": "JG",
+    "Name": "Thermal Energy Transportation System",
+    "Iri": null
+  },
+  {
+    "Code": "KJ",
+    "Name": "Thermal exchange system",
+    "Iri": null
+  },
+  {
+    "Code": "KK",
+    "Name": "Compression System",
+    "Iri": null
+  },
+  {
+    "Code": "KL",
+    "Name": "Chemical Reactor System",
     "Iri": null
   }
 ]

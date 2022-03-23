@@ -8,6 +8,6 @@ namespace Mb.Models.Application.TypeEditor
         public string Code { get; set; }
         public string Name { get; set; }
         public string Iri { get; set; }
-        [JsonIgnore] public string Key => $"{Code}-{Name}";
+        [JsonIgnore] public string Key => $"{Code}";
     }
 }
