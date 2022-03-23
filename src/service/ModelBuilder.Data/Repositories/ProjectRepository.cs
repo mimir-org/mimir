@@ -115,6 +115,8 @@ namespace Mb.Data.Repositories
         /// <returns>A project update task</returns>
         public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
+            _logger.LogInformation("Starting updating");
+
             if (!original.Equals(updated))
             {
                 updated.Updated = DateTime.Now.ToUniversalTime();
@@ -123,6 +125,8 @@ namespace Mb.Data.Repositories
                 // Update project
                 await Task.WhenAny(Task.Run(() => UpsertProject(updated)));
             }
+
+            _logger.LogInformation("Finished project");
 
             // Update all objects and create new nodes
             await Task.WhenAll(
@@ -137,6 +141,8 @@ namespace Mb.Data.Repositories
                 Task.Run(() => _edgeRepository.BulkUpdate(data.EdgeUpdate))
             );
 
+            _logger.LogInformation("Finished Update all objects and create new nodes");
+
             // Create all new Connectors and simples
             await Task.WhenAll(
                 Task.Run(() => _connectorRepository.BulkCreate(data.RelationCreate)),
@@ -145,11 +151,15 @@ namespace Mb.Data.Repositories
                 Task.Run(() => _edgeRepository.BulkDelete(data.EdgeDelete))
             );
 
+            _logger.LogInformation("Finished Create all new Connectors and simples");
+
             // Create all Transports, Interfaces
             await Task.WhenAll(
                 Task.Run(() => _transportRepository.BulkCreate(data.TransportCreate)),
                 Task.Run(() => _interfaceRepository.BulkCreate(data.InterfaceCreate))
             );
+
+            _logger.LogInformation("Finished Create all Transports, Interfaces");
 
             // Create all new Attributes
             await Task.WhenAll(
@@ -158,6 +168,8 @@ namespace Mb.Data.Repositories
                 Task.Run(() => _edgeRepository.BulkCreate(data.EdgeCreate))
             );
 
+            _logger.LogInformation("Finished Create all new Attributes");
+
             // Delete Transports, Interface and Simples
             await Task.WhenAll(
                 Task.Run(() => _transportRepository.BulkDelete(data.TransportDelete)),
@@ -165,16 +177,22 @@ namespace Mb.Data.Repositories
                 Task.Run(() => _simpleRepository.BulkDelete(data.SimpleDelete))
             );
 
+            _logger.LogInformation("Finished Delete Transports, Interface and Simples");
+
             // Delete all Connectors
             await Task.WhenAll(
                 Task.Run(() => _connectorRepository.BulkDelete(data.RelationDelete)),
                 Task.Run(() => _connectorRepository.BulkDelete(data.TerminalDelete))
             );
 
+            _logger.LogInformation("Finished Delete all Connectors");
+
             // Delete all Nodes
             await Task.WhenAll(
                 Task.Run(() => _nodeRepository.BulkDelete(data.NodeDelete))
             );
+
+            _logger.LogInformation("Finished Delete all Nodes");
 
             var key = GetKey(updated.Id, updated.Iri);
             await _cacheRepository.CreateAsync(key, async () => await GetProjectAsync(updated.Id, updated.Iri));
