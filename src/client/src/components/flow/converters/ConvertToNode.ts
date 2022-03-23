@@ -54,7 +54,7 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
       if (x.attributes) {
         x.attributes.forEach((y) => {
           y.id = CreateId();
-          y.terminalId = connectorId;
+          // y.terminalId = connectorId;          
         });
       }
     });
@@ -63,7 +63,7 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
   if (node.attributes) {
     node.attributes.forEach((x) => {
       x.id = CreateId();
-      x.nodeId = node.id;
+      // x.nodeId = node.id;
     });
   }
 
@@ -75,7 +75,7 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
       if (x.attributes) {
         x.attributes.forEach((y) => {
           y.id = CreateId();
-          y.simpleId = simpleId;
+          // y.simpleId = simpleId;
         });
       }
     });
