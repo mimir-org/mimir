@@ -11,7 +11,6 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Rds");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Code).HasColumnName("Code").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired(false);
         }

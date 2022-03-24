@@ -18,6 +18,8 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.TypeId).HasColumnName("TypeId").IsRequired();
             builder.Property(p => p.SemanticReference).HasColumnName("SemanticReference").IsRequired(false).HasDefaultValue(null);
             builder.Property(p => p.PurposeId).HasColumnName("PurposeId").IsRequired(false);
+            builder.Property(p => p.RdsId).HasColumnName("RdsId").IsRequired();
+            builder.Property(p => p.RdsName).HasColumnName("RdsName").IsRequired();
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false).HasDefaultValue(null);
             builder.Property(p => p.StatusId).HasColumnName("StatusId").IsRequired().HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF");
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired(false).HasDefaultValue(null);
@@ -26,8 +28,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Created).HasColumnName("Created").IsRequired().HasDefaultValue(DateTime.MinValue.ToUniversalTime());
 
             builder.HasOne(x => x.Purpose).WithMany(y => y.LibraryTypes).HasForeignKey(x => x.PurposeId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Rds).WithMany(y => y.LibraryTypes).HasForeignKey(x => x.RdsId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Status).WithMany(y => y.LibraryTypes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

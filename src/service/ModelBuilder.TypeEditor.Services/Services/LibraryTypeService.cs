@@ -23,16 +23,18 @@ namespace Mb.TypeEditor.Services.Services
         private readonly ILibraryTypeRepository _libraryTypeComponentRepository;
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly ISimpleTypeRepository _simpleTypeRepository;
+        private readonly IRdsRepository _rdsRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public LibraryTypeService(INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ILibraryRepository libraryRepository, ILibraryTypeRepository libraryTypeComponentRepository, IAttributeTypeRepository attributeTypeRepository, ISimpleTypeRepository simpleTypeRepository, IMapper mapper, IHttpContextAccessor contextAccessor)
+        public LibraryTypeService(INodeTypeTerminalTypeRepository nodeTypeTerminalTypeRepository, ILibraryRepository libraryRepository, ILibraryTypeRepository libraryTypeComponentRepository, IAttributeTypeRepository attributeTypeRepository, ISimpleTypeRepository simpleTypeRepository, IMapper mapper, IHttpContextAccessor contextAccessor, IRdsRepository rdsRepository)
         {
             _nodeTypeTerminalTypeRepository = nodeTypeTerminalTypeRepository;
             _libraryRepository = libraryRepository;
             _libraryTypeComponentRepository = libraryTypeComponentRepository;
             _mapper = mapper;
             _contextAccessor = contextAccessor;
+            _rdsRepository = rdsRepository;
             _attributeTypeRepository = attributeTypeRepository;
             _simpleTypeRepository = simpleTypeRepository;
         }
@@ -132,9 +134,7 @@ namespace Mb.TypeEditor.Services.Services
 
             if (updateMajorVersion || updateMinorVersion)
             {
-                createLibraryType.Version = updateMajorVersion ?
-                    existingTypeVersions[^1].Version.IncrementMajorVersion() :
-                    existingTypeVersions[^1].Version.IncrementMinorVersion();
+                createLibraryType.Version = updateMajorVersion ? existingTypeVersions[^1].Version.IncrementMajorVersion() : existingTypeVersions[^1].Version.IncrementMinorVersion();
 
                 createLibraryType.TypeId = existingTypeVersions[0].TypeId;
 
@@ -366,6 +366,8 @@ namespace Mb.TypeEditor.Services.Services
             var currentUser = _contextAccessor.GetName();
             var dateTimeNow = DateTime.Now.ToUniversalTime();
 
+            var allRds = _rdsRepository.GetAll();
+
             foreach (var createLibraryType in createLibraryTypes)
             {
                 if (!createNewFromExistingVersion)
@@ -395,48 +397,50 @@ namespace Mb.TypeEditor.Services.Services
                     return null;
 
                 libraryType.TypeId = !createNewFromExistingVersion ? libraryType.Id : createLibraryType.TypeId;
+                libraryType.RdsName = allRds.FirstOrDefault(x => x.Id == libraryType.RdsId)?.Name;
 
                 switch (libraryType)
                 {
                     case NodeType nt:
+                    {
+                        if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                         {
-                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
+                            foreach (var attributeType in nt.AttributeTypes)
                             {
-                                foreach (var attributeType in nt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
-                                }
+                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
                             }
-
-                            if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
-                            {
-                                foreach (var simpleType in nt.SimpleTypes)
-                                {
-                                    _simpleTypeRepository.Attach(simpleType, EntityState.Unchanged);
-                                }
-                            }
-                            await _libraryTypeComponentRepository.CreateAsync(nt);
-                            await _libraryTypeComponentRepository.SaveAsync();
-
-                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in nt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Detach(attributeType);
-                                }
-                            }
-
-                            if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
-                            {
-                                foreach (var simpleType in nt.SimpleTypes)
-                                {
-                                    _simpleTypeRepository.Detach(simpleType);
-                                }
-                            }
-
-                            createdLibraryTypes.Add(nt);
-                            continue;
                         }
+
+                        if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
+                        {
+                            foreach (var simpleType in nt.SimpleTypes)
+                            {
+                                _simpleTypeRepository.Attach(simpleType, EntityState.Unchanged);
+                            }
+                        }
+
+                        await _libraryTypeComponentRepository.CreateAsync(nt);
+                        await _libraryTypeComponentRepository.SaveAsync();
+
+                        if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
+                        {
+                            foreach (var attributeType in nt.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Detach(attributeType);
+                            }
+                        }
+
+                        if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
+                        {
+                            foreach (var simpleType in nt.SimpleTypes)
+                            {
+                                _simpleTypeRepository.Detach(simpleType);
+                            }
+                        }
+
+                        createdLibraryTypes.Add(nt);
+                        continue;
+                    }
 
                     case InterfaceType it:
 
@@ -463,29 +467,29 @@ namespace Mb.TypeEditor.Services.Services
                         continue;
 
                     case TransportType tt:
+                    {
+                        if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
                         {
-                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
+                            foreach (var attributeType in tt.AttributeTypes)
                             {
-                                foreach (var attributeType in tt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
-                                }
+                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
                             }
-
-                            await _libraryTypeComponentRepository.CreateAsync(tt);
-                            await _libraryTypeComponentRepository.SaveAsync();
-
-                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
-                            {
-                                foreach (var attributeType in tt.AttributeTypes)
-                                {
-                                    _attributeTypeRepository.Detach(attributeType);
-                                }
-                            }
-
-                            createdLibraryTypes.Add(tt);
-                            continue;
                         }
+
+                        await _libraryTypeComponentRepository.CreateAsync(tt);
+                        await _libraryTypeComponentRepository.SaveAsync();
+
+                        if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
+                        {
+                            foreach (var attributeType in tt.AttributeTypes)
+                            {
+                                _attributeTypeRepository.Detach(attributeType);
+                            }
+                        }
+
+                        createdLibraryTypes.Add(tt);
+                        continue;
+                    }
 
                     default:
                         continue;
@@ -501,7 +505,7 @@ namespace Mb.TypeEditor.Services.Services
             if (createLibraryType == null)
                 return null;
 
-            var data = (await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType }, createNewFromExistingVersion))?.FirstOrDefault();
+            var data = (await CreateLibraryTypes(new List<CreateLibraryType> {createLibraryType}, createNewFromExistingVersion))?.FirstOrDefault();
 
             if (data == null)
                 throw new ModelBuilderNullReferenceException("Could not create type");
@@ -518,7 +522,6 @@ namespace Mb.TypeEditor.Services.Services
             //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
 
             //libraryType.Version = existingType.Version.IncrementMinorVersion();
-
         }
 
         #endregion Private

@@ -34,7 +34,6 @@ namespace Mb.TypeEditor.Data.Repositories
                 .Include("TerminalTypes.TerminalType.TerminalCategory")
                 .Include("TerminalTypes.TerminalType.Attributes")
                 .Include("TerminalTypes.TerminalType.Attributes.Units")
-                .Include(x => x.Rds)
                 .Include(x => x.SimpleTypes)
                 .Include("SimpleTypes.AttributeTypes")
                 .Include("SimpleTypes.AttributeTypes.Units")
@@ -52,7 +51,6 @@ namespace Mb.TypeEditor.Data.Repositories
         {
             var interfaceTypes = await _interfaceTypeRepository.GetAll()
                 .Include(x => x.AttributeTypes)
-                .Include(x => x.Rds)
                 .Include(x => x.Purpose)
                 .OrderBy(x => x.Name)
                 .AsSplitQuery()
@@ -68,7 +66,6 @@ namespace Mb.TypeEditor.Data.Repositories
         {
             var transportTypes = await _transportTypeRepository.GetAll()
                 .Include(x => x.AttributeTypes)
-                .Include(x => x.Rds)
                 .Include(x => x.Purpose)
                 .OrderBy(x => x.Name)
                 .AsSplitQuery()
@@ -92,7 +89,6 @@ namespace Mb.TypeEditor.Data.Repositories
                     .Include("TerminalTypes.TerminalType.TerminalCategory")
                     .Include("TerminalTypes.TerminalType.Attributes")
                     .Include("TerminalTypes.TerminalType.Attributes.Units")
-                    .Include(x => x.Rds)
                     .Include(x => x.SimpleTypes)
                     .Include("SimpleTypes.AttributeTypes")
                     .Include("SimpleTypes.AttributeTypes.Units")
@@ -107,7 +103,6 @@ namespace Mb.TypeEditor.Data.Repositories
             {
                 var interfaceType = await _interfaceTypeRepository.FindBy(x => x.Id == id)
                     .Include(x => x.AttributeTypes)
-                    .Include(x => x.Rds)
                     .Include(x => x.Purpose)
                     .OrderBy(x => x.Name)
                     .AsSplitQuery()
@@ -120,7 +115,6 @@ namespace Mb.TypeEditor.Data.Repositories
             {
                 var transportType = await _transportTypeRepository.FindBy(x => x.Id == id)
                     .Include(x => x.AttributeTypes)
-                    .Include(x => x.Rds)
                     .Include(x => x.Purpose)
                     .OrderBy(x => x.Name)
                     .AsSplitQuery()
