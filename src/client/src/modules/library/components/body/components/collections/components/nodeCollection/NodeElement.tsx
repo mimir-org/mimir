@@ -3,8 +3,6 @@ import { Dispatch } from "redux";
 import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { LibraryCategory } from "../../../../../../../../models/project";
-import { SetNewSelectedElement } from "./helpers/SetNewSelectedElement";
-import { SetNewSelectedElementType } from "./helpers/SetNewSelectedElementType";
 import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
 import { NodeElementButton, NodeElementText } from "./NodeElement.styled";
@@ -15,13 +13,12 @@ import { FavoriteComponent } from "./FavoriteComponent";
 interface Props {
   item: LibItem;
   customCategory: LibraryCategory;
-  selectedElement: string;
-  setSelectedElement: (value: string) => void;
-  setSelectedElementType: (value: ObjectType) => void;
+  selectedElement: LibItem;
+  setSelectedElement: (value: LibItem) => void;
   isCustomCategory: boolean;
   dispatch: Dispatch;
-  selectedTypes: string[];
-  setSelectedTypes: (array: string[]) => void;
+  selectedTypes: LibItem[];
+  setSelectedTypes: (array: LibItem[]) => void;
   collectionState: CollectionsActions;
 }
 
@@ -35,7 +32,6 @@ export const NodeElement = ({
   customCategory,
   selectedElement,
   setSelectedElement,
-  setSelectedElementType,
   isCustomCategory,
   selectedTypes,
   setSelectedTypes,
@@ -43,9 +39,8 @@ export const NodeElement = ({
   dispatch,
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
-  const isSelected = selectedTypes.some((x) => x === item.id);
+  const isSelected = selectedTypes.some((x) => x.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
-  const managingType = collectionState === CollectionsActions.ManageType;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
@@ -56,11 +51,8 @@ export const NodeElement = ({
     <NodeElementButton
       onMouseEnter={() => setShowAddButton(true)}
       onMouseLeave={() => setShowAddButton(false)}
-      active={selectedElement === item.id}
-      onClick={() => {
-        SetNewSelectedElement(item, setSelectedElement);
-        SetNewSelectedElementType(item.libraryType, setSelectedElementType);
-      }}
+      active={selectedElement && selectedElement.id === item.id}
+      onClick={() => setSelectedElement(item)}
       draggable={item.libraryType === ObjectType.ObjectBlock}
       onDragStart={(event) => item.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(item))}
       key={item.id}
@@ -73,15 +65,15 @@ export const NodeElement = ({
         {TextResources.Library_Type_Version}
         {item.version}
       </LibElementVersion> */}
-      {managingType && (
+      {collectionState === CollectionsActions.ManageType && (
         <Checkbox
           isChecked={isSelected}
           onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, isSelected)}
           color={Color.BLACK}
         />
       )}
-      {isCustomCategory && !managingType && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}
-      {!isCustomCategory && showAddButton && !isItemFavorite && !managingType && (
+      {isCustomCategory && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}
+      {!isCustomCategory && showAddButton && !isItemFavorite && (
         <FavoriteComponent addFavorite onClick={() => OnAddFavoriteClick(item, customCategory, dispatch)} />
       )}
     </NodeElementButton>

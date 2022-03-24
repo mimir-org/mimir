@@ -6,17 +6,16 @@ import { GetSelectedNode, IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
 import { FilterByAspect } from "./helpers/FilterByAspect";
-import { Aspect, CollectionsActions, ObjectType } from "../../../../../../../../models";
+import { Aspect, CollectionsActions, LibItem } from "../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
 
 interface Props {
   collectionState: CollectionsActions;
-  selectedTypes: string[];
-  setSelectedTypes: (array: string[]) => void;
+  selectedTypes: LibItem[];
+  setSelectedTypes: (array: LibItem[]) => void;
   searchString: string;
-  selectedElement: string;
-  setSelectedElement: (value: string) => void;
-  setSelectedElementType: (value: ObjectType) => void;
+  selectedElement: LibItem | null;
+  setSelectedElement: (value: LibItem) => void;
   aspectFilters: Aspect[];
 }
 
@@ -27,7 +26,6 @@ export const NodeCollectionList = ({
   searchString,
   selectedElement,
   setSelectedElement,
-  setSelectedElementType,
   aspectFilters,
 }: Props) => {
   const dispatch = useDispatch();
@@ -53,7 +51,6 @@ export const NodeCollectionList = ({
         setSelectedTypes={setSelectedTypes}
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
-        setSelectedElementType={setSelectedElementType}
         key={customCategory.name}
         category={customCategory}
         customCategory={customCategory}
@@ -68,7 +65,6 @@ export const NodeCollectionList = ({
             setSelectedTypes={setSelectedTypes}
             selectedElement={selectedElement}
             setSelectedElement={setSelectedElement}
-            setSelectedElementType={setSelectedElementType}
             key={category.name}
             category={category}
             customCategory={customCategory}

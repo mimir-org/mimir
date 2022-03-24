@@ -2,17 +2,16 @@ import { Dispatch } from "redux";
 import { RightArrowIcon } from "../../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Button } from "../../../../../../../compLibrary/buttons";
-import { CollectionsActions } from "../../../../../../../models";
+import { CollectionsActions, LibItem } from "../../../../../../../models";
 import { OnManageCollection } from "../handlers";
 import { ModalButtonsWrapper } from "../../styled/ModalButtonsWrapper";
 
 interface Props {
   collectionState: CollectionsActions;
-  isOpen: boolean;
-  onExit: (isOpen: boolean) => void;
-  selectedTypes: string[];
+  onExit: () => void;
+  selectedTypes: LibItem[];
   selectedCollections: string[];
-  setSelectedTypes: (types: string[]) => void;
+  setSelectedTypes: (types: LibItem[]) => void;
   setCollectionState: (action: CollectionsActions) => void;
   setAddSelectedToCollection: (open: boolean) => void;
   dispatch: Dispatch;
@@ -20,7 +19,6 @@ interface Props {
 
 export const ModalButton = ({
   collectionState,
-  isOpen,
   onExit,
   selectedTypes,
   setSelectedTypes,
@@ -30,7 +28,7 @@ export const ModalButton = ({
   dispatch,
 }: Props) => (
   <ModalButtonsWrapper>
-    <Button onClick={() => onExit(!isOpen)} text={TextResources.CANCEL} />
+    <Button onClick={onExit} text={TextResources.CANCEL} />
     {collectionState === CollectionsActions.ManageType && (
       <Button
         icon={RightArrowIcon}
@@ -43,7 +41,7 @@ export const ModalButton = ({
             setAddSelectedToCollection,
             dispatch
           );
-          onExit(!isOpen);
+          onExit();
         }}
         text={TextResources.LIBRARY_MODAL_ADD_COLLECTION}
       />

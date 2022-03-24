@@ -34,7 +34,10 @@ export interface OffPageData {
 export const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
-  const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
+
+  if (!sourceConnector || !sourceNode) return null;
+
+  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOf(c) && !IsInputTerminal(c));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
@@ -58,13 +61,13 @@ export const CreateOffPageObject = (data: OffPageData) => {
     name: "OffPageInput",
     type: ConnectorType.Input,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector?.terminalCategory,
-    terminalCategoryId: sourceConnector?.terminalCategoryId,
-    terminalTypeId: sourceConnector?.terminalTypeId,
+    terminalCategory: sourceConnector.terminalCategory,
+    terminalCategoryId: sourceConnector.terminalCategoryId,
+    terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
     connectorVisibility: ConnectorVisibility.InputVisible,
-    color: sourceConnector?.color,
+    color: sourceConnector.color,
     kind: CONNECTOR_KIND,
   } as Connector;
 
@@ -73,13 +76,13 @@ export const CreateOffPageObject = (data: OffPageData) => {
     name: "OffPageOutput",
     type: ConnectorType.Output,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector?.terminalCategory,
-    terminalCategoryId: sourceConnector?.terminalCategoryId,
-    terminalTypeId: sourceConnector?.terminalTypeId,
+    terminalCategory: sourceConnector.terminalCategory,
+    terminalCategoryId: sourceConnector.terminalCategoryId,
+    terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
     connectorVisibility: ConnectorVisibility.OutputVisible,
-    color: sourceConnector?.color,
+    color: sourceConnector.color,
     kind: CONNECTOR_KIND,
   } as Connector;
 
@@ -101,8 +104,8 @@ export const CreateOffPageObject = (data: OffPageData) => {
   //#region Edges
   const partofEdge = {
     id: CreateId(),
-    fromConnector: sourcePartOfConnector,
-    fromConnectorId: sourcePartOfConnector?.id,
+    fromConnector: sourcePartOfConn,
+    fromConnectorId: sourcePartOfConn?.id,
     toConnector: partOfConnector,
     toConnectorId: partOfConnector?.id,
     fromNode: sourceNode,
@@ -117,9 +120,9 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const transportEdge = {
     id: CreateId(),
     fromConnector: isTarget ? sourceConnector : outputConnector,
-    fromConnectorId: isTarget ? sourceConnector.id : outputConnector?.id,
+    fromConnectorId: isTarget ? sourceConnector.id : outputConnector.id,
     toConnector: isTarget ? inputConnector : sourceConnector,
-    toConnectorId: isTarget ? inputConnector.id : sourceConnector?.id,
+    toConnectorId: isTarget ? inputConnector.id : sourceConnector.id,
     fromNode: isTarget ? sourceNode : offPageNode,
     fromNodeId: isTarget ? sourceNode.id : offPageNode.id,
     toNode: isTarget ? offPageNode : sourceNode,

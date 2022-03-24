@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
     [Serializable]
-    public class Project
+    public class Project : IEquatable<Project>
     {
         #region Properties
 
@@ -33,6 +34,7 @@ namespace Mb.Models.Data
         public string UpdatedBy { get; set; }
 
         [Required]
+        // TODO: updated should be nullable
         public DateTime Updated { get; set; }
 
         public virtual ICollection<Node> Nodes { get; set; }
@@ -64,6 +66,47 @@ namespace Mb.Models.Data
                 Version += ".0";
 
             Version = Version.IncrementCommitVersion();
+        }
+
+        #endregion
+
+        #region IEquatable
+
+        public bool Equals(Project other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id == other.Id &&
+                   Iri == other.Iri &&
+                   IsSubProject == other.IsSubProject &&
+                   Version == other.Version &&
+                   Name == other.Name &&
+                   Description == other.Description &&
+                   ProjectOwner == other.ProjectOwner &&
+                   UpdatedBy == other.UpdatedBy &&
+                   Updated.Equals(other.Updated);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((Project) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            hashCode.Add(Iri);
+            hashCode.Add(IsSubProject);
+            hashCode.Add(Version);
+            hashCode.Add(Name);
+            hashCode.Add(Description);
+            hashCode.Add(ProjectOwner);
+            hashCode.Add(UpdatedBy);
+            hashCode.Add(Updated);
+            return hashCode.ToHashCode();
         }
 
         #endregion

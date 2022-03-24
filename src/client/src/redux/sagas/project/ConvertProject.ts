@@ -98,7 +98,6 @@ export interface NodeAm {
   positionBlockY: number;
   width: number;
   height: number;
-  cost: number;
   statusId: string;
   masterProjectId: string;
   masterProjectIri: string;
@@ -141,11 +140,11 @@ export interface EdgeAm {
 export interface ProjectAm {
   id: string;
   iri: string;
-  domain: string;
   name: string;
   isSubProject: boolean;
   version: string;
   description: string;
+  projectOwner: string;
   nodes: NodeAm[];
   edges: EdgeAm[];
 }
@@ -405,7 +404,6 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
       positionBlockY: node.positionBlockY,
       width: node.width,
       height: node.height,
-      cost: node.cost,
       statusId: node.statusId,
       masterProjectId: node.masterProjectId,
       masterProjectIri: node.masterProjectIri,
@@ -463,11 +461,11 @@ const ConvertProject = (project: Project): ProjectAm => {
   return {
     id: project.id,
     iri: project.iri,
-    domain: project.domain,
     name: project.name,
     isSubProject: project.isSubProject,
     version: project.version,
     description: project.description,
+    projectOwner: project.projectOwner,
     nodes: ConvertNodes(project.nodes),
     edges: ConvertEdges(project.edges),
   };

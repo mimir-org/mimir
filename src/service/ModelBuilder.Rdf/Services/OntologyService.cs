@@ -287,6 +287,26 @@ namespace ModelBuilder.Rdf.Services
             return data;
         }
 
+        public int? GetIntValue(string iri, string predicate, bool allowMany = true)
+        {
+            var objects = GetTriplesWithSubjectPredicate(iri, predicate).Select(t => t.Object).ToList();
+
+            if (!objects.Any())
+                return null;
+
+            if (allowMany && objects.Count < 1)
+                throw new InvalidDataException($"There should always be at least one, 1, {predicate} | Iri: {iri}");
+
+            if (!allowMany && objects.Count != 1)
+                throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
+
+            var value = objects.First()?.ResolveValue();
+            if (!int.TryParse(value?.Trim(), out var data))
+                throw new InvalidDataException($"{predicate} should always point to a integer value | Iri: {iri}");
+
+            return data;
+        }
+
         public T GetEnumValue<T>(string iri, string predicate, bool allowMany = true) where T : struct
         {
             var objects = GetTriplesWithSubjectPredicate(iri, predicate).Select(t => t.Object).ToList();

@@ -1,20 +1,7 @@
 import { Dispatch } from "redux";
-import { ObjectType } from "../../models";
-import { GetLibraryType } from "../helpers";
-import { changeTypeEditorVisibility, fetchCreateLibraryType } from "../redux/typeEditorSlice";
+import { changeTypeEditorVisibility } from "../redux/typeEditorSlice";
 
-export const OnOpenTypeEditor = (
-  selectedElement: string,
-  selectedElementType: ObjectType,
-  onChange: () => void,
-  dispatch: Dispatch
-) => {
-  if (selectedElement && selectedElementType !== ObjectType.NotSet) {
-    const filter = GetLibraryType(selectedElementType);
-    dispatch(fetchCreateLibraryType({ selectedType: selectedElement, filter }));
-    onChange();
-  } else {
-    dispatch(changeTypeEditorVisibility(true));
-    onChange();
-  }
+export const OnOpenTypeEditor = (onChange: () => void, dispatch: Dispatch) => {
+  dispatch(changeTypeEditorVisibility(true));
+  onChange();
 };

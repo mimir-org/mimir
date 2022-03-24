@@ -1,20 +1,12 @@
 import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
-import { addNode, createEdge } from "../../../../redux/store/project/actions";
-import { ConvertToEdge, ConvertToNode } from "../../converters";
+import { addNode } from "../../../../redux/store/project/actions";
+import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { GetSelectedNode, IsFamily, IsLocation, IsProduct } from "../../../../helpers";
+import { GetSelectedNode, IsFamily } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
-import { Attribute, BlobData, Connector, ConnectorVisibility, LibItem, Node, Project, Simple, User } from "../../../../models";
-import {
-  CreateId,
-  IsInputTerminal,
-  IsOutputTerminal,
-  IsLocationTerminal,
-  IsPartOf,
-  SetSiblingIndexOnNodeDrop,
-  IsProductTerminal,
-} from "../../helpers";
+import { BlobData, LibItem, Node, Project, User } from "../../../../models";
+import { HandleCreatePartOfEdge, InitConnectorVisibility } from "../../helpers/LibraryDropHelpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -40,16 +32,18 @@ interface OnDropParameters {
  */
 const useOnDrop = (params: OnDropParameters) => {
   const { event } = params;
-
   event.stopPropagation();
   event.preventDefault();
 
   if (DoesNotContainApplicationData(event)) return;
 
-  handleNodeDrop(params);
+  HandleNodeDrop(params);
 };
 
-const handleNodeDrop = ({ event, project, user, icons, library, secondaryNode, flowTransform, dispatch }: OnDropParameters) => {
+const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
+  !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
+
+function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, flowTransform, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   let parentNode = GetSelectedNode();
 
@@ -65,13 +59,11 @@ const handleNodeDrop = ({ event, project, user, icons, library, secondaryNode, f
     if (!parentNode) return;
   }
 
-  targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
-  targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
-  targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
-  if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
+  targetNode.connectors?.forEach((connector) => InitConnectorVisibility(connector, targetNode));
+  if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
-};
+}
 
 /**
  * Function to define the dropzone for a SecondaryNode.
@@ -85,7 +77,7 @@ function CalculateSecondaryNodeDropZone(transform: FlowTransform) {
 }
 
 /**
- * Function to determine which parentNode in SplitView that will the parent of a dropped Node.
+ * Function to determine which parentNode in SplitView that is the parent of a dropped Node.
  * @param targetNode
  * @param selectedNode
  * @param secondaryNode
@@ -98,60 +90,6 @@ function FindParent(targetNode: Node, selectedNode: Node, secondaryNode: Node, d
   if (!IsFamily(targetNode, selectedNode)) return secondaryNode;
   if (!IsFamily(targetNode, secondaryNode)) return selectedNode;
   return clientX < dropZone ? selectedNode : secondaryNode;
-}
-
-const handleCreatePartOfEdge = (
-  sourceNode: Node,
-  targetNode: Node,
-  project: Project,
-  library: LibraryState,
-  dispatch: Dispatch
-) => {
-  targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
-  const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
-
-  SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
-  dispatch(createEdge(partofEdge));
-};
-
-const initSimple = (simple: Simple, targetNode: Node) => {
-  const simpleId = CreateId();
-  simple.id = simpleId;
-  simple.nodeId = targetNode.id;
-  simple.attributes.forEach((a) => {
-    a.simpleId = simpleId;
-  });
-};
-
-const initConnector = (connector: Connector, targetNode: Node) => {
-  connector.id = CreateId();
-  connector.nodeId = targetNode.id;
-  connector.attributes?.forEach((a) => {
-    a.id = CreateId();
-  });
-
-  setInitConnectorVisibility(connector, targetNode);
-};
-
-const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
-  attribute.nodeId = targetNode.id;
-  attribute.id = CreateId();
-};
-
-const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
-  !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
-
-function setInitConnectorVisibility(conn: Connector, targetNode: Node) {
-  const isLocationConn = IsLocation(targetNode) && IsLocationTerminal(conn);
-  const isProductConn = IsProduct(targetNode) && IsProductTerminal(conn);
-
-  // Location and Product terminals are visible by default.
-  if (isLocationConn || isProductConn) {
-    if (IsInputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.InputVisible;
-    if (IsOutputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.OutputVisible;
-  } else conn.connectorVisibility = ConnectorVisibility.None;
 }
 
 export default useOnDrop;

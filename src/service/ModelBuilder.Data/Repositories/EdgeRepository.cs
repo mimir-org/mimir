@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
@@ -8,8 +9,12 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using SqlBulkTools;
 
 namespace Mb.Data.Repositories
 {
@@ -21,8 +26,10 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ICommonRepository _commonRepository;
+        private readonly DatabaseConfiguration _databaseConfiguration;
+        private readonly ILogger<EdgeRepository> _logger;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<EdgeRepository> logger) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
@@ -30,6 +37,8 @@ namespace Mb.Data.Repositories
             _connectorRepository = connectorRepository;
             _contextAccessor = contextAccessor;
             _commonRepository = commonRepository;
+            _logger = logger;
+            _databaseConfiguration = databaseConfiguration?.Value;
         }
 
         public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
@@ -150,6 +159,65 @@ namespace Mb.Data.Repositories
             }
 
             return returnValues;
+        }
+
+        /// <summary>
+        /// Bulk edge update
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="edges">The edges to be upserted</param>
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Edge> edges)
+        {
+            if (edges == null || !edges.Any())
+                return;
+
+            bulk.Setup<Edge>()
+                .ForCollection(edges)
+                .WithTable("Edge")
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.Iri)
+                .AddColumn(x => x.FromConnectorId)
+                .AddColumn(x => x.FromConnectorIri)
+                .AddColumn(x => x.ToConnectorId)
+                .AddColumn(x => x.ToConnectorIri)
+                .AddColumn(x => x.FromNodeId)
+                .AddColumn(x => x.FromNodeIri)
+                .AddColumn(x => x.ToNodeId)
+                .AddColumn(x => x.ToNodeIri)
+                .AddColumn(x => x.TransportId)
+                .AddColumn(x => x.InterfaceId)
+                .AddColumn(x => x.IsLocked)
+                .AddColumn(x => x.IsLockedStatusBy)
+                .AddColumn(x => x.IsLockedStatusDate)
+                .AddColumn(x => x.MasterProjectId)
+                .AddColumn(x => x.MasterProjectIri)
+                .AddColumn(x => x.ProjectId)
+                .AddColumn(x => x.ProjectIri)
+                .BulkInsertOrUpdate()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+
+        /// <summary>
+        /// Bulk delete edges
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="edges">The edges to be deleted</param>
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Edge> edges)
+        {
+            if (edges == null || !edges.Any())
+                return;
+
+            bulk.Setup<Edge>()
+                .ForCollection(edges)
+                .WithTable("Edge")
+                .AddColumn(x => x.Id)
+                .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
         }
 
         private void ResetEdgeBeforeSave(Edge edge)

@@ -1,13 +1,13 @@
 import { Dispatch } from "redux";
-import { CollectionsActions } from "../../../../../../../models";
+import { CollectionsActions, LibItem } from "../../../../../../../models";
 import { addToCollections } from "../../../../../../../redux/store/library/librarySlice";
 import { addToCollectionsTypes } from "../../../../../../../redux/store/library/types";
 
 const OnManageCollection = (
-  selectedTypes: string[],
+  selectedTypes: LibItem[],
   selectedCollections: string[],
   setCollectionState: (action: CollectionsActions) => void,
-  setSelectedTypes: (types: string[]) => void,
+  setSelectedTypes: (types: LibItem[]) => void,
   setAddSelectedToCollection: (open: boolean) => void,
   dispatch: Dispatch
 ) => {
@@ -17,7 +17,7 @@ const OnManageCollection = (
   };
   dispatch(addToCollections(collections));
   setAddSelectedToCollection(false);
-  setCollectionState(CollectionsActions.ManageCollection);
+  setCollectionState(CollectionsActions.ReadOnly);
   setSelectedTypes([]);
 };
 

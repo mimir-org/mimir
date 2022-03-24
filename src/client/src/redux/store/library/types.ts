@@ -32,6 +32,6 @@ export interface DeleteLibraryItem {
 }
 
 export interface addToCollectionsTypes {
-  types: string[];
+  types: LibItem[];
   collectionIds: string[];
 }

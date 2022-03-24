@@ -29,7 +29,11 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
     }
 
     if (hasContent(response)) {
-      response.data = await response.json();
+      try {
+        response.data = await response.json();
+      } catch (error) {
+        // Ignore badly formatted json response
+      }
     }
 
     return response;

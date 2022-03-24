@@ -6,7 +6,6 @@ import { ParameterButton } from "../../../styled/ParameterButton";
 import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
 import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
-import { HelpIcon, WarningIcon } from "../../../../../../../../../../../assets/icons/common";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
 import { AttributeLikeItem } from "../../../../../../../../../types";
@@ -27,28 +26,20 @@ interface Props {
 }
 
 export const Parameter = ({ attribute, combination, headerColor, bodyColor, onLock, onClose, onChange }: Props) => {
+  const [value, setValue] = useState("");
   const isAttribute = IsAttribute(attribute);
+  const attributeValue = isAttribute ? attribute.value ?? "" : "";
   const isLocked = isAttribute ? attribute.isLocked : false;
-  const [value, setValue] = useState(isAttribute ? attribute.value ?? "" : "");
   const unit = isAttribute ? attribute.selectedUnitId ?? attribute.units?.[0]?.id : attribute.units?.[0]?.id;
 
   useEffect(() => {
-    if (IsAttribute(attribute) && attribute.value) setValue(attribute.value);
-  }, [attribute]);
+    IsAttribute(attribute) && setValue(attributeValue);
+  }, [attribute, attributeValue]);
 
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterHeader color={bodyColor}>
-        {false && ( //TODO: Add proper logic for warningIcon when validation feature is added
-          <img src={WarningIcon} className="warningIcon" alt="icon" />
-        )}
         <span>{attribute?.entity}</span>
-        {false && (
-          <ParameterButton>
-            <VisuallyHidden>Open help</VisuallyHidden>
-            <img src={HelpIcon} alt="question mark" onClick={() => null} />
-          </ParameterButton>
-        )}
         {isAttribute && (
           <>
             <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
@@ -66,11 +57,9 @@ export const Parameter = ({ attribute, combination, headerColor, bodyColor, onLo
       <ParameterInputsWrapper>
         <input
           name="parameterInput"
-          className="parameterInput"
-          disabled={isLocked}
+          disabled={isLocked || !isAttribute}
           value={value}
-          type="text"
-          onChange={(e) => isAttribute && setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
           onBlur={() => onChange(attribute.id, value, unit)}
         />
 

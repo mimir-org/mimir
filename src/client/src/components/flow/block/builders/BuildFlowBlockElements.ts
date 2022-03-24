@@ -2,43 +2,41 @@ import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildFlowParentNode, BuildFlowSecondaryParentNode } from ".";
 import { DrawFlowBlockEdges, DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
-import { BlockNodeSize } from "../../../../models/project";
 
 /**
- * Component to draw all nodes and edges in BlockView.
+ * Component to draw all Flow nodes and edges in BlockView.
+ * These elements contain the data for the nodes and edges. In addition to the FlowElements, Mimir Nodes and Mimir Edges
+ * are created, with the extra functionality needed for Mimir. The Flow elements and Mimir elements co-exist
+ * and share the same id and position.
  * @param project
- * @param selectedNode
+ * @param primaryNode
  * @param secondaryNode
  * @param animatedEdge
- * @param parentNodeSize
- * @returns all Elements.
+ * @returns all FlowElements.
  */
-const BuildFlowBlockElements = (
-  project: Project,
-  selectedNode: Node,
-  secondaryNode: Node,
-  animatedEdge: boolean,
-  parentNodeSize: BlockNodeSize
-) => {
+const BuildFlowBlockElements = (project: Project, primaryNode: Node, secondaryNode: Node, animatedEdge: boolean) => {
   if (!project) return;
 
-  const elements: Elements = [];
-  const splitView = secondaryNode !== null;
+  const flowElements: Elements = [];
+  const splitView = secondaryNode !== undefined;
 
-  const parentBlock = BuildFlowParentNode(selectedNode);
-  if (parentBlock) elements.push(parentBlock);
+  const parentBlockNode = BuildFlowParentNode(primaryNode);
+  if (!parentBlockNode) return;
+
+  flowElements.push(parentBlockNode);
 
   if (splitView) {
-    const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
-    const parentSecondaryBlock = BuildFlowSecondaryParentNode(selectedNode, secondary);
-    if (parentSecondaryBlock) elements.push(parentSecondaryBlock);
-    DrawFlowSecondaryChildren(project, secondaryNode, elements, parentNodeSize);
+    const parentSecondaryBlock = BuildFlowSecondaryParentNode(primaryNode, secondaryNode);
+    if (!parentSecondaryBlock) return;
+
+    flowElements.push(parentSecondaryBlock);
+    DrawFlowSecondaryChildren(project, primaryNode, secondaryNode, flowElements);
   }
 
-  DrawFlowChildNodes(project, selectedNode, elements, secondaryNode, parentNodeSize);
-  DrawFlowBlockEdges(project, elements, secondaryNode, animatedEdge);
+  DrawFlowChildNodes(project, primaryNode, secondaryNode, flowElements);
+  DrawFlowBlockEdges(project, secondaryNode, flowElements, animatedEdge);
 
-  return elements;
+  return flowElements;
 };
 
 export default BuildFlowBlockElements;

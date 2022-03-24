@@ -92,6 +92,12 @@
     "attributes": []
   },
   {
+    "name": "System 88 Earthing and Lightning Protection",
+    "Color": "#777777",
+    "terminalCategoryId": "07FBB0F674D76D56A4B5898A5893955A",
+    "attributes": []
+  },
+  {
     "name": "Essential power System 83",
     "Color": "#FF9900",
     "terminalCategoryId": "07FBB0F674D76D56A4B5898A5893955A",

@@ -1,14 +1,19 @@
 import { Connector, Node } from "../../../../../../models";
-import { ParentBox } from "./styled";
+import { ParentBox, ResizeButton } from "./styled";
 import { IsLocation } from "../../../../../../helpers";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../../compLibrary/colors/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
-import { BlockNodeSize } from "../../../../../../models/project";
+import { ResizeIcon } from "../../../../../../assets/icons/resize";
+import { useRef } from "react";
+import { useAppDispatch } from "../../../../../../redux/store";
+import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
+import { TextResources } from "../../../../../../assets/text/TextResources";
+import { useResizeParentNode } from "./hooks/useResizeParentNode";
 
 interface Props {
   node: Node;
-  size: BlockNodeSize;
+  splitView: boolean;
   inputTerminals: Connector[];
   outputTerminals: Connector[];
   isNavigationActive: boolean;
@@ -25,7 +30,7 @@ interface Props {
  */
 export const BlockParentComponent = ({
   node,
-  size,
+  splitView,
   inputTerminals,
   outputTerminals,
   isNavigationActive,
@@ -33,10 +38,13 @@ export const BlockParentComponent = ({
   onNavigateDownClick,
   onConnectorClick,
 }: Props) => {
+  const dispatch = useAppDispatch();
   const isLocation = IsLocation(node);
+  const resizePanelRef = useRef(null);
+  useResizeParentNode(node, resizePanelRef, dispatch);
 
   return (
-    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} size={size}>
+    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} width={node.width} height={node.height}>
       <BlockParentBanner
         node={node}
         inputTerminals={inputTerminals}
@@ -46,6 +54,11 @@ export const BlockParentComponent = ({
         onNavigateDownClick={() => onNavigateDownClick()}
         onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
       />
+      <Tooltip content={TextResources.RESIZE_NODE} placement={"bottom"} offset={[0, 10]}>
+        <ResizeButton ref={resizePanelRef} visible={!splitView}>
+          <img src={ResizeIcon} alt="resize" />
+        </ResizeButton>
+      </Tooltip>
       <Background
         variant={isLocation ? BackgroundVariant.Lines : BackgroundVariant.Dots}
         color={isLocation ? Color.GAINSBORO : Color.MIDNIGHT_EXPRESS}

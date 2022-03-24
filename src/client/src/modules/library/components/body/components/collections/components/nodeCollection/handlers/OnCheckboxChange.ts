@@ -2,13 +2,13 @@ import { LibItem } from "../../../../../../../../../models";
 
 const OnCheckboxChange = (
   item: LibItem,
-  selectedTypes: string[],
-  setSelectedTypes: (array: string[]) => void,
+  selectedTypes: LibItem[],
+  setSelectedTypes: (array: LibItem[]) => void,
   isSelected: boolean
 ) => {
-  let temp: string[] = [...selectedTypes];
-  if (isSelected) temp = temp.filter((a) => a !== item.id);
-  else if (!isSelected && temp) temp.push(item.id);
+  let temp: LibItem[] = [...selectedTypes];
+  if (isSelected) temp = temp.filter((a) => a !== item);
+  else if (!isSelected && temp) temp.push(item);
   setSelectedTypes(temp);
 };
 
