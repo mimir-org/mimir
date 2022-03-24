@@ -11,9 +11,9 @@ using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Exceptions;
 using Mb.Models.Records;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
 // ReSharper disable IdentifierTypo
@@ -27,7 +27,6 @@ namespace Mb.Data.Repositories
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
         private readonly IAttributeRepository _attributeRepository;
-        private readonly IServiceProvider _services;
         private readonly DatabaseConfiguration _databaseConfiguration;
         private readonly ITransportRepository _transportRepository;
         private readonly IConnectorRepository _connectorRepository;
@@ -35,13 +34,12 @@ namespace Mb.Data.Repositories
         private readonly ISimpleRepository _simpleRepository;
         private readonly ICacheRepository _cacheRepository;
 
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IServiceProvider services, IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
+        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
         {
             _mapper = mapper;
             _nodeRepository = nodeRepository;
             _edgeRepository = edgeRepository;
             _attributeRepository = attributeRepository;
-            _services = services;
             _databaseConfiguration = databaseConfiguration?.Value;
             _transportRepository = transportRepository;
             _connectorRepository = connectorRepository;
@@ -58,48 +56,21 @@ namespace Mb.Data.Repositories
         /// <returns>Complete project</returns>
         public async Task<Project> GetAsyncComplete(string id, string iri)
         {
-            //if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
-            //    throw new ModelBuilderNullReferenceException("The ID and IRI can't both be null.");
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                throw new ModelBuilderNullReferenceException("The ID and IRI can't both be null.");
 
-            //var key = GetKey(id, iri);
+            var key = GetKey(id, iri);
 
-            //if (!string.IsNullOrWhiteSpace(key))
-            //{
-            //    var project = await _cacheRepository.GetOrCreateAsync(key, async () => await GetProjectAsync(id, iri));
-            //    return project;
-            //}
-
-            var project = await
-                FindBy(x => x.Id == id || x.Iri == iri)
-                    .Include(x => x.Edges)
-                    .Include("Edges.FromNode")
-                    .Include("Edges.ToNode")
-                    .Include("Edges.FromConnector")
-                    .Include("Edges.ToConnector")
-                    .Include("Edges.Transport")
-                    .Include("Edges.Transport.Attributes")
-                    .Include("Edges.Transport.InputTerminal")
-                    .Include("Edges.Transport.InputTerminal.Attributes")
-                    .Include("Edges.Transport.OutputTerminal")
-                    .Include("Edges.Transport.OutputTerminal.Attributes")
-                    .Include("Edges.Interface")
-                    .Include("Edges.Interface.Attributes")
-                    .Include("Edges.Interface.InputTerminal")
-                    .Include("Edges.Interface.InputTerminal.Attributes")
-                    .Include("Edges.Interface.OutputTerminal")
-                    .Include("Edges.Interface.OutputTerminal.Attributes")
-                    .Include(x => x.Nodes)
-                    .Include("Nodes.Attributes")
-                    .Include("Nodes.Connectors")
-                    .Include("Nodes.Connectors.Attributes")
-                    .Include("Nodes.Simples")
-                    .Include("Nodes.Simples.Attributes")
-                    .AsNoTracking()
-                    .AsSplitQuery()
-                    .OrderByDescending(x => x.Name)
-                    .FirstOrDefaultAsync();
-
-            return project;
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                var project = await _cacheRepository.GetOrCreateAsync(key, async () => await GetProjectAsync(id, iri));
+                return project;
+            }
+            else
+            {
+                var project = await GetProjectAsync(id, iri);
+                return project;
+            }
         }
 
         /// <summary>
@@ -135,7 +106,7 @@ namespace Mb.Data.Repositories
         /// <param name="updated"></param>
         /// <param name="data"></param>
         /// <returns>A project update task</returns>
-        public Task UpdateProject(Project original, Project updated, ProjectEditData data)
+        public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
             var bulk = new BulkOperations();
 
@@ -183,7 +154,8 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            return Task.CompletedTask;
+            var key = GetKey(updated.Id, updated.Iri);
+            await _cacheRepository.DeleteCacheAsync(key);
         }
 
         /// <summary>
@@ -275,77 +247,52 @@ namespace Mb.Data.Repositories
         #region Private methods
 
         /// <summary>
-        /// Find a project async
+        /// Get complete project async
         /// </summary>
         /// <param name="id"></param>
         /// <param name="iri"></param>
         /// <returns></returns>
-        private async Task<Project> FindProjectAsync(string id, string iri)
+        private Task<Project> GetProjectAsync(string id, string iri)
         {
-            using var scope = _services.CreateScope();
-            var repo = scope.ServiceProvider.GetRequiredService<IProjectRepository>();
+            var project =
+                FindBy(x => x.Id == id || x.Iri == iri)
+                    .Include(x => x.Edges)
+                    .Include("Edges.FromNode")
+                    .Include("Edges.ToNode")
+                    .Include("Edges.FromConnector")
+                    .Include("Edges.ToConnector")
+                    .Include("Edges.Transport")
+                    .Include("Edges.Transport.Attributes")
+                    .Include("Edges.Transport.InputTerminal")
+                    .Include("Edges.Transport.InputTerminal.Attributes")
+                    .Include("Edges.Transport.OutputTerminal")
+                    .Include("Edges.Transport.OutputTerminal.Attributes")
+                    .Include("Edges.Interface")
+                    .Include("Edges.Interface.Attributes")
+                    .Include("Edges.Interface.InputTerminal")
+                    .Include("Edges.Interface.InputTerminal.Attributes")
+                    .Include("Edges.Interface.OutputTerminal")
+                    .Include("Edges.Interface.OutputTerminal.Attributes")
+                    .Include(x => x.Nodes)
+                    .Include("Nodes.Attributes")
+                    .Include("Nodes.Connectors")
+                    .Include("Nodes.Connectors.Attributes")
+                    .Include("Nodes.Simples")
+                    .Include("Nodes.Simples.Attributes")
+                    .AsNoTracking()
+                    .AsSplitQuery()
+                    .OrderByDescending(x => x.Name)
+                    .FirstOrDefault();
 
-            return await Task.Run(() => repo.FindBy(x => x.Id == id || x.Iri == iri)
-                .AsNoTracking()
-                .SingleOrDefaultAsync());
+            return Task.FromResult(project);
         }
 
         /// <summary>
-        /// Find edges async
+        /// Get cache key based on id and iri
         /// </summary>
         /// <param name="id"></param>
         /// <param name="iri"></param>
         /// <returns></returns>
-        private async Task<List<Edge>> FindEdgesAsync(string id, string iri)
-        {
-            using var scope = _services.CreateScope();
-            var repo = scope.ServiceProvider.GetRequiredService<IEdgeRepository>();
-
-            return await Task.Run(() =>
-                repo.FindBy(x => x.ProjectId == id || x.ProjectIri == iri)
-                    .Include("FromNode")
-                    .Include("ToNode")
-                    .Include("FromConnector")
-                    .Include("ToConnector")
-                    .Include("Transport")
-                    .Include("Transport.Attributes")
-                    .Include("Transport.InputTerminal")
-                    .Include("Transport.InputTerminal.Attributes")
-                    .Include("Transport.OutputTerminal")
-                    .Include("Transport.OutputTerminal.Attributes")
-                    .Include("Interface")
-                    .Include("Interface.Attributes")
-                    .Include("Interface.InputTerminal")
-                    .Include("Interface.InputTerminal.Attributes")
-                    .Include("Interface.OutputTerminal")
-                    .Include("Interface.OutputTerminal.Attributes")
-                    .AsNoTracking()
-                    .AsSplitQuery()
-                    .ToListAsync());
-        }
-
-        /// <summary>
-        /// Find nodes async
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="iri"></param>
-        /// <returns></returns>
-        private async Task<List<Node>> FindNodesAsync(string id, string iri)
-        {
-            using var scope = _services.CreateScope();
-            var repo = scope.ServiceProvider.GetRequiredService<INodeRepository>();
-            return await Task.Run(() =>
-                repo.FindBy(x => x.ProjectId == id || x.ProjectIri == iri)
-                    .Include("Attributes")
-                    .Include("Connectors")
-                    .Include("Connectors.Attributes")
-                    .Include("Simples")
-                    .Include("Simples.Attributes")
-                    .AsNoTracking()
-                    .AsSplitQuery()
-                    .ToListAsync());
-        }
-
         private string GetKey(string id, string iri)
         {
             if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
