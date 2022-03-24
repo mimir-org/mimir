@@ -6,15 +6,13 @@ import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
-import { Connector, Node } from "../../../../../models";
+import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
-import { Size } from "../../../../../compLibrary/size";
-import { Dispatch } from "redux";
-import { updateBlockSize } from "../../../../../redux/store/project/actions";
+import { InitParentSize } from "./helpers/InitParentSize";
 
 /**
  * Component for a ParentNode in BlockView.
@@ -67,22 +65,5 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
     </BoxWrapper>
   );
 };
-
-/**
- * Function to ensure that the ParentNode size has been initialized.
- * @param node
- * @param dispatch
- */
-function InitParentSize(node: Node, dispatch: Dispatch) {
-  if (
-    node?.width == null ||
-    node?.height === null ||
-    node?.width === undefined ||
-    node?.height === undefined ||
-    node?.width < Size.BLOCK_NODE_MIN_WIDTH ||
-    node?.height < Size.BLOCK_NODE_MIN_HEIGHT
-  )
-    dispatch(updateBlockSize(node.id, { width: Size.BLOCK_NODE_WIDTH, height: Size.BLOCK_NODE_HEIGHT }));
-}
 
 export default memo(BlockParentNode);
