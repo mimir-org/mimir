@@ -1,5 +1,5 @@
 import { Connector, Node } from "../../../../../../models";
-import { addNode, createEdge } from "../../../../../../redux/store/project/actions";
+import { createConnectedOffPageNode } from "../../../../../../redux/store/project/actions";
 import { OffPageData, CreateOffPageObject } from "./CreateOffPageObject";
 import { Position } from "../../../../../../models/project";
 import { Dispatch } from "redux";
@@ -7,6 +7,7 @@ import { Dispatch } from "redux";
 /**
  * Component to create an OffPageNode that is connected.
  * The OffPageNode is created with a partOf edge to its parent, and a transport edge.
+ * This component is called from the HandleConnectedOffPageNode component.
  * @param sourceNode
  * @param sourceConnector
  * @param position
@@ -18,15 +19,12 @@ export const CreateConnectedOffPageNode = (
   position: Position,
   dispatch: Dispatch
 ) => {
-  const offPageData: OffPageData = {
-    sourceNode: sourceNode,
-    sourceConnector: sourceConnector,
-    position: { x: position.x, y: position.y },
-  };
+  const data = {
+    sourceNode,
+    sourceConnector,
+    position,
+  } as OffPageData;
 
-  const offPageObject = CreateOffPageObject(offPageData);
-
-  dispatch(addNode(offPageObject.node));
-  dispatch(createEdge(offPageObject.partOfEdge));
-  dispatch(createEdge(offPageObject.transportEdge));
+  const offPageObject = CreateOffPageObject(data);
+  dispatch(createConnectedOffPageNode(offPageObject));
 };

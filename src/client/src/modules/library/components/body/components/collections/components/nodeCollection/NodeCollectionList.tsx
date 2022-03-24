@@ -2,11 +2,11 @@ import { LibraryCategory } from "../../../../../../../../models/project";
 import { useMemo } from "react";
 import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
 import { GetLibCategories } from "./helpers/GetLibCategories";
-import { GetSelectedNode } from "../../../../../../../../helpers";
+import { GetSelectedNode, IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
 import { FilterByAspect } from "./helpers/FilterByAspect";
-import { Aspect, CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
+import { Aspect, CollectionsActions, LibItem } from "../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
 
 interface Props {
@@ -14,9 +14,8 @@ interface Props {
   selectedTypes: LibItem[];
   setSelectedTypes: (array: LibItem[]) => void;
   searchString: string;
-  selectedElement: string;
-  setSelectedElement: (value: string) => void;
-  setSelectedElementType: (value: ObjectType) => void;
+  selectedElement: LibItem | null;
+  setSelectedElement: (value: LibItem) => void;
   aspectFilters: Aspect[];
 }
 
@@ -27,17 +26,18 @@ export const NodeCollectionList = ({
   searchString,
   selectedElement,
   setSelectedElement,
-  setSelectedElementType,
   aspectFilters,
 }: Props) => {
   const dispatch = useDispatch();
-
   const libState = useAppSelector(librarySelector);
   const customCategory = useAppSelector(customCategorySelector);
-
+  const isBlockView = IsBlockView();
   const selectedNode = GetSelectedNode();
 
-  const libCategories = useMemo(() => GetLibCategories(selectedNode, libState), [selectedNode, libState]);
+  const libCategories = useMemo(
+    () => GetLibCategories(selectedNode, libState, isBlockView),
+    [selectedNode, libState, isBlockView]
+  );
   const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
 
   const filterCatBySearch = (): LibraryCategory[] => {
@@ -51,7 +51,6 @@ export const NodeCollectionList = ({
         setSelectedTypes={setSelectedTypes}
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
-        setSelectedElementType={setSelectedElementType}
         key={customCategory.name}
         category={customCategory}
         customCategory={customCategory}
@@ -66,7 +65,6 @@ export const NodeCollectionList = ({
             setSelectedTypes={setSelectedTypes}
             selectedElement={selectedElement}
             setSelectedElement={setSelectedElement}
-            setSelectedElementType={setSelectedElementType}
             key={category.name}
             category={category}
             customCategory={customCategory}

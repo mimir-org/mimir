@@ -8,8 +8,7 @@ import { ModalButtonsWrapper } from "../../styled/ModalButtonsWrapper";
 
 interface Props {
   collectionState: CollectionsActions;
-  isOpen: boolean;
-  onExit: (isOpen: boolean) => void;
+  onExit: () => void;
   selectedTypes: LibItem[];
   selectedCollections: string[];
   setSelectedTypes: (types: LibItem[]) => void;
@@ -20,7 +19,6 @@ interface Props {
 
 export const ModalButton = ({
   collectionState,
-  isOpen,
   onExit,
   selectedTypes,
   setSelectedTypes,
@@ -30,7 +28,7 @@ export const ModalButton = ({
   dispatch,
 }: Props) => (
   <ModalButtonsWrapper>
-    <Button onClick={() => onExit(!isOpen)} text={TextResources.Library_Modal_Cancel} />
+    <Button onClick={onExit} text={TextResources.Library_Modal_Cancel} />
     {collectionState === CollectionsActions.ManageType && (
       <Button
         icon={RightArrowIcon}
@@ -43,7 +41,7 @@ export const ModalButton = ({
             setAddSelectedToCollection,
             dispatch
           );
-          onExit(!isOpen);
+          onExit();
         }}
         text={TextResources.Library_Modal_Add_Collection}
       />

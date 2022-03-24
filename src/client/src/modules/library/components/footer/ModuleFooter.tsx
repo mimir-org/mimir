@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../assets/text";
-import { OnOpenTypeEditor } from "../../../../typeEditor/handlers";
 import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
+import { onDeleteTypeClick } from "./components/confirmDelete/handlers/OnDeleteTypeClick";
+import { OnOpenTypeEditor, OnOpenTypeEditorWithItem } from "../../../../typeEditor/handlers";
 import { GetCollectionIcon, SetCollectionButtonText } from "./helpers/";
 import { Button, ButtonVariant } from "../../../../compLibrary/buttons";
 import { NewType, EditType, DeleteType } from "../../../../assets/icons/library";
@@ -15,12 +16,11 @@ interface Props {
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
-  selectedElement: string;
-  selectedElementType: ObjectType;
+  selectedElement: LibItem | null;
+  resetSelectedElement: () => void;
   selectedTypes: LibItem[];
   setSelectedTypes: (types: LibItem[]) => void;
   collections: Collection[];
-  onChange: () => void;
   dispatch: Dispatch;
 }
 
@@ -36,65 +36,72 @@ export const ModuleFooter = ({
   collectionState,
   setCollectionState,
   selectedElement,
-  selectedElementType,
+  resetSelectedElement,
   selectedTypes,
   setSelectedTypes,
   collections,
-  onChange,
   dispatch,
 }: Props) => {
-  const [confirmDeleteBox, setConfirmDeleteBox] = useState(false);
-  const [addSelectedToCollection, setAddSelectedToCollection] = useState(false);
-  const showCollectionButton = collectionState === CollectionsActions.ManageType;
+  const [confirmDeleteBoxVisible, setConfirmDeleteBoxVisible] = useState(false);
+  const [addSelectedToCollectionVisible, setAddSelectedToCollectionVisible] = useState(false);
+  const isShowCollectionButtonVisible = collectionState === CollectionsActions.ManageType;
 
   return (
     <LibFooter libOpen={libOpen}>
       <Button
         variant={ButtonVariant.WhiteButton}
-        onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
+        onClick={() => OnOpenTypeEditor(resetSelectedElement, dispatch)}
         text={TextResources.Library_New_Type}
         icon={NewType}
       />
       <Button
         variant={ButtonVariant.WhiteButton}
-        onClick={() => OnOpenTypeEditor(selectedElement, selectedElementType, onChange, dispatch)}
+        onClick={() =>
+          OnOpenTypeEditorWithItem(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)
+        }
         text={TextResources.Library_Edit_Type}
         icon={EditType}
-        disabled={selectedElement === ""}
+        disabled={selectedElement === null || selectedElement.libraryType === ObjectType.NotSet}
       />
       <Button
         variant={ButtonVariant.WhiteButton}
-        onClick={() => setConfirmDeleteBox(true)}
+        onClick={() => setConfirmDeleteBoxVisible(true)}
         text={TextResources.Library_Delete_Type}
         icon={DeleteType}
-        disabled={selectedElement === ""}
+        disabled={selectedElement === null}
       />
-      {showCollectionButton && (
+      {isShowCollectionButtonVisible && (
         <Button
           variant={ButtonVariant.WhiteButton}
-          onClick={() => setAddSelectedToCollection(true)}
+          onClick={() => setAddSelectedToCollectionVisible(true)}
           text={SetCollectionButtonText(collectionState)}
           icon={GetCollectionIcon(collectionState, activeTab)}
         />
       )}
-      {confirmDeleteBox && (
+      {confirmDeleteBoxVisible && (
         <ConfirmDeleteType
-          isOpen={confirmDeleteBox}
-          onExit={setConfirmDeleteBox}
-          selectedElement={selectedElement}
+          isOpen={confirmDeleteBoxVisible}
+          onExit={() => setConfirmDeleteBoxVisible(false)}
+          onDelete={() =>
+            onDeleteTypeClick(selectedElement.id, dispatch, () => {
+              setConfirmDeleteBoxVisible(false);
+              resetSelectedElement();
+            })
+          }
+          deleteTargetName={selectedElement?.name}
           dispatch={dispatch}
         />
       )}
-      {addSelectedToCollection && (
+      {addSelectedToCollectionVisible && (
         <ManageSelectedTypes
-          isOpen={addSelectedToCollection}
-          onExit={setAddSelectedToCollection}
+          isOpen={addSelectedToCollectionVisible}
+          onExit={() => setAddSelectedToCollectionVisible(false)}
           selectedTypes={selectedTypes}
           setSelectedTypes={setSelectedTypes}
           collections={collections}
           collectionState={collectionState}
           setCollectionState={setCollectionState}
-          setAddSelectedToCollection={setAddSelectedToCollection}
+          setAddSelectedToCollection={setAddSelectedToCollectionVisible}
           dispatch={dispatch}
         />
       )}

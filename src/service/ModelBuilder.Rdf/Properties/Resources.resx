@@ -183,6 +183,9 @@
   <data name="HasDiscipline" xml:space="preserve">
     <value>mimir:discipline</value>
   </data>
+  <data name="HasHeight" xml:space="preserve">
+    <value>mimir:hasHeight</value>
+  </data>
   <data name="HasInputTerminal" xml:space="preserve">
     <value>imf:hasInTerminal</value>
   </data>
@@ -225,11 +228,17 @@
   <data name="HasSymbol" xml:space="preserve">
     <value>mimir:symbol</value>
   </data>
+  <data name="HasWidth" xml:space="preserve">
+    <value>mimir:hasWidth</value>
+  </data>
   <data name="InputTerminal" xml:space="preserve">
     <value>imf:inTerminal</value>
   </data>
+  <data name="Integer" xml:space="preserve">
+    <value>xsd:integer</value>
+  </data>
   <data name="IntegratedObject" xml:space="preserve">
-    <value>imf:integratedObject</value>
+    <value>imf:IntegratedObject</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>imf:Interface</value>
@@ -256,13 +265,13 @@
     <value>mimir:name</value>
   </data>
   <data name="OutputTerminal" xml:space="preserve">
-    <value>imf:outTerminal</value>
+    <value>imf:OutTerminal</value>
   </data>
   <data name="PhysicalQuantity" xml:space="preserve">
     <value>lis:PhysicalQuantity</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>mimir:project</value>
+    <value>mimir:Project</value>
   </data>
   <data name="QualityQuantifiedAs" xml:space="preserve">
     <value>lis:qualityQuantifiedAs</value>

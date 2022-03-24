@@ -20,29 +20,30 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
-
-  const offPageInputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
-  const offPageOutputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
-
   const edge = project?.edges?.find((x) => IsTransport(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
-  const isOffPageNodeTarget = edge?.toNodeId === data.id;
-  const offPageTerminal = isOffPageNodeTarget ? offPageInputTerminal : offPageOutputTerminal;
 
+  const intputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
+  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
+
+  const isTarget = edge?.toNodeId === data.id;
+  const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
+
+  // The position of the OffPageNode is based on its grandparent => the large parentBlockNode
   const offPageParent = GetParent(data);
   const parentBlockNode = GetParent(offPageParent);
 
-  const parentNodeTerminal = isOffPageNodeTarget
+  const parentNodeTerminal = isTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
     : offPageParent?.connectors.find((c) => c.id === edge?.toConnectorId);
-
-  const iconColor = offPageTerminal?.color;
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
     if (!IsProduct(parentBlockNode)) UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
   }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, secondaryNode]);
 
-  if (!data) return null;
+  if (!data || !offPageParent || !parentBlockNode) return null;
+
+  const iconColor = offPageTerminal.color;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
   const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));

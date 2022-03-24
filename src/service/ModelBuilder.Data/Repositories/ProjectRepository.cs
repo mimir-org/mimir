@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
@@ -8,53 +11,75 @@ using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
+using Mb.Models.Exceptions;
+using Mb.Models.Records;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using SqlBulkTools;
+// ReSharper disable IdentifierTypo
+// ReSharper disable StringLiteralTypo
 
 namespace Mb.Data.Repositories
 {
     public class ProjectRepository : GenericRepository<ModelBuilderDbContext, Project>, IProjectRepository
     {
         private readonly IMapper _mapper;
+        private readonly INodeRepository _nodeRepository;
+        private readonly IEdgeRepository _edgeRepository;
+        private readonly IAttributeRepository _attributeRepository;
+        private readonly DatabaseConfiguration _databaseConfiguration;
+        private readonly ITransportRepository _transportRepository;
+        private readonly IConnectorRepository _connectorRepository;
+        private readonly IInterfaceRepository _interfaceRepository;
+        private readonly ISimpleRepository _simpleRepository;
+        private readonly ICacheRepository _cacheRepository;
 
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper) : base(dbContext)
+        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
         {
             _mapper = mapper;
+            _nodeRepository = nodeRepository;
+            _edgeRepository = edgeRepository;
+            _attributeRepository = attributeRepository;
+            _databaseConfiguration = databaseConfiguration?.Value;
+            _transportRepository = transportRepository;
+            _connectorRepository = connectorRepository;
+            _interfaceRepository = interfaceRepository;
+            _simpleRepository = simpleRepository;
+            _cacheRepository = cacheRepository;
         }
 
+        /// <summary>
+        /// Get complete project
+        /// </summary>
+        /// <param name="id">Project id</param>
+        /// <param name="iri">Project Iri</param>
+        /// <returns>Complete project</returns>
         public async Task<Project> GetAsyncComplete(string id, string iri)
         {
-            var project = await
-                FindBy(x => x.Id == id || x.Iri == iri)
-                .Include(x => x.Edges)
-                .Include("Edges.FromNode")
-                .Include("Edges.ToNode")
-                .Include("Edges.FromConnector")
-                .Include("Edges.ToConnector")
-                .Include("Edges.Transport")
-                .Include("Edges.Transport.Attributes")
-                .Include("Edges.Transport.InputTerminal")
-                .Include("Edges.Transport.InputTerminal.Attributes")
-                .Include("Edges.Transport.OutputTerminal")
-                .Include("Edges.Transport.OutputTerminal.Attributes")
-                .Include("Edges.Interface")
-                .Include("Edges.Interface.Attributes")
-                .Include("Edges.Interface.InputTerminal")
-                .Include("Edges.Interface.InputTerminal.Attributes")
-                .Include("Edges.Interface.OutputTerminal")
-                .Include("Edges.Interface.OutputTerminal.Attributes")
-                .Include(x => x.Nodes)
-                .Include("Nodes.Attributes")
-                .Include("Nodes.Connectors")
-                .Include("Nodes.Connectors.Attributes")
-                .Include("Nodes.Simples")
-                .Include("Nodes.Simples.Attributes")
-                .AsSplitQuery()
-                .OrderByDescending(x => x.Name)
-                .FirstOrDefaultAsync();
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                throw new ModelBuilderNullReferenceException("The ID and IRI can't both be null.");
 
-            return project;
+            var key = GetKey(id, iri);
+
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                var project = await _cacheRepository.GetOrCreateAsync(key, async () => await GetProjectAsync(id, iri));
+                return project;
+            }
+            else
+            {
+                var project = await GetProjectAsync(id, iri);
+                return project;
+            }
         }
 
+        /// <summary>
+        /// Get project list
+        /// </summary>
+        /// <param name="name">The project to search for</param>
+        /// <param name="from">Get project from</param>
+        /// <param name="number">Get number of project</param>
+        /// <returns>A list of project information</returns>
         public IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number)
         {
             if (string.IsNullOrEmpty(name))
@@ -73,5 +98,221 @@ namespace Mb.Data.Repositories
                 .ProjectTo<ProjectItemCm>(_mapper.ConfigurationProvider)
                 .ToList();
         }
+
+        /// <summary>
+        /// Update project
+        /// </summary>
+        /// <param name="original"></param>
+        /// <param name="updated"></param>
+        /// <param name="data"></param>
+        /// <returns>A project update task</returns>
+        public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
+        {
+            var bulk = new BulkOperations();
+
+            using (var trans = new TransactionScope())
+            {
+                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                {
+                    // Upsert
+                    bulk.Setup<Project>()
+                        .ForObject(original)
+                        .WithTable("Project")
+                        .AddColumn(x => x.Id)
+                        .AddColumn(x => x.Iri)
+                        .AddColumn(x => x.IsSubProject)
+                        .AddColumn(x => x.Version)
+                        .AddColumn(x => x.Name)
+                        .AddColumn(x => x.Description)
+                        .AddColumn(x => x.ProjectOwner)
+                        .AddColumn(x => x.UpdatedBy)
+                        .AddColumn(x => x.Updated)
+                        .Upsert()
+                        .MatchTargetOn(x => x.Id)
+                        .Commit(conn);
+
+                    _nodeRepository.BulkUpsert(bulk, conn, data.NodeUpdateInsert);
+                    _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
+                    _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
+                    _transportRepository.BulkUpsert(bulk, conn, data.TransportUpdateInsert);
+                    _interfaceRepository.BulkUpsert(bulk, conn, data.InterfaceUpdateInsert);
+                    _simpleRepository.BulkUpsert(bulk, conn, data.SimpleUpdateInsert);
+                    _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
+                    _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
+
+                    // Delete
+                    _edgeRepository.BulkDelete(bulk, conn, data.EdgeDelete);
+                    _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
+                    _transportRepository.BulkDelete(bulk, conn, data.TransportDelete);
+                    _interfaceRepository.BulkDelete(bulk, conn, data.InterfaceDelete);
+                    _simpleRepository.BulkDelete(bulk, conn, data.SimpleDelete);
+                    _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
+                    _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
+                    _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
+                }
+
+                trans.Complete();
+            }
+
+            var key = GetKey(updated.Id, updated.Iri);
+            await _cacheRepository.DeleteCacheAsync(key);
+        }
+
+        /// <summary>
+        /// Create a project
+        /// </summary>
+        /// <param name="project">The project that should be created</param>
+        /// <param name="data">Project data</param>
+        /// <returns>A project create task</returns>
+        public Task CreateProject(Project project, ProjectData data)
+        {
+            var bulk = new BulkOperations();
+
+            using (var trans = new TransactionScope())
+            {
+                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                {
+                    // Upsert
+                    bulk.Setup<Project>()
+                        .ForObject(project)
+                        .WithTable("Project")
+                        .AddColumn(x => x.Id)
+                        .AddColumn(x => x.Iri)
+                        .AddColumn(x => x.IsSubProject)
+                        .AddColumn(x => x.Version)
+                        .AddColumn(x => x.Name)
+                        .AddColumn(x => x.Description)
+                        .AddColumn(x => x.ProjectOwner)
+                        .AddColumn(x => x.UpdatedBy)
+                        .AddColumn(x => x.Updated)
+                        .Upsert()
+                        .MatchTargetOn(x => x.Id)
+                        .Commit(conn);
+
+                    _nodeRepository.BulkUpsert(bulk, conn, data.Nodes);
+                    _connectorRepository.BulkUpsert(bulk, conn, data.Relations);
+                    _connectorRepository.BulkUpsert(bulk, conn, data.Terminals);
+                    _transportRepository.BulkUpsert(bulk, conn, data.Transports);
+                    _interfaceRepository.BulkUpsert(bulk, conn, data.Interfaces);
+                    _simpleRepository.BulkUpsert(bulk, conn, data.Simples);
+                    _attributeRepository.BulkUpsert(bulk, conn, data.Attributes);
+                    _edgeRepository.BulkUpsert(bulk, conn, data.Edges);
+                }
+
+                trans.Complete();
+            }
+
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Delete a project
+        /// </summary>
+        /// <param name="project">The project that should be deleted</param>
+        /// <param name="data">Project data</param>
+        /// <returns>A project delete task</returns>
+        public async Task DeleteProject(Project project, ProjectData data)
+        {
+            var bulk = new BulkOperations();
+
+            using (var trans = new TransactionScope())
+            {
+                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                {
+                    _edgeRepository.BulkDelete(bulk, conn, data.Edges);
+                    _attributeRepository.BulkDelete(bulk, conn, data.Attributes);
+                    _transportRepository.BulkDelete(bulk, conn, data.Transports);
+                    _interfaceRepository.BulkDelete(bulk, conn, data.Interfaces);
+                    _simpleRepository.BulkDelete(bulk, conn, data.Simples);
+                    _connectorRepository.BulkDelete(bulk, conn, data.Relations);
+                    _connectorRepository.BulkDelete(bulk, conn, data.Terminals);
+                    _nodeRepository.BulkDelete(bulk, conn, data.Nodes);
+
+                    bulk.Setup<Project>()
+                        .ForCollection(new List<Project> { project })
+                        .WithTable("Project")
+                        .AddColumn(x => x.Id)
+                        .BulkDelete()
+                        .MatchTargetOn(x => x.Id)
+                        .Commit(conn);
+                }
+
+                trans.Complete();
+            }
+
+            var key = GetKey(project.Id, project.Iri);
+            await _cacheRepository.DeleteCacheAsync(key);
+        }
+
+        #region Private methods
+
+        /// <summary>
+        /// Get complete project async
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="iri"></param>
+        /// <returns></returns>
+        private Task<Project> GetProjectAsync(string id, string iri)
+        {
+            var project =
+                FindBy(x => x.Id == id || x.Iri == iri)
+                    .Include(x => x.Edges)
+                    .Include("Edges.FromNode")
+                    .Include("Edges.ToNode")
+                    .Include("Edges.FromConnector")
+                    .Include("Edges.ToConnector")
+                    .Include("Edges.Transport")
+                    .Include("Edges.Transport.Attributes")
+                    .Include("Edges.Transport.InputTerminal")
+                    .Include("Edges.Transport.InputTerminal.Attributes")
+                    .Include("Edges.Transport.OutputTerminal")
+                    .Include("Edges.Transport.OutputTerminal.Attributes")
+                    .Include("Edges.Interface")
+                    .Include("Edges.Interface.Attributes")
+                    .Include("Edges.Interface.InputTerminal")
+                    .Include("Edges.Interface.InputTerminal.Attributes")
+                    .Include("Edges.Interface.OutputTerminal")
+                    .Include("Edges.Interface.OutputTerminal.Attributes")
+                    .Include(x => x.Nodes)
+                    .Include("Nodes.Attributes")
+                    .Include("Nodes.Connectors")
+                    .Include("Nodes.Connectors.Attributes")
+                    .Include("Nodes.Simples")
+                    .Include("Nodes.Simples.Attributes")
+                    .AsNoTracking()
+                    .AsSplitQuery()
+                    .OrderByDescending(x => x.Name)
+                    .FirstOrDefault();
+
+            return Task.FromResult(project);
+        }
+
+        /// <summary>
+        /// Get cache key based on id and iri
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="iri"></param>
+        /// <returns></returns>
+        private string GetKey(string id, string iri)
+        {
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                return null;
+
+            string key;
+
+            if (!string.IsNullOrWhiteSpace(id))
+                key = id.Split('_').Last();
+            else
+            {
+                var uri = new Uri(iri);
+                key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
+                if (key.StartsWith("ID"))
+                    key = key.Remove(0, 2);
+            }
+
+            return key;
+        }
+
+        #endregion
     }
 }

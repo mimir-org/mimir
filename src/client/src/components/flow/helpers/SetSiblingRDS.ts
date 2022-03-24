@@ -12,7 +12,6 @@ import { GetChildren } from "./GetChildren";
  */
 export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, project: Project, dispatch: Dispatch) => {
   const parent = edge.fromNode;
-
   const children = [...GetChildren(parent, project), edge.toNode];
 
   children.forEach((child, i) => ResetRDS(child, i, dispatch));
@@ -56,7 +55,6 @@ export const SetSiblingIndexOnNodeDrop = (node: Node, project: Project, parent: 
 
 const HandleParentDeleted = (node: Node, project: Project, dispatch: Dispatch) => {
   const children = GetChildren(node, project).filter((n) => n.id !== node.id);
-
   if (!children || !children.length) return;
 
   children.forEach((child) => ClearRDS(child, dispatch));
@@ -64,11 +62,9 @@ const HandleParentDeleted = (node: Node, project: Project, dispatch: Dispatch) =
 
 const HandleSiblingDeleted = (node: Node, project: Project, dispatch: Dispatch) => {
   const parent = FindParentEdge(node, project)?.fromNode;
-
   if (!parent) return;
 
   const siblings = GetChildren(parent, project).filter((n) => n.id !== node.id);
-
   if (!siblings || !siblings.length) return;
 
   siblings.forEach((sibling, i) => ResetRDS(sibling, i, dispatch));
@@ -79,7 +75,7 @@ const HandleSiblingDeleted = (node: Node, project: Project, dispatch: Dispatch) 
  * @param rds RDS string to strip sibling index.
  * @returns Updated RDS string, without sibling index.
  */
-const StripSiblingIndex = (rds: string): string => rds.replace(/\d+$/, "");
+const StripSiblingIndex = (rds: string): string => rds?.replace(/\d+$/, "");
 
 const ClearRDS = (node: Node, dispatch: Dispatch) => {
   const newRDS = StripSiblingIndex(node.rds);

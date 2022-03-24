@@ -529,10 +529,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Aspect");
 
-                    b.Property<decimal?>("Cost")
-                        .HasColumnType("decimal(10,4)")
-                        .HasColumnName("Cost");
-
                     b.Property<DateTime?>("Created")
                         .IsRequired()
                         .HasColumnType("datetime2")
@@ -547,8 +543,8 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Description");
 
-                    b.Property<decimal?>("Height")
-                        .HasColumnType("decimal(5,2)")
+                    b.Property<int?>("Height")
+                        .HasColumnType("int")
                         .HasColumnName("Height");
 
                     b.Property<string>("Iri")
@@ -577,10 +573,6 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Label");
-
-                    b.Property<decimal?>("Length")
-                        .HasColumnType("decimal(5,2)")
-                        .HasColumnName("Length");
 
                     b.Property<int>("Level")
                         .HasColumnType("int")
@@ -671,8 +663,8 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Version");
 
-                    b.Property<decimal?>("Width")
-                        .HasColumnType("decimal(5,2)")
+                    b.Property<int?>("Width")
+                        .HasColumnType("int")
                         .HasColumnName("Width");
 
                     b.HasKey("Id");
@@ -1367,7 +1359,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("TerminalCategoryId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Terminal_CategoryId");
+                        .HasColumnName("TerminalCategoryId");
 
                     b.Property<string>("TerminalTypeId")
                         .HasColumnType("nvarchar(max)")

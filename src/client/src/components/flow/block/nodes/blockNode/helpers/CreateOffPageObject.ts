@@ -1,5 +1,6 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
+import { Size } from "../../../../../../compLibrary/size";
 import {
   Aspect,
   CONNECTOR_KIND,
@@ -25,16 +26,19 @@ export interface OffPageData {
 }
 
 /**
- * Component to create an OffPage object.
+ * Component to create an OffPage object in BlockView.
+ * The component is called from either the CreateRequiredOffPageNode component or the CreateConnectedOffPageNode component.
  * @param data
  * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
 export const CreateOffPageObject = (data: OffPageData) => {
   const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
-  const sourcePartOfConnector = sourceNode?.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
+
+  if (!sourceConnector || !sourceNode) return null;
+
+  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOf(c) && !IsInputTerminal(c));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
-  const marginY = 80;
 
   const offPageNode = {
     id: CreateId(),
@@ -42,7 +46,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     label: "OffPage-" + sourceNode.label,
     aspect: Aspect.None,
     positionBlockX: data.position.x,
-    positionBlockY: data.position.y - marginY,
+    positionBlockY: sourceNode.positionBlockY + Size.NODE_HEIGHT, // Adjust relative to parent
     connectors: [],
     attributes: [],
     isHidden: false,
@@ -56,13 +60,13 @@ export const CreateOffPageObject = (data: OffPageData) => {
     name: "OffPageInput",
     type: ConnectorType.Input,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector?.terminalCategory,
-    terminalCategoryId: sourceConnector?.terminalCategoryId,
-    terminalTypeId: sourceConnector?.terminalTypeId,
+    terminalCategory: sourceConnector.terminalCategory,
+    terminalCategoryId: sourceConnector.terminalCategoryId,
+    terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
     connectorVisibility: ConnectorVisibility.InputVisible,
-    color: sourceConnector?.color,
+    color: sourceConnector.color,
     kind: CONNECTOR_KIND,
   } as Connector;
 
@@ -71,13 +75,13 @@ export const CreateOffPageObject = (data: OffPageData) => {
     name: "OffPageOutput",
     type: ConnectorType.Output,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector?.terminalCategory,
-    terminalCategoryId: sourceConnector?.terminalCategoryId,
-    terminalTypeId: sourceConnector?.terminalTypeId,
+    terminalCategory: sourceConnector.terminalCategory,
+    terminalCategoryId: sourceConnector.terminalCategoryId,
+    terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
     connectorVisibility: ConnectorVisibility.OutputVisible,
-    color: sourceConnector?.color,
+    color: sourceConnector.color,
     kind: CONNECTOR_KIND,
   } as Connector;
 
@@ -97,8 +101,8 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   const partofEdge = {
     id: CreateId(),
-    fromConnector: sourcePartOfConnector,
-    fromConnectorId: sourcePartOfConnector?.id,
+    fromConnector: sourcePartOfConn,
+    fromConnectorId: sourcePartOfConn?.id,
     toConnector: partOfConnector,
     toConnectorId: partOfConnector?.id,
     fromNode: sourceNode,
@@ -113,9 +117,9 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const transportEdge = {
     id: CreateId(),
     fromConnector: isTarget ? sourceConnector : outputConnector,
-    fromConnectorId: isTarget ? sourceConnector.id : outputConnector?.id,
+    fromConnectorId: isTarget ? sourceConnector.id : outputConnector.id,
     toConnector: isTarget ? inputConnector : sourceConnector,
-    toConnectorId: isTarget ? inputConnector.id : sourceConnector?.id,
+    toConnectorId: isTarget ? inputConnector.id : sourceConnector.id,
     fromNode: isTarget ? sourceNode : offPageNode,
     fromNodeId: isTarget ? sourceNode.id : offPageNode.id,
     toNode: isTarget ? offPageNode : sourceNode,

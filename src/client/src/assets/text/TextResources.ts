@@ -37,6 +37,7 @@ const TextResources = {
   Toolbar_Electro_Off: "Toggle electromode off",
   Toolbar_VisualFilters_Open: "Open visual filters",
   Toolbar_VisualFilters_Close: "Close visual filters",
+  Toolbar_FitScreen: "Fit to screen",
 
   // InspectorModule
   Inspector_AdminInfo: "Admin",
@@ -362,6 +363,9 @@ const TextResources = {
 
   // Modal
   Modal_Close: "Close menu",
+
+  // Resize
+  Resize_Node: "Resize node",
 };
 
 export default TextResources;

@@ -9,7 +9,7 @@ namespace ModelBuilder.Rdf.Services
     public interface IOntologyService
     {
         void BuildProject(Project project);
-        ProjectAm BuildProject(string rdf);
+        ProjectAm BuildProject(IGraph rdf);
         byte[] GetBytes<T>() where T : IRdfWriter, new();
         void SetBaseUri(Uri uri);
         void AssertNode(string subject, string predicate, string obj, bool isLiteral = false);
@@ -25,6 +25,7 @@ namespace ModelBuilder.Rdf.Services
         string GetValue(string iri, string predicate, bool allowMany = true);
         DateTime GetDateTimeValue(string iri, string predicate, bool allowMany = true);
         decimal GetDecimalValue(string iri, string predicate, bool allowMany = true);
+        int? GetIntValue(string iri, string predicate, bool allowMany = true);
         T GetEnumValue<T>(string iri, string predicate, bool allowMany = true) where T : struct;
     }
 }

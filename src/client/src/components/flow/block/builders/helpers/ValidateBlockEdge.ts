@@ -21,7 +21,7 @@ const ValidateBlockEdge = (
   sourceConn: Connector,
   targetConn: Connector
 ) => {
-  const splitView = splitNode !== null;
+  const splitView = splitNode !== undefined;
   if (splitView) return ValidateSplitView(selectedNode, splitNode, sourceNode, targetNode, sourceConn, targetConn);
   return true;
 };

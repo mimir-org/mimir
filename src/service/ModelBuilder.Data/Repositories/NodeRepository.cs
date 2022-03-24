@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
@@ -10,6 +9,7 @@ using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using SqlBulkTools;
 
 namespace Mb.Data.Repositories
 {
@@ -111,6 +111,79 @@ namespace Mb.Data.Repositories
 
             return returnValues;
         }
+
+        /// <summary>
+        /// Bulk node update
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn"></param>
+        /// <param name="nodes">The nodes to be upserted</param>
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Node> nodes)
+        {
+            if (nodes == null || !nodes.Any())
+                return;
+
+            bulk.Setup<Node>()
+               .ForCollection(nodes)
+               .WithTable("Node")
+               .AddColumn(x => x.Id)
+               .AddColumn(x => x.Iri)
+               .AddColumn(x => x.Rds)
+               .AddColumn(x => x.Description)
+               .AddColumn(x => x.SemanticReference)
+               .AddColumn(x => x.Name)
+               .AddColumn(x => x.Label)
+               .AddColumn(x => x.PositionX)
+               .AddColumn(x => x.PositionY)
+               .AddColumn(x => x.IsLocked)
+               .AddColumn(x => x.IsLockedStatusBy)
+               .AddColumn(x => x.IsLockedStatusDate)
+               .AddColumn(x => x.PositionBlockX)
+               .AddColumn(x => x.PositionBlockY)
+               .AddColumn(x => x.Level)
+               .AddColumn(x => x.Order)
+               .AddColumn(x => x.StatusId)
+               .AddColumn(x => x.UpdatedBy)
+               .AddColumn(x => x.Updated)
+               .AddColumn(x => x.Created)
+               .AddColumn(x => x.CreatedBy)
+               .AddColumn(x => x.LibraryTypeId)
+               .AddColumn(x => x.Version)
+               .AddColumn(x => x.Aspect)
+               .AddColumn(x => x.IsRoot)
+               .AddColumn(x => x.MasterProjectId)
+               .AddColumn(x => x.MasterProjectIri)
+               .AddColumn(x => x.Symbol)
+               .AddColumn(x => x.PurposeString)
+               .AddColumn(x => x.ProjectId)
+               .AddColumn(x => x.ProjectIri)
+               .AddColumn(x => x.Width)
+               .AddColumn(x => x.Height)
+               .BulkInsertOrUpdate()
+               .MatchTargetOn(x => x.Id)
+               .Commit(conn);
+        }
+
+        /// <summary>
+        /// Bulk delete nodes
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="nodes">The nodes to be deleted</param>
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Node> nodes)
+        {
+            if (nodes == null || !nodes.Any())
+                return;
+
+            bulk.Setup<Node>()
+                .ForCollection(nodes)
+                .WithTable("Node")
+                .AddColumn(x => x.Id)
+                .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
 
         #region Private
 
@@ -227,13 +300,6 @@ namespace Mb.Data.Repositories
 
             //ToEdges
             if (originalNode.ToEdges?.Count != node.ToEdges?.Count)
-            {
-                node.Version = originalNode.Version.IncrementMinorVersion();
-                return;
-            }
-
-            //Cost
-            if (originalNode.Cost != node.Cost)
             {
                 node.Version = originalNode.Version.IncrementMinorVersion();
                 return;

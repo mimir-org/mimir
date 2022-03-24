@@ -68,6 +68,9 @@ namespace Mb.Core.Extensions
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = false; });
 
             // Dependency injection
+
+            services.AddMemoryCache();
+            services.AddSingleton<ICacheRepository, InMemoryCacheRepository>();
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
