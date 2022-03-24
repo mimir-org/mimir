@@ -5,16 +5,16 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModalList } from "./components/ModalList";
-import { Collection, CollectionsActions } from "../../../../../../models";
+import { Collection, CollectionsActions, LibItem } from "../../../../../../models";
 import { ModalListHeader } from "./ManageSelectedTypes.styled";
 import { ModalButton } from "./components/ModalButton";
 import { CreateCollectionComponent } from "./components/CreateCollectionComponent";
 
 interface Props {
   isOpen: boolean;
-  onExit: (isOpen: boolean) => void;
-  selectedTypes: string[];
-  setSelectedTypes: (types: string[]) => void;
+  onExit: () => void;
+  selectedTypes: LibItem[];
+  setSelectedTypes: (types: LibItem[]) => void;
   collections: Collection[];
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
@@ -37,9 +37,14 @@ export const ManageSelectedTypes = ({
   const [selectedCollections, setSelectedCollections] = useState([] as string[]);
 
   return (
-    <Modal isBlurred isOpen={isOpen} onExit={() => onExit(!isOpen)}>
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
       <InfoModalContent title={TextResources.LIBRARY_MODAL_CREATE_COLLECTION} icon={ColoredCollections}>
-        <CreateCollectionComponent collectionName={collectionName} setCollectionName={setCollectionName} dispatch={dispatch} />
+        <CreateCollectionComponent
+          collectionName={collectionName}
+          setCollectionName={setCollectionName}
+          selectedTypes={selectedTypes}
+          dispatch={dispatch}
+        />
         <ModalListHeader>{TextResources.LIBRARY_MODAL_SELECT_COLLECTION}</ModalListHeader>
         <ModalList
           collections={collections}
@@ -48,7 +53,6 @@ export const ManageSelectedTypes = ({
         />
         <ModalButton
           collectionState={collectionState}
-          isOpen={isOpen}
           onExit={onExit}
           selectedTypes={selectedTypes}
           selectedCollections={selectedCollections}

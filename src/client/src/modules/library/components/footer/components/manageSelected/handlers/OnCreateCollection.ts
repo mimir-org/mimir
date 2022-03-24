@@ -1,13 +1,13 @@
 import { Dispatch } from "redux";
 import { CreateId } from "../../../../../../../components/flow/helpers";
-import { Collection } from "../../../../../../../models";
+import { Collection, LibItem } from "../../../../../../../models";
 import { addCollection } from "../../../../../../../redux/store/library/librarySlice";
 
-const OnCreateCollection = (collectionName: string, dispatch: Dispatch) => {
+const OnCreateCollection = (collectionName: string, selectedTypes: LibItem[], dispatch: Dispatch) => {
   const collection: Collection = {
     id: CreateId(),
     name: collectionName,
-    libItems: [],
+    libItems: selectedTypes,
     created: new Date(),
   };
   dispatch(addCollection(collection));
