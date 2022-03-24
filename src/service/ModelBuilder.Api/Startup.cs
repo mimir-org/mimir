@@ -79,9 +79,6 @@ namespace Mb.Api
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            if (!env.IsDevelopment())
-                app.UseHttpsRedirection();
-
             app.UseCors("CorsPolicy");
             app.UseRouting();
 
