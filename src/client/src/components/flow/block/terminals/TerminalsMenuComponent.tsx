@@ -2,7 +2,7 @@ import * as Click from "./handlers";
 import { TerminalsMenu, TerminalsMenuButton } from "./components";
 import { Connector, Node } from "../../../../models";
 import { useState } from "react";
-import { TerminalMenuWrapper } from "./styled";
+import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
 import { IsConnectorVisible } from "../../../../helpers";
 
 interface Props {

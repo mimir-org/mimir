@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-interface Props {
+interface TerminalsButtonBoxProps {
   visible: boolean;
   isInput: boolean;
 }
 
-const TerminalsButtonBox = styled.span<Props>`
+export const TerminalsButtonBox = styled.span<TerminalsButtonBoxProps>`
   opacity: ${(props) => (!props.visible ? 0 : 1)};
   cursor: pointer;
   transition: opacity 250ms ease-in-out;
@@ -19,5 +19,3 @@ const TerminalsButtonBox = styled.span<Props>`
     right: ${(props) => (props.isInput ? 0 : 10)}px;
   }
 `;
-
-export default TerminalsButtonBox;

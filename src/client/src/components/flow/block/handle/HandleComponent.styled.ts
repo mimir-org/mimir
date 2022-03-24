@@ -1,10 +1,24 @@
 import styled from "styled-components";
 
-interface Props {
+interface HandleContainerProps {
+  isElectro: boolean;
+}
+
+export const HandleContainer = styled.div<HandleContainerProps>`
+  display: flex;
+  gap: 4px;
+  flex-direction: ${(props) => (props.isElectro ? "row" : "column")};
+  justify-content: center;
+  align-items: center;
+  min-width: 20px;
+  min-height: 20px;
+`;
+
+interface HandleBoxProps {
   visible: boolean;
 }
 
-const HandleBox = styled.div<Props>`
+export const HandleBox = styled.div<HandleBoxProps>`
   position: relative;
   line-height: 0;
 
@@ -20,5 +34,3 @@ const HandleBox = styled.div<Props>`
     transform: revert;
   }
 `;
-
-export default HandleBox;

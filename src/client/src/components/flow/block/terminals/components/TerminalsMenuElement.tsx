@@ -5,7 +5,7 @@ import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
 import { IsBidirectionalTerminal } from "../../../helpers";
 import { GetTerminalColor } from "../../helpers";
-import { BidirectionalBox, ColorTag, TerminalsElementBox } from "../styled";
+import { BidirectionalBox, ColorTag, TerminalsElementBox } from "./TerminalsMenuElement.styled";
 
 interface Props {
   conn: Connector;
