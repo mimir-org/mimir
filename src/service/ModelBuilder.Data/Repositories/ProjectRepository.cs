@@ -108,54 +108,64 @@ namespace Mb.Data.Repositories
         /// <returns>A project update task</returns>
         public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
+            if(original == null || updated == null || data == null)
+                throw new ModelBuilderNullReferenceException("Original project, updated project and project edit can't be null.");
+
             var bulk = new BulkOperations();
-
-            using (var trans = new TransactionScope())
+            try
             {
-                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                using (var trans = new TransactionScope())
                 {
-                    // Upsert
-                    bulk.Setup<Project>()
-                        .ForObject(updated)
-                        .WithTable("Project")
-                        .AddColumn(x => x.Id)
-                        .AddColumn(x => x.Iri)
-                        .AddColumn(x => x.IsSubProject)
-                        .AddColumn(x => x.Version)
-                        .AddColumn(x => x.Name)
-                        .AddColumn(x => x.Description)
-                        .AddColumn(x => x.ProjectOwner)
-                        .AddColumn(x => x.UpdatedBy)
-                        .AddColumn(x => x.Updated)
-                        .Upsert()
-                        .MatchTargetOn(x => x.Id)
-                        .Commit(conn);
+                    using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                    {
+                        // Upsert
+                        bulk.Setup<Project>()
+                            .ForObject(updated)
+                            .WithTable("Project")
+                            .AddColumn(x => x.Id)
+                            .AddColumn(x => x.Iri)
+                            .AddColumn(x => x.IsSubProject)
+                            .AddColumn(x => x.Version)
+                            .AddColumn(x => x.Name)
+                            .AddColumn(x => x.Description)
+                            .AddColumn(x => x.ProjectOwner)
+                            .AddColumn(x => x.UpdatedBy)
+                            .AddColumn(x => x.Updated)
+                            .Upsert()
+                            .MatchTargetOn(x => x.Id)
+                            .Commit(conn);
 
-                    _nodeRepository.BulkUpsert(bulk, conn, data.NodeUpdateInsert);
-                    _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
-                    _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
-                    _transportRepository.BulkUpsert(bulk, conn, data.TransportUpdateInsert);
-                    _interfaceRepository.BulkUpsert(bulk, conn, data.InterfaceUpdateInsert);
-                    _simpleRepository.BulkUpsert(bulk, conn, data.SimpleUpdateInsert);
-                    _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
-                    _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
+                        _nodeRepository.BulkUpsert(bulk, conn, data.NodeUpdateInsert);
+                        _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
+                        _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
+                        _transportRepository.BulkUpsert(bulk, conn, data.TransportUpdateInsert);
+                        _interfaceRepository.BulkUpsert(bulk, conn, data.InterfaceUpdateInsert);
+                        _simpleRepository.BulkUpsert(bulk, conn, data.SimpleUpdateInsert);
+                        _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
+                        _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
 
-                    // Delete
-                    _edgeRepository.BulkDelete(bulk, conn, data.EdgeDelete);
-                    _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
-                    _transportRepository.BulkDelete(bulk, conn, data.TransportDelete);
-                    _interfaceRepository.BulkDelete(bulk, conn, data.InterfaceDelete);
-                    _simpleRepository.BulkDelete(bulk, conn, data.SimpleDelete);
-                    _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
-                    _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
-                    _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
+                        // Delete
+                        _edgeRepository.BulkDelete(bulk, conn, data.EdgeDelete);
+                        _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
+                        _transportRepository.BulkDelete(bulk, conn, data.TransportDelete);
+                        _interfaceRepository.BulkDelete(bulk, conn, data.InterfaceDelete);
+                        _simpleRepository.BulkDelete(bulk, conn, data.SimpleDelete);
+                        _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
+                        _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
+                        _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
+                    }
+
+                    trans.Complete();
                 }
-
-                trans.Complete();
+            }
+            catch (Exception e)
+            {
+                var a = e.Message;
             }
 
             var key = GetKey(updated.Id, updated.Iri);
-            await _cacheRepository.DeleteCacheAsync(key);
+                await _cacheRepository.DeleteCacheAsync(key);
+            
         }
 
         /// <summary>
