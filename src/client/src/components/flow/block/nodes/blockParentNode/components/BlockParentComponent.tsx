@@ -8,7 +8,7 @@ import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
 import { useAppDispatch } from "../../../../../../redux/store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
 
 interface Props {
@@ -54,7 +54,7 @@ export const BlockParentComponent = ({
         onNavigateDownClick={() => onNavigateDownClick()}
         onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
       />
-      <Tooltip content={TextResources.Resize_Node} placement={"bottom"} offset={[0, 10]}>
+      <Tooltip content={TextResources.RESIZE_NODE} placement={"bottom"} offset={[0, 10]}>
         <ResizeButton ref={resizePanelRef} visible={!splitView}>
           <img src={ResizeIcon} alt="resize" />
         </ResizeButton>
