@@ -9,6 +9,7 @@ import {
   IsRdsSelectionInvalid,
   IsSymbolSelectionInvalid,
   IsTerminalTypesSelectionInvalid,
+  IsTerminalMediaTypesInvalid,
   IsTypeNameInvalid,
 } from "../validators";
 
@@ -22,6 +23,7 @@ export function IsTypeEditorSubmissionValid(createLibraryType: CreateLibraryType
     IsTypeNameInvalid,
     IsRdsSelectionInvalid,
     IsTerminalTypesSelectionInvalid,
+    IsTerminalMediaTypesInvalid,
     IsAttributeTypesSelectionInvalid,
     IsPredefinedAttributesSelectionInvalid,
   ].every((func) => func(createLibraryType) === false);

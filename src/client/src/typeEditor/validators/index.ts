@@ -11,5 +11,6 @@ export { default as IsTypeNameInvalid } from "./IsTypeNameInvalid";
 export { default as IsTypeEditorSubmissionValid } from "./IsTypeEditorSubmissionValid";
 export { default as IsRdsSelectionInvalid } from "./IsRdsSelectionInvalid";
 export { default as IsTerminalTypesSelectionInvalid } from "./IsTerminalTypesSelectionInvalid";
+export { default as IsTerminalMediaTypesInvalid } from "./IsTerminalMediaTypesInvalid";
 export { default as IsAttributeTypesSelectionInvalid } from "./IsAttributeTypesSelectionInvalid";
 export { default as IsPredefinedAttributesSelectionInvalid } from "./IsPredefinedAttributesSelectionInvalid";
