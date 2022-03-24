@@ -69,7 +69,8 @@ namespace Mb.Models.Records
                 Task.Run(() => ResolveTransports(original, updated)),
                 Task.Run(() => ResolveInterfaces(original, updated)),
                 Task.Run(() => ResolveRelations(original, updated)),
-                Task.Run(() => ResolveTerminals(original, updated))
+                Task.Run(() => ResolveTerminals(original, updated)),
+                Task.Run(() => ResolveSimples(original, updated))
             };
 
             await Task.WhenAll(tasks);
