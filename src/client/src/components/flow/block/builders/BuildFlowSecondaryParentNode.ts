@@ -16,12 +16,11 @@ const BuildFlowSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) =>
   if (!primaryNode || !secondaryNode) return null;
 
   const type = TextResources.Type_BlockParentNode;
-  const width = Size.BLOCK_NODE_WIDTH;
   const distanceToPrimaryNode = Size.SPLITVIEW_DISTANCE;
 
   // The secondaryNode is positioned to the right of the primaryNode
   const position = {
-    x: primaryNode.positionBlockX + distanceToPrimaryNode + width,
+    x: primaryNode.positionBlockX + primaryNode.width + distanceToPrimaryNode,
     y: primaryNode.positionBlockY,
   };
 

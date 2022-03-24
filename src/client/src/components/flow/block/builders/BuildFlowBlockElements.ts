@@ -24,6 +24,7 @@ const BuildFlowBlockElements = (project: Project, selectedNode: Node, secondaryN
   if (!parentBlockNode) return;
 
   flowElements.push(parentBlockNode);
+  const size = { width: parentBlockNode.data.width, height: parentBlockNode.data.height };
 
   if (splitView) {
     const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
@@ -31,12 +32,8 @@ const BuildFlowBlockElements = (project: Project, selectedNode: Node, secondaryN
     if (!parentSecondaryBlock) return;
 
     flowElements.push(parentSecondaryBlock);
-    const secondarySize = { width: parentSecondaryBlock.data.width, height: parentSecondaryBlock.data.height };
-    DrawFlowSecondaryChildren(project, secondaryNode, flowElements, secondarySize);
+    DrawFlowSecondaryChildren(project, secondaryNode, flowElements, size);
   }
-
-  const parent = project.nodes.find((n) => n.id === parentBlockNode.id);
-  const size = { width: parent.width, height: parent.height };
 
   DrawFlowChildNodes(project, size, selectedNode, secondaryNode, flowElements);
   DrawFlowBlockEdges(project, secondaryNode, flowElements, animatedEdge);
