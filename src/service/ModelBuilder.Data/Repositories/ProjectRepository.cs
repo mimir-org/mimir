@@ -116,7 +116,7 @@ namespace Mb.Data.Repositories
                 {
                     // Upsert
                     bulk.Setup<Project>()
-                        .ForObject(original)
+                        .ForObject(updated)
                         .WithTable("Project")
                         .AddColumn(x => x.Id)
                         .AddColumn(x => x.Iri)
@@ -279,8 +279,8 @@ namespace Mb.Data.Repositories
                     .Include("Nodes.Connectors.Attributes")
                     .Include("Nodes.Simples")
                     .Include("Nodes.Simples.Attributes")
-                    .AsNoTracking()
                     .AsSplitQuery()
+                    .AsNoTracking()
                     .OrderByDescending(x => x.Name)
                     .FirstOrDefault();
 
