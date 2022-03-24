@@ -15,7 +15,7 @@ const SetSecondaryChildNodePosition = (primaryNode: Node, secondaryNode: Node, c
   const marginY = Size.BLOCK_MARGIN_Y + margin;
 
   const xMin = primaryNode.positionBlockX + primaryNode.width + splitViewMargin;
-  const xMax = secondaryNode.positionBlockX + secondaryNode.width;
+  const xMax = secondaryNode.positionBlockX + secondaryNode.width - Size.NODE_WIDTH;
   const yMin = margin;
   const yMax = secondaryNode.height;
 
