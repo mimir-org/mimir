@@ -735,6 +735,11 @@
     "Iri": null
   },
   {
+    "Code": "HME",
+    "Name": "Scrubbing Separating System",
+    "Iri": null
+  },
+  {
     "Code": "HMF",
     "Name": "Coalescing System",
     "Iri": null
@@ -892,6 +897,16 @@
   {
     "Code": "KL",
     "Name": "Chemical Reactor System",
+    "Iri": null
+  },
+  {
+    "Code": "XMC",
+    "Name": "Converging Tee System",
+    "Iri": null
+  },
+  {
+    "Code": "XMD",
+    "Name": "Diverging Tee System ",
     "Iri": null
   }
 ]
