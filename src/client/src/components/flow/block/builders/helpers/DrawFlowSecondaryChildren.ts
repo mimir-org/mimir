@@ -2,16 +2,15 @@ import { Elements } from "react-flow-renderer";
 import { BuildFlowSecondaryChildNode } from "..";
 import { IsDirectChild, IsFamily } from "../../../../../helpers";
 import { Node, Project } from "../../../../../models";
-import { BlockNodeSize } from "../../../../../models/project";
 
 /**
  * Component to draw all secondaryNode children nodes in BlockView.
  * @param project
+ * @param primaryNode
  * @param secondaryNode
  * @param elements
- * @param size
  */
-const DrawFlowSecondaryChildren = (project: Project, secondaryNode: Node, elements: Elements, size: BlockNodeSize) => {
+const DrawFlowSecondaryChildren = (project: Project, primaryNode: Node, secondaryNode: Node, elements: Elements) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
@@ -22,7 +21,7 @@ const DrawFlowSecondaryChildren = (project: Project, secondaryNode: Node, elemen
     const targetNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondaryNode));
     if (!targetNode) return;
 
-    const childNode = BuildFlowSecondaryChildNode(targetNode, size);
+    const childNode = BuildFlowSecondaryChildNode(primaryNode, secondaryNode, targetNode);
     if (childNode) elements.push(childNode);
   });
 };

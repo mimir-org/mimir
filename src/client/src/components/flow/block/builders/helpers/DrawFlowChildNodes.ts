@@ -2,36 +2,29 @@ import { Elements } from "react-flow-renderer";
 import { BuildFlowChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Edge, Node, Project } from "../../../../../models";
-import { BlockNodeSize } from "../../../../../models/project";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } from "../../../helpers";
 
 /**
  * Component to draw all children FlowNodes in BlockView.
  * @param project
- * @param size
- * @param selectedNode
+ * @param primaryNode
  * @param secondaryNode
  * @param elements
  */
-const DrawFlowChildNodes = (
-  project: Project,
-  size: BlockNodeSize,
-  selectedNode: Node,
-  secondaryNode: Node,
-  elements: Elements
-) => {
+const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: Node, elements: Elements) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
   edges?.forEach((edge) => {
-    if (!ValidateEdge(edge, selectedNode)) return;
+    if (!ValidateEdge(edge, primaryNode)) return;
+
     const targetNode = nodes.find((n) => n.id === edge.toNode.id);
     if (!targetNode) return;
 
-    const childNode = BuildFlowChildNode(targetNode, size);
+    const childNode = BuildFlowChildNode(targetNode, primaryNode);
     let isValid = true;
 
-    if (IsOffPage(targetNode)) isValid = ValidateOffPage(targetNode, selectedNode, secondaryNode, elements, edges, nodes);
+    if (IsOffPage(targetNode)) isValid = ValidateOffPage(targetNode, primaryNode, secondaryNode, elements, edges, nodes);
     if (isValid && childNode) elements.push(childNode);
   });
 };

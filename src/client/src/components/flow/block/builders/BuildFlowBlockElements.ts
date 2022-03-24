@@ -9,33 +9,31 @@ import { DrawFlowBlockEdges, DrawFlowChildNodes, DrawFlowSecondaryChildren } fro
  * are created, with the extra functionality needed for Mimir. The Flow elements and Mimir elements co-exist
  * and share the same id and position.
  * @param project
- * @param selectedNode
+ * @param primaryNode
  * @param secondaryNode
  * @param animatedEdge
  * @returns all FlowElements.
  */
-const BuildFlowBlockElements = (project: Project, selectedNode: Node, secondaryNode: Node, animatedEdge: boolean) => {
+const BuildFlowBlockElements = (project: Project, primaryNode: Node, secondaryNode: Node, animatedEdge: boolean) => {
   if (!project) return;
 
   const flowElements: Elements = [];
-  const splitView = secondaryNode !== null;
+  const splitView = secondaryNode !== undefined;
 
-  const parentBlockNode = BuildFlowParentNode(selectedNode);
+  const parentBlockNode = BuildFlowParentNode(primaryNode);
   if (!parentBlockNode) return;
 
   flowElements.push(parentBlockNode);
-  const size = { width: parentBlockNode.data.width, height: parentBlockNode.data.height };
 
   if (splitView) {
-    const secondary = project.nodes?.find((x) => x.id === secondaryNode.id);
-    const parentSecondaryBlock = BuildFlowSecondaryParentNode(selectedNode, secondary);
+    const parentSecondaryBlock = BuildFlowSecondaryParentNode(primaryNode, secondaryNode);
     if (!parentSecondaryBlock) return;
 
     flowElements.push(parentSecondaryBlock);
-    DrawFlowSecondaryChildren(project, secondaryNode, flowElements, size);
+    DrawFlowSecondaryChildren(project, primaryNode, secondaryNode, flowElements);
   }
 
-  DrawFlowChildNodes(project, size, selectedNode, secondaryNode, flowElements);
+  DrawFlowChildNodes(project, primaryNode, secondaryNode, flowElements);
   DrawFlowBlockEdges(project, secondaryNode, flowElements, animatedEdge);
 
   return flowElements;

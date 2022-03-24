@@ -30,7 +30,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
-  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
@@ -39,6 +39,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
   const defaultZoom = Size.ZOOM_DEFAULT;
+  const secondaryNode = project.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
@@ -90,7 +91,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       user: userState.user,
       icons,
       library,
-      secondaryNode,
+      secondaryNode: secondaryNodeRef,
       flowTransform: transform,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,

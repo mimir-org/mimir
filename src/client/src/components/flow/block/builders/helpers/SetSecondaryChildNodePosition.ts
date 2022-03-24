@@ -3,19 +3,21 @@ import { Node } from "../../../../../models";
 import { Position } from "../../../../../models/project";
 
 /**
- * Component to force a child node to fit within the parent block in BlockView.
- * @param parentNode
+ * Component to force a child node to fit within the secondary parent block in BlockView.
+ * @param primaryNode
+ * @param secondaryNode
  * @param childNodePos
  * @returns an updated position, containing X and Y values.
  */
-const SetChildNodePosition = (childNodePos: Position, parentNode: Node) => {
+const SetSecondaryChildNodePosition = (primaryNode: Node, secondaryNode: Node, childNodePos: Position) => {
+  const splitViewMargin = Size.SPLITVIEW_DISTANCE;
   const margin = 30;
   const marginY = Size.BLOCK_MARGIN_Y + margin;
 
-  const xMin = 0;
-  const xMax = parentNode.width - Size.NODE_WIDTH;
+  const xMin = primaryNode.positionBlockX + primaryNode.width + splitViewMargin;
+  const xMax = secondaryNode.positionBlockX + secondaryNode.width;
   const yMin = margin;
-  const yMax = parentNode.height;
+  const yMax = secondaryNode.height;
 
   let nodeX = childNodePos.x;
   let nodeY = childNodePos.y;
@@ -28,4 +30,4 @@ const SetChildNodePosition = (childNodePos: Position, parentNode: Node) => {
   return { x: nodeX, y: nodeY };
 };
 
-export default SetChildNodePosition;
+export default SetSecondaryChildNodePosition;

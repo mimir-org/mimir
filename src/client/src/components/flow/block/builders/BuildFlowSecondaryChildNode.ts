@@ -1,33 +1,33 @@
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
-import { GetNodeTypeString, SetChildNodePosition } from "./helpers";
+import { GetNodeTypeString, SetSecondaryChildNodePosition } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
-import { BlockNodeSize } from "../../../../models/project";
 
 /**
  * Component to create a child node for the SecondaryParentNode in BlockView.
  * This component creates a FlowElement that contains the basic data for a node.
  * On top of the FlowNode a layer with Mimir functionality is created. See the BlockNode component.
- * @param node
- * @param size
+ * @param primaryNode
+ * @param secondaryNode
+ * @param childNode
  * @returns a node that sits inside the container of the ParentSecondaryNode.
  */
-const BuildFlowSecondaryChildNode = (node: Node, size: BlockNodeSize) => {
-  if (!node) return null;
+const BuildFlowSecondaryChildNode = (primaryNode: Node, secondaryNode: Node, childNode: Node) => {
+  if (!secondaryNode) return null;
 
-  const type = GetNodeTypeString(node);
-  const nodePos = { x: node.positionBlockX, y: node.positionBlockY };
-  const position = !IsOffPage(node) ? SetChildNodePosition(nodePos, size, true) : nodePos;
+  const type = GetNodeTypeString(secondaryNode);
+  const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
+  const position = !IsOffPage(secondaryNode) ? SetSecondaryChildNodePosition(primaryNode, secondaryNode, nodePos) : nodePos;
 
   return {
     key: CreateId(),
-    id: node.id,
+    id: childNode.id,
     type: type,
-    data: node,
+    data: childNode,
     position: position,
-    isHidden: node.isHidden,
-    isSelected: node.isSelected,
+    isHidden: childNode.isHidden,
+    isSelected: childNode.isSelected,
     draggable: true,
     selectable: true,
     connectable: true,

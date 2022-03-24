@@ -16,6 +16,8 @@ export const InitParentSize = (node: Node, dispatch: Dispatch) => {
     node?.height === undefined ||
     node?.width < Size.BLOCK_NODE_MIN_WIDTH ||
     node?.height < Size.BLOCK_NODE_MIN_HEIGHT
-  )
-    dispatch(updateBlockSize(node.id, { width: Size.BLOCK_NODE_WIDTH, height: Size.BLOCK_NODE_HEIGHT }));
+  ) {
+    const size = { width: Size.BLOCK_NODE_WIDTH, height: Size.BLOCK_NODE_HEIGHT };
+    dispatch(updateBlockSize(node.id, size));
+  }
 };
