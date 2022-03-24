@@ -4,4 +4,5 @@ export { default as DrawFlowBlockEdges } from "./DrawFlowBlockEdges";
 export { default as GetNodeTypeString } from "./GetNodeTypeString";
 export { default as ValidateBlockEdge } from "./ValidateBlockEdge";
 export { default as SetChildNodePosition } from "./SetChildNodePosition";
+export { default as SetOffPageNodePosition } from "./SetOffPageNodePosition";
 export { default as SetSecondaryChildNodePosition } from "./SetSecondaryChildNodePosition";
