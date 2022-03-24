@@ -283,8 +283,8 @@ namespace Mb.Data.Repositories
                     .Include("Nodes.Connectors.Attributes")
                     .Include("Nodes.Simples")
                     .Include("Nodes.Simples.Attributes")
-                    .AsSplitQuery()
                     .AsNoTracking()
+                    .AsSplitQuery()
                     .OrderByDescending(x => x.Name)
                     .FirstOrDefault();
 
