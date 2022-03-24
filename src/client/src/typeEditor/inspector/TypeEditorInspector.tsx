@@ -4,7 +4,7 @@ import { Action, Dispatch } from "redux";
 import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedInspector, InspectorHeader } from "../../modules/inspector/components";
-import { InspectorResizePanel } from "../../modules/inspector/InpectorModule.styled";
+import { InspectorResizePanel } from "../../modules/inspector/InspectorModule.styled";
 import { SetPanelHeight } from "../../modules/inspector/helpers";
 import { useDragResizePanel } from "../../modules/inspector/hooks";
 import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../helpers";

@@ -39,11 +39,9 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.IsRoot).HasColumnName("IsRoot").IsRequired();
             builder.Property(p => p.MasterProjectId).HasColumnName("MasterProjectId").IsRequired();
             builder.Property(p => p.MasterProjectIri).HasColumnName("MasterProjectIri").IsRequired();
-            builder.Property(p => p.Length).HasColumnName("Length").IsRequired(false).HasColumnType("decimal(5,2)");
-            builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false).HasColumnType("decimal(5,2)");
-            builder.Property(p => p.Height).HasColumnName("Height").IsRequired(false).HasColumnType("decimal(5,2)");
+            builder.Property(p => p.Width).HasColumnName("Width").IsRequired(false);
+            builder.Property(p => p.Height).HasColumnName("Height").IsRequired(false);
             builder.Property(p => p.Symbol).HasColumnName("Symbol").IsRequired(false);
-            builder.Property(p => p.Cost).HasColumnName("Cost").IsRequired(false).HasColumnType("decimal(10,4)");
             builder.Property(p => p.PurposeString).HasColumnName("PurposeString").IsRequired(false);
 
             builder.HasIndex(x => x.ProjectId).IsUnique(false);

@@ -1,6 +1,7 @@
-export { default as DrawFlowChildNodes } from "./DrawChildNodes";
-export { default as DrawFlowSecondaryChildren } from "./DrawSecondaryChildren";
-export { default as DrawFlowBlockEdges } from "./DrawBlockEdges";
-export { default as SetChildNodePosition } from "./SetChildNodePosition";
+export { default as DrawFlowChildNodes } from "./DrawFlowChildNodes";
+export { default as DrawFlowSecondaryChildren } from "./DrawFlowSecondaryChildren";
+export { default as DrawFlowBlockEdges } from "./DrawFlowBlockEdges";
 export { default as GetNodeTypeString } from "./GetNodeTypeString";
 export { default as ValidateBlockEdge } from "./ValidateBlockEdge";
+export { default as SetChildNodePosition } from "./SetChildNodePosition";
+export { default as SetSecondaryChildNodePosition } from "./SetSecondaryChildNodePosition";

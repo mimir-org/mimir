@@ -118,13 +118,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         {IsProduct(node) && (
           <div>
             <div>{TextResources.INSPECTOR_ADMIN_COST}</div>
-            <Input
-              fontSize={FontSize.STANDARD}
-              readOnly={IsAspectNode(node) || node.isLocked}
-              value={node.cost ?? ""}
-              onChange={(e: Event) => onChange("cost", Number(e.target.value))}
-              inputType=""
-            />
+            <Input fontSize={FontSize.STANDARD} readOnly value={""} onChange={() => null} inputType="" />
           </div>
         )}
       </TabColumn>

@@ -30,23 +30,23 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
-  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const parentNodeSize = useAppSelector(selectors.nodeSizeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
   const node = GetSelectedNode();
   const defaultZoom = Size.ZOOM_DEFAULT;
+  const secondaryNode = project.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildFlowBlockElements(project, node, secondaryNode, animatedEdge, parentNodeSize));
+      setElements(BuildFlowBlockElements(project, node, secondaryNode, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge, parentNodeSize]
+    [project, node, secondaryNode, animatedEdge]
   );
 
   const OnElementsRemove = (flowNodesToRemove: Elements) => {
@@ -66,7 +66,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, parentNodeSize, secondaryNode, transform, dispatch);
+    return hooks.useOnConnectStop(e, project, secondaryNode, transform, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -91,7 +91,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       user: userState.user,
       icons,
       library,
-      secondaryNode,
+      secondaryNode: secondaryNodeRef,
       flowTransform: transform,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,

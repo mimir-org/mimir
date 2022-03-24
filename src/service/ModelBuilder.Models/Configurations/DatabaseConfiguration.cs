@@ -1,6 +1,6 @@
-using System.Configuration;
+using Mb.Models.Exceptions;
 
-namespace MicrosoftSqlServerModule.Models
+namespace Mb.Models.Configurations
 {
     public class DatabaseConfiguration
     {
@@ -18,7 +18,7 @@ namespace MicrosoftSqlServerModule.Models
         {
             if (string.IsNullOrWhiteSpace(DataSource) || Port <= 0 || string.IsNullOrWhiteSpace(InitialCatalog) ||
                 string.IsNullOrWhiteSpace(DbUser) || string.IsNullOrWhiteSpace(Password))
-                throw new ConfigurationErrorsException("DatabaseConfiguration is missing or invalid");
+                throw new ModelBuilderConfigurationException("DatabaseConfiguration is missing or invalid");
 
             return $@"Data Source={DataSource},{Port};Initial Catalog={InitialCatalog};Integrated Security=False;User ID={DbUser};Password='{Password}';TrustServerCertificate=True;MultipleActiveResultSets=True";
         }

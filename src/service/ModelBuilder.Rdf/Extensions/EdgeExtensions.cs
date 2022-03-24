@@ -41,13 +41,13 @@ namespace ModelBuilder.Rdf.Extensions
                 if (edge.Transport.Updated != null && !string.IsNullOrWhiteSpace(edge.Transport.UpdatedBy))
                 {
                     ontologyService.AssertNode(edge.Transport.Iri, Resources.UpdatedBy, edge.Transport.UpdatedBy, true);
-                    ontologyService.AssertNode(edge.Transport.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{edge.Transport.Updated}", Resources.DateTime));
+                    ontologyService.AssertNode(edge.Transport.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{edge.Transport.Updated?.ToString("u")}", Resources.DateTime));
                 }
 
                 if (edge.Transport.Created != null && !string.IsNullOrWhiteSpace(edge.Transport.CreatedBy))
                 {
                     ontologyService.AssertNode(edge.Transport.Iri, Resources.CreatedBy, edge.Transport.CreatedBy, true);
-                    ontologyService.AssertNode(edge.Transport.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{edge.Transport.Created}", Resources.DateTime));
+                    ontologyService.AssertNode(edge.Transport.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{edge.Transport.Created?.ToString("u")}", Resources.DateTime));
                 }
 
                 // TODO: This should be an iri
@@ -81,13 +81,13 @@ namespace ModelBuilder.Rdf.Extensions
                 if (edge.Interface.Updated != null && !string.IsNullOrWhiteSpace(edge.Interface.UpdatedBy))
                 {
                     ontologyService.AssertNode(edge.Interface.Iri, Resources.UpdatedBy, edge.Interface.UpdatedBy, true);
-                    ontologyService.AssertNode(edge.Interface.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{edge.Interface.Updated}", Resources.DateTime));
+                    ontologyService.AssertNode(edge.Interface.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{edge.Interface.Updated?.ToString("u")}", Resources.DateTime));
                 }
 
                 if (edge.Interface.Created != null && !string.IsNullOrWhiteSpace(edge.Interface.CreatedBy))
                 {
                     ontologyService.AssertNode(edge.Interface.Iri, Resources.CreatedBy, edge.Interface.CreatedBy, true);
-                    ontologyService.AssertNode(edge.Interface.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{edge.Interface.Created}", Resources.DateTime));
+                    ontologyService.AssertNode(edge.Interface.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{edge.Interface.Created?.ToString("u")}", Resources.DateTime));
                 }
 
                 // TODO: This should be an iri

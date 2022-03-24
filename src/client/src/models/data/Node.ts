@@ -22,7 +22,6 @@ export interface Node {
   positionX: number;
   positionY: number;
   purpose: Purpose;
-
   positionBlockX: number;
   positionBlockY: number;
   level: number;
@@ -49,9 +48,6 @@ export interface Node {
   isLockedStatusBy: string;
   isLockedStatusDate: string;
   kind: string;
-
-  // Required only for product aspect
-  cost: number;
 
   // Only for client
   isSelected?: boolean;

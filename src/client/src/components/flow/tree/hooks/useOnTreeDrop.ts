@@ -1,33 +1,12 @@
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
-import { ConvertToEdge, ConvertToNode } from "../../converters";
+import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { GetSelectedNode, IsAspectNode, IsFamily, IsLocation, IsProduct } from "../../../../helpers";
+import { GetSelectedNode, IsAspectNode, IsFamily } from "../../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
-import {
-  Attribute,
-  BlobData,
-  Connector,
-  ConnectorVisibility,
-  LibItem,
-  LibrarySubProjectItem,
-  Node,
-  Project,
-  Simple,
-  User,
-} from "../../../../models";
-import {
-  CreateId,
-  GetProjectData,
-  GetSubProject,
-  IsInputTerminal,
-  IsOutputTerminal,
-  IsLocationTerminal,
-  IsPartOf,
-  IsSubProject,
-  SetSiblingIndexOnNodeDrop,
-  IsProductTerminal,
-} from "../../helpers";
+import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
+import { HandleCreatePartOfEdge, InitConnectorVisibility } from "../../helpers/LibraryDropHelpers";
+import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -60,11 +39,14 @@ const useOnTreeDrop = (params: OnDropParameters) => {
   const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
 
-  if (isSubProject) handleSubProjectDrop(event, project, dispatch);
-  else handleNodeDrop(params, sourceNode);
+  if (isSubProject) HandleSubProjectDrop(event, project, dispatch);
+  else HandleNodeDrop(params, sourceNode);
 };
 
-const handleSubProjectDrop = (event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) => {
+const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
+  !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
+
+function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
   const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibrarySubProjectItem;
 
   (async () => {
@@ -74,11 +56,11 @@ const handleSubProjectDrop = (event: React.DragEvent<HTMLDivElement>, project: P
     nodesToCreate.forEach((node) => dispatch(addNode(node)));
     edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
   })();
-};
+}
 
-const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) => {
+function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  const parentNode = getParentNode(sourceNode, project, data);
+  const parentNode = GetParentNode(sourceNode, project, data);
 
   // TODO: fix when implementing auto-position
   const marginY = 220;
@@ -86,70 +68,15 @@ const handleNodeDrop = ({ event, project, user, icons, library, dispatch }: OnDr
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
-  targetNode.simples?.forEach((simple) => initSimple(simple, targetNode));
-  targetNode.connectors?.forEach((connector) => initConnector(connector, targetNode));
-  targetNode.attributes?.forEach((attribute) => initNodeAttributes(attribute, targetNode));
-  if (IsFamily(parentNode, targetNode)) handleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
+  targetNode.connectors?.forEach((connector) => InitConnectorVisibility(connector, targetNode));
+  if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
-};
+}
 
-const handleCreatePartOfEdge = (
-  sourceNode: Node,
-  targetNode: Node,
-  project: Project,
-  library: LibraryState,
-  dispatch: Dispatch
-) => {
-  targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && !IsInputTerminal(x));
-  const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-  const partOfEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
-
-  SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
-  dispatch(createEdge(partOfEdge));
-};
-
-const initSimple = (simple: Simple, targetNode: Node) => {
-  const simpleId = CreateId();
-  simple.id = simpleId;
-  simple.nodeId = targetNode.id;
-  simple.attributes.forEach((a) => {
-    a.simpleId = simpleId;
-  });
-};
-
-const initConnector = (connector: Connector, targetNode: Node) => {
-  connector.id = CreateId();
-  connector.nodeId = targetNode.id;
-  connector.attributes?.forEach((a) => {
-    a.id = CreateId();
-  });
-
-  setInitConnectorVisibility(connector, targetNode);
-};
-
-const initNodeAttributes = (attribute: Attribute, targetNode: Node) => {
-  attribute.nodeId = targetNode.id;
-  attribute.id = CreateId();
-};
-
-const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
-  !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
-
-const getParentNode = (sourceNode: Node, project: Project, data: LibItem) => {
+function GetParentNode(sourceNode: Node, project: Project, data: LibItem) {
   if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
-};
-
-const setInitConnectorVisibility = (conn: Connector, targetNode: Node) => {
-  const isLocationConnector = IsLocation(targetNode) && IsLocationTerminal(conn);
-  const isProductConnector = IsProduct(targetNode) && IsProductTerminal(conn);
-
-  if (isLocationConnector || isProductConnector) {
-    if (IsInputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.InputVisible;
-    if (IsOutputTerminal(conn)) conn.connectorVisibility = ConnectorVisibility.OutputVisible;
-  } else conn.connectorVisibility = ConnectorVisibility.None;
-};
+}
 
 export default useOnTreeDrop;

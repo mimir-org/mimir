@@ -1,8 +1,8 @@
 using System;
 using AutoMapper;
+using Mb.Data.Extensions;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
@@ -40,10 +40,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot))
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.Length))
                 .ForMember(dest => dest.Width, opt => opt.MapFrom(src => src.Width))
                 .ForMember(dest => dest.Height, opt => opt.MapFrom(src => src.Height))
-                .ForMember(dest => dest.Cost, opt => opt.MapFrom(src => src.Cost))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
@@ -71,10 +69,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
                 .ForMember(dest => dest.PositionBlockX, opt => opt.MapFrom(src => src.PositionBlockX))
                 .ForMember(dest => dest.PositionBlockY, opt => opt.MapFrom(src => src.PositionBlockY))
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.Length))
                 .ForMember(dest => dest.Width, opt => opt.MapFrom(src => src.Width))
                 .ForMember(dest => dest.Height, opt => opt.MapFrom(src => src.Height))
-                .ForMember(dest => dest.Cost, opt => opt.MapFrom(src => src.Cost))
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.StatusId))
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))

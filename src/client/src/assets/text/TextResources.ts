@@ -291,4 +291,7 @@ export const TextResources = {
 
   // Modal
   MODAL_CLOSE: "Close menu",
+
+  // Resize
+  RESIZE_NODE: "Resize node",
 };

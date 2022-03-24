@@ -15,6 +15,7 @@ namespace Mb.Models.Data.Enums
 
         [JsonIgnore]
         public string InternalType { get; internal set; }
+
         public virtual string Description { get; set; }
         public virtual string SemanticReference { get; set; }
 

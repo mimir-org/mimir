@@ -5,7 +5,7 @@ import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../assets/text/TextResources";
 import { MODULE_TYPE } from "../../models/project";
 import { InspectorElement } from "./types";
-import { InspectorResizePanel } from "./InpectorModule.styled";
+import { InspectorResizePanel } from "./InspectorModule.styled";
 import { Project } from "../../models";
 import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
@@ -11,6 +12,7 @@ import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../.
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
+import { InitParentSize } from "./helpers/InitParentSize";
 
 /**
  * Component for a ParentNode in BlockView.
@@ -27,12 +29,15 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const size = useAppSelector(selectors.nodeSizeSelector);
 
   useEffect(() => {
     const canvasData = SetZoomCenterLevel(secondaryNode !== null);
     setCenter(canvasData.x, canvasData.y, canvasData.zoom);
   }, [setCenter, secondaryNode]);
+
+  useEffect(() => {
+    InitParentSize(node, dispatch);
+  }, []);
 
   useEffect(() => {
     setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
@@ -48,7 +53,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockParentComponent
         node={node}
-        size={size}
+        splitView={secondaryNode !== null}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}

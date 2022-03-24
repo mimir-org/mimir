@@ -3,7 +3,6 @@ import { Button } from "../../../../../../compLibrary/buttons";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { FontSize } from "../../../../../../compLibrary/font";
-import { GetProjectFileData } from "./helpers/GetProjectFileData";
 import { ImportProjectIcon } from "../../../../../../assets/icons/project";
 import { Label } from "../../../../../../compLibrary/input/text";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
@@ -30,8 +29,7 @@ export const ImportProjectFileMenu = () => {
   });
 
   const selectedText = plainFiles?.[0]?.name ?? TextResources.PROJECT_IMPORT_SELECT;
-  const data = GetProjectFileData(filesContent, parser);
-  const onAction = () => OnImportProjectFileClick(clear, dispatch, data);
+  const onAction = () => OnImportProjectFileClick(clear, dispatch, plainFiles[0], parser.id);
   const isActionDisabled = !hasParser || filesContent?.length <= 0 || plainFiles?.length <= 0;
 
   return (
