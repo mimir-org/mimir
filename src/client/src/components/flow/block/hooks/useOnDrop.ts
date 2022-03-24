@@ -6,7 +6,7 @@ import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnector, InitNodeAttributes, InitSimple } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility } from "../../helpers/LibraryDropHelpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -59,9 +59,7 @@ function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, f
     if (!parentNode) return;
   }
 
-  targetNode.simples?.forEach((simple) => InitSimple(simple, targetNode));
-  targetNode.connectors?.forEach((connector) => InitConnector(connector, targetNode));
-  targetNode.attributes?.forEach((attribute) => InitNodeAttributes(attribute, targetNode));
+  targetNode.connectors?.forEach((connector) => InitConnectorVisibility(connector, targetNode));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
