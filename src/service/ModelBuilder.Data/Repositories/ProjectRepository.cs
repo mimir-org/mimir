@@ -108,6 +108,9 @@ namespace Mb.Data.Repositories
         /// <returns>A project update task</returns>
         public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
+            if (original == null || updated == null || data == null)
+                throw new ModelBuilderNullReferenceException("Original project, updated project and project edit can't be null.");
+
             var bulk = new BulkOperations();
 
             using (var trans = new TransactionScope())
@@ -156,6 +159,7 @@ namespace Mb.Data.Repositories
 
             var key = GetKey(updated.Id, updated.Iri);
             await _cacheRepository.DeleteCacheAsync(key);
+
         }
 
         /// <summary>
@@ -279,8 +283,8 @@ namespace Mb.Data.Repositories
                     .Include("Nodes.Connectors.Attributes")
                     .Include("Nodes.Simples")
                     .Include("Nodes.Simples.Attributes")
-                    .AsSplitQuery()
                     .AsNoTracking()
+                    .AsSplitQuery()
                     .OrderByDescending(x => x.Name)
                     .FirstOrDefault();
 
