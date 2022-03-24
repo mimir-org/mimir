@@ -12,7 +12,7 @@ import { CreateCollectionComponent } from "./components/CreateCollectionComponen
 
 interface Props {
   isOpen: boolean;
-  onExit: (isOpen: boolean) => void;
+  onExit: () => void;
   selectedTypes: LibItem[];
   setSelectedTypes: (types: LibItem[]) => void;
   collections: Collection[];
@@ -37,7 +37,7 @@ export const ManageSelectedTypes = ({
   const [selectedCollections, setSelectedCollections] = useState([] as string[]);
 
   return (
-    <Modal isBlurred isOpen={isOpen} onExit={() => onExit(!isOpen)}>
+    <Modal isBlurred isOpen={isOpen} onExit={onExit}>
       <InfoModalContent title={TextResources.Library_Modal_Create_Collection} icon={ColoredCollections}>
         <CreateCollectionComponent
           collectionName={collectionName}
@@ -53,7 +53,6 @@ export const ManageSelectedTypes = ({
         />
         <ModalButton
           collectionState={collectionState}
-          isOpen={isOpen}
           onExit={onExit}
           selectedTypes={selectedTypes}
           selectedCollections={selectedCollections}

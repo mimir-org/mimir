@@ -2,16 +2,15 @@ import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { Dispatch } from "redux";
 import { NodeElement } from "./NodeElement";
-import { CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
+import { CollectionsActions, LibItem } from "../../../../../../../../models";
 import { NodeCollectionButton, NodeCollectionButtonText, NodeCollectionContainer } from "./NodeCollection.styled";
 
 interface Props {
   collectionState: CollectionsActions;
   customCategory: LibraryCategory;
   category: LibraryCategory;
-  selectedElement: string;
-  setSelectedElement: (value: string) => void;
-  setSelectedElementType: (value: ObjectType) => void;
+  selectedElement: LibItem | null;
+  setSelectedElement: (value: LibItem) => void;
   dispatch: Dispatch;
   searchList?: LibraryCategory[];
   selectedTypes: LibItem[];
@@ -29,7 +28,6 @@ export const NodeCollection = ({
   customCategory,
   selectedElement,
   setSelectedElement,
-  setSelectedElementType,
   dispatch,
   searchList,
   selectedTypes,
@@ -58,7 +56,6 @@ export const NodeCollection = ({
               customCategory={customCategory}
               selectedElement={selectedElement}
               setSelectedElement={setSelectedElement}
-              setSelectedElementType={setSelectedElementType}
               isCustomCategory={isCustomCategory}
               dispatch={dispatch}
               selectedTypes={selectedTypes}

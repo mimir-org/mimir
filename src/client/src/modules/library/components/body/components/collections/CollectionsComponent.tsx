@@ -1,5 +1,5 @@
 import { CollectionsWrapper } from "./CollectionsComponent.styled";
-import { Aspect, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../../../models";
+import { Aspect, CollectionsActions, LibItem, LibraryTab } from "../../../../../../models";
 import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
 
@@ -10,9 +10,8 @@ interface Props {
   setSelectedTypes: (array: LibItem[]) => void;
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
-  selectedElement: string;
-  setSelectedElement: (value: string) => void;
-  setSelectedElementType: (value: ObjectType) => void;
+  selectedElement: LibItem | null;
+  setSelectedElement: (value: LibItem) => void;
   aspectFilters: Aspect[];
 }
 
@@ -23,7 +22,6 @@ export const CollectionsComponent = ({
   searchString,
   selectedElement,
   setSelectedElement,
-  setSelectedElementType,
   aspectFilters,
 }: Props) => {
   const managingCollections = collectionState === CollectionsActions.ManageCollection;
@@ -37,7 +35,6 @@ export const CollectionsComponent = ({
           searchString={searchString}
           selectedElement={selectedElement}
           setSelectedElement={setSelectedElement}
-          setSelectedElementType={setSelectedElementType}
           selectedTypes={selectedTypes}
           setSelectedTypes={setSelectedTypes}
           collectionState={collectionState}
