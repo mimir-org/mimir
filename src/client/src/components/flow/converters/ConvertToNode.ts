@@ -48,13 +48,11 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
 
   if (node.connectors) {
     node.connectors.forEach((x) => {
-      const connectorId = CreateId();
-      x.id = connectorId;
+      x.id = CreateId();
       x.nodeId = node.id;
       if (x.attributes) {
         x.attributes.forEach((y) => {
           y.id = CreateId();
-          y.terminalId = connectorId;
         });
       }
     });
@@ -63,19 +61,16 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
   if (node.attributes) {
     node.attributes.forEach((x) => {
       x.id = CreateId();
-      x.nodeId = node.id;
     });
   }
 
   if (node.simples) {
     node.simples.forEach((x) => {
-      const simpleId = CreateId();
-      x.id = simpleId;
+      x.id = CreateId();
       x.nodeId = node.id;
       if (x.attributes) {
         x.attributes.forEach((y) => {
           y.id = CreateId();
-          y.simpleId = simpleId;
         });
       }
     });

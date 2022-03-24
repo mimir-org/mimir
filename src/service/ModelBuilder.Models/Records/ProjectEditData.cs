@@ -50,6 +50,15 @@ namespace Mb.Models.Records
         public List<Terminal> TerminalCreateAndDelete => TerminalCreate.Union(TerminalDelete).ToList();
         public List<Simple> SimpleCreateAndDelete => SimpleCreate.Union(SimpleDelete).ToList();
 
+        public List<Node> NodeUpdateInsert => NodeUpdate.Union(NodeCreate).ToList();
+        public List<Terminal> TerminalUpdateInsert => TerminalUpdate.Union(TerminalCreate).ToList();
+        public List<Relation> RelationUpdateInsert => RelationUpdate.Union(RelationCreate).ToList();
+        public List<Transport> TransportUpdateInsert => TransportUpdate.Union(TransportCreate).ToList();
+        public List<Interface> InterfaceUpdateInsert => InterfaceUpdate.Union(InterfaceCreate).ToList();
+        public List<Simple> SimpleUpdateInsert => SimpleUpdate.Union(SimpleCreate).ToList();
+        public List<Attribute> AttributeUpdateInsert => AttributeUpdate.Union(AttributeCreate).ToList();
+        public List<Edge> EdgeUpdateInsert => EdgeUpdate.Union(EdgeCreate).ToList();
+
         public async Task ResolveEditData(ProjectData original, ProjectData updated)
         {
             var tasks = new List<Task>

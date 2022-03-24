@@ -1,18 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SqlBulkTools;
 
@@ -24,17 +19,13 @@ namespace Mb.Data.Repositories
         private readonly IAttributeRepository _attributeRepository;
         private readonly ISimpleRepository _simpleRepository;
         private readonly ICommonRepository _commonRepository;
-        private readonly DatabaseConfiguration _databaseConfiguration;
-        private readonly ILogger<NodeRepository> _logger;
 
-        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ISimpleRepository simpleRepository, ICommonRepository commonRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<NodeRepository> logger) : base(dbContext)
+        public NodeRepository(ModelBuilderDbContext dbContext, IConnectorRepository connectorRepository, IAttributeRepository attributeRepository, ISimpleRepository simpleRepository, ICommonRepository commonRepository) : base(dbContext)
         {
             _connectorRepository = connectorRepository;
             _attributeRepository = attributeRepository;
             _simpleRepository = simpleRepository;
             _commonRepository = commonRepository;
-            _logger = logger;
-            _databaseConfiguration = databaseConfiguration?.Value;
         }
 
         public IEnumerable<(Node node, WorkerStatus status)> UpdateInsert(ICollection<Node> original, Project project, string invokedByDomain)
@@ -124,181 +115,73 @@ namespace Mb.Data.Repositories
         /// <summary>
         /// Bulk node update
         /// </summary>
-        /// <param name="nodes">The nodes to be updated</param>
-        /// <returns>A bulk update task</returns>
-        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
-        public async Task BulkUpdate(List<Node> nodes)
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn"></param>
+        /// <param name="nodes">The nodes to be upserted</param>
+        public void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Node> nodes)
         {
             if (nodes == null || !nodes.Any())
                 return;
 
-            if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
-                throw new ModelBuilderConfigurationException("Database configuration missing");
-
-            var bulk = new BulkOperations();
-            var connection = new SqlConnection(_databaseConfiguration.ConnectionString);
-
-            try
-            {
-                bulk.Setup<Node>(x => x.ForCollection(nodes))
-                    .WithTable("Node")
-                    .AddColumn(x => x.Id)
-                    .AddColumn(x => x.Iri)
-                    .AddColumn(x => x.Rds)
-                    .AddColumn(x => x.Description)
-                    .AddColumn(x => x.SemanticReference)
-                    .AddColumn(x => x.Name)
-                    .AddColumn(x => x.Label)
-                    .AddColumn(x => x.PositionX)
-                    .AddColumn(x => x.PositionY)
-                    .AddColumn(x => x.IsLocked)
-                    .AddColumn(x => x.IsLockedStatusBy)
-                    .AddColumn(x => x.IsLockedStatusDate)
-                    .AddColumn(x => x.PositionBlockX)
-                    .AddColumn(x => x.PositionBlockY)
-                    .AddColumn(x => x.Level)
-                    .AddColumn(x => x.Order)
-                    .AddColumn(x => x.StatusId)
-                    .AddColumn(x => x.UpdatedBy)
-                    .AddColumn(x => x.Updated)
-                    .AddColumn(x => x.Created)
-                    .AddColumn(x => x.CreatedBy)
-                    .AddColumn(x => x.LibraryTypeId)
-                    .AddColumn(x => x.Version)
-                    .AddColumn(x => x.Aspect)
-                    .AddColumn(x => x.IsRoot)
-                    .AddColumn(x => x.MasterProjectId)
-                    .AddColumn(x => x.MasterProjectIri)
-                    .AddColumn(x => x.Symbol)
-                    .AddColumn(x => x.PurposeString)
-                    .AddColumn(x => x.ProjectId)
-                    .AddColumn(x => x.ProjectIri)
-                    .AddColumn(x => x.Width)
-                    .AddColumn(x => x.Height)
-                    .TmpDisableAllNonClusteredIndexes()
-                    .BulkUpdate()
-                    .MatchTargetOn(x => x.Id);
-
-                await bulk.CommitTransactionAsync(connection);
-            }
-            catch (Exception e)
-            {
-                _logger.LogCritical($"Error in Node Repository. Can't update database. Error: {e.Message}");
-                throw;
-            }
-            finally
-            {
-                await connection.DisposeAsync();
-            }
+            bulk.Setup<Node>()
+               .ForCollection(nodes)
+               .WithTable("Node")
+               .AddColumn(x => x.Id)
+               .AddColumn(x => x.Iri)
+               .AddColumn(x => x.Rds)
+               .AddColumn(x => x.Description)
+               .AddColumn(x => x.SemanticReference)
+               .AddColumn(x => x.Name)
+               .AddColumn(x => x.Label)
+               .AddColumn(x => x.PositionX)
+               .AddColumn(x => x.PositionY)
+               .AddColumn(x => x.IsLocked)
+               .AddColumn(x => x.IsLockedStatusBy)
+               .AddColumn(x => x.IsLockedStatusDate)
+               .AddColumn(x => x.PositionBlockX)
+               .AddColumn(x => x.PositionBlockY)
+               .AddColumn(x => x.Level)
+               .AddColumn(x => x.Order)
+               .AddColumn(x => x.StatusId)
+               .AddColumn(x => x.UpdatedBy)
+               .AddColumn(x => x.Updated)
+               .AddColumn(x => x.Created)
+               .AddColumn(x => x.CreatedBy)
+               .AddColumn(x => x.LibraryTypeId)
+               .AddColumn(x => x.Version)
+               .AddColumn(x => x.Aspect)
+               .AddColumn(x => x.IsRoot)
+               .AddColumn(x => x.MasterProjectId)
+               .AddColumn(x => x.MasterProjectIri)
+               .AddColumn(x => x.Symbol)
+               .AddColumn(x => x.PurposeString)
+               .AddColumn(x => x.ProjectId)
+               .AddColumn(x => x.ProjectIri)
+               .AddColumn(x => x.Width)
+               .AddColumn(x => x.Height)
+               .BulkInsertOrUpdate()
+               .MatchTargetOn(x => x.Id)
+               .Commit(conn);
         }
 
         /// <summary>
-        /// Bulk node insert
+        /// Bulk delete nodes
         /// </summary>
-        /// <param name="nodes">The nodes to be inserted</param>
-        /// <returns>A bulk insert task</returns>
-        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
-        public async Task BulkCreate(List<Node> nodes)
-        {
-            if (nodes == null || !nodes.Any())
-                return;
-
-            if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
-                throw new ModelBuilderConfigurationException("Database configuration missing");
-
-            var bulk = new BulkOperations();
-            var connection = new SqlConnection(_databaseConfiguration.ConnectionString);
-
-            try
-            {
-                bulk.Setup<Node>(x => x.ForCollection(nodes))
-                    .WithTable("Node")
-                    .AddColumn(x => x.Id)
-                    .AddColumn(x => x.Iri)
-                    .AddColumn(x => x.Rds)
-                    .AddColumn(x => x.Description)
-                    .AddColumn(x => x.SemanticReference)
-                    .AddColumn(x => x.Name)
-                    .AddColumn(x => x.Label)
-                    .AddColumn(x => x.PositionX)
-                    .AddColumn(x => x.PositionY)
-                    .AddColumn(x => x.IsLocked)
-                    .AddColumn(x => x.IsLockedStatusBy)
-                    .AddColumn(x => x.IsLockedStatusDate)
-                    .AddColumn(x => x.PositionBlockX)
-                    .AddColumn(x => x.PositionBlockY)
-                    .AddColumn(x => x.Level)
-                    .AddColumn(x => x.Order)
-                    .AddColumn(x => x.StatusId)
-                    .AddColumn(x => x.UpdatedBy)
-                    .AddColumn(x => x.Updated)
-                    .AddColumn(x => x.Created)
-                    .AddColumn(x => x.CreatedBy)
-                    .AddColumn(x => x.LibraryTypeId)
-                    .AddColumn(x => x.Version)
-                    .AddColumn(x => x.Aspect)
-                    .AddColumn(x => x.IsRoot)
-                    .AddColumn(x => x.MasterProjectId)
-                    .AddColumn(x => x.MasterProjectIri)
-                    .AddColumn(x => x.Symbol)
-                    .AddColumn(x => x.PurposeString)
-                    .AddColumn(x => x.ProjectId)
-                    .AddColumn(x => x.ProjectIri)
-                    .AddColumn(x => x.Width)
-                    .AddColumn(x => x.Height)
-                    .TmpDisableAllNonClusteredIndexes()
-                    .BulkInsert();
-
-                await bulk.CommitTransactionAsync(connection);
-            }
-            catch (Exception e)
-            {
-                _logger.LogCritical($"Error in Node Repository. Can't update database. Error: {e.Message}");
-                throw;
-            }
-            finally
-            {
-                await connection.DisposeAsync();
-            }
-        }
-
-        /// <summary>
-        /// Bulk node delete
-        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
         /// <param name="nodes">The nodes to be deleted</param>
-        /// <returns>A bulk delete task</returns>
-        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
-        public async Task BulkDelete(List<Node> nodes)
+        public void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Node> nodes)
         {
             if (nodes == null || !nodes.Any())
                 return;
 
-            if (_databaseConfiguration == null || string.IsNullOrWhiteSpace(_databaseConfiguration.ConnectionString))
-                throw new ModelBuilderConfigurationException("Database configuration missing");
-
-            var bulk = new BulkOperations();
-            var connection = new SqlConnection(_databaseConfiguration.ConnectionString);
-
-            try
-            {
-                bulk.Setup<Node>(x => x.ForCollection(nodes))
-                    .WithTable("Node")
-                    .AddColumn(x => x.Id)
-                    .TmpDisableAllNonClusteredIndexes()
-                    .BulkDelete()
-                    .MatchTargetOn(x => x.Id);
-
-                await bulk.CommitTransactionAsync(connection);
-            }
-            catch (Exception e)
-            {
-                _logger.LogCritical($"Error in Node Repository. Can't delete from database. Error: {e.Message}");
-                throw;
-            }
-            finally
-            {
-                await connection.DisposeAsync();
-            }
+            bulk.Setup<Node>()
+                .ForCollection(nodes)
+                .WithTable("Node")
+                .AddColumn(x => x.Id)
+                .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
         }
 
 

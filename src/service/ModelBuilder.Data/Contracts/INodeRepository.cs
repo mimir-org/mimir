@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
+using SqlBulkTools;
 
 namespace Mb.Data.Contracts
 {
@@ -16,25 +16,17 @@ namespace Mb.Data.Contracts
         /// <summary>
         /// Bulk node update
         /// </summary>
-        /// <param name="nodes">The nodes to be updated</param>
-        /// <returns>A bulk update task</returns>
-        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
-        Task BulkUpdate(List<Node> nodes);
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn"></param>
+        /// <param name="nodes">The nodes to be upserted</param>
+        void BulkUpsert(BulkOperations bulk, SqlConnection conn, List<Node> nodes);
 
         /// <summary>
-        /// Bulk node insert
+        /// Bulk delete nodes
         /// </summary>
-        /// <param name="nodes">The nodes to be inserted</param>
-        /// <returns>A bulk insert task</returns>
-        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
-        Task BulkCreate(List<Node> nodes);
-
-        /// <summary>
-        /// Bulk node delete
-        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
         /// <param name="nodes">The nodes to be deleted</param>
-        /// <returns>A bulk delete task</returns>
-        /// <exception cref="ModelBuilderConfigurationException">Throws if database configuration is missing</exception>
-        Task BulkDelete(List<Node> nodes);
+        void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Node> nodes);
     }
 }
