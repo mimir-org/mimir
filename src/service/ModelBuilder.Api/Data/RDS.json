@@ -600,22 +600,22 @@
     "Iri": null
   },
   {
-    "Code": "A",
+    "Code": "Z",
     "Name": "Offshore complex",
     "Iri": null
   },
   {
-    "Code": "B",
+    "Code": "Y",
     "Name": "Onshore complex",
     "Iri": null
   },
   {
-    "Code": "C",
+    "Code": "X",
     "Name": "Transition complex",
     "Iri": null
   },
   {
-    "Code": "D",
+    "Code": "W",
     "Name": "Interconnection complex",
     "Iri": null
   },
