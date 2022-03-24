@@ -33,7 +33,7 @@ const BuildFlowBlockElements = (project: Project, primaryNode: Node, secondaryNo
     DrawFlowSecondaryChildren(project, primaryNode, secondaryNode, flowElements);
   }
 
-  DrawFlowChildNodes(project, primaryNode, secondaryNode, flowElements);
+  DrawFlowChildNodes(project, primaryNode, flowElements);
   DrawFlowBlockEdges(project, secondaryNode, flowElements, animatedEdge);
 
   return flowElements;
