@@ -8,8 +8,6 @@ import { FindProjectEdgeByElementId, FindProjectNodeByElementId, GetParent, IsEl
 import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
 import { GetParentConnector } from "../../block/nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 import { CloseInspector } from "../../handlers";
-import { IsOffPageEdge } from "../helpers";
-import { DoConnectorsMatch, EdgeIsConnectedToNode } from "../helpers/CheckEdgeConnections";
 
 /**
  * Hook that runs when an element is deleted from Mimir in BlockView.
@@ -81,14 +79,20 @@ function HandleRelatedEdges(edgesToRemove: Edge[], project: Project, dispatch: D
 
 function HandleRelatedOffPageElements(project: Project, elementEdge: Edge, dispatch: Dispatch) {
   if (!elementEdge) return;
+
   const nodes = project.nodes;
   const edges = project.edges;
 
   nodes.forEach((node) => {
-    const hasRelatedOffPageNode = IsOffPage(node) && EdgeIsConnectedToNode(elementEdge, node);
+    const hasRelatedOffPageNode = IsOffPage(node) && (node?.id === elementEdge?.fromNodeId || node?.id === elementEdge?.toNodeId);
     if (!hasRelatedOffPageNode) return;
 
-    const transportEdge = edges.find((edge) => IsOffPageEdge(edge) && DoConnectorsMatch(edge, elementEdge));
+    const transportEdge = project.edges.find(
+      (x) =>
+        (IsOffPage(x?.fromNode) || IsOffPage(x?.toNode)) &&
+        (x?.toConnectorId === elementEdge?.toConnectorId || x?.fromConnectorId === elementEdge?.fromConnectorId)
+    );
+
     if (!transportEdge) return;
 
     const partOfTerminal = node?.connectors?.find((c) => IsPartOf(c));

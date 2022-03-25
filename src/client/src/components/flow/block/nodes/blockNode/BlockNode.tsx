@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
@@ -36,7 +37,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     HandleConnectedOffPageNode(node, edges, size, dispatch);
     HandleRequiredOffPageNode(node, edges, size, dispatch);
-  }, [dispatch, edges, node, size]);
+  }, [secondaryNode]);
 
   useEffect(() => {
     setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
