@@ -21,7 +21,7 @@ const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: 
     const targetNode = nodes.find((n) => n.id === edge.toNode.id);
     if (!targetNode) return;
 
-    const childNode = BuildFlowChildNode(targetNode, primaryNode);
+    const childNode = BuildFlowChildNode(targetNode, primaryNode, secondaryNode);
     let isValid = true;
 
     if (IsOffPage(targetNode)) isValid = ValidateOffPage(targetNode, primaryNode, secondaryNode, elements, edges, nodes);

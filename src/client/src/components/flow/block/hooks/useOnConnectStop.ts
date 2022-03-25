@@ -17,11 +17,19 @@ import { TextResources } from "../../../../assets/text";
  * The dropzone is located to the left or right of the ParentBlockNode, depending on the OffPageNode type.
  * @param e
  * @param project
+ * @param primaryNode
  * @param secondaryNode
  * @param transform
  * @param dispatch
  */
-const useOnConnectStop = (e: MouseEvent, project: Project, secondaryNode: Node, transform: FlowTransform, dispatch: Dispatch) => {
+const useOnConnectStop = (
+  e: MouseEvent,
+  project: Project,
+  primaryNode: Node,
+  secondaryNode: Node,
+  transform: FlowTransform,
+  dispatch: Dispatch
+) => {
   e.preventDefault();
   const edgeEvent = LoadEventData("edgeEvent") as EdgeEvent;
   if (!edgeEvent) return;
@@ -42,7 +50,7 @@ const useOnConnectStop = (e: MouseEvent, project: Project, secondaryNode: Node, 
     return;
   }
 
-  const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, secondaryNode, sourceConn);
+  const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, transform, sourceNode, primaryNode, secondaryNode, sourceConn);
   if (!isValidOffPageDrop) return;
 
   const position = { x: e.clientX, y: e.clientY };
@@ -55,12 +63,13 @@ function ValidateOffPageDrop(
   clientX: number,
   transform: FlowTransform,
   sourceNode: Node,
+  primaryNode: Node,
   secondaryNode: Node,
   sourceConn: Connector
 ) {
   const splitView = secondaryNode !== undefined;
   const isTarget = IsOutputTerminal(sourceConn) || IsOutputVisible(sourceConn);
-  const dropZone = CalculateDropZone(transform, sourceNode, secondaryNode, isTarget);
+  const dropZone = CalculateDropZone(transform, sourceNode, primaryNode, secondaryNode, isTarget);
 
   if (splitView) {
     const dropZoneWidth = Size.SPLITVIEW_DISTANCE;
@@ -73,21 +82,29 @@ function ValidateOffPageDrop(
 }
 
 /**
- * The dropzone for an OffPageNode depends on the canvas' zoom level and position. This function handles those calculations.
+ * The dropzone for an OffPageNode depends on the canvas' zoom level and position. This function handles these calculations.
  * If the OffPageNode is a source, the dropzone is located to the left of the ParentNode, else the dropzone is to the right of the ParentNode.
  * @param transform
  * @param sourceNode
+ * @param primaryNode
  * @param secondaryNode
  * @param isTarget
  * @returns an X value that represents the dropzone on the canvas.
  */
-function CalculateDropZone(transform: FlowTransform, sourceNode: Node, secondaryNode: Node, isTarget: boolean) {
+function CalculateDropZone(
+  transform: FlowTransform,
+  sourceNode: Node,
+  primaryNode: Node,
+  secondaryNode: Node,
+  isTarget: boolean
+) {
   const parentNode = GetParent(sourceNode);
   const parentPosX = parentNode?.positionBlockX;
+
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;
   const parentNodeWidthScaled = parentNode.width * transform.zoom;
-  const defaultX = Size.BLOCK_MARGIN_X;
 
+  const defaultX = Size.BLOCK_MARGIN_X;
   let dropZone = isTarget ? parentPosX + parentNodeWidthScaled : parentPosX;
 
   // Handle canvas scroll
@@ -95,8 +112,9 @@ function CalculateDropZone(transform: FlowTransform, sourceNode: Node, secondary
 
   // Handle splitView
   if (isSecondaryNode) {
-    const targetDropZone = transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled * 2;
-    const sourceDropZone = transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled;
+    const primaryNodeWidthScaled = primaryNode.width * transform.zoom;
+    const sourceDropZone = transform.x + Size.SPLITVIEW_DISTANCE + primaryNodeWidthScaled;
+    const targetDropZone = transform.x + Size.SPLITVIEW_DISTANCE + primaryNodeWidthScaled + parentNodeWidthScaled;
     return isTarget ? targetDropZone : sourceDropZone;
   }
 
