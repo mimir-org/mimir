@@ -59,7 +59,7 @@ function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, f
     if (!parentNode) return;
   }
 
-  targetNode.connectors?.forEach((connector) => InitConnectorVisibility(connector, targetNode));
+  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
