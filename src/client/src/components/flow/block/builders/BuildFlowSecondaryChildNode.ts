@@ -1,6 +1,6 @@
-import { GetNodeTypeString, SetSecondaryOffPageNodePos, SetSecondaryChildNodePos } from "./helpers";
 import { Node } from "../../../../models";
 import { FlowElement } from "react-flow-renderer";
+import { GetNodeTypeString, SetSecondaryChildNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
 
@@ -16,12 +16,9 @@ import { IsOffPage } from "../../../../helpers";
 const BuildFlowSecondaryChildNode = (primaryNode: Node, secondaryNode: Node, childNode: Node) => {
   if (!secondaryNode) return null;
 
-  const type = GetNodeTypeString(childNode);
+  const type = GetNodeTypeString(secondaryNode);
   const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
-
-  const position = IsOffPage(childNode)
-    ? SetSecondaryOffPageNodePos(childNode, secondaryNode)
-    : SetSecondaryChildNodePos(primaryNode, secondaryNode, nodePos);
+  const position = !IsOffPage(secondaryNode) ? SetSecondaryChildNodePos(primaryNode, secondaryNode, nodePos) : nodePos;
 
   return {
     key: CreateId(),

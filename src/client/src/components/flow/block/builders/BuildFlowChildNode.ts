@@ -12,12 +12,15 @@ import { IsOffPage } from "../../../../helpers";
  * @param parentNode
  * @returns a node that sits inside the container of the ParentNode.
  */
-const BuildFlowChildNode = (childNode: Node, parentNode: Node) => {
+const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: Node) => {
   if (!childNode) return null;
 
   const type = GetNodeTypeString(childNode);
   const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
-  const position = IsOffPage(childNode) ? SetOffPageNodePos(childNode, parentNode) : SetChildNodePos(nodePos, parentNode);
+
+  const position = IsOffPage(childNode)
+    ? SetOffPageNodePos(childNode, parentNode, secondaryNode)
+    : SetChildNodePos(nodePos, parentNode);
 
   return {
     key: CreateId(),

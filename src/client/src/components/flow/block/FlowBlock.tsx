@@ -37,16 +37,16 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const transform = useAppSelector(selectors.flowTransformSelector);
-  const node = GetSelectedNode();
+  const primaryNode = GetSelectedNode();
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildFlowBlockElements(project, node, secondaryNode, animatedEdge));
+      setElements(BuildFlowBlockElements(project, primaryNode, secondaryNode, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, node, secondaryNode, animatedEdge]
+    [project, primaryNode, secondaryNode, animatedEdge]
   );
 
   const OnElementsRemove = (flowNodesToRemove: Elements) => {
@@ -66,7 +66,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, secondaryNode, transform, dispatch);
+    return hooks.useOnConnectStop(e, project, primaryNode, secondaryNode, transform, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
