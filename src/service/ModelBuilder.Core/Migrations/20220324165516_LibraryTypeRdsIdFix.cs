@@ -131,7 +131,8 @@ namespace Mb.Core.Migrations
                         UPDATE LibraryType SET RdsId = 'C', RdsName = 'Transportation system' WHERE RdsId = 'F212A4FCD0A83D9E0524871C63C0AB48';
                         UPDATE LibraryType SET RdsId = 'AAA', RdsName = 'Underground reservoir' WHERE RdsId = '226A13C8A0324DD7D4CE3937A038C56B';
                         UPDATE LibraryType SET RdsId = 'BBC', RdsName = 'Well interface entity' WHERE RdsId = '1C725E2B9B1902239B8849B8120A2F4E';
-                        UPDATE LibraryType SET RdsId = 'BAA', RdsName = 'Working space' WHERE RdsId = 'CC0586F2B1C539ECCF8CA9EEB786E8A8';";
+                        UPDATE LibraryType SET RdsId = 'BAA', RdsName = 'Working space' WHERE RdsId = 'CC0586F2B1C539ECCF8CA9EEB786E8A8';
+                        delete from Rds where LEN(Id) > 5";
             
             migrationBuilder.Sql(sql);
         }
