@@ -31,9 +31,9 @@ const HandleConnectedOffPageDelete = (project: Project, transportEdge: Edge, ref
 
   const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode, GetParent(oppositeOffPageNode), project);
 
-  dispatch(removeNode(oppositeOffPageNode.id));
-  dispatch(removeEdge(oppositeTransportEdge.id));
-  dispatch(removeEdge(oppositePartOfEdge.id));
+  dispatch(removeNode(oppositeOffPageNode?.id));
+  dispatch(removeEdge(oppositeTransportEdge?.id));
+  dispatch(removeEdge(oppositePartOfEdge?.id));
 };
 
 export default HandleConnectedOffPageDelete;

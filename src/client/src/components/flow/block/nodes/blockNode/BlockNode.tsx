@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
@@ -11,7 +12,7 @@ import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../
 import { Size } from "../../../../../compLibrary/size/Size";
 import { GetAspectColor } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
-import { SetNodeSize } from "./helpers/SetNodeSize";
+import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
@@ -36,7 +37,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   useEffect(() => {
     HandleConnectedOffPageNode(node, edges, size, dispatch);
     HandleRequiredOffPageNode(node, edges, size, dispatch);
-  }, [dispatch, edges, node, size]);
+  }, [secondaryNode]);
 
   useEffect(() => {
     setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
@@ -44,7 +45,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   // Update node size based on active terminals
   useEffect(() => {
-    const updatedSize = SetNodeSize(terminals, isElectro);
+    const updatedSize = SetChildNodeSize(terminals, isElectro);
     setSize(updatedSize);
   }, [isElectro, terminals]);
 

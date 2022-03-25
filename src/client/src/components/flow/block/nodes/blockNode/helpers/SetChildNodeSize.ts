@@ -8,7 +8,7 @@ import { IsInputTerminal } from "../../../../helpers";
  * @param terminals
  * @param electro
  */
-export const SetNodeSize = (terminals: Connector[], electro: boolean) => {
+export const SetChildNodeSize = (terminals: Connector[], electro: boolean) => {
   const maximum = 5;
   const increaseY = 25;
   const increaseX = 30;
@@ -26,10 +26,10 @@ export const SetNodeSize = (terminals: Connector[], electro: boolean) => {
   if (electro) {
     if (inTerminals > maximum) width = inTerminals * increaseX;
     if (outTerminals > maximum) width = outTerminals * increaseX;
-  } else {
-    if (inTerminals > maximum) height = inTerminals * increaseY;
-    if (outTerminals > maximum) height = outTerminals * increaseY;
+    return { width, height };
   }
 
-  return { width: width, height: height };
+  if (inTerminals > maximum) height = inTerminals * increaseY;
+  if (outTerminals > maximum) height = outTerminals * increaseY;
+  return { width, height };
 };

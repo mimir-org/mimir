@@ -136,7 +136,7 @@ namespace ModelBuilder.Rdf.Extensions
             if (transmitter != null)
             {
                 var terminalCategoryId = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
-                terminal.TerminalCategoryId = terminalCategoryId;
+                terminal.TerminalCategoryId = string.IsNullOrWhiteSpace(terminalCategoryId) ? null : terminalCategoryId;
             }
 
             terminal.Attributes = new List<AttributeAm>();
