@@ -1,7 +1,3 @@
-export { default as ValidateTerminal } from "./ValidateTerminal";
-export { default as CheckTerminalDuplicates } from "./CheckTerminalDuplicates";
-export { default as ValidateTerminalType } from "./ValidateTerminalType";
-export { default as GetValidationMessage } from "./GetValidationMessage";
 export { default as IsAspectSelectionInvalid } from "./IsAspectSelectionInvalid";
 export { default as IsLocationSelectionInvalid } from "./IsLocationSelectionInvalid";
 export { default as IsObjectSelectionInvalid } from "./IsObjectSelectionInvalid";
@@ -11,6 +7,5 @@ export { default as IsTypeNameInvalid } from "./IsTypeNameInvalid";
 export { default as IsTypeEditorSubmissionValid } from "./IsTypeEditorSubmissionValid";
 export { default as IsRdsSelectionInvalid } from "./IsRdsSelectionInvalid";
 export { default as IsTerminalTypesSelectionInvalid } from "./IsTerminalTypesSelectionInvalid";
-export { default as IsTerminalMediaTypesInvalid } from "./IsTerminalMediaTypesInvalid";
 export { default as IsAttributeTypesSelectionInvalid } from "./IsAttributeTypesSelectionInvalid";
 export { default as IsPredefinedAttributesSelectionInvalid } from "./IsPredefinedAttributesSelectionInvalid";

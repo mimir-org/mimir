@@ -9,7 +9,6 @@ import {
   IsPredefinedAttributesSelectionInvalid,
   IsRdsSelectionInvalid,
   IsTerminalTypesSelectionInvalid,
-  IsTerminalMediaTypesInvalid,
 } from "../validators";
 
 interface TypeEditorListDescriptor extends TypeEditorListProps {
@@ -54,9 +53,7 @@ export function GetTypeEditorListDescriptor(
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         onTerminalCategoryChange: (key, data) => OnTerminalCategoryChange(key, data, dispatch),
         validation: {
-          visible:
-            state?.validationVisibility &&
-            (IsTerminalTypesSelectionInvalid(state?.createLibraryType) || IsTerminalMediaTypesInvalid(state?.createLibraryType)),
+          visible: state?.validationVisibility && IsTerminalTypesSelectionInvalid(state?.createLibraryType),
           message: TypeEditorTextResources.ERROR_TERMINALS,
         },
       };
