@@ -68,7 +68,7 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
 
   const targetNode = ConvertToNode(data, position, project.id, icons, user);
 
-  targetNode.connectors?.forEach((connector) => InitConnectorVisibility(connector, targetNode));
+  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
