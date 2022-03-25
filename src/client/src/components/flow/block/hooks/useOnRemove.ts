@@ -7,6 +7,7 @@ import { HandleOffPageDelete } from "../../block/nodes/blockOffPageNode/helpers"
 import { FindProjectEdgeByElementId, FindProjectNodeByElementId, GetParent, IsElementEdge, IsPartOf } from "../../helpers";
 import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
 import { CloseInspector } from "../../handlers";
+import { GetParentConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 
 /**
  * Hook that runs when an element is deleted from Mimir in BlockView.
