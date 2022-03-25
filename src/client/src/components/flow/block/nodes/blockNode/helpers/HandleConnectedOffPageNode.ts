@@ -4,7 +4,6 @@ import { IsOffPage } from "../../../../../../helpers";
 import { Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { GetParent, IsTransportConnection } from "../../../../helpers";
-import { EdgeIsConnectedToNode } from "../../../helpers/CheckEdgeConnections";
 
 /**
  * Component to draw an OffPageNode that is connected.
@@ -16,6 +15,7 @@ import { EdgeIsConnectedToNode } from "../../../helpers/CheckEdgeConnections";
  * @param size
  * @param dispatch
  */
+
 export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
   if (!edges.length || !node) return;
 
@@ -39,18 +39,18 @@ export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: Bloc
 //#region Helpers
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
   const existingEdge = isTargetNode
-    ? edges.find((x) => IsOffPage(x.fromNode) && x.toConnectorId === edge.toConnectorId)
-    : edges.find((x) => IsOffPage(x.toNode) && x.fromConnectorId === edge.fromConnectorId);
+    ? edges.find((x) => x.toConnectorId === edge.toConnectorId && IsOffPage(x.fromNode))
+    : edges.find((x) => x.fromConnectorId === edge.fromConnectorId && IsOffPage(x.toNode));
 
   return existingEdge !== undefined;
 }
 
 function IsValidTransport(edge: Edge, node: Node) {
   return (
-    !IsOffPage(edge.toNode) &&
-    !IsOffPage(edge.fromNode) &&
     IsTransportConnection(edge.fromConnector, edge.toConnector) &&
-    EdgeIsConnectedToNode(edge, node)
+    (node.id === edge.fromNodeId || node.id === edge.toNodeId) &&
+    !IsOffPage(edge.toNode) &&
+    !IsOffPage(edge.fromNode)
   );
 }
 

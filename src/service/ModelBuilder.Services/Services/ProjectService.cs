@@ -301,6 +301,8 @@ namespace Mb.Services.Services
 
             // Map updated project
             var updated = _mapper.Map<Project>(project);
+            updated.Updated = DateTime.Now.ToUniversalTime();
+            updated.UpdatedBy = _contextAccessor.GetName() ?? "System";
 
             // Sort nodes
             ResolveLevelAndOrder(updated);
