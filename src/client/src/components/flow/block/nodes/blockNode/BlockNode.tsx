@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../
 import { Size } from "../../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
-import { SetNodeSize } from "./helpers/SetNodeSize";
+import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
@@ -45,7 +45,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   // Update node size based on active terminals
   useEffect(() => {
-    const updatedSize = SetNodeSize(terminals, isElectro);
+    const updatedSize = SetChildNodeSize(terminals, isElectro);
     setSize(updatedSize);
   }, [isElectro, terminals]);
 

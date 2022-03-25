@@ -38,8 +38,8 @@ export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: Bloc
 
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
   const existingEdge = isTargetNode
-    ? edges?.find((x) => x?.toConnectorId === edge.toConnectorId && IsOffPage(x?.fromNode))
-    : edges?.find((x) => x?.fromConnectorId === edge.fromConnectorId && IsOffPage(x?.toNode));
+    ? edges.find((x) => x.toConnectorId === edge.toConnectorId && IsOffPage(x.fromNode))
+    : edges.find((x) => x.fromConnectorId === edge.fromConnectorId && IsOffPage(x.toNode));
 
   return existingEdge !== undefined;
 }
