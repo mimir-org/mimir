@@ -6,8 +6,10 @@ import { Node } from "../../../../../../../models";
 import { updateBlockSize } from "../../../../../../../redux/store/project/actions";
 import { GetFlowNodeByDataId } from "../helpers/GetFlowNodeByDataId";
 
-const MIN_HEIGHT = Size.BLOCK_NODE_HEIGHT - 200;
-const MIN_WIDTH = Size.BLOCK_NODE_WIDTH - 200;
+const MIN_HEIGHT = Size.BLOCK_NODE_MIN_HEIGHT;
+const MIN_WIDTH = Size.BLOCK_NODE_MIN_WIDTH;
+const MAX_HEIGHT = Size.BLOCK_NODE_MAX_HEIGHT;
+const MAX_WIDTH = Size.BLOCK_NODE_MAX_WIDTH;
 
 /**
  * Hook to resize a parentNode in BlockView. The resizing is excuted by a mouse drag on the resize icon on the ParentNode.
@@ -77,12 +79,12 @@ const onResize = (
   nodeHeightRef.current = parseInt(getComputedStyle(parentFlowRef.current).height) - dy;
 
   // Implement new size
-  if (nodeWidthRef.current > MIN_WIDTH) {
+  if (nodeWidthRef.current > MIN_WIDTH && nodeWidthRef.current < MAX_WIDTH) {
     parentFlowRef.current.style.width = nodeWidthRef.current + "px";
     parentRef.current.style.width = nodeWidthRef.current + "px";
   }
 
-  if (nodeHeightRef.current > MIN_HEIGHT) {
+  if (nodeHeightRef.current > MIN_HEIGHT && nodeHeightRef.current < MAX_HEIGHT) {
     parentFlowRef.current.style.height = nodeHeightRef.current + "px";
     parentRef.current.style.height = nodeHeightRef.current + "px";
   }
