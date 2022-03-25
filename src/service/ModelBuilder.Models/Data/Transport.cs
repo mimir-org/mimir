@@ -4,16 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using Mb.Models.Data.Enums;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
-    public class Transport
+    public class Transport : IEquatable<Transport>
     {
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Version { get; set; }
         public string Rds { get; set; }
-
         public string Kind => nameof(Transport);
 
         [Required]
@@ -31,7 +31,6 @@ namespace Mb.Models.Data
         public virtual Terminal InputTerminal { get; set; }
         public string OutputTerminalId { get; set; }
         public virtual Terminal OutputTerminal { get; set; }
-
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }
@@ -51,5 +50,60 @@ namespace Mb.Models.Data
         {
             Version = Version.IncrementMajorVersion();
         }
+
+        #region IEquatable
+
+        public bool Equals(Transport other)
+        {
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id == other.Id &&
+                   Iri == other.Iri &&
+                   Version == other.Version &&
+                   Rds == other.Rds &&
+                   Name == other.Name &&
+                   Label == other.Label &&
+                   Description == other.Description &&
+                   StatusId == other.StatusId &&
+                   SemanticReference == other.SemanticReference &&
+                   InputTerminalId == other.InputTerminalId &&
+                   OutputTerminalId == other.OutputTerminalId &&
+                   UpdatedBy == other.UpdatedBy &&
+                   Nullable.Equals(Updated, other.Updated) &&
+                   Nullable.Equals(Created, other.Created) &&
+                   CreatedBy == other.CreatedBy &&
+                   LibraryTypeId == other.LibraryTypeId;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((Transport) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Id);
+            hashCode.Add(Iri);
+            hashCode.Add(Version);
+            hashCode.Add(Rds);
+            hashCode.Add(Name);
+            hashCode.Add(Label);
+            hashCode.Add(Description);
+            hashCode.Add(StatusId);
+            hashCode.Add(SemanticReference);
+            hashCode.Add(InputTerminalId);
+            hashCode.Add(OutputTerminalId);
+            hashCode.Add(UpdatedBy);
+            hashCode.Add(Updated);
+            hashCode.Add(Created);
+            hashCode.Add(CreatedBy);
+            hashCode.Add(LibraryTypeId);
+            return hashCode.ToHashCode();
+        }
+
+        #endregion
     }
 }

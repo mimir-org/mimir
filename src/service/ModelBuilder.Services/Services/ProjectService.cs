@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
+using Mb.Data.Extensions;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
@@ -11,8 +12,8 @@ using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
+using Mb.Models.Records;
 using Mb.Services.Contracts;
-using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -34,6 +35,7 @@ namespace Mb.Services.Services
         private readonly ICooperateService _cooperateService;
         private readonly ILogger<ProjectService> _logger;
 
+
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
@@ -54,27 +56,27 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Get a list of simple projects sorted by last edited
-        /// from start index and a max number that will be returned
+        /// Get a list of project items from start index and a max number that will be returned.
+        /// The list will be filtered on the name parameter.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="from"></param>
-        /// <param name="number"></param>
-        /// <returns></returns>
+        /// <param name="name">Name search filter</param>
+        /// <param name="from">From number</param>
+        /// <param name="number">Number of items</param>
+        /// <returns>A list project list items</returns>
         public IEnumerable<ProjectItemCm> GetProjectList(string name, int from, int number)
         {
             return _projectRepository.GetProjectList(name, from, number);
         }
 
         /// <summary>
-        /// Get a project by id. The project will include all edges, nodes,
+        /// Get a project by Id or Iri. The project will include all edges, nodes, transports, interfaces,
         /// attributes and connectors.
-        /// The method wil throw a ModelBuilderNotFoundException if not exist
         /// </summary>
         /// <param name="id"></param>
         /// <param name="iri"></param>
         /// <param name="ignoreNotFound"></param>
-        /// <returns></returns>
+        /// <returns>The actual project</returns>
+        /// <exception cref="ModelBuilderNotFoundException">Throws if the project does not exist</exception>
         public async Task<Project> GetProject(string id, string iri, bool ignoreNotFound = false)
         {
             var project = await _projectRepository.GetAsyncComplete(id, iri);
@@ -90,7 +92,7 @@ namespace Mb.Services.Services
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
                 foreach (var node in project.Nodes)
                 {
-                    // TODO: Må gjøres på en bedre måte, generell via mapper
+                    // TODO: Implement this in the EF configuration
                     if (node.Attributes != null)
                     {
                         foreach (var attribute in node.Attributes)
@@ -106,7 +108,7 @@ namespace Mb.Services.Services
                             node.Purpose = JsonConvert.DeserializeObject<Purpose>(node.PurposeString);
                         }
                     }
-                    // TODO: Må gjøres på en bedre måte, generell via mapper
+                    // TODO: Implement this in the EF configuration
                     if (node.Connectors != null)
                     {
                         foreach (var connector in node.Connectors.OfType<Terminal>())
@@ -122,7 +124,7 @@ namespace Mb.Services.Services
                             }
                         }
                     }
-                    // TODO: Må gjøres på en bedre måte, generell via mapper
+                    // TODO: Implement this in the EF configuration
                     if (node.Simples != null)
                     {
                         foreach (var simple in node.Simples)
@@ -159,63 +161,59 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Create a new project based on an existing project. If project, node, edge or connector already exist,
-        /// a ModelBuilderDuplicateException will be thrown.
+        /// Create a new mimir project based on data
         /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
+        /// <param name="project">The project that should be created</param>
+        /// <returns>A create project task</returns>
+        /// <exception cref="ModelBuilderDuplicateException">Throws if there is already a project, node or edge with same id.</exception>
+        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null</exception>
+        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid</exception>
         public async Task<Project> CreateProject(ProjectAm project)
         {
-            try
+            if (project == null)
+                throw new ModelBuilderNullReferenceException("The project that should be created is null.");
+
+            var validation = project.ValidateObject();
+            if (!validation.IsValid)
+                throw new ModelBuilderBadRequestException($"Couldn't create project with name: {project.Name}", validation);
+
+            var existingProject = ProjectExist(project.Id, project.Iri);
+            ClearAllChangeTracker();
+
+            if (existingProject)
+                throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
+
+            if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more edges already exist");
+
+            if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more nodes already exist");
+
+            var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
+            if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
+                throw new ModelBuilderDuplicateException("One or more connectors already exist");
+
+            // Remap and create new id's
+            _remapService.Remap(project);
+
+            // Create an empty project
+            var newProject = new Project
             {
-                var existingProject = await GetProject(project.Id, null, true);
+                ProjectOwner = _contextAccessor.GetName(),
+                UpdatedBy = _contextAccessor.GetName(),
+                Updated = DateTime.Now.ToUniversalTime()
+            };
 
-                if (existingProject != null)
-                    throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
+            // Map data
+            _mapper.Map(project, newProject);
 
-                if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
-                    throw new ModelBuilderDuplicateException("One or more edges already exist");
+            // Deconstruct project
+            var projectData = new ProjectData();
+            await _remapService.DeConstruct(newProject, projectData);
+            await _projectRepository.CreateProject(newProject, projectData);
 
-                if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
-                    throw new ModelBuilderDuplicateException("One or more nodes already exist");
-
-                var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
-                if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
-                    throw new ModelBuilderDuplicateException("One or more connectors already exist");
-
-                // Cast connectors
-                CastConnectors(project);
-
-                // Remap and create new id's
-                _remapService.Remap(project);
-
-                // Create an empty project
-                var newProject = new Project
-                {
-                    ProjectOwner = _contextAccessor.GetName(),
-                    UpdatedBy = _contextAccessor.GetName(),
-                    Updated = DateTime.Now.ToUniversalTime()
-                };
-
-                // Map data
-                _mapper.Map(project, newProject);
-
-                await _projectRepository.CreateAsync(newProject);
-                await _projectRepository.SaveAsync();
-
-                var updatedProject = await GetProject(newProject.Id, null);
-                ClearAllChangeTracker();
-                return updatedProject;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Can not create project with name: {project?.Name}. Error: {e.Message}");
-                throw;
-            }
-            finally
-            {
-                ClearAllChangeTracker();
-            }
+            var updatedProject = await GetProject(newProject.Id, null);
+            return updatedProject;
         }
 
         /// <summary>
@@ -223,12 +221,13 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="subProjectAm"></param>
         /// <returns></returns>
+        /// TODO: Should implement new way of creating project
         public async Task<Project> CreateProject(SubProjectAm subProjectAm)
         {
             try
             {
                 if (subProjectAm == null)
-                    throw new ModelBuilderInvalidOperationException("Sub-project is null");
+                    throw new ModelBuilderNullReferenceException("Sub-project is null");
 
                 var validation = subProjectAm.ValidateObject();
                 if (!validation.IsValid)
@@ -267,77 +266,55 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
-        /// Update a project, if the project does not exist, a ModelBuilderNotFoundException will be thrown.
+        /// Update a project
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="projectAm"></param>
+        /// <param name="project"></param>
         /// <param name="invokedByDomain"></param>
         /// <param name="iri"></param>
-        /// <returns></returns>
-        public async Task<ProjectResultAm> UpdateProject(string id, string iri, ProjectAm projectAm, string invokedByDomain)
+        /// <returns>Update Project Task</returns>
+        /// <exception cref="ModelBuilderInvalidOperationException">Throws if invoking domain is not set.</exception>
+        /// <exception cref="ModelBuilderNotFoundException">Throws if project is missing from database.</exception>
+        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
+        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid.</exception>
+        /// TODO: We need to handle invokedByDomain in update process
+        public async Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain)
         {
-            ClearAllChangeTracker();
+            if ((string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri)) || project == null)
+                throw new ModelBuilderNullReferenceException("Id or Iri must have value. Project can't be null.");
 
             if (string.IsNullOrWhiteSpace(invokedByDomain))
                 throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
-            try
-            {
-                var originalProject = await _projectRepository.GetAsyncComplete(id, iri);
 
-                if (originalProject == null)
-                    throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
+            var validation = project.ValidateObject();
+            if (!validation.IsValid)
+                throw new ModelBuilderBadRequestException($"Couldn't update project with name: {project.Name}", validation);
 
-                // Cast connectors
-                CastConnectors(projectAm);
+            var original = await _projectRepository.GetAsyncComplete(id, iri);
+            ClearAllChangeTracker();
 
-                // Remap and create new id's
-                var remap = _remapService.Remap(projectAm);
+            if (original == null)
+                throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
 
-                // Edges
-                var originalEdges = originalProject.Edges.ToList();
-                var deleteEdges = originalEdges.Where(x => projectAm.Edges.All(y => y.Id != x.Id)).ToList();
-                var edgeChangeMap = await _edgeRepository.DeleteEdges(deleteEdges, projectAm.Id, invokedByDomain);
+            // Remap and create new id's
+            _ = _remapService.Remap(project);
 
-                // Nodes
-                var originalNodes = originalProject.Nodes.ToList();
-                var deleteNodes = originalNodes.Where(x => projectAm.Nodes.All(y => y.Id != x.Id)).ToList();
-                var nodeChangeMap = _nodeRepository.DeleteNodes(deleteNodes, projectAm.Id, invokedByDomain).ToList();
+            // Map updated project
+            var updated = _mapper.Map<Project>(project);
+            updated.Updated = DateTime.Now.ToUniversalTime();
+            updated.UpdatedBy = _contextAccessor.GetName() ?? "System";
 
-                //Determine if project version should be incremented
-                SetProjectVersion(originalProject, projectAm);
+            // Sort nodes
+            ResolveLevelAndOrder(updated);
 
-                // Map new data from projectAm to originalProject
-                _mapper.Map(projectAm, originalProject);
+            // Get create edit data
+            var projectEditData = await _remapService.CreateEditData(original, updated);
 
-                //New data from projectAm is now mapped to originalProject.
-                //To avoid confusion we now call originalProject 'updatedProject'
-                var updatedProject = originalProject;
+            // Update
+            await _projectRepository.UpdateProject(original, updated, projectEditData);
 
-                nodeChangeMap = nodeChangeMap.Concat(_nodeRepository.UpdateInsert(originalNodes, updatedProject, invokedByDomain)).ToList();
-                edgeChangeMap = edgeChangeMap.Concat(_edgeRepository.UpdateInsert(originalEdges, updatedProject, invokedByDomain)).ToList();
-
-                ResolveLevelAndOrder(updatedProject);
-
-                _projectRepository.Update(updatedProject);
-                _ = _cooperateService.SendNodeUpdates(nodeChangeMap.ToList(), updatedProject.Id);
-                _ = _cooperateService.SendEdgeUpdates(edgeChangeMap.ToList(), updatedProject.Id);
-                await _projectRepository.SaveAsync();
-
-                return new ProjectResultAm
-                {
-                    Project = updatedProject,
-                    IdChanges = remap
-                };
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Can not update project with id: {id}. Error: {e.Message}");
-                throw;
-            }
-            finally
-            {
-                ClearAllChangeTracker();
-            }
+            // Send websocket data.
+            await _cooperateService.SendDataUpdates(projectEditData, id);
         }
 
         /// <summary>
@@ -351,10 +328,9 @@ namespace Mb.Services.Services
             if (existingProject == null)
                 throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
 
-            _ = await _edgeRepository.DeleteEdges(existingProject.Edges, projectId, _commonRepository.GetDomain());
-            _ = _nodeRepository.DeleteNodes(existingProject.Nodes, projectId, _commonRepository.GetDomain()).ToList();
-            await _projectRepository.Delete(projectId);
-            await _projectRepository.SaveAsync();
+            var projectData = new ProjectData();
+            await _remapService.DeConstruct(existingProject, projectData);
+            await _projectRepository.DeleteProject(existingProject, projectData);
         }
 
         /// <summary>
@@ -433,12 +409,8 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public bool ProjectExist(string projectId, string projectIri)
         {
-            var exist =
-                _projectRepository.Context.Projects.Any(x => x.Id == projectId) ||
-                _projectRepository.Context.Projects.Any(x => x.Iri == projectIri);
-
+            var exist = _projectRepository.Context.Projects.Any(x => x.Id == projectId || x.Iri == projectIri);
             ClearAllChangeTracker();
-
             return exist;
         }
 
@@ -496,9 +468,8 @@ namespace Mb.Services.Services
                 IsRoot = true,
                 MasterProjectId = projectId,
                 Aspect = aspect,
-                Length = null,
                 Height = null,
-                Cost = null,
+                Width = null,
                 Created = dateTimeNow,
                 CreatedBy = userName,
                 Updated = dateTimeNow,
@@ -592,70 +563,44 @@ namespace Mb.Services.Services
             return project;
         }
 
-        private void CastConnectors(ProjectAm project)
-        {
-            foreach (var node in project.Nodes)
-            {
-                var connectors = new List<ConnectorAm>();
-                foreach (var connector in node.Connectors)
-                {
-                    if (string.IsNullOrEmpty(connector.TerminalCategoryId) && connector.RelationType != RelationType.NotSet)
-                    {
-                        var relationAm = new RelationAm();
-                        _mapper.Map(connector, relationAm);
-                        connectors.Add(relationAm);
-                    }
+        //private void SetProjectVersion(Project originalProject, ProjectAm projectAm)
+        //{
+        //    if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) ||
+        //        projectAm == null || string.IsNullOrWhiteSpace(projectAm.Id))
+        //        return;
 
-                    else
-                    {
-                        var terminalAm = new TerminalAm();
-                        _mapper.Map(connector, terminalAm);
-                        connectors.Add(terminalAm);
-                    }
-                }
+        //    //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
 
-                node.Connectors = connectors;
-            }
-        }
+        //    if (originalProject.IsSubProject != projectAm.IsSubProject)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-        private void SetProjectVersion(Project originalProject, ProjectAm projectAm)
-        {
-            if (originalProject == null || string.IsNullOrWhiteSpace(originalProject.Id) ||
-                projectAm == null || string.IsNullOrWhiteSpace(projectAm.Id))
-                return;
+        //    if (originalProject.Name != projectAm.Name)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-            //TODO: The rules for when to trigger major/minor version incrementation is not finalized!
+        //    if (originalProject.Description != projectAm.Description)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-            if (originalProject.IsSubProject != projectAm.IsSubProject)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
+        //    if (originalProject.Nodes?.Count != projectAm.Nodes?.Count)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //        return;
+        //    }
 
-            if (originalProject.Name != projectAm.Name)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
+        //    if (originalProject.Edges?.Count != projectAm.Edges?.Count)
+        //    {
+        //        originalProject.IncrementMinorVersion();
+        //    }
 
-            if (originalProject.Description != projectAm.Description)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
-
-            if (originalProject.Nodes?.Count != projectAm.Nodes?.Count)
-            {
-                originalProject.IncrementMinorVersion();
-                return;
-            }
-
-            if (originalProject.Edges?.Count != projectAm.Edges?.Count)
-            {
-                originalProject.IncrementMinorVersion();
-            }
-
-        }
+        //}
 
         private async Task SetProjectCommitVersion(string projectId)
         {

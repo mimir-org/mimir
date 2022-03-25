@@ -47,17 +47,11 @@ namespace ModelBuilder.Rdf.Repositories
         /// Load graph data into TripleStore
         /// </summary>
         /// <param name="data">Data to be loaded</param>
-        public void LoadData(string data)
+        public void LoadData(IGraph data)
         {
             _graph = CreateOntologyGraph();
             _store = CreateTripleStore();
-
-            if (string.IsNullOrWhiteSpace(data))
-                return;
-
-            IGraph graph = new Graph();
-            graph.LoadFromString(data);
-            _graph.Merge(graph);
+            _graph.Merge(data);
             _store.Add(_graph);
         }
 

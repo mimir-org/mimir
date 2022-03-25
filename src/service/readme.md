@@ -17,6 +17,19 @@ To format the project using dotnet-format, run the following command from the se
 
 The tool will pick up the .editorconfig and format all .cs files found in the subprojects.
 
+### Format with dotnet-format 
+
+You can use dotnet-format to format your code (instead of dotnet format).
+To install the dotnet-format tool run this line in a powershell window:
+dotnet tool install -g dotnet-format --version "6.*" --add-source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json
+Navigate to the directory with the project *.sln (example: .\ti-spine-modelbuilder\src\service)
+The run this command in a powershell window:
+dotnet-format .
+This will format all code and apply the result. You can then check the changes with 'Git Changes'
+You can then run this command:
+dotnet-format . --verify-no-changes --verbosity diagnostic --no-restore
+The rusult should show  Formatted 0 of x files.
+
 ### Format on save - Visual studio with Resharper
 
 The ReSharper extension for visual studio (version 2020.2++) allows for configuring automatic code cleanup (including code formatting) on save. This enforces code style with minimal manual action needed from team members.
@@ -28,6 +41,7 @@ In order to configure cleanup on save:
    2. Can also be accessed via Tools > Options > Resharper > Options
 2. Navigate Code Editing > Code Cleanup > General
 3. Select option "Automatically run cleanup when saving a file"
+4. First time you save a file after this change you will get Visual Studie a pop-up window. Choose 'C# Reformat code' and click 'ok'.
 
 
 ### Format on save - Rider

@@ -8,30 +8,29 @@ import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { Size } from "../../../../../compLibrary/size";
 import { GetAspectColor } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
-import { SetNodeSize } from "./helpers/SetNodeSize";
+import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 
 /**
  * Component for a child Node in BlockView.
+ * This component lives in conjunction with the FlowNode from BuildFlowChildNode.
  * @param data the data for the node.
- * @returns a child Node of the Flow node type with Mimir styling and functionality.
+ * @returns a Mimir Node.
  */
 const BlockNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
+  const initialSize: BlockNodeSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT };
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
-  const nodes = useAppSelector(selectors.nodeSelector);
+  const node = useParametricAppSelector(selectors.nodeSelector, data.id);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const electro = useAppSelector(selectors.electroSelector);
-  const node = nodes?.find((x) => x.id === data.id);
   const isElectro = useAppSelector(selectors.electroSelector);
 
   // Check for elements that require OffPage nodes
@@ -41,14 +40,14 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   }, [secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node, secondaryNode));
+    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   // Update node size based on active terminals
   useEffect(() => {
-    const updatedSize = SetNodeSize(terminals, electro);
-    setSize({ width: updatedSize.width, height: updatedSize.height });
-  }, [electro, terminals]);
+    const updatedSize = SetChildNodeSize(terminals, isElectro);
+    setSize(updatedSize);
+  }, [isElectro, terminals]);
 
   if (!node) return null;
 

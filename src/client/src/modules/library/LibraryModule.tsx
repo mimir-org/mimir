@@ -6,7 +6,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { ModuleFooter } from "./components/footer/ModuleFooter";
-import { LibraryTab, CollectionsActions, ObjectType, LibItem, Aspect } from "../../models";
+import { LibraryTab, CollectionsActions, LibItem, Aspect } from "../../models";
 import {
   useAppSelector,
   useParametricAppSelector,
@@ -30,8 +30,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
   const [selectedTypes, setSelectedTypes] = useState([] as LibItem[]);
-  const [selectedElement, setSelectedElement] = useState("");
-  const [selectedElementType, setSelectedElementType] = useState<ObjectType>(null);
+  const [selectedElement, setSelectedElement] = useState<LibItem>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
 
   const showFooter = collectionState !== CollectionsActions.ManageCollection;
@@ -42,11 +41,6 @@ export const LibraryModule = ({ dispatch }: Props) => {
 
   const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
   const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
-
-  const typeEditorOpen = () => {
-    setSelectedElement("");
-    setSelectedElementType(null);
-  };
 
   return (
     <AnimatedModule start={startLib} stop={stopLib} run={animate} type={lib} id="LibraryModule">
@@ -69,7 +63,6 @@ export const LibraryModule = ({ dispatch }: Props) => {
         searchString={searchString}
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
-        setSelectedElementType={setSelectedElementType}
         aspectFilters={aspectFilters}
       />
       {showFooter && (
@@ -79,11 +72,10 @@ export const LibraryModule = ({ dispatch }: Props) => {
           collectionState={collectionState}
           setCollectionState={setCollectionState}
           selectedElement={selectedElement}
-          selectedElementType={selectedElementType}
+          resetSelectedElement={() => setSelectedElement(null)}
           selectedTypes={selectedTypes}
           setSelectedTypes={setSelectedTypes}
           collections={collections}
-          onChange={typeEditorOpen}
           dispatch={dispatch}
         />
       )}

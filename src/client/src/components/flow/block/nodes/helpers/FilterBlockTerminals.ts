@@ -5,14 +5,14 @@ import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "..
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
  * Different node types allow different terminal types.
- * @param actualNode
+ * @param actualNodeConnectors
  * @param secondaryNode
  * @returns a filtered list of connectors sorted by type and name.
  */
-export const FilterBlockTerminals = (actualNode: Node, secondaryNode: Node) => {
+export const FilterBlockTerminals = (actualNodeConnectors: Connector[], secondaryNode: Node) => {
   const selectedNode = GetSelectedNode();
 
-  return actualNode?.connectors
+  return actualNodeConnectors
     ?.filter((c) => !IsPartOf(c) && FilterTerminal(selectedNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
 };

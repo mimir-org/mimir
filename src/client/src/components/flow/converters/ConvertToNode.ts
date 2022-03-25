@@ -2,6 +2,7 @@ import { CreateId } from "../helpers";
 import { BlobData, LibItem, Node, User, NODE_KIND } from "../../../models";
 import { Size } from "../../../compLibrary/size";
 import { GetDateNowUtc } from "../../../helpers";
+import { Position } from "../../../models/project";
 
 /**
  * Function to convert data to a Mimir Node.
@@ -12,7 +13,7 @@ import { GetDateNowUtc } from "../../../helpers";
  * @param user
  * @returns a Node.
  */
-const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobData[], user: User): Node => {
+const ConvertToNode = (data: LibItem, position: Position, projectId: string, icons: BlobData[], user: User) => {
   const now = GetDateNowUtc();
 
   const node = {
@@ -34,9 +35,8 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
     masterProjectId: projectId,
     symbol: icons?.find((x) => x.id === data.symbolId)?.data,
     level: 0,
-    cost: null,
-    height: Size.NODE_HEIGHT,
-    width: Size.NODE_WIDTH,
+    height: Size.BLOCK_NODE_HEIGHT, // Only used in BlockView
+    width: Size.BLOCK_NODE_WIDTH, // Only used in BlockView
     purpose: data.purpose,
     created: now,
     createdBy: user?.name,
@@ -47,28 +47,37 @@ const ConvertToNode = (data: LibItem, position, projectId: string, icons: BlobDa
   } as Node;
 
   if (node.connectors) {
-    node.connectors.forEach((x) => {
-      x.id = CreateId();
-      if (x.attributes) {
-        x.attributes.forEach((y) => {
-          y.id = CreateId();
+    node.connectors.forEach((connector) => {
+      const connectorId = CreateId();
+      connector.id = connectorId;
+      connector.nodeId = node.id;
+
+      if (connector.attributes) {
+        connector.attributes.forEach((attribute) => {
+          attribute.id = CreateId();
+          attribute.terminalId = connectorId;
         });
       }
     });
   }
 
   if (node.attributes) {
-    node.attributes.forEach((x) => {
-      x.id = CreateId();
+    node.attributes.forEach((attribute) => {
+      attribute.id = CreateId();
+      attribute.nodeId = node.id;
     });
   }
 
   if (node.simples) {
-    node.simples.forEach((x) => {
-      x.id = CreateId();
-      if (x.attributes) {
-        x.attributes.forEach((y) => {
-          y.id = CreateId();
+    node.simples.forEach((simple) => {
+      const simpleId = CreateId();
+      simple.id = simpleId;
+      simple.nodeId = node.id;
+
+      if (simple.attributes) {
+        simple.attributes.forEach((attribute) => {
+          attribute.id = CreateId();
+          attribute.simpleId = simpleId;
         });
       }
     });

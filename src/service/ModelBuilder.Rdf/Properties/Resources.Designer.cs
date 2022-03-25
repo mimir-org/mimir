@@ -259,6 +259,15 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:hasHeight.
+        /// </summary>
+        internal static string HasHeight {
+            get {
+                return ResourceManager.GetString("HasHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:hasInTerminal.
         /// </summary>
         internal static string HasInputTerminal {
@@ -385,6 +394,15 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mimir:hasWidth.
+        /// </summary>
+        internal static string HasWidth {
+            get {
+                return ResourceManager.GetString("HasWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to imf:inTerminal.
         /// </summary>
         internal static string InputTerminal {
@@ -394,7 +412,16 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:integratedObject.
+        ///   Looks up a localized string similar to xsd:integer.
+        /// </summary>
+        internal static string Integer {
+            get {
+                return ResourceManager.GetString("Integer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to imf:IntegratedObject.
         /// </summary>
         internal static string IntegratedObject {
             get {
@@ -475,7 +502,7 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to imf:outTerminal.
+        ///   Looks up a localized string similar to imf:OutTerminal.
         /// </summary>
         internal static string OutputTerminal {
             get {
@@ -493,7 +520,7 @@ namespace ModelBuilder.Rdf.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mimir:project.
+        ///   Looks up a localized string similar to mimir:Project.
         /// </summary>
         internal static string Project {
             get {

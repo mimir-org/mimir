@@ -1,9 +1,9 @@
 using System;
 using AutoMapper;
 using Mb.Data.Contracts;
+using Mb.Data.Extensions;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Services.Extensions;
 using Microsoft.AspNetCore.Http;
 
 namespace Mb.Core.Profiles
@@ -29,9 +29,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.IsSubProject, opt => opt.MapFrom(src => src.IsSubProject))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.ProjectOwner, opt => opt.UseDestinationValue())
+                .ForMember(dest => dest.ProjectOwner, opt => opt.MapFrom(src => src.ProjectOwner))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => contextAccessor.GetName() ?? src.UpdatedBy))
-                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => DateTime.Now.ToUniversalTime()))
+                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Nodes, opt => opt.MapFrom(src => src.Nodes))
                 .ForMember(dest => dest.Edges, opt => opt.MapFrom(src => src.Edges));
 

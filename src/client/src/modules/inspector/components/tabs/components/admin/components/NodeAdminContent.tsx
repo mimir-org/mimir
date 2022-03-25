@@ -35,15 +35,15 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
       <TabColumn width={250}>
         <div>
           <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.id ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.id ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={GetRdsId(node) ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsId(node) ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.semanticReference ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.semanticReference ?? ""} />
         </div>
       </TabColumn>
       <TabColumn width={250}>
@@ -58,25 +58,25 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.name} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.name} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.updatedBy ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.updatedBy ?? ""} />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
           <div>{TextResources.Inspector_Admin_Updated_Date}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={moment(node.updated).format("DD/MM/YYYY") ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={moment(node.updated).format("DD/MM/YYYY") ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Created_Date}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={moment(node.created).format("DD/MM/YYYY") ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={moment(node.created).format("DD/MM/YYYY") ?? ""} />
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Designation}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={GetReferenceDesignation(node, project) ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={GetReferenceDesignation(node, project) ?? ""} />
         </div>
       </TabColumn>
       <TabColumn width={125}>
@@ -95,18 +95,12 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
         </div>
         <div>
           <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly={true} value={node.version ?? ""} />
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.version ?? ""} />
         </div>
         {IsProduct(node) && (
           <div>
             <div>{TextResources.Inspector_Admin_Cost}</div>
-            <Input
-              fontSize={FontSize.STANDARD}
-              readOnly={IsAspectNode(node) || node.isLocked}
-              value={node.cost ?? ""}
-              onChange={(e: Event) => onChange("cost", Number(e.target.value))}
-              inputType=""
-            />
+            <Input fontSize={FontSize.STANDARD} readOnly value={""} onChange={() => null} inputType="" />
           </div>
         )}
       </TabColumn>

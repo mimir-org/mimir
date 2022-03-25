@@ -12,30 +12,35 @@ import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../.
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
+import { InitParentSize } from "./helpers/InitParentSize";
 
 /**
  * Component for a ParentNode in BlockView.
+ * This component lives in conjunction with the FlowNode from BuildFlowParentNode.
  * @param data the data for the node.
- * @returns a parent node of the Flow node type with Mimir styling and functionality.
+ * @returns a Mimir ParentNode.
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const { setCenter } = useZoomPanHelper();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const nodes = useAppSelector(selectors.nodeSelector);
+  const nodes = useAppSelector(selectors.nodesSelector);
   const edges = useAppSelector(selectors.edgeSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
-  const size = useAppSelector(selectors.nodeSizeSelector);
 
   useEffect(() => {
     const canvasData = SetZoomCenterLevel(secondaryNode !== null);
     setCenter(canvasData.x, canvasData.y, canvasData.zoom);
-  }, [secondaryNode]);
+  }, [setCenter, secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node, secondaryNode));
+    InitParentSize(node, dispatch);
+  }, []);
+
+  useEffect(() => {
+    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
   }, [secondaryNode, node?.connectors]);
 
   if (!node) return null;
@@ -48,7 +53,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
       <HandleComponent node={node} terminals={inputTerminals} isInput />
       <BlockParentComponent
         node={node}
-        size={size}
+        splitView={secondaryNode !== null}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}

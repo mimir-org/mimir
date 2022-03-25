@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
@@ -21,8 +20,8 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="node"></param>
         /// <param name="project"></param>
         /// <param name="ontologyService"></param>
-        /// <param name="libRepository"></param>
-        public static void AssertNode(this Node node, Project project, IOntologyService ontologyService, ILibRepository libRepository)
+        /// <param name="projectData">Record of ICollections</param>
+        public static void AssertNode(this Node node, Project project, IOntologyService ontologyService, ProjectData projectData)
         {
             var parentNode = node.GetParent(project);
 
@@ -39,18 +38,26 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(node.Iri, Resources.HasPositionY, ontologyService.CreateLiteralNode($"{node.PositionY}", Resources.Float));
             ontologyService.AssertNode(node.Iri, Resources.HasBlockPositionX, ontologyService.CreateLiteralNode($"{node.PositionBlockX}", Resources.Float));
             ontologyService.AssertNode(node.Iri, Resources.HasBlockPositionY, ontologyService.CreateLiteralNode($"{node.PositionBlockY}", Resources.Float));
+
+            if (node.Width != null)
+                ontologyService.AssertNode(node.Iri, Resources.HasWidth, ontologyService.CreateLiteralNode($"{node.Width}", Resources.Integer));
+
+            if (node.Height != null)
+                ontologyService.AssertNode(node.Iri, Resources.HasHeight, ontologyService.CreateLiteralNode($"{node.Height}", Resources.Integer));
+
+
             ontologyService.AssertNode(node.Iri, Resources.HasAspect, $"imf:{node.Aspect}");
             ontologyService.AssertNode(node.Iri, Resources.Version, node.Version, true);
             ontologyService.AssertNode(node.Iri, Resources.Name, node.Name, true);
             ontologyService.AssertNode(node.Iri, Resources.Label, node.Label ?? node.Name, true);
 
             ontologyService.AssertNode(node.Iri, Resources.UpdatedBy, node.UpdatedBy, true);
-            ontologyService.AssertNode(node.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{node.Updated}", Resources.DateTime));
+            ontologyService.AssertNode(node.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{node.Updated.ToString("u")}", Resources.DateTime));
 
             if (node.Created != null && !string.IsNullOrWhiteSpace(node.CreatedBy))
             {
                 ontologyService.AssertNode(node.Iri, Resources.CreatedBy, node.CreatedBy, true);
-                ontologyService.AssertNode(node.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{node.Created}", Resources.DateTime));
+                ontologyService.AssertNode(node.Iri, Resources.Created, ontologyService.CreateLiteralNode($"{node.Created?.ToString("u")}", Resources.DateTime));
             }
 
             // TODO: This should be an iri
@@ -149,7 +156,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="iri">The IRI of the node</param>
         /// <param name="projectIri">The IRI of the project</param>
         /// <param name="isRootNode">Is the node a root node</param>
-        /// <param name="projectData">Existing project data</param>
+        /// <param name="projectData">Record of ICollections</param>
         /// <exception cref="InvalidDataException">Throws if the parameter list is missing values</exception>
         public static void ResolveNode(this NodeAm node, IOntologyService ontologyService, string iri, string projectIri, bool isRootNode, ProjectData projectData)
         {
@@ -167,6 +174,8 @@ namespace ModelBuilder.Rdf.Extensions
             node.PositionY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
             node.PositionBlockX = ontologyService.GetDecimalValue(iri, Resources.HasBlockPositionX, false);
             node.PositionBlockY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
+            node.Width = ontologyService.GetIntValue(iri, Resources.HasWidth, false);
+            node.Height = ontologyService.GetIntValue(iri, Resources.HasHeight, false);
             node.StatusId = "4590637F39B6BA6F39C74293BE9138DF";
 
             var masterProjectIriNode = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();

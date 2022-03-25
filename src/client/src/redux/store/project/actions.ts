@@ -1,4 +1,6 @@
 import * as Types from "./types";
+import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
+import { BlockNodeSize } from "../../../models/project";
 import {
   CommitPackage,
   Connector,
@@ -10,7 +12,6 @@ import {
   Node,
   Project,
   ProjectConverterAm,
-  ProjectFileAm,
   Simple,
 } from "../../../models";
 
@@ -121,6 +122,16 @@ export function updateBlockPosition(nodeId: string, x: number, y: number): Types
       nodeId: nodeId,
       x: x,
       y: y,
+    },
+  };
+}
+
+export function updateBlockSize(nodeId: string, size: BlockNodeSize): Types.ProjectActionTypes {
+  return {
+    type: Types.UPDATE_BLOCK_SIZE,
+    payload: {
+      nodeId,
+      size,
     },
   };
 }
@@ -369,10 +380,13 @@ export function exportProjectToFile(projectConverter: ProjectConverterAm): Types
   };
 }
 
-export function importProjectAction(data: ProjectFileAm): Types.ProjectActionTypes {
+export function importProjectAction(file: File, parserId: string): Types.ProjectActionTypes {
   return {
     type: Types.IMPORT_PROJECT,
-    payload: data,
+    payload: {
+      file: file,
+      parserId: parserId,
+    },
   };
 }
 
@@ -550,6 +564,32 @@ export function setOffPageStatus(nodeId: string, connectorId: string, isRequired
       nodeId: nodeId,
       connectorId: connectorId,
       isRequired: isRequired,
+    },
+  };
+}
+
+export function createRequiredOffPageNode(
+  nodeId: string,
+  connectorId: string,
+  isRequired: boolean,
+  offPageObject: OffPageObject
+): Types.CreateRequiredOffPageNode {
+  return {
+    type: Types.CREATE_REQUIRED_OFFPAGE_NODE,
+    payload: {
+      nodeId: nodeId,
+      connectorId: connectorId,
+      isRequired: isRequired,
+      offPageObject: offPageObject,
+    },
+  };
+}
+
+export function createConnectedOffPageNode(offPageObject: OffPageObject): Types.CreateConnectedOffPageNode {
+  return {
+    type: Types.CREATE_CONNECTED_OFFPAGE_NODE,
+    payload: {
+      offPageObject: offPageObject,
     },
   };
 }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ModelBuilder.Rdf.Repositories;
 using ModelBuilder.Rdf.Services;
+using VDS.RDF;
 using VDS.RDF.Writing;
 
 namespace RdfTurtleParser
@@ -62,7 +63,9 @@ namespace RdfTurtleParser
         public Task<ProjectAm> DeserializeProjectAm(byte[] data)
         {
             var valueAsString = Encoding.UTF8.GetString(data, 0, data.Length);
-            var project = _ontologyService.BuildProject(valueAsString);
+            IGraph graph = new Graph();
+            graph.LoadFromString(valueAsString);
+            var project = _ontologyService.BuildProject(graph);
             return Task.FromResult(project);
         }
 

@@ -8,27 +8,31 @@ import { IsInputTerminal, IsInputVisible } from "../../../../helpers";
 /**
  * Component to check if any terminals have a required OffPageNode flag. If so, an OffPageNode is created.
  * OffPageNodes are not stored in our model/database, therefore this check is crucial to draw the needed OffPageNodes in Mimir.
+ * This component is called from the BlockNode component.
  * @param node
  * @param edges
  * @param size
  * @param dispatch
  */
 export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
-  const isRequired = true;
+  if (!edges.length || !node) return;
 
-  node?.connectors.forEach((conn) => {
-    if (conn.isRequired) {
-      const offPageExists = RequiredOffPageNodeExists(edges, conn);
-      if (!offPageExists) CreateRequiredOffPageNode(node, conn, { x: size.width, y: node?.positionBlockY }, dispatch, isRequired);
-    }
+  node.connectors.forEach((conn) => {
+    if (!conn.isRequired) return;
+    const nodeExists = HasRequiredOffPageNode(edges, conn);
+    if (nodeExists) return;
+
+    const isRequired = true;
+    const position = { x: size.width, y: node.positionBlockY };
+    CreateRequiredOffPageNode(node, conn, position, isRequired, dispatch);
   });
 };
 
-function RequiredOffPageNodeExists(edges: Edge[], connector: Connector) {
+function HasRequiredOffPageNode(edges: Edge[], connector: Connector) {
   const existingEdge =
     IsInputTerminal(connector) || IsInputVisible(connector)
-      ? edges?.find((edge) => edge?.toConnector?.id === connector.id && IsOffPage(edge?.fromNode))
-      : edges?.find((edge) => edge?.fromConnector?.id === connector.id && IsOffPage(edge?.toNode));
+      ? edges.find((edge) => IsOffPage(edge.fromNode) && edge.toConnector?.id === connector.id)
+      : edges.find((edge) => IsOffPage(edge.toNode) && edge.fromConnector?.id === connector.id);
 
   return existingEdge !== undefined;
 }
