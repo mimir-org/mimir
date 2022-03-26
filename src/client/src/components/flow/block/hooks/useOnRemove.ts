@@ -30,11 +30,10 @@ const useOnRemove = (
 ) => {
   const elementsToRemove: Elements = [];
   HandleRemoveElements(elements, elementsToRemove, project, dispatch);
+  if (!elementsToRemove.length) return;
 
-  if (elementsToRemove.length) {
-    CloseInspector(inspectorRef, dispatch);
-    return setElements((els) => removeElements(elementsToRemove, els));
-  }
+  CloseInspector(inspectorRef, dispatch);
+  return setElements((els) => removeElements(elementsToRemove, els));
 };
 
 function HandleRemoveElements(elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) {
