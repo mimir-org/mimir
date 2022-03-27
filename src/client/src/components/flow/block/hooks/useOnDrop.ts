@@ -7,6 +7,7 @@ import { GetSelectedNode, IsFamily } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility } from "../../helpers/LibraryDropHelpers";
+import { Position } from "../../../../models/project";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -46,18 +47,19 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
 function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, flowTransform, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   let parentNode = GetSelectedNode();
-
-  const position = { x: event.clientX, y: event.clientY };
-  const targetNode = ConvertToNode(data, position, project.id, icons, user);
-
-  if (!secondaryNode && !IsFamily(parentNode, targetNode)) return;
+  if (!parentNode) return;
 
   // Handle drop in SplitView
   if (secondaryNode) {
-    const dropZone = CalculateSecondaryNodeDropZone(flowTransform);
-    parentNode = FindParent(targetNode, parentNode, secondaryNode, dropZone, event.clientX);
+    const dropZone = CalculateSecondaryNodeDropZone(flowTransform, parentNode);
+    parentNode = FindParent(data, parentNode, secondaryNode, dropZone, event.clientX);
     if (!parentNode) return;
   }
+
+  const treePosition = SetTreeNodePosition(parentNode, project);
+  const blockPosition = SetBlockNodePosition(flowTransform, event);
+  const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
+  if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
@@ -66,14 +68,89 @@ function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, f
 }
 
 /**
+ * Function to calculate the TreeView position of a dropped Node.
+ * @param parentNode
+ * @param project
+ * @returns a Position object.
+ */
+function SetTreeNodePosition(parentNode: Node, project: Project) {
+  // TODO: fix when implementing auto-position
+  const marginYTree = 220;
+  const treeX = SetTreeXPosition(parentNode, project);
+  return { x: treeX, y: parentNode.positionY + marginYTree } as Position;
+}
+
+/**
+ * Function to calculate the BlockView position of a dropped Node.
+ * @param transform
+ * @param event
+ * @returns a Position object.
+ */
+function SetBlockNodePosition(transform: FlowTransform, event: React.DragEvent<HTMLDivElement>) {
+  const defaultMarginX = 45;
+  const defaultMarginY = 43;
+  let x = event.clientX - defaultMarginX - transform.x;
+  let y = event.clientY - defaultMarginY - transform.y;
+
+  if (transform.zoom < Size.ZOOM_DEFAULT) {
+    const absX = Math.abs(transform.x - event.clientX);
+    const absY = Math.abs(transform.y - event.clientY);
+    x = event.clientX + absX;
+    y = event.clientY + absY;
+  }
+
+  return { x, y } as Position;
+}
+
+/**
+ * Function to position nodes in the TreeView canvas when a node is dropped onto the BlockView canvas.
+ * This function will place a node to the right of the sibling with the highest X position.
+ * @param parentNode
+ * @param project
+ * @returns a value for the X position.
+ */
+function SetTreeXPosition(parentNode: Node, project: Project) {
+  const siblings = FindSiblingNodes(parentNode, project);
+  const siblingMargin = 100;
+  let highestXPos = 0;
+
+  siblings?.forEach((s) => {
+    if (s?.positionX > highestXPos) highestXPos = s?.positionX;
+  });
+
+  return highestXPos + Size.NODE_WIDTH + siblingMargin;
+}
+
+/**
+ * Function to find a dropped Node's sibling nodes.
+ * @param parentNode
+ * @param project
+ * @returns a list of nodes.
+ */
+
+function FindSiblingNodes(parentNode: Node, project: Project) {
+  if (!parentNode) return [];
+  const siblings: Node[] = [];
+
+  project.edges?.forEach((x) => {
+    if (x.fromNodeId === parentNode.id) {
+      const siblingNode = project.nodes?.find((n) => n.id === x.toNodeId && n.level === parentNode.level + 1);
+      siblings.push(siblingNode);
+    }
+  });
+
+  return siblings;
+}
+
+/**
  * Function to define the dropzone for a SecondaryNode.
  * A Node will have the SecondaryNode as parent if dropped over its area.
  * @param transform
- * @returns an X position where the SecondaryNode is placed.
+ * @returns an X value where the SecondaryNode is placed.
  */
-function CalculateSecondaryNodeDropZone(transform: FlowTransform) {
-  const parentNodeWidthScaled = Size.BLOCK_NODE_WIDTH * transform.zoom;
-  return transform.x + Size.SPLITVIEW_DISTANCE + parentNodeWidthScaled;
+function CalculateSecondaryNodeDropZone(transform: FlowTransform, primaryNode: Node) {
+  const parentNodeWidthScaled = primaryNode.width * transform.zoom;
+  return transform.x + parentNodeWidthScaled + Size.SPLITVIEW_DISTANCE;
 }
 
 /**
@@ -85,7 +162,7 @@ function CalculateSecondaryNodeDropZone(transform: FlowTransform) {
  * @param clientX
  * @returns a Node.
  */
-function FindParent(targetNode: Node, selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
+function FindParent(targetNode: LibItem, selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
   if (!IsFamily(targetNode, selectedNode) && !IsFamily(targetNode, secondaryNode)) return null;
   if (!IsFamily(targetNode, selectedNode)) return secondaryNode;
   if (!IsFamily(targetNode, secondaryNode)) return selectedNode;

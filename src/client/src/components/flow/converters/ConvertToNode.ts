@@ -7,14 +7,23 @@ import { Position } from "../../../models/project";
 /**
  * Function to convert data to a Mimir Node.
  * @param data
- * @param position
+ * @param treePosition
+ * @param blockPosition
  * @param projectId
  * @param icons
  * @param user
  * @returns a Node.
  */
-const ConvertToNode = (data: LibItem, position: Position, projectId: string, icons: BlobData[], user: User) => {
+const ConvertToNode = (
+  data: LibItem,
+  treePosition: Position,
+  blockPosition: Position,
+  projectId: string,
+  icons: BlobData[],
+  user: User
+) => {
   const now = GetDateNowUtc();
+  const symbol = icons?.find((x) => x.id === data.symbolId)?.data;
 
   const node = {
     id: CreateId(),
@@ -22,10 +31,10 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
     projectId: projectId,
     name: data.name,
     label: data.name,
-    positionX: position.x,
-    positionY: position.y,
-    positionBlockX: position.x,
-    positionBlockY: position.y,
+    positionX: treePosition.x,
+    positionY: treePosition.y,
+    positionBlockX: blockPosition.x,
+    positionBlockY: blockPosition.y,
     connectors: data.connectors,
     attributes: data.attributes,
     simples: data.simples,
@@ -33,7 +42,7 @@ const ConvertToNode = (data: LibItem, position: Position, projectId: string, ico
     statusId: data.statusId,
     version: data.version,
     masterProjectId: projectId,
-    symbol: icons?.find((x) => x.id === data.symbolId)?.data,
+    symbol: symbol,
     level: 0,
     height: Size.BLOCK_NODE_HEIGHT, // Only used in BlockView
     width: Size.BLOCK_NODE_WIDTH, // Only used in BlockView

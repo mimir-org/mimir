@@ -64,9 +64,10 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
 
   // TODO: fix when implementing auto-position
   const marginY = 220;
-  const position = { x: parentNode.positionX, y: parentNode.positionY + marginY };
+  const treePosition = { x: parentNode.positionX, y: parentNode.positionY + marginY };
+  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY + marginY };
 
-  const targetNode = ConvertToNode(data, position, project.id, icons, user);
+  const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
