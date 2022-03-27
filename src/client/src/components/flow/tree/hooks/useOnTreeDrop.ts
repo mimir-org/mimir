@@ -5,7 +5,7 @@ import { GetSelectedNode, IsAspectNode, IsFamily } from "../../../../helpers";
 import { Dispatch } from "redux";
 import { Elements, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeXPosition } from "../../helpers/LibraryDropHelpers";
 import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -64,7 +64,8 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
 
   // TODO: fix when implementing auto-position
   const marginY = 220;
-  const treePosition = { x: parentNode.positionX, y: parentNode.positionY + marginY };
+  const treeXPos = SetTreeXPosition(parentNode, project);
+  const treePosition = { x: treeXPos, y: parentNode.positionY + marginY };
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY + marginY };
 
   const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
