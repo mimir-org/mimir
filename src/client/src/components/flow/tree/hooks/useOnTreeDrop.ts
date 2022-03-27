@@ -60,15 +60,11 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
 
 function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  const parentNode = getParentNode(sourceNode, project, data);
+  const parentNode = GetParentNode(sourceNode, project, data);
 
-  // TODO: fix when implementing auto-position
-  const marginY = 220;
-  const treeXPos = SetTreeXPosition(parentNode, project);
-  const treePosition = { x: treeXPos, y: parentNode.positionY + marginY };
-  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY + marginY };
-
-  const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
+  const position = SetNodePosition(parentNode, project);
+  const targetNode = ConvertToNode(data, position.treePosition, position.blockPosition, project.id, icons, user);
+  if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
@@ -76,7 +72,17 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
   dispatch(addNode(targetNode));
 }
 
-function getParentNode(sourceNode: Node, project: Project, data: LibItem) {
+function SetNodePosition(parentNode: Node, project: Project) {
+  // TODO: fix when implementing auto-position
+  const marginY = 220;
+  const treeXPos = SetTreeXPosition(parentNode, project);
+  const treePosition = { x: treeXPos, y: parentNode.positionY + marginY };
+  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY + marginY };
+
+  return { treePosition, blockPosition };
+}
+
+function GetParentNode(sourceNode: Node, project: Project, data: LibItem) {
   if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
   return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
 }
