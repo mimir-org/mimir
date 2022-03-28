@@ -6,7 +6,7 @@ import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeXPosition } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodeXPosition } from "../../helpers/LibraryDropHelpers";
 import { Position } from "../../../../models/project";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -96,9 +96,8 @@ function SetBlockNodePosition(transform: FlowTransform, event: React.DragEvent<H
  * @returns a Position object.
  */
 function SetTreeNodePosition(parentNode: Node, project: Project) {
-  // TODO: fix when implementing auto-position
   const marginYTree = 220;
-  const treeX = SetTreeXPosition(parentNode, project);
+  const treeX = SetTreeNodeXPosition(parentNode, project);
   return { x: treeX, y: parentNode.positionY + marginYTree } as Position;
 }
 

@@ -1,6 +1,6 @@
 import CreateId from "./CreateId";
 import { Connector, ConnectorVisibility, Node, Project } from "../../../models";
-import { IsLocation, IsProduct } from "../../../helpers";
+import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers";
 import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal } from ".";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
@@ -41,31 +41,46 @@ export function HandleCreatePartOfEdge(
  * @returns the ConnectorVisibility status.
  */
 export function InitConnectorVisibility(connector: Connector, targetNode: Node) {
-  const isLocationConn = IsLocation(targetNode) && IsLocationTerminal(connector);
-  const isProductConn = IsProduct(targetNode) && IsProductTerminal(connector);
+  const isLocation = IsLocation(targetNode) && IsLocationTerminal(connector);
+  const isProduct = IsProduct(targetNode) && IsProductTerminal(connector);
 
-  if (!isLocationConn && !isProductConn) return ConnectorVisibility.None;
+  if (!isLocation && !isProduct) return ConnectorVisibility.None;
   if (IsInputTerminal(connector)) return ConnectorVisibility.InputVisible;
   if (IsOutputTerminal(connector)) return ConnectorVisibility.OutputVisible;
 }
 
 /**
  * Function to position nodes in the TreeView canvas when a node is dropped from the LibraryModule.
- * This function will place the node to the right of the sibling with the highest X position.
+ * This function will position the node middle-out relative to existing sibling nodes.
  * @param parentNode
  * @param project
  * @returns a value for the X position.
  */
-export function SetTreeXPosition(parentNode: Node, project: Project) {
+export function SetTreeNodeXPosition(parentNode: Node, project: Project) {
+  const isAspect = IsAspectNode(parentNode);
   const siblings = FindSiblingNodes(parentNode, project);
-  const siblingMargin = 100;
-  let highestXPos = 0;
+  const marginX = Size.NODE_WIDTH + 70;
+  const aspectMarginX = 35;
+  let xPos = parentNode.positionX;
 
-  siblings?.forEach((s) => {
-    if (s?.positionX > highestXPos) highestXPos = s?.positionX;
+  if (siblings.length === 0) return isAspect ? xPos - aspectMarginX : xPos;
+  if (siblings.length === 2) return isAspect ? xPos + marginX - aspectMarginX : xPos + marginX;
+
+  // Position node to the right of sibling
+  if (siblings.length % 2 === 0) {
+    siblings.forEach((s) => {
+      if (s.positionX >= xPos) xPos = s.positionX;
+    });
+
+    return xPos + marginX;
+  }
+
+  // Position node to the left of sibling
+  siblings.forEach((s) => {
+    if (s.positionX < xPos) xPos = s.positionX;
   });
 
-  return highestXPos + Size.NODE_WIDTH + siblingMargin;
+  return xPos - marginX;
 }
 
 /**
