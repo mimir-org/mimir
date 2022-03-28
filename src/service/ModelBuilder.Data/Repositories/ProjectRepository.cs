@@ -113,7 +113,7 @@ namespace Mb.Data.Repositories
 
             var bulk = new BulkOperations();
 
-            using (var trans = new TransactionScope())
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0,0,10,0)))
             {
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
