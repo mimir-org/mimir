@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../compLibrary/colors";
+import { Color } from "../../../../compLibrary/colors/Color";
 
 interface LibFooterProps {
   libOpen: boolean;
@@ -15,7 +15,7 @@ export const LibFooter = styled.div<LibFooterProps>`
   grid-auto-rows: min-content;
   gap: 30px 40px;
 
-  background-color: ${Color.GREY_LIGHTER};
+  background-color: ${Color.GHOST_WHITE};
   box-shadow: 0px -4px 10px 1px rgba(0, 0, 0, 0.05);
   opacity: ${(props) => (props.libOpen ? 1 : 0)};
 `;

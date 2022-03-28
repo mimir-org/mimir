@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../compLibrary/font";
 
 interface AvatarBoxProps {
@@ -36,7 +36,7 @@ export const AvatarCircle = styled.div`
 export const AvatarInitials = styled.p`
   position: absolute;
   margin: 0;
-  color: ${Color.TEXT_AVATAR};
+  color: ${Color.BLACK_ROCK};
   font-size: ${FontSize.STANDARD};
   font-weight: ${FontWeight.NORMAL};
 `;

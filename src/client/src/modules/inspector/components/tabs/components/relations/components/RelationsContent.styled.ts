@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../compLibrary/font";
 
 export const RelationsContainer = styled.div`
@@ -9,7 +9,7 @@ export const RelationsContainer = styled.div`
 `;
 
 export const RelationsHeader = styled.span`
-  color: ${Color.GREY_HEADER};
+  color: ${Color.DAVYS_GREY};
   font-size: ${FontSize.MEDIUM};
 `;
 
@@ -48,7 +48,7 @@ export const RelationsTerminalListElement = styled.div<RelationsTerminalListElem
   display: flex;
   align-items: center;
   background-color: ${(props) => props.color};
-  border-bottom: 1px solid ${Color.GREY_DARK};
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
 
   .icon {
     display: flex;
@@ -56,7 +56,7 @@ export const RelationsTerminalListElement = styled.div<RelationsTerminalListElem
   }
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     cursor: pointer;
     text-decoration: underline;
   }

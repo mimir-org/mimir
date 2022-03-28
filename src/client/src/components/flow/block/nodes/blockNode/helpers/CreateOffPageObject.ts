@@ -1,6 +1,6 @@
 import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
-import { Size } from "../../../../../../compLibrary/size";
+import { Size } from "../../../../../../compLibrary/size/Size";
 import {
   Aspect,
   CONNECTOR_KIND,
@@ -55,6 +55,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     projectId: sourceNode.projectId,
   } as Node;
 
+  //#region Connectors
   const inputConnector = {
     id: CreateId(),
     name: "OffPageInput",
@@ -98,7 +99,9 @@ export const CreateOffPageObject = (data: OffPageData) => {
   offPageNode.connectors.push(inputConnector);
   offPageNode.connectors.push(outputConnector);
   offPageNode.connectors.push(partOfConnector);
+  //#endregion
 
+  //#region Edges
   const partofEdge = {
     id: CreateId(),
     fromConnector: sourcePartOfConn,
@@ -128,6 +131,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     kind: EDGE_KIND,
     projectId: sourceNode.projectId,
   } as Edge;
+  //#endregion
 
   return {
     node: offPageNode,

@@ -9,6 +9,11 @@ interface Props {
   bottomLine?: boolean;
 }
 
+/**
+ * Component for a MenuElement in the ProjectMenu.
+ * @param interface
+ * @returns a clickable element with an icon and text.
+ */
 export const MenuElement = ({ text, icon, onClick, disabled, bottomLine }: Props) => (
   <MenuElementButton onClick={() => !disabled && onClick()} disabled={disabled} bottomLine={bottomLine}>
     <Icon size={18} src={icon} alt="" />

@@ -4,12 +4,12 @@ import { fetchBlobData, fetchInitialData, fetchSimpleTypes } from "./redux/typeE
 import { CloseIcon } from "../assets/icons/close";
 import { CheckIcon } from "../assets/icons/checkmark";
 import { LibraryIcon } from "../assets/icons/modules";
-import { TextResources } from "../assets/text";
 import { Button } from "../compLibrary/buttons";
 import { GetInputTerminals, GetOutputTerminals } from "./preview/helpers";
 import { TypeEditorInputs, TypePreview } from "./";
 import { OnCloseEditor, OnPropertyChange, OnSave } from "./handlers";
 import { GetPropertiesHeight, GetSelectedIcon, GetSelectedRds, GetSelectedTerminal, GetTypeEditorLists } from "./helpers";
+import { TypeEditorTextResources } from "./assets/TypeEditorTextResources";
 import {
   ButtonsContainer,
   ChooseProperties,
@@ -40,7 +40,7 @@ export const TypeEditorComponent = () => {
       <TypeEditorWrapper>
         <TypeEditorContent>
           <TypeEditorHeader>
-            <p>{TextResources.TypeEditor}</p>
+            <p>{TypeEditorTextResources.TYPEEDITOR}</p>
             <img src={CloseIcon} alt="close-window" onClick={() => OnCloseEditor(dispatch)} />
           </TypeEditorHeader>
           <TypeEditorInputs
@@ -71,12 +71,12 @@ export const TypeEditorComponent = () => {
               <ButtonsContainer>
                 <Button
                   onClick={() => OnSave(dispatch, state.createLibraryType)}
-                  text={createMode ? TextResources.TypeEditor_Button_Add : TextResources.TypeEditor_Button_Edit}
+                  text={createMode ? TypeEditorTextResources.BUTTON_ADD : TypeEditorTextResources.BUTTON_EDIT}
                   icon={createMode ? LibraryIcon : CheckIcon}
                 />
                 <Button
                   onClick={() => OnCloseEditor(dispatch)}
-                  text={createMode ? TextResources.TypeEditor_Button_Cancel_Add : TextResources.TypeEditor_Button_Cancel_Edit}
+                  text={createMode ? TypeEditorTextResources.BUTTON_CANCEL_ADD : TypeEditorTextResources.BUTTON_CANCEL_EDIT}
                 />
               </ButtonsContainer>
             </TypePreviewColumn>

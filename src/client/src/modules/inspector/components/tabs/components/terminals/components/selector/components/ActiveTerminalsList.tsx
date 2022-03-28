@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Color } from "../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { ConnectorType, TerminalType } from "../../../../../../../../../models";
 import { ActiveTerminalsTypeList } from "./ActiveTerminalsTypeList";
@@ -69,7 +69,7 @@ export const ActiveTerminalsList = ({
               onClick={() =>
                 OnCategoryClick(category, isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)
               }
-              color={i % 2 ? undefined : Color.PURPLE_LIGHT}
+              color={i % 2 ? undefined : Color.LAVANDER_WEB_LIST}
             >
               <div className="numCategoryTerminals">{numCategoryTerminals}</div>
 

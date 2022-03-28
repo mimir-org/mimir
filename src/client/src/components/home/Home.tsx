@@ -3,7 +3,7 @@ import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
 import { StartPage } from "../start/StartPage";
-import { InspectorModule } from "../../modules/inspector";
+import { InspectorModule } from "../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../modules/library/LibraryModule";
 import { ProjectSubMenus } from "../menus/projectMenu/ProjectSubMenus";
 import { search } from "../../redux/store/project/actions";

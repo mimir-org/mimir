@@ -2,7 +2,7 @@ import { GetAspectColor, GetCompanyLogoForNode, GetRdsPrefix } from "../../../..
 import { AspectColorType, Connector, Node } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
-import { Navigation } from "../../navigation/Navigation";
+import { Navigation } from "./Navigation";
 import Config from "../../../../../../models/Config";
 
 interface Props {

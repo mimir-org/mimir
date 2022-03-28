@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType, FontWeight } from "../../../../../../../../compLibrary/font";
 
 interface NodeCollectionContainerProps {
@@ -8,9 +8,9 @@ interface NodeCollectionContainerProps {
 
 export const NodeCollectionContainer = styled.div<NodeCollectionContainerProps>`
   display: flex;
-  background-color: ${Color.GREY_LIGHT};
+  background-color: ${Color.WHITE_SMOKE};
   margin: ${(props) => (props.isOpen ? "2px 0px 2px 0px" : "2px 0px 5px 0px")};
-  border: 1px solid ${(props) => (props.isOpen ? Color.BLUE_MAGENTA : Color.GREY_LIBRARY_COLLECTION_BORDER)};
+  border: 1px solid ${(props) => (props.isOpen ? Color.BASTILLE : Color.SILVER)};
   border-radius: 5px;
   flex-direction: column;
 `;
@@ -27,7 +27,7 @@ export const NodeCollectionButton = styled.button<NodeCollectionButtonProps>`
   width: 100%;
   height: 30px;
   border-style: solid;
-  border-color: ${(props) => (props.isOpen ? Color.BLUE_MAGENTA : Color.GREY_LIBRARY_COLLECTION_BORDER)};
+  border-color: ${(props) => (props.isOpen ? Color.BASTILLE : Color.SILVER)};
   border-width: ${(props) => (props.isOpen ? "0px 0px 1px 0px" : "0px")} !important;
   border-radius: 3px;
   background-color: ${Color.WHITE} !important;

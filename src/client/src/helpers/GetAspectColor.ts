@@ -1,4 +1,4 @@
-import { Color } from "../compLibrary/colors";
+import { Color } from "../compLibrary/colors/Color";
 import { AspectColorType, LibItem, Node } from "../models";
 import { IsFunction, IsLocation, IsProduct } from ".";
 
@@ -23,27 +23,27 @@ const GetAspectColor = (node: Node | LibItem, colorType: AspectColorType, isTran
 };
 
 function GetMainColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FUNCTION_MAIN;
-  if (IsProduct(node)) return Color.PRODUCT_MAIN;
-  if (IsLocation(node)) return Color.LOCATION_MAIN;
+  if (IsFunction(node)) return Color.LEMON_YELLOW;
+  if (IsProduct(node)) return Color.ELECTRIC_BLUE;
+  if (IsLocation(node)) return Color.MAGENTA;
 }
 
 function GetSelectedColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FUNCTION_SELECTED;
-  if (IsProduct(node)) return Color.PRODUCT_SELECTED;
-  if (IsLocation(node)) return Color.LOCATION_SELECTED;
+  if (IsFunction(node)) return Color.SUNGLOW;
+  if (IsProduct(node)) return Color.VIRIDIAN_GREEN;
+  if (IsLocation(node)) return Color.PURPLE_MUNSELL;
 }
 
 function GetHeaderColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FUNCTION_HEADER;
-  if (IsProduct(node)) return Color.PRODUCT_HEADER;
-  if (IsLocation(node)) return Color.LOCATION_HEADER;
+  if (IsFunction(node)) return Color.LEMON_YELLOW_CRAYOLA;
+  if (IsProduct(node)) return Color.CELESTE;
+  if (IsLocation(node)) return Color.PINK_LACE;
 }
 
 function GetTabColor(node: Node | LibItem) {
-  if (IsFunction(node)) return Color.FUNCTION_TAB;
-  if (IsProduct(node)) return Color.PRODUCT_TAB;
-  if (IsLocation(node)) return Color.LOCATION_TAB;
+  if (IsFunction(node)) return Color.JASMINE;
+  if (IsProduct(node)) return Color.DARK_TURQUOISE;
+  if (IsLocation(node)) return Color.PINK;
 }
 
 export default GetAspectColor;

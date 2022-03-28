@@ -1,12 +1,12 @@
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { Node } from "../../../../../models";
 import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
 
 const GetNodeTypeString = (node: Node) => {
-  if (IsLocation(node)) return TextResources.Type_BlockLocation;
-  if (IsProduct(node)) return TextResources.Type_BlockProduct;
-  if (IsFunction(node)) return TextResources.Type_BlockFunction;
-  if (IsOffPage(node)) return TextResources.Type_OffPageNode;
+  if (IsLocation(node)) return TextResources.BLOCK_LOCATION;
+  if (IsProduct(node)) return TextResources.BLOCK_PRODUCT;
+  if (IsFunction(node)) return TextResources.BLOCK_FUNCTION;
+  if (IsOffPage(node)) return TextResources.BLOCK_OFFPAGE_NODE;
 };
 
 export default GetNodeTypeString;

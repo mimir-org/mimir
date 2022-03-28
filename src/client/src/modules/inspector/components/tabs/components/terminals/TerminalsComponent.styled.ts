@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TERMINALS_COLUMN_HORIZONTAL_PADDING, TERMINALS_COLUMN_WIDTH } from "../shared/styled/TerminalsColumn";
-import { Color } from "../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../compLibrary/colors/Color";
 
 export const TerminalsWrapper = styled.div`
   display: flex;
@@ -17,5 +17,5 @@ export const TerminalsParametersWrapper = styled.div`
 
   border-left-width: 1px;
   border-left-style: solid;
-  border-color: ${Color.GREY_DARK};
+  border-color: ${Color.LIGHT_SILVER};
 `;

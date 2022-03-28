@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../compLibrary/colors";
+import { Color } from "../../compLibrary/colors/Color";
 
 interface AppBoxProps {
   fetching: boolean;
@@ -8,7 +8,7 @@ interface AppBoxProps {
 export const AppBox = styled.div<AppBoxProps>`
   width: 100%;
   height: 100%;
-  background: ${(props) => props.fetching && Color.GREY};
+  background: ${(props) => props.fetching && Color.GAINSBORO};
   opacity: ${(props) => props.fetching && 0.2};
 `;
 

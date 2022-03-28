@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../../../../compLibrary/font";
 
 export const MenuWrapper = styled.div`
@@ -65,7 +65,7 @@ export const MenuListItem = styled.label`
   height: 30px;
   border-width: 1px 0 1px 0;
   border-style: solid;
-  border-color: ${Color.GREY_DARK};
+  border-color: ${Color.LIGHT_SILVER};
   font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
   background-color: ${Color.WHITE};
@@ -73,7 +73,7 @@ export const MenuListItem = styled.label`
   z-index: 1;
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     span {
       text-decoration: underline;
     }

@@ -1,6 +1,6 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
 import { Connector, Node, Project } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
@@ -85,9 +85,9 @@ const onMouseUp = (
   dispatch: Dispatch
 ) => {
   if (!sourceTerminal || !targetTerminal) return;
-  if (!validTerminalType) dispatch(setValidation({ valid: false, message: TextResources.Validation_Terminals }));
-  if (!validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.Validation_OffPage }));
-  if (!validTransport || !validRelation) dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+  if (!validTerminalType) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TERMINALS }));
+  if (!validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_OFFPAGE }));
+  if (!validTransport || !validRelation) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
 
   return document.removeEventListener("mouseup", () =>
     onMouseUp(sourceTerminal, targetTerminal, validTerminalType, validOffPageNode, validTransport, validRelation, dispatch)

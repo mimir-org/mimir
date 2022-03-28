@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { IsProduct } from "../../../../../../../helpers";
 import { Node } from "../../../../../../../models";
-import { Size } from "../../../../../../../compLibrary/size";
+import { Size } from "../../../../../../../compLibrary/size/Size";
 
 interface Props {
   node: Node;
@@ -38,7 +38,7 @@ const NodeBox = styled.div<Props>`
   .line {
     height: 1px;
     width: auto;
-    background-color: ${(props) => (IsProduct(props.node) ? Color.PRODUCT_SELECTED : Color.FUNCTION_SELECTED)};
+    background-color: ${(props) => (IsProduct(props.node) ? Color.VIRIDIAN_GREEN : Color.SUNGLOW)};
     position: relative;
     bottom: 15px;
     left: 0;

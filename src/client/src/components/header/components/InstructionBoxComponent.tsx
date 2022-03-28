@@ -1,4 +1,4 @@
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import {
   InstructionArrowContainer,
   InstructionArrowCurve,
@@ -20,7 +20,7 @@ const InstructionBoxComponent = () => (
       <InstructionArrowPoint />
     </InstructionArrowContainer>
     <InstructionTextBox>
-      <InstructionText>{TextResources.Project_Menu_Instruction}</InstructionText>
+      <InstructionText>{TextResources.PROJECT_MENU_SELECT}</InstructionText>
     </InstructionTextBox>
   </InstructionProjectMenu>
 );

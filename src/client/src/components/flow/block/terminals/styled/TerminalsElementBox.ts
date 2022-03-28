@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../compLibrary/font";
 
 const TerminalsElementBox = styled.label`
@@ -9,12 +9,12 @@ const TerminalsElementBox = styled.label`
   gap: 5px;
   padding-left: 5px;
   height: 25px;
-  border-bottom: 1px solid ${Color.GREY_DARK};
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
   font-size: ${FontSize.TINY};
   color: ${Color.BLACK};
 
   &:hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     text-decoration: underline;
     cursor: pointer;
   }

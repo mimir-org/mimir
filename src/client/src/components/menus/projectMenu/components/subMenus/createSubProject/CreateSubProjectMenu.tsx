@@ -4,7 +4,7 @@ import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CreateSubProjectIcon } from "../../../../../../assets/icons/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useSelectedFlowElements } from "../../../../../../helpers";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
@@ -22,20 +22,20 @@ export const CreateSubProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_SubProject_Save}>
-        <Label>{TextResources.Project_Name}</Label>
+      <InfoModalContent title={TextResources.PROJECT_SUBPROJECT_SAVE}>
+        <Label>{TextResources.PROJECT_NAME}</Label>
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.Project_Name_Placeholder}
+          placeholder={TextResources.PROJECT_NAME_PLACEHOLDER}
           value={projectName}
         />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
           <Button
             disabled={isActionDisabled}
             onClick={onAction}
-            text={TextResources.Project_SubProject}
+            text={TextResources.PROJECT_SUBPROJECT}
             icon={CreateSubProjectIcon}
           />
         </ButtonBox>

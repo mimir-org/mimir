@@ -1,5 +1,5 @@
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
 import { Node } from "../../../../../models";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
@@ -13,6 +13,10 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
   const visible = !data?.edge?.isHidden;
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
+
+  // Adjust to match connector
+  targetX += 8;
+  sourceX -= 8;
 
   const bezierPath = getBezierPath({
     sourceX,
@@ -38,7 +42,7 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
 };
 
 function GetRelationColor(node: Node) {
-  if (IsFunction(node)) return Color.FUNCTION_SELECTED;
-  if (IsLocation(node)) return Color.LOCATION_MAIN;
-  if (IsProduct(node)) return Color.PRODUCT_MAIN;
+  if (IsFunction(node)) return Color.SUNGLOW;
+  if (IsLocation(node)) return Color.MAGENTA;
+  if (IsProduct(node)) return Color.ELECTRIC_BLUE;
 }

@@ -1,10 +1,10 @@
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize } from "../../../compLibrary/font";
 import styled from "styled-components";
 
 const ValidationMessage = styled.span`
   margin-top: 5px;
-  color: ${Color.RED_WARNING};
+  color: ${Color.ULTRA_RED};
   font-size: ${FontSize.STANDARD};
 
   :empty:before {

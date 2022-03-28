@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../compLibrary/font";
 
 interface Props {
@@ -19,7 +19,7 @@ const ButtonsContainer = styled.div<Props>`
   flex-direction: row;
   align-items: center;
   background: ${Color.WHITE};
-  border: 2px solid ${Color.BLUE_MAGENTA};
+  border: 2px solid ${Color.BASTILLE};
   border-radius: 5px;
   padding: 0px 16px;
   white-space: nowrap;

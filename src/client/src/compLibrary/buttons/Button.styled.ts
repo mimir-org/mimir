@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../colors";
+import { Color } from "../colors/Color";
 import { FontSize } from "../font";
 
 export const ButtonBase = styled.button`
@@ -12,7 +12,7 @@ export const ButtonBase = styled.button`
   padding: 10px 20px;
   font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
-  border-color: ${Color.BLUE_MAGENTA};
+  border-color: ${Color.BASTILLE};
   border-style: solid;
   cursor: pointer;
 
@@ -40,7 +40,7 @@ export const ButtonBase = styled.button`
 `;
 
 export const GreyButton = styled(ButtonBase)`
-  background: ${Color.GREY_LIGHT};
+  background: ${Color.WHITE_SMOKE};
   border-width: 1px;
   border-radius: 2px;
 `;

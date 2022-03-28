@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../compLibrary/font";
 
 interface Props {
@@ -14,7 +14,7 @@ export const TerminalsCategoryListElement = styled.div<Props>`
   font-size: ${FontSize.SMALL};
   display: flex;
   background-color: ${(props) => props.color};
-  border-bottom: 1px solid ${Color.GREY_DARK};
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
 
   text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
   font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
@@ -34,7 +34,7 @@ export const TerminalsCategoryListElement = styled.div<Props>`
   }
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     cursor: pointer;
     text-decoration: underline;
   }

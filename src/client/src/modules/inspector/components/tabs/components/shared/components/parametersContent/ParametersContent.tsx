@@ -1,4 +1,4 @@
-import { TextResources } from "../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { CombinedAttributeFilter, Project } from "../../../../../../../../models";
 import { GetAttributeCombinations } from "./helpers/GetAttributeCombinations";
 import { GetParametersColor } from "./helpers/GetParametersColor";
@@ -95,7 +95,7 @@ export const ParametersContent = ({
             className={`link ${isCreateLibraryType && "hide-link"}`}
             onClick={() => !isCreateLibraryType && OnClearAllFilters(parametersElement.id, dispatch)}
           >
-            {TextResources.Inspector_Params_Clear_All}
+            {TextResources.INSPECTOR_PARAMS_CLEAR_ALL}
           </ParameterButton>
           <ParameterButton
             className={`link ${isCreateLibraryType && "hide-link"}`}
@@ -103,7 +103,7 @@ export const ParametersContent = ({
               !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch)
             }
           >
-            {TextResources.Inspector_Params_Default}
+            {TextResources.INSPECTOR_PARAMS_DEFAULT}
           </ParameterButton>
         </ParametersContentMenu>
       </ParametersContentHeader>

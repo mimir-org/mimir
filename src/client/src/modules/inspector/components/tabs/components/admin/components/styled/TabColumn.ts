@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../../compLibrary/font";
 
 interface Props {
@@ -15,7 +15,7 @@ export const TabColumn = styled.div<Props>`
 
   & > div {
     font-size: ${FontSize.TINY};
-    color: ${Color.GREY_HEADER};
+    color: ${Color.DAVYS_GREY};
   }
 
   & > div > :first-child {

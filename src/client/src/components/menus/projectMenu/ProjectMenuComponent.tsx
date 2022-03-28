@@ -3,7 +3,7 @@ import * as Icons from "../../../assets/icons/project";
 import { MenuElement } from "./components/MenuElement";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { useRef } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { useSelectedFlowElements } from "../../../helpers";
@@ -35,29 +35,29 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   return (
     <ProjectMenuBox ref={menuRef} id={MENU_TYPE.PROJECT_MENU} hidden={!!activeMenu}>
       <MenuElement
-        text={TextResources.Project_OpenProject}
+        text={TextResources.PROJECT_OPEN}
         icon={Icons.OpenProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnOpenClick(dispatch))}
       />
       <MenuElement
-        text={TextResources.Project_CreateProject}
+        text={TextResources.PROJECT_CREATE}
         icon={Icons.CreateProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateClick(dispatch))}
       />
       <MenuElement
-        text={TextResources.Project_Save_Label}
+        text={TextResources.PROJECT_SAVE}
         icon={isNoActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
         onClick={() => projectMenuAction(() => Click.OnSaveProjectClick(dispatch, project))}
         disabled={isNoActiveProject}
         bottomLine
       />
       <MenuElement
-        text={TextResources.Project_Import}
+        text={TextResources.PROJECT_IMPORT}
         icon={Icons.ImportProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnImportProjectFile(dispatch))}
       />
       <MenuElement
-        text={TextResources.Project_Export}
+        text={TextResources.PROJECT_EXPORT}
         icon={isNoActiveProject ? Icons.ExportProjectInactiveIcon : Icons.ExportProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnExportProjectFile(dispatch))}
         disabled={isNoActiveProject}
@@ -70,18 +70,18 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
           disabled={!projectState?.project?.isSubProject}
         /> */}
       <MenuElement
-        text={TextResources.Project_SubProject_Save}
+        text={TextResources.PROJECT_SUBPROJECT_SAVE}
         icon={selectedNodeIds ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
         disabled={!selectedNodeIds}
       />
       <MenuElement
-        text={TextResources.Project_Import_LibraryTypes}
+        text={TextResources.PROJECT_IMPORT_LIB_TYPES}
         icon={Icons.ImportLibraryIcon}
         onClick={() => projectMenuAction(() => Click.OnImportLibraryFile(dispatch))}
       />
       <MenuElement
-        text={TextResources.Project_Export_LibraryTypes}
+        text={TextResources.PROJECT_EXPORT_LIBRARY_TYPES}
         icon={Icons.ExportLibraryIcon}
         onClick={() => projectMenuAction(() => Click.OnSaveLibraryFile(dispatch))}
       />

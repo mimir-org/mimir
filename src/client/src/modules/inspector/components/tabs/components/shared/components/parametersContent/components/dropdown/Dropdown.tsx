@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { MenuHeader, MenuList, MenuListItem, MenuWrapper } from "./Dropdown.styled";
 import { CollapseIcon, ExpandIcon } from "../../../../../../../../../../assets/icons/chevron";
-import { TextResources } from "../../../../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../../../../assets/text/TextResources";
 import { CombinedAttributeFilter } from "../../../../../../../../../../models";
 import { FilterDict } from "../../../../../parameters/redux/types";
-import { Checkbox } from "../../../../../../../../../../compLibrary/input/checkbox/common";
+import { Checkbox } from "../../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 
 interface Props {
   items: CombinedAttributeFilter[];
@@ -22,7 +22,7 @@ export const Dropdown = ({ items, selectedItems, onChange }: Props) => {
   return (
     <MenuWrapper>
       <MenuHeader onClick={() => setIsListOpen(!isListOpen)}>
-        <p className="searchText">{TextResources.Inspector_Params_Search}</p>
+        <p className="searchText">{TextResources.INSPECTOR_PARAMS_SEARCH}</p>
         <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
       </MenuHeader>
       {isListOpen && (

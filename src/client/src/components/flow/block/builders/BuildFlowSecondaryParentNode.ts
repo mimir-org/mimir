@@ -1,6 +1,6 @@
 import { FlowElement } from "react-flow-renderer";
-import { TextResources } from "../../../../assets/text";
-import { Size } from "../../../../compLibrary/size";
+import { TextResources } from "../../../../assets/text/TextResources";
+import { Size } from "../../../../compLibrary/size/Size";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
 
@@ -15,7 +15,7 @@ import { CreateId } from "../../helpers";
 const BuildFlowSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) => {
   if (!primaryNode || !secondaryNode) return null;
 
-  const type = TextResources.Type_BlockParentNode;
+  const type = TextResources.BLOCK_PARENTNODE;
   const distanceToPrimaryNode = Size.SPLITVIEW_DISTANCE;
 
   // The secondaryNode is positioned to the right of the primaryNode

@@ -9,7 +9,7 @@ import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../redux/store";
-import { Size } from "../../../../../compLibrary/size";
+import { Size } from "../../../../../compLibrary/size/Size";
 import { GetAspectColor } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
 import { SetChildNodeSize } from "./helpers/SetChildNodeSize";

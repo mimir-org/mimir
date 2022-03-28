@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../compLibrary/font";
 
 export const UserMenuBox = styled.div`
@@ -8,7 +8,7 @@ export const UserMenuBox = styled.div`
   background: ${Color.WHITE};
   width: 250px;
   border-style: solid;
-  border-color: ${Color.BLUE_MAGENTA};
+  border-color: ${Color.BASTILLE};
   border-width: 0 1px 1px 1px;
   border-radius: 0 0 10px 10px;
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
@@ -33,7 +33,7 @@ export const UserNameRoleText = styled.p`
   margin: 0;
   font-size: ${FontSize.MEDIUM};
   font-weight: ${FontWeight.NORMAL};
-  color: ${Color.GREY_INACTIVE};
+  color: ${Color.BATTLESHIP_GREY};
 `;
 
 export const UserMenuElement = styled.button`
@@ -43,17 +43,17 @@ export const UserMenuElement = styled.button`
   border: 0;
   width: 100%;
   padding: 10px 15px;
-  color: ${Color.BLUE_MAGENTA};
+  color: ${Color.BASTILLE};
   cursor: pointer;
   text-align: left;
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
   }
 
   & + & {
     margin-top: 10px;
-    border-top: 1px solid ${Color.GREY};
+    border-top: 1px solid ${Color.GAINSBORO};
     border-radius: 0 0 10px 10px;
   }
 `;

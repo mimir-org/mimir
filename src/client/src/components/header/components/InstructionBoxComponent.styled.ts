@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../compLibrary/font";
 
 export const InstructionProjectMenu = styled.div`
@@ -60,7 +60,7 @@ export const InstructionTextBox = styled.div`
   margin-top: -25px;
   margin-right: -50px;
   width: 235px;
-  background-color: ${Color.BLUE_DARK};
+  background-color: ${Color.MIDNIGHT_EXPRESS};
   border: ${Color.WHITE} solid 1px;
   border-radius: 5px;
 `;

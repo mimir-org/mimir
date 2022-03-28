@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated";
-import { Size } from "../../compLibrary/size";
+import { Size } from "../../compLibrary/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
@@ -52,6 +52,8 @@ export const LibraryModule = ({ dispatch }: Props) => {
         search={(text: string) => setSearchString(text)}
         aspectFilters={aspectFilters}
         setAspectFilters={setAspectFilters}
+        // collectionState={collectionState}
+        // setCollectionState={setCollectionState}
       />
       <ModuleBody
         libOpen={libOpen}

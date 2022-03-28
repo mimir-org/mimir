@@ -1,4 +1,4 @@
-import { Color } from "../compLibrary/colors";
+import { Color } from "../compLibrary/colors/Color";
 
 /**
  * Component to toggle Mimir's color profile between light and dark.
@@ -15,7 +15,7 @@ const ToggleDarkModeColor = (isDarkMode: boolean) => {
   const inspectorBody = document.getElementById("InspectorBody");
 
   const mainColor = isDarkMode ? Color.DARKMODE_MAIN : Color.WHITE;
-  const moduleColor = isDarkMode ? Color.DARKMODE_MODULE : Color.GREY_LIGHTER;
+  const moduleColor = isDarkMode ? Color.DARKMODE_MODULE : Color.GHOST_WHITE;
 
   if (root) root.style.background = mainColor;
   if (explorer) explorer.style.background = moduleColor;

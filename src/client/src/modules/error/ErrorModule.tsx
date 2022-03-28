@@ -1,7 +1,7 @@
 import * as selectors from "./helpers/selectors";
 import ExitButton from "../../compLibrary/modal/components/ExitButton";
 import { useEffect, useState } from "react";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { BadRequestData } from "../../models/webclient";
 import { deleteProjectError } from "../../redux/store/project/actions";
 import { deleteCommonError } from "../../redux/store/common/commonSlice";
@@ -10,7 +10,7 @@ import { deleteUserError } from "../../redux/store/user/userSlice";
 import { deleteTypeEditorError } from "../../typeEditor/redux/typeEditorSlice";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
 import { Modal } from "../../compLibrary/modal/Modal";
-import { Color } from "../../compLibrary/colors";
+import { Color } from "../../compLibrary/colors/Color";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
 
@@ -119,7 +119,7 @@ const ErrorModule = () => {
 
   return (
     <Modal isBlurred isOpen={visible} onExit={closeHeader}>
-      <InfoModalContent title={TextResources.Error_Tile} color={Color.RED_WARNING}>
+      <InfoModalContent title={TextResources.ERROR_GENERIC} color={Color.ULTRA_RED}>
         <ExitButton onClick={closeHeader} />
         <ErrorBody>
           {errors?.map((x, index) => {

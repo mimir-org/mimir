@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 
 interface ToolElementBoxProps {
   active: boolean;
@@ -14,14 +14,14 @@ export const ToolElementBox = styled.button<ToolElementBoxProps>`
   height: 40px;
   width: 60px;
   cursor: pointer;
-  background-color: ${(props) => (props.active ? Color.GREY_TOOLBAR_SELECTED : "transparent")};
+  background-color: ${(props) => (props.active ? Color.DIM_GREY : "transparent")};
   border-width: 0;
   border-left: ${(props) => props.borderLeft && 1}px;
   border-right: ${(props) => props.borderRight && 1}px;
   border-style: solid;
-  border-color: ${Color.GREY};
+  border-color: ${Color.GAINSBORO};
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
   }
 `;

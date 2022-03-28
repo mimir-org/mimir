@@ -1,4 +1,4 @@
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { SimpleLikeItem } from "../../../../../types";
 import { TerminalsCategoryListElement } from "../../shared/styled/TerminalsCategoryListElement";
 import { TerminalsListElementWrapper } from "../../shared/styled/TerminalsListElementWrapper";
@@ -18,7 +18,7 @@ export const ActiveSimpleTypesList = ({ simpleTypes, selectedSimpleTypeId, onSel
             radius={0}
             isSelected={selectedSimpleTypeId === type.id}
             onClick={() => onSelect(type)}
-            color={i % 2 ? undefined : Color.PURPLE_LIGHT}
+            color={i % 2 ? undefined : Color.LAVANDER_WEB_LIST}
           >
             {type.name}
           </TerminalsCategoryListElement>

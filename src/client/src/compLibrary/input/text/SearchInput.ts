@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../colors";
+import { Color } from "../../colors/Color";
 import { FontSize, FontWeight } from "../../font";
 import { SearchIcon } from "../../../assets/icons/common";
 
@@ -17,11 +17,11 @@ const SearchInput = styled.input`
   background-repeat: no-repeat;
 
   &:hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
   }
 
   &:focus {
-    border-color: ${Color.BLUE_MAGENTA};
+    border-color: ${Color.BASTILLE};
   }
 `;
 

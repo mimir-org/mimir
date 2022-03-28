@@ -1,9 +1,9 @@
-import { TextResources } from "../../assets/text";
 import { Aspect, ObjectType } from "../../models";
+import { TypeEditorTextResources } from "../assets/TypeEditorTextResources";
 
 const GetDefaultValue = (type: Aspect | ObjectType | "typeName") => {
-  if (type === Aspect.NotSet) return TextResources.TypeEditor_Aspect_Placeholder;
-  if (type === ObjectType.NotSet) return TextResources.TypeEditor_Object_Placeholder;
+  if (type === Aspect.NotSet) return TypeEditorTextResources.ASPECT_PLACEHOLDER;
+  if (type === ObjectType.NotSet) return TypeEditorTextResources.OBJECT_PLACEHOLDER;
   if (type === "typeName") return "";
 };
 

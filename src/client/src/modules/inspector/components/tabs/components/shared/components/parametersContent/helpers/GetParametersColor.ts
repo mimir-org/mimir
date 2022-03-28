@@ -1,26 +1,26 @@
-import { Color } from "../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 
 export const GetParametersColor = (index: number): [string, string] => {
   switch (index % 6) {
     case 0:
-      return [Color.PARAMS_CYAN, Color.PARAMS_CYAN_LIGHT];
+      return [Color.CADET_BLUE, Color.MYSTIC];
 
     case 1:
-      return [Color.PARAMS_PURPLE, Color.PARAMS_PURPLE_LIGHT];
+      return [Color.CORNFLOWER_BLUE, Color.LAVENDER];
 
     case 2:
-      return [Color.PARAMS_PINK, Color.PARAMS_PINK_LIGHT];
+      return [Color.FRENCH_MAUVE, Color.PALE_PURPLE_PANTONE];
 
     case 3:
-      return [Color.PARAMS_ORANGE, Color.PARAMS_ORANGE_LIGHT];
+      return [Color.CHOCOLATE, Color.LINEN];
 
     case 4:
-      return [Color.PARAMS_GREEN, Color.PARAMS_GREEN_LIGHT];
+      return [Color.ASPARAGUS, Color.NYANZA];
 
     case 5:
-      return [Color.PARAMS_YELLOW, Color.PARAMS_YELLOW_LIGHT];
+      return [Color.GOLDENROD, Color.CREAM];
 
     default:
-      return [Color.PARAMS_PURPLE, Color.PARAMS_PURPLE_LIGHT];
+      return [Color.CORNFLOWER_BLUE, Color.LAVENDER];
   }
 };

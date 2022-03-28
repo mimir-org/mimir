@@ -2,7 +2,7 @@ import { ProjectData } from "./ProjectData";
 import { Dispatch } from "redux";
 import { ProjectItemCm } from "../../../../../../../models";
 import { ProjectDataContainer, ProjectListBox, ProjectListLabels } from "./ProjectList.styled";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 
 interface Props {
   projectList: ProjectItemCm[];
@@ -12,10 +12,10 @@ interface Props {
 export const ProjectList = ({ projectList, dispatch }: Props) => (
   <ProjectListBox>
     <ProjectListLabels>
-      <p className="name">{TextResources.Project}</p>
-      <p className="owner">{TextResources.Project_Recent_Owner}</p>
-      <p className="version">{TextResources.Project_Recent_Version}</p>
-      <p className="edited">{TextResources.Project_Recent_Edited}</p>
+      <p className="name">{TextResources.PROJECT}</p>
+      <p className="owner">{TextResources.PROJECT_OWNER}</p>
+      <p className="version">{TextResources.PROJECT_VERSION}</p>
+      <p className="edited">{TextResources.PROJECT_EDITED}</p>
     </ProjectListLabels>
     <ProjectDataContainer>
       {projectList?.map((project) => {

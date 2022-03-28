@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Size } from "../../../compLibrary/size";
-import { Color } from "../../../compLibrary/colors";
+import { Size } from "../../../compLibrary/size/Size";
+import { Color } from "../../../compLibrary/colors/Color";
 
 const TypeEditorInspectorWrapper = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const TypeEditorInspectorWrapper = styled.div`
   height: ${Size.MODULE_CLOSED}px;
 
   & > div {
-    background: ${Color.GREY_LIGHTER};
+    background: ${Color.GHOST_WHITE};
     width: 100%;
   }
 `;

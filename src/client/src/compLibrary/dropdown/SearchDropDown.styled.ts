@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../colors";
+import { Color } from "../colors/Color";
 import { FontSize } from "../font";
 
 export const SearchBarContainer = styled.div`
@@ -12,7 +12,7 @@ export const SearchBar = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
-  border: 1px solid ${Color.BLUE_MAGENTA};
+  border: 1px solid ${Color.BASTILLE};
   border-radius: 5px;
   background-color: ${Color.WHITE} !important;
   padding: 0 5px 0 10px;
@@ -30,7 +30,7 @@ export const SearchBar = styled.div`
   }
 
   input[type="text"]::placeholder {
-    color: ${Color.GREY_DARKER};
+    color: ${Color.GREY};
     font-size: ${FontSize.MEDIUM};
     font-style: italic;
     opacity: 0.5;
@@ -46,7 +46,7 @@ export const SearchBarList = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${Color.WHITE};
-  border: 1px solid ${Color.BLUE_MAGENTA};
+  border: 1px solid ${Color.BASTILLE};
   border-radius: 5px;
   padding: 1px;
   font-size: 11px;
@@ -59,7 +59,7 @@ export const SearchBarList = styled.div`
 
 export const SearchBarListItem = styled.div`
   height: 18px;
-  border-bottom: 1px solid ${Color.GREY_DARK};
+  border-bottom: 1px solid ${Color.LIGHT_SILVER};
   background-color: ${Color.WHITE};
 
   p {
@@ -67,7 +67,7 @@ export const SearchBarListItem = styled.div`
   }
 
   &:hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     text-decoration: underline;
     cursor: pointer;
   }

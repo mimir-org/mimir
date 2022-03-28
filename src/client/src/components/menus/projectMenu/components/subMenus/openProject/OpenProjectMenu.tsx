@@ -4,12 +4,11 @@ import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { ProjectDetails } from "./components/ProjectDetails";
 import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
-import { TextResources } from "../../../../../../assets/text";
-import { VIEW_TYPE } from "../../../../../../models/project";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnOpen } from "./handlers";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 
 /**
  * Open project menu component
@@ -19,7 +18,6 @@ export const OpenProjectMenu = () => {
   const dispatch = useAppDispatch();
   const currentProject = useAppSelector(selectors.projectSelector);
   const projectList = useAppSelector(selectors.projectListSelector);
-  const isStartPage = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.STARTPAGE);
   const selectedProject = projectList?.find((x) => x.selected);
   const projectId = selectedProject?.id;
   const projectDescription = selectedProject?.description;
@@ -29,11 +27,11 @@ export const OpenProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_Open_Label} inset={isStartPage && "120px 0 0 0"}>
+      <InfoModalContent title={TextResources.PROJECT_OPEN_LABEL}>
         <ProjectDetails projects={projectList} projectDescription={projectDescription} />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
-          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Open} icon={RightArrowIcon} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.OPEN} icon={RightArrowIcon} />
         </ButtonBox>
       </InfoModalContent>
     </Modal>

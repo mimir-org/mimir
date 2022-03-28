@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { Action, Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 
 const BORDER_SIZE = 44;
 const MIN_HEIGHT = Size.MODULE_CLOSED;
@@ -52,7 +52,6 @@ const resize = (
   prevYRef.current = e.clientY;
 
   const prevHeight = getComputedHeight(inspectorRef);
-
   let newHeight = prevHeight + dy;
 
   if (maxHeight && newHeight > maxHeight) {
@@ -65,9 +64,7 @@ const resize = (
 
   if (siblingRef) {
     const prevSiblingHeight = getComputedHeight(siblingRef);
-
     const newSiblingHeight = prevSiblingHeight - (newHeight - prevHeight);
-
     setHeightProperty(siblingRef, newSiblingHeight);
   }
 };

@@ -3,7 +3,7 @@ import { ActiveSimpleTypesList } from "./ActiveSimpleTypesList";
 import { TerminalsColumn } from "../../shared/styled/TerminalsColumn";
 import { SimpleLikeItem } from "../../../../../types";
 import { FontSize } from "../../../../../../../compLibrary/font";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../compLibrary/input/text";
 
 interface Props {
@@ -25,7 +25,7 @@ export const SimpleTypesSelector = ({ simpleTypes, onSelect, selectedSimpleTypeI
         fontStyle={"italic"}
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}
-        placeholder={TextResources.Inspector_SimpleTypes_Search}
+        placeholder={TextResources.INSPECTOR_SIMPLETYPES_SEARCH}
         onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
       />
       <ActiveSimpleTypesList simpleTypes={simpleTypes} selectedSimpleTypeId={selectedSimpleTypeId} onSelect={onSelect} />

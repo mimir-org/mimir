@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { GetSelectedNode } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
-import { Edge, Project } from "../../../models";
+import { Project } from "../../../models";
 import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
 import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
 
@@ -21,7 +21,7 @@ interface Props {
 }
 
 /**
- * Component for the Flow library in BlockView
+ * Component for the Flow library in BlockView.
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
@@ -50,15 +50,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   );
 
   const OnElementsRemove = (flowNodesToRemove: Elements) => {
-    const nodeToRemove = flowNodesToRemove[0];
-    if (!nodeToRemove) return;
-    const edgesToRemove: Edge[] = [];
-
-    project.edges?.forEach((edge) => {
-      if (edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id) edgesToRemove.push(edge);
-    });
-
-    return hooks.useOnRemove(flowNodesToRemove, edgesToRemove, inspectorRef, project, setElements, dispatch);
+    return hooks.useOnRemove(flowNodesToRemove, inspectorRef, project, setElements, dispatch);
   };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {

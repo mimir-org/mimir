@@ -36,6 +36,7 @@ export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: Bloc
   });
 };
 
+//#region Helpers
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
   const existingEdge = isTargetNode
     ? edges.find((x) => x.toConnectorId === edge.toConnectorId && IsOffPage(x.fromNode))
@@ -70,3 +71,4 @@ function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
 
   return !targetNodeVisible;
 }
+//#endregion

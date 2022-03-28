@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../../../../../compLibrary/font";
 
 interface ProjectDataBoxProps {
@@ -44,10 +44,10 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
   }
 
   &:nth-of-type(odd) {
-    background: ${Color.PURPLE_LIGHT};
+    background: ${Color.LAVANDER_WEB_LIST};
   }
 
   &:hover {
-    background: ${Color.BLUE_LIGHT};
+    background: ${Color.LAVANDER_WEB_HOVER};
   }
 `;

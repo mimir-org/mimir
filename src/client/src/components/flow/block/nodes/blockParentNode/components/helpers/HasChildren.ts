@@ -1,6 +1,6 @@
-import red from "../../../../../../redux/store";
-import { IsPartOf } from "../../../../helpers";
-import { Node } from "../../../../../../models";
+import red from "../../../../../../../redux/store";
+import { IsPartOf } from "../../../../../helpers";
+import { Node } from "../../../../../../../models";
 
 /**
  * Component to check if a node has children nodes.

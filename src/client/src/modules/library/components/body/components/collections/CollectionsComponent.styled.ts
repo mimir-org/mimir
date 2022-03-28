@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../../../../compLibrary/font";
 
 interface CollectionsWrapperProps {
@@ -20,20 +20,28 @@ export const CollectionsWrapper = styled.div<CollectionsWrapperProps>`
     font-family:${FontType.STANDARD}
     padding: 10px 0;
   }
+`;
+
+export const CollectionsUpdateButtonWrapper = styled.div`
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
 
   button {
-      position:${(props) => (props.manageCollections ? "absolute" : "relative")};
-      bottom: ${(props) => (props.manageCollections ? "5%" : "")};
-      align-self: center;
-      background: transparent;
-      min-width: 200px;
-      height: 34px;
-      border: 1.5px solid ${Color.BLUE_MAGENTA};
-      border-radius: 5px;
+    position: absolute;
+    bottom: 5%;
+    align-self: center;
+    background: ${Color.WHITE};
+    min-width: 140px;
+    height: 34px;
+    border: 1.5px solid ${Color.BASTILLE};
+    border-radius: 5px;
 
-      .button-text {
-        font-size: ${FontSize.STANDARD};
-        font-family:${FontType.STANDARD}
-      }
+    .button-text {
+      font-size: ${FontSize.STANDARD};
+      font-family: ${FontType.STANDARD};
+    }
   }
 `;

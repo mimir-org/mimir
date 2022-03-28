@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../compLibrary/colors";
-import { Size } from "../../compLibrary/size";
+import { Color } from "../../compLibrary/colors/Color";
+import { Size } from "../../compLibrary/size/Size";
 
 interface ToolBarBoxProps {
   libOpen: boolean;
@@ -15,7 +15,7 @@ export const ToolBarBox = styled.div<ToolBarBoxProps>`
   color: ${Color.BLACK};
   height: 40px;
   width: auto;
-  border-bottom: 1px solid ${Color.GREY};
+  border-bottom: 1px solid ${Color.GAINSBORO};
   position: absolute;
   top: ${Size.TOPMENU_HEIGHT}px;
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;

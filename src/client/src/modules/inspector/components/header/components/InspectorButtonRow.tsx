@@ -5,7 +5,7 @@ import { Action, Dispatch } from "redux";
 import { Icon } from "../../../../../compLibrary/icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton } from "../../../../../compLibrary/buttons";
 import { InspectorButtonType } from "../../../../../compLibrary/buttons/inspector/InspectorButton";
 import { Project } from "../../../../../models";
@@ -45,8 +45,8 @@ export const InspectorButtonRow = ({
   const deleteDisabled =
     isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === GetSelectedNode());
 
-  let inspectorToggleText = open ? TextResources.Inspector_Close_Panel : TextResources.Inspector_Expand_Panel;
-  if (!isElementSelected) inspectorToggleText = TextResources.Inspector_Inactive_Panel;
+  let inspectorToggleText = open ? TextResources.INSPECTOR_CLOSE : TextResources.INSPECTOR_EXPAND;
+  if (!isElementSelected) inspectorToggleText = TextResources.INSPECTOR_INACTIVE_PANEL;
 
   return (
     <InspectorButtonRowContainer>
@@ -55,12 +55,12 @@ export const InspectorButtonRow = ({
           <InspectorButton
             onClick={() => OnLockClick(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
-            description={element?.isLocked ? TextResources.Inspector_Unlock_Object : TextResources.Inspector_Lock_Object}
+            description={element?.isLocked ? TextResources.INSPECTOR_UNLOCK_OBJECT : TextResources.INSPECTOR_LOCK_OBJECT}
           />
           <InspectorButton
             onClick={() => !deleteDisabled && OnDeleteClick(project, element, dispatch, inspectorRef)}
             type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
-            description={TextResources.Inspector_Delete_Object}
+            description={TextResources.INSPECTOR_DELETE_OBJECT}
             disabled={deleteDisabled}
           />
         </>
@@ -73,7 +73,7 @@ export const InspectorButtonRow = ({
               OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
             }
           >
-            <InspectorButtonRowToggleTitle>{TextResources.Module_Inspector}</InspectorButtonRowToggleTitle>
+            <InspectorButtonRowToggleTitle>{TextResources.MODULE_INSPECTOR}</InspectorButtonRowToggleTitle>
             <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
           </InspectorButtonRowToggleContainer>
         </span>

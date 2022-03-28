@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize } from "../../../compLibrary/font";
 
 const LocationTypeCategory = styled.div`
@@ -8,7 +8,7 @@ const LocationTypeCategory = styled.div`
   align-items: center;
   border-width: 1px 0px 1px 0px;
   border-style: solid;
-  border-color: ${Color.GREY};
+  border-color: ${Color.GAINSBORO};
   font-size: ${FontSize.STANDARD};
   font-weight: bold;
   color: ${Color.BLACK};

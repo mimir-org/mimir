@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Size } from "../../../compLibrary/size";
-import { Color } from "../../../compLibrary/colors";
+import { Size } from "../../../compLibrary/size/Size";
+import { Color } from "../../../compLibrary/colors/Color";
 
 interface AnimatedInspectorContainerProps {
   isInspectorOpen: boolean;
@@ -22,7 +22,7 @@ export const AnimatedInspectorContainer = styled.div<AnimatedInspectorContainerP
   z-index: ${(props) => props.zIndex};
   position: absolute;
   bottom: 0;
-  background-color: ${Color.GREY_INSPECTOR};
+  background-color: ${Color.CULTURED};
   right: ${(props) => (props.isLibraryOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
   left: ${(props) => (props.isExplorerOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED)}px;
   overflow-x: auto;

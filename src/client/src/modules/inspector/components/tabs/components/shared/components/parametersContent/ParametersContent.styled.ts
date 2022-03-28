@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../../compLibrary/font";
 
 export const ParametersContentContainer = styled.div`
@@ -26,8 +26,8 @@ export const ParametersContentHeader = styled.div`
   top: 0;
   z-index: 5;
 
-  background-color: ${Color.GREY_INSPECTOR};
-  border-bottom: 1px solid ${Color.GREY};
+  background-color: ${Color.CULTURED};
+  border-bottom: 1px solid ${Color.GAINSBORO};
 `;
 
 export const ParametersContentMenu = styled.div`

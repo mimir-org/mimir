@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../compLibrary/colors";
+import { Color } from "../../compLibrary/colors/Color";
 import { FontSize, FontType, FontWeight } from "../../compLibrary/font";
 
 export const ListSearchBar = styled.div`
@@ -10,7 +10,7 @@ export const ListSearchBar = styled.div`
   border-width: 0;
   border-bottom-width: 2px;
   border-style: solid;
-  border-color: ${Color.BLUE_MAGENTA};
+  border-color: ${Color.BASTILLE};
 
   input:focus,
   textarea:focus,
@@ -30,7 +30,7 @@ export const ListSearchBar = styled.div`
     font-size: ${FontSize.STANDARD};
     font-weight: ${FontWeight.BOLD};
     font-style: italic;
-    color: ${Color.BLUE_MAGENTA};
+    color: ${Color.BASTILLE};
   }
 
   .icon {

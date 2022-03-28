@@ -11,7 +11,7 @@ import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import ReactFlow, {
   Background,
   Elements,

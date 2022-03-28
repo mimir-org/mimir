@@ -1,6 +1,6 @@
 import { BidirectionalIcon } from "../../../../../assets/icons/bidirectional";
-import { Color } from "../../../../../compLibrary/colors";
-import { Checkbox } from "../../../../../compLibrary/input/checkbox/common";
+import { Color } from "../../../../../compLibrary/colors/Color";
+import { Checkbox } from "../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
 import { IsBidirectionalTerminal } from "../../../helpers";
@@ -20,7 +20,12 @@ interface Props {
  */
 export const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
   <TerminalsElementBox key={conn.id}>
-    <Checkbox isChecked={IsConnectorVisible(conn)} onChange={() => onClick(conn, isInput)} color={Color.GREY_DARK} id={conn.id} />
+    <Checkbox
+      isChecked={IsConnectorVisible(conn)}
+      onChange={() => onClick(conn, isInput)}
+      color={Color.LIGHT_SILVER}
+      id={conn.id}
+    />
     {IsBidirectionalTerminal(conn) ? (
       <BidirectionalBox>
         <BidirectionalIcon fill={GetTerminalColor(conn)} className="icon" />

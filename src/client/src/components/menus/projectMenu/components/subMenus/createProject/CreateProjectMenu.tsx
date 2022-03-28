@@ -3,7 +3,7 @@ import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CreateProjectIcon } from "../../../../../../assets/icons/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnShowInstructionClick } from "../../../handlers";
@@ -19,17 +19,17 @@ export const CreateProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>
-      <InfoModalContent title={TextResources.Project_CreateProject}>
-        <Label>{TextResources.Project_Name}</Label>
+      <InfoModalContent title={TextResources.PROJECT_CREATE}>
+        <Label>{TextResources.PROJECT_NAME}</Label>
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.Project_Name_Placeholder}
+          placeholder={TextResources.PROJECT_NAME_PLACEHOLDER}
           value={projectName}
         />
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.Project_Cancel} />
-          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.Project_Create} icon={CreateProjectIcon} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.CREATE} icon={CreateProjectIcon} />
         </ButtonBox>
       </InfoModalContent>
     </Modal>
