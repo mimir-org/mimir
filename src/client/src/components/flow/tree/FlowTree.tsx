@@ -117,6 +117,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         nodeTypes={helpers.GetTreeNodeTypes}
         edgeTypes={helpers.GetTreeEdgeTypes}
         defaultZoom={0.7}
+        minZoom={0.1}
         defaultPosition={[800, Size.BLOCK_MARGIN_Y]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
