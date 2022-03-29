@@ -9,6 +9,7 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../..
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";
 import { GetSelectedBlockNode, IsProduct } from "../../../../../helpers";
+import { Color } from "../../../../../compLibrary/colors/Color";
 
 /**
  * Component for an offpage node in BlockView
@@ -43,7 +44,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   if (!data || !offPageParent || !parentBlockNode) return null;
 
-  const iconColor = offPageTerminal.color;
+  const iconColor = offPageTerminal?.color ?? Color.BLACK;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
   const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));
