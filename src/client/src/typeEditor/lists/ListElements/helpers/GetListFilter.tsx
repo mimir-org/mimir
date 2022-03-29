@@ -18,7 +18,7 @@ const GetListFilter = (
   const filter: any[] = list;
   if (list)
     if (IsRds(listType))
-      return filter.filter((x) => x.name.match(new RegExp(searchString, "i")) || x.code.match(new RegExp(searchString, "i")));
+      return filter.filter((x) => x.name.match(new RegExp(searchString, "i")) || x.id.match(new RegExp(searchString, "i")));
   if (IsTerminal(listType))
     return filter.filter(
       (x) => x.key.match(new RegExp(searchString, "i")) || x.value.some((y) => y.name.match(new RegExp(searchString, "i")))

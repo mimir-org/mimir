@@ -21,7 +21,6 @@ export { default as GetLocationTypes } from "./GetLocationTypes";
 export { default as GetAttributesList } from "./GetAttributesList";
 export { default as GetRDSList } from "./GetRDSList";
 export { default as GetFilteredBlobData } from "./GetFilteredBlobData";
-export { default as GetFilteredRdsList } from "./GetFilteredRdsList";
 export { default as GetFilteredTerminalsList } from "./GetFilteredTerminalsList";
 export { default as GetFilteredAttributesList } from "./GetFilteredAttributesList";
 export * from "./GetFilteredTerminalTypeList";

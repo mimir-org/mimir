@@ -13,7 +13,7 @@ export const RDSElement = ({ rds, defaultValue, onChange }: Props) => (
   <RdsListElement key={rds.id} isSelected={rds.id === defaultValue}>
     <RadioButtonContainer
       id={rds.id}
-      label={rds?.code + " - " + rds.name}
+      label={rds?.id + " - " + rds.name}
       listType={ListType.Rds}
       onChange={(key, data) => onChange(key, data)}
       defaultValue={defaultValue}
