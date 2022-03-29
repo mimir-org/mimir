@@ -72,7 +72,6 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
       library,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,
-      setElements,
       dispatch,
     });
   };
@@ -88,6 +87,10 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
       handleMultiSelect(dispatch);
     }
   };
+
+  useEffect(() => {
+    if (project) setElements(BuildTreeElements(project, animatedEdge));
+  }, [project?.nodes?.length]);
 
   // Build elements from Project
   useEffect(() => {
