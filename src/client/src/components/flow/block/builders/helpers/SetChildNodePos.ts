@@ -10,12 +10,11 @@ import { Position } from "../../../../../models/project";
  */
 const SetChildNodePos = (childNodePos: Position, parentNode: Node) => {
   const margin = 30;
-  const marginY = Size.BLOCK_MARGIN_Y + margin;
 
-  const xMin = 0;
+  const xMin = parentNode.positionBlockX;
   const xMax = parentNode.width - Size.NODE_WIDTH;
   const yMin = margin;
-  const yMax = parentNode.height;
+  const yMax = parentNode.height - Size.NODE_HEIGHT;
 
   let nodeX = childNodePos.x;
   let nodeY = childNodePos.y;
@@ -23,7 +22,7 @@ const SetChildNodePos = (childNodePos: Position, parentNode: Node) => {
   if (nodeX < xMin) nodeX = xMin + margin;
   if (nodeX > xMax) nodeX = xMax;
   if (nodeY < yMin) nodeY = yMin + margin;
-  if (nodeY > yMax) nodeY = yMax - marginY;
+  if (nodeY > yMax) nodeY = yMax;
 
   return { x: nodeX, y: nodeY };
 };

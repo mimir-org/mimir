@@ -9,6 +9,7 @@ import { ConvertToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../compLibrary/size/Size";
+import { Position } from "../../../models/project";
 
 /**
  * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
@@ -50,7 +51,19 @@ export function InitConnectorVisibility(connector: Connector, targetNode: Node) 
 }
 
 /**
- * Function to position nodes in the TreeView canvas when a node is dropped from the LibraryModule.
+ * Function to calculate the TreeView position of a dropped Node.
+ * @param parentNode
+ * @param project
+ * @returns a Position object.
+ */
+export function SetTreeNodePosition(parentNode: Node, project: Project) {
+  const marginY = 220;
+  const x = SetTreeNodeXPosition(parentNode, project);
+  return { x, y: parentNode.positionY + marginY } as Position;
+}
+
+/**
+ * Function to position a node in the TreeView canvas when a node is dropped from the LibraryModule.
  * This function will position the node middle-out relative to existing sibling nodes.
  * @param parentNode
  * @param project
@@ -59,6 +72,8 @@ export function InitConnectorVisibility(connector: Connector, targetNode: Node) 
 export function SetTreeNodeXPosition(parentNode: Node, project: Project) {
   const isAspect = IsAspectNode(parentNode);
   const siblings = FindSiblingNodes(parentNode, project);
+  const increaseX = siblings.length % 2 === 0;
+
   const marginX = Size.NODE_WIDTH + 70;
   const aspectMarginX = 35;
   let xPos = parentNode.positionX;
@@ -66,21 +81,12 @@ export function SetTreeNodeXPosition(parentNode: Node, project: Project) {
   if (siblings.length === 0) return isAspect ? xPos - aspectMarginX : xPos;
   if (siblings.length === 2) return isAspect ? xPos + marginX - aspectMarginX : xPos + marginX;
 
-  // Position node to the right of sibling
-  if (siblings.length % 2 === 0) {
-    siblings.forEach((s) => {
-      if (s.positionX >= xPos) xPos = s.positionX;
-    });
-
-    return xPos + marginX;
-  }
-
-  // Position node to the left of sibling
+  // Find siblings' highest or lowest X position
   siblings.forEach((s) => {
-    if (s.positionX < xPos) xPos = s.positionX;
+    if ((increaseX && s.positionX > xPos) || (!increaseX && s.positionX < xPos)) xPos = s.positionX;
   });
 
-  return xPos - marginX;
+  return increaseX ? xPos + marginX : xPos - marginX;
 }
 
 /**
@@ -93,10 +99,10 @@ export function FindSiblingNodes(parentNode: Node, project: Project) {
   if (!parentNode) return [];
   const siblings: Node[] = [];
 
-  project.edges?.forEach((x) => {
-    if (x.fromNodeId === parentNode.id) {
-      const siblingNode = project.nodes?.find((n) => n.id === x.toNodeId && n.level === parentNode.level + 1);
-      siblings.push(siblingNode);
+  project.edges?.forEach((edge) => {
+    if (edge.fromNodeId === parentNode.id) {
+      const sibling = project.nodes?.find((n) => n.id === edge.toNodeId && n.level === parentNode.level + 1);
+      siblings.push(sibling);
     }
   });
 
