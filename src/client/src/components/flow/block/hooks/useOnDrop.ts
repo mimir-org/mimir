@@ -4,7 +4,7 @@ import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
-import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
+import { FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
 import { Position } from "../../../../models/project";
@@ -21,7 +21,6 @@ interface OnDropParameters {
   flowTransform: FlowTransform;
   reactFlowInstance: OnLoadParams;
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
-  setElements: React.Dispatch<React.SetStateAction<Elements>>;
   dispatch: Dispatch;
 }
 

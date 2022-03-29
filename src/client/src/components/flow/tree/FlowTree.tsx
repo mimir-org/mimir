@@ -88,17 +88,18 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     }
   };
 
-  useEffect(() => {
-    if (project) setElements(BuildTreeElements(project, animatedEdge));
-  }, [project?.nodes?.length]);
-
-  // Build elements from Project
+  // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
       setElements(BuildTreeElements(project, animatedEdge));
       setHasRendered(true);
     }
   }, [project]);
+
+  // Build elements with new nodes
+  useEffect(() => {
+    if (project) setElements(BuildTreeElements(project, animatedEdge));
+  }, [project?.nodes?.length]);
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {
