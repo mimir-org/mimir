@@ -27,7 +27,7 @@ const ConvertToNode = (
 
   const node = {
     id: CreateId(),
-    rds: data.rds,
+    rds: data.rdsId,
     projectId: projectId,
     name: data.name,
     label: data.name,
