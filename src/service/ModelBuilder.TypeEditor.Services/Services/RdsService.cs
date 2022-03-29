@@ -19,6 +19,15 @@ namespace Mb.TypeEditor.Services.Services
             _mapper = mapper;
             _rdsRepository = rdsRepository;
         }
+        
+        /// <summary>
+        /// Get all RDS entities
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Rds> GetRds()
+        {
+            return _rdsRepository.GetAll();
+        }
 
         /// <summary>
         /// Create a RDS

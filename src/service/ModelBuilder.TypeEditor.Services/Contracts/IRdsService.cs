@@ -7,6 +7,7 @@ namespace Mb.TypeEditor.Services.Contracts
 {
     public interface IRdsService
     {
+        IEnumerable<Rds> GetRds();
         Task<Rds> CreateRds(CreateRds createRds);
         Task<List<Rds>> CreateRdsAsync(List<CreateRds> createRds);
     }
