@@ -221,10 +221,11 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<int>("ConnectorVisibility")
+                    b.Property<string>("ConnectorVisibility")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0)
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("None")
                         .HasColumnName("ConnectorVisibility");
 
                     b.Property<string>("Discriminator")
@@ -255,8 +256,9 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("NodeIri");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int")
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("Type");
 
                     b.HasKey("Id");
@@ -1356,8 +1358,9 @@ namespace Mb.Core.Migrations
                 {
                     b.HasBaseType("Mb.Models.Data.Connector");
 
-                    b.Property<int>("RelationType")
-                        .HasColumnType("int")
+                    b.Property<string>("RelationType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("RelationType");
 
                     b.HasDiscriminator().HasValue("Relation");

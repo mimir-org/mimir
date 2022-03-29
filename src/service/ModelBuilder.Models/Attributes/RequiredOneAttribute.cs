@@ -8,7 +8,7 @@ namespace Mb.Models.Attributes
     public class RequiredOneAttribute : ValidationAttribute
     {
         private readonly string _dependent;
-        
+
         public RequiredOneAttribute(string dependent)
         {
             _dependent = dependent;
@@ -18,8 +18,8 @@ namespace Mb.Models.Attributes
         {
             var dependentValue = validationContext?.ObjectInstance.GetType().GetProperty(_dependent)?.GetValue(validationContext.ObjectInstance, null);
 
-            if(string.IsNullOrWhiteSpace(value?.ToString()) && string.IsNullOrWhiteSpace(dependentValue?.ToString()))
-                return new ValidationResult("One of those fields are required.", new List<string>{validationContext?.MemberName, _dependent});
+            if (string.IsNullOrWhiteSpace(value?.ToString()) && string.IsNullOrWhiteSpace(dependentValue?.ToString()))
+                return new ValidationResult("One of those fields are required.", new List<string> { validationContext?.MemberName, _dependent });
 
             return ValidationResult.Success;
         }

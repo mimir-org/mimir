@@ -28,7 +28,7 @@ namespace ModelBuilder.Tests.Models
                 TerminalCategoryId = "12345",
                 TerminalTypeId = "12345",
                 SemanticReference = null
-                
+
             };
         }
 
@@ -45,7 +45,7 @@ namespace ModelBuilder.Tests.Models
             var obj = _terminal.DeepCopy();
             obj.Id = "";
             obj.Iri = "";
-            
+
             var validation = obj.ValidateObject();
             Assert.False(validation.IsValid);
         }
@@ -71,6 +71,25 @@ namespace ModelBuilder.Tests.Models
             obj.RelationType = relationType;
             var validation = obj.ValidateObject();
             Assert.False(validation.IsValid);
+        }
+
+        [Theory]
+        [InlineData("1234", "https://rdf.dummy.com/ID1234", true)]
+        [InlineData("1234", null, true)]
+        [InlineData(null, "https://rdf.dummy.com/ID1234", true)]
+        [InlineData(null, null, false)]
+        public void TerminalTypeId_Or_TerminalTypeIri_Must_Be_Set(string terminalTypeId, string terminalTypeIri, bool result)
+        {
+            var obj = _terminal.DeepCopy();
+            obj.TerminalTypeId = terminalTypeId;
+            obj.TerminalTypeIri = terminalTypeIri;
+
+            var validation = obj.ValidateObject();
+
+            if (result)
+                Assert.True(validation.IsValid);
+            else
+                Assert.False(validation.IsValid);
         }
     }
 }
