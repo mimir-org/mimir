@@ -6,8 +6,8 @@
   "isSubProject": false,
   "version": "1.0.0",
   "description": "UnitTestA",
-  "projectOwner": "Reidar Liabø",
-  "updatedBy": "Reidar Liabø",
+  "projectOwner": "Reidar LiabÃ¸",
+  "updatedBy": "Reidar LiabÃ¸",
   "updated": "2022-01-26T20:47:08.5113941",
   "nodes": [
     {
@@ -38,10 +38,10 @@
       "symbol": null,
       "purpose": null,
       "created": "2022-01-25T18:30:47.2872705",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "Function",
       "updated": "2022-01-25T18:30:47.2872705",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_27c92c26-4022-4068-8cef-d7c00f668f62",
@@ -85,8 +85,8 @@
       "positionBlockX": 1142.0000,
       "positionBlockY": 111.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -104,10 +104,10 @@
         "semanticReference": null
       },
       "created": "2022-01-26T19:41:57",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-26T19:41:57",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_05412aca-dae8-42bd-a005-dab82d34d372",
@@ -2542,8 +2542,8 @@
       "positionBlockX": -49.0000,
       "positionBlockY": 449.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -2561,10 +2561,10 @@
         "semanticReference": null
       },
       "created": "2022-01-26T19:41:59",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-26T19:41:59",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_2d6669c5-b666-4cf9-9bc3-7d18346aae94",
@@ -4999,8 +4999,8 @@
       "positionBlockX": -49.0000,
       "positionBlockY": 669.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -5018,10 +5018,10 @@
         "semanticReference": null
       },
       "created": "2022-01-26T20:37:37",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-26T20:37:45",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_18624843-e442-4506-a6f0-c886243c8811",
@@ -7456,8 +7456,8 @@
       "positionBlockX": -49.0000,
       "positionBlockY": 669.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -7475,10 +7475,10 @@
         "semanticReference": null
       },
       "created": "2022-01-26T20:40:33",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-26T20:40:43",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_21e41786-6a0b-4972-a4d0-064fed7d6e19",
@@ -9913,8 +9913,8 @@
       "positionBlockX": -49.0000,
       "positionBlockY": 669.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -9932,10 +9932,10 @@
         "semanticReference": null
       },
       "created": "2022-01-26T20:45:12",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-26T20:45:21",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_0a97d959-a1f2-4efe-a5fd-a9216ee36ba5",
@@ -12370,8 +12370,8 @@
       "positionBlockX": 1141.0000,
       "positionBlockY": 328.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -12389,10 +12389,10 @@
         "semanticReference": null
       },
       "created": "2022-01-26T19:42:07",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-26T19:42:21",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_07742de0-9f7f-463f-af8f-f58880bdfea8",
@@ -14827,8 +14827,8 @@
       "positionBlockX": 556.0000,
       "positionBlockY": 209.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -14846,10 +14846,10 @@
         "semanticReference": null
       },
       "created": "2022-01-26T19:42:11",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-26T19:42:17",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_0b1f7a3a-cac9-4a5d-b97e-da21b16d7896",
@@ -17293,10 +17293,10 @@
       "symbol": null,
       "purpose": null,
       "created": "2022-01-25T18:30:47.2983124",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "Product",
       "updated": "2022-01-25T18:30:47.2983124",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_dbbbba93-dabc-4c8c-91fb-1965d19a7a3e",
@@ -17349,10 +17349,10 @@
       "symbol": null,
       "purpose": null,
       "created": "2022-01-25T18:30:47.2983524",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "Location",
       "updated": "2022-01-25T18:30:47.2983524",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_13486173-25c3-479d-8647-ba62e0f564c6",
@@ -17494,10 +17494,10 @@
             "discipline": "Electrical"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T20:47:08.86032",
         "created": "2022-01-26T19:43:10.3329027",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "CBFC42F53BD9950B3583A832B8016674"
       },
       "interface": null
@@ -18200,10 +18200,10 @@
             "discipline": "Process"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T20:47:08.9058858",
         "created": "2022-01-26T19:43:10.3339023",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "CDC1DCED48244D668219BD2B6DDB2652"
       },
       "interface": null
@@ -18927,10 +18927,10 @@
             "discipline": "Process"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T20:47:08.9068644",
         "created": "2022-01-26T19:43:10.3352438",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "8DE60CB4D0ED24DC7B4E0CD1DE7B3651"
       },
       "interface": null
@@ -19078,10 +19078,10 @@
             "discipline": "Electrical"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T20:47:08.9076947",
         "created": "2022-01-26T19:43:10.336723",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "FE5F2BD911C3D94FF77D3EFAC600C1B6"
       },
       "interface": null

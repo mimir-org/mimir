@@ -540,7 +540,7 @@ namespace Mb.Services.Services
                 var connectors = new List<ConnectorAm>();
                 foreach (var connector in node.Connectors)
                 {
-                    if (string.IsNullOrEmpty(connector.TerminalCategoryId) && connector.RelationType != RelationType.NotSet)
+                    if (connector.RelationType != RelationType.NotSet)
                     {
                         var relationAm = new RelationAm();
                         _mapper.Map(connector, relationAm);
