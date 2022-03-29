@@ -36,11 +36,16 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
+  const [hasRendered, setHasRendered] = useState(false);
   const userState = useAppSelector(selectors.userStateSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+
+  const OnLoad = useCallback((_reactFlowInstance: OnLoadParams) => {
+    return setFlowInstance(_reactFlowInstance);
+  }, []);
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -53,14 +58,6 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const OnElementsRemove = (elementsToRemove: Elements) => {
     return useOnTreeRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
   };
-
-  const OnLoad = useCallback(
-    (_reactFlowInstance: OnLoadParams) => {
-      setElements(BuildTreeElements(project, animatedEdge));
-      return setFlowInstance(_reactFlowInstance);
-    },
-    [project, animatedEdge, dispatch]
-  );
 
   const OnConnect = (connection: FlowEdge | Connection) => {
     return useOnTreeConnect({ connection, project, setElements, dispatch, library, animatedEdge });
@@ -92,10 +89,18 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     }
   };
 
-  // Rerender
+  // Build initial elements from Project
   useEffect(() => {
-    OnLoad(flowInstance);
-  }, [OnLoad, flowInstance]);
+    if (!hasRendered && project) {
+      setElements(BuildTreeElements(project, animatedEdge));
+      setHasRendered(true);
+    }
+  }, [project]);
+
+  // Build elements with new nodes
+  useEffect(() => {
+    if (project) setElements(BuildTreeElements(project, animatedEdge));
+  }, [project?.nodes?.length]);
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {
