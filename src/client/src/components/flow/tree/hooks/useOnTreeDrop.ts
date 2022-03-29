@@ -60,7 +60,6 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
 function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   const parentNode = GetParentNode(sourceNode, project, data);
-  if (!parentNode) return;
 
   const treePosition = SetTreeNodePosition(parentNode, project);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
