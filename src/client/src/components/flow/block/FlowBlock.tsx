@@ -30,7 +30,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState(null);
   const [elements, setElements] = useState<Elements>([]);
-  const [hasRendered, setHasRendered] = useState(false);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
@@ -42,9 +41,13 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
-  const OnLoad = useCallback((_reactFlowInstance) => {
-    return setFlowInstance(_reactFlowInstance);
-  }, []);
+  const OnLoad = useCallback(
+    (_reactFlowInstance) => {
+      setElements(BuildFlowBlockElements(project, primaryNode, secondaryNode, animatedEdge));
+      return setFlowInstance(_reactFlowInstance);
+    },
+    [project, primaryNode, secondaryNode, animatedEdge]
+  );
 
   const OnElementsRemove = (flowNodesToRemove: Elements) => {
     return hooks.useOnRemove(flowNodesToRemove, inspectorRef, project, setElements, dispatch);
@@ -104,18 +107,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     CloseInspector(inspectorRef, dispatch);
   }, [inspectorRef, dispatch]);
 
-  // Build initial elements from Project
   useEffect(() => {
-    if (!hasRendered && project) {
-      setElements(BuildFlowBlockElements(project, primaryNode, secondaryNode, animatedEdge));
-      setHasRendered(true);
-    }
-  }, [project]);
-
-  // Build elements with new nodes
-  useEffect(() => {
-    if (project) setElements(BuildFlowBlockElements(project, primaryNode, secondaryNode, animatedEdge));
-  }, [project?.nodes?.length]);
+    OnLoad(flowInstance);
+  }, [OnLoad, flowInstance]);
 
   useEffect(() => {
     dispatch(updateBlockElements(elements));
