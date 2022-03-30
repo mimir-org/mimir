@@ -18,7 +18,6 @@ interface OnDropParameters {
   library: LibraryState;
   reactFlowInstance: OnLoadParams;
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
-  setElements: React.Dispatch<React.SetStateAction<Elements>>;
   dispatch: Dispatch;
 }
 
