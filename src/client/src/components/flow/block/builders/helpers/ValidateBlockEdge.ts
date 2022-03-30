@@ -39,7 +39,7 @@ function ValidateSplitView(
   if (IsProduct(selectedNode)) {
     if (IsLocation(splitNode)) return IsLocationConnection(source, target);
     if (IsFunction(splitNode)) return IsTransportConnection(source, target);
-    return IsProductConnection(source, target);
+    if (IsProduct(splitNode)) return IsTransportConnection(source, target);
   }
   if (IsProduct(splitNode)) return IsProductConnection(source, target);
   if (IsLocation(splitNode)) return IsLocationConnection(source, target);
