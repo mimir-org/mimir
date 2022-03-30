@@ -1,4 +1,5 @@
-export { default as BuildFlowBlockElements } from "./BuildFlowBlockElements";
+export { default as BuildFlowBlockNodes } from "./BuildFlowBlockNodes";
+export { default as BuildFlowBlockEdges } from "./BuildFlowBlockEdges";
 
 export { default as BuildFlowParentNode } from "./BuildFlowParentNode";
 export { default as BuildFlowChildNode } from "./BuildFlowChildNode";

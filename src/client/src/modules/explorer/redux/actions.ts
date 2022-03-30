@@ -1,9 +1,9 @@
-import { Elements } from "react-flow-renderer";
-import { UPDATE_BLOCK_ELEMENTS } from "./types";
+import { Node as FlowNode } from "react-flow-renderer";
+import { UPDATE_BLOCK_NODES } from "./types";
 
-export function updateBlockElements(elements: Elements) {
+export function updateBlockNodes(nodes: FlowNode[]) {
   return {
-    type: UPDATE_BLOCK_ELEMENTS,
-    payload: elements,
+    type: UPDATE_BLOCK_NODES,
+    payload: nodes,
   };
 }

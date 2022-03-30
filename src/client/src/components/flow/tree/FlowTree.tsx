@@ -2,7 +2,7 @@
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
 import { useOnTreeConnect, useOnTreeDrop, useOnTreeRemove } from "./hooks";
-import { BuildTreeElements } from "../tree/builders";
+import { BuildTreeFlowNodes, BuildTreeFlowEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -14,11 +14,11 @@ import { IsPartOf } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
 import ReactFlow, {
   Background,
-  Elements,
-  OnLoadParams,
   Edge as FlowEdge,
   Connection,
   Node as FlowNode,
+  useNodesState,
+  useEdgesState,
 } from "react-flow-renderer";
 
 interface Props {
@@ -34,8 +34,11 @@ interface Props {
 const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
-  const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
-  const [elements, setElements] = useState<Elements>();
+  const [flowInstance, setFlowInstance] = useState<any>(null);
+
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
   const [hasRendered, setHasRendered] = useState(false);
   const userState = useAppSelector(selectors.userStateSelector);
   const icons = useAppSelector(selectors.iconSelector);
@@ -43,7 +46,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
 
-  const OnLoad = useCallback((_reactFlowInstance: OnLoadParams) => {
+  const OnLoad = useCallback((_reactFlowInstance) => {
+    //_reactFlowInstance: OnLoadParams
     return setFlowInstance(_reactFlowInstance);
   }, []);
 
@@ -55,12 +59,12 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
-  const OnElementsRemove = (elementsToRemove: Elements) => {
-    return useOnTreeRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
+  const OnElementsRemove = (flowNodesToRemove: FlowNode[], flowEdgesToRemove: FlowEdge[]) => {
+    return useOnTreeRemove(flowNodesToRemove, flowEdgesToRemove, inspectorRef, project, setNodes, setEdges, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return useOnTreeConnect({ connection, project, setElements, dispatch, library, animatedEdge });
+    return useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -76,29 +80,33 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  const onSelectionChange = (selectedElements: Elements) => {
-    if (selectedElements === null) {
-      handleNoSelect(project, inspectorRef, dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetTreeNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetTreeEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length > 1) {
-      handleMultiSelect(dispatch);
-    }
-  };
+  // const onSelectionChange = (selectedElements: Elements) => {
+  //   if (selectedElements === null) {
+  //     handleNoSelect(project, inspectorRef, dispatch);
+  //   } else if (selectedElements.length === 1 && helpers.GetTreeNodeTypes[selectedElements[0]?.type]) {
+  //     handleNodeSelect(selectedElements[0], dispatch);
+  //   } else if (selectedElements.length === 1 && helpers.GetTreeEdgeTypes[selectedElements[0]?.type]) {
+  //     handleEdgeSelect(selectedElements[0], dispatch);
+  //   } else if (selectedElements.length > 1) {
+  //     handleMultiSelect(dispatch);
+  //   }
+  // };
 
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
-      setElements(BuildTreeElements(project, animatedEdge));
+      setNodes(BuildTreeFlowNodes(project));
+      setEdges(BuildTreeFlowEdges(project, animatedEdge));
       setHasRendered(true);
     }
   }, [project]);
 
   // Rebuild elements
   useEffect(() => {
-    if (project) setElements(BuildTreeElements(project, animatedEdge));
+    if (project) {
+      setNodes(BuildTreeFlowNodes(project));
+      setEdges(BuildTreeFlowEdges(project, animatedEdge));
+    }
   }, [project]);
 
   useEffect(() => {
@@ -111,9 +119,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}></div>
       <ReactFlow
-        elements={elements}
         onConnect={OnConnect}
-        onElementsRemove={OnElementsRemove}
+        // onElementsRemove={OnElementsRemove}
         onLoad={OnLoad}
         onDrop={OnDrop}
         onDragOver={OnDragOver}
@@ -125,13 +132,13 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         defaultPosition={[800, Size.BLOCK_MARGIN_Y]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
-        onSelectionChange={(e) => onSelectionChange(e)}
+        // onSelectionChange={(e) => onSelectionChange(e)}
         connectionLineComponent={TreeConnectionLine}
         deleteKeyCode={"Delete"}
       >
         <Background />
       </ReactFlow>
-      {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
+      {visualFilter && <VisualFilterComponent flowNodes={nodes} flowEdges={edges} edgeAnimation={animatedEdge} />}
     </>
   );
 };

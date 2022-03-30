@@ -1,21 +1,20 @@
-import { Elements } from "react-flow-renderer";
+import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
 import { IsOffPage } from "../../../../helpers";
 import { Edge, Node } from "../../../../models";
 
-export const GetFilterElements = (elements: Elements): { nodes: Node[]; edges: Edge[] } => {
-  const nodes: Node[] = [];
-  const edges: Edge[] = [];
+export const GetMimirElements = (flowNodes: FlowNode[], flowEdges: FlowEdge[]) => {
+  const mimirNodes: Node[] = [];
+  const mimirEdges: Edge[] = [];
 
-  elements?.forEach((elem) => {
-    const edge = elem.data?.edge as Edge;
-    const node = elem.data as Node;
-
-    if (edge && !IsOffPage(edge.fromNode)) {
-      edges.push(edge);
-    } else if (node && !IsOffPage(node)) {
-      nodes.push(node);
-    }
+  flowNodes?.forEach((flowNode) => {
+    const node = flowNode.data as Node;
+    if (node && !IsOffPage(node)) mimirNodes.push(node);
   });
 
-  return { nodes, edges };
+  flowEdges?.forEach((elem) => {
+    const edge = elem.data as Edge;
+    if (edge && !IsOffPage(edge.fromNode)) mimirEdges.push(edge);
+  });
+
+  return { mimirNodes, mimirEdges };
 };

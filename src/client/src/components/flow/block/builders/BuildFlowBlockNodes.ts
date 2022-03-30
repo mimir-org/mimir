@@ -1,7 +1,7 @@
-import { Elements } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BuildFlowParentNode, BuildFlowSecondaryParentNode } from ".";
-import { DrawFlowBlockEdges, DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
+import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
 
 /**
  * Component to draw all Flow nodes and edges in BlockView.
@@ -11,32 +11,30 @@ import { DrawFlowBlockEdges, DrawFlowChildNodes, DrawFlowSecondaryChildren } fro
  * @param project
  * @param primaryNode
  * @param secondaryNode
- * @param animatedEdge
  * @returns all FlowElements.
  */
-const BuildFlowBlockElements = (project: Project, primaryNode: Node, secondaryNode: Node, animatedEdge: boolean) => {
+const BuildFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode: Node) => {
   if (!project) return;
 
-  const flowElements: Elements = [];
+  const flowNodes: FlowNode[] = [];
   const splitView = secondaryNode !== undefined;
 
   const parentBlockNode = BuildFlowParentNode(primaryNode);
   if (!parentBlockNode) return;
 
-  flowElements.push(parentBlockNode);
+  flowNodes.push(parentBlockNode);
 
   if (splitView) {
     const parentSecondaryBlock = BuildFlowSecondaryParentNode(primaryNode, secondaryNode);
     if (!parentSecondaryBlock) return;
 
-    flowElements.push(parentSecondaryBlock);
-    DrawFlowSecondaryChildren(project, primaryNode, secondaryNode, flowElements);
+    flowNodes.push(parentSecondaryBlock);
+    DrawFlowSecondaryChildren(project, primaryNode, secondaryNode, flowNodes);
   }
 
-  DrawFlowChildNodes(project, primaryNode, secondaryNode, flowElements);
-  DrawFlowBlockEdges(project, secondaryNode, flowElements, animatedEdge);
+  DrawFlowChildNodes(project, primaryNode, secondaryNode, flowNodes);
 
-  return flowElements;
+  return flowNodes;
 };
 
-export default BuildFlowBlockElements;
+export default BuildFlowBlockNodes;

@@ -1,11 +1,11 @@
-import { FlowElement } from "react-flow-renderer";
+import { Edge as FlowEdge } from "react-flow-renderer";
 import { IsOffPage } from "../../../helpers";
 import { Edge, Node } from "../../../models";
 import { EdgeType } from "../../../models/project";
 import { IsTransport } from "../helpers";
 
 /**
- * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow Library.
+ * Function to convert a Mimir Edge to a FlowEdge that interacts with the Flow Library.
  * @param edge
  * @param edgeType
  * @param sourceNode
@@ -35,7 +35,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
     isHidden: false, // Opacity is controlled by the styled component
     parentType: sourceNode?.aspect,
     targetType: targetNode?.aspect,
-  } as FlowElement;
+  } as FlowEdge;
 };
 
 export default ConvertEdgeToFlow;

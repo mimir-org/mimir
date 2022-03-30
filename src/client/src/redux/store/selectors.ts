@@ -135,11 +135,6 @@ export const nodeSizeSelector = createAppSelector(
   (size) => size
 );
 
-export const flowTransformSelector = createAppSelector(
-  (state) => state.flowTransform,
-  (flowTransform) => flowTransform
-);
-
 export const flowViewSelector = createAppSelector(
   (state) => state.flow.view,
   (view) => view

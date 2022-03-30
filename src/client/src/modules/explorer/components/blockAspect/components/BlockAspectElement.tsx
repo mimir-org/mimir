@@ -1,10 +1,10 @@
+import { Node as FlowNode } from "react-flow-renderer";
 import { AspectExpandButton } from "../../shared/components/AspectExpandButton";
 import { AspectColorType, Node } from "../../../../../models";
 import { GetAspectColor, GetAspectIcon, IsAspectNode, UseIndentLevel } from "../../../../../helpers";
 import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnBlockChange } from "./handlers/OnBlockChange";
 import { IsChecked, IsMiniCheckBox } from "./helpers/";
-import { Elements } from "react-flow-renderer";
 import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
 import { Dispatch } from "redux";
 
@@ -12,7 +12,7 @@ interface Props {
   node: Node;
   selectedNode: Node;
   secondaryNode: Node;
-  elements: Elements;
+  flowNodes: FlowNode[];
   dispatch: Dispatch;
   isLeaf: boolean;
   isExpanded: boolean;
@@ -29,7 +29,7 @@ export const BlockAspectElement = ({
   node,
   selectedNode,
   secondaryNode,
-  elements,
+  flowNodes,
   dispatch,
   isLeaf,
   isExpanded,
@@ -39,7 +39,7 @@ export const BlockAspectElement = ({
   <AspectElementWrapper indent={UseIndentLevel(indent)}>
     <CheckboxExplorer
       color={GetAspectColor(node, AspectColorType.Selected)}
-      isChecked={IsChecked(elements, node)}
+      isChecked={IsChecked(flowNodes, node)}
       isMiniCheckbox={IsMiniCheckBox(node, selectedNode, secondaryNode)}
       isBlockView
       isAspectNode={IsAspectNode(node)}

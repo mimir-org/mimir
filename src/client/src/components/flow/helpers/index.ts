@@ -22,8 +22,7 @@ export { default as IsSubProject } from "./IsSubProject";
 export { default as GetProjectData } from "./GetProjectData";
 export { default as GetSubProject } from "./GetSubProject";
 
-export { default as IsElementEdge } from "./IsElementEdge";
-export { default as FindProjectNodeByElementId } from "./FindProjectNodeByElementId";
-export { default as FindProjectEdgeByElementId } from "./FindProjectEdgeByElementId";
+export { default as FindMimirNodeByFlowNodeId } from "./FindMimirNodeByFlowNodeId";
+export { default as FindMimirEdgeByFlowEdgeId } from "./FindMimirEdgeByFlowEdgeId";
 
 export * from "./SetSiblingRDS";

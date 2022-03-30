@@ -1,4 +1,4 @@
-import { FlowElement } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { Aspect, Node } from "../../../models";
 
 /**
@@ -20,7 +20,7 @@ const ConvertNodeToFlow = (node: Node) => {
     draggable: true,
     selectable: true,
     connectable: true,
-  } as FlowElement;
+  } as FlowNode;
 };
 
 const GetNodeType = (node: Node) => {

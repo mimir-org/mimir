@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect } from "react";
-import { useStoreState } from "react-flow-renderer";
+import { useStore } from "react-flow-renderer";
 import { SetPanelHeight } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
 import { changeInspectorHeight } from "../redux/inspectorSlice";
@@ -13,7 +13,7 @@ import { MODULE_TYPE } from "../../../models/project";
  */
 export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElement>) => {
   const dispatch = useAppDispatch();
-  const numberOfSelectedElements = useStoreState((x) => x.selectedElements?.length);
+  const numberOfSelectedElements = 0; //useStoreState((x) => x.selectedElements?.length);
 
   useEffect(() => {
     const minimizeCriteria = [numberOfSelectedElements > 1];

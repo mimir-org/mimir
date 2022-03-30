@@ -60,7 +60,7 @@ export const ProjectComponent = () => {
               indent={indent}
               isExpanded={expanded}
               isLeaf={!HasChildren(node, project)}
-              elements={elements}
+              flowNodes={elements}
               onToggleExpanded={expandHandler}
               dispatch={dispatch}
             />

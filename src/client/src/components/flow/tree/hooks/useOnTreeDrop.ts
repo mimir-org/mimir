@@ -3,7 +3,6 @@ import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsFamily } from "../../../../helpers";
 import { Dispatch } from "redux";
-import { OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
 import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
@@ -16,7 +15,7 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
-  reactFlowInstance: OnLoadParams;
+  reactFlowInstance: any;
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }

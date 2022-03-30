@@ -1,23 +1,23 @@
 import { useCallback } from "react";
-import { useStoreActions, useStoreState } from "react-flow-renderer";
+import { useStore } from "react-flow-renderer";
 
 type SetFlowElementFunction = (elementId: string) => void;
 
 export const useSelectFlowElements = (): [SetFlowElementFunction, SetFlowElementFunction] => {
-  const setSelectedElements = useStoreActions((state) => state.setSelectedElements);
+  // const setSelectedElements = useStore((store) =>  state.setSelectedElements);
 
-  const nodes = useStoreState((state) => state.nodes);
-  const edges = useStoreState((state) => state.edges);
+  // const nodes = useStore((store) => store.nodes);
+  // const edges = useStore((state) => state.edges);
 
-  const setActiveNode = useCallback(
-    (elementId: string) => setSelectedElements(nodes.filter((ele) => ele.id === elementId)),
-    [nodes, setSelectedElements]
-  );
+  // const setActiveNode = useCallback(
+  // (elementId: string) => setSelectedElements(nodes.filter((ele) => ele.id === elementId)),
+  // [nodes, setSelectedElements]
+  // );
 
-  const setActiveEdge = useCallback(
-    (elementId: string) => setSelectedElements(edges.filter((ele) => ele.id === elementId)),
-    [edges, setSelectedElements]
-  );
-
-  return [setActiveNode, setActiveEdge];
+  // const setActiveEdge = useCallback(
+  // (elementId: string) => setSelectedElements(edges.filter((ele) => ele.id === elementId)),
+  // [edges, setSelectedElements]
+  // );
+  return null;
+  // return [setActiveNode, setActiveEdge];
 };

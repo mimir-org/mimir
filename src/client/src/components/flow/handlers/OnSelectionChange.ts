@@ -1,4 +1,4 @@
-import { FlowElement } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size/Size";
 import { Project } from "../../../models";
@@ -22,14 +22,14 @@ export const handleNoSelect = (
   CloseInspector(inspectorRef, dispatch);
 };
 
-export const handleNodeSelect = (element: FlowElement, dispatch: Dispatch, isBlock = false) => {
+export const handleNodeSelect = (flowNode: FlowNode, dispatch: Dispatch, isBlock = false) => {
   dispatch(setActiveEdge(null, false));
-  isBlock ? dispatch(setActiveBlockNode(element.id)) : dispatch(setActiveNode(element.id, true));
+  isBlock ? dispatch(setActiveBlockNode(flowNode.id)) : dispatch(setActiveNode(flowNode.id, true));
   OpenInspector(dispatch);
 };
 
-export const handleEdgeSelect = (element: FlowElement, dispatch: Dispatch, isBlock = false) => {
-  dispatch(setActiveEdge(element?.id, true));
+export const handleEdgeSelect = (flowNode: FlowNode, dispatch: Dispatch, isBlock = false) => {
+  dispatch(setActiveEdge(flowNode?.id, true));
   isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
   OpenInspector(dispatch);
 };

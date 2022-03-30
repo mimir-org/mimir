@@ -1,6 +1,6 @@
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { CreateId, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
-import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
+import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { createEdge, removeEdge } from "../../../../redux/store/project/actions";
 import { Node, Project } from "../../../../models";
 import { ConvertToEdge } from "../../converters";
@@ -11,7 +11,7 @@ import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
 interface Params {
   connection: FlowEdge | Connection;
   project: Project;
-  setElements: React.Dispatch<React.SetStateAction<Elements>>;
+  setEdges: React.Dispatch<React.SetStateAction<FlowEdge<any>[]>>;
   dispatch: Dispatch;
   library: LibraryState;
   animatedEdge: boolean;
@@ -24,7 +24,7 @@ interface Params {
  */
 const useOnConnectTree = (params: Params) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, library, animatedEdge, setElements, dispatch } = params;
+  const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === connection.source);
   const sourceConn = sourceNode.connectors.find((c) => c.id === connection.sourceHandle);
@@ -39,7 +39,7 @@ const useOnConnectTree = (params: Params) => {
 
   if (IsPartOf(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
 
-  return setElements((els) => {
+  return setEdges((els) => {
     return addEdge(
       {
         ...connection,

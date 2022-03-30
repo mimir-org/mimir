@@ -1,6 +1,6 @@
+import { Node as FlowNode } from "react-flow-renderer";
 import { AspectContainer } from "../shared/styled/AspectContainer";
 import { LockComponent } from "../shared/components/LockComponent";
-import { Elements } from "react-flow-renderer";
 import { Node, Project } from "../../../../models";
 import { BlockAspectElement } from "./components/BlockAspectElement";
 import { Dispatch } from "redux";
@@ -16,7 +16,7 @@ interface Props {
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
-  elements: Elements;
+  flowNodes: FlowNode[];
   onToggleExpanded: () => void;
   dispatch: Dispatch;
 }
@@ -35,7 +35,7 @@ export const BlockAspectComponent = ({
   isExpanded,
   indent,
   isLeaf,
-  elements,
+  flowNodes,
   dispatch,
   onToggleExpanded,
 }: Props) => (
@@ -53,7 +53,7 @@ export const BlockAspectComponent = ({
       onToggleExpanded={onToggleExpanded}
       selectedNode={selectedNode}
       secondaryNode={secondaryNode}
-      elements={elements}
+      flowNodes={flowNodes}
       dispatch={dispatch}
       indent={indent}
     />

@@ -1,5 +1,5 @@
+import { Node as FlowNode } from "react-flow-renderer";
 import { Node } from "../../../../models";
-import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetSecondaryChildNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers";
@@ -31,7 +31,7 @@ const BuildFlowSecondaryChildNode = (primaryNode: Node, secondaryNode: Node, chi
     draggable: true,
     selectable: true,
     connectable: true,
-  } as FlowElement;
+  } as FlowNode;
 };
 
 export default BuildFlowSecondaryChildNode;

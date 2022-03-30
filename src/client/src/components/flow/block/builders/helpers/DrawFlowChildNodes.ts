@@ -1,4 +1,4 @@
-import { Elements } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowChildNode } from "..";
 import { IsFamily, IsOffPage } from "../../../../../helpers";
 import { Edge, Node, Project } from "../../../../../models";
@@ -9,9 +9,9 @@ import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } f
  * @param project
  * @param primaryNode
  * @param secondaryNode
- * @param elements
+ * @param flowNodes
  */
-const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: Node, elements: Elements) => {
+const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: Node, flowNodes: FlowNode[]) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
@@ -24,8 +24,8 @@ const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: 
     const childNode = BuildFlowChildNode(targetNode, primaryNode, secondaryNode);
     let isValid = true;
 
-    if (IsOffPage(targetNode)) isValid = ValidateOffPage(targetNode, primaryNode, secondaryNode, elements, edges, nodes);
-    if (isValid && childNode) elements.push(childNode);
+    if (IsOffPage(targetNode)) isValid = ValidateOffPage(targetNode, primaryNode, secondaryNode, flowNodes, edges, nodes);
+    if (isValid && childNode) flowNodes.push(childNode);
   });
 };
 
@@ -38,13 +38,13 @@ function ValidateOffPage(
   offPageNode: Node,
   selectedNode: Node,
   secondaryNode: Node,
-  elements: Elements,
+  flowNodes: FlowNode[],
   edges: Edge[],
   nodes: Node[]
 ) {
   const offPageParent = GetParent(offPageNode);
 
-  if (!secondaryNode) return elements?.some((elem) => elem?.id === offPageParent?.id);
+  if (!secondaryNode) return flowNodes?.some((elem) => elem?.id === offPageParent?.id);
   if (!IsFamily(selectedNode, secondaryNode)) return false;
 
   const inputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));

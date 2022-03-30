@@ -1,4 +1,4 @@
-import { Elements } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowSecondaryChildNode } from "..";
 import { IsDirectChild, IsFamily } from "../../../../../helpers";
 import { Node, Project } from "../../../../../models";
@@ -8,9 +8,9 @@ import { Node, Project } from "../../../../../models";
  * @param project
  * @param primaryNode
  * @param secondaryNode
- * @param elements
+ * @param flowNodes
  */
-const DrawFlowSecondaryChildren = (project: Project, primaryNode: Node, secondaryNode: Node, elements: Elements) => {
+const DrawFlowSecondaryChildren = (project: Project, primaryNode: Node, secondaryNode: Node, flowNodes: FlowNode[]) => {
   const nodes = project.nodes;
   const edges = project.edges;
 
@@ -22,7 +22,7 @@ const DrawFlowSecondaryChildren = (project: Project, primaryNode: Node, secondar
     if (!targetNode) return;
 
     const childNode = BuildFlowSecondaryChildNode(primaryNode, secondaryNode, targetNode);
-    if (childNode) elements.push(childNode);
+    if (childNode) flowNodes.push(childNode);
   });
 };
 

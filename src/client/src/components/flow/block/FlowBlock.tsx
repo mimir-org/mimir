@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { BuildFlowBlockElements } from "./builders";
+import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
@@ -10,10 +10,16 @@ import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine"
 import { Size } from "../../../compLibrary/size/Size";
 import { GetSelectedNode } from "../../../helpers";
 import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
-import { updateBlockElements } from "../../../modules/explorer/redux/actions";
+import { updateBlockNodes } from "../../../modules/explorer/redux/actions";
 import { Project } from "../../../models";
-import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
-import ReactFlow, { Elements, Node as FlowNode, Edge as FlowEdge, Connection, FlowTransform } from "react-flow-renderer";
+import ReactFlow, {
+  Node as FlowNode,
+  Edge as FlowEdge,
+  Connection,
+  useNodesState,
+  useEdgesState,
+  useReactFlow,
+} from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -28,41 +34,46 @@ interface Props {
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
+  const { getViewport } = useReactFlow();
+
   const [flowInstance, setFlowInstance] = useState(null);
-  const [elements, setElements] = useState<Elements>([]);
+
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const transform = useAppSelector(selectors.flowTransformSelector);
   const primaryNode = GetSelectedNode();
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
   const OnLoad = useCallback(
     (_reactFlowInstance) => {
-      setElements(BuildFlowBlockElements(project, primaryNode, secondaryNode, animatedEdge));
+      setNodes(BuildFlowBlockNodes(project, primaryNode, secondaryNode));
+      setEdges(BuildFlowBlockEdges(project, primaryNode, secondaryNode, animatedEdge));
       return setFlowInstance(_reactFlowInstance);
     },
-    [project, primaryNode, secondaryNode, animatedEdge]
+    [project, primaryNode, secondaryNode]
   );
 
-  const OnElementsRemove = (flowNodesToRemove: Elements) => {
-    return hooks.useOnRemove(flowNodesToRemove, inspectorRef, project, setElements, dispatch);
-  };
+  // const OnElementsRemove = (flowNodesToRemove: Elements) => {
+  //   return hooks.useOnRemove(flowNodesToRemove, inspectorRef, project, setElements, dispatch);
+  // };
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
     return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, primaryNode, secondaryNode, transform, dispatch);
+    return hooks.useOnConnectStop(e, project, primaryNode, secondaryNode, getViewport, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnConnect({ connection, project, library, animatedEdge, setElements, dispatch });
+    return hooks.useOnConnect({ connection, project, library, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -74,7 +85,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 
-  const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
+  // const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({
@@ -84,24 +95,24 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       icons,
       library,
       secondaryNode: secondaryNodeRef,
-      flowTransform: transform,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,
+      getViewport,
       dispatch,
     });
   };
 
-  const onSelectionChange = (selectedElements: Elements) => {
-    if (selectedElements === null) {
-      handleNoSelect(project, inspectorRef, dispatch, true);
-    } else if (selectedElements.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], dispatch, true);
-    } else if (selectedElements.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], dispatch, true);
-    } else if (selectedElements.length > 1) {
-      handleMultiSelect(dispatch, true);
-    }
-  };
+  // const onSelectionChange = (selectedElements: Elements) => {
+  //   if (selectedElements === null) {
+  //     handleNoSelect(project, inspectorRef, dispatch, true);
+  //   } else if (selectedElements.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
+  //     handleNodeSelect(selectedElements[0], dispatch, true);
+  //   } else if (selectedElements.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
+  //     handleEdgeSelect(selectedElements[0], dispatch, true);
+  //   } else if (selectedElements.length > 1) {
+  //     handleMultiSelect(dispatch, true);
+  //   }
+  // };
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -112,8 +123,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   }, [OnLoad, flowInstance]);
 
   useEffect(() => {
-    dispatch(updateBlockElements(elements));
-  }, [elements, dispatch]);
+    dispatch(updateBlockNodes(nodes));
+  }, [nodes, dispatch]);
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
@@ -123,31 +134,32 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}>
         <ReactFlow
-          elements={elements}
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
           onConnect={OnConnect}
           onConnectStart={OnConnectStart}
           onConnectStop={OnConnectStop}
-          onElementsRemove={OnElementsRemove}
+          // onElementsRemove={OnElementsRemove}
           onLoad={OnLoad}
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          onMoveEnd={OnMoveEnd}
+          // onMoveEnd={OnMoveEnd}
           onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
-          onSelectionChange={(e) => onSelectionChange(e)}
+          // onSelectionChange={(e) => onSelectionChange(e)}
           deleteKeyCode={"Delete"}
           zoomOnDoubleClick={false}
           defaultZoom={defaultZoom}
           minZoom={0.2}
           maxZoom={3}
           zoomOnScroll
-          paneMoveable
+          panOnDrag
         ></ReactFlow>
-        {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
+        {visualFilter && <VisualFilterComponent flowNodes={nodes} flowEdges={edges} edgeAnimation={animatedEdge} />}
       </div>
     </>
   );

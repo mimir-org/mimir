@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
-import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnParentClick, OnChildClick } from "./handlers/";
@@ -22,7 +22,6 @@ import { InitParentSize } from "./helpers/InitParentSize";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const { setCenter } = useZoomPanHelper();
   const [terminals, setTerminals] = useState<Connector[]>([]);
   const nodes = useAppSelector(selectors.nodesSelector);
   const edges = useAppSelector(selectors.edgeSelector);
@@ -31,9 +30,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const node = nodes?.find((x) => x.id === data.id);
 
   useEffect(() => {
-    const canvasData = SetZoomCenterLevel(secondaryNode !== null);
-    setCenter(canvasData.x, canvasData.y, canvasData.zoom);
-  }, [setCenter, secondaryNode]);
+    SetZoomCenterLevel(secondaryNode !== null);
+  }, [secondaryNode]);
 
   useEffect(() => {
     InitParentSize(node, dispatch);

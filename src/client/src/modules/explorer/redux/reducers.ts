@@ -1,17 +1,17 @@
-import { Elements } from "react-flow-renderer";
-import { UPDATE_BLOCK_ELEMENTS } from "./types";
+import { Node as FlowNode } from "react-flow-renderer";
+import { UPDATE_BLOCK_NODES } from "./types";
 
 const initialState = {
   elements: null,
 };
 
-export function blockElementsReducer(state = initialState, action) {
-  if (action.type === UPDATE_BLOCK_ELEMENTS) {
-    const elements = action.payload as Elements;
+export function blockNodesReducer(state = initialState, action) {
+  if (action.type === UPDATE_BLOCK_NODES) {
+    const flowNodes = action.payload as FlowNode[];
 
     return {
       ...state,
-      elements: elements,
+      flowNodes,
     };
   }
   return state;

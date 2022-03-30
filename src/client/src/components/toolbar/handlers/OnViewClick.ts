@@ -2,7 +2,7 @@ import { VIEW_TYPE, ViewType } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { GetSelectedNode } from "../../../helpers";
-import { updateBlockElements } from "../../../modules/explorer/redux/actions";
+import { updateBlockNodes } from "../../../modules/explorer/redux/actions";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
 import { Dispatch } from "redux";
@@ -13,7 +13,7 @@ const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch:
   if (!ValidateBlockViewClick(view, selectedNode, numberOfSelectedElements, dispatch)) return;
 
   dispatch(removeSecondaryNode());
-  dispatch(updateBlockElements([]));
+  dispatch(updateBlockNodes([]));
   dispatch(changeFlowView(view));
 };
 

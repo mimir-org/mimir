@@ -1,10 +1,10 @@
-import { Elements } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 
-export const UPDATE_BLOCK_ELEMENTS = "UPDATE_BLOCK_ELEMENTS";
+export const UPDATE_BLOCK_NODES = "UPDATE_BLOCK_NODES";
 
-export interface UpdateBlockElements {
-  type: typeof UPDATE_BLOCK_ELEMENTS;
+export interface UpdateBlockNodes {
+  type: typeof UPDATE_BLOCK_NODES;
   payload: {
-    elements: Elements;
+    nodes: FlowNode[];
   };
 }

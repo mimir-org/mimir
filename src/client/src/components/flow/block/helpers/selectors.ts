@@ -5,5 +5,4 @@ export {
   userStateSelector,
   filterSelector,
   animatedEdgeSelector,
-  flowTransformSelector,
 } from "../../../../redux/store/selectors";

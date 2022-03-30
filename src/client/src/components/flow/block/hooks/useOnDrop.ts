@@ -1,12 +1,12 @@
 import { Dispatch } from "redux";
-import { Size } from "../../../../compLibrary/size/Size";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
-import { FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
+import { GetViewport } from "react-flow-renderer";
+import { Size } from "../../../../compLibrary/size/Size";
 import { Position } from "../../../../models/project";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -18,9 +18,9 @@ interface OnDropParameters {
   icons: BlobData[];
   library: LibraryState;
   secondaryNode: Node;
-  flowTransform: FlowTransform;
-  reactFlowInstance: OnLoadParams;
+  reactFlowInstance: any;
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
+  getViewport: GetViewport;
   dispatch: Dispatch;
 }
 
@@ -31,6 +31,7 @@ interface OnDropParameters {
  * @param params
  */
 const useOnDrop = (params: OnDropParameters) => {
+  // OnLoadParams
   const { event } = params;
   event.stopPropagation();
   event.preventDefault();
@@ -43,20 +44,20 @@ const useOnDrop = (params: OnDropParameters) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, flowTransform, dispatch }: OnDropParameters) {
+function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, getViewport, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   let parentNode = GetSelectedNode();
   if (!parentNode) return;
 
   // Handle drop in SplitView
   if (secondaryNode) {
-    const dropZone = CalculateSecondaryNodeDropZone(flowTransform, parentNode);
+    const dropZone = CalculateSecondaryNodeDropZone(getViewport, parentNode);
     parentNode = FindParent(data, parentNode, secondaryNode, dropZone, event.clientX);
     if (!parentNode) return;
   }
 
   const treePosition = SetTreeNodePosition(parentNode, project);
-  const blockPosition = SetBlockNodePosition(flowTransform, event);
+  const blockPosition = SetBlockNodePosition(getViewport, event);
   const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
@@ -68,19 +69,19 @@ function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, f
 
 /**
  * Function to calculate the BlockView position of a dropped Node.
- * @param transform
+ * @param getViewport
  * @param event
  * @returns a Position object.
  */
-function SetBlockNodePosition(transform: FlowTransform, event: React.DragEvent<HTMLDivElement>) {
+function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<HTMLDivElement>) {
   const defaultMarginX = 45;
   const defaultMarginY = 43;
-  let x = event.clientX - defaultMarginX - transform.x;
-  let y = event.clientY - defaultMarginY - transform.y;
+  let x = event.clientX - defaultMarginX - getViewport().x;
+  let y = event.clientY - defaultMarginY - getViewport().y;
 
-  if (transform.zoom < Size.ZOOM_DEFAULT) {
-    const absX = Math.abs(transform.x - event.clientX);
-    const absY = Math.abs(transform.y - event.clientY);
+  if (getViewport().zoom < Size.ZOOM_DEFAULT) {
+    const absX = Math.abs(getViewport().x - event.clientX);
+    const absY = Math.abs(getViewport().y - event.clientY);
     x = event.clientX + absX;
     y = event.clientY + absY;
   }
@@ -91,12 +92,15 @@ function SetBlockNodePosition(transform: FlowTransform, event: React.DragEvent<H
 /**
  * Function to define the dropzone for a SecondaryNode.
  * A Node will have the SecondaryNode as parent if dropped over its area.
- * @param transform
+ * @param getViewport
  * @returns an X value where the SecondaryNode is placed.
  */
-function CalculateSecondaryNodeDropZone(transform: FlowTransform, primaryNode: Node) {
-  const parentNodeWidthScaled = primaryNode.width * transform.zoom;
-  return transform.x + parentNodeWidthScaled + Size.SPLITVIEW_DISTANCE;
+function CalculateSecondaryNodeDropZone(getViewport: GetViewport, primaryNode: Node) {
+  const zoom = getViewport().zoom;
+  const x = getViewport().x;
+
+  const parentNodeWidthScaled = primaryNode.width * zoom;
+  return x + parentNodeWidthScaled + Size.SPLITVIEW_DISTANCE;
 }
 
 /**

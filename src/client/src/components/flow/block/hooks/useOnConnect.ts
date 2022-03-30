@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
+import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { CreateId, IsTransport } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
@@ -12,7 +12,7 @@ import { GetBlockEdgeType, HandleOffPageConnect } from "../helpers";
 export interface Params {
   connection: FlowEdge | Connection;
   project: Project;
-  setElements: React.Dispatch<React.SetStateAction<Elements>>;
+  setEdges: React.Dispatch<React.SetStateAction<FlowEdge<any>[]>>;
   dispatch: Dispatch;
   library: LibraryState;
   animatedEdge: boolean;
@@ -25,7 +25,8 @@ export interface Params {
  */
 const useOnConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, library, animatedEdge, setElements, dispatch } = params;
+  const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
+
   const id = CreateId();
   const sourceNode = project.nodes.find((node) => node.id === connection.source);
   const sourceConn = sourceNode.connectors.find((c) => c.id === connection.sourceHandle);
@@ -40,7 +41,7 @@ const useOnConnect = (params: Params) => {
   const edge = ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
   dispatch(createEdge(edge));
 
-  return setElements((els) => {
+  return setEdges((els) => {
     return addEdge(
       {
         ...connection,

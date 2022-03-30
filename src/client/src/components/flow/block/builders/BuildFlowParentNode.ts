@@ -1,4 +1,4 @@
-import { FlowElement } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { Node } from "../../../../models";
 import { CreateId } from "../../helpers";
@@ -30,7 +30,7 @@ const BuildFlowParentNode = (node: Node) => {
     isSelected: node.isSelected,
     draggable: false,
     selectable: false,
-  } as FlowElement;
+  } as FlowNode;
 };
 
 export default BuildFlowParentNode;

@@ -1,60 +1,67 @@
-import { Elements, removeElements } from "react-flow-renderer";
+import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
-import { EDGE_TYPE } from "../../../../models/project";
 import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
 import { GetSelectedNode, IsAspectNode } from "../../../../helpers";
 import { CloseInspector } from "../../handlers";
-import { FindProjectEdgeByElementId, FindProjectNodeByElementId, IsElementEdge } from "../../helpers";
+import { FindMimirNodeByFlowNodeId, FindMimirEdgeByFlowEdgeId } from "../../helpers";
 
 /**
  * Hook that runs when an element is deleted from Mimir in TreeView.
  * If a Node is deleted the connected Edges are also deleted.
  * If an Edge is deleted the connect Nodes will not be deleted.
- * @param elements
+ * @param flowNodes
+ * @param flowEdges
  * @param inspectorRef
  * @param project
- * @param setElements
+ * @param setNodes
+ * @param setEdges
  * @param dispatch
  */
 const useOnTreeRemove = (
-  elements: Elements,
+  flowNodes: FlowNode[],
+  flowEdges: FlowEdge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,
-  setElements: React.Dispatch<React.SetStateAction<Elements>>,
+  setNodes: React.Dispatch<React.SetStateAction<FlowNode<any>[]>>,
+  setEdges: React.Dispatch<React.SetStateAction<FlowEdge<any>[]>>,
   dispatch: Dispatch
 ) => {
-  const elementsToRemove: Elements = [];
-  HandleRemoveElements(elements, elementsToRemove, project, dispatch);
+  const nodesToRemove: FlowNode[] = [];
+  const edgesToRemove: FlowEdge[] = [];
 
-  if (!elementsToRemove.length) return;
+  HandleRemoveFlowNodes(flowNodes, nodesToRemove, project, dispatch);
+  HandleRemoveFlowEdges(flowEdges, edgesToRemove, project, dispatch);
+
+  if (!nodesToRemove.length) return;
 
   CloseInspector(inspectorRef, dispatch);
-  return setElements((els) => removeElements(elementsToRemove, els));
+  return null; //setElements((els) => removeElements(elementsToRemove, els));
 };
 
-const HandleRemoveElements = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
-  elements.forEach((elem) => {
-    if (IsAspectNode(elem.data)) return;
-    const isEdge = IsElementEdge(Object.values(EDGE_TYPE), elem);
+function HandleRemoveFlowNodes(flowNodes: FlowNode[], flowNodesToRemove: FlowNode[], project: Project, dispatch: Dispatch) {
+  flowNodes.forEach((flowNode) => {
+    if (IsAspectNode(flowNode.data)) return;
 
-    if (isEdge) {
-      const selectedNode = GetSelectedNode();
-      if (IsAspectNode(selectedNode)) return;
-      const edge = FindProjectEdgeByElementId(project, elem);
-      if (edge?.isLocked) return;
-
-      dispatch(removeEdge(elem.id));
-      elementsToRemove.push(elem);
-      return;
-    }
-
-    const node = FindProjectNodeByElementId(project, elem);
+    const node = FindMimirNodeByFlowNodeId(project, flowNode);
     if (node?.isLocked) return;
 
-    dispatch(removeNode(elem.id));
-    elementsToRemove.push(elem);
+    dispatch(removeNode(flowNode.id));
+    flowNodesToRemove.push(flowNode);
   });
-};
+}
+
+function HandleRemoveFlowEdges(flowEdges: FlowEdge[], flowEdgesToRemove: FlowEdge[], project: Project, dispatch: Dispatch) {
+  flowEdges.forEach((flowEdge) => {
+    const selectedNode = GetSelectedNode();
+    if (IsAspectNode(selectedNode)) return;
+
+    const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge);
+    if (edge?.isLocked) return;
+
+    dispatch(removeEdge(flowEdge.id));
+    flowEdgesToRemove.push(flowEdge);
+  });
+}
 
 export default useOnTreeRemove;
