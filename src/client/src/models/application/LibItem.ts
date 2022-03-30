@@ -9,7 +9,6 @@ export interface LibItem {
   id: string;
   version: string;
   rdsId: string;
-  category: string;
   name: string;
   description: string;
   statusId: string;
