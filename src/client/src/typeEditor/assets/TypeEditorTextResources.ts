@@ -42,7 +42,7 @@ export const TypeEditorTextResources = {
   ERROR_STATUS: "*Please select a status for the type",
   ERROR_ATTRIBUTES: "*Please add one or more attributes.",
   ERROR_LOCATION_ATTRIBUTES: "*Please add one or more location attributes.",
-  ERROR_TERMINALS: "*Please select one or more terminals.",
+  ERROR_TERMINALS: "*Please select one or more terminal media types.",
   ERROR_TERMINALSTYPE: "*You can only select two of each terminal, one must be input, the other must be output.",
   ERROR_TERMINALS_INTERFACE: "*Please select a terminal type.",
   ERROR_SIMPLE_TYPES: "*Please select simple types.",

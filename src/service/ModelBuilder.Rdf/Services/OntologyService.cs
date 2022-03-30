@@ -341,14 +341,21 @@ namespace ModelBuilder.Rdf.Services
             var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
             var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).Where(x => x.ProjectIri == projectIri).ToList();
             var units = _libRepository.GetObject<Unit>().ToList();
-            var attributeFormats = _libRepository.GetObject<AttributeFormat>().ToList();
+
+            var attributeFormats = _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Id, x => x);
+            var attributeConditions = _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Id, x => x);
+            var attributeSources = _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Id, x => x);
+            var attributeQualifiers = _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Id, x => x);
 
             var projectData = new ProjectData
             {
                 Edges = _mapper.Map<List<EdgeAm>>(edges),
                 Nodes = _mapper.Map<List<NodeAm>>(nodes),
                 Units = units,
-                AttributeFormats = attributeFormats
+                AttributeFormats = attributeFormats,
+                AttributeQualifiers = attributeQualifiers,
+                AttributeConditions = attributeConditions,
+                AttributeSources = attributeSources
             };
 
             _edgeRepository.Context.ChangeTracker.Clear();

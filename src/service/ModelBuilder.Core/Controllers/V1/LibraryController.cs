@@ -48,7 +48,6 @@ namespace Mb.Core.Controllers.V1
             try
             {
                 var data = await _libraryService.GetLibTypes(name);
-                var actual = data.ObjectBlocks.FirstOrDefault(x => x.Name == "Reidar");
                 return Ok(data);
             }
             catch (Exception e)

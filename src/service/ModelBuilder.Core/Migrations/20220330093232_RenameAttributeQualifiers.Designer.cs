@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220330093232_RenameAttributeQualifiers")]
+    partial class RenameAttributeQualifiers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -963,9 +965,6 @@ namespace Mb.Core.Migrations
                     b.Property<int>("Aspect")
                         .HasColumnType("int");
 
-                    b.Property<string>("BuildStatusId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -997,14 +996,7 @@ namespace Mb.Core.Migrations
                         .HasColumnName("PurposeId");
 
                     b.Property<string>("RdsId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("RdsId");
-
-                    b.Property<string>("RdsName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("RdsName");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SemanticReference")
                         .HasColumnType("nvarchar(max)")
@@ -1013,7 +1005,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("StatusId")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
                         .HasColumnName("StatusId");
 
@@ -1037,9 +1029,11 @@ namespace Mb.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuildStatusId");
-
                     b.HasIndex("PurposeId");
+
+                    b.HasIndex("RdsId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("LibraryType", (string)null);
 
@@ -1084,16 +1078,31 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("Id");
 
-                    b.Property<string>("Iri")
+                    b.Property<string>("Aspect")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Iri");
+                        .HasColumnName("Aspect");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Code");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
 
+                    b.Property<string>("RdsCategoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SemanticReference")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SemanticReference");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RdsCategoryId");
 
                     b.ToTable("Rds", (string)null);
                 });
@@ -1310,6 +1319,13 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Discipline");
 
                     b.HasDiscriminator().HasValue("Purpose");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Enums.RdsCategory", b =>
+                {
+                    b.HasBaseType("Mb.Models.Data.Enums.EnumBase");
+
+                    b.HasDiscriminator().HasValue("RdsCategory");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.TerminalCategory", b =>
@@ -1665,16 +1681,27 @@ namespace Mb.Core.Migrations
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.LibraryType", b =>
                 {
-                    b.HasOne("Mb.Models.Data.Enums.BuildStatus", null)
-                        .WithMany("LibraryTypes")
-                        .HasForeignKey("BuildStatusId");
-
                     b.HasOne("Mb.Models.Data.Enums.Purpose", "Purpose")
                         .WithMany("LibraryTypes")
                         .HasForeignKey("PurposeId")
                         .OnDelete(DeleteBehavior.NoAction);
 
+                    b.HasOne("Mb.Models.Data.TypeEditor.Rds", "Rds")
+                        .WithMany("LibraryTypes")
+                        .HasForeignKey("RdsId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Mb.Models.Data.Enums.BuildStatus", "Status")
+                        .WithMany("LibraryTypes")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Purpose");
+
+                    b.Navigation("Rds");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.NodeTypeTerminalType", b =>
@@ -1692,6 +1719,16 @@ namespace Mb.Core.Migrations
                     b.Navigation("NodeType");
 
                     b.Navigation("TerminalType");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.TypeEditor.Rds", b =>
+                {
+                    b.HasOne("Mb.Models.Data.Enums.RdsCategory", "RdsCategory")
+                        .WithMany("RdsList")
+                        .HasForeignKey("RdsCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("RdsCategory");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.TerminalType", b =>
@@ -1861,6 +1898,11 @@ namespace Mb.Core.Migrations
                     b.Navigation("Edges");
                 });
 
+            modelBuilder.Entity("Mb.Models.Data.TypeEditor.Rds", b =>
+                {
+                    b.Navigation("LibraryTypes");
+                });
+
             modelBuilder.Entity("Mb.Models.Data.TypeEditor.TerminalType", b =>
                 {
                     b.Navigation("InterfaceTypes");
@@ -1904,6 +1946,11 @@ namespace Mb.Core.Migrations
             modelBuilder.Entity("Mb.Models.Data.Enums.Purpose", b =>
                 {
                     b.Navigation("LibraryTypes");
+                });
+
+            modelBuilder.Entity("Mb.Models.Data.Enums.RdsCategory", b =>
+                {
+                    b.Navigation("RdsList");
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Enums.TerminalCategory", b =>
