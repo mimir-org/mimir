@@ -12,14 +12,10 @@ export interface Attribute {
   value: string;
   selectedUnitId: string;
   unit: EnumBase;
-  qualifierId: string;
-  qualifier: EnumBase;
-  sourceId: string;
-  source: EnumBase;
-  conditionId: string;
-  condition: EnumBase;
-  formatId: string;
-  format: EnumBase;
+  qualifier: string;
+  source: string;
+  condition: string;
+  format: string;
   units: EnumBase[];
   attributeTypeId: string;
   attributeTypeIri: string;
