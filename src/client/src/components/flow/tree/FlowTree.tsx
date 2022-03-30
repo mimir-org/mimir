@@ -72,7 +72,6 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
       library,
       reactFlowInstance: flowInstance,
       reactFlowWrapper: flowWrapper,
-      setElements,
       dispatch,
     });
   };
@@ -97,10 +96,10 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     }
   }, [project]);
 
-  // Build elements with new nodes
+  // Update elements
   useEffect(() => {
     if (project) setElements(BuildTreeElements(project, animatedEdge));
-  }, [project?.nodes?.length]);
+  }, [project]);
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {
