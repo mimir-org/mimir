@@ -1,7 +1,7 @@
 import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../../../../redux/store/project/actions";
 import { removeSecondaryNode, setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
 import { IsParentOf } from "../../../../../../components/flow/helpers";
-import { IsDirectChild, IsFamily, IsProduct } from "../../../../../../helpers";
+import { IsDirectChild, IsFamily } from "../../../../../../helpers";
 import { Dispatch } from "redux";
 import { Node } from "../../../../../../models";
 
@@ -30,17 +30,6 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
     }
   }
 
-  // Handling Product
-  if (IsProduct(selectedNode)) {
-    if (!IsProduct(node)) {
-      dispatch(setActiveNode(node?.id, !node.isSelected));
-      dispatch(setActiveBlockNode(node?.id));
-    }
-    if (IsProduct(node) && node.id !== selectedNode.id) dispatch(setNodeVisibility(node, true));
-    if (node === selectedNode) dispatch(setActiveNode(null, false));
-    return;
-  }
-
   // Handling same Aspect
   if (selectedNode && IsFamily(node, selectedNode) && node !== selectedNode) {
     validateSiblings(node, selectedNode, secondaryNode, dispatch);
@@ -55,7 +44,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 
   // Set SecondaryNode
   if (node !== selectedNode && node !== secondaryNode && !IsFamily(node, selectedNode)) {
-    if (!IsProduct(selectedNode)) dispatch(setSecondaryNode(node)); // ProductNode can not have a secondary node.
+    dispatch(setSecondaryNode(node));
     return;
   }
 

@@ -96,7 +96,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     }
   }, [project]);
 
-  // Update elements
+  // Rebuild elements
   useEffect(() => {
     if (project) setElements(BuildTreeElements(project, animatedEdge));
   }, [project]);

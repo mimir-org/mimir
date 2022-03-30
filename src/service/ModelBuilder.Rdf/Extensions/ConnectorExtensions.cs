@@ -114,9 +114,10 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="terminal">The terminal to resolve</param>
         /// <param name="ontologyService">Ontology Service</param>
+        /// <param name="projectData">Project data</param>
         /// <param name="nodeIri">Node IRI</param>
         /// <param name="iri">The terminal IRI</param>
-        public static void ResolveTerminal(this TerminalAm terminal, IOntologyService ontologyService, string nodeIri, string iri)
+        public static void ResolveTerminal(this TerminalAm terminal, IOntologyService ontologyService, ProjectData projectData, string nodeIri, string iri)
         {
             terminal.Iri = iri;
             terminal.NodeIri = nodeIri;
@@ -145,7 +146,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
-                attribute.ResolveAttribute(ontologyService, a.ToString(), null, null, iri, null, null);
+                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), null, null, iri, null, null);
                 terminal.Attributes.Add(attribute);
             }
         }
