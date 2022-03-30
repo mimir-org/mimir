@@ -24,8 +24,14 @@ function FilterTerminal(selectedNode: Node, secondary: Node, c: Connector) {
 }
 
 function FilterSplitViewTerminal(selectedNode: Node, secondary: Node, c: Connector) {
-  if (!IsLocation(selectedNode)) {
+  if (IsProduct(selectedNode)) {
+    if (IsFunction(secondary)) return IsProductTerminal(c);
+    if (IsLocation(secondary)) return IsLocationTerminal(c);
+    if (IsProduct(secondary)) return IsTransport(c);
+  }
+  if (IsFunction(selectedNode)) {
     if (IsFunction(secondary)) return IsTransport(c);
+    if (IsLocation(secondary)) return IsLocationTerminal(c);
     if (IsProduct(secondary)) return IsProductTerminal(c);
   }
   return IsLocationTerminal(c);
