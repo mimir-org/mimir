@@ -23,10 +23,10 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
 
-            builder.Property(p => p.Qualifier).HasColumnName("QualifierId").HasMaxLength(127);
-            builder.Property(p => p.Source).HasColumnName("SourceId").HasMaxLength(127);
-            builder.Property(p => p.Condition).HasColumnName("ConditionId").HasMaxLength(127);
-            builder.Property(p => p.Format).HasColumnName("FormatId").HasMaxLength(127);
+            builder.Property(p => p.Qualifier).HasColumnName("Qualifier").HasMaxLength(127);
+            builder.Property(p => p.Source).HasColumnName("Source").HasMaxLength(127);
+            builder.Property(p => p.Condition).HasColumnName("Condition").HasMaxLength(127);
+            builder.Property(p => p.Format).HasColumnName("Format").HasMaxLength(127);
 
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
             builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);

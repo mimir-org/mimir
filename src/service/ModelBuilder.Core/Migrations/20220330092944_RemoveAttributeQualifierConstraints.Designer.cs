@@ -4,6 +4,7 @@ using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mb.Core.Migrations
 {
     [DbContext(typeof(ModelBuilderDbContext))]
-    partial class ModelBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220330092944_RemoveAttributeQualifierConstraints")]
+    partial class RemoveAttributeQualifierConstraints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Condition")
                         .HasMaxLength(127)
                         .HasColumnType("nvarchar(127)")
-                        .HasColumnName("Condition");
+                        .HasColumnName("ConditionId");
 
                     b.Property<int>("Discipline")
                         .HasColumnType("int")
@@ -68,7 +70,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Format")
                         .HasMaxLength(127)
                         .HasColumnType("nvarchar(127)")
-                        .HasColumnName("Format");
+                        .HasColumnName("FormatId");
 
                     b.Property<string>("InterfaceId")
                         .HasColumnType("nvarchar(450)")
@@ -108,7 +110,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Qualifier")
                         .HasMaxLength(127)
                         .HasColumnType("nvarchar(127)")
-                        .HasColumnName("Qualifier");
+                        .HasColumnName("QualifierId");
 
                     b.Property<int>("SelectType")
                         .HasColumnType("int")
@@ -133,7 +135,7 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Source")
                         .HasMaxLength(127)
                         .HasColumnType("nvarchar(127)")
-                        .HasColumnName("Source");
+                        .HasColumnName("SourceId");
 
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)")
