@@ -88,7 +88,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="projectData">Record of ICollections</param>
         public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ProjectData projectData)
         {
-            var attributeFormat = projectData.AttributeFormats.FirstOrDefault(x => x.Id == attribute.FormatId);
+            var attributeFormat = projectData.AttributeFormats[attribute.Format];
 
             if (attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.SemanticReference))
                 return;
@@ -143,10 +143,10 @@ namespace ModelBuilder.Rdf.Extensions
 
             return new AttributeDatumObject
             {
-                QualifierObject = $"{rootIri}/qualifier/ID{attribute.QualifierId}",
-                SourceObject = $"{rootIri}/source/ID{attribute.SourceId}",
-                ConditionObject = $"{rootIri}/condition/ID{attribute.ConditionId}",
-                FormatObject = $"{rootIri}/format/ID{attribute.FormatId}"
+                QualifierObject = $"{rootIri}/qualifier/{attribute.Qualifier}",
+                SourceObject = $"{rootIri}/source/{attribute.Source}",
+                ConditionObject = $"{rootIri}/condition/{attribute.Condition}",
+                FormatObject = $"{rootIri}/format/{attribute.Format}"
             };
         }
 
@@ -161,7 +161,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="terminalIri"></param>
         /// <param name="transportIri"></param>
         /// <param name="simpleIri"></param>
-        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri, string simpleIri)
+        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri, string simpleIri)
         {
             attribute.Iri = iri;
             attribute.Entity = ontologyService.GetValue(iri, Resources.Label);
@@ -171,10 +171,15 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.AttributeTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
             var adp = iri.AttributeDatumPredicate();
-            attribute.QualifierId = ontologyService.GetValue(iri.IriDatum(), adp.QualifierPredicate, false);
-            attribute.SourceId = ontologyService.GetValue(iri.IriDatum(), adp.SourcePredicate, false);
-            attribute.ConditionId = ontologyService.GetValue(iri.IriDatum(), adp.ConditionPredicate, false);
-            attribute.FormatId = ontologyService.GetValue(iri.IriDatum(), adp.FormatPredicate, false);
+            attribute.Qualifier = ontologyService.GetValue(iri.IriDatum(), adp.QualifierPredicate, false);
+            attribute.Source = ontologyService.GetValue(iri.IriDatum(), adp.SourcePredicate, false);
+            attribute.Condition = ontologyService.GetValue(iri.IriDatum(), adp.ConditionPredicate, false);
+            attribute.Format = ontologyService.GetValue(iri.IriDatum(), adp.FormatPredicate, false);
+
+            attribute.Qualifier = projectData.AttributeQualifiers[attribute.Qualifier]?.Name ?? attribute.Qualifier;
+            attribute.Source = projectData.AttributeSources[attribute.Source]?.Name ?? attribute.Source;
+            attribute.Condition = projectData.AttributeConditions[attribute.Condition]?.Name ?? attribute.Condition;
+            attribute.Format = projectData.AttributeFormats[attribute.Format]?.Name ?? attribute.Format;
 
             attribute.NodeIri = nodeIri;
             attribute.InterfaceIri = interfaceIri;

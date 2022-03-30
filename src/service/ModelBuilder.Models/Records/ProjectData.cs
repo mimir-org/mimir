@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Data;
 
@@ -16,99 +17,139 @@ namespace Mb.Models.Records
         public List<Simple> Simples { get; init; } = new();
 
         /// <summary>
-        /// Deconstruct and flatten node
+        /// Deconstruct and flatten edges 
         /// </summary>
-        /// <param name="node">Node to deconstruct</param>
-        public Task DeconstructNode(Node node)
+        /// <param name="project">Project to be deconstructed</param>
+        public Task DeconstructAttributes(Project project)
         {
-            if (node == null)
-                return Task.CompletedTask;
+            var nodeAttributes = project.Nodes.Select(x => x.Attributes).SelectMany(y => y).ToList();
+            var connectorAttributes = project.Nodes.SelectMany(x => x.Connectors).OfType<Terminal>().SelectMany(y => y.Attributes).ToList();
+            var transportAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).SelectMany(y => y.Attributes).ToList();
+            var interfaceAttributes = project.Edges.Where(x => x.Interface != null).Select(x => x.Interface).SelectMany(y => y.Attributes).ToList();
+            var simpleAttributes = project.Nodes.Where(x => x.Simples != null).SelectMany(y => y.Simples).Where(y => y != null).SelectMany(z => z.Attributes).ToList();
 
-            Nodes.Add(node);
-            Attributes.AddRange(node.Attributes ?? new List<Attribute>());
+            var inputTerminalAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.InputTerminal).SelectMany(z => z.Attributes).ToList();
+            var outputTerminalAttributes = project.Edges.Where(x => x.Transport != null).Select(x => x.Transport).Select(y => y.OutputTerminal).SelectMany(z => z.Attributes).ToList();
 
-            if (node.Connectors != null)
-            {
-                foreach (var connector in node.Connectors)
-                {
-                    switch (connector)
-                    {
-                        case Terminal t:
-                            Terminals.Add(t);
-                            Attributes.AddRange(t.Attributes ?? new List<Attribute>());
-                            break;
-                        case Relation r:
-                            Relations.Add(r);
-                            break;
-                    }
-                }
-            }
+            var allAttributes = nodeAttributes
+                .Union(connectorAttributes)
+                .Union(transportAttributes)
+                .Union(interfaceAttributes)
+                .Union(inputTerminalAttributes)
+                .Union(outputTerminalAttributes)
+                .Union(simpleAttributes)
+                .ToList();
 
-            if (node.Simples == null)
-                return Task.CompletedTask;
-
-            foreach (var simple in node.Simples)
-            {
-                Simples.Add(simple);
-                Attributes.AddRange(simple.Attributes ?? new List<Attribute>());
-            }
-
+            Attributes.AddRange(allAttributes);
             return Task.CompletedTask;
         }
 
         /// <summary>
-        /// Deconstruct and flatten edge
+        /// Deconstruct and flatten nodes
         /// </summary>
-        /// <param name="edge">Edge to deconstruct</param>
-        public Task DeconstructEdge(Edge edge)
+        /// <param name="project">Project to be deconstructed</param>
+        public Task DeconstructNodes(Project project)
         {
-            if (edge == null)
+            if (project?.Nodes == null || !project.Nodes.Any())
                 return Task.CompletedTask;
 
-            Edges.Add(edge);
+            Nodes.AddRange(project.Nodes);
+            return Task.CompletedTask;
+        }
 
-            if (edge.Transport != null)
-            {
-                Transports.Add(edge.Transport);
-                if (edge.Transport.Attributes != null)
-                    Attributes.AddRange(edge.Transport.Attributes ?? new List<Attribute>());
+        /// <summary>
+        /// Deconstruct terminals
+        /// </summary>
+        /// <param name="project">The project to be deconstructed</param>
+        public Task DeconstructTerminals(Project project)
+        {
+            if (project == null)
+                return Task.CompletedTask;
 
-                if (edge.Transport.InputTerminal != null)
-                {
-                    Terminals.Add(edge.Transport.InputTerminal);
-                    if (edge.Transport.InputTerminal.Attributes != null)
-                        Attributes.AddRange(edge.Transport.InputTerminal.Attributes ?? new List<Attribute>());
-                }
+            var nodeTerminals = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Terminal>().ToList();
+            var transports = project.Edges.Where(x => x.Transport != null).Select(y => y.Transport).ToList();
+            var inputTerminals = transports.Where(y => y.InputTerminal != null).Select(y => y.InputTerminal).ToList();
+            var outputTerminals = transports.Where(y => y.OutputTerminal != null).Select(y => y.OutputTerminal).ToList();
 
-                if (edge.Transport.OutputTerminal != null)
-                {
-                    Terminals.Add(edge.Transport.OutputTerminal);
-                    if (edge.Transport.OutputTerminal.Attributes != null)
-                        Attributes.AddRange(edge.Transport.OutputTerminal.Attributes ?? new List<Attribute>());
-                }
-            }
+            var terminals = nodeTerminals
+                .Union(inputTerminals)
+                .Union(outputTerminals)
+                .ToList();
 
-            if (edge.Interface != null)
-            {
-                Interfaces.Add(edge.Interface);
-                if (edge.Interface.Attributes != null)
-                    Attributes.AddRange(edge.Interface.Attributes ?? new List<Attribute>());
+            Terminals.AddRange(terminals);
+            return Task.CompletedTask;
+        }
 
-                if (edge.Interface.InputTerminal != null)
-                {
-                    Terminals.Add(edge.Interface.InputTerminal);
-                    if (edge.Interface.InputTerminal.Attributes != null)
-                        Attributes.AddRange(edge.Interface.InputTerminal.Attributes ?? new List<Attribute>());
-                }
+        /// <summary>
+        /// Deconstruct relations
+        /// </summary>
+        /// <param name="project">The project to be deconstructed</param>
+        public Task DeconstructRelations(Project project)
+        {
+            if (project == null)
+                return Task.CompletedTask;
 
-                if (edge.Interface.OutputTerminal != null)
-                {
-                    Terminals.Add(edge.Interface.OutputTerminal);
-                    if (edge.Interface.OutputTerminal.Attributes != null)
-                        Attributes.AddRange(edge.Interface.OutputTerminal.Attributes ?? new List<Attribute>());
-                }
-            }
+            var nodeRelations = project.Nodes.Where(x => x.Connectors != null).SelectMany(x => x.Connectors).OfType<Relation>().ToList();
 
+            Relations.AddRange(nodeRelations);
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Deconstruct and flatten interfaces
+        /// </summary>
+        /// <param name="project">The project to be deconstructed</param>
+        public Task DeconstructInterfaces(Project project)
+        {
+            if (project.Edges == null || !project.Edges.Any())
+                return Task.CompletedTask;
+
+            var interfaces = project.Edges.Where(x => x.Interface != null).Select(y => y.Interface).ToList();
+
+            Interfaces.AddRange(interfaces);
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Deconstruct and flatten transports
+        /// </summary>
+        /// <param name="project">The project to be deconstructed</param>
+        public Task DeconstructTransports(Project project)
+        {
+            if (project.Edges == null || !project.Edges.Any())
+                return Task.CompletedTask;
+
+            var transports = project.Edges.Where(x => x.Transport != null).Select(y => y.Transport).ToList();
+
+            Transports.AddRange(transports);
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Deconstruct and flatten simples
+        /// </summary>
+        /// <param name="project">The project to be deconstructed</param>
+        public Task DeconstructSimples(Project project)
+        {
+            if (project.Nodes == null || !project.Nodes.Any())
+                return Task.CompletedTask;
+
+            var simples = project.Nodes.Where(x => x.Simples != null).SelectMany(y => y.Simples).ToList();
+
+            Simples.AddRange(simples);
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Deconstruct and flatten edges
+        /// </summary>
+        /// <param name="project">The project to be deconstructed</param>
+        public Task DeconstructEdges(Project project)
+        {
+            if (project.Edges == null || !project.Edges.Any())
+                return Task.CompletedTask;
+
+            Edges.AddRange(project.Edges);
             return Task.CompletedTask;
         }
     }

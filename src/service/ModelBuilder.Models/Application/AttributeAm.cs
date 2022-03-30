@@ -26,13 +26,16 @@ namespace Mb.Models.Application
 
         // Qualifiers
         [Required]
-        public string QualifierId { get; set; }
+        public string Qualifier { get; set; }
+
         [Required]
-        public string SourceId { get; set; }
+        public string Source { get; set; }
+
         [Required]
-        public string ConditionId { get; set; }
+        public string Condition { get; set; }
+
         [Required]
-        public string FormatId { get; set; }
+        public string Format { get; set; }
 
         // References
         public string TerminalId { get; set; }

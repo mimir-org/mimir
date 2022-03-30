@@ -68,13 +68,19 @@ namespace Mb.Services.Services
             if (project == null || (project.Edges == null && project.Nodes == null))
                 return;
 
-            if (project.Nodes != null)
-                foreach (var node in project.Nodes)
-                    await data.DeconstructNode(node);
+            var tasks = new List<Task>
+            {
+                Task.Run(() => data.DeconstructAttributes(project)),
+                Task.Run(() => data.DeconstructEdges(project)),
+                Task.Run(() => data.DeconstructNodes(project)),
+                Task.Run(() => data.DeconstructInterfaces(project)),
+                Task.Run(() => data.DeconstructTransports(project)),
+                Task.Run(() => data.DeconstructRelations(project)),
+                Task.Run(() => data.DeconstructTerminals(project)),
+                Task.Run(() => data.DeconstructSimples(project))
+            };
 
-            if (project.Edges != null)
-                foreach (var edge in project.Edges)
-                    await data.DeconstructEdge(edge);
+            await Task.WhenAll(tasks);
         }
 
         /// <summary>
