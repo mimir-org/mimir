@@ -72,7 +72,7 @@ function ValidateOffPageDrop(
   const dropZone = CalculateDropZone(transform, sourceNode, primaryNode, secondaryNode, isTarget);
 
   if (splitView) {
-    const dropZoneWidth = Size.SPLITVIEW_DISTANCE;
+    const dropZoneWidth = Size.SPLITVIEW_DISTANCE - 70;
     if (isTarget) return clientX > dropZone && clientX < dropZone + dropZoneWidth;
     return clientX < dropZone && clientX > dropZone - dropZoneWidth;
   }
