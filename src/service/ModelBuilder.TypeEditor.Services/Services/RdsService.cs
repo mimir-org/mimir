@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,14 +20,18 @@ namespace Mb.TypeEditor.Services.Services
             _mapper = mapper;
             _rdsRepository = rdsRepository;
         }
-        
+
         /// <summary>
         /// Get all RDS entities
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Rds> GetRds()
         {
-            return _rdsRepository.GetAll();
+            var allRds = _rdsRepository.GetAll().ToList();
+
+            return allRds.Any()
+                ? allRds.OrderBy(x => x.Id.Length).ThenBy(x => x.Id, StringComparer.InvariantCultureIgnoreCase)
+                : new List<Rds>();
         }
 
         /// <summary>
