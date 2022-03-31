@@ -20,6 +20,7 @@ import { MENU_TYPE, VIEW_TYPE, ViewType } from "../../models/project";
 import { ToggleDarkModeColor } from "../../helpers";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
+import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import {
   fetchCollaborationPartners,
   fetchCombinedAttributeFilters,
@@ -40,8 +41,9 @@ export const Home = ({ dispatch }: Props) => {
   const projectState = useAppSelector(selectors.projectStateSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
-  const inspectorRef = useRef(null);
+  const isFilterOpen = useAppSelector(selectors.filterSelector);
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
+  const inspectorRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchLibraryInterfaceTypes());
@@ -87,6 +89,7 @@ export const Home = ({ dispatch }: Props) => {
       <ProjectSubMenus />
       <ValidationModule />
       <ErrorModule />
+      {isFilterOpen && <VisualFilterComponent />}
     </>
   );
 };

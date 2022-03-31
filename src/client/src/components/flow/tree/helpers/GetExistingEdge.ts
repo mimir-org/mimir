@@ -8,7 +8,7 @@ const GetExistingEdge = (project: Project, connection: FlowEdge | Connection, so
       edge.toConnectorId === connection.targetHandle &&
       edge.fromNodeId === sourceNode.id &&
       edge.toNodeId === targetNode.id &&
-      edge.isHidden === targetNode.hidden
+      edge.isHidden === targetNode.isHidden
   );
 };
 

@@ -51,7 +51,7 @@ export interface Node {
 
   // Only for client
   isSelected?: boolean;
-  blockSelected?: boolean;
-  hidden?: boolean;
+  isBlockSelected?: boolean;
+  isHidden?: boolean;
   isOffPageTarget?: boolean;
 }

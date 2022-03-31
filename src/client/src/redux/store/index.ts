@@ -20,7 +20,6 @@ import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
 import { rootSaga } from "../sagas";
-import { blockNodesReducer } from "../../modules/explorer/redux/reducers";
 
 const rootReducers = combineReducers({
   library: libraryReducer,
@@ -40,7 +39,6 @@ const rootReducers = combineReducers({
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
   location3D: location3DReducer,
-  blockNodes: blockNodesReducer,
   validation: validationReducer,
 });
 

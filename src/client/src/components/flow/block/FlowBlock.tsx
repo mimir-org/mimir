@@ -5,12 +5,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
-import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
 import { GetSelectedNode } from "../../../helpers";
 import { CloseInspector, HandleNodeSelection } from "../handlers";
-import { updateBlockNodes } from "../../../modules/explorer/redux/actions";
 import { Project } from "../../../models";
 import ReactFlow, {
   Node as FlowNode,
@@ -40,14 +38,13 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState<FlowNode>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<FlowEdge>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
-  const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const primaryNode = GetSelectedNode();
   const defaultZoom = Size.ZOOM_DEFAULT;
@@ -131,47 +128,40 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   }, [inspectorRef, dispatch]);
 
   useEffect(() => {
-    dispatch(updateBlockNodes(nodes));
-  }, [nodes, dispatch]);
-
-  useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
   }, []);
 
   return (
-    <>
-      <div className="reactflow-wrapper" ref={flowWrapper}>
-        <ReactFlow
-          onInit={OnInit}
-          nodes={nodes}
-          edges={edges}
-          nodeTypes={GetBlockNodeTypes}
-          edgeTypes={GetBlockEdgeTypes}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onNodesDelete={OnNodesDelete}
-          onEdgesDelete={OnEdgesDelete}
-          onConnect={OnConnect}
-          onConnectStart={OnConnectStart}
-          onConnectStop={OnConnectStop}
-          onDrop={OnDrop}
-          onDragOver={OnDragOver}
-          onNodeDragStop={OnNodeDragStop}
-          multiSelectionKeyCode={"Control"}
-          connectionLineComponent={BlockConnectionLine}
-          onSelectionChange={(e) => OnSelectionChange(e)}
-          deleteKeyCode={"Delete"}
-          zoomOnDoubleClick={false}
-          defaultZoom={defaultZoom}
-          minZoom={0.2}
-          maxZoom={3}
-          onlyRenderVisibleElements
-          zoomOnScroll
-          panOnDrag
-        ></ReactFlow>
-        {visualFilter && <VisualFilterComponent flowNodes={nodes} flowEdges={edges} edgeAnimation={animatedEdge} />}
-      </div>
-    </>
+    <div className="reactflow-wrapper" ref={flowWrapper}>
+      <ReactFlow
+        onInit={OnInit}
+        nodes={nodes}
+        edges={edges}
+        nodeTypes={GetBlockNodeTypes}
+        edgeTypes={GetBlockEdgeTypes}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodesDelete={OnNodesDelete}
+        onEdgesDelete={OnEdgesDelete}
+        onConnect={OnConnect}
+        onConnectStart={OnConnectStart}
+        onConnectStop={OnConnectStop}
+        onDrop={OnDrop}
+        onDragOver={OnDragOver}
+        onNodeDragStop={OnNodeDragStop}
+        multiSelectionKeyCode={"Control"}
+        connectionLineComponent={BlockConnectionLine}
+        onSelectionChange={(e) => OnSelectionChange(e)}
+        deleteKeyCode={"Delete"}
+        zoomOnDoubleClick={false}
+        defaultZoom={defaultZoom}
+        minZoom={0.2}
+        maxZoom={3}
+        onlyRenderVisibleElements
+        zoomOnScroll
+        panOnDrag
+      ></ReactFlow>
+    </div>
   );
 };
 

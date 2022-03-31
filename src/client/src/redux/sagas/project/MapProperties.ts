@@ -8,8 +8,8 @@ export const MapProperties = (project: Project, oldProject: Project, reMappedIds
       const oldNode = oldProject.nodes.find((x) => x.id === node.id || (reMappedIds[node.id] && x.id === reMappedIds[node.id]));
 
       if (oldNode) {
-        node.hidden = oldNode.hidden;
-        node.blockSelected = oldNode.blockSelected;
+        node.isHidden = oldNode.isHidden;
+        node.isBlockSelected = oldNode.isBlockSelected;
         node.isSelected = oldNode.isSelected;
       }
     });

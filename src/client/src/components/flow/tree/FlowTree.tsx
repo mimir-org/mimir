@@ -6,7 +6,6 @@ import { BuildTreeFlowNodes, BuildTreeFlowEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleNodeSelection } from "../handlers";
 import { Project } from "../../../models";
@@ -39,13 +38,12 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [nodes, setNodes] = useNodesState([]);
-  const [edges, setEdges] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const user = useAppSelector(selectors.userStateSelector).user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
-  const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
@@ -121,8 +119,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         onInit={OnInit}
         nodes={nodes}
         edges={edges}
-        onNodesChange={OnNodesChange}
-        onEdgesChange={OnEdgesChange}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         onNodesDelete={OnNodesDelete}
         onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
@@ -142,7 +140,6 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
       >
         <Background />
       </ReactFlow>
-      {visualFilter && <VisualFilterComponent flowNodes={nodes} flowEdges={edges} edgeAnimation={animatedEdge} />}
     </>
   );
 };
