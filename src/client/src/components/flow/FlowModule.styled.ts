@@ -86,7 +86,7 @@ export const FlowModuleContainer = styled.div`
   .path-treeRelationTargetEdge {
     stroke-width: 2px !important;
     fill: none;
-    pointer-events: all;
+    pointer-events: visibleStroke;
     cursor: grab;
   }
 
@@ -113,7 +113,7 @@ export const FlowModuleContainer = styled.div`
   .path-blockOffPageEdge {
     stroke-width: 2px !important;
     fill: none;
-    pointer-events: all;
+    pointer-events: visibleStroke;
     cursor: grab;
   }
 
