@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-interface Props {
+interface OffPageBoxProps {
   isSelected: boolean;
   color: string;
 }
 
-export const OffPageBox = styled.div<Props>`
+export const OffPageBox = styled.div<OffPageBoxProps>`
   display: flex;
   position: relative;
   align-items: center;
@@ -14,7 +14,6 @@ export const OffPageBox = styled.div<Props>`
   border: 1.5px solid;
   border-radius: 5px;
   border-color: ${(props) => (props.isSelected ? props.color : "transparent")};
-  /* background: #fff; */
 
   .icon {
     display: flex;

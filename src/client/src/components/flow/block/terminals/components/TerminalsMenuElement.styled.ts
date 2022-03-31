@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../compLibrary/font";
 
-const TerminalsElementBox = styled.label`
+export const TerminalsElementBox = styled.label`
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -31,4 +31,34 @@ const TerminalsElementBox = styled.label`
   }
 `;
 
-export default TerminalsElementBox;
+export const BidirectionalBox = styled.div`
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  line-height: 2.5;
+  width: 100%;
+  height: 100%;
+
+  .icon {
+    height: auto;
+    margin-right: 12px;
+  }
+`;
+
+interface ColorTagProps {
+  color: string;
+}
+
+export const ColorTag = styled.span<ColorTagProps>`
+  width: 100%;
+  height: 100%;
+  border-left: 12px solid ${(props) => props.color};
+  padding-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  line-height: 2.5;
+`;

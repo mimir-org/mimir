@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const NavigationButton = styled.button`
+export const NavigationButton = styled.button`
   padding: 10px 5px;
   margin: 0;
   background: transparent;
@@ -16,5 +16,3 @@ const NavigationButton = styled.button`
     pointer-events: none;
   }
 `;
-
-export default NavigationButton;

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Color } from "../../../../../compLibrary/colors/Color";
 
-interface Props {
+interface TerminalsBoxProps {
   isInput: boolean;
   menuOffset: string;
   color: string;
 }
 
-const TerminalsBox = styled.div<Props>`
+export const TerminalsBox = styled.div<TerminalsBoxProps>`
   position: absolute;
   width: 175px;
   top: -2px;
@@ -20,5 +20,3 @@ const TerminalsBox = styled.div<Props>`
   pointer-events: all;
   z-index: 1;
 `;
-
-export default TerminalsBox;

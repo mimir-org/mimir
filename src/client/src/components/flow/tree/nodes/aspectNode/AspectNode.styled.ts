@@ -5,7 +5,7 @@ interface Props {
   isSelected: boolean;
 }
 
-export const AspectNodeBox = styled.div<Props>`
+export const AspectNodeStyled = styled.div<Props>`
   padding-top: 10px;
   width: 90px;
   height: 55px;

@@ -4,7 +4,7 @@ import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle";
-import { OffPageBox } from "./styled/OffPageBox";
+import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";

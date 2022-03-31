@@ -1,5 +1,5 @@
 import { MiniMap, Node as FlowNode } from "react-flow-renderer";
-import { MapWrapper } from "./styled";
+import { MapWrapper } from "./MapComponent.styled";
 import { Size } from "../../../compLibrary/size/Size";
 import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } from "../../../redux/store";
 import { GetAspectColor } from "../../../helpers";

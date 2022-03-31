@@ -1,17 +1,18 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors/Color";
-import { IsProduct } from "../../../../../../../helpers";
-import { Node } from "../../../../../../../models";
-import { Size } from "../../../../../../../compLibrary/size/Size";
+import { Color } from "../../../../../../compLibrary/colors/Color";
+import { IsProduct } from "../../../../../../helpers";
+import { Node } from "../../../../../../models";
+import { Size } from "../../../../../../compLibrary/size/Size";
+import { SymbolImage } from "../../../../../../compLibrary/symbol/Symbol.styled";
 
-interface Props {
+interface NodeBoxProps {
   node: Node;
   colorMain: string;
   colorSelected: string;
   isSelected: boolean;
 }
 
-const NodeBox = styled.div<Props>`
+export const NodeBox = styled.div<NodeBoxProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,4 +46,23 @@ const NodeBox = styled.div<Props>`
   }
 `;
 
-export default NodeBox;
+export const SymbolBox = styled.div`
+  max-height: 30px;
+
+  ${SymbolImage} {
+    min-height: 30px;
+  }
+`;
+
+export const LogoBox = styled.div`
+  height: 20px;
+  width: 50px;
+  align-self: flex-start;
+  pointer-events: none;
+  margin-left: 10px;
+
+  img {
+    min-height: 100%;
+    filter: brightness(0%);
+  }
+`;
