@@ -29,9 +29,9 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const isElectro = useAppSelector(selectors.electroSelector);
   const node = nodes?.find((x) => x.id === data.id);
 
-  useEffect(() => {
-    SetZoomCenterLevel(secondaryNode !== null);
-  }, [secondaryNode]);
+  // useEffect(() => {
+  //   SetZoomCenterLevel(secondaryNode !== null);
+  // }, [secondaryNode]);
 
   useEffect(() => {
     InitParentSize(node, dispatch);

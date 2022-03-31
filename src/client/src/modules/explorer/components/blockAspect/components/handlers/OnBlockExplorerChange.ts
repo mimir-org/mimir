@@ -15,7 +15,10 @@ import { IsFamily } from "../../../../../../helpers/CheckTypes";
  * @param secondaryNode
  * @param dispatch
  */
-export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: Dispatch) => {
+export const OnBlockExplorerChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: Dispatch) => {
+  console.log({ node });
+  console.log({ selectedNode });
+
   // Set selectNode
   if (!selectedNode) {
     dispatch(setActiveNode(node?.id, !node.isSelected));
@@ -39,6 +42,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 
   // Toggle off selectedNode
   if (node === selectedNode && selectedNode && !secondaryNode) {
+    console.log("SKRU AV: ", node?.name, selectedNode?.name);
     dispatch(setActiveNode(null, false));
     return;
   }

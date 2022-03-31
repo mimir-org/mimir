@@ -3,8 +3,8 @@ import { AspectExpandButton } from "../../shared/components/AspectExpandButton";
 import { AspectColorType, Node } from "../../../../../models";
 import { GetAspectColor, GetAspectIcon, UseIndentLevel } from "../../../../../helpers";
 import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
-import { OnBlockChange } from "./handlers/OnBlockChange";
-import { IsChecked, IsMiniCheckBox } from "./helpers/";
+import { OnBlockExplorerChange } from "./handlers/OnBlockExplorerChange";
+import { IsNodeInBlockExplorerChecked, IsMiniCheckBox } from "./helpers/";
 import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/CheckTypes";
@@ -40,10 +40,10 @@ export const BlockAspectElement = ({
   <AspectElementWrapper indent={UseIndentLevel(indent)}>
     <CheckboxExplorer
       color={GetAspectColor(node, AspectColorType.Selected)}
-      isChecked={IsChecked(flowNodes, node)}
+      isChecked={IsNodeInBlockExplorerChecked(flowNodes, node)}
       isMiniCheckbox={IsMiniCheckBox(node, selectedNode, secondaryNode)}
       isAspectNode={IsAspectNode(node)}
-      onChange={() => OnBlockChange(node, selectedNode, secondaryNode, dispatch)}
+      onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, dispatch)}
       label={node.label}
       icon={GetAspectIcon(node)}
       isBlockView

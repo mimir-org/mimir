@@ -1,2 +1,2 @@
-export { default as IsChecked } from "./IsChecked";
+export { default as IsNodeInBlockExplorerChecked } from "./IsNodeInBlockExplorerChecked";
 export { default as IsMiniCheckBox } from "./IsMiniCheckBox";

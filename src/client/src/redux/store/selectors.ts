@@ -126,8 +126,8 @@ export const customCategorySelector = createAppSelector(
 );
 
 export const blockNodesSelector = createAppSelector(
-  (state) => state.blockNodes.nodes,
-  (nodes) => nodes
+  (state) => state.blockNodes.flowNodes,
+  (flowNodes) => flowNodes
 );
 
 export const nodeSizeSelector = createAppSelector(

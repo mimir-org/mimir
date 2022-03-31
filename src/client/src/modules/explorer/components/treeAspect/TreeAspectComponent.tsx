@@ -5,7 +5,7 @@ import { Node, Project } from "../../../../models";
 import { TreeAspectElement } from "./components/TreeAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
-import { OnTreeChange } from "./handlers/OnTreeChange";
+import { OnTreeExplorerChangeVisibility } from "./handlers/OnTreeExplorerChange";
 import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
@@ -51,7 +51,7 @@ export const TreeAspectComponent = ({
       hideText={TextResources.EXPLORER_HIDE_OBJECT}
       onToggleVisible={() => {
         onSetVisibleElement(!isVisible, node.id);
-        OnTreeChange(node, project, dispatch);
+        OnTreeExplorerChangeVisibility(node, project, dispatch);
       }}
     />
     <LockComponent

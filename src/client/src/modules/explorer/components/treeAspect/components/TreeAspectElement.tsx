@@ -2,7 +2,7 @@ import { AspectExpandButton } from "../../shared/components/AspectExpandButton";
 import { AspectColorType, Node } from "../../../../../models";
 import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
-import { IsCheckedTree } from "./helpers/IsCheckedTree";
+import { IsNodeInTreeExplorerChecked } from "./helpers/IsCheckedTree";
 import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
 import { Icon } from "../../../../../compLibrary/icon";
 import { GetAspectColor, GetAspectIcon, UseIndentLevel, UseSetSelectNodes, GetSelectedNodes } from "../../../../../helpers";
@@ -36,7 +36,7 @@ export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExp
       ) : (
         <CheckboxExplorer
           color={GetAspectColor(node, AspectColorType.Selected)}
-          isChecked={IsCheckedTree(node, selectedNodes)}
+          isChecked={IsNodeInTreeExplorerChecked(node, selectedNodes)}
           onChange={() => OnSelectActiveNode(node, nodes, selectedNodes, setActiveNodeElement)}
           label={node.label}
         />

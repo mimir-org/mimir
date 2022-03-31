@@ -2,7 +2,7 @@ import { Node as FlowNode } from "react-flow-renderer";
 import { UPDATE_BLOCK_NODES } from "./types";
 
 const initialState = {
-  nodes: null,
+  flowNodes: null,
 };
 
 export function blockNodesReducer(state = initialState, action) {

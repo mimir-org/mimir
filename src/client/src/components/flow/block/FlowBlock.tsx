@@ -40,8 +40,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [nodes, setNodes] = useNodesState([]);
-  const [edges, setEdges] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<FlowNode>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<FlowEdge>([]);
   const [hasRendered, setHasRendered] = useState(false);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
@@ -147,8 +147,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           edges={edges}
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
-          onNodesChange={OnNodesChange}
-          onEdgesChange={OnEdgesChange}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
           onNodesDelete={OnNodesDelete}
           onEdgesDelete={OnEdgesDelete}
           onConnect={OnConnect}

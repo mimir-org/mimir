@@ -12,7 +12,7 @@ export const OnSelectActiveNode = (
 
   selectedNodes?.forEach((n) => {
     const selectedNode = mimirNodes.find((x) => x.id === n.id);
-    tempArray.push(selectedNode);
+    if (selectedNode) tempArray.push(selectedNode);
   });
 
   const isInArray = tempArray.includes(mimirNode);
@@ -20,7 +20,7 @@ export const OnSelectActiveNode = (
   if (isInArray) tempArray = tempArray.filter((n) => n !== mimirNode);
   else {
     const selectedNode = mimirNodes.find((n) => n.id === mimirNode.id);
-    tempArray.push(selectedNode);
+    if (selectedNode) tempArray.push(selectedNode);
   }
 
   setActiveFlowElement(tempArray);

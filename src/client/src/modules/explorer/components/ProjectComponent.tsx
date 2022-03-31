@@ -9,6 +9,7 @@ import { GetSelectedNode, IsBlockView } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/CheckTypes";
+import { useReactFlow } from "react-flow-renderer";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module.
@@ -16,12 +17,13 @@ import { IsOffPage } from "../../../helpers/CheckTypes";
  */
 export const ProjectComponent = () => {
   const dispatch = useAppDispatch();
-  const blockNodes = useAppSelector(selectors.blockNodesSelector);
+  const flowNodes = useReactFlow().getNodes();
   const project = useAppSelector(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedNode = GetSelectedNode();
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  console.log({ blockNodes: flowNodes });
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
@@ -61,7 +63,7 @@ export const ProjectComponent = () => {
               indent={indent}
               isExpanded={expanded}
               isLeaf={!HasChildren(node, project)}
-              flowNodes={blockNodes}
+              flowNodes={flowNodes}
               onToggleExpanded={expandHandler}
               dispatch={dispatch}
             />
