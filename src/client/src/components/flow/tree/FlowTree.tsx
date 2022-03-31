@@ -8,7 +8,7 @@ import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
-import { handleEdgeSelect, handleNoSelect, handleNodeSelect } from "../handlers";
+import { HandleNodeSelection } from "../handlers";
 import { Project } from "../../../models";
 import { Size } from "../../../compLibrary/size/Size";
 import { IsPartOfTerminal } from "../helpers/CheckConnectorTypes";
@@ -88,14 +88,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  const onSelectionChange = (elements: OnSelectionChangeParams) => {
-    if (elements === null) handleNoSelect(project, inspectorRef, dispatch);
-    else if (elements.nodes.length === 1) handleNodeSelect(elements.nodes[0], dispatch);
-    else if (elements.edges.length === 1) handleEdgeSelect(elements.edges[0], dispatch);
-
-    //  else if (selectedElements.length > 1)
-    //   handleMultiSelect(dispatch);
-  };
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
+    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -142,7 +136,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         defaultPosition={[800, Size.BLOCK_MARGIN_Y]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
-        onSelectionChange={(e) => onSelectionChange(e)}
+        onSelectionChange={(e) => OnSelectionChange(e)}
         connectionLineComponent={TreeConnectionLine}
         deleteKeyCode={"Delete"}
       >

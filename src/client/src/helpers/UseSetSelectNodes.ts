@@ -2,26 +2,25 @@ import { useCallback } from "react";
 import { useReactFlow, useStore } from "react-flow-renderer";
 import { Node } from "../models";
 
-export type SetFlowElementFunction = (elements: Node[]) => void;
+export type SetFlowElementFunction = (mimirNodes: Node[]) => void;
 
 export const UseSetSelectNodes = (): [SetFlowElementFunction] => {
   const setSelectedElements = useStore().addSelectedNodes; // useStoreActions((state) => state.setSelectedElements);
-
-  const nodes = useReactFlow().getNodes();
+  const flowNodes = useReactFlow().getNodes();
 
   const setActiveNodes = useCallback(
-    (elements: Node[]) => {
+    (mimirNodes: Node[]) => {
       const nodesArray = [];
-      elements.forEach((e) => {
-        nodes.forEach((n) => {
-          if (n.id === e.id) {
-            nodesArray.push(n);
-          }
+
+      mimirNodes.forEach((mn) => {
+        flowNodes.forEach((fn) => {
+          if (fn.id === mn.id) nodesArray.push(fn);
         });
       });
+
       setSelectedElements(nodesArray);
     },
-    [nodes, setSelectedElements]
+    [flowNodes, setSelectedElements]
   );
 
   return [setActiveNodes];

@@ -15,15 +15,15 @@ const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch:
 };
 
 function ValidateBlockViewClick(numberOfSelectedElements: number, dispatch: Dispatch) {
-  // BlockView can not be opened if multiple nodes are selected
-  if (numberOfSelectedElements > 1) {
-    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_BLOCKVIEW_MULTISELECT }));
+  // BlockView can only be opened when one node is selected
+  if (numberOfSelectedElements < 1) {
+    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_BLOCKVIEW }));
     return false;
   }
 
-  // BlockView can only be opened when a node is selected
-  if (numberOfSelectedElements < 1) {
-    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_BLOCKVIEW }));
+  // BlockView can not be opened if multiple nodes are selected
+  if (numberOfSelectedElements > 1) {
+    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_BLOCKVIEW_MULTISELECT }));
     return false;
   }
 

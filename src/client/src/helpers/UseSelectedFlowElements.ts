@@ -1,15 +1,14 @@
 import { useMemo } from "react";
-import { useReactFlow } from "react-flow-renderer";
 import { GetTreeEdgeTypes, GetTreeNodeTypes } from "../components/flow/tree/helpers";
+import { GetSelectedEdges } from "./GetSelectedEdges";
+import { GetSelectedNodes } from "./GetSelectedNodes";
 
 export const useSelectedFlowElements = () => {
-  // const elements = useStoreState((state) => state.selectedElements);
-  const elements = useReactFlow()
-    .getNodes()
-    .filter((n) => n.selected);
+  const selectedNodes = GetSelectedNodes();
+  const selectedEdges = GetSelectedEdges();
 
-  const nodeIds = useMemo(() => elements?.filter((ele) => GetTreeNodeTypes[ele.type]).map((ele) => ele.id), [elements]);
-  // const edgeIds = useMemo(() => elements?.filter((ele) => GetTreeEdgeTypes[ele.type]).map((ele) => ele.id), [elements]);
+  const nodeIds = useMemo(() => selectedNodes?.filter((ele) => GetTreeNodeTypes[ele.type]).map((ele) => ele.id), [selectedNodes]);
+  const edgeIds = useMemo(() => selectedEdges?.filter((ele) => GetTreeEdgeTypes[ele.type]).map((ele) => ele.id), [selectedEdges]);
 
-  return [nodeIds, []];
+  return [nodeIds, edgeIds];
 };

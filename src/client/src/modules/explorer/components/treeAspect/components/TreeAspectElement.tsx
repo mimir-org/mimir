@@ -5,7 +5,7 @@ import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsCheckedTree } from "./helpers/IsCheckedTree";
 import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
 import { Icon } from "../../../../../compLibrary/icon";
-import { GetAspectColor, GetAspectIcon, UseIndentLevel, UseSetSelectNodes, useSelectedNodes } from "../../../../../helpers";
+import { GetAspectColor, GetAspectIcon, UseIndentLevel, UseSetSelectNodes, GetSelectedNodes } from "../../../../../helpers";
 import { IsAspectNode } from "../../../../../helpers/CheckTypes";
 
 interface Props {
@@ -23,7 +23,8 @@ interface Props {
  * @returns an element with either an Aspect header or a checkbox.
  */
 export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExpanded, indent }: Props) => {
-  const selectedNodes = useSelectedNodes();
+  const selectedNodes = GetSelectedNodes();
+  console.log({ selectedNodes });
   const [setActiveNodeElement] = UseSetSelectNodes();
 
   return (

@@ -9,7 +9,7 @@ import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterCompon
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
 import { GetSelectedNode } from "../../../helpers";
-import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
+import { CloseInspector, HandleNodeSelection } from "../handlers";
 import { updateBlockNodes } from "../../../modules/explorer/redux/actions";
 import { Project } from "../../../models";
 import ReactFlow, {
@@ -22,6 +22,7 @@ import ReactFlow, {
   applyNodeChanges,
   applyEdgeChanges,
   ReactFlowInstance,
+  OnSelectionChangeParams,
 } from "react-flow-renderer";
 
 interface Props {
@@ -105,17 +106,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  // const onSelectionChange = (selectedElements: Elements) => {
-  //   if (selectedElements === null) {
-  //     handleNoSelect(project, inspectorRef, dispatch, true);
-  //   } else if (selectedElements.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
-  //     handleNodeSelect(selectedElements[0], dispatch, true);
-  //   } else if (selectedElements.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
-  //     handleEdgeSelect(selectedElements[0], dispatch, true);
-  //   } else if (selectedElements.length > 1) {
-  //     handleMultiSelect(dispatch, true);
-  //   }
-  // };
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
+    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -167,7 +159,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           onNodeDragStop={OnNodeDragStop}
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
-          // onSelectionChange={(e) => onSelectionChange(e)}
+          onSelectionChange={(e) => OnSelectionChange(e)}
           deleteKeyCode={"Delete"}
           zoomOnDoubleClick={false}
           defaultZoom={defaultZoom}

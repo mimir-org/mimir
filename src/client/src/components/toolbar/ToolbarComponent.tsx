@@ -1,6 +1,5 @@
 import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
-import { useReactFlow } from "react-flow-renderer";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { OnElectroClick, OnFilterClick, OnViewClick } from "./handlers/";
 import { VIEW_TYPE, ViewType } from "../../models/project";
@@ -8,6 +7,7 @@ import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { SetZoomCenterLevel } from "../flow/block/nodes/blockParentNode/helpers/SetZoomCenterLevel";
+import { GetSelectedNodes } from "../../helpers";
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
@@ -21,8 +21,7 @@ const ToolbarComponent = () => {
   const IsVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const nodes = useReactFlow().getNodes();
-  const selectedNodes = nodes.filter((n) => n.selected);
+  const selectedNodes = GetSelectedNodes();
   const numberOfSelectedElements = selectedNodes.length;
 
   const onResetZoom = () => {

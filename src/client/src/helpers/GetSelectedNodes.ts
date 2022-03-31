@@ -1,6 +1,6 @@
 import { useReactFlow } from "react-flow-renderer";
 
-export const useSelectedNodes = () => {
+export const GetSelectedNodes = () => {
   return useReactFlow()
     .getNodes()
     .filter((n) => n.selected);

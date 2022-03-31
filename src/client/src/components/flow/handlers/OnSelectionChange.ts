@@ -1,4 +1,4 @@
-import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
+import { Node as FlowNode, Edge as FlowEdge, OnSelectionChangeParams } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size/Size";
 import { Project } from "../../../models";
@@ -8,36 +8,57 @@ import { changeInspectorHeight, changeInspectorTab } from "../../../modules/insp
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../redux/store/project/actions";
 
-export const handleNoSelect = (
+/**
+ * Component to handle selection of Nodes.
+ * @param selectedItems
+ * @param project
+ * @param inspectorRef
+ * @param dispatch
+ */
+export const HandleNodeSelection = (
+  selectedItems: OnSelectionChangeParams,
+  project: Project,
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  dispatch: Dispatch
+) => {
+  if (selectedItems === null) HandleNoSelect(project, inspectorRef, dispatch);
+  else if (selectedItems.nodes.length === 1) HandleNodeSelect(selectedItems.nodes[0], dispatch);
+  else if (selectedItems.edges.length === 1) HandleEdgeSelect(selectedItems.edges[0], dispatch);
+
+  //  else if (selectedElements.length > 1)
+  //   handleMultiSelect(dispatch);
+};
+
+function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch, isBlock = false) {
+  dispatch(setActiveEdge(null, false));
+  isBlock ? dispatch(setActiveBlockNode(flowNode.id)) : dispatch(setActiveNode(flowNode.id, true));
+  OpenInspector(dispatch);
+}
+
+function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch, isBlock = false) {
+  dispatch(setActiveEdge(flowEdge?.id, true));
+  isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
+  OpenInspector(dispatch);
+}
+
+function HandleMultiSelect(dispatch: Dispatch, isBlock = false) {
+  isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
+  dispatch(setActiveEdge(null, false));
+}
+
+function HandleNoSelect(
   project: Project,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch,
   isBlock = false
-) => {
+) {
   if (project) {
     isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
     dispatch(setActiveEdge(null, false));
   }
 
   CloseInspector(inspectorRef, dispatch);
-};
-
-export const handleNodeSelect = (flowNode: FlowNode, dispatch: Dispatch, isBlock = false) => {
-  dispatch(setActiveEdge(null, false));
-  isBlock ? dispatch(setActiveBlockNode(flowNode.id)) : dispatch(setActiveNode(flowNode.id, true));
-  OpenInspector(dispatch);
-};
-
-export const handleEdgeSelect = (flowEdge: FlowEdge, dispatch: Dispatch, isBlock = false) => {
-  dispatch(setActiveEdge(flowEdge?.id, true));
-  isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
-  OpenInspector(dispatch);
-};
-
-export const handleMultiSelect = (dispatch: Dispatch, isBlock = false) => {
-  isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
-  dispatch(setActiveEdge(null, false));
-};
+}
 
 export const OpenInspector = (dispatch: Dispatch) => {
   dispatch(changeInspectorTab(0));

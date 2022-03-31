@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector, ConnectorVisibility, Edge, Node } from "../../../../../models";
 import { changeActiveConnector, removeEdge } from "../../../../../redux/store/project/actions";
+import { IsConnectorVisible } from "../../../helpers/CheckConnectorTypes";
 
 export const OnConnectorClick = (conn: Connector, isInput: boolean, node: Node, dispatch: Dispatch, edges: Edge[]) => {
   const visible = IsConnectorVisible(conn);

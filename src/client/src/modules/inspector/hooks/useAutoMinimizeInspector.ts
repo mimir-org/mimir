@@ -1,11 +1,11 @@
 import { MutableRefObject, useEffect } from "react";
-import { useReactFlow } from "react-flow-renderer";
 import { SetPanelHeight } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
 import { changeInspectorHeight } from "../redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { useAppDispatch } from "../../../redux/store";
 import { MODULE_TYPE } from "../../../models/project";
+import { GetSelectedNodes } from "../../../helpers";
 
 /**
  * Hook for minimizing inspector panel based on criteria within this hook.
@@ -13,15 +13,11 @@ import { MODULE_TYPE } from "../../../models/project";
  */
 export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElement>) => {
   const dispatch = useAppDispatch();
-  const selectedNodes = useReactFlow()
-    .getNodes()
-    .filter((n) => n.selected);
-
+  const selectedNodes = GetSelectedNodes();
   const numberOfSelectedElements = selectedNodes.length;
 
   useEffect(() => {
     const minimizeCriteria = [numberOfSelectedElements > 1];
-
     minimizeCriteria.every(Boolean) && SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 
     dispatch(changeInspectorHeight(Size.MODULE_CLOSED));

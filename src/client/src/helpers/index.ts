@@ -1,7 +1,5 @@
 export { default as IsDirectChild } from "./IsDirectChild";
 export { default as IsBlockView } from "./IsBlockView";
-export { default as IsConnectorVisible } from "./IsConnectorVisible";
-export * from "./IsUnsaved";
 
 export { default as GetSelectedNode } from "./GetSelectedNode";
 export { default as GetSelectedBlockNode } from "./GetSelectedBlockNode";
@@ -21,5 +19,6 @@ export { default as SetIndentLevel } from "./SetIndentLevel";
 export { default as UseIndentLevel } from "./UseIndentLevel";
 export * from "./UseSelectFlowElements";
 export * from "./UseSelectedFlowElements";
-export * from "./useSelectedNodes";
+export * from "./GetSelectedNodes";
 export * from "./UseSetSelectNodes";
+export * from "./IsUnsaved";
