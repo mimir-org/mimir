@@ -27,7 +27,7 @@ const BuildFlowParentNode = (node: Node) => {
     data: node,
     position: position,
     hidden: node.hidden,
-    selected: node.selected,
+    selected: node.isSelected,
     draggable: false,
     selectable: false,
   } as FlowNode;

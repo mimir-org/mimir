@@ -24,7 +24,6 @@ interface Props {
  */
 export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExpanded, indent }: Props) => {
   const selectedNodes = GetSelectedNodes();
-  console.log({ selectedNodes });
   const [setActiveNodeElement] = UseSetSelectNodes();
 
   return (

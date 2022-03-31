@@ -50,7 +50,7 @@ export interface Node {
   kind: string;
 
   // Only for client
-  selected?: boolean;
+  isSelected?: boolean;
   blockSelected?: boolean;
   hidden?: boolean;
   isOffPageTarget?: boolean;

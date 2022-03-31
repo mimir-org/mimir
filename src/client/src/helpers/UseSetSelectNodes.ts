@@ -5,7 +5,7 @@ import { Node } from "../models";
 export type SetFlowElementFunction = (mimirNodes: Node[]) => void;
 
 export const UseSetSelectNodes = (): [SetFlowElementFunction] => {
-  const setSelectedElements = useStore().addSelectedNodes; // useStoreActions((state) => state.setSelectedElements);
+  const setSelectedElements = useStore().addSelectedNodes;
   const flowNodes = useReactFlow().getNodes();
 
   const setActiveNodes = useCallback(

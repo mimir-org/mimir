@@ -10,7 +10,7 @@ export const MapProperties = (project: Project, oldProject: Project, reMappedIds
       if (oldNode) {
         node.hidden = oldNode.hidden;
         node.blockSelected = oldNode.blockSelected;
-        node.selected = oldNode.selected;
+        node.isSelected = oldNode.isSelected;
       }
     });
   }

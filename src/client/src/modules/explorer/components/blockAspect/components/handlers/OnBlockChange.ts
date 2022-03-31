@@ -18,7 +18,7 @@ import { IsFamily } from "../../../../../../helpers/CheckTypes";
 export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: Dispatch) => {
   // Set selectNode
   if (!selectedNode) {
-    dispatch(setActiveNode(node?.id, !node.selected));
+    dispatch(setActiveNode(node?.id, !node.isSelected));
     dispatch(setActiveBlockNode(node?.id));
     return;
   }

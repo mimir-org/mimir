@@ -48,6 +48,7 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
 
   useAutoMinimizeInspector(inspectorRef);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
+
   const changeInspectorVisibilityAction = useCallback(
     (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
     [type]

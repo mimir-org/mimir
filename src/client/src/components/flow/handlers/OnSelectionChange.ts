@@ -21,9 +21,12 @@ export const HandleNodeSelection = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
-  if (selectedItems === null) HandleNoSelect(project, inspectorRef, dispatch);
-  else if (selectedItems.nodes.length === 1) HandleNodeSelect(selectedItems.nodes[0], dispatch);
-  else if (selectedItems.edges.length === 1) HandleEdgeSelect(selectedItems.edges[0], dispatch);
+  const nodes = selectedItems.nodes;
+  const edges = selectedItems.edges;
+
+  if (!nodes.length && !edges.length) HandleNoSelect(project, inspectorRef, dispatch);
+  else if (nodes.length === 1) HandleNodeSelect(nodes[0], dispatch);
+  else if (edges.length === 1) HandleEdgeSelect(edges[0], dispatch);
 
   //  else if (selectedElements.length > 1)
   //   handleMultiSelect(dispatch);

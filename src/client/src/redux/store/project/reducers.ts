@@ -896,7 +896,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.id ? { ...action.payload, selected: x.selected, blockSelected: x.blockSelected } : x
+            x.id === action.payload.id ? { ...action.payload, isSelected: x.isSelected, blockSelected: x.blockSelected } : x
           ),
         },
       };
