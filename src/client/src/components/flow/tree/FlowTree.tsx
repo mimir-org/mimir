@@ -8,7 +8,7 @@ import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
-import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
+import { handleEdgeSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { Project } from "../../../models";
 import { Size } from "../../../compLibrary/size/Size";
 import { IsPartOfTerminal } from "../helpers/CheckConnectorTypes";
@@ -22,6 +22,7 @@ import ReactFlow, {
   ReactFlowInstance,
   applyNodeChanges,
   applyEdgeChanges,
+  OnSelectionChangeParams,
 } from "react-flow-renderer";
 
 interface Props {
@@ -87,17 +88,14 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  // const onSelectionChange = (selectedElements: Elements) => {
-  //   if (selectedElements === null) {
-  //     handleNoSelect(project, inspectorRef, dispatch);
-  //   } else if (selectedElements.length === 1 && helpers.GetTreeNodeTypes[selectedElements[0]?.type]) {
-  //     handleNodeSelect(selectedElements[0], dispatch);
-  //   } else if (selectedElements.length === 1 && helpers.GetTreeEdgeTypes[selectedElements[0]?.type]) {
-  //     handleEdgeSelect(selectedElements[0], dispatch);
-  //   } else if (selectedElements.length > 1) {
-  //     handleMultiSelect(dispatch);
-  //   }
-  // };
+  const onSelectionChange = (elements: OnSelectionChangeParams) => {
+    if (elements === null) handleNoSelect(project, inspectorRef, dispatch);
+    else if (elements.nodes.length === 1) handleNodeSelect(elements.nodes[0], dispatch);
+    else if (elements.edges.length === 1) handleEdgeSelect(elements.edges[0], dispatch);
+
+    //  else if (selectedElements.length > 1)
+    //   handleMultiSelect(dispatch);
+  };
 
   // Build initial elements from Project
   useEffect(() => {
@@ -144,7 +142,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         defaultPosition={[800, Size.BLOCK_MARGIN_Y]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
-        // onSelectionChange={(e) => onSelectionChange(e)}
+        onSelectionChange={(e) => onSelectionChange(e)}
         connectionLineComponent={TreeConnectionLine}
         deleteKeyCode={"Delete"}
       >

@@ -21,11 +21,8 @@ const ToolbarComponent = () => {
   const IsVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-
-  const selectedNodes = useReactFlow()
-    .getNodes()
-    .filter((n) => n.selected);
-
+  const nodes = useReactFlow().getNodes();
+  const selectedNodes = nodes.filter((n) => n.selected);
   const numberOfSelectedElements = selectedNodes.length;
 
   const onResetZoom = () => {
