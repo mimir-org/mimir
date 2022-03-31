@@ -31,15 +31,17 @@ export const TransportInterfaceElement = ({
   const [searchbarInput, setSearchbarInput] = useState(defaultTerminal ? defaultTerminal.name : "");
   const [expandList, setExpandList] = useState(false);
   const filter = terminalTypes?.filter((t) => t.name.match(new RegExp(searchbarInput, "i")));
+  const isSelected = terminalTypes.some((t) => t.id === defaultTerminal?.id);
+  const handleChange = (e) => setSearchbarInput(e.target.value.toLowerCase());
 
-  const defaultTerminalItem = {
+  const defaultTerminalItem: TerminalTypeItem = {
     terminalId: CreateId(),
     terminalTypeId: "",
     selected: false,
     connectorType: ConnectorType.Input,
     number: 1,
     categoryId: defaultTerminal?.terminalCategoryId,
-  } as TerminalTypeItem;
+  };
 
   const handleTerminalClick = (terminal: TerminalType) => {
     setSearchbarInput(terminal.name);
@@ -49,20 +51,6 @@ export const TransportInterfaceElement = ({
 
     onTerminalCategoryChange("terminalTypeId", defaultTerminalItem);
     setExpandList(!expandList);
-  };
-
-  const handleChange = (e) => {
-    setSearchbarInput(e.target.value.toLowerCase());
-  };
-
-  const isSelected = () => {
-    let selected = false;
-    terminalTypes.forEach((t) => {
-      if (t.id === defaultTerminal?.id) {
-        selected = true;
-      }
-    });
-    return selected;
   };
 
   const showListItems = () => {
@@ -84,16 +72,19 @@ export const TransportInterfaceElement = ({
 
   return (
     <TerminalListElement>
-      <TerminalCategoryWrapper isSelected={isSelected()}>
+      <TerminalCategoryWrapper isSelected={isSelected}>
         <RadioButtonContainer
           id={categoryName}
           label={categoryName}
           listType={ListType.Terminals}
-          checked={isSelected()}
+          checked={isSelected}
           defaultValue={terminalTypes[0].id}
-          onChange={(key, terminalTypeId) => onPropertyChange(key, terminalTypeId)}
+          onChange={(key, terminalTypeId) => {
+            setSearchbarInput("");
+            onPropertyChange(key, terminalTypeId);
+          }}
         />
-        {isSelected() && (
+        {isSelected && (
           <SearchBarContainer>
             <SearchBar>
               <label htmlFor="terminalsearch" />

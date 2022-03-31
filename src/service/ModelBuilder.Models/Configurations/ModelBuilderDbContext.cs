@@ -26,7 +26,6 @@ namespace Mb.Models.Configurations
         public virtual DbSet<AttributeQualifier> AttributeQualifiers { get; set; }
         public virtual DbSet<AttributeSource> AttributeSources { get; set; }
         public virtual DbSet<BuildStatus> BuildStatuses { get; set; }
-        public virtual DbSet<RdsCategory> RdsCategories { get; set; }
         public virtual DbSet<TerminalCategory> TerminalCategories { get; set; }
         public virtual DbSet<NodeType> NodeTypes { get; set; }
         public virtual DbSet<TransportType> TransportTypes { get; set; }

@@ -1,7 +1,7 @@
 import { GetCompanyLogoForNode, GetSelectedBlockNode } from "../../../../../../helpers";
 import { Connector, Node } from "../../../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
-import { NodeBox, SymbolBox, LogoBox } from "./styled";
+import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
