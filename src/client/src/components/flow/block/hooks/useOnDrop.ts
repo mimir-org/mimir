@@ -19,8 +19,8 @@ interface OnDropParameters {
   icons: BlobData[];
   library: LibraryState;
   secondaryNode: Node;
-  reactFlowInstance: ReactFlowInstance;
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
+  flowInstance: ReactFlowInstance;
+  flowWrapper: React.MutableRefObject<HTMLDivElement>;
   getViewport: GetViewport;
   dispatch: Dispatch;
 }

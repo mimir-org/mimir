@@ -4,14 +4,14 @@ import { BuildFlowParentNode, BuildFlowSecondaryParentNode } from ".";
 import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
 
 /**
- * Component to draw all Flow nodes and edges in BlockView.
- * These elements contain the data for the nodes and edges. In addition to the FlowElements, Mimir Nodes and Mimir Edges
- * are created, with the extra functionality needed for Mimir. The Flow elements and Mimir elements co-exist
+ * Component to draw all Flow nodes in BlockView.
+ * These nodes contain the data for the nodes. In addition to the FlowNodes, MimirNodes
+ * are created, with the extra functionality needed for Mimir. The FlowNodes and MimirEdges co-exist
  * and share the same id and position.
  * @param project
  * @param primaryNode
  * @param secondaryNode
- * @returns all FlowElements.
+ * @returns all validated FlowNodes.
  */
 const BuildFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode: Node) => {
   if (!project) return;

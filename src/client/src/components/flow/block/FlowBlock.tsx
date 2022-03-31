@@ -19,6 +19,9 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   useReactFlow,
+  applyNodeChanges,
+  applyEdgeChanges,
+  ReactFlowInstance,
 } from "react-flow-renderer";
 
 interface Props {
@@ -33,36 +36,25 @@ interface Props {
  */
 const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
-  const flowWrapper = useRef(null);
   const { getViewport } = useReactFlow();
-
-  const [flowInstance, setFlowInstance] = useState(null);
-
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
+  const flowWrapper = useRef(null);
+  const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
+  const [nodes, setNodes] = useNodesState([]);
+  const [edges, setEdges] = useEdgesState([]);
+  const [hasRendered, setHasRendered] = useState(false);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
-  const userState = useAppSelector(selectors.userStateSelector);
+  const user = useAppSelector(selectors.userStateSelector).user;
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const primaryNode = GetSelectedNode();
   const defaultZoom = Size.ZOOM_DEFAULT;
-  const secondaryNode = project.nodes?.find((x) => x.id === secondaryNodeRef?.id);
+  const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
-  const OnLoad = useCallback(
-    (_reactFlowInstance) => {
-      setNodes(BuildFlowBlockNodes(project, primaryNode, secondaryNode));
-      setEdges(BuildFlowBlockEdges(project, primaryNode, secondaryNode, animatedEdge));
-      return setFlowInstance(_reactFlowInstance);
-    },
-    [project, primaryNode, secondaryNode]
-  );
-
-  // const OnElementsRemove = (flowNodesToRemove: Elements) => {
-  //   return hooks.useOnRemove(flowNodesToRemove, inspectorRef, project, setElements, dispatch);
-  // };
+  const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
+    return setFlowInstance(_reactFlowInstance);
+  }, []);
 
   const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
     return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
@@ -87,16 +79,27 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   // const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
 
+  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
+  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+
+  const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
+    return hooks.useOnNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
+  };
+
+  const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
+    return hooks.useOnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
+  };
+
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({
       event,
       project,
-      user: userState.user,
+      user,
       icons,
       library,
       secondaryNode: secondaryNodeRef,
-      reactFlowInstance: flowInstance,
-      reactFlowWrapper: flowWrapper,
+      flowInstance,
+      flowWrapper,
       getViewport,
       dispatch,
     });
@@ -114,13 +117,26 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   //   }
   // };
 
+  // Build initial elements from Project
+  useEffect(() => {
+    if (!hasRendered && project) {
+      setNodes(BuildFlowBlockNodes(project, primaryNode, secondaryNode));
+      setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
+      setHasRendered(true);
+    }
+  }, [project]);
+
+  // Rebuild elements
+  useEffect(() => {
+    if (project) {
+      setNodes(BuildFlowBlockNodes(project, primaryNode, secondaryNode));
+      setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
+    }
+  }, [project]);
+
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
   }, [inspectorRef, dispatch]);
-
-  useEffect(() => {
-    OnLoad(flowInstance);
-  }, [OnLoad, flowInstance]);
 
   useEffect(() => {
     dispatch(updateBlockNodes(nodes));
@@ -134,22 +150,21 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}>
         <ReactFlow
+          onInit={OnInit}
           nodes={nodes}
           edges={edges}
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
+          onNodesChange={OnNodesChange}
+          onEdgesChange={OnEdgesChange}
+          onNodesDelete={OnNodesDelete}
+          onEdgesDelete={OnEdgesDelete}
           onConnect={OnConnect}
           onConnectStart={OnConnectStart}
           onConnectStop={OnConnectStop}
-          // onElementsRemove={OnElementsRemove}
-          onLoad={OnLoad}
           onDrop={OnDrop}
           onDragOver={OnDragOver}
           onNodeDragStop={OnNodeDragStop}
-          // onMoveEnd={OnMoveEnd}
-          onlyRenderVisibleElements
           multiSelectionKeyCode={"Control"}
           connectionLineComponent={BlockConnectionLine}
           // onSelectionChange={(e) => onSelectionChange(e)}
@@ -158,6 +173,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
           defaultZoom={defaultZoom}
           minZoom={0.2}
           maxZoom={3}
+          onlyRenderVisibleElements
           zoomOnScroll
           panOnDrag
         ></ReactFlow>

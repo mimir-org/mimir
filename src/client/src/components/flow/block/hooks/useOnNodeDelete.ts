@@ -1,73 +1,59 @@
-import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Node, Edge, Project } from "../../../../models";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
-import { HandleOffPageDelete } from "../../block/nodes/blockOffPageNode/helpers";
-import { FindMimirEdgeByFlowEdgeId, FindMimirNodeByFlowNodeId, GetParent } from "../../helpers";
+import { HandleOffPageDelete } from "../nodes/blockOffPageNode/helpers";
+import { FindMimirNodeByFlowNodeId, GetParent } from "../../helpers";
 import { IsAspectNode, IsOffPage } from "../../../../helpers/CheckTypes";
 import { CloseInspector } from "../../handlers";
 import { GetParentConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 import { IsOffPageEdge } from "../helpers";
-import { GetSelectedBlockNode } from "../../../../helpers";
 import { IsPartOfTerminal } from "../../helpers/CheckConnectorTypes";
 
 /**
- * Hook that runs when an element is deleted from Mimir in BlockView.
+ * Hook that runs when a node is deleted from Mimir in BlockView.
  * If a Node is deleted the connected Edges are also deleted.
  * If an Edge is deleted the connect Nodes will not be deleted, except an edge between OffPageNodes.
  * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
- * @param flowNodes
- * @param flowEdges
+ * @param flowNodesToDelete
  * @param inspectorRef
  * @param project
- * @param setNodes
- * @param setEdges
  * @param dispatch
  */
-const useOnRemove = (
-  flowNodes: FlowNode[],
-  flowEdges: FlowEdge[],
+const useOnNodeDelete = (
+  flowNodesToDelete: FlowNode[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,
-  setNodes: React.Dispatch<React.SetStateAction<FlowNode<any>[]>>,
-  setEdges: React.Dispatch<React.SetStateAction<FlowEdge<any>[]>>,
   dispatch: Dispatch
 ) => {
-  const nodesToRemove: FlowNode[] = [];
-  const edgesToRemove: FlowEdge[] = [];
-
-  HandleRemoveFlowNodes(flowNodes, nodesToRemove, project, dispatch);
-  HandleRemoveFlowEdges(flowEdges, edgesToRemove, project, dispatch);
-  if (!nodesToRemove.length || !edgesToRemove.length) return;
-
+  HandleDeleteNodes(flowNodesToDelete, project, dispatch);
   CloseInspector(inspectorRef, dispatch);
-  return null; //setElements((els) => removeElements(nodesToRemove, els));
 };
 
-function HandleRemoveFlowNodes(flowNodes: FlowNode[], nodesToRemove: FlowNode[], project: Project, dispatch: Dispatch) {
+function HandleDeleteNodes(flowNodes: FlowNode[], project: Project, dispatch: Dispatch) {
   flowNodes.forEach((flowNode) => {
     if (IsAspectNode(flowNode.data)) return;
 
     const node = FindMimirNodeByFlowNodeId(project, flowNode);
     if (node?.isLocked) return;
 
+    DeleteRelatedEdges(node, project, dispatch);
+
     IsOffPage(node) ? HandleOffPageDelete(project, node, dispatch) : HandleRelatedEdges(node, project, dispatch);
     dispatch(removeNode(flowNode.id));
-    nodesToRemove.push(flowNode);
   });
 }
 
-function HandleRemoveFlowEdges(flowEdges: FlowEdge[], edgesToRemove: FlowEdge[], project: Project, dispatch: Dispatch) {
-  flowEdges.forEach((flowEdge) => {
-    const selectedNode = GetSelectedBlockNode();
-    if (IsAspectNode(selectedNode)) return;
-
-    const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge);
-    if (edge?.isLocked) return;
-
-    // HandleRelatedOffPageElements(project, elem?.data?.edge, dispatch);
-    dispatch(removeEdge(flowEdge.id));
-    edgesToRemove.push(flowEdge);
+/**
+ * Function to delete all edges related to a node that is to be deleted.
+ * Note: the edges must be deleted before the node.
+ * @param node
+ * @param project
+ * @param dispatch
+ */
+function DeleteRelatedEdges(node: Node, project: Project, dispatch: Dispatch) {
+  project.edges.forEach((edge) => {
+    if (edge.fromNodeId === node.id || edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
   });
 }
 
@@ -113,4 +99,4 @@ function HandleConnectedOffPageElements(project: Project, elementEdge: Edge, dis
   });
 }
 
-export default useOnRemove;
+export default useOnNodeDelete;
