@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Mb.Models.Data.TypeEditor;
 using Mb.TypeEditor.Services.Contracts;

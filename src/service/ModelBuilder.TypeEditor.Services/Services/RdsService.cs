@@ -41,7 +41,7 @@ namespace Mb.TypeEditor.Services.Services
         /// <returns></returns>
         public async Task<Rds> CreateRds(CreateRds createRds)
         {
-            var data = await CreateRdsAsync(new List<CreateRds> {createRds});
+            var data = await CreateRdsAsync(new List<CreateRds> { createRds });
             return data.SingleOrDefault();
         }
 
