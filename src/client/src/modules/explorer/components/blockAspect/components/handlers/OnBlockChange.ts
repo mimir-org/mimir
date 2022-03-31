@@ -17,7 +17,7 @@ import { Node } from "../../../../../../models";
 export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: Dispatch) => {
   // Set selectNode
   if (!selectedNode) {
-    dispatch(setActiveNode(node?.id, !node.isSelected));
+    dispatch(setActiveNode(node?.id, !node.selected));
     dispatch(setActiveBlockNode(node?.id));
     return;
   }

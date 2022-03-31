@@ -1,23 +1,35 @@
 import { useCallback } from "react";
-import { useStore } from "react-flow-renderer";
+import { useStore, useReactFlow } from "react-flow-renderer";
 
 type SetFlowElementFunction = (elementId: string) => void;
 
 export const useSelectFlowElements = (): [SetFlowElementFunction, SetFlowElementFunction] => {
-  // const setSelectedElements = useStore((store) =>  state.setSelectedElements);
+  const setSelectedNodes = useStore().addSelectedNodes; //  useStore((store) =>  state.setSelectedElements);
+  const setSelectedEdges = useStore().addSelectedEdges; //  useStore((store) =>  state.setSelectedElements);
 
-  // const nodes = useStore((store) => store.nodes);
-  // const edges = useStore((state) => state.edges);
+  const nodes = useReactFlow().getNodes();
+  const edges = useReactFlow().getEdges();
 
-  // const setActiveNode = useCallback(
-  // (elementId: string) => setSelectedElements(nodes.filter((ele) => ele.id === elementId)),
-  // [nodes, setSelectedElements]
-  // );
+  const nodeIds: string[] = [];
+  const edgeIds: string[] = [];
 
-  // const setActiveEdge = useCallback(
-  // (elementId: string) => setSelectedElements(edges.filter((ele) => ele.id === elementId)),
-  // [edges, setSelectedElements]
-  // );
-  return null;
-  // return [setActiveNode, setActiveEdge];
+  nodes.forEach((n) => {
+    nodeIds.push(n.id);
+  });
+
+  edges.forEach((e) => {
+    edgeIds.push(e.id);
+  });
+
+  const setActiveNode = useCallback(
+    (elementId: string) => setSelectedNodes(nodeIds.filter((id) => id === elementId)),
+    [nodeIds, setSelectedNodes]
+  );
+
+  const setActiveEdge = useCallback(
+    (elementId: string) => setSelectedEdges(edgeIds.filter((id) => id === elementId)),
+    [edgeIds, setSelectedEdges]
+  );
+
+  return [setActiveNode, setActiveEdge];
 };

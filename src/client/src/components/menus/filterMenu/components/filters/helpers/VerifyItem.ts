@@ -3,19 +3,19 @@ import { IsFamily } from "../../../../../../helpers";
 import { Connector } from "../../../../../../models";
 import { IsLocationTerminal, IsProductTerminal } from "../../../../../flow/helpers";
 
-export function ValidateTransportItem(items: Connector[], sourceConn: Connector) {
+export function VerifyTransportItem(items: Connector[], sourceConn: Connector) {
   if (!items.some((conn) => conn.terminalTypeId === sourceConn.terminalTypeId)) items.push(sourceConn);
 }
 
-export function ValidateRelationItem(items: Connector[], sourceConn: Connector) {
+export function VerifyRelationItem(items: Connector[], sourceConn: Connector) {
   if (!items.some((conn) => IsLocationTerminal(conn))) items.push(sourceConn);
 }
 
-export function ValidateFulfilledByItem(items: Connector[], sourceConn: Connector) {
+export function VerifyFulfilledByItem(items: Connector[], sourceConn: Connector) {
   if (!items.some((conn) => IsProductTerminal(conn))) items.push(sourceConn);
 }
 
-export function ValidatePartOfItem(items: Connector[], sourceConn: Connector) {
+export function VerifyPartOfItem(items: Connector[], sourceConn: Connector) {
   const sourceNode = GetConnectorNode(sourceConn);
   let exists = false;
 

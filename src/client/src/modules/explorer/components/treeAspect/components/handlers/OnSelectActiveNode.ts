@@ -1,25 +1,25 @@
+import { Node as FlowNode } from "react-flow-renderer";
 import { SetFlowElementFunction } from "../../../../../../helpers";
 import { Node } from "../../../../../../models";
 
 export const OnSelectActiveNode = (
-  node: Node,
-  nodes: Node[],
-  selectedNodes: string[],
+  mimirNode: Node,
+  mimirNodes: Node[],
+  selectedNodes: FlowNode[],
   setActiveFlowElement: SetFlowElementFunction
 ) => {
   let tempArray: Node[] = [];
 
   selectedNodes?.forEach((n) => {
-    const selectedNode = nodes.find((x) => x.id === n);
+    const selectedNode = mimirNodes.find((x) => x.id === n.id);
     tempArray.push(selectedNode);
   });
 
-  const isInArray = tempArray.includes(node);
+  const isInArray = tempArray.includes(mimirNode);
 
-  if (isInArray) {
-    tempArray = tempArray.filter((n) => n !== node);
-  } else {
-    const selectedNode = nodes.find((n) => n.id === node.id);
+  if (isInArray) tempArray = tempArray.filter((n) => n !== mimirNode);
+  else {
+    const selectedNode = mimirNodes.find((n) => n.id === mimirNode.id);
     tempArray.push(selectedNode);
   }
 

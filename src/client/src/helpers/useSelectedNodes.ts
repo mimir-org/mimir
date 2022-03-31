@@ -1,10 +1,7 @@
-import { useMemo } from "react";
-import { useStore } from "react-flow-renderer";
-import { GetTreeNodeTypes } from "../components/flow/tree/helpers";
+import { useReactFlow } from "react-flow-renderer";
 
 export const useSelectedNodes = () => {
-  // const elements = useStore((store) => store. state.selectedElements);
-  // const nodes = useMemo(() => elements?.filter((ele) => GetTreeNodeTypes[ele.type]).map((ele) => ele.id), [elements]);
-  // return [nodes];
-  return [];
+  return useReactFlow()
+    .getNodes()
+    .filter((n) => n.selected);
 };

@@ -40,7 +40,7 @@ const rootReducers = combineReducers({
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
   location3D: location3DReducer,
-  blockElements: blockNodesReducer,
+  blockNodes: blockNodesReducer,
   validation: validationReducer,
 });
 

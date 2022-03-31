@@ -4,6 +4,7 @@ import { TextResources } from "../../../../../assets/text/TextResources";
 import { Connector, Edge, Node } from "../../../../../models";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
 import { AllPartOfChecked, GetPartOfName } from "./helpers";
+
 interface Props {
   edges: Edge[];
   nodes: Node[];
@@ -13,7 +14,7 @@ interface Props {
 }
 
 /**
- * Component for partOf relations.
+ * Component for partOf relations in the Visual Filter.
  * @param interface
  * @returns checkboxes to toggle partOf relations that exist in Mimir.
  */

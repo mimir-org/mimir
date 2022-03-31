@@ -12,7 +12,7 @@ export const GetMimirElements = (flowNodes: FlowNode[], flowEdges: FlowEdge[]) =
   });
 
   flowEdges?.forEach((elem) => {
-    const edge = elem.data as Edge;
+    const edge = elem.data.edge as Edge;
     if (edge && !IsOffPage(edge.fromNode)) mimirEdges.push(edge);
   });
 

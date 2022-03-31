@@ -29,7 +29,7 @@ interface Props {
  * @returns an element with either an Aspect header or a checkbox.
  */
 export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExpanded, indent }: Props) => {
-  const [selectedNodes] = useSelectedNodes();
+  const selectedNodes = useSelectedNodes();
   const [setActiveNodeElement] = UseSetSelectNodes();
 
   return (

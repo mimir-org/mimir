@@ -15,7 +15,7 @@ import { ProjectContentContainer } from "./ProjectComponent.styled";
  */
 export const ProjectComponent = () => {
   const dispatch = useAppDispatch();
-  const elements = useAppSelector(selectors.blockElementsSelector);
+  const blockNodes = useAppSelector(selectors.blockNodesSelector);
   const project = useAppSelector(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
@@ -60,7 +60,7 @@ export const ProjectComponent = () => {
               indent={indent}
               isExpanded={expanded}
               isLeaf={!HasChildren(node, project)}
-              flowNodes={elements}
+              flowNodes={blockNodes}
               onToggleExpanded={expandHandler}
               dispatch={dispatch}
             />

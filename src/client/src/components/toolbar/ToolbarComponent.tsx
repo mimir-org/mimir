@@ -1,5 +1,6 @@
 import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
+import { useReactFlow } from "react-flow-renderer";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { OnElectroClick, OnFilterClick, OnViewClick } from "./handlers/";
 import { VIEW_TYPE, ViewType } from "../../models/project";
@@ -20,7 +21,12 @@ const ToolbarComponent = () => {
   const IsVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const numberOfSelectedElements = 0; // useStoreState((x) => x.selectedElements?.length);
+
+  const selectedNodes = useReactFlow()
+    .getNodes()
+    .filter((n) => n.selected);
+
+  const numberOfSelectedElements = selectedNodes.length;
 
   const onResetZoom = () => {
     if (isTreeView) return;

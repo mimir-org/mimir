@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect } from "react";
-import { useStore } from "react-flow-renderer";
+import { useReactFlow } from "react-flow-renderer";
 import { SetPanelHeight } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
 import { changeInspectorHeight } from "../redux/inspectorSlice";
@@ -8,12 +8,16 @@ import { useAppDispatch } from "../../../redux/store";
 import { MODULE_TYPE } from "../../../models/project";
 
 /**
- * Hook for minimizing inspector panel based on criteria within this hook
- * @param inspectorRef reference to the inspector element which should receive height mutations
+ * Hook for minimizing inspector panel based on criteria within this hook.
+ * @param inspectorRef reference to the inspector element which should receive height mutations.
  */
 export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElement>) => {
   const dispatch = useAppDispatch();
-  const numberOfSelectedElements = 0; //useStoreState((x) => x.selectedElements?.length);
+  const selectedNodes = useReactFlow()
+    .getNodes()
+    .filter((n) => n.selected);
+
+  const numberOfSelectedElements = selectedNodes.length;
 
   useEffect(() => {
     const minimizeCriteria = [numberOfSelectedElements > 1];

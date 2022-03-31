@@ -49,7 +49,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     positionBlockY: sourceNode.positionBlockY + Size.NODE_HEIGHT, // Adjust relative to parent
     connectors: [],
     attributes: [],
-    isHidden: false,
+    hidden: false,
     masterProjectId: sourceNode.masterProjectId,
     statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,

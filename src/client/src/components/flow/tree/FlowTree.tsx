@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import { useOnTreeConnect, useOnTreeDrop, useOnTreeRemove } from "./hooks";
+import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
 import { BuildTreeFlowNodes, BuildTreeFlowEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
@@ -19,6 +19,9 @@ import ReactFlow, {
   Node as FlowNode,
   useNodesState,
   useEdgesState,
+  ReactFlowInstance,
+  applyNodeChanges,
+  applyEdgeChanges,
 } from "react-flow-renderer";
 
 interface Props {
@@ -34,20 +37,17 @@ interface Props {
 const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
-  const [flowInstance, setFlowInstance] = useState<any>(null);
-
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
+  const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
+  const [nodes, setNodes] = useNodesState([]);
+  const [edges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
-  const userState = useAppSelector(selectors.userStateSelector);
+  const user = useAppSelector(selectors.userStateSelector).user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
 
-  const OnLoad = useCallback((_reactFlowInstance) => {
-    //_reactFlowInstance: OnLoadParams
+  const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
   }, []);
 
@@ -59,8 +59,15 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
-  const OnElementsRemove = (flowNodesToRemove: FlowNode[], flowEdgesToRemove: FlowEdge[]) => {
-    return useOnTreeRemove(flowNodesToRemove, flowEdgesToRemove, inspectorRef, project, setNodes, setEdges, dispatch);
+  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
+  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+
+  const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
+    return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
+  };
+
+  const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
+    return useOnTreeEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -71,11 +78,11 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     return useOnTreeDrop({
       event,
       project,
-      user: userState.user,
+      user,
       icons,
       library,
-      reactFlowInstance: flowInstance,
-      reactFlowWrapper: flowWrapper,
+      flowInstance,
+      flowWrapper,
       dispatch,
     });
   };
@@ -119,9 +126,14 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}></div>
       <ReactFlow
+        onInit={OnInit}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={OnNodesChange}
+        onEdgesChange={OnEdgesChange}
+        onNodesDelete={OnNodesDelete}
+        onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
-        // onElementsRemove={OnElementsRemove}
-        onLoad={OnLoad}
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}

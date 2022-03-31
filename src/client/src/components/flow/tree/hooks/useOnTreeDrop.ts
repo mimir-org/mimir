@@ -1,3 +1,4 @@
+import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
@@ -15,8 +16,8 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
-  reactFlowInstance: any;
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
+  flowInstance: ReactFlowInstance;
+  flowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
 

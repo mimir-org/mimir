@@ -44,7 +44,7 @@ export const TreeAspectComponent = ({
 }: Props) => (
   <AspectContainer node={node}>
     <VisibleComponent
-      isHidden={node.isHidden}
+      isHidden={node.hidden}
       isAncestorVisible={isAncestorVisible}
       isVisible={isVisible}
       showText={TextResources.EXPLORER_SHOW_OBJECT}

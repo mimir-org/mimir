@@ -1,1 +1,1 @@
-export { blockElementsSelector, projectSelector, secondaryNodeSelector, usernameSelector } from "../../../../redux/store";
+export { blockNodesSelector, projectSelector, secondaryNodeSelector, usernameSelector } from "../../../../redux/store";

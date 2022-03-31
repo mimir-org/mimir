@@ -1,11 +1,6 @@
 import { Connector, Edge } from "../../../../models";
 import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../flow/helpers";
-import {
-  ValidateFulfilledByItem,
-  ValidatePartOfItem,
-  ValidateRelationItem,
-  ValidateTransportItem,
-} from "../components/filters/helpers";
+import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";
 
 /**
  * Method to add content to the different categories in the Visual Filter.
@@ -20,12 +15,12 @@ export const PopulateFilterLists = (
   relationItems: Connector[],
   partOfItems: Connector[]
 ) => {
-  edges.forEach((e) => {
-    const sourceConn = e.fromConnector;
+  edges.forEach((edge) => {
+    const sourceConn = edge.fromConnector;
 
-    if (IsTransport(sourceConn)) ValidateTransportItem(transportItems, sourceConn);
-    if (IsLocationTerminal(sourceConn)) ValidateRelationItem(relationItems, sourceConn);
-    if (IsProductTerminal(sourceConn)) ValidateFulfilledByItem(relationItems, sourceConn);
-    if (IsPartOf(sourceConn)) ValidatePartOfItem(partOfItems, sourceConn);
+    if (IsTransport(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
+    if (IsLocationTerminal(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
+    if (IsProductTerminal(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
+    if (IsPartOf(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn);
   });
 };

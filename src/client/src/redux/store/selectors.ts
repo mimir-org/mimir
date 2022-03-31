@@ -125,9 +125,9 @@ export const customCategorySelector = createAppSelector(
   (customCategory) => customCategory
 );
 
-export const blockElementsSelector = createAppSelector(
-  (state) => state.blockElements.elements,
-  (elements) => elements
+export const blockNodesSelector = createAppSelector(
+  (state) => state.blockNodes.nodes,
+  (nodes) => nodes
 );
 
 export const nodeSizeSelector = createAppSelector(

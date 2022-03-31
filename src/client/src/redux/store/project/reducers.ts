@@ -225,14 +225,14 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       const nodeList = state.project.nodes;
       const edgeList = state.project.edges;
       const isParent = action.payload.isParent;
-      const isHidden = !node.isHidden;
+      const isHidden = !node.hidden;
 
       if (IsAspectNode(node)) {
         return {
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((n) => (IsFamily(node, n) ? { ...n, isHidden: isHidden } : n)),
+            nodes: nodeList.map((n) => (IsFamily(node, n) ? { ...n, hidden: isHidden } : n)),
             edges: edgeList.map((edge) =>
               IsFamily(node, edge.fromNode) || IsFamily(node, edge.toNode) || edge.fromNode === node
                 ? { ...edge, isHidden: isHidden }
@@ -252,7 +252,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ...state,
           project: {
             ...state.project,
-            nodes: nodeList.map((x) => (elements.includes(x) ? { ...x, isHidden: isHidden } : x)),
+            nodes: nodeList.map((x) => (elements.includes(x) ? { ...x, hidden: isHidden } : x)),
             edges: edgeList.map((edge) =>
               elements.includes(edge) || edge.toNode === node ? { ...edge, isHidden: isHidden } : edge
             ),
@@ -264,7 +264,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...state.project,
-          nodes: nodeList.map((n) => (n.id === node.id ? { ...n, isHidden: isHidden } : n)),
+          nodes: nodeList.map((n) => (n.id === node.id ? { ...n, hidden: isHidden } : n)),
           edges: edgeList.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, isHidden: isHidden } : e)),
         },
       };
@@ -896,7 +896,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...state.project,
           nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.id ? { ...action.payload, isSelected: x.isSelected, isBlockSelected: x.isBlockSelected } : x
+            x.id === action.payload.id ? { ...action.payload, selected: x.selected, blockSelected: x.blockSelected } : x
           ),
         },
       };

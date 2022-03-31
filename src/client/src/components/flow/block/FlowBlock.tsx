@@ -134,6 +134,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     <>
       <div className="reactflow-wrapper" ref={flowWrapper}>
         <ReactFlow
+          nodes={nodes}
+          edges={edges}
           nodeTypes={GetBlockNodeTypes}
           edgeTypes={GetBlockEdgeTypes}
           onNodesChange={onNodesChange}
