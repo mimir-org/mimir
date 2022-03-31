@@ -1,9 +1,9 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowChildNode } from "..";
-import { IsFamily, IsOffPage } from "../../../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../../../helpers/Aspects";
+import { IsFamily, GetParent } from "../../../../../helpers/Family";
 import { Edge, Node, Project } from "../../../../../models";
-import { GetParent } from "../../../helpers";
-import { IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, IsTransport } from "../../../helpers/CheckConnectorTypes";
+import { IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, IsTransport } from "../../../helpers/Connectors";
 
 /**
  * Component to draw all children FlowNodes in BlockView.

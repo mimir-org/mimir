@@ -1,5 +1,5 @@
 import * as Icons from "../assets/icons/aspects";
-import { IsFunction, IsLocation, IsProduct } from "./CheckTypes";
+import { IsFunction, IsLocation, IsProduct } from "./Aspects";
 import { Node } from "../models";
 
 const GetAspectIcon = (node: Node) => {

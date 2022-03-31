@@ -12,8 +12,9 @@ import { Project } from "../../../../../models";
 import { IsCreateLibraryType, IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject } from "react";
-import { GetSelectedNode, IsBlockView } from "../../../../../helpers";
-import { IsAspectNode } from "../../../../../helpers/CheckTypes";
+import { IsBlockView } from "../../../../../helpers";
+import { IsAspectNode } from "../../../../../helpers/Aspects";
+import { GetSelectedNode } from "../../../../../helpers/Selected";
 import {
   InspectorButtonRowContainer,
   InspectorButtonRowToggleTitle,

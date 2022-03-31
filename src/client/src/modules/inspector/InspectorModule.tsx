@@ -10,10 +10,11 @@ import { Project } from "../../models";
 import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
-import { GetSelectedNode, IsBlockView } from "../../helpers";
+import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { GetSelectedNode } from "../../helpers/Selected";
 
 interface Props {
   project: Project;

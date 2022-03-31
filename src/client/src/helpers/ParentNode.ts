@@ -1,5 +1,5 @@
 import { Node, Project } from "../models";
-import { IsPartOfTerminal } from "../components/flow/helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 
 export const FindParentEdge = (node: Node, project: Project) => {
   return project.edges.find((x) => x.toNodeId === node.id && IsPartOfTerminal(x.fromConnector));

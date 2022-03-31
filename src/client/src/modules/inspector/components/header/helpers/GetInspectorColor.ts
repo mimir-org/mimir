@@ -1,5 +1,5 @@
 import { Color } from "../../../../../compLibrary/colors/Color";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/CheckTypes";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
 

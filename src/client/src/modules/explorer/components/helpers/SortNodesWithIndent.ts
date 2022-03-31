@@ -1,12 +1,11 @@
-import { IsParentOf } from "../../../../components/flow/helpers";
-import { SetIndentLevel } from "../../../../helpers";
-import { IsAspectNode } from "../../../../helpers/CheckTypes";
-import { Node } from "../../../../models";
+import { IsParentOf } from "../../../../helpers/Family";
+import { SetIndentLevel } from "../../../../helpers/SetIndentLevel";
+import { IsAspectNode } from "../../../../helpers/Aspects";
+import { Node, Edge } from "../../../../models";
 
-const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {
+const SortNodesWithIndent = (nodes: Node[], edges: Edge[]): [Node, number][] => {
   InitialSortNodes(nodes);
-
-  const buckets = GroupNodesByIndentLevel(nodes);
+  const buckets = GroupNodesByIndentLevel(nodes, edges);
 
   return SortNodesByIndent(buckets);
 };
@@ -24,11 +23,11 @@ const InitialSortNodes = (nodes: Node[]): void => {
  * @param nodes Nodes to group.
  * @returns Map of indent levels and nodes with the corresponding indent level.
  */
-const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
+const GroupNodesByIndentLevel = (nodes: Node[], edges: Edge[]): Map<number, Node[]> => {
   const buckets: Map<number, Node[]> = new Map();
 
   for (const node of nodes) {
-    const indent = SetIndentLevel(node, 0);
+    const indent = SetIndentLevel(node, nodes, edges, 0);
 
     if (!buckets.has(indent)) buckets.set(indent, []);
     buckets.get(indent).push(node);

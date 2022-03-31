@@ -5,7 +5,7 @@ import { changeInspectorHeight } from "../redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { useAppDispatch } from "../../../redux/store";
 import { MODULE_TYPE } from "../../../models/project";
-import { GetSelectedNodes } from "../../../helpers";
+import { GetSelectedNodes } from "../../../helpers/Selected";
 
 /**
  * Hook for minimizing inspector panel based on criteria within this hook.

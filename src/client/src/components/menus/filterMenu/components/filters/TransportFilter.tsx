@@ -10,6 +10,7 @@ export interface TerminalCategory {
   id: string;
   name: string;
 }
+
 interface Props {
   edges: Edge[];
   items: Connector[];

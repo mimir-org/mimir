@@ -1,4 +1,4 @@
-import { IsOffPage } from "../../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../../helpers/Aspects";
 import { Edge } from "../../../../models";
 
 const IsOffPageEdge = (edge: Edge) => {

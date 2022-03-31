@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { ToggleDarkModeColor } from "../../../../helpers";
+import { ToggleDarkModeColor } from "../../../../helpers/ToggleDarkModeColor";
 import { toggleDarkMode } from "../../../../redux/store/darkMode/darkModeSlice";
 
 export const OnToggleDarkMode = (dispatch: Dispatch, isDarkMode: boolean) => {

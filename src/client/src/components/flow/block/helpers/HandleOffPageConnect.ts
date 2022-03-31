@@ -1,10 +1,11 @@
 import { addEdge } from "react-flow-renderer";
+import { GetParent } from "../../../../helpers/Family";
 import { Node, Project } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { ConvertToEdge } from "../../converters";
-import { CreateId, GetParent } from "../../helpers";
-import { IsTransport } from "../../helpers/CheckConnectorTypes";
+import { CreateId } from "../../helpers";
+import { IsTransport } from "../../helpers/Connectors";
 import { Params } from "../hooks/useOnConnect";
 import { IsOffPageEdge } from "./";
 

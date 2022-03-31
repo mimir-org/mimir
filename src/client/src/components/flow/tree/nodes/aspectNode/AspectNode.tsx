@@ -6,8 +6,9 @@ import { GetHandleType } from "../helpers/GetHandleType";
 import { GetFlowAspectIcon } from "./helpers/GetFlowAspectIcon";
 import { OnMouseLeave } from "./handlers/OnMouseLeave";
 import { AspectNodeStyled } from "./AspectNode.styled";
-import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
+import { GetAspectColor } from "../../../../../helpers";
 import { SetTopPos } from "../helpers/SetTopPos";
+import { GetSelectedNode } from "../../../../../helpers/Selected";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
 import { Connector, Edge, Node } from "../../../../../../models";
-import { IsTransport, IsConnectorVisible } from "../../../../../flow/helpers/CheckConnectorTypes";
+import { IsTransport, IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
 
 /**
  * Method to find all terminals of a Node.

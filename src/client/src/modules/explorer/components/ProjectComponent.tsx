@@ -5,10 +5,11 @@ import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
-import { GetSelectedNode, IsBlockView } from "../../../helpers";
+import { IsBlockView } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
-import { IsOffPage } from "../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../helpers/Aspects";
+import { GetSelectedNode } from "../../../helpers/Selected";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module.
@@ -19,6 +20,8 @@ export const ProjectComponent = () => {
   const project = useAppSelector(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
+  const edges = project?.edges;
+
   const selectedNode = GetSelectedNode();
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
 
@@ -43,7 +46,7 @@ export const ProjectComponent = () => {
 
   return (
     <ProjectContentContainer>
-      {SortNodesWithIndent(nodes).map(([node, indent]) => {
+      {SortNodesWithIndent(nodes, edges).map(([node, indent]) => {
         if (!areAncestorsExpanded(node)) return null;
         const expanded = !closedNodes.has(node.id);
         const expandHandler = () => onExpandElement(!expanded, node.id);

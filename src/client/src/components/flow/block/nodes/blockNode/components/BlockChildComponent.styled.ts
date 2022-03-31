@@ -3,7 +3,7 @@ import { SymbolImage } from "../../../../../../compLibrary/symbol/Symbol.styled"
 import { Color } from "../../../../../../compLibrary/colors/Color";
 import { Size } from "../../../../../../compLibrary/size/Size";
 import { Node } from "../../../../../../models";
-import { IsProduct } from "../../../../../../helpers/CheckTypes";
+import { IsProduct } from "../../../../../../helpers/Aspects";
 
 interface NodeBoxProps {
   node: Node;

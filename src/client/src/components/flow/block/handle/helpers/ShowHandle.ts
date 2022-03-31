@@ -1,10 +1,5 @@
 import { Connector } from "../../../../../models";
-import {
-  IsBidirectionalTerminal,
-  IsInputVisible,
-  IsOutputVisible,
-  IsConnectorVisible,
-} from "../../../helpers/CheckConnectorTypes";
+import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible, IsConnectorVisible } from "../../../helpers/Connectors";
 
 /**
  * Component to determine if a handle/connector should be displayed in BlockView.

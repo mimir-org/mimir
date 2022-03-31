@@ -1,6 +1,6 @@
 import { GetRdsId } from ".";
 import { Edge, Node, Project } from "../models";
-import { IsAspectNode } from "./CheckTypes";
+import { IsAspectNode } from "./Aspects";
 import { FindParentEdge } from "./ParentNode";
 
 const findParentNode = (currentNode: Node, project: Project) => {

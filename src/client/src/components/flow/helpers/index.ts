@@ -1,8 +1,5 @@
 export { default as CreateId } from "./CreateId";
 
-export { default as GetParent } from "./GetParent";
-export { default as IsParentOf } from "./IsParentOf";
-
 export { default as IsSubProject } from "./IsSubProject";
 export { default as GetProjectData } from "./GetProjectData";
 export { default as GetSubProject } from "./GetSubProject";

@@ -2,7 +2,7 @@ import { IsRelationEdge } from "../../../../../components/flow/helpers/IsRelatio
 import { IsLocation } from "../../../../../typeEditor/helpers";
 import { InspectorElement } from "../../../types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";
-import { IsProduct } from "../../../../../helpers/CheckTypes";
+import { IsProduct } from "../../../../../helpers/Aspects";
 
 export const ShouldShowTabs = (element: InspectorElement) => {
   const shouldShowAdmin = !IsCreateLibraryType(element) || !!element.objectType || !!element.locationType;

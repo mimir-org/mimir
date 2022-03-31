@@ -1,4 +1,4 @@
-import { IsPartOfTerminal } from "../../../components/flow/helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
 import { IsBlockView } from "../../../helpers";
 import { Project } from "../../../models";
 

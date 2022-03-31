@@ -11,7 +11,7 @@ import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsId, GetReferenceDesignation } from "../../../../../../../helpers";
 import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
-import { IsAspectNode, IsProduct } from "../../../../../../../helpers/CheckTypes";
+import { IsAspectNode, IsProduct } from "../../../../../../../helpers/Aspects";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 

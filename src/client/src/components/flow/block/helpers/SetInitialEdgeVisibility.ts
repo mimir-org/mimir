@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { setEdgeVisibility } from "../../../../redux/store/project/actions";
-import { IsLocationTerminal, IsProductTerminal, IsTransport } from "../../helpers/CheckConnectorTypes";
+import { IsLocationTerminal, IsProductTerminal, IsTransport } from "../../helpers/Connectors";
 
 /**
  * Component to set the visibility of transport edges on first render of BlockView.

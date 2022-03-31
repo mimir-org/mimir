@@ -1,4 +1,4 @@
-import { IsFamily } from "../../../../../../../../../helpers/CheckTypes";
+import { IsFamily } from "../../../../../../../../../helpers/Family";
 import { LibItem, Node } from "../../../../../../../../../models";
 import { LibraryState } from "../../../../../../../../../redux/store/library/types";
 

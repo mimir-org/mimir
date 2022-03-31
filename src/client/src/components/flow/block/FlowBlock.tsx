@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
-import { GetSelectedNode } from "../../../helpers";
+import { GetSelectedNode } from "../../../helpers/Selected";
 import { CloseInspector, HandleNodeSelection } from "../handlers";
 import { Project } from "../../../models";
 import ReactFlow, {

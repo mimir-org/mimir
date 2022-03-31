@@ -22,7 +22,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const project = useAppSelector(projectSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
   const isNoActiveProject = !project;
-  // const [selectedNodeIds] = useSelectedFlowElements();
+  const [selectedNodeIds] = useSelectedFlowElements();
   const menuRef = useRef(null);
 
   const projectMenuAction = (callback: () => void) => {
@@ -69,12 +69,12 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
           onClick={() => projectMenuAction(() => Click.OnCommit(dispatch))}
           disabled={!projectState?.project?.isSubProject}
         /> */}
-      {/* <MenuElement
+      <MenuElement
         text={TextResources.PROJECT_SUBPROJECT_SAVE}
         icon={selectedNodeIds ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
         disabled={!selectedNodeIds}
-      /> */}
+      />
       <MenuElement
         text={TextResources.PROJECT_IMPORT_LIB_TYPES}
         icon={Icons.ImportLibraryIcon}

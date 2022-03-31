@@ -3,13 +3,13 @@ import { Dispatch } from "redux";
 import { EdgeEvent } from "../../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
 import { Connector, Node, Project } from "../../../../models";
-import { IsOffPage } from "../../../../helpers/CheckTypes";
-import { IsOutputTerminal, IsOutputVisible, IsTransport } from "../../helpers/CheckConnectorTypes";
+import { IsOffPage } from "../../../../helpers/Aspects";
+import { IsOutputTerminal, IsOutputVisible, IsTransport } from "../../helpers/Connectors";
 import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Size } from "../../../../compLibrary/size/Size";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
-import { GetParent } from "../../helpers";
+import { GetParent } from "../../../../helpers/Family";
 
 /**
  * Hook that runs when a user drags a connection from a terminal and releases the mouse button in BlockView.

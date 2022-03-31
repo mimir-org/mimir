@@ -1,7 +1,7 @@
 import { Connector, Edge, Node } from "../../../models";
 import { GetLegendInfo } from "./GetLegendInfo";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOfTerminal } from "../../../components/flow/helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
 import { Legend } from "./types";
 
 export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {

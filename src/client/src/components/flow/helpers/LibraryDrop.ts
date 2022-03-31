@@ -1,20 +1,14 @@
 import CreateId from "./CreateId";
 import { Connector, ConnectorVisibility, Node, Project } from "../../../models";
-import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/CheckTypes";
+import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { ConvertToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
-import { Size } from "../../../compLibrary/size//Size";
+import { Size } from "../../../compLibrary/size/Size";
 import { Position } from "../../../models/project";
-import {
-  IsProductTerminal,
-  IsLocationTerminal,
-  IsOutputTerminal,
-  IsInputTerminal,
-  IsPartOfTerminal,
-} from "./CheckConnectorTypes";
+import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal, IsPartOfTerminal } from "./Connectors";
 
 /**
  * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
@@ -107,7 +101,7 @@ export function FindSiblingNodes(parentNode: Node, project: Project) {
   project.edges?.forEach((edge) => {
     if (edge.fromNodeId === parentNode.id) {
       const sibling = project.nodes?.find((n) => n.id === edge.toNodeId && n.level === parentNode.level + 1);
-      siblings.push(sibling);
+      if (sibling) siblings.push(sibling);
     }
   });
 

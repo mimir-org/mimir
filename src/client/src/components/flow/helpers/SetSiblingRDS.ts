@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { Edge, Node, Project } from "../../../models";
 import { FindParentEdge } from "../../../helpers/ParentNode";
 import { changeNodeValue } from "../../../redux/store/project/actions";
-import { GetChildren } from "./GetChildren";
+import { GetChildren } from "../../../helpers/Family";
 
 /**
  * Updates the sibling index of nodes affected by an Edge being connected.

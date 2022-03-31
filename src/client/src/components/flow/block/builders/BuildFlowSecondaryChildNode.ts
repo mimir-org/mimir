@@ -2,7 +2,7 @@ import { Node as FlowNode } from "react-flow-renderer";
 import { Node } from "../../../../models";
 import { GetNodeTypeString, SetSecondaryChildNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
-import { IsOffPage } from "../../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../../helpers/Aspects";
 
 /**
  * Component to create a child node for the SecondaryParentNode in BlockView.

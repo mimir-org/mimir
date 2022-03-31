@@ -1,10 +1,5 @@
 import { Edge } from "../../../../../../models";
-import {
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsProductTerminal,
-  IsTransport,
-} from "../../../../../flow/helpers/CheckConnectorTypes";
+import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../../../flow/helpers/Connectors";
 
 export const AllRelationsChecked = (edges: Edge[]) => {
   return !edges.some((x) => x.isHidden && (IsLocationTerminal(x.fromConnector) || IsProductTerminal(x.fromConnector)));

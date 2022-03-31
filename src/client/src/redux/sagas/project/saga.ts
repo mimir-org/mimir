@@ -3,7 +3,7 @@ import { Project, ProjectFileAm, WebSocket } from "../../../models";
 import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOfTerminal } from "../../../components/flow/helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
 import { search } from "../../store/project/actions";
 import Config from "../../../models/Config";
 import {

@@ -1,6 +1,6 @@
 import { Connector } from "../../../../../models";
 import { HandleType, Position } from "react-flow-renderer";
-import { IsInputTerminal, IsInputVisible, IsOutputTerminal, IsOutputVisible } from "../../../helpers/CheckConnectorTypes";
+import { IsInputTerminal, IsInputVisible, IsOutputTerminal, IsOutputVisible } from "../../../helpers/Connectors";
 
 /**
  * Function to give a handle/terminal a position and type.

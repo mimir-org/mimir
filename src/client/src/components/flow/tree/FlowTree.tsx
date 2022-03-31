@@ -10,7 +10,7 @@ import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleNodeSelection } from "../handlers";
 import { Project } from "../../../models";
 import { Size } from "../../../compLibrary/size/Size";
-import { IsPartOfTerminal } from "../helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../helpers/Connectors";
 import ReactFlow, {
   Background,
   Edge as FlowEdge,
@@ -41,7 +41,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
-  const user = useAppSelector(selectors.userStateSelector).user;
+  const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
@@ -113,8 +113,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   }, []);
 
   return (
-    <>
-      <div className="reactflow-wrapper" ref={flowWrapper}></div>
+    <div className="reactflow-wrapper" ref={flowWrapper}>
       <ReactFlow
         onInit={OnInit}
         nodes={nodes}
@@ -140,7 +139,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
       >
         <Background />
       </ReactFlow>
-    </>
+    </div>
   );
 };
 

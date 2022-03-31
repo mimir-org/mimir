@@ -5,7 +5,7 @@ import { Color } from "../compLibrary/colors/Color";
  * Note: the dark color scheme is temporary, the UX-approved version is pending.
  * @param isDarkMode
  */
-const ToggleDarkModeColor = (isDarkMode: boolean) => {
+export const ToggleDarkModeColor = (isDarkMode: boolean) => {
   const root = document.getElementById("root");
   const menuBar = document.getElementById("ToolBar");
   const explorer = document.getElementById("ExplorerModule");
@@ -25,5 +25,3 @@ const ToggleDarkModeColor = (isDarkMode: boolean) => {
   if (inspectorBody) inspectorBody.style.background = moduleColor;
   if (menuBar) menuBar.style.background = mainColor;
 };
-
-export default ToggleDarkModeColor;

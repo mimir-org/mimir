@@ -1,6 +1,6 @@
 import { Size } from "../../../../../../compLibrary/size/Size";
 import { Connector } from "../../../../../../models";
-import { IsInputTerminal, IsConnectorVisible } from "../../../../helpers/CheckConnectorTypes";
+import { IsInputTerminal, IsConnectorVisible } from "../../../../helpers/Connectors";
 
 /**
  * Component to resize a child BlockNode based on the amount of active terminals.

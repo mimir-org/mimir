@@ -1,6 +1,6 @@
 import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { IsPartOfTerminal, IsPartOfConnection, IsTransport } from "../../helpers/CheckConnectorTypes";
+import { IsPartOfTerminal, IsPartOfConnection, IsTransport } from "../../helpers/Connectors";
 import { createEdge, removeEdge } from "../../../../redux/store/project/actions";
 import { Node, Project } from "../../../../models";
 import { ConvertToEdge } from "../../converters";

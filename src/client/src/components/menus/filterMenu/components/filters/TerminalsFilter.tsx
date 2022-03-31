@@ -3,7 +3,7 @@ import { FilterElement } from "./FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Connector } from "../../../../../models";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";
-import { IsConnectorVisible } from "../../../../flow/helpers/CheckConnectorTypes";
+import { IsConnectorVisible } from "../../../../flow/helpers/Connectors";
 
 interface Props {
   activeTerminals: Connector[];

@@ -4,12 +4,13 @@ import { AspectColorType, Node } from "../../../../../models";
 import { TreeNodeStyled } from "./TreeNode.styled";
 import { HandleBox } from "../styled/HandleBox";
 import { GetHandleType } from "../helpers/GetHandleType";
-import { IsPartOfTerminal } from "../../../helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../helpers/Connectors";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
-import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
+import { GetAspectColor } from "../../../../../helpers";
 import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
 import { SetTopPos } from "../helpers/SetTopPos";
 import { nodesSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { GetSelectedNode } from "../../../../../helpers/Selected";
 
 /**
  * Component to display a node in TreeView.

@@ -1,7 +1,7 @@
 import { Edge as FlowEdge, Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowBlockEdge } from "..";
 import { Node, Project } from "../../../../../models";
-import { IsPartOfTerminal } from "../../../helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../helpers/Connectors";
 import { GetBlockEdgeType } from "../../helpers";
 
 /**

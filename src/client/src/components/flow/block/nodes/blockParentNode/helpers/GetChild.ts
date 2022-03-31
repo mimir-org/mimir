@@ -1,4 +1,4 @@
-import { IsPartOfTerminal } from "../../../../helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../../helpers/Connectors";
 import { Edge, Node } from "../../../../../../models";
 
 /**

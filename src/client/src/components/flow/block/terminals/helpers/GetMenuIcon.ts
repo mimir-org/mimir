@@ -1,5 +1,5 @@
 import * as Icons from "../../../../../assets/icons/terminalsMenu";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/CheckTypes";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { Node } from "../../../../../models";
 
 /**

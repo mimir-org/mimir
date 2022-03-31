@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { IsOffPage } from "../../../../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../../../../helpers/Aspects";
+import { GetParent } from "../../../../../../helpers/Family";
 import { Edge, Project } from "../../../../../../models";
 import { removeEdge, removeNode } from "../../../../../../redux/store/project/actions";
-import { GetParent } from "../../../../helpers";
 import { IsOffPageEdge } from "../../../helpers";
 import { GetPartOfEdge } from "./HandleOffPageDelete";
 

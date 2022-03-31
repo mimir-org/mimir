@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { getFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
-import { GetSelectedNode, IsBlockView } from "../../../../../../../../helpers";
+import { IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
 import { filterByAspect } from "./helpers/FilterByAspect";
@@ -9,6 +9,7 @@ import { customCategorySelector, librarySelector, useAppSelector } from "../../.
 import { getValidLibItems } from "./helpers/GetValidLibItems";
 import { getSharedCategory } from "./helpers/GetSharedCategory";
 import { getRecentlyCreatedCategory } from "./helpers/GetRecentlyCreatedCategory";
+import { GetSelectedNode } from "../../../../../../../../helpers/Selected";
 
 interface Props {
   collectionState: CollectionsActions;

@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import { HandleConnectedOffPageDelete } from ".";
-import { IsOffPage } from "../../../../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../../../../helpers/Aspects";
+import { GetParent } from "../../../../../../helpers/Family";
 import { Connector, Edge, Node, Project } from "../../../../../../models";
 import { removeEdge, setOffPageStatus } from "../../../../../../redux/store/project/actions";
-import { GetParent } from "../../../../helpers";
-import { IsPartOfTerminal, IsTransport } from "../../../../helpers/CheckConnectorTypes";
+import { IsPartOfTerminal, IsTransport } from "../../../../helpers/Connectors";
 
 /**
  * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected.

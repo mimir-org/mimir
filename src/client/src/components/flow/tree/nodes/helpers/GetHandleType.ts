@@ -7,7 +7,7 @@ import {
   IsOutputVisible,
   IsBidirectionalTerminal,
   IsPartOfTerminal,
-} from "../../../helpers/CheckConnectorTypes";
+} from "../../../helpers/Connectors";
 
 export const GetHandleType = (conn: Connector): [HandleType, Position] => {
   const sourcePosition = IsPartOfTerminal(conn) ? Position.Bottom : Position.Right;

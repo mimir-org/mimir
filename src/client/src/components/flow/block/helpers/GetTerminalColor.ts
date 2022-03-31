@@ -1,4 +1,4 @@
-import { IsLocationTerminal, IsProductTerminal } from "../../helpers/CheckConnectorTypes";
+import { IsLocationTerminal, IsProductTerminal } from "../../helpers/Connectors";
 import { Color } from "../../../../compLibrary/colors/Color";
 import { Connector } from "../../../../models";
 

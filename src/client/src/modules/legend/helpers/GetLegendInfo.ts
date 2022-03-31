@@ -7,7 +7,7 @@ import {
   IsPartOfTerminal,
   IsProductTerminal,
   IsTransport,
-} from "../../../components/flow/helpers/CheckConnectorTypes";
+} from "../../../components/flow/helpers/Connectors";
 
 export const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";

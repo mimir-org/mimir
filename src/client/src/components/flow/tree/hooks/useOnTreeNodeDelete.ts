@@ -2,7 +2,7 @@ import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project, Node } from "../../../../models";
 import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
-import { IsAspectNode } from "../../../../helpers/CheckTypes";
+import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
 import { FindMimirNodeByFlowNodeId } from "../../helpers";
 

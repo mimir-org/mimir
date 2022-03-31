@@ -17,7 +17,7 @@ import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
-import { ToggleDarkModeColor } from "../../helpers";
+import { ToggleDarkModeColor } from "../../helpers/ToggleDarkModeColor";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";

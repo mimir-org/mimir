@@ -4,7 +4,7 @@ import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
-import { IsLibrary } from "../../../helpers/CheckTypes";
+import { IsLibrary } from "../../../helpers/Modules";
 import { GetMimirElements } from "./helpers/GetFilterElements";
 import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
 

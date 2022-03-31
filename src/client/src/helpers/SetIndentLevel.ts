@@ -1,11 +1,15 @@
-import red from "../redux/store";
-import { Node } from "../models";
-import { IsPartOfTerminal } from "../components/flow/helpers/CheckConnectorTypes";
+import { Node, Edge } from "../models";
+import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 
-const SetIndentLevel = (node: Node, count: number): number => {
-  const edges = red.store.getState().projectState.project.edges;
-  const nodes = red.store.getState().projectState.project.nodes;
-
+/**
+ * Recursive function to give each node the correct level  based on it's family tree.
+ * @param node
+ * @param nodes
+ * @param edges
+ * @param count
+ * @returns a number that defines the indent in the Explorer Module.
+ */
+export const SetIndentLevel = (node: Node, nodes: Node[], edges: Edge[], count: number): number => {
   const edge = edges.find((x) => x.toNode.id === node.id && IsPartOfTerminal(x.toConnector));
   if (!edge) return count;
 
@@ -14,7 +18,5 @@ const SetIndentLevel = (node: Node, count: number): number => {
   const nextNode = nodes?.find((x) => x.id === edge.fromNode?.id);
   if (!nextNode) return count;
 
-  return SetIndentLevel(nextNode, count);
+  return SetIndentLevel(nextNode, nodes, edges, count);
 };
-
-export default SetIndentLevel;

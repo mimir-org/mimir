@@ -6,9 +6,9 @@ import { createEdge } from "../../../../redux/store/project/actions";
 import { Project } from "../../../../models";
 import { ConvertToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { IsOffPage } from "../../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetBlockEdgeType, HandleOffPageConnect } from "../helpers";
-import { IsTransport } from "../../helpers/CheckConnectorTypes";
+import { IsTransport } from "../../helpers/Connectors";
 
 export interface Params {
   connection: FlowEdge | Connection;

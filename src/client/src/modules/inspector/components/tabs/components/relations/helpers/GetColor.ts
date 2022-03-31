@@ -1,5 +1,5 @@
 import { Color } from "../../../../../../../compLibrary/colors/Color";
-import { IsLocationTerminal, IsProductTerminal } from "../../../../../../../components/flow/helpers/CheckConnectorTypes";
+import { IsLocationTerminal, IsProductTerminal } from "../../../../../../../components/flow/helpers/Connectors";
 import { Connector } from "../../../../../../../models";
 
 export const GetListItemColor = (index: number) => (index % 2 ? undefined : Color.LAVANDER_WEB_LIST);

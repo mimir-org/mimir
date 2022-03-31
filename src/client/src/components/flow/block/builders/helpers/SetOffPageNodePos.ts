@@ -1,7 +1,7 @@
 import { Size } from "../../../../../compLibrary/size/Size";
+import { GetParent } from "../../../../../helpers/Family";
 import { Node } from "../../../../../models";
 import { Position } from "../../../../../models/project";
-import { GetParent } from "../../../helpers";
 
 /**
  * Component to force an OffPageNode to fit the position of the ParentNode.

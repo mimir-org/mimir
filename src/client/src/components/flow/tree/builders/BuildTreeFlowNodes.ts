@@ -1,6 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Project } from "../../../../models";
-import { IsOffPage } from "../../../../helpers/CheckTypes";
+import { IsOffPage } from "../../../../helpers/Aspects";
 import { ConvertNodeToFlow } from "../../converters";
 
 const BuildTreeFlowNodes = (project: Project) => {

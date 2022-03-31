@@ -3,7 +3,7 @@ import { TerminalsMenu, TerminalsMenuButton } from "./components";
 import { Connector, Node } from "../../../../models";
 import { useState } from "react";
 import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
-import { IsConnectorVisible } from "../../helpers/CheckConnectorTypes";
+import { IsConnectorVisible } from "../../helpers/Connectors";
 
 interface Props {
   node: Node;

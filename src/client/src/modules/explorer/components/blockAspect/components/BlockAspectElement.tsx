@@ -1,12 +1,12 @@
 import { AspectExpandButton } from "../../shared/components/AspectExpandButton";
 import { AspectColorType, Node } from "../../../../../models";
-import { GetAspectColor, GetAspectIcon, GetSelectedNodes, UseIndentLevel } from "../../../../../helpers";
+import { GetAspectColor, GetAspectIcon, UseIndentLevel } from "../../../../../helpers";
 import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnBlockExplorerChange } from "./handlers/OnBlockExplorerChange";
 import { IsNodeInBlockExplorerChecked, IsMiniCheckBox } from "./helpers/";
 import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
 import { Dispatch } from "redux";
-import { IsAspectNode } from "../../../../../helpers/CheckTypes";
+import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { useReactFlow } from "react-flow-renderer";
 
 interface Props {

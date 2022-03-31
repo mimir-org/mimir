@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers/CheckConnectorTypes";
+import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers/Connectors";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../redux/store";
 import { AspectColorType, Connector } from "../../../../../models";
 import { HandleComponent } from "../../handle";

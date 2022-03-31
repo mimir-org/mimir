@@ -6,8 +6,8 @@ import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux
 import { useEffectOnce } from "../../hooks/useEffectOnce";
 
 /**
- * The start page for Mimir
- * @returns a splash page with Mimir logo
+ * The start page for Mimir.
+ * @returns a splash page with the Mimir logo.
  */
 export const StartPage = () => {
   const dispatch = useAppDispatch();

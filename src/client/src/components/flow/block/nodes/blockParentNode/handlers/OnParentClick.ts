@@ -1,7 +1,7 @@
 import { Node } from "../../../../../../models";
-import { GetParent } from "../../../../helpers";
 import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
+import { GetParent } from "../../../../../../helpers/Family";
 
 const OnParentClick = (dispatch: Dispatch, node: Node) => {
   const parentNode = GetParent(node);

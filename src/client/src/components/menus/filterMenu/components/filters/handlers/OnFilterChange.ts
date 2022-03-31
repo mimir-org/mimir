@@ -2,13 +2,8 @@ import { Dispatch } from "redux";
 import { Edge } from "../../../../../../models";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
 import { GetConnectorNode } from "../helpers";
-import { IsFamily } from "../../../../../../helpers/CheckTypes";
-import {
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsProductTerminal,
-  IsTransport,
-} from "../../../../../flow/helpers/CheckConnectorTypes";
+import { IsFamily } from "../../../../../../helpers/Family";
+import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../../../flow/helpers/Connectors";
 
 /**
  * Component to toggle a specific element on/off in Visual Filter.

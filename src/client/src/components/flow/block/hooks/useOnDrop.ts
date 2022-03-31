@@ -2,13 +2,13 @@ import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { GetSelectedNode } from "../../../../helpers";
+import { GetSelectedNode } from "../../../../helpers/Selected";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Position } from "../../../../models/project";
-import { IsFamily } from "../../../../helpers/CheckTypes";
+import { IsFamily } from "../../../../helpers/Family";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 

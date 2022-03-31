@@ -7,7 +7,6 @@ const IsNodeInBlockExplorerChecked = (flowNodes: FlowNode[], node: Node) => {
   let checked = false;
 
   flowNodes?.forEach((flowNode) => {
-    console.log({ flowNode });
     if (node.id === flowNode?.id && !node.isHidden) checked = true;
   });
 

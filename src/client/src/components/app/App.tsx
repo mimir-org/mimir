@@ -17,6 +17,7 @@ type AppProps = {
 };
 
 export const App = ({ pca }: AppProps) => {
+  const dispatch = useDispatch();
   const isFetching = useAppSelector(isFetchingSelector);
   const projectState = useAppSelector(projectStateSelector);
 
@@ -25,7 +26,6 @@ export const App = ({ pca }: AppProps) => {
   };
 
   const websocket = new WebSocket();
-  const dispatch = useDispatch();
   websocket.setDispatcher(dispatch);
   websocket.setProjectState(projectState);
   websocket.start();

@@ -8,9 +8,9 @@ import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Dispatch } from "redux";
-import { IsAspectNode } from "../../../../../helpers/CheckTypes";
+import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
-import { IsPartOfTerminal } from "../../../../../components/flow/helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../../../components/flow/helpers/Connectors";
 
 export const OnDeleteClick = (
   project: Project,

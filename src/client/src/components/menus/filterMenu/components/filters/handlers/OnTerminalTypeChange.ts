@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Edge } from "../../../../../../models";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
-import { IsTransport } from "../../../../../flow/helpers/CheckConnectorTypes";
+import { IsTransport } from "../../../../../flow/helpers/Connectors";
 
 export const OnTerminalTypeChange = (
   edges: Edge[],

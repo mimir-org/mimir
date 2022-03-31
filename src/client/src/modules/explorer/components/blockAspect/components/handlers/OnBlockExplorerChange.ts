@@ -1,10 +1,8 @@
 import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../../../../redux/store/project/actions";
 import { removeSecondaryNode, setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
-import { IsParentOf } from "../../../../../../components/flow/helpers";
-import { IsDirectChild } from "../../../../../../helpers";
+import { IsDirectChild, IsFamily, IsParentOf } from "../../../../../../helpers/Family";
 import { Dispatch } from "redux";
 import { Node } from "../../../../../../models";
-import { IsFamily } from "../../../../../../helpers/CheckTypes";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -16,9 +14,6 @@ import { IsFamily } from "../../../../../../helpers/CheckTypes";
  * @param dispatch
  */
 export const OnBlockExplorerChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: Dispatch) => {
-  console.log({ node });
-  console.log({ selectedNode });
-
   // Set selectNode
   if (!selectedNode) {
     dispatch(setActiveNode(node?.id, !node.isSelected));
@@ -42,7 +37,6 @@ export const OnBlockExplorerChange = (node: Node, selectedNode: Node, secondaryN
 
   // Toggle off selectedNode
   if (node === selectedNode && selectedNode && !secondaryNode) {
-    console.log("SKRU AV: ", node?.name, selectedNode?.name);
     dispatch(setActiveNode(null, false));
     return;
   }

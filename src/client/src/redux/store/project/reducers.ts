@@ -1,6 +1,7 @@
 import * as Types from "./types";
 import { Edge, Node } from "../../../models";
-import { IsAspectNode, IsFamily } from "../../../helpers/CheckTypes";
+import { IsAspectNode } from "../../../helpers/Aspects";
+import { IsFamily } from "../../../helpers/Family";
 import {
   GetUpdatedEdgeInnerWithTerminalAttributeIsLocked,
   GetUpdatedEdgeInnerWithTerminalAttributeValue,

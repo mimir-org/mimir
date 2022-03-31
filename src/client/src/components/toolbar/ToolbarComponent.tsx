@@ -7,7 +7,7 @@ import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { SetZoomCenterLevel } from "../flow/block/nodes/blockParentNode/helpers/SetZoomCenterLevel";
-import { GetSelectedNodes } from "../../helpers";
+import { GetSelectedNodes } from "../../helpers/Selected";
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.

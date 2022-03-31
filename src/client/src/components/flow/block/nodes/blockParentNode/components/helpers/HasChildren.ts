@@ -1,5 +1,5 @@
 import red from "../../../../../../../redux/store";
-import { IsPartOfTerminal } from "../../../../../helpers/CheckConnectorTypes";
+import { IsPartOfTerminal } from "../../../../../helpers/Connectors";
 import { Node } from "../../../../../../../models";
 
 /**

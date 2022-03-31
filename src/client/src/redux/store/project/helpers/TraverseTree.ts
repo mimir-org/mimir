@@ -1,5 +1,5 @@
-import { IsPartOfTerminal } from "../../../../components/flow/helpers/CheckConnectorTypes";
-import { IsFamily } from "../../../../helpers/CheckTypes";
+import { IsPartOfTerminal } from "../../../../components/flow/helpers/Connectors";
+import { IsFamily } from "../../../../helpers/Family";
 import { Edge, Node } from "../../../../models";
 
 const TraverseTree = (edgeList: Edge[], nodeList: Node[], parentNode: Node, elements: (Node | Edge)[]) => {
@@ -16,6 +16,7 @@ const TraverseTree = (edgeList: Edge[], nodeList: Node[], parentNode: Node, elem
       }
       elements.push(edge);
     }
+
     if (edge.toNodeId === parentNode.id) elements.push(edge);
   });
 

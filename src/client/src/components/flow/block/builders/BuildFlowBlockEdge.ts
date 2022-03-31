@@ -1,7 +1,7 @@
 import { Edge, Node } from "../../../../models";
 import { EdgeType } from "../../../../models/project";
 import { ConvertEdgeToFlow } from "../../converters";
-import { GetSelectedNode } from "../../../../helpers";
+import { GetSelectedNode } from "../../../../helpers/Selected";
 import { ValidateBlockEdge } from "./helpers";
 
 export const BuildFlowBlockEdge = (nodes: Node[], edge: Edge, edgeType: EdgeType, secondaryNode: Node, animated: boolean) => {

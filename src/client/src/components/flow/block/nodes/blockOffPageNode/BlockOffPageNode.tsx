@@ -4,14 +4,14 @@ import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle";
-import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers/CheckConnectorTypes";
+import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";
-import { IsProduct } from "../../../../../helpers/CheckTypes";
+import { IsProduct } from "../../../../../helpers/Aspects";
 import { Color } from "../../../../../compLibrary/colors/Color";
-import { GetParent } from "../../../helpers";
-import { GetSelectedBlockNode } from "../../../../../helpers";
+import { GetSelectedBlockNode } from "../../../../../helpers/Selected";
+import { GetParent } from "../../../../../helpers/Family";
 
 /**
  * Component for an offpage node in BlockView
