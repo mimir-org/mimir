@@ -65,10 +65,7 @@ namespace Mb.Core.Extensions
             modelBuilderSection.Bind(modelBuilderConfiguration);
             services.AddSingleton(Options.Create(modelBuilderConfiguration));
 
-            services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = false;
-            });
+            services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = false; });
 
             // Dependency injection
 
@@ -96,6 +93,9 @@ namespace Mb.Core.Extensions
             services.AddScoped<IProjectFileService, ProjectFileService>();
             services.AddScoped<ICooperateService, CooperateService>();
             services.AddScoped<ILockService, LockService>();
+            //services.AddSingleton<IWorkerService, WorkerService>();
+
+            //services.AddHostedService<IWorkerService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();

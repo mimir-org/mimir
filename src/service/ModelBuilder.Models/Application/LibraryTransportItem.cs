@@ -10,8 +10,7 @@ namespace Mb.Models.Application
     {
         public string Id { get; set; }
         public string Version { get; set; } = "1.0";
-        public string Rds { get; set; }
-        public string Category { get; set; }
+        public string RdsId { get; set; }
         public Aspect Aspect { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

@@ -11,8 +11,7 @@ namespace Mb.Models.Application
     {
         public string Id { get; set; }
         public string Version { get; set; } = "1.0";
-        public string Rds { get; set; }
-        public string Category { get; set; }
+        public string RdsId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string StatusId { get; set; } = "4590637F39B6BA6F39C74293BE9138DF";

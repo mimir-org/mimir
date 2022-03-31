@@ -22,7 +22,7 @@ interface Props {
 export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {
   const aspect = createLibraryType?.aspect;
   const objectType = createLibraryType?.objectType;
-  const rdsLabel = rds ? rds.code + " - " + rds.name : null;
+  const rdsLabel = rds ? rds.id + " - " + rds.name : null;
 
   const showObjectBlock = () => {
     if (

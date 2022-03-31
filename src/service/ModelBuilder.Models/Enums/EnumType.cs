@@ -6,7 +6,6 @@ namespace Mb.Models.Enums
         AttributeCondition = 1,
         AttributeQualifier = 2,
         AttributeSource = 3,
-        RdsCategory = 4,
         TerminalCategory = 5,
         AttributeFormat = 6,
         BuildStatus = 7,

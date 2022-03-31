@@ -5,7 +5,7 @@ import { AspectColorType, Connector, Node } from "../../../../../models";
 import { GetHandleType } from "../helpers/GetHandleType";
 import { GetFlowAspectIcon } from "./helpers/GetFlowAspectIcon";
 import { OnMouseLeave } from "./handlers/OnMouseLeave";
-import { AspectNodeBox } from "./styled/AspectNodeBox";
+import { AspectNodeStyled } from "./AspectNode.styled";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 import { SetTopPos } from "../helpers/SetTopPos";
 
@@ -26,7 +26,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   }, [timer]);
 
   return (
-    <AspectNodeBox
+    <AspectNodeStyled
       colorMain={GetAspectColor(data, AspectColorType.Main)}
       isSelected={data === GetSelectedNode()}
       onMouseEnter={() => setIsHover(true)}
@@ -56,7 +56,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
 
       <div>{GetFlowAspectIcon(data.aspect)}</div>
       {data.label ?? data.name}
-    </AspectNodeBox>
+    </AspectNodeStyled>
   );
 };
 

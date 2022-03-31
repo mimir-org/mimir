@@ -27,7 +27,6 @@ namespace Mb.Models.Extensions
             EnumTypes.Add(1, typeof(AttributeCondition));
             EnumTypes.Add(2, typeof(AttributeQualifier));
             EnumTypes.Add(3, typeof(AttributeSource));
-            EnumTypes.Add(4, typeof(RdsCategory));
             EnumTypes.Add(5, typeof(TerminalCategory));
             EnumTypes.Add(6, typeof(AttributeFormat));
             EnumTypes.Add(7, typeof(BuildStatus));
