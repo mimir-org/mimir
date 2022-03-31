@@ -3,8 +3,9 @@ import { Project, ProjectFileAm, WebSocket } from "../../../models";
 import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOf } from "../../../components/flow/helpers";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/CheckConnectorTypes";
 import { search } from "../../store/project/actions";
+import Config from "../../../models/Config";
 import {
   ApiError,
   GetApiErrorForBadRequest,
@@ -36,7 +37,6 @@ import {
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   SaveProjectAction,
 } from "../../store/project/types";
-import Config from "../../../models/Config";
 
 export function* getProject(action: FetchingProjectAction) {
   try {
@@ -74,7 +74,7 @@ export function* getProject(action: FetchingProjectAction) {
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
-        if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
+        if (!IsPartOfTerminal(edge.fromConnector)) edge.isHidden = true;
       });
     }
 

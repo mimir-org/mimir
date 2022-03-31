@@ -1,6 +1,7 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowSecondaryChildNode } from "..";
-import { IsDirectChild, IsFamily } from "../../../../../helpers";
+import { IsDirectChild } from "../../../../../helpers";
+import { IsFamily } from "../../../../../helpers/CheckTypes";
 import { Node, Project } from "../../../../../models";
 
 /**

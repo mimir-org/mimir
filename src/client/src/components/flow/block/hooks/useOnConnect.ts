@@ -1,13 +1,14 @@
 import { Dispatch } from "redux";
 import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { CreateId, IsTransport } from "../../helpers";
+import { CreateId } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
 import { Project } from "../../../../models";
 import { ConvertToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage } from "../../../../helpers/CheckTypes";
 import { GetBlockEdgeType, HandleOffPageConnect } from "../helpers";
+import { IsTransport } from "../../helpers/CheckConnectorTypes";
 
 export interface Params {
   connection: FlowEdge | Connection;

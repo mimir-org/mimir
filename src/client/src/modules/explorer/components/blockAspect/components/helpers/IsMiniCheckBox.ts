@@ -1,4 +1,4 @@
-import { IsProduct } from "../../../../../../helpers";
+import { IsProduct } from "../../../../../../helpers/CheckTypes";
 import { Node } from "../../../../../../models";
 
 const IsMiniCheckBox = (node: Node, selectedNode: Node, secondaryNode: Node) => {

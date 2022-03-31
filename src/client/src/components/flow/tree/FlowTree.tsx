@@ -10,8 +10,8 @@ import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterCompon
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
 import { Project } from "../../../models";
-import { IsPartOf } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
+import { IsPartOfTerminal } from "../helpers/CheckConnectorTypes";
 import ReactFlow, {
   Background,
   Edge as FlowEdge,
@@ -118,7 +118,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {
-      if (!IsPartOf(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
+      if (!IsPartOfTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
     });
   }, []);
 

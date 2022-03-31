@@ -8,9 +8,10 @@ import { EnumBase, Node, Project } from "../../../../../../../models";
 import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
-import { GetRdsId, GetReferenceDesignation, IsAspectNode, IsProduct } from "../../../../../../../helpers";
+import { GetRdsId, GetReferenceDesignation } from "../../../../../../../helpers";
 import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
+import { IsAspectNode, IsProduct } from "../../../../../../../helpers/CheckTypes";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 

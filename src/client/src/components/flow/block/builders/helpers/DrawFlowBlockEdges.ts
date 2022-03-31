@@ -1,7 +1,7 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { BuildFlowBlockEdge } from "..";
 import { Node, Project } from "../../../../../models";
-import { IsPartOf } from "../../../helpers";
+import { IsPartOfTerminal } from "../../../helpers/CheckConnectorTypes";
 import { GetBlockEdgeType } from "../../helpers";
 
 /**
@@ -16,7 +16,7 @@ const DrawFlowBlockEdges = (project: Project, secondaryNode: Node, flowEdges: Fl
   const mimirEdges = project.edges;
 
   mimirEdges.forEach((edge) => {
-    if (IsPartOf(edge.fromConnector)) return;
+    if (IsPartOfTerminal(edge.fromConnector)) return;
 
     // const sourceNodeIsDisplayed = elements.some((elem) => elem.id === edge.fromNodeId);
     // const targetNodeIsDisplayed = elements.some((elem) => elem.id === edge.toNodeId);

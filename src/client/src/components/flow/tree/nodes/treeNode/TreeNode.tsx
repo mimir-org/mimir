@@ -4,7 +4,7 @@ import { AspectColorType, Node } from "../../../../../models";
 import { TreeNodeBox } from "./styled/TreeNodeBox";
 import { HandleBox } from "../styled/HandleBox";
 import { GetHandleType } from "../helpers/GetHandleType";
-import { IsPartOf } from "../../../helpers";
+import { IsPartOfTerminal } from "../../../helpers/CheckConnectorTypes";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
 import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
@@ -56,7 +56,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
             key={"handle-treeview-" + conn.id}
-            visible={IsPartOf(conn) && isHover}
+            visible={IsPartOfTerminal(conn) && isHover}
             position={pos}
             topPos={SetTopPos(pos)}
           >

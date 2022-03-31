@@ -1,8 +1,9 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowChildNode } from "..";
-import { IsFamily, IsOffPage } from "../../../../../helpers";
+import { IsFamily, IsOffPage } from "../../../../../helpers/CheckTypes";
 import { Edge, Node, Project } from "../../../../../models";
-import { GetParent, IsInputTerminal, IsOutputTerminal, IsPartOf, IsTransport } from "../../../helpers";
+import { GetParent } from "../../../helpers";
+import { IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, IsTransport } from "../../../helpers/CheckConnectorTypes";
 
 /**
  * Component to draw all children FlowNodes in BlockView.
@@ -30,8 +31,8 @@ const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: 
 };
 
 function ValidateEdge(edge: Edge, selectedNode: Node) {
-  if (IsOffPage(edge.toNode)) return IsPartOf(edge.toConnector);
-  return IsPartOf(edge.toConnector) && IsFamily(selectedNode, edge.toNode) && edge.fromNodeId === selectedNode?.id;
+  if (IsOffPage(edge.toNode)) return IsPartOfTerminal(edge.toConnector);
+  return IsPartOfTerminal(edge.toConnector) && IsFamily(selectedNode, edge.toNode) && edge.fromNodeId === selectedNode?.id;
 }
 
 function ValidateOffPage(

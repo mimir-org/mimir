@@ -3,7 +3,8 @@ import { Node, Project } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { ConvertToEdge } from "../../converters";
-import { CreateId, GetParent, IsTransport } from "../../helpers";
+import { CreateId, GetParent } from "../../helpers";
+import { IsTransport } from "../../helpers/CheckConnectorTypes";
 import { Params } from "../hooks/useOnConnect";
 import { IsOffPageEdge } from "./";
 

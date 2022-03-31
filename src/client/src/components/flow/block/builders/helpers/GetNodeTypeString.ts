@@ -1,6 +1,6 @@
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Node } from "../../../../../models";
-import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/CheckTypes";
 
 const GetNodeTypeString = (node: Node) => {
   if (IsLocation(node)) return TextResources.BLOCK_LOCATION;

@@ -1,5 +1,5 @@
 import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage } from "../../../../helpers/CheckTypes";
 import { Edge, Node } from "../../../../models";
 
 export const GetMimirElements = (flowNodes: FlowNode[], flowEdges: FlowEdge[]) => {

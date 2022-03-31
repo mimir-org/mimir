@@ -1,12 +1,12 @@
 import red from "../redux/store";
-import { Edge, Node } from "../models";
-import { IsPartOf } from "../components/flow/helpers";
+import { Node } from "../models";
+import { IsPartOfTerminal } from "../components/flow/helpers/CheckConnectorTypes";
 
 const SetIndentLevel = (node: Node, count: number): number => {
-  const edges = red.store.getState().projectState.project.edges as Edge[];
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const edges = red.store.getState().projectState.project.edges;
+  const nodes = red.store.getState().projectState.project.nodes;
 
-  const edge = edges.find((x) => x.toNode.id === node.id && IsPartOf(x.toConnector));
+  const edge = edges.find((x) => x.toNode.id === node.id && IsPartOfTerminal(x.toConnector));
   if (!edge) return count;
 
   count++;

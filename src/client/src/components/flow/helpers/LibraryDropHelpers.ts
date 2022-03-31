@@ -1,15 +1,20 @@
 import CreateId from "./CreateId";
 import { Connector, ConnectorVisibility, Node, Project } from "../../../models";
-import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers";
-import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal } from ".";
+import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/CheckTypes";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { IsPartOf } from "./IsPartOf";
 import { ConvertToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../compLibrary/size//Size";
 import { Position } from "../../../models/project";
+import {
+  IsProductTerminal,
+  IsLocationTerminal,
+  IsOutputTerminal,
+  IsInputTerminal,
+  IsPartOfTerminal,
+} from "./CheckConnectorTypes";
 
 /**
  * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
@@ -27,8 +32,8 @@ export function HandleCreatePartOfEdge(
   dispatch: Dispatch
 ) {
   targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
-  const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
+  const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
+  const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
   const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);

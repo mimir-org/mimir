@@ -2,7 +2,7 @@ import { NavigationButton } from "./styled/";
 import { ArrowDownIcon, ArrowDownInactiveIcon, ArrowUpIcon, ArrowUpInactiveIcon } from "../../../../../../assets/icons/arrow";
 import { Node } from "../../../../../../models";
 import { HasChildren } from "./helpers/HasChildren";
-import { IsAspectNode } from "../../../../../../helpers";
+import { IsAspectNode } from "../../../../../../helpers/CheckTypes";
 
 interface Props {
   isActive: boolean;

@@ -1,4 +1,4 @@
-import { IsPartOf } from "../../../components/flow/helpers";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/CheckConnectorTypes";
 import { IsBlockView } from "../../../helpers";
 import { Project } from "../../../models";
 
@@ -28,7 +28,7 @@ export const MapProperties = (project: Project, oldProject: Project, reMappedIds
 
   if (!IsBlockView()) {
     project?.edges.forEach((edge) => {
-      if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
+      if (!IsPartOfTerminal(edge.fromConnector)) edge.isHidden = true;
     });
   }
 };

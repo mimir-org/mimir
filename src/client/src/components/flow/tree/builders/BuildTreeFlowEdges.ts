@@ -1,6 +1,6 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { Project } from "../../../../models";
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage } from "../../../../helpers/CheckTypes";
 import { BuildTreeEdge } from ".";
 import { GetTreeEdgeType } from "../helpers";
 

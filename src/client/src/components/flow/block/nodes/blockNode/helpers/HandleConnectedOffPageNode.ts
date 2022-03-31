@@ -1,9 +1,10 @@
 import { Dispatch } from "redux";
 import { CreateConnectedOffPageNode } from "./CreateConnectedOffPageNode";
-import { IsOffPage } from "../../../../../../helpers";
+import { IsOffPage } from "../../../../../../helpers/CheckTypes";
 import { Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { GetParent, IsTransportConnection } from "../../../../helpers";
+import { IsTransportConnection } from "../../../../helpers/CheckConnectorTypes";
+import { GetParent } from "../../../../helpers";
 
 /**
  * Component to draw an OffPageNode that is connected.

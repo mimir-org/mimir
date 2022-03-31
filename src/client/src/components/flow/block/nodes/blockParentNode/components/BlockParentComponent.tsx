@@ -1,6 +1,6 @@
 import { Connector, Node } from "../../../../../../models";
 import { ParentBox, ResizeButton } from "./styled";
-import { IsLocation } from "../../../../../../helpers";
+import { IsLocation } from "../../../../../../helpers/CheckTypes";
 import { Background, BackgroundVariant } from "react-flow-renderer";
 import { Color } from "../../../../../../compLibrary/colors/Color";
 import { BlockParentBanner } from "./BlockParentBanner";

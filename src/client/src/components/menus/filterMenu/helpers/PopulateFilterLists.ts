@@ -1,5 +1,5 @@
 import { Connector, Edge } from "../../../../models";
-import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../flow/helpers";
+import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../flow/helpers/CheckConnectorTypes";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";
 
 /**
@@ -21,6 +21,6 @@ export const PopulateFilterLists = (
     if (IsTransport(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
     if (IsLocationTerminal(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
     if (IsProductTerminal(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
-    if (IsPartOf(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn);
+    if (IsPartOfTerminal(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn);
   });
 };

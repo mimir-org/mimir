@@ -1,4 +1,4 @@
-import { IsFamily } from "../../../helpers";
+import { IsFamily } from "../../../helpers/CheckTypes";
 import { Node } from "../../../models";
 
 const IsSiblingNodes = (node: Node, nodeToCheck: Node) => {

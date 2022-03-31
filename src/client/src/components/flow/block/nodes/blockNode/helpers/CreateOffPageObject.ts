@@ -1,4 +1,5 @@
-import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
+import { IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOfTerminal } from "../../../../helpers/CheckConnectorTypes";
+import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../compLibrary/size/Size";
 import {
@@ -37,7 +38,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   if (!sourceConnector || !sourceNode) return null;
 
-  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOf(c) && !IsInputTerminal(c));
+  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOfTerminal(c) && !IsInputTerminal(c));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {

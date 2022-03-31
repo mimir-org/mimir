@@ -5,9 +5,10 @@ import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
-import { GetSelectedNode, IsBlockView, IsOffPage } from "../../../helpers";
+import { GetSelectedNode, IsBlockView } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
+import { IsOffPage } from "../../../helpers/CheckTypes";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module.

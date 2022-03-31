@@ -1,10 +1,10 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
+import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/CheckTypes";
 import { Connector, Node, Project } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
-import { IsLocationTerminal, IsProductTerminal } from "../../../helpers";
+import { IsLocationTerminal, IsProductTerminal } from "../../../helpers/CheckConnectorTypes";
 
 /**
  * Function to check if a connection/edge in BlockView is valid.

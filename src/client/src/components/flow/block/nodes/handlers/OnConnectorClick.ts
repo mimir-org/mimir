@@ -9,10 +9,10 @@ export const OnConnectorClick = (conn: Connector, isInput: boolean, node: Node, 
 
   dispatch(changeActiveConnector(node.id, conn.id, connectorVisibility));
 
-  if (visible) {
-    const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
-    if (edge) dispatch(removeEdge(edge.id));
-  }
+  if (!visible) return;
+
+  const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
+  if (edge) dispatch(removeEdge(edge.id));
 };
 
 function SetConnectorVisibility(conn: Connector, isInput: boolean) {
@@ -20,5 +20,5 @@ function SetConnectorVisibility(conn: Connector, isInput: boolean) {
 
   if (visible) return ConnectorVisibility.None;
   if (isInput) return ConnectorVisibility.InputVisible;
-  else return ConnectorVisibility.OutputVisible;
+  return ConnectorVisibility.OutputVisible;
 }

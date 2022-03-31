@@ -2,7 +2,7 @@
 import { IsConnectorVisible } from "../../../../../../helpers";
 import { Connector, EDGE_KIND, Edge, Node } from "../../../../../../models";
 import { EDGE_TYPE } from "../../../../../../models/project";
-import { IsTransport } from "../../../../../flow/helpers";
+import { IsTransport } from "../../../../../flow/helpers/CheckConnectorTypes";
 
 /**
  * Method to find all terminals of a Node.

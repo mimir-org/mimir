@@ -1,9 +1,10 @@
 import { Dispatch } from "redux";
 import { HandleConnectedOffPageDelete } from ".";
-import { IsOffPage } from "../../../../../../helpers";
+import { IsOffPage } from "../../../../../../helpers/CheckTypes";
 import { Connector, Edge, Node, Project } from "../../../../../../models";
 import { removeEdge, setOffPageStatus } from "../../../../../../redux/store/project/actions";
-import { GetParent, IsPartOf, IsTransport } from "../../../../helpers";
+import { GetParent } from "../../../../helpers";
+import { IsPartOfTerminal, IsTransport } from "../../../../helpers/CheckConnectorTypes";
 
 /**
  * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected.
@@ -46,8 +47,8 @@ function GetConnectedEdge(connector: Connector, project: Project) {
 export function GetPartOfEdge(node: Node, parentNode: Node, project: Project) {
   return project.edges.find(
     (x) =>
-      (x.fromConnector?.nodeId === parentNode.id && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNode.id && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNode.id && IsPartOfTerminal(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
+      (x.toConnector?.nodeId === parentNode.id && IsPartOfTerminal(x?.toConnector) && x.fromConnector?.nodeId === node.id)
   );
 }
 

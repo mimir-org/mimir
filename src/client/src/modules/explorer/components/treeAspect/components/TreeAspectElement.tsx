@@ -5,14 +5,8 @@ import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsCheckedTree } from "./helpers/IsCheckedTree";
 import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
 import { Icon } from "../../../../../compLibrary/icon";
-import {
-  GetAspectColor,
-  GetAspectIcon,
-  IsAspectNode,
-  UseIndentLevel,
-  UseSetSelectNodes,
-  useSelectedNodes,
-} from "../../../../../helpers";
+import { GetAspectColor, GetAspectIcon, UseIndentLevel, UseSetSelectNodes, useSelectedNodes } from "../../../../../helpers";
+import { IsAspectNode } from "../../../../../helpers/CheckTypes";
 
 interface Props {
   node: Node;

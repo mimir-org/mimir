@@ -1,12 +1,12 @@
 import { Node, Project } from "../models";
-import { IsPartOf } from "../components/flow/helpers";
+import { IsPartOfTerminal } from "../components/flow/helpers/CheckConnectorTypes";
 
 export const FindParentEdge = (node: Node, project: Project) => {
-  return project.edges.find((x) => x.toNodeId === node.id && IsPartOf(x.fromConnector));
+  return project.edges.find((x) => x.toNodeId === node.id && IsPartOfTerminal(x.fromConnector));
 };
 
 const FindChildrenEdge = (node: Node, project: Project) => {
-  return project.edges.find((x) => x.fromNodeId === node.id && IsPartOf(x.fromConnector));
+  return project.edges.find((x) => x.fromNodeId === node.id && IsPartOfTerminal(x.fromConnector));
 };
 
 export const HasChildren = (_node: Node, project: Project) => {

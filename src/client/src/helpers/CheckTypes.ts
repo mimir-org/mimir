@@ -1,5 +1,6 @@
 import { Aspect, CreateLibraryType, LibItem, Node } from "../models";
-import { MODULE_TYPE } from "../models/project";
+import { MODULE_TYPE, VIEW_TYPE } from "../models/project";
+import red from "../redux/store";
 
 export const IsAspectNode = (node: Node) => {
   return node?.isRoot;
@@ -31,4 +32,9 @@ export const IsExplorer = (module: string) => {
 
 export const IsLibrary = (module: string) => {
   return module === MODULE_TYPE.LIBRARY;
+};
+
+export const IsStartPage = () => {
+  const view = red.store.getState().flow.view;
+  return view === VIEW_TYPE.STARTPAGE;
 };

@@ -1,5 +1,5 @@
-import { IsPartOf } from ".";
-import { Edge, Node } from "../../../models";
+import { IsPartOfTerminal } from "./CheckConnectorTypes";
+import { Node } from "../../../models";
 import red from "../../../redux/store";
 
 /**
@@ -9,10 +9,10 @@ import red from "../../../redux/store";
  * @returns a boolean value.
  */
 const IsParentOf = (parentNode: Node, childNode: Node) => {
-  const edges = red.store.getState().projectState.project.edges as Edge[];
+  const edges = red.store.getState().projectState.project.edges;
   const edge = edges?.find((e) => e.toNode?.id === childNode?.id && e.fromNode?.id === parentNode?.id);
 
-  return edge && IsPartOf(edge.fromConnector);
+  return edge && IsPartOfTerminal(edge.fromConnector);
 };
 
 export default IsParentOf;

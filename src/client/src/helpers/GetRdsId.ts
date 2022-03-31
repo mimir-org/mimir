@@ -1,5 +1,5 @@
 import { Edge, Node } from "../models";
-import { IsFunction, IsLocation, IsProduct } from "../helpers";
+import { IsFunction, IsLocation, IsProduct } from "../helpers/CheckTypes";
 import { TextResources } from "../assets/text/TextResources";
 
 export const GetRdsId = (node: Node) => {

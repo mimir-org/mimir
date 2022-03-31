@@ -1,7 +1,7 @@
 import { LibItem, Node } from "../../../../../../../../../models";
 import { LibraryCategory } from "../../../../../../../../../models/project";
 import { LibraryState } from "../../../../../../../../../redux/store/library/types";
-import { IsFamily } from "../../../../../../../../../helpers";
+import { IsFamily } from "../../../../../../../../../helpers/CheckTypes";
 
 export const GetLibCategories = (selectedNode: Node, state: LibraryState, isBlockView: boolean) => {
   const allCategories: LibraryCategory[] = [];

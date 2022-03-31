@@ -4,7 +4,7 @@ import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text/TextResources";
-import { IsAspectNode, IsFamily } from "../../helpers";
+import { IsAspectNode, IsFamily } from "../../helpers/CheckTypes";
 import Config from "../Config";
 import { ConnectorType } from "../enums/ConnectorType";
 import { RelationType } from "../enums/RelationType";

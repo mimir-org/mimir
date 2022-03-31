@@ -3,11 +3,13 @@ import { Dispatch } from "redux";
 import { Node, Edge, Project } from "../../../../models";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { HandleOffPageDelete } from "../../block/nodes/blockOffPageNode/helpers";
-import { FindMimirEdgeByFlowEdgeId, FindMimirNodeByFlowNodeId, GetParent, IsPartOf } from "../../helpers";
-import { GetSelectedBlockNode, IsAspectNode, IsOffPage } from "../../../../helpers";
+import { FindMimirEdgeByFlowEdgeId, FindMimirNodeByFlowNodeId, GetParent } from "../../helpers";
+import { IsAspectNode, IsOffPage } from "../../../../helpers/CheckTypes";
 import { CloseInspector } from "../../handlers";
 import { GetParentConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
 import { IsOffPageEdge } from "../helpers";
+import { GetSelectedBlockNode } from "../../../../helpers";
+import { IsPartOfTerminal } from "../../helpers/CheckConnectorTypes";
 
 /**
  * Hook that runs when an element is deleted from Mimir in BlockView.
@@ -98,7 +100,7 @@ function HandleConnectedOffPageElements(project: Project, elementEdge: Edge, dis
 
     if (!transportEdge) return;
 
-    const partOfTerminal = node?.connectors?.find((c) => IsPartOf(c));
+    const partOfTerminal = node?.connectors?.find((c) => IsPartOfTerminal(c));
     const partOfEdge = edges.find((x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id);
 
     const parentNode = GetParent(node);

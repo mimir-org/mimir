@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { CreateRequiredOffPageNode } from "./CreateRequiredOffPageNode";
-import { IsOffPage } from "../../../../../../helpers";
+import { IsOffPage } from "../../../../../../helpers/CheckTypes";
 import { Connector, Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { IsInputTerminal, IsInputVisible } from "../../../../helpers";
+import { IsInputTerminal, IsInputVisible } from "../../../../helpers/CheckConnectorTypes";
 
 /**
  * Component to check if any terminals have a required OffPageNode flag. If so, an OffPageNode is created.

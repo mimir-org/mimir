@@ -1,6 +1,6 @@
-import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/CheckTypes";
 import { Connector, Node } from "../../../../../models";
-import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers";
+import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers/CheckConnectorTypes";
 
 /**
  * Validator for an edge in BlockView. The basis for drawing an edge in BlockView is that the source node

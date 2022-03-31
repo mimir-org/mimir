@@ -1,8 +1,8 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
-import { IsOffPage } from "../../../helpers";
+import { IsOffPage } from "../../../helpers/CheckTypes";
 import { Edge, Node } from "../../../models";
 import { EdgeType } from "../../../models/project";
-import { IsTransport } from "../helpers";
+import { IsTransport } from "../helpers/CheckConnectorTypes";
 
 /**
  * Function to convert a Mimir Edge to a FlowEdge that interacts with the Flow Library.

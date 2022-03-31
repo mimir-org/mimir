@@ -1,7 +1,7 @@
 import { Connector, Edge, Node } from "../../../models";
 import { GetLegendInfo } from "./GetLegendInfo";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOf } from "../../../components/flow/helpers";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/CheckConnectorTypes";
 import { Legend } from "./types";
 
 export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
@@ -13,7 +13,7 @@ export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
         found = true;
         return;
       }
-      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden && !IsPartOf(conn)) found = true;
+      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden && !IsPartOfTerminal(conn)) found = true;
     });
     return found;
   };

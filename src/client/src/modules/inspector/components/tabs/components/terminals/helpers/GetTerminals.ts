@@ -1,4 +1,4 @@
-import { IsTransport } from "../../../../../../../components/flow/helpers";
+import { IsTransport } from "../../../../../../../components/flow/helpers/CheckConnectorTypes";
 import { Connector } from "../../../../../../../models";
 import { IsEdge, IsNode } from "../../../../../helpers/IsType";
 import { InspectorElement } from "../../../../../types";

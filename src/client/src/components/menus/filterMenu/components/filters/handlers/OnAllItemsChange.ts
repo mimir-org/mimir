@@ -1,7 +1,12 @@
 import { Dispatch } from "redux";
 import { Connector, ConnectorVisibility, Edge } from "../../../../../../models";
 import { changeActiveConnector, setEdgeVisibility } from "../../../../../../redux/store/project/actions";
-import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../../../flow/helpers";
+import {
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsProductTerminal,
+  IsTransport,
+} from "../../../../../flow/helpers/CheckConnectorTypes";
 
 export const OnAllRelationsChange = (edges: Edge[], dispatch: Dispatch) => {
   const hidden = edges.some((x) => (IsLocationTerminal(x.fromConnector) || IsProductTerminal(x.fromConnector)) && x.isHidden);
@@ -12,10 +17,10 @@ export const OnAllRelationsChange = (edges: Edge[], dispatch: Dispatch) => {
 };
 
 export const OnAllPartOfChange = (edges: Edge[], dispatch: Dispatch) => {
-  const hidden = edges.some((x) => IsPartOf(x.fromConnector) && x.isHidden);
+  const hidden = edges.some((x) => IsPartOfTerminal(x.fromConnector) && x.isHidden);
 
   edges?.forEach((e) => {
-    if (IsPartOf(e.fromConnector)) dispatch(setEdgeVisibility(e, !hidden));
+    if (IsPartOfTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e, !hidden));
   });
 };
 

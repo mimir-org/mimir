@@ -1,6 +1,6 @@
 import { Color } from "../compLibrary/colors/Color";
 import { AspectColorType, LibItem, Node } from "../models";
-import { IsFunction, IsLocation, IsProduct } from ".";
+import { IsFunction, IsLocation, IsProduct } from "./CheckTypes";
 
 /**
  * Component to get the color for a given item.

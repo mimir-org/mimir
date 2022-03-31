@@ -1,4 +1,4 @@
-import { IsInputTerminal } from "../../../../../../../../../../components/flow/helpers";
+import { IsInputTerminal } from "../../../../../../../../../../components/flow/helpers/CheckConnectorTypes";
 import { TerminalLikeItem } from "../../../../../../../../types";
 
 export const GetInputAndOutputTerminalsByTerminalType = (terminals: TerminalLikeItem[]) => {

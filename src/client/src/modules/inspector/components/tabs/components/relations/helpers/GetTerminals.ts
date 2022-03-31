@@ -1,5 +1,5 @@
 import { Connector, Edge } from "../../../../../../../models";
-import { IsInputTerminal, IsOutputTerminal } from "../../../../../../../components/flow/helpers";
+import { IsInputTerminal, IsOutputTerminal } from "../../../../../../../components/flow/helpers/CheckConnectorTypes";
 import { InspectorElement } from "../../../../../types";
 import { IsEdge, IsNode } from "../../../../../helpers/IsType";
 

@@ -1,12 +1,13 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { AspectExpandButton } from "../../shared/components/AspectExpandButton";
 import { AspectColorType, Node } from "../../../../../models";
-import { GetAspectColor, GetAspectIcon, IsAspectNode, UseIndentLevel } from "../../../../../helpers";
+import { GetAspectColor, GetAspectIcon, UseIndentLevel } from "../../../../../helpers";
 import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnBlockChange } from "./handlers/OnBlockChange";
 import { IsChecked, IsMiniCheckBox } from "./helpers/";
 import { AspectElementWrapper } from "../../shared/styled/AspectElementWrapper";
 import { Dispatch } from "redux";
+import { IsAspectNode } from "../../../../../helpers/CheckTypes";
 
 interface Props {
   node: Node;
@@ -41,11 +42,11 @@ export const BlockAspectElement = ({
       color={GetAspectColor(node, AspectColorType.Selected)}
       isChecked={IsChecked(flowNodes, node)}
       isMiniCheckbox={IsMiniCheckBox(node, selectedNode, secondaryNode)}
-      isBlockView
       isAspectNode={IsAspectNode(node)}
       onChange={() => OnBlockChange(node, selectedNode, secondaryNode, dispatch)}
       label={node.label}
       icon={GetAspectIcon(node)}
+      isBlockView
     />
     {!isLeaf && <AspectExpandButton onClick={onToggleExpanded} isExpanded={isExpanded} />}
   </AspectElementWrapper>

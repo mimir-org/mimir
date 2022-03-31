@@ -1,4 +1,4 @@
-import { IsAspectNode } from "../../../../../helpers";
+import { IsAspectNode } from "../../../../../helpers/CheckTypes";
 import { GetMenuIcon } from "../helpers";
 import { TerminalsButtonBox } from "../styled";
 import { Connector, Node } from "../../../../../models";

@@ -2,12 +2,13 @@ import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { GetSelectedNode, IsFamily } from "../../../../helpers";
+import { GetSelectedNode } from "../../../../helpers";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
-import { GetViewport } from "react-flow-renderer";
+import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Position } from "../../../../models/project";
+import { IsFamily } from "../../../../helpers/CheckTypes";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -18,7 +19,7 @@ interface OnDropParameters {
   icons: BlobData[];
   library: LibraryState;
   secondaryNode: Node;
-  reactFlowInstance: any;
+  reactFlowInstance: ReactFlowInstance;
   reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
   getViewport: GetViewport;
   dispatch: Dispatch;

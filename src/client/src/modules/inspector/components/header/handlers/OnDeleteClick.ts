@@ -8,8 +8,9 @@ import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Dispatch } from "redux";
-import { IsAspectNode } from "../../../../../helpers";
-import { IsPartOf, UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
+import { IsAspectNode } from "../../../../../helpers/CheckTypes";
+import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
+import { IsPartOfTerminal } from "../../../../../components/flow/helpers/CheckConnectorTypes";
 
 export const OnDeleteClick = (
   project: Project,
@@ -41,6 +42,6 @@ const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
 };
 
 const HandleEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {
-  if (IsPartOf(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
+  if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
   dispatch(removeEdge(edge.id));
 };

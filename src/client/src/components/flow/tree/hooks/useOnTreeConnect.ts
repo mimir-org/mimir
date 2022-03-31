@@ -1,12 +1,13 @@
-import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { CreateId, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
 import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
+import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
+import { IsPartOfTerminal, IsPartOfConnection, IsTransport } from "../../helpers/CheckConnectorTypes";
 import { createEdge, removeEdge } from "../../../../redux/store/project/actions";
 import { Node, Project } from "../../../../models";
 import { ConvertToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
+import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
 
 interface Params {
   connection: FlowEdge | Connection;
@@ -37,7 +38,7 @@ const useOnConnectTree = (params: Params) => {
   const currentEdge = existingEdge ?? ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
-  if (IsPartOf(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
+  if (IsPartOfTerminal(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
 
   return setEdges((els) => {
     return addEdge(
@@ -59,7 +60,9 @@ const useOnConnectTree = (params: Params) => {
 
 function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch) {
   //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
-  const existingPartOfEdge = project.edges?.find((edge) => edge.toNodeId === targetNode.id && IsPartOf(edge?.fromConnector));
+  const existingPartOfEdge = project.edges?.find(
+    (edge) => edge.toNodeId === targetNode.id && IsPartOfTerminal(edge?.fromConnector)
+  );
   if (existingPartOfEdge) dispatch(removeEdge(existingPartOfEdge.id));
 }
 

@@ -2,7 +2,7 @@ import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
-import { IsBidirectionalTerminal } from "../../../helpers";
+import { IsBidirectionalTerminal } from "../../../helpers/CheckConnectorTypes";
 import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
 
 /**

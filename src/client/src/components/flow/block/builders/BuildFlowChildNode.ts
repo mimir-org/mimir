@@ -2,7 +2,7 @@ import { Node as FlowNode } from "react-flow-renderer";
 import { Node } from "../../../../models";
 import { GetNodeTypeString, SetChildNodePos, SetOffPageNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage } from "../../../../helpers/CheckTypes";
 
 /**
  * Component to create a child node in BlockView.

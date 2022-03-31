@@ -1,7 +1,7 @@
 import { GetConnectorNode } from "./index";
-import { IsFamily } from "../../../../../../helpers";
+import { IsFamily } from "../../../../../../helpers/CheckTypes";
 import { Connector } from "../../../../../../models";
-import { IsLocationTerminal, IsProductTerminal } from "../../../../../flow/helpers";
+import { IsLocationTerminal, IsProductTerminal } from "../../../../../flow/helpers/CheckConnectorTypes";
 
 export function VerifyTransportItem(items: Connector[], sourceConn: Connector) {
   if (!items.some((conn) => conn.terminalTypeId === sourceConn.terminalTypeId)) items.push(sourceConn);

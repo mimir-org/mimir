@@ -1,4 +1,4 @@
-import { IsAspectNode } from "../../../../../helpers";
+import { IsAspectNode } from "../../../../../helpers/CheckTypes";
 import { GetSelectedIcon } from "../../../../../typeEditor/helpers";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorHeader.styled";
 import { InspectorElement } from "../../../types";

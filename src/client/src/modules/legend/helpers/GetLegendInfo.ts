@@ -1,8 +1,13 @@
 import { AspectColorType, Connector, Node } from "../../../models";
 import { TextResources } from "../../../assets/text/TextResources";
 import { Color } from "../../../compLibrary/colors/Color";
-import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../components/flow/helpers";
 import { GetAspectColor } from "../../../helpers";
+import {
+  IsLocationTerminal,
+  IsPartOfTerminal,
+  IsProductTerminal,
+  IsTransport,
+} from "../../../components/flow/helpers/CheckConnectorTypes";
 
 export const GetLegendInfo = (conn: Connector, node: Node) => {
   let color = "";
@@ -14,7 +19,7 @@ export const GetLegendInfo = (conn: Connector, node: Node) => {
     return [name, color];
   }
 
-  if (IsPartOf(conn)) {
+  if (IsPartOfTerminal(conn)) {
     name = TextResources.RELATIONS_PARTOF_RELATIONSHIP;
     color = GetAspectColor(node, AspectColorType.Main);
     return [name, color];

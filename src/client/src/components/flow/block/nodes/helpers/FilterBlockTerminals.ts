@@ -1,6 +1,7 @@
-import { GetSelectedNode, IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
+import { GetSelectedNode } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/CheckTypes";
 import { Connector, Node } from "../../../../../models";
-import { IsLocationTerminal, IsPartOf, IsProductTerminal, IsTransport } from "../../../helpers";
+import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../helpers/CheckConnectorTypes";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
@@ -13,7 +14,7 @@ export const FilterBlockTerminals = (actualNodeConnectors: Connector[], secondar
   const selectedNode = GetSelectedNode();
 
   return actualNodeConnectors
-    ?.filter((c) => !IsPartOf(c) && FilterTerminal(selectedNode, secondaryNode, c))
+    ?.filter((c) => !IsPartOfTerminal(c) && FilterTerminal(selectedNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
 };
 
@@ -29,10 +30,12 @@ function FilterSplitViewTerminal(selectedNode: Node, secondary: Node, c: Connect
     if (IsLocation(secondary)) return IsLocationTerminal(c);
     if (IsProduct(secondary)) return IsTransport(c);
   }
+
   if (IsFunction(selectedNode)) {
     if (IsFunction(secondary)) return IsTransport(c);
     if (IsLocation(secondary)) return IsLocationTerminal(c);
     if (IsProduct(secondary)) return IsProductTerminal(c);
   }
+
   return IsLocationTerminal(c);
 }

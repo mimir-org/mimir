@@ -1,6 +1,6 @@
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors/Color";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/CheckTypes";
 import { Node } from "../../../../../models";
 import { useAppSelector, electroSelector } from "../../../../../redux/store";
 import { GetEdgeStyle } from "../helpers/GetEdgeStyle";

@@ -1,7 +1,7 @@
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage } from "../../../../helpers/CheckTypes";
 import { Connector, Node } from "../../../../models";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
-import { IsTransport, IsLocationTerminal, IsProductTerminal } from "../../helpers";
+import { IsTransport, IsLocationTerminal, IsProductTerminal } from "../../helpers/CheckConnectorTypes";
 
 const GetBlockEdgeType = (connector: Connector, sourceNode: Node, targetNode: Node): EdgeType => {
   if (IsOffPage(sourceNode) || IsOffPage(targetNode)) return EDGE_TYPE.BLOCK_OFFPAGE as EdgeType;
