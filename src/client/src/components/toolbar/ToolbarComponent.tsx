@@ -13,7 +13,7 @@ import { GetSelectedNodes } from "../../helpers";
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
  * @returns a menu with icons for different features.
  */
-const ToolbarComponent = () => {
+export const ToolbarComponent = () => {
   const dispatch = useAppDispatch();
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
@@ -75,5 +75,3 @@ const ToolbarComponent = () => {
     </ToolBarBox>
   );
 };
-
-export default ToolbarComponent;

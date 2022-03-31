@@ -1,5 +1,4 @@
 export {
-  projectStateSelector,
   projectNameSelector,
   projectSelector,
   flowViewSelector,

@@ -8,14 +8,16 @@ import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnProjectCreateClick } from "./handlers";
-import { useAppDispatch } from "../../../../../../redux/store";
+import { useAppDispatch, useParametricAppSelector, isActiveViewSelector } from "../../../../../../redux/store";
+import { VIEW_TYPE } from "../../../../../../models/project";
 
 export const CreateProjectMenu = () => {
   const dispatch = useAppDispatch();
+  const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
   const [projectName, setProjectName] = useState("");
   const isActionDisabled = !projectName;
   const onAction = () => OnProjectCreateClick(dispatch, projectName);
-  const onExit = () => OnReturnShowInstructionClick(dispatch);
+  const onExit = () => OnReturnShowInstructionClick(isStartPage, dispatch);
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>

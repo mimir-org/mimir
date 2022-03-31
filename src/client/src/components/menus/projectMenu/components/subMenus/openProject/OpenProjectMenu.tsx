@@ -8,7 +8,8 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnReturnShowInstructionClick } from "../../../handlers";
 import { OnOpen } from "./handlers";
-import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../../redux/store";
+import { VIEW_TYPE } from "../../../../../../models/project";
 
 /**
  * Open project menu component
@@ -18,12 +19,13 @@ export const OpenProjectMenu = () => {
   const dispatch = useAppDispatch();
   const currentProject = useAppSelector(selectors.projectSelector);
   const projectList = useAppSelector(selectors.projectListSelector);
+  const isStartPage = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.STARTPAGE);
   const selectedProject = projectList?.find((x) => x.selected);
   const projectId = selectedProject?.id;
   const projectDescription = selectedProject?.description;
   const isActionDisabled = !projectId || projectId === "";
   const onAction = () => OnOpen(projectId, currentProject, dispatch);
-  const onExit = () => OnReturnShowInstructionClick(dispatch);
+  const onExit = () => OnReturnShowInstructionClick(isStartPage, dispatch);
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>
