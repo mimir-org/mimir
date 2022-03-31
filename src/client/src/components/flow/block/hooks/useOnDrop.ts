@@ -6,7 +6,7 @@ import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
 import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodeXPosition } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
 import { Position } from "../../../../models/project";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -87,18 +87,6 @@ function SetBlockNodePosition(transform: FlowTransform, event: React.DragEvent<H
   }
 
   return { x, y } as Position;
-}
-
-/**
- * Function to calculate the TreeView position of a dropped Node.
- * @param parentNode
- * @param project
- * @returns a Position object.
- */
-function SetTreeNodePosition(parentNode: Node, project: Project) {
-  const marginYTree = 220;
-  const treeX = SetTreeNodeXPosition(parentNode, project);
-  return { x: treeX, y: parentNode.positionY + marginYTree } as Position;
 }
 
 /**

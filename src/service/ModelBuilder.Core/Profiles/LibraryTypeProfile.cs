@@ -38,10 +38,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
-                .AfterMap((_, dest, _) =>
-                {
-                    dest.ResolvePredefinedAttributeData();
-                });
+                .AfterMap((_, dest, _) => { dest.ResolvePredefinedAttributeData(); });
 
             CreateMap<CreateLibraryType, TransportType>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => $"{src.Key}-{commonRepository.GetDomain()}-{src.Version}".CreateMd5()))
@@ -103,10 +100,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeId))
-                .BeforeMap((src, _, _) =>
-                {
-                    src.ResolvePredefinedAttributes();
-                });
+                .BeforeMap((src, _, _) => { src.ResolvePredefinedAttributes(); });
 
             CreateMap<TransportType, CreateLibraryType>()
                 .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.TypeId))
@@ -163,12 +157,11 @@ namespace Mb.Core.Profiles
             CreateMap<NodeType, LibraryNodeItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds.Code))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.StatusId))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Rds.RdsCategory.Name))
                 .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.AttributeTypes))
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.SymbolId))
@@ -178,16 +171,12 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
-                .AfterMap((src, dest, context) =>
-                {
-                    dest.Connectors = Task.Run(() => CreateConnectors(src.TerminalTypes, context)).Result;
-                });
+                .AfterMap((src, dest, context) => { dest.Connectors = Task.Run(() => CreateConnectors(src.TerminalTypes, context)).Result; });
 
             CreateMap<TransportType, LibraryTransportItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds.Code))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Rds.RdsCategory.Name))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.StatusId))
@@ -205,8 +194,7 @@ namespace Mb.Core.Profiles
             CreateMap<InterfaceType, LibraryInterfaceItem>()
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds.Code))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Rds.RdsCategory.Name))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.StatusId))

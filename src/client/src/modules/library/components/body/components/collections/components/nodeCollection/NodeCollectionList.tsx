@@ -1,13 +1,14 @@
-import { LibraryCategory } from "../../../../../../../../models/project";
 import { useMemo } from "react";
-import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
-import { GetLibCategories } from "./helpers/GetLibCategories";
+import { getFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
 import { GetSelectedNode, IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
-import { FilterByAspect } from "./helpers/FilterByAspect";
+import { filterByAspect } from "./helpers/FilterByAspect";
 import { Aspect, CollectionsActions, LibItem } from "../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
+import { getValidLibItems } from "./helpers/GetValidLibItems";
+import { getSharedCategory } from "./helpers/GetSharedCategory";
+import { getRecentlyCreatedCategory } from "./helpers/GetRecentlyCreatedCategory";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -34,15 +35,18 @@ export const NodeCollectionList = ({
   const isBlockView = IsBlockView();
   const selectedNode = GetSelectedNode();
 
-  const libCategories = useMemo(
-    () => GetLibCategories(selectedNode, libState, isBlockView),
+  const validLibItems = useMemo(
+    () => getValidLibItems(selectedNode, libState, isBlockView),
     [selectedNode, libState, isBlockView]
   );
-  const filteredCategories = useMemo(() => GetFilteredLibCategories(libCategories, searchString), [libCategories, searchString]);
 
-  const filterCatBySearch = (): LibraryCategory[] => {
-    return searchString ? filteredCategories : libCategories;
-  };
+  const allLibItems = getSharedCategory(validLibItems);
+  const recentlyChangedLibItems = getRecentlyCreatedCategory(validLibItems);
+
+  const filteredCategories = useMemo(
+    () => getFilteredLibCategories([recentlyChangedLibItems, allLibItems], searchString),
+    [recentlyChangedLibItems, allLibItems, searchString]
+  );
 
   return (
     <>
@@ -57,7 +61,7 @@ export const NodeCollectionList = ({
         dispatch={dispatch}
         collectionState={collectionState}
       />
-      {FilterByAspect(filterCatBySearch(), aspectFilters).map((category) => {
+      {filterByAspect(filteredCategories, aspectFilters).map((category) => {
         return (
           <NodeCollection
             collectionState={collectionState}
