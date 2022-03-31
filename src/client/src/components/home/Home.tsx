@@ -27,6 +27,7 @@ import {
   fetchParsers,
   fetchStatuses,
 } from "../../redux/store/common/commonSlice";
+import ToolbarComponent from "../toolbar/ToolbarComponent";
 
 interface Props {
   dispatch: Dispatch;
@@ -79,17 +80,18 @@ export const Home = ({ dispatch }: Props) => {
         <StartPage />
       ) : (
         <>
+          <ToolbarComponent />
           <ExplorerModule dispatch={dispatch} />
           <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule dispatch={dispatch} />
           <TypeEditorComponent />
+          {isFilterOpen && <VisualFilterComponent />}
         </>
       )}
       <ProjectSubMenus />
       <ValidationModule />
       <ErrorModule />
-      {isFilterOpen && <VisualFilterComponent />}
     </>
   );
 };
