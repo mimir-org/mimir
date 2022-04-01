@@ -1,5 +1,5 @@
 import { CollectionsWrapper } from "./CollectionsComponent.styled";
-import { Aspect, CollectionsActions, LibItem, LibraryTab } from "../../../../../../models";
+import { Aspect, CollectionsActions, LibItem, LibraryTab, Node } from "../../../../../../models";
 import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
 
@@ -13,6 +13,7 @@ interface Props {
   selectedElement: LibItem | null;
   setSelectedElement: (value: LibItem) => void;
   aspectFilters: Aspect[];
+  selectedNode: Node;
 }
 
 export const CollectionsComponent = ({
@@ -23,6 +24,7 @@ export const CollectionsComponent = ({
   selectedElement,
   setSelectedElement,
   aspectFilters,
+  selectedNode,
 }: Props) => {
   const managingCollections = collectionState === CollectionsActions.ManageCollection;
 
@@ -39,6 +41,7 @@ export const CollectionsComponent = ({
           setSelectedTypes={setSelectedTypes}
           collectionState={collectionState}
           aspectFilters={aspectFilters}
+          selectedNode={selectedNode}
         />
       )}
     </CollectionsWrapper>

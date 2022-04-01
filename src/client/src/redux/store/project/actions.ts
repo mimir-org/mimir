@@ -561,9 +561,9 @@ export function setOffPageStatus(nodeId: string, connectorId: string, isRequired
   return {
     type: Types.SET_OFFPAGE_STATUS,
     payload: {
-      nodeId: nodeId,
-      connectorId: connectorId,
-      isRequired: isRequired,
+      nodeId,
+      connectorId,
+      isRequired,
     },
   };
 }
@@ -577,10 +577,10 @@ export function createRequiredOffPageNode(
   return {
     type: Types.CREATE_REQUIRED_OFFPAGE_NODE,
     payload: {
-      nodeId: nodeId,
-      connectorId: connectorId,
-      isRequired: isRequired,
-      offPageObject: offPageObject,
+      nodeId,
+      connectorId,
+      isRequired,
+      offPageObject,
     },
   };
 }
@@ -589,7 +589,7 @@ export function createConnectedOffPageNode(offPageObject: OffPageObject): Types.
   return {
     type: Types.CREATE_CONNECTED_OFFPAGE_NODE,
     payload: {
-      offPageObject: offPageObject,
+      offPageObject,
     },
   };
 }

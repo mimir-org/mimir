@@ -51,7 +51,15 @@ const useOnConnectStop = (
     return;
   }
 
-  const isValidOffPageDrop = ValidateOffPageDrop(e.clientX, getViewport, sourceNode, primaryNode, secondaryNode, sourceConn);
+  const isValidOffPageDrop = ValidateOffPageDrop(
+    project,
+    e.clientX,
+    getViewport,
+    sourceNode,
+    primaryNode,
+    secondaryNode,
+    sourceConn
+  );
   if (!isValidOffPageDrop) return;
 
   const position = { x: e.clientX, y: e.clientY };
@@ -61,6 +69,7 @@ const useOnConnectStop = (
 
 //#region OffPage Functions
 function ValidateOffPageDrop(
+  project: Project,
   clientX: number,
   getViewPort: GetViewport,
   sourceNode: Node,
@@ -70,7 +79,7 @@ function ValidateOffPageDrop(
 ) {
   const splitView = secondaryNode !== undefined;
   const isTarget = IsOutputTerminal(sourceConn) || IsOutputVisible(sourceConn);
-  const dropZone = CalculateDropZone(getViewPort, sourceNode, primaryNode, secondaryNode, isTarget);
+  const dropZone = CalculateDropZone(getViewPort, project, sourceNode, primaryNode, secondaryNode, isTarget);
 
   if (splitView) {
     const dropZoneWidth = Size.SPLITVIEW_DISTANCE - 70;
@@ -94,6 +103,7 @@ function ValidateOffPageDrop(
  */
 function CalculateDropZone(
   getViewPort: GetViewport,
+  project: Project,
   sourceNode: Node,
   primaryNode: Node,
   secondaryNode: Node,
@@ -102,7 +112,7 @@ function CalculateDropZone(
   const zoom = getViewPort().zoom;
   const x = getViewPort().x;
 
-  const parentNode = GetParent(sourceNode);
+  const parentNode = GetParent(sourceNode?.id, project);
   const parentPosX = parentNode?.positionBlockX;
 
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;

@@ -22,8 +22,8 @@ import { IsOffPageEdge } from "./";
 const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
   const { project, connection, library, dispatch, setEdges } = params;
   const id = CreateId();
-  const sourceParent = GetParent(sourceNode);
-  const targetParent = GetParent(targetNode);
+  const sourceParent = GetParent(sourceNode?.id, project);
+  const targetParent = GetParent(targetNode?.id, project);
 
   const sourceTerminal = GetSourceTerminal(project, sourceParent, sourceNode);
   const targetTerminal = GetTargetTerminal(project, targetParent, targetNode);

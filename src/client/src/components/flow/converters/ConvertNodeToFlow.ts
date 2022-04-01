@@ -15,8 +15,8 @@ const ConvertNodeToFlow = (node: Node) => {
     type: GetNodeType(node),
     data: node,
     position: position,
-    isHidden: false, // Opacity is controlled by the styled component
-    isSelected: node.isSelected,
+    hidden: false, // Opacity is controlled by the styled component
+    selected: node.isSelected,
     draggable: true,
     selectable: true,
     connectable: true,

@@ -90,8 +90,8 @@ function HandleConnectedOffPageElements(project: Project, elementEdge: Edge, dis
     const partOfTerminal = node?.connectors?.find((c) => IsPartOfTerminal(c));
     const partOfEdge = edges.find((x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id);
 
-    const parentNode = GetParent(node);
-    const parentNodeConn = GetParentConnector(transportEdge, node);
+    const parentNode = GetParent(node?.id, project);
+    const parentNodeConn = GetParentConnector(transportEdge, node?.id);
 
     dispatch(setOffPageStatus(parentNode?.id, parentNodeConn?.id, false));
     dispatch(removeEdge(transportEdge?.id));

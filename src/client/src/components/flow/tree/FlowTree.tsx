@@ -55,8 +55,9 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
+  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) => {
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
+  };
 
   const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
   const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);

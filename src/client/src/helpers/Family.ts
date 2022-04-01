@@ -1,27 +1,28 @@
-import red from "../redux/store";
 import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 import { LibItem, Node, Project } from "../models";
+import { useReactFlow } from "react-flow-renderer";
 
 export const IsFamily = (element: Node | LibItem, elementToCheck: Node | LibItem) => {
   return element?.aspect === elementToCheck?.aspect;
 };
 
-export const IsDirectChild = (child: Node, parent: Node) => {
-  return GetParent(child)?.id === parent?.id;
+export const IsDirectChild = (childId: string, parentId: string, project: Project) => {
+  const actualParent = GetParent(childId, project);
+  return actualParent?.id === parentId;
 };
 
-export const IsParentOf = (parentNode: Node, childNode: Node) => {
-  const edges = red.store.getState().projectState.project.edges;
-  const edge = edges?.find((e) => e.toNode?.id === childNode?.id && e.fromNode?.id === parentNode?.id);
+export const IsParentOf = (parentId: string, childId: string) => {
+  const edges = useReactFlow().getEdges();
+  const edge = edges?.find((e) => e.data.edge.toNode?.id === childId && e.data.edge.fromNode?.id === parentId)?.data?.edge;
 
   return edge && IsPartOfTerminal(edge.fromConnector);
 };
 
-export const GetParent = (childNode: Node) => {
-  const edges = red.store.getState().projectState.project?.edges;
-  const nodes = red.store.getState().projectState.project?.nodes;
+export const GetParent = (nodeId: string, project: Project) => {
+  const edges = project?.edges;
+  const nodes = project?.nodes;
 
-  const parentEdge = edges?.find((e) => e.toNodeId === childNode?.id && IsPartOfTerminal(e.toConnector));
+  const parentEdge = edges?.find((e) => e.toNodeId === nodeId && IsPartOfTerminal(e.toConnector));
   const parentNode = nodes?.find((n) => n.id === parentEdge?.fromNodeId);
 
   return parentNode ?? null;

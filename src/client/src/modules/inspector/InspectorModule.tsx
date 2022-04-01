@@ -14,7 +14,7 @@ import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { GetSelectedNode } from "../../helpers/Selected";
+import { useReactFlow } from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -42,12 +42,16 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
   const edge = edges.find((x) => x.isSelected);
-  const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
+  const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : nodes?.find((x) => x.isSelected);
 
   const resizePanelRef = useRef(null);
   const element: InspectorElement = node || edge;
 
-  useAutoMinimizeInspector(inspectorRef);
+  const selectedNodes = useReactFlow()
+    .getNodes()
+    .filter((n) => n.selected);
+
+  useAutoMinimizeInspector(inspectorRef, selectedNodes);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
 
   const changeInspectorVisibilityAction = useCallback(

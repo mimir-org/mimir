@@ -1,20 +1,21 @@
 import { Size } from "../../../../../compLibrary/size/Size";
 import { GetParent } from "../../../../../helpers/Family";
-import { Node } from "../../../../../models";
+import { Node, Project } from "../../../../../models";
 import { Position } from "../../../../../models/project";
 
 /**
  * Component to force an OffPageNode to fit the position of the ParentNode.
  * @param offPageNode
  * @param parentNode
+ * @param project
  * @returns a Position object.
  */
-const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: Node) => {
+const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: Node, project: Project) => {
   if (!offPageNode || !parentNode) return null;
 
   // Handle OffPageNodes from the SecondaryNode
   if (secondaryNode !== undefined) {
-    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode);
+    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode, project);
     if (splitOffPagePos !== null) return splitOffPagePos;
   }
 
@@ -71,11 +72,12 @@ function HandleTargetOffPagePos(parentNode: Node, offPageNode: Node) {
  * Function to force the position of an OffPageNode that is a child of the SecondaryNode.
  * @param secondaryNode
  * @param offPageNode
+ * @param project
  * @returns a Position object.
  */
-function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node) {
-  const offPageParent = GetParent(offPageNode);
-  const parentBlock = GetParent(offPageParent);
+function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, project: Project) {
+  const offPageParent = GetParent(offPageNode?.id, project);
+  const parentBlock = GetParent(offPageParent?.id, project);
 
   if (parentBlock?.id !== secondaryNode?.id) return null;
 

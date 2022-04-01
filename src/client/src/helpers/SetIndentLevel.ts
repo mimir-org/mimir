@@ -1,4 +1,5 @@
-import { Node, Edge } from "../models";
+import red from "../redux/store";
+import { Node } from "../models";
 import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 
 /**
@@ -9,7 +10,10 @@ import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
  * @param count
  * @returns a number that defines the indent in the Explorer Module.
  */
-export const SetIndentLevel = (node: Node, nodes: Node[], edges: Edge[], count: number): number => {
+export const SetIndentLevel = (node: Node, count: number): number => {
+  const edges = red.store.getState().projectState.project.edges;
+  const nodes = red.store.getState().projectState.project.nodes;
+
   const edge = edges.find((x) => x.toNode.id === node.id && IsPartOfTerminal(x.toConnector));
   if (!edge) return count;
 
@@ -18,5 +22,5 @@ export const SetIndentLevel = (node: Node, nodes: Node[], edges: Edge[], count: 
   const nextNode = nodes?.find((x) => x.id === edge.fromNode?.id);
   if (!nextNode) return count;
 
-  return SetIndentLevel(nextNode, nodes, edges, count);
+  return SetIndentLevel(nextNode, count);
 };

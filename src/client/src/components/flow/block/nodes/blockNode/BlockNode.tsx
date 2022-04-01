@@ -29,19 +29,20 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const initialSize: BlockNodeSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT };
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
   const node = useParametricAppSelector(selectors.nodeSelector, data.id);
-  const edges = useAppSelector(selectors.edgeSelector);
+  const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const selectedNode = project?.nodes.find((n) => n.isSelected);
   const isElectro = useAppSelector(selectors.electroSelector);
 
   // Check for elements that require OffPage nodes
   useEffect(() => {
-    HandleConnectedOffPageNode(node, edges, size, dispatch);
-    HandleRequiredOffPageNode(node, edges, size, dispatch);
+    HandleConnectedOffPageNode(node, project, size, dispatch);
+    HandleRequiredOffPageNode(node, project.edges, size, dispatch);
   }, [secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
-  }, [secondaryNode, node?.connectors]);
+    setTerminals(FilterBlockTerminals(node?.connectors, selectedNode, secondaryNode));
+  }, [selectedNode, secondaryNode, node?.connectors]);
 
   // Update node size based on active terminals
   useEffect(() => {
@@ -63,7 +64,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         colorSelected={GetAspectColor(node, AspectColorType.Selected)}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, project.edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />
     </BoxWrapper>

@@ -8,7 +8,6 @@ import { OnMouseLeave } from "./handlers/OnMouseLeave";
 import { AspectNodeStyled } from "./AspectNode.styled";
 import { GetAspectColor } from "../../../../../helpers";
 import { SetTopPos } from "../helpers/SetTopPos";
-import { GetSelectedNode } from "../../../../../helpers/Selected";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
@@ -29,7 +28,7 @@ const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   return (
     <AspectNodeStyled
       colorMain={GetAspectColor(data, AspectColorType.Main)}
-      isSelected={data === GetSelectedNode()}
+      isSelected={data.isSelected}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => OnMouseLeave(setTimer)}
     >

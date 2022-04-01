@@ -7,7 +7,6 @@ import { Dispatch } from "redux";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
-import { GetSelectedNode } from "../../../../helpers/Selected";
 import { IsFamily } from "../../../../helpers/Family";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -37,7 +36,7 @@ const useOnTreeDrop = (params: OnDropParameters) => {
 
   if (DoesNotContainApplicationData(event)) return;
 
-  const sourceNode = GetSelectedNode();
+  const sourceNode = project?.nodes.find((n) => n.isSelected);
   const isSubProject = IsSubProject(event);
 
   if (isSubProject) HandleSubProjectDrop(event, project, dispatch);

@@ -6,7 +6,7 @@ import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { ModuleFooter } from "./components/footer/ModuleFooter";
-import { LibraryTab, CollectionsActions, LibItem, Aspect } from "../../models";
+import { LibraryTab, CollectionsActions, LibItem, Aspect, Node } from "../../models";
 import {
   useAppSelector,
   useParametricAppSelector,
@@ -16,6 +16,7 @@ import {
 } from "../../redux/store";
 
 interface Props {
+  nodes: Node[];
   dispatch: Dispatch;
 }
 
@@ -25,7 +26,7 @@ interface Props {
  * @returns a module with tabs and its contents
  */
 
-export const LibraryModule = ({ dispatch }: Props) => {
+export const LibraryModule = ({ nodes, dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
@@ -38,6 +39,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
   const collections = useAppSelector(librarySelector).collections;
+  const selectedNode = nodes?.find((n) => n.isSelected);
 
   const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
   const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
@@ -66,6 +68,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
         aspectFilters={aspectFilters}
+        selectedNode={selectedNode}
       />
       {showFooter && (
         <ModuleFooter

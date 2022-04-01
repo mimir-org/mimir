@@ -14,7 +14,6 @@ import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../type
 import { MutableRefObject } from "react";
 import { IsBlockView } from "../../../../../helpers";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
-import { GetSelectedNode } from "../../../../../helpers/Selected";
 import {
   InspectorButtonRowContainer,
   InspectorButtonRowToggleTitle,
@@ -44,8 +43,8 @@ export const InspectorButtonRow = ({
 }: Props) => {
   const isLocked = IsCreateLibraryType(element) ? true : element?.isLocked;
   const isElementSelected = !!element;
-  const deleteDisabled =
-    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === GetSelectedNode());
+  const selectedNode = project?.nodes?.find((n) => n.isSelected);
+  const deleteDisabled = isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === selectedNode);
 
   let inspectorToggleText = open ? TextResources.INSPECTOR_CLOSE : TextResources.INSPECTOR_EXPAND;
   if (!isElementSelected) inspectorToggleText = TextResources.INSPECTOR_INACTIVE_PANEL;

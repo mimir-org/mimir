@@ -23,11 +23,11 @@ import { InitParentSize } from "./helpers/InitParentSize";
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [terminals, setTerminals] = useState<Connector[]>([]);
-  const nodes = useAppSelector(selectors.nodesSelector);
-  const edges = useAppSelector(selectors.edgeSelector);
+  const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
-  const node = nodes?.find((x) => x.id === data.id);
+  const node = project?.nodes?.find((x) => x.id === data.id);
+  const selectedNode = project?.nodes.find((n) => n.isSelected);
 
   // useEffect(() => {
   //   SetZoomCenterLevel(secondaryNode !== null);
@@ -38,8 +38,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
-  }, [secondaryNode, node?.connectors]);
+    setTerminals(FilterBlockTerminals(node?.connectors, selectedNode, secondaryNode));
+  }, [selectedNode, secondaryNode, node?.connectors]);
 
   if (!node) return null;
 
@@ -55,9 +55,9 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}
-        onNavigateUpClick={() => OnParentClick(dispatch, node)}
-        onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
+        onNavigateUpClick={() => OnParentClick(dispatch, node?.id, project)}
+        onNavigateDownClick={() => OnChildClick(dispatch, node, project)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, project.edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />
     </BoxWrapper>

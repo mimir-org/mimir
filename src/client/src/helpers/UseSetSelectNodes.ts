@@ -1,26 +1,36 @@
 import { useReactFlow, useStore } from "react-flow-renderer";
-import { useCallback } from "react";
-import { Node } from "../models";
+import { useCallback, useMemo } from "react";
 
-export type SetFlowElementFunction = (mimirNodes: Node[]) => void;
+export type SetFlowNodeFunction = (mimirNodesIds: string[]) => void;
 
-export const UseSetSelectNodes = (): [SetFlowElementFunction] => {
-  const setSelectedElements = useStore().addSelectedNodes;
+export const UseSetSelectNodes = (): [SetFlowNodeFunction] => {
+  const setSelectedNodes = useStore().addSelectedNodes;
   const flowNodes = useReactFlow().getNodes();
 
+  const nodeIds: string[] = useMemo(() => [], []);
+
+  // flowNodes.forEach((n) => {
+  //   nodeIds.push(n.id);
+  // });
+
+  const setActiveNode = useCallback(() => {
+    setSelectedNodes(nodeIds);
+  }, [nodeIds, setSelectedNodes]);
+
   const setActiveNodes = useCallback(
-    (mimirNodes: Node[]) => {
+    (mimirNodesIds: string[]) => {
       const flowNodeIds: string[] = [];
 
-      mimirNodes.forEach((mn) => {
+      mimirNodesIds.forEach((mn) => {
         flowNodes.forEach((fn) => {
-          if (fn.id === mn.id) flowNodeIds.push(fn.id);
+          if (fn.id === mn) nodeIds.push(fn.id);
         });
       });
+      console.log("KAISS: ", mimirNodesIds);
 
-      setSelectedElements(flowNodeIds);
+      setSelectedNodes(nodeIds);
     },
-    [flowNodes, setSelectedElements]
+    [nodeIds, setSelectedNodes]
   );
 
   return [setActiveNodes];

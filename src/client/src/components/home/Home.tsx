@@ -82,7 +82,7 @@ export const Home = ({ dispatch }: Props) => {
           <ExplorerModule dispatch={dispatch} />
           <FlowModule project={project} inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
-          <LibraryModule dispatch={dispatch} />
+          <LibraryModule nodes={project?.nodes} dispatch={dispatch} />
           <TypeEditorComponent />
           {isFilterOpen && <VisualFilterComponent />}
         </>

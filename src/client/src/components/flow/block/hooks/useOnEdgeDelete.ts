@@ -5,7 +5,6 @@ import { removeEdge } from "../../../../redux/store/project/actions";
 import { FindMimirEdgeByFlowEdgeId } from "../../helpers";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
-import { GetSelectedNode } from "../../../../helpers/Selected";
 
 /**
  * Hook that runs when an edge is deleted from Mimir in BlockView.
@@ -26,7 +25,7 @@ const useOnEdgeDelete = (
 
 function HandleDeleteEdges(flowEdges: FlowEdge[], project: Project, dispatch: Dispatch) {
   flowEdges.forEach((flowEdge) => {
-    const selectedNode = GetSelectedNode();
+    const selectedNode = project?.nodes?.find((n) => n.isSelected);
     if (IsAspectNode(selectedNode)) return;
 
     const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge);

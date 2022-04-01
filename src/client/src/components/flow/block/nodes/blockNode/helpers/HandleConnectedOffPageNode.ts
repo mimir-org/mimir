@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { CreateConnectedOffPageNode } from "./CreateConnectedOffPageNode";
 import { IsOffPage } from "../../../../../../helpers/Aspects";
-import { Edge, Node } from "../../../../../../models";
+import { Edge, Node, Project } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsTransportConnection } from "../../../../helpers/Connectors";
 import { GetParent } from "../../../../../../helpers/Family";
@@ -12,23 +12,23 @@ import { GetParent } from "../../../../../../helpers/Family";
  * The OffPageNode is only a visual element, and is not part of the project's data model.
  * This component is called from the BlockNode component.
  * @param node
- * @param edges
+ * @param project
  * @param size
  * @param dispatch
  */
 
-export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
-  if (!edges.length || !node) return;
+export const HandleConnectedOffPageNode = (node: Node, project: Project, size: BlockNodeSize, dispatch: Dispatch) => {
+  if (!project || !node) return;
 
-  edges.forEach((edge) => {
+  project.edges.forEach((edge) => {
     if (!IsValidTransport(edge, node)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, isTarget)) return;
+    if (!OnlyOneNodeVisible(edge, project, isTarget)) return;
 
-    const nodeExists = HasConnectedOffPageNode(edges, edge, isTarget);
+    const nodeExists = HasConnectedOffPageNode(project.edges, edge, isTarget);
     if (nodeExists) return;
 
-    const nodeParent = GetParent(node);
+    const nodeParent = GetParent(node?.id, project);
     const xPos = isTarget ? nodeParent?.positionBlockX : size.width;
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
     const position = { x: xPos, y: node.positionBlockY };
@@ -59,15 +59,16 @@ function IsValidTransport(edge: Edge, node: Node) {
  * Function to verify that only one node from a connection is displayed on the screen.
  * If both nodes are visible there is no need to draw a Connected OffPageNode.
  * @param edge
+ * @param project
  * @param isTarget
  * @returns a boolean value.
  */
-function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
+function OnlyOneNodeVisible(edge: Edge, project: Project, isTarget: boolean) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 
-  const sourceNodeParent = GetParent(sourceNode);
-  const targetNodeParent = GetParent(targetNode);
+  const sourceNodeParent = GetParent(sourceNode?.id, project);
+  const targetNodeParent = GetParent(targetNode?.id, project);
   const targetNodeVisible = sourceNodeParent?.id === targetNodeParent?.id;
 
   return !targetNodeVisible;

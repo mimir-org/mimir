@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
-import { GetSelectedNode } from "../../../helpers/Selected";
 import { CloseInspector, HandleNodeSelection } from "../handlers";
 import { Project } from "../../../models";
 import ReactFlow, {
@@ -46,7 +45,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const library = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const primaryNode = GetSelectedNode();
+  const primaryNode = project?.nodes?.find((n) => n.isSelected);
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
@@ -95,6 +94,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       user,
       icons,
       library,
+      selectedNode: primaryNode,
       secondaryNode: secondaryNodeRef,
       flowInstance,
       flowWrapper,

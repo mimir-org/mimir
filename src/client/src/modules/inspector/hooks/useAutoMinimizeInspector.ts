@@ -1,3 +1,4 @@
+import { Node as FlowNode } from "react-flow-renderer";
 import { MutableRefObject, useEffect } from "react";
 import { SetPanelHeight } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
@@ -6,17 +7,20 @@ import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { useAppDispatch } from "../../../redux/store";
 import { MODULE_TYPE } from "../../../models/project";
 import { GetSelectedNodes } from "../../../helpers/Selected";
+import { useReactFlow } from "react-flow-renderer";
 
 /**
  * Hook for minimizing inspector panel based on criteria within this hook.
  * @param inspectorRef reference to the inspector element which should receive height mutations.
  */
-export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElement>) => {
+export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElement>, selectedFlowNodes: FlowNode[]) => {
   const dispatch = useAppDispatch();
-  const selectedNodes = GetSelectedNodes();
-  const numberOfSelectedElements = selectedNodes.length;
+
+  const numberOfSelectedElements = selectedFlowNodes.length;
 
   useEffect(() => {
+    console.log({ numberOfSelectedElements });
+
     const minimizeCriteria = [numberOfSelectedElements > 1];
     minimizeCriteria.every(Boolean) && SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 

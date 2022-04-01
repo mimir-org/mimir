@@ -10,7 +10,6 @@ import { GetAspectColor } from "../../../../../helpers";
 import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
 import { SetTopPos } from "../helpers/SetTopPos";
 import { nodesSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
-import { GetSelectedNode } from "../../../../../helpers/Selected";
 
 /**
  * Component to display a node in TreeView.
@@ -44,7 +43,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     <TreeNodeStyled
       colorMain={GetAspectColor(node, AspectColorType.Main)}
       colorSelected={GetAspectColor(node, AspectColorType.Selected)}
-      isSelected={node === GetSelectedNode()}
+      isSelected={node.isSelected}
       visible={!node.isHidden}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => mouseNodeLeave()}

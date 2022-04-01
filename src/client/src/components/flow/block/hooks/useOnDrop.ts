@@ -2,7 +2,6 @@ import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { GetSelectedNode } from "../../../../helpers/Selected";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
@@ -18,6 +17,7 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
+  selectedNode: Node;
   secondaryNode: Node;
   flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;
@@ -45,9 +45,19 @@ const useOnDrop = (params: OnDropParameters) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, getViewport, dispatch }: OnDropParameters) {
+function HandleNodeDrop({
+  event,
+  project,
+  user,
+  icons,
+  library,
+  selectedNode,
+  secondaryNode,
+  getViewport,
+  dispatch,
+}: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  let parentNode = GetSelectedNode();
+  let parentNode = selectedNode;
   if (!parentNode) return;
 
   // Handle drop in SplitView
