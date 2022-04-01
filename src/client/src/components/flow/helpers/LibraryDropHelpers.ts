@@ -83,7 +83,7 @@ export function SetTreeNodeXPosition(parentNode: Node, project: Project) {
 
   // Find siblings' highest or lowest X position
   siblings.forEach((s) => {
-    if ((increaseX && s.positionX > xPos) || (!increaseX && s.positionX < xPos)) xPos = s.positionX;
+    if ((increaseX && s?.positionX > xPos) || (!increaseX && s?.positionX < xPos)) xPos = s?.positionX;
   });
 
   return increaseX ? xPos + marginX : xPos - marginX;
