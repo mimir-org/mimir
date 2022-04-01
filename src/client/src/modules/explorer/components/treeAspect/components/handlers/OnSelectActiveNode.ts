@@ -17,17 +17,13 @@ export const OnSelectActiveNode = (
 
   const isAlreadySelected = tempArray.some((x) => x === mimirNode.id);
 
-  // This means that element has been deselected
+  // Element has been deselected
   if (isAlreadySelected) {
-    console.log("DESELECT? FØR: ", tempArray);
     tempArray = tempArray.filter((n) => n !== mimirNode.id);
-    console.log("DESELECT? ETTER: ", tempArray);
   } else {
-    // This means that the element has been selected
-    console.log("ADD NEW SELECT FØR: ", tempArray);
+    // Element has been selected
     const selectedNode = mimirNodes.find((n) => n.id === mimirNode.id);
     if (selectedNode) tempArray.push(selectedNode.id);
-    console.log("ADD NEW SELECT ETTER: ", tempArray);
   }
 
   setActiveFlowNode(tempArray);
