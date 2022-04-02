@@ -8,15 +8,14 @@ import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";
-import { IsProduct } from "../../../../../helpers/Aspects";
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { GetSelectedBlockNode } from "../../../../../helpers/Selected";
 import { GetParent } from "../../../../../helpers/Family";
 
 /**
- * Component for an offpage node in BlockView
+ * Component for an OffPageNode in BlockView.
  * @param params
- * @returns an offpage node that can be connected to other nodes.
+ * @returns an OffPageNode that can be connected to other nodes.
  */
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
@@ -41,7 +40,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    if (!IsProduct(parentBlockNode)) UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
+    UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
   }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, secondaryNode]);
 
   if (!data || !offPageParent || !parentBlockNode) return null;
