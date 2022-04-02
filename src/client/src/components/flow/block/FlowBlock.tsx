@@ -9,7 +9,7 @@ import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterCompon
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
 import { GetSelectedNode } from "../../../helpers";
-import { CloseInspector, handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
+import { CloseInspector, OnSelectionChange } from "../handlers";
 import { updateBlockElements } from "../../../modules/explorer/redux/actions";
 import { Project } from "../../../models";
 import { changeFlowTransform } from "../../../redux/store/flowTransform/flowTransformSlice";
@@ -91,17 +91,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  const onSelectionChange = (selectedElements: Elements) => {
-    if (selectedElements === null) {
-      handleNoSelect(project, inspectorRef, dispatch, true);
-    } else if (selectedElements.length === 1 && GetBlockNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], dispatch, true);
-    } else if (selectedElements.length === 1 && GetBlockEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], dispatch, true);
-    } else if (selectedElements.length > 1) {
-      handleMultiSelect(dispatch, true);
-    }
-  };
+  const onSelectionChange = (elements: Elements) => OnSelectionChange(elements, project, inspectorRef, dispatch);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);

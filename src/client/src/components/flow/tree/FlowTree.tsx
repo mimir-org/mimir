@@ -8,7 +8,7 @@ import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
-import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
+import { OnTreeSelectionChange } from "../handlers";
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
@@ -76,17 +76,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  const onSelectionChange = (selectedElements: Elements) => {
-    if (selectedElements === null) {
-      handleNoSelect(project, inspectorRef, dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetTreeNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetTreeEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length > 1) {
-      handleMultiSelect(dispatch);
-    }
-  };
+  const onSelectionChange = (elements: Elements) => OnTreeSelectionChange(elements, project, inspectorRef, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {
