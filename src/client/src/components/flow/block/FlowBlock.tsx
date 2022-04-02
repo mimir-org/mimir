@@ -33,10 +33,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
-  const userState = useAppSelector(selectors.userStateSelector);
+  const user = useAppSelector(selectors.userStateSelector)?.user;
   const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const transform = useAppSelector(selectors.flowTransformSelector);
+  const flowTransform = useAppSelector(selectors.flowTransformSelector);
   const primaryNode = GetSelectedNode();
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project.nodes?.find((x) => x.id === secondaryNodeRef?.id);
@@ -58,7 +58,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, primaryNode, secondaryNode, transform, dispatch);
+    return hooks.useOnConnectStop(e, project, primaryNode, secondaryNode, flowTransform, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -74,24 +74,24 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 
-  const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
+  const OnMoveEnd = (transform: FlowTransform) => dispatch(changeFlowTransform(transform));
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({
       event,
       project,
-      user: userState.user,
+      user,
       icons,
       library,
-      secondaryNode: secondaryNodeRef,
-      flowTransform: transform,
-      reactFlowInstance: flowInstance,
-      reactFlowWrapper: flowWrapper,
+      secondaryNodeRef,
+      flowTransform,
+      flowInstance,
+      flowWrapper,
       dispatch,
     });
   };
 
-  const onSelectionChange = (elements: Elements) => OnSelectionChange(elements, project, inspectorRef, dispatch);
+  const onSelectionChange = (selectedElements: Elements) => OnSelectionChange(selectedElements, project, inspectorRef, dispatch);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);

@@ -37,7 +37,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
   const [hasRendered, setHasRendered] = useState(false);
-  const userState = useAppSelector(selectors.userStateSelector);
+  const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
@@ -67,16 +67,17 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     return useOnTreeDrop({
       event,
       project,
-      user: userState.user,
+      user,
       icons,
       library,
-      reactFlowInstance: flowInstance,
-      reactFlowWrapper: flowWrapper,
+      flowInstance,
+      flowWrapper,
       dispatch,
     });
   };
 
-  const onSelectionChange = (elements: Elements) => OnTreeSelectionChange(elements, project, inspectorRef, dispatch);
+  const onSelectionChange = (selectedElements: Elements) =>
+    OnTreeSelectionChange(selectedElements, project, inspectorRef, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {

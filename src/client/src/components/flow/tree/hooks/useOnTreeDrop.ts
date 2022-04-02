@@ -16,8 +16,8 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
-  reactFlowInstance: OnLoadParams;
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
+  flowInstance: OnLoadParams;
+  flowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
 
