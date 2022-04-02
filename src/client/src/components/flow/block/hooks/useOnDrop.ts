@@ -6,7 +6,7 @@ import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
 import { FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Position } from "../../../../models/project";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";

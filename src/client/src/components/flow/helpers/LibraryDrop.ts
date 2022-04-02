@@ -8,7 +8,7 @@ import { IsPartOf } from "./IsPartOf";
 import { ConvertToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
-import { Size } from "../../../compLibrary/size//Size";
+import { Size } from "../../../compLibrary/size/Size";
 import { Position } from "../../../models/project";
 
 /**
