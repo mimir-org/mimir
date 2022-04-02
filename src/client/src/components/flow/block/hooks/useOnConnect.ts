@@ -13,7 +13,7 @@ import { IsTransport } from "../../helpers/Connectors";
 export interface Params {
   connection: FlowEdge | Connection;
   project: Project;
-  setEdges: React.Dispatch<React.SetStateAction<FlowEdge<any>[]>>;
+  setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>;
   dispatch: Dispatch;
   library: LibraryState;
   animatedEdge: boolean;

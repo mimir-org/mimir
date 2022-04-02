@@ -27,8 +27,8 @@ const useOnTreeEdgeDelete = (
 
     const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge);
     if (edge?.isLocked) return;
-    hasDeleted = true;
 
+    hasDeleted = true;
     dispatch(removeEdge(flowEdge.id));
   });
 

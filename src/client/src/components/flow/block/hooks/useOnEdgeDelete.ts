@@ -28,9 +28,9 @@ const useOnEdgeDelete = (
 
     const edgeToDelete = FindMimirEdgeByFlowEdgeId(project, flowEdge);
     if (edgeToDelete?.isLocked) return;
-    hasDeleted = true;
-
     HandleOffPageEdgeDelete(edgeToDelete, project, dispatch);
+
+    hasDeleted = true;
     dispatch(removeEdge(flowEdge.id));
   });
 

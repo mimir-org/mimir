@@ -19,8 +19,6 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   ReactFlowInstance,
-  applyNodeChanges,
-  applyEdgeChanges,
   OnSelectionChangeParams,
 } from "react-flow-renderer";
 
@@ -59,8 +57,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
   };
 
-  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
-  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+  // const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
+  // const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
   const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
     return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);

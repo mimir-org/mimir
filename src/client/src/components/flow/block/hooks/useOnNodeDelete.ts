@@ -31,7 +31,6 @@ const useOnNodeDelete = (
 
     const nodeToDelete = FindMimirNodeByFlowNodeId(project, flowNode);
     if (nodeToDelete?.isLocked) return;
-    hasDeleted = true;
 
     DeleteRelatedEdges(nodeToDelete, project, dispatch);
 
@@ -39,6 +38,7 @@ const useOnNodeDelete = (
       ? HandleOffPageNodeDelete(nodeToDelete.id, project, dispatch)
       : HandleRelatedEdges(nodeToDelete, project, dispatch);
 
+    hasDeleted = true;
     dispatch(removeNode(flowNode.id));
   });
 

@@ -11,7 +11,6 @@ import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
-import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
 import { InitParentSize } from "./helpers/InitParentSize";
 
 /**

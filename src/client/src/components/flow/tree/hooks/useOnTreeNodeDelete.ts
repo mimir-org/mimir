@@ -27,9 +27,9 @@ const useOnTreeNodeDelete = (
 
     const mimirNode = FindMimirNodeByFlowNodeId(project, flowNode);
     if (mimirNode?.isLocked) return;
-    hasDeleted = true;
-
     DeleteRelatedEdges(mimirNode.id, project, dispatch);
+
+    hasDeleted = true;
     dispatch(removeNode(mimirNode.id));
   });
 
