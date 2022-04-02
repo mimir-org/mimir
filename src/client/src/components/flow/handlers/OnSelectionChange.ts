@@ -42,10 +42,10 @@ export const OnSelectionChange = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
-  if (elements === null) HandleNoSelect(project, inspectorRef, dispatch);
-  else if (elements.length === 1 && GetBlockNodeTypes[elements[0]?.type]) HandleNodeSelect(elements[0], dispatch);
-  else if (elements.length === 1 && GetBlockEdgeTypes[elements[0]?.type]) HandleEdgeSelect(elements[0], dispatch);
-  else if (elements.length > 1) HandleMultiSelect(dispatch);
+  if (elements === null) HandleNoSelect(project, inspectorRef, dispatch, true);
+  else if (elements.length === 1 && GetBlockNodeTypes[elements[0]?.type]) HandleNodeSelect(elements[0], dispatch, true);
+  else if (elements.length === 1 && GetBlockEdgeTypes[elements[0]?.type]) HandleEdgeSelect(elements[0], dispatch, true);
+  else if (elements.length > 1) HandleMultiSelect(dispatch, true);
 };
 
 export function HandleNoSelect(
