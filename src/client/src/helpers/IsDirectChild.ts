@@ -1,8 +1,7 @@
 import { GetParent } from "../components/flow/helpers";
-import { Node } from "../models";
 
-const IsDirectChild = (child: Node, parent: Node) => {
-  return GetParent(child)?.id === parent?.id;
+const IsDirectChild = (childId: string, parentId: string) => {
+  return GetParent(childId)?.id === parentId;
 };
 
 export default IsDirectChild;

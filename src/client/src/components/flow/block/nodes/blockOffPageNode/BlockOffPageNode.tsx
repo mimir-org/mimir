@@ -30,8 +30,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
 
   // The position of the OffPageNode is based on its grandparent => the large parentBlockNode
-  const offPageParent = GetParent(data);
-  const parentBlockNode = GetParent(offPageParent);
+  const offPageParent = GetParent(data.id);
+  const parentBlockNode = GetParent(offPageParent?.id);
 
   const parentNodeTerminal = isTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)

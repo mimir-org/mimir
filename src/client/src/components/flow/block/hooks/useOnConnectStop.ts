@@ -98,7 +98,7 @@ function CalculateDropZone(
   secondaryNode: Node,
   isTarget: boolean
 ) {
-  const parentNode = GetParent(sourceNode);
+  const parentNode = GetParent(sourceNode?.id);
   const parentPosX = parentNode?.positionBlockX;
 
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;

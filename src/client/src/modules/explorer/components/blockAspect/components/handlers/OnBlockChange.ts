@@ -53,7 +53,7 @@ export const OnBlockChange = (node: Node, selectedNode: Node, secondaryNode: Nod
 };
 
 function validateSiblings(node: Node, selected: Node, secondary: Node, dispatch: Dispatch) {
-  if (IsDirectChild(node, selected)) dispatch(setNodeVisibility(node, true));
-  if (!IsDirectChild(node, selected) && !IsParentOf(node, selected)) dispatch(setSecondaryNode(node));
-  if (!IsDirectChild(node, selected) && node === secondary) dispatch(removeSecondaryNode());
+  if (IsDirectChild(node?.id, selected?.id)) dispatch(setNodeVisibility(node, true));
+  if (!IsDirectChild(node?.id, selected?.id) && !IsParentOf(node, selected)) dispatch(setSecondaryNode(node));
+  if (!IsDirectChild(node?.id, selected?.id) && node === secondary) dispatch(removeSecondaryNode());
 }
