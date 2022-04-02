@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../../helpers";
-import { Node, Edge, Project } from "../../../../../models";
+import { Edge, Project } from "../../../../../models";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import { GetParent } from "../../../helpers";
 import {
@@ -13,19 +13,19 @@ import {
 
 /**
  * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected.
- * A Connected OffPage node is pointing to another node that is not visible on the screen, this is handled by
- * the HandleConnectedOffPageDelete component.
- * @param nodeToDelete
+ * A Required OffPageNode is deleted along with its transport edge and partOf edge.
+ * A Connected OffPageNode is handled by HandleConnectedOffPageNode
+ * @param nodeToDeleteId
  * @param project
  * @param dispatch
  */
-export const HandleOffPageNodeDelete = (nodeToDelete: Node, project: Project, dispatch: Dispatch) => {
-  const parentNodeId = GetParent(nodeToDelete)?.id;
+export const HandleOffPageNodeDelete = (nodeToDeleteId: string, project: Project, dispatch: Dispatch) => {
+  const parentNodeId = GetParent(nodeToDeleteId)?.id;
   if (!parentNodeId) return;
 
-  const transportEdge = GetTransportEdge(nodeToDelete?.id, parentNodeId, project);
-  const partOfEdge = GetPartOfEdge(nodeToDelete, parentNodeId, project);
-  const parentConnectorId = GetParentConnector(transportEdge, nodeToDelete?.id)?.id;
+  const transportEdge = GetTransportEdge(nodeToDeleteId, parentNodeId, project);
+  const partOfEdge = GetPartOfEdge(nodeToDeleteId, parentNodeId, project);
+  const parentConnectorId = GetParentConnector(transportEdge, nodeToDeleteId)?.id;
   const connectedEdge = GetConnectedEdge(parentConnectorId, project);
 
   if (transportEdge && !connectedEdge) dispatch(setOffPageStatus(parentNodeId, parentConnectorId, false));
@@ -34,9 +34,9 @@ export const HandleOffPageNodeDelete = (nodeToDelete: Node, project: Project, di
 };
 
 /**
- * Component to handle deleting a Connected OffPageNode. All related OffPage nodes and edges are removed.
- * A Connected OffPageNode is a node that appears if a node is connected to a node that is not displayed on the screen.
- * When deleting a Connected OffPageNode, the actual edge that the OffPageNode refers to is removed.
+ * Handler for deleting a Connected OffPageNode. All related OffPage nodes and edges are deleted.
+ * A Connected OffPageNode appears if a node is connected to a node not displayed on the screen.
+ * When deleting a Connected OffPageNode, the actual transport edge that the OffPageNode refers to is deleted.
  * The opposite Connected OffPageNode and edges are also removed.
  * @param project
  * @param transportEdge
@@ -44,17 +44,17 @@ export const HandleOffPageNodeDelete = (nodeToDelete: Node, project: Project, di
  * @param dispatch
  */
 export const HandleConnectedOffPageDelete = (project: Project, transportEdge: Edge, referenceEdge: Edge, dispatch: Dispatch) => {
-  dispatch(removeEdge(referenceEdge.id));
-  dispatch(removeEdge(transportEdge.id));
-
   const oppositeTransportEdge = GetOppositeTransportEdge(project, referenceEdge);
 
   const oppositeOffPageNode = IsOffPage(oppositeTransportEdge.toNode)
     ? oppositeTransportEdge.toNode
     : oppositeTransportEdge.fromNode;
 
-  const oppositeParent = GetParent(oppositeOffPageNode);
-  const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode, oppositeParent?.id, project);
+  const oppositeParent = GetParent(oppositeOffPageNode?.id);
+  const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode?.id, oppositeParent?.id, project);
+
+  dispatch(removeEdge(referenceEdge.id));
+  dispatch(removeEdge(transportEdge.id));
 
   if (oppositeOffPageNode) dispatch(removeNode(oppositeOffPageNode.id));
   if (oppositeTransportEdge) dispatch(removeEdge(oppositeTransportEdge.id));

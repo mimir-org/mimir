@@ -4,11 +4,11 @@ import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../../..
 import { Dispatch } from "redux";
 
 const OnParentClick = (dispatch: Dispatch, node: Node) => {
-  const parentNode = GetParent(node);
+  const parentNode = GetParent(node?.id);
 
   dispatch(setActiveEdge(null, false));
-  dispatch(setActiveBlockNode(parentNode.id));
-  dispatch(setActiveNode(parentNode.id, true));
+  dispatch(setActiveBlockNode(parentNode?.id));
+  dispatch(setActiveNode(parentNode?.id, true));
 };
 
 export default OnParentClick;
