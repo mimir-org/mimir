@@ -28,9 +28,9 @@ export const GetParent = (nodeId: string, project: Project) => {
   return parentNode ?? null;
 };
 
-export const GetChildren = (node: Node, project: Project) =>
+export const GetChildren = (nodeId: string, project: Project) =>
   project?.nodes?.filter((otherNode) =>
     project?.edges?.find(
-      (edge) => edge.fromNodeId === node?.id && edge.toNodeId === otherNode?.id && IsPartOfTerminal(edge.fromConnector)
+      (edge) => edge.fromNodeId === nodeId && edge.toNodeId === otherNode?.id && IsPartOfTerminal(edge.fromConnector)
     )
   );

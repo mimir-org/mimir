@@ -1,6 +1,6 @@
-import { IsOffPage } from "../../../../../helpers";
+import { IsOffPage } from "../../../../../helpers/Aspects";
 import { Node, Edge, Project } from "../../../../../models";
-import { IsPartOf, IsTransport } from "../../../helpers";
+import { IsPartOfTerminal, IsTransport } from "../../../helpers/Connectors";
 import { IsOffPageEdge } from "../../helpers";
 
 export function GetTransportEdge(nodeId: string, parentNodeId: string, project: Project) {
@@ -27,13 +27,13 @@ export function GetRelatedTransportEdge(nodeId: string, elementEdge: Edge, proje
 export function GetPartOfEdge(nodeId: string, parentNodeId: string, project: Project) {
   return project.edges.find(
     (x) =>
-      (x.fromConnector?.nodeId === parentNodeId && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === nodeId) ||
-      (x.toConnector?.nodeId === parentNodeId && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === nodeId)
+      (x.fromConnector?.nodeId === parentNodeId && IsPartOfTerminal(x?.fromConnector) && x.toConnector?.nodeId === nodeId) ||
+      (x.toConnector?.nodeId === parentNodeId && IsPartOfTerminal(x?.toConnector) && x.fromConnector?.nodeId === nodeId)
   );
 }
 
 export function GetRelatedPartOfEdge(node: Node, project: Project) {
-  const partOfTerminal = node.connectors?.find((c) => IsPartOf(c));
+  const partOfTerminal = node.connectors?.find((c) => IsPartOfTerminal(c));
   return project.edges.find((x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id);
 }
 
