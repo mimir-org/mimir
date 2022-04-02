@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../../helpers";
-import { Node, Edge, Project } from "../../../../../models";
+import { Edge, Project } from "../../../../../models";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import { GetParent } from "../../../helpers";
 import {

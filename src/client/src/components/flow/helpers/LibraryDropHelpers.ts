@@ -31,7 +31,7 @@ export function HandleCreatePartOfEdge(
   const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
   const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
-  SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
+  SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode.id);
   dispatch(createEdge(partofEdge));
 }
 
