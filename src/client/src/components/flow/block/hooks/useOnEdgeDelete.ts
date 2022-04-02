@@ -5,6 +5,7 @@ import { removeEdge } from "../../../../redux/store/project/actions";
 import { FindMimirEdgeByFlowEdgeId } from "../../helpers";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
+import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
 
 /**
  * Hook that runs when an edge is deleted from Mimir in BlockView.
@@ -19,20 +20,21 @@ const useOnEdgeDelete = (
   project: Project,
   dispatch: Dispatch
 ) => {
-  HandleDeleteEdges(flowEdgesToDelete, project, dispatch);
-  CloseInspector(inspectorRef, dispatch);
-};
+  let hasDeleted = false;
 
-function HandleDeleteEdges(flowEdges: FlowEdge[], project: Project, dispatch: Dispatch) {
-  flowEdges.forEach((flowEdge) => {
+  flowEdgesToDelete.forEach((flowEdge) => {
     const selectedNode = project?.nodes?.find((n) => n.isSelected);
     if (IsAspectNode(selectedNode)) return;
 
-    const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge);
-    if (edge?.isLocked) return;
+    const edgeToDelete = FindMimirEdgeByFlowEdgeId(project, flowEdge);
+    if (edgeToDelete?.isLocked) return;
+    hasDeleted = true;
 
+    HandleOffPageEdgeDelete(edgeToDelete, project, dispatch);
     dispatch(removeEdge(flowEdge.id));
   });
-}
+
+  if (hasDeleted) CloseInspector(inspectorRef, dispatch);
+};
 
 export default useOnEdgeDelete;

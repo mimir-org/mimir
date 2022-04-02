@@ -1,6 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Project, Node } from "../../../../models";
+import { Project } from "../../../../models";
 import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
@@ -20,33 +20,32 @@ const useOnTreeNodeDelete = (
   project: Project,
   dispatch: Dispatch
 ) => {
-  HandleDeleteNodes(flowNodesToDelete, project, dispatch);
+  let hasDeleted = false;
 
-  CloseInspector(inspectorRef, dispatch);
-};
-
-function HandleDeleteNodes(flowNodes: FlowNode[], project: Project, dispatch: Dispatch) {
-  flowNodes.forEach((flowNode) => {
+  flowNodesToDelete.forEach((flowNode) => {
     if (IsAspectNode(flowNode.data)) return;
 
     const mimirNode = FindMimirNodeByFlowNodeId(project, flowNode);
     if (mimirNode?.isLocked) return;
+    hasDeleted = true;
 
-    DeleteRelatedEdges(mimirNode, project, dispatch);
+    DeleteRelatedEdges(mimirNode.id, project, dispatch);
     dispatch(removeNode(mimirNode.id));
   });
-}
+
+  if (hasDeleted) CloseInspector(inspectorRef, dispatch);
+};
 
 /**
  * Function to delete all edges related to a node that is to be deleted.
  * Note: the edges must be deleted before the node.
- * @param node
+ * @param nodeId
  * @param project
  * @param dispatch
  */
-function DeleteRelatedEdges(node: Node, project: Project, dispatch: Dispatch) {
+function DeleteRelatedEdges(nodeId: string, project: Project, dispatch: Dispatch) {
   project.edges.forEach((edge) => {
-    if (edge.fromNodeId === node.id || edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
+    if (edge.fromNodeId === nodeId || edge.toNodeId === nodeId) dispatch(removeEdge(edge.id));
   });
 }
 

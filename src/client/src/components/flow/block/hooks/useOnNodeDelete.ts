@@ -1,15 +1,12 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Node, Edge, Project } from "../../../../models";
-import { removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
-import { HandleOffPageDelete } from "../nodes/blockOffPageNode/helpers";
+import { Node, Project } from "../../../../models";
+import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
 import { FindMimirNodeByFlowNodeId } from "../../helpers";
 import { IsAspectNode, IsOffPage } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
-import { GetParentConnector } from "../nodes/blockOffPageNode/helpers/HandleOffPageDelete";
-import { IsOffPageEdge } from "../helpers";
-import { IsPartOfTerminal } from "../../helpers/Connectors";
-import { GetParent } from "../../../../helpers/Family";
+import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
+import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
 
 /**
  * Hook that runs when a node is deleted from Mimir in BlockView.
@@ -27,23 +24,26 @@ const useOnNodeDelete = (
   project: Project,
   dispatch: Dispatch
 ) => {
-  HandleDeleteNodes(flowNodesToDelete, project, dispatch);
-  CloseInspector(inspectorRef, dispatch);
-};
+  let hasDeleted = false;
 
-function HandleDeleteNodes(flowNodes: FlowNode[], project: Project, dispatch: Dispatch) {
-  flowNodes.forEach((flowNode) => {
+  flowNodesToDelete.forEach((flowNode) => {
     if (IsAspectNode(flowNode.data)) return;
 
-    const node = FindMimirNodeByFlowNodeId(project, flowNode);
-    if (node?.isLocked) return;
+    const nodeToDelete = FindMimirNodeByFlowNodeId(project, flowNode);
+    if (nodeToDelete?.isLocked) return;
+    hasDeleted = true;
 
-    DeleteRelatedEdges(node, project, dispatch);
+    DeleteRelatedEdges(nodeToDelete, project, dispatch);
 
-    IsOffPage(node) ? HandleOffPageDelete(project, node, dispatch) : HandleRelatedEdges(node, project, dispatch);
+    IsOffPage(nodeToDelete)
+      ? HandleOffPageNodeDelete(nodeToDelete.id, project, dispatch)
+      : HandleRelatedEdges(nodeToDelete, project, dispatch);
+
     dispatch(removeNode(flowNode.id));
   });
-}
+
+  if (hasDeleted) CloseInspector(inspectorRef, dispatch);
+};
 
 /**
  * Function to delete all edges related to a node that is to be deleted.
@@ -63,40 +63,10 @@ function HandleRelatedEdges(nodeToRemove: Node, project: Project, dispatch: Disp
     const isRelated = edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id;
     if (!isRelated) return;
 
-    HandleConnectedOffPageElements(project, edge, dispatch);
+    HandleOffPageEdgeDelete(edge, project, dispatch);
+
     const node = project.nodes.find((n) => n.id === edge.toNodeId);
     if (!node?.isLocked) dispatch(removeEdge(edge.id));
-  });
-}
-
-function HandleConnectedOffPageElements(project: Project, elementEdge: Edge, dispatch: Dispatch) {
-  if (!elementEdge) return;
-
-  const nodes = project.nodes;
-  const edges = project.edges;
-
-  nodes.forEach((node) => {
-    const hasRelatedOffPageNode = IsOffPage(node) && node?.id === elementEdge.fromNodeId;
-    if (!hasRelatedOffPageNode) return;
-
-    const transportEdge = project.edges.find(
-      (x) =>
-        IsOffPageEdge(x) &&
-        (x?.toConnectorId === elementEdge?.toConnectorId || x?.fromConnectorId === elementEdge?.fromConnectorId)
-    );
-
-    if (!transportEdge) return;
-
-    const partOfTerminal = node?.connectors?.find((c) => IsPartOfTerminal(c));
-    const partOfEdge = edges.find((x) => IsOffPage(x.toNode) && x.toNodeId === node.id && x.toConnectorId === partOfTerminal?.id);
-
-    const parentNode = GetParent(node?.id, project);
-    const parentNodeConn = GetParentConnector(transportEdge, node?.id);
-
-    dispatch(setOffPageStatus(parentNode?.id, parentNodeConn?.id, false));
-    dispatch(removeEdge(transportEdge?.id));
-    dispatch(removeEdge(partOfEdge?.id));
-    dispatch(removeNode(node.id));
   });
 }
 

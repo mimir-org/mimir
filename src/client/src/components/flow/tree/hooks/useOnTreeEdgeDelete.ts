@@ -19,20 +19,20 @@ const useOnTreeEdgeDelete = (
   project: Project,
   dispatch: Dispatch
 ) => {
-  HandleDeleteEdges(flowEdgesToDelete, project, dispatch);
-  CloseInspector(inspectorRef, dispatch);
-};
+  let hasDeleted = false;
 
-function HandleDeleteEdges(flowEdges: FlowEdge[], project: Project, dispatch: Dispatch) {
-  flowEdges.forEach((flowEdge) => {
+  flowEdgesToDelete.forEach((flowEdge) => {
     const selectedNode = project?.nodes?.find((n) => n.isSelected);
     if (IsAspectNode(selectedNode)) return;
 
     const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge);
     if (edge?.isLocked) return;
+    hasDeleted = true;
 
     dispatch(removeEdge(flowEdge.id));
   });
-}
+
+  if (hasDeleted) CloseInspector(inspectorRef, dispatch);
+};
 
 export default useOnTreeEdgeDelete;
