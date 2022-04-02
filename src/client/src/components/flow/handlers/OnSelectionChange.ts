@@ -14,20 +14,22 @@ import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../redux
  * @param project
  * @param inspectorRef
  * @param dispatch
+ * @param isBlockView
  */
 export const HandleNodeSelection = (
   selectedItems: OnSelectionChangeParams,
   project: Project,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  isBlockView?: boolean
 ) => {
   const nodes = selectedItems.nodes;
   const edges = selectedItems.edges;
 
-  if (!nodes.length && !edges.length) HandleNoSelect(project, inspectorRef, dispatch);
-  else if (nodes.length === 1) HandleNodeSelect(nodes[0], dispatch);
-  else if (edges.length === 1) HandleEdgeSelect(edges[0], dispatch);
-  else if (nodes.length > 1) HandleMultiSelect(dispatch);
+  if (!nodes.length && !edges.length) HandleNoSelect(project, inspectorRef, dispatch, isBlockView);
+  else if (nodes.length === 1) HandleNodeSelect(nodes[0], dispatch, isBlockView);
+  else if (edges.length === 1) HandleEdgeSelect(edges[0], dispatch, isBlockView);
+  else if (nodes.length > 1) HandleMultiSelect(dispatch, isBlockView);
 };
 
 function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch, isBlock = false) {
@@ -36,22 +38,22 @@ function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch, isBlock = fals
   OpenInspector(dispatch);
 }
 
-function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch, isBlock = false) {
+function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch, isBlock: boolean) {
   dispatch(setActiveEdge(flowEdge?.id, true));
   isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
   OpenInspector(dispatch);
 }
 
-function HandleMultiSelect(dispatch: Dispatch, isBlock = false) {
-  isBlock && dispatch(setActiveBlockNode(null)); //isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
-  // dispatch(setActiveEdge(null, false));
+function HandleMultiSelect(dispatch: Dispatch, isBlock: boolean) {
+  isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
+  dispatch(setActiveEdge(null, false));
 }
 
 function HandleNoSelect(
   project: Project,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch,
-  isBlock = false
+  isBlock: boolean
 ) {
   if (project) {
     isBlock && dispatch(setActiveBlockNode(null)); //: dispatch(setActiveNode(null, false));
