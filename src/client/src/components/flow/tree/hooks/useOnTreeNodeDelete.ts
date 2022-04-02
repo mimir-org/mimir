@@ -25,7 +25,7 @@ const useOnTreeNodeDelete = (
   flowNodesToDelete.forEach((flowNode) => {
     if (IsAspectNode(flowNode.data)) return;
 
-    const mimirNode = FindMimirNodeByFlowNodeId(project, flowNode);
+    const mimirNode = FindMimirNodeByFlowNodeId(project, flowNode.id);
     if (mimirNode?.isLocked) return;
     DeleteRelatedEdges(mimirNode.id, project, dispatch);
 

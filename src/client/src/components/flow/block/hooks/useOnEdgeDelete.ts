@@ -26,7 +26,7 @@ const useOnEdgeDelete = (
     const selectedNode = project?.nodes?.find((n) => n.isSelected);
     if (IsAspectNode(selectedNode)) return;
 
-    const edgeToDelete = FindMimirEdgeByFlowEdgeId(project, flowEdge);
+    const edgeToDelete = FindMimirEdgeByFlowEdgeId(project, flowEdge.id);
     if (edgeToDelete?.isLocked) return;
     HandleOffPageEdgeDelete(edgeToDelete, project, dispatch);
 

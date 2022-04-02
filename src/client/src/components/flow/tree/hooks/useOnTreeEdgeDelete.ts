@@ -25,7 +25,7 @@ const useOnTreeEdgeDelete = (
     const selectedNode = project?.nodes?.find((n) => n.isSelected);
     if (IsAspectNode(selectedNode)) return;
 
-    const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge);
+    const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge.id);
     if (edge?.isLocked) return;
 
     hasDeleted = true;

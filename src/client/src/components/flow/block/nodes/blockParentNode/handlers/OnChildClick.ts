@@ -1,14 +1,14 @@
-import { Node, Project } from "../../../../../../models";
+import { Project } from "../../../../../../models";
 import { GetChild } from "../helpers/GetChild";
 import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 
-const OnChildClick = (dispatch: Dispatch, node: Node, project: Project) => {
-  const childNode = GetChild(node, project);
+const OnChildClick = (dispatch: Dispatch, nodeId: string, project: Project) => {
+  const childNodeId = GetChild(nodeId, project);
 
   dispatch(setActiveEdge(null, false));
-  dispatch(setActiveBlockNode(childNode.id));
-  dispatch(setActiveNode(childNode.id, true));
+  dispatch(setActiveBlockNode(childNodeId));
+  dispatch(setActiveNode(childNodeId, true));
 };
 
 export default OnChildClick;

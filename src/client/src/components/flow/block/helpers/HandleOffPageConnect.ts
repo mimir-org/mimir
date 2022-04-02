@@ -1,6 +1,6 @@
 import { addEdge } from "react-flow-renderer";
 import { GetParent } from "../../../../helpers/Family";
-import { Node, Project } from "../../../../models";
+import { Project } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { ConvertToEdge } from "../../converters";
@@ -15,18 +15,18 @@ import { IsOffPageEdge } from "./";
  * and one new transport edge is created between the parents of the OffPageNodes.
  * This component is called from the useOnConnect hook.
  * @param params
- * @param sourceNode
- * @param targetNode
+ * @param sourceNodeId
+ * @param targetNodeId
  * @returns a transport edge between the parents of the OffPageNodes.
  */
-const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
+const HandleOffPageConnect = (params: Params, sourceNodeId: string, targetNodeId: string) => {
   const { project, connection, library, dispatch, setEdges } = params;
   const id = CreateId();
-  const sourceParent = GetParent(sourceNode?.id, project);
-  const targetParent = GetParent(targetNode?.id, project);
+  const sourceParent = GetParent(sourceNodeId, project);
+  const targetParent = GetParent(targetNodeId, project);
 
-  const sourceTerminal = GetSourceTerminal(project, sourceParent, sourceNode);
-  const targetTerminal = GetTargetTerminal(project, targetParent, targetNode);
+  const sourceTerminal = GetSourceTerminal(project, sourceParent?.id, sourceNodeId);
+  const targetTerminal = GetTargetTerminal(project, targetParent?.id, targetNodeId);
 
   if (!sourceTerminal || !targetTerminal) return null;
 
@@ -38,8 +38,8 @@ const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node
   });
 
   const isRequired = false;
-  dispatch(removeNode(sourceNode.id));
-  dispatch(removeNode(targetNode.id));
+  dispatch(removeNode(sourceNodeId));
+  dispatch(removeNode(targetNodeId));
   dispatch(setOffPageStatus(sourceParent.id, sourceTerminal.id, isRequired));
   dispatch(setOffPageStatus(targetParent.id, targetTerminal.id, isRequired));
 
@@ -62,17 +62,17 @@ const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node
 
 export default HandleOffPageConnect;
 
-function GetSourceTerminal(project: Project, sourceParent: Node, sourceNode: Node) {
+function GetSourceTerminal(project: Project, sourceParentId: string, sourceNodeId: string) {
   const sourceTerminal = project.edges.find(
-    (x) => x.fromConnector.nodeId === sourceParent.id && IsTransport(x.fromConnector) && x.toConnector.nodeId === sourceNode.id
+    (x) => x.fromConnector.nodeId === sourceParentId && IsTransport(x.fromConnector) && x.toConnector.nodeId === sourceNodeId
   ).fromConnector;
 
   return sourceTerminal ?? null;
 }
 
-function GetTargetTerminal(project: Project, targetParent: Node, targetNode: Node) {
+function GetTargetTerminal(project: Project, targetParentId: string, targetNodeId: string) {
   const targetTerminal = project.edges.find(
-    (x) => x.toConnector.nodeId === targetParent.id && IsTransport(x.toConnector) && x.fromConnector.nodeId === targetNode.id
+    (x) => x.toConnector.nodeId === targetParentId && IsTransport(x.toConnector) && x.fromConnector.nodeId === targetNodeId
   ).toConnector;
 
   return targetTerminal ?? null;

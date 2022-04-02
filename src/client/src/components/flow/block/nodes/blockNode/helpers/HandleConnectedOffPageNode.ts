@@ -21,7 +21,7 @@ export const HandleConnectedOffPageNode = (node: Node, project: Project, size: B
   if (!project || !node) return;
 
   project.edges.forEach((edge) => {
-    if (!IsValidTransport(edge, node)) return;
+    if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
     if (!OnlyOneNodeVisible(edge, project, isTarget)) return;
 
@@ -46,10 +46,10 @@ function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolea
   return existingEdge !== undefined;
 }
 
-function IsValidTransport(edge: Edge, node: Node) {
+function IsValidTransport(edge: Edge, nodeId: string) {
   return (
     IsTransportConnection(edge.fromConnector, edge.toConnector) &&
-    (node.id === edge.fromNodeId || node.id === edge.toNodeId) &&
+    (nodeId === edge.fromNodeId || nodeId === edge.toNodeId) &&
     !IsOffPage(edge.toNode) &&
     !IsOffPage(edge.fromNode)
   );

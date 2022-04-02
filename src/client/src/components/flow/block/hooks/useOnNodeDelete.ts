@@ -1,6 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Node, Project } from "../../../../models";
+import { Project } from "../../../../models";
 import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
 import { FindMimirNodeByFlowNodeId } from "../../helpers";
 import { IsAspectNode, IsOffPage } from "../../../../helpers/Aspects";
@@ -29,14 +29,14 @@ const useOnNodeDelete = (
   flowNodesToDelete.forEach((flowNode) => {
     if (IsAspectNode(flowNode.data)) return;
 
-    const nodeToDelete = FindMimirNodeByFlowNodeId(project, flowNode);
+    const nodeToDelete = FindMimirNodeByFlowNodeId(project, flowNode.id);
     if (nodeToDelete?.isLocked) return;
 
-    DeleteRelatedEdges(nodeToDelete, project, dispatch);
+    DeleteRelatedEdges(nodeToDelete.id, project, dispatch);
 
     IsOffPage(nodeToDelete)
       ? HandleOffPageNodeDelete(nodeToDelete.id, project, dispatch)
-      : HandleRelatedEdges(nodeToDelete, project, dispatch);
+      : HandleRelatedEdges(nodeToDelete.id, project, dispatch);
 
     hasDeleted = true;
     dispatch(removeNode(flowNode.id));
@@ -48,19 +48,19 @@ const useOnNodeDelete = (
 /**
  * Function to delete all edges related to a node that is to be deleted.
  * Note: the edges must be deleted before the node.
- * @param node
+ * @param nodeId
  * @param project
  * @param dispatch
  */
-function DeleteRelatedEdges(node: Node, project: Project, dispatch: Dispatch) {
+function DeleteRelatedEdges(nodeId: string, project: Project, dispatch: Dispatch) {
   project.edges.forEach((edge) => {
-    if (edge.fromNodeId === node.id || edge.toNodeId === node.id) dispatch(removeEdge(edge.id));
+    if (edge.fromNodeId === nodeId || edge.toNodeId === nodeId) dispatch(removeEdge(edge.id));
   });
 }
 
-function HandleRelatedEdges(nodeToRemove: Node, project: Project, dispatch: Dispatch) {
+function HandleRelatedEdges(nodeToRemoveId: string, project: Project, dispatch: Dispatch) {
   project.edges?.forEach((edge) => {
-    const isRelated = edge.fromNodeId === nodeToRemove.id || edge.toNodeId === nodeToRemove.id;
+    const isRelated = edge.fromNodeId === nodeToRemoveId || edge.toNodeId === nodeToRemoveId;
     if (!isRelated) return;
 
     HandleOffPageEdgeDelete(edge, project, dispatch);

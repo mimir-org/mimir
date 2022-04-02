@@ -1,8 +1,7 @@
-import { Edge as FlowEdge } from "react-flow-renderer";
 import { Project } from "../../../models";
 
-const FindMimirEdgeByFlowEdgeId = (project: Project, flowEdge: FlowEdge) => {
-  return project.edges.find((edge) => edge.id === flowEdge.id);
+const FindMimirEdgeByFlowEdgeId = (project: Project, flowEdgeId: string) => {
+  return project.edges.find((edge) => edge.id === flowEdgeId);
 };
 
 export default FindMimirEdgeByFlowEdgeId;

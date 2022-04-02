@@ -1,8 +1,7 @@
-import { Node as FlowNode } from "react-flow-renderer";
 import { Project } from "../../../models";
 
-const FindMimirNodeByFlowNodeId = (project: Project, flowNode: FlowNode) => {
-  return project.nodes.find((node) => node.id === flowNode.id);
+const FindMimirNodeByFlowNodeId = (project: Project, flowNodeId: string) => {
+  return project.nodes.find((node) => node.id === flowNodeId);
 };
 
 export default FindMimirNodeByFlowNodeId;
