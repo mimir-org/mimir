@@ -1,4 +1,4 @@
-import { Elements, removeElements } from "react-flow-renderer";
+import { Elements, FlowElement, removeElements } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
@@ -24,37 +24,43 @@ const useOnTreeRemove = (
   setElements: React.Dispatch<React.SetStateAction<Elements>>,
   dispatch: Dispatch
 ) => {
-  const elementsToRemove: Elements = [];
-  HandleRemoveElements(elements, elementsToRemove, project, dispatch);
-
-  if (!elementsToRemove.length) return;
+  const elementsToDelete = HandleDeleteElements(elements, [], project, dispatch);
+  if (!elementsToDelete.length) return;
 
   CloseInspector(inspectorRef, dispatch);
-  return setElements((els) => removeElements(elementsToRemove, els));
+  return setElements((els) => removeElements(elementsToDelete, els));
 };
 
-const HandleRemoveElements = (elements: Elements, elementsToRemove: Elements, project: Project, dispatch: Dispatch) => {
+const HandleDeleteElements = (elements: Elements, elementsToDelete: Elements, project: Project, dispatch: Dispatch) => {
   elements.forEach((elem) => {
     if (IsAspectNode(elem.data)) return;
     const isEdge = IsElementEdge(Object.values(EDGE_TYPE), elem);
 
-    if (isEdge) {
-      const selectedNode = GetSelectedNode();
-      if (IsAspectNode(selectedNode)) return;
-      const edge = FindProjectEdgeByElementId(project, elem);
-      if (edge?.isLocked) return;
-
-      dispatch(removeEdge(elem.id));
-      elementsToRemove.push(elem);
-      return;
-    }
-
-    const node = FindProjectNodeByElementId(project, elem);
-    if (node?.isLocked) return;
-
-    dispatch(removeNode(elem.id));
-    elementsToRemove.push(elem);
+    isEdge
+      ? HandleEdgeDelete(elem, project, elementsToDelete, dispatch)
+      : HandleNodeDelete(elem, project, elementsToDelete, dispatch);
   });
+
+  return elementsToDelete;
 };
+
+function HandleNodeDelete(elem: FlowElement, project: Project, elementsToDelete: Elements, dispatch: Dispatch) {
+  const node = FindProjectNodeByElementId(project, elem);
+  if (node?.isLocked) return elementsToDelete;
+
+  dispatch(removeNode(elem.id));
+  return elementsToDelete.push(elem);
+}
+
+function HandleEdgeDelete(elem: FlowElement, project: Project, elementsToDelete: Elements, dispatch: Dispatch) {
+  const selectedNode = GetSelectedNode();
+
+  if (IsAspectNode(selectedNode)) return elementsToDelete;
+  const edge = FindProjectEdgeByElementId(project, elem);
+  if (edge?.isLocked) return elementsToDelete;
+
+  dispatch(removeEdge(elem.id));
+  return elementsToDelete.push(elem);
+}
 
 export default useOnTreeRemove;
