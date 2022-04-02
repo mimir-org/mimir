@@ -13,6 +13,8 @@ namespace Mb.Models.Data
     [Serializable]
     public class Node : IEquatable<Node>
     {
+        #region Properties
+
         public string Id { get; set; }
         public string Iri { get; set; }
         public string Domain => Id.ResolveDomain();
@@ -74,7 +76,18 @@ namespace Mb.Models.Data
         public string PurposeString { get; set; }
 
         [NotMapped]
-        public virtual Purpose Purpose { get; set; }
+        public virtual Purpose Purpose {
+            get
+            {
+                if (_purpose != null)
+                    return _purpose;
+                
+                return !string.IsNullOrWhiteSpace(PurposeString) ? 
+                    JsonConvert.DeserializeObject<Purpose>(PurposeString) : 
+                    null;
+            }
+            set => _purpose = value;
+        }
 
         public virtual ICollection<Connector> Connectors { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
@@ -95,6 +108,16 @@ namespace Mb.Models.Data
 
         public int? Height { get; set; }
 
+        #endregion
+
+        #region Members
+
+        private Purpose _purpose;
+
+        #endregion
+
+        #region Methods
+
         public void IncrementMinorVersion()
         {
             Version = Version.IncrementMinorVersion();
@@ -104,6 +127,8 @@ namespace Mb.Models.Data
         {
             Version = Version.IncrementMajorVersion();
         }
+
+        #endregion
 
         #region IEquatable
 

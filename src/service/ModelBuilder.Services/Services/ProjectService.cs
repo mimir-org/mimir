@@ -8,7 +8,6 @@ using Mb.Data.Extensions;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
@@ -16,7 +15,6 @@ using Mb.Models.Records;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Mb.Services.Services
 {
@@ -74,75 +72,14 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="iri"></param>
-        /// <param name="ignoreNotFound"></param>
         /// <returns>The actual project</returns>
         /// <exception cref="ModelBuilderNotFoundException">Throws if the project does not exist</exception>
-        public async Task<Project> GetProject(string id, string iri, bool ignoreNotFound = false)
+        public async Task<Project> GetProject(string id, string iri)
         {
             var project = await _projectRepository.GetAsyncComplete(id, iri);
 
-            if (!ignoreNotFound && project == null)
-                throw new ModelBuilderNotFoundException($"Could not find project with id: {id}");
-
             if (project == null)
-                return null;
-
-            if (project.Nodes != null)
-            {
-                project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
-                foreach (var node in project.Nodes)
-                {
-                    // TODO: Implement this in the EF configuration
-                    if (node.Attributes != null)
-                    {
-                        foreach (var attribute in node.Attributes)
-                        {
-                            if (!string.IsNullOrEmpty(attribute.UnitString))
-                                attribute.Units =
-                                    JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
-
-                        }
-
-                        if (!string.IsNullOrEmpty(node.PurposeString))
-                        {
-                            node.Purpose = JsonConvert.DeserializeObject<Purpose>(node.PurposeString);
-                        }
-                    }
-                    // TODO: Implement this in the EF configuration
-                    if (node.Connectors != null)
-                    {
-                        foreach (var connector in node.Connectors.OfType<Terminal>())
-                        {
-                            if (connector.Attributes != null)
-                            {
-                                foreach (var attribute in connector.Attributes)
-                                {
-                                    if (!string.IsNullOrEmpty(attribute.UnitString))
-                                        attribute.Units =
-                                            JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
-                                }
-                            }
-                        }
-                    }
-                    // TODO: Implement this in the EF configuration
-                    if (node.Simples != null)
-                    {
-                        foreach (var simple in node.Simples)
-                        {
-                            if (simple.Attributes != null)
-                            {
-                                foreach (var attribute in simple.Attributes)
-                                {
-                                    if (!string.IsNullOrEmpty(attribute.UnitString))
-                                        attribute.Units =
-                                            JsonConvert.DeserializeObject<ICollection<Unit>>(attribute.UnitString);
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
+                throw new ModelBuilderNotFoundException($"Could not find project with id: {id} or iri: {iri}");
 
             return project;
         }

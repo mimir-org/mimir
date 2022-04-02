@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
@@ -27,7 +28,18 @@ namespace Mb.Models.Data
         public string SelectedUnitId { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Unit> Units { get; set; }
+        public virtual ICollection<Unit> Units {
+            get
+            {
+                if (_units != null)
+                    return _units;
+
+                return !string.IsNullOrWhiteSpace(UnitString) ? 
+                    JsonConvert.DeserializeObject<ICollection<Unit>>(UnitString) : 
+                    null;
+            }
+            set => _units = value;
+        }
 
         [JsonIgnore]
         public string UnitString { get; set; }
@@ -74,6 +86,12 @@ namespace Mb.Models.Data
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
+
+        #endregion
+
+        #region Members
+
+        private ICollection<Unit> _units;
 
         #endregion
 

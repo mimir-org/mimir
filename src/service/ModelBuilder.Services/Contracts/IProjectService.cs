@@ -25,10 +25,9 @@ namespace Mb.Services.Contracts
         /// </summary>
         /// <param name="id"></param>
         /// <param name="iri"></param>
-        /// <param name="ignoreNotFound"></param>
         /// <returns>The actual project</returns>
         /// <exception cref="ModelBuilderNotFoundException">Throws if the project does not exist</exception>
-        Task<Project> GetProject(string id, string iri, bool ignoreNotFound = false);
+        Task<Project> GetProject(string id, string iri);
 
         /// <summary>
         /// Create a new mimir project based on data
