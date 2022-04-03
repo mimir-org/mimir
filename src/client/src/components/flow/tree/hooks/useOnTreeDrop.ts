@@ -5,7 +5,7 @@ import { GetSelectedNode, IsAspectNode, IsFamily } from "../../../../helpers";
 import { Dispatch } from "redux";
 import { OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -16,8 +16,8 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
-  reactFlowInstance: OnLoadParams;
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
+  flowInstance: OnLoadParams;
+  flowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
 

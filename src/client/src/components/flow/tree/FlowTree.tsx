@@ -8,7 +8,7 @@ import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
-import { handleEdgeSelect, handleMultiSelect, handleNoSelect, handleNodeSelect } from "../handlers";
+import { OnTreeSelectionChange } from "../handlers";
 import { Project } from "../../../models";
 import { IsPartOf } from "../helpers";
 import { Size } from "../../../compLibrary/size/Size";
@@ -37,7 +37,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
   const [elements, setElements] = useState<Elements>();
   const [hasRendered, setHasRendered] = useState(false);
-  const userState = useAppSelector(selectors.userStateSelector);
+  const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const visualFilter = useAppSelector(selectors.filterSelector);
@@ -67,26 +67,17 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     return useOnTreeDrop({
       event,
       project,
-      user: userState.user,
+      user,
       icons,
       library,
-      reactFlowInstance: flowInstance,
-      reactFlowWrapper: flowWrapper,
+      flowInstance,
+      flowWrapper,
       dispatch,
     });
   };
 
-  const onSelectionChange = (selectedElements: Elements) => {
-    if (selectedElements === null) {
-      handleNoSelect(project, inspectorRef, dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetTreeNodeTypes[selectedElements[0]?.type]) {
-      handleNodeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length === 1 && helpers.GetTreeEdgeTypes[selectedElements[0]?.type]) {
-      handleEdgeSelect(selectedElements[0], dispatch);
-    } else if (selectedElements.length > 1) {
-      handleMultiSelect(dispatch);
-    }
-  };
+  const onSelectionChange = (selectedElements: Elements) =>
+    OnTreeSelectionChange(selectedElements, project, inspectorRef, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -99,7 +90,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   // Rebuild elements
   useEffect(() => {
     if (project) setElements(BuildTreeElements(project, animatedEdge));
-  }, [project]);
+  }, [project, animatedEdge]);
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {

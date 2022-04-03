@@ -8,7 +8,7 @@ import { IsPartOf } from "./IsPartOf";
 import { ConvertToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
-import { Size } from "../../../compLibrary/size//Size";
+import { Size } from "../../../compLibrary/size/Size";
 import { Position } from "../../../models/project";
 
 /**
@@ -31,7 +31,7 @@ export function HandleCreatePartOfEdge(
   const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
   const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
-  SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode);
+  SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode.id);
   dispatch(createEdge(partofEdge));
 }
 

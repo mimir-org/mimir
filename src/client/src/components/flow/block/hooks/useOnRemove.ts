@@ -52,7 +52,7 @@ function HandleNodeDelete(elem: FlowElement, project: Project, elementsToDelete:
   if (nodeToDelete?.isLocked) return elementsToDelete;
 
   IsOffPage(nodeToDelete)
-    ? HandleOffPageNodeDelete(nodeToDelete, project, dispatch)
+    ? HandleOffPageNodeDelete(nodeToDelete.id, project, dispatch)
     : HandleRelatedEdges(nodeToDelete, project, dispatch);
 
   dispatch(removeNode(elem.id));

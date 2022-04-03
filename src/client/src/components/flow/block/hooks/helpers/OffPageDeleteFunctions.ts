@@ -16,19 +16,19 @@ export function GetOppositeTransportEdge(project: Project, edge: Edge) {
   );
 }
 
-export function GetRelatedTransportEdge(node: Node, elementEdge: Edge, project: Project) {
+export function GetRelatedTransportEdge(nodeId: string, elementEdge: Edge, project: Project) {
   return project.edges.find(
     (e) =>
-      (e.fromNodeId === node.id || e.toNodeId == node.id) &&
+      (e.fromNodeId === nodeId || e.toNodeId == nodeId) &&
       (e.fromConnectorId === elementEdge.fromConnectorId || e.toConnectorId === elementEdge.toConnectorId)
   );
 }
 
-export function GetPartOfEdge(node: Node, parentNodeId: string, project: Project) {
+export function GetPartOfEdge(nodeId: string, parentNodeId: string, project: Project) {
   return project.edges.find(
     (x) =>
-      (x.fromConnector?.nodeId === parentNodeId && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === node.id) ||
-      (x.toConnector?.nodeId === parentNodeId && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === node.id)
+      (x.fromConnector?.nodeId === parentNodeId && IsPartOf(x?.fromConnector) && x.toConnector?.nodeId === nodeId) ||
+      (x.toConnector?.nodeId === parentNodeId && IsPartOf(x?.toConnector) && x.fromConnector?.nodeId === nodeId)
   );
 }
 

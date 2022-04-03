@@ -74,8 +74,8 @@ function HandleTargetOffPagePos(parentNode: Node, offPageNode: Node) {
  * @returns a Position object.
  */
 function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node) {
-  const offPageParent = GetParent(offPageNode);
-  const parentBlock = GetParent(offPageParent);
+  const offPageParent = GetParent(offPageNode?.id);
+  const parentBlock = GetParent(offPageParent?.id);
 
   if (parentBlock?.id !== secondaryNode?.id) return null;
 
