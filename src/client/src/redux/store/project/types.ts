@@ -93,18 +93,12 @@ export interface SearchProjectAction {
 
 export interface SearchProjectActionFinished {
   type: typeof SEARCH_PROJECT_SUCCESS_OR_ERROR;
-  payload: {
-    projectList: [];
-    apiError: ApiError;
-  };
+  payload: { projectList: []; apiError: ApiError };
 }
 
 export interface FetchingProjectActionFinished {
   type: typeof FETCHING_PROJECT_SUCCESS_OR_ERROR;
-  payload: {
-    project: Project;
-    apiError: ApiError;
-  };
+  payload: { project: Project; apiError: ApiError };
 }
 
 export interface CreatingProjectAction {
@@ -114,10 +108,7 @@ export interface CreatingProjectAction {
 
 export interface CreatingProjectActionFinished {
   type: typeof CREATING_PROJECT_SUCCESS_OR_ERROR;
-  payload: {
-    project: Project;
-    apiError: ApiError;
-  };
+  payload: { project: Project; apiError: ApiError };
 }
 
 export interface AddNodeAction {
@@ -142,103 +133,66 @@ export interface RemoveEdgeAction {
 
 export interface UpdatePositionAction {
   type: typeof UPDATE_POSITION;
-  payload: {
-    nodeId: string;
-    x: number;
-    y: number;
-  };
+  payload: { nodeId: string; x: number; y: number };
 }
 export interface UpdateBlockPositionAction {
   type: typeof UPDATE_BLOCK_POSITION;
-  payload: {
-    nodeId: string;
-    x: number;
-    y: number;
-  };
+  payload: { nodeId: string; x: number; y: number };
 }
 
 export interface UpdateBlockSizeAction {
   type: typeof UPDATE_BLOCK_SIZE;
-  payload: {
-    nodeId: string;
-    size: BlockNodeSize;
-  };
+  payload: { nodeId: string; size: BlockNodeSize };
 }
 
 export interface SetNodeVisibility {
   type: typeof SET_NODE_VISIBILITY;
-  payload: {
-    node: Node;
-    isParent: boolean;
-  };
+  payload: { node: Node; isParent: boolean };
 }
 
 export interface SetEdgeVisibility {
   type: typeof SET_EDGE_VISIBILITY;
-  payload: {
-    edge: Edge;
-    isHidden: boolean;
-  };
+  payload: { edge: Edge; isHidden: boolean };
 }
 
 export interface SetLocationNodeSize {
   type: typeof SET_LOCATION_NODE_SIZE;
-  payload: {
-    nodeId: string;
-    key: string;
-    value: number;
-  };
+  payload: { nodeId: string; key: string; value: number };
 }
 
 export interface SetActiveNode {
   type: typeof SET_ACTIVE_NODE;
-  payload: {
-    nodeId: string;
-    isActive: boolean;
-  };
+  payload: { nodeId: string; isActive: boolean };
 }
 
 export interface SetActiveEdge {
   type: typeof SET_ACTIVE_EDGE;
-  payload: {
-    edgeId: string;
-    isActive: boolean;
-  };
+  payload: { edgeId: string; isActive: boolean };
 }
 
 export interface SetActiveBlockNode {
   type: typeof SET_ACTIVE_BLOCKNODE;
-  payload: {
-    nodeId: string;
-  };
+  payload: { nodeId: string };
 }
 
 export interface SaveProjectAction {
   type: typeof SAVE_PROJECT;
-  payload: {
-    project: Project;
-  };
+  payload: { project: Project };
 }
 
 export interface SaveProjectActionFinished {
   type: typeof SAVE_PROJECT_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 
 export interface ChangeSelectedProject {
   type: typeof CHANGE_SELECTED_PROJECT;
-  payload: {
-    projectId: string;
-  };
+  payload: { projectId: string };
 }
 
 export interface ChangeAllNodes {
   type: typeof CHANGE_ALL_NODES;
-  payload: {
-    visible: boolean;
-  };
+  payload: { visible: boolean };
 }
 
 export interface ChangeNodePropValue {
@@ -253,12 +207,7 @@ export interface ChangeNodePropValue {
 
 export interface ChangeNodeAttributeValue {
   type: typeof CHANGE_NODE_ATTRIBUTE_VALUE;
-  payload: {
-    id: string;
-    value: string;
-    unitId: string;
-    nodeId: string;
-  };
+  payload: { id: string; value: string; unitId: string; nodeId: string };
 }
 
 export interface ChangeTransportPropValue {
@@ -273,12 +222,7 @@ export interface ChangeTransportPropValue {
 
 export interface ChangeTransportAttributeValue {
   type: typeof CHANGE_TRANSPORT_ATTRIBUTE_VALUE;
-  payload: {
-    id: string;
-    value: string;
-    unitId: string;
-    edgeId: string;
-  };
+  payload: { id: string; value: string; unitId: string; edgeId: string };
 }
 
 export interface ChangeInterfacePropValue {
@@ -292,70 +236,35 @@ export interface ChangeInterfacePropValue {
 }
 export interface ChangeInterfaceAttributeValue {
   type: typeof CHANGE_INTERFACE_ATTRIBUTE_VALUE;
-  payload: {
-    id: string;
-    value: string;
-    unitId: string;
-    edgeId: string;
-  };
+  payload: { id: string; value: string; unitId: string; edgeId: string };
 }
 export interface ChangeNodeTerminalAttributeValue {
   type: typeof CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE;
-  payload: {
-    id: string;
-    nodeId;
-    value: string;
-    unitId: string;
-    terminalId: string;
-  };
+  payload: { id: string; nodeId: string; value: string; unitId: string; terminalId: string };
 }
 
 export interface ChangeTransportTerminalAttributeValue {
   type: typeof CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE;
-  payload: {
-    id: string;
-    edgeId: string;
-    value: string;
-    unitId: string;
-    terminalId: string;
-  };
+  payload: { id: string; edgeId: string; value: string; unitId: string; terminalId: string };
 }
 
 export interface ChangeInterfaceTerminalAttributeValue {
   type: typeof CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE;
-  payload: {
-    id: string;
-    edgeId: string;
-    value: string;
-    unitId: string;
-    terminalId: string;
-  };
+  payload: { id: string; edgeId: string; value: string; unitId: string; terminalId: string };
 }
 export interface ChangeSimpleAttributeValue {
   type: typeof CHANGE_SIMPLE_ATTRIBUTE_VALUE;
-  payload: {
-    id: string;
-    value: string;
-    unitId: string;
-    nodeId: string;
-    simpleId: string;
-  };
+  payload: { id: string; value: string; unitId: string; nodeId: string; simpleId: string };
 }
 
 export interface DeleteProjectErrorAction {
   type: typeof DELETE_PROJECT_ERROR;
-  payload: {
-    key: string;
-  };
+  payload: { key: string };
 }
 
 export interface ChangeActiveConnector {
   type: typeof CHANGE_ACTIVE_CONNECTOR;
-  payload: {
-    nodeId: string;
-    connectorId: string;
-    connectorVisibility: ConnectorVisibility;
-  };
+  payload: { nodeId: string; connectorId: string; connectorVisibility: ConnectorVisibility };
 }
 export interface ExportProjectFileAction {
   type: typeof EXPORT_PROJECT_TO_FILE;
@@ -363,23 +272,16 @@ export interface ExportProjectFileAction {
 }
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
-  payload: {
-    file: File;
-    parserId: string;
-  };
+  payload: { file: File; parserId: string };
 }
 
 export interface ExportProjectFileActionFinished {
   type: typeof EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 export interface ImportProjectActionFinished {
   type: typeof IMPORT_PROJECT_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 
 export interface CommitProject {
@@ -389,110 +291,62 @@ export interface CommitProject {
 
 export interface CommitProjectFinished {
   type: typeof COMMIT_PROJECT_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 
 export interface LockNode {
   type: typeof LOCK_NODE;
-  payload: {
-    id: string;
-    projectId: string;
-    isLocked: boolean;
-  };
+  payload: { id: string; projectId: string; isLocked: boolean };
 }
 
 export interface LockNodeFinished {
   type: typeof LOCK_NODE_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 
 export interface LockEdge {
   type: typeof LOCK_EDGE;
-  payload: {
-    id: string;
-    projectId: string;
-    isLocked: boolean;
-  };
+  payload: { id: string; projectId: string; isLocked: boolean };
 }
 
 export interface LockEdgeFinished {
   type: typeof LOCK_EDGE_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 
 export interface LockAttribute {
   type: typeof LOCK_ATTRIBUTE;
-  payload: {
-    id: string;
-    projectId: string;
-    isLocked: boolean;
-  };
+  payload: { id: string; projectId: string; isLocked: boolean };
 }
 
 export interface LockAttributeFinished {
   type: typeof LOCK_ATTRIBUTE_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 
 export interface SetLockNode {
   type: typeof SET_LOCK_NODE;
-  payload: {
-    id: string;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: string;
-  };
+  payload: { id: string; isLocked: boolean; isLockedStatusBy: string; isLockedStatusDate: string };
 }
 
 export interface SetLockEdge {
   type: typeof SET_LOCK_EDGE;
-  payload: {
-    id: string;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: string;
-  };
+  payload: { id: string; isLocked: boolean; isLockedStatusBy: string; isLockedStatusDate: string };
 }
 
 export interface SetLockNodeAttribute {
   type: typeof SET_LOCK_NODE_ATTRIBUTE;
-  payload: {
-    id: string;
-    nodeId: string;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: string;
-  };
+  payload: { id: string; nodeId: string; isLocked: boolean; isLockedStatusBy: string; isLockedStatusDate: string };
 }
 
 export interface SetLockTransportAttribute {
   type: typeof SET_LOCK_TRANSPORT_ATTRIBUTE;
-  payload: {
-    id: string;
-    transportId: string;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: string;
-  };
+  payload: { id: string; transportId: string; isLocked: boolean; isLockedStatusBy: string; isLockedStatusDate: string };
 }
 
 export interface SetLockInterfaceAttribute {
   type: typeof SET_LOCK_INTERFACE_ATTRIBUTE;
-  payload: {
-    id: string;
-    interfaceId: string;
-    isLocked: boolean;
-    isLockedStatusBy: string;
-    isLockedStatusDate: string;
-  };
+  payload: { id: string; interfaceId: string; isLocked: boolean; isLockedStatusBy: string; isLockedStatusDate: string };
 }
 
 export interface SetLockNodeTerminalAttribute {
@@ -545,28 +399,16 @@ export interface SetLockSimpleAttribute {
 
 export interface ChangeNodeUpdated {
   type: typeof CHANGE_NODE_UPDATED;
-  payload: {
-    nodeId: string;
-    updated: Date;
-    userName: string;
-  };
+  payload: { nodeId: string; updated: Date; userName: string };
 }
 
 export interface CreateSubProject {
   type: typeof CREATING_SUB_PROJECT;
-  payload: {
-    fromProjectId: string;
-    name: string;
-    description: string;
-    nodes: string[];
-    edges: string[];
-  };
+  payload: { fromProjectId: string; name: string; description: string; nodes: string[]; edges: string[] };
 }
 export interface CreateSubProjectFinished {
   type: typeof CREATING_SUB_PROJECT_SUCCESS_OR_ERROR;
-  payload: {
-    apiError: ApiError;
-  };
+  payload: { apiError: ApiError };
 }
 
 export interface UpdateNodeAction {
@@ -580,28 +422,17 @@ export interface UpdateEdgeAction {
 
 export interface SetOffPageStatus {
   type: typeof SET_OFFPAGE_STATUS;
-  payload: {
-    nodeId: string;
-    connectorId: string;
-    isRequired: boolean;
-  };
+  payload: { nodeId: string; connectorId: string; isRequired: boolean };
 }
 
 export interface CreateRequiredOffPageNode {
   type: typeof CREATE_REQUIRED_OFFPAGE_NODE;
-  payload: {
-    nodeId: string;
-    connectorId: string;
-    isRequired: boolean;
-    offPageObject: OffPageObject;
-  };
+  payload: { nodeId: string; connectorId: string; isRequired: boolean; offPageObject: OffPageObject };
 }
 
 export interface CreateConnectedOffPageNode {
   type: typeof CREATE_CONNECTED_OFFPAGE_NODE;
-  payload: {
-    offPageObject: OffPageObject;
-  };
+  payload: { offPageObject: OffPageObject };
 }
 
 export type ProjectActionTypes =
