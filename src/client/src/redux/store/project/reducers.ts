@@ -130,20 +130,14 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.UPDATE_BLOCK_SIZE: {
-      const { nodeId, size } = action.payload;
+      const { nodeId } = action.payload;
+      const { width, height } = action.payload.size;
 
-      return {
-        ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, width: size.width, height: size.height } : n)),
-        },
-      };
+      return { ...state, project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, width, height } : n)) } };
     }
 
     case Types.SET_EDGE_VISIBILITY: {
       const { edge, isHidden } = action.payload;
-
       return { ...state, project: { ...project, edges: edges.map((e) => (e.id === edge.id ? { ...e, isHidden } : e)) } };
     }
 
@@ -262,13 +256,13 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.CHANGE_NODE_ATTRIBUTE_VALUE: {
       const { id, nodeId, value, unitId: selectedUnitId } = action.payload;
 
-      const getAttributes = (n: Node) => {
+      const getAttr = (n: Node) => {
         return n.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));
       };
 
       return {
         ...state,
-        project: { ...project, nodes: nodes.map((x) => (x.id === nodeId ? { ...x, attributes: getAttributes(x) } : x)) },
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, attributes: getAttr(n) } : n)) },
       };
     }
 
@@ -287,21 +281,15 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE: {
       const { id, edgeId, value, unitId: selectedUnitId } = action.payload;
 
+      const getAttr = (e: Edge) => {
+        return e.transport.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a));
+      };
+
       return {
         ...state,
         project: {
           ...project,
-          edges: edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  transport: {
-                    ...e.transport,
-                    attributes: e.transport.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a)),
-                  },
-                }
-              : e
-          ),
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: { ...e.transport, attributes: getAttr(e) } } : e)),
         },
       };
     }
@@ -321,102 +309,84 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE: {
       const { id, edgeId, unitId: selectedUnitId, value } = action.payload;
 
+      const getAttr = (e: Edge) => {
+        return e.transport.attributes.map((a) => (a.id === id ? { ...a, selectedUnitId, value } : a));
+      };
+
       return {
         ...state,
         project: {
           ...project,
-          edges: edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  interface: {
-                    ...e.transport,
-                    attributes: e.transport.attributes.map((a) => (a.id === id ? { ...a, selectedUnitId, value } : a)),
-                  },
-                }
-              : e
-          ),
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: { ...e.transport, attributes: getAttr(e) } } : e)),
         },
       };
     }
+
     case Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE: {
       const { id, terminalId, nodeId, value, unitId: selectedUnitId } = action.payload;
 
-      const getAttributes = (conn: Connector) => {
+      const getAttr = (conn: Connector) => {
         return conn.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));
       };
 
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) => (conn.id === terminalId ? { ...conn, attributes: getAttr(conn) } : conn));
+      };
+
       return {
         ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) =>
-            n.id === nodeId
-              ? {
-                  ...n,
-                  connectors: n.connectors.map((conn) =>
-                    conn.id === terminalId ? { ...conn, attributes: getAttributes(conn) } : conn
-                  ),
-                }
-              : n
-          ),
-        },
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
       };
     }
+
     case Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE: {
       const { id, terminalId, edgeId, value, unitId } = action.payload;
 
+      const getTransport = (e: Edge) => {
+        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId);
+      };
+
       return {
         ...state,
         project: {
           ...project,
-          edges: edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  transport: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId),
-                }
-              : e
-          ),
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: getTransport(e) } : e)),
         },
       };
     }
+
     case Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE: {
       const { id, terminalId, edgeId, value, unitId } = action.payload;
 
-      return {
-        ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  interface: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId),
-                }
-              : e
-          ),
-        },
-      };
-    }
-    case Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE: {
-      const { id, simpleId, nodeId, value, unitId: selectedUnitId } = action.payload;
-      const getAttributes = (s: Simple) => {
-        return s.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a));
+      const getInterface = (e: Edge) => {
+        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId);
       };
 
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) =>
-            n.id === nodeId
-              ? {
-                  ...n,
-                  simples: n.simples.map((s) => (s.id === simpleId ? { ...s, attributes: getAttributes(s) } : s)),
-                }
-              : n
-          ),
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: getInterface(e) } : e)),
+        },
+      };
+    }
+
+    case Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE: {
+      const { id, simpleId, nodeId, value, unitId: selectedUnitId } = action.payload;
+
+      const getAttr = (s: Simple) => {
+        return s.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a));
+      };
+
+      const getSimples = (n: Node) => {
+        return n.simples.map((s) => (s.id === simpleId ? { ...s, attributes: getAttr(s) } : s));
+      };
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)),
         },
       };
     }
@@ -486,34 +456,28 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.SET_LOCK_EDGE: {
       const { id, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
+      const getAttrFromTransport = (e: Edge) => {
+        return e.transport?.attributes?.map((a) => UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate));
+      };
+
+      const getAttrFromInterface = (e: Edge) => {
+        return e.interface?.attributes?.map((a) => UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate));
+      };
+
       return {
         ...state,
         project: {
           ...project,
-          edges: edges.map((x) =>
-            x.id === id
+          edges: edges.map((e) =>
+            e.id === id
               ? {
-                  ...x,
+                  ...e,
                   isLocked,
                   isLockedStatusBy,
-                  transport: x.transport
-                    ? {
-                        ...x.transport,
-                        attributes: x.transport?.attributes?.map((a) =>
-                          UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate)
-                        ),
-                      }
-                    : null,
-                  interface: x.interface
-                    ? {
-                        ...x.interface,
-                        attributes: x.interface?.attributes?.map((a) =>
-                          UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate)
-                        ),
-                      }
-                    : null,
+                  transport: e.transport ? { ...e.transport, attributes: getAttrFromTransport(e) } : null,
+                  interface: e.interface ? { ...e.interface, attributes: getAttrFromInterface(e) } : null,
                 }
-              : x
+              : e
           ),
         },
       };
@@ -522,20 +486,17 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.SET_LOCK_NODE_ATTRIBUTE: {
       const { id, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
+      const getAttributes = (n: Node) => {
+        return n.attributes.map((a) =>
+          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
+        );
+      };
+
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) =>
-            n.id === nodeId
-              ? {
-                  ...n,
-                  attributes: n.attributes.map((a) =>
-                    a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-                  ),
-                }
-              : n
-          ),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, attributes: getAttributes(n) } : n)),
         },
       };
     }
@@ -543,30 +504,25 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.SET_LOCK_NODE_TERMINAL_ATTRIBUTE: {
       const { id, terminalId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
+      const getAttr = (conn: Connector) => {
+        return conn.attributes.map((a) =>
+          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
+        );
+      };
+
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) => (conn.id === terminalId ? { ...conn, attributes: getAttr(conn) } : conn));
+      };
+
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) =>
-            n.id === nodeId
-              ? {
-                  ...n,
-                  connectors: n.connectors.map((conn) =>
-                    conn.id === terminalId
-                      ? {
-                          ...conn,
-                          attributes: conn.attributes.map((a) =>
-                            a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-                          ),
-                        }
-                      : conn
-                  ),
-                }
-              : n
-          ),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)),
         },
       };
     }
+
     case Types.SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
       const { id, terminalId, transportId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
@@ -621,22 +577,18 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.SET_LOCK_TRANSPORT_ATTRIBUTE: {
       const { id, transportId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
+      const getAttr = (e: Edge) => {
+        return e.transport.attributes.map((a) =>
+          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
+        );
+      };
+
       return {
         ...state,
         project: {
           ...project,
           edges: edges.map((e) =>
-            e.transport && e.transport.id === transportId
-              ? {
-                  ...e,
-                  transport: {
-                    ...e.transport,
-                    attributes: e.transport.attributes.map((a) =>
-                      a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-                    ),
-                  },
-                }
-              : e
+            e.transport && e.transport.id === transportId ? { ...e, transport: { ...e.transport, attributes: getAttr(e) } } : e
           ),
         },
       };
@@ -645,22 +597,18 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.SET_LOCK_INTERFACE_ATTRIBUTE: {
       const { id, interfaceId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
+      const getAttr = (e: Edge) => {
+        return e.transport.attributes.map((a) =>
+          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
+        );
+      };
+
       return {
         ...state,
         project: {
           ...project,
           edges: edges.map((e) =>
-            e.interface && e.interface.id === interfaceId
-              ? {
-                  ...e,
-                  interface: {
-                    ...e.transport,
-                    attributes: e.transport.attributes.map((a) =>
-                      a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-                    ),
-                  },
-                }
-              : e
+            e?.interface?.id === interfaceId ? { ...e, interface: { ...e.transport, attributes: getAttr(e) } } : e
           ),
         },
       };
@@ -669,27 +617,21 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.SET_LOCK_SIMPLE_ATTRIBUTE: {
       const { id, simpleId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
 
+      const getAttr = (s: Simple) => {
+        return s.attributes.map((a) =>
+          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
+        );
+      };
+
+      const getSimples = (n: Node) => {
+        return n.simples.map((s) => (s.id === simpleId ? { ...s, attributes: getAttr(s) } : s));
+      };
+
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) =>
-            n.id === nodeId
-              ? {
-                  ...n,
-                  simples: n.simples.map((s) =>
-                    s.id === simpleId
-                      ? {
-                          ...s,
-                          attributes: s.attributes.map((a) =>
-                            a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-                          ),
-                        }
-                      : s
-                  ),
-                }
-              : n
-          ),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)),
         },
       };
     }
