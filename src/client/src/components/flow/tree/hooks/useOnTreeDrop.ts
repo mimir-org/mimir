@@ -2,12 +2,12 @@ import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Dispatch } from "redux";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
 import { IsFamily } from "../../../../helpers/Family";
+import { IsAspectNode } from "../../../../helpers/Aspects";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 

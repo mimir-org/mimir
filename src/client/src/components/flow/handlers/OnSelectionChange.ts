@@ -63,12 +63,12 @@ function HandleNoSelect(
   CloseInspector(inspectorRef, dispatch);
 }
 
-export const OpenInspector = (dispatch: Dispatch) => {
+export function OpenInspector(dispatch: Dispatch) {
   dispatch(changeInspectorTab(0));
-};
+}
 
-export const CloseInspector = (inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) => {
+export function CloseInspector(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
   dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
   dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
   SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
-};
+}

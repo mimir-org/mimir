@@ -22,7 +22,7 @@ namespace ModelBuilder.Rdf.Services
         IEnumerable<Triple> GetTriplesWithPredicateObject(string predicate, string obj);
         IEnumerable<Triple> GetTriplesWithSubjectPredicate(string subject, string predicate);
         IEnumerable<Triple> GetTriplesWithPredicate(string predicate);
-        string GetValue(string iri, string predicate, bool allowMany = true);
+        string GetValue(string iri, string predicate, bool allowMany = true, bool urlEncode = true);
         DateTime GetDateTimeValue(string iri, string predicate, bool allowMany = true);
         decimal GetDecimalValue(string iri, string predicate, bool allowMany = true);
         int? GetIntValue(string iri, string predicate, bool allowMany = true);

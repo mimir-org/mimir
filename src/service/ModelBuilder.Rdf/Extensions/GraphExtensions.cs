@@ -1,4 +1,6 @@
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using VDS.RDF;
 
 namespace ModelBuilder.Rdf.Extensions
@@ -29,10 +31,11 @@ namespace ModelBuilder.Rdf.Extensions
         /// Resolve value from INode
         /// </summary>
         /// <param name="node"></param>
+        /// <param name="urlDecode"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException">Throws if node type is not implemented</exception>
         /// <exception cref="ArgumentOutOfRangeException">Throws if node type does not exist</exception>
-        public static string ResolveValue(this INode node)
+        public static string ResolveValue(this INode node, bool urlDecode)
         {
             if (node == null)
                 return null;
@@ -40,13 +43,16 @@ namespace ModelBuilder.Rdf.Extensions
             switch (node.NodeType)
             {
                 case NodeType.Literal:
-                    return ((ILiteralNode) node).Value;
+                    var val = ((ILiteralNode) node).Value;
+                    Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(val));
+                    return urlDecode ? HttpUtility.UrlDecode(val) : val;
                 case NodeType.Uri:
                     var uriNode = (IUriNode) node;
                     var uri = uriNode.Uri.Fragment.ResolveFragment();
                     if (string.IsNullOrWhiteSpace(uri))
                         uri = uriNode.Uri.ToString().ResolveIriId();
-                    return uri;
+                    Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(uri));
+                    return urlDecode ? HttpUtility.UrlDecode(uri) : uri;
                 case NodeType.Blank:
                     throw new NotImplementedException($"There is no implementation of ResolveValue for {node.NodeType}");
                 case NodeType.GraphLiteral:

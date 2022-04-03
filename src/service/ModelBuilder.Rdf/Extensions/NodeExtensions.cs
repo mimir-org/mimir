@@ -181,7 +181,7 @@ namespace ModelBuilder.Rdf.Extensions
             var masterProjectIriNode = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
             node.MasterProjectIri = masterProjectIriNode?.ToString();
 
-            node.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false);
+            node.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false, false);
             node.LibraryTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
 
             node.UpdatedBy = ontologyService.GetValue(iri, Resources.UpdatedBy, false);

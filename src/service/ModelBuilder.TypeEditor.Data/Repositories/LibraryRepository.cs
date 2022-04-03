@@ -45,6 +45,10 @@ namespace Mb.TypeEditor.Data.Repositories
                 .Include(x => x.SimpleTypes)
                 .Include("SimpleTypes.AttributeTypes")
                 .Include("SimpleTypes.AttributeTypes.Units")
+                .Include("SimpleTypes.AttributeTypes.Qualifier")
+                .Include("SimpleTypes.AttributeTypes.Source")
+                .Include("SimpleTypes.AttributeTypes.Condition")
+                .Include("SimpleTypes.AttributeTypes.Format")
                 .Include(x => x.Purpose)
                 .AsSplitQuery()
                 .ToArrayAsync();
@@ -117,6 +121,10 @@ namespace Mb.TypeEditor.Data.Repositories
                     .Include(x => x.SimpleTypes)
                     .Include("SimpleTypes.AttributeTypes")
                     .Include("SimpleTypes.AttributeTypes.Units")
+                    .Include("SimpleTypes.AttributeTypes.Qualifier")
+                    .Include("SimpleTypes.AttributeTypes.Source")
+                    .Include("SimpleTypes.AttributeTypes.Condition")
+                    .Include("SimpleTypes.AttributeTypes.Format")
                     .Include(x => x.Purpose)
                     .AsSplitQuery()
                     .FirstOrDefaultAsync();
