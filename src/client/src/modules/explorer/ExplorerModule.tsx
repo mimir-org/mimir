@@ -10,9 +10,11 @@ import { Icon } from "../../compLibrary/icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./ExplorerModule.styled";
 import { useAppSelector, explorerSelector } from "../../redux/store";
+import { Project } from "../../models";
 
 interface Props {
   dispatch: Dispatch;
+  project: Project;
 }
 
 /**
@@ -20,7 +22,7 @@ interface Props {
  * @param interface
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = ({ dispatch }: Props) => {
+export const ExplorerModule = ({ project, dispatch }: Props) => {
   const isOpen = useAppSelector(explorerSelector);
   const type = MODULE_TYPE.EXPLORER;
 
@@ -39,7 +41,7 @@ export const ExplorerModule = ({ dispatch }: Props) => {
           <Icon size={24} src={ExplorerIcon} alt="" />
         </ExplorerModuleHeader>
       </Tooltip>
-      <ExplorerModuleBody>{isOpen && <ProjectComponent />}</ExplorerModuleBody>
+      <ExplorerModuleBody>{isOpen && <ProjectComponent project={project} dispatch={dispatch} />}</ExplorerModuleBody>
     </AnimatedModule>
   );
 };

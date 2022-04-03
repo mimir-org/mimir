@@ -37,7 +37,7 @@ export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExp
       ) : (
         <CheckboxExplorer
           color={GetAspectColor(node, AspectColorType.Selected)}
-          isChecked={IsNodeInTreeExplorerChecked(node, selectedNodes)}
+          isChecked={IsNodeInTreeExplorerChecked(node.id, selectedNodes)}
           onChange={() => OnSelectActiveNode(node, nodes, selectedNodes, setActiveNodeElement)}
           label={node.label}
         />

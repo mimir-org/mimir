@@ -79,7 +79,7 @@ export const Home = ({ dispatch }: Props) => {
       ) : (
         <>
           <ToolbarComponent />
-          <ExplorerModule dispatch={dispatch} />
+          <ExplorerModule project={project} dispatch={dispatch} />
           <FlowModule project={project} inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule nodes={project?.nodes} dispatch={dispatch} />

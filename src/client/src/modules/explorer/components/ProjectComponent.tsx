@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Node } from "../../../models";
+import { Node, Project } from "../../../models";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
@@ -9,14 +9,20 @@ import { IsBlockView } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
+import { Dispatch } from "redux";
+
+interface Props {
+  dispatch: Dispatch;
+  project: Project;
+}
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
-export const ProjectComponent = () => {
-  const dispatch = useAppDispatch();
-  const project = useAppSelector(selectors.projectSelector);
+export const ProjectComponent = ({ project, dispatch }: Props) => {
+  // const dispatch = useAppDispatch();
+  // const project = useAppSelector(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
 

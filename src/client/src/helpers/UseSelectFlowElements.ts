@@ -6,7 +6,6 @@ type SetFlowElementFunction = (elementId: string) => void;
 export const useSelectFlowElements = (): [SetFlowElementFunction, SetFlowElementFunction] => {
   const setSelectedNodes = useStore().addSelectedNodes;
   const setSelectedEdges = useStore().addSelectedEdges;
-  console.log("REIDARS");
 
   const nodes = useReactFlow().getNodes();
   const edges = useReactFlow().getEdges();

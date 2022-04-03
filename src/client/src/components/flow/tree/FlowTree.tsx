@@ -20,6 +20,8 @@ import ReactFlow, {
   useEdgesState,
   ReactFlowInstance,
   OnSelectionChangeParams,
+  applyNodeChanges,
+  applyEdgeChanges,
 } from "react-flow-renderer";
 
 interface Props {
@@ -36,8 +38,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes] = useNodesState([]);
+  const [edges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
@@ -57,8 +59,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
   };
 
-  // const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
-  // const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
+  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
   const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
     return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
@@ -121,8 +123,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         onInit={OnInit}
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
+        onNodesChange={OnNodesChange}
+        onEdgesChange={OnEdgesChange}
         onNodesDelete={OnNodesDelete}
         onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
