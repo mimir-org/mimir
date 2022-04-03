@@ -80,10 +80,7 @@ export interface ProjectState {
 // Action types
 export interface FetchingProjectAction {
   type: typeof FETCHING_PROJECT;
-  payload: {
-    id: string;
-    project: Project;
-  };
+  payload: { id: string; project: Project };
 }
 
 export interface SearchProjectAction {

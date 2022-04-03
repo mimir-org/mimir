@@ -20,8 +20,8 @@ const initialState: Types.ProjectState = {
 // TODO: Refactor to reduce complexity
 export function projectReducer(state = initialState, action: Types.ProjectActionTypes) {
   const project = state.project;
-  const nodes = state.project.nodes;
-  const edges = state.project.edges;
+  const nodes = state.project?.nodes;
+  const edges = state.project?.edges;
 
   switch (action.type) {
     case Types.SAVE_PROJECT:
@@ -99,6 +99,31 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
 
+    case Types.EXPORT_PROJECT_TO_FILE:
+      return {
+        ...state,
+        fetching: true,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.EXPORT_PROJECT_TO_FILE) : state.apiError,
+      };
+
+    case Types.IMPORT_PROJECT:
+      return {
+        ...state,
+        fetching: true,
+        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.IMPORT_PROJECT) : state.apiError,
+      };
+
+    case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
+    case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
+    case Types.LOCK_NODE_SUCCESS_OR_ERROR:
+    case Types.LOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
+    case Types.LOCK_EDGE_SUCCESS_OR_ERROR:
+      return {
+        ...state,
+        fetching: false,
+        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
+      };
+
     case Types.ADD_NODE:
       return { ...state, project: { ...project, nodes: [...nodes, action.payload] } };
 
@@ -132,7 +157,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.UPDATE_BLOCK_SIZE: {
       const { nodeId } = action.payload;
       const { width, height } = action.payload.size;
-
       return { ...state, project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, width, height } : n)) } };
     }
 
@@ -143,7 +167,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.SET_LOCATION_NODE_SIZE: {
       const { nodeId, key, value } = action.payload;
-
       return { ...state, project: { ...project, nodes: nodes.map((x) => (x.id === nodeId ? { ...x, [key]: value } : x)) } };
     }
 
@@ -161,7 +184,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           project: {
             ...project,
             nodes: nodes.map((n) => (IsFamily(node, n) ? { ...n, isHidden } : n)),
-            edges: edges.map((edge) => (isRelated(edge) ? { ...edge, isHidden } : edge)),
+            edges: edges.map((e) => (isRelated(e) ? { ...e, isHidden } : e)),
           },
         };
       }
@@ -177,7 +200,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           project: {
             ...project,
             nodes: nodes.map((x) => (elements.includes(x) ? { ...x, isHidden } : x)),
-            edges: edges.map((edge) => (elements.includes(edge) || edge.toNode === node ? { ...edge, isHidden } : edge)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, isHidden } : e)),
           },
         };
       }
@@ -199,7 +222,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((x) => (x.id === nodeId ? { ...x, isSelected } : { ...x, isSelected: false })),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, isSelected } : { ...n, isSelected: false })),
           edges,
         },
       };
@@ -210,10 +233,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          edges: edges?.map((edge) => (edge.id === edgeId ? { ...edge, isSelected } : { ...edge, isSelected: false })),
-        },
+        project: { ...project, edges: edges?.map((e) => (e.id === edgeId ? { ...e, isSelected } : { ...e, isSelected: false })) },
       };
     }
 
@@ -224,7 +244,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((x) => (x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false })),
+          nodes: nodes.map((n) => (n.id === blockId ? { ...n, isBlockSelected: true } : { ...n, isBlockSelected: false })),
           edges,
         },
       };
@@ -273,7 +293,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          edges: edges.map((x) => (x.id === edgeId ? { ...x, transport: { ...x.transport, [propName]: propValue } } : x)),
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: { ...e.transport, [propName]: propValue } } : e)),
         },
       };
     }
@@ -301,7 +321,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          edges: edges.map((x) => (x.id === edgeId ? { ...x, interface: { ...x.interface, [propName]: propValue } } : x)),
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: { ...e.interface, [propName]: propValue } } : e)),
         },
       };
     }
@@ -348,10 +368,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: getTransport(e) } : e)),
-        },
+        project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: getTransport(e) } : e)) },
       };
     }
 
@@ -364,10 +381,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: getInterface(e) } : e)),
-        },
+        project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: getInterface(e) } : e)) },
       };
     }
 
@@ -384,10 +398,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)),
-        },
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)) },
       };
     }
 
@@ -404,50 +415,19 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.EXPORT_PROJECT_TO_FILE:
-      return {
-        ...state,
-        fetching: true,
-        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.EXPORT_PROJECT_TO_FILE) : state.apiError,
-      };
-
-    case Types.IMPORT_PROJECT:
-      return {
-        ...state,
-        fetching: true,
-        apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== Types.IMPORT_PROJECT) : state.apiError,
-      };
-
-    case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
-    case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
-    case Types.LOCK_NODE_SUCCESS_OR_ERROR:
-    case Types.LOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
-    case Types.LOCK_EDGE_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
-      };
-
     case Types.SET_LOCK_NODE: {
       const { id, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+
+      const getAttr = (n: Node) => {
+        return n.attributes.map((attr) => UpdateAttributeIsLocked(attr, isLocked, isLockedStatusBy, isLockedStatusDate));
+      };
 
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((x) =>
-            x.id === id
-              ? {
-                  ...x,
-                  isLocked,
-                  isLockedStatusBy,
-                  isLockedStatusDate,
-                  attributes: x.attributes.map((attr) =>
-                    UpdateAttributeIsLocked(attr, isLocked, isLockedStatusBy, isLockedStatusDate)
-                  ),
-                }
-              : x
+          nodes: nodes.map((n) =>
+            n.id === id ? { ...n, isLocked, isLockedStatusBy, isLockedStatusDate, attributes: getAttr(n) } : n
           ),
         },
       };
@@ -494,10 +474,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, attributes: getAttributes(n) } : n)),
-        },
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, attributes: getAttributes(n) } : n)) },
       };
     }
 
@@ -516,10 +493,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)),
-        },
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
       };
     }
 
@@ -629,10 +603,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)),
-        },
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)) },
       };
     }
 
@@ -690,11 +661,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          nodes: [...nodesWithRequiredStatus, offPageNode],
-          edges: [...edges, transportEdge, partOfEdge],
-        },
+        project: { ...project, nodes: [...nodesWithRequiredStatus, offPageNode], edges: [...edges, transportEdge, partOfEdge] },
       };
     }
 
@@ -703,11 +670,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: {
-          ...project,
-          nodes: [...nodes, offPageNode],
-          edges: [...edges, partOfEdge, transportEdge],
-        },
+        project: { ...project, nodes: [...nodes, offPageNode], edges: [...edges, partOfEdge, transportEdge] },
       };
     }
 
