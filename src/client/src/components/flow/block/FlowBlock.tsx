@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
@@ -118,7 +118,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       setNodes(BuildFlowBlockNodes(project, primaryNode, secondaryNode));
       setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
     }
-  }, [project]);
+    console.log("BLOCK RENDER!");
+  }, [project, animatedEdge]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -128,14 +129,17 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     SetInitialEdgeVisibility(project, dispatch);
   }, []);
 
+  const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
+  const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
+
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>
       <ReactFlow
         onInit={OnInit}
         nodes={nodes}
         edges={edges}
-        nodeTypes={GetBlockNodeTypes}
-        edgeTypes={GetBlockEdgeTypes}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodesDelete={OnNodesDelete}

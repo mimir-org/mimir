@@ -3,7 +3,7 @@ import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
 import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
 import { BuildTreeFlowNodes, BuildTreeFlowEdges } from "../tree/builders";
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
@@ -103,13 +103,17 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
       setNodes(BuildTreeFlowNodes(project));
       setEdges(BuildTreeFlowEdges(project, animatedEdge));
     }
-  }, [project]);
+    console.log("TREE RENDER!");
+  }, [project, animatedEdge]);
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {
       if (!IsPartOfTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
     });
   }, []);
+
+  const nodeTypes = useMemo(() => helpers.GetTreeNodeTypes, []);
+  const edgeTypes = useMemo(() => helpers.GetTreeEdgeTypes, []);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>
@@ -125,8 +129,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        nodeTypes={helpers.GetTreeNodeTypes}
-        edgeTypes={helpers.GetTreeEdgeTypes}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         defaultZoom={0.7}
         minZoom={0.1}
         defaultPosition={[800, Size.BLOCK_MARGIN_Y]}

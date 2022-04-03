@@ -56,7 +56,7 @@ function HandleNoSelect(
   isBlock: boolean
 ) {
   if (project) {
-    isBlock && dispatch(setActiveBlockNode(null)); //: dispatch(setActiveNode(null, false));
+    isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
     dispatch(setActiveEdge(null, false));
   }
 
