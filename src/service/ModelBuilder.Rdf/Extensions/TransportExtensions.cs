@@ -72,7 +72,7 @@ namespace ModelBuilder.Rdf.Extensions
                 var inputTerminal = new TerminalAm();
                 inputTerminal.ResolveTerminal(ontologyService, projectData, null, inputTerminalNode.ToString());
                 transport.InputTerminal = inputTerminal;
-                transport.InputTerminalId = inputTerminalNode.ResolveValue();
+                transport.InputTerminalId = inputTerminalNode.ResolveValue(false);
                 nodeFromConnector = ontologyService
                     .GetTriplesWithSubjectPredicate(inputTerminalNode.ToString(), Resources.HasNodeFromConnection)
                     .Select(x => x.Object).SingleOrDefault()?.ToString();
@@ -83,7 +83,7 @@ namespace ModelBuilder.Rdf.Extensions
                 var outputTerminal = new TerminalAm();
                 outputTerminal.ResolveTerminal(ontologyService, projectData, null, outputTerminalNode.ToString());
                 transport.OutputTerminal = outputTerminal;
-                transport.OutputTerminalId = outputTerminalNode.ResolveValue();
+                transport.OutputTerminalId = outputTerminalNode.ResolveValue(false);
                 nodeToConnector = ontologyService
                     .GetTriplesWithSubjectPredicate(outputTerminalNode.ToString(), Resources.HasNodeToConnection)
                     .Select(x => x.Object).SingleOrDefault()?.ToString();
