@@ -76,14 +76,15 @@ namespace Mb.Models.Data
         public string PurposeString { get; set; }
 
         [NotMapped]
-        public virtual Purpose Purpose {
+        public virtual Purpose Purpose
+        {
             get
             {
                 if (_purpose != null)
                     return _purpose;
-                
-                return !string.IsNullOrWhiteSpace(PurposeString) ? 
-                    JsonConvert.DeserializeObject<Purpose>(PurposeString) : 
+
+                return !string.IsNullOrWhiteSpace(PurposeString) ?
+                    JsonConvert.DeserializeObject<Purpose>(PurposeString) :
                     null;
             }
             set => _purpose = value;
