@@ -36,9 +36,10 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="simple">The simple that should be resolved</param>
         /// <param name="ontologyService">Ontology Service</param>
+        /// <param name="projectData">Project Data</param>
         /// <param name="iri">The simple IRI</param>
         /// <param name="parentIri">The simple parent IRI</param>
-        public static void ResolveSimple(this SimpleAm simple, IOntologyService ontologyService, string iri, string parentIri)
+        public static void ResolveSimple(this SimpleAm simple, IOntologyService ontologyService, ProjectData projectData, string iri, string parentIri)
         {
             simple.Iri = iri;
             simple.Name = ontologyService.GetValue(iri, Resources.Label, false);
@@ -51,7 +52,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
-                attribute.ResolveAttribute(ontologyService, a.ToString(), null, null, null, null, iri);
+                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), null, null, null, null, iri);
                 simple.Attributes.Add(attribute);
             }
         }

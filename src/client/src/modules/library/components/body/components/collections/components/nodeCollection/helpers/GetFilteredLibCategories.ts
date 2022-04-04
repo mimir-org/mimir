@@ -1,9 +1,9 @@
 import { LibraryCategory } from "../../../../../../../../../models/project";
 
-export const GetFilteredLibCategories = (libCategories: LibraryCategory[], searchString: string): LibraryCategory[] => {
+export const getFilteredLibCategories = (libCategories: LibraryCategory[], searchString: string): LibraryCategory[] => {
   const searchStringLower = searchString.toLowerCase();
 
-  if (searchString === "") return [];
+  if (searchStringLower === "") return libCategories;
 
   return libCategories
     .map((cat) => {

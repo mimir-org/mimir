@@ -23,6 +23,11 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
 
+            builder.Property(p => p.Qualifier).HasColumnName("Qualifier").HasMaxLength(127);
+            builder.Property(p => p.Source).HasColumnName("Source").HasMaxLength(127);
+            builder.Property(p => p.Condition).HasColumnName("Condition").HasMaxLength(127);
+            builder.Property(p => p.Format).HasColumnName("Format").HasMaxLength(127);
+
             builder.Property(p => p.NodeId).HasColumnName("NodeId").IsRequired(false);
             builder.Property(p => p.NodeIri).HasColumnName("NodeIri").IsRequired(false);
             builder.Property(p => p.TerminalId).HasColumnName("TerminalId").IsRequired(false);
@@ -38,18 +43,14 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.IsLockedStatusBy).HasColumnName("IsLockedStatusBy").IsRequired(false);
             builder.Property(p => p.IsLockedStatusDate).HasColumnName("IsLockedStatusDate").IsRequired(false);
             builder.Property(p => p.SelectValuesString).HasColumnName("SelectValuesString").IsRequired(false);
-            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired().HasConversion<string>();
-            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired().HasConversion<string>();
+            builder.Property(p => p.SelectType).HasColumnName("SelectType").IsRequired();
+            builder.Property(p => p.Discipline).HasColumnName("Discipline").IsRequired();
             builder.Property(p => p.Tags).HasColumnName("Tags").IsRequired(false).HasConversion(stringConverter, stringComparer);
 
             builder.HasOne(x => x.Terminal).WithMany(y => y.Attributes).HasForeignKey(x => x.TerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Node).WithMany(y => y.Attributes).HasForeignKey(x => x.NodeId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Transport).WithMany(y => y.Attributes).HasForeignKey(x => x.TransportId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Interface).WithMany(y => y.Attributes).HasForeignKey(x => x.InterfaceId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Condition).WithMany(y => y.Attributes).HasForeignKey(x => x.ConditionId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Qualifier).WithMany(y => y.Attributes).HasForeignKey(x => x.QualifierId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Source).WithMany(y => y.Attributes).HasForeignKey(x => x.SourceId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Format).WithMany(y => y.Attributes).HasForeignKey(x => x.FormatId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.Simple).WithMany(y => y.Attributes).HasForeignKey(x => x.SimpleId).OnDelete(DeleteBehavior.NoAction);
         }
     }

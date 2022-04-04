@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Connector, Node } from "../../../../models";
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType, IsValidBlockConnection, ShowHandle } from "./helpers";
-import { HandleBox, HandleContainer } from "./styled";
+import { HandleBox, HandleContainer } from "./HandleComponent.styled";
 import { GetTerminalColor } from "../helpers";
 import { OnMouseEnter, OnMouseLeave } from "./handlers";
 import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 import { FontWeight } from "../../../../../compLibrary/font";
 
 interface InspectorTabHeaderProps {
@@ -17,7 +17,7 @@ export const InspectorTabHeader = styled.div<InspectorTabHeaderProps>`
   margin-right: 7px;
   height: ${(props) => (props.active ? 44 : 35)}px;
   margin-top: ${(props) => (props.active ? 0 : 9)}px;
-  background-color: ${(props) => (props.active ? Color.GREY_LIGHTER : props.color)};
+  background-color: ${(props) => (props.active ? Color.GHOST_WHITE : props.color)};
   padding: ${(props) => (props.active ? "17px 5px 0px 5px;" : "8px 5px 0px 5px")};
   box-shadow: -4px 0 4px -5px rgba(0, 0, 0, 0.4), 4px 0 3px -5px rgba(0, 0, 0, 0.4);
 

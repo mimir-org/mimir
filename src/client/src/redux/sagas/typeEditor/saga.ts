@@ -59,10 +59,9 @@ export function* getInitialData() {
   }
 }
 
-export function* getRDS(action) {
+export function* getRDS() {
   try {
-    const aspect = action.payload != null ? action.payload.aspect : Aspect.NotSet;
-    const endpointUrl = `${Config.API_BASE_URL}rds/${aspect}`;
+    const endpointUrl = `${Config.API_BASE_URL}rds`;
     const rdsResponse = yield call(get, endpointUrl);
 
     yield statePut(fetchRdsSuccessOrError(rdsResponse.data));

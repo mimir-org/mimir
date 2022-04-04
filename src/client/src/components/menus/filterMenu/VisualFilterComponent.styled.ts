@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Size } from "../../../compLibrary/size";
-import { Color } from "../../../compLibrary/colors";
+import { Size } from "../../../compLibrary/size/Size";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../compLibrary/font";
 
 interface Props {
@@ -17,7 +17,7 @@ export const VisualFilterContainer = styled.div<Props>`
   min-height: 140px;
   height: auto;
   border-style: solid;
-  border-color: ${Color.BLUE_MAGENTA};
+  border-color: ${Color.BASTILLE};
   border-width: 0 0 1px 1px;
   border-bottom-left-radius: 10px;
   z-index: 5;

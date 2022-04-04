@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Configurations;
-using Mb.Models.Exceptions;
 using SqlBulkTools;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -40,10 +38,10 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.AttributeTypeIri)
                 .AddColumn(x => x.SelectedUnitId)
                 .AddColumn(x => x.UnitString)
-                .AddColumn(x => x.QualifierId)
-                .AddColumn(x => x.SourceId)
-                .AddColumn(x => x.ConditionId)
-                .AddColumn(x => x.FormatId)
+                .AddColumn(x => x.Qualifier)
+                .AddColumn(x => x.Source)
+                .AddColumn(x => x.Condition)
+                .AddColumn(x => x.Format)
                 .AddColumn(x => x.TerminalId)
                 .AddColumn(x => x.TerminalIri)
                 .AddColumn(x => x.NodeId)

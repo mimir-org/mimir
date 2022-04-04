@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../compLibrary/colors";
+import { Color } from "../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../compLibrary/font";
 
 interface MenuElementStyledProps {
@@ -17,8 +17,8 @@ export const MenuElementButton = styled.button<MenuElementStyledProps>`
   padding: 10px 20px;
   cursor: pointer;
   border-width: 0;
-  color: ${Color.BLUE_MAGENTA};
-  border-bottom: ${(props) => (props.bottomLine ? 1 : 0)}px solid ${Color.GREY};
+  color: ${Color.BASTILLE};
+  border-bottom: ${(props) => (props.bottomLine ? 1 : 0)}px solid ${Color.GAINSBORO};
   text-align: left;
 
   :disabled {
@@ -26,7 +26,7 @@ export const MenuElementButton = styled.button<MenuElementStyledProps>`
   }
 
   :hover:not(:disabled) {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     text-decoration: underline;
   }
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { OnPropertyChangeFunction } from "../types";
-import { RadioButton } from "../../compLibrary/input/radiobutton";
+import { RadioButton } from "../../compLibrary/input/radiobutton/RadioButton";
 import { AttributeName, LabelWrapper } from "./styled";
 
 export enum ListType {

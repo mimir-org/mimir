@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../colors";
+import { Color } from "../colors/Color";
 
 export const DropdownContainer = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ export const DropdownHeader = styled.div`
   align-items: center;
   flex-direction: row;
   width: 90px;
-  border: 1px solid ${Color.BLUE_MAGENTA};
+  border: 1px solid ${Color.BASTILLE};
   border-radius: 5px;
   padding: 0 5px;
   font-size: 11px;
@@ -36,7 +36,7 @@ export const DropdownList = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${Color.WHITE};
-  border: 1px solid ${Color.BLUE_MAGENTA};
+  border: 1px solid ${Color.BASTILLE};
   border-radius: 5px;
   padding: 1px;
   font-size: 11px;
@@ -48,7 +48,7 @@ export const DropdownList = styled.div`
   z-index: 1;
 
   .dropdown_listitem {
-    border-bottom: 1px solid ${Color.GREY_DARK};
+    border-bottom: 1px solid ${Color.LIGHT_SILVER};
     background-color: ${Color.WHITE};
     padding: 2px 5px;
 
@@ -58,7 +58,7 @@ export const DropdownList = styled.div`
   }
 
   .dropdown_listitem:hover {
-    background-color: #bde6fd;
+    background-color: ${Color.ONAHAU};
     text-decoration: underline;
     cursor: pointer;
   }

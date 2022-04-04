@@ -3,9 +3,9 @@ import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsAspectNode, IsFamily } from "../../../../helpers";
 import { Dispatch } from "redux";
-import { Elements, OnLoadParams } from "react-flow-renderer";
+import { OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodeXPosition } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -16,9 +16,8 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
-  reactFlowInstance: OnLoadParams;
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
-  setElements: React.Dispatch<React.SetStateAction<Elements>>;
+  flowInstance: OnLoadParams;
+  flowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
 
@@ -62,23 +61,16 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   const parentNode = GetParentNode(sourceNode, project, data);
 
-  const position = SetNodePosition(parentNode, project);
-  const targetNode = ConvertToNode(data, position.treePosition, position.blockPosition, project.id, icons, user);
+  const treePosition = SetTreeNodePosition(parentNode, project);
+  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
+
+  const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
 
   dispatch(addNode(targetNode));
-}
-
-function SetNodePosition(parentNode: Node, project: Project) {
-  const marginY = 220;
-  const treeXPos = SetTreeNodeXPosition(parentNode, project);
-  const treePosition = { x: treeXPos, y: parentNode.positionY + marginY };
-  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY + marginY };
-
-  return { treePosition, blockPosition };
 }
 
 function GetParentNode(sourceNode: Node, project: Project, data: LibItem) {

@@ -1,6 +1,6 @@
 import Moment from "react-moment";
-import { Checkbox } from "../../../../../../../compLibrary/input/checkbox/common";
-import { TextResources } from "../../../../../../../assets/text";
+import { Checkbox } from "../../../../../../../compLibrary/input/checkbox/common/Checkbox";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Collection } from "../../../../../../../models";
 import { OnCheckboxChange } from "../handlers";
 import {
@@ -24,7 +24,7 @@ export const ModalList = ({ collections, selectedCollections, setSelectedCollect
 
   return (
     <ModalListContent>
-      <ModalListColumnText>{TextResources.Library_Modal_Collection_Created}</ModalListColumnText>
+      <ModalListColumnText>{TextResources.LIBRARY_MODAL_COLLECTION_CREATED}</ModalListColumnText>
       <ModalListElementsContainer>
         {collections?.map((c) => {
           return (

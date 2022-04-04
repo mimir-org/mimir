@@ -1,6 +1,6 @@
 import { RelationsContent } from "./components/RelationsContent";
 import { RelationsBody } from "./RelationsComponent.styled";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { edgeSelector, useAppSelector } from "../../../../../../redux/store";
 import { InspectorElement } from "../../../../types";
 import { IsEdge, IsNode } from "../../../../helpers/IsType";
@@ -36,7 +36,7 @@ export const RelationsComponent = ({ element }: Props) => {
           {IsNode(element) && (
             <RelationsContent
               items={GetRelations(element, edges)}
-              label={TextResources.Inspector_Relations_Relationships}
+              label={TextResources.INSPECTOR_RELATIONS_RELATIONSHIPS}
               getName={(edge) => GetNameRelation(edge, element)}
               getColor={(edge, index) => GetActiveRelationColor(edge.fromConnector, index)}
               onClick={(edge) => OnClickRelation(element, edge, setActiveNodeElement)}
@@ -44,14 +44,14 @@ export const RelationsComponent = ({ element }: Props) => {
           )}
           <RelationsContent
             items={inputTerminals}
-            label={TextResources.Inspector_Relations_Terminal_Input}
+            label={TextResources.INSPECTOR_RELATIONS_TERMINAL_INPUT}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
           <RelationsContent
             items={outputTerminals}
-            label={TextResources.Inspector_Relations_Terminal_Output}
+            label={TextResources.INSPECTOR_RELATIONS_TERMINAL_OUTPUT}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
@@ -59,7 +59,7 @@ export const RelationsComponent = ({ element }: Props) => {
           {IsNode(element) && (
             <RelationsContent
               items={transports}
-              label={TextResources.Inspector_Relations_Transport}
+              label={TextResources.INSPECTOR_RELATIONS_TRANSPORT}
               getName={(edge) => GetNameTransport(edge, element)}
               getColor={(_, index) => GetListItemColor(index)}
               onClick={(edge) => OnClickTransport(edge, setActiveEdgeElement)}
@@ -68,7 +68,7 @@ export const RelationsComponent = ({ element }: Props) => {
           {IsEdge(element) && (
             <RelationsContent
               items={[element.fromNode, element.toNode]}
-              label={TextResources.Inspector_Relations_Nodes}
+              label={TextResources.INSPECTOR_RELATIONS_NODES}
               getName={(node) => GetNameNode(element, node)}
               getColor={(_, index) => GetListItemColor(index)}
               onClick={(node) => OnClickNode(node, setActiveNodeElement)}

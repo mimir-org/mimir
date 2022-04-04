@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Mb.Models.Data.TypeEditor;
-using Mb.Models.Enums;
 using Mb.TypeEditor.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,14 +11,14 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Mb.TypeEditor.Core.Controllers.V1
 {
     /// <summary>
-    /// Library file services
+    /// Rds services
     /// </summary>
     [Produces("application/json")]
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("V{version:apiVersion}/[controller]")]
-    [SwaggerTag("Attribute type services")]
+    [SwaggerTag("Rds")]
     public class RdsController : ControllerBase
     {
         private readonly ILogger<RdsController> _logger;
@@ -35,19 +33,18 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         #region Get
 
         /// <summary>
-        /// Get RDS codes
+        /// Get all RDS entities
         /// </summary>
-        /// <param name="aspect"></param>
         /// <returns></returns>
-        [HttpGet("{aspect}")]
-        [ProducesResponseType(typeof(ICollection<Rds>), StatusCodes.Status200OK)]
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Rds>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetRdsCodes(Aspect aspect)
+        public IActionResult GetAllRds()
         {
             try
             {
-                var data = _rdsService.GetRds(aspect).ToList();
+                var data = _rdsService.GetRds();
                 return Ok(data);
             }
             catch (Exception e)
@@ -56,16 +53,6 @@ namespace Mb.TypeEditor.Core.Controllers.V1
                 return StatusCode(500, "Internal Server Error");
             }
         }
-
-        #endregion
-
-        #region Post
-
-        #endregion
-
-        #region Delete
-
-
 
         #endregion
     }

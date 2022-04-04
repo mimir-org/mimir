@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import moment from "moment/moment.js";
-import { TextResources } from "../../../../../../../assets/text";
+import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../compLibrary/font";
 import { EnumBase, Node, Project } from "../../../../../../../models";
 import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
-import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsId, GetReferenceDesignation, IsAspectNode, IsProduct } from "../../../../../../../helpers";
 import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
@@ -34,21 +34,21 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
     <>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.Inspector_Admin_Id}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={node.id ?? ""} />
+          <div>{TextResources.ID}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_RDS}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsId(node) ?? ""} />
+          <div>{TextResources.INSPECTOR_ADMIN_RDS}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Semantic_Id}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={node.semanticReference ?? ""} />
+          <div>{TextResources.INSPECTOR_ADMIN_SEMANTIC_ID}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.semanticReference ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.Inspector_Admin_Service}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_SERVICE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={node.isLocked}
@@ -57,31 +57,49 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Type}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={node.name} />
+          <div>{TextResources.INSPECTOR_ADMIN_TYPE}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.name} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Updated_By}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={node.updatedBy ?? ""} />
+          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_BY}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
-          <div>{TextResources.Inspector_Admin_Updated_Date}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={moment(node.updated).format("DD/MM/YYYY") ?? ""} />
+          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_DATE}</div>
+          <Input
+            fontSize={FontSize.STANDARD}
+            readOnly
+            value={moment(node.updated).format("DD/MM/YYYY") ?? ""}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Created_Date}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={moment(node.created).format("DD/MM/YYYY") ?? ""} />
+          <div>{TextResources.INSPECTOR_ADMIN_CREATED_DATE}</div>
+          <Input
+            fontSize={FontSize.STANDARD}
+            readOnly
+            onChange={() => null}
+            inputType=""
+            value={moment(node.created).format("DD/MM/YYYY") ?? ""}
+          />
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Designation}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={GetReferenceDesignation(node, project) ?? ""} />
+          <div>{TextResources.INSPECTOR_ADMIN_DESIGNATION}</div>
+          <Input
+            fontSize={FontSize.STANDARD}
+            readOnly
+            value={GetReferenceDesignation(node, project) ?? ""}
+            onChange={() => null}
+            inputType=""
+          />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div className="statusDropdown">
-          <div>{TextResources.Inspector_Admin_Status}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_STATUS}</div>
           <Dropdown
             label=""
             items={statuses}
@@ -94,19 +112,19 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           ></Dropdown>
         </div>
         <div>
-          <div>{TextResources.Inspector_Admin_Version}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={node.version ?? ""} />
+          <div>{TextResources.INSPECTOR_ADMIN_VERSION}</div>
+          <Input fontSize={FontSize.STANDARD} readOnly value={node.version ?? ""} onChange={() => null} inputType="" />
         </div>
         {IsProduct(node) && (
           <div>
-            <div>{TextResources.Inspector_Admin_Cost}</div>
+            <div>{TextResources.INSPECTOR_ADMIN_COST}</div>
             <Input fontSize={FontSize.STANDARD} readOnly value={""} onChange={() => null} inputType="" />
           </div>
         )}
       </TabColumn>
       <TabColumn width={465}>
         <div>
-          <div>{TextResources.Inspector_Admin_Description}</div>
+          <div>{TextResources.INSPECTOR_ADMIN_DESCRIPTION}</div>
           <TextArea
             height={200}
             value={node.description ?? ""}

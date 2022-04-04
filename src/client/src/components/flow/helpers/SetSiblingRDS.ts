@@ -11,8 +11,8 @@ import { GetChildren } from "./GetChildren";
  * @param dispatch Dispatch function for redux store.
  */
 export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, project: Project, dispatch: Dispatch) => {
-  const parent = edge.fromNode;
-  const children = [...GetChildren(parent, project), edge.toNode];
+  const parentId = edge.fromNodeId;
+  const children = [...GetChildren(parentId, project), edge.toNode];
 
   children.forEach((child, i) => ResetRDS(child, i, dispatch));
 };
@@ -43,18 +43,18 @@ export const UpdateSiblingIndexOnNodeDelete = (node: Node, project: Project, dis
  * Sets the sibling index of node being dropped into project.
  * @param node Node being dropped.
  * @param project Project node is part of.
- * @param parent Parent Node of node.
+ * @param parentId Parent Node of node.
  */
-export const SetSiblingIndexOnNodeDrop = (node: Node, project: Project, parent: Node) => {
-  if (!parent) return null;
+export const SetSiblingIndexOnNodeDrop = (node: Node, project: Project, parentId: string) => {
+  if (!parentId) return null;
 
-  const siblings = GetChildren(parent, project);
+  const siblings = GetChildren(parentId, project);
 
   node.rds += siblings.length;
 };
 
 const HandleParentDeleted = (node: Node, project: Project, dispatch: Dispatch) => {
-  const children = GetChildren(node, project).filter((n) => n.id !== node.id);
+  const children = GetChildren(node?.id, project).filter((n) => n.id !== node.id);
   if (!children || !children.length) return;
 
   children.forEach((child) => ClearRDS(child, dispatch));
@@ -64,7 +64,7 @@ const HandleSiblingDeleted = (node: Node, project: Project, dispatch: Dispatch) 
   const parent = FindParentEdge(node, project)?.fromNode;
   if (!parent) return;
 
-  const siblings = GetChildren(parent, project).filter((n) => n.id !== node.id);
+  const siblings = GetChildren(parent.id, project).filter((n) => n.id !== node.id);
   if (!siblings || !siblings.length) return;
 
   siblings.forEach((sibling, i) => ResetRDS(sibling, i, dispatch));

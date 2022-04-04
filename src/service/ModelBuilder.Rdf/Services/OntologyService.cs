@@ -6,6 +6,7 @@ using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Exceptions;
+using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ModelBuilder.Rdf.Extensions;
 using ModelBuilder.Rdf.Models;
@@ -229,7 +230,7 @@ namespace ModelBuilder.Rdf.Services
             return _ontologyRepository.Store.GetTriplesWithPredicate(p);
         }
 
-        public string GetValue(string iri, string predicate, bool allowMany = true)
+        public string GetValue(string iri, string predicate, bool allowMany = true, bool urlEncode = true)
         {
             var objects = GetTriplesWithSubjectPredicate(iri, predicate).Select(t => t.Object).ToList();
 
@@ -242,7 +243,7 @@ namespace ModelBuilder.Rdf.Services
             if (!allowMany && objects.Count != 1)
                 throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
 
-            return objects.First()?.ResolveValue();
+            return objects.First()?.ResolveValue(urlEncode);
         }
 
         public DateTime GetDateTimeValue(string iri, string predicate, bool allowMany = true)
@@ -258,7 +259,7 @@ namespace ModelBuilder.Rdf.Services
             if (!allowMany && objects.Count != 1)
                 throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
 
-            var value = objects.First()?.ResolveValue();
+            var value = objects.First()?.ResolveValue(false);
 
             if (!DateTime.TryParse(value, out var data))
                 throw new InvalidDataException($"{predicate} should always be a datetime | Iri: {iri}");
@@ -279,7 +280,7 @@ namespace ModelBuilder.Rdf.Services
             if (!allowMany && objects.Count != 1)
                 throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
 
-            var value = objects.First()?.ResolveValue();
+            var value = objects.First()?.ResolveValue(false);
 
             if (!decimal.TryParse(value?.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo, out var data))
                 throw new InvalidDataException($"{predicate} should always point to a decimal value | Iri: {iri}");
@@ -300,7 +301,7 @@ namespace ModelBuilder.Rdf.Services
             if (!allowMany && objects.Count != 1)
                 throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
 
-            var value = objects.First()?.ResolveValue();
+            var value = objects.First()?.ResolveValue(false);
             if (!int.TryParse(value?.Trim(), out var data))
                 throw new InvalidDataException($"{predicate} should always point to a integer value | Iri: {iri}");
 
@@ -320,7 +321,7 @@ namespace ModelBuilder.Rdf.Services
             if (!allowMany && objects.Count != 1)
                 throw new InvalidDataException($"There should always be exactly one, 1, {predicate} | Iri: {iri}");
 
-            var value = objects.First()?.ResolveValue();
+            var value = objects.First()?.ResolveValue(false);
             if (!Enum.TryParse<T>(value, true, out var val))
                 throw new InvalidDataException($"{predicate} should always point to an enum value | Iri: {iri}");
 
@@ -341,14 +342,28 @@ namespace ModelBuilder.Rdf.Services
             var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
             var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).Where(x => x.ProjectIri == projectIri).ToList();
             var units = _libRepository.GetObject<Unit>().ToList();
-            var attributeFormats = _libRepository.GetObject<AttributeFormat>().ToList();
+
+            var attributeFormatsWithId = _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Id, x => x);
+            var attributeFormatsWithName = _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Name, x => x);
+
+            var attributeConditionsWithId = _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Id, x => x);
+            var attributeConditionsWithName = _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Name, x => x);
+
+            var attributeSourcesWithId = _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Id, x => x);
+            var attributeSourcesWithName = _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Name, x => x);
+
+            var attributeQualifiersWithId = _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Id, x => x);
+            var attributeQualifiersWithName = _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Name, x => x);
 
             var projectData = new ProjectData
             {
                 Edges = _mapper.Map<List<EdgeAm>>(edges),
                 Nodes = _mapper.Map<List<NodeAm>>(nodes),
                 Units = units,
-                AttributeFormats = attributeFormats
+                AttributeFormats = attributeFormatsWithId.Merge(attributeFormatsWithName),
+                AttributeConditions = attributeConditionsWithId.Merge(attributeConditionsWithName),
+                AttributeSources = attributeSourcesWithId.Merge(attributeSourcesWithName),
+                AttributeQualifiers = attributeQualifiersWithId.Merge(attributeQualifiersWithName)
             };
 
             _edgeRepository.Context.ChangeTracker.Clear();

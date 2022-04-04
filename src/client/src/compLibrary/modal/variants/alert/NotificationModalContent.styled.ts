@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../colors";
+import { Color } from "../../../colors/Color";
 import { Icon } from "../../../icon";
 
 interface NotificationModalContentContainerProps {
@@ -14,7 +14,7 @@ export const NotificationModalContentContainer = styled.div<NotificationModalCon
   gap: 15px;
   min-width: 260px;
   min-height: 180px;
-  border: 2px solid ${(props) => (props.isWarning ? Color.RED_WARNING : Color.BLACK)};
+  border: 2px solid ${(props) => (props.isWarning ? Color.ULTRA_RED : Color.BLACK)};
   border-radius: 5px;
   background-color: ${Color.WHITE};
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);

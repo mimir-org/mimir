@@ -8,7 +8,7 @@ namespace Mb.Models.Configurations
     {
         public void Configure(EntityTypeBuilder<Relation> builder)
         {
-            builder.Property(p => p.RelationType).HasColumnName("RelationType").HasConversion<string>();
+            builder.Property(p => p.RelationType).HasColumnName("RelationType");
         }
     }
 }

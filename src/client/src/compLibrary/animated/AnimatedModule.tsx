@@ -5,7 +5,7 @@ import { MODULE_TYPE } from "../../models/project";
 interface Props {
   start: number;
   stop: number;
-  run: boolean;
+  run?: boolean;
   type: string;
 }
 

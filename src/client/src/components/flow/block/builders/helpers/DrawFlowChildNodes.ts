@@ -42,7 +42,7 @@ function ValidateOffPage(
   edges: Edge[],
   nodes: Node[]
 ) {
-  const offPageParent = GetParent(offPageNode);
+  const offPageParent = GetParent(offPageNode?.id);
 
   if (!secondaryNode) return elements?.some((elem) => elem?.id === offPageParent?.id);
   if (!IsFamily(selectedNode, secondaryNode)) return false;

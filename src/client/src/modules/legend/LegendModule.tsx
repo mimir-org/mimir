@@ -6,7 +6,7 @@ interface Props {
   project: Project;
 }
 
-const LegendModule = ({ project }: Props) => {
+export const LegendModule = ({ project }: Props) => {
   const legends = LegendComponent(project);
 
   return (
@@ -22,4 +22,3 @@ const LegendModule = ({ project }: Props) => {
     </LegendBody>
   );
 };
-export default LegendModule;

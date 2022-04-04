@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../compLibrary/colors";
+import { Color } from "../../compLibrary/colors/Color";
 import { FontSize } from "../../compLibrary/font";
 
 const ErrorMessageBox = styled.div`
@@ -9,7 +9,7 @@ const ErrorMessageBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
-  border: 2px solid ${Color.BLUE_MAGENTA};
+  border: 2px solid ${Color.BASTILLE};
   font-size: ${FontSize.STANDARD};
   line-height: 1.5;
   padding: 10px 20px;

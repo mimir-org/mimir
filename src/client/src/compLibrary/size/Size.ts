@@ -1,7 +1,7 @@
 /**
  * Component for static size types in Mimir.
  */
-const Size = {
+export const Size = {
   NODE_WIDTH: 160,
   NODE_HEIGHT: 95,
 
@@ -30,11 +30,4 @@ const Size = {
 
   // Menus
   TOPMENU_HEIGHT: 54,
-
-  // TypeEditor
-  TYPEEDITOR_INSPECTOR_OPEN: 355, // TO BE REMOVED
-  TYPEEDITOR_PROPERTIES_FULL_BASELINE: -362, // TO BE REMOVED
-  TYPEEDITOR_PROPERTIES_SHRUNK_BASELINE: -672, // TO BE REMOVED
 };
-
-export default Size;

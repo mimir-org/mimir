@@ -1,12 +1,12 @@
 import { Dispatch } from "redux";
-import { Size } from "../../../../compLibrary/size";
+import { Size } from "../../../../compLibrary/size/Size";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { GetSelectedNode, IsFamily } from "../../../../helpers";
-import { Elements, FlowTransform, OnLoadParams } from "react-flow-renderer";
+import { FlowTransform, OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodeXPosition } from "../../helpers/LibraryDropHelpers";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Position } from "../../../../models/project";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
@@ -17,11 +17,10 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
-  secondaryNode: Node;
+  secondaryNodeRef: Node;
   flowTransform: FlowTransform;
-  reactFlowInstance: OnLoadParams;
-  reactFlowWrapper: React.MutableRefObject<HTMLDivElement>;
-  setElements: React.Dispatch<React.SetStateAction<Elements>>;
+  flowInstance: OnLoadParams;
+  flowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
 
@@ -44,15 +43,15 @@ const useOnDrop = (params: OnDropParameters) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-function HandleNodeDrop({ event, project, user, icons, library, secondaryNode, flowTransform, dispatch }: OnDropParameters) {
+function HandleNodeDrop({ event, project, user, icons, library, secondaryNodeRef, flowTransform, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   let parentNode = GetSelectedNode();
   if (!parentNode) return;
 
   // Handle drop in SplitView
-  if (secondaryNode) {
+  if (secondaryNodeRef) {
     const dropZone = CalculateSecondaryNodeDropZone(flowTransform, parentNode);
-    parentNode = FindParent(data, parentNode, secondaryNode, dropZone, event.clientX);
+    parentNode = FindParent(data, parentNode, secondaryNodeRef, dropZone, event.clientX);
     if (!parentNode) return;
   }
 
@@ -87,18 +86,6 @@ function SetBlockNodePosition(transform: FlowTransform, event: React.DragEvent<H
   }
 
   return { x, y } as Position;
-}
-
-/**
- * Function to calculate the TreeView position of a dropped Node.
- * @param parentNode
- * @param project
- * @returns a Position object.
- */
-function SetTreeNodePosition(parentNode: Node, project: Project) {
-  const marginYTree = 220;
-  const treeX = SetTreeNodeXPosition(parentNode, project);
-  return { x: treeX, y: parentNode.positionY + marginYTree } as Position;
 }
 
 /**

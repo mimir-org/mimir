@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType, FontWeight } from "../../../../../../../compLibrary/font";
 
 export const ModalListContent = styled.div`
@@ -16,7 +16,7 @@ export const ModalListContent = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BLUE_MAGENTA};
+    background: ${Color.BASTILLE};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -27,7 +27,7 @@ export const ModalListContent = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BLUE_MAGENTA};
+    background: ${Color.BASTILLE};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -42,7 +42,7 @@ export const ModalListColumnText = styled.span`
 `;
 
 export const ModalListElementsContainer = styled.div`
-  border-top: 2px solid ${Color.BLUE_MAGENTA};
+  border-top: 2px solid ${Color.BASTILLE};
   border-bottom: 1px solid ${Color.BLACK};
   min-height: 370px;
   overflow: auto;
@@ -67,11 +67,11 @@ export const ModalListElement = styled.div<ModalListElementProps>`
   }
 
   :nth-child(odd) {
-    background-color: ${Color.PURPLE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_LIST};
   }
 
   :nth-child(n):hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
   }
 
   > ${ModalListElementText} {

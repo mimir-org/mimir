@@ -181,7 +181,7 @@ namespace ModelBuilder.Rdf.Extensions
             var masterProjectIriNode = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
             node.MasterProjectIri = masterProjectIriNode?.ToString();
 
-            node.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false);
+            node.Symbol = ontologyService.GetValue(iri, Resources.HasSymbol, false, false);
             node.LibraryTypeId = ontologyService.GetValue(iri, Resources.LibraryType, false);
 
             node.UpdatedBy = ontologyService.GetValue(iri, Resources.UpdatedBy, false);
@@ -203,7 +203,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
-                attribute.ResolveAttribute(ontologyService, a.ToString(), iri, null, null, null, null);
+                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), iri, null, null, null, null);
                 node.Attributes.Add(attribute);
             }
 
@@ -223,17 +223,17 @@ namespace ModelBuilder.Rdf.Extensions
 
             // Create all input terminals
             var inputTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasInputTerminal).Select(x => x.Object).ToList();
-            var inputTerminals = ResolveTerminals(inputTerminalNodes, iri, ontologyService).ToList();
+            var inputTerminals = ResolveTerminals(inputTerminalNodes, projectData, iri, ontologyService).ToList();
             node.Connectors = node.Connectors.Union(inputTerminals).ToList();
 
             // Create all output terminals
             var outputTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasOutputTerminal).Select(x => x.Object).ToList();
-            var outputTerminals = ResolveTerminals(outputTerminalNodes, iri, ontologyService).ToList();
+            var outputTerminals = ResolveTerminals(outputTerminalNodes, projectData, iri, ontologyService).ToList();
             node.Connectors = node.Connectors.Union(outputTerminals).ToList();
 
             // Create all bidirectional terminals
             var bidirectionalTerminalNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasBidirectionalTerminal).Select(x => x.Object).ToList();
-            var bidirectionalTerminals = ResolveTerminals(bidirectionalTerminalNodes, iri, ontologyService).ToList();
+            var bidirectionalTerminals = ResolveTerminals(bidirectionalTerminalNodes, projectData, iri, ontologyService).ToList();
             node.Connectors = node.Connectors.Union(bidirectionalTerminals).ToList();
 
             // Resolve simples
@@ -243,7 +243,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var s in simples)
             {
                 var simple = new SimpleAm();
-                simple.ResolveSimple(ontologyService, s.ToString(), node.Iri);
+                simple.ResolveSimple(ontologyService, projectData, s.ToString(), node.Iri);
                 node.Simples.Add(simple);
             }
         }
@@ -252,10 +252,11 @@ namespace ModelBuilder.Rdf.Extensions
         /// Resolve all Terminals from INodes
         /// </summary>
         /// <param name="nodes">The nodes to be resolved</param>
+        /// <param name="projectData">Project Data</param>
         /// <param name="nodeIri">Parent node IRI</param>
         /// <param name="ontologyService">Ontology Service</param>
         /// <returns></returns>
-        public static IEnumerable<TerminalAm> ResolveTerminals(List<INode> nodes, string nodeIri, IOntologyService ontologyService)
+        public static IEnumerable<TerminalAm> ResolveTerminals(List<INode> nodes, ProjectData projectData, string nodeIri, IOntologyService ontologyService)
         {
             if (!nodes.Any())
                 yield break;
@@ -263,7 +264,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var node in nodes)
             {
                 var terminal = new TerminalAm();
-                terminal.ResolveTerminal(ontologyService, nodeIri, node.ToString());
+                terminal.ResolveTerminal(ontologyService, projectData, nodeIri, node.ToString());
                 yield return terminal;
             }
         }

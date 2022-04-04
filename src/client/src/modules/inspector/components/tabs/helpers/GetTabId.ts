@@ -1,8 +1,8 @@
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 export const GetTabId = (index: number) => {
-  if (index === 1) return TextResources.Inspector_Parameters;
-  if (index === 2) return TextResources.Inspector_Terminals;
-  if (index === 3) return TextResources.Inspector_Relations;
-  if (index === 4) return TextResources.Inspector_SimpleTypes;
+  if (index === 1) return TextResources.INSPECTOR_PARAMETERS;
+  if (index === 2) return TextResources.TERMINALS;
+  if (index === 3) return TextResources.RELATIONS;
+  if (index === 4) return TextResources.INSPECTOR_SIMPLETYPES;
 };

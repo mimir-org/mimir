@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../colors";
+import { Color } from "../../../colors/Color";
 import { FontSize } from "../../../font";
 
 interface CheckboxWrapperProps {
@@ -21,7 +21,7 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
     cursor: pointer;
     height: 20px;
     width: 20px;
-    border: 2px solid ${Color.GREY_HEADER};
+    border: 2px solid ${Color.DAVYS_GREY};
     background-color: ${Color.WHITE};
     border-radius: 3px;
     margin: 0;

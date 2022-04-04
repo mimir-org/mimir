@@ -31,9 +31,6 @@ namespace Mb.Services.Services
         public IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters()
         {
             var allFilteredAttributes = _attributeRepository.GetAll()
-                .Include(x => x.Qualifier)
-                .Include(x => x.Source)
-                .Include(x => x.Condition)
                 .Select(x => new { x.Entity, x.Qualifier, x.Source, x.Condition }).Distinct()
                 .ToList();
 
@@ -45,12 +42,9 @@ namespace Mb.Services.Services
 
                 var combinedAttributes = group.Select(x => new CombinedAttribute
                 {
-                    Condition = x.Condition.Name,
-                    ConditionId = x.Condition.Id,
-                    Qualifier = x.Qualifier.Name,
-                    QualifierId = x.Qualifier.Id,
-                    Source = x.Source.Name,
-                    SourceId = x.Source.Id
+                    Condition = x.Condition,
+                    Qualifier = x.Qualifier,
+                    Source = x.Source
                 }).ToList();
 
                 yield return new CombinedAttributeFilter

@@ -3,7 +3,7 @@ import { LibraryTab } from "../../../../../models";
 import { ConvertToLibTabName } from "./helpers/ConvertToLibTabName";
 import { LibraryTabsWrapper, LibraryTabHeader, LibraryTabHeaderText } from "./ModuleTabs.styled";
 import { ExpandButton } from "./ExpandButton";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export const ModuleTabs = ({ isOpen, activeTab, setActiveTab, dispatch }: Props)
 
   return (
     <LibraryTabsWrapper>
-      <ExpandButton isOpen={isOpen} text={TextResources.Library_Close_Panel} offset={[0, 10]} dispatch={dispatch} />
+      <ExpandButton isOpen={isOpen} text={TextResources.LIBRARY_CLOSE_PANEL} offset={[0, 10]} dispatch={dispatch} />
 
       {Object.keys(LibraryTab)
         .filter(stringIsNumber)

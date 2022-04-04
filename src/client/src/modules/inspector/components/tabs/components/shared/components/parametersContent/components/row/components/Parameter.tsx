@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ParameterDescriptor } from "./ParameterDescriptor";
 import { Entity } from "../styled/Entity";
-import { Color } from "../../../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../../../compLibrary/colors/Color";
 import { ParameterButton } from "../../../styled/ParameterButton";
 import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
-import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir";
+import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
@@ -71,7 +71,7 @@ export const Parameter = ({ attribute, combination, headerColor, bodyColor, onLo
           valueProp="value"
           onChange={(_unit: EnumBase) => onChange(attribute.id, value, _unit.id)}
           borderRadius={2}
-          borderColor={Color.GREY_INACTIVE}
+          borderColor={Color.BATTLESHIP_GREY}
           fontSize={FontSize.SMALL}
           height={22}
           listTop={27}

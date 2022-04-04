@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FontSize } from "../../../../../../../../../../../compLibrary/font";
-import { Color } from "../../../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../../../compLibrary/colors/Color";
 
 export const MenuWrapper = styled.div`
   position: relative;

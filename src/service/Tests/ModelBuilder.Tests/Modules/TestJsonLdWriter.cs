@@ -20,6 +20,8 @@ public class TestJsonLdWriter
 
         using var streamWriter = new StreamWriter("Data/pumpout.jsonld");
         streamWriter.Write(jsonLdString);
+        streamWriter.Flush();
+        streamWriter.Dispose();
 
         using var reader2 = new StreamReader("Data/pumpout.jsonld");
         var json_text2 = reader.ReadToEnd();

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontWeight } from "../../../compLibrary/font";
 
 interface Props {
@@ -15,7 +15,7 @@ const RdsListElement = styled.div<Props>`
   padding: 2px 5px;
 
   &:hover {
-    background-color: ${Color.BLUE_LIGHT} !important;
+    background-color: ${Color.LAVANDER_WEB_HOVER} !important;
   }
 
   label {

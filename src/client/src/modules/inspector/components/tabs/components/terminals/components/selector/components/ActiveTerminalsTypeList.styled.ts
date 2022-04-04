@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FontSize } from "../../../../../../../../../compLibrary/font";
-import { Color } from "../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 
 interface TerminalListElementProps {
   isSelected: boolean;
@@ -23,7 +23,7 @@ export const TerminalListElement = styled.div<TerminalListElementProps>`
   }
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     cursor: pointer;
     text-decoration: underline;
   }
@@ -46,7 +46,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
     content: "";
     width: 1px;
     height: 10px;
-    background: ${Color.TERMINALS_PURPLE};
+    background: ${Color.WISTFUL};
     border-radius: 1px;
     position: absolute;
     bottom: 3px;
@@ -57,7 +57,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
     content: "";
     width: 385px;
     height: 1px;
-    background: ${Color.TERMINALS_PURPLE};
+    background: ${Color.WISTFUL};
     border-radius: 1px;
     position: absolute;
     bottom: 3px;
@@ -75,7 +75,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
   }
 
   :hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     cursor: pointer;
     text-decoration: underline;
   }

@@ -1,5 +1,5 @@
 import { FlowTransform } from "react-flow-renderer";
-import { Size } from "../../../../../../compLibrary/size";
+import { Size } from "../../../../../../compLibrary/size/Size";
 
 /**
  * Component to center the canvas' zoom level and position.

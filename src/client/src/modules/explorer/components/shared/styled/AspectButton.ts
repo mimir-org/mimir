@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 
 interface Props {
   isHidden?: boolean;
@@ -16,7 +16,7 @@ export const AspectButton = styled.button<Props>`
   background-color: transparent;
   margin: 0;
   border: 0;
-  border-right: 2px solid ${Color.GREY_INACTIVE};
+  border-right: 2px solid ${Color.BATTLESHIP_GREY};
   opacity: ${(props) => (props.isLocked || props.isHidden ? 0.5 : 1)};
 
   :hover {

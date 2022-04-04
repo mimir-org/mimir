@@ -5,7 +5,7 @@ import { Node, Project } from "../../../../models";
 import { BlockAspectElement } from "./components/BlockAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
   project: Project;
@@ -42,8 +42,8 @@ export const BlockAspectComponent = ({
   <AspectContainer node={node}>
     <LockComponent
       isLocked={node.isLocked}
-      unlockText={TextResources.Explorer_Unlock_Object}
-      lockText={TextResources.Explorer_Lock_Object}
+      unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
+      lockText={TextResources.EXPLORER_LOCK_OBJECT}
       onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
     />
     <BlockAspectElement

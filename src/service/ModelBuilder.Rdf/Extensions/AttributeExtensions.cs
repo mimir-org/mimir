@@ -1,3 +1,4 @@
+using System.Web;
 using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data.Enums;
@@ -88,7 +89,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="projectData">Record of ICollections</param>
         public static void AssertAttributeFormat(this Attribute attribute, IOntologyService ontologyService, ProjectData projectData)
         {
-            var attributeFormat = projectData.AttributeFormats.FirstOrDefault(x => x.Id == attribute.FormatId);
+            var attributeFormat = projectData.AttributeFormats[attribute.Format];
 
             if (attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.SemanticReference))
                 return;
@@ -143,10 +144,10 @@ namespace ModelBuilder.Rdf.Extensions
 
             return new AttributeDatumObject
             {
-                QualifierObject = $"{rootIri}/qualifier/ID{attribute.QualifierId}",
-                SourceObject = $"{rootIri}/source/ID{attribute.SourceId}",
-                ConditionObject = $"{rootIri}/condition/ID{attribute.ConditionId}",
-                FormatObject = $"{rootIri}/format/ID{attribute.FormatId}"
+                QualifierObject = $"{rootIri}/qualifier/{HttpUtility.UrlEncode(attribute.Qualifier)}",
+                SourceObject = $"{rootIri}/source/{HttpUtility.UrlEncode(attribute.Source)}",
+                ConditionObject = $"{rootIri}/condition/{HttpUtility.UrlEncode(attribute.Condition)}",
+                FormatObject = $"{rootIri}/format/{HttpUtility.UrlEncode(attribute.Format)}"
             };
         }
 
@@ -155,13 +156,14 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="attribute"></param>
         /// <param name="ontologyService"></param>
+        /// <param name="projectData"></param>
         /// <param name="iri"></param>
         /// <param name="nodeIri"></param>
         /// <param name="interfaceIri"></param>
         /// <param name="terminalIri"></param>
         /// <param name="transportIri"></param>
         /// <param name="simpleIri"></param>
-        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri, string simpleIri)
+        public static void ResolveAttribute(this AttributeAm attribute, IOntologyService ontologyService, ProjectData projectData, string iri, string nodeIri, string interfaceIri, string terminalIri, string transportIri, string simpleIri)
         {
             attribute.Iri = iri;
             attribute.Entity = ontologyService.GetValue(iri, Resources.Label);
@@ -171,10 +173,15 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.AttributeTypeIri = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.LibraryType)?.Select(x => x.Object).SingleOrDefault()?.ToString();
 
             var adp = iri.AttributeDatumPredicate();
-            attribute.QualifierId = ontologyService.GetValue(iri.IriDatum(), adp.QualifierPredicate, false);
-            attribute.SourceId = ontologyService.GetValue(iri.IriDatum(), adp.SourcePredicate, false);
-            attribute.ConditionId = ontologyService.GetValue(iri.IriDatum(), adp.ConditionPredicate, false);
-            attribute.FormatId = ontologyService.GetValue(iri.IriDatum(), adp.FormatPredicate, false);
+            attribute.Qualifier = ontologyService.GetValue(iri.IriDatum(), adp.QualifierPredicate, false);
+            attribute.Source = ontologyService.GetValue(iri.IriDatum(), adp.SourcePredicate, false);
+            attribute.Condition = ontologyService.GetValue(iri.IriDatum(), adp.ConditionPredicate, false);
+            attribute.Format = ontologyService.GetValue(iri.IriDatum(), adp.FormatPredicate, false);
+
+            attribute.Qualifier = string.IsNullOrWhiteSpace(attribute.Qualifier) ? "NotSet" : projectData.AttributeQualifiers[attribute.Qualifier]?.Name ?? attribute.Qualifier;
+            attribute.Source = string.IsNullOrWhiteSpace(attribute.Source) ? "NotSet" : projectData.AttributeSources[attribute.Source]?.Name ?? attribute.Source;
+            attribute.Condition = string.IsNullOrWhiteSpace(attribute.Condition) ? "NotSet" : projectData.AttributeConditions[attribute.Condition]?.Name ?? attribute.Condition;
+            attribute.Format = string.IsNullOrWhiteSpace(attribute.Format) ? "NotSet" : projectData.AttributeFormats[attribute.Format]?.Name ?? attribute.Format;
 
             attribute.NodeIri = nodeIri;
             attribute.InterfaceIri = interfaceIri;
@@ -186,7 +193,7 @@ namespace ModelBuilder.Rdf.Extensions
             var allowedUnitNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.AllowedUnit).Select(x => x.Object).ToList();
             attribute.Units = allowedUnitNodes.Select(x =>
             {
-                var value = x.ResolveValue()?.Split('-', StringSplitOptions.RemoveEmptyEntries);
+                var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
                 return new UnitAm
                 {
                     Id = value?[0].Trim(),
@@ -195,7 +202,7 @@ namespace ModelBuilder.Rdf.Extensions
             }).ToList();
 
             var selectValueNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.SelectValue).Select(x => x.Object).ToList();
-            attribute.SelectValues = selectValueNodes.Select(x => x.ResolveValue()).ToList();
+            attribute.SelectValues = selectValueNodes.Select(x => x.ResolveValue(false)).ToList();
 
             attribute.SelectType = ontologyService.GetEnumValue<SelectType>(iri, Resources.SelectType, false);
             attribute.Discipline = ontologyService.GetEnumValue<Discipline>(iri, Resources.HasDiscipline, false);

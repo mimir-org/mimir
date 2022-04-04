@@ -2,7 +2,7 @@ import * as selectors from "../../home/helpers/selectors";
 import InstructionBoxComponent from "./InstructionBoxComponent";
 import { useState } from "react";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { Icon } from "../../../compLibrary/icon";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuComponent } from "../../menus/projectMenu";
@@ -21,9 +21,9 @@ export const ProjectMenuHeaderComponent = () => {
 
   return (
     <ProjectHeaderButtonContainer>
-      <Tooltip content={TextResources.Project_Description} placement={"bottom"} offset={[0, 8]}>
+      <Tooltip content={TextResources.PROJECT_DESCRIPTION} placement={"bottom"} offset={[0, 8]}>
         <ProjectHeaderButton isOpen={isUserMenuOpen} onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
-          <span>{projectName ?? TextResources.Project}</span>
+          <span>{projectName ?? TextResources.PROJECT}</span>
           <Icon size={10} src={isUserMenuOpen ? CollapseWhiteIcon : ExpandWhiteIcon} alt="" />
         </ProjectHeaderButton>
       </Tooltip>

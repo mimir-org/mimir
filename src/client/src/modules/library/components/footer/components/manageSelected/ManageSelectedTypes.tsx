@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
 import { ColoredCollections } from "../../../../../../assets/icons/library";
-import { TextResources } from "../../../../../../assets/text";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModalList } from "./components/ModalList";
@@ -38,14 +38,14 @@ export const ManageSelectedTypes = ({
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.Library_Modal_Create_Collection} icon={ColoredCollections}>
+      <InfoModalContent title={TextResources.LIBRARY_MODAL_CREATE_COLLECTION} icon={ColoredCollections}>
         <CreateCollectionComponent
           collectionName={collectionName}
           setCollectionName={setCollectionName}
           selectedTypes={selectedTypes}
           dispatch={dispatch}
         />
-        <ModalListHeader>{TextResources.Library_Modal_Select_Collection}</ModalListHeader>
+        <ModalListHeader>{TextResources.LIBRARY_MODAL_SELECT_COLLECTION}</ModalListHeader>
         <ModalList
           collections={collections}
           selectedCollections={selectedCollections}

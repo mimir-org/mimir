@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontWeight } from "../../../compLibrary/font";
 
 const ListCategoryElement = styled.div`
-  border-top: 1px solid ${Color.BLUE_MAGENTA};
-  border-bottom: 1px solid ${Color.BLUE_MAGENTA};
+  border-top: 1px solid ${Color.BASTILLE};
+  border-bottom: 1px solid ${Color.BASTILLE};
   background-color: ${Color.WHITE} !important;
 
   p {

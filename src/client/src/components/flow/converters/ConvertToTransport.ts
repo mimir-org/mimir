@@ -2,7 +2,7 @@ import { Attribute, Connector, ConnectorType, Transport, TRANSPORT_KIND } from "
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 
-const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Transport => {
+const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const transportType = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   if (!transportType) return null;
 
@@ -42,9 +42,9 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
     id: transportId,
     iri: "",
     version: transportType.version,
-    rds: transportType.rds,
+    rds: transportType.rdsId,
     name: transportType.name,
-    label: transportType.label ?? transportType.name,
+    label: transportType.name,
     description: transportType.description,
     statusId: transportType.statusId,
     semanticReference: transportType.semanticReference,
@@ -59,7 +59,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState): Trans
     created: transportType.created,
     libraryTypeId: transportType.id,
     kind: TRANSPORT_KIND,
-  };
+  } as Transport;
 };
 
 export default ConvertToTransport;

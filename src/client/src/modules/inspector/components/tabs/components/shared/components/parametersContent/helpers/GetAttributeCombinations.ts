@@ -20,8 +20,8 @@ const GetAttributeCombinations = (
 };
 
 const DoesCombinationMatchAttribute = (combination: CombinedAttribute, attribute: AttributeLikeItem) =>
-  combination.qualifierId === attribute.qualifierId &&
-  combination.sourceId === attribute.sourceId &&
-  combination.conditionId === attribute.conditionId;
+  combination.qualifier === attribute.qualifier &&
+  combination.source === attribute.source &&
+  combination.condition === attribute.condition;
 
 export { GetAttributeCombinations, DoesCombinationMatchAttribute };

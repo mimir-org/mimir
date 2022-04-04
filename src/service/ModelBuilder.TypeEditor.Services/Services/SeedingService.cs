@@ -15,24 +15,22 @@ namespace Mb.TypeEditor.Services.Services
 {
     public class SeedingService : ISeedingService
     {
-        public const string RdsFileName = "rds";
-        public const string AttributeFileName = "attribute";
-        public const string ContractorFileName = "contractor";
-        public const string TerminalFileName = "terminal";
-        public const string TransportFileName = "transport";
-        public const string UnitFileName = "unit";
-        public const string ConditionFileName = "condition";
-        public const string QualifierFileName = "qualifier";
-        public const string SourceFileName = "source";
-        public const string RdsCategoryFileName = "rdscategory";
-        public const string TerminalCategoryFileName = "termcategory";
-        public const string AttributeFormatFileName = "format";
-        public const string BuildStatusFileName = "buildstatus";
-        public const string TypeAttributeFileName = "type_attribute";
-        public const string PredefinedAttributeFileName = "predefined_attribute";
-        public const string PurposeFileName = "purpose";
-        public const string SymbolFileName = "symbol";
-        public const string SimpleTypeFileName = "simple_type";
+        private const string RdsFileName = "rds";
+        private const string AttributeFileName = "attribute";
+        private const string TerminalFileName = "terminal";
+        private const string TransportFileName = "transport";
+        private const string UnitFileName = "unit";
+        private const string ConditionFileName = "condition";
+        private const string QualifierFileName = "qualifier";
+        private const string SourceFileName = "source";
+        private const string TerminalCategoryFileName = "termcategory";
+        private const string AttributeFormatFileName = "format";
+        private const string BuildStatusFileName = "buildstatus";
+        private const string TypeAttributeFileName = "type_attribute";
+        private const string PredefinedAttributeFileName = "predefined_attribute";
+        private const string PurposeFileName = "purpose";
+        private const string SymbolFileName = "symbol";
+        private const string SimpleTypeFileName = "simple_type";
 
         private readonly IFileRepository _fileRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
@@ -73,14 +71,12 @@ namespace Mb.TypeEditor.Services.Services
                 var conditionFiles = fileList.Where(x => x.ToLower().Equals(ConditionFileName)).ToList();
                 var qualifierFiles = fileList.Where(x => x.ToLower().Equals(QualifierFileName)).ToList();
                 var sourceFiles = fileList.Where(x => x.ToLower().Equals(SourceFileName)).ToList();
-                var rdsCategoryFiles = fileList.Where(x => x.ToLower().Equals(RdsCategoryFileName)).ToList();
                 var terminalCategoryFiles = fileList.Where(x => x.ToLower().Equals(TerminalCategoryFileName)).ToList();
                 var attributeFormatFiles = fileList.Where(x => x.ToLower().Equals(AttributeFormatFileName)).ToList();
                 var buildStatusFiles = fileList.Where(x => x.ToLower().Equals(BuildStatusFileName)).ToList();
                 var typeAttributeFiles = fileList.Where(x => x.ToLower().Equals(TypeAttributeFileName)).ToList();
 
                 //Other
-                var contractorFiles = fileList.Where(x => x.ToLower().Equals(ContractorFileName)).ToList();
                 var attributeFiles = fileList.Where(x => x.ToLower().Equals(AttributeFileName)).ToList();
                 var terminalFiles = fileList.Where(x => x.ToLower().Equals(TerminalFileName)).ToList();
                 var transportFiles = fileList.Where(x => x.ToLower().Equals(TransportFileName)).ToList();
@@ -94,7 +90,6 @@ namespace Mb.TypeEditor.Services.Services
                 var conditions = _fileRepository.ReadAllFiles<AttributeCondition>(conditionFiles).ToList();
                 var qualifiers = _fileRepository.ReadAllFiles<AttributeQualifier>(qualifierFiles).ToList();
                 var sources = _fileRepository.ReadAllFiles<AttributeSource>(sourceFiles).ToList();
-                var rdsCategories = _fileRepository.ReadAllFiles<RdsCategory>(rdsCategoryFiles).ToList();
                 var terminalCategories = _fileRepository.ReadAllFiles<TerminalCategory>(terminalCategoryFiles).ToList();
                 var attributeFormats = _fileRepository.ReadAllFiles<AttributeFormat>(attributeFormatFiles).ToList();
                 var buildStatuses = _fileRepository.ReadAllFiles<BuildStatus>(buildStatusFiles).ToList();
@@ -113,7 +108,6 @@ namespace Mb.TypeEditor.Services.Services
                 await CreateEnumBase(conditions);
                 await CreateEnumBase(qualifiers);
                 await CreateEnumBase(sources);
-                await CreateEnumBase(rdsCategories);
                 await CreateEnumBase(terminalCategories);
                 await CreateEnumBase(attributeFormats);
                 await CreateEnumBase(buildStatuses);
@@ -139,11 +133,14 @@ namespace Mb.TypeEditor.Services.Services
         }
 
 
-
         private async Task CreateEnumBase<T>(IEnumerable<T> items) where T : EnumBase
         {
             var exitingItems = _enumBaseRepository.GetAll().OfType<T>().ToList();
-            var newItems = items.Select(x => { x.Id = x.Key.CreateMd5(); return x; }).ToList();
+            var newItems = items.Select(x =>
+            {
+                x.Id = x.Key.CreateMd5();
+                return x;
+            }).ToList();
             var notExistingItems = newItems.Where(x => exitingItems.All(y => y.Id != x.Id)).ToList();
 
             if (!notExistingItems.Any())

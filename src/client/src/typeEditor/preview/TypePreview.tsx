@@ -1,11 +1,10 @@
 import { BlobData, CreateLibraryType, Rds, TerminalType } from "../../models";
 import { ObjectBlock } from "./ObjectBlock";
-import { ListLabel, ListWrapper } from "../../compLibrary/list";
-import { InfoText, InfoWrapper, PreviewArea } from "../styled";
+import { InfoText, InfoWrapper, ListLabel, ListWrapper, PreviewArea } from "../styled";
 import { IsTransportOrInterface } from "./helpers";
-import { TextResources } from "../../assets/text";
 import { InterfaceIcon, TransportIcon } from "../../assets/icons/type";
 import { IsFunction, IsInterface, IsLocation, IsObjectBlock, IsProduct, IsTransport } from "../helpers";
+import { TypeEditorTextResources } from "../assets/TypeEditorTextResources";
 
 interface Props {
   createLibraryType: CreateLibraryType;
@@ -23,7 +22,7 @@ interface Props {
 export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, outputTerminals, symbol }: Props) => {
   const aspect = createLibraryType?.aspect;
   const objectType = createLibraryType?.objectType;
-  const rdsLabel = rds ? rds.code + " - " + rds.name : null;
+  const rdsLabel = rds ? rds.id + " - " + rds.name : null;
 
   const showObjectBlock = () => {
     if (
@@ -45,7 +44,7 @@ export const TypePreview = ({ createLibraryType, rds, terminal, inputTerminals, 
 
   return (
     <ListWrapper flex={1.5}>
-      <ListLabel preview={true}>{TextResources.TypeEditor_New_Type_Preview}</ListLabel>
+      <ListLabel preview>{TypeEditorTextResources.NEW_TYPE_PREVIEW}</ListLabel>
       <PreviewArea>
         {showObjectBlock()}
         {IsTransportOrInterface(createLibraryType) && (

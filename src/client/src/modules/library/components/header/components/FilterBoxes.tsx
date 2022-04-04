@@ -2,8 +2,9 @@ import { Icon } from "../../../../../compLibrary/icon";
 import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { Aspect } from "../../../../../models";
+// import { ColoredCollections, Collections } from "../../../../../assets/icons/library";
 import { FilterBoxesWrapper, FilterBoxButton } from "./FilterBoxes.styled";
-import { TextResources } from "../../../../../assets/text";
+import { TextResources } from "../../../../../assets/text/TextResources";
 
 interface Props {
   // collectionState: CollectionsActions;
@@ -20,7 +21,7 @@ interface Props {
 export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
   const stringIsNumber = (value: string) => isNaN(Number(value)) === false;
   // const onCollectionsClick = () => {
-  //   if (collectionState === CollectionsActions.ManageType) setCollectionState(CollectionsActions.ReadOnly);
+  //   if (collectionState === CollectionsActions.ManageType) setCollectionState(CollectionsActions.ShowTypes);
   //   else setCollectionState(CollectionsActions.ManageType);
   // };
 
@@ -40,9 +41,9 @@ export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
 
   return (
     <FilterBoxesWrapper>
-      {/* <FilterWrapper onClick={onCollectionsClick}>
+      {/* <FilterBoxButton onClick={onCollectionsClick}>
         <Icon size={24} src={getCollectionIcon()} alt="collection" />
-      </FilterWrapper> */}
+      </FilterBoxButton> */}
       {Object.keys(Aspect)
         .filter(stringIsNumber)
         .filter((aspect) => Number(aspect) !== Aspect.None && Number(aspect) !== Aspect.NotSet)
@@ -55,8 +56,8 @@ export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
               key={i}
               content={
                 aspectSelected
-                  ? `${TextResources.Library_Aspect_Toggle} ${aspectName} ${TextResources.Library_Aspect_Filter_Off}`
-                  : `${TextResources.Library_Aspect_Toggle} ${aspectName} ${TextResources.Library_Aspect_Filter_On}`
+                  ? `${TextResources.LIBRARY_ASPECT_TOGGLE} ${aspectName} ${TextResources.LIBRARY_ASPECT_FILTER_OFF}`
+                  : `${TextResources.LIBRARY_ASPECT_TOGGLE} ${aspectName} ${TextResources.LIBRARY_ASPECT_FILTER_ON}`
               }
               offset={[0, 10]}
             >

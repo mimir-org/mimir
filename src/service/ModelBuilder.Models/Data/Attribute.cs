@@ -27,23 +27,28 @@ namespace Mb.Models.Data
         public string SelectedUnitId { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Unit> Units { get; set; }
+        public virtual ICollection<Unit> Units
+        {
+            get
+            {
+                if (_units != null)
+                    return _units;
+
+                return !string.IsNullOrWhiteSpace(UnitString) ?
+                    JsonConvert.DeserializeObject<ICollection<Unit>>(UnitString) :
+                    null;
+            }
+            set => _units = value;
+        }
 
         [JsonIgnore]
         public string UnitString { get; set; }
 
         // Qualifiers
-        public string QualifierId { get; set; }
-        public AttributeQualifier Qualifier { get; set; }
-
-        public string SourceId { get; set; }
-        public AttributeSource Source { get; set; }
-
-        public string ConditionId { get; set; }
-        public AttributeCondition Condition { get; set; }
-
-        public string FormatId { get; set; }
-        public AttributeFormat Format { get; set; }
+        public string Qualifier { get; set; }
+        public string Source { get; set; }
+        public string Condition { get; set; }
+        public string Format { get; set; }
 
         [JsonIgnore]
         public virtual Terminal Terminal { get; set; }
@@ -84,6 +89,12 @@ namespace Mb.Models.Data
 
         #endregion
 
+        #region Members
+
+        private ICollection<Unit> _units;
+
+        #endregion
+
         #region IEquatable
 
         public bool Equals(Attribute other)
@@ -98,10 +109,10 @@ namespace Mb.Models.Data
                    AttributeTypeIri == other.AttributeTypeIri &&
                    SelectedUnitId == other.SelectedUnitId &&
                    UnitString == other.UnitString &&
-                   QualifierId == other.QualifierId &&
-                   SourceId == other.SourceId &&
-                   ConditionId == other.ConditionId &&
-                   FormatId == other.FormatId &&
+                   Qualifier == other.Qualifier &&
+                   Source == other.Source &&
+                   Condition == other.Condition &&
+                   Format == other.Format &&
                    TerminalId == other.TerminalId &&
                    TerminalIri == other.TerminalIri &&
                    NodeId == other.NodeId &&
@@ -138,10 +149,10 @@ namespace Mb.Models.Data
             hashCode.Add(AttributeTypeIri);
             hashCode.Add(SelectedUnitId);
             hashCode.Add(UnitString);
-            hashCode.Add(QualifierId);
-            hashCode.Add(SourceId);
-            hashCode.Add(ConditionId);
-            hashCode.Add(FormatId);
+            hashCode.Add(Qualifier);
+            hashCode.Add(Source);
+            hashCode.Add(Condition);
+            hashCode.Add(Format);
             hashCode.Add(TerminalId);
             hashCode.Add(TerminalIri);
             hashCode.Add(NodeId);

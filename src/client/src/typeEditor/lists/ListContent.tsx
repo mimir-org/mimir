@@ -1,7 +1,7 @@
-import { ListElementsContainer } from "../../compLibrary/list";
 import { ListType } from "../TypeEditorList";
 import { useMemo } from "react";
 import { OnPropertyChangeFunction, OnTerminalCategoryChangeFunction } from "../types";
+import { ListElementsContainer } from "../styled";
 import { AttributeType, CreateLibraryType, PredefinedAttribute, Rds, SimpleType, TerminalTypeDict } from "../../models";
 import {
   AttributeElement,
@@ -63,9 +63,8 @@ export const ListContent = ({
         {listType === ListType.Rds &&
           filteredList.map((element) => (
             <RDSElement
-              key={element.name}
-              category={element.name}
-              rds={element.items}
+              key={element.id}
+              rds={element}
               onChange={(key, data) => onPropertyChange(key, data)}
               defaultValue={createLibraryType?.rdsId}
             />

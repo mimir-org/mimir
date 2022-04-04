@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect } from "react";
 import { useStoreState } from "react-flow-renderer";
 import { SetPanelHeight } from "../helpers";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { changeInspectorHeight } from "../redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { useAppDispatch } from "../../../redux/store";

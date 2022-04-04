@@ -1,18 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CreateLibraryType } from "../../models";
 import { ListType } from "../TypeEditorList";
-import { GetAttributesList, GetFilteredAttributesList, GetFilteredRdsList, GetFilteredTerminalsList } from ".";
+import { GetAttributesList, GetFilteredAttributesList, GetFilteredTerminalsList, GetRDSList } from ".";
 
-const GetFilteredList = (
-  listType: ListType,
-  items: any,
-  createLibraryType: CreateLibraryType
-  // discipline?: Discipline
-): any[] => {
+const GetFilteredList = (listType: ListType, items: any, createLibraryType: CreateLibraryType): any[] => {
   const aspect = createLibraryType?.aspect;
   switch (listType) {
     case ListType.Rds:
-      return GetFilteredRdsList(items, aspect);
+      return GetRDSList(createLibraryType, items);
     case ListType.Terminals:
       return GetFilteredTerminalsList(items);
     case ListType.PredefinedAttributes:

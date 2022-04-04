@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../compLibrary/colors";
+import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../compLibrary/font";
 
 const TerminalListElement = styled.div`
@@ -12,7 +12,7 @@ const TerminalListElement = styled.div`
   color: ${Color.BLACK};
 
   :nth-child(odd) {
-    background-color: ${Color.PURPLE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_LIST};
   }
   :nth-child(even) {
     background-color: ${Color.WHITE};

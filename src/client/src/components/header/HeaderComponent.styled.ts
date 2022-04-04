@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { Size } from "../../compLibrary/size";
-import { Color } from "../../compLibrary/colors";
+import { Size } from "../../compLibrary/size/Size";
+import { Color } from "../../compLibrary/colors/Color";
 
 export const HeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   min-height: ${Size.TOPMENU_HEIGHT}px;
-  background-color: ${Color.BLUE_MAGENTA};
+  background-color: ${Color.BASTILLE};
 `;
 
 export const HeaderRightSection = styled.div`

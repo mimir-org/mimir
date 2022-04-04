@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useState } from "react";
 import { Handle, NodeProps } from "react-flow-renderer";
 import { AspectColorType, Node } from "../../../../../models";
-import { TreeNodeBox } from "./styled/TreeNodeBox";
+import { TreeNodeStyled } from "./TreeNode.styled";
 import { HandleBox } from "../styled/HandleBox";
 import { GetHandleType } from "../helpers/GetHandleType";
 import { IsPartOf } from "../../../helpers";
@@ -40,7 +40,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const mouseNodeLeave = () => setTimer(true);
 
   return (
-    <TreeNodeBox
+    <TreeNodeStyled
       colorMain={GetAspectColor(node, AspectColorType.Main)}
       colorSelected={GetAspectColor(node, AspectColorType.Selected)}
       isSelected={node === GetSelectedNode()}
@@ -71,7 +71,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
         );
       })}
       <TreeLogoComponent node={node} />
-    </TreeNodeBox>
+    </TreeNodeStyled>
   );
 };
 

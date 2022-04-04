@@ -3,7 +3,7 @@ import { GlobalStyle } from "../../compLibrary";
 import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
 import { LoginBox } from "./App.styled";
 import { LogoutIcon } from "../../assets/icons/header";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { WebSocket } from "../../models";
 import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";
@@ -16,7 +16,7 @@ type AppProps = {
   pca: IPublicClientApplication;
 };
 
-const App = ({ pca }: AppProps) => {
+export const App = ({ pca }: AppProps) => {
   const isFetching = useAppSelector(isFetchingSelector);
   const projectState = useAppSelector(projectStateSelector);
 
@@ -41,11 +41,9 @@ const App = ({ pca }: AppProps) => {
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
         <LoginBox>
-          <Button text={TextResources.Login_Label} onClick={login} icon={LogoutIcon} />
+          <Button text={TextResources.LOGIN_LABEL} onClick={login} icon={LogoutIcon} />
         </LoginBox>
       </UnauthenticatedTemplate>
     </MsalProvider>
   );
 };
-
-export default App;

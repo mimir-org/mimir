@@ -44,7 +44,7 @@ namespace ModelBuilder.Rdf.Extensions
             foreach (var a in attributes)
             {
                 var attribute = new AttributeAm();
-                attribute.ResolveAttribute(ontologyService, a.ToString(), null, iri, null, null, null);
+                attribute.ResolveAttribute(ontologyService, projectData, a.ToString(), null, iri, null, null, null);
                 inter.Attributes.Add(attribute);
             }
 
@@ -70,9 +70,9 @@ namespace ModelBuilder.Rdf.Extensions
             if (inputTerminalNode != null)
             {
                 var inputTerminal = new TerminalAm();
-                inputTerminal.ResolveTerminal(ontologyService, null, inputTerminalNode.ToString());
+                inputTerminal.ResolveTerminal(ontologyService, projectData, null, inputTerminalNode.ToString());
                 inter.InputTerminal = inputTerminal;
-                inter.InputTerminalId = inputTerminalNode.ResolveValue();
+                inter.InputTerminalId = inputTerminalNode.ResolveValue(false);
                 nodeFromConnector = ontologyService
                     .GetTriplesWithSubjectPredicate(inputTerminalNode.ToString(), Resources.HasNodeFromConnection)
                     .Select(x => x.Object).SingleOrDefault()?.ToString();
@@ -81,9 +81,9 @@ namespace ModelBuilder.Rdf.Extensions
             if (outputTerminalNode != null)
             {
                 var outputTerminal = new TerminalAm();
-                outputTerminal.ResolveTerminal(ontologyService, null, outputTerminalNode.ToString());
+                outputTerminal.ResolveTerminal(ontologyService, projectData, null, outputTerminalNode.ToString());
                 inter.OutputTerminal = outputTerminal;
-                inter.OutputTerminalId = outputTerminalNode.ResolveValue();
+                inter.OutputTerminalId = outputTerminalNode.ResolveValue(false);
                 nodeToConnector = ontologyService
                     .GetTriplesWithSubjectPredicate(outputTerminalNode.ToString(), Resources.HasNodeToConnection)
                     .Select(x => x.Object).SingleOrDefault()?.ToString();

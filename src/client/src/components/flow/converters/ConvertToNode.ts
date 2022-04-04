@@ -1,6 +1,6 @@
 import { CreateId } from "../helpers";
 import { BlobData, LibItem, Node, User, NODE_KIND } from "../../../models";
-import { Size } from "../../../compLibrary/size";
+import { Size } from "../../../compLibrary/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
 
@@ -27,7 +27,7 @@ const ConvertToNode = (
 
   const node = {
     id: CreateId(),
-    rds: data.rds,
+    rds: data.rdsId,
     projectId: projectId,
     name: data.name,
     label: data.name,

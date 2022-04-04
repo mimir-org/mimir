@@ -7,26 +7,23 @@ import { Simple } from "../data/Simple";
 
 export interface LibItem {
   id: string;
-  rds: string;
-  category: string;
+  version: string;
+  rdsId: string;
   name: string;
-  label: string;
   description: string;
+  statusId: string;
   aspect: Aspect;
   connectors: Connector[];
   attributes?: Attribute[] | null;
-  simples?: Simple[] | null;
   semanticReference: string;
-  statusId: string;
-  version: string;
-  symbolId: string;
   terminalId: string;
   terminalTypeId: string;
+  symbolId: string;
   libraryType: ObjectType;
+  simples?: Simple[] | null;
   purpose: Purpose;
   updatedBy: string;
   updated: Date;
   createdBy: string;
   created: Date;
-  libraryTypeId: string;
 }

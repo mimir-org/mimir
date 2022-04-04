@@ -4,17 +4,17 @@ import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle";
-import { OffPageBox } from "./styled/OffPageBox";
+import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";
-import { GetSelectedBlockNode, IsProduct } from "../../../../../helpers";
-import { Color } from "../../../../../compLibrary/colors";
+import { GetSelectedBlockNode } from "../../../../../helpers";
+import { Color } from "../../../../../compLibrary/colors/Color";
 
 /**
- * Component for an offpage node in BlockView
+ * Component for an OffPageNode in BlockView.
  * @param params
- * @returns an offpage node that can be connected to other nodes.
+ * @returns an OffPageNode that can be connected to other nodes.
  */
 const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
@@ -30,8 +30,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
 
   // The position of the OffPageNode is based on its grandparent => the large parentBlockNode
-  const offPageParent = GetParent(data);
-  const parentBlockNode = GetParent(offPageParent);
+  const offPageParent = GetParent(data.id);
+  const parentBlockNode = GetParent(offPageParent?.id);
 
   const parentNodeTerminal = isTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
@@ -39,7 +39,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    if (!IsProduct(parentBlockNode)) UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
+    UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
   }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, secondaryNode]);
 
   if (!data || !offPageParent || !parentBlockNode) return null;

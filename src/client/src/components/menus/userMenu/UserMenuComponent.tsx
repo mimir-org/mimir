@@ -1,10 +1,11 @@
 import * as selectors from "../../home/helpers/selectors";
 import { MENU_TYPE } from "../../../models/project";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { memo, useRef } from "react";
 import { OnToggleDarkMode } from "./handlers/OnToggleDarkMode";
 import { OnLogOutClick } from "./handlers/OnLogOutClick";
+import { Icon } from "../../../compLibrary/icon";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { useAppDispatch, useAppSelector, userStateSelector } from "../../../redux/store";
 import {
@@ -16,8 +17,6 @@ import {
   UserNameText,
 } from "./UserMenuComponent.styled";
 
-import { Icon } from "../../../compLibrary/icon";
-
 interface Props {
   setIsUserMenuOpen: (value: boolean) => void;
 }
@@ -27,7 +26,7 @@ interface Props {
  * @param interface
  * @returns a menu for the user in the header of Mimir.
  */
-const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
+export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const dispatch = useAppDispatch();
   const userState = useAppSelector(userStateSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
@@ -39,7 +38,7 @@ const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
     <UserMenuBox id={MENU_TYPE.USER_MENU} ref={menuRef}>
       <UserNameBox>
         <UserNameText>{userState.user && userState?.user?.name}</UserNameText>
-        <UserNameRoleText>{userState?.user?.role ?? TextResources.UserMenu_User}</UserNameRoleText>
+        <UserNameRoleText>{userState?.user?.role ?? TextResources.USERMENU_USER}</UserNameRoleText>
       </UserNameBox>
 
       {/* <UserMenuElement onClick={() => null}>
@@ -55,13 +54,13 @@ const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       <UserMenuElement onClick={() => OnToggleDarkMode(dispatch, isDarkMode)}>
         <Icon size={20} src={isDarkMode ? LightMode : DarkMode} />
         <UserMenuElementText>
-          {isDarkMode ? TextResources.UserMenu_LightMode : TextResources.UserMenu_DarkMode}
+          {isDarkMode ? TextResources.USERMENU_LIGHTMODE : TextResources.USERMENU_DARKMODE}
         </UserMenuElementText>
       </UserMenuElement>
 
       <UserMenuElement onClick={() => OnLogOutClick()}>
         <Icon size={20} src={LogoutIcon} />
-        <UserMenuElementText>{TextResources.UserMenu_LogOut}</UserMenuElementText>
+        <UserMenuElementText>{TextResources.LOGOUT}</UserMenuElementText>
       </UserMenuElement>
     </UserMenuBox>
   );

@@ -1,6 +1,6 @@
 import * as selectors from "../helpers/selectors";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
-import { TextResources } from "../../../assets/text";
+import { TextResources } from "../../../assets/text/TextResources";
 import { AvatarBackground } from "../../../assets/icons/header";
 import { GetAvatarInitials } from "../helpers/GetAvatarInitials";
 import { useAppSelector } from "../../../redux/store";
@@ -8,7 +8,7 @@ import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevro
 import { AvatarButton, AvatarCircle, AvatarComponentContainer, AvatarInitials } from "./AvatarComponent.styled";
 import { Icon } from "../../../compLibrary/icon";
 import { useState } from "react";
-import { UserMenuComponent } from "../../menus/userMenu";
+import { UserMenuComponent } from "../../menus/userMenu/";
 
 /**
  * Component for the avatar icon in the header of Mimir.
@@ -20,7 +20,7 @@ export const AvatarComponent = () => {
 
   return (
     <AvatarComponentContainer>
-      <Tooltip content={TextResources.UserMenu_Description} placement={"bottom"} offset={[0, 8]}>
+      <Tooltip content={TextResources.USERMENU_DESC} placement={"bottom"} offset={[0, 8]}>
         <AvatarButton isOpen={isUserMenuOpen} onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
           <AvatarCircle>
             <Icon size={35} src={AvatarBackground} alt="avatar" />

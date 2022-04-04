@@ -6,9 +6,9 @@ import { Connector, Node, Project } from "../../../../models";
 import { IsOffPage } from "../../../../helpers";
 import { GetParent, IsOutputTerminal, IsOutputVisible, IsTransport } from "../../helpers";
 import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequiredOffPageNode";
-import { Size } from "../../../../compLibrary/size";
+import { Size } from "../../../../compLibrary/size/Size";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 /**
  * Hook that runs when a user drags a connection from a terminal and releases the mouse button in BlockView.
@@ -46,7 +46,7 @@ const useOnConnectStop = (
   );
 
   if (existingEdge) {
-    dispatch(setValidation({ valid: false, message: TextResources.Validation_Connectors }));
+    dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
     return;
   }
 
@@ -98,7 +98,7 @@ function CalculateDropZone(
   secondaryNode: Node,
   isTarget: boolean
 ) {
-  const parentNode = GetParent(sourceNode);
+  const parentNode = GetParent(sourceNode?.id);
   const parentPosX = parentNode?.positionBlockX;
 
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;

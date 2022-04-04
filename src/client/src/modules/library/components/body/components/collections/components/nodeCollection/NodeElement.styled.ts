@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontType } from "../../../../../../../../compLibrary/font";
 
 interface NodeElementButtonProps {
@@ -10,13 +10,14 @@ interface NodeElementButtonProps {
 
 export const NodeElementButton = styled.button<NodeElementButtonProps>`
   display: flex;
+  align-self: center;
   align-items: center;
   justify-content: space-between;
   gap: 5px;
   width: calc(100% - 20px);
   height: 32px;
   border: 1px;
-  border-color: ${(props) => (props.active ? props.selectedColor : Color.GREY_INACTIVE)} !important;
+  border-color: ${(props) => (props.active ? props.selectedColor : Color.BATTLESHIP_GREY)} !important;
   border-style: ${(props) => (props.active ? "dashed" : "revert")} !important;
   border-radius: 5px;
   background-color: ${(props) => (props.active ? props.hoverColor : Color.WHITE)} !important;
@@ -35,7 +36,7 @@ export const NodeElementButton = styled.button<NodeElementButtonProps>`
   }
 
   &:hover {
-    background-color: ${Color.BLUE_LIGHT};
+    background-color: ${Color.LAVANDER_WEB_HOVER};
     text-decoration: underline;
   }
 `;

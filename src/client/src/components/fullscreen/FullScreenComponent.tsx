@@ -1,8 +1,8 @@
 import { MutableRefObject } from "react";
-import { Size } from "../../compLibrary/size";
+import { Size } from "../../compLibrary/size/Size";
 import { VisuallyHidden } from "../../compLibrary/util";
 import { CloseIcon, ExpandIcon } from "../../assets/icons/controls";
-import { TextResources } from "../../assets/text";
+import { TextResources } from "../../assets/text/TextResources";
 import { OnToggleClick } from "./handlers/OnToggleClick";
 import { FullScreenButton } from "./FullScreenComponent.styled";
 import {
@@ -34,7 +34,7 @@ export const FullScreenComponent = ({ inspectorRef }: Props) => {
 
   return (
     <FullScreenButton libraryOpen={isLibOpen} height={height} onClick={() => OnToggleClick(dispatch, isOpen, inspectorRef)}>
-      <VisuallyHidden>{isOpen ? TextResources.Fullscreen_Close : TextResources.Fullscreen_Open}</VisuallyHidden>
+      <VisuallyHidden>{isOpen ? TextResources.FULLSCREEN_CLOSE : TextResources.FULLSCREEN_OPEN}</VisuallyHidden>
       <img src={isOpen ? ExpandIcon : CloseIcon} alt="" />
     </FullScreenButton>
   );

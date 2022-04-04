@@ -20,6 +20,7 @@ const ResetRedux = (dispatch: any, key: keyof CreateLibraryType, value: any) => 
     dispatch(updateCreateLibraryType({ key: "terminalTypeId", value: "" }));
   }
   if (key === "objectType" && (IsTransport(value) || IsInterface(value))) {
+    dispatch(updateCreateLibraryType({ key: "terminalTypeId", value: "" }));
     dispatch(updateCreateLibraryType({ key: "terminalTypes", value: [] }));
   }
   if (key === "terminalTypeId") {

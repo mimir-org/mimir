@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../../../../../compLibrary/font";
 
 export const ProjectDetailsContainer = styled.div`

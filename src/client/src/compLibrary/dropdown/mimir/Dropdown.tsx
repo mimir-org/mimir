@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Color } from "../../colors";
-import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
+import { Color } from "../../colors/Color";
 import { FontSize } from "../../font";
-import { Symbol } from "../../symbol";
-import { DropdownBox, DropdownHeader, DropdownList, DropdownListItem } from "./Dropdown.styled";
+import { DropdownBox } from "./Dropdown.styled";
+import { DropdownHeader } from "./components/DropdownHeader";
+import { DropdownList } from "./components/DropdownList";
 
 interface Props {
   label: string;
@@ -21,7 +21,7 @@ interface Props {
   listTop?: number;
 }
 
-interface DropdownItem {
+export interface DropdownItem {
   name: string;
   key?: string;
 }
@@ -31,7 +31,7 @@ interface DropdownItem {
  * @param interface
  * @returns a drop-down menu.
  */
-const Dropdown = ({
+export const Dropdown = ({
   label,
   items,
   keyProp,
@@ -77,44 +77,33 @@ const Dropdown = ({
         }}
       >
         <label htmlFor={label} />
-        <>
-          <DropdownHeader
-            borderRadius={borderRadius}
-            borderColor={borderColor}
-            fontSize={fontSize}
-            height={height}
-            onClick={disabled ? null : () => setIsListOpen(!isListOpen)}
-          >
-            {selectedItem && (
-              <>
-                {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
-                <p>{selectedItem.name ?? selectedItem.key}</p>
-                <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
-              </>
-            )}
-          </DropdownHeader>
-        </>
+        <DropdownHeader
+          borderRadius={borderRadius}
+          borderColor={borderColor}
+          fontSize={fontSize}
+          height={height}
+          disabled={disabled}
+          isListOpen={isListOpen}
+          setIsListOpen={setIsListOpen}
+          selectedItem={selectedItem}
+          valueProp={valueProp}
+          valueImageProp={valueImageProp}
+        />
         {isListOpen && (
-          <DropdownList borderRadius={borderRadius} borderColor={borderColor} top={listTop}>
-            {items?.map((item) => {
-              return (
-                <DropdownListItem
-                  fontSize={fontSize}
-                  height={height}
-                  borderRadius={borderRadius}
-                  onClick={() => handleChange(item)}
-                  key={item[keyProp]}
-                >
-                  {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
-                  <p>{item.name ?? item.key}</p>
-                </DropdownListItem>
-              );
-            })}
-          </DropdownList>
+          <DropdownList
+            items={items}
+            borderColor={borderColor}
+            borderRadius={borderRadius}
+            height={height}
+            listTop={listTop}
+            fontSize={fontSize}
+            valueProp={valueProp}
+            valueImageProp={valueImageProp}
+            keyProp={keyProp}
+            handleChange={(item: DropdownItem) => handleChange(item)}
+          />
         )}
       </DropdownBox>
     )
   );
 };
-
-export default Dropdown;

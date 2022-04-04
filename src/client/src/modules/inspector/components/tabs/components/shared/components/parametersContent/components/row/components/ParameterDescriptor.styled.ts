@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../../../../../compLibrary/font";
 
 export const ParameterDescriptorsWrapper = styled.div`
@@ -9,7 +9,7 @@ export const ParameterDescriptorsWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: ${FontSize.TINY};
-    color: ${Color.GREY_HEADER};
+    color: ${Color.DAVYS_GREY};
   }
 
   .descriptors-bottom {
@@ -17,13 +17,13 @@ export const ParameterDescriptorsWrapper = styled.div`
     font-size: ${FontSize.SMALL};
     justify-content: space-between;
     margin-top: 1px;
-    border-top: 1px solid ${Color.PARAMS_PURPLE};
+    border-top: 1px solid ${Color.CORNFLOWER_BLUE};
 
     div:not(:first-child)::after {
       content: "";
       width: 1px;
       height: 6px;
-      background: ${Color.PARAMS_PURPLE};
+      background: ${Color.CORNFLOWER_BLUE};
       border-radius: 1px;
       position: absolute;
       top: -1.5px;

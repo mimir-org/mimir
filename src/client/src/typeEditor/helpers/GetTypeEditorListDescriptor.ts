@@ -1,9 +1,9 @@
 import { ListType, TypeEditorListProps } from "../TypeEditorList";
 import { TypeEditorState } from "../redux/types";
 import { Dispatch } from "redux";
-import { TextResources } from "../../assets/text";
 import { OnPropertyChange, OnTerminalCategoryChange } from "../handlers";
 import { IsLocation, IsProduct } from "./index";
+import { TypeEditorTextResources } from "../assets/TypeEditorTextResources";
 import {
   IsAttributeTypesSelectionInvalid,
   IsPredefinedAttributesSelectionInvalid,
@@ -41,7 +41,7 @@ export function GetTypeEditorListDescriptor(
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsRdsSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_RDS,
+          message: TypeEditorTextResources.ERROR_RDS,
         },
       };
     case ListType.Terminals:
@@ -54,7 +54,7 @@ export function GetTypeEditorListDescriptor(
         onTerminalCategoryChange: (key, data) => OnTerminalCategoryChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsTerminalTypesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Terminals,
+          message: TypeEditorTextResources.ERROR_TERMINALS,
         },
       };
     case ListType.PredefinedAttributes:
@@ -66,7 +66,7 @@ export function GetTypeEditorListDescriptor(
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsPredefinedAttributesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Location_Attributes,
+          message: TypeEditorTextResources.ERROR_LOCATION_ATTRIBUTES,
         },
       };
     case ListType.ObjectAttributes:
@@ -78,7 +78,7 @@ export function GetTypeEditorListDescriptor(
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsAttributeTypesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Attributes,
+          message: TypeEditorTextResources.ERROR_ATTRIBUTES,
         },
       };
     case ListType.LocationAttributes:
@@ -90,7 +90,7 @@ export function GetTypeEditorListDescriptor(
         onPropertyChange: (key, data) => OnPropertyChange(key, data, dispatch),
         validation: {
           visible: state?.validationVisibility && IsAttributeTypesSelectionInvalid(state?.createLibraryType),
-          message: TextResources.TypeEditor_Error_Attributes,
+          message: TypeEditorTextResources.ERROR_ATTRIBUTES,
         },
       };
     case ListType.SimpleTypes:

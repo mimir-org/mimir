@@ -31,10 +31,10 @@ export interface AttributeAm {
   entity: string;
   value: string;
   selectedUnitId: string;
-  qualifierId: string;
-  sourceId: string;
-  conditionId: string;
-  formatId: string;
+  qualifier: string;
+  source: string;
+  condition: string;
+  format: string;
   terminalId: string;
   terminalIri: string;
   nodeId: string;
@@ -230,10 +230,10 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
       entity: attribute.entity,
       value: attribute.value,
       selectedUnitId: attribute.selectedUnitId,
-      qualifierId: attribute.qualifierId,
-      sourceId: attribute.sourceId,
-      conditionId: attribute.conditionId,
-      formatId: attribute.formatId,
+      qualifier: attribute.qualifier,
+      source: attribute.source,
+      condition: attribute.condition,
+      format: attribute.format,
       terminalId: attribute.terminalId,
       terminalIri: attribute.terminalIri,
       nodeId: attribute.nodeId,

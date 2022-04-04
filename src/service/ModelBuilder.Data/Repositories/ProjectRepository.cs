@@ -288,6 +288,9 @@ namespace Mb.Data.Repositories
                     .OrderByDescending(x => x.Name)
                     .FirstOrDefault();
 
+            if (project != null && project.Nodes.Any())
+                project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
+
             return Task.FromResult(project);
         }
 

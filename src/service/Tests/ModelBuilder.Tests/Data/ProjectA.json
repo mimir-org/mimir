@@ -6,8 +6,8 @@
   "isSubProject": false,
   "version": "1.0.0",
   "description": "UnitTestA",
-  "projectOwner": "Reidar Liabø",
-  "updatedBy": "Reidar Liabø",
+  "projectOwner": "Reidar LiabÃ¸",
+  "updatedBy": "Reidar LiabÃ¸",
   "updated": "2022-01-26T14:12:36.3747872",
   "nodes": [
     {
@@ -38,10 +38,10 @@
       "symbol": null,
       "purpose": null,
       "created": "2022-01-25T18:30:47.2872705",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "Function",
       "updated": "2022-01-25T18:30:47.2872705",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_27c92c26-4022-4068-8cef-d7c00f668f62",
@@ -85,8 +85,8 @@
       "positionBlockX": 416.0000,
       "positionBlockY": 263.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -104,10 +104,10 @@
         "semanticReference": null
       },
       "created": "2022-01-25T18:31:05",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-25T18:31:05",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_0fbb7f2e-c3f7-465d-bdf8-15a3c75e06a7",
@@ -2542,8 +2542,8 @@
       "positionBlockX": 1266.0000,
       "positionBlockY": 264.0000,
       "length": null,
-      "width": 170.00,
-      "height": 100.00,
+      "width": 170,
+      "height": 100,
       "cost": null,
       "statusId": "4590637F39B6BA6F39C74293BE9138DF",
       "masterProjectId": "equinor.com_d80cd67c-fa0f-41c8-9ee6-0058ee5e64f5",
@@ -2561,10 +2561,10 @@
         "semanticReference": null
       },
       "created": "2022-01-25T18:31:09",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "6238377E0B27ACC8FA6E7CB847DDD99E",
       "updated": "2022-01-25T18:31:09",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_2a478544-b7e6-415a-9d7b-ec79021babfc",
@@ -5008,10 +5008,10 @@
       "symbol": null,
       "purpose": null,
       "created": "2022-01-25T18:30:47.2983124",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "Product",
       "updated": "2022-01-25T18:30:47.2983124",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_dbbbba93-dabc-4c8c-91fb-1965d19a7a3e",
@@ -5064,10 +5064,10 @@
       "symbol": null,
       "purpose": null,
       "created": "2022-01-25T18:30:47.2983524",
-      "createdBy": "Reidar Liabø",
+      "createdBy": "Reidar LiabÃ¸",
       "libraryTypeId": "Location",
       "updated": "2022-01-25T18:30:47.2983524",
-      "updatedBy": "Reidar Liabø",
+      "updatedBy": "Reidar LiabÃ¸",
       "connectors": [
         {
           "id": "equinor.com_13486173-25c3-479d-8647-ba62e0f564c6",
@@ -5216,10 +5216,10 @@
             "discipline": "Electrical"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T14:12:36.6710451",
         "created": "2022-01-26T07:45:07.8537392",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "FE5F2BD911C3D94FF77D3EFAC600C1B6"
       },
       "interface": null
@@ -5880,10 +5880,10 @@
             "discipline": "Process"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T14:12:36.755017",
         "created": "2022-01-26T07:45:07.91882",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "CDC1DCED48244D668219BD2B6DDB2652"
       },
       "interface": null
@@ -6544,10 +6544,10 @@
             "discipline": "Process"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T14:12:36.7558209",
         "created": "2022-01-26T07:45:07.9200205",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "8DE60CB4D0ED24DC7B4E0CD1DE7B3651"
       },
       "interface": null
@@ -6646,10 +6646,10 @@
             "discipline": "Electrical"
           }
         ],
-        "updatedBy": "Reidar Liabø",
+        "updatedBy": "Reidar LiabÃ¸",
         "updated": "2022-01-26T14:12:36.7563616",
         "created": "2022-01-26T07:45:07.9209084",
-        "createdBy": "Reidar Liabø",
+        "createdBy": "Reidar LiabÃ¸",
         "libraryTypeId": "CBFC42F53BD9950B3583A832B8016674"
       },
       "interface": null

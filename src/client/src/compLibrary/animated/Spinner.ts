@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Color } from "../colors";
+import { Color } from "../colors/Color";
 
 const spin = keyframes`
   0% { transform: rotate(0deg); }
@@ -7,8 +7,8 @@ const spin = keyframes`
 `;
 
 const Spinner = styled.div`
-  border: 16px solid ${Color.GREY_LIGHTER};
-  border-top: 16px solid ${Color.BLUE_MAGENTA};
+  border: 16px solid ${Color.GHOST_WHITE};
+  border-top: 16px solid ${Color.BASTILLE};
   border-radius: 50%;
   width: 100%;
   height: 100%;

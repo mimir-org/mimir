@@ -7,16 +7,16 @@ import {
   InfoModalHeaderDescription,
   InfoModalHeaderTitle,
 } from "./InfoModalContent.styled";
+
 interface Props {
   title?: string;
   description?: string;
-  inset?: string;
   color?: string;
   icon?: string;
 }
 
-export const InfoModalContent: FunctionComponent<Props> = ({ title, description, inset, color, icon, children }) => (
-  <InfoModalContentContainer inset={inset} color={color}>
+export const InfoModalContent: FunctionComponent<Props> = ({ title, description, color, icon, children }) => (
+  <InfoModalContentContainer color={color}>
     <InfoModalHeader>
       {title && (
         <Dialog.Title as={InfoModalHeaderTitle}>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { TextResources } from "../../../../assets/text";
+import { TextResources } from "../../../../assets/text/TextResources";
 import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
@@ -51,7 +51,7 @@ export const ModuleFooter = ({
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => OnOpenTypeEditor(resetSelectedElement, dispatch)}
-        text={TextResources.Library_New_Type}
+        text={TextResources.LIBRARY_NEW_TYPE}
         icon={NewType}
       />
       <Button
@@ -59,14 +59,14 @@ export const ModuleFooter = ({
         onClick={() =>
           OnOpenTypeEditorWithItem(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)
         }
-        text={TextResources.Library_Edit_Type}
+        text={TextResources.LIBRARY_EDIT_TYPE}
         icon={EditType}
         disabled={selectedElement === null || selectedElement.libraryType === ObjectType.NotSet}
       />
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => setConfirmDeleteBoxVisible(true)}
-        text={TextResources.Library_Delete_Type}
+        text={TextResources.LIBRARY_DELETE_TYPE}
         icon={DeleteType}
         disabled={selectedElement === null}
       />

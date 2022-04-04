@@ -144,6 +144,7 @@ namespace Mb.Models.Records
             };
 
             await Task.WhenAll(tasks);
+
             var dict = updated.Attributes.ToDictionary(x => x.Id, x => x);
             AttributeUpdate.AddRange(original.Attributes.Exclude(AttributeCreateAndDelete, x => x.Id).Where(y => !y.Equals(dict[y.Id])).Select(y => dict[y.Id]));
         }

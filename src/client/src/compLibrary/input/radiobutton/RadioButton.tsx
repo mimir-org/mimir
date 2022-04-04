@@ -11,11 +11,9 @@ interface Props {
  * @param interface
  * @returns a radio button.
  */
-const RadioButton = ({ isChecked, onChange, id }: Props) => (
+export const RadioButton = ({ isChecked, onChange, id }: Props) => (
   <RadioButtonWrapper>
     <input type="radio" value={id} key={id} checked={isChecked ?? false} id={id} onChange={(e) => onChange(e)} />
     <div className="checkmark-circle" />
   </RadioButtonWrapper>
 );
-
-export default RadioButton;

@@ -2,12 +2,12 @@ import { GetRdsId, IsAspectNode } from ".";
 import { Edge, Node, Project } from "../models";
 import { FindParentEdge } from "./ParentNode";
 
-const findParentNode = (currentNode: Node, project: Project): Node => {
+const findParentNode = (currentNode: Node, project: Project) => {
   if (!currentNode || IsAspectNode(currentNode)) return null;
   return FindParentEdge(currentNode, project)?.fromNode;
 };
 
-const GetReferenceDesignation = (node: Node, project: Project): string => {
+const GetReferenceDesignation = (node: Node, project: Project) => {
   if (!node || !project || !project.nodes || !project.edges) return "";
 
   const refs = [];

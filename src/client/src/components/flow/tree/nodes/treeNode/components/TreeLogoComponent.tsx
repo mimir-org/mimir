@@ -1,4 +1,4 @@
-import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./styled";
+import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./TreeLogoComponent.styled";
 import { Node } from "../../../../../../models";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { GetCompanyLogoForNode } from "../../../../../../helpers";

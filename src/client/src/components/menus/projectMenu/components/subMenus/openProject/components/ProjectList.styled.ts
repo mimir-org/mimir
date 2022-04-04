@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors";
+import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../../../../../compLibrary/font";
 
 export const ProjectListBox = styled.div`
@@ -10,7 +10,7 @@ export const ProjectListBox = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BLUE_MAGENTA};
+    background: ${Color.BASTILLE};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -21,7 +21,7 @@ export const ProjectListBox = styled.div`
     content: "";
     width: 1px;
     height: 5px;
-    background: ${Color.BLUE_MAGENTA};
+    background: ${Color.BASTILLE};
     border-radius: 1px;
     position: absolute;
     bottom: 0;
@@ -35,7 +35,7 @@ export const ProjectListLabels = styled.div`
   font-weight: ${FontWeight.NORMAL};
   font-size: ${FontSize.STANDARD};
   color: ${Color.BLACK};
-  border-bottom: 2px solid ${Color.BLUE_MAGENTA};
+  border-bottom: 2px solid ${Color.BASTILLE};
   padding-right: 10px;
 
   p {
@@ -67,6 +67,6 @@ export const ProjectDataContainer = styled.div`
   max-height: 280px;
   overflow-y: auto;
   overflow-x: hidden;
-  border-bottom: 1px solid ${Color.BLUE_MAGENTA};
+  border-bottom: 1px solid ${Color.BASTILLE};
   box-shadow: 0 0, 0 -3px 3px -3px rgba(0, 0, 0, 0.2) inset, 0 0, 0 0;
 `;

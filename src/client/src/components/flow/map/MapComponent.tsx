@@ -1,11 +1,11 @@
 import { MiniMap, Node as FlowNode } from "react-flow-renderer";
-import { MapWrapper } from "./styled";
-import { Size } from "../../../compLibrary/size";
+import { MapWrapper } from "./MapComponent.styled";
+import { Size } from "../../../compLibrary/size/Size";
 import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } from "../../../redux/store";
 import { GetAspectColor } from "../../../helpers";
 import { AspectColorType, Node } from "../../../models";
 
-const MiniMapComponent = () => {
+export const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);
   const inspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
@@ -25,5 +25,3 @@ const MiniMapComponent = () => {
     </MapWrapper>
   );
 };
-
-export default MiniMapComponent;

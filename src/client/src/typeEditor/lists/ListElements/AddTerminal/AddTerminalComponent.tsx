@@ -1,10 +1,10 @@
 import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../models";
 import { TerminalElementWrapper } from "../../../styled";
-import { TextResources } from "../../../../assets/text";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { OnDirectionChange, OnQuantityChange, OnTerminalIdChange } from "./handlers";
 import { DirectionalDropdown, SearchDropDown } from "../../../../compLibrary";
 import { NumericValueInput } from "../../../../compLibrary/input/text";
+import { TypeEditorTextResources } from "../../../assets/TypeEditorTextResources";
 
 interface Props {
   terminals: TerminalType[];
@@ -22,7 +22,7 @@ const AddTerminal = ({ terminals, defaultTerminal, onChange }: Props) => (
     <SearchDropDown
       value={defaultTerminal.terminalTypeId}
       onChange={(item) => OnTerminalIdChange(item, defaultTerminal, onChange)}
-      placeHolder={TextResources.TypeEditor_Search}
+      placeHolder={TypeEditorTextResources.SEARCH}
       list={terminals}
     />
     <DirectionalDropdown

@@ -1,5 +1,5 @@
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
-import { Color } from "../../../../../compLibrary/colors";
+import { Color } from "../../../../../compLibrary/colors/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
 import { Node } from "../../../../../models";
 import { useAppSelector, electroSelector } from "../../../../../redux/store";
@@ -68,7 +68,7 @@ export const BlockRelationEdge = ({
 };
 
 function GetRelationColor(node: Node) {
-  if (IsFunction(node)) return Color.FUNCTION_SELECTED;
-  if (IsLocation(node)) return Color.LOCATION_MAIN;
-  if (IsProduct(node)) return Color.PRODUCT_MAIN;
+  if (IsFunction(node)) return Color.SUNGLOW;
+  if (IsLocation(node)) return Color.MAGENTA;
+  if (IsProduct(node)) return Color.ELECTRIC_BLUE;
 }
