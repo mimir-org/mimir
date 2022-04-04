@@ -4,7 +4,7 @@ import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { memo, useState } from "react";
-import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
+import { InitialSortNodes } from "./helpers/SortNodesWithIndent";
 import { IsBlockView } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
@@ -44,7 +44,7 @@ const ProjectComponent = () => {
 
   return (
     <ProjectContentContainer>
-      {SortNodesWithIndent(nodes).map(([node, indent]) => {
+      {InitialSortNodes(nodes).map((node) => {
         if (!areAncestorsExpanded(node)) return null;
         const expanded = !closedNodes.has(node.id);
         const expandHandler = () => onExpandElement(!expanded, node.id);
@@ -58,7 +58,7 @@ const ProjectComponent = () => {
               node={node}
               selectedNode={selectedNode}
               secondaryNode={secondaryNode}
-              indent={indent}
+              indent={node.level}
               isExpanded={expanded}
               isLeaf={!HasChildren(node, project)}
               onToggleExpanded={expandHandler}
@@ -73,7 +73,7 @@ const ProjectComponent = () => {
             username={username}
             node={node}
             nodes={nodes}
-            indent={indent}
+            indent={node.level}
             isExpanded={expanded}
             isLeaf={!HasChildren(node, project)}
             isAncestorVisible={areAncestorsVisible(node)}

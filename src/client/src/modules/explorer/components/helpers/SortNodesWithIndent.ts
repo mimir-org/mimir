@@ -6,7 +6,6 @@ import { Node } from "../../../../models";
 const SortNodesWithIndent = (nodes: Node[]) => {
   InitialSortNodes(nodes);
   const buckets = GroupNodesByIndentLevel(nodes);
-
   return SortNodesByIndent(buckets);
 };
 
@@ -14,8 +13,8 @@ const SortNodesWithIndent = (nodes: Node[]) => {
  * Ensures nodes are sorted according to aspect. On a tie, aspect nodes are placed before non-aspect nodes.
  * @param nodes Nodes to sort.
  */
-const InitialSortNodes = (nodes: Node[]): void => {
-  nodes?.sort((a, b) => (a.aspect === b.aspect ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
+export const InitialSortNodes = (nodes: Node[]) => {
+  return nodes?.sort((a, b) => (a.aspect === b.aspect ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
 };
 
 /**
@@ -44,7 +43,6 @@ const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
  */
 const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
   let sortedNodedWithIndent: [Node, number][] = [];
-  // return sortedNodedWithIndent;
 
   for (const indent of Array.from(buckets.keys())) {
     const bucket = buckets.get(indent);
@@ -73,10 +71,10 @@ const AddNodeFromBucket = (node: Node, indent: number, sortedNodedWithIndent: [N
   for (let i = 0; i < sortedNodedWithIndent.length; i++) {
     const [otherNode] = sortedNodedWithIndent[i];
 
-    // if (IsParentOf(otherNode?.id, node?.id)) {
-    //   sortedNodedWithIndent.splice(i + 1, 0, [node, indent]);
-    //   return;
-    // }
+    if (IsParentOf(otherNode?.id, node?.id)) {
+      sortedNodedWithIndent.splice(i + 1, 0, [node, indent]);
+      return;
+    }
   }
 };
 

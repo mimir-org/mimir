@@ -18,8 +18,6 @@ export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElem
   const numberOfSelectedElements = selectedNodes.length;
 
   useEffect(() => {
-    console.log({ numberOfSelectedElements });
-
     const minimizeCriteria = [numberOfSelectedElements > 1];
     minimizeCriteria.every(Boolean) && SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 
