@@ -1,6 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
-import { SetFlowNodeFunction } from "../../../../../../../helpers";
-import { Node } from "../../../../../../../models";
+import { SetFlowNodeFunction } from "../../../../../../helpers";
+import { Node } from "../../../../../../models";
 
 export const OnSelectActiveNode = (
   mimirNode: Node,

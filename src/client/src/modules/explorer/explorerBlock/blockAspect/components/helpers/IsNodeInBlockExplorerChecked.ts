@@ -1,5 +1,5 @@
 import { Node as FlowNode } from "react-flow-renderer";
-import { Node } from "../../../../../../../models";
+import { Node } from "../../../../../../models";
 
 const IsNodeInBlockExplorerChecked = (flowNodes: FlowNode[], node: Node) => {
   return false;

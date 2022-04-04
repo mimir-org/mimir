@@ -1,14 +1,14 @@
-import { BlockProjectComponent } from "./components";
-import { MODULE_TYPE } from "../../../models/project";
-import { AnimatedModule } from "../../../compLibrary/animated";
-import { Size } from "../../../compLibrary/size/Size";
-import { OnToggleClick } from "../shared/handlers/OnToggleClick";
-import { ExplorerIcon } from "../../../assets/icons/modules";
-import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
-import { Icon } from "../../../compLibrary/icon";
-import { TextResources } from "../../../assets/text/TextResources";
-import { ExplorerModuleBody, ExplorerModuleHeader } from "../shared/styled/ExplorerModule.styled";
-import { useAppSelector, explorerSelector, useAppDispatch } from "../../../redux/store";
+import { BlockProjectComponent } from "./explorerBlock/";
+import { MODULE_TYPE } from "../../models/project";
+import { AnimatedModule } from "../../compLibrary/animated";
+import { Size } from "../../compLibrary/size/Size";
+import { OnToggleClick } from "./shared/handlers/OnToggleClick";
+import { ExplorerIcon } from "../../assets/icons/modules";
+import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
+import { Icon } from "../../compLibrary/icon";
+import { TextResources } from "../../assets/text/TextResources";
+import { ExplorerModuleBody, ExplorerModuleHeader } from "./shared/styled/ExplorerModule.styled";
+import { useAppSelector, explorerSelector, useAppDispatch } from "../../redux/store";
 import { memo } from "react";
 
 /**

@@ -1,1 +1,1 @@
-export { default as ExplorerBlockModule } from "./ExplorerBlockModule";
+export { default as BlockProjectComponent } from "./BlockProjectComponent";

@@ -1,12 +1,12 @@
-import { AspectContainer } from "../../../shared/styled/AspectContainer";
-import { VisibleComponent } from "../../../shared/components/VisibleComponent";
-import { LockComponent } from "../../../shared/components/LockComponent";
-import { Node, Project } from "../../../../../models";
+import { AspectContainer } from "../../shared/styled/AspectContainer";
+import { VisibleComponent } from "../../shared/components/VisibleComponent";
+import { LockComponent } from "../../shared/components/LockComponent";
+import { Node, Project } from "../../../../models";
 import { TreeAspectElement } from "./components/TreeAspectElement";
 import { Dispatch } from "redux";
-import { OnLockNode } from "../../../shared/handlers/OnLockNode";
-import { OnTreeExplorerChangeVisibility } from "./handlers/OnTreeExplorerChange";
-import { TextResources } from "../../../../../assets/text/TextResources";
+import { OnLockNode } from "../../shared/handlers/OnLockNode";
+import { OnTreeExplorerChange } from "./handlers/OnTreeExplorerChange";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
   project: Project;
@@ -52,7 +52,7 @@ export const TreeAspectComponent = ({
         hideText={TextResources.EXPLORER_HIDE_OBJECT}
         onToggleVisible={() => {
           onSetVisibleElement(!isVisible, node.id);
-          OnTreeExplorerChangeVisibility(node, project, dispatch);
+          OnTreeExplorerChange(node, project, dispatch);
         }}
       />
       <LockComponent

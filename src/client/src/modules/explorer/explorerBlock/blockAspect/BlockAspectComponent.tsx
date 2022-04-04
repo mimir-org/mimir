@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
-import { AspectContainer } from "../../../shared/styled/AspectContainer";
-import { LockComponent } from "../../../shared/components/LockComponent";
-import { Node, Project } from "../../../../../models";
+import { AspectContainer } from "../../shared/styled/AspectContainer";
+import { LockComponent } from "../../shared/components/LockComponent";
+import { Node, Project } from "../../../../models";
 import { BlockAspectElement } from "./components/BlockAspectElement";
-import { OnLockNode } from "../../../shared/handlers/OnLockNode";
-import { TextResources } from "../../../../../assets/text/TextResources";
+import { OnLockNode } from "../../shared/handlers/OnLockNode";
+import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
   project: Project;

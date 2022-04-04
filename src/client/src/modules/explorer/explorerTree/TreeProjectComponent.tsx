@@ -1,12 +1,12 @@
-import * as selectors from "./helpers/selectors";
-import { Node } from "../../../../models";
+import { Node } from "../../../models";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
-import { HasChildren, IsAncestorInSet } from "../../../../helpers/ParentNode";
+import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { memo, useState } from "react";
-import { InitialSortNodes } from "../../shared/helpers/SortNodesWithIndent";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { ProjectContentContainer } from "../../shared/styled/ProjectComponent.styled";
-import { IsOffPage } from "../../../../helpers/Aspects";
+import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
+import { projectSelector, usernameSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
+import { IsOffPage } from "../../../helpers/Aspects";
+import { OnExpandElement } from "../shared/handlers/OnExpandElement";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of TreeView.
@@ -14,17 +14,12 @@ import { IsOffPage } from "../../../../helpers/Aspects";
  */
 const TreeProjectComponent = () => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector(selectors.projectSelector);
-  const username = useAppSelector(selectors.usernameSelector);
+  const project = useAppSelector(projectSelector);
+  const username = useAppSelector(usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
-
-  const onExpandElement = (_expanded: boolean, nodeId: string) => {
-    _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
-    setClosedNodes((_) => new Set(closedNodes));
-  };
 
   const onSetVisibleElement = (_visible: boolean, nodeId: string) => {
     _visible ? invisibleNodes.delete(nodeId) : invisibleNodes.add(nodeId);
@@ -42,7 +37,6 @@ const TreeProjectComponent = () => {
       {InitialSortNodes(nodes).map((node) => {
         if (ancestorsCollapsed(node)) return null;
         const expanded = !closedNodes.has(node.id);
-        const expandHandler = () => onExpandElement(!expanded, node.id);
 
         return (
           <TreeAspectComponent
@@ -56,7 +50,7 @@ const TreeProjectComponent = () => {
             isLeaf={!HasChildren(node, project)}
             isAncestorVisible={ancestorsVisible(node)}
             isVisible={isVisible(node)}
-            onToggleExpanded={expandHandler}
+            onToggleExpanded={() => OnExpandElement(!expanded, node.id, closedNodes, setClosedNodes)}
             onSetVisibleElement={onSetVisibleElement}
             dispatch={dispatch}
           />

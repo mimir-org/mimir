@@ -1,13 +1,13 @@
-import { AspectExpandButton } from "../../../../shared/components/AspectExpandButton";
-import { AspectColorType, Node } from "../../../../../../models";
-import { CheckboxExplorer } from "../../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
+import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
+import { AspectColorType, Node } from "../../../../../models";
+import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsNodeInTreeExplorerChecked } from "./helpers/IsNodeInTreeExplorerChecked";
-import { AspectElementWrapper } from "../../../../shared/styled/AspectElementWrapper";
-import { Icon } from "../../../../../../compLibrary/icon";
-import { GetAspectColor, GetAspectIcon, UseIndentLevel, UseSetSelectNodes } from "../../../../../../helpers";
-import { IsAspectNode } from "../../../../../../helpers/Aspects";
-import { GetSelectedNodes } from "../../../../../../helpers/Selected";
+import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
+import { Icon } from "../../../../../compLibrary/icon";
+import { GetAspectColor, GetAspectIcon, UseIndentLevel, UseSetSelectNodes } from "../../../../../helpers";
+import { IsAspectNode } from "../../../../../helpers/Aspects";
+import { GetSelectedNodes } from "../../../../../helpers/Selected";
 
 interface Props {
   node: Node;

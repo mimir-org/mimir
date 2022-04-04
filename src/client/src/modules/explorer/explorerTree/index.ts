@@ -1,1 +1,1 @@
-export { default as ExplorerTreeModule } from "./ExplorerTreeModule";
+export { default as TreeProjectComponent } from "./TreeProjectComponent";

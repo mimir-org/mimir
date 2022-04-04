@@ -1,6 +1,6 @@
-import { setNodeVisibility } from "../../../../../../redux/store/project/actions";
-import { Node, Project } from "../../../../../../models";
 import { Dispatch } from "redux";
+import { setNodeVisibility } from "../../../../../redux/store/project/actions";
+import { Node, Project } from "../../../../../models";
 
 /**
  * Handler for changing visibility of a node in the TreeView's Explorer.
@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
  * @param project
  * @param dispatch
  */
-export const OnTreeExplorerChangeVisibility = (node: Node, project: Project, dispatch: Dispatch) => {
+export const OnTreeExplorerChange = (node: Node, project: Project, dispatch: Dispatch) => {
   let isParent = false;
 
   const edge = project.edges?.find((x) => x.fromNodeId === node.id);
