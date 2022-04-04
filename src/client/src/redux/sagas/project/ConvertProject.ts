@@ -206,12 +206,7 @@ const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
   if (!units) return converted;
 
   units.forEach((unit) => {
-    converted.push({
-      id: unit.id,
-      name: unit.name,
-      description: unit.description,
-      semanticReference: unit.semanticReference,
-    });
+    converted.push({ id: unit.id, name: unit.name, description: unit.description, semanticReference: unit.semanticReference });
   });
 
   return converted;

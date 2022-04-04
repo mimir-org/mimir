@@ -5,8 +5,6 @@ import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 /**
  * Recursive function to give each node the correct level  based on it's family tree.
  * @param node
- * @param nodes
- * @param edges
  * @param count
  * @returns a number that defines the indent in the Explorer Module.
  */

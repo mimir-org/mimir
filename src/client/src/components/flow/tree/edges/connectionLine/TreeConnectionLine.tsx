@@ -18,14 +18,7 @@ export const TreeConnectionLine = ({
 }: ConnectionLineComponentProps) => {
   const color = GetAspectColor(sourceNode?.data, AspectColorType.Main);
   const markerEnd = getMarkerEnd(MarkerType.ArrowClosed, null);
-  const smoothPath = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const smoothPath = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return (
     <g>

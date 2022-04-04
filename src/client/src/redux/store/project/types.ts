@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiError } from "../../../models/webclient";
 import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
 import { BlockNodeSize } from "../../../models/project";
@@ -194,12 +195,7 @@ export interface ChangeAllNodes {
 
 export interface ChangeNodePropValue {
   type: typeof CHANGE_NODE_PROP_VALUE;
-  payload: {
-    nodeId: string;
-    propName: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    propValue: any;
-  };
+  payload: { nodeId: string; propName: string; propValue: any };
 }
 
 export interface ChangeNodeAttributeValue {
@@ -209,12 +205,7 @@ export interface ChangeNodeAttributeValue {
 
 export interface ChangeTransportPropValue {
   type: typeof CHANGE_TRANSPORT_PROP_VALUE;
-  payload: {
-    edgeId: string;
-    propName: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    propValue: any;
-  };
+  payload: { edgeId: string; propName: string; propValue: any };
 }
 
 export interface ChangeTransportAttributeValue {
@@ -224,12 +215,7 @@ export interface ChangeTransportAttributeValue {
 
 export interface ChangeInterfacePropValue {
   type: typeof CHANGE_INTERFACE_PROP_VALUE;
-  payload: {
-    edgeId: string;
-    propName: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    propValue: any;
-  };
+  payload: { edgeId: string; propName: string; propValue: any };
 }
 export interface ChangeInterfaceAttributeValue {
   type: typeof CHANGE_INTERFACE_ATTRIBUTE_VALUE;
@@ -263,10 +249,12 @@ export interface ChangeActiveConnector {
   type: typeof CHANGE_ACTIVE_CONNECTOR;
   payload: { nodeId: string; connectorId: string; connectorVisibility: ConnectorVisibility };
 }
+
 export interface ExportProjectFileAction {
   type: typeof EXPORT_PROJECT_TO_FILE;
   payload: ProjectConverterAm;
 }
+
 export interface ImportProjectAction {
   type: typeof IMPORT_PROJECT;
   payload: { file: File; parserId: string };

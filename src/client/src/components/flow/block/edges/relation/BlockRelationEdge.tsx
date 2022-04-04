@@ -30,14 +30,7 @@ export const BlockRelationEdge = ({
   const margin = 6;
   targetX -= !isElectro ? margin : 0;
 
-  const bezierPath = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const bezierPath = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return (
     <>

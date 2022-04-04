@@ -199,7 +199,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ...state,
           project: {
             ...project,
-            nodes: nodes.map((x) => (elements.includes(x) ? { ...x, isHidden } : x)),
+            nodes: nodes.map((n) => (elements.includes(n) ? { ...n, isHidden } : n)),
             edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, isHidden } : e)),
           },
         };
@@ -505,7 +505,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...project,
           edges: edges.map((e) =>
-            e.transport && e.transport.id === transportId
+            e?.transport?.id === transportId
               ? {
                   ...e,
                   transport: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(
@@ -530,7 +530,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...project,
           edges: edges.map((e) =>
-            e.interface && e.interface.id === interfaceId
+            e?.interface?.id === interfaceId
               ? {
                   ...e,
                   interface: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(
@@ -651,7 +651,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.CREATE_REQUIRED_OFFPAGE_NODE: {
       const { nodeId, connectorId, isRequired } = action.payload;
-      const { node: offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
+      const { offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
 
       const getConnectors = (n: Node) => {
         return n.connectors.map((conn) => (conn.id === connectorId ? { ...conn, isRequired } : conn));
@@ -666,7 +666,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CREATE_CONNECTED_OFFPAGE_NODE: {
-      const { node: offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
+      const { offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
 
       return {
         ...state,

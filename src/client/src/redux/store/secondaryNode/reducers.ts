@@ -5,18 +5,8 @@ const initialState = {
 };
 
 export function secondaryReducer(state = initialState, action: SecondaryActionTypes) {
-  if (action.type === SET_SECONDARY_NODE) {
-    return {
-      ...state,
-      node: action.payload.node,
-    };
-  }
+  if (action.type === SET_SECONDARY_NODE) return { ...state, node: action.payload.node };
+  if (action.type === REMOVE_SECONDARY_NODE) return { ...state, node: null };
 
-  if (action.type === REMOVE_SECONDARY_NODE) {
-    return {
-      ...state,
-      node: null,
-    };
-  }
   return state;
 }

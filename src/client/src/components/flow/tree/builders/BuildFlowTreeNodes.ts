@@ -3,7 +3,7 @@ import { Project } from "../../../../models";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { ConvertNodeToFlow } from "../../converters";
 
-const BuildTreeFlowNodes = (project: Project) => {
+const BuildFlowTreeNodes = (project: Project) => {
   if (!project) return [];
 
   const flowNodes: FlowNode[] = [];
@@ -17,4 +17,4 @@ const BuildTreeFlowNodes = (project: Project) => {
   return flowNodes;
 };
 
-export default BuildTreeFlowNodes;
+export default BuildFlowTreeNodes;

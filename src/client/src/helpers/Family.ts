@@ -2,7 +2,9 @@ import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 import { LibItem, Node, Project } from "../models";
 import { useReactFlow } from "react-flow-renderer";
 
-export const IsFamily = (element: Node | LibItem, elementToCheck: Node | LibItem) => {
+type Item = Node | LibItem;
+
+export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;
 };
 

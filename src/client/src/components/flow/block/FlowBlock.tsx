@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -41,7 +42,7 @@ const FlowBlock = () => {
   const [hasRendered, setHasRendered] = useState(false);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
-  const library = useAppSelector(selectors.librarySelector);
+  const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const selectedNode = project?.nodes?.find((n) => n.isSelected);
@@ -61,7 +62,7 @@ const FlowBlock = () => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnConnect({ connection, project, library, animatedEdge, setEdges, dispatch });
+    return hooks.useOnConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -91,9 +92,9 @@ const FlowBlock = () => {
       project,
       user,
       icons,
-      library,
+      lib,
       selectedNode,
-      secondaryNode: secondaryNodeRef,
+      secondaryNodeRef,
       flowInstance,
       flowWrapper,
       getViewport,

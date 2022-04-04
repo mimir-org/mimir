@@ -15,7 +15,7 @@ import {
 } from "../../../../../../models";
 
 export interface OffPageObject {
-  node: Node;
+  offPageNode: Node;
   partOfEdge: Edge;
   transportEdge: Edge;
 }
@@ -104,7 +104,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
   //#endregion
 
   //#region Edges
-  const partofEdge = {
+  const partOfEdge = {
     id: CreateId(),
     fromConnector: sourcePartOfConn,
     fromConnectorId: sourcePartOfConn?.id,
@@ -135,9 +135,5 @@ export const CreateOffPageObject = (data: OffPageData) => {
   } as Edge;
   //#endregion
 
-  return {
-    node: offPageNode,
-    partOfEdge: partofEdge,
-    transportEdge: transportEdge,
-  } as OffPageObject;
+  return { offPageNode, partOfEdge, transportEdge } as OffPageObject;
 };

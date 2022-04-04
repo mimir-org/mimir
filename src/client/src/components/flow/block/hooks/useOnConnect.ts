@@ -15,7 +15,7 @@ export interface Params {
   project: Project;
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>;
   dispatch: Dispatch;
-  library: LibraryState;
+  lib: LibraryState;
   animatedEdge: boolean;
 }
 
@@ -26,37 +26,27 @@ export interface Params {
  */
 const useOnConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
+  const { project, connection, lib, animatedEdge, setEdges, dispatch } = params;
 
   const id = CreateId();
-  const sourceNode = project.nodes.find((node) => node.id === connection.source);
-  const sourceConn = sourceNode.connectors.find((c) => c.id === connection.sourceHandle);
-  const targetNode = project.nodes.find((node) => node.id === connection.target);
-  const targetConn = targetNode.connectors.find((c) => c.id === connection.targetHandle);
+  const source = project.nodes.find((node) => node.id === connection.source);
+  const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
+  const target = project.nodes.find((node) => node.id === connection.target);
+  const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
 
-  if (IsOffPage(sourceNode) && IsOffPage(targetNode)) {
-    HandleOffPageConnect(params, sourceNode?.id, targetNode?.id);
+  if (IsOffPage(source) && IsOffPage(target)) {
+    HandleOffPageConnect(params, source?.id, target?.id);
     return;
   }
 
-  const edge = ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  const edge = ConvertToEdge(id, sourceConn, targetConn, source, target, project.id, lib);
   dispatch(createEdge(edge));
 
+  const type = GetBlockEdgeType(sourceConn, source, target);
+  const animated = animatedEdge && IsTransport(sourceConn);
+
   return setEdges((els) => {
-    return addEdge(
-      {
-        ...connection,
-        id: id,
-        type: GetBlockEdgeType(sourceConn, sourceNode, targetNode),
-        animated: animatedEdge && IsTransport(sourceConn),
-        data: {
-          source: sourceNode,
-          target: targetNode,
-          edge: edge,
-        },
-      },
-      els
-    );
+    return addEdge({ ...connection, id, type, animated, data: { source, target, edge: edge } }, els);
   });
 };
 

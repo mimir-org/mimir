@@ -55,61 +55,32 @@ const ErrorModule = () => {
 
     if (projectState.apiError) {
       projectState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "Project",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "Project", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (libraryState.apiError) {
       libraryState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "Library",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "Library", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (commonState.apiError) {
       commonState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "Common",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "Common", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (userState.apiError) {
       userState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "User",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "User", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (typeEditorState.apiError) {
       typeEditorState.apiError.forEach((error) => {
         if (error)
-          errorList.push({
-            module: "TypeEditor",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+          errorList.push({ module: "TypeEditor", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 

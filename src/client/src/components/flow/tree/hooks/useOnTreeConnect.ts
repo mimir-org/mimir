@@ -27,34 +27,24 @@ const useOnConnectTree = (params: Params) => {
   SaveEventData(null, "edgeEvent");
   const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
-  const sourceNode = project.nodes.find((node) => node.id === connection.source);
-  const sourceConn = sourceNode.connectors.find((c) => c.id === connection.sourceHandle);
-  const targetNode = project.nodes.find((node) => node.id === connection.target);
-  const targetConn = targetNode.connectors.find((c) => c.id === connection.targetHandle);
-  const existingEdge = GetExistingEdge(project, connection, sourceNode, targetNode);
+  const source = project.nodes.find((node) => node.id === connection.source);
+  const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
+  const target = project.nodes.find((node) => node.id === connection.target);
+  const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
+  const existingEdge = GetExistingEdge(project, connection, source, target);
 
-  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
+  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, target, dispatch);
 
-  const currentEdge = existingEdge ?? ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  const currentEdge = existingEdge ?? ConvertToEdge(id, sourceConn, targetConn, source, target, project.id, library);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
   if (IsPartOfTerminal(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
 
+  const type = GetTreeEdgeType(sourceConn);
+  const animated = animatedEdge && IsTransport(sourceConn);
+
   return setEdges((els) => {
-    return addEdge(
-      {
-        ...connection,
-        id: id,
-        type: GetTreeEdgeType(sourceConn),
-        animated: animatedEdge && IsTransport(sourceConn),
-        data: {
-          source: sourceNode,
-          target: targetNode,
-          edge: currentEdge,
-        },
-      },
-      els
-    );
+    return addEdge({ ...connection, id, type, animated, data: { source, target, edge: currentEdge } }, els);
   });
 };
 

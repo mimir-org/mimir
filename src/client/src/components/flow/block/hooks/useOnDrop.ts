@@ -16,9 +16,9 @@ interface OnDropParameters {
   project: Project;
   user: User;
   icons: BlobData[];
-  library: LibraryState;
+  lib: LibraryState;
   selectedNode: Node;
-  secondaryNode: Node;
+  secondaryNodeRef: Node;
   flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;
   getViewport: GetViewport;
@@ -50,9 +50,9 @@ function HandleNodeDrop({
   project,
   user,
   icons,
-  library,
+  lib: library,
   selectedNode,
-  secondaryNode,
+  secondaryNodeRef: secondaryNode,
   getViewport,
   dispatch,
 }: OnDropParameters) {

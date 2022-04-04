@@ -11,11 +11,11 @@ export const PopulateTerminalCategories = (transportItems: Connector[]) => {
   const categories = [] as TerminalCategory[];
 
   transportItems?.forEach((item) => {
-    if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory?.name)) {
-      const category = {
-        id: item.terminalCategoryId,
-        name: item.terminalCategory?.name ?? TextResources.FILTER_CATEGORY,
-      } as TerminalCategory;
+    const id = item.terminalCategoryId;
+    const name = item.terminalCategory?.name;
+
+    if (!categories.some((x) => x.id === id || x.name === name)) {
+      const category = { id, name: name ?? TextResources.FILTER_CATEGORY } as TerminalCategory;
       categories.push(category);
     }
   });

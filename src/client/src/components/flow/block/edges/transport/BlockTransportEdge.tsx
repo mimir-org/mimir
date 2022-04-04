@@ -34,16 +34,7 @@ export const BlockTransportEdge = ({
   sourceX += isBidirectional ? margin / 2 : 0;
   targetX -= !isElectro ? margin : 0;
 
-  const smoothPath = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-    borderRadius,
-  });
-
+  const smoothPath = getSmoothStepPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, borderRadius });
   const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return (

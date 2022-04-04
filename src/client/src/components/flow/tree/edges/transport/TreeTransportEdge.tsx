@@ -23,14 +23,7 @@ export const TreeTransportEdge = ({
   // Adjust to match connector
   targetX -= 6;
 
-  const smoothStep = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const smoothStep = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return <path id={id} style={GetTreeEdgeStyle(color, !data?.edge.isHidden)} className="path-treeTransportEdge" d={smoothStep} />;
 };

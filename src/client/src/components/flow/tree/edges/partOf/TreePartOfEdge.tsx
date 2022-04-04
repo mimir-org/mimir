@@ -12,14 +12,7 @@ export const TreePartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourceP
   const color = GetAspectColor(data.edge.fromNode, AspectColorType.Main);
   const style = GetTreeEdgeStyle(color, !data.edge.isHidden);
 
-  const edgePathSmoothStep = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const edgePathSmoothStep = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return <path id={id} style={style} className="path-treePartOfEdge" d={edgePathSmoothStep} />;
 };

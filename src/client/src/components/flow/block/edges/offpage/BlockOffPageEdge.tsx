@@ -20,16 +20,7 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
   const borderRadius = 20;
   const arrowId = `arrow-${id}`;
 
-  const smoothPath = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-    borderRadius,
-  });
-
+  const smoothPath = getSmoothStepPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, borderRadius });
   const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return (

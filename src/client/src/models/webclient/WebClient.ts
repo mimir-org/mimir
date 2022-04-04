@@ -6,14 +6,8 @@ import { TextResources } from "../../assets/text/TextResources";
 export const Token = async () => {
   const account = msalInstance.getActiveAccount();
 
-  if (!account) {
-    throw Error(TextResources.ERROR_NOACCOUNT);
-  }
-
-  const response = await msalInstance.acquireTokenSilent({
-    ...loginRequest,
-    account: account,
-  });
+  if (!account) throw Error(TextResources.ERROR_NOACCOUNT);
+  const response = await msalInstance.acquireTokenSilent({ ...loginRequest, account });
 
   return `Bearer ${response.accessToken}`;
 };
@@ -24,9 +18,7 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
   try {
     response = await fetch(request);
 
-    if (!isValidStatus(response.status)) {
-      throw new Error(errorMessage(response));
-    }
+    if (!isValidStatus(response.status)) throw new Error(errorMessage(response));
 
     if (hasContent(response)) {
       try {
@@ -46,13 +38,8 @@ const isValidStatus = (status: number) => (status >= 200 && status < 300) || sta
 const hasContent = <T>(response: HttpResponse<T>) => response.status !== 204;
 
 const errorMessage = <T>(response: HttpResponse<T>) => {
-  if (response.status >= 401 && response.status <= 403) {
-    return TextResources.ERROR_FORBIDDEN;
-  }
-
-  if (response.status >= 500) {
-    return TextResources.ERROR_SERVER;
-  }
+  if (response.status >= 401 && response.status <= 403) return TextResources.ERROR_FORBIDDEN;
+  if (response.status >= 500) return TextResources.ERROR_SERVER;
 
   return TextResources.ERROR_SERVER_UNAVAILABLE;
 };

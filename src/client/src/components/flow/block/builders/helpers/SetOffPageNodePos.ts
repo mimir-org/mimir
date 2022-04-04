@@ -37,13 +37,13 @@ function HandleSourceOffPagePos(parentNode: Node, offPageNode: Node) {
   const yMax = parentNode.height;
   const yMin = Size.BLOCK_MARGIN_Y;
 
-  const nodeX = parentNode.positionBlockX - marginX;
-  let nodeY = offPageNode.positionBlockY;
+  const x = parentNode.positionBlockX - marginX;
+  let y = offPageNode.positionBlockY;
 
-  if (nodeY > yMax) nodeY = yMax - marginY;
-  if (nodeY < yMin) nodeY = yMin + marginY;
+  if (y > yMax) y = yMax - marginY;
+  if (y < yMin) y = yMin + marginY;
 
-  return { x: nodeX, y: nodeY } as Position;
+  return { x, y } as Position;
 }
 
 /**
@@ -59,13 +59,13 @@ function HandleTargetOffPagePos(parentNode: Node, offPageNode: Node) {
   const yMax = parentNode.height;
   const yMin = Size.BLOCK_MARGIN_Y;
 
-  const nodeX = parentNode.positionBlockX + parentNode.width - marginX;
-  let nodeY = offPageNode.positionBlockY;
+  const x = parentNode.positionBlockX + parentNode.width - marginX;
+  let y = offPageNode.positionBlockY;
 
-  if (nodeY < yMin) nodeY = yMin - marginY;
-  if (nodeY > yMax) nodeY = yMax - marginY;
+  if (y < yMin) y = yMin - marginY;
+  if (y > yMax) y = yMax - marginY;
 
-  return { x: nodeX, y: nodeY } as Position;
+  return { x, y } as Position;
 }
 
 /**

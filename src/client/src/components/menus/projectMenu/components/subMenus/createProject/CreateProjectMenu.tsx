@@ -7,7 +7,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnShowInstructionClick } from "../../../handlers";
-import { OnProjectCreateClick } from "./handlers";
+import { OnProjectCreateClick } from "./handlers/OnProjectCreateClick";
 import { useAppDispatch, useParametricAppSelector, isActiveViewSelector } from "../../../../../../redux/store";
 import { VIEW_TYPE } from "../../../../../../models/project";
 

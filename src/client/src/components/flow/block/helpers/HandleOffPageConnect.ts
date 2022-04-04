@@ -20,7 +20,7 @@ import { IsOffPageEdge } from "./";
  * @returns a transport edge between the parents of the OffPageNodes.
  */
 const HandleOffPageConnect = (params: Params, sourceNodeId: string, targetNodeId: string) => {
-  const { project, connection, library, dispatch, setEdges } = params;
+  const { project, connection, lib, dispatch, setEdges } = params;
   const id = CreateId();
   const sourceParent = GetParent(sourceNodeId, project);
   const targetParent = GetParent(targetNodeId, project);
@@ -30,7 +30,7 @@ const HandleOffPageConnect = (params: Params, sourceNodeId: string, targetNodeId
 
   if (!sourceTerminal || !targetTerminal) return null;
 
-  const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, library);
+  const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, lib);
   dispatch(createEdge(edge));
 
   project.edges.forEach((e) => {
@@ -45,26 +45,15 @@ const HandleOffPageConnect = (params: Params, sourceNodeId: string, targetNodeId
 
   return setEdges((els) => {
     return addEdge(
-      {
-        ...connection,
-        id: id,
-        type: EDGE_TYPE.BLOCK_OFFPAGE,
-        data: {
-          source: sourceParent,
-          target: targetParent,
-          edge: edge,
-        },
-      },
+      { ...connection, id, type: EDGE_TYPE.BLOCK_OFFPAGE, data: { source: sourceParent, target: targetParent, edge } },
       els
     );
   });
 };
 
-export default HandleOffPageConnect;
-
 function GetSourceTerminal(project: Project, sourceParentId: string, sourceNodeId: string) {
   const sourceTerminal = project.edges.find(
-    (x) => x.fromConnector.nodeId === sourceParentId && IsTransport(x.fromConnector) && x.toConnector.nodeId === sourceNodeId
+    (e) => e.fromConnector.nodeId === sourceParentId && IsTransport(e.fromConnector) && e.toConnector.nodeId === sourceNodeId
   ).fromConnector;
 
   return sourceTerminal ?? null;
@@ -72,8 +61,10 @@ function GetSourceTerminal(project: Project, sourceParentId: string, sourceNodeI
 
 function GetTargetTerminal(project: Project, targetParentId: string, targetNodeId: string) {
   const targetTerminal = project.edges.find(
-    (x) => x.toConnector.nodeId === targetParentId && IsTransport(x.toConnector) && x.fromConnector.nodeId === targetNodeId
+    (e) => e.toConnector.nodeId === targetParentId && IsTransport(e.toConnector) && e.fromConnector.nodeId === targetNodeId
   ).toConnector;
 
   return targetTerminal ?? null;
 }
+
+export default HandleOffPageConnect;

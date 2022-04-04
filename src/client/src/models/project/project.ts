@@ -42,12 +42,7 @@ export const MENU_TYPE = {
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;
-export const VIEW_TYPE = {
-  STARTPAGE: "startpage",
-  BLOCKVIEW: "blockview",
-  TREEVIEW: "treeview",
-  TYPE_EDITOR: "type-editor",
-};
+export const VIEW_TYPE = { STARTPAGE: "startpage", BLOCKVIEW: "blockview", TREEVIEW: "treeview", TYPE_EDITOR: "type-editor" };
 
 export interface LibraryCategory {
   name: string;

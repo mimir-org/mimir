@@ -1,4 +1,2 @@
-export { default as BuildTreeFlowNodes } from "./BuildTreeFlowNodes";
-export { default as BuildTreeFlowEdges } from "./BuildTreeFlowEdges";
-
-export { default as BuildTreeEdge } from "./BuildTreeEdge";
+export { default as BuildFlowTreeNodes } from "./BuildFlowTreeNodes";
+export { default as BuildFlowTreeEdges } from "./BuildFlowTreeEdges";

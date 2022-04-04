@@ -2,7 +2,7 @@
 import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
 import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
-import { BuildTreeFlowNodes, BuildTreeFlowEdges } from "../tree/builders";
+import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -74,16 +74,7 @@ const FlowTree = () => {
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnTreeDrop({
-      event,
-      project,
-      user,
-      icons,
-      library,
-      flowInstance,
-      flowWrapper,
-      dispatch,
-    });
+    return useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => HandleNodeSelection(selectedItems, project, dispatch);
@@ -91,8 +82,8 @@ const FlowTree = () => {
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
-      setNodes(BuildTreeFlowNodes(project));
-      setEdges(BuildTreeFlowEdges(project, animatedEdge));
+      setNodes(BuildFlowTreeNodes(project));
+      setEdges(BuildFlowTreeEdges(project, animatedEdge));
       setHasRendered(true);
     }
   }, [project]);
@@ -101,8 +92,8 @@ const FlowTree = () => {
   useEffect(() => {
     if (project) {
       console.log("BUILD");
-      setNodes(BuildTreeFlowNodes(project));
-      setEdges(BuildTreeFlowEdges(project, animatedEdge));
+      setNodes(BuildFlowTreeNodes(project));
+      setEdges(BuildFlowTreeEdges(project, animatedEdge));
     }
     console.log("TREE RENDER!");
   }, [project?.nodes?.length]);

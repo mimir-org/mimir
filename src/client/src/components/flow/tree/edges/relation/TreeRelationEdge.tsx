@@ -18,14 +18,7 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
   targetX += 8;
   sourceX -= 8;
 
-  const bezierPath = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const bezierPath = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return (
     <>
