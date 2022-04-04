@@ -6,7 +6,7 @@ import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { memo, useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { IsBlockView } from "../../../helpers";
-import { nodesSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
 
@@ -16,13 +16,9 @@ import { IsOffPage } from "../../../helpers/Aspects";
  */
 const ProjectComponent = () => {
   const dispatch = useAppDispatch();
-  // const project = useAppSelector(selectors.projectSelector);
-  console.log("PROJECT COMP");
-  const nodes = useAppSelector(nodesSelector);
-  console.log("PROJECT nodes");
-
+  const project = useAppSelector(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
-  // const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
+  const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
 
   const selectedNode = nodes?.find((n) => n.isSelected);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -40,50 +36,47 @@ const ProjectComponent = () => {
     setInvisibleNodes((_) => new Set(invisibleNodes));
   };
 
-  // const areAncestorsExpanded = (elem: Node) => !IsAncestorInSet(elem, closedNodes, project);
-  // const areAncestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
+  const areAncestorsExpanded = (elem: Node) => !IsAncestorInSet(elem, closedNodes, project);
+  const areAncestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
   const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
   if (!nodes) return null;
 
-  console.log("PROJECT return");
-
   return (
     <ProjectContentContainer>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
-        // if (!areAncestorsExpanded(node)) return null;
+        if (!areAncestorsExpanded(node)) return null;
         const expanded = !closedNodes.has(node.id);
         const expandHandler = () => onExpandElement(!expanded, node.id);
-        console.log("IN LOOP");
 
-        // if (IsBlockView()) {
-        //   return (
-        //     <BlockAspectComponent
-        //       key={node.id}
-        //       project={project}
-        //       username={username}
-        //       node={node}
-        //       selectedNode={selectedNode}
-        //       secondaryNode={secondaryNode}
-        //       indent={indent}
-        //       isExpanded={expanded}
-        //       isLeaf={!HasChildren(node, project)}
-        //       onToggleExpanded={expandHandler}
-        //       dispatch={dispatch}
-        //     />
-        //   );
-        // }
+        if (IsBlockView()) {
+          return (
+            <BlockAspectComponent
+              key={node.id}
+              project={project}
+              username={username}
+              node={node}
+              selectedNode={selectedNode}
+              secondaryNode={secondaryNode}
+              indent={indent}
+              isExpanded={expanded}
+              isLeaf={!HasChildren(node, project)}
+              onToggleExpanded={expandHandler}
+              dispatch={dispatch}
+            />
+          );
+        }
         return (
           <TreeAspectComponent
             key={node.id}
-            project={null}
+            project={project}
             username={username}
             node={node}
-            nodes={[]}
+            nodes={nodes}
             indent={indent}
             isExpanded={expanded}
-            isLeaf={false}
-            isAncestorVisible={false}
+            isLeaf={!HasChildren(node, project)}
+            isAncestorVisible={areAncestorsVisible(node)}
             isVisible={isVisible(node)}
             onToggleExpanded={expandHandler}
             onSetVisibleElement={onSetVisibleElement}
@@ -94,5 +87,4 @@ const ProjectComponent = () => {
     </ProjectContentContainer>
   );
 };
-
 export default memo(ProjectComponent);

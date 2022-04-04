@@ -42,7 +42,6 @@ export const TreeAspectComponent = ({
   onToggleExpanded,
   dispatch,
 }: Props) => {
-  console.log("ASPECT COMP");
   return (
     <AspectContainer node={node}>
       <VisibleComponent
@@ -53,23 +52,23 @@ export const TreeAspectComponent = ({
         hideText={TextResources.EXPLORER_HIDE_OBJECT}
         onToggleVisible={() => {
           onSetVisibleElement(!isVisible, node.id);
-          // OnTreeExplorerChangeVisibility(node, project, dispatch);
+          OnTreeExplorerChangeVisibility(node, project, dispatch);
         }}
       />
-      {/* <LockComponent
-      isLocked={node.isLocked}
-      unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
-      lockText={TextResources.EXPLORER_LOCK_OBJECT}
-      onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
-    /> */}
-      {/* <TreeAspectElement
-      node={node}
-      nodes={nodes}
-      isExpanded={isExpanded}
-      isLeaf={isLeaf}
-      onToggleExpanded={onToggleExpanded}
-      indent={indent}
-    /> */}
+      <LockComponent
+        isLocked={node.isLocked}
+        unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
+        lockText={TextResources.EXPLORER_LOCK_OBJECT}
+        onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
+      />
+      <TreeAspectElement
+        node={node}
+        nodes={nodes}
+        isExpanded={isExpanded}
+        isLeaf={isLeaf}
+        onToggleExpanded={onToggleExpanded}
+        indent={indent}
+      />
     </AspectContainer>
   );
 };

@@ -3,11 +3,9 @@ import { SetIndentLevel } from "../../../../helpers/SetIndentLevel";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node } from "../../../../models";
 
-const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {
-  // InitialSortNodes(nodes);
-  console.log("initialsort");
+const SortNodesWithIndent = (nodes: Node[]) => {
+  InitialSortNodes(nodes);
   const buckets = GroupNodesByIndentLevel(nodes);
-  console.log({ buckets });
 
   return SortNodesByIndent(buckets);
 };
@@ -39,12 +37,14 @@ const GroupNodesByIndentLevel = (nodes: Node[]): Map<number, Node[]> => {
 };
 
 /**
- * Create array of nodes, adhering to node hierarcy: Parent node is placed before children node. Nodes are inserted into array according to indent level, making sure to insert childNode one place deeper than parent.
+ * Create array of nodes, adhering to node hierarcy: Parent node is placed before children node.
+ * Nodes are inserted into array according to indent level, making sure to insert childNode one place deeper than parent.
  * @param buckets Mapping between indent level and array of nodes with corresponding indent level.
  * @returns Array of Node and indent level, to be rendered by explorer module.
  */
 const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
   let sortedNodedWithIndent: [Node, number][] = [];
+  // return sortedNodedWithIndent;
 
   for (const indent of Array.from(buckets.keys())) {
     const bucket = buckets.get(indent);
@@ -58,7 +58,7 @@ const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
       AddNodeFromBucket(node, indent, sortedNodedWithIndent);
     }
   }
-  console.log({ sortedNodedWithIndent });
+
   return sortedNodedWithIndent;
 };
 
@@ -73,10 +73,10 @@ const AddNodeFromBucket = (node: Node, indent: number, sortedNodedWithIndent: [N
   for (let i = 0; i < sortedNodedWithIndent.length; i++) {
     const [otherNode] = sortedNodedWithIndent[i];
 
-    if (IsParentOf(otherNode?.id, node?.id)) {
-      sortedNodedWithIndent.splice(i + 1, 0, [node, indent]);
-      return;
-    }
+    // if (IsParentOf(otherNode?.id, node?.id)) {
+    //   sortedNodedWithIndent.splice(i + 1, 0, [node, indent]);
+    //   return;
+    // }
   }
 };
 

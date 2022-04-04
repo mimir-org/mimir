@@ -32,7 +32,7 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = () => {
+const FlowTree = ({ inspectorRef }: Props) => {
   const project = useAppSelector(selectors.projectSelector);
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
@@ -54,20 +54,19 @@ const FlowTree = () => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) => {
+  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
-  };
 
   const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
   const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
-  // const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
-  //   return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
-  // };
+  const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
+    return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
+  };
 
-  // const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
-  //   return useOnTreeEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
-  // };
+  const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
+    return useOnTreeEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
+  };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
     return useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
@@ -91,11 +90,9 @@ const FlowTree = () => {
   // Rebuild elements
   useEffect(() => {
     if (project) {
-      console.log("BUILD");
       setNodes(BuildFlowTreeNodes(project));
       setEdges(BuildFlowTreeEdges(project, animatedEdge));
     }
-    console.log("TREE RENDER!");
   }, [project?.nodes?.length]);
 
   useEffect(() => {
@@ -115,8 +112,8 @@ const FlowTree = () => {
         edges={edges}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
-        // onNodesDelete={OnNodesDelete}
-        // onEdgesDelete={OnEdgesDelete}
+        onNodesDelete={OnNodesDelete}
+        onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
         onDrop={OnDrop}
         onDragOver={OnDragOver}

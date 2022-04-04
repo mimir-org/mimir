@@ -14,7 +14,7 @@ import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
  * @returns all validated FlowNodes.
  */
 const BuildFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode: Node) => {
-  if (!project) return;
+  if (!project) return [];
 
   const flowNodes: FlowNode[] = [];
   const splitView = secondaryNode !== undefined;

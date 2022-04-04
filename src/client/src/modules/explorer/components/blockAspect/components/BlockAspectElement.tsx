@@ -37,13 +37,13 @@ export const BlockAspectElement = ({
   onToggleExpanded,
   indent,
 }: Props) => {
-  // const flowNodes = useReactFlow().getNodes();
+  const flowNodes = useReactFlow().getNodes();
 
   return (
     <AspectElementWrapper indent={UseIndentLevel(indent)}>
       <CheckboxExplorer
         color={GetAspectColor(node, AspectColorType.Selected)}
-        isChecked={IsNodeInBlockExplorerChecked([], node)}
+        isChecked={IsNodeInBlockExplorerChecked(flowNodes, node)}
         isMiniCheckbox={IsMiniCheckBox(node, selectedNode, secondaryNode)}
         isAspectNode={IsAspectNode(node)}
         onChange={() => OnBlockExplorerChange(project, node, selectedNode, secondaryNode, dispatch)}

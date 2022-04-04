@@ -19,8 +19,8 @@ interface OnDropParameters {
   lib: LibraryState;
   selectedNode: Node;
   secondaryNodeRef: Node;
-  flowInstance: ReactFlowInstance;
-  flowWrapper: React.MutableRefObject<HTMLDivElement>;
+  instance: ReactFlowInstance;
+  wrapper: React.MutableRefObject<HTMLDivElement>;
   getViewport: GetViewport;
   dispatch: Dispatch;
 }
@@ -50,9 +50,9 @@ function HandleNodeDrop({
   project,
   user,
   icons,
-  lib: library,
+  lib,
   selectedNode,
-  secondaryNodeRef: secondaryNode,
+  secondaryNodeRef,
   getViewport,
   dispatch,
 }: OnDropParameters) {
@@ -61,9 +61,9 @@ function HandleNodeDrop({
   if (!parentNode) return;
 
   // Handle drop in SplitView
-  if (secondaryNode) {
+  if (secondaryNodeRef) {
     const dropZone = CalculateSecondaryNodeDropZone(getViewport, parentNode);
-    parentNode = FindParent(data, parentNode, secondaryNode, dropZone, event.clientX);
+    parentNode = FindParent(data, parentNode, secondaryNodeRef, dropZone, event.clientX);
     if (!parentNode) return;
   }
 
@@ -73,7 +73,7 @@ function HandleNodeDrop({
   if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
-  if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
+  if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, lib, dispatch);
 
   dispatch(addNode(targetNode));
 }

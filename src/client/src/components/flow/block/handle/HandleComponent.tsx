@@ -29,11 +29,11 @@ export const HandleComponent = ({ node, terminals, offPage, isInput }: Props) =>
   const className = "react-flow__handle-block";
   const updateNodeInternals = useUpdateNodeInternals();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     updateNodeInternals(node?.id);
-  //   }, 200);
-  // }, [isElectro, terminals]);
+  useEffect(() => {
+    setTimeout(() => {
+      updateNodeInternals(node?.id);
+    }, 200);
+  }, [isElectro, terminals]);
 
   return (
     <HandleContainer isElectro={isElectro}>
