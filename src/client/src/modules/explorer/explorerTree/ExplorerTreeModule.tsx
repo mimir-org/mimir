@@ -7,7 +7,7 @@ import { ExplorerIcon } from "../../../assets/icons/modules";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { Icon } from "../../../compLibrary/icon";
 import { TextResources } from "../../../assets/text/TextResources";
-import { ExplorerModuleBody, ExplorerModuleHeader } from "./ExplorerTreeModule.styled";
+import { ExplorerModuleBody, ExplorerModuleHeader } from "../shared/styled/ExplorerModule.styled";
 import { useAppSelector, explorerSelector, useAppDispatch } from "../../../redux/store";
 import { memo } from "react";
 

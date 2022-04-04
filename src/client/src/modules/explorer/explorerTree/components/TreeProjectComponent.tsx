@@ -5,7 +5,7 @@ import { HasChildren, IsAncestorInSet } from "../../../../helpers/ParentNode";
 import { memo, useState } from "react";
 import { InitialSortNodes } from "../../shared/helpers/SortNodesWithIndent";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { ProjectContentContainer } from "./TreeProjectComponent.styled";
+import { ProjectContentContainer } from "../../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../../helpers/Aspects";
 
 /**
