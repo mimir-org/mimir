@@ -13,7 +13,8 @@ import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
 import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
 import { HeaderComponent } from "../header/HeaderComponent";
-import { ExplorerModule } from "../../modules/explorer/";
+import { ExplorerTreeModule } from "../../modules/explorer/explorerTree";
+import { ExplorerBlockModule } from "../../modules/explorer/explorerBlock";
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
@@ -44,6 +45,7 @@ export const Home = ({ dispatch }: Props) => {
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
   const isFilterOpen = useAppSelector(selectors.filterSelector);
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
+  const isBlockView = flowView === VIEW_TYPE.BLOCKVIEW;
   const inspectorRef = useRef(null);
 
   useEffect(() => {
@@ -79,7 +81,8 @@ export const Home = ({ dispatch }: Props) => {
       ) : (
         <>
           <ToolbarComponent />
-          <ExplorerModule />
+          {!isBlockView && <ExplorerTreeModule />}
+          {isBlockView && <ExplorerBlockModule />}
           <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule nodes={project?.nodes} dispatch={dispatch} />

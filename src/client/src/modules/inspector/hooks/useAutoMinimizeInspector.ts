@@ -13,9 +13,8 @@ import { GetSelectedNodes } from "../../../helpers/Selected";
  */
 export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElement>) => {
   const dispatch = useAppDispatch();
-
   const selectedNodes = GetSelectedNodes();
-  const numberOfSelectedElements = selectedNodes.length;
+  const numberOfSelectedElements = selectedNodes?.length;
 
   useEffect(() => {
     const minimizeCriteria = [numberOfSelectedElements > 1];
