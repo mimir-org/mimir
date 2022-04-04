@@ -89,7 +89,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => src.IsLockedStatusDate))
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
-                .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
+                .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
             /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri)) // TODO: Logic if null?*/
