@@ -13,7 +13,7 @@ import { ValidationModule } from "../../modules/validation";
 import { TypeEditorComponent } from "../../typeEditor";
 import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
 import { HeaderComponent } from "../header/HeaderComponent";
-import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
+import { ExplorerModule } from "../../modules/explorer/";
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
@@ -79,8 +79,8 @@ export const Home = ({ dispatch }: Props) => {
       ) : (
         <>
           <ToolbarComponent />
-          <ExplorerModule project={project} dispatch={dispatch} />
-          <FlowModule project={project} inspectorRef={inspectorRef} flowView={flowView} />
+          <ExplorerModule />
+          <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule nodes={project?.nodes} dispatch={dispatch} />
           <TypeEditorComponent />

@@ -32,13 +32,13 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   //   SetZoomCenterLevel(secondaryNode !== null);
   // }, [secondaryNode]);
 
-  useEffect(() => {
-    InitParentSize(node, dispatch);
-  }, []);
+  // useEffect(() => {
+  //   InitParentSize(node, dispatch);
+  // }, []);
 
-  useEffect(() => {
-    setTerminals(FilterBlockTerminals(node?.connectors, selectedNode, secondaryNode));
-  }, [selectedNode, secondaryNode, node?.connectors]);
+  // useEffect(() => {
+  //   setTerminals(FilterBlockTerminals(node?.connectors, selectedNode, secondaryNode));
+  // }, [selectedNode, secondaryNode, node?.connectors]);
 
   if (!node) return null;
 
@@ -47,7 +47,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={node} terminals={inputTerminals} isInput />
+      {/* <HandleComponent node={node} terminals={inputTerminals} isInput /> */}
       <BlockParentComponent
         node={node}
         splitView={secondaryNode !== null}
@@ -58,7 +58,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         onNavigateDownClick={() => OnChildClick(dispatch, node.id, project)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, project.edges)}
       />
-      <HandleComponent node={node} terminals={outputTerminals} />
+      {/* <HandleComponent node={node} terminals={outputTerminals} /> */}
     </BoxWrapper>
   );
 };

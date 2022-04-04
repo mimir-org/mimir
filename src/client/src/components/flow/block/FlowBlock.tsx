@@ -8,7 +8,6 @@ import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
 import { CloseInspector, HandleNodeSelection } from "../handlers";
-import { Project } from "../../../models";
 import ReactFlow, {
   Node as FlowNode,
   Edge as FlowEdge,
@@ -23,7 +22,6 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 interface Props {
-  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
@@ -32,7 +30,8 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = ({ project, inspectorRef }: Props) => {
+const FlowBlock = () => {
+  const project = useAppSelector(selectors.projectSelector);
   const dispatch = useAppDispatch();
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
@@ -78,13 +77,13 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
   const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
-  const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
-    return hooks.useOnNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
-  };
+  // const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
+  //   return hooks.useOnNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
+  // };
 
-  const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
-    return hooks.useOnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
-  };
+  // const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
+  //   return hooks.useOnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
+  // };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({
@@ -103,7 +102,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
-    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch, true);
+    HandleNodeSelection(selectedItems, project, dispatch, true);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -123,9 +122,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     console.log("BLOCK RENDER!");
   }, [project, animatedEdge]);
 
-  useEffect(() => {
-    CloseInspector(inspectorRef, dispatch);
-  }, [inspectorRef, dispatch]);
+  // useEffect(() => {
+  //   CloseInspector(inspectorRef, dispatch);
+  // }, [inspectorRef, dispatch]);
 
   useEffect(() => {
     SetInitialEdgeVisibility(project, dispatch);
@@ -144,8 +143,8 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
         edgeTypes={edgeTypes}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
-        onNodesDelete={OnNodesDelete}
-        onEdgesDelete={OnEdgesDelete}
+        // onNodesDelete={OnNodesDelete}
+        // onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
         onConnectStart={OnConnectStart}
         onConnectStop={OnConnectStop}

@@ -19,14 +19,14 @@ import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../redux
 export const HandleNodeSelection = (
   selectedItems: OnSelectionChangeParams,
   project: Project,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+
   dispatch: Dispatch,
   isBlockView?: boolean
 ) => {
   const nodes = selectedItems.nodes;
   const edges = selectedItems.edges;
 
-  if (!nodes.length && !edges.length) HandleNoSelect(project, inspectorRef, dispatch, isBlockView);
+  if (!nodes.length && !edges.length) HandleNoSelect(project, dispatch, isBlockView);
   else if (nodes.length === 1) HandleNodeSelect(nodes[0], dispatch, isBlockView);
   else if (edges.length === 1) HandleEdgeSelect(edges[0], dispatch, isBlockView);
   else if (nodes.length > 1) HandleMultiSelect(dispatch, isBlockView);
@@ -51,7 +51,7 @@ function HandleMultiSelect(dispatch: Dispatch, isBlock: boolean) {
 
 function HandleNoSelect(
   project: Project,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  // inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch,
   isBlock: boolean
 ) {
@@ -60,7 +60,7 @@ function HandleNoSelect(
     dispatch(setActiveEdge(null, false));
   }
 
-  CloseInspector(inspectorRef, dispatch);
+  // CloseInspector(inspectorRef, dispatch);
 }
 
 export function OpenInspector(dispatch: Dispatch) {

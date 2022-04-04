@@ -35,20 +35,20 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const isElectro = useAppSelector(selectors.electroSelector);
 
   // Check for elements that require OffPage nodes
-  useEffect(() => {
-    HandleConnectedOffPageNode(node, project, size, dispatch);
-    HandleRequiredOffPageNode(node, project.edges, size, dispatch);
-  }, [secondaryNode]);
+  // useEffect(() => {
+  //   HandleConnectedOffPageNode(node, project, size, dispatch);
+  //   HandleRequiredOffPageNode(node, project.edges, size, dispatch);
+  // }, [secondaryNode]);
 
-  useEffect(() => {
-    setTerminals(FilterBlockTerminals(node?.connectors, selectedNode, secondaryNode));
-  }, [selectedNode, secondaryNode, node?.connectors]);
+  // useEffect(() => {
+  //   setTerminals(FilterBlockTerminals(node?.connectors, selectedNode, secondaryNode));
+  // }, [selectedNode, secondaryNode, node?.connectors]);
 
   // Update node size based on active terminals
-  useEffect(() => {
-    const updatedSize = SetChildNodeSize(terminals, isElectro);
-    setSize(updatedSize);
-  }, [isElectro, terminals]);
+  // useEffect(() => {
+  //   const updatedSize = SetChildNodeSize(terminals, isElectro);
+  //   setSize(updatedSize);
+  // }, [isElectro, terminals]);
 
   if (!node) return null;
 

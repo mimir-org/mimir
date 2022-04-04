@@ -1,30 +1,28 @@
 import * as selectors from "./helpers/selectors";
-import { Node, Project } from "../../../models";
+import { Node } from "../../../models";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { IsBlockView } from "../../../helpers";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { nodesSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "./ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
-import { Dispatch } from "redux";
-
-interface Props {
-  dispatch: Dispatch;
-  project: Project;
-}
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
-export const ProjectComponent = ({ project, dispatch }: Props) => {
-  // const dispatch = useAppDispatch();
+const ProjectComponent = () => {
+  const dispatch = useAppDispatch();
   // const project = useAppSelector(selectors.projectSelector);
+  console.log("PROJECT COMP");
+  const nodes = useAppSelector(nodesSelector);
+  console.log("PROJECT nodes");
+
   const username = useAppSelector(selectors.usernameSelector);
-  const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
+  // const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
 
   const selectedNode = nodes?.find((n) => n.isSelected);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -42,47 +40,50 @@ export const ProjectComponent = ({ project, dispatch }: Props) => {
     setInvisibleNodes((_) => new Set(invisibleNodes));
   };
 
-  const areAncestorsExpanded = (elem: Node) => !IsAncestorInSet(elem, closedNodes, project);
-  const areAncestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
+  // const areAncestorsExpanded = (elem: Node) => !IsAncestorInSet(elem, closedNodes, project);
+  // const areAncestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
   const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
-  if (!project || !nodes) return null;
+  if (!nodes) return null;
+
+  console.log("PROJECT return");
 
   return (
     <ProjectContentContainer>
       {SortNodesWithIndent(nodes).map(([node, indent]) => {
-        if (!areAncestorsExpanded(node)) return null;
+        // if (!areAncestorsExpanded(node)) return null;
         const expanded = !closedNodes.has(node.id);
         const expandHandler = () => onExpandElement(!expanded, node.id);
+        console.log("IN LOOP");
 
-        if (IsBlockView()) {
-          return (
-            <BlockAspectComponent
-              key={node.id}
-              project={project}
-              username={username}
-              node={node}
-              selectedNode={selectedNode}
-              secondaryNode={secondaryNode}
-              indent={indent}
-              isExpanded={expanded}
-              isLeaf={!HasChildren(node, project)}
-              onToggleExpanded={expandHandler}
-              dispatch={dispatch}
-            />
-          );
-        }
+        // if (IsBlockView()) {
+        //   return (
+        //     <BlockAspectComponent
+        //       key={node.id}
+        //       project={project}
+        //       username={username}
+        //       node={node}
+        //       selectedNode={selectedNode}
+        //       secondaryNode={secondaryNode}
+        //       indent={indent}
+        //       isExpanded={expanded}
+        //       isLeaf={!HasChildren(node, project)}
+        //       onToggleExpanded={expandHandler}
+        //       dispatch={dispatch}
+        //     />
+        //   );
+        // }
         return (
           <TreeAspectComponent
             key={node.id}
-            project={project}
+            project={null}
             username={username}
             node={node}
-            nodes={nodes}
+            nodes={[]}
             indent={indent}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node, project)}
-            isAncestorVisible={areAncestorsVisible(node)}
+            isLeaf={false}
+            isAncestorVisible={false}
             isVisible={isVisible(node)}
             onToggleExpanded={expandHandler}
             onSetVisibleElement={onSetVisibleElement}
@@ -93,3 +94,5 @@ export const ProjectComponent = ({ project, dispatch }: Props) => {
     </ProjectContentContainer>
   );
 };
+
+export default memo(ProjectComponent);

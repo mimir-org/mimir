@@ -8,7 +8,6 @@ import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleNodeSelection } from "../handlers";
-import { Project } from "../../../models";
 import { Size } from "../../../compLibrary/size/Size";
 import { IsPartOfTerminal } from "../helpers/Connectors";
 import ReactFlow, {
@@ -25,7 +24,6 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 interface Props {
-  project: Project;
   inspectorRef: MutableRefObject<HTMLDivElement>;
 }
 
@@ -34,7 +32,8 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = ({ project, inspectorRef }: Props) => {
+const FlowTree = () => {
+  const project = useAppSelector(selectors.projectSelector);
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
@@ -62,13 +61,13 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
   const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
-  const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
-    return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
-  };
+  // const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
+  //   return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
+  // };
 
-  const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
-    return useOnTreeEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
-  };
+  // const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
+  //   return useOnTreeEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
+  // };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
     return useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
@@ -87,8 +86,7 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     });
   };
 
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
-    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch);
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => HandleNodeSelection(selectedItems, project, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -102,11 +100,12 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
   // Rebuild elements
   useEffect(() => {
     if (project) {
+      console.log("BUILD");
       setNodes(BuildTreeFlowNodes(project));
       setEdges(BuildTreeFlowEdges(project, animatedEdge));
     }
     console.log("TREE RENDER!");
-  }, [project, animatedEdge]);
+  }, [project?.nodes?.length]);
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {
@@ -125,8 +124,8 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
         edges={edges}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
-        onNodesDelete={OnNodesDelete}
-        onEdgesDelete={OnEdgesDelete}
+        // onNodesDelete={OnNodesDelete}
+        // onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
         onDrop={OnDrop}
         onDragOver={OnDragOver}

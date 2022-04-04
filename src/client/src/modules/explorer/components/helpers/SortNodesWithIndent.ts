@@ -4,8 +4,10 @@ import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node } from "../../../../models";
 
 const SortNodesWithIndent = (nodes: Node[]): [Node, number][] => {
-  InitialSortNodes(nodes);
+  // InitialSortNodes(nodes);
+  console.log("initialsort");
   const buckets = GroupNodesByIndentLevel(nodes);
+  console.log({ buckets });
 
   return SortNodesByIndent(buckets);
 };
@@ -56,6 +58,7 @@ const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
       AddNodeFromBucket(node, indent, sortedNodedWithIndent);
     }
   }
+  console.log({ sortedNodedWithIndent });
   return sortedNodedWithIndent;
 };
 

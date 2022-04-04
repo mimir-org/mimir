@@ -1,5 +1,4 @@
-import { Dispatch } from "redux";
-import { ProjectComponent } from "./components/ProjectComponent";
+import { ProjectComponent } from "./components/";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size/Size";
@@ -9,20 +8,15 @@ import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { Icon } from "../../compLibrary/icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./ExplorerModule.styled";
-import { useAppSelector, explorerSelector } from "../../redux/store";
-import { Project } from "../../models";
-
-interface Props {
-  dispatch: Dispatch;
-  project: Project;
-}
+import { useAppSelector, explorerSelector, useAppDispatch } from "../../redux/store";
+import { memo } from "react";
 
 /**
  * Component for the Explorer Module in Mimir.
- * @param interface
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerModule = ({ project, dispatch }: Props) => {
+const ExplorerModule = () => {
+  const dispatch = useAppDispatch();
   const isOpen = useAppSelector(explorerSelector);
   const type = MODULE_TYPE.EXPLORER;
 
@@ -41,7 +35,9 @@ export const ExplorerModule = ({ project, dispatch }: Props) => {
           <Icon size={24} src={ExplorerIcon} alt="" />
         </ExplorerModuleHeader>
       </Tooltip>
-      <ExplorerModuleBody>{isOpen && <ProjectComponent project={project} dispatch={dispatch} />}</ExplorerModuleBody>
+      <ExplorerModuleBody>{isOpen && <ProjectComponent />}</ExplorerModuleBody>
     </AnimatedModule>
   );
 };
+
+export default memo(ExplorerModule);

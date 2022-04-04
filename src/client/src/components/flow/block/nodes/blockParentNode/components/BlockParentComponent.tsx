@@ -41,7 +41,7 @@ export const BlockParentComponent = ({
   const dispatch = useAppDispatch();
   const isLocation = IsLocation(node);
   const resizePanelRef = useRef(null);
-  useResizeParentNode(node, resizePanelRef, dispatch);
+  // useResizeParentNode(node, resizePanelRef, dispatch);
 
   return (
     <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} width={node.width} height={node.height}>
