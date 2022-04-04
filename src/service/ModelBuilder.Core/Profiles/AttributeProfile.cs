@@ -49,6 +49,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
                 .ForMember(dest => dest.NodeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Node, opt => opt.Ignore())
+                .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString))
