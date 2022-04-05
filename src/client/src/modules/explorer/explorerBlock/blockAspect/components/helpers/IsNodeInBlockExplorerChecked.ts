@@ -2,16 +2,15 @@ import { Node as FlowNode } from "react-flow-renderer";
 import { Node } from "../../../../../../models";
 
 const IsNodeInBlockExplorerChecked = (flowNodes: FlowNode[], node: Node) => {
-  return false;
-  // if (!node) return false;
+  if (!node) return false;
 
-  // let checked = false;
+  let checked = false;
 
-  // flowNodes?.forEach((flowNode) => {
-  //   if (node.id === flowNode?.id && !node.isHidden) checked = true;
-  // });
+  flowNodes?.forEach((flowNode) => {
+    if (node.id === flowNode?.id && !node.isHidden) checked = true;
+  });
 
-  // return checked;
+  return checked;
 };
 
 export default IsNodeInBlockExplorerChecked;
