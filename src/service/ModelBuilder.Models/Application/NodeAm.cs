@@ -97,7 +97,7 @@ namespace Mb.Models.Application
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (string.IsNullOrWhiteSpace(Rds) && !IsRoot)
-                yield return new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(IsRoot)});
+                yield return new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(IsRoot) });
 
             if (Aspect == Aspect.None)
                 yield return new ValidationResult($"Aspect {nameof(Aspect.None)} is not allowed", new List<string> { nameof(Aspect) });

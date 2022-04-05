@@ -16,10 +16,10 @@ namespace Mb.Models.Application
         public string Iri { get; set; }
 
         public string Domain => Id.ResolveDomain();
-        
+
         [Required]
         public string Version { get; set; }
-        
+
         [Required]
         public string Rds { get; set; }
 
@@ -50,10 +50,10 @@ namespace Mb.Models.Application
 
         public string UpdatedBy { get; set; }
         public DateTime? Updated { get; set; }
-        
+
         public DateTime? Created { get; set; }
         public string CreatedBy { get; set; }
-        
+
         [Required]
         public string LibraryTypeId { get; set; }
 
@@ -61,8 +61,8 @@ namespace Mb.Models.Application
         {
             if (InputTerminal != null)
             {
-                if(InputTerminal.Id != InputTerminalId)
-                    yield return new ValidationResult("InputTerminal.Id is different from InputTerminalId.", new List<string> {nameof(InputTerminalId), nameof(InputTerminal)});
+                if (InputTerminal.Id != InputTerminalId)
+                    yield return new ValidationResult("InputTerminal.Id is different from InputTerminalId.", new List<string> { nameof(InputTerminalId), nameof(InputTerminal) });
             }
 
             if (OutputTerminal != null)

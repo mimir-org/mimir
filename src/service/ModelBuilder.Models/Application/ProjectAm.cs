@@ -8,7 +8,7 @@ using Mb.Models.Extensions;
 namespace Mb.Models.Application
 {
     public class ProjectAm : IValidatableObject
-    { 
+    {
         [RequiredOne(nameof(Iri))]
         public string Id { get; set; }
 
@@ -19,7 +19,7 @@ namespace Mb.Models.Application
 
         [Required]
         public string Name { get; set; }
-        
+
         [Required]
         public bool IsSubProject { get; set; }
 

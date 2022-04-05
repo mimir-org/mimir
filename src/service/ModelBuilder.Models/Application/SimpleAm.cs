@@ -15,7 +15,7 @@ namespace Mb.Models.Application
 
         [Required]
         public string Name { get; set; }
-        
+
         public virtual ICollection<AttributeAm> Attributes { get; set; }
 
         [RequiredOne(nameof(NodeIri))]

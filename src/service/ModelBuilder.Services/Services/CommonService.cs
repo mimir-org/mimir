@@ -33,15 +33,15 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters()
         {
-           var allFilteredAttributes = _attributeRepository.GetAll()
-                .Select(x => new
-                {
-                    x.Entity,
-                    x.Qualifier,
-                    x.Source,
-                    x.Condition
-                }).Distinct()
-                .ToList();
+            var allFilteredAttributes = _attributeRepository.GetAll()
+                 .Select(x => new
+                 {
+                     x.Entity,
+                     x.Qualifier,
+                     x.Source,
+                     x.Condition
+                 }).Distinct()
+                 .ToList();
 
             var allFilteredAttributeTypes = _attributeTypeRepository.GetAll()
                 .Select(x => new

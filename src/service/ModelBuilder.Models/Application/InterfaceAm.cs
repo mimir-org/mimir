@@ -56,7 +56,7 @@ namespace Mb.Models.Application
 
         [Required]
         public string LibraryTypeId { get; set; }
-        
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (InputTerminal != null)
