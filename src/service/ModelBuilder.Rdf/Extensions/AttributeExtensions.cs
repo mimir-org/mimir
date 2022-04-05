@@ -76,9 +76,9 @@ namespace ModelBuilder.Rdf.Extensions
             if (string.IsNullOrWhiteSpace(attribute.SelectedUnitId) || string.IsNullOrWhiteSpace(selectedUnit?.Name))
                 return;
 
-            ontologyService.AssertNode($"eq:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
-            ontologyService.AssertNode($"eq:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
-            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"eq:{attribute.SelectedUnitId}");
+            ontologyService.AssertNode($"mimir:{attribute.SelectedUnitId}", Resources.Type, Resources.Scale);
+            ontologyService.AssertNode($"mimir:{attribute.SelectedUnitId}", Resources.Label, selectedUnit.Name, true);
+            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumUOM, $"mimir:{attribute.SelectedUnitId}");
         }
 
         /// <summary>
@@ -118,9 +118,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns>A list of allowed units</returns>
         public static List<Unit> GetAllowedUnits(this Attribute attribute)
         {
-            return string.IsNullOrWhiteSpace(attribute.UnitString) ?
-                null :
-                JsonConvert.DeserializeObject<List<Unit>>(attribute.UnitString, DefaultSettings.SerializerSettings);
+            return string.IsNullOrWhiteSpace(attribute.UnitString) ? null : JsonConvert.DeserializeObject<List<Unit>>(attribute.UnitString, DefaultSettings.SerializerSettings);
         }
 
         /// <summary>

@@ -32,7 +32,6 @@ namespace ModelBuilder.Tests
         /// </summary>
         public ProjectFixture()
         {
-
             Setup();
             LoadData();
         }
@@ -42,7 +41,6 @@ namespace ModelBuilder.Tests
         /// </summary>
         public void Dispose()
         {
-
         }
 
         /// <summary>
@@ -83,20 +81,27 @@ namespace ModelBuilder.Tests
                     Id = 1,
                     Current = true,
                     Domain = "equinor.com",
-                    Iris = new List<string>{ "rdf.equinor.com" }
+                    Iris = new List<string> {"rdf.equinor.com"}
                 },
                 new()
                 {
                     Id = 2,
                     Current = false,
                     Domain = "hansa.no",
-                    Iris = new List<string>{ "hansa.no" }
+                    Iris = new List<string> {"hansa.no"}
+                },
+                new()
+                {
+                    Id = 3,
+                    Current = false,
+                    Domain = "aibel.com",
+                    Iris = new List<string> {"rdf.aibel.com"}
                 }
             };
-            var mock = data.AsQueryable().BuildMock();
+            var collaborationPartnersMock = data.AsQueryable().BuildMock();
 
             var collaborationPartnerRepository = new Mock<ICollaborationPartnerRepository>();
-            collaborationPartnerRepository.Setup(x => x.GetAll(true)).Returns(mock.Object);
+            collaborationPartnerRepository.Setup(x => x.GetAll(true)).Returns(collaborationPartnersMock);
             CollaborationPartnerRepository = collaborationPartnerRepository.Object;
         }
 

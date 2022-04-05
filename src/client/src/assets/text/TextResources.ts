@@ -165,7 +165,7 @@ export const TextResources = {
   LIBRARY_ASPECT_TOGGLE: "Toggle",
   LIBRARY_ASPECT_FILTER_ON: "filter on",
   LIBRARY_ASPECT_FILTER_OFF: "filter off",
-  LIBRARY_CATEGORY_RECENT: "Recently changed",
+  LIBRARY_CATEGORY_RECENT: "Recently created",
   LIBRARY_CATEGORY_ALL: "Types",
 
   // ExplorerModule

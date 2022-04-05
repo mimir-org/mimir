@@ -5,6 +5,7 @@ using Mb.Data.Contracts;
 using Mb.Models.Common;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
+using Mb.Models.Extensions;
 
 namespace Mb.Data.Repositories
 {
@@ -131,7 +132,7 @@ namespace Mb.Data.Repositories
             if (replacement == null)
                 throw new NullReferenceException("Replacement can't be null in CreateOrUseIdAndIri");
 
-            var data = new ReplacementId { FromId = replacement.FromId, FromIri = replacement.FromIri };
+            var data = new ReplacementId {FromId = replacement.FromId, FromIri = replacement.FromIri};
             var hasValidId = HasValidId(replacement.FromId);
             var hasValidIri = HasValidIri(replacement.FromIri);
 
@@ -224,17 +225,22 @@ namespace Mb.Data.Repositories
         {
             Init();
 
-            if (_currentCollaborationPartner == null || !_currentCollaborationPartner.Iris.Any())
-                throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
+            var domain = id.ResolveDomain();
 
-            var iri = _currentCollaborationPartner.Iris?.FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(domain))
+                throw new ModelBuilderConfigurationException($"Missing domain from id {id}");
+
+            if (_collaborationPartners == null || !_collaborationPartners.Any() || _collaborationPartners.All(x => x.Domain != domain))
+                throw new ModelBuilderConfigurationException($"There are missing application settings for collaboration partners or domain {domain}");
+
+            var iri = _collaborationPartners.FirstOrDefault(x => x.Domain == domain)?.Iris?.FirstOrDefault();
+
             if (iri == null)
-                throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner default iri");
+                throw new ModelBuilderConfigurationException($"Collaboration partner for {domain} not found");
 
-            if (iri.StartsWith("http"))
-                return $"{iri.TrimEnd('/')}/ID{SplitId(id)}";
-
-            return $"https://{iri.TrimEnd('/')}/ID{SplitId(id)}";
+            return iri.StartsWith("http")
+                ? $"{iri.TrimEnd('/')}/ID{SplitId(id)}"
+                : $"https://{iri.TrimEnd('/')}/ID{SplitId(id)}";
         }
 
         /// <summary>
