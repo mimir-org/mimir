@@ -71,7 +71,7 @@ namespace Mb.Services.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-            await ImportProject(new ProjectFileAm {ParserId = id, FileContent = fileContent});
+            await ImportProject(new ProjectFileAm { ParserId = id, FileContent = fileContent });
         }
 
         /// <summary>
