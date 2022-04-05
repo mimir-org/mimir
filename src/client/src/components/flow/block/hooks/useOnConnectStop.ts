@@ -51,16 +51,7 @@ const useOnConnectStop = (
     return;
   }
 
-  const isValidOffPageDrop = ValidateOffPageDrop(
-    project,
-    e.clientX,
-    getViewport,
-    sourceNode,
-    primaryNode,
-    secondaryNode,
-    sourceConn
-  );
-  if (!isValidOffPageDrop) return;
+  if (!ValidateOffPageDrop(project, e.clientX, getViewport, sourceNode, primaryNode, secondaryNode, sourceConn)) return;
 
   const position = { x: e.clientX, y: e.clientY };
   CreateRequiredOffPageNode(sourceNode, sourceConn, position, true, dispatch);

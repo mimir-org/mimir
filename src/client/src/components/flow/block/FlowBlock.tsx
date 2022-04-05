@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import * as selectors from "./helpers/selectors";
-// import * as hooks from "./hooks";
+import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
@@ -21,15 +20,6 @@ import ReactFlow, {
   applyNodeChanges,
   applyEdgeChanges,
 } from "react-flow-renderer";
-import {
-  useOnConnectStart,
-  useOnConnectStop,
-  useOnConnect,
-  useOnDrop,
-  useOnDragStop,
-  useOnEdgeDelete,
-  useOnNodeDelete,
-} from "./hooks";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -41,14 +31,14 @@ interface Props {
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowBlock = ({ inspectorRef }: Props) => {
-  const project = useAppSelector(selectors.projectSelector);
   const dispatch = useAppDispatch();
   const { getViewport } = useReactFlow();
-  const wrapper = useRef(null);
+  const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
+  const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const lib = useAppSelector(selectors.librarySelector);
@@ -62,16 +52,16 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return setFlowInstance(_reactFlowInstance);
   }, []);
 
-  const OnConnectStart = (e, { nodeId, handleType, handleId }) => {
-    return useOnConnectStart(e, { nodeId, handleType, handleId });
+  const OnConnectStart = (e: React.MouseEvent, { nodeId, handleType, handleId }) => {
+    return hooks.useOnConnectStart(e, { nodeId, handleType, handleId });
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return useOnConnectStop(e, project, selectedNode, secondaryNode, getViewport, dispatch);
+    return hooks.useOnConnectStop(e, project, selectedNode, secondaryNode, getViewport, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return useOnConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
+    return hooks.useOnConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -80,36 +70,28 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
-    return useOnDragStop(_event, activeNode, dispatch);
+    return hooks.useOnDragStop(_event, activeNode, dispatch);
   };
 
   // const OnMoveEnd = (flowTransform: FlowTransform) => dispatch(changeFlowTransform(flowTransform));
-  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
-  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
   const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
-    return useOnNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
+    return hooks.useOnNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
   };
 
   const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
-    return useOnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
+    return hooks.useOnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnDrop({
-      event,
-      project,
-      user,
-      icons,
-      lib,
-      selectedNode,
-      secondaryNodeRef,
-      instance,
-      wrapper,
-      getViewport,
-      dispatch,
-    });
+    return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
+
+  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
+  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+
+  const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
+  const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
     HandleNodeSelection(selectedItems, project, inspectorRef, dispatch, true);
@@ -123,13 +105,17 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     }
   }, [project]);
 
-  // Rebuild elements
+  // Rebuild nodes
   useEffect(() => {
-    if (project) {
-      setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-      setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
-    }
-  }, [project, animatedEdge]);
+    if (!project) return;
+    setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
+  }, [project?.nodes?.length]);
+
+  // Rebuild edges
+  useEffect(() => {
+    if (!project) return;
+    setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
+  }, [project?.edges, animatedEdge]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -139,11 +125,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     SetInitialEdgeVisibility(project, dispatch);
   }, []);
 
-  const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
-  const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
-
   return (
-    <div className="reactflow-wrapper" ref={wrapper}>
+    <div className="reactflow-wrapper" ref={flowWrapper}>
       <ReactFlow
         onInit={OnInit}
         nodes={nodes}

@@ -23,7 +23,7 @@ interface Params {
  * @param params
  * @returns an Edge connection.
  */
-const useOnConnectTree = (params: Params) => {
+const useOnTreeConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
   const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
@@ -56,4 +56,4 @@ function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch
   if (existingPartOfEdge) dispatch(removeEdge(existingPartOfEdge.id));
 }
 
-export default useOnConnectTree;
+export default useOnTreeConnect;

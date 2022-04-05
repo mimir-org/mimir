@@ -5,7 +5,7 @@ import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsNodeInTreeExplorerChecked } from "./helpers/IsNodeInTreeExplorerChecked";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
 import { Icon } from "../../../../../compLibrary/icon";
-import { GetAspectColor, GetAspectIcon, UseIndentLevel, UseSetSelectNodes } from "../../../../../helpers";
+import { GetAspectColor, GetAspectIcon, GetIndentLevel, UseSetSelectNodes } from "../../../../../helpers";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetSelectedNodes } from "../../../../../helpers/Selected";
 
@@ -28,7 +28,7 @@ export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExp
   const [setActiveNodeElement] = UseSetSelectNodes();
 
   return (
-    <AspectElementWrapper indent={UseIndentLevel(indent)}>
+    <AspectElementWrapper indent={GetIndentLevel(indent)}>
       {IsAspectNode(node) ? (
         <>
           <Icon size={22} src={GetAspectIcon(node)} alt="" />

@@ -18,9 +18,8 @@ interface OnDropParameters {
   icons: BlobData[];
   lib: LibraryState;
   selectedNode: Node;
-  secondaryNodeRef: Node;
+  secondaryNode: Node;
   instance: ReactFlowInstance;
-  wrapper: React.MutableRefObject<HTMLDivElement>;
   getViewport: GetViewport;
   dispatch: Dispatch;
 }
@@ -32,38 +31,26 @@ interface OnDropParameters {
  * @param params
  */
 const useOnDrop = (params: OnDropParameters) => {
-  // OnLoadParams
   const { event } = params;
   event.stopPropagation();
   event.preventDefault();
 
   if (DoesNotContainApplicationData(event)) return;
-
-  HandleNodeDrop(params);
+  HandleDrop(params);
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
-function HandleNodeDrop({
-  event,
-  project,
-  user,
-  icons,
-  lib,
-  selectedNode,
-  secondaryNodeRef,
-  getViewport,
-  dispatch,
-}: OnDropParameters) {
+function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
   let parentNode = selectedNode;
   if (!parentNode) return;
 
   // Handle drop in SplitView
-  if (secondaryNodeRef) {
+  if (secondaryNode) {
     const dropZone = CalculateSecondaryNodeDropZone(getViewport, parentNode);
-    parentNode = FindParent(data, parentNode, secondaryNodeRef, dropZone, event.clientX);
+    parentNode = FindParent(data, parentNode, secondaryNode, dropZone, event.clientX);
     if (!parentNode) return;
   }
 

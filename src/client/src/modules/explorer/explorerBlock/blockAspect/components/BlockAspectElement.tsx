@@ -1,6 +1,6 @@
 import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
 import { AspectColorType, Node, Project } from "../../../../../models";
-import { GetAspectColor, GetAspectIcon, UseIndentLevel } from "../../../../../helpers";
+import { GetAspectColor, GetAspectIcon, GetIndentLevel } from "../../../../../helpers";
 import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnBlockExplorerChange } from "./handlers/OnBlockExplorerChange";
 import { IsNodeInBlockExplorerChecked, IsMiniCheckBox } from "./helpers";
@@ -40,7 +40,7 @@ export const BlockAspectElement = ({
   const flowNodes = useReactFlow().getNodes();
 
   return (
-    <AspectElementWrapper indent={UseIndentLevel(indent)}>
+    <AspectElementWrapper indent={GetIndentLevel(indent)}>
       <CheckboxExplorer
         color={GetAspectColor(node, AspectColorType.Selected)}
         isChecked={IsNodeInBlockExplorerChecked(flowNodes, node)}

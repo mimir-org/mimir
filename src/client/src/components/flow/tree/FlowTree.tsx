@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
 import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
@@ -10,6 +9,7 @@ import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleNodeSelection } from "../handlers";
 import { Size } from "../../../compLibrary/size/Size";
 import { IsPartOfTerminal } from "../helpers/Connectors";
+import { GetTreeEdgeTypes, GetTreeNodeTypes } from "./helpers/";
 import ReactFlow, {
   Background,
   Edge as FlowEdge,
@@ -33,13 +33,13 @@ interface Props {
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
 const FlowTree = ({ inspectorRef }: Props) => {
-  const project = useAppSelector(selectors.projectSelector);
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
+  const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
@@ -56,9 +56,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
 
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
-
-  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
-  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
   const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
     return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
@@ -79,6 +76,12 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
     HandleNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
+  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
+  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+
+  const nodeTypes = useMemo(() => GetTreeNodeTypes, []);
+  const edgeTypes = useMemo(() => GetTreeEdgeTypes, []);
+
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
@@ -88,23 +91,25 @@ const FlowTree = ({ inspectorRef }: Props) => {
     }
   }, [project]);
 
-  // Rebuild elements
+  // Rebuild nodes
   useEffect(() => {
-    if (project) {
-      console.log("REBUILD nodes");
-      setNodes(BuildFlowTreeNodes(project));
-      setEdges(BuildFlowTreeEdges(project, animatedEdge));
-    }
-  }, [project?.nodes?.length, project?.edges, animatedEdge]);
+    if (!project) return;
+    setNodes(BuildFlowTreeNodes(project));
+  }, [project?.nodes?.length]);
 
+  // Rebuild edges
   useEffect(() => {
-    project?.edges?.forEach((edge) => {
-      if (!IsPartOfTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
+    if (!project) return;
+    setEdges(BuildFlowTreeEdges(project, animatedEdge));
+  }, [project?.edges, animatedEdge]);
+
+  // Show only partOf edges by default
+  useEffect(() => {
+    if (!project) return;
+    project.edges?.forEach((e) => {
+      if (!IsPartOfTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e, true));
     });
   }, []);
-
-  const nodeTypes = useMemo(() => helpers.GetTreeNodeTypes, []);
-  const edgeTypes = useMemo(() => helpers.GetTreeEdgeTypes, []);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>

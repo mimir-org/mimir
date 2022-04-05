@@ -17,3 +17,7 @@ export const GetSelectedNodes = () => {
     .getNodes()
     .filter((n) => n.selected);
 };
+
+export const GetFlowNodes = () => {
+  return useReactFlow().getNodes();
+};
