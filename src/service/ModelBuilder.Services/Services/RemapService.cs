@@ -95,7 +95,7 @@ namespace Mb.Services.Services
             CastConnectors(project);
 
             var remap = new Dictionary<string, string>();
-            var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
+            var r = new ReplacementId {FromId = project.Id, FromIri = project.Iri};
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             project.Nodes = RemapNodes(replacement, project.Nodes, project.Edges, remap, false).ToList();
@@ -159,7 +159,7 @@ namespace Mb.Services.Services
 
             foreach (var node in nodes)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = node.Id, FromIri = node.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = node.Id, FromIri = node.Iri};
                 var nodeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
@@ -206,7 +206,7 @@ namespace Mb.Services.Services
 
             foreach (var edge in edges)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = edge.Id, FromIri = edge.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = edge.Id, FromIri = edge.Iri};
                 var edgeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
@@ -224,10 +224,10 @@ namespace Mb.Services.Services
                 edge.ProjectId = project.ToId;
                 edge.ProjectIri = project.ToIri;
 
-                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToConnectorId, FromIri = edge.ToConnectorIri });
-                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromConnectorId, FromIri = edge.FromConnectorIri });
-                var toNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.ToNodeId, FromIri = edge.ToNodeIri });
-                var fromNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId { FromId = edge.FromNodeId, FromIri = edge.FromNodeIri });
+                var toConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId {FromId = edge.ToConnectorId, FromIri = edge.ToConnectorIri});
+                var fromConnectorReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId {FromId = edge.FromConnectorId, FromIri = edge.FromConnectorIri});
+                var toNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId {FromId = edge.ToNodeId, FromIri = edge.ToNodeIri});
+                var fromNodeReplacement = _commonRepository.CreateOrUseIdAndIri(new ReplacementId {FromId = edge.FromNodeId, FromIri = edge.FromNodeIri});
 
                 edge.ToConnectorId = toConnectorReplacement.ToId;
                 edge.FromConnectorId = fromConnectorReplacement.ToId;
@@ -285,7 +285,7 @@ namespace Mb.Services.Services
 
             foreach (var connector in connectors)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = connector.Id, FromIri = connector.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = connector.Id, FromIri = connector.Iri};
                 var connectorReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
@@ -382,7 +382,7 @@ namespace Mb.Services.Services
 
             foreach (var attribute in attributes)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = attribute.Id, FromIri = attribute.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = attribute.Id, FromIri = attribute.Iri};
                 var attributeReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
@@ -439,7 +439,7 @@ namespace Mb.Services.Services
 
             foreach (var simple in simples)
             {
-                var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = simple.Id, FromIri = simple.Iri };
+                var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = simple.Id, FromIri = simple.Iri};
                 var simpleReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
                 // Need to set this if there is a clone after new Id and Iri is created
@@ -463,7 +463,7 @@ namespace Mb.Services.Services
             if (transport == null)
                 return null;
 
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = transport.Id, FromIri = transport.Iri };
+            var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = transport.Id, FromIri = transport.Iri};
             var transportReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             // Need to set this if there is a clone after new Id and Iri is created
@@ -487,7 +487,7 @@ namespace Mb.Services.Services
             if (interfaceAm == null)
                 return null;
 
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = interfaceAm.Id, FromIri = interfaceAm.Iri };
+            var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = interfaceAm.Id, FromIri = interfaceAm.Iri};
             var interfaceReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             // Need to set this if there is a clone after new Id and Iri is created
@@ -511,7 +511,7 @@ namespace Mb.Services.Services
             if (terminal == null)
                 return null;
 
-            var r = createCopy ? new ReplacementId() : new ReplacementId { FromId = terminal.Id, FromIri = terminal.Iri };
+            var r = createCopy ? new ReplacementId() : new ReplacementId {FromId = terminal.Id, FromIri = terminal.Iri};
             var terminalReplacement = _commonRepository.CreateOrUseIdAndIri(r);
 
             // Need to set this if there is a clone after new Id and Iri is created
@@ -523,12 +523,6 @@ namespace Mb.Services.Services
 
             terminal.Id = terminalReplacement.ToId;
             terminal.Iri = terminalReplacement.ToIri;
-
-            if (terminal.NodeId == replacement.FromId)
-            {
-                terminal.NodeId = replacement.FromId;
-                terminal.NodeIri = replacement.ToIri;
-            }
 
             if (!string.IsNullOrWhiteSpace(terminal.TerminalTypeId) && string.IsNullOrWhiteSpace(terminal.TerminalTypeIri))
             {
