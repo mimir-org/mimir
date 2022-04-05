@@ -7,9 +7,13 @@ namespace Mb.Models.Application
     {
         [Required]
         public string Name { get; set; }
+
         [Required]
         public string Domain { get; set; }
+
+        [Required]
         public bool Current { get; set; }
+
         public ICollection<string> Iris { get; set; }
     }
 }

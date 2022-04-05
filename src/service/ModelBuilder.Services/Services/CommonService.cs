@@ -7,6 +7,7 @@ using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
+using Mb.TypeEditor.Data.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Services.Services
@@ -15,13 +16,15 @@ namespace Mb.Services.Services
     {
         private readonly ICollaborationPartnerRepository _collaborationPartnerRepository;
         private readonly IAttributeRepository _attributeRepository;
+        private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly IMapper _mapper;
 
-        public CommonService(ICollaborationPartnerRepository collaborationPartnerRepository, IAttributeRepository attributeRepository, IMapper mapper)
+        public CommonService(ICollaborationPartnerRepository collaborationPartnerRepository, IAttributeRepository attributeRepository, IMapper mapper, IAttributeTypeRepository attributeTypeRepository)
         {
             _collaborationPartnerRepository = collaborationPartnerRepository;
             _attributeRepository = attributeRepository;
             _mapper = mapper;
+            _attributeTypeRepository = attributeTypeRepository;
         }
 
         /// <summary>
@@ -30,11 +33,29 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters()
         {
-            var allFilteredAttributes = _attributeRepository.GetAll()
-                .Select(x => new { x.Entity, x.Qualifier, x.Source, x.Condition }).Distinct()
+           var allFilteredAttributes = _attributeRepository.GetAll()
+                .Select(x => new
+                {
+                    x.Entity,
+                    x.Qualifier,
+                    x.Source,
+                    x.Condition
+                }).Distinct()
                 .ToList();
 
-            var groups = allFilteredAttributes.GroupBy(x => x.Entity).Select(x => x.ToList());
+            var allFilteredAttributeTypes = _attributeTypeRepository.GetAll()
+                .Select(x => new
+                {
+                    x.Entity,
+                    Qualifier = x.Qualifier.Name,
+                    Source = x.Source.Name,
+                    Condition = x.Condition.Name
+                }).Distinct()
+                .ToList();
+
+            var all = allFilteredAttributes.Union(allFilteredAttributeTypes).Distinct();
+            var groups = all.GroupBy(x => x.Entity).Select(x => x.ToList()).ToList();
+
             foreach (var group in groups)
             {
                 if (!group.Any())

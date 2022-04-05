@@ -37,7 +37,8 @@ namespace Mb.Services.Services
         public ProjectService(IProjectRepository projectRepository, IMapper mapper,
             IHttpContextAccessor contextAccessor, INodeRepository nodeRepository, IEdgeRepository edgeRepository,
             ICommonRepository commonRepository, IConnectorRepository connectorRepository, IModuleService moduleService,
-            IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService, ICooperateService cooperateService)
+            IAttributeRepository attributeRepository, ILogger<ProjectService> logger, IRemapService remapService,
+            ICooperateService cooperateService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
@@ -112,7 +113,8 @@ namespace Mb.Services.Services
 
             var validation = project.ValidateObject();
             if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException($"Couldn't create project with name: {project.Name}", validation);
+                throw new ModelBuilderBadRequestException($"Couldn't create project with name: {project.Name}",
+                    validation);
 
             var existingProject = ProjectExist(project.Id, project.Iri);
             ClearAllChangeTracker();
@@ -168,13 +170,15 @@ namespace Mb.Services.Services
 
                 var validation = subProjectAm.ValidateObject();
                 if (!validation.IsValid)
-                    throw new ModelBuilderBadRequestException($"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
+                    throw new ModelBuilderBadRequestException(
+                        $"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
                 var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId, null);
                 if (fromProject == null)
                     throw new ModelBuilderInvalidOperationException("The original project does not exist");
 
-                fromProject.Nodes = fromProject.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y)).ToList();
+                fromProject.Nodes = fromProject.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y))
+                    .ToList();
                 fromProject.Edges = fromProject.Edges.Where(x => subProjectAm.Edges.Any(y => x.Id == y)).ToList();
 
                 var projectAm = _mapper.Map<ProjectAm>(fromProject);
@@ -189,11 +193,11 @@ namespace Mb.Services.Services
                 await _projectRepository.SaveAsync();
 
                 return newSubProject;
-
             }
             catch (Exception e)
             {
-                _logger.LogError($"Can not create sub project from project id: {subProjectAm?.FromProjectId}. Error: {e.Message}");
+                _logger.LogError(
+                    $"Can not create sub project from project id: {subProjectAm?.FromProjectId}. Error: {e.Message}");
                 throw;
             }
             finally
@@ -225,7 +229,8 @@ namespace Mb.Services.Services
 
             var validation = project.ValidateObject();
             if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException($"Couldn't update project with name: {project.Name}", validation);
+                throw new ModelBuilderBadRequestException($"Couldn't update project with name: {project.Name}",
+                    validation);
 
             var original = await _projectRepository.GetAsyncComplete(id, iri);
             ClearAllChangeTracker();
@@ -280,7 +285,9 @@ namespace Mb.Services.Services
         {
             var project = await GetProject(projectId, null);
 
-            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
+            if (_moduleService.Modules.All(x =>
+                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(
+                        x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with id: {id}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(id);
@@ -300,7 +307,9 @@ namespace Mb.Services.Services
             if (string.IsNullOrWhiteSpace(package?.ProjectId))
                 throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
 
-            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), package.Parser, StringComparison.CurrentCultureIgnoreCase)))
+            if (_moduleService.Modules.All(x =>
+                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(
+                        x.ModuleDescription.Id.ToString(), package.Parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
 
             var senders = _moduleService.Modules.Where(x => x.Instance is IModelBuilderSyncService).ToList();
@@ -450,14 +459,16 @@ namespace Mb.Services.Services
 
             node.Level = level;
             node.Order = order;
-            var connector = node.Connectors.OfType<Relation>().FirstOrDefault(x => x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf);
+            var connector = node.Connectors.OfType<Relation>().FirstOrDefault(x =>
+                x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf);
 
             if (connector == null)
                 return order;
 
             var edges = project.Edges.Where(x => x.FromConnectorId == connector.Id).ToList();
             var children = project.Nodes.Where(x => edges.Any(y => y.ToNodeId == x.Id)).ToList();
-            return children.Aggregate(order, (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
+            return children.Aggregate(order,
+                (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }
 
         private Project CreateInitProject(CreateProject createProject, bool isSubProject)
