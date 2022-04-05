@@ -1,11 +1,11 @@
 import { SetCenter, SetViewport } from "react-flow-renderer";
-import { Size } from "../../../../../../compLibrary/size/Size";
+import { Size } from "../compLibrary/size/Size";
 
 /**
  * Component to center the canvas' zoom level and position.
  * @param splitView
  */
-export const SetZoomCenterLevel = (setViewport: SetViewport, setCenter: SetCenter, splitView: boolean) => {
+const SetZoomCenterLevel = (setViewport: SetViewport, setCenter: SetCenter, splitView: boolean) => {
   let x = window.innerWidth / 2 - Size.BLOCK_MARGIN_X;
   let y = window.innerHeight / 2 - Size.BLOCK_MARGIN_Y;
   let zoom = Size.ZOOM_DEFAULT;
@@ -19,3 +19,5 @@ export const SetZoomCenterLevel = (setViewport: SetViewport, setCenter: SetCente
   setViewport({ x, y, zoom });
   setCenter(x, y, { zoom });
 };
+
+export default SetZoomCenterLevel;

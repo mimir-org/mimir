@@ -6,7 +6,7 @@ import { useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
-import { OnExpandElement } from "../shared/handlers/OnExpandElement";
+import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.
@@ -42,7 +42,7 @@ export const BlockProjectComponent = () => {
             indent={node.level}
             isExpanded={expanded}
             isLeaf={!HasChildren(node, project)}
-            onToggleExpanded={() => OnExpandElement(!expanded, node.id, closedNodes, setClosedNodes)}
+            onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             dispatch={dispatch}
           />
         );

@@ -2,7 +2,7 @@ import { TreeProjectComponent } from "./explorerTree/TreeProjectComponent";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size/Size";
-import { OnToggleClick } from "./shared/handlers/OnToggleClick";
+import { OnToggleExplorerClick } from "./shared/handlers/OnToggleExplorerClick";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { Icon } from "../../compLibrary/icon";
@@ -30,7 +30,7 @@ const ExplorerTreeModule = () => {
         placement={"bottom"}
         offset={[0, -10]}
       >
-        <ExplorerModuleHeader onClick={() => OnToggleClick(dispatch, type)}>
+        <ExplorerModuleHeader onClick={() => OnToggleExplorerClick(dispatch, type)}>
           {isOpen && <span>{type}</span>}
           <Icon size={24} src={ExplorerIcon} alt="" />
         </ExplorerModuleHeader>

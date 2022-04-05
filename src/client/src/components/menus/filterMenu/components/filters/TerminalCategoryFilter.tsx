@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
-import { FilterElement } from "./FilterElement";
 import { Connector, Edge } from "../../../../../models";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
 import { TerminalCategory } from "./TransportFilter";
+import { FilterElement } from "../FilterElement";
 
 interface Props {
   category: TerminalCategory;

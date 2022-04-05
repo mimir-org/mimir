@@ -1,12 +1,11 @@
 import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
 import { ToolbarElement } from "./components/ToolbarElement";
-import { OnElectroClick, OnFilterClick, OnViewClick } from "./handlers/";
+import { OnElectroClick, OnFilterClick, OnViewClick, OnResetZoom } from "./handlers/";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { SetZoomCenterLevel } from "../flow/block/nodes/blockParentNode/helpers/SetZoomCenterLevel";
 import { GetSelectedNodes } from "../../helpers/Selected";
 import { useReactFlow } from "react-flow-renderer";
 
@@ -26,11 +25,6 @@ export const ToolbarComponent = () => {
   const selectedNodes = GetSelectedNodes();
   const numberOfSelectedElements = selectedNodes.length;
 
-  const onResetZoom = () => {
-    if (isTreeView) return;
-    SetZoomCenterLevel(setViewport, setCenter, secondaryNode !== null);
-  };
-
   return (
     <ToolBarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
       <ToolbarButtonGroup>
@@ -39,7 +33,7 @@ export const ToolbarComponent = () => {
             <ToolbarElement
               label={TextResources.TOOLBAR_FITSCREEN}
               icon={Icons.FitScreenIcon}
-              onClick={() => onResetZoom()}
+              onClick={() => OnResetZoom(isTreeView, setViewport, setCenter, secondaryNode)}
               borderRight
             />
             <ToolbarElement

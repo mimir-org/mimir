@@ -44,7 +44,7 @@ export const BlockAspectElement = ({
       <CheckboxExplorer
         color={GetAspectColor(node, AspectColorType.Selected)}
         isChecked={IsNodeInBlockExplorerChecked(flowNodes, node)}
-        isMiniCheckbox={IsMiniCheckBox(node, selectedNode, secondaryNode)}
+        isMiniCheckbox={IsMiniCheckBox(node?.id, secondaryNode?.id, selectedNode)}
         isAspectNode={IsAspectNode(node)}
         onChange={() => OnBlockExplorerChange(project, node, selectedNode, secondaryNode, dispatch)}
         label={node.label}

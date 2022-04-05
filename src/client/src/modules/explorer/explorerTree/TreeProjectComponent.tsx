@@ -6,7 +6,7 @@ import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { projectSelector, usernameSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
-import { OnExpandElement } from "../shared/handlers/OnExpandElement";
+import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 
 /**
@@ -46,7 +46,7 @@ export const TreeProjectComponent = () => {
             isLeaf={!HasChildren(node, project)}
             isAncestorVisible={ancestorsVisible(node)}
             isVisible={isVisible(node)}
-            onToggleExpanded={() => OnExpandElement(!expanded, node.id, closedNodes, setClosedNodes)}
+            onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             onSetVisibleElement={() => OnSetVisibleElement(isVisible(node), node.id, invisibleNodes, setInvisibleNodes)}
             dispatch={dispatch}
           />

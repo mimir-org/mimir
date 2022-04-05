@@ -9,6 +9,7 @@ export { default as GetCompanyLogoForNode } from "./GetCompanyLogoForNode";
 export { default as GetCompanyLogoForInspector } from "./GetCompanyLogoForInspector";
 export { default as GetCompanyLogoForHeader } from "./GetCompanyLogoForHeader";
 export { default as GetDateNowUtc } from "./GetDateNowUtc";
+export { default as SetZoomCenterLevel } from "./SetZoomCenterLevel";
 
 export { default as GetIndentLevel } from "./GetIndentLevel";
 export * from "./UseSelectFlowElements";

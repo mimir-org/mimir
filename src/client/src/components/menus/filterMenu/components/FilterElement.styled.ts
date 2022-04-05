@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors/Color";
-import { FontSize, FontWeight } from "../../../../../compLibrary/font";
+import { Color } from "../../../../compLibrary/colors/Color";
+import { FontSize, FontWeight } from "../../../../compLibrary/font";
 
 interface ElementBoxProps {
   isHeader: boolean;

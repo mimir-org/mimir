@@ -1,4 +1,4 @@
-export const OnExpandElement = (
+export const OnExpandExplorerElement = (
   _expanded: boolean,
   nodeId: string,
   closedNodes: Set<string>,

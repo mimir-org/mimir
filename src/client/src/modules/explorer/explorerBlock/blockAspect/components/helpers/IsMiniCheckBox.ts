@@ -1,8 +1,8 @@
 import { IsProduct } from "../../../../../../helpers/Aspects";
 import { Node } from "../../../../../../models";
 
-const IsMiniCheckBox = (node: Node, selectedNode: Node, secondaryNode: Node) => {
-  return node?.id !== selectedNode?.id && node?.id !== secondaryNode?.id && !IsProduct(selectedNode);
+const IsMiniCheckBox = (nodeId: string, secondaryNodeId: string, selectedNode: Node) => {
+  return nodeId !== selectedNode?.id && nodeId !== secondaryNodeId && !IsProduct(selectedNode);
 };
 
 export default IsMiniCheckBox;

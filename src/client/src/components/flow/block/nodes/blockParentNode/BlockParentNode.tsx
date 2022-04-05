@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
-import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
+import { SetZoomCenterLevel } from "../../../../../helpers";
 
 /**
  * Component for a ParentNode in BlockView.

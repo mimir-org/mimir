@@ -7,9 +7,9 @@ import { GetHandleType } from "../helpers/GetHandleType";
 import { IsPartOfTerminal } from "../../../helpers/Connectors";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
-import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
 import { SetTopPos } from "../helpers/SetTopPos";
-import { nodeSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { nodeSelector, useParametricAppSelector } from "../../../../../redux/store";
+// import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
 
 /**
  * Component to display a node in TreeView.
@@ -17,7 +17,7 @@ import { nodeSelector, useAppDispatch, useParametricAppSelector } from "../../..
  * @returns a Mimir Node in the FlowTree context.
  */
 const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
   const node = useParametricAppSelector(nodeSelector, data.id);

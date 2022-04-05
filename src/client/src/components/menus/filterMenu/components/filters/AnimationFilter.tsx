@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { FilterElement } from "./FilterElement";
+import { FilterElement } from "../FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { toggleEdgeAnimation } from "../../../../../redux/store/edgeAnimation/edgeAnimationSlice";
 

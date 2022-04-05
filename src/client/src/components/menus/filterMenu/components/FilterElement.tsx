@@ -1,5 +1,5 @@
-import { Checkbox } from "../../../../../compLibrary/input/checkbox/common/Checkbox";
-import { CreateId } from "../../../../flow/helpers";
+import { Checkbox } from "../../../../compLibrary/input/checkbox/common/Checkbox";
+import { CreateId } from "../../../flow/helpers";
 import { ElementBox, ElementLabel } from "./FilterElement.styled";
 
 interface Props {

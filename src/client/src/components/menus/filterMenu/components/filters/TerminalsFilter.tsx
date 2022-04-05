@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
-import { FilterElement } from "./FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Connector } from "../../../../../models";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";
 import { IsConnectorVisible } from "../../../../flow/helpers/Connectors";
+import { FilterElement } from "../FilterElement";
 
 interface Props {
   activeTerminals: Connector[];

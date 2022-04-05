@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
-import { FilterElement } from "./FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Connector, Edge } from "../../../../../models";
 import { OnAllTransportsChange } from "./handlers";
 import { PopulateTerminalCategories, AllTransportsChecked } from "./helpers";
+import { FilterElement } from "../FilterElement";
 
 export interface TerminalCategory {
   id: string;
