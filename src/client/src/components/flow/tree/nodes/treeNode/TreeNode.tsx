@@ -8,8 +8,8 @@ import { IsPartOfTerminal } from "../../../helpers/Connectors";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
 import { SetTopPos } from "../helpers/SetTopPos";
-import { nodeSelector, useParametricAppSelector } from "../../../../../redux/store";
-// import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
+import { nodeSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
 
 /**
  * Component to display a node in TreeView.
@@ -17,7 +17,7 @@ import { nodeSelector, useParametricAppSelector } from "../../../../../redux/sto
  * @returns a Mimir Node in the FlowTree context.
  */
 const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
   const node = useParametricAppSelector(nodeSelector, data.id);
@@ -62,7 +62,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
               position={pos}
               id={conn.id}
               className="function-treeview-handler"
-              // isValidConnection={(connection) => IsValidTreeConnection(node, connection, nodes, dispatch)}
+              isValidConnection={(connection) => IsValidTreeConnection(node, connection, dispatch)}
             />
           </HandleBox>
         );

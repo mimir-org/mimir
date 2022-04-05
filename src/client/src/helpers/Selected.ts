@@ -21,3 +21,7 @@ export const GetSelectedNodes = () => {
 export const GetFlowNodes = () => {
   return useReactFlow().getNodes();
 };
+
+export const GetMimirNodes = () => {
+  return red.store.getState().projectState?.project?.nodes;
+};
