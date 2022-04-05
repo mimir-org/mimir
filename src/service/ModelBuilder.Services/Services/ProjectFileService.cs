@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
-using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Services.Contracts;
@@ -62,37 +61,6 @@ namespace Mb.Services.Services
         /// <summary>
         /// Import project, if exist update project
         /// </summary>
-        /// <param name="projectFile"></param>
-        /// <returns></returns>
-        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
-        public async Task ImportProject(ProjectFileAm projectFile)
-        {
-            if (projectFile == null)
-                throw new ModelBuilderInvalidOperationException("ProjectFile is null");
-
-            var validation = projectFile.ValidateObject();
-            if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.", validation);
-
-            var project = await ResolveProject(projectFile);
-
-            if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Iri)))
-                throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
-
-            var exist = _projectService.ProjectExist(project.Id, project.Iri);
-
-            if (exist)
-            {
-                await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
-                return;
-            }
-
-            _ = await _projectService.CreateProject(project);
-        }
-
-        /// <summary>
-        /// Import project, if exist update project
-        /// </summary>
         /// <param name="file"></param>
         /// <param name="cancellationToken"></param>
         /// <param name="id"></param>
@@ -103,7 +71,7 @@ namespace Mb.Services.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-            await ImportProject(new ProjectFileAm { ParserId = id, FileContent = fileContent });
+            await ImportProject(new ProjectFileAm {ParserId = id, FileContent = fileContent});
         }
 
         /// <summary>
@@ -136,5 +104,41 @@ namespace Mb.Services.Services
         }
 
         #endregion
+
+
+        #region Private
+
+        /// <summary>
+        /// Import project, if exist update project
+        /// </summary>
+        /// <param name="projectFile"></param>
+        /// <returns></returns>
+        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
+        private async Task ImportProject(ProjectFileAm projectFile)
+        {
+            if (projectFile == null)
+                throw new ModelBuilderInvalidOperationException("ProjectFile is null");
+
+            var validation = projectFile.ValidateObject();
+            if (!validation.IsValid)
+                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.", validation);
+
+            var project = await ResolveProject(projectFile);
+
+            if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Iri)))
+                throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
+
+            var exist = _projectService.ProjectExist(project.Id, project.Iri);
+
+            if (exist)
+            {
+                await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
+                return;
+            }
+
+            _ = await _projectService.CreateProject(project);
+        }
+
+        #endregion Private
     }
 }

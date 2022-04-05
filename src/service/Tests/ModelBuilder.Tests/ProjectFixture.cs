@@ -89,6 +89,13 @@ namespace ModelBuilder.Tests
                     Current = false,
                     Domain = "hansa.no",
                     Iris = new List<string> {"hansa.no"}
+                },
+                new()
+                {
+                    Id = 3,
+                    Current = false,
+                    Domain = "aibel.com",
+                    Iris = new List<string> {"rdf.aibel.com"}
                 }
             };
             var collaborationPartnersMock = data.AsQueryable().BuildMock();
