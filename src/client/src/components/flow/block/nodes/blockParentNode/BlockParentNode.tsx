@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
-import { NodeProps } from "react-flow-renderer";
+import { NodeProps, useReactFlow } from "react-flow-renderer";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers/Connectors";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
+import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
 
 /**
  * Component for a ParentNode in BlockView.
@@ -21,6 +22,7 @@ import { InitParentSize } from "./helpers/InitParentSize";
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
+  const { setViewport, setCenter } = useReactFlow();
   const [terminals, setTerminals] = useState<Connector[]>([]);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -28,9 +30,9 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const node = project?.nodes?.find((x) => x.id === data.id);
   const selectedNode = project?.nodes.find((n) => n.isSelected);
 
-  // useEffect(() => {
-  //   SetZoomCenterLevel(secondaryNode !== null);
-  // }, [secondaryNode]);
+  useEffect(() => {
+    SetZoomCenterLevel(setViewport, setCenter, secondaryNode !== null);
+  }, [secondaryNode]);
 
   useEffect(() => {
     InitParentSize(node, dispatch);

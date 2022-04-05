@@ -8,6 +8,7 @@ import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { SetZoomCenterLevel } from "../flow/block/nodes/blockParentNode/helpers/SetZoomCenterLevel";
 import { GetSelectedNodes } from "../../helpers/Selected";
+import { useReactFlow } from "react-flow-renderer";
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
@@ -15,6 +16,7 @@ import { GetSelectedNodes } from "../../helpers/Selected";
  */
 export const ToolbarComponent = () => {
   const dispatch = useAppDispatch();
+  const { setViewport, setCenter } = useReactFlow();
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
   const isTreeView = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.TREEVIEW);
@@ -26,7 +28,7 @@ export const ToolbarComponent = () => {
 
   const onResetZoom = () => {
     if (isTreeView) return;
-    SetZoomCenterLevel(secondaryNode !== null);
+    SetZoomCenterLevel(setViewport, setCenter, secondaryNode !== null);
   };
 
   return (
