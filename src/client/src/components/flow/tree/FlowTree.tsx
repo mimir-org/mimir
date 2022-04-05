@@ -76,7 +76,8 @@ const FlowTree = ({ inspectorRef }: Props) => {
     return useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => HandleNodeSelection(selectedItems, project, dispatch);
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
+    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -90,10 +91,11 @@ const FlowTree = ({ inspectorRef }: Props) => {
   // Rebuild elements
   useEffect(() => {
     if (project) {
+      console.log("REBUILD nodes");
       setNodes(BuildFlowTreeNodes(project));
       setEdges(BuildFlowTreeEdges(project, animatedEdge));
     }
-  }, [project?.nodes?.length]);
+  }, [project?.nodes?.length, project?.edges, animatedEdge]);
 
   useEffect(() => {
     project?.edges?.forEach((edge) => {

@@ -5,7 +5,7 @@ import { NodeProps } from "react-flow-renderer";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers/Connectors";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
-import { OnParentClick, OnChildClick } from "./handlers/";
+import { OnBlockParentClick, OnBlockChildClick } from "./handlers/";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
@@ -54,8 +54,8 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}
-        onNavigateUpClick={() => OnParentClick(dispatch, node.id, project)}
-        onNavigateDownClick={() => OnChildClick(dispatch, node.id, project)}
+        onNavigateUpClick={() => OnBlockParentClick(dispatch, node.id, project)}
+        onNavigateDownClick={() => OnBlockChildClick(dispatch, node.id, project)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, project.edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />

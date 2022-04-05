@@ -3,7 +3,7 @@ import { GetChild } from "../helpers/GetChild";
 import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../../../../redux/store/project/actions";
 import { Dispatch } from "redux";
 
-const OnChildClick = (dispatch: Dispatch, nodeId: string, project: Project) => {
+const OnBlockChildClick = (dispatch: Dispatch, nodeId: string, project: Project) => {
   const childNodeId = GetChild(nodeId, project);
 
   dispatch(setActiveEdge(null, false));
@@ -11,4 +11,4 @@ const OnChildClick = (dispatch: Dispatch, nodeId: string, project: Project) => {
   dispatch(setActiveNode(childNodeId, true));
 };
 
-export default OnChildClick;
+export default OnBlockChildClick;

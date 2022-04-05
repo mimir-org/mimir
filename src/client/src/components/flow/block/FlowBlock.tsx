@@ -112,7 +112,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
-    HandleNodeSelection(selectedItems, project, dispatch, true);
+    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch, true);
 
   // Build initial elements from Project
   useEffect(() => {
