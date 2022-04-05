@@ -29,12 +29,15 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(project.Iri, Resources.Type, Resources.IntegratedObject);
             ontologyService.AssertNode(project.Iri, Resources.Domain, project.Domain, true);
             ontologyService.AssertNode(project.Iri, Resources.HasOwner, project.ProjectOwner, true);
-            ontologyService.AssertNode(project.Iri, Resources.UpdatedBy, project.UpdatedBy, true);
-            ontologyService.AssertNode(project.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{project.Updated.ToString("u")}", Resources.DateTime));
 
+            if (!string.IsNullOrWhiteSpace(project.UpdatedBy))
+                ontologyService.AssertNode(project.Iri, Resources.UpdatedBy, project.UpdatedBy, true);
+            
+            if (project.Updated != null)
+                ontologyService.AssertNode(project.Iri, Resources.LastUpdated, ontologyService.CreateLiteralNode($"{project.Updated?.ToString("u")}", Resources.DateTime));
+            
             if (!string.IsNullOrEmpty(project.Description))
                 ontologyService.AssertNode(project.Iri, Resources.Desc, project.Description, true);
-
         }
 
         /// <summary>
