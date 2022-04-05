@@ -1,4 +1,4 @@
-import { TreeProjectComponent } from "./explorerTree/";
+import { TreeProjectComponent } from "./explorerTree/TreeProjectComponent";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size/Size";

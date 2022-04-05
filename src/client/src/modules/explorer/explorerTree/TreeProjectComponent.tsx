@@ -1,18 +1,19 @@
 import { Node } from "../../../models";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { projectSelector, usernameSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandElement } from "../shared/handlers/OnExpandElement";
+import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of TreeView.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
-const TreeProjectComponent = () => {
+export const TreeProjectComponent = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const username = useAppSelector(usernameSelector);
@@ -20,11 +21,6 @@ const TreeProjectComponent = () => {
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
-
-  const onSetVisibleElement = (_visible: boolean, nodeId: string) => {
-    _visible ? invisibleNodes.delete(nodeId) : invisibleNodes.add(nodeId);
-    setInvisibleNodes((_) => new Set(invisibleNodes));
-  };
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project);
   const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
@@ -51,7 +47,7 @@ const TreeProjectComponent = () => {
             isAncestorVisible={ancestorsVisible(node)}
             isVisible={isVisible(node)}
             onToggleExpanded={() => OnExpandElement(!expanded, node.id, closedNodes, setClosedNodes)}
-            onSetVisibleElement={onSetVisibleElement}
+            onSetVisibleElement={() => OnSetVisibleElement(isVisible(node), node.id, invisibleNodes, setInvisibleNodes)}
             dispatch={dispatch}
           />
         );
@@ -59,5 +55,3 @@ const TreeProjectComponent = () => {
     </ProjectContentContainer>
   );
 };
-
-export default memo(TreeProjectComponent);

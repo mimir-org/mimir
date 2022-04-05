@@ -72,5 +72,3 @@ export const TreeAspectComponent = ({
     </AspectContainer>
   );
 };
-
-export default TreeAspectComponent;

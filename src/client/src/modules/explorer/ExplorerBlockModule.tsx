@@ -1,4 +1,4 @@
-import { BlockProjectComponent } from "./explorerBlock/";
+import { BlockProjectComponent } from "./explorerBlock/BlockProjectComponent";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated";
 import { Size } from "../../compLibrary/size/Size";

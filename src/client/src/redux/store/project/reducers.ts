@@ -621,20 +621,20 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((x) =>
-            x.id === action.payload.id ? { ...action.payload, isSelected: x.isSelected, isBlockSelected: x.isBlockSelected } : x
+          nodes: nodes.map((n) =>
+            n.id === action.payload.id ? { ...action.payload, isSelected: n.isSelected, isBlockSelected: n.isBlockSelected } : n
           ),
         },
       };
 
-    case Types.UPDATE_EDGE:
+    case Types.UPDATE_EDGE: {
+      const { id } = action.payload;
+
       return {
         ...state,
-        project: {
-          ...project,
-          edges: edges.map((x) => (x.id === action.payload.id ? { ...action.payload, isSelected: x.isSelected } : x)),
-        },
+        project: { ...project, edges: edges.map((e) => (e.id === id ? { ...action.payload, isSelected: e.isSelected } : e)) },
       };
+    }
 
     case Types.SET_OFFPAGE_STATUS: {
       const { nodeId, connectorId, isRequired } = action.payload;

@@ -56,5 +56,3 @@ export const BlockAspectComponent = ({
     />
   </AspectContainer>
 );
-
-export default BlockAspectComponent;

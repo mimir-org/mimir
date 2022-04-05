@@ -2,7 +2,7 @@ import { Node } from "../../../models";
 import { useAppDispatch, useAppSelector, usernameSelector, projectSelector, secondaryNodeSelector } from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
@@ -12,7 +12,7 @@ import { OnExpandElement } from "../shared/handlers/OnExpandElement";
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
-const BlockProjectComponent = () => {
+export const BlockProjectComponent = () => {
   const dispatch = useAppDispatch();
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const project = useAppSelector(projectSelector);
@@ -50,4 +50,3 @@ const BlockProjectComponent = () => {
     </ProjectContentContainer>
   );
 };
-export default memo(BlockProjectComponent);
