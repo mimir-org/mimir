@@ -31,7 +31,7 @@ export const TerminalsFilter = ({ activeTerminals, allTerminals, dispatch }: Pro
       />
       <FilterElement
         isChecked={activeTerminalsChecked}
-        label={TextResources.FILTER_SHOW_ACTIVE_TERMINALS}
+        label={TextResources.SHOW_ACTIVE_TERMINALS}
         onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
         visible
       />

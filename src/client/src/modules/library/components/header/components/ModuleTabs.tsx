@@ -23,7 +23,7 @@ export const ModuleTabs = ({ isOpen, activeTab, setActiveTab, dispatch }: Props)
 
   return (
     <LibraryTabsWrapper>
-      <ExpandButton isOpen={isOpen} text={TextResources.LIBRARY_CLOSE_PANEL} offset={[0, 10]} dispatch={dispatch} />
+      <ExpandButton isOpen={isOpen} text={TextResources.CLOSE_LIB_PANEL} offset={[0, 10]} dispatch={dispatch} />
 
       {Object.keys(LibraryTab)
         .filter(stringIsNumber)

@@ -36,7 +36,7 @@ export const RelationsComponent = ({ element }: Props) => {
           {IsNode(element) && (
             <RelationsContent
               items={GetRelations(element, edges)}
-              label={TextResources.INSPECTOR_RELATIONS_RELATIONSHIPS}
+              label={TextResources.RELATIONS_RELATIONSHIPS}
               getName={(edge) => GetNameRelation(edge, element)}
               getColor={(edge, index) => GetActiveRelationColor(edge.fromConnector, index)}
               onClick={(edge) => OnClickRelation(element, edge, setActiveNodeElement)}
@@ -44,14 +44,14 @@ export const RelationsComponent = ({ element }: Props) => {
           )}
           <RelationsContent
             items={inputTerminals}
-            label={TextResources.INSPECTOR_RELATIONS_TERMINAL_INPUT}
+            label={TextResources.RELATIONS_TERMINAL_INPUT}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
           />
           <RelationsContent
             items={outputTerminals}
-            label={TextResources.INSPECTOR_RELATIONS_TERMINAL_OUTPUT}
+            label={TextResources.RELATIONS_TERMINAL_OUTPUT}
             getName={(terminal) => GetNameTerminal(terminal, transports)}
             getColor={(_, index) => GetListItemColor(index)}
             onClick={OnClickTerminal}
@@ -59,7 +59,7 @@ export const RelationsComponent = ({ element }: Props) => {
           {IsNode(element) && (
             <RelationsContent
               items={transports}
-              label={TextResources.INSPECTOR_RELATIONS_TRANSPORT}
+              label={TextResources.RELATIONS_TRANSPORT}
               getName={(edge) => GetNameTransport(edge, element)}
               getColor={(_, index) => GetListItemColor(index)}
               onClick={(edge) => OnClickTransport(edge, setActiveEdgeElement)}
@@ -68,7 +68,7 @@ export const RelationsComponent = ({ element }: Props) => {
           {IsEdge(element) && (
             <RelationsContent
               items={[element.fromNode, element.toNode]}
-              label={TextResources.INSPECTOR_RELATIONS_NODES}
+              label={TextResources.RELATIONS_NODES}
               getName={(node) => GetNameNode(element, node)}
               getColor={(_, index) => GetListItemColor(index)}
               onClick={(node) => OnClickNode(node, setActiveNodeElement)}

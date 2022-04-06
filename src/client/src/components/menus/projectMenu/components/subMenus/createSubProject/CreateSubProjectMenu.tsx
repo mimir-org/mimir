@@ -22,12 +22,12 @@ export const CreateSubProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>
-      <InfoModalContent title={TextResources.PROJECT_SUBPROJECT_SAVE}>
+      <InfoModalContent title={TextResources.SUBPROJECT_SAVE}>
         <Label>{TextResources.PROJECT_NAME}</Label>
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.PROJECT_NAME_PLACEHOLDER}
+          placeholder={TextResources.PROJECT_NAME_NEW}
           value={projectName}
         />
         <ButtonBox>
@@ -35,7 +35,7 @@ export const CreateSubProjectMenu = () => {
           <Button
             disabled={isActionDisabled}
             onClick={onAction}
-            text={TextResources.PROJECT_SUBPROJECT}
+            text={TextResources.SAVE_SUBPROJECT}
             icon={CreateSubProjectIcon}
           />
         </ButtonBox>

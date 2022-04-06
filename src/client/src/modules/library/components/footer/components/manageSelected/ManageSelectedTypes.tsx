@@ -38,14 +38,14 @@ export const ManageSelectedTypes = ({
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>
-      <InfoModalContent title={TextResources.LIBRARY_MODAL_CREATE_COLLECTION} icon={ColoredCollections}>
+      <InfoModalContent title={TextResources.CREATE_COLLECTION} icon={ColoredCollections}>
         <CreateCollectionComponent
           collectionName={collectionName}
           setCollectionName={setCollectionName}
           selectedTypes={selectedTypes}
           dispatch={dispatch}
         />
-        <ModalListHeader>{TextResources.LIBRARY_MODAL_SELECT_COLLECTION}</ModalListHeader>
+        <ModalListHeader>{TextResources.SELECT_COLLECTION}</ModalListHeader>
         <ModalList
           collections={collections}
           selectedCollections={selectedCollections}

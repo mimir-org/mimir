@@ -67,7 +67,7 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
       zIndex={5}
       forwardRef={inspectorRef}
     >
-      <Tooltip content={TextResources.INSPECTOR_RESIZE} offset={[0, 10]} delay={150}>
+      <Tooltip content={TextResources.RESIZE} offset={[0, 10]} delay={150}>
         <InspectorResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       </Tooltip>
       <InspectorHeader

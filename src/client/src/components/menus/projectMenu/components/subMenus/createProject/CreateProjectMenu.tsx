@@ -26,7 +26,7 @@ export const CreateProjectMenu = () => {
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.PROJECT_NAME_PLACEHOLDER}
+          placeholder={TextResources.PROJECT_NAME_NEW}
           value={projectName}
         />
         <ButtonBox>

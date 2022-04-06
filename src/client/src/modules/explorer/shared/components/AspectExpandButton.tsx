@@ -11,7 +11,7 @@ interface Props {
 
 export const AspectExpandButton = ({ onClick, isExpanded }: Props) => (
   <AspectExpandButtonContainer onClick={onClick}>
-    <VisuallyHidden>{isExpanded ? TextResources.EXPLORER_CLOSE_GROUP : TextResources.EXPLORER_OPEN_GROUP}</VisuallyHidden>
+    <VisuallyHidden>{isExpanded ? TextResources.CLOSE_GROUP : TextResources.OPEN_GROUP}</VisuallyHidden>
     <Icon size={10} src={isExpanded ? ExpandIcon : CollapseIcon} alt="" />
   </AspectExpandButtonContainer>
 );

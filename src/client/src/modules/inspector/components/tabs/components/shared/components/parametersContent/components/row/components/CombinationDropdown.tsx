@@ -37,7 +37,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     return (
       <MenuListItem color={bodyColor}>
         <Checkbox isChecked={areAllItemsSelected} onChange={onClick} readOnly />
-        <span>{TextResources.INSPECTOR_PARAMS_SELECT_ALL}</span>
+        <span>{TextResources.PARAMS_SELECT_ALL}</span>
       </MenuListItem>
     );
   };
@@ -57,7 +57,7 @@ export const CombinationDropdown = ({ items, selectedItems, keyProp, onChange, h
     <MenuWrapper tabIndex={0} onBlur={() => setIsListOpen(false)}>
       <div onClick={() => setIsListOpen(!isListOpen)}>
         <MenuHeader open={isListOpen} color={headerColor}>
-          <p>{TextResources.INSPECTOR_PARAMS_COMBINATION}</p>
+          <p>{TextResources.PARAMS_COMBINATION}</p>
           <img src={isListOpen ? CollapseWhiteIcon : ExpandWhiteIcon} alt="expand-icon" />
         </MenuHeader>
       </div>

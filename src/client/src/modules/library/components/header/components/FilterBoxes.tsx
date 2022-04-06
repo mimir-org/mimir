@@ -56,8 +56,8 @@ export const FilterBoxes = ({ aspectFilters, setAspectFilters }: Props) => {
               key={i}
               content={
                 aspectSelected
-                  ? `${TextResources.LIBRARY_ASPECT_TOGGLE} ${aspectName} ${TextResources.LIBRARY_ASPECT_FILTER_OFF}`
-                  : `${TextResources.LIBRARY_ASPECT_TOGGLE} ${aspectName} ${TextResources.LIBRARY_ASPECT_FILTER_ON}`
+                  ? `${TextResources.TOGGLE} ${aspectName} ${TextResources.ASPECT_FILTER_OFF}`
+                  : `${TextResources.TOGGLE} ${aspectName} ${TextResources.ASPECT_FILTER_ON}`
               }
               offset={[0, 10]}
             >

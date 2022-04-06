@@ -31,7 +31,7 @@ export const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
     visible && (
       <>
         <FilterElement
-          label={TextResources.FILTER_TRANSPORTS}
+          label={TextResources.TRANSPORTS}
           onChange={() => OnAllTransportsChange(edges, dispatch)}
           isChecked={AllTransportsChecked(edges)}
           visible={visible}

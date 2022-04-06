@@ -95,7 +95,7 @@ export const ParametersContent = ({
             className={`link ${isCreateLibraryType && "hide-link"}`}
             onClick={() => !isCreateLibraryType && OnClearAllFilters(parametersElement.id, dispatch)}
           >
-            {TextResources.INSPECTOR_PARAMS_CLEAR_ALL}
+            {TextResources.PARAMS_CLEAR_ALL}
           </ParameterButton>
           <ParameterButton
             className={`link ${isCreateLibraryType && "hide-link"}`}
@@ -103,7 +103,7 @@ export const ParametersContent = ({
               !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch)
             }
           >
-            {TextResources.INSPECTOR_PARAMS_DEFAULT}
+            {TextResources.PARAMS_DEFAULT}
           </ParameterButton>
         </ParametersContentMenu>
       </ParametersContentHeader>

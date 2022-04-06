@@ -28,7 +28,7 @@ export const VisualFilterComponent = () => {
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
-      <VisualFilterHeader>{TextResources.FILTER_HEADING}</VisualFilterHeader>
+      <VisualFilterHeader>{TextResources.VISUAL_FILTER}</VisualFilterHeader>
       <VisualFilterMenuColumn>
         <AnimationFilter edgeAnimation={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter

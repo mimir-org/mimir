@@ -25,11 +25,11 @@ export const ExportProjectFileMenu = () => {
   return (
     <Modal isBlurred isOpen onExit={onExit}>
       <InfoModalContent title={TextResources.PROJECT_EXPORT}>
-        <Label>{TextResources.PROJECT_FILE_NAME}</Label>
+        <Label>{TextResources.FILE_NAME}</Label>
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setFileName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.PROJECT_FILE_NAME}
+          placeholder={TextResources.FILE_NAME}
           value={fileName}
         />
         <Label>{TextResources.PROJECT_PARSER}</Label>

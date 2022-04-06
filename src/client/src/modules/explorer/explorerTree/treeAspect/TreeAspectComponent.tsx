@@ -48,8 +48,8 @@ export const TreeAspectComponent = ({
         isHidden={node.isHidden}
         isAncestorVisible={isAncestorVisible}
         isVisible={isVisible}
-        showText={TextResources.EXPLORER_SHOW_OBJECT}
-        hideText={TextResources.EXPLORER_HIDE_OBJECT}
+        showText={TextResources.SHOW_OBJECT}
+        hideText={TextResources.HIDE_OBJECT}
         onToggleVisible={() => {
           onSetVisibleElement(!isVisible, node.id);
           OnTreeExplorerChange(node, project, dispatch);
@@ -57,8 +57,8 @@ export const TreeAspectComponent = ({
       />
       <LockComponent
         isLocked={node.isLocked}
-        unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
-        lockText={TextResources.EXPLORER_LOCK_OBJECT}
+        unlockText={TextResources.UNLOCK_OBJECT}
+        lockText={TextResources.LOCK_OBJECT}
         onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
       />
       <TreeAspectElement

@@ -8,7 +8,8 @@ import { Color } from "../compLibrary/colors/Color";
 export const ToggleDarkModeColor = (isDarkMode: boolean) => {
   const root = document.getElementById("root");
   const menuBar = document.getElementById("ToolBar");
-  const explorer = document.getElementById("ExplorerModule");
+  const explorerTree = document.getElementById("ExplorerTreeModule");
+  const explorerBlock = document.getElementById("ExplorerBlockModule");
   const library = document.getElementById("LibraryModule");
   const legend = document.getElementById("LegendModule");
   const inspector = document.getElementById("InspectorModule");
@@ -18,7 +19,8 @@ export const ToggleDarkModeColor = (isDarkMode: boolean) => {
   const moduleColor = isDarkMode ? Color.DARKMODE_MODULE : Color.GHOST_WHITE;
 
   if (root) root.style.background = mainColor;
-  if (explorer) explorer.style.background = moduleColor;
+  if (explorerTree) explorerTree.style.background = moduleColor;
+  if (explorerBlock) explorerBlock.style.background = moduleColor;
   if (library) library.style.background = moduleColor;
   if (legend) legend.style.background = moduleColor;
   if (inspector) inspector.style.background = moduleColor;

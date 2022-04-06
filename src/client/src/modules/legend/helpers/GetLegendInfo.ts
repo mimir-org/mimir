@@ -20,7 +20,7 @@ export const GetLegendInfo = (conn: Connector, node: Node) => {
   }
 
   if (IsPartOfTerminal(conn)) {
-    name = TextResources.RELATIONS_PARTOF_RELATIONSHIP;
+    name = TextResources.PARTOF_RELATIONSHIP;
     color = GetAspectColor(node, AspectColorType.Main);
     return [name, color];
   }

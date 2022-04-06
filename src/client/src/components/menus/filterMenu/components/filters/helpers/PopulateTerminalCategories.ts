@@ -15,7 +15,7 @@ export const PopulateTerminalCategories = (transportItems: Connector[]) => {
     const name = item.terminalCategory?.name;
 
     if (!categories.some((x) => x.id === id || x.name === name)) {
-      const category = { id, name: name ?? TextResources.FILTER_CATEGORY } as TerminalCategory;
+      const category = { id, name: name ?? TextResources.CATEGORY } as TerminalCategory;
       categories.push(category);
     }
   });

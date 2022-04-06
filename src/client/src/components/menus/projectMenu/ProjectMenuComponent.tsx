@@ -70,7 +70,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
           disabled={!projectState?.project?.isSubProject}
         /> */}
       <MenuElement
-        text={TextResources.PROJECT_SUBPROJECT_SAVE}
+        text={TextResources.SUBPROJECT_SAVE}
         icon={selectedNodeIds ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
         disabled={!selectedNodeIds}

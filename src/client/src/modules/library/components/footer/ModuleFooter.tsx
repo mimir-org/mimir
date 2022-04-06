@@ -51,7 +51,7 @@ export const ModuleFooter = ({
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => OnOpenTypeEditor(resetSelectedElement, dispatch)}
-        text={TextResources.LIBRARY_NEW_TYPE}
+        text={TextResources.NEW_TYPE}
         icon={NewType}
       />
       <Button
@@ -59,14 +59,14 @@ export const ModuleFooter = ({
         onClick={() =>
           OnOpenTypeEditorWithItem(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)
         }
-        text={TextResources.LIBRARY_EDIT_TYPE}
+        text={TextResources.EDIT_TYPE}
         icon={EditType}
         disabled={selectedElement === null || selectedElement.libraryType === ObjectType.NotSet}
       />
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => setConfirmDeleteBoxVisible(true)}
-        text={TextResources.LIBRARY_DELETE_TYPE}
+        text={TextResources.DELETE_TYPE}
         icon={DeleteType}
         disabled={selectedElement === null}
       />

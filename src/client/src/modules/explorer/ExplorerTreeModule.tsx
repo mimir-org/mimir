@@ -24,12 +24,8 @@ const ExplorerTreeModule = () => {
   const stop = isOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   return (
-    <AnimatedModule type={type} start={start} stop={stop} run id="ExplorerModule">
-      <Tooltip
-        content={isOpen ? TextResources.EXPLORER_CLOSE_PANEL : TextResources.EXPLORER_EXPAND_PANEL}
-        placement={"bottom"}
-        offset={[0, -10]}
-      >
+    <AnimatedModule type={type} start={start} stop={stop} run id="ExplorerTreeModule">
+      <Tooltip content={isOpen ? TextResources.CLOSE_PANEL : TextResources.EXPAND_PANEL} placement={"bottom"} offset={[0, -10]}>
         <ExplorerModuleHeader onClick={() => OnToggleExplorerClick(dispatch, type)}>
           {isOpen && <span>{type}</span>}
           <Icon size={24} src={ExplorerIcon} alt="" />

@@ -29,11 +29,7 @@ export const CheckboxExplorer = ({
   icon,
   label,
 }: Props) => (
-  <Tooltip
-    content={isChecked ? TextResources.EXPLORER_UNSELECT_OBJECT : TextResources.EXPLORER_SELECT_OBJECT}
-    placement={"right"}
-    offset={[0, 15]}
-  >
+  <Tooltip content={isChecked ? TextResources.UNSELECT_OBJECT : TextResources.SELECT_OBJECT} placement={"right"} offset={[0, 15]}>
     <CheckboxWrapper color={color} miniCheckBox={isMiniCheckbox} isBlockView={isBlockView} isAspectNode={isAspectNode}>
       <input type="checkbox" checked={isChecked ?? false} onChange={() => onChange()} />
       {isAspectNode && <Icon size={22} src={icon} alt="" />}

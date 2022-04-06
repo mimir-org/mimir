@@ -46,8 +46,8 @@ export const InspectorButtonRow = ({
   const selectedNode = project?.nodes?.find((n) => n.isSelected);
   const deleteDisabled = isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === selectedNode);
 
-  let inspectorToggleText = open ? TextResources.INSPECTOR_CLOSE : TextResources.INSPECTOR_EXPAND;
-  if (!isElementSelected) inspectorToggleText = TextResources.INSPECTOR_INACTIVE_PANEL;
+  let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;
+  if (!isElementSelected) inspectorToggleText = TextResources.INACTIVE_PANEL;
 
   return (
     <InspectorButtonRowContainer>
@@ -56,12 +56,12 @@ export const InspectorButtonRow = ({
           <InspectorButton
             onClick={() => OnLockClick(element, project, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
-            description={element?.isLocked ? TextResources.INSPECTOR_UNLOCK_OBJECT : TextResources.INSPECTOR_LOCK_OBJECT}
+            description={element?.isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
           />
           <InspectorButton
             onClick={() => !deleteDisabled && OnDeleteClick(project, element, dispatch, inspectorRef)}
             type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
-            description={TextResources.INSPECTOR_DELETE_OBJECT}
+            description={TextResources.DELETE_OBJECT}
             disabled={deleteDisabled}
           />
         </>
@@ -74,7 +74,7 @@ export const InspectorButtonRow = ({
               OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
             }
           >
-            <InspectorButtonRowToggleTitle>{TextResources.MODULE_INSPECTOR}</InspectorButtonRowToggleTitle>
+            <InspectorButtonRowToggleTitle>{TextResources.INSPECTOR}</InspectorButtonRowToggleTitle>
             <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
           </InspectorButtonRowToggleContainer>
         </span>

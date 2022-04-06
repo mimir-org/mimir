@@ -31,13 +31,13 @@ export const ToolbarComponent = () => {
         {!isTreeView && (
           <>
             <ToolbarElement
-              label={TextResources.TOOLBAR_FITSCREEN}
+              label={TextResources.FITSCREEN}
               icon={Icons.FitScreenIcon}
               onClick={() => OnResetZoom(isTreeView, setViewport, setCenter, secondaryNode)}
               borderRight
             />
             <ToolbarElement
-              label={isElectro ? TextResources.TOOLBAR_ELECTRO_OFF : TextResources.TOOLBAR_ELECTRO_ON}
+              label={isElectro ? TextResources.ELECTRO_OFF : TextResources.ELECTRO_ON}
               icon={isElectro ? Icons.Vertical : Icons.Horizontal}
               onClick={() => OnElectroClick(dispatch)}
               borderRight
@@ -48,21 +48,21 @@ export const ToolbarComponent = () => {
       <ToolbarButtonGroup>
         <ToolbarElement
           active={isTreeView}
-          label={TextResources.TOOLBAR_TREEVIEW}
+          label={TextResources.TREEVIEW}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
           onClick={() => OnViewClick(VIEW_TYPE.TREEVIEW as ViewType, numberOfSelectedElements, dispatch)}
           borderLeft
         />
         <ToolbarElement
           active={!isTreeView}
-          label={TextResources.TOOLBAR_BLOCKVIEW}
+          label={TextResources.BLOCKVIEW}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
           onClick={() => OnViewClick(VIEW_TYPE.BLOCKVIEW as ViewType, numberOfSelectedElements, dispatch)}
           borderLeft
         />
         <ToolbarElement
           active={IsVisualFilterOpen}
-          label={IsVisualFilterOpen ? TextResources.TOOLBAR_VISUALFILTERS_CLOSE : TextResources.TOOLBAR_VISUALFILTERS_OPEN}
+          label={IsVisualFilterOpen ? TextResources.VISUALFILTER_CLOSE : TextResources.VISUALFILTER_OPEN}
           icon={IsVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
           onClick={() => OnFilterClick(dispatch, IsVisualFilterOpen)}
           borderLeft

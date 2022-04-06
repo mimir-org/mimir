@@ -38,7 +38,7 @@ export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
     <UserMenuBox id={MENU_TYPE.USER_MENU} ref={menuRef}>
       <UserNameBox>
         <UserNameText>{userState.user && userState?.user?.name}</UserNameText>
-        <UserNameRoleText>{userState?.user?.role ?? TextResources.USERMENU_USER}</UserNameRoleText>
+        <UserNameRoleText>{userState?.user?.role ?? TextResources.USER}</UserNameRoleText>
       </UserNameBox>
 
       {/* <UserMenuElement onClick={() => null}>
@@ -53,9 +53,7 @@ export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
 
       <UserMenuElement onClick={() => OnToggleDarkMode(dispatch, isDarkMode)}>
         <Icon size={20} src={isDarkMode ? LightMode : DarkMode} />
-        <UserMenuElementText>
-          {isDarkMode ? TextResources.USERMENU_LIGHTMODE : TextResources.USERMENU_DARKMODE}
-        </UserMenuElementText>
+        <UserMenuElementText>{isDarkMode ? TextResources.LIGHT_MODE : TextResources.DARK_MODE}</UserMenuElementText>
       </UserMenuElement>
 
       <UserMenuElement onClick={() => OnLogOutClick()}>

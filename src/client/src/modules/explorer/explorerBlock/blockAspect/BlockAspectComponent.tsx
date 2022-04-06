@@ -39,8 +39,8 @@ export const BlockAspectComponent = ({
   <AspectContainer node={node}>
     <LockComponent
       isLocked={node.isLocked}
-      unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
-      lockText={TextResources.EXPLORER_LOCK_OBJECT}
+      unlockText={TextResources.UNLOCK_OBJECT}
+      lockText={TextResources.LOCK_OBJECT}
       onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
     />
     <BlockAspectElement
