@@ -1,3 +1,4 @@
+using System.Web;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -26,7 +27,7 @@ namespace ModelBuilder.Rdf.Extensions
             {
                 case Terminal terminal:
                     ontologyService.AssertNode($"mimir:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
-                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}");
+                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{terminal.TerminalCategoryId}-{HttpUtility.UrlEncode(terminal.Name)}");
                     ontologyService.AssertNode(terminal.Iri, Resources.Type, edge != null ? Resources.StreamTerminal : Resources.FSBTerminal);
                     ontologyService.AssertNode(terminal.Iri, Resources.Label, terminal.Name, true);
                     ontologyService.AssertNode(terminal.Iri, Resources.TerminalDirectionType, terminal.Type.ToString(), true);
@@ -97,7 +98,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static bool IsPartOf(this Connector c)
         {
-            return c is Relation {RelationType: RelationType.PartOf};
+            return c is Relation { RelationType: RelationType.PartOf };
         }
 
         /// <summary>

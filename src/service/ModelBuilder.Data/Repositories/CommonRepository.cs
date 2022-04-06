@@ -132,7 +132,7 @@ namespace Mb.Data.Repositories
             if (replacement == null)
                 throw new NullReferenceException("Replacement can't be null in CreateOrUseIdAndIri");
 
-            var data = new ReplacementId {FromId = replacement.FromId, FromIri = replacement.FromIri};
+            var data = new ReplacementId { FromId = replacement.FromId, FromIri = replacement.FromIri };
             var hasValidId = HasValidId(replacement.FromId);
             var hasValidIri = HasValidIri(replacement.FromIri);
 
