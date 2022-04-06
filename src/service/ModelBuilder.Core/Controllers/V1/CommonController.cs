@@ -29,7 +29,8 @@ namespace Mb.Core.Controllers.V1
         private readonly ICommonService _commonService;
         private readonly IModuleService _moduleService;
 
-        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService)
+        public CommonController(ICommonService commonService, ILogger<CommonController> logger,
+            IModuleService moduleService)
         {
             _commonService = commonService;
             _logger = logger;

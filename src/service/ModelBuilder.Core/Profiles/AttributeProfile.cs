@@ -29,12 +29,15 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.ConvertToObject))
                 .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
-                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
+                .ForMember(dest => dest.SelectValuesString,
+                    opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
             // TODO: We should not map objects from AttributeType to Attribute??
             CreateMap<AttributeType, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => commonRepository.CreateId()))
                 .ForMember(dest => dest.Iri, opt => opt.Ignore())
+                .ForMember(dest => dest.Domain, opt => opt.Ignore())
+                .ForMember(dest => dest.Kind, opt => opt.Ignore())
                 .ForMember(dest => dest.Entity, opt => opt.MapFrom(src => src.Entity))
                 .ForMember(dest => dest.Value, opt => opt.UseDestinationValue())
                 .ForMember(dest => dest.SelectedUnitId, opt => opt.Ignore())
@@ -54,7 +57,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags));
-            /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.Id)) // TODO: Convert*/
 
             CreateMap<AttributeAm, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -69,7 +71,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AttributeTypeId, opt => opt.MapFrom(src => src.AttributeTypeId))
                 .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
-                .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
+                .ForMember(dest => dest.UnitString,
+                    opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.TerminalIri, opt => opt.MapFrom(src => src.TerminalIri))
@@ -92,8 +95,8 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
-                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
-            /*.ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri)) // TODO: Logic if null?*/
+                .ForMember(dest => dest.SelectValuesString,
+                    opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
             CreateMap<Attribute, AttributeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

@@ -13,8 +13,6 @@ namespace Mb.Api
             CreateHostBuilder(args).Build().Run();
         }
 
-        //
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(logging =>
@@ -27,9 +25,9 @@ namespace Mb.Api
                     webBuilder.UseStartup<Startup>()
                         .ConfigureAppConfiguration(configurationBuilder =>
                         {
-                            configurationBuilder.AddJsonFile($"{Directory.GetCurrentDirectory()}/appsettings.local.json", true);
+                            configurationBuilder.AddJsonFile(
+                                $"{Directory.GetCurrentDirectory()}/appsettings.local.json", true);
                         });
                 });
-
     }
 }

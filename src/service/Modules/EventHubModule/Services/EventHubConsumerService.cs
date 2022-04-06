@@ -21,16 +21,22 @@ namespace EventHubModule.Services
         private readonly bool _hasValidConfiguration;
         private readonly ILogger<EventHubConsumerService<T>> _logger;
 
-        public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration, ILogger<EventHubConsumerService<T>> logger)
+        public EventHubConsumerService(IOptions<EventHubConfiguration> eventHubConfiguration,
+            ILogger<EventHubConsumerService<T>> logger)
         {
             _logger = logger;
-            _hasValidConfiguration = eventHubConfiguration?.Value != null && eventHubConfiguration.Value.HasValidConsumerConfiguration();
+            _hasValidConfiguration = eventHubConfiguration?.Value != null &&
+                                     eventHubConfiguration.Value.HasValidConsumerConfiguration();
 
             if (!_hasValidConfiguration)
                 return;
 
-            var blobContainerClient = new BlobContainerClient(eventHubConfiguration?.Value?.ConsumerBlobStorageConnectionString, eventHubConfiguration?.Value?.ConsumerBlobContainerName);
-            _client = new EventProcessorClient(blobContainerClient, EventHubConsumerClient.DefaultConsumerGroupName, eventHubConfiguration?.Value?.ConsumerConnectionString, eventHubConfiguration?.Value?.ConsumerEventHubName);
+            var blobContainerClient = new BlobContainerClient(
+                eventHubConfiguration?.Value?.ConsumerBlobStorageConnectionString,
+                eventHubConfiguration?.Value?.ConsumerBlobContainerName);
+            _client = new EventProcessorClient(blobContainerClient, EventHubConsumerClient.DefaultConsumerGroupName,
+                eventHubConfiguration?.Value?.ConsumerConnectionString,
+                eventHubConfiguration?.Value?.ConsumerEventHubName);
             _client.ProcessEventAsync += ProcessEventHandler;
             _client.ProcessErrorAsync += ProcessErrorHandler;
         }
@@ -39,7 +45,7 @@ namespace EventHubModule.Services
         {
             if (!_hasValidConfiguration)
             {
-                _logger.LogError("EventHub missing configuration");
+                _logger.LogWarning("EventHub - missing configuration");
                 return;
             }
 

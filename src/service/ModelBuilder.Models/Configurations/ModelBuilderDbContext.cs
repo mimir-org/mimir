@@ -1,7 +1,10 @@
+using System;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Configurations
 {
@@ -42,6 +45,8 @@ namespace Mb.Models.Configurations
 
         public ModelBuilderDbContext(DbContextOptions<ModelBuilderDbContext> options) : base(options)
         {
+            // ReSharper disable once VirtualMemberCallInConstructor
+            Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
