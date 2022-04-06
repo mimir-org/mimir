@@ -16,6 +16,7 @@ using Mb.Models.Records;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
+
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
 
@@ -34,7 +35,11 @@ namespace Mb.Data.Repositories
         private readonly ISimpleRepository _simpleRepository;
         private readonly ICacheRepository _cacheRepository;
 
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
+        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository,
+            IEdgeRepository edgeRepository, IAttributeRepository attributeRepository,
+            IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository,
+            IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository,
+            ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
         {
             _mapper = mapper;
             _nodeRepository = nodeRepository;
@@ -109,64 +114,58 @@ namespace Mb.Data.Repositories
         public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
             if (original == null || updated == null || data == null)
-                throw new ModelBuilderNullReferenceException("Original project, updated project and project edit can't be null.");
+                throw new ModelBuilderNullReferenceException(
+                    "Original project, updated project and project edit can't be null.");
 
             var bulk = new BulkOperations();
 
             using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
             {
-                try
+                using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
-                    using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
-                    {
-                        // Upsert
-                        bulk.Setup<Project>()
-                            .ForObject(updated)
-                            .WithTable("Project")
-                            .AddColumn(x => x.Id)
-                            .AddColumn(x => x.Iri)
-                            .AddColumn(x => x.IsSubProject)
-                            .AddColumn(x => x.Version)
-                            .AddColumn(x => x.Name)
-                            .AddColumn(x => x.Description)
-                            .AddColumn(x => x.ProjectOwner)
-                            .AddColumn(x => x.UpdatedBy)
-                            .AddColumn(x => x.Updated)
-                            .Upsert()
-                            .MatchTargetOn(x => x.Id)
-                            .Commit(conn);
+                    // Upsert
+                    bulk.Setup<Project>()
+                        .ForObject(updated)
+                        .WithTable("Project")
+                        .AddColumn(x => x.Id)
+                        .AddColumn(x => x.Iri)
+                        .AddColumn(x => x.IsSubProject)
+                        .AddColumn(x => x.Version)
+                        .AddColumn(x => x.Name)
+                        .AddColumn(x => x.Description)
+                        .AddColumn(x => x.ProjectOwner)
+                        .AddColumn(x => x.UpdatedBy)
+                        .AddColumn(x => x.Updated)
+                        .Upsert()
+                        .MatchTargetOn(x => x.Id)
+                        .Commit(conn);
 
-                        _nodeRepository.BulkUpsert(bulk, conn, data.NodeUpdateInsert);
-                        _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
-                        _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
-                        _transportRepository.BulkUpsert(bulk, conn, data.TransportUpdateInsert);
-                        _interfaceRepository.BulkUpsert(bulk, conn, data.InterfaceUpdateInsert);
-                        _simpleRepository.BulkUpsert(bulk, conn, data.SimpleUpdateInsert);
-                        _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
-                        _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
+                    _nodeRepository.BulkUpsert(bulk, conn, data.NodeUpdateInsert);
+                    _connectorRepository.BulkUpsert(bulk, conn, data.RelationUpdateInsert);
+                    _connectorRepository.BulkUpsert(bulk, conn, data.TerminalUpdateInsert);
+                    _transportRepository.BulkUpsert(bulk, conn, data.TransportUpdateInsert);
+                    _interfaceRepository.BulkUpsert(bulk, conn, data.InterfaceUpdateInsert);
+                    _simpleRepository.BulkUpsert(bulk, conn, data.SimpleUpdateInsert);
+                    _attributeRepository.BulkUpsert(bulk, conn, data.AttributeUpdateInsert);
+                    _edgeRepository.BulkUpsert(bulk, conn, data.EdgeUpdateInsert);
 
-                        // Delete
-                        _edgeRepository.BulkDelete(bulk, conn, data.EdgeDelete);
-                        _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
-                        _transportRepository.BulkDelete(bulk, conn, data.TransportDelete);
-                        _interfaceRepository.BulkDelete(bulk, conn, data.InterfaceDelete);
-                        _simpleRepository.BulkDelete(bulk, conn, data.SimpleDelete);
-                        _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
-                        _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
-                        _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
-                    }
-
-                    trans.Complete();
+                    // Delete
+                    _edgeRepository.BulkDelete(bulk, conn, data.EdgeDelete);
+                    _attributeRepository.BulkDelete(bulk, conn, data.AttributeDelete);
+                    _transportRepository.BulkDelete(bulk, conn, data.TransportDelete);
+                    _interfaceRepository.BulkDelete(bulk, conn, data.InterfaceDelete);
+                    _simpleRepository.BulkDelete(bulk, conn, data.SimpleDelete);
+                    _connectorRepository.BulkDelete(bulk, conn, data.RelationDelete);
+                    _connectorRepository.BulkDelete(bulk, conn, data.TerminalDelete);
+                    _nodeRepository.BulkDelete(bulk, conn, data.NodeDelete);
                 }
-                catch (Exception e)
-                {
-                    var err = e.Message;
-                }
+
+                trans.Complete();
             }
 
             var key = GetKey(updated.Id, updated.Iri);
             await _cacheRepository.DeleteCacheAsync(key);
-
+            _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Iri));
         }
 
         /// <summary>
@@ -179,7 +178,7 @@ namespace Mb.Data.Repositories
         {
             var bulk = new BulkOperations();
 
-            using (var trans = new TransactionScope())
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
             {
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
@@ -213,6 +212,7 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
+            _cacheRepository.RefreshList.Enqueue((project.Id, project.Iri));
             return Task.CompletedTask;
         }
 
@@ -226,7 +226,7 @@ namespace Mb.Data.Repositories
         {
             var bulk = new BulkOperations();
 
-            using (var trans = new TransactionScope())
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
             {
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
@@ -292,7 +292,6 @@ namespace Mb.Data.Repositories
                     .Include("Nodes.Simples.Attributes")
                     .AsNoTracking()
                     .AsSplitQuery()
-                    .OrderByDescending(x => x.Name)
                     .FirstOrDefault();
 
             if (project != null && project.Nodes.Any())

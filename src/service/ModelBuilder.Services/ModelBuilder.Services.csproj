@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <EntityDeploy Remove="Extensions\**" />
+    <None Remove="Extensions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="DelegateDecompiler.EntityFramework" Version="0.30.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
@@ -23,10 +30,6 @@
     <ProjectReference Include="..\ModelBuilder.Data\ModelBuilder.Data.csproj" />
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
     <ProjectReference Include="..\ModelBuilder.TypeEditor.Data\ModelBuilder.TypeEditor.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

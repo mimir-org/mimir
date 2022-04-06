@@ -26,7 +26,8 @@ namespace ModelBuilder.Rdf.Services
 
         #region Constructors
 
-        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository, INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository)
+        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository,
+            INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository)
         {
             _ontologyRepository = ontologyRepository;
             _libRepository = libRepository;
@@ -282,7 +283,9 @@ namespace ModelBuilder.Rdf.Services
 
             var value = objects.First()?.ResolveValue(false);
 
-            if (!decimal.TryParse(value?.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo, out var data))
+            if (!decimal.TryParse(value?.Replace(',', '.'),
+                    NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, NumberFormatInfo.InvariantInfo,
+                    out var data))
                 throw new InvalidDataException($"{predicate} should always point to a decimal value | Iri: {iri}");
 
             return data;
@@ -340,20 +343,27 @@ namespace ModelBuilder.Rdf.Services
         private ProjectData GetApplicationData(string projectIri)
         {
             var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
-            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).Where(x => x.ProjectIri == projectIri).ToList();
+            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery()
+                .Where(x => x.ProjectIri == projectIri).ToList();
             var units = _libRepository.GetObject<Unit>().ToList();
 
             var attributeFormatsWithId = _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Id, x => x);
-            var attributeFormatsWithName = _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Name, x => x);
+            var attributeFormatsWithName =
+                _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Name, x => x);
 
-            var attributeConditionsWithId = _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Id, x => x);
-            var attributeConditionsWithName = _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Name, x => x);
+            var attributeConditionsWithId =
+                _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Id, x => x);
+            var attributeConditionsWithName =
+                _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Name, x => x);
 
             var attributeSourcesWithId = _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Id, x => x);
-            var attributeSourcesWithName = _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Name, x => x);
+            var attributeSourcesWithName =
+                _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Name, x => x);
 
-            var attributeQualifiersWithId = _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Id, x => x);
-            var attributeQualifiersWithName = _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Name, x => x);
+            var attributeQualifiersWithId =
+                _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Id, x => x);
+            var attributeQualifiersWithName =
+                _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Name, x => x);
 
             var projectData = new ProjectData
             {
@@ -477,6 +487,5 @@ namespace ModelBuilder.Rdf.Services
         }
 
         #endregion
-
     }
 }
