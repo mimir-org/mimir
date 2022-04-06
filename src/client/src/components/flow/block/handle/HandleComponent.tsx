@@ -5,7 +5,7 @@ import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
 import { GetBlockHandleType, IsValidBlockConnection, ShowHandle } from "./helpers";
 import { HandleBox, HandleContainer } from "./HandleComponent.styled";
 import { GetTerminalColor } from "../helpers";
-import { OnMouseEnter, OnMouseLeave } from "./handlers";
+import { OnMouseEnter, OnMouseLeave } from "./handlers/OnMouseHandler";
 import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { HandleIcon } from "./components/HandleIcon";
 
