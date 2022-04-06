@@ -20,7 +20,8 @@ namespace Mb.TypeEditor.Services.Services
         private readonly IAttributeTypeRepository _attributeTypeRepository;
         private readonly IEnumBaseRepository _enumBaseRepository;
 
-        public AttributeTypeService(IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository, IAttributeTypeRepository attributeTypeRepository, IEnumBaseRepository enumBaseRepository)
+        public AttributeTypeService(IMapper mapper, IPredefinedAttributeRepository predefinedAttributeRepository,
+            IAttributeTypeRepository attributeTypeRepository, IEnumBaseRepository enumBaseRepository)
         {
             _mapper = mapper;
             _predefinedAttributeRepository = predefinedAttributeRepository;
@@ -41,11 +42,10 @@ namespace Mb.TypeEditor.Services.Services
                 .Include(x => x.Condition)
                 .Include(x => x.Format)
                 .Include(x => x.Units)
+                .AsSplitQuery()
                 .ToList();
 
-            return aspect == Aspect.NotSet ?
-                all :
-                all.Where(x => x.Aspect.HasFlag(aspect)).ToList();
+            return aspect == Aspect.NotSet ? all : all.Where(x => x.Aspect.HasFlag(aspect)).ToList();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Mb.TypeEditor.Services.Services
         /// <returns></returns>
         public async Task<AttributeType> CreateAttributeType(AttributeTypeAm createAttributeType)
         {
-            var data = await CreateAttributeTypes(new List<AttributeTypeAm> { createAttributeType });
+            var data = await CreateAttributeTypes(new List<AttributeTypeAm> {createAttributeType});
             return data.SingleOrDefault();
         }
 
@@ -130,6 +130,7 @@ namespace Mb.TypeEditor.Services.Services
             {
                 await _predefinedAttributeRepository.CreateAsync(entity);
             }
+
             await _predefinedAttributeRepository.SaveAsync();
             return attributes;
         }

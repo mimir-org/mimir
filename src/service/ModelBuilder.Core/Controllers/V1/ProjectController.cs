@@ -43,7 +43,8 @@ namespace Mb.Core.Controllers.V1
         /// <param name="projectFileService"></param>
         /// <param name="commonRepository"></param>
         /// <param name="moduleService"></param>
-        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger, IProjectFileService projectFileService, ICommonRepository commonRepository, IModuleService moduleService)
+        public ProjectController(IProjectService projectService, ILogger<ProjectController> logger,
+            IProjectFileService projectFileService, ICommonRepository commonRepository, IModuleService moduleService)
         {
             _projectService = projectService;
             _logger = logger;
@@ -304,7 +305,8 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Edit")]
         [RequestSizeLimit(100_000_000)]
-        public async Task<IActionResult> UploadProject(string parser, IFormFile file, CancellationToken cancellationToken)
+        public async Task<IActionResult> UploadProject(string parser, IFormFile file,
+            CancellationToken cancellationToken)
         {
             try
             {

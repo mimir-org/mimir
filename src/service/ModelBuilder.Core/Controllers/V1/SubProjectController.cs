@@ -26,19 +26,16 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly IProjectService _projectService;
         private readonly ILogger<ProjectController> _logger;
-        private readonly IModuleService _moduleService;
 
         /// <summary>
         /// Project Controller Constructor
         /// </summary>
         /// <param name="projectService"></param>
         /// <param name="logger"></param>
-        /// <param name="moduleService"></param>
-        public SubProjectController(IProjectService projectService, ILogger<ProjectController> logger, IModuleService moduleService)
+        public SubProjectController(IProjectService projectService, ILogger<ProjectController> logger)
         {
             _projectService = projectService;
             _logger = logger;
-            _moduleService = moduleService;
         }
 
         /// <summary>
@@ -104,7 +101,7 @@ namespace Mb.Core.Controllers.V1
             {
                 var data = await _projectService.GetProject(id, null);
 
-                if (data is { IsSubProject: false })
+                if (data is {IsSubProject: false})
                     return BadRequest("This is not a subProject");
 
                 return Ok(data);
