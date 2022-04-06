@@ -19,7 +19,6 @@ export const IsValidTreeConnection = (node: Node, conn: Connection, dispatch: Di
   const isValidAspect = IsFamily(node, parentNode);
 
   document.addEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch), { once: true });
-
   return isValidAspect;
 };
 

@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { Edge, Node, Project } from "../../../models";
 import { FindParentEdge } from "../../../helpers/ParentNode";
 import { changeNodeValue } from "../../../redux/store/project/actions";
-import { GetChildren } from "../../../helpers/Family";
+import { IsPartOfTerminal } from "./Connectors";
 
 /**
  * Updates the sibling index of nodes affected by an Edge being connected.
@@ -49,7 +49,6 @@ export const SetSiblingIndexOnNodeDrop = (node: Node, project: Project, parentId
   if (!parentId) return null;
 
   const siblings = GetChildren(parentId, project);
-
   node.rds += siblings.length;
 };
 
@@ -86,3 +85,10 @@ const ResetRDS = (node: Node, index: number, dispatch: Dispatch) => {
   const newRDS = StripSiblingIndex(node.rds) + index;
   dispatch(changeNodeValue(node.id, "rds", newRDS));
 };
+
+const GetChildren = (nodeId: string, project: Project) =>
+  project?.nodes?.filter((otherNode) =>
+    project?.edges?.find(
+      (edge) => edge.fromNodeId === nodeId && edge.toNodeId === otherNode?.id && IsPartOfTerminal(edge.fromConnector)
+    )
+  );

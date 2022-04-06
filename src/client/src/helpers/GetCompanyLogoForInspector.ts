@@ -6,11 +6,8 @@ import { IsCreateLibraryType } from "../modules/inspector/helpers/IsType";
 const GetCompanyLogoForInspector = (company: string, elem: InspectorElement) => {
   let companyValue = company;
 
-  if (IsCreateLibraryType(elem)) {
-    return null;
-  } else if (elem.domain) {
-    companyValue = elem.domain;
-  }
+  if (IsCreateLibraryType(elem)) return null;
+  else if (elem.domain) companyValue = elem.domain;
 
   if (companyValue === "aibel.com") return AibelLogo;
   if (companyValue === "equinor.com") return EquinorLogo;

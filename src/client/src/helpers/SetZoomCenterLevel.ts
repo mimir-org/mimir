@@ -3,6 +3,8 @@ import { Size } from "../compLibrary/size/Size";
 
 /**
  * Component to center the canvas' zoom level and position.
+ * @param setViewport
+ * @param setCenter
  * @param splitView
  */
 const SetZoomCenterLevel = (setViewport: SetViewport, setCenter: SetCenter, splitView: boolean) => {

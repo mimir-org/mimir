@@ -2,6 +2,8 @@ import { Color } from "../compLibrary/colors/Color";
 import { AspectColorType, LibItem, Node } from "../models";
 import { IsFunction, IsLocation, IsProduct } from "./Aspects";
 
+type Item = Node | LibItem;
+
 /**
  * Component to get the color for a given item.
  * @param node
@@ -9,7 +11,7 @@ import { IsFunction, IsLocation, IsProduct } from "./Aspects";
  * @param isTransparent
  * @returns the color according to the chosen criteriums.
  */
-const GetAspectColor = (node: Node | LibItem, colorType: AspectColorType, isTransparent?: boolean) => {
+const GetAspectColor = (node: Item, colorType: AspectColorType, isTransparent?: boolean) => {
   if (isTransparent) {
     if (IsFunction(node)) return "rgba(251, 201, 19, 0.1)";
     if (IsProduct(node)) return "rgba(6, 144, 152, 0.1)";
@@ -22,25 +24,25 @@ const GetAspectColor = (node: Node | LibItem, colorType: AspectColorType, isTran
   if (colorType === AspectColorType.Tab) return GetTabColor(node);
 };
 
-function GetMainColor(node: Node | LibItem) {
+function GetMainColor(node: Item) {
   if (IsFunction(node)) return Color.LEMON_YELLOW;
   if (IsProduct(node)) return Color.ELECTRIC_BLUE;
   if (IsLocation(node)) return Color.MAGENTA;
 }
 
-function GetSelectedColor(node: Node | LibItem) {
+function GetSelectedColor(node: Item) {
   if (IsFunction(node)) return Color.SUNGLOW;
   if (IsProduct(node)) return Color.VIRIDIAN_GREEN;
   if (IsLocation(node)) return Color.PURPLE_MUNSELL;
 }
 
-function GetHeaderColor(node: Node | LibItem) {
+function GetHeaderColor(node: Item) {
   if (IsFunction(node)) return Color.LEMON_YELLOW_CRAYOLA;
   if (IsProduct(node)) return Color.CELESTE;
   if (IsLocation(node)) return Color.PINK_LACE;
 }
 
-function GetTabColor(node: Node | LibItem) {
+function GetTabColor(node: Item) {
   if (IsFunction(node)) return Color.JASMINE;
   if (IsProduct(node)) return Color.DARK_TURQUOISE;
   if (IsLocation(node)) return Color.PINK;

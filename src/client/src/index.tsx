@@ -30,12 +30,7 @@ msalInstance.addEventCallback((event: EventMessage) => {
 });
 
 if (Config.APP_INSIGHTS_CONNECTION_STRING) {
-  const appInsights = new ApplicationInsights({
-    config: {
-      connectionString: Config.APP_INSIGHTS_CONNECTION_STRING,
-    },
-  });
-
+  const appInsights = new ApplicationInsights({ config: { connectionString: Config.APP_INSIGHTS_CONNECTION_STRING } });
   appInsights.loadAppInsights();
   appInsights.trackPageView();
 }

@@ -6,7 +6,6 @@ const GetCompanyLogoForNode = (company: string, node: Node) => {
   let companyValue = company;
 
   if (node.domain) companyValue = node.domain;
-
   if (companyValue === "aibel.com") return AibelLogo;
   if (companyValue === "equinor.com") return EquinorLogo;
   return null;

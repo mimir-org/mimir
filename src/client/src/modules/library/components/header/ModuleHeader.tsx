@@ -20,9 +20,9 @@ interface Props {
 }
 
 /**
- * Header component for library module
+ * Header component for the Library Module.
  * @param interface
- * @returns library module tabs, search input and filters
+ * @returns Library Module tabs, search input and filters.
  */
 
 export const ModuleHeader = ({
