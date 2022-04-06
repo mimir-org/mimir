@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Color } from "../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../compLibrary/font";
 
-export const UserMenuBox = styled.div`
+export const Box = styled.div`
   position: absolute;
   right: 0;
   background: ${Color.WHITE};
@@ -36,7 +36,7 @@ export const UserNameRoleText = styled.p`
   color: ${Color.BATTLESHIP_GREY};
 `;
 
-export const UserMenuElement = styled.button`
+export const Element = styled.button`
   display: flex;
   gap: 10px;
   background: transparent;
@@ -58,7 +58,7 @@ export const UserMenuElement = styled.button`
   }
 `;
 
-export const UserMenuElementText = styled.span`
+export const Text = styled.span`
   font-size: ${FontSize.STANDARD};
 
   :hover {

@@ -2,7 +2,6 @@ import { FlowTree } from "./tree";
 import { FlowBlock } from "./block";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { TypeEditorComponent } from "../../typeEditor";
-
 import { FlowModuleContainer } from "./FlowModule.styled";
 
 interface Props {

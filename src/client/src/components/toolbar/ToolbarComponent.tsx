@@ -1,7 +1,7 @@
 import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
 import { ToolbarElement } from "./components/ToolbarElement";
-import { OnElectroClick, OnFilterClick, OnViewClick, OnResetZoom } from "./handlers/";
+import { OnElectroClick, OnFilterClick, OnViewClick, OnResetZoomClick } from "./handlers/OnToolbarClick";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
@@ -33,7 +33,7 @@ export const ToolbarComponent = () => {
             <ToolbarElement
               label={TextResources.FITSCREEN}
               icon={Icons.FitScreenIcon}
-              onClick={() => OnResetZoom(isTreeView, setViewport, setCenter, secondaryNode)}
+              onClick={() => OnResetZoomClick(isTreeView, setViewport, setCenter, secondaryNode)}
               borderRight
             />
             <ToolbarElement
