@@ -415,45 +415,45 @@ namespace Mb.TypeEditor.Services.Services
                 switch (libraryType)
                 {
                     case NodeType nt:
-                    {
-                        if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                         {
-                            foreach (var attributeType in nt.AttributeTypes)
+                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                foreach (var attributeType in nt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                }
                             }
-                        }
 
-                        if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
-                        {
-                            foreach (var simpleType in nt.SimpleTypes)
+                            if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
                             {
-                                _simpleTypeRepository.Attach(simpleType, EntityState.Unchanged);
+                                foreach (var simpleType in nt.SimpleTypes)
+                                {
+                                    _simpleTypeRepository.Attach(simpleType, EntityState.Unchanged);
+                                }
                             }
-                        }
 
-                        await _libraryTypeComponentRepository.CreateAsync(nt);
-                        await _libraryTypeComponentRepository.SaveAsync();
+                            await _libraryTypeComponentRepository.CreateAsync(nt);
+                            await _libraryTypeComponentRepository.SaveAsync();
 
-                        if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
-                        {
-                            foreach (var attributeType in nt.AttributeTypes)
+                            if (nt.AttributeTypes != null && nt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Detach(attributeType);
+                                foreach (var attributeType in nt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Detach(attributeType);
+                                }
                             }
-                        }
 
-                        if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
-                        {
-                            foreach (var simpleType in nt.SimpleTypes)
+                            if (nt.SimpleTypes != null && nt.SimpleTypes.Any())
                             {
-                                _simpleTypeRepository.Detach(simpleType);
+                                foreach (var simpleType in nt.SimpleTypes)
+                                {
+                                    _simpleTypeRepository.Detach(simpleType);
+                                }
                             }
-                        }
 
-                        createdLibraryTypes.Add(nt);
-                        continue;
-                    }
+                            createdLibraryTypes.Add(nt);
+                            continue;
+                        }
 
                     case InterfaceType it:
 
@@ -480,29 +480,29 @@ namespace Mb.TypeEditor.Services.Services
                         continue;
 
                     case TransportType tt:
-                    {
-                        if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
                         {
-                            foreach (var attributeType in tt.AttributeTypes)
+                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                foreach (var attributeType in tt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Attach(attributeType, EntityState.Unchanged);
+                                }
                             }
-                        }
 
-                        await _libraryTypeComponentRepository.CreateAsync(tt);
-                        await _libraryTypeComponentRepository.SaveAsync();
+                            await _libraryTypeComponentRepository.CreateAsync(tt);
+                            await _libraryTypeComponentRepository.SaveAsync();
 
-                        if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
-                        {
-                            foreach (var attributeType in tt.AttributeTypes)
+                            if (tt.AttributeTypes != null && tt.AttributeTypes.Any())
                             {
-                                _attributeTypeRepository.Detach(attributeType);
+                                foreach (var attributeType in tt.AttributeTypes)
+                                {
+                                    _attributeTypeRepository.Detach(attributeType);
+                                }
                             }
-                        }
 
-                        createdLibraryTypes.Add(tt);
-                        continue;
-                    }
+                            createdLibraryTypes.Add(tt);
+                            continue;
+                        }
 
                     default:
                         continue;
@@ -519,7 +519,7 @@ namespace Mb.TypeEditor.Services.Services
             if (createLibraryType == null)
                 return null;
 
-            var data = (await CreateLibraryTypes(new List<CreateLibraryType> {createLibraryType},
+            var data = (await CreateLibraryTypes(new List<CreateLibraryType> { createLibraryType },
                 createNewFromExistingVersion))?.FirstOrDefault();
 
             if (data == null)

@@ -240,7 +240,7 @@ namespace Mb.Data.Repositories
                     _nodeRepository.BulkDelete(bulk, conn, data.Nodes);
 
                     bulk.Setup<Project>()
-                        .ForCollection(new List<Project> {project})
+                        .ForCollection(new List<Project> { project })
                         .WithTable("Project")
                         .AddColumn(x => x.Id)
                         .BulkDelete()

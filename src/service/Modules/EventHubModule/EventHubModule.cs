@@ -63,7 +63,7 @@ namespace EventHubModule
 
         public async Task SendData<T>(T data) where T : class
         {
-            var datalist = new List<T> {data};
+            var datalist = new List<T> { data };
             var eventHubProducerService = _provider?.GetService<IEventHubProducerService>();
 
             if (eventHubProducerService == null)

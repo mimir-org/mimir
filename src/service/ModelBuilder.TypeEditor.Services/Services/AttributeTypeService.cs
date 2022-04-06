@@ -55,7 +55,7 @@ namespace Mb.TypeEditor.Services.Services
         /// <returns></returns>
         public async Task<AttributeType> CreateAttributeType(AttributeTypeAm createAttributeType)
         {
-            var data = await CreateAttributeTypes(new List<AttributeTypeAm> {createAttributeType});
+            var data = await CreateAttributeTypes(new List<AttributeTypeAm> { createAttributeType });
             return data.SingleOrDefault();
         }
 

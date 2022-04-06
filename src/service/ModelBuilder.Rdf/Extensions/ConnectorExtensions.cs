@@ -98,7 +98,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <returns></returns>
         public static bool IsPartOf(this Connector c)
         {
-            return c is Relation {RelationType: RelationType.PartOf};
+            return c is Relation { RelationType: RelationType.PartOf };
         }
 
         /// <summary>
