@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { useState } from "react";
-import { AnimatedModule } from "../../compLibrary/animated";
+import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
 import { Size } from "../../compLibrary/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";

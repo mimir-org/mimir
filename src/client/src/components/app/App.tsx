@@ -10,7 +10,7 @@ import { IPublicClientApplication } from "@azure/msal-browser";
 import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
-import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
+import { Spinner, SpinnerWrapper } from "../../compLibrary/spinner/Spinner";
 
 type AppProps = {
   pca: IPublicClientApplication;

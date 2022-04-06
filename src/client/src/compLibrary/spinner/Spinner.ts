@@ -6,7 +6,7 @@ const spin = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-const Spinner = styled.div`
+export const Spinner = styled.div`
   border: 16px solid ${Color.GHOST_WHITE};
   border-top: 16px solid ${Color.BASTILLE};
   border-radius: 50%;
@@ -15,4 +15,17 @@ const Spinner = styled.div`
   animation: ${spin} 2s linear infinite;
 `;
 
-export default Spinner;
+interface Props {
+  fetching: boolean;
+}
+
+export const SpinnerWrapper = styled.div<Props>`
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: ${(props) => !props.fetching && "none"};
+  z-index: 100;
+`;
