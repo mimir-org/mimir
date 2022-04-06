@@ -5,7 +5,7 @@ import { GetTreeEdgeType } from "../helpers";
 import { ConvertEdgeToFlow } from "../../converters";
 import { EdgeType } from "../../../../models/project";
 
-const BuildFlowTreeEdges = (project: Project, animated: boolean) => {
+export const BuildFlowTreeEdges = (project: Project, animated: boolean) => {
   if (!project) return [];
   const flowEdges: FlowEdge[] = [];
 
@@ -25,5 +25,3 @@ function BuildTreeEdge(edge: Edge, edgeType: EdgeType, nodes: Node[], animated: 
 
   if (edge.fromNode && edge.toNode) return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
 }
-
-export default BuildFlowTreeEdges;

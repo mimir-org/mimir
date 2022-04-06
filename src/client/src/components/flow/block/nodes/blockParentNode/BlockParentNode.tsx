@@ -5,7 +5,7 @@ import { NodeProps, useReactFlow } from "react-flow-renderer";
 import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers/Connectors";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
-import { OnBlockParentClick, OnBlockChildClick } from "./handlers/";
+import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";

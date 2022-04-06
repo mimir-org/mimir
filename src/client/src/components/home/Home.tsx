@@ -70,7 +70,7 @@ export const Home = ({ dispatch }: Props) => {
 
   useEffect(() => {
     ToggleDarkModeColor(isDarkMode);
-  }, [isDarkMode]);
+  }, [isDarkMode, isBlockView]);
 
   return (
     <>
