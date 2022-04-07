@@ -113,7 +113,7 @@ export const TextResources = {
   INSPECTOR_VALIDATE: "Validate",
 
   INSPECTOR_PARAMS_CLEAR_ALL: "Clear all Entities",
-  INSPECTOR_PARAMS_DEFAULT: "Show Default Entities",
+  INSPECTOR_PARAMS_DEFAULT: "Show all Entities",
   INSPECTOR_PARAMS_COMBINATION: "Select combinations",
   INSPECTOR_PARAMS_SELECT_ALL: "Select all",
 
