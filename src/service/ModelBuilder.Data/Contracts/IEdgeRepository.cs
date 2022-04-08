@@ -29,5 +29,13 @@ namespace Mb.Data.Contracts
         /// <param name="conn">Sql Connection</param>
         /// <param name="edges">The edges to be deleted</param>
         void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Edge> edges);
+
+        /// <summary>
+        /// Bulk edge update lock status
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="edges">The attributes to be updated</param>
+        void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Edge> edges);
     }
 }

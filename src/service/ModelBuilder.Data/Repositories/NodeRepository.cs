@@ -124,44 +124,44 @@ namespace Mb.Data.Repositories
                 return;
 
             bulk.Setup<Node>()
-               .ForCollection(nodes)
-               .WithTable("Node")
-               .AddColumn(x => x.Id)
-               .AddColumn(x => x.Iri)
-               .AddColumn(x => x.Rds)
-               .AddColumn(x => x.Description)
-               .AddColumn(x => x.SemanticReference)
-               .AddColumn(x => x.Name)
-               .AddColumn(x => x.Label)
-               .AddColumn(x => x.PositionX)
-               .AddColumn(x => x.PositionY)
-               .AddColumn(x => x.IsLocked)
-               .AddColumn(x => x.IsLockedStatusBy)
-               .AddColumn(x => x.IsLockedStatusDate)
-               .AddColumn(x => x.PositionBlockX)
-               .AddColumn(x => x.PositionBlockY)
-               .AddColumn(x => x.Level)
-               .AddColumn(x => x.Order)
-               .AddColumn(x => x.StatusId)
-               .AddColumn(x => x.UpdatedBy)
-               .AddColumn(x => x.Updated)
-               .AddColumn(x => x.Created)
-               .AddColumn(x => x.CreatedBy)
-               .AddColumn(x => x.LibraryTypeId)
-               .AddColumn(x => x.Version)
-               .AddColumn(x => x.Aspect)
-               .AddColumn(x => x.IsRoot)
-               .AddColumn(x => x.MasterProjectId)
-               .AddColumn(x => x.MasterProjectIri)
-               .AddColumn(x => x.Symbol)
-               .AddColumn(x => x.PurposeString)
-               .AddColumn(x => x.ProjectId)
-               .AddColumn(x => x.ProjectIri)
-               .AddColumn(x => x.Width)
-               .AddColumn(x => x.Height)
-               .BulkInsertOrUpdate()
-               .MatchTargetOn(x => x.Id)
-               .Commit(conn);
+                .ForCollection(nodes)
+                .WithTable("Node")
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.Iri)
+                .AddColumn(x => x.Rds)
+                .AddColumn(x => x.Description)
+                .AddColumn(x => x.SemanticReference)
+                .AddColumn(x => x.Name)
+                .AddColumn(x => x.Label)
+                .AddColumn(x => x.PositionX)
+                .AddColumn(x => x.PositionY)
+                .AddColumn(x => x.IsLocked)
+                .AddColumn(x => x.IsLockedStatusBy)
+                .AddColumn(x => x.IsLockedStatusDate)
+                .AddColumn(x => x.PositionBlockX)
+                .AddColumn(x => x.PositionBlockY)
+                .AddColumn(x => x.Level)
+                .AddColumn(x => x.Order)
+                .AddColumn(x => x.StatusId)
+                .AddColumn(x => x.UpdatedBy)
+                .AddColumn(x => x.Updated)
+                .AddColumn(x => x.Created)
+                .AddColumn(x => x.CreatedBy)
+                .AddColumn(x => x.LibraryTypeId)
+                .AddColumn(x => x.Version)
+                .AddColumn(x => x.Aspect)
+                .AddColumn(x => x.IsRoot)
+                .AddColumn(x => x.MasterProjectId)
+                .AddColumn(x => x.MasterProjectIri)
+                .AddColumn(x => x.Symbol)
+                .AddColumn(x => x.PurposeString)
+                .AddColumn(x => x.ProjectId)
+                .AddColumn(x => x.ProjectIri)
+                .AddColumn(x => x.Width)
+                .AddColumn(x => x.Height)
+                .BulkInsertOrUpdate()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
         }
 
         /// <summary>
@@ -180,6 +180,29 @@ namespace Mb.Data.Repositories
                 .WithTable("Node")
                 .AddColumn(x => x.Id)
                 .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        /// <summary>
+        /// Bulk attributes update lock status
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="nodes">The attributes to be updated</param>
+        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Node> nodes)
+        {
+            if (nodes == null || !nodes.Any())
+                return;
+
+            bulk.Setup<Node>()
+                .ForCollection(nodes)
+                .WithTable("Node")
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.IsLocked)
+                .AddColumn(x => x.IsLockedStatusBy)
+                .AddColumn(x => x.IsLockedStatusDate)
+                .BulkUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);
         }
@@ -306,7 +329,6 @@ namespace Mb.Data.Repositories
             }
 
             node.Version = originalNode.Version;
-
         }
 
         #endregion Private

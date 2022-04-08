@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
@@ -31,19 +32,19 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
         }
 
-        public async Task SendLockAttributeData(LockAttributeAm am, string projectId, WorkerStatus workerStatus)
+        public async Task SendLockAttributeData(List<LockAttributeAm> am, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockAttributeData, workerStatus, data);
         }
 
-        public async Task SendLockNodeData(LockNodeAm am, string projectId, WorkerStatus workerStatus)
+        public async Task SendLockNodeData(List<LockNodeAm> am, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockNodeData, workerStatus, data);
         }
 
-        public async Task SendLockEdgeData(LockEdgeAm am, string projectId, WorkerStatus workerStatus)
+        public async Task SendLockEdgeData(List<LockEdgeAm> am, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(am, DefaultSettings.SerializerSettings);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockEdgeData, workerStatus, data);

@@ -1,14 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
+using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using SqlBulkTools;
 using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Services.Services
@@ -23,9 +29,11 @@ namespace Mb.Services.Services
         private readonly IConnectorRepository _connectorRepository;
         private readonly ICooperateService _cooperateService;
         private readonly ISimpleRepository _simpleRepository;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly DatabaseConfiguration _databaseConfiguration;
 
         public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IConnectorRepository connectorRepository,
-            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository)
+            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, IHttpContextAccessor contextAccessor, DatabaseConfiguration databaseConfiguration)
         {
             _nodeRepository = nodeRepository;
             _edgeRepository = edgeRepository;
@@ -35,6 +43,8 @@ namespace Mb.Services.Services
             _transportRepository = transportRepository;
             _interfaceRepository = interfaceRepository;
             _simpleRepository = simpleRepository;
+            _contextAccessor = contextAccessor;
+            _databaseConfiguration = databaseConfiguration;
         }
 
         /// <summary>
@@ -80,26 +90,139 @@ namespace Mb.Services.Services
         /// Lock or unlock an attribute
         /// </summary>
         /// <param name="lockAttributeAm"></param>
-        /// <param name="save"></param>
-        /// <param name="userName"></param>
-        /// <param name="dateTimeNow"></param>
         /// <returns>Status204NoContent</returns>
-        public async Task LockAttribute(LockAttributeAm lockAttributeAm, bool save, string userName, DateTime dateTimeNow)
+        public async Task LockAttribute(LockAttributeAm lockAttributeAm)
         {
-            if (string.IsNullOrWhiteSpace(lockAttributeAm?.Id))
+            if (lockAttributeAm?.Id == null || lockAttributeAm.ProjectId == null)
                 throw new ModelBuilderBadRequestException($"Error locking/unlocking Attribute: Id or projectId can't be null or empty.");
 
-            var attribute = await _attributeRepository.GetAsync(lockAttributeAm.Id);
+            var userName = _contextAccessor.GetName();
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
+            var allAttributes = _attributeRepository.GetAll();
+            var allSimple = _simpleRepository.GetAll();
+            var lockObject = new LockObject();
 
-            if (attribute == null || attribute.IsLocked == lockAttributeAm.IsLocked)
-                return;
+            var tempLockObject = GetAttributeUpdated(lockAttributeAm, userName, dateTimeNow, allAttributes, allSimple);
+            lockObject.Attributes.AddRange(tempLockObject.Attributes);
+            lockObject.LockAttributeAms.AddRange(tempLockObject.LockAttributeAms);
 
-            attribute.IsLocked = lockAttributeAm.IsLocked;
-            attribute.IsLockedStatusBy = userName;
-            attribute.IsLockedStatusDate = dateTimeNow;
+            //Save to database
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
+            {
+                await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                {
+                    _attributeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockObject.Attributes);
+                }
 
-            lockAttributeAm.IsLockedStatusBy = attribute.IsLockedStatusBy;
-            lockAttributeAm.IsLockedStatusDate = attribute.IsLockedStatusDate;
+                trans.Complete();
+            }
+
+            await _cooperateService.SendLockAttributeUpdates(lockObject.LockAttributeAms, WorkerStatus.Update, lockAttributeAm.ProjectId);
+        }
+
+        /// <summary>
+        /// Lock or unlock an attribute
+        /// </summary>
+        /// <param name="lockEdgeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        public async Task LockEdge(LockEdgeAm lockEdgeAm)
+        {
+            if (lockEdgeAm?.Id == null || lockEdgeAm.ProjectId == null)
+                throw new ModelBuilderBadRequestException($"Error locking/unlocking Edge: Id or projectId can't be null or empty.");
+
+            var userName = _contextAccessor.GetName();
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
+            var allAttributes = _attributeRepository.GetAll();
+            var allEdges = _edgeRepository.GetAll().Where(x => x.ProjectId == lockEdgeAm.ProjectId);
+            var allConnectors = _connectorRepository.GetAll();
+            var allTransports = _transportRepository.GetAll();
+            var allInterfaces = _interfaceRepository.GetAll();
+            var allSimple = _simpleRepository.GetAll();
+            var lockObject = new LockObject();
+
+            var tempLockObject = GetEdgeUpdated(lockEdgeAm, userName, dateTimeNow, allAttributes, allEdges, allConnectors, allTransports, allInterfaces, allSimple);
+            lockObject.Edge.AddRange(tempLockObject.Edge);
+            lockObject.LockEdgeAms.AddRange(tempLockObject.LockEdgeAms);
+
+            //Save edges and attributes to database
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
+            {
+                await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                {
+                    _edgeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockObject.Edge);
+                    _attributeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockObject.Attributes);
+                }
+
+                trans.Complete();
+            }
+
+            await _cooperateService.SendLockEdgeUpdates(lockObject.LockEdgeAms, WorkerStatus.Update, lockEdgeAm.ProjectId);
+            await _cooperateService.SendLockAttributeUpdates(lockObject.LockAttributeAms, WorkerStatus.Update, lockEdgeAm.ProjectId);
+        }
+
+        /// <summary>
+        /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
+        /// </summary>
+        /// <param name="lockNodeAm"></param>
+        /// <returns>Status204NoContent</returns>
+        public async Task LockNode(LockNodeAm lockNodeAm)
+        {
+            if (lockNodeAm?.Id == null || lockNodeAm.ProjectId == null)
+                throw new ModelBuilderBadRequestException($"Error locking/unlocking Node: Id or projectId can't be null or empty.");
+
+            var allNodes = _nodeRepository.GetAll().Where(x => x.ProjectId == lockNodeAm.ProjectId);
+            var node = allNodes.FirstOrDefault(x => x.Id == lockNodeAm.Id);
+
+            if (node == null)
+                throw new ModelBuilderNotFoundException($"Error locking/unlocking Node: Node with id {lockNodeAm.Id} not found.");
+
+            var userName = _contextAccessor.GetName();
+            var dateTimeNow = DateTime.Now.ToUniversalTime();
+            var allEdges = _edgeRepository.GetAll().Where(x => x.ProjectId == lockNodeAm.ProjectId);
+            var allAttributes = _attributeRepository.GetAll();
+            var allConnectors = _connectorRepository.GetAll();
+            var allTransports = _transportRepository.GetAll();
+            var allInterfaces = _interfaceRepository.GetAll();
+            var allSimple = _simpleRepository.GetAll();
+            var lockObject = new LockObject();
+
+            LockNodesRecursive(node, lockNodeAm, userName, dateTimeNow, allNodes, allConnectors, allAttributes, allEdges, allTransports, allInterfaces, allSimple, lockObject);
+
+            //Save nodes, edges and attributes to database
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
+            {
+                await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
+                {
+                    _nodeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockObject.Node);
+                    _edgeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockObject.Edge);
+                    _attributeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockObject.Attributes);
+                }
+
+                trans.Complete();
+            }
+
+            await _cooperateService.SendLockNodeUpdates(lockObject.LockNodeAms, WorkerStatus.Update, lockNodeAm.ProjectId);
+            await _cooperateService.SendLockEdgeUpdates(lockObject.LockEdgeAms, WorkerStatus.Update, lockNodeAm.ProjectId);
+            await _cooperateService.SendLockAttributeUpdates(lockObject.LockAttributeAms, WorkerStatus.Update, lockNodeAm.ProjectId);
+        }
+
+        #region Private
+
+        private LockObject GetAttributeUpdated(LockAttributeAm lockAttributeAm, string userName, DateTime dateTimeNow,
+            IQueryable<Attribute> allAttributes, IQueryable<Simple> allSimple)
+        {
+            var lockObject = new LockObject();
+
+            var attribute = allAttributes.FirstOrDefault(x => x.Id == lockAttributeAm.Id);
+
+            if (attribute == null)
+                throw new ModelBuilderNotFoundException($"Attribute with id {lockAttributeAm.Id} not found");
+
+            if (attribute.IsLocked == lockAttributeAm.IsLocked)
+                return lockObject;
+
+            lockAttributeAm.IsLockedStatusBy = userName;
+            lockAttributeAm.IsLockedStatusDate = dateTimeNow;
             lockAttributeAm.NodeId = attribute.NodeId;
             lockAttributeAm.TransportId = attribute.TransportId;
             lockAttributeAm.InterfaceId = attribute.InterfaceId;
@@ -108,82 +231,67 @@ namespace Mb.Services.Services
 
             if (!string.IsNullOrWhiteSpace(lockAttributeAm.CompositeId) && string.IsNullOrWhiteSpace(lockAttributeAm.NodeId))
             {
-                var simple = _simpleRepository.FindBy(x => x.Id == lockAttributeAm.CompositeId)?.First();
+                var simple = allSimple.FirstOrDefault(x => x.Id == lockAttributeAm.CompositeId);
 
                 if (simple != null)
                     lockAttributeAm.NodeId = simple.NodeId;
             }
 
-            if (save)
-            {
-                await _attributeRepository.SaveAsync();
+            attribute.IsLocked = lockAttributeAm.IsLocked;
+            attribute.IsLockedStatusBy = lockAttributeAm.IsLockedStatusBy;
+            attribute.IsLockedStatusDate = lockAttributeAm.IsLockedStatusDate;
 
-                //WebSocket - send attribute to client
-                await _cooperateService.SendLockAttributeUpdates(
-                    new List<(LockAttributeAm am, WorkerStatus workerStatus)>
-                        { (lockAttributeAm, WorkerStatus.Update) }, lockAttributeAm.ProjectId);
-            }
+            lockObject.Attributes.Add(attribute);
+            lockObject.LockAttributeAms.Add(lockAttributeAm);
+
+            return lockObject;
         }
 
-        /// <summary>
-        /// Lock or unlock an attribute
-        /// </summary>
-        /// <param name="lockEdgeAm"></param>
-        /// <param name="save"></param>
-        /// <param name="userName"></param>
-        /// <param name="dateTimeNow"></param>
-        /// <returns>Status204NoContent</returns>
-        public async Task LockEdge(LockEdgeAm lockEdgeAm, bool save, string userName, DateTime dateTimeNow)
+        private LockObject GetEdgeUpdated(LockEdgeAm lockEdgeAm, string userName, DateTime dateTimeNow,
+            IQueryable<Attribute> allAttributes, IQueryable<Edge> allEdges, IQueryable<Connector> allConnectors,
+            IQueryable<Transport> allTransports, IQueryable<Interface> allInterfaces, IQueryable<Simple> allSimple)
         {
-            if (string.IsNullOrWhiteSpace(lockEdgeAm?.Id) || string.IsNullOrWhiteSpace(lockEdgeAm.ProjectId))
-                throw new ModelBuilderBadRequestException($"Error locking/unlocking Edge: Id or projectId can't be null or empty.");
+            var lockObject = new LockObject();
 
-            var edge = await _edgeRepository.GetAsync(lockEdgeAm.Id);
+            var edge = allEdges.FirstOrDefault(x => x.Id == lockEdgeAm.Id);
 
             if (edge == null)
-                return;
+                throw new ModelBuilderNotFoundException($"Edge with id {lockEdgeAm.Id} not found");
 
-            //Edge lock/unlockt
-            if (edge.IsLocked != lockEdgeAm.IsLocked)
-            {
-                edge.IsLocked = lockEdgeAm.IsLocked;
-                edge.IsLockedStatusBy = userName;
-                edge.IsLockedStatusDate = dateTimeNow;
+            if (edge.IsLocked == lockEdgeAm.IsLocked)
+                return lockObject;
 
-                lockEdgeAm.IsLockedStatusBy = edge.IsLockedStatusBy;
-                lockEdgeAm.IsLockedStatusDate = edge.IsLockedStatusDate;
+            lockEdgeAm.IsLockedStatusBy = userName;
+            lockEdgeAm.IsLockedStatusDate = dateTimeNow;
 
-                if (save)
-                    await _edgeRepository.SaveAsync();
-            }
+            edge.IsLocked = lockEdgeAm.IsLocked;
+            edge.IsLockedStatusBy = lockEdgeAm.IsLockedStatusBy;
+            edge.IsLockedStatusDate = lockEdgeAm.IsLockedStatusDate;
 
-            //WebSocket - send edge to client
-            await _cooperateService.SendLockEdgeUpdates(
-                new List<(LockEdgeAm am, WorkerStatus workerStatus)>
-                    { (lockEdgeAm, WorkerStatus.Update) }, lockEdgeAm.ProjectId);
+            lockObject.Edge.Add(edge);
+            lockObject.LockEdgeAms.Add(lockEdgeAm);
 
-            //Find all edge attributes
-            var edgeConnectors = _connectorRepository.GetAll(false).Where(x => x.Id == edge.FromConnectorId || x.Id == edge.ToConnectorId);
+            //Find all attributes for the edge
+            var edgeConnectors = allConnectors.Where(x => x.Id == edge.FromConnectorId || x.Id == edge.ToConnectorId);
 
             Transport transportObject = null;
             if (!string.IsNullOrEmpty(edge.TransportId))
-                transportObject = _transportRepository.FindBy(x => x.Id == edge.TransportId)?.FirstOrDefault();
+                transportObject = allTransports.FirstOrDefault(x => x.Id == edge.TransportId);
 
             Interface interfaceObject = null;
             if (!string.IsNullOrWhiteSpace(edge.InterfaceId))
-                interfaceObject = _interfaceRepository.FindBy(x => x.Id == edge.InterfaceId)?.FirstOrDefault();
+                interfaceObject = allInterfaces.FirstOrDefault(x => x.Id == edge.InterfaceId);
 
             IQueryable<Attribute> edgeAttributes;
 
             if (transportObject == null && interfaceObject == null)
             {
-                edgeAttributes = _attributeRepository.GetAll(false)
-                    .Where(x => edgeConnectors.Any(y => y.Id == x.TerminalId)).AsSplitQuery();
+                edgeAttributes = allAttributes.Where(x => edgeConnectors.Any(y => y.Id == x.TerminalId)).AsSplitQuery();
             }
 
             else if (transportObject != null && interfaceObject == null)
             {
-                edgeAttributes = _attributeRepository.GetAll(false)
+                edgeAttributes = allAttributes
                     .Where(x => edgeConnectors.Any(y => y.Id == x.TerminalId) ||
                                 x.TerminalId == transportObject.InputTerminalId ||
                                 x.TerminalId == transportObject.OutputTerminalId).AsSplitQuery();
@@ -191,7 +299,7 @@ namespace Mb.Services.Services
 
             else if (transportObject == null)
             {
-                edgeAttributes = _attributeRepository.GetAll(false)
+                edgeAttributes = allAttributes
                     .Where(x => edgeConnectors.Any(y => y.Id == x.TerminalId) ||
                                 x.TerminalId == interfaceObject.InputTerminalId ||
                                 x.TerminalId == interfaceObject.OutputTerminalId).AsSplitQuery();
@@ -199,7 +307,7 @@ namespace Mb.Services.Services
 
             else
             {
-                edgeAttributes = _attributeRepository.GetAll(false)
+                edgeAttributes = allAttributes
                     .Where(x => edgeConnectors.Any(y => y.Id == x.TerminalId) ||
                                 x.TerminalId == transportObject.InputTerminalId ||
                                 x.TerminalId == transportObject.OutputTerminalId ||
@@ -207,55 +315,21 @@ namespace Mb.Services.Services
                                 x.TerminalId == interfaceObject.OutputTerminalId).AsSplitQuery();
             }
 
-            //Edge attributes lock/unlock
             foreach (var attribute in edgeAttributes)
             {
-                var lockAttribute = new LockAttributeAm { Id = attribute.Id, IsLocked = lockEdgeAm.IsLocked };
-                await LockAttribute(lockAttribute, false, userName, dateTimeNow);
+                var lockAttributeAm = new LockAttributeAm {Id = attribute.Id, IsLocked = lockEdgeAm.IsLocked, IsLockedStatusBy = userName, IsLockedStatusDate = dateTimeNow};
+                var tempLockObject = GetAttributeUpdated(lockAttributeAm, userName, dateTimeNow, allAttributes, allSimple);
+                lockObject.LockAttributeAms.AddRange(tempLockObject.LockAttributeAms);
+                lockObject.Attributes.AddRange(tempLockObject.Attributes);
             }
 
-            if (save)
-                await _attributeRepository.SaveAsync();
+            return lockObject;
         }
 
-        /// <summary>
-        /// Locks or unlocks a node (including all attributes on the node) and all children nodes and attributes
-        /// </summary>
-        /// <param name="lockNodeAm"></param>
-        /// <param name="userName"></param>
-        /// <param name="dateTimeNow"></param>
-        /// <returns>Status204NoContent</returns>
-        public async Task LockNode(LockNodeAm lockNodeAm, string userName, DateTime dateTimeNow)
-        {
-            if (lockNodeAm?.Id == null || lockNodeAm.ProjectId == null)
-                throw new ModelBuilderBadRequestException($"Error locking/unlocking Node: Id or projectId can't be null or empty.");
-
-            var allEdgesInProject = _edgeRepository.GetAll(false).Where(x => x.ProjectId == lockNodeAm.ProjectId);
-
-            if (!allEdgesInProject.Any())
-                return;
-
-            var allNodesInProject = _nodeRepository.GetAll(false).Where(x => x.ProjectId == lockNodeAm.ProjectId);
-            var node = allNodesInProject.FirstOrDefault(x => x.Id == lockNodeAm.Id);
-
-            if (node == null)
-                return;
-
-            var allConnectors = _connectorRepository.GetAll(false);
-            var allAttributes = _attributeRepository.GetAll(false);
-
-            LockNodesRecursive(node, lockNodeAm, userName, dateTimeNow, allNodesInProject, allConnectors, allAttributes, allEdgesInProject);
-
-            await _nodeRepository.SaveAsync();
-            await _edgeRepository.SaveAsync();
-            await _attributeRepository.SaveAsync();
-        }
-
-        #region Private
-
-
-        private async void LockNodesRecursive(Node node, LockNodeAm lockNodeAm, string userName, DateTime dateTimeNow,
-            IQueryable<Node> allNodesInProject, IQueryable<Connector> allConnectors, IQueryable<Attribute> allAttributes, IQueryable<Edge> allEdgesInProject)
+        private void LockNodesRecursive(Node node, LockNodeAm lockNodeAm, string userName, DateTime dateTimeNow,
+            IQueryable<Node> allNodes, IQueryable<Connector> allConnectors, IQueryable<Attribute> allAttributes,
+            IQueryable<Edge> allEdges, IQueryable<Transport> allTransports, IQueryable<Interface> allInterfaces,
+            IQueryable<Simple> allSimple, LockObject lockObject)
         {
             if (node == null)
                 return;
@@ -271,10 +345,8 @@ namespace Mb.Services.Services
                 node.IsLockedStatusBy = lockNodeAm.IsLockedStatusBy;
                 node.IsLockedStatusDate = lockNodeAm.IsLockedStatusDate;
 
-                //WebSocket - send to client
-                await _cooperateService.SendLockNodeUpdates(
-                    new List<(LockNodeAm am, WorkerStatus workerStatus)>
-                    { (lockNodeAm, WorkerStatus.Update) }, lockNodeAm.ProjectId);
+                lockObject.Node.Add(node);
+                lockObject.LockNodeAms.Add(lockNodeAm);
 
                 //Find all node attributes
                 var nodeConnectors = allConnectors.Where(x => x.NodeId == node.Id);
@@ -283,12 +355,14 @@ namespace Mb.Services.Services
                 //Node attributes lock/unlock
                 foreach (var attribute in attributes)
                 {
-                    var lockAttribute = new LockAttributeAm { Id = attribute.Id, IsLocked = lockNodeAm.IsLocked };
-                    await LockAttribute(lockAttribute, false, userName, dateTimeNow);
+                    var lockAttributeAm = new LockAttributeAm {Id = attribute.Id, IsLocked = lockNodeAm.IsLocked};
+                    var tempLockObject = GetAttributeUpdated(lockAttributeAm, userName, dateTimeNow, allAttributes, allSimple);
+                    lockObject.Attributes.AddRange(tempLockObject.Attributes);
+                    lockObject.LockAttributeAms.AddRange(tempLockObject.LockAttributeAms);
                 }
             }
 
-            var edgesInProject = allEdgesInProject.Where(x => x.FromNodeId == node.Id);
+            var edgesInProject = allEdges.Where(x => x.FromNodeId == node.Id);
 
             //Edge lock/unlock (including all edge attributes)
             foreach (var edge in edgesInProject)
@@ -302,17 +376,33 @@ namespace Mb.Services.Services
                     ProjectId = lockNodeAm.ProjectId
                 };
 
-                await LockEdge(lockEdgeAm, false, userName, dateTimeNow);
+                var tempLockObject = GetEdgeUpdated(lockEdgeAm, userName, dateTimeNow, allAttributes, allEdges, allConnectors, allTransports, allInterfaces, allSimple);
+                lockObject.Edge.AddRange(tempLockObject.Edge);
+                lockObject.LockEdgeAms.AddRange(tempLockObject.LockEdgeAms);
+                lockObject.Attributes.AddRange(tempLockObject.Attributes);
+                lockObject.LockAttributeAms.AddRange(tempLockObject.LockAttributeAms);
 
-                var childNode = allNodesInProject.FirstOrDefault(x => x.Id == edge.ToNodeId);
+                var childNode = allNodes.FirstOrDefault(x => x.Id == edge.ToNodeId);
 
                 if (childNode != null && childNode.Level <= node.Level)
                     continue;
 
-                LockNodesRecursive(childNode, lockNodeAm, userName, dateTimeNow, allNodesInProject, allConnectors, allAttributes, allEdgesInProject);
+                LockNodesRecursive(childNode, lockNodeAm, userName, dateTimeNow, allNodes, allConnectors, allAttributes, allEdges, allTransports, allInterfaces, allSimple, lockObject);
             }
         }
 
         #endregion Private
+    }
+
+    public class LockObject
+    {
+        public List<Attribute> Attributes = new List<Attribute>();
+        public List<LockAttributeAm> LockAttributeAms = new List<LockAttributeAm>();
+
+        public List<Edge> Edge = new List<Edge>();
+        public List<LockEdgeAm> LockEdgeAms = new List<LockEdgeAm>();
+
+        public List<Node> Node = new List<Node>();
+        public List<LockNodeAm> LockNodeAms = new List<LockNodeAm>();
     }
 }

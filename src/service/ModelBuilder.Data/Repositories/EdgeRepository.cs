@@ -9,11 +9,8 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SqlBulkTools;
 
 namespace Mb.Data.Repositories
@@ -26,10 +23,8 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ICommonRepository _commonRepository;
-        private readonly DatabaseConfiguration _databaseConfiguration;
-        private readonly ILogger<EdgeRepository> _logger;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<EdgeRepository> logger) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository) : base(dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
@@ -37,8 +32,6 @@ namespace Mb.Data.Repositories
             _connectorRepository = connectorRepository;
             _contextAccessor = contextAccessor;
             _commonRepository = commonRepository;
-            _logger = logger;
-            _databaseConfiguration = databaseConfiguration?.Value;
         }
 
         public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
@@ -155,7 +148,6 @@ namespace Mb.Data.Repositories
 
                 //projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete });
                 returnValues.Add((edge, WorkerStatus.Delete));
-
             }
 
             return returnValues;
@@ -216,6 +208,29 @@ namespace Mb.Data.Repositories
                 .WithTable("Edge")
                 .AddColumn(x => x.Id)
                 .BulkDelete()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
+        /// <summary>
+        /// Bulk attributes update lock status
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="edges">The attributes to be updated</param>
+        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Edge> edges)
+        {
+            if (edges == null || !edges.Any())
+                return;
+
+            bulk.Setup<Edge>()
+                .ForCollection(edges)
+                .WithTable("Edge")
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.IsLocked)
+                .AddColumn(x => x.IsLockedStatusBy)
+                .AddColumn(x => x.IsLockedStatusDate)
+                .BulkUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);
         }
