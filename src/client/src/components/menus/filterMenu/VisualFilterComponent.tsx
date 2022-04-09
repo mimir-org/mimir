@@ -24,7 +24,7 @@ export const VisualFilterComponent = () => {
   const relationItems: Connector[] = [];
   const partOfItems: Connector[] = [];
 
-  PopulateFilterLists(mimirEdges, transportItems, relationItems, partOfItems);
+  PopulateFilterLists(mimirEdges, mimirNodes, transportItems, relationItems, partOfItems);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
@@ -38,7 +38,13 @@ export const VisualFilterComponent = () => {
           dispatch={dispatch}
           visible={!!partOfItems.length}
         />
-        <RelationFilter edges={mimirEdges} items={relationItems} dispatch={dispatch} visible={!!relationItems.length} />
+        <RelationFilter
+          edges={mimirEdges}
+          nodes={mimirNodes}
+          items={relationItems}
+          dispatch={dispatch}
+          visible={!!relationItems.length}
+        />
         <TransportFilter edges={mimirEdges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
       </VisualFilterMenuColumn>
     </VisualFilterContainer>

@@ -4,8 +4,8 @@ import { AddLegend } from "./AddLegend";
 
 export const LegendComponent = (project: Project) => {
   let legends = [] as Legend[];
-
   if (!project) return legends;
+
   const edges = project.edges;
   const nodes = project.nodes?.filter((node) => !node.isHidden);
 

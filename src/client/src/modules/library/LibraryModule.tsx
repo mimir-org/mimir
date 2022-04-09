@@ -25,7 +25,6 @@ interface Props {
  * @param interface
  * @returns a module with tabs and its contents
  */
-
 export const LibraryModule = ({ nodes, dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");

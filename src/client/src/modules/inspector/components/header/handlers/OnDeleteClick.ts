@@ -2,7 +2,7 @@ import { Size } from "../../../../../compLibrary/size/Size";
 import { Edge, Node, Project } from "../../../../../models";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
-import { SetPanelHeight } from "../../../helpers";
+import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 import { removeEdge, removeNode } from "../../../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
@@ -18,11 +18,8 @@ export const OnDeleteClick = (
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
-  if (IsNode(element)) {
-    HandleNodeDelete(element, project, dispatch);
-  } else if (IsEdge(element)) {
-    HandleEdgeDelete(element, project, dispatch);
-  }
+  if (IsNode(element)) HandleNodeDelete(element, project, dispatch);
+  else if (IsEdge(element)) HandleEdgeDelete(element, project, dispatch);
 
   dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
   dispatch(changeInspectorHeight(Size.MODULE_CLOSED));

@@ -22,11 +22,6 @@ export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
     ?.filter((conn) => IsActive(conn))
     .map((x) => {
       const [name, color] = GetLegendInfo(x, node);
-
-      return {
-        key: x.id,
-        name: name,
-        color: color,
-      };
+      return { key: x.id, name, color };
     });
 };

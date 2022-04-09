@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Edge } from "../../../../../../models";
+import { Edge, Node } from "../../../../../../models";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
 import { GetConnectorNode } from "../helpers";
 import { IsFamily } from "../../../../../../helpers/Family";
@@ -9,9 +9,10 @@ import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } 
  * Component to toggle a specific element on/off in Visual Filter.
  * @param actualEdge
  * @param edges
+ * @param nodes
  * @param dispatch
  */
-export const OnFilterChange = (actualEdge: Edge, edges: Edge[], dispatch: Dispatch) => {
+export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], dispatch: Dispatch) => {
   const partOf = IsPartOfTerminal(actualEdge.fromConnector);
   const location = IsLocationTerminal(actualEdge.fromConnector);
   const fulfilledBy = IsProductTerminal(actualEdge.fromConnector);
@@ -21,7 +22,7 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], dispatch: Dispat
   edges.forEach((e) => {
     // PartOf
     if (partOf && IsPartOfTerminal(e.fromConnector)) {
-      const source = GetConnectorNode(e.fromConnector);
+      const source = GetConnectorNode(e.fromConnector, nodes);
       IsFamily(source, actualEdge.fromNode) && dispatch(setEdgeVisibility(e, !e.isHidden));
     }
 

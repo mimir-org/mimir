@@ -29,7 +29,6 @@ interface Props {
  * @param interface
  * @returns a footer with buttons based on activeTab
  */
-
 export const ModuleFooter = ({
   libOpen,
   activeTab,

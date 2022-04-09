@@ -5,7 +5,7 @@ import { CreateLibraryType } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedInspector, InspectorHeader } from "../../modules/inspector/components";
 import { InspectorResizePanel } from "../../modules/inspector/InspectorModule.styled";
-import { SetPanelHeight } from "../../modules/inspector/helpers";
+import { SetPanelHeight } from "../../modules/inspector/helpers/SetPanelHeight";
 import { useDragResizePanel } from "../../modules/inspector/hooks";
 import { GetFilteredTerminalTypeExtendedList, GetPropertiesHeight } from "../helpers";
 import { TypeEditorSize } from "../assets/TypeEditorSize";

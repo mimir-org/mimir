@@ -93,15 +93,15 @@ const ErrorModule = () => {
       <InfoModalContent title={TextResources.ERROR_GENERIC} color={Color.ULTRA_RED}>
         <ExitButton onClick={closeHeader} />
         <ErrorBody>
-          {errors?.map((x, index) => {
+          {errors?.map((err, index) => {
             return (
-              <ErrorItem key={x.module + index}>
-                <ErrorItemTitle>{x.module}</ErrorItemTitle>
-                <ErrorItemText>{x.message}</ErrorItemText>
-                {x.errorData?.items?.map((y) => {
+              <ErrorItem key={err.module + index}>
+                <ErrorItemTitle>{err.module}</ErrorItemTitle>
+                <ErrorItemText>{err.message}</ErrorItemText>
+                {err.errorData?.items?.map((item) => {
                   return (
-                    <ErrorItemText key={y.key}>
-                      {y.key}: {JSON.stringify(y.value)}
+                    <ErrorItemText key={item.key}>
+                      {item.key}: {JSON.stringify(item.value)}
                     </ErrorItemText>
                   );
                 })}

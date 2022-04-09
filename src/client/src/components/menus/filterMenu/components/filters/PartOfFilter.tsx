@@ -37,7 +37,7 @@ export const PartOfFilter = ({ edges, nodes, items, dispatch, visible }: Props) 
           <FilterElement
             key={conn.id}
             label={name}
-            onChange={() => OnFilterChange(edge, edges, dispatch)}
+            onChange={() => OnFilterChange(edge, edges, nodes, dispatch)}
             isChecked={!edge.isHidden}
             indent={2}
             visible

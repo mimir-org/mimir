@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { Size } from "../../../compLibrary/size/Size";
 import { Project } from "../../../models";
 import { MODULE_TYPE } from "../../../models/project";
-import { SetPanelHeight } from "../../../modules/inspector/helpers";
+import { SetPanelHeight } from "../../../modules/inspector/helpers/SetPanelHeight";
 import { changeInspectorHeight, changeInspectorTab } from "../../../modules/inspector/redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { setActiveBlockNode, setActiveEdge, setActiveNode } from "../../../redux/store/project/actions";
@@ -56,11 +56,15 @@ function HandleNoSelect(
   dispatch: Dispatch,
   isBlock: boolean
 ) {
-  if (project) {
-    isBlock ? dispatch(setActiveBlockNode(null)) : dispatch(setActiveNode(null, false));
-    // dispatch(setActiveEdge(null, false));
-  }
+  if (!project) return;
 
+  if (isBlock) {
+    dispatch(setActiveBlockNode(null));
+    dispatch(setActiveEdge(null, false));
+  } else {
+    dispatch(setActiveNode(null, false));
+    dispatch(setActiveEdge(null, false));
+  }
   CloseInspector(inspectorRef, dispatch);
 }
 

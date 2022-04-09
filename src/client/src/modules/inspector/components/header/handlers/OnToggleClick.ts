@@ -1,6 +1,6 @@
 import { Action, Dispatch } from "redux";
 import { Size } from "../../../../../compLibrary/size/Size";
-import { SetPanelHeight } from "../../../helpers";
+import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 
 /**
  * Function to open/close the Inspector Module.

@@ -7,7 +7,7 @@ import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
 import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from "./InspectorTabWrapper.styled";
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
-import { SetPanelHeight } from "../../../helpers";
+import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 import { GetInspectorText, GetTabsColor, GetTabId } from "../helpers";
 
 interface Props {

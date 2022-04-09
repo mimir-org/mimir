@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect } from "react";
-import { SetPanelHeight } from "../helpers";
+import { SetPanelHeight } from "../helpers/SetPanelHeight";
 import { Size } from "../../../compLibrary/size/Size";
 import { changeInspectorHeight } from "../redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
