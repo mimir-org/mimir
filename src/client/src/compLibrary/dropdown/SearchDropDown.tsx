@@ -16,7 +16,7 @@ export interface SearchDropDownItem {
   attributes: AttributeType[];
 }
 
-const SearchDropDown = <T extends SearchDropDownItem>({ value, placeHolder, list, onChange }: Props<T>) => {
+export const SearchDropDown = <T extends SearchDropDownItem>({ value, placeHolder, list, onChange }: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [searchString, setSearchString] = useState("");
   const isInArray = list.find((x) => x.name === searchString);
@@ -70,5 +70,3 @@ const SearchDropDown = <T extends SearchDropDownItem>({ value, placeHolder, list
     </SearchBarContainer>
   );
 };
-
-export default SearchDropDown;

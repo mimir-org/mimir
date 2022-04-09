@@ -5,10 +5,9 @@ import { TextResources } from "../../assets/text/TextResources";
 
 export const Token = async () => {
   const account = msalInstance.getActiveAccount();
-
   if (!account) throw Error(TextResources.ERROR_NOACCOUNT);
-  const response = await msalInstance.acquireTokenSilent({ ...loginRequest, account });
 
+  const response = await msalInstance.acquireTokenSilent({ ...loginRequest, account });
   return `Bearer ${response.accessToken}`;
 };
 
@@ -17,7 +16,6 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
 
   try {
     response = await fetch(request);
-
     if (!isValidStatus(response.status)) throw new Error(errorMessage(response));
 
     if (hasContent(response)) {

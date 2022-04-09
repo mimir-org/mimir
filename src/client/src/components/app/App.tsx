@@ -1,5 +1,5 @@
 import { Home } from "../home/Home";
-import { GlobalStyle } from "../../compLibrary";
+import { GlobalStyle } from "../../compLibrary/GlobalStyle";
 import { isFetchingSelector, projectStateSelector, useAppSelector } from "../../redux/store";
 import { LoginBox } from "./App.styled";
 import { LogoutIcon } from "../../assets/icons/header";
