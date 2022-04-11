@@ -14,6 +14,7 @@ using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SqlBulkTools;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -33,7 +34,7 @@ namespace Mb.Services.Services
         private readonly DatabaseConfiguration _databaseConfiguration;
 
         public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IConnectorRepository connectorRepository,
-            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, IHttpContextAccessor contextAccessor, DatabaseConfiguration databaseConfiguration)
+            IAttributeRepository attributeRepository, ICooperateService cooperateService, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, IHttpContextAccessor contextAccessor, IOptions<DatabaseConfiguration> databaseConfiguration)
         {
             _nodeRepository = nodeRepository;
             _edgeRepository = edgeRepository;
@@ -44,7 +45,7 @@ namespace Mb.Services.Services
             _interfaceRepository = interfaceRepository;
             _simpleRepository = simpleRepository;
             _contextAccessor = contextAccessor;
-            _databaseConfiguration = databaseConfiguration;
+            _databaseConfiguration = databaseConfiguration?.Value;
         }
 
         /// <summary>
