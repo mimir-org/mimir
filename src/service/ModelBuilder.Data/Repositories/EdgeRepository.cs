@@ -9,11 +9,8 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SqlBulkTools;
 
 namespace Mb.Data.Repositories
@@ -26,10 +23,13 @@ namespace Mb.Data.Repositories
         private readonly IConnectorRepository _connectorRepository;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly ICommonRepository _commonRepository;
-        private readonly DatabaseConfiguration _databaseConfiguration;
-        private readonly ILogger<EdgeRepository> _logger;
+        private readonly IModelBuilderProcRepository _modelBuilderProcRepository;
 
-        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository, ITransportRepository transportRepository, IInterfaceRepository interfaceRepository, IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor, ICommonRepository commonRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ILogger<EdgeRepository> logger) : base(dbContext)
+        public EdgeRepository(ModelBuilderDbContext dbContext, IAttributeRepository attributeRepository,
+            ITransportRepository transportRepository, IInterfaceRepository interfaceRepository,
+            IConnectorRepository connectorRepository, IHttpContextAccessor contextAccessor,
+            ICommonRepository commonRepository, IModelBuilderProcRepository modelBuilderProcRepository) : base(
+            dbContext)
         {
             _attributeRepository = attributeRepository;
             _transportRepository = transportRepository;
@@ -37,11 +37,11 @@ namespace Mb.Data.Repositories
             _connectorRepository = connectorRepository;
             _contextAccessor = contextAccessor;
             _commonRepository = commonRepository;
-            _logger = logger;
-            _databaseConfiguration = databaseConfiguration?.Value;
+            _modelBuilderProcRepository = modelBuilderProcRepository;
         }
 
-        public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project, string invokedByDomain)
+        public IEnumerable<(Edge edge, WorkerStatus status)> UpdateInsert(ICollection<Edge> original, Project project,
+            string invokedByDomain)
         {
             if (project?.Edges == null || !project.Edges.Any() || original == null)
                 yield break;
@@ -64,7 +64,8 @@ namespace Mb.Data.Repositories
                 else
                 {
                     // Parties is not allowed changed our edge
-                    if (_commonRepository.GetDomain() == edge.Domain && _commonRepository.GetDomain() != invokedByDomain)
+                    if (_commonRepository.GetDomain() == edge.Domain &&
+                        _commonRepository.GetDomain() != invokedByDomain)
                     {
                         Detach(edge);
                         continue;
@@ -80,7 +81,8 @@ namespace Mb.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<(Edge edge, WorkerStatus status)>> DeleteEdges(ICollection<Edge> delete, string projectId, string invokedByDomain)
+        public async Task<IEnumerable<(Edge edge, WorkerStatus status)>> DeleteEdges(ICollection<Edge> delete,
+            string projectId, string invokedByDomain)
         {
             var returnValues = new List<(Edge edge, WorkerStatus status)>();
 
@@ -155,7 +157,6 @@ namespace Mb.Data.Repositories
 
                 //projectWorker.Edges.Add(new EdgeWorker { Edge = edge, WorkerStatus = WorkerStatus.Delete });
                 returnValues.Add((edge, WorkerStatus.Delete));
-
             }
 
             return returnValues;
@@ -218,6 +219,27 @@ namespace Mb.Data.Repositories
                 .BulkDelete()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);
+        }
+
+        /// <summary>
+        /// Get edge connected data
+        /// </summary>
+        /// <param name="edgeId">The edge you want data from</param>
+        /// <returns>A collection connected identity data</returns>
+        /// <remarks>Get det edge identifier and all connected attributes from transport, interface and terminals</remarks>
+        public async Task<List<ObjectIdentity>> GetEdgeConnectedData(string edgeId)
+        {
+            if (string.IsNullOrWhiteSpace(edgeId))
+                return null;
+
+            var procParams = new Dictionary<string, object>
+            {
+                {"@EdgeId", edgeId}
+            };
+
+            var attributes =
+                await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("EdgeLockData", procParams);
+            return attributes;
         }
 
         private void ResetEdgeBeforeSave(Edge edge)

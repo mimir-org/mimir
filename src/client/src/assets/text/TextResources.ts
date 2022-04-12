@@ -118,7 +118,7 @@ export const TextResources = {
   INSPECTOR_LOCK: "Lock",
 
   PARAMS_CLEAR_ALL: "Clear all Entities",
-  PARAMS_DEFAULT: "Show Default Entities",
+  PARAMS_DEFAULT: "Show all Entities",
   PARAMS_COMBINATION: "Select combinations",
   PARAMS_SELECT_ALL: "Select all",
   PARAMS_SEARCH: "Select Entity...",
