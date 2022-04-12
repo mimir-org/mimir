@@ -1,4 +1,4 @@
-import { GetCompanyLogoForNode } from "../../../../../../helpers";
+import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
 import { Connector, Node } from "../../../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
 import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";

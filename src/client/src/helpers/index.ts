@@ -5,9 +5,7 @@ export { GetRdsId, GetRdsIdEdge, GetRdsPrefix } from "./GetRdsId";
 export { default as GetReferenceDesignation } from "./GetReferenceDesignation";
 export { default as GetObjectIcon } from "./GetObjectIcon";
 export { default as GetAspectIcon } from "./GetAspectIcon";
-export { default as GetCompanyLogoForNode } from "./GetCompanyLogoForNode";
-export { default as GetCompanyLogoForInspector } from "./GetCompanyLogoForInspector";
-export { default as GetCompanyLogoForHeader } from "./GetCompanyLogoForHeader";
+
 export { default as GetDateNowUtc } from "./GetDateNowUtc";
 export { default as SetZoomCenterLevel } from "./SetZoomCenterLevel";
 

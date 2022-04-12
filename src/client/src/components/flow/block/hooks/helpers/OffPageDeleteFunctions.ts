@@ -1,7 +1,7 @@
 import { IsOffPage } from "../../../../../helpers/Aspects";
 import { Node, Edge, Project } from "../../../../../models";
 import { IsPartOfTerminal, IsTransport } from "../../../helpers/Connectors";
-import { IsOffPageEdge } from "../../helpers";
+import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
 
 export function GetTransportEdge(nodeId: string, parentNodeId: string, project: Project) {
   return project.edges.find(

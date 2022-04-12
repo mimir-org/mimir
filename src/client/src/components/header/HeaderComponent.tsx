@@ -3,7 +3,7 @@ import { MimirLogo } from "../../assets/icons/mimir";
 import { AvatarComponent } from "./components/AvatarComponent";
 import { ProjectMenuHeaderComponent } from "./components/ProjectMenuHeaderComponent";
 import { CompanyLogoBox, HeaderBox, LogoBox, HeaderRightSection } from "./HeaderComponent.styled";
-import { GetCompanyLogoForHeader } from "../../helpers";
+import { GetCompanyLogoForHeader } from "../../helpers/GetCompanyLogo";
 
 /**
  * The top header in Mimir.

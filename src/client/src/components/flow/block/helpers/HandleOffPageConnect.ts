@@ -7,7 +7,7 @@ import { ConvertDataToEdge } from "../../converters";
 import { CreateId } from "../../helpers";
 import { IsTransport } from "../../helpers/Connectors";
 import { Params } from "../hooks/useOnConnect";
-import { IsOffPageEdge } from "./";
+import { IsOffPageEdge } from "./IsOffPageEdge";
 
 /**
  * Component to handle a connection between two OffPageNodes.
