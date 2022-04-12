@@ -14,7 +14,7 @@ export const OnActiveTerminalChange = (activeElements: any[], dispatch: Dispatch
     // const connectorVisibility = visible ? ConnectorVisibility.None: elem.connectorVisibility;
 
     if (isEdge) {
-      if (!IsPartOfTerminal(elem.fromConnector)) elem.isHidden = visible;
+      if (!IsPartOfTerminal(elem.fromConnector)) elem.hidden = visible;
     } else dispatch(changeActiveConnector(elem?.nodeId, elem?.id, ConnectorVisibility.InputVisible)); // TODO: fix
   });
 };

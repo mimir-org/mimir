@@ -38,7 +38,7 @@ export const LibraryModule = ({ nodes, dispatch }: Props) => {
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
   const collections = useAppSelector(librarySelector).collections;
-  const selectedNode = nodes?.find((n) => n.isSelected);
+  const selectedNode = nodes?.find((n) => n.selected);
 
   const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
   const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;

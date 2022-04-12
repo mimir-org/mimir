@@ -10,7 +10,7 @@ import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
  * @returns a hasLocation or fullfilledBy edge in TreeView.
  */
 export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
-  const visible = !data?.edge?.isHidden;
+  const visible = !data?.edge?.hidden;
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
 

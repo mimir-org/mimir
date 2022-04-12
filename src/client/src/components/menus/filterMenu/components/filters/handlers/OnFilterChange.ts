@@ -23,17 +23,16 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], d
     // PartOf
     if (partOf && IsPartOfTerminal(e.fromConnector)) {
       const source = GetConnectorNode(e.fromConnector, nodes);
-      IsFamily(source, actualEdge.fromNode) && dispatch(setEdgeVisibility(e, !e.isHidden));
+      IsFamily(source, actualEdge.fromNode) && dispatch(setEdgeVisibility(e, !e.hidden));
     }
 
     // Transport
     if (transport && IsTransport(e.fromConnector)) {
-      if (e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId)
-        dispatch(setEdgeVisibility(e, !e.isHidden));
+      if (e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId) dispatch(setEdgeVisibility(e, !e.hidden));
     }
 
     // Relations
     if ((location && IsLocationTerminal(e.fromConnector)) || (fulfilledBy && IsProductTerminal(e.fromConnector)))
-      dispatch(setEdgeVisibility(e, !e.isHidden));
+      dispatch(setEdgeVisibility(e, !e.hidden));
   });
 };

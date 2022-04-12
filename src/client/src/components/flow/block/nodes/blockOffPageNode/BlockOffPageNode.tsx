@@ -52,7 +52,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
 
   return (
-    <OffPageBox id={"BlockOffPageNode-" + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>
+    <OffPageBox id={`BlockOffPageNode-${data.id}`} selected={data === GetSelectedBlockNode()} color={iconColor}>
       <HandleComponent node={data} terminals={inputTerminals} offPage />
       <OffPageIcon style={{ fill: iconColor }} className="icon" />
       <HandleComponent node={data} terminals={outputTerminals} offPage />

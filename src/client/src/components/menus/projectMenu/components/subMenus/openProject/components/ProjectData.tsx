@@ -15,11 +15,11 @@ interface Props {
 }
 
 export const ProjectData = ({ projects, projectId, projectName, projectVersion, projectOwner, updated, dispatch }: Props) => {
-  const isSelected = projects.find((x) => x.id === projectId).selected;
+  const selected = projects.find((x) => x.id === projectId).selected;
   const onClick = () => dispatch(changeSelectedProject(projectId));
 
   return (
-    <ProjectDataBox onClick={onClick} isSelected={isSelected}>
+    <ProjectDataBox onClick={onClick} selected={selected}>
       <p className="name">{projectName}</p>
       <p className="owner">{projectOwner}</p>
       <p className="version">{projectVersion}</p>

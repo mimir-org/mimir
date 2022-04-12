@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/selectors";
 import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
-import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
@@ -21,6 +21,8 @@ import ReactFlow, {
   OnSelectionChangeParams,
   applyNodeChanges,
   applyEdgeChanges,
+  NodeChange,
+  EdgeChange,
 } from "react-flow-renderer";
 
 interface Props {
@@ -76,8 +78,11 @@ const FlowTree = ({ inspectorRef }: Props) => {
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
     HandleNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
-  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
-  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+  const OnNodesChange = useCallback((changes: NodeChange[]) => {
+    setNodes((n) => applyNodeChanges(changes, n));
+  }, []);
+
+  const OnEdgesChange = useCallback((changes: EdgeChange[]) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
   const nodeTypes = useMemo(() => GetTreeNodeTypes, []);
   const edgeTypes = useMemo(() => GetTreeEdgeTypes, []);
@@ -94,6 +99,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
+
     setNodes(BuildFlowTreeNodes(project));
   }, [project?.nodes?.length]);
 
@@ -142,4 +148,4 @@ const FlowTree = ({ inspectorRef }: Props) => {
   );
 };
 
-export default FlowTree;
+export default memo(FlowTree);

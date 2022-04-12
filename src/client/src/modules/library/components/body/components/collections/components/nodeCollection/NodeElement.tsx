@@ -39,7 +39,7 @@ export const NodeElement = ({
   dispatch,
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
-  const isSelected = selectedTypes.some((x) => x.id === item.id);
+  const selected = selectedTypes.some((x) => x.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
 
   const onDragStart = (event, node) => {
@@ -67,8 +67,8 @@ export const NodeElement = ({
       </LibElementVersion> */}
       {collectionState === CollectionsActions.ManageType && (
         <Checkbox
-          isChecked={isSelected}
-          onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, isSelected)}
+          isChecked={selected}
+          onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, selected)}
           color={Color.BLACK}
         />
       )}

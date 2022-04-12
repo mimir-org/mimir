@@ -9,11 +9,11 @@ export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
     let found = false;
 
     edges.forEach((edge) => {
-      if (!IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden) {
+      if (!IsBlockView() && edge.fromConnectorId === conn.id && !edge.hidden) {
         found = true;
         return;
       }
-      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden && !IsPartOfTerminal(conn)) found = true;
+      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.hidden && !IsPartOfTerminal(conn)) found = true;
     });
     return found;
   };

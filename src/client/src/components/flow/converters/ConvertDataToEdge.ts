@@ -13,7 +13,7 @@ import { ConvertToInterface, ConvertToTransport } from ".";
  * @param library
  * @returns an Edge.
  */
-const ConvertToEdge = (
+const ConvertDataToEdge = (
   id: string,
   sourceConn: Connector,
   targetConn: Connector,
@@ -33,7 +33,7 @@ const ConvertToEdge = (
     fromNode: sourceNode,
     toNodeId: targetNode.id,
     toNode: targetNode,
-    isHidden: false,
+    hidden: false,
     masterProjectId: projectId,
     transport: ConvertToTransport(sourceConn, library),
     interface: ConvertToInterface(sourceConn, library),
@@ -41,4 +41,4 @@ const ConvertToEdge = (
   } as Edge;
 };
 
-export default ConvertToEdge;
+export default ConvertDataToEdge;

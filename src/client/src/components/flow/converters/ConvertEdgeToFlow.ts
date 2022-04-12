@@ -26,8 +26,8 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, source: Node, target:
     arrowHeadType: null,
     animated: isAnimated,
     label: "",
-    data: { source, target, edge, isSelected: edge.isSelected },
-    isHidden: false, // Opacity is controlled by the styled component
+    data: { source, target, edge, selected: edge.selected },
+    hidden: false, // Opacity is controlled by the styled component
     parentType: source?.aspect,
     targetType: target?.aspect,
   } as FlowEdge;

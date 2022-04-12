@@ -14,7 +14,7 @@ import { Position } from "../../../models/project";
  * @param user
  * @returns a Node.
  */
-const ConvertToNode = (
+const ConvertDataToNode = (
   data: LibItem,
   treePosition: Position,
   blockPosition: Position,
@@ -95,4 +95,4 @@ const ConvertToNode = (
   return node;
 };
 
-export default ConvertToNode;
+export default ConvertDataToNode;

@@ -8,7 +8,7 @@ interface Props {
   topPos: string;
 }
 
-export const HandleBox = styled.div<Props>`
+export const TreeHandleBox = styled.div<Props>`
   .function-treeview-handler {
     opacity: ${(props) => (props.visible ? 1 : 0)};
     visibility: ${(props) => (props.visible ? "visible" : "hidden")};

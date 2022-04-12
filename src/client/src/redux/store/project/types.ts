@@ -150,7 +150,7 @@ export interface SetNodeVisibility {
 
 export interface SetEdgeVisibility {
   type: typeof SET_EDGE_VISIBILITY;
-  payload: { edge: Edge; isHidden: boolean };
+  payload: { edge: Edge; hidden: boolean };
 }
 
 export interface SetLocationNodeSize {
@@ -160,7 +160,7 @@ export interface SetLocationNodeSize {
 
 export interface SetActiveNode {
   type: typeof SET_ACTIVE_NODE;
-  payload: { nodeId: string; isActive: boolean };
+  payload: { nodeId: string; selected: boolean };
 }
 
 export interface SetActiveEdge {

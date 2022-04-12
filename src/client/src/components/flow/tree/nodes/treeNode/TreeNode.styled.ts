@@ -4,7 +4,7 @@ import { Size } from "../../../../../compLibrary/size/Size";
 interface Props {
   colorMain: string;
   colorSelected: string;
-  isSelected: boolean;
+  selected: boolean;
   visible: boolean;
 }
 
@@ -17,7 +17,7 @@ export const TreeNodeBox = styled.div<Props>`
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
   background-color: ${(props) => props.colorMain};
   border: 3px solid;
-  border-color: ${(props) => (props.isSelected ? props.colorSelected : props.colorMain)};
+  border-color: ${(props) => (props.selected ? props.colorSelected : props.colorMain)};
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transition: border 250ms, opacity 250ms;
 

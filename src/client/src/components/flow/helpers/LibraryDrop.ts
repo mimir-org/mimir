@@ -3,7 +3,7 @@ import { Connector, ConnectorVisibility, Node, Project } from "../../../models";
 import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { ConvertToEdge } from "../converters";
+import { ConvertDataToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../compLibrary/size/Size";
@@ -28,7 +28,7 @@ export function HandleCreatePartOfEdge(
   targetNode.level = sourceNode.level + 1;
   const sourceConn = sourceNode.connectors?.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
   const targetConn = targetNode.connectors?.find((x) => IsPartOfTerminal(x) && IsInputTerminal(x));
-  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  const partofEdge = ConvertDataToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode.id);
   dispatch(createEdge(partofEdge));

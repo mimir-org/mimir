@@ -3,7 +3,7 @@ import { SaveEventData } from "../../../../redux/store/localStorage/localStorage
 import { IsPartOfTerminal, IsPartOfConnection, IsTransport } from "../../helpers/Connectors";
 import { createEdge, removeEdge } from "../../../../redux/store/project/actions";
 import { Node, Project } from "../../../../models";
-import { ConvertToEdge } from "../../converters";
+import { ConvertDataToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
@@ -35,7 +35,7 @@ const useOnTreeConnect = (params: Params) => {
 
   if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, target, dispatch);
 
-  const currentEdge = existingEdge ?? ConvertToEdge(id, sourceConn, targetConn, source, target, project.id, library);
+  const currentEdge = existingEdge ?? ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, library);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
   if (IsPartOfTerminal(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);

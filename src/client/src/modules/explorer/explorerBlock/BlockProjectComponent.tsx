@@ -18,7 +18,7 @@ export const BlockProjectComponent = () => {
   const project = useAppSelector(projectSelector);
   const username = useAppSelector(usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
-  const selectedNode = nodes?.find((n) => n.isSelected);
+  const selectedNode = nodes?.find((n) => n.selected);
   const secondaryNode = useAppSelector(secondaryNodeSelector);
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project);

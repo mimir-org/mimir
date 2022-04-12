@@ -35,7 +35,7 @@ export const RelationFilter = ({ edges, nodes, items, dispatch, visible }: Props
             key={conn.id}
             label={conn.name}
             onChange={() => OnFilterChange(edge, edges, nodes, dispatch)}
-            isChecked={!edge.isHidden}
+            isChecked={!edge.hidden}
             indent={2}
             visible
           />

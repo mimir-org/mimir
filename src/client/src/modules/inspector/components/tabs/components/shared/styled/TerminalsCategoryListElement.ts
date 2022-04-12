@@ -3,7 +3,7 @@ import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize } from "../../../../../../../compLibrary/font";
 
 interface Props {
-  isSelected?: boolean;
+  selected?: boolean;
   radius: number;
   color: string;
 }
@@ -16,8 +16,8 @@ export const TerminalsCategoryListElement = styled.div<Props>`
   background-color: ${(props) => props.color};
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
 
-  text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
+  text-decoration: ${(props) => (props.selected ? "underline" : "none")};
+  font-weight: ${(props) => (props.selected ? "bold" : "normal")};
 
   .icon {
     display: flex;

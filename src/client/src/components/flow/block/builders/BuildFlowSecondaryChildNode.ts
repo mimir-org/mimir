@@ -26,11 +26,12 @@ const BuildFlowSecondaryChildNode = (primaryNode: Node, secondaryNode: Node, chi
     type: type,
     data: childNode,
     position: position,
-    isHidden: childNode.isHidden,
-    isSelected: childNode.isSelected,
+    hidden: childNode.hidden,
+    selected: childNode.selected,
     draggable: true,
     selectable: true,
     connectable: true,
+    parentNode: secondaryNode.id,
   } as FlowNode;
 };
 

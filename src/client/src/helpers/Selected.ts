@@ -3,7 +3,7 @@ import red from "../redux/store";
 
 export const GetSelectedBlockNode = () => {
   const nodes = red.store.getState().projectState?.project?.nodes;
-  return nodes?.find((node) => node?.isBlockSelected);
+  return nodes?.find((node) => node?.blockSelected);
 };
 
 export const GetSelectedEdges = () => {

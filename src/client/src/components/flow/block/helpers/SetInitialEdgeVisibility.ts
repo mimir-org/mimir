@@ -9,12 +9,12 @@ import { IsLocationTerminal, IsProductTerminal, IsTransport } from "../../helper
  * @param dispatch
  */
 const SetInitialEdgeVisibility = (project: Project, dispatch: Dispatch) => {
-  const isHidden = false;
+  const hidden = false;
 
   project?.edges?.forEach((edge) => {
-    if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, isHidden));
-    if (IsProductTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, isHidden));
-    if (IsLocationTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, isHidden));
+    if (IsTransport(edge.fromConnector)) dispatch(setEdgeVisibility(edge, hidden));
+    if (IsProductTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, hidden));
+    if (IsLocationTerminal(edge.fromConnector)) dispatch(setEdgeVisibility(edge, hidden));
   });
 };
 

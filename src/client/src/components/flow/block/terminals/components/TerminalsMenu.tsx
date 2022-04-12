@@ -26,7 +26,7 @@ export const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, is
 
   return (
     <TerminalsBox
-      id={"terminals-dropdown-" + node.id}
+      id={`terminals-dropdown-${node.id}`}
       tabIndex={0}
       onBlur={onBlur}
       color={GetAspectColor(node, AspectColorType.Selected)}

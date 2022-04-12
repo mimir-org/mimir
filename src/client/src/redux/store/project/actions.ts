@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Types from "./types";
 import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
 import { BlockNodeSize } from "../../../models/project";
@@ -77,16 +78,16 @@ export function setNodeVisibility(node: Node, isParent: boolean): Types.ProjectA
   return { type: Types.SET_NODE_VISIBILITY, payload: { node, isParent } };
 }
 
-export function setEdgeVisibility(edge: Edge, isHidden: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_EDGE_VISIBILITY, payload: { edge, isHidden } };
+export function setEdgeVisibility(edge: Edge, hidden: boolean): Types.ProjectActionTypes {
+  return { type: Types.SET_EDGE_VISIBILITY, payload: { edge, hidden } };
 }
 
 export function setLocationNodeSize(nodeId: string, key: string, value: number): Types.ProjectActionTypes {
   return { type: Types.SET_LOCATION_NODE_SIZE, payload: { nodeId, key, value } };
 }
 
-export function setActiveNode(nodeId: string, isActive: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_ACTIVE_NODE, payload: { nodeId, isActive } };
+export function setActiveNode(nodeId: string, selected: boolean): Types.ProjectActionTypes {
+  return { type: Types.SET_ACTIVE_NODE, payload: { nodeId, selected } };
 }
 
 export function setActiveBlockNode(nodeId: string): Types.ProjectActionTypes {
@@ -105,17 +106,14 @@ export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
   return { type: Types.CHANGE_ALL_NODES, payload: { visible } };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeNodeValue(nodeId: string, propName: string, propValue: any): Types.ChangeNodePropValue {
   return { type: Types.CHANGE_NODE_PROP_VALUE, payload: { nodeId, propName, propValue } };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeTransportValue(edgeId: string, propName: string, propValue: any): Types.ChangeTransportPropValue {
   return { type: Types.CHANGE_TRANSPORT_PROP_VALUE, payload: { edgeId, propName, propValue } };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeInterfaceValue(edgeId: string, propName: string, propValue: any): Types.ChangeInterfacePropValue {
   return { type: Types.CHANGE_INTERFACE_PROP_VALUE, payload: { edgeId, propName, propValue } };
 }

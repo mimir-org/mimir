@@ -4,7 +4,7 @@ import { SaveEventData } from "../../../../redux/store/localStorage/localStorage
 import { CreateId } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
 import { Project } from "../../../../models";
-import { ConvertToEdge } from "../../converters";
+import { ConvertDataToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetBlockEdgeType, HandleOffPageConnect } from "../helpers";
@@ -39,7 +39,7 @@ const useOnConnect = (params: Params) => {
     return;
   }
 
-  const edge = ConvertToEdge(id, sourceConn, targetConn, source, target, project.id, lib);
+  const edge = ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, lib);
   dispatch(createEdge(edge));
 
   const type = GetBlockEdgeType(sourceConn, source, target);

@@ -21,9 +21,7 @@ export const App = ({ pca }: AppProps) => {
   const isFetching = useAppSelector(isFetchingSelector);
   const projectState = useAppSelector(projectStateSelector);
 
-  const login = () => {
-    msalInstance.loginRedirect();
-  };
+  const login = () => msalInstance.loginRedirect();
 
   const websocket = new WebSocket();
   websocket.setDispatcher(dispatch);

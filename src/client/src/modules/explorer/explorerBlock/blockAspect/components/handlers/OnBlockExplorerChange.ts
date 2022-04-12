@@ -23,7 +23,7 @@ export const OnBlockExplorerChange = (
 ) => {
   // Set selectNode
   if (!selectedNode) {
-    dispatch(setActiveNode(node?.id, !node.isSelected));
+    dispatch(setActiveNode(node?.id, !node.selected));
     dispatch(setActiveBlockNode(node?.id));
     return;
   }

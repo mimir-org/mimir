@@ -43,7 +43,7 @@ export const InspectorButtonRow = ({
 }: Props) => {
   const isLocked = IsCreateLibraryType(element) ? true : element?.isLocked;
   const isElementSelected = !!element;
-  const selectedNode = project?.nodes?.find((n) => n.isSelected);
+  const selectedNode = project?.nodes?.find((n) => n.selected);
   const deleteDisabled = isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === selectedNode);
 
   let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;

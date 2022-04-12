@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
-import { ConvertToNode } from "../../converters";
+import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
@@ -44,6 +44,7 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
 
 function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
+
   let parentNode = selectedNode;
   if (!parentNode) return;
 
@@ -56,7 +57,7 @@ function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryN
 
   const treePosition = SetTreeNodePosition(parentNode, project);
   const blockPosition = SetBlockNodePosition(getViewport, event);
-  const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
+  const targetNode = ConvertDataToNode(data, treePosition, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));

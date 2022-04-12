@@ -3,7 +3,7 @@ import { GetParent } from "../../../../helpers/Family";
 import { Project } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
-import { ConvertToEdge } from "../../converters";
+import { ConvertDataToEdge } from "../../converters";
 import { CreateId } from "../../helpers";
 import { IsTransport } from "../../helpers/Connectors";
 import { Params } from "../hooks/useOnConnect";
@@ -30,7 +30,7 @@ const HandleOffPageConnect = (params: Params, sourceNodeId: string, targetNodeId
 
   if (!sourceTerminal || !targetTerminal) return null;
 
-  const edge = ConvertToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, lib);
+  const edge = ConvertDataToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, lib);
   dispatch(createEdge(edge));
 
   project.edges.forEach((e) => {

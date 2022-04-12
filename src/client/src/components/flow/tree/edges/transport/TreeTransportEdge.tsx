@@ -25,5 +25,5 @@ export const TreeTransportEdge = ({
 
   const smoothStep = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
-  return <path id={id} style={GetTreeEdgeStyle(color, !data?.edge.isHidden)} className="path-treeTransportEdge" d={smoothStep} />;
+  return <path id={id} style={GetTreeEdgeStyle(color, !data?.edge.hidden)} className="path-treeTransportEdge" d={smoothStep} />;
 };

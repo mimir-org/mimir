@@ -3,6 +3,7 @@ import { FlowBlock } from "./block";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { TypeEditorComponent } from "../../typeEditor";
 import { FlowModuleContainer } from "./FlowModule.styled";
+import { memo } from "react";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
@@ -21,4 +22,4 @@ const FlowModule = ({ inspectorRef, flowView }: Props) => (
     {flowView === VIEW_TYPE.TYPE_EDITOR && <TypeEditorComponent />}
   </FlowModuleContainer>
 );
-export default FlowModule;
+export default memo(FlowModule);

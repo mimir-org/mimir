@@ -20,7 +20,7 @@ export const BlockRelationEdge = ({
   targetPosition,
   data,
 }: EdgeProps) => {
-  const visible = !data?.edge?.isHidden;
+  const visible = !data?.edge?.hidden;
   const isElectro = useAppSelector(electroSelector);
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);

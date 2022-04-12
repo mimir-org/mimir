@@ -23,7 +23,7 @@ const useOnEdgeDelete = (
   let hasDeleted = false;
 
   flowEdgesToDelete.forEach((flowEdge) => {
-    const selectedNode = project?.nodes?.find((n) => n.isSelected);
+    const selectedNode = project?.nodes?.find((n) => n.selected);
     if (IsAspectNode(selectedNode)) return;
 
     const edgeToDelete = FindMimirEdgeByFlowEdgeId(project, flowEdge.id);

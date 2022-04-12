@@ -7,7 +7,7 @@ export const LegendComponent = (project: Project) => {
   if (!project) return legends;
 
   const edges = project.edges;
-  const nodes = project.nodes?.filter((node) => !node.isHidden);
+  const nodes = project.nodes?.filter((node) => !node.hidden);
 
   nodes?.forEach((node) => {
     legends = [...legends, ...AddLegend(node, edges)];

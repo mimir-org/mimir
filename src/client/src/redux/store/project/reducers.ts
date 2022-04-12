@@ -161,8 +161,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_EDGE_VISIBILITY: {
-      const { edge, isHidden } = action.payload;
-      return { ...state, project: { ...project, edges: edges.map((e) => (e.id === edge.id ? { ...e, isHidden } : e)) } };
+      const { edge, hidden } = action.payload;
+      return { ...state, project: { ...project, edges: edges.map((e) => (e.id === edge.id ? { ...e, hidden } : e)) } };
     }
 
     case Types.SET_LOCATION_NODE_SIZE: {
@@ -172,7 +172,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.SET_NODE_VISIBILITY: {
       const { node, isParent } = action.payload;
-      const isHidden = !node.isHidden;
+      const hidden = !node.hidden;
 
       const isRelated = (edge: Edge) => {
         return IsFamily(node, edge.fromNode) || IsFamily(node, edge.toNode) || edge.fromNodeId === node.id;
@@ -183,8 +183,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ...state,
           project: {
             ...project,
-            nodes: nodes.map((n) => (IsFamily(node, n) ? { ...n, isHidden } : n)),
-            edges: edges.map((e) => (isRelated(e) ? { ...e, isHidden } : e)),
+            nodes: nodes.map((n) => (IsFamily(node, n) ? { ...n, hidden } : n)),
+            edges: edges.map((e) => (isRelated(e) ? { ...e, hidden: hidden } : e)),
           },
         };
       }
@@ -199,8 +199,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           ...state,
           project: {
             ...project,
-            nodes: nodes.map((n) => (elements.includes(n) ? { ...n, isHidden } : n)),
-            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, isHidden } : e)),
+            nodes: nodes.map((n) => (elements.includes(n) ? { ...n, hidden } : n)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, hidden: hidden } : e)),
           },
         };
       }
@@ -209,31 +209,31 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === node.id ? { ...n, isHidden } : n)),
-          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, isHidden } : e)),
+          nodes: nodes.map((n) => (n.id === node.id ? { ...n, hidden } : n)),
+          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, hidden: hidden } : e)),
         },
       };
     }
 
     case Types.SET_ACTIVE_NODE: {
-      const { nodeId, isActive: isSelected } = action.payload;
+      const { nodeId, selected } = action.payload;
 
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, isSelected } : { ...n, isSelected: false })),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected } : { ...n, selected: false })),
           edges,
         },
       };
     }
 
     case Types.SET_ACTIVE_EDGE: {
-      const { edgeId, isActive: isSelected } = action.payload;
+      const { edgeId, isActive: selected } = action.payload;
 
       return {
         ...state,
-        project: { ...project, edges: edges?.map((e) => (e.id === edgeId ? { ...e, isSelected } : { ...e, isSelected: false })) },
+        project: { ...project, edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected } : { ...e, selected: false })) },
       };
     }
 
@@ -262,7 +262,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_ALL_NODES:
-      return { ...state, project: { ...project, nodes: nodes.map((x) => state && { ...x, isHidden: true }) } };
+      return { ...state, project: { ...project, nodes: nodes.map((x) => state && { ...x, hidden: true }) } };
 
     case Types.CHANGE_NODE_PROP_VALUE: {
       const { nodeId, propName, propValue } = action.payload;
@@ -622,7 +622,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...project,
           nodes: nodes.map((n) =>
-            n.id === action.payload.id ? { ...action.payload, isSelected: n.isSelected, isBlockSelected: n.isBlockSelected } : n
+            n.id === action.payload.id ? { ...action.payload, selected: n.selected, blockSelected: n.blockSelected } : n
           ),
         },
       };
@@ -632,7 +632,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: { ...project, edges: edges.map((e) => (e.id === id ? { ...action.payload, isSelected: e.isSelected } : e)) },
+        project: { ...project, edges: edges.map((e) => (e.id === id ? { ...action.payload, selected: e.selected } : e)) },
       };
     }
 

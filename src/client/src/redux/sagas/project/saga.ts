@@ -62,7 +62,7 @@ export function* getProject(action: FetchingProjectAction) {
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
-        if (!IsPartOfTerminal(edge.fromConnector)) edge.isHidden = true;
+        if (!IsPartOfTerminal(edge.fromConnector)) edge.hidden = true;
       });
     }
 

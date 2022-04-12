@@ -15,7 +15,7 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
-  const visible = !data?.edge?.isHidden;
+  const visible = !data?.edge?.hidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
   const arrowId = `arrow-${id}`;

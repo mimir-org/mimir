@@ -4,7 +4,7 @@ import { changeActiveConnector, setEdgeVisibility } from "../../../../../../redu
 import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../../../flow/helpers/Connectors";
 
 export const OnAllRelationsChange = (edges: Edge[], dispatch: Dispatch) => {
-  const hidden = edges.some((x) => (IsLocationTerminal(x.fromConnector) || IsProductTerminal(x.fromConnector)) && x.isHidden);
+  const hidden = edges.some((x) => (IsLocationTerminal(x.fromConnector) || IsProductTerminal(x.fromConnector)) && x.hidden);
 
   edges?.forEach((e) => {
     if (IsLocationTerminal(e.fromConnector) || IsProductTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e, !hidden));
@@ -12,7 +12,7 @@ export const OnAllRelationsChange = (edges: Edge[], dispatch: Dispatch) => {
 };
 
 export const OnAllPartOfChange = (edges: Edge[], dispatch: Dispatch) => {
-  const hidden = edges.some((x) => IsPartOfTerminal(x.fromConnector) && x.isHidden);
+  const hidden = edges.some((x) => IsPartOfTerminal(x.fromConnector) && x.hidden);
 
   edges?.forEach((e) => {
     if (IsPartOfTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e, !hidden));
@@ -20,7 +20,7 @@ export const OnAllPartOfChange = (edges: Edge[], dispatch: Dispatch) => {
 };
 
 export const OnAllTransportsChange = (edges: Edge[], dispatch: Dispatch) => {
-  const hidden = edges.some((x) => IsTransport(x.fromConnector) && x.isHidden);
+  const hidden = edges.some((x) => IsTransport(x.fromConnector) && x.hidden);
 
   edges?.forEach((e) => {
     if (IsTransport(e.fromConnector)) dispatch(setEdgeVisibility(e, !hidden));

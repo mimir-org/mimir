@@ -44,7 +44,7 @@ export const BlockParentComponent = ({
   useResizeParentNode(node, resizePanelRef, dispatch);
 
   return (
-    <ParentBox id={"parent-block-" + node.id} selected={node.isBlockSelected} width={node.width} height={node.height}>
+    <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={node.width} height={node.height}>
       <BlockParentBanner
         node={node}
         inputTerminals={inputTerminals}

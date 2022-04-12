@@ -1,6 +1,6 @@
 import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
-import { ConvertToNode } from "../../converters";
+import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
@@ -36,7 +36,7 @@ const useOnTreeDrop = (params: OnDropParameters) => {
 
   if (DoesNotContainApplicationData(event)) return;
 
-  const sourceNode = project?.nodes.find((n) => n.isSelected);
+  const sourceNode = project?.nodes.find((n) => n.selected);
   const isSubProject = IsSubProject(event);
 
   if (isSubProject) HandleSubProjectDrop(event, project, dispatch);
@@ -65,7 +65,7 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
   const treePosition = SetTreeNodePosition(parentNode, project);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
-  const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
+  const targetNode = ConvertDataToNode(data, treePosition, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));

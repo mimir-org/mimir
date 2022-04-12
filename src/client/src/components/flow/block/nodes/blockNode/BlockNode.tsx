@@ -31,7 +31,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const node = useParametricAppSelector(selectors.nodeSelector, data.id);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const selectedNode = project?.nodes.find((n) => n.isSelected);
+  const selectedNode = project?.nodes.find((n) => n.selected);
   const isElectro = useAppSelector(selectors.electroSelector);
 
   // Check for elements that require OffPage nodes
@@ -52,8 +52,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   if (!node) return null;
 
-  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
-  const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
+  const inputTerminals = node.connectors.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
+  const outputTerminals = node.connectors.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
 
   return (
     <BoxWrapper isElectro={isElectro}>

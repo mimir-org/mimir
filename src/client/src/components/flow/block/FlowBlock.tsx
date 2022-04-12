@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
@@ -19,6 +19,8 @@ import ReactFlow, {
   OnSelectionChangeParams,
   applyNodeChanges,
   applyEdgeChanges,
+  NodeChange,
+  EdgeChange,
 } from "react-flow-renderer";
 
 interface Props {
@@ -44,7 +46,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const selectedNode = project?.nodes?.find((n) => n.isSelected);
+  const selectedNode = project?.nodes?.find((n) => n.selected);
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
@@ -87,8 +89,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
-  const OnNodesChange = useCallback((changes) => setNodes((n) => applyNodeChanges(changes, n)), []);
-  const OnEdgesChange = useCallback((changes) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+  const OnNodesChange = useCallback((changes: NodeChange[]) => setNodes((n) => applyNodeChanges(changes, n)), []);
+  const OnEdgesChange = useCallback((changes: EdgeChange[]) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
   const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
   const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
@@ -159,4 +161,4 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   );
 };
 
-export default FlowBlock;
+export default memo(FlowBlock);
