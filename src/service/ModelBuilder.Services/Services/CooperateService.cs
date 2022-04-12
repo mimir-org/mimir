@@ -42,42 +42,10 @@ namespace Mb.Services.Services
             );
         }
 
-        public Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId)
+        public Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus)
         {
-            foreach (var tuple in nodeMap)
-            {
-                _webSocketRepository.SendNodeData(tuple.node, projectId, tuple.workerStatus);
-            }
+            _webSocketRepository.SendLockData(lockCms, workerStatus);
 
-            return Task.CompletedTask;
-        }
-
-        public Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId)
-        {
-            foreach (var tuple in edgeMap)
-            {
-                _webSocketRepository.SendEdgeData(tuple.edge, projectId, tuple.workerStatus);
-            }
-
-            return Task.CompletedTask;
-        }
-
-        public Task SendLockAttributeUpdates(List<LockAttributeAm> lockAttributeAms, WorkerStatus workerStatus, string projectId)
-        {
-            _webSocketRepository.SendLockAttributeData(lockAttributeAms, projectId, workerStatus);
-
-            return Task.CompletedTask;
-        }
-
-        public Task SendLockNodeUpdates(List<LockNodeAm> lockNodeAms, WorkerStatus workerStatus, string projectId)
-        {
-            _webSocketRepository.SendLockNodeData(lockNodeAms, projectId, workerStatus);
-            return Task.CompletedTask;
-        }
-
-        public Task SendLockEdgeUpdates(List<LockEdgeAm> lockEdgeAms, WorkerStatus workerStatus, string projectId)
-        {
-            _webSocketRepository.SendLockEdgeData(lockEdgeAms, projectId, workerStatus);
             return Task.CompletedTask;
         }
 

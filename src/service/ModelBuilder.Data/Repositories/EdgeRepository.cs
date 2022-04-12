@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SqlBulkTools;
@@ -226,14 +228,17 @@ namespace Mb.Data.Repositories
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
-        /// <param name="edges">The attributes to be updated</param>
-        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Edge> edges)
+        /// <param name="lockDms">The attributes to be updated</param>
+        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
         {
-            if (edges == null || !edges.Any())
+            if (lockDms == null || !lockDms.Any())
                 return;
 
-            bulk.Setup<Edge>()
-                .ForCollection(edges)
+            if (lockDms.Any(x => x.Type is not EntityType.Edge))
+                throw new ModelBuilderBadRequestException("EntityType is not of type Edge");
+
+            bulk.Setup<LockDm>()
+                .ForCollection(lockDms)
                 .WithTable("Edge")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.IsLocked)
