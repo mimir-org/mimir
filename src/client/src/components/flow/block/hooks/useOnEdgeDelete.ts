@@ -2,7 +2,7 @@ import { Edge as FlowEdge } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { removeEdge } from "../../../../redux/store/project/actions";
-import { FindMimirEdgeByFlowEdgeId } from "../../helpers";
+import { GetMimirEdgeByFlowEdgeId } from "../../helpers/GetMimirDataByFlowId";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
@@ -26,7 +26,7 @@ const useOnEdgeDelete = (
     const selectedNode = project?.nodes?.find((n) => n.selected);
     if (IsAspectNode(selectedNode)) return;
 
-    const edgeToDelete = FindMimirEdgeByFlowEdgeId(project, flowEdge.id);
+    const edgeToDelete = GetMimirEdgeByFlowEdgeId(project, flowEdge.id);
     if (edgeToDelete?.isLocked) return;
     HandleOffPageEdgeDelete(edgeToDelete, project, dispatch);
 

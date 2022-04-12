@@ -4,7 +4,7 @@ import { Project } from "../../../../models";
 import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
-import { FindMimirNodeByFlowNodeId } from "../../helpers";
+import { GetMimirNodeByFlowNodeId } from "../../helpers/GetMimirDataByFlowId";
 
 /**
  * Hook that runs when a FlowNode is deleted from Mimir in TreeView.
@@ -25,7 +25,7 @@ const useOnTreeNodeDelete = (
   flowNodesToDelete.forEach((flowNode) => {
     if (IsAspectNode(flowNode.data)) return;
 
-    const mimirNode = FindMimirNodeByFlowNodeId(project, flowNode.id);
+    const mimirNode = GetMimirNodeByFlowNodeId(project, flowNode.id);
     if (mimirNode?.isLocked) return;
     DeleteRelatedEdges(mimirNode.id, project, dispatch);
 

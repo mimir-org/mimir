@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { removeEdge } from "../../../../redux/store/project/actions";
 import { CloseInspector } from "../../handlers";
-import { FindMimirEdgeByFlowEdgeId } from "../../helpers";
+import { GetMimirEdgeByFlowEdgeId } from "../../helpers/GetMimirDataByFlowId";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 
 /**
@@ -25,7 +25,7 @@ const useOnTreeEdgeDelete = (
     const selectedNode = project?.nodes?.find((n) => n.selected);
     if (IsAspectNode(selectedNode)) return;
 
-    const edge = FindMimirEdgeByFlowEdgeId(project, flowEdge.id);
+    const edge = GetMimirEdgeByFlowEdgeId(project, flowEdge.id);
     if (edge?.isLocked) return;
 
     hasDeleted = true;

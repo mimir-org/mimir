@@ -1,6 +1,7 @@
 import { Attribute, Connector, ConnectorType, Transport, TRANSPORT_KIND } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
+import { IsBidirectionalTerminal } from "../helpers/Connectors";
 
 const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const transportType = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
@@ -13,10 +14,11 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
 
   inputTerminal.id = CreateId();
-  inputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Input;
+  inputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorType.Bidirectional : ConnectorType.Input;
   inputTerminal.nodeId = null;
+
   outputTerminal.id = CreateId();
-  outputTerminal.type = sourceConn.type === ConnectorType.Bidirectional ? ConnectorType.Bidirectional : ConnectorType.Output;
+  outputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorType.Bidirectional : ConnectorType.Output;
   outputTerminal.nodeId = null;
 
   if (inputTerminal?.attributes) {
