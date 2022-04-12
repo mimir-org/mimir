@@ -1,6 +1,6 @@
-import * as Icons from "../assets/icons/aspects";
-import { IsFunction, IsLocation, IsProduct } from "./Aspects";
-import { Node } from "../models";
+import * as Icons from "../../../../assets/icons/aspects";
+import { IsFunction, IsLocation, IsProduct } from "../../../../helpers/Aspects";
+import { Node } from "../../../../models";
 
 const GetAspectIcon = (node: Node) => {
   if (IsFunction(node)) return Icons.Function;

@@ -1,7 +1,7 @@
-import { CreateId } from ".";
-import { IsAspectNode } from "../../../helpers/Aspects";
-import { IsFamily } from "../../../helpers/Family";
-import { ConnectorType, Edge, Node, Project, RelationType } from "../../../models";
+import { CreateId } from "../../helpers";
+import { IsAspectNode } from "../../../../helpers/Aspects";
+import { IsFamily } from "../../../../helpers/Family";
+import { ConnectorType, Edge, Node, Project, RelationType } from "../../../../models";
 
 const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project, subProject: Project): [Node[], Edge[]] => {
   try {

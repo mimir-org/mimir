@@ -5,9 +5,10 @@ import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsNodeInTreeExplorerChecked } from "./helpers/IsNodeInTreeExplorerChecked";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
 import { Icon } from "../../../../../compLibrary/icon";
-import { GetAspectColor, GetAspectIcon, GetIndentLevel, UseSetSelectNodes } from "../../../../../helpers";
+import { GetAspectColor, UseSetSelectNodes } from "../../../../../helpers";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetSelectedNodes } from "../../../../../helpers/Selected";
+import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";
 
 interface Props {
   node: Node;

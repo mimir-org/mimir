@@ -1,4 +1,4 @@
-import { IsRelationEdge } from "../../../../../components/flow/helpers/IsRelationEdge";
+import { IsRelationEdge } from "./IsRelationEdge";
 import { IsLocation } from "../../../../../typeEditor/helpers";
 import { InspectorElement } from "../../../types";
 import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";

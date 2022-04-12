@@ -1,6 +1,6 @@
-import { Project } from "../../../models";
-import Config from "../../../models/Config";
-import { get } from "../../../models/webclient";
+import { Project } from "../../../../models";
+import Config from "../../../../models/Config";
+import { get } from "../../../../models/webclient";
 
 const GetSubProject = async (projectId: string): Promise<Project> => {
   try {

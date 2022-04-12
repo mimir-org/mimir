@@ -5,7 +5,7 @@ import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
-import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
+import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 

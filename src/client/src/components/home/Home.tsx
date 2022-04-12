@@ -17,7 +17,7 @@ import { ExplorerTreeModule, ExplorerBlockModule } from "../../modules/explorer/
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
-import { ToggleDarkModeColor } from "../../helpers/ToggleDarkModeColor";
+import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
@@ -69,7 +69,7 @@ export const Home = ({ dispatch }: Props) => {
   }, []);
 
   useEffect(() => {
-    ToggleDarkModeColor(isDarkMode);
+    ToggleColorProfile(isDarkMode);
   }, [isDarkMode, isBlockView]);
 
   return (
