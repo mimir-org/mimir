@@ -64,7 +64,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
         colorSelected={GetAspectColor(node, AspectColorType.Selected)}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, project.edges)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node.id, dispatch, project.edges)}
       />
       <HandleComponent node={node} terminals={outputTerminals} />
     </BoxWrapper>

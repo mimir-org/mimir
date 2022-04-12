@@ -9,7 +9,7 @@ import { Node } from "../../../../../models";
  * @param isInput
  * @returns an icon
  */
-const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
+export const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
   if (isParent) return Icons.ParentMenu;
 
   if (IsLocation(node)) {
@@ -27,5 +27,3 @@ const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
     return Icons.ProductOutputMenu;
   }
 };
-
-export default GetMenuIcon;

@@ -1,13 +1,13 @@
 import { Dispatch } from "redux";
-import { Connector, ConnectorVisibility, Edge, Node } from "../../../../../models";
+import { Connector, ConnectorVisibility, Edge } from "../../../../../models";
 import { changeActiveConnector, removeEdge } from "../../../../../redux/store/project/actions";
 import { IsConnectorVisible } from "../../../helpers/Connectors";
 
-export const OnConnectorClick = (conn: Connector, isInput: boolean, node: Node, dispatch: Dispatch, edges: Edge[]) => {
+export const OnConnectorClick = (conn: Connector, isInput: boolean, nodeId: string, dispatch: Dispatch, edges: Edge[]) => {
   const visible = IsConnectorVisible(conn);
   const connectorVisibility = SetConnectorVisibility(conn, isInput);
 
-  dispatch(changeActiveConnector(node.id, conn.id, connectorVisibility));
+  dispatch(changeActiveConnector(nodeId, conn.id, connectorVisibility));
 
   if (!visible) return;
 

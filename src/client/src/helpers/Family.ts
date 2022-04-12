@@ -1,5 +1,5 @@
 import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
-import { LibItem, Node, Project } from "../models";
+import { LibItem, Node } from "../models";
 import { useReactFlow } from "react-flow-renderer";
 
 type Item = Node | LibItem;
@@ -8,9 +8,8 @@ export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;
 };
 
-export const IsDirectChild = (childId: string, parentId: string, project: Project) => {
-  const actualParent = GetParent(childId, project);
-  return actualParent?.id === parentId;
+export const IsDirectChild = (childParentId: string, parentId: string) => {
+  return childParentId === parentId;
 };
 
 export const IsParentOf = (parentId: string, childId: string) => {
@@ -20,12 +19,8 @@ export const IsParentOf = (parentId: string, childId: string) => {
   return edge && IsPartOfTerminal(edge.fromConnector);
 };
 
-export const GetParent = (nodeId: string, project: Project) => {
-  const edges = project?.edges;
-  const nodes = project?.nodes;
-
-  const parentEdge = edges?.find((e) => e.toNodeId === nodeId && IsPartOfTerminal(e.toConnector));
-  const parentNode = nodes?.find((n) => n.id === parentEdge?.fromNodeId);
+export const GetParentNode = (parentNodeId: string, nodes: Node[]) => {
+  const parentNode = nodes.find((n) => n.id === parentNodeId);
 
   return parentNode ?? null;
 };

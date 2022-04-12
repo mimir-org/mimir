@@ -34,8 +34,8 @@ const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
     if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
   });
 
-  UpdateSiblingIndexOnNodeDelete(node, project, dispatch);
-  dispatch(removeNode(node.id));
+  UpdateSiblingIndexOnNodeDelete(node?.id, project, dispatch);
+  dispatch(removeNode(node?.id));
 };
 
 const HandleEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {

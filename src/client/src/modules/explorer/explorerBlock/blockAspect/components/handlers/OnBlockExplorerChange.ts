@@ -2,7 +2,7 @@ import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../.
 import { removeSecondaryNode, setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
 import { IsDirectChild, IsFamily, IsParentOf } from "../../../../../../helpers/Family";
 import { Dispatch } from "redux";
-import { Node, Project } from "../../../../../../models";
+import { Node } from "../../../../../../models";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -11,16 +11,9 @@ import { Node, Project } from "../../../../../../models";
  * @param node
  * @param selectedNode
  * @param secondaryNode
- * @param project
  * @param dispatch
  */
-export const OnBlockExplorerChange = (
-  project: Project,
-  node: Node,
-  selectedNode: Node,
-  secondaryNode: Node,
-  dispatch: Dispatch
-) => {
+export const OnBlockExplorerChange = (node: Node, selectedNode: Node, secondaryNode: Node, dispatch: Dispatch) => {
   // Set selectNode
   if (!selectedNode) {
     dispatch(setActiveNode(node?.id, !node.selected));
@@ -38,7 +31,7 @@ export const OnBlockExplorerChange = (
 
   // Handling same Aspect
   if (selectedNode && IsFamily(node, selectedNode) && node !== selectedNode) {
-    validateSiblings(project, node, selectedNode, secondaryNode, dispatch);
+    validateSiblings(node, selectedNode, secondaryNode, dispatch);
     return;
   }
 
@@ -58,8 +51,8 @@ export const OnBlockExplorerChange = (
   if (node === secondaryNode) dispatch(removeSecondaryNode());
 };
 
-function validateSiblings(project: Project, node: Node, selected: Node, secondary: Node, dispatch: Dispatch) {
-  if (IsDirectChild(node?.id, selected?.id, project)) dispatch(setNodeVisibility(node, true));
-  if (!IsDirectChild(node?.id, selected?.id, project) && !IsParentOf(node?.id, selected?.id)) dispatch(setSecondaryNode(node));
-  if (!IsDirectChild(node?.id, selected?.id, project) && node === secondary) dispatch(removeSecondaryNode());
+function validateSiblings(node: Node, selected: Node, secondary: Node, dispatch: Dispatch) {
+  if (IsDirectChild(node?.parentNodeId, selected?.id)) dispatch(setNodeVisibility(node, true));
+  if (!IsDirectChild(node?.parentNodeId, selected?.id) && !IsParentOf(node?.id, selected?.id)) dispatch(setSecondaryNode(node));
+  if (!IsDirectChild(node?.parentNodeId, selected?.id) && node === secondary) dispatch(removeSecondaryNode());
 }

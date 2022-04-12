@@ -43,7 +43,7 @@ export const TreeProjectComponent = () => {
             nodes={nodes}
             indent={node.level}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node, project)}
+            isLeaf={!HasChildren(node.id, project)}
             isAncestorVisible={ancestorsVisible(node)}
             isVisible={isVisible(node)}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}

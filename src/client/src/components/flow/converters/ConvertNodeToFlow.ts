@@ -20,6 +20,7 @@ const ConvertNodeToFlow = (node: Node) => {
     draggable: true,
     selectable: true,
     connectable: true,
+    parentNode: node.parentNodeId,
   } as FlowNode;
 };
 

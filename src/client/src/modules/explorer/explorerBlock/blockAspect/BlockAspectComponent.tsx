@@ -44,7 +44,6 @@ export const BlockAspectComponent = ({
       onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
     />
     <BlockAspectElement
-      project={project}
       node={node}
       isExpanded={isExpanded}
       isLeaf={isLeaf}

@@ -25,18 +25,18 @@ export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, project: Project, di
  */
 export const UpdateSiblingIndexOnEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {
   ClearRDS(edge.toNode, dispatch);
-  HandleSiblingDeleted(edge.toNode, project, dispatch);
+  HandleSiblingDeleted(edge.toNodeId, project, dispatch);
 };
 
 /**
  * Updates the sibling index of nodes affected by a Node being deleted.
- * @param node Node to be deleted.
+ * @param nodeId Node to be deleted.
  * @param project Project node is part of.
  * @param dispatch Dispatch function for redux store.
  */
-export const UpdateSiblingIndexOnNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
-  HandleParentDeleted(node, project, dispatch);
-  HandleSiblingDeleted(node, project, dispatch);
+export const UpdateSiblingIndexOnNodeDelete = (nodeId: string, project: Project, dispatch: Dispatch) => {
+  HandleParentDeleted(nodeId, project, dispatch);
+  HandleSiblingDeleted(nodeId, project, dispatch);
 };
 
 /**
@@ -52,18 +52,18 @@ export const SetSiblingIndexOnNodeDrop = (node: Node, project: Project, parentId
   node.rds += siblings.length;
 };
 
-const HandleParentDeleted = (node: Node, project: Project, dispatch: Dispatch) => {
-  const children = GetChildren(node?.id, project).filter((n) => n.id !== node.id);
+const HandleParentDeleted = (nodeId: string, project: Project, dispatch: Dispatch) => {
+  const children = GetChildren(nodeId, project).filter((n) => n.id !== nodeId);
   if (!children || !children.length) return;
 
   children.forEach((child) => ClearRDS(child, dispatch));
 };
 
-const HandleSiblingDeleted = (node: Node, project: Project, dispatch: Dispatch) => {
-  const parent = FindParentEdge(node, project)?.fromNode;
+const HandleSiblingDeleted = (nodeId: string, project: Project, dispatch: Dispatch) => {
+  const parent = FindParentEdge(nodeId, project)?.fromNode;
   if (!parent) return;
 
-  const siblings = GetChildren(parent.id, project).filter((n) => n.id !== node.id);
+  const siblings = GetChildren(parent.id, project).filter((n) => n.id !== nodeId);
   if (!siblings || !siblings.length) return;
 
   siblings.forEach((sibling, i) => ResetRDS(sibling, i, dispatch));

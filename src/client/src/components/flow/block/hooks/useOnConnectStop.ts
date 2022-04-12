@@ -9,7 +9,7 @@ import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequ
 import { Size } from "../../../../compLibrary/size/Size";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
-import { GetParent } from "../../../../helpers/Family";
+import { GetParentNode } from "../../../../helpers/Family";
 
 /**
  * Hook that runs when a user drags a connection from a terminal and releases the mouse button in BlockView.
@@ -51,7 +51,7 @@ const useOnConnectStop = (
     return;
   }
 
-  if (!ValidateOffPageDrop(project, e.clientX, getViewport, sourceNode, primaryNode, secondaryNode, sourceConn)) return;
+  if (!ValidateOffPageDrop(project.nodes, e.clientX, getViewport, sourceNode, primaryNode, secondaryNode, sourceConn)) return;
 
   const position = { x: e.clientX, y: e.clientY };
   CreateRequiredOffPageNode(sourceNode, sourceConn, position, true, dispatch);
@@ -60,7 +60,7 @@ const useOnConnectStop = (
 
 //#region OffPage Functions
 function ValidateOffPageDrop(
-  project: Project,
+  nodes: Node[],
   clientX: number,
   getViewPort: GetViewport,
   sourceNode: Node,
@@ -70,7 +70,7 @@ function ValidateOffPageDrop(
 ) {
   const splitView = secondaryNode !== undefined;
   const isTarget = IsOutputTerminal(sourceConn) || IsOutputVisible(sourceConn);
-  const dropZone = CalculateDropZone(getViewPort, project, sourceNode, primaryNode, secondaryNode, isTarget);
+  const dropZone = CalculateDropZone(getViewPort, nodes, sourceNode, primaryNode, secondaryNode, isTarget);
 
   if (splitView) {
     const dropZoneWidth = Size.SPLITVIEW_DISTANCE - 70;
@@ -86,6 +86,7 @@ function ValidateOffPageDrop(
  * The dropzone for an OffPageNode depends on the canvas' zoom level and position. This function handles these calculations.
  * If the OffPageNode is a source, the dropzone is located to the left of the ParentNode, else the dropzone is to the right of the ParentNode.
  * @param getViewPort
+ * @param nodes
  * @param sourceNode
  * @param primaryNode
  * @param secondaryNode
@@ -94,7 +95,7 @@ function ValidateOffPageDrop(
  */
 function CalculateDropZone(
   getViewPort: GetViewport,
-  project: Project,
+  nodes: Node[],
   sourceNode: Node,
   primaryNode: Node,
   secondaryNode: Node,
@@ -103,7 +104,7 @@ function CalculateDropZone(
   const zoom = getViewPort().zoom;
   const x = getViewPort().x;
 
-  const parentNode = GetParent(sourceNode?.id, project);
+  const parentNode = GetParentNode(sourceNode?.parentNodeId, nodes);
   const parentPosX = parentNode?.positionBlockX;
 
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;

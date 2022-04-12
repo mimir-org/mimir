@@ -35,7 +35,7 @@ const useOnConnect = (params: Params) => {
   const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
 
   if (IsOffPage(source) && IsOffPage(target)) {
-    HandleOffPageConnect(params, source?.id, target?.id);
+    HandleOffPageConnect(params, source, target);
     return;
   }
 

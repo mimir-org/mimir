@@ -41,7 +41,7 @@ export const BlockProjectComponent = () => {
             secondaryNode={secondaryNode}
             indent={node.level}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node, project)}
+            isLeaf={!HasChildren(node.id, project)}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             dispatch={dispatch}
           />

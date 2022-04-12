@@ -30,6 +30,12 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     }
   }, [timer]);
 
+  const GetTerminal = useCallback((conn: Connector) => {
+    return GetTreeNodeTerminal(node, conn, dispatch, setIsHover, isHover);
+  }, []);
+
+  if (!node) return null;
+
   const mouseNodeLeave = () => {
     setTimer(true);
     setRenderTerminals(false);
@@ -47,12 +53,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     setIsHover(true);
     setRenderTerminals(false);
   };
-
-  const GetTerminal = useCallback((conn: Connector) => {
-    return GetTreeNodeTerminal(node, conn, dispatch, setIsHover, isHover);
-  }, []);
-
-  if (!node) return null;
 
   return (
     <TreeNodeBox

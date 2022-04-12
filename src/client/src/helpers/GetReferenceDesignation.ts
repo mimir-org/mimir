@@ -5,7 +5,7 @@ import { FindParentEdge } from "./ParentNode";
 
 const findParentNode = (currentNode: Node, project: Project) => {
   if (!currentNode || IsAspectNode(currentNode)) return null;
-  return FindParentEdge(currentNode, project)?.fromNode;
+  return FindParentEdge(currentNode.id, project)?.fromNode;
 };
 
 const GetReferenceDesignation = (node: Node, project: Project) => {

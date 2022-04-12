@@ -1,5 +1,5 @@
 import { IsAspectNode } from "../../../../../helpers/Aspects";
-import { GetMenuIcon } from "../helpers";
+import { GetMenuIcon } from "../helpers/GetMenuIcon";
 import { TerminalsButtonBox } from "./TerminalsMenuButton.styled";
 import { Connector, Node } from "../../../../../models";
 

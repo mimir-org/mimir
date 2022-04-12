@@ -55,6 +55,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,
     isOffPageTarget: isTarget,
+    parentNodeId: sourceNode.id,
   } as Node;
 
   //#region Connectors

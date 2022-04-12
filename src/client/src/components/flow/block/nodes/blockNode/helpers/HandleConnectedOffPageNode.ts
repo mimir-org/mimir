@@ -4,7 +4,7 @@ import { IsOffPage } from "../../../../../../helpers/Aspects";
 import { Edge, Node, Project } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsTransportConnection } from "../../../../helpers/Connectors";
-import { GetParent } from "../../../../../../helpers/Family";
+import { GetParentNode } from "../../../../../../helpers/Family";
 
 /**
  * Component to draw an OffPageNode that is connected.
@@ -23,12 +23,13 @@ export const HandleConnectedOffPageNode = (node: Node, project: Project, size: B
   project.edges.forEach((edge) => {
     if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, project, isTarget)) return;
+    if (!OnlyOneNodeVisible(edge, isTarget)) return;
 
     const nodeExists = HasConnectedOffPageNode(project.edges, edge, isTarget);
     if (nodeExists) return;
 
-    const nodeParent = GetParent(node?.id, project);
+    const nodeParent = GetParentNode(node.parentNodeId, project.nodes);
+
     const xPos = isTarget ? nodeParent?.positionBlockX : size.width;
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
     const position = { x: xPos, y: node.positionBlockY };
@@ -59,17 +60,16 @@ function IsValidTransport(edge: Edge, nodeId: string) {
  * Function to verify that only one node from a connection is displayed on the screen.
  * If both nodes are visible there is no need to draw a Connected OffPageNode.
  * @param edge
- * @param project
  * @param isTarget
  * @returns a boolean value.
  */
-function OnlyOneNodeVisible(edge: Edge, project: Project, isTarget: boolean) {
+function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 
-  const sourceNodeParent = GetParent(sourceNode?.id, project);
-  const targetNodeParent = GetParent(targetNode?.id, project);
-  const targetNodeVisible = sourceNodeParent?.id === targetNodeParent?.id;
+  const sourceNodeParentId = sourceNode?.parentNodeId;
+  const targetNodeParentId = targetNode?.parentNodeId;
+  const targetNodeVisible = sourceNodeParentId === targetNodeParentId;
 
   return !targetNodeVisible;
 }

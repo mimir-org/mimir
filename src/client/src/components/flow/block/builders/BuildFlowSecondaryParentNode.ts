@@ -38,6 +38,7 @@ const BuildFlowSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) =>
     selected: secondaryNode.selected,
     draggable: false,
     selectable: false,
+    parentNode: secondaryNode.parentNodeId,
   } as FlowNode;
 };
 

@@ -1,7 +1,6 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../../helpers/Aspects";
-import { GetParent } from "../../../../../helpers/Family";
-import { Edge, Project } from "../../../../../models";
+import { Edge, Project, Node } from "../../../../../models";
 import { removeEdge, removeNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import {
   GetOppositeTransportEdge,
@@ -15,17 +14,17 @@ import {
  * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected.
  * A Required OffPageNode is deleted along with its transport edge and partOf edge.
  * A Connected OffPageNode is handled by HandleConnectedOffPageNode
- * @param nodeToDeleteId
+ * @param nodeToDelete
  * @param project
  * @param dispatch
  */
-export const HandleOffPageNodeDelete = (nodeToDeleteId: string, project: Project, dispatch: Dispatch) => {
-  const parentNodeId = GetParent(nodeToDeleteId, project)?.id;
+export const HandleOffPageNodeDelete = (nodeToDelete: Node, project: Project, dispatch: Dispatch) => {
+  const parentNodeId = nodeToDelete.parentNodeId;
   if (!parentNodeId) return;
 
-  const transportEdge = GetTransportEdge(nodeToDeleteId, parentNodeId, project);
-  const partOfEdge = GetPartOfEdge(nodeToDeleteId, parentNodeId, project);
-  const parentConnectorId = GetParentConnector(transportEdge, nodeToDeleteId)?.id;
+  const transportEdge = GetTransportEdge(nodeToDelete.id, parentNodeId, project);
+  const partOfEdge = GetPartOfEdge(nodeToDelete.id, parentNodeId, project);
+  const parentConnectorId = GetParentConnector(transportEdge, nodeToDelete.id)?.id;
   const connectedEdge = GetConnectedEdge(parentConnectorId, project);
 
   if (transportEdge && !connectedEdge) dispatch(setOffPageStatus(parentNodeId, parentConnectorId, false));
@@ -50,8 +49,8 @@ export const HandleConnectedOffPageDelete = (project: Project, transportEdge: Ed
     ? oppositeTransportEdge.toNode
     : oppositeTransportEdge.fromNode;
 
-  const oppositeParent = GetParent(oppositeOffPageNode?.id, project);
-  const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode?.id, oppositeParent?.id, project);
+  const oppositeParentId = oppositeOffPageNode.parentNodeId;
+  const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode?.id, oppositeParentId, project);
 
   dispatch(removeEdge(referenceEdge.id));
   dispatch(removeEdge(transportEdge.id));

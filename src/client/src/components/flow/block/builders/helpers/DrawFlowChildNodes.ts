@@ -1,7 +1,7 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowChildNode } from "..";
 import { IsOffPage } from "../../../../../helpers/Aspects";
-import { IsFamily, GetParent } from "../../../../../helpers/Family";
+import { IsFamily } from "../../../../../helpers/Family";
 import { Edge, Node, Project } from "../../../../../models";
 import { IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, IsTransport } from "../../../helpers/Connectors";
 
@@ -36,9 +36,9 @@ function ValidateEdge(edge: Edge, selectedNode: Node) {
 }
 
 function ValidateOffPage(project: Project, offPageNode: Node, selectedNode: Node, secondaryNode: Node, flowNodes: FlowNode[]) {
-  const offPageParent = GetParent(offPageNode?.id, project);
+  const offPageParentId = offPageNode.parentNodeId;
 
-  if (!secondaryNode) return flowNodes?.some((elem) => elem?.id === offPageParent?.id);
+  if (!secondaryNode) return flowNodes?.some((elem) => elem?.id === offPageParentId);
   if (!IsFamily(selectedNode, secondaryNode)) return false;
 
   const inputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));

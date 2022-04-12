@@ -10,7 +10,7 @@ import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { GetSelectedBlockNode } from "../../../../../helpers/Selected";
-import { GetParent } from "../../../../../helpers/Family";
+import { GetParentNode } from "../../../../../helpers/Family";
 
 /**
  * Component for an OffPageNode in BlockView.
@@ -31,8 +31,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
 
   // The position of the OffPageNode is based on its grandparent => the large parentBlockNode
-  const offPageParent = GetParent(data?.id, project);
-  const parentBlockNode = GetParent(offPageParent?.id, project);
+  const offPageParent = GetParentNode(data.parentNodeId, project.nodes);
+  const offPageGrandParent = GetParentNode(offPageParent?.parentNodeId, project.nodes);
 
   const parentNodeTerminal = isTarget
     ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
@@ -40,10 +40,10 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
-  }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, secondaryNode]);
+    UpdateOffPagePosition(data, offPageGrandParent, offPageTerminal, size, dispatch);
+  }, [data?.positionBlockX, size, offPageGrandParent?.positionBlockX, secondaryNode]);
 
-  if (!data || !offPageParent || !parentBlockNode) return null;
+  if (!data || !offPageParent || !offPageGrandParent) return null;
 
   const iconColor = offPageTerminal?.color ?? Color.BLACK;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
