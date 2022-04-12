@@ -20,8 +20,6 @@ export const TextResources = {
   TERMINALS: "Terminals",
   PROJECT: "Project",
   VISUAL_FILTER: "Visual Filter",
-  LOGIN: "Log in",
-  LOGOUT: "Log out",
   TEMPLATES: "Templates",
   SUBPROJECTS: "Subprojects",
   LOCK_OBJECT: "Lock object(s)",
@@ -40,18 +38,17 @@ export const TextResources = {
   TRANSPORT: "Transport",
 
   // Log in
-  LOGIN_LABEL_EMAIL: "SSO e-mail",
-
-  // Top-menu
   LOGIN_HEADING: "Login",
+  LOGIN: "Log in",
+  LOGOUT: "Log out",
 
   // Toolbar
   TREEVIEW: "Tree view",
   BLOCKVIEW: "Block view",
   ELECTRO_ON: "Toggle electromode on",
   ELECTRO_OFF: "Toggle electromode off",
-  VISUALFILTER_OPEN: "Open visual filters",
-  VISUALFILTER_CLOSE: "Close visual filters",
+  VISUALFILTER_OPEN: "Open visual filter",
+  VISUALFILTER_CLOSE: "Close visual filter",
   FITSCREEN: "Fit to screen",
 
   // InspectorModule
@@ -94,7 +91,7 @@ export const TextResources = {
   ADMIN_LONG_DESCRIPTION: "Long Description",
   ADMIN_INTERFACE: "Interface",
   ADMIN_UPDATED_BY: "Updated by",
-  ADMIN_COLLABORATION_PARTNER: "Collaboration partner",
+  ADMIN_PARTNER: "Collaboration partner",
   ADMIN_UPDATED_DATE: "Last updated",
   ADMIN_CREATED_DATE: "Date created",
   ADMIN_LOCAL_DESCRIPTION: "Long Local Description",
