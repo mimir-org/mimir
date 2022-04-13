@@ -11,9 +11,11 @@ import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } 
  * @returns a filtered list of connectors sorted by type and name.
  */
 export const FilterBlockTerminals = (connectors: Connector[], selectedNode: Node, secondaryNode: Node) => {
-  return connectors
+  const filteredConnectors = connectors
     ?.filter((c) => !IsPartOfTerminal(c) && FilterTerminal(selectedNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
+  // console.log({ filteredConnectors });
+  return filteredConnectors;
 };
 
 function FilterTerminal(selectedNode: Node, secondary: Node, c: Connector) {
