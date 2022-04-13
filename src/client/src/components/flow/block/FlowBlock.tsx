@@ -92,6 +92,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
   const OnNodesChange = useCallback((changes: NodeChange[]) => {
     if (IsPositionChange(changes) && !ValidateNodePosition(changes as NodePositionChange[], project)) return;
+    console.log("CHANGE");
     setNodes((n) => applyNodeChanges(changes, n));
   }, []);
 
@@ -117,8 +118,9 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
+    console.log("BUILD");
     setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes?.length]);
+  }, [project?.nodes?.length, selectedNode?.width]);
 
   // Rebuild edges
   useEffect(() => {
