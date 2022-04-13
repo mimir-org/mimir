@@ -70,7 +70,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task Lock(LockAm lockAm)
         {
-            if (string.IsNullOrWhiteSpace(lockAm?.Id))
+            if(string.IsNullOrWhiteSpace(lockAm?.Id))
                 throw new ModelBuilderBadRequestException("LockAm Id can't be null.");
 
             var lockDms = new List<LockDm>();
@@ -79,7 +79,7 @@ namespace Mb.Services.Services
             switch (lockAm.Type)
             {
                 case EntityType.Attribute:
-                    lockDms.AddRange(_mapper.Map<List<LockDm>>(new List<LockAm> { lockAm }));
+                    lockDms.AddRange(_mapper.Map<List<LockDm>>(new List<LockAm>{lockAm}));
                     break;
                 case EntityType.Edge:
                     objectIdentity = await _edgeRepository.GetEdgeConnectedData(lockAm.Id);
