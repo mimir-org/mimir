@@ -79,7 +79,7 @@ namespace Mb.Services.Services
             switch (lockAm.Type)
             {
                 case EntityType.Attribute:
-                    lockDms.AddRange(_mapper.Map<List<LockDm>>(lockAm));
+                    lockDms.AddRange(_mapper.Map<List<LockDm>>(new List<LockAm>{lockAm}));
                     break;
                 case EntityType.Edge:
                     objectIdentity = await _edgeRepository.GetEdgeConnectedData(lockAm.Id);
@@ -92,7 +92,7 @@ namespace Mb.Services.Services
             }
 
             var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList(); 
-            lockDms = _mapper.Map<List<LockDm>>(lockAms);
+            lockDms.AddRange(_mapper.Map<List<LockDm>>(lockAms));
 
             using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
             {

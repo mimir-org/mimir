@@ -35,7 +35,7 @@ namespace Mb.Data.Repositories
         public async Task SendLockData(List<LockCm> lockCms, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettings);
-            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveLockAttributeData, workerStatus, data);
+            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
         }
     }
 }
