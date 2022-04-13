@@ -17,9 +17,9 @@ export const CREATING_PROJECT_SUCCESS_OR_ERROR = "CREATING_PROJECT_SUCCESS_OR_ER
 export const CREATING_SUB_PROJECT = "CREATING_SUB_PROJECT";
 export const CREATING_SUB_PROJECT_SUCCESS_OR_ERROR = "CREATING_SUB_PROJECT_SUCCESS_OR_ERROR";
 export const ADD_NODE = "ADD_NODE";
-export const REMOVE_NODE = "REMOVE_NODE";
+export const DELETE_NODE = "DELETE_NODE";
 export const ADD_EDGE = "ADD_EDGE";
-export const REMOVE_EDGE = "REMOVE_EDGE";
+export const DELETE_EDGE = "DELETE_EDGE";
 export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const UPDATE_BLOCK_SIZE = "UPDATE_BLOCK_SIZE";
@@ -30,7 +30,6 @@ export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
 export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
 export const SET_LOCATION_NODE_SIZE = "SET_LOCATION_NODE_SIZE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
-export const CHANGE_ALL_NODES = "CHANGE_ALL_NODES";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
 export const CHANGE_TRANSPORT_PROP_VALUE = "CHANGE_TRANSPORT_PROP_VALUE";
 export const CHANGE_INTERFACE_PROP_VALUE = "CHANGE_INTERFACE_PROP_VALUE";
@@ -114,8 +113,8 @@ export interface AddNodeAction {
   payload: Node;
 }
 
-export interface RemoveNodeAction {
-  type: typeof REMOVE_NODE;
+export interface DeleteNodeAction {
+  type: typeof DELETE_NODE;
   payload: string;
 }
 
@@ -124,8 +123,8 @@ export interface AddEdgeAction {
   payload: Edge;
 }
 
-export interface RemoveEdgeAction {
-  type: typeof REMOVE_EDGE;
+export interface DeleteEdgeAction {
+  type: typeof DELETE_EDGE;
   payload: string;
 }
 
@@ -186,11 +185,6 @@ export interface SaveProjectActionFinished {
 export interface ChangeSelectedProject {
   type: typeof CHANGE_SELECTED_PROJECT;
   payload: { projectId: string };
-}
-
-export interface ChangeAllNodes {
-  type: typeof CHANGE_ALL_NODES;
-  payload: { visible: boolean };
 }
 
 export interface ChangeNodePropValue {
@@ -428,9 +422,9 @@ export type ProjectActionTypes =
   | CreatingProjectAction
   | CreatingProjectActionFinished
   | AddNodeAction
-  | RemoveNodeAction
+  | DeleteNodeAction
   | AddEdgeAction
-  | RemoveEdgeAction
+  | DeleteEdgeAction
   | UpdatePositionAction
   | UpdateBlockSizeAction
   | SetNodeVisibility
@@ -443,7 +437,6 @@ export type ProjectActionTypes =
   | SaveProjectActionFinished
   | ChangeSelectedProject
   | UpdateBlockPositionAction
-  | ChangeAllNodes
   | ChangeNodePropValue
   | ChangeNodeAttributeValue
   | ChangeTransportPropValue

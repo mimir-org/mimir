@@ -56,7 +56,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={node.id !== secondaryNode?.id}
-        onNavigateUpClick={() => OnBlockParentClick(dispatch, node.parentNodeId)}
+        onNavigateUpClick={() => OnBlockParentClick(dispatch, node.id, project)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, node.id, project)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node.id, dispatch, project.edges)}
       />

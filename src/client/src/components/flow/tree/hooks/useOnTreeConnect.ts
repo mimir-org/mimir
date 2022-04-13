@@ -1,7 +1,7 @@
 import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { IsPartOfTerminal, IsPartOfConnection, IsTransport } from "../../helpers/Connectors";
-import { createEdge, removeEdge } from "../../../../redux/store/project/actions";
+import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
 import { Node, Project } from "../../../../models";
 import { ConvertDataToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
@@ -53,7 +53,7 @@ function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch
   const existingPartOfEdge = project.edges?.find(
     (edge) => edge.toNodeId === targetNode.id && IsPartOfTerminal(edge?.fromConnector)
   );
-  if (existingPartOfEdge) dispatch(removeEdge(existingPartOfEdge.id));
+  if (existingPartOfEdge) dispatch(deleteEdge(existingPartOfEdge.id));
 }
 
 export default useOnTreeConnect;

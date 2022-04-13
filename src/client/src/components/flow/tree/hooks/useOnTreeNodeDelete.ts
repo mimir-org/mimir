@@ -1,7 +1,7 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
-import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
+import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
 import { GetMimirNodeByFlowNodeId } from "../../helpers/GetMimirDataByFlowId";
@@ -10,6 +10,7 @@ import { GetMimirNodeByFlowNodeId } from "../../helpers/GetMimirDataByFlowId";
  * Hook that runs when a FlowNode is deleted from Mimir in TreeView.
  * If a node is deleted the connected edges are also deleted.
  * @param flowNodesToDelete
+ 
  * @param inspectorRef
  * @param project
  * @param dispatch
@@ -30,7 +31,8 @@ const useOnTreeNodeDelete = (
     DeleteRelatedEdges(mimirNode.id, project, dispatch);
 
     hasDeleted = true;
-    dispatch(removeNode(mimirNode.id));
+
+    dispatch(deleteNode(mimirNode.id));
   });
 
   if (hasDeleted) CloseInspector(inspectorRef, dispatch);
@@ -45,7 +47,7 @@ const useOnTreeNodeDelete = (
  */
 function DeleteRelatedEdges(nodeId: string, project: Project, dispatch: Dispatch) {
   project.edges.forEach((edge) => {
-    if (edge.fromNodeId === nodeId || edge.toNodeId === nodeId) dispatch(removeEdge(edge.id));
+    if (edge.fromNodeId === nodeId || edge.toNodeId === nodeId) dispatch(deleteEdge(edge.id));
   });
 }
 

@@ -1,7 +1,8 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../../helpers/Aspects";
+import { GetParentNode } from "../../../../../helpers/Family";
 import { Edge, Project, Node } from "../../../../../models";
-import { removeEdge, removeNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
+import { deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import {
   GetOppositeTransportEdge,
   GetConnectedEdge,
@@ -19,7 +20,7 @@ import {
  * @param dispatch
  */
 export const HandleOffPageNodeDelete = (nodeToDelete: Node, project: Project, dispatch: Dispatch) => {
-  const parentNodeId = nodeToDelete.parentNodeId;
+  const parentNodeId = GetParentNode(nodeToDelete?.id, project)?.id;
   if (!parentNodeId) return;
 
   const transportEdge = GetTransportEdge(nodeToDelete.id, parentNodeId, project);
@@ -29,7 +30,7 @@ export const HandleOffPageNodeDelete = (nodeToDelete: Node, project: Project, di
 
   if (transportEdge && !connectedEdge) dispatch(setOffPageStatus(parentNodeId, parentConnectorId, false));
   if (connectedEdge) HandleConnectedOffPageDelete(project, transportEdge, connectedEdge, dispatch);
-  if (partOfEdge) dispatch(removeEdge(partOfEdge.id));
+  if (partOfEdge) dispatch(deleteEdge(partOfEdge.id));
 };
 
 /**
@@ -49,13 +50,13 @@ export const HandleConnectedOffPageDelete = (project: Project, transportEdge: Ed
     ? oppositeTransportEdge.toNode
     : oppositeTransportEdge.fromNode;
 
-  const oppositeParentId = oppositeOffPageNode.parentNodeId;
+  const oppositeParentId = GetParentNode(oppositeOffPageNode?.id, project)?.id;
   const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode?.id, oppositeParentId, project);
 
-  dispatch(removeEdge(referenceEdge.id));
-  dispatch(removeEdge(transportEdge.id));
+  dispatch(deleteEdge(referenceEdge.id));
+  dispatch(deleteEdge(transportEdge.id));
 
-  if (oppositeOffPageNode) dispatch(removeNode(oppositeOffPageNode.id));
-  if (oppositeTransportEdge) dispatch(removeEdge(oppositeTransportEdge.id));
-  if (oppositePartOfEdge) dispatch(removeEdge(oppositePartOfEdge.id));
+  if (oppositeOffPageNode) dispatch(deleteNode(oppositeOffPageNode.id));
+  if (oppositeTransportEdge) dispatch(deleteEdge(oppositeTransportEdge.id));
+  if (oppositePartOfEdge) dispatch(deleteEdge(oppositePartOfEdge.id));
 };

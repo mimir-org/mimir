@@ -2,7 +2,7 @@ import { addEdge } from "react-flow-renderer";
 import { GetParentNode } from "../../../../helpers/Family";
 import { Project, Node } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
-import { createEdge, removeEdge, removeNode, setOffPageStatus } from "../../../../redux/store/project/actions";
+import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { ConvertDataToEdge } from "../../converters";
 import { CreateId } from "../../helpers";
 import { IsTransport } from "../../helpers/Connectors";
@@ -22,8 +22,8 @@ import { IsOffPageEdge } from "./IsOffPageEdge";
 const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
   const { project, connection, lib, dispatch, setEdges } = params;
   const id = CreateId();
-  const sourceParent = GetParentNode(sourceNode?.parentNodeId, project.nodes);
-  const targetParent = GetParentNode(targetNode?.parentNodeId, project.nodes);
+  const sourceParent = GetParentNode(sourceNode?.id, project);
+  const targetParent = GetParentNode(targetNode?.id, project);
 
   const sourceTerminal = GetSourceTerminal(project, sourceParent?.id, sourceNode?.id);
   const targetTerminal = GetTargetTerminal(project, targetParent?.id, targetNode?.id);
@@ -34,12 +34,12 @@ const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node
   dispatch(createEdge(edge));
 
   project.edges.forEach((e) => {
-    if (IsOffPageEdge(e)) dispatch(removeEdge(e.id));
+    if (IsOffPageEdge(e)) dispatch(deleteEdge(e.id));
   });
 
   const isRequired = false;
-  dispatch(removeNode(sourceNode?.id));
-  dispatch(removeNode(targetNode?.id));
+  dispatch(deleteNode(sourceNode?.id));
+  dispatch(deleteNode(targetNode?.id));
   dispatch(setOffPageStatus(sourceParent.id, sourceTerminal.id, isRequired));
   dispatch(setOffPageStatus(targetParent.id, targetTerminal.id, isRequired));
 

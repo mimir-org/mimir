@@ -23,12 +23,12 @@ export const HandleConnectedOffPageNode = (node: Node, project: Project, size: B
   project.edges.forEach((edge) => {
     if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, isTarget)) return;
+    if (!OnlyOneNodeVisible(edge, isTarget, project)) return;
 
     const nodeExists = HasConnectedOffPageNode(project.edges, edge, isTarget);
     if (nodeExists) return;
 
-    const nodeParent = GetParentNode(node.parentNodeId, project.nodes);
+    const nodeParent = GetParentNode(node.id, project);
 
     const xPos = isTarget ? nodeParent?.positionBlockX : size.width;
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
@@ -61,14 +61,15 @@ function IsValidTransport(edge: Edge, nodeId: string) {
  * If both nodes are visible there is no need to draw a Connected OffPageNode.
  * @param edge
  * @param isTarget
+ * @param project
  * @returns a boolean value.
  */
-function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
+function OnlyOneNodeVisible(edge: Edge, isTarget: boolean, project: Project) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 
-  const sourceNodeParentId = sourceNode?.parentNodeId;
-  const targetNodeParentId = targetNode?.parentNodeId;
+  const sourceNodeParentId = GetParentNode(sourceNode?.id, project);
+  const targetNodeParentId = GetParentNode(targetNode?.id, project);
   const targetNodeVisible = sourceNodeParentId === targetNodeParentId;
 
   return !targetNodeVisible;

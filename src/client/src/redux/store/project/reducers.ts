@@ -127,13 +127,13 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     case Types.ADD_NODE:
       return { ...state, project: { ...project, nodes: [...nodes, action.payload] } };
 
-    case Types.REMOVE_NODE:
+    case Types.DELETE_NODE:
       return { ...state, project: { ...project, nodes: nodes.filter((n) => n.id !== action.payload) } };
 
     case Types.ADD_EDGE:
       return { ...state, project: { ...project, edges: [...edges, action.payload] } };
 
-    case Types.REMOVE_EDGE:
+    case Types.DELETE_EDGE:
       return { ...state, project: { ...project, edges: edges.filter((e) => e?.id !== action.payload) } };
 
     case Types.UPDATE_POSITION: {
@@ -260,9 +260,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         projectList: projects.map((p) => (p.id === projectId ? { ...p, selected: true } : { ...p, selected: false })),
       };
     }
-
-    case Types.CHANGE_ALL_NODES:
-      return { ...state, project: { ...project, nodes: nodes.map((x) => state && { ...x, hidden: true }) } };
 
     case Types.CHANGE_NODE_PROP_VALUE: {
       const { nodeId, propName, propValue } = action.payload;

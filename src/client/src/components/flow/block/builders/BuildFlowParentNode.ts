@@ -30,7 +30,6 @@ const BuildFlowParentNode = (node: Node) => {
     selected: node.selected,
     draggable: false,
     selectable: false,
-    parentNode: node.parentNodeId,
   } as FlowNode;
 };
 

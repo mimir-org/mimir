@@ -1,4 +1,5 @@
 import { Size } from "../../../../../compLibrary/size/Size";
+import { GetParentNode } from "../../../../../helpers/Family";
 import { Node, Project } from "../../../../../models";
 import { Position } from "../../../../../models/project";
 
@@ -75,8 +76,8 @@ function HandleTargetOffPagePos(parentNode: Node, offPageNode: Node) {
  * @returns a Position object.
  */
 function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, project: Project) {
-  const offPageParentId = offPageNode?.parentNodeId;
-  const parentBlock = project.nodes.find((n) => n.parentNodeId === offPageParentId);
+  const offPageParentId = GetParentNode(offPageNode?.id, project)?.id;
+  const parentBlock = GetParentNode(offPageParentId, project);
 
   if (parentBlock?.id !== secondaryNode?.id) return null;
 

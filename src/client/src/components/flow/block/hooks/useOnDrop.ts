@@ -58,7 +58,7 @@ function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryN
   const treePosition = SetTreeNodePosition(parentNode, project);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const targetNode = ConvertDataToNode(data, parentNode, treePosition, blockPosition, project.id, icons, user);
+  const targetNode = ConvertDataToNode(data, treePosition, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));

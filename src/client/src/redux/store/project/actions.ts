@@ -50,16 +50,16 @@ export function addNode(node: Node): Types.ProjectActionTypes {
   return { type: Types.ADD_NODE, payload: node };
 }
 
-export function removeNode(nodeId: string): Types.ProjectActionTypes {
-  return { type: Types.REMOVE_NODE, payload: nodeId };
+export function deleteNode(nodeId: string): Types.ProjectActionTypes {
+  return { type: Types.DELETE_NODE, payload: nodeId };
 }
 
 export function createEdge(edge: Edge): Types.ProjectActionTypes {
   return { type: Types.ADD_EDGE, payload: edge };
 }
 
-export function removeEdge(edgeId: string): Types.ProjectActionTypes {
-  return { type: Types.REMOVE_EDGE, payload: edgeId };
+export function deleteEdge(edgeId: string): Types.ProjectActionTypes {
+  return { type: Types.DELETE_EDGE, payload: edgeId };
 }
 
 export function updatePosition(nodeId: string, x: number, y: number): Types.ProjectActionTypes {
@@ -100,10 +100,6 @@ export function setActiveEdge(edgeId: string, isActive: boolean): Types.ProjectA
 
 export function changeSelectedProject(projectId: string): Types.ProjectActionTypes {
   return { type: Types.CHANGE_SELECTED_PROJECT, payload: { projectId } };
-}
-
-export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
-  return { type: Types.CHANGE_ALL_NODES, payload: { visible } };
 }
 
 export function changeNodeValue(nodeId: string, propName: string, propValue: any): Types.ChangeNodePropValue {

@@ -3,7 +3,7 @@ import { Edge, Node, Project } from "../../../../../models";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
-import { removeEdge, removeNode } from "../../../../../redux/store/project/actions";
+import { deleteEdge, deleteNode } from "../../../../../redux/store/project/actions";
 import { changeInspectorHeight } from "../../../redux/inspectorSlice";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
@@ -30,15 +30,15 @@ const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
   if (IsAspectNode(node)) return;
 
   project.edges.forEach((e) => {
-    if (e.fromNodeId === node.id) dispatch(removeEdge(e.id));
-    if (e.toNodeId === node.id) dispatch(removeEdge(e.id));
+    if (e.fromNodeId === node.id) dispatch(deleteEdge(e.id));
+    if (e.toNodeId === node.id) dispatch(deleteEdge(e.id));
   });
 
   UpdateSiblingIndexOnNodeDelete(node?.id, project, dispatch);
-  dispatch(removeNode(node?.id));
+  dispatch(deleteNode(node?.id));
 };
 
 const HandleEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {
   if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
-  dispatch(removeEdge(edge.id));
+  dispatch(deleteEdge(edge.id));
 };

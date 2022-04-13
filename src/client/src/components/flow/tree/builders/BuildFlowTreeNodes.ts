@@ -10,6 +10,7 @@ export const BuildFlowTreeNodes = (project: Project) => {
   project.nodes.forEach((node) => {
     let treeNode = null;
     if (!IsOffPage(node)) treeNode = ConvertNodeToFlow(node);
+
     if (treeNode) flowNodes.push(treeNode);
   });
 

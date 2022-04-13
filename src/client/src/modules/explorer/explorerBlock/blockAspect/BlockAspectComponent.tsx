@@ -50,6 +50,7 @@ export const BlockAspectComponent = ({
       onToggleExpanded={onToggleExpanded}
       selectedNode={selectedNode}
       secondaryNode={secondaryNode}
+      project={project}
       dispatch={dispatch}
       indent={indent}
     />

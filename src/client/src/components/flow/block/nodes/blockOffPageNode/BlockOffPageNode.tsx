@@ -31,12 +31,12 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
 
   // The position of the OffPageNode is based on its grandparent => the large parentBlockNode
-  const offPageParent = GetParentNode(data.parentNodeId, project.nodes);
-  const offPageGrandParent = GetParentNode(offPageParent?.parentNodeId, project.nodes);
+  const offPageParent = GetParentNode(data.id, project);
+  const offPageGrandParent = GetParentNode(offPageParent?.id, project);
 
   const parentNodeTerminal = isTarget
-    ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
-    : offPageParent?.connectors.find((c) => c.id === edge?.toConnectorId);
+    ? offPageParent?.connectors.find((c: Connector) => c.id === edge?.fromConnectorId)
+    : offPageParent?.connectors.find((c: Connector) => c.id === edge?.toConnectorId);
 
   // Update position relative to ParentBlockNode
   useEffect(() => {

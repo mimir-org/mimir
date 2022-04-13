@@ -16,7 +16,6 @@ import { Position } from "../../../models/project";
  */
 const ConvertDataToNode = (
   data: LibItem,
-  parentNode: Node,
   treePosition: Position,
   blockPosition: Position,
   projectId: string,
@@ -54,7 +53,6 @@ const ConvertDataToNode = (
     updatedBy: user?.name,
     libraryTypeId: data.id,
     kind: NODE_KIND,
-    parentNodeId: parentNode.id,
   } as Node;
 
   if (node.connectors) {

@@ -6,8 +6,8 @@ import Config from "../Config";
 import {
   addNode,
   createEdge,
-  removeEdge,
-  removeNode,
+  deleteEdge,
+  deleteNode,
   setIsLockedEdge,
   setIsLockedInterfaceAttribute,
   setIsLockedNode,
@@ -106,7 +106,7 @@ export class WebSocket {
 
     if (!this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
 
-    if (eventType === WorkerStatus.Delete) this._dispatch(removeNode(node.id));
+    if (eventType === WorkerStatus.Delete) this._dispatch(deleteNode(node.id));
     if (eventType === WorkerStatus.Update) this._dispatch(updateNode(node));
   };
 
@@ -119,7 +119,7 @@ export class WebSocket {
     }
 
     if (!this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
-    if (eventType === WorkerStatus.Delete) this._dispatch(removeEdge(edge.id));
+    if (eventType === WorkerStatus.Delete) this._dispatch(deleteEdge(edge.id));
     if (eventType === WorkerStatus.Update) this._dispatch(updateEdge(edge));
   };
 

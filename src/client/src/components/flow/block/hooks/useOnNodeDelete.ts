@@ -1,7 +1,7 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
-import { removeEdge, removeNode } from "../../../../redux/store/project/actions";
+import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
 import { GetMimirNodeByFlowNodeId } from "../../helpers/GetMimirDataByFlowId";
 import { IsAspectNode, IsOffPage } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../../handlers";
@@ -39,7 +39,7 @@ const useOnNodeDelete = (
       : HandleRelatedEdges(nodeToDelete.id, project, dispatch);
 
     hasDeleted = true;
-    dispatch(removeNode(flowNode.id));
+    dispatch(deleteNode(flowNode.id));
   });
 
   if (hasDeleted) CloseInspector(inspectorRef, dispatch);
@@ -54,7 +54,7 @@ const useOnNodeDelete = (
  */
 function DeleteRelatedEdges(nodeId: string, project: Project, dispatch: Dispatch) {
   project.edges.forEach((edge) => {
-    if (edge.fromNodeId === nodeId || edge.toNodeId === nodeId) dispatch(removeEdge(edge.id));
+    if (edge.fromNodeId === nodeId || edge.toNodeId === nodeId) dispatch(deleteEdge(edge.id));
   });
 }
 
@@ -66,7 +66,7 @@ function HandleRelatedEdges(nodeToRemoveId: string, project: Project, dispatch: 
     HandleOffPageEdgeDelete(edge, project, dispatch);
 
     const node = project.nodes.find((n) => n.id === edge.toNodeId);
-    if (!node?.isLocked) dispatch(removeEdge(edge.id));
+    if (!node?.isLocked) dispatch(deleteEdge(edge.id));
   });
 }
 

@@ -99,7 +99,6 @@ const FlowTree = ({ inspectorRef }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
-
     setNodes(BuildFlowTreeNodes(project));
   }, [project?.nodes?.length]);
 
@@ -135,7 +134,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
         edgeTypes={edgeTypes}
         defaultZoom={0.7}
         minZoom={0.1}
-        defaultPosition={[800, Size.BLOCK_MARGIN_Y]}
+        defaultPosition={[window.innerWidth / 3, Size.BLOCK_MARGIN_Y]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
         onSelectionChange={(e) => OnSelectionChange(e)}

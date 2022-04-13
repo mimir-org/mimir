@@ -1,6 +1,6 @@
 import { useReactFlow } from "react-flow-renderer";
 import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
-import { AspectColorType, Node } from "../../../../../models";
+import { AspectColorType, Node, Project } from "../../../../../models";
 import { GetAspectColor } from "../../../../../helpers";
 import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
 import { OnBlockExplorerChange } from "./handlers/OnBlockExplorerChange";
@@ -14,6 +14,7 @@ interface Props {
   node: Node;
   selectedNode: Node;
   secondaryNode: Node;
+  project: Project;
   dispatch: Dispatch;
   isLeaf: boolean;
   isExpanded: boolean;
@@ -30,6 +31,7 @@ export const BlockAspectElement = ({
   node,
   selectedNode,
   secondaryNode,
+  project,
   dispatch,
   isLeaf,
   isExpanded,
@@ -45,7 +47,7 @@ export const BlockAspectElement = ({
         isChecked={IsNodeInBlockExplorerChecked(flowNodes, node)}
         isMiniCheckbox={IsMiniCheckBox(node?.id, secondaryNode?.id, selectedNode)}
         isAspectNode={IsAspectNode(node)}
-        onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, dispatch)}
+        onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, project, dispatch)}
         label={node.label}
         icon={GetAspectIcon(node)}
         isBlockView
