@@ -65,7 +65,6 @@ export function HandleNoSelect(
 export const HandleNodeSelect = (element: FlowElement, dispatch: Dispatch, isBlock = false) => {
   dispatch(setActiveEdge(null, false));
   isBlock ? dispatch(setActiveBlockNode(element.id)) : dispatch(setActiveNode(element.id, true));
-  OpenInspector(dispatch);
 };
 
 export function HandleEdgeSelect(element: FlowElement, dispatch: Dispatch, isBlock = false) {
