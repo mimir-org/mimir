@@ -70,7 +70,7 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task Lock(LockAm lockAm)
         {
-            if(string.IsNullOrWhiteSpace(lockAm?.Id))
+            if (string.IsNullOrWhiteSpace(lockAm?.Id))
                 throw new ModelBuilderBadRequestException("LockAm Id can't be null.");
 
             var lockDms = new List<LockDm>();
@@ -79,7 +79,7 @@ namespace Mb.Services.Services
             switch (lockAm.Type)
             {
                 case EntityType.Attribute:
-                    lockDms.AddRange(_mapper.Map<List<LockDm>>(new List<LockAm>{lockAm}));
+                    lockDms.AddRange(_mapper.Map<List<LockDm>>(new List<LockAm> { lockAm }));
                     break;
                 case EntityType.Edge:
                     objectIdentity = await _edgeRepository.GetEdgeConnectedData(lockAm.Id);
@@ -91,7 +91,7 @@ namespace Mb.Services.Services
                     throw new ModelBuilderBadRequestException("EntityType not found.");
             }
 
-            var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList(); 
+            var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList();
             lockDms.AddRange(_mapper.Map<List<LockDm>>(lockAms));
 
             using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
