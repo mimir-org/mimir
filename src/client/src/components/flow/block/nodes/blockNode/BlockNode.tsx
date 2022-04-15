@@ -47,7 +47,7 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   // Update node size based on active terminals
   useEffect(() => {
-    setSize(SetChildNodeSize(terminals.in, terminals.out, isElectro));
+    setSize(SetChildNodeSize(terminals, isElectro));
   }, [isElectro, terminals]);
 
   if (!node) return null;

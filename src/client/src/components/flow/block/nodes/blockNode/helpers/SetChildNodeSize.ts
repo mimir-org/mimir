@@ -1,14 +1,13 @@
 import { Size } from "../../../../../../compLibrary/size/Size";
-import { Connector } from "../../../../../../models";
 import { IsInputTerminal, IsConnectorVisible, IsOutputTerminal } from "../../../../helpers/Connectors";
+import { Terminals } from "../../blockParentNode/BlockParentNode";
 
 /**
  * Component to resize a child BlockNode based on the amount of active terminals.
- * @param inputTerminals
- * @param outputTerminals
+ * @param terminals
  * @param electro
  */
-export const SetChildNodeSize = (inputTerminals: Connector[], outputTerminals: Connector[], electro: boolean) => {
+export const SetChildNodeSize = (terminals: Terminals, electro: boolean) => {
   const maximum = 5;
   const increaseY = 25;
   const increaseX = 30;
@@ -18,11 +17,11 @@ export const SetChildNodeSize = (inputTerminals: Connector[], outputTerminals: C
   let height = Size.NODE_HEIGHT;
   let width = Size.NODE_WIDTH;
 
-  inputTerminals?.forEach((t) => {
+  terminals.in.forEach((t) => {
     IsConnectorVisible(t) && IsInputTerminal(t) && inTerminals++;
   });
 
-  outputTerminals?.forEach((t) => {
+  terminals.out.forEach((t) => {
     IsConnectorVisible(t) && IsOutputTerminal(t) && outTerminals++;
   });
 
