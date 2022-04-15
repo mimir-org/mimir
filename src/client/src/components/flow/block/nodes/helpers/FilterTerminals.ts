@@ -1,6 +1,15 @@
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { Connector, Node } from "../../../../../models";
-import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../helpers/Connectors";
+import { Terminals } from "../blockParentNode/BlockParentNode";
+import {
+  IsBidirectionalTerminal,
+  IsInputTerminal,
+  IsLocationTerminal,
+  IsOutputTerminal,
+  IsPartOfTerminal,
+  IsProductTerminal,
+  IsTransport,
+} from "../../../helpers/Connectors";
 
 /**
  * Component to filter the terminals displayed on the nodes in BlockView.
@@ -8,12 +17,17 @@ import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } 
  * @param connectors
  * @param selectedNode
  * @param secondaryNode
- * @returns a filtered list of connectors sorted by type and name.
+ * @returns two filtered list of connectors sorted by type, name and input/output.
  */
-export const FilterBlockTerminals = (connectors: Connector[], selectedNode: Node, secondaryNode: Node) => {
-  return connectors
+export const FilterTerminals = (connectors: Connector[], selectedNode: Node, secondaryNode: Node) => {
+  const sortedConnectors = connectors
     ?.filter((c) => !IsPartOfTerminal(c) && FilterTerminal(selectedNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
+
+  const inputs = sortedConnectors.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
+  const outputs = sortedConnectors.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
+
+  return { in: inputs, out: outputs } as Terminals;
 };
 
 function FilterTerminal(selectedNode: Node, secondary: Node, c: Connector) {

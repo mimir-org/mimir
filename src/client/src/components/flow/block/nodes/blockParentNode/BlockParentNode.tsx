@@ -2,17 +2,18 @@
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps, useReactFlow } from "react-flow-renderer";
-import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers/Connectors";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
-import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
+import { FilterTerminals } from "../helpers/FilterTerminals";
 import { Connector } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
 import { SetZoomCenterLevel } from "../../../../../helpers";
+
+export type Terminals = { in: Connector[]; out: Connector[] };
 
 /**
  * Component for a ParentNode in BlockView.
@@ -23,7 +24,8 @@ import { SetZoomCenterLevel } from "../../../../../helpers";
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const { setViewport, setCenter } = useReactFlow();
-  const [terminals, setTerminals] = useState<Connector[]>([]);
+  const initialTerminals = { in: [], out: [] } as Terminals;
+  const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
@@ -39,28 +41,25 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node?.connectors, selectedNode, secondaryNode));
+    setTerminals(FilterTerminals(node?.connectors, selectedNode, secondaryNode));
   }, [selectedNode, secondaryNode, node?.connectors]);
 
   if (!node) return null;
 
-  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
-  const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
-
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={node} terminals={inputTerminals} isInput />
+      <HandleComponent node={node} terminals={terminals.in} isInput />
       <BlockParentComponent
         node={node}
         splitView={secondaryNode !== null}
-        inputTerminals={inputTerminals}
-        outputTerminals={outputTerminals}
+        inputTerminals={terminals.in}
+        outputTerminals={terminals.out}
         isNavigationActive={node.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, node.id, project)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, node.id, project)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node.id, dispatch, project.edges)}
       />
-      <HandleComponent node={node} terminals={outputTerminals} />
+      <HandleComponent node={node} terminals={terminals.out} />
     </BoxWrapper>
   );
 };
