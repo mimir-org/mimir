@@ -52,8 +52,8 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
 
   if (!node) return null;
 
-  const inputTerminals = node.connectors.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
-  const outputTerminals = node.connectors.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
+  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
+  const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
 
   return (
     <BoxWrapper isElectro={isElectro}>

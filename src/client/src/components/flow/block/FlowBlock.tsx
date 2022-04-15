@@ -162,7 +162,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        multiSelectionKeyCode={"Control"}
         connectionLineComponent={BlockConnectionLine}
         onSelectionChange={(e) => OnSelectionChange(e)}
         deleteKeyCode={"Delete"}
