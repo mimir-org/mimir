@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
@@ -10,6 +10,7 @@ import { Size } from "../../../compLibrary/size/Size";
 import { HandleBlockNodeSelection, CloseInspector } from "./handlers";
 import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
 import { IsPositionChange } from "./helpers/IsPositionChange";
+import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
 import ReactFlow, {
   Node as FlowNode,
   Edge as FlowEdge,
@@ -43,6 +44,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
@@ -50,7 +52,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const selectedNode = project?.nodes?.find((n) => n.selected);
-  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
@@ -112,6 +113,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
+      setIsFetching(true);
       setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
       setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
       setHasRendered(true);
@@ -122,24 +124,34 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes?.length, project?.edges?.length]);
+  }, [project?.nodes?.length]);
 
   // Rebuild edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
-  }, [project?.edges, animatedEdge, project?.edges?.length, project?.nodes?.length]);
+  }, [project?.edges?.length, animatedEdge]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
   }, [inspectorRef, dispatch]);
 
+  // Show transport edges by default
   useEffect(() => {
+    setIsFetching(true);
     SetInitialEdgeVisibility(project?.edges, dispatch);
+
+    setTimeout(() => {
+      setIsFetching(false);
+    }, 1000);
   }, []);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>
+      <SpinnerWrapper fetching={isFetching}>
+        <Spinner />
+      </SpinnerWrapper>
+
       <ReactFlow
         onInit={OnInit}
         nodes={nodes}
@@ -172,4 +184,4 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   );
 };
 
-export default memo(FlowBlock);
+export default FlowBlock;

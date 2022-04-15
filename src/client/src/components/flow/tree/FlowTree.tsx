@@ -3,13 +3,13 @@ import * as selectors from "./helpers/selectors";
 import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
+import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../compLibrary/size/Size";
-import { IsPartOfTerminal } from "../helpers/Connectors";
-import { GetTreeEdgeTypes, GetTreeNodeTypes } from "./helpers/";
+import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
+import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
 import ReactFlow, {
   Background,
   Edge as FlowEdge,
@@ -41,6 +41,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   const [nodes, setNodes] = useNodesState([]);
   const [edges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
@@ -90,6 +91,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
+      setIsFetching(true);
       setNodes(BuildFlowTreeNodes(project));
       setEdges(BuildFlowTreeEdges(project, animatedEdge));
       setHasRendered(true);
@@ -110,14 +112,20 @@ export const FlowTree = ({ inspectorRef }: Props) => {
 
   // Show only partOf edges by default
   useEffect(() => {
-    if (!project) return;
-    project.edges?.forEach((e) => {
-      if (!IsPartOfTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e.id, true));
-    });
+    setIsFetching(true);
+    SetInitialEdgeVisibility(project?.edges, dispatch);
+
+    setTimeout(() => {
+      setIsFetching(false);
+    }, 1000);
   }, []);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>
+      <SpinnerWrapper fetching={isFetching}>
+        <Spinner />
+      </SpinnerWrapper>
+
       <ReactFlow
         onInit={OnInit}
         nodes={nodes}
