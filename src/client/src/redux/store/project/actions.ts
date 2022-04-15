@@ -78,8 +78,8 @@ export function setNodeVisibility(node: Node, isParent: boolean): Types.ProjectA
   return { type: Types.SET_NODE_VISIBILITY, payload: { node, isParent } };
 }
 
-export function setEdgeVisibility(edge: Edge, hidden: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_EDGE_VISIBILITY, payload: { edge, hidden } };
+export function setEdgeVisibility(edgeId: string, hidden: boolean): Types.ProjectActionTypes {
+  return { type: Types.SET_EDGE_VISIBILITY, payload: { edgeId: edgeId, hidden } };
 }
 
 export function setLocationNodeSize(nodeId: string, key: string, value: number): Types.ProjectActionTypes {

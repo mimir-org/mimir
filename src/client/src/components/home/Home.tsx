@@ -10,7 +10,6 @@ import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
-import { TypeEditorComponent } from "../../typeEditor";
 import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
 import { HeaderComponent } from "../header/HeaderComponent";
 import { ExplorerTreeModule, ExplorerBlockModule } from "../../modules/explorer/";
@@ -85,7 +84,7 @@ export const Home = ({ dispatch }: Props) => {
           <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule nodes={project?.nodes} dispatch={dispatch} />
-          <TypeEditorComponent />
+          {/* <TypeEditorComponent /> */}
           {isFilterOpen && <VisualFilterComponent />}
         </>
       )}

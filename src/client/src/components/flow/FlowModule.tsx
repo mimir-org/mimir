@@ -1,9 +1,9 @@
-import { FlowTree } from "./tree";
-import { FlowBlock } from "./block";
+import { memo } from "react";
+import { FlowTree } from "./tree/FlowTree";
+import { FlowBlock } from "./block/";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { TypeEditorComponent } from "../../typeEditor";
 import { FlowModuleContainer } from "./FlowModule.styled";
-import { memo } from "react";
 
 interface Props {
   inspectorRef: React.MutableRefObject<HTMLDivElement>;

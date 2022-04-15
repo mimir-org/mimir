@@ -2,11 +2,11 @@
 import * as selectors from "./helpers/selectors";
 import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
-import { memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
-import { HandleNodeSelection } from "../handlers";
+import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../compLibrary/size/Size";
 import { IsPartOfTerminal } from "../helpers/Connectors";
 import { GetTreeEdgeTypes, GetTreeNodeTypes } from "./helpers/";
@@ -34,7 +34,7 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = ({ inspectorRef }: Props) => {
+export const FlowTree = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
@@ -76,7 +76,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
-    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch);
+    HandleTreeNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
   const OnNodesChange = useCallback((changes: NodeChange[]) => {
     setNodes((n) => applyNodeChanges(changes, n));
@@ -112,7 +112,7 @@ const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     project.edges?.forEach((e) => {
-      if (!IsPartOfTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e, true));
+      if (!IsPartOfTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e.id, true));
     });
   }, []);
 
@@ -147,4 +147,4 @@ const FlowTree = ({ inspectorRef }: Props) => {
   );
 };
 
-export default memo(FlowTree);
+export default FlowTree;

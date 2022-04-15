@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
-import { CloseInspector, HandleNodeSelection } from "../handlers";
+import { HandleBlockNodeSelection, CloseInspector } from "./handlers";
 import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
 import { IsPositionChange } from "./helpers/IsPositionChange";
 import ReactFlow, {
@@ -50,6 +50,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
@@ -90,11 +91,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
-  const OnNodesChange = useCallback((changes: NodeChange[]) => {
-    if (IsPositionChange(changes) && !ValidateNodePosition(changes as NodePositionChange[], project)) return;
-    console.log("CHANGE");
-    setNodes((n) => applyNodeChanges(changes, n));
-  }, []);
+  const OnNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      if (IsPositionChange(changes) && !ValidateNodePosition(changes as NodePositionChange[], project)) return;
+      setNodes((n) => applyNodeChanges(changes, n));
+    },
+    [project?.nodes?.length]
+  );
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
     setEdges((e) => applyEdgeChanges(changes, e));
@@ -104,7 +107,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
-    HandleNodeSelection(selectedItems, project, inspectorRef, dispatch, true);
+    HandleBlockNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -118,22 +121,21 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
-    console.log("BUILD");
     setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes?.length, selectedNode?.width]);
+  }, [project?.nodes?.length, project?.edges?.length]);
 
   // Rebuild edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
-  }, [project?.edges, animatedEdge]);
+  }, [project?.edges, animatedEdge, project?.edges?.length, project?.nodes?.length]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
   }, [inspectorRef, dispatch]);
 
   useEffect(() => {
-    SetInitialEdgeVisibility(project, dispatch);
+    SetInitialEdgeVisibility(project?.edges, dispatch);
   }, []);
 
   return (

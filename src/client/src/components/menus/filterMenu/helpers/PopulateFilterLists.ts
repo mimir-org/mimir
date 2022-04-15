@@ -21,8 +21,8 @@ export const PopulateFilterLists = (
     const sourceConn = edge.fromConnector;
 
     if (IsTransport(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
-    if (IsLocationTerminal(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
-    if (IsProductTerminal(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
-    if (IsPartOfTerminal(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);
+    else if (IsLocationTerminal(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
+    else if (IsProductTerminal(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
+    else if (IsPartOfTerminal(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);
   });
 };

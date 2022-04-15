@@ -19,18 +19,11 @@ export const IsParentOf = (parentId: string, childId: string) => {
   return edge && IsPartOfTerminal(edge.fromConnector);
 };
 
-// export const GetParentNode = (parentNodeId: string, nodes: Node[]) => {
-//   const parentNode = nodes.find((n) => n.id === parentNodeId);
-
-//   return parentNode ?? null;
-// };
-
 export const GetParentNode = (childNodeId: string, project: Project) => {
   const edges = project?.edges;
   const nodes = project?.nodes;
 
   const parentEdge = edges?.find((e) => e.toNodeId === childNodeId && IsPartOfTerminal(e.toConnector));
-  const parentNode = nodes?.find((n) => n.id === parentEdge?.fromNodeId);
 
-  return parentNode ?? null;
+  return nodes?.find((n) => n.id === parentEdge?.fromNodeId);
 };

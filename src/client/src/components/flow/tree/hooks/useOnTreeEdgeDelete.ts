@@ -2,9 +2,9 @@ import { Edge as FlowEdge } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { deleteEdge } from "../../../../redux/store/project/actions";
-import { CloseInspector } from "../../handlers";
 import { GetMimirEdgeByFlowEdgeId } from "../../helpers/GetMimirDataByFlowId";
 import { IsAspectNode } from "../../../../helpers/Aspects";
+import { CloseInspector } from "../handlers";
 
 /**
  * Hook that runs when an FlowEdge is deleted from Mimir in TreeView.

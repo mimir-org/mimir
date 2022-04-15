@@ -13,7 +13,7 @@ export const OnTerminalTypeChange = (
   edges?.forEach((edge) => {
     if (IsTransport(edge.fromConnector)) {
       if (edge.fromConnector.terminalCategoryId === terminalCategoryId && edge.fromConnector.terminalTypeId === terminalTypeId)
-        dispatch(setEdgeVisibility(edge, isChecked));
+        dispatch(setEdgeVisibility(edge.id, isChecked));
     }
   });
 };

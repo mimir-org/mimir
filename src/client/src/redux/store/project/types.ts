@@ -149,7 +149,7 @@ export interface SetNodeVisibility {
 
 export interface SetEdgeVisibility {
   type: typeof SET_EDGE_VISIBILITY;
-  payload: { edge: Edge; hidden: boolean };
+  payload: { edgeId: string; hidden: boolean };
 }
 
 export interface SetLocationNodeSize {

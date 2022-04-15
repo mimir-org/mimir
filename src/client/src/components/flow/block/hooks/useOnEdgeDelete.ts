@@ -4,8 +4,8 @@ import { Project } from "../../../../models";
 import { deleteEdge } from "../../../../redux/store/project/actions";
 import { GetMimirEdgeByFlowEdgeId } from "../../helpers/GetMimirDataByFlowId";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { CloseInspector } from "../../handlers";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
+import { CloseInspector } from "../handlers";
 
 /**
  * Hook that runs when an edge is deleted from Mimir in BlockView.

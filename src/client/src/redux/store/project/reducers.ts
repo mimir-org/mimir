@@ -161,8 +161,8 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_EDGE_VISIBILITY: {
-      const { edge, hidden } = action.payload;
-      return { ...state, project: { ...project, edges: edges.map((e) => (e.id === edge.id ? { ...e, hidden } : e)) } };
+      const { edgeId, hidden } = action.payload;
+      return { ...state, project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, hidden } : e)) } };
     }
 
     case Types.SET_LOCATION_NODE_SIZE: {
@@ -244,7 +244,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === blockId ? { ...n, isBlockSelected: true } : { ...n, isBlockSelected: false })),
+          nodes: nodes.map((n) => (n.id === blockId ? { ...n, blockSelected: true } : { ...n, blockSelected: false })),
           edges,
         },
       };

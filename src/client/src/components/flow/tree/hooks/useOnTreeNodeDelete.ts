@@ -3,8 +3,8 @@ import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { CloseInspector } from "../../handlers";
 import { GetMimirNodeByFlowNodeId } from "../../helpers/GetMimirDataByFlowId";
+import { CloseInspector } from "../handlers";
 
 /**
  * Hook that runs when a FlowNode is deleted from Mimir in TreeView.
