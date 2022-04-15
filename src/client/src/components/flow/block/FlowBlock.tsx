@@ -117,6 +117,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
       setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
       setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
       setHasRendered(true);
+      setIsFetching(false);
     }
   }, [project]);
 
@@ -130,20 +131,19 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
-  }, [project?.edges?.length, animatedEdge]);
+  }, [project?.edges, animatedEdge]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
   }, [inspectorRef, dispatch]);
 
-  // Show transport edges by default
+  // Show transport edges by default, timeout is added due to loading of OffPage nodes
   useEffect(() => {
     setIsFetching(true);
-    SetInitialEdgeVisibility(project?.edges, dispatch);
-
     setTimeout(() => {
+      SetInitialEdgeVisibility(project?.edges, dispatch);
       setIsFetching(false);
-    }, 1000);
+    }, 400);
   }, []);
 
   return (

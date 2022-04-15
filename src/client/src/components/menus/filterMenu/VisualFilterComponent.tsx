@@ -5,7 +5,7 @@ import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } fro
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
-import { GetMimirElements } from "./helpers/GetFilterElements";
+import { ConvertFlowElements } from "./helpers/GetFilterElements";
 import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
 
 /**
@@ -18,7 +18,7 @@ export const VisualFilterComponent = () => {
   const edgeAnimation = useAppSelector(animatedEdgeSelector);
   const flowNodes = useReactFlow().getNodes();
   const flowEdges = useReactFlow().getEdges();
-  const { mimirNodes, mimirEdges } = GetMimirElements(flowNodes, flowEdges);
+  const { mimirNodes, mimirEdges } = ConvertFlowElements(flowNodes, flowEdges);
 
   const transportItems: Connector[] = [];
   const relationItems: Connector[] = [];

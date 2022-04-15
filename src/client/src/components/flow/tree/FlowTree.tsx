@@ -95,6 +95,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
       setNodes(BuildFlowTreeNodes(project));
       setEdges(BuildFlowTreeEdges(project, animatedEdge));
       setHasRendered(true);
+      setIsFetching(false);
     }
   }, [project]);
 
@@ -114,10 +115,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     setIsFetching(true);
     SetInitialEdgeVisibility(project?.edges, dispatch);
-
-    setTimeout(() => {
-      setIsFetching(false);
-    }, 1000);
+    setIsFetching(false);
   }, []);
 
   return (
