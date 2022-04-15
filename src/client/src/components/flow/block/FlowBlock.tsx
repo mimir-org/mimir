@@ -8,8 +8,6 @@ import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
 import { HandleBlockNodeSelection, CloseInspector } from "./handlers";
-import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
-import { IsPositionChange } from "./helpers/IsPositionChange";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
 import ReactFlow, {
   Node as FlowNode,
@@ -20,11 +18,8 @@ import ReactFlow, {
   useReactFlow,
   ReactFlowInstance,
   OnSelectionChangeParams,
-  applyNodeChanges,
-  applyEdgeChanges,
   NodeChange,
   EdgeChange,
-  NodePositionChange,
 } from "react-flow-renderer";
 
 interface Props {
@@ -94,14 +89,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      if (IsPositionChange(changes) && !ValidateNodePosition(changes as NodePositionChange[], project)) return;
-      setNodes((n) => applyNodeChanges(changes, n));
+      return hooks.useOnNodesChange(project, changes, setNodes);
     },
     [project?.nodes?.length]
   );
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
-    setEdges((e) => applyEdgeChanges(changes, e));
+    return hooks.useOnEdgesChange(changes, setEdges);
   }, []);
 
   const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
