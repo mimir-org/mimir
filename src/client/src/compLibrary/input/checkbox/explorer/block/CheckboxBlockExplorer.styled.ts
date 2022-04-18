@@ -1,12 +1,10 @@
 import styled from "styled-components";
-import { Color } from "../../../colors/Color";
-import { FontSize } from "../../../font";
+import { Color } from "../../../../colors/Color";
+import { FontSize } from "../../../../font";
 
 interface CheckboxWrapperProps {
   color: string;
   miniCheckBox: boolean;
-  isBlockView: boolean;
-  isAspectNode: boolean;
 }
 
 export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`

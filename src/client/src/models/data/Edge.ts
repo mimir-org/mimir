@@ -48,4 +48,5 @@ export interface Edge {
   // Only for client
   selected: boolean;
   hidden: boolean;
+  blockHidden?: boolean;
 }

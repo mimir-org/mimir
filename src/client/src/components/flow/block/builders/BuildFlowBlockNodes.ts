@@ -17,16 +17,16 @@ const BuildFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode:
   if (!project) return [];
 
   const flowNodes: FlowNode[] = [];
-  const splitView = secondaryNode !== undefined;
+  const splitView = secondaryNode !== undefined && secondaryNode !== null;
 
   const parentBlockNode = BuildFlowParentNode(primaryNode);
-  if (!parentBlockNode) return;
+  if (!parentBlockNode) return flowNodes;
 
   flowNodes.push(parentBlockNode);
 
   if (splitView) {
     const parentSecondaryBlock = BuildFlowSecondaryParentNode(primaryNode, secondaryNode);
-    if (!parentSecondaryBlock) return;
+    if (!parentSecondaryBlock) return flowNodes;
 
     flowNodes.push(parentSecondaryBlock);
     DrawFlowSecondaryChildren(project, primaryNode, secondaryNode, flowNodes);

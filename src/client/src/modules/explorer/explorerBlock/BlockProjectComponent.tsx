@@ -7,6 +7,7 @@ import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
+import { useReactFlow } from "react-flow-renderer";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.
@@ -14,6 +15,7 @@ import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElem
  */
 export const BlockProjectComponent = () => {
   const dispatch = useAppDispatch();
+  const { setViewport, setCenter } = useReactFlow();
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const project = useAppSelector(projectSelector);
   const username = useAppSelector(usernameSelector);
@@ -44,6 +46,8 @@ export const BlockProjectComponent = () => {
             isLeaf={!HasChildren(node.id, project)}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             dispatch={dispatch}
+            setViewport={setViewport}
+            setCenter={setCenter}
           />
         );
       })}

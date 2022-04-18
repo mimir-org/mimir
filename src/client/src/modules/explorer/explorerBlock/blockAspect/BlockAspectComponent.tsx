@@ -5,6 +5,7 @@ import { Node, Project } from "../../../../models";
 import { BlockAspectElement } from "./components/BlockAspectElement";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { TextResources } from "../../../../assets/text/TextResources";
+import { SetCenter, SetViewport } from "react-flow-renderer";
 
 interface Props {
   project: Project;
@@ -17,6 +18,8 @@ interface Props {
   isExpanded: boolean;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
+  setViewport: SetViewport;
+  setCenter: SetCenter;
 }
 
 /**
@@ -35,6 +38,8 @@ export const BlockAspectComponent = ({
   isLeaf,
   dispatch,
   onToggleExpanded,
+  setViewport,
+  setCenter,
 }: Props) => (
   <AspectContainer node={node}>
     <LockComponent
@@ -50,9 +55,10 @@ export const BlockAspectComponent = ({
       onToggleExpanded={onToggleExpanded}
       selectedNode={selectedNode}
       secondaryNode={secondaryNode}
-      project={project}
       dispatch={dispatch}
       indent={indent}
+      setViewport={setViewport}
+      setCenter={setCenter}
     />
   </AspectContainer>
 );

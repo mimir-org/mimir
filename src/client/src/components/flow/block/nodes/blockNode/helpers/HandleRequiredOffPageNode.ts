@@ -29,10 +29,11 @@ export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: Block
 };
 
 function HasRequiredOffPageNode(edges: Edge[], connector: Connector) {
-  const existingEdge =
-    IsInputTerminal(connector) || IsInputVisible(connector)
-      ? edges.find((edge) => IsOffPage(edge.fromNode) && edge.toConnector?.id === connector.id)
-      : edges.find((edge) => IsOffPage(edge.toNode) && edge.fromConnector?.id === connector.id);
+  const isInput = IsInputTerminal(connector) || IsInputVisible(connector);
+
+  const existingEdge = isInput
+    ? edges.find((edge) => IsOffPage(edge.fromNode) && edge.toConnector?.id === connector.id)
+    : edges.find((edge) => IsOffPage(edge.toNode) && edge.fromConnector?.id === connector.id);
 
   return existingEdge !== undefined;
 }

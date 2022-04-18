@@ -16,7 +16,6 @@ import { GetParentNode } from "../../../../../../helpers/Family";
  * @param size
  * @param dispatch
  */
-
 export const HandleConnectedOffPageNode = (node: Node, project: Project, size: BlockNodeSize, dispatch: Dispatch) => {
   if (!project || !node) return;
 
@@ -48,12 +47,11 @@ function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolea
 }
 
 function IsValidTransport(edge: Edge, nodeId: string) {
-  return (
-    IsTransportConnection(edge.fromConnector, edge.toConnector) &&
-    (nodeId === edge.fromNodeId || nodeId === edge.toNodeId) &&
-    !IsOffPage(edge.toNode) &&
-    !IsOffPage(edge.fromNode)
-  );
+  const isTransport = IsTransportConnection(edge.fromConnector, edge.toConnector);
+  const isNotOffPageTransport = !IsOffPage(edge.toNode) && !IsOffPage(edge.fromNode);
+  const nodeHasEdge = nodeId === edge.fromNodeId || nodeId === edge.toNodeId;
+
+  return isTransport && nodeHasEdge && isNotOffPageTransport;
 }
 
 /**

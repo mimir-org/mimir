@@ -1,6 +1,6 @@
+import { useReactFlow } from "react-flow-renderer";
 import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 import { LibItem, Node, Project } from "../models";
-import { useReactFlow } from "react-flow-renderer";
 
 type Item = Node | LibItem;
 
@@ -8,8 +8,10 @@ export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;
 };
 
-export const IsDirectChild = (childId: string, parentId: string, project: Project) => {
-  return GetParentNode(childId, project)?.id === parentId;
+export const IsDirectChild = (child: Node, parent: Node) => {
+  const isFamily = IsFamily(child, parent);
+  const isDirectChild = parent.level === child.level - 1;
+  return isFamily && isDirectChild;
 };
 
 export const IsParentOf = (parentId: string, childId: string) => {

@@ -170,21 +170,35 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       return { ...state, project: { ...project, nodes: nodes.map((x) => (x.id === nodeId ? { ...x, [key]: value } : x)) } };
     }
 
-    case Types.SET_NODE_VISIBILITY: {
-      const { node, isParent } = action.payload;
-      const hidden = !node.hidden;
-
-      const isRelated = (edge: Edge) => {
-        return IsFamily(node, edge.fromNode) || IsFamily(node, edge.toNode) || edge.fromNodeId === node.id;
+    case Types.SET_BLOCK_EDGE_VISIBILITY: {
+      const { edgeId, blockHidden: hidden } = action.payload;
+      return {
+        ...state,
+        project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, blockHidden: hidden } : e)) },
       };
+    }
+
+    case Types.SET_NODE_VISIBILITY: {
+      const { node } = action.payload;
+      if (!node) return;
+
+      const hidden = node.hidden === undefined ? true : !node.hidden;
+
+      let isParent = false;
+      const parentEdge = edges?.find((x) => x.fromNodeId === node.id);
+      if (parentEdge) isParent = true;
 
       if (IsAspectNode(node)) {
+        const isRelated = (e: Edge) => {
+          return IsFamily(node, e.fromNode) || IsFamily(node, e.toNode) || e.fromNodeId === node.id;
+        };
+
         return {
           ...state,
           project: {
             ...project,
             nodes: nodes.map((n) => (IsFamily(node, n) ? { ...n, hidden } : n)),
-            edges: edges.map((e) => (isRelated(e) ? { ...e, hidden: hidden } : e)),
+            edges: edges.map((e) => (isRelated(e) ? { ...e, hidden } : e)),
           },
         };
       }
@@ -200,7 +214,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           project: {
             ...project,
             nodes: nodes.map((n) => (elements.includes(n) ? { ...n, hidden } : n)),
-            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, hidden: hidden } : e)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, hidden } : e)),
           },
         };
       }
@@ -210,7 +224,41 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...project,
           nodes: nodes.map((n) => (n.id === node.id ? { ...n, hidden } : n)),
-          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, hidden: hidden } : e)),
+          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, hidden } : e)),
+        },
+      };
+    }
+
+    case Types.SET_BLOCK_NODE_VISIBILITY: {
+      const { node, blockHidden } = action.payload;
+      if (!node) return;
+
+      let isParent = false;
+      const parentEdge = edges?.find((x) => x.fromNodeId === node.id);
+      if (parentEdge) isParent = true;
+
+      if (isParent) {
+        const elements: (Node | Edge)[] = [];
+        elements.push(node);
+
+        TraverseTree(edges, nodes, node, elements);
+
+        return {
+          ...state,
+          project: {
+            ...project,
+            nodes: nodes.map((n) => (elements.includes(n) ? { ...n, blockHidden } : n)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, blockHidden } : e)),
+          },
+        };
+      }
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.id === node.id ? { ...n, blockHidden } : n)),
+          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, blockHidden } : e)),
         },
       };
     }

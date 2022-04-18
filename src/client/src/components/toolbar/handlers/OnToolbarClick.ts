@@ -6,10 +6,10 @@ import { SetCenter, SetViewport } from "react-flow-renderer";
 import { SetZoomCenterLevel } from "../../../helpers";
 import { Node } from "../../../models";
 import { ViewType, VIEW_TYPE } from "../../../models/project";
-import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
+import { setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 
 export const OnElectroClick = (dispatch: Dispatch) => {
   dispatch(toggleElectroView());
@@ -31,7 +31,7 @@ export const OnResetZoomClick = (isTreeView: boolean, setViewport: SetViewport, 
 export const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch: Dispatch) => {
   if (view === VIEW_TYPE.BLOCKVIEW && !ValidateBlockViewClick(numberOfSelectedElements, dispatch)) return;
 
-  dispatch(removeSecondaryNode());
+  dispatch(setSecondaryNode(null));
   dispatch(changeFlowView(view));
 };
 

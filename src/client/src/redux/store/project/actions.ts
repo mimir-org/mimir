@@ -74,12 +74,20 @@ export function updateBlockSize(nodeId: string, size: BlockNodeSize): Types.Proj
   return { type: Types.UPDATE_BLOCK_SIZE, payload: { nodeId, size } };
 }
 
-export function setNodeVisibility(node: Node, isParent: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_NODE_VISIBILITY, payload: { node, isParent } };
+export function setNodeVisibility(node: Node): Types.ProjectActionTypes {
+  return { type: Types.SET_NODE_VISIBILITY, payload: { node } };
+}
+
+export function setBlockNodeVisibility(node: Node, blockHidden: boolean): Types.ProjectActionTypes {
+  return { type: Types.SET_BLOCK_NODE_VISIBILITY, payload: { node, blockHidden } };
 }
 
 export function setEdgeVisibility(edgeId: string, hidden: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_EDGE_VISIBILITY, payload: { edgeId: edgeId, hidden } };
+  return { type: Types.SET_EDGE_VISIBILITY, payload: { edgeId, hidden } };
+}
+
+export function setBlockEdgeVisibility(edgeId: string, blockHidden: boolean): Types.ProjectActionTypes {
+  return { type: Types.SET_BLOCK_EDGE_VISIBILITY, payload: { edgeId, blockHidden } };
 }
 
 export function setLocationNodeSize(nodeId: string, key: string, value: number): Types.ProjectActionTypes {

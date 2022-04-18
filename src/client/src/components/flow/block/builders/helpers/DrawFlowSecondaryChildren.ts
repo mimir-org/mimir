@@ -18,7 +18,7 @@ const DrawFlowSecondaryChildren = (project: Project, primaryNode: Node, secondar
     const isChild = edge.fromNodeId === secondaryNode.id && IsFamily(secondaryNode, edge.toNode);
     if (!isChild) return;
 
-    const targetNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n?.id, secondaryNode?.id, project));
+    const targetNode = nodes.find((n) => n.id === edge.toNodeId && IsDirectChild(n, secondaryNode));
     if (!targetNode) return;
 
     const childNode = BuildFlowSecondaryChildNode(primaryNode, secondaryNode, targetNode);

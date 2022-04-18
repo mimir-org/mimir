@@ -1,25 +1,26 @@
-import { useReactFlow } from "react-flow-renderer";
 import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
-import { AspectColorType, Node, Project } from "../../../../../models";
+import { AspectColorType, Node } from "../../../../../models";
 import { GetAspectColor } from "../../../../../helpers";
-import { CheckboxExplorer } from "../../../../../compLibrary/input/checkbox/explorer/CheckboxExplorer";
+import { CheckboxBlockExplorer } from "../../../../../compLibrary/input/checkbox/explorer/block/CheckboxBlockExplorer";
 import { OnBlockExplorerChange } from "./handlers/OnBlockExplorerChange";
-import { IsNodeInBlockExplorerChecked, IsMiniCheckBox } from "./helpers";
+import { IsMiniCheckBox } from "./helpers/IsMiniCheckBox";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";
+import { SetCenter, SetViewport } from "react-flow-renderer";
 
 interface Props {
   node: Node;
   selectedNode: Node;
   secondaryNode: Node;
-  project: Project;
   dispatch: Dispatch;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
   indent?: number;
+  setViewport: SetViewport;
+  setCenter: SetCenter;
 }
 
 /**
@@ -31,28 +32,24 @@ export const BlockAspectElement = ({
   node,
   selectedNode,
   secondaryNode,
-  project,
   dispatch,
   isLeaf,
   isExpanded,
   onToggleExpanded,
   indent,
-}: Props) => {
-  const flowNodes = useReactFlow().getNodes();
-
-  return (
-    <AspectElementWrapper indent={GetIndentLevel(indent)}>
-      <CheckboxExplorer
-        color={GetAspectColor(node, AspectColorType.Selected)}
-        isChecked={IsNodeInBlockExplorerChecked(flowNodes, node)}
-        isMiniCheckbox={IsMiniCheckBox(node?.id, secondaryNode?.id, selectedNode)}
-        isAspectNode={IsAspectNode(node)}
-        onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, project, dispatch)}
-        label={node.label}
-        icon={GetAspectIcon(node)}
-        isBlockView
-      />
-      {!isLeaf && <AspectExpandButton onClick={onToggleExpanded} isExpanded={isExpanded} />}
-    </AspectElementWrapper>
-  );
-};
+  setViewport,
+  setCenter,
+}: Props) => (
+  <AspectElementWrapper indent={GetIndentLevel(indent)}>
+    <CheckboxBlockExplorer
+      color={GetAspectColor(node, AspectColorType.Selected)}
+      isChecked={node.selected || node.id === secondaryNode?.id}
+      isMiniCheckbox={IsMiniCheckBox(node, secondaryNode?.id, selectedNode)}
+      isAspectNode={IsAspectNode(node)}
+      onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, dispatch, setViewport, setCenter)}
+      label={node.label}
+      icon={GetAspectIcon(node)}
+    />
+    {!isLeaf && <AspectExpandButton onClick={onToggleExpanded} isExpanded={isExpanded} />}
+  </AspectElementWrapper>
+);

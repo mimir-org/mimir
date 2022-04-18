@@ -34,7 +34,7 @@ const BuildFlowSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) =>
     type: type,
     data: secondaryNode,
     position: position,
-    hidden: secondaryNode.hidden,
+    hidden: secondaryNode.blockHidden,
     selected: secondaryNode.selected,
     draggable: false,
     selectable: false,

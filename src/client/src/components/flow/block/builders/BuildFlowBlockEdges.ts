@@ -15,7 +15,7 @@ import { BuildFlowBlockEdge } from "./BuildFlowBlockEdge";
  * @returns all validated FlowEdges.
  */
 const BuildFlowBlockEdges = (project: Project, secondaryNode: Node, flowNodes: FlowNode[], animatedEdge: boolean) => {
-  if (!project) return;
+  if (!project) return [];
 
   const mimirNodes = project.nodes;
   const mimirEdges = project.edges;

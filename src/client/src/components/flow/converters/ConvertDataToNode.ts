@@ -53,6 +53,8 @@ const ConvertDataToNode = (
     updatedBy: user?.name,
     libraryTypeId: data.id,
     kind: NODE_KIND,
+    hidden: false,
+    blockHidden: false,
   } as Node;
 
   if (node.connectors) {

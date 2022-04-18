@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
-import { NodeProps, useReactFlow } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
-import { SetZoomCenterLevel } from "../../../../../helpers";
 
 export type Terminals = { in: Connector[]; out: Connector[] };
 
@@ -23,7 +22,6 @@ export type Terminals = { in: Connector[]; out: Connector[] };
  */
 const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const { setViewport, setCenter } = useReactFlow();
   const initialTerminals = { in: [], out: [] } as Terminals;
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
   const project = useAppSelector(selectors.projectSelector);
@@ -31,10 +29,6 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const isElectro = useAppSelector(selectors.electroSelector);
   const node = project?.nodes?.find((x) => x.id === data.id);
   const selectedNode = project?.nodes.find((n) => n.selected);
-
-  useEffect(() => {
-    SetZoomCenterLevel(setViewport, setCenter, secondaryNode !== null);
-  }, [secondaryNode]);
 
   useEffect(() => {
     InitParentSize(node, dispatch);

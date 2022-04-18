@@ -28,7 +28,7 @@ const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: No
     type: type,
     data: childNode,
     position: position,
-    hidden: childNode.hidden,
+    hidden: childNode.blockHidden,
     selected: childNode.selected,
     draggable: true,
     selectable: true,

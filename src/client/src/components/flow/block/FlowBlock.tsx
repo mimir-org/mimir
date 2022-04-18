@@ -47,6 +47,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
@@ -72,7 +73,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
-    return hooks.useOnDragStop(_event, activeNode, dispatch);
+    return hooks.useOnDragStop(activeNode, dispatch);
   };
 
   const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
@@ -87,12 +88,9 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
-  const OnNodesChange = useCallback(
-    (changes: NodeChange[]) => {
-      return hooks.useOnNodesChange(project, changes, setNodes);
-    },
-    [project?.nodes?.length]
-  );
+  const OnNodesChange = useCallback((changes: NodeChange[]) => {
+    return hooks.useOnNodesChange(project, selectedNode, changes, setNodes);
+  }, []);
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
     return hooks.useOnEdgesChange(changes, setEdges);
@@ -101,8 +99,12 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
   const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
 
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
-    HandleBlockNodeSelection(selectedItems, project, inspectorRef, dispatch);
+  const OnSelectionChange = useCallback(
+    (selectedItems: OnSelectionChangeParams) => {
+      HandleBlockNodeSelection(selectedItems, project, selectedNode, inspectorRef, dispatch);
+    },
+    [selectedBlockNode]
+  );
 
   // Build initial elements from Project
   useEffect(() => {
@@ -115,13 +117,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     }
   }, [project]);
 
-  // Rebuild nodes
+  // Rerender nodes
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes?.length]);
+  }, [project?.nodes, secondaryNode]);
 
-  // Rebuild edges
+  // Rerender edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
@@ -136,6 +138,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     setIsFetching(true);
     setTimeout(() => {
       SetInitialEdgeVisibility(project?.edges, dispatch);
+      // SetInitialNodeVisibility(project?.nodes, dispatch);
       setIsFetching(false);
     }, 400);
   }, []);

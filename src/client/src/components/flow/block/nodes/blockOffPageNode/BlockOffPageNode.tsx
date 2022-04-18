@@ -9,7 +9,6 @@ import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector } from "../../../../../models";
 import { Color } from "../../../../../compLibrary/colors/Color";
-import { GetSelectedBlockNode } from "../../../../../helpers/Selected";
 import { GetParentNode } from "../../../../../helpers/Family";
 
 /**
@@ -52,7 +51,7 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
 
   return (
-    <OffPageBox id={`BlockOffPageNode-${data.id}`} selected={data === GetSelectedBlockNode()} color={iconColor}>
+    <OffPageBox id={`BlockOffPageNode-${data.id}`} selected={data.blockSelected} color={iconColor}>
       <HandleComponent node={data} terminals={inputTerminals} offPage />
       <OffPageIcon style={{ fill: iconColor }} className="icon" />
       <HandleComponent node={data} terminals={outputTerminals} offPage />

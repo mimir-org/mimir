@@ -2,7 +2,7 @@ import { MutableRefObject } from "react";
 import { Node as FlowNode, Edge as FlowEdge, OnSelectionChangeParams } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
-import { Project } from "../../../../models";
+import { Project, Node } from "../../../../models";
 import { MODULE_TYPE } from "../../../../models/project";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers/SetPanelHeight";
 import { changeInspectorHeight, changeInspectorTab } from "../../../../modules/inspector/redux/inspectorSlice";
@@ -19,6 +19,7 @@ import { setActiveBlockNode, setActiveEdge } from "../../../../redux/store/proje
 export const HandleBlockNodeSelection = (
   selectedItems: OnSelectionChangeParams,
   project: Project,
+  selectedNode: Node,
   inspectorRef: MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
@@ -26,14 +27,14 @@ export const HandleBlockNodeSelection = (
   const edges = selectedItems.edges;
 
   if (!nodes.length && !edges.length) HandleNoSelect(project, inspectorRef, dispatch);
-  else if (nodes.length === 1) HandleBlockNodeSelect(nodes[0], dispatch);
+  else if (nodes.length === 1) HandleBlockNodeSelect(nodes[0], selectedNode, dispatch);
   else if (edges.length === 1) HandleBlockEdgeSelect(edges[0], dispatch);
   else if (nodes.length > 1) HandleMultiSelect(dispatch);
 };
 
-function HandleBlockNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
+function HandleBlockNodeSelect(flowNode: FlowNode, selectedNode: Node, dispatch: Dispatch) {
   dispatch(setActiveEdge(null, false));
-  dispatch(setActiveBlockNode(flowNode.id));
+  if (flowNode.id !== selectedNode?.id) dispatch(setActiveBlockNode(flowNode.id));
   OpenInspector(dispatch);
 }
 

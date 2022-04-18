@@ -1,65 +1,89 @@
-import { setActiveBlockNode, setActiveNode, setNodeVisibility } from "../../../../../../redux/store/project/actions";
-import { removeSecondaryNode, setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
-import { IsDirectChild, IsFamily, IsParentOf } from "../../../../../../helpers/Family";
 import { Dispatch } from "redux";
-import { Node, Project } from "../../../../../../models";
+import { setActiveBlockNode, setActiveNode, setBlockNodeVisibility } from "../../../../../../redux/store/project/actions";
+import { setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
+import { IsDirectChild, IsFamily } from "../../../../../../helpers/Family";
+import { Node } from "../../../../../../models";
+import { SetZoomCenterLevel } from "../../../../../../helpers";
+import { SetCenter, SetViewport } from "react-flow-renderer";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
+ * The BlockExplorer has a different functionality than the TreeExplorer.
+ * The selectedNode is marked as chekced, and its children are marked with the mini checkmark.
  * Currently two parentNodes can be displayed at the same time - selectedNode and secondaryNode
  * Two parentNodes of the same Aspect can be displayed, unless it is a direct parent/child relation.
  * @param node
  * @param selectedNode
  * @param secondaryNode
- * @param project
  * @param dispatch
  */
 export const OnBlockExplorerChange = (
   node: Node,
   selectedNode: Node,
   secondaryNode: Node,
-  project: Project,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  setViewport: SetViewport,
+  setCenter: SetCenter
 ) => {
-  // Set selectNode
+  if (!node) return;
+
+  // Set selectedNode
   if (!selectedNode) {
-    dispatch(setActiveNode(node?.id, !node.selected));
-    dispatch(setActiveBlockNode(node?.id));
+    SetSelectedNode(node, dispatch);
     return;
   }
 
-  if (selectedNode && secondaryNode) {
-    if (node === selectedNode && node !== secondaryNode) {
-      dispatch(setActiveNode(secondaryNode.id, true));
-      dispatch(removeSecondaryNode());
-      return;
-    }
-  }
-
-  // Handling same Aspect
-  if (selectedNode && IsFamily(node, selectedNode) && node !== selectedNode) {
-    validateSiblings(node, selectedNode, secondaryNode, project, dispatch);
+  // Toggle selectedNode off
+  if (node.id === selectedNode.id) {
+    UnselectSelectedNode(node, dispatch);
     return;
   }
 
-  // Toggle off selectedNode
-  if (node === selectedNode && selectedNode && !secondaryNode) {
-    dispatch(setActiveNode(null, false));
+  // Toggle child of selectedNode
+  if (IsDirectChild(node, selectedNode)) {
+    ToggleChildNode(node, dispatch);
     return;
   }
 
-  // Set SecondaryNode
-  if (node !== selectedNode && node !== secondaryNode && !IsFamily(node, selectedNode)) {
+  // Add secondaryNode
+  if (!secondaryNode) {
     dispatch(setSecondaryNode(node));
+    SetZoomCenterLevel(setViewport, setCenter, true);
     return;
   }
 
-  // Remove SecondaryNode
-  if (node === secondaryNode) dispatch(removeSecondaryNode());
+  // Remove secondaryNode
+  if (node.id === secondaryNode?.id) {
+    dispatch(setSecondaryNode(null));
+    SetZoomCenterLevel(setViewport, setCenter, false);
+    return;
+  }
+
+  // Change secondaryNode
+  if (node.id !== secondaryNode.id) {
+    if (ValidateSecondaryNode(node, secondaryNode)) dispatch(setSecondaryNode(node));
+  }
 };
 
-function validateSiblings(node: Node, selected: Node, secondary: Node, project: Project, dispatch: Dispatch) {
-  if (IsDirectChild(node?.id, selected?.id, project)) dispatch(setNodeVisibility(node, true));
-  if (!IsDirectChild(node?.id, selected?.id, project) && !IsParentOf(node?.id, selected?.id)) dispatch(setSecondaryNode(node));
-  if (!IsDirectChild(node?.id, selected?.id, project) && node === secondary) dispatch(removeSecondaryNode());
+function ValidateSecondaryNode(node: Node, secondaryNode: Node) {
+  if (IsFamily(node, secondaryNode)) return !IsDirectChild(node, secondaryNode);
+  if (!IsFamily(node, secondaryNode)) return true;
+  return false;
+}
+
+function UnselectSelectedNode(node: Node, dispatch: Dispatch) {
+  dispatch(setActiveNode(null, false));
+  dispatch(setActiveBlockNode(null));
+  dispatch(setBlockNodeVisibility(node, true));
+}
+
+function SetSelectedNode(node: Node, dispatch: Dispatch) {
+  dispatch(setActiveNode(node.id, !node.selected));
+  dispatch(setActiveBlockNode(node.id));
+  dispatch(setBlockNodeVisibility(node, false));
+}
+
+function ToggleChildNode(node: Node, dispatch: Dispatch) {
+  const shouldBeHidden = !node.blockHidden;
+  dispatch(setBlockNodeVisibility(node, shouldBeHidden));
 }

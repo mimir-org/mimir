@@ -5,7 +5,6 @@ import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
-import { GetSelectedBlockNode } from "../../../../../../helpers/Selected";
 import Config from "../../../../../../models/Config";
 
 interface Props {
@@ -30,7 +29,7 @@ export const BlockChildComponent = ({
   onConnectorClick,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
-  const selected = node.id === GetSelectedBlockNode()?.id;
+  const selected = node?.blockSelected;
 
   return (
     <NodeBox

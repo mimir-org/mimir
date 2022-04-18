@@ -52,7 +52,7 @@ export const TreeAspectComponent = ({
         hideText={TextResources.HIDE_OBJECT}
         onToggleVisible={() => {
           onSetVisibleElement(!isVisible, node.id);
-          OnTreeExplorerChange(node, project, dispatch);
+          OnTreeExplorerChange(node, dispatch);
         }}
       />
       <LockComponent

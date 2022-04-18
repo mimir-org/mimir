@@ -1,26 +1,37 @@
 import { applyNodeChanges, NodeChange, NodePositionChange, Node as FlowNode } from "react-flow-renderer";
 import { Size } from "../../../../compLibrary/size/Size";
 import { GetParentNode } from "../../../../helpers/Family";
-import { Project } from "../../../../models";
+import { Project, Node } from "../../../../models";
 
 /**
  * Hook that runs whenever a Node has a change in BlockView.
  * In the Flow Library a change is defined by the following types:
  * NodeDimensionChange | NodePositionChange | NodeSelectionChange | NodeRemoveChange | NodeAddChange | NodeResetChange
  * @param project
+ * @param selectedNode
  * @param changes
  * @param setNodes
  */
 const useOnNodesChange = (
   project: Project,
+  selectedNode: Node,
   changes: NodeChange[],
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>
 ) => {
+  if (!selectedNode) return;
+  const filteredList = [] as NodeChange[];
+
+  changes.forEach((c) => {
+    if (c.type === "position") {
+      if (c.id !== selectedNode?.id) filteredList.push(c);
+    }
+  });
+
   // Guard to check if a changed position is valid
-  if (IsPositionChange(changes) && !ValidateNodePosition(changes as NodePositionChange[], project)) return;
+  if (IsPositionChange(filteredList) && !ValidateNodePosition(filteredList as NodePositionChange[], project)) return;
 
   // Execute all changes
-  setNodes((n) => applyNodeChanges(changes, n));
+  setNodes((n) => applyNodeChanges(filteredList, n));
 };
 
 /**

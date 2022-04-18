@@ -24,7 +24,9 @@ export const UPDATE_POSITION = "UPDATE_POSITION";
 export const UPDATE_BLOCK_POSITION = "UPDATE_BLOCK_POSITION";
 export const UPDATE_BLOCK_SIZE = "UPDATE_BLOCK_SIZE";
 export const SET_NODE_VISIBILITY = "SET_NODE_VISIBILITY";
+export const SET_BLOCK_NODE_VISIBILITY = "SET_BLOCK_NODE_VISIBILITY";
 export const SET_EDGE_VISIBILITY = "SET_EDGE_VISIBILITY";
+export const SET_BLOCK_EDGE_VISIBILITY = "SET_BLOCK_EDGE_VISIBILITY";
 export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
 export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
 export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
@@ -144,12 +146,22 @@ export interface UpdateBlockSizeAction {
 
 export interface SetNodeVisibility {
   type: typeof SET_NODE_VISIBILITY;
-  payload: { node: Node; isParent: boolean };
+  payload: { node: Node };
+}
+
+export interface SetBlockNodeVisibility {
+  type: typeof SET_BLOCK_NODE_VISIBILITY;
+  payload: { node: Node; blockHidden: boolean };
 }
 
 export interface SetEdgeVisibility {
   type: typeof SET_EDGE_VISIBILITY;
   payload: { edgeId: string; hidden: boolean };
+}
+
+export interface SetBlockEdgeVisibility {
+  type: typeof SET_BLOCK_EDGE_VISIBILITY;
+  payload: { edgeId: string; blockHidden: boolean };
 }
 
 export interface SetLocationNodeSize {
@@ -229,6 +241,7 @@ export interface ChangeInterfaceTerminalAttributeValue {
   type: typeof CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE;
   payload: { id: string; edgeId: string; value: string; unitId: string; terminalId: string };
 }
+
 export interface ChangeSimpleAttributeValue {
   type: typeof CHANGE_SIMPLE_ATTRIBUTE_VALUE;
   payload: { id: string; value: string; unitId: string; nodeId: string; simpleId: string };
@@ -428,7 +441,9 @@ export type ProjectActionTypes =
   | UpdatePositionAction
   | UpdateBlockSizeAction
   | SetNodeVisibility
+  | SetBlockNodeVisibility
   | SetEdgeVisibility
+  | SetBlockEdgeVisibility
   | SetActiveNode
   | SetActiveEdge
   | SetActiveBlockNode

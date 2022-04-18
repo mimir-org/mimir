@@ -17,15 +17,15 @@ import {
  * @param connectors
  * @param selectedNode
  * @param secondaryNode
- * @returns two filtered list of connectors sorted by type, name and input/output.
+ * @returns two filtered lists of connectors sorted by type, name and input/output.
  */
 export const FilterTerminals = (connectors: Connector[], selectedNode: Node, secondaryNode: Node) => {
   const sortedConnectors = connectors
     ?.filter((c) => !IsPartOfTerminal(c) && FilterTerminal(selectedNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
 
-  const inputs = sortedConnectors.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
-  const outputs = sortedConnectors.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
+  const inputs = sortedConnectors?.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t)) ?? [];
+  const outputs = sortedConnectors?.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t)) ?? [];
 
   return { in: inputs, out: outputs } as Terminals;
 };
