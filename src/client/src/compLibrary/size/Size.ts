@@ -22,7 +22,7 @@ export const Size = {
 
   // Zoom
   ZOOM_DEFAULT: 1,
-  ZOOM_SPLITVIEW: 0.7,
+  ZOOM_SPLITVIEW: 0.5,
 
   // Modules
   MODULE_OPEN: 400,

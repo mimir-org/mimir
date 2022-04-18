@@ -46,8 +46,7 @@ export const BlockProjectComponent = () => {
             isLeaf={!HasChildren(node.id, project)}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             dispatch={dispatch}
-            setViewport={setViewport}
-            setCenter={setCenter}
+            viewportData={{ setViewport, setCenter }}
           />
         );
       })}

@@ -8,7 +8,7 @@ import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrappe
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";
-import { SetCenter, SetViewport } from "react-flow-renderer";
+import { ViewportData } from "../../../../../models/project";
 
 interface Props {
   node: Node;
@@ -19,8 +19,7 @@ interface Props {
   isExpanded: boolean;
   onToggleExpanded: () => void;
   indent?: number;
-  setViewport: SetViewport;
-  setCenter: SetCenter;
+  viewportData: ViewportData;
 }
 
 /**
@@ -37,16 +36,15 @@ export const BlockAspectElement = ({
   isExpanded,
   onToggleExpanded,
   indent,
-  setViewport,
-  setCenter,
+  viewportData,
 }: Props) => (
   <AspectElementWrapper indent={GetIndentLevel(indent)}>
     <CheckboxBlockExplorer
       color={GetAspectColor(node, AspectColorType.Selected)}
       isChecked={node.selected || node.id === secondaryNode?.id}
-      isMiniCheckbox={IsMiniCheckBox(node, secondaryNode?.id, selectedNode)}
+      isMiniCheckbox={IsMiniCheckBox(node, secondaryNode, selectedNode)}
       isAspectNode={IsAspectNode(node)}
-      onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, dispatch, setViewport, setCenter)}
+      onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, viewportData, dispatch)}
       label={node.label}
       icon={GetAspectIcon(node)}
     />

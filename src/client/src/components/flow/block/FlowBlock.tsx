@@ -47,7 +47,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const selectedNode = project?.nodes?.find((n) => n.selected);
-  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
@@ -99,12 +98,9 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
   const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
 
-  const OnSelectionChange = useCallback(
-    (selectedItems: OnSelectionChangeParams) => {
-      HandleBlockNodeSelection(selectedItems, project, selectedNode, inspectorRef, dispatch);
-    },
-    [selectedBlockNode]
-  );
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
+    HandleBlockNodeSelection(selectedItems, project, selectedNode, inspectorRef, dispatch);
+  };
 
   // Build initial elements from Project
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { SetCenter, SetViewport } from "react-flow-renderer";
 import { LibItem } from "../";
 
 export const ATTRIBUTE_TAB = {
@@ -63,4 +64,9 @@ export interface Position {
 export interface BlockNodeSize {
   width: number;
   height: number;
+}
+
+export interface ViewportData {
+  setViewport: SetViewport;
+  setCenter: SetCenter;
 }

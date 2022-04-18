@@ -2,10 +2,9 @@ import { Dispatch } from "redux";
 import { toggleElectroView } from "../../../redux/store/electro/electroSlice";
 import { setFilterMenuVisibility } from "../../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { toggleLocation3D } from "../../../modules/location/redux/location3DSlice";
-import { SetCenter, SetViewport } from "react-flow-renderer";
 import { SetZoomCenterLevel } from "../../../helpers";
 import { Node } from "../../../models";
-import { ViewType, VIEW_TYPE } from "../../../models/project";
+import { ViewportData, ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
@@ -23,9 +22,9 @@ export const OnLocation3DClick = (dispatch: Dispatch) => {
   dispatch(toggleLocation3D());
 };
 
-export const OnResetZoomClick = (isTreeView: boolean, setViewport: SetViewport, setCenter: SetCenter, secondaryNode: Node) => {
+export const OnResetZoomClick = (isTreeView: boolean, viewportData: ViewportData, secondaryNode: Node) => {
   if (isTreeView) return;
-  SetZoomCenterLevel(setViewport, setCenter, secondaryNode !== null);
+  SetZoomCenterLevel(viewportData, secondaryNode !== null);
 };
 
 export const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch: Dispatch) => {

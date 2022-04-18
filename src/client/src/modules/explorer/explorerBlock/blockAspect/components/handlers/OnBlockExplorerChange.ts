@@ -4,7 +4,7 @@ import { setSecondaryNode } from "../../../../../../redux/store/secondaryNode/ac
 import { IsDirectChild, IsFamily } from "../../../../../../helpers/Family";
 import { Node } from "../../../../../../models";
 import { SetZoomCenterLevel } from "../../../../../../helpers";
-import { SetCenter, SetViewport } from "react-flow-renderer";
+import { ViewportData } from "../../../../../../models/project";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -15,15 +15,15 @@ import { SetCenter, SetViewport } from "react-flow-renderer";
  * @param node
  * @param selectedNode
  * @param secondaryNode
+ * @param viewportData
  * @param dispatch
  */
 export const OnBlockExplorerChange = (
   node: Node,
   selectedNode: Node,
   secondaryNode: Node,
-  dispatch: Dispatch,
-  setViewport: SetViewport,
-  setCenter: SetCenter
+  viewportData: ViewportData,
+  dispatch: Dispatch
 ) => {
   if (!node) return;
 
@@ -48,14 +48,20 @@ export const OnBlockExplorerChange = (
   // Add secondaryNode
   if (!secondaryNode) {
     dispatch(setSecondaryNode(node));
-    SetZoomCenterLevel(setViewport, setCenter, true);
+    SetZoomCenterLevel(viewportData, true);
     return;
   }
 
   // Remove secondaryNode
-  if (node.id === secondaryNode?.id) {
+  if (node.id === secondaryNode.id) {
     dispatch(setSecondaryNode(null));
-    SetZoomCenterLevel(setViewport, setCenter, false);
+    SetZoomCenterLevel(viewportData, false);
+    return;
+  }
+
+  // Toggle child of secondaryNode
+  if (IsDirectChild(node, secondaryNode)) {
+    ToggleChildNode(node, dispatch);
     return;
   }
 

@@ -2,7 +2,7 @@ import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { OnElectroClick, OnFilterClick, OnViewClick, OnResetZoomClick } from "./handlers/OnToolbarClick";
-import { VIEW_TYPE, ViewType } from "../../models/project";
+import { VIEW_TYPE, ViewType, ViewportData } from "../../models/project";
 import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
@@ -16,6 +16,7 @@ import { useReactFlow } from "react-flow-renderer";
 export const ToolbarComponent = () => {
   const dispatch = useAppDispatch();
   const { setViewport, setCenter } = useReactFlow();
+  const viewportData = { setViewport, setCenter } as ViewportData;
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
   const isTreeView = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.TREEVIEW);
@@ -33,7 +34,7 @@ export const ToolbarComponent = () => {
             <ToolbarElement
               label={TextResources.FITSCREEN}
               icon={Icons.FitScreenIcon}
-              onClick={() => OnResetZoomClick(isTreeView, setViewport, setCenter, secondaryNode)}
+              onClick={() => OnResetZoomClick(isTreeView, viewportData, secondaryNode)}
               borderRight
             />
             <ToolbarElement
