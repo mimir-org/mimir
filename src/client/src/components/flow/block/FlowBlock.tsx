@@ -98,9 +98,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
   const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
 
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
     HandleBlockNodeSelection(selectedItems, project, selectedNode, inspectorRef, dispatch);
-  };
 
   // Build initial elements from Project
   useEffect(() => {

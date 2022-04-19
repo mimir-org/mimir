@@ -3,7 +3,7 @@ import { setActiveBlockNode, setActiveNode, setBlockNodeVisibility } from "../..
 import { setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
 import { IsDirectChild, IsFamily } from "../../../../../../helpers/Family";
 import { Node } from "../../../../../../models";
-import { SetZoomCenterLevel } from "../../../../../../helpers";
+import { SetFitToScreen } from "../../../../../../helpers";
 import { ViewportData } from "../../../../../../models/project";
 
 /**
@@ -34,8 +34,8 @@ export const OnBlockExplorerChange = (
   }
 
   // Toggle selectedNode off
-  if (node.id === selectedNode.id) {
-    UnselectSelectedNode(node, dispatch);
+  if (node.id === selectedNode.id && !secondaryNode) {
+    RemoveSelectedNode(node, dispatch);
     return;
   }
 
@@ -47,15 +47,20 @@ export const OnBlockExplorerChange = (
 
   // Add secondaryNode
   if (!secondaryNode) {
-    dispatch(setSecondaryNode(node));
-    SetZoomCenterLevel(viewportData, true);
+    SetSecondaryNode(node, viewportData, dispatch);
     return;
   }
 
   // Remove secondaryNode
   if (node.id === secondaryNode.id) {
-    dispatch(setSecondaryNode(null));
-    SetZoomCenterLevel(viewportData, false);
+    RemoveSecondaryNode(viewportData, dispatch);
+    return;
+  }
+
+  // Make secondaryNode the selectedNode
+  if (node.id === selectedNode.id && secondaryNode) {
+    RemoveSecondaryNode(viewportData, dispatch);
+    SetSelectedNode(secondaryNode, dispatch);
     return;
   }
 
@@ -71,13 +76,14 @@ export const OnBlockExplorerChange = (
   }
 };
 
+//#region helpers
 function ValidateSecondaryNode(node: Node, secondaryNode: Node) {
   if (IsFamily(node, secondaryNode)) return !IsDirectChild(node, secondaryNode);
   if (!IsFamily(node, secondaryNode)) return true;
   return false;
 }
 
-function UnselectSelectedNode(node: Node, dispatch: Dispatch) {
+function RemoveSelectedNode(node: Node, dispatch: Dispatch) {
   dispatch(setActiveNode(null, false));
   dispatch(setActiveBlockNode(null));
   dispatch(setBlockNodeVisibility(node, true));
@@ -93,3 +99,14 @@ function ToggleChildNode(node: Node, dispatch: Dispatch) {
   const shouldBeHidden = !node.blockHidden;
   dispatch(setBlockNodeVisibility(node, shouldBeHidden));
 }
+
+function SetSecondaryNode(node: Node, viewportData: ViewportData, dispatch: Dispatch) {
+  dispatch(setSecondaryNode(node));
+  SetFitToScreen(viewportData, true);
+}
+
+function RemoveSecondaryNode(viewportData: ViewportData, dispatch: Dispatch) {
+  dispatch(setSecondaryNode(null));
+  SetFitToScreen(viewportData, false);
+}
+//#endregion

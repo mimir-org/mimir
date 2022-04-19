@@ -1,8 +1,7 @@
 import { Dispatch } from "redux";
 import { toggleElectroView } from "../../../redux/store/electro/electroSlice";
 import { setFilterMenuVisibility } from "../../menus/projectMenu/components/subMenus/redux/menuSlice";
-import { toggleLocation3D } from "../../../modules/location/redux/location3DSlice";
-import { SetZoomCenterLevel } from "../../../helpers";
+import { SetFitToScreen } from "../../../helpers";
 import { Node } from "../../../models";
 import { ViewportData, ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
@@ -18,20 +17,21 @@ export const OnFilterClick = (dispatch: Dispatch, open: boolean) => {
   dispatch(setFilterMenuVisibility(!open));
 };
 
-export const OnLocation3DClick = (dispatch: Dispatch) => {
-  dispatch(toggleLocation3D());
-};
-
-export const OnResetZoomClick = (isTreeView: boolean, viewportData: ViewportData, secondaryNode: Node) => {
+export const OnFitToScreenClick = (isTreeView: boolean, viewportData: ViewportData, secondaryNode: Node) => {
   if (isTreeView) return;
-  SetZoomCenterLevel(viewportData, secondaryNode !== null);
+  SetFitToScreen(viewportData, secondaryNode !== null);
 };
 
-export const OnViewClick = (view: ViewType, numberOfSelectedElements: number, dispatch: Dispatch) => {
-  if (view === VIEW_TYPE.BLOCKVIEW && !ValidateBlockViewClick(numberOfSelectedElements, dispatch)) return;
+export const OnBlockViewClick = (numberOfSelectedElements: number, viewportData: ViewportData, dispatch: Dispatch) => {
+  if (!ValidateBlockViewClick(numberOfSelectedElements, dispatch)) return;
 
+  SetFitToScreen(viewportData, false);
   dispatch(setSecondaryNode(null));
-  dispatch(changeFlowView(view));
+  dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW as ViewType));
+};
+
+export const OnTreeViewClick = (dispatch: Dispatch) => {
+  dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
 };
 
 function ValidateBlockViewClick(numberOfSelectedElements: number, dispatch: Dispatch) {

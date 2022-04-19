@@ -2,11 +2,11 @@ import { Size } from "../compLibrary/size/Size";
 import { ViewportData } from "../models/project";
 
 /**
- * Component to center the canvas' zoom level and position.
+ * Component to fit the view to the screen.
  * @param viewportData
  * @param splitView
  */
-const SetZoomCenterLevel = (viewportData: ViewportData, splitView: boolean) => {
+const SetFitToScreen = (viewportData: ViewportData, splitView: boolean) => {
   let x = window.innerWidth / 2 - Size.BLOCK_MARGIN_X;
   let y = window.innerHeight / 2 - Size.BLOCK_MARGIN_Y;
   let zoom = Size.ZOOM_DEFAULT;
@@ -21,4 +21,4 @@ const SetZoomCenterLevel = (viewportData: ViewportData, splitView: boolean) => {
   viewportData.setCenter(x, y, { zoom });
 };
 
-export default SetZoomCenterLevel;
+export default SetFitToScreen;
