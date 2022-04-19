@@ -42,6 +42,26 @@ namespace Mb.Services.Services
             );
         }
 
+        public Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId)
+        {
+            foreach (var tuple in nodeMap)
+            {
+                _webSocketRepository.SendNodeData(tuple.node, projectId, tuple.workerStatus);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId)
+        {
+            foreach (var tuple in edgeMap)
+            {
+                _webSocketRepository.SendEdgeData(tuple.edge, projectId, tuple.workerStatus);
+            }
+
+            return Task.CompletedTask;
+        }
+
         public Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus)
         {
             _webSocketRepository.SendLockData(lockCms, workerStatus);
