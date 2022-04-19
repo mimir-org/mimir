@@ -120,6 +120,7 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new EdgeProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
+            cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(),
                 provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();

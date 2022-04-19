@@ -18,7 +18,6 @@ namespace Mb.Models.Abstract
         /// <param name="storedProcName">Name of the procedure that should be executed.</param>
         /// <param name="procParams">Dictionary of params that procedure takes as parameters.</param>
         /// <returns>List of objects that are mapped in T type, returned by procedure.</returns>
-        Task<List<T>> ExecuteStoredProc<T>(string storedProcName, Dictionary<string, object> procParams)
-            where T : class;
+        Task<List<T>> ExecuteStoredProc<T>(string storedProcName, Dictionary<string, object> procParams) where T : class;
     }
 }

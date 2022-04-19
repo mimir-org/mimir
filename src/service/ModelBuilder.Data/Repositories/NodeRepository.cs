@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -199,6 +201,32 @@ namespace Mb.Data.Repositories
                 .Commit(conn);
         }
 
+        /// <summary>
+        /// Bulk attributes update lock status
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="lockDms">The attributes to be updated</param>
+        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
+        {
+            if (lockDms == null || !lockDms.Any())
+                return;
+
+            if (lockDms.Any(x => x.Type is not EntityType.Node))
+                throw new ModelBuilderBadRequestException("EntityType is not of type Node");
+
+            bulk.Setup<LockDm>()
+                .ForCollection(lockDms)
+                .WithTable("Node")
+                .AddColumn(x => x.Id)
+                .AddColumn(x => x.IsLocked)
+                .AddColumn(x => x.IsLockedStatusBy)
+                .AddColumn(x => x.IsLockedStatusDate)
+                .BulkUpdate()
+                .MatchTargetOn(x => x.Id)
+                .Commit(conn);
+        }
+
 
         /// <summary>
         /// Get node connected data
@@ -217,8 +245,7 @@ namespace Mb.Data.Repositories
                 {"@NodeId", nodeId}
             };
 
-            var attributes =
-                await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("NodeLockData", procParams);
+            var attributes = await _modelBuilderProcRepository.ExecuteStoredProc<ObjectIdentity>("NodeLockData", procParams);
             return attributes;
         }
 

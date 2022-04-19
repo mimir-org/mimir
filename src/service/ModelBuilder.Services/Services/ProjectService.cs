@@ -146,6 +146,9 @@ namespace Mb.Services.Services
             // Map data
             _mapper.Map(project, newProject);
 
+            // Sort nodes
+            ResolveLevelAndOrder(newProject);
+
             // Deconstruct project
             var projectData = new ProjectData();
             await _remapService.DeConstruct(newProject, projectData);

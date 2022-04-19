@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -32,6 +33,14 @@ namespace Mb.Data.Contracts
         /// <param name="conn">Sql Connection</param>
         /// <param name="nodes">The nodes to be deleted</param>
         void BulkDelete(BulkOperations bulk, SqlConnection conn, List<Node> nodes);
+
+        /// <summary>
+        /// Bulk edge update lock status
+        /// </summary>
+        /// <param name="bulk">Bulk operations</param>
+        /// <param name="conn">Sql Connection</param>
+        /// <param name="lockDms">The attributes to be updated</param>
+        void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms);
 
         /// <summary>
         /// Get node connected data
