@@ -134,7 +134,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> LockAttribute([FromBody] LockAm lockAm)
+        public async Task<IActionResult> Lock([FromBody] LockAm lockAm)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -144,10 +144,15 @@ namespace Mb.Core.Controllers.V1
                 await _lockService.Lock(lockAm);
                 return NoContent();
             }
-            catch (ModelBuilderUnauthorizedAccessException e)
+            catch (ModelBuilderBadRequestException e)
             {
                 ModelState.AddModelError("lock", e.Message);
                 return BadRequest(ModelState);
+            }
+            catch (ModelBuilderUnauthorizedAccessException e)
+            {
+                ModelState.AddModelError("lock", e.Message);
+                return Unauthorized(ModelState);
             }
             catch (Exception e)
             {
