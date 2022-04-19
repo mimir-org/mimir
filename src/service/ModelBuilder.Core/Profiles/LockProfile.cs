@@ -13,7 +13,7 @@ namespace Mb.Core.Profiles
             CreateMap<LockAm, LockDm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.IsLocked, opt => opt.MapFrom(src => src.IsLocked))
-                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => contextAccessor.GetName()))
+                .ForMember(dest => dest.IsLockedStatusBy, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(contextAccessor.GetName()) ? "Unknown" : contextAccessor.GetName()))
                 .ForMember(dest => dest.IsLockedStatusDate, opt => opt.MapFrom(src => DateTime.Now.ToUniversalTime()))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type));
 
