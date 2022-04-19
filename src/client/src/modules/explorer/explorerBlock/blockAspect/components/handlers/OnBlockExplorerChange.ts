@@ -10,7 +10,7 @@ import { ViewportData } from "../../../../../../models/project";
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
  * The BlockExplorer has a different functionality than the TreeExplorer.
  * The selectedNode is marked as chekced, and its children are marked with the mini checkmark.
- * Currently two parentNodes can be displayed at the same time - selectedNode and secondaryNode
+ * SplitView is when two parentNodes are displayed - one selectedNode and one secondaryNode.
  * Two parentNodes of the same Aspect can be displayed, unless it is a direct parent/child relation.
  * @param node
  * @param selectedNode

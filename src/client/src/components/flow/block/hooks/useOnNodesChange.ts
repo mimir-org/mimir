@@ -1,4 +1,4 @@
-import { applyNodeChanges, NodeChange, NodePositionChange, Node as FlowNode } from "react-flow-renderer";
+import { applyNodeChanges, NodeChange, Node as FlowNode, XYPosition } from "react-flow-renderer";
 import { Size } from "../../../../compLibrary/size/Size";
 import { GetParentNode } from "../../../../helpers/Family";
 import { Project, Node } from "../../../../models";
@@ -23,12 +23,9 @@ const useOnNodesChange = (
 
   changes.forEach((c) => {
     if (c.type === "position") {
-      if (c.id !== selectedNode?.id) filteredList.push(c);
-    }
+      if (c.id !== selectedNode.id && ValidateNodePosition(c.id, c.position, project)) filteredList.push(c);
+    } else filteredList.push(c);
   });
-
-  // Guard to check if a changed position is valid
-  if (IsPositionChange(filteredList) && !ValidateNodePosition(filteredList as NodePositionChange[], project)) return;
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(filteredList, n));
@@ -36,13 +33,12 @@ const useOnNodesChange = (
 
 /**
  * Function to validate that a Node's position is not outside the boundary of its ParentNode in BlockView.
- * @param changes
+ * @param nodeId
+ * @param position
  * @param project
  * @returns a boolean value.
  */
-function ValidateNodePosition(changes: NodePositionChange[], project: Project) {
-  const nodeId = changes[0].id;
-  const position = changes[0].position;
+function ValidateNodePosition(nodeId: string, position: XYPosition, project: Project) {
   const parentNode = GetParentNode(nodeId, project);
 
   if (!position || !parentNode) return false;
@@ -60,10 +56,6 @@ function ValidateNodePosition(changes: NodePositionChange[], project: Project) {
   const validY = y > yMin && y < yMax;
 
   return validX && validY;
-}
-
-function IsPositionChange(changes: NodeChange[]) {
-  return changes[0]?.type === "position";
 }
 
 export default useOnNodesChange;

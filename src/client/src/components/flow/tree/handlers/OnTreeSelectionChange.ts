@@ -15,7 +15,6 @@ import { setActiveEdge, setActiveNode } from "../../../../redux/store/project/ac
  * @param project
  * @param inspectorRef
  * @param dispatch
- 
  */
 export const HandleTreeNodeSelection = (
   selectedItems: OnSelectionChangeParams,

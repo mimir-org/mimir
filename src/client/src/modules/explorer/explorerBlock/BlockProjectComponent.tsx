@@ -8,6 +8,7 @@ import { ProjectContentContainer } from "../shared/styled/ProjectComponent.style
 import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
 import { useReactFlow } from "react-flow-renderer";
+import { ViewportData } from "../../../models/project";
 
 /**
  * Component for a single Project in Mimir, displayed in the Explorer Module of BlockView.
@@ -16,6 +17,7 @@ import { useReactFlow } from "react-flow-renderer";
 export const BlockProjectComponent = () => {
   const dispatch = useAppDispatch();
   const { setViewport, setCenter } = useReactFlow();
+  const viewportData = { setViewport, setCenter } as ViewportData;
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const project = useAppSelector(projectSelector);
   const username = useAppSelector(usernameSelector);
@@ -46,7 +48,7 @@ export const BlockProjectComponent = () => {
             isLeaf={!HasChildren(node.id, project)}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             dispatch={dispatch}
-            viewportData={{ setViewport, setCenter }}
+            viewportData={viewportData}
           />
         );
       })}

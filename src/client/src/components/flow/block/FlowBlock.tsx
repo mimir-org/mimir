@@ -116,13 +116,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes, secondaryNode]);
+  }, [project?.nodes, secondaryNode, selectedNode]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
-  }, [project?.edges, animatedEdge]);
+  }, [project?.edges, project?.nodes, animatedEdge]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
