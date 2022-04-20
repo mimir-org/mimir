@@ -28,8 +28,11 @@ export const SET_BLOCK_NODE_VISIBILITY = "SET_BLOCK_NODE_VISIBILITY";
 export const SET_EDGE_VISIBILITY = "SET_EDGE_VISIBILITY";
 export const SET_BLOCK_EDGE_VISIBILITY = "SET_BLOCK_EDGE_VISIBILITY";
 export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
+export const REMOVE_ACTIVE_NODE = "REMOVE_ACTIVE_NODE";
 export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
+export const REMOVE_ACTIVE_BLOCKNODE = "REMOVE_ACTIVE_BLOCKNODE";
 export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
+export const REMOVE_ACTIVE_EDGE = "REMOVE_ACTIVE_EDGE";
 export const SET_LOCATION_NODE_SIZE = "SET_LOCATION_NODE_SIZE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
@@ -174,14 +177,29 @@ export interface SetActiveNode {
   payload: { nodeId: string; selected: boolean };
 }
 
+export interface RemoveActiveNode {
+  type: typeof REMOVE_ACTIVE_NODE;
+  payload: null;
+}
+
 export interface SetActiveEdge {
   type: typeof SET_ACTIVE_EDGE;
   payload: { edgeId: string; isActive: boolean };
 }
 
+export interface RemoveActiveEdge {
+  type: typeof REMOVE_ACTIVE_EDGE;
+  payload: null;
+}
+
 export interface SetActiveBlockNode {
   type: typeof SET_ACTIVE_BLOCKNODE;
   payload: { nodeId: string };
+}
+
+export interface RemoveActiveBlockNode {
+  type: typeof REMOVE_ACTIVE_BLOCKNODE;
+  payload: null;
 }
 
 export interface SaveProjectAction {
@@ -445,8 +463,11 @@ export type ProjectActionTypes =
   | SetEdgeVisibility
   | SetBlockEdgeVisibility
   | SetActiveNode
+  | RemoveActiveNode
   | SetActiveEdge
+  | RemoveActiveEdge
   | SetActiveBlockNode
+  | RemoveActiveBlockNode
   | SetLocationNodeSize
   | SaveProjectAction
   | SaveProjectActionFinished

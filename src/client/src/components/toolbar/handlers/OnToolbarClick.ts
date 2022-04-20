@@ -7,7 +7,7 @@ import { ViewportData, ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
-import { setSecondaryNode } from "../../../redux/store/secondaryNode/actions";
+import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 
 export const OnElectroClick = (dispatch: Dispatch) => {
   dispatch(toggleElectroView());
@@ -26,7 +26,7 @@ export const OnBlockViewClick = (numberOfSelectedElements: number, viewportData:
   if (!ValidateBlockViewClick(numberOfSelectedElements, dispatch)) return;
 
   SetFitToScreen(viewportData, false);
-  dispatch(setSecondaryNode(null));
+  dispatch(removeSecondaryNode());
   dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW as ViewType));
 };
 

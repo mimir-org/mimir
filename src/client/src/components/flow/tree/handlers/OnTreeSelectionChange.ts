@@ -7,7 +7,7 @@ import { MODULE_TYPE } from "../../../../models/project";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers/SetPanelHeight";
 import { changeInspectorHeight, changeInspectorTab } from "../../../../modules/inspector/redux/inspectorSlice";
 import { setModuleVisibility } from "../../../../redux/store/modules/modulesSlice";
-import { setActiveEdge, setActiveNode } from "../../../../redux/store/project/actions";
+import { removeActiveEdge, removeActiveNode, setActiveEdge, setActiveNode } from "../../../../redux/store/project/actions";
 
 /**
  * Component to handle selection of Nodes in TreeView.
@@ -32,27 +32,27 @@ export const HandleTreeNodeSelection = (
 };
 
 function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
-  dispatch(setActiveEdge(null, false));
+  dispatch(removeActiveEdge());
   dispatch(setActiveNode(flowNode.id, true));
   OpenInspector(dispatch);
 }
 
 function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
   dispatch(setActiveEdge(flowEdge?.id, true));
-  dispatch(setActiveNode(null, false));
+  dispatch(removeActiveNode());
   OpenInspector(dispatch);
 }
 
 function HandleMultiSelect(dispatch: Dispatch) {
-  dispatch(setActiveNode(null, false));
-  dispatch(setActiveEdge(null, false));
+  dispatch(removeActiveNode());
+  dispatch(removeActiveEdge());
 }
 
 function HandleNoSelect(project: Project, inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
   if (!project) return;
 
-  dispatch(setActiveNode(null, false));
-  dispatch(setActiveEdge(null, false));
+  dispatch(removeActiveNode());
+  dispatch(removeActiveEdge());
 
   CloseInspector(inspectorRef, dispatch);
 }

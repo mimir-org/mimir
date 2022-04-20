@@ -98,12 +98,24 @@ export function setActiveNode(nodeId: string, selected: boolean): Types.ProjectA
   return { type: Types.SET_ACTIVE_NODE, payload: { nodeId, selected } };
 }
 
+export function removeActiveNode(): Types.ProjectActionTypes {
+  return { type: Types.REMOVE_ACTIVE_NODE, payload: null };
+}
+
 export function setActiveBlockNode(nodeId: string): Types.ProjectActionTypes {
   return { type: Types.SET_ACTIVE_BLOCKNODE, payload: { nodeId } };
 }
 
+export function removeActiveBlockNode(): Types.ProjectActionTypes {
+  return { type: Types.REMOVE_ACTIVE_BLOCKNODE, payload: null };
+}
+
 export function setActiveEdge(edgeId: string, isActive: boolean): Types.ProjectActionTypes {
   return { type: Types.SET_ACTIVE_EDGE, payload: { edgeId, isActive } };
+}
+
+export function removeActiveEdge(): Types.ProjectActionTypes {
+  return { type: Types.REMOVE_ACTIVE_EDGE, payload: null };
 }
 
 export function changeSelectedProject(projectId: string): Types.ProjectActionTypes {

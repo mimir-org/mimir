@@ -30,6 +30,7 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, source: Node, target:
     hidden: false, // Opacity is controlled by the styled component
     parentType: source?.aspect,
     targetType: target?.aspect,
+    selected: edge.selected,
   } as FlowEdge;
 };
 

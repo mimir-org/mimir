@@ -1,10 +1,16 @@
 import { Dispatch } from "redux";
-import { setActiveBlockNode, setActiveNode, setBlockNodeVisibility } from "../../../../../../redux/store/project/actions";
-import { setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
+import { removeSecondaryNode, setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
 import { IsDirectChild, IsFamily } from "../../../../../../helpers/Family";
 import { Node } from "../../../../../../models";
 import { SetFitToScreen } from "../../../../../../helpers";
 import { ViewportData } from "../../../../../../models/project";
+import {
+  removeActiveBlockNode,
+  removeActiveNode,
+  setActiveBlockNode,
+  setActiveNode,
+  setBlockNodeVisibility,
+} from "../../../../../../redux/store/project/actions";
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
@@ -84,8 +90,8 @@ function ValidateSecondaryNode(node: Node, secondaryNode: Node) {
 }
 
 function RemoveSelectedNode(node: Node, dispatch: Dispatch) {
-  dispatch(setActiveNode(null, false));
-  dispatch(setActiveBlockNode(null));
+  dispatch(removeActiveNode());
+  dispatch(removeActiveBlockNode());
   dispatch(setBlockNodeVisibility(node, true));
 }
 
@@ -106,7 +112,7 @@ function SetSecondaryNode(node: Node, viewportData: ViewportData, dispatch: Disp
 }
 
 function RemoveSecondaryNode(viewportData: ViewportData, dispatch: Dispatch) {
-  dispatch(setSecondaryNode(null));
+  dispatch(removeSecondaryNode());
   SetFitToScreen(viewportData, false);
 }
 //#endregion

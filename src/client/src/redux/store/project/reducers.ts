@@ -276,12 +276,30 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
+    case Types.REMOVE_ACTIVE_NODE: {
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => ({ ...n, selected: false })),
+          edges,
+        },
+      };
+    }
+
     case Types.SET_ACTIVE_EDGE: {
       const { edgeId, isActive: selected } = action.payload;
 
       return {
         ...state,
         project: { ...project, edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected } : { ...e, selected: false })) },
+      };
+    }
+
+    case Types.REMOVE_ACTIVE_EDGE: {
+      return {
+        ...state,
+        project: { ...project, edges: edges?.map((e) => ({ ...e, selected: false })) },
       };
     }
 
@@ -293,6 +311,17 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         project: {
           ...project,
           nodes: nodes.map((n) => (n.id === blockId ? { ...n, blockSelected: true } : { ...n, blockSelected: false })),
+          edges,
+        },
+      };
+    }
+
+    case Types.REMOVE_ACTIVE_BLOCKNODE: {
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => ({ ...n, blockSelected: false })),
           edges,
         },
       };

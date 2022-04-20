@@ -49,6 +49,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const selectedNode = project?.nodes?.find((n) => n.selected);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
+  const selectedEdge = project?.edges?.find((e) => e.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -87,7 +88,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   );
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
-    return hooks.useOnEdgesChange(changes, setEdges);
+    return hooks.useOnEdgesChange(changes, setEdges, inspectorRef, project, dispatch);
   }, []);
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
@@ -108,13 +109,13 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes, secondaryNode, selectedNode]);
+  }, [project?.nodes, secondaryNode, selectedNode, selectedEdge]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
-  }, [project?.edges, project?.nodes, animatedEdge]);
+  }, [project?.edges, project?.nodes, animatedEdge, selectedEdge]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
