@@ -1,3 +1,4 @@
+using ModelBuilder.Rdf.Properties;
 using Newtonsoft.Json.Linq;
 
 namespace JsonLdParser
@@ -11,23 +12,32 @@ namespace JsonLdParser
                 ["@context"] = new JObject()
                 {
                     ["@vocab"] = "http://ns.imfid.org/imf#",
+                    ["imf"] = "http://ns.imfid.org/imf#",
                     ["lis"] = "http://standards.iso.org/iso/15926/part14/",
                     ["eqn"] = "https://rdf.equinor.com/",
                     ["mimir"] = "http://ns.imfid.org/mimir#",
                     ["commonlib"] = "https://commonlibrary.equinor.com/",
-                    ["hasAspectModel"] = new JObject() { ["@reverse"] = "isAspectOf" },
+                    ["hasAspectModel"] = new JObject() { ["@reverse"] = Resources.IsAspectOf },
                     ["@version"] = "1.1"
                 },
-                ["@type"] = new JArray() { "FunctionalSystemBlock", "Transport", "Interface", "IntegratedObject", "mimir:Project", "Terminal", "InTerminal", "OutTerminal", "AspectObject" },
-                ["hasChild"] = new JObject()
+                ["@type"] = new JArray() { Resources.FSB, Resources.Transport, Resources.Interface, Resources.IntegratedObject, Resources.Project, "Terminal", Resources.InputTerminal, Resources.OutputTerminal, "AspectObject" },
+                [Resources.HasChild] = new JObject()
                 {
                     ["@embed"] = "@never"
                 },
-                ["mimir:hasMasterProject"] = new JObject()
+                [Resources.HasMasterProject] = new JObject()
                 {
                     ["@embed"] = "@never"
                 },
-                ["hasTerminal"] = new JObject()
+                [Resources.HasInputTerminal] = new JObject()
+                {
+                    ["@embed"] = "@never"
+                },
+                [Resources.HasOutputTerminal] = new JObject()
+                {
+                    ["@embed"] = "@never"
+                },
+                ["imf:hasTerminal"] = new JObject()
                 {
                     ["@embed"] = "@never"
                 },
@@ -35,15 +45,15 @@ namespace JsonLdParser
                 {
                     ["@embed"] = "@always"
                 },
-                ["hasParent"] = new JObject()
+                [Resources.HasParent] = new JObject()
                 {
                     ["@embed"] = "@never"
                 },
-                ["isAspectOf"] = new JObject()
+                [Resources.IsAspectOf] = new JObject()
                 {
                     ["@embed"] = "@never"
                 },
-                ["fulfilledBy"] = new JObject()
+                [Resources.FulfilledBy] = new JObject()
                 {
                     ["@embed"] = "@never"
                 },
