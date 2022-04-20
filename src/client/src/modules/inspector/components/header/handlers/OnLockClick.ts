@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
 import { LockCm } from "../../../../../models";
-import { lockEntity, setIsLockedEdge, setIsLockedNode } from "../../../../../redux/store/project/actions";
+import { lockEntity, setLockedEdge, setLockedNode } from "../../../../../redux/store/project/actions";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
 import { EntityType } from "../../../../../models/enums/EntityType";
@@ -24,6 +24,6 @@ const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLocke
     type: IsNode(element) ? EntityType.Node : EntityType.Edge,
   };
 
-  if (IsNode(element)) dispatch(setIsLockedNode(lockObj));
-  if (IsEdge(element)) dispatch(setIsLockedEdge(lockObj));
+  if (IsNode(element)) dispatch(setLockedNode(lockObj));
+  if (IsEdge(element)) dispatch(setLockedEdge(lockObj));
 };

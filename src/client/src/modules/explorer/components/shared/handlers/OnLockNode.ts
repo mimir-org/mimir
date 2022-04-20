@@ -1,4 +1,4 @@
-import { lockEntity, setIsLockedNode } from "../../../../../redux/store/project/actions";
+import { lockEntity, setLockedNode } from "../../../../../redux/store/project/actions";
 import { Node } from "../../../../../models";
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
@@ -8,7 +8,7 @@ export const OnLockNode = (node: Node, isLockedBy: string, dispatch: Dispatch) =
   if (!IsUnsaved(node)) dispatch(lockEntity(node.id, !node.isLocked, EntityType.Node));
   else
     dispatch(
-      setIsLockedNode({
+      setLockedNode({
         id: node.id,
         isLocked: !node.isLocked,
         isLockedStatusBy: isLockedBy,

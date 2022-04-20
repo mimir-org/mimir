@@ -6,12 +6,12 @@ import {
   createEdge,
   removeEdge,
   removeNode,
-  setIsLockedAttribute,
-  setIsLockedAttributes,
-  setIsLockedEdge,
-  setIsLockedEdges,
-  setIsLockedNode,
-  setIsLockedNodes,
+  setLockedAttribute,
+  setLockedAttributes,
+  setLockedEdge,
+  setLockedEdges,
+  setLockedNode,
+  setLockedNodes,
   updateEdge,
   updateNode,
 } from "../../redux/store/project/actions";
@@ -130,20 +130,20 @@ export class WebSocket {
 
     const nodeLocks = locks.filter((l) => l.type === EntityType.Node);
     if (nodeLocks) {
-      if (nodeLocks.length > 1) this._dispatch(setIsLockedNodes(nodeLocks));
-      else if (nodeLocks.length === 1) this._dispatch(setIsLockedNode(nodeLocks[0]));
+      if (nodeLocks.length > 1) this._dispatch(setLockedNodes(nodeLocks));
+      else if (nodeLocks.length === 1) this._dispatch(setLockedNode(nodeLocks[0]));
     }
 
     const edgeLocks = locks.filter((l) => l.type === EntityType.Edge);
     if (edgeLocks) {
-      if (edgeLocks.length > 1) this._dispatch(setIsLockedEdges(edgeLocks));
-      else if (edgeLocks.length === 1) this._dispatch(setIsLockedEdge(edgeLocks[0]));
+      if (edgeLocks.length > 1) this._dispatch(setLockedEdges(edgeLocks));
+      else if (edgeLocks.length === 1) this._dispatch(setLockedEdge(edgeLocks[0]));
     }
 
     const attributeLocks = locks.filter((l) => l.type === EntityType.Attribute);
     if (attributeLocks) {
-      if (attributeLocks.length > 1) this._dispatch(setIsLockedAttributes(attributeLocks));
-      else if (attributeLocks.length === 1) this._dispatch(setIsLockedAttribute(attributeLocks[0]));
+      if (attributeLocks.length > 1) this._dispatch(setLockedAttributes(attributeLocks));
+      else if (attributeLocks.length === 1) this._dispatch(setLockedAttribute(attributeLocks[0]));
     }
   };
 }

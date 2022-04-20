@@ -3,7 +3,7 @@ import { IsUnsaved } from "../../../../../../../../../helpers";
 import { EntityType } from "../../../../../../../../../models/enums/EntityType";
 import { Attribute } from "../../../../../../../../../models";
 import { InspectorElement } from "../../../../../../../types";
-import { lockEntity, setIsLockedAttribute } from "../../../../../../../../../redux/store/project/actions";
+import { lockEntity, setLockedAttribute } from "../../../../../../../../../redux/store/project/actions";
 
 export const OnLockParameter = (
   inspectorParentElement: InspectorElement,
@@ -25,7 +25,7 @@ const handleLockOnline = (attribute: Attribute, isLocked: boolean, dispatch: Dis
 
 const handleLockOffline = (attribute: Attribute, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {
   dispatch(
-    setIsLockedAttribute({
+    setLockedAttribute({
       id: attribute.id,
       isLocked: isLocked,
       isLockedStatusBy: isLockedBy,

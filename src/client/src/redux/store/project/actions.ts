@@ -400,42 +400,42 @@ export function lockEntity(id: string, isLocked: boolean, type: EntityType): Typ
   };
 }
 
-export function setIsLockedNode(lock: LockCm): Types.SetLockNode {
+export function setLockedNode(lock: LockCm): Types.SetLockNode {
   return {
     type: Types.SET_LOCK_NODE,
     payload: lock,
   };
 }
 
-export function setIsLockedNodes(locks: LockCm[]): Types.SetLockNodes {
+export function setLockedNodes(locks: LockCm[]): Types.SetLockNodes {
   return {
     type: Types.SET_LOCK_NODES,
     payload: locks,
   };
 }
 
-export function setIsLockedEdge(lock: LockCm): Types.SetLockEdge {
+export function setLockedEdge(lock: LockCm): Types.SetLockEdge {
   return {
     type: Types.SET_LOCK_EDGE,
     payload: lock,
   };
 }
 
-export function setIsLockedEdges(locks: LockCm[]): Types.SetLockEdges {
+export function setLockedEdges(locks: LockCm[]): Types.SetLockEdges {
   return {
     type: Types.SET_LOCK_EDGES,
     payload: locks,
   };
 }
 
-export function setIsLockedAttribute(lock: LockCm): Types.SetLockAttribute {
+export function setLockedAttribute(lock: LockCm): Types.SetLockAttribute {
   return {
     type: Types.SET_LOCK_ATTRIBUTE,
     payload: lock,
   };
 }
 
-export function setIsLockedAttributes(locks: LockCm[]): Types.SetLockAttributes {
+export function setLockedAttributes(locks: LockCm[]): Types.SetLockAttributes {
   return {
     type: Types.SET_LOCK_ATTRIBUTES,
     payload: locks,
