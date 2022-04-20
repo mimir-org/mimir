@@ -8,12 +8,14 @@
         "hasAspectModel": { "@reverse": "isAspectOf" },
         "@version": "1.1"
     },
-    "@type": [ "FunctionalSystemBlock", "Transport", "Interface", "IntegratedObject", "mimir:Project" ],
+    "@type": [ "FunctionalSystemBlock", "Transport", "Interface", "IntegratedObject", "mimir:Project", "Terminal", "InTerminal", "OutTerminal", "AspectObject" ],
     "hasChild": {
-        "@type": "FunctionalSystemBlock",
         "@embed": "@never"
     },
     "mimir:hasMasterProject": {
+        "@embed": "@never"
+    },
+    "hasTerminal": {
         "@embed": "@never"
     },
     "hasAspectModel": {
