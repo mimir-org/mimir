@@ -3,12 +3,14 @@ import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
 import { GetParentNode } from "../../../../helpers/Family";
 import { Project, Node } from "../../../../models";
-import useOnNodeDelete from "./useOnNodeDelete";
+import { useOnNodeDelete } from ".";
 
 /**
  * Hook that runs whenever a Node has a change in BlockView.
  * In the Flow Library a change is defined by the following types:
  * NodeDimensionChange | NodePositionChange | NodeSelectionChange | NodeRemoveChange | NodeAddChange | NodeResetChange
+ * If a node is marked as removed, the hook useOnNodeDelete runs and handles removal of Mimir nodes and edges.
+ * If a node is marked with a position change, HandlePositionChange is called, and validates the position.
  * @param project
  * @param selectedNode
  * @param selectedBlockNode
@@ -24,15 +26,14 @@ const useOnNodesChange = (
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
-  const flowChanges: NodeChange[] = [];
-  const mimirNodesToDelete: Node[] = [];
+  const flowChanges = [] as NodeChange[];
+  const mimirNodesToDelete = [] as Node[];
 
+  // Verify changes
   changes.forEach((c) => {
-    if (c.type === "position") {
-      HandlePositionChange(c, selectedNode, project, flowChanges);
-    } else if (c.type === "remove") {
-      HandleRemoveNode(c.id, selectedNode, selectedBlockNode, flowChanges, mimirNodesToDelete);
-    } else flowChanges.push(c);
+    if (c.type === "position") return HandlePositionChange(c, selectedNode, project, flowChanges);
+    if (c.type === "remove") return HandleRemoveChange(c.id, selectedNode, selectedBlockNode, flowChanges, mimirNodesToDelete);
+    flowChanges.push(c);
   });
 
   // Execute all changes
@@ -48,9 +49,8 @@ const useOnNodesChange = (
  * @param selectedBlockNode
  * @param flowChanges
  * @param mimirNodesToDelete
- * @returns
  */
-function HandleRemoveNode(
+function HandleRemoveChange(
   id: string,
   selectedNode: Node,
   selectedBlockNode: Node,
@@ -59,8 +59,8 @@ function HandleRemoveNode(
 ) {
   if (id !== selectedNode?.id || !selectedBlockNode) return;
 
-  // Flow only deletes a selectedNode. In BlockView we want to delete the selectedBlockNode
-  const nodeChange: NodeChange = { id: selectedBlockNode?.id, type: "remove" };
+  // Flow only detects deletion of a selectedNode. In BlockView we want to delete the selectedBlockNode
+  const nodeChange = { id: selectedBlockNode?.id, type: "remove" } as NodeChange;
 
   flowChanges.push(nodeChange);
   mimirNodesToDelete.push(selectedBlockNode);

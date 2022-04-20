@@ -48,7 +48,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const selectedNode = project?.nodes?.find((n) => n.selected);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
-  const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
@@ -90,9 +89,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
     return hooks.useOnEdgesChange(changes, setEdges);
   }, []);
-
-  const nodeTypes = useMemo(() => GetBlockNodeTypes, []);
-  const edgeTypes = useMemo(() => GetBlockEdgeTypes, []);
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
     HandleBlockNodeSelection(selectedItems, project, selectedNode, inspectorRef, dispatch);
@@ -144,8 +140,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         onInit={OnInit}
         nodes={nodes}
         edges={edges}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
+        nodeTypes={useMemo(() => GetBlockNodeTypes, [])}
+        edgeTypes={useMemo(() => GetBlockEdgeTypes, [])}
         onNodesDelete={null}
         onEdgesDelete={null}
         onNodesChange={OnNodesChange}
@@ -160,7 +156,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         onSelectionChange={(e) => OnSelectionChange(e)}
         deleteKeyCode={"Delete"}
         zoomOnDoubleClick={false}
-        defaultZoom={defaultZoom}
+        defaultZoom={Size.ZOOM_DEFAULT}
         minZoom={0.2}
         maxZoom={3}
         onlyRenderVisibleElements

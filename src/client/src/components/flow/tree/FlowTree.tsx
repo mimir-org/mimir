@@ -85,9 +85,6 @@ export const FlowTree = ({ inspectorRef }: Props) => {
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
-  const nodeTypes = useMemo(() => GetTreeNodeTypes, []);
-  const edgeTypes = useMemo(() => GetTreeEdgeTypes, []);
-
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
@@ -136,8 +133,8 @@ export const FlowTree = ({ inspectorRef }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
+        nodeTypes={useMemo(() => GetTreeNodeTypes, [])}
+        edgeTypes={useMemo(() => GetTreeEdgeTypes, [])}
         defaultZoom={0.7}
         minZoom={0.1}
         defaultPosition={[window.innerWidth / 3, Size.BLOCK_MARGIN_Y]}
