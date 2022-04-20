@@ -18,8 +18,7 @@ namespace JsonLdParser
         /// </summary>
         public ImfJsonLdWriter()
         {
-            var filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Data/imfframe.jsonld";
-            Frame = JObject.Parse(File.ReadAllText(filePath));
+            Frame = JsonLdFrame.GetFrame();
 
             Opts = new JsonLdProcessorOptions
             {
