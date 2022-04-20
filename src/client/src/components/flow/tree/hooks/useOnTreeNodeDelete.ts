@@ -10,7 +10,6 @@ import { CloseInspector } from "../handlers";
  * Hook that runs when a FlowNode is deleted from Mimir in TreeView.
  * If a node is deleted the connected edges are also deleted.
  * @param flowNodesToDelete
- 
  * @param inspectorRef
  * @param project
  * @param dispatch

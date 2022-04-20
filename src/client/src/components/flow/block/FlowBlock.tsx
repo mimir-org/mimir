@@ -47,6 +47,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
   const defaultZoom = Size.ZOOM_DEFAULT;
   const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
 
@@ -75,21 +76,16 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return hooks.useOnDragStop(activeNode, dispatch);
   };
 
-  const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
-    return hooks.useOnNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
-  };
-
-  const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
-    return hooks.useOnEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
-  };
-
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
-  const OnNodesChange = useCallback((changes: NodeChange[]) => {
-    return hooks.useOnNodesChange(project, selectedNode, changes, setNodes);
-  }, []);
+  const OnNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      return hooks.useOnNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
+    },
+    [selectedBlockNode]
+  );
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
     return hooks.useOnEdgesChange(changes, setEdges);
@@ -150,10 +146,10 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         edges={edges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
+        onNodesDelete={null}
+        onEdgesDelete={null}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
-        onNodesDelete={OnNodesDelete}
-        onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
         onConnectStart={OnConnectStart}
         onConnectStop={OnConnectStop}

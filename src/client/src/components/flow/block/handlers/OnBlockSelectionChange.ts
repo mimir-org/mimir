@@ -39,7 +39,7 @@ function HandleBlockNodeSelect(flowNode: FlowNode, selectedNode: Node, dispatch:
 }
 
 function HandleBlockEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
-  dispatch(setActiveEdge(flowEdge?.id, true));
+  dispatch(setActiveEdge(flowEdge.id, true));
   dispatch(setActiveBlockNode(null));
   OpenInspector(dispatch);
 }

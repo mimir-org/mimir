@@ -1,8 +1,6 @@
-import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Project } from "../../../../models";
+import { Project, Node } from "../../../../models";
 import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
-import { GetMimirNodeByFlowNodeId } from "../../helpers/GetMimirDataByFlowId";
 import { IsAspectNode, IsOffPage } from "../../../../helpers/Aspects";
 import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
@@ -13,33 +11,29 @@ import { CloseInspector } from "../handlers";
  * If a Node is deleted the connected Edges are also deleted.
  * If an Edge is deleted the connect Nodes will not be deleted, except an edge between OffPageNodes.
  * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
- * @param flowNodesToDelete
+ * @param nodesToDelete
  * @param inspectorRef
  * @param project
  * @param dispatch
  */
 const useOnNodeDelete = (
-  flowNodesToDelete: FlowNode[],
+  nodesToDelete: Node[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   project: Project,
   dispatch: Dispatch
 ) => {
+  if (!nodesToDelete.length) return;
+
   let hasDeleted = false;
 
-  flowNodesToDelete.forEach((flowNode) => {
-    if (IsAspectNode(flowNode.data)) return;
+  nodesToDelete.forEach((node) => {
+    if (IsAspectNode(node) || node.isLocked) return;
 
-    const nodeToDelete = GetMimirNodeByFlowNodeId(project, flowNode.id);
-    if (nodeToDelete?.isLocked) return;
-
-    DeleteRelatedEdges(nodeToDelete.id, project, dispatch);
-
-    IsOffPage(nodeToDelete)
-      ? HandleOffPageNodeDelete(nodeToDelete, project, dispatch)
-      : HandleRelatedEdges(nodeToDelete.id, project, dispatch);
+    DeleteRelatedEdges(node.id, project, dispatch);
+    IsOffPage(node) ? HandleOffPageNodeDelete(node.id, project, dispatch) : HandleRelatedEdges(node.id, project, dispatch);
 
     hasDeleted = true;
-    dispatch(deleteNode(flowNode.id));
+    dispatch(deleteNode(node.id));
   });
 
   if (hasDeleted) CloseInspector(inspectorRef, dispatch);
