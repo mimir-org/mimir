@@ -32,8 +32,8 @@ const useOnNodeDelete = (
     DeleteRelatedEdges(node.id, project, dispatch);
     IsOffPage(node) ? HandleOffPageNodeDelete(node.id, project, dispatch) : HandleRelatedEdges(node.id, project, dispatch);
 
-    hasDeleted = true;
     dispatch(deleteNode(node.id));
+    hasDeleted = true;
   });
 
   if (hasDeleted) CloseInspector(inspectorRef, dispatch);
