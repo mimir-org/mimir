@@ -52,7 +52,6 @@ export const ProjectComponent = () => {
           return (
             <BlockAspectComponent
               key={node.id}
-              project={project}
               username={username}
               node={node}
               selectedNode={selectedNode}

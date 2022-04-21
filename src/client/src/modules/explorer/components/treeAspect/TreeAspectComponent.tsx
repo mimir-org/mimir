@@ -58,7 +58,7 @@ export const TreeAspectComponent = ({
       isLocked={node.isLocked}
       unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
       lockText={TextResources.EXPLORER_LOCK_OBJECT}
-      onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
+      onToggleLocked={() => OnLockNode(node, username, dispatch)}
     />
     <TreeAspectElement
       node={node}

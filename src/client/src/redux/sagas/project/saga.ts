@@ -26,12 +26,8 @@ import {
   FetchingProjectAction,
   IMPORT_PROJECT_SUCCESS_OR_ERROR,
   ImportProjectAction,
-  LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-  LOCK_EDGE_SUCCESS_OR_ERROR,
-  LOCK_NODE_SUCCESS_OR_ERROR,
-  LockAttribute,
-  LockEdge,
-  LockNode,
+  LOCK_ENTITY_SUCCESS_OR_ERROR,
+  LockEntity,
   SAVE_PROJECT_SUCCESS_OR_ERROR,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   SaveProjectAction,
@@ -408,146 +404,21 @@ export function* commitProject(action: CommitProject) {
   }
 }
 
-export function* lockNode(action: LockNode) {
+export function* lockNode(action: LockEntity) {
   try {
-    const url = Config.API_BASE_URL + "lock/node";
+    const url = `${Config.API_BASE_URL}lock`;
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
     if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: LOCK_NODE_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      const payload = {
-        apiError: apiError,
-      };
-
-      yield put({
-        type: LOCK_NODE_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      const apiError = GetApiErrorForBadRequest(response, LOCK_ENTITY_SUCCESS_OR_ERROR);
+      yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: apiError } });
       return;
     }
 
-    const payload = {
-      apiError: null,
-    };
-    yield put({
-      type: LOCK_NODE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: null } });
   } catch (error) {
-    const apiError = {
-      key: LOCK_NODE_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      apiError: apiError,
-    };
-
-    yield put({
-      type: LOCK_NODE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
-}
-
-export function* lockEdge(action: LockEdge) {
-  try {
-    const url = Config.API_BASE_URL + "lock/edge";
-    const response = yield call(post, url, action.payload);
-
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: LOCK_EDGE_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      const payload = {
-        apiError: apiError,
-      };
-
-      yield put({
-        type: LOCK_EDGE_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
-      return;
-    }
-
-    const payload = {
-      apiError: null,
-    };
-    yield put({
-      type: LOCK_EDGE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  } catch (error) {
-    const apiError = {
-      key: LOCK_EDGE_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      apiError: apiError,
-    };
-
-    yield put({
-      type: LOCK_EDGE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
-  }
-}
-
-export function* lockAttribute(action: LockAttribute) {
-  try {
-    const url = Config.API_BASE_URL + "lock/attribute";
-    const response = yield call(post, url, action.payload);
-
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
-
-      const apiError = {
-        key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-        errorMessage: data.title,
-        errorData: data,
-      } as ApiError;
-
-      const payload = {
-        apiError: apiError,
-      };
-
-      yield put({
-        type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
-    }
-  } catch (error) {
-    const apiError = {
-      key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-      errorMessage: error.message,
-      errorData: null,
-    } as ApiError;
-
-    const payload = {
-      apiError: apiError,
-    };
-
-    yield put({
-      type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    const apiError = GetApiErrorForException(error, LOCK_ENTITY_SUCCESS_OR_ERROR);
+    yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: apiError } });
   }
 }
