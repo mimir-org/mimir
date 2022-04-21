@@ -2,7 +2,6 @@ import { Edge as FlowEdge } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { deleteEdge } from "../../../../redux/store/project/actions";
-import { GetMimirEdgeByFlowEdgeId } from "../../helpers/GetMimirDataByFlowId";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { CloseInspector } from "../handlers";
 
@@ -22,14 +21,14 @@ const useOnTreeEdgeDelete = (
   let hasDeleted = false;
 
   flowEdgesToDelete.forEach((flowEdge) => {
-    const selectedNode = project?.nodes?.find((n) => n.selected);
+    const selectedNode = project.nodes.find((n) => n.selected);
     if (IsAspectNode(selectedNode)) return;
 
-    const edge = GetMimirEdgeByFlowEdgeId(project, flowEdge.id);
+    const edge = project.edges.find((e) => e.id === flowEdge.id);
     if (edge?.isLocked) return;
 
+    dispatch(deleteEdge(edge.id));
     hasDeleted = true;
-    dispatch(deleteEdge(flowEdge.id));
   });
 
   if (hasDeleted) CloseInspector(inspectorRef, dispatch);

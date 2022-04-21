@@ -3,7 +3,6 @@ import { Dispatch } from "redux";
 import { Project } from "../../../../models";
 import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { GetMimirNodeByFlowNodeId } from "../../helpers/GetMimirDataByFlowId";
 import { CloseInspector } from "../handlers";
 
 /**
@@ -25,13 +24,12 @@ const useOnTreeNodeDelete = (
   flowNodesToDelete.forEach((flowNode) => {
     if (IsAspectNode(flowNode.data)) return;
 
-    const mimirNode = GetMimirNodeByFlowNodeId(project, flowNode.id);
+    const mimirNode = project.nodes.find((n) => n.id === flowNode.id);
     if (mimirNode?.isLocked) return;
+
     DeleteRelatedEdges(mimirNode.id, project, dispatch);
-
-    hasDeleted = true;
-
     dispatch(deleteNode(mimirNode.id));
+    hasDeleted = true;
   });
 
   if (hasDeleted) CloseInspector(inspectorRef, dispatch);

@@ -79,10 +79,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
     HandleTreeNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
-  const OnNodesChange = useCallback((changes: NodeChange[]) => {
-    setNodes((n) => applyNodeChanges(changes, n));
-  }, []);
-
+  const OnNodesChange = useCallback((changes: NodeChange[]) => setNodes((n) => applyNodeChanges(changes, n)), []);
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => setEdges((e) => applyEdgeChanges(changes, e)), []);
 
   // Build initial elements from Project
