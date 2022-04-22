@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
-import { useOnTreeConnect, useOnTreeDrop, useOnTreeEdgeDelete, useOnTreeNodeDelete } from "./hooks";
+import * as hooks from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
@@ -19,8 +19,6 @@ import ReactFlow, {
   useEdgesState,
   ReactFlowInstance,
   OnSelectionChangeParams,
-  applyNodeChanges,
-  applyEdgeChanges,
   NodeChange,
   EdgeChange,
 } from "react-flow-renderer";
@@ -60,27 +58,30 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
 
-  const OnNodesDelete = (nodesToDelete: FlowNode[]) => {
-    return useOnTreeNodeDelete(nodesToDelete, inspectorRef, project, dispatch);
-  };
-
-  const OnEdgesDelete = (edgesToDelete: FlowEdge[]) => {
-    return useOnTreeEdgeDelete(edgesToDelete, inspectorRef, project, dispatch);
-  };
-
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
+    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
     HandleTreeNodeSelection(selectedItems, project, inspectorRef, dispatch);
 
-  const OnNodesChange = useCallback((changes: NodeChange[]) => setNodes((n) => applyNodeChanges(changes, n)), []);
-  const OnEdgesChange = useCallback((changes: EdgeChange[]) => setEdges((e) => applyEdgeChanges(changes, e)), []);
+  const OnNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      return hooks.useOnTreeNodesChange(project, changes, setNodes, dispatch, inspectorRef);
+    },
+    [project]
+  );
+
+  const OnEdgesChange = useCallback(
+    (changes: EdgeChange[]) => {
+      return hooks.useOnTreeEdgesChange(project, changes, setEdges, dispatch, inspectorRef);
+    },
+    [project]
+  );
 
   // Build initial elements from Project
   useEffect(() => {
@@ -124,8 +125,6 @@ export const FlowTree = ({ inspectorRef }: Props) => {
         edges={edges}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
-        onNodesDelete={OnNodesDelete}
-        onEdgesDelete={OnEdgesDelete}
         onConnect={OnConnect}
         onDrop={OnDrop}
         onDragOver={OnDragOver}

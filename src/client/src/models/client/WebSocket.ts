@@ -105,8 +105,12 @@ export class WebSocket {
     }
 
     if (!this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
-    if (eventType === WorkerStatus.Delete) this._dispatch(deleteNode(node.id));
-    if (eventType === WorkerStatus.Update) this._dispatch(updateNode(node));
+    if (eventType === WorkerStatus.Delete) {
+      this._dispatch(deleteNode(node.id));
+    }
+    if (eventType === WorkerStatus.Update) {
+      this._dispatch(updateNode(node));
+    }
   };
 
   private handleReceivedEdgeData = (eventType: WorkerStatus, data: string) => {
@@ -119,8 +123,12 @@ export class WebSocket {
     }
 
     if (!this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
-    if (eventType === WorkerStatus.Delete) this._dispatch(deleteEdge(edge.id));
-    if (eventType === WorkerStatus.Update) this._dispatch(updateEdge(edge));
+    if (eventType === WorkerStatus.Delete) {
+      this._dispatch(deleteEdge(edge.id));
+    }
+    if (eventType === WorkerStatus.Update) {
+      this._dispatch(updateEdge(edge));
+    }
   };
 
   private handleReceiveLockData = (_: WorkerStatus, data: string) => {

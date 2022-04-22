@@ -1,4 +1,5 @@
 export { default as useOnTreeDrop } from "./useOnTreeDrop";
 export { default as useOnTreeConnect } from "./useOnTreeConnect";
-export { default as useOnTreeNodeDelete } from "./useOnTreeNodeDelete";
-export { default as useOnTreeEdgeDelete } from "./useOnTreeEdgeDelete";
+
+export { default as useOnTreeNodesChange } from "./useOnTreeNodesChange";
+export { default as useOnTreeEdgesChange } from "./useOnTreeEdgesChange";

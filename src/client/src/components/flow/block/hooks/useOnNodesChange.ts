@@ -57,7 +57,7 @@ function HandleRemoveChange(
   flowChanges: NodeChange[],
   mimirNodesToDelete: Node[]
 ) {
-  if (id !== selectedNode?.id || !selectedBlockNode) return;
+  if (id !== selectedNode?.id || !selectedBlockNode || selectedBlockNode.isLocked) return;
 
   // Flow only detects deletion of a selectedNode. In BlockView we want to delete the selectedBlockNode
   const nodeChange = { id: selectedBlockNode?.id, type: "remove" } as NodeChange;
