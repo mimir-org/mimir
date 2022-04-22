@@ -27,8 +27,8 @@ export const CheckboxWrapper = styled.label<CheckboxWrapperProps>`
 
   > input::before {
     content: "";
-    height: 8px;
-    width: 14px;
+    height: 16px;
+    width: 20px;
     background-color: ${(props) => props.color};
     transform: scale(0);
     transition: 250ms transform ease-in-out;

@@ -3,7 +3,7 @@ import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
-import { projectSelector, usernameSelector, useAppDispatch, useAppSelector, projectStateSelector } from "../../../redux/store";
+import { usernameSelector, useAppDispatch, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
@@ -15,9 +15,9 @@ import { OnSetVisibleElement } from "./handlers/OnSetVisibleElement";
  */
 export const TreeProjectComponent = () => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector(projectSelector);
   const username = useAppSelector(usernameSelector);
   const projectState = useAppSelector(projectStateSelector);
+  const project = projectState?.project;
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
