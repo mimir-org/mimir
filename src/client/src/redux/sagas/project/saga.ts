@@ -3,8 +3,8 @@ import { Project, ProjectFileAm, WebSocket } from "../../../models";
 import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
 import { search } from "../../store/project/actions";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
 import {
   ApiError,
@@ -27,12 +27,8 @@ import {
   FetchingProjectAction,
   IMPORT_PROJECT_SUCCESS_OR_ERROR,
   ImportProjectAction,
-  LOCK_ATTRIBUTE_SUCCESS_OR_ERROR,
-  LOCK_EDGE_SUCCESS_OR_ERROR,
-  LOCK_NODE_SUCCESS_OR_ERROR,
-  LockAttribute,
-  LockEdge,
-  LockNode,
+  LOCK_ENTITY_SUCCESS_OR_ERROR,
+  LockEntity,
   SAVE_PROJECT_SUCCESS_OR_ERROR,
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   SaveProjectAction,
@@ -49,8 +45,14 @@ export function* getProject(action: FetchingProjectAction) {
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
-      const apiError = { key: FETCHING_PROJECT_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
-      const payload = { project: null, apiError };
+
+      const apiError = {
+        key: FETCHING_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = { project: null, apiError: apiError };
 
       yield put({ type: FETCHING_PROJECT_SUCCESS_OR_ERROR, payload });
       return;
@@ -67,10 +69,17 @@ export function* getProject(action: FetchingProjectAction) {
     }
 
     const payload = { project, apiError: null };
+
     yield put({ type: FETCHING_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
-    const apiError = { key: FETCHING_PROJECT_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
+    const apiError = {
+      key: FETCHING_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
     const payload = { project: null, apiError };
+
     yield put({ type: FETCHING_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }
@@ -83,9 +92,14 @@ export function* searchProject(action) {
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
-      const apiError = { key: SEARCH_PROJECT_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
-      const payload = { projectList: null, apiError };
 
+      const apiError = {
+        key: SEARCH_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
+      const payload = { projectList: null, apiError };
       yield put({ type: SEARCH_PROJECT_SUCCESS_OR_ERROR, payload });
       return;
     }
@@ -94,7 +108,12 @@ export function* searchProject(action) {
 
     yield put({ type: SEARCH_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
-    const apiError = { key: SEARCH_PROJECT_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
+    const apiError = {
+      key: SEARCH_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
     const payload = { projectList: null, apiError };
     yield put({ type: SEARCH_PROJECT_SUCCESS_OR_ERROR, payload });
   }
@@ -108,7 +127,13 @@ export function* createProject(action) {
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
-      const apiError = { key: CREATING_PROJECT_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
+
+      const apiError = {
+        key: CREATING_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
       const payload = { project: null, apiError };
 
       yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
@@ -117,11 +142,17 @@ export function* createProject(action) {
 
     const project = response.data as Project;
     project.edges = [];
+
     const payload = { project, apiError: null };
 
     yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
-    const apiError = { key: CREATING_PROJECT_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
+    const apiError = {
+      key: CREATING_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
     const payload = { project: null, apiError };
     yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
   }
@@ -136,7 +167,12 @@ export function* createSubProject(action: CreateSubProject) {
     if (response.status === 400) {
       const data = GetBadResponseData(response);
 
-      const apiError = { key: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
+      const apiError = {
+        key: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
       const payload = { project: null, apiError };
 
       yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
@@ -144,9 +180,15 @@ export function* createSubProject(action: CreateSubProject) {
     }
 
     const payload = { apiError: null };
+
     yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
-    const apiError = { key: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
+    const apiError = {
+      key: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
     const payload = { project: null, apiError };
     yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
   }
@@ -179,7 +221,9 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     if (response.status === 400) {
       yield put({
         type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-        payload: { apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR) },
+        payload: {
+          apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
+        },
       });
       return;
     }
@@ -189,11 +233,16 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
 
     saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
 
-    yield put({ type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR, payload: { apiError: null } });
+    yield put({
+      type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
+      payload: { apiError: null },
+    });
   } catch (error) {
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-      payload: { apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR) },
+      payload: {
+        apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
+      },
     });
   }
 }
@@ -207,7 +256,11 @@ export function* importProject(action: ImportProjectAction) {
 
     const { ["Content-Type"]: _, ...formPostHeaders } = HeadersInitDefault;
 
-    const response = yield call(post, url, formData, { method: "post", body: formData, headers: { ...formPostHeaders } });
+    const response = yield call(post, url, formData, {
+      method: "post",
+      body: formData,
+      headers: { ...formPostHeaders },
+    });
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, IMPORT_PROJECT_SUCCESS_OR_ERROR);
@@ -231,7 +284,13 @@ export function* commitProject(action: CommitProject) {
     // This is a bad request
     if (response.status === 400) {
       const data = GetBadResponseData(response);
-      const apiError = { key: COMMIT_PROJECT_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
+
+      const apiError = {
+        key: COMMIT_PROJECT_SUCCESS_OR_ERROR,
+        errorMessage: data.title,
+        errorData: data,
+      } as ApiError;
+
       const payload = { apiError };
 
       yield put({ type: COMMIT_PROJECT_SUCCESS_OR_ERROR, payload });
@@ -239,76 +298,36 @@ export function* commitProject(action: CommitProject) {
     }
 
     const payload = { apiError: null };
+
     yield put({ type: COMMIT_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
-    const apiError = { key: COMMIT_PROJECT_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
+    const apiError = {
+      key: COMMIT_PROJECT_SUCCESS_OR_ERROR,
+      errorMessage: error.message,
+      errorData: null,
+    } as ApiError;
+
     const payload = { apiError };
+
     yield put({ type: COMMIT_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }
 
-export function* lockNode(action: LockNode) {
+export function* lockNode(action: LockEntity) {
   try {
-    const url = Config.API_BASE_URL + "lock/node";
+    const url = `${Config.API_BASE_URL}lock`;
     const response = yield call(post, url, action.payload);
 
     // This is a bad request
     if (response.status === 400) {
-      const data = GetBadResponseData(response);
-      const apiError = { key: LOCK_NODE_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
-      const payload = { apiError };
-      yield put({ type: LOCK_NODE_SUCCESS_OR_ERROR, payload });
+      const apiError = GetApiErrorForBadRequest(response, LOCK_ENTITY_SUCCESS_OR_ERROR);
+      yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: apiError } });
       return;
     }
 
-    const payload = { apiError: null };
-    yield put({ type: LOCK_NODE_SUCCESS_OR_ERROR, payload });
+    yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: null } });
   } catch (error) {
-    const apiError = { key: LOCK_NODE_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
-    const payload = { apiError };
-
-    yield put({ type: LOCK_NODE_SUCCESS_OR_ERROR, payload });
-  }
-}
-
-export function* lockEdge(action: LockEdge) {
-  try {
-    const url = Config.API_BASE_URL + "lock/edge";
-    const response = yield call(post, url, action.payload);
-
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
-      const apiError = { key: LOCK_EDGE_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
-      const payload = { apiError };
-      yield put({ type: LOCK_EDGE_SUCCESS_OR_ERROR, payload });
-      return;
-    }
-
-    const payload = { apiError: null };
-    yield put({ type: LOCK_EDGE_SUCCESS_OR_ERROR, payload });
-  } catch (error) {
-    const apiError = { key: LOCK_EDGE_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
-    const payload = { apiError };
-    yield put({ type: LOCK_EDGE_SUCCESS_OR_ERROR, payload });
-  }
-}
-
-export function* lockAttribute(action: LockAttribute) {
-  try {
-    const url = Config.API_BASE_URL + "lock/attribute";
-    const response = yield call(post, url, action.payload);
-
-    // This is a bad request
-    if (response.status === 400) {
-      const data = GetBadResponseData(response);
-      const apiError = { key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR, errorMessage: data.title, errorData: data } as ApiError;
-      const payload = { apiError };
-      yield put({ type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR, payload });
-    }
-  } catch (error) {
-    const apiError = { key: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR, errorMessage: error.message, errorData: null } as ApiError;
-    const payload = { apiError };
-    yield put({ type: LOCK_ATTRIBUTE_SUCCESS_OR_ERROR, payload });
+    const apiError = GetApiErrorForException(error, LOCK_ENTITY_SUCCESS_OR_ERROR);
+    yield put({ type: LOCK_ENTITY_SUCCESS_OR_ERROR, payload: { apiError: apiError } });
   }
 }

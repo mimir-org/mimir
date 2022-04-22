@@ -3,10 +3,24 @@ import { Connector, Edge, Node, Simple } from "../../../models";
 import { IsAspectNode } from "../../../helpers/Aspects";
 import { IsFamily } from "../../../helpers/Family";
 import {
-  GetUpdatedEdgeInnerWithTerminalAttributeIsLocked,
+  getEdgeInterfaceAttributeMap,
+  getEdgeInterfaceTerminalAttributeMap,
+  getEdgeTransportAttributeMap,
+  getEdgeTransportTerminalAttributeMap,
+  getNodeAttributeMap,
+  getNodeConnectorAttributeMap,
+  getNodeSimpleAttributeMap,
   GetUpdatedEdgeInnerWithTerminalAttributeValue,
+  setLockEdge,
+  setLockInterfaceAttribute,
+  setLockInterfaceTerminalAttribute,
+  setLockNode,
+  setLockNodeAttribute,
+  setLockNodeTerminalAttribute,
+  setLockSimpleAttribute,
+  setLockTransportAttribute,
+  setLockTransportTerminalAttribute,
   TraverseTree,
-  UpdateAttributeIsLocked,
 } from "./helpers/";
 
 const initialState: Types.ProjectState = {
@@ -115,9 +129,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
     case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
-    case Types.LOCK_NODE_SUCCESS_OR_ERROR:
-    case Types.LOCK_ATTRIBUTE_SUCCESS_OR_ERROR:
-    case Types.LOCK_EDGE_SUCCESS_OR_ERROR:
+    case Types.LOCK_ENTITY_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
@@ -490,195 +502,135 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_LOCK_NODE: {
-      const { id, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+      return setLockNode(action.payload, state);
+    }
 
-      const getAttr = (n: Node) => {
-        return n.attributes.map((attr) => UpdateAttributeIsLocked(attr, isLocked, isLockedStatusBy, isLockedStatusDate));
-      };
+    case Types.SET_LOCK_NODES: {
+      const nodeLocks = action.payload;
 
-      return {
-        ...state,
-        project: {
-          ...project,
-          nodes: nodes.map((n) =>
-            n.id === id ? { ...n, isLocked, isLockedStatusBy, isLockedStatusDate, attributes: getAttr(n) } : n
-          ),
-        },
-      };
+      let modifiedState = { ...state };
+
+      nodeLocks.forEach((nodeLock) => {
+        modifiedState = setLockNode(nodeLock, modifiedState);
+      });
+
+      return modifiedState;
     }
 
     case Types.SET_LOCK_EDGE: {
-      const { id, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
-
-      const getAttrFromTransport = (e: Edge) => {
-        return e.transport?.attributes?.map((a) => UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate));
-      };
-
-      const getAttrFromInterface = (e: Edge) => {
-        return e.interface?.attributes?.map((a) => UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate));
-      };
-
-      return {
-        ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) =>
-            e.id === id
-              ? {
-                  ...e,
-                  isLocked,
-                  isLockedStatusBy,
-                  transport: e.transport ? { ...e.transport, attributes: getAttrFromTransport(e) } : null,
-                  interface: e.interface ? { ...e.interface, attributes: getAttrFromInterface(e) } : null,
-                }
-              : e
-          ),
-        },
-      };
+      return setLockEdge(action.payload, state);
     }
 
-    case Types.SET_LOCK_NODE_ATTRIBUTE: {
-      const { id, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+    case Types.SET_LOCK_EDGES: {
+      const edgeLocks = action.payload;
 
-      const getAttributes = (n: Node) => {
-        return n.attributes.map((a) =>
-          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-        );
-      };
+      let modifiedState = { ...state };
 
-      return {
-        ...state,
-        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, attributes: getAttributes(n) } : n)) },
-      };
+      edgeLocks.forEach((edgeLock) => {
+        modifiedState = setLockEdge(edgeLock, modifiedState);
+      });
+
+      return modifiedState;
     }
 
-    case Types.SET_LOCK_NODE_TERMINAL_ATTRIBUTE: {
-      const { id, terminalId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+    case Types.SET_LOCK_ATTRIBUTE: {
+      const { id } = action.payload;
 
-      const getAttr = (conn: Connector) => {
-        return conn.attributes.map((a) =>
-          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-        );
-      };
+      const nodeAttributeMapTarget = getNodeAttributeMap(state.project.nodes)[id];
+      if (nodeAttributeMapTarget) {
+        return setLockNodeAttribute({ ...nodeAttributeMapTarget, ...action.payload }, state);
+      }
 
-      const getConnectors = (n: Node) => {
-        return n.connectors.map((conn) => (conn.id === terminalId ? { ...conn, attributes: getAttr(conn) } : conn));
-      };
+      const nodeConnectorAttributeMapTarget = getNodeConnectorAttributeMap(state.project.nodes)[id];
+      if (nodeConnectorAttributeMapTarget) {
+        return setLockNodeTerminalAttribute({ ...nodeConnectorAttributeMapTarget, ...action.payload }, state);
+      }
 
-      return {
-        ...state,
-        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
-      };
+      const nodeSimpleAttributeMapTarget = getNodeSimpleAttributeMap(state.project.nodes)[id];
+      if (nodeSimpleAttributeMapTarget) {
+        return setLockSimpleAttribute({ ...nodeSimpleAttributeMapTarget, ...action.payload }, state);
+      }
+
+      const edgeTransportAttributeMapTarget = getEdgeTransportAttributeMap(state.project.edges)[id];
+      if (edgeTransportAttributeMapTarget) {
+        return setLockTransportAttribute({ ...edgeTransportAttributeMapTarget, ...action.payload }, state);
+      }
+
+      const edgeTransportTerminalAttributeMapTarget = getEdgeTransportTerminalAttributeMap(state.project.edges)[id];
+      if (edgeTransportTerminalAttributeMapTarget) {
+        return setLockTransportTerminalAttribute({ ...edgeTransportTerminalAttributeMapTarget, ...action.payload }, state);
+      }
+
+      const edgeInterfaceAttributeMapTarget = getEdgeInterfaceAttributeMap(state.project.edges)[id];
+      if (edgeInterfaceAttributeMapTarget) {
+        return setLockInterfaceAttribute({ ...edgeInterfaceAttributeMapTarget, ...action.payload }, state);
+      }
+
+      const edgeInterfaceTerminalAttributeMapTarget = getEdgeInterfaceTerminalAttributeMap(state.project.edges)[id];
+      if (edgeInterfaceTerminalAttributeMapTarget) {
+        return setLockInterfaceTerminalAttribute({ ...edgeInterfaceTerminalAttributeMapTarget, ...action.payload }, state);
+      }
+
+      return { ...state };
     }
 
-    case Types.SET_LOCK_TRANSPORT_TERMINAL_ATTRIBUTE: {
-      const { id, terminalId, transportId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+    case Types.SET_LOCK_ATTRIBUTES: {
+      const attributeLocks = action.payload;
 
-      return {
-        ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) =>
-            e?.transport?.id === transportId
-              ? {
-                  ...e,
-                  transport: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(
-                    e.transport,
-                    terminalId,
-                    id,
-                    isLocked,
-                    isLockedStatusBy,
-                    isLockedStatusDate
-                  ),
-                }
-              : e
-          ),
-        },
-      };
-    }
-    case Types.SET_LOCK_INTERFACE_TERMINAL_ATTRIBUTE: {
-      const { id, terminalId, interfaceId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+      const nodeAttributeMap = getNodeAttributeMap(state.project.nodes);
+      const nodeConnectorAttributeMap = getNodeConnectorAttributeMap(state.project.nodes);
+      const nodeSimpleAttributeMap = getNodeSimpleAttributeMap(state.project.nodes);
+      const edgeTransportAttributeMap = getEdgeTransportAttributeMap(state.project.edges);
+      const edgeTransportTerminalAttributeMap = getEdgeTransportTerminalAttributeMap(state.project.edges);
+      const edgeInterfaceAttributeMap = getEdgeInterfaceAttributeMap(state.project.edges);
+      const edgeInterfaceTerminalAttributeMap = getEdgeInterfaceTerminalAttributeMap(state.project.edges);
 
-      return {
-        ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) =>
-            e?.interface?.id === interfaceId
-              ? {
-                  ...e,
-                  interface: GetUpdatedEdgeInnerWithTerminalAttributeIsLocked(
-                    e.interface,
-                    terminalId,
-                    id,
-                    isLocked,
-                    isLockedStatusBy,
-                    isLockedStatusDate
-                  ),
-                }
-              : e
-          ),
-        },
-      };
-    }
+      let modifiedState = { ...state };
 
-    case Types.SET_LOCK_TRANSPORT_ATTRIBUTE: {
-      const { id, transportId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+      attributeLocks.forEach((attributeLock) => {
+        const nodeAttributeMapTarget = nodeAttributeMap[attributeLock.id];
+        if (nodeAttributeMapTarget) {
+          modifiedState = setLockNodeAttribute({ ...nodeAttributeMapTarget, ...attributeLock }, modifiedState);
+        }
 
-      const getAttr = (e: Edge) => {
-        return e.transport.attributes.map((a) =>
-          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-        );
-      };
+        const nodeConnectorAttributeMapTarget = nodeConnectorAttributeMap[attributeLock.id];
+        if (nodeConnectorAttributeMapTarget) {
+          modifiedState = setLockNodeTerminalAttribute({ ...nodeConnectorAttributeMapTarget, ...attributeLock }, modifiedState);
+        }
 
-      return {
-        ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) =>
-            e.transport && e.transport.id === transportId ? { ...e, transport: { ...e.transport, attributes: getAttr(e) } } : e
-          ),
-        },
-      };
-    }
+        const nodeSimpleAttributeMapTarget = nodeSimpleAttributeMap[attributeLock.id];
+        if (nodeSimpleAttributeMapTarget) {
+          modifiedState = setLockSimpleAttribute({ ...nodeSimpleAttributeMapTarget, ...attributeLock }, modifiedState);
+        }
 
-    case Types.SET_LOCK_INTERFACE_ATTRIBUTE: {
-      const { id, interfaceId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+        const edgeTransportAttributeMapTarget = edgeTransportAttributeMap[attributeLock.id];
+        if (edgeTransportAttributeMapTarget) {
+          modifiedState = setLockTransportAttribute({ ...edgeTransportAttributeMapTarget, ...attributeLock }, modifiedState);
+        }
 
-      const getAttr = (e: Edge) => {
-        return e.transport.attributes.map((a) =>
-          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-        );
-      };
+        const edgeTransportTerminalAttributeMapTarget = edgeTransportTerminalAttributeMap[attributeLock.id];
+        if (edgeTransportTerminalAttributeMapTarget) {
+          modifiedState = setLockTransportTerminalAttribute(
+            { ...edgeTransportTerminalAttributeMapTarget, ...attributeLock },
+            modifiedState
+          );
+        }
 
-      return {
-        ...state,
-        project: {
-          ...project,
-          edges: edges.map((e) =>
-            e?.interface?.id === interfaceId ? { ...e, interface: { ...e.transport, attributes: getAttr(e) } } : e
-          ),
-        },
-      };
-    }
+        const edgeInterfaceAttributeMapTarget = edgeInterfaceAttributeMap[attributeLock.id];
+        if (edgeInterfaceAttributeMapTarget) {
+          modifiedState = setLockInterfaceAttribute({ ...edgeInterfaceAttributeMapTarget, ...attributeLock }, modifiedState);
+        }
 
-    case Types.SET_LOCK_SIMPLE_ATTRIBUTE: {
-      const { id, simpleId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = action.payload;
+        const edgeInterfaceTerminalAttributeMapTarget = edgeInterfaceTerminalAttributeMap[attributeLock.id];
+        if (edgeInterfaceTerminalAttributeMapTarget) {
+          modifiedState = setLockInterfaceTerminalAttribute(
+            { ...edgeInterfaceTerminalAttributeMapTarget, ...attributeLock },
+            modifiedState
+          );
+        }
+      });
 
-      const getAttr = (s: Simple) => {
-        return s.attributes.map((a) =>
-          a.id === id ? UpdateAttributeIsLocked(a, isLocked, isLockedStatusBy, isLockedStatusDate) : a
-        );
-      };
-
-      const getSimples = (n: Node) => {
-        return n.simples.map((s) => (s.id === simpleId ? { ...s, attributes: getAttr(s) } : s));
-      };
-
-      return {
-        ...state,
-        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)) },
-      };
+      return modifiedState;
     }
 
     case Types.CHANGE_NODE_UPDATED: {

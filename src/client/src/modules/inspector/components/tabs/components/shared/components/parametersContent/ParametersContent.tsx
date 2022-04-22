@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
-import { CombinedAttributeFilter, Project } from "../../../../../../../../models";
+import { CombinedAttributeFilter } from "../../../../../../../../models";
 import { GetAttributeCombinations } from "./helpers/GetAttributeCombinations";
 import { GetParametersColor } from "./helpers/GetParametersColor";
 import { GetAttributes } from "./helpers/GetAttributes";
@@ -37,8 +37,6 @@ interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
-  project: Project;
-  elementIsLocked: boolean;
   attributeLikeItems?: AttributeLikeItem[];
 }
 
@@ -46,8 +44,6 @@ export const ParametersContent = ({
   parametersElement,
   inspectorParentElement,
   terminalParentElement,
-  project,
-  elementIsLocked,
   attributeLikeItems,
 }: Props) => {
   const dispatch = useAppDispatch();
@@ -119,7 +115,6 @@ export const ParametersContent = ({
               <ParameterRow
                 key={filterName}
                 element={parametersElement}
-                elementIsLocked={elementIsLocked}
                 inspectorParentElement={inspectorParentElement}
                 terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
@@ -127,7 +122,6 @@ export const ParametersContent = ({
                 attributeLikeItems={attributeLikeItems}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 username={username}
-                project={project}
                 filterName={filterName}
                 headerColor={headerColor}
                 bodyColor={bodyColor}

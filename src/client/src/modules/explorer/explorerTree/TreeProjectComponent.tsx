@@ -37,7 +37,6 @@ export const TreeProjectComponent = () => {
         return (
           <TreeAspectComponent
             key={node.id}
-            project={project}
             username={username}
             node={node}
             nodes={nodes}

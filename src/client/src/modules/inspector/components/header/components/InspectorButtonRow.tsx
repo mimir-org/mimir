@@ -54,7 +54,7 @@ export const InspectorButtonRow = ({
       {!IsCreateLibraryType(element) && isElementSelected && (
         <>
           <InspectorButton
-            onClick={() => OnLockClick(element, project, !element.isLocked, username, dispatch)}
+            onClick={() => OnLockClick(element, !element.isLocked, username, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
             description={element?.isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
           />

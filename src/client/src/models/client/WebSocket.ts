@@ -1,26 +1,27 @@
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
-import { Edge, LockAttributeAm, LockEdgeAm, LockNodeAm, Node, WorkerStatus } from "../index";
+import { Edge, Node, WorkerStatus } from "../index";
 import { ProjectState } from "../../redux/store/project/types";
 import Config from "../Config";
+import { LockCm } from "../application/LockCm";
+import { EntityType } from "../enums/EntityType";
 import {
   addNode,
   createEdge,
   deleteEdge,
   deleteNode,
-  setIsLockedEdge,
-  setIsLockedInterfaceAttribute,
-  setIsLockedNode,
-  setIsLockedNodeAttribute,
-  setIsLockedNodeTerminalAttribute,
-  setIsLockedSimpleAttribute,
-  setIsLockedTransportAttribute,
-  setIsLockedTransportTerminalAttribute,
+  setLockedAttribute,
+  setLockedAttributes,
+  setLockedEdge,
+  setLockedEdges,
+  setLockedNode,
+  setLockedNodes,
   updateEdge,
   updateNode,
 } from "../../redux/store/project/actions";
 
 let instance = null;
+
 export class WebSocket {
   private _connection: HubConnection;
   private _running: boolean;
@@ -42,7 +43,7 @@ export class WebSocket {
       .build();
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    instance = this; // TODO: Check
+    instance = this;
     return instance;
   }
 
@@ -64,9 +65,7 @@ export class WebSocket {
 
           this._connection.on("ReceiveNodeData", this.handleReceivedNodeData);
           this._connection.on("ReceiveEdgeData", this.handleReceivedEdgeData);
-          this._connection.on("ReceiveLockAttributeData", this.handleReceiveLockAttributeData);
-          this._connection.on("ReceiveLockNodeData", this.handleReceiveLockNodeData);
-          this._connection.on("ReceiveLockEdgeData", this.handleReceiveLockEdgeData);
+          this._connection.on("ReceiveLockData", this.handleReceiveLockData);
         })
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         .catch((_e: unknown) => {});
@@ -101,11 +100,11 @@ export class WebSocket {
 
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
+
       this._dispatch(addNode(node));
     }
 
     if (!this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
-
     if (eventType === WorkerStatus.Delete) this._dispatch(deleteNode(node.id));
     if (eventType === WorkerStatus.Update) this._dispatch(updateNode(node));
   };
@@ -115,6 +114,7 @@ export class WebSocket {
 
     if (eventType === WorkerStatus.Create) {
       if (this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
+
       this._dispatch(createEdge(edge));
     }
 
@@ -123,42 +123,25 @@ export class WebSocket {
     if (eventType === WorkerStatus.Update) this._dispatch(updateEdge(edge));
   };
 
-  private handleReceiveLockNodeData = (_: WorkerStatus, data: string) => {
-    const lockNodeAm = JSON.parse(data) as LockNodeAm;
-    this._dispatch(setIsLockedNode(lockNodeAm));
-  };
+  private handleReceiveLockData = (_: WorkerStatus, data: string) => {
+    const locks = JSON.parse(data) as LockCm[];
 
-  private handleReceiveLockEdgeData = (_: WorkerStatus, data: string) => {
-    const lockEdgeAm = JSON.parse(data) as LockEdgeAm;
-    this._dispatch(setIsLockedEdge(lockEdgeAm));
-  };
+    const nodeLocks = locks.filter((l) => l.type === EntityType.Node);
+    if (nodeLocks) {
+      if (nodeLocks.length > 1) this._dispatch(setLockedNodes(nodeLocks));
+      else if (nodeLocks.length === 1) this._dispatch(setLockedNode(nodeLocks[0]));
+    }
 
-  private handleReceiveLockAttributeData = (_: WorkerStatus, data: string) => {
-    const lockAttributeAm = JSON.parse(data) as LockAttributeAm;
-    this.onLockAttribute(lockAttributeAm);
-  };
+    const edgeLocks = locks.filter((l) => l.type === EntityType.Edge);
+    if (edgeLocks) {
+      if (edgeLocks.length > 1) this._dispatch(setLockedEdges(edgeLocks));
+      else if (edgeLocks.length === 1) this._dispatch(setLockedEdge(edgeLocks[0]));
+    }
 
-  private onLockAttribute = (lockAttributeAm: LockAttributeAm) => {
-    if (lockAttributeAm.nodeId) {
-      if (lockAttributeAm.terminalId) {
-        this._dispatch(setIsLockedNodeTerminalAttribute(lockAttributeAm));
-      } else if (lockAttributeAm.compositeId) {
-        this._dispatch(setIsLockedSimpleAttribute(lockAttributeAm));
-      } else {
-        this._dispatch(setIsLockedNodeAttribute(lockAttributeAm));
-      }
-    } else if (lockAttributeAm.transportId) {
-      if (lockAttributeAm.terminalId) {
-        this._dispatch(setIsLockedTransportTerminalAttribute(lockAttributeAm));
-      } else {
-        this._dispatch(setIsLockedTransportAttribute(lockAttributeAm));
-      }
-    } else if (lockAttributeAm.interfaceId) {
-      if (lockAttributeAm.terminalId) {
-        this._dispatch(setIsLockedNodeTerminalAttribute(lockAttributeAm));
-      } else {
-        this._dispatch(setIsLockedInterfaceAttribute(lockAttributeAm));
-      }
+    const attributeLocks = locks.filter((l) => l.type === EntityType.Attribute);
+    if (attributeLocks) {
+      if (attributeLocks.length > 1) this._dispatch(setLockedAttributes(attributeLocks));
+      else if (attributeLocks.length === 1) this._dispatch(setLockedAttribute(attributeLocks[0]));
     }
   };
 }

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { CombinedAttribute, Project } from "../../../../../../../../../../models";
+import { CombinedAttribute } from "../../../../../../../../../../models";
 import { PARAMETER_ENTITY_WIDTH, Parameter } from "./components/Parameter";
 import { Body, Box } from "./ParameterRow.styled";
 import { Entity } from "./styled/Entity";
@@ -24,10 +24,8 @@ const FILTER_ENTITY_WIDTH = 191;
 
 interface Props {
   element: InspectorParametersElement;
-  elementIsLocked: boolean;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
-  project: Project;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   attributeLikeItems?: AttributeLikeItem[];
@@ -41,10 +39,8 @@ interface Props {
 
 export const ParameterRow = ({
   element,
-  elementIsLocked,
   inspectorParentElement,
   terminalParentElement,
-  project,
   combinations,
   selectedCombinations,
   attributeLikeItems,
@@ -100,19 +96,7 @@ export const ParameterRow = ({
             onChange={(id, value, unitId) =>
               OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
             }
-            onLock={(attribute, isLocked) =>
-              OnLockParameter(
-                element,
-                inspectorParentElement,
-                terminalParentElement,
-                elementIsLocked,
-                project,
-                attribute,
-                isLocked,
-                username,
-                dispatch
-              )
-            }
+            onLock={(attribute, isLocked) => OnLockParameter(inspectorParentElement, attribute, isLocked, username, dispatch)}
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />
         ))}

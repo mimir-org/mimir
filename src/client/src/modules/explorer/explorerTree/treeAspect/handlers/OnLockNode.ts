@@ -1,8 +1,8 @@
+import { lockEntity, setLockedNode } from "../../../../../redux/store/project/actions";
+import { Node } from "../../../../../models";
 import { Dispatch } from "redux";
-import { IsUnsaved } from "../../../../helpers";
-import { Node } from "../../../../models";
-import { EntityType } from "../../../../models/enums/EntityType";
-import { lockEntity, setLockedNode } from "../../../../redux/store/project/actions";
+import { IsUnsaved } from "../../../../../helpers";
+import { EntityType } from "../../../../../models/enums/EntityType";
 
 export const OnLockNode = (node: Node, isLockedBy: string, dispatch: Dispatch) => {
   if (!IsUnsaved(node)) dispatch(lockEntity(node.id, !node.isLocked, EntityType.Node));

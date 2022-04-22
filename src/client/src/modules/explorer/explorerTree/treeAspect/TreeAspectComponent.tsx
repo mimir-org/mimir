@@ -1,7 +1,7 @@
 import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { VisibleComponent } from "../../shared/components/VisibleComponent";
 import { LockComponent } from "../../shared/components/LockComponent";
-import { Node, Project } from "../../../../models";
+import { Node } from "../../../../models";
 import { TreeAspectElement } from "./components/TreeAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
@@ -9,7 +9,6 @@ import { OnTreeExplorerChange } from "./handlers/OnTreeExplorerChange";
 import { TextResources } from "../../../../assets/text/TextResources";
 
 interface Props {
-  project: Project;
   username: string;
   node: Node;
   nodes: Node[];
@@ -29,7 +28,6 @@ interface Props {
  * @returns a TreeAspectElement.
  */
 export const TreeAspectComponent = ({
-  project,
   username,
   node,
   nodes,
@@ -59,7 +57,7 @@ export const TreeAspectComponent = ({
         isLocked={node.isLocked}
         unlockText={TextResources.UNLOCK_OBJECT}
         lockText={TextResources.LOCK_OBJECT}
-        onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
+        onToggleLocked={() => OnLockNode(node, username, dispatch)}
       />
       <TreeAspectElement
         node={node}

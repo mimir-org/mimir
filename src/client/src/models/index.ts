@@ -39,15 +39,14 @@ export type { PredefinedAttribute } from "./data/PredefinedAttribute";
 export type { CollaborationPartner } from "./data/CollaborationPartner";
 
 export type { User } from "./application/User";
+export type { LockCm } from "./application/LockCm";
+export type { LockAm } from "./application/LockAm";
 export type { Library } from "./application/Library";
 export type { LibItem } from "./application/LibItem";
 export type { FileFormat } from "./application/FileFormat";
-export type { LockNodeAm } from "./application/LockNodeAm";
-export type { LockEdgeAm } from "./application/LockEdgeAm";
 export type { CommitPackage } from "./application/CommitPackage";
 export type { ProjectItemCm } from "./application/ProjectItemCm";
 export type { ProjectFileAm } from "./application/ProjectFileAm";
-export type { LockAttributeAm } from "./application/LockAttributeAm";
 export type { ProjectResultAm } from "./application/ProjectResultAm";
 export type { CombinedAttribute } from "./application/CombinedAttribute";
 export type { ProjectConverterAm } from "./application/ProjectConverterAm";
