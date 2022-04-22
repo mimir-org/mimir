@@ -17,12 +17,12 @@ export const TreeProjectComponent = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const username = useAppSelector(usernameSelector);
+  const projectState = useAppSelector(projectStateSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
-  const projectState = useAppSelector(projectStateSelector);
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project);
   const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);

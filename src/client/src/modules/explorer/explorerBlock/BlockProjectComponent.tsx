@@ -1,12 +1,6 @@
+import * as selectors from "./helpers/selectors";
 import { Node } from "../../../models";
-import {
-  useAppDispatch,
-  useAppSelector,
-  usernameSelector,
-  projectSelector,
-  projectStateSelector,
-  secondaryNodeSelector,
-} from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useState } from "react";
@@ -27,12 +21,12 @@ export const BlockProjectComponent = () => {
   const viewportData = { setViewport, setCenter } as ViewportData;
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
-  const projectState = useAppSelector(projectStateSelector);
-  const project = useAppSelector(projectSelector);
-  const username = useAppSelector(usernameSelector);
+  const projectState = useAppSelector(selectors.projectStateSelector);
+  const username = useAppSelector(selectors.usernameSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const project = projectState?.project;
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedNode = nodes?.find((n) => n.selected);
-  const secondaryNode = useAppSelector(secondaryNodeSelector);
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project);
 

@@ -20,8 +20,12 @@ export const LockComponent = ({ isLocked, nodeIsLocking, onToggleLocked, unlockT
           <Spinner />
         </LockSpinner>
       ) : (
-        <Icon size={15} src={isLocked ? LockClosed : LockOpen} alt="" />
+        <Icon size={15} src={GetLockIcon(isLocked)} alt="" />
       )}
     </AspectButton>
   </Tooltip>
 );
+
+function GetLockIcon(isLocked: boolean) {
+  return isLocked ? LockClosed : LockOpen;
+}
