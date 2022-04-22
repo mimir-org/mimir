@@ -17,14 +17,14 @@ export const ProjectComponent = () => {
   const dispatch = useAppDispatch();
   const elements = useAppSelector(selectors.blockElementsSelector);
   const project = useAppSelector(selectors.projectSelector);
+  const projectState = useAppSelector(selectors.projectStateSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedNode = GetSelectedNode();
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-
+  const [lockingNode, setLockingNode] = useState(null);
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
-
   const onExpandElement = (_expanded: boolean, nodeId: string) => {
     _expanded ? closedNodes.delete(nodeId) : closedNodes.add(nodeId);
     setClosedNodes((_) => new Set(closedNodes));
@@ -59,6 +59,8 @@ export const ProjectComponent = () => {
               indent={indent}
               isExpanded={expanded}
               isLeaf={!HasChildren(node, project)}
+              isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+              setLockingNode={setLockingNode}
               elements={elements}
               onToggleExpanded={expandHandler}
               dispatch={dispatch}
@@ -77,6 +79,8 @@ export const ProjectComponent = () => {
             isLeaf={!HasChildren(node, project)}
             isAncestorVisible={areAncestorsVisible(node)}
             isVisible={isVisible(node)}
+            isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+            setLockingNode={setLockingNode}
             onToggleExpanded={expandHandler}
             onSetVisibleElement={onSetVisibleElement}
             dispatch={dispatch}

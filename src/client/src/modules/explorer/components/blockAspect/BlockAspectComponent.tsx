@@ -6,7 +6,6 @@ import { BlockAspectElement } from "./components/BlockAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
 import { TextResources } from "../../../../assets/text/TextResources";
-
 interface Props {
   username: string;
   node: Node;
@@ -15,7 +14,9 @@ interface Props {
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
+  isNodeLocking: boolean;
   elements: Elements;
+  setLockingNode: (node: Node) => void;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
 }
@@ -33,6 +34,8 @@ export const BlockAspectComponent = ({
   isExpanded,
   indent,
   isLeaf,
+  isNodeLocking,
+  setLockingNode,
   elements,
   dispatch,
   onToggleExpanded,
@@ -40,9 +43,10 @@ export const BlockAspectComponent = ({
   <AspectContainer node={node}>
     <LockComponent
       isLocked={node.isLocked}
+      nodeIsLocking={isNodeLocking}
       unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
       lockText={TextResources.EXPLORER_LOCK_OBJECT}
-      onToggleLocked={() => OnLockNode(node, username, dispatch)}
+      onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
     />
     <BlockAspectElement
       node={node}
