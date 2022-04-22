@@ -1,5 +1,12 @@
 import { Node } from "../../../models";
-import { useAppDispatch, useAppSelector, usernameSelector, projectSelector, secondaryNodeSelector } from "../../../redux/store";
+import {
+  useAppDispatch,
+  useAppSelector,
+  usernameSelector,
+  projectSelector,
+  projectStateSelector,
+  secondaryNodeSelector,
+} from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useState } from "react";
@@ -19,6 +26,8 @@ export const BlockProjectComponent = () => {
   const { setViewport, setCenter } = useReactFlow();
   const viewportData = { setViewport, setCenter } as ViewportData;
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
+  const [lockingNode, setLockingNode] = useState(null);
+  const projectState = useAppSelector(projectStateSelector);
   const project = useAppSelector(projectSelector);
   const username = useAppSelector(usernameSelector);
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
@@ -45,6 +54,8 @@ export const BlockProjectComponent = () => {
             indent={node.level}
             isExpanded={expanded}
             isLeaf={!HasChildren(node.id, project)}
+            isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+            setLockingNode={setLockingNode}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             dispatch={dispatch}
             viewportData={viewportData}

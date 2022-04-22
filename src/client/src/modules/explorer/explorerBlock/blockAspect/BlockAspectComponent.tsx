@@ -15,6 +15,8 @@ interface Props {
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
+  isNodeLocking: boolean;
+  setLockingNode: (node: Node) => void;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
   viewportData: ViewportData;
@@ -33,6 +35,8 @@ export const BlockAspectComponent = ({
   isExpanded,
   indent,
   isLeaf,
+  isNodeLocking,
+  setLockingNode,
   dispatch,
   onToggleExpanded,
   viewportData,
@@ -42,7 +46,8 @@ export const BlockAspectComponent = ({
       isLocked={node.isLocked}
       unlockText={TextResources.UNLOCK_OBJECT}
       lockText={TextResources.LOCK_OBJECT}
-      onToggleLocked={() => OnLockNode(node, username, dispatch)}
+      nodeIsLocking={isNodeLocking}
+      onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
     />
     <BlockAspectElement
       node={node}

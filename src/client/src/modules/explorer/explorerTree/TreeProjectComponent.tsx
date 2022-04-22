@@ -3,7 +3,7 @@ import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
-import { projectSelector, usernameSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { projectSelector, usernameSelector, useAppDispatch, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
@@ -21,6 +21,8 @@ export const TreeProjectComponent = () => {
 
   const [closedNodes, setClosedNodes] = useState(new Set<string>());
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
+  const [lockingNode, setLockingNode] = useState(null);
+  const projectState = useAppSelector(projectStateSelector);
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project);
   const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
@@ -45,6 +47,8 @@ export const TreeProjectComponent = () => {
             isLeaf={!HasChildren(node.id, project)}
             isAncestorVisible={ancestorsVisible(node)}
             isVisible={isVisible(node)}
+            isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+            setLockingNode={setLockingNode}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             onSetVisibleElement={() => OnSetVisibleElement(isVisible(node), node.id, invisibleNodes, setInvisibleNodes)}
             dispatch={dispatch}

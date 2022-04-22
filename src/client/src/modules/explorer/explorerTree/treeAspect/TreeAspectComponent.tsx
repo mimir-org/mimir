@@ -17,6 +17,8 @@ interface Props {
   isExpanded: boolean;
   isAncestorVisible: boolean;
   isVisible: boolean;
+  isNodeLocking: boolean;
+  setLockingNode: (node: Node) => void;
   onToggleExpanded: () => void;
   onSetVisibleElement: (visible: boolean, nodeId: string) => void;
   dispatch: Dispatch;
@@ -36,6 +38,8 @@ export const TreeAspectComponent = ({
   isLeaf,
   isAncestorVisible,
   isVisible,
+  isNodeLocking,
+  setLockingNode,
   onSetVisibleElement,
   onToggleExpanded,
   dispatch,
@@ -55,9 +59,10 @@ export const TreeAspectComponent = ({
       />
       <LockComponent
         isLocked={node.isLocked}
+        nodeIsLocking={isNodeLocking}
         unlockText={TextResources.UNLOCK_OBJECT}
         lockText={TextResources.LOCK_OBJECT}
-        onToggleLocked={() => OnLockNode(node, username, dispatch)}
+        onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
       />
       <TreeAspectElement
         node={node}

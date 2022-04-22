@@ -26,6 +26,7 @@ import {
 const initialState: Types.ProjectState = {
   fetching: false,
   creating: false,
+  isLocking: false,
   project: null,
   projectList: null,
   apiError: [],
@@ -129,10 +130,16 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
     case Types.EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR:
     case Types.IMPORT_PROJECT_SUCCESS_OR_ERROR:
+    case Types.LOCK_ENTITY:
+      return {
+        ...state,
+        isLocking: true,
+      };
     case Types.LOCK_ENTITY_SUCCESS_OR_ERROR:
       return {
         ...state,
         fetching: false,
+        isLocking: false,
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
 
@@ -502,13 +509,14 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_LOCK_NODE: {
-      return setLockNode(action.payload, state);
+      const modifiedState = { ...state, isLocking: false };
+      return setLockNode(action.payload, modifiedState);
     }
 
     case Types.SET_LOCK_NODES: {
       const nodeLocks = action.payload;
 
-      let modifiedState = { ...state };
+      let modifiedState = { ...state, isLocking: false };
 
       nodeLocks.forEach((nodeLock) => {
         modifiedState = setLockNode(nodeLock, modifiedState);
@@ -518,13 +526,14 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_LOCK_EDGE: {
-      return setLockEdge(action.payload, state);
+      const modifiedState = { ...state, isLocking: false };
+      return setLockEdge(action.payload, modifiedState);
     }
 
     case Types.SET_LOCK_EDGES: {
       const edgeLocks = action.payload;
 
-      let modifiedState = { ...state };
+      let modifiedState = { ...state, isLocking: false };
 
       edgeLocks.forEach((edgeLock) => {
         modifiedState = setLockEdge(edgeLock, modifiedState);
@@ -571,7 +580,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         return setLockInterfaceTerminalAttribute({ ...edgeInterfaceTerminalAttributeMapTarget, ...action.payload }, state);
       }
 
-      return { ...state };
+      return { ...state, isLocking: false };
     }
 
     case Types.SET_LOCK_ATTRIBUTES: {
@@ -585,7 +594,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       const edgeInterfaceAttributeMap = getEdgeInterfaceAttributeMap(state.project.edges);
       const edgeInterfaceTerminalAttributeMap = getEdgeInterfaceTerminalAttributeMap(state.project.edges);
 
-      let modifiedState = { ...state };
+      let modifiedState = { ...state, isLocking: false };
 
       attributeLocks.forEach((attributeLock) => {
         const nodeAttributeMapTarget = nodeAttributeMap[attributeLock.id];

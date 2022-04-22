@@ -80,6 +80,7 @@ export const CREATE_CONNECTED_OFFPAGE_NODE = "CREATE_CONNECTED_OFFPAGE_NODE";
 export interface ProjectState {
   fetching: boolean;
   creating: boolean;
+  isLocking: boolean;
   project: Project;
   projectList: ProjectItemCm[];
   apiError: ApiError[];
