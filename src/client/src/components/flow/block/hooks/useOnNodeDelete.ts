@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Project, Node } from "../../../../models";
 import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
-import { IsAspectNode, IsOffPage } from "../../../../helpers/Aspects";
+import { IsOffPage } from "../../../../helpers/Aspects";
 import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
 import { CloseInspector } from "../handlers";
@@ -24,19 +24,13 @@ const useOnNodeDelete = (
 ) => {
   if (!nodesToDelete.length) return;
 
-  let hasDeleted = false;
-
   nodesToDelete.forEach((node) => {
-    if (IsAspectNode(node) || node.isLocked) return;
-
     DeleteRelatedEdges(node.id, project, dispatch);
     IsOffPage(node) ? HandleOffPageNodeDelete(node.id, project, dispatch) : HandleRelatedEdges(node.id, project, dispatch);
-
     dispatch(deleteNode(node.id));
-    hasDeleted = true;
   });
 
-  if (hasDeleted) CloseInspector(inspectorRef, dispatch);
+  CloseInspector(inspectorRef, dispatch);
 };
 
 /**

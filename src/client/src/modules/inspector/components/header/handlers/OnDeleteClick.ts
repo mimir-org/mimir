@@ -27,7 +27,7 @@ export const OnDeleteClick = (
 };
 
 const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
-  if (IsAspectNode(node)) return;
+  if (IsAspectNode(node) || node.isLocked) return;
 
   project.edges.forEach((e) => {
     if (e.fromNodeId === node.id) dispatch(deleteEdge(e.id));
@@ -39,6 +39,7 @@ const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
 };
 
 const HandleEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {
+  if (edge.isLocked) return;
   if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
   dispatch(deleteEdge(edge.id));
 };

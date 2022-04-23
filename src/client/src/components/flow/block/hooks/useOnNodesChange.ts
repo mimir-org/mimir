@@ -26,19 +26,19 @@ const useOnNodesChange = (
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
-  const flowChanges = [] as NodeChange[];
-  const mimirNodesToDelete = [] as Node[];
+  const verifiedFlowChanges = [] as NodeChange[];
+  const verifiedMimirNodes = [] as Node[];
 
   // Verify changes
   changes.forEach((c) => {
-    if (c.type === "position") return HandlePositionChange(c, selectedNode, project, flowChanges);
-    if (c.type === "remove") return HandleRemoveChange(c.id, selectedNode, selectedBlockNode, flowChanges, mimirNodesToDelete);
-    flowChanges.push(c);
+    if (c.type === "position") return HandlePosition(c, selectedNode, project, verifiedFlowChanges);
+    if (c.type === "remove") return HandleRemove(c.id, selectedNode, selectedBlockNode, verifiedFlowChanges, verifiedMimirNodes);
+    verifiedFlowChanges.push(c);
   });
 
   // Execute all changes
-  setNodes((n) => applyNodeChanges(flowChanges, n));
-  useOnNodeDelete(mimirNodesToDelete, inspectorRef, project, dispatch);
+  setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
+  useOnNodeDelete(verifiedMimirNodes, inspectorRef, project, dispatch);
 };
 
 /**
@@ -47,28 +47,35 @@ const useOnNodesChange = (
  * @param id
  * @param selectedNode
  * @param selectedBlockNode
- * @param flowChanges
- * @param mimirNodesToDelete
+ * @param verifiedFlowChanges
+ * @param verifiedMimirNodes
  */
-function HandleRemoveChange(
+function HandleRemove(
   id: string,
   selectedNode: Node,
   selectedBlockNode: Node,
-  flowChanges: NodeChange[],
-  mimirNodesToDelete: Node[]
+  verifiedFlowChanges: NodeChange[],
+  verifiedMimirNodes: Node[]
 ) {
   if (id !== selectedNode?.id || !selectedBlockNode || selectedBlockNode.isLocked) return;
 
   // Flow only detects deletion of a selectedNode. In BlockView we want to delete the selectedBlockNode
   const nodeChange = { id: selectedBlockNode?.id, type: "remove" } as NodeChange;
 
-  flowChanges.push(nodeChange);
-  mimirNodesToDelete.push(selectedBlockNode);
+  verifiedFlowChanges.push(nodeChange);
+  verifiedMimirNodes.push(selectedBlockNode);
 }
 
-function HandlePositionChange(c: NodePositionChange, selectedNode: Node, project: Project, filteredList: NodeChange[]) {
-  if (c.id === selectedNode.id) return;
-  if (ValidateNodePosition(c.id, c.position, project)) filteredList.push(c);
+/**
+ * Function to handle position changes.
+ * @param change
+ * @param selectedNode
+ * @param project
+ * @param filteredList
+ */
+function HandlePosition(change: NodePositionChange, selectedNode: Node, project: Project, filteredList: NodeChange[]) {
+  if (change.id === selectedNode.id) return;
+  if (ValidateNodePosition(change.id, change.position, project)) filteredList.push(change);
 }
 
 /**
