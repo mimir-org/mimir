@@ -2,7 +2,7 @@ import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange } from
 import { Dispatch } from "redux";
 import { Edge, Project } from "../../../../models";
 import { deleteEdge } from "../../../../redux/store/project/actions";
-import { CloseInspector } from "../handlers";
+import { CloseInspector } from "../handlers/OnBlockSelectionChange";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
 
 /**

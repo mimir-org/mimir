@@ -1,5 +1,5 @@
 import { IsAspectNode } from "../../../../../../helpers/Aspects";
-import { IsDirectChild, IsFamily } from "../../../../../../helpers/Family";
+import { IsDirectChild } from "../../../../../../helpers/Family";
 import { Node } from "../../../../../../models";
 
 /**
@@ -14,12 +14,17 @@ export const IsMiniCheckBox = (node: Node, secondaryNode: Node, selectedNode: No
   const noSelectedNode = selectedNode === undefined || selectedNode === null;
   if (noSelectedNode || IsAspectNode(node)) return false;
 
-  let isDirectChild = IsDirectChild(node, selectedNode);
-  if (secondaryNode && IsFamily(node, secondaryNode)) isDirectChild = IsDirectChild(node, secondaryNode);
-
+  const isDirectChild = ValidateChild(node, selectedNode, secondaryNode);
   const isVisible = !node.blockHidden;
   const isNotSelectedNode = !node.selected;
   const isNotSecondaryNode = node.id !== secondaryNode?.id;
 
-  return isVisible && isNotSelectedNode && isNotSecondaryNode && isDirectChild;
+  return isVisible && isDirectChild && isNotSelectedNode && isNotSecondaryNode;
 };
+
+function ValidateChild(node: Node, selectedNode: Node, secondaryNode: Node) {
+  if (!secondaryNode) return IsDirectChild(node, selectedNode);
+  if (secondaryNode && IsDirectChild(node, secondaryNode)) return true;
+  if (secondaryNode && IsDirectChild(node, selectedNode)) return true;
+  return false;
+}

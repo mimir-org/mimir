@@ -10,6 +10,7 @@ import { AspectContainer } from "../../shared/styled/AspectContainer";
 interface Props {
   username: string;
   node: Node;
+  nodes: Node[];
   selectedNode: Node;
   secondaryNode: Node;
   indent: number;
@@ -30,6 +31,7 @@ interface Props {
 export const BlockAspectComponent = ({
   username,
   node,
+  nodes,
   selectedNode,
   secondaryNode,
   isExpanded,
@@ -51,6 +53,7 @@ export const BlockAspectComponent = ({
     />
     <BlockAspectElement
       node={node}
+      nodes={nodes}
       isExpanded={isExpanded}
       isLeaf={isLeaf}
       onToggleExpanded={onToggleExpanded}

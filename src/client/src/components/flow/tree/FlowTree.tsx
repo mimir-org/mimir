@@ -45,7 +45,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  // const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedNode = project?.nodes?.find((n) => n.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -64,7 +64,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, selectedNode, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
@@ -94,7 +94,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowTreeNodes(project));
-  }, [project?.nodes?.length]);
+  }, [project?.nodes?.length, selectedNode]);
 
   // Rebuild edges
   useEffect(() => {

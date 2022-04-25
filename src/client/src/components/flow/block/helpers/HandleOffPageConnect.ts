@@ -1,5 +1,4 @@
 import { addEdge } from "react-flow-renderer";
-import { GetParentNode } from "../../../../helpers/Family";
 import { Project, Node } from "../../../../models";
 import { EDGE_TYPE } from "../../../../models/project";
 import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../../redux/store/project/actions";
@@ -22,11 +21,11 @@ import { IsOffPageEdge } from "./IsOffPageEdge";
 const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
   const { project, connection, lib, dispatch, setEdges } = params;
   const id = CreateId();
-  const sourceParent = GetParentNode(sourceNode?.id);
-  const targetParent = GetParentNode(targetNode?.id);
+  const sourceParent = project.nodes.find((n) => n.id === sourceNode?.parentNodeId);
+  const targetParent = project.nodes.find((n) => n.id === targetNode?.parentNodeId);
 
-  const sourceTerminal = GetSourceTerminal(project, sourceParent?.id, sourceNode?.id);
-  const targetTerminal = GetTargetTerminal(project, targetParent?.id, targetNode?.id);
+  const sourceTerminal = GetSourceTerminal(project, sourceNode?.parentNodeId, sourceNode?.id);
+  const targetTerminal = GetTargetTerminal(project, targetNode?.parentNodeId, targetNode?.id);
 
   if (!sourceTerminal || !targetTerminal) return null;
 

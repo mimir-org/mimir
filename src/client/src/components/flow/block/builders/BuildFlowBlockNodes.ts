@@ -13,7 +13,7 @@ import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
  * @param secondaryNode
  * @returns all validated FlowNodes.
  */
-const BuildInitialFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode: Node) => {
+const BuildFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode: Node) => {
   if (!project) return [];
 
   const flowNodes: FlowNode[] = [];
@@ -37,4 +37,4 @@ const BuildInitialFlowBlockNodes = (project: Project, primaryNode: Node, seconda
   return flowNodes;
 };
 
-export default BuildInitialFlowBlockNodes;
+export default BuildFlowBlockNodes;

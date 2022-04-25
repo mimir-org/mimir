@@ -2,12 +2,12 @@
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BuildInitialFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
+import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
+import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
-import { HandleBlockNodeSelection, CloseInspector } from "./handlers";
+import { CloseInspector, OnBlockSelectionChange } from "./handlers/OnBlockSelectionChange";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
 import ReactFlow, {
   Node as FlowNode,
@@ -88,14 +88,15 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   }, []);
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
-    HandleBlockNodeSelection(selectedItems, project, selectedNode, inspectorRef, dispatch);
+    OnBlockSelectionChange(selectedItems, project, selectedNode, inspectorRef, dispatch);
   };
 
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      setNodes(BuildInitialFlowBlockNodes(project, selectedNode, secondaryNode));
+      SetInitialParentId(project?.nodes);
+      setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
       setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
@@ -105,8 +106,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildInitialFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes]);
+    setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
+  }, [project?.nodes, secondaryNode]);
 
   // Rerender edges
   useEffect(() => {
@@ -124,11 +125,11 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     setTimeout(() => {
       SetInitialEdgeVisibility(project?.edges, dispatch);
       setIsFetching(false);
-    }, 400);
+    }, 200);
   }, []);
 
   return (
-    <div className="reactflow-block-wrapper" ref={flowWrapper}>
+    <div className="reactflow-wrapper" ref={flowWrapper}>
       <SpinnerWrapper fetching={isFetching}>
         <Spinner />
       </SpinnerWrapper>

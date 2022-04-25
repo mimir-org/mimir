@@ -1,7 +1,7 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowChildNode } from "..";
 import { IsOffPage } from "../../../../../helpers/Aspects";
-import { GetParentNode, IsFamily } from "../../../../../helpers/Family";
+import { IsFamily } from "../../../../../helpers/Family";
 import { Edge, Node, Project } from "../../../../../models";
 import { IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, IsTransport } from "../../../helpers/Connectors";
 
@@ -19,7 +19,7 @@ const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: 
   edges?.forEach((edge) => {
     if (!ValidateEdge(edge, primaryNode)) return;
 
-    const targetNode = nodes.find((n) => n.id === edge.toNode.id);
+    const targetNode = nodes.find((n) => n.id === edge.toNodeId);
     if (!targetNode) return;
 
     const childNode = BuildFlowChildNode(targetNode, primaryNode, secondaryNode, project);
@@ -36,7 +36,7 @@ function ValidateEdge(edge: Edge, selectedNode: Node) {
 }
 
 function ValidateOffPage(project: Project, offPageNode: Node, selectedNode: Node, secondaryNode: Node, flowNodes: FlowNode[]) {
-  const offPageParentId = GetParentNode(offPageNode?.id)?.id;
+  const offPageParentId = offPageNode?.parentNodeId;
 
   if (!secondaryNode) return flowNodes?.some((elem) => elem?.id === offPageParentId);
   if (!IsFamily(selectedNode, secondaryNode)) return false;

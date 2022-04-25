@@ -4,7 +4,6 @@ import { IsOffPage } from "../../../../../../helpers/Aspects";
 import { Edge, Node, Project } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsTransportConnection } from "../../../../helpers/Connectors";
-import { GetParentNode } from "../../../../../../helpers/Family";
 
 /**
  * Component to draw an OffPageNode that is connected.
@@ -27,7 +26,7 @@ export const HandleConnectedOffPageNode = (node: Node, project: Project, size: B
     const nodeExists = HasConnectedOffPageNode(project.edges, edge, isTarget);
     if (nodeExists) return;
 
-    const nodeParent = GetParentNode(node.id);
+    const nodeParent = project.nodes.find((n) => n.id === node.parentNodeId);
 
     const xPos = isTarget ? nodeParent?.positionBlockX : size.width;
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
@@ -66,8 +65,8 @@ function OnlyOneNodeVisible(edge: Edge, isTarget: boolean, project: Project) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 
-  const sourceNodeParentId = GetParentNode(sourceNode?.id);
-  const targetNodeParentId = GetParentNode(targetNode?.id);
+  const sourceNodeParentId = project.nodes.find((n) => n.id === sourceNode?.parentNodeId);
+  const targetNodeParentId = project.nodes.find((n) => n.id === targetNode?.parentNodeId);
   const targetNodeVisible = sourceNodeParentId === targetNodeParentId;
 
   return !targetNodeVisible;

@@ -22,7 +22,7 @@ import {
  * @param inspectorRef
  * @param dispatch
  */
-export const HandleBlockNodeSelection = (
+export const OnBlockSelectionChange = (
   selectedItems: OnSelectionChangeParams,
   project: Project,
   selectedNode: Node,

@@ -50,6 +50,7 @@ export interface Node {
   kind: string;
 
   // Only for client
+  parentNodeId: string;
   selected?: boolean;
   blockSelected?: boolean;
   hidden?: boolean;

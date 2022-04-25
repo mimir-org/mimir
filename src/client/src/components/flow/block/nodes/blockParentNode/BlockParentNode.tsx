@@ -6,7 +6,7 @@ import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterTerminals } from "../helpers/FilterTerminals";
-import { Connector } from "../../../../../models";
+import { Connector, Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
@@ -20,7 +20,7 @@ export type Terminals = { in: Connector[]; out: Connector[] };
  * @param data the data for the node.
  * @returns a Mimir ParentNode.
  */
-const BlockParentNode: FC<NodeProps> = ({ data }) => {
+const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const initialTerminals = { in: [], out: [] } as Terminals;
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
@@ -48,7 +48,7 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
         inputTerminals={terminals.in}
         outputTerminals={terminals.out}
         isNavigationActive={data.id !== secondaryNode?.id}
-        onNavigateUpClick={() => OnBlockParentClick(dispatch, data.id)}
+        onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />

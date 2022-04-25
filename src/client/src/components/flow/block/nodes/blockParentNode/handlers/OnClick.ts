@@ -1,6 +1,6 @@
 import { GetChild } from "../helpers/GetChild";
 import { Dispatch } from "redux";
-import { GetParentNode } from "../../../../../../helpers/Family";
+import { Node } from "../../../../../../models";
 import {
   removeActiveBlockNode,
   removeActiveEdge,
@@ -9,14 +9,14 @@ import {
   setActiveNode,
 } from "../../../../../../redux/store/project/actions";
 
-export const OnBlockParentClick = (dispatch: Dispatch, childNodeId: string) => {
-  const parentNode = GetParentNode(childNodeId);
+export const OnBlockParentClick = (dispatch: Dispatch, childNode: Node) => {
+  const parentNodeId = childNode.parentNodeId;
 
   dispatch(removeActiveEdge());
   dispatch(removeActiveNode());
   dispatch(removeActiveBlockNode());
-  dispatch(setActiveBlockNode(parentNode?.id));
-  dispatch(setActiveNode(parentNode?.id, true));
+  dispatch(setActiveBlockNode(parentNodeId));
+  dispatch(setActiveNode(parentNodeId, true));
 };
 
 export const OnBlockChildClick = (dispatch: Dispatch, nodeId: string) => {

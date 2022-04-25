@@ -1,6 +1,5 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../../helpers/Aspects";
-import { GetParentNode } from "../../../../../helpers/Family";
 import { Edge, Project } from "../../../../../models";
 import { deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import { GetParentConnector, GetRelatedPartOfEdge, GetRelatedTransportEdge } from "./OffPageDeleteFunctions";
@@ -22,7 +21,7 @@ export const HandleOffPageEdgeDelete = (edgeToDelete: Edge, project: Project, di
     if (!relatedTransportEdge) return;
 
     const partOfEdge = GetRelatedPartOfEdge(node, project.edges);
-    const parentNodeId = GetParentNode(node.id)?.id;
+    const parentNodeId = node?.parentNodeId;
     const parentNodeConn = GetParentConnector(relatedTransportEdge, node.id);
 
     dispatch(setOffPageStatus(parentNodeId, parentNodeConn?.id, false));

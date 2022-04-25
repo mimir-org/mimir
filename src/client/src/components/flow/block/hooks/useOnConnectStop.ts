@@ -9,7 +9,6 @@ import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequ
 import { Size } from "../../../../compLibrary/size/Size";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
-import { GetParentNode } from "../../../../helpers/Family";
 
 /**
  * Hook that runs when a user drags a connection from a terminal and releases the mouse button in BlockView.
@@ -104,7 +103,7 @@ function CalculateDropZone(
   const zoom = getViewPort().zoom;
   const x = getViewPort().x;
 
-  const parentNode = GetParentNode(sourceNode?.id);
+  const parentNode = project.nodes.find((n) => n.id === sourceNode?.parentNodeId);
   const parentPosX = parentNode?.positionBlockX;
 
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;

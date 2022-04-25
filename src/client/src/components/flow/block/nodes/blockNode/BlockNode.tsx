@@ -3,7 +3,7 @@ import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
-import { AspectColorType } from "../../../../../models";
+import { AspectColorType, Node } from "../../../../../models";
 import { HandleComponent } from "../../handle";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
@@ -23,7 +23,7 @@ import { Terminals } from "../blockParentNode/BlockParentNode";
  * @param data the data for the node.
  * @returns a Mimir Node.
  */
-const BlockNode: FC<NodeProps> = ({ data }) => {
+const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const initialTerminals = { in: [], out: [] } as Terminals;
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);

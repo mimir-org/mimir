@@ -20,6 +20,7 @@ import {
  * @param node
  * @param selectedNode
  * @param secondaryNode
+ * @param nodes
  * @param viewportData
  * @param dispatch
  */
@@ -27,6 +28,7 @@ export const OnBlockExplorerChange = (
   node: Node,
   selectedNode: Node,
   secondaryNode: Node,
+  nodes: Node[],
   viewportData: ViewportData,
   dispatch: Dispatch
 ) => {
@@ -34,7 +36,7 @@ export const OnBlockExplorerChange = (
 
   // Set selectedNode
   if (!selectedNode) {
-    SetSelectedNode(node, dispatch);
+    SetSelectedNode(nodes, node, dispatch);
     return;
   }
 
@@ -52,7 +54,7 @@ export const OnBlockExplorerChange = (
 
   // Add secondaryNode
   if (!secondaryNode) {
-    SetSecondaryNode(node, viewportData, dispatch);
+    if (ValidateNewSecondaryNode(node, selectedNode)) SetSecondaryNode(nodes, node, viewportData, dispatch);
     return;
   }
 
@@ -65,7 +67,7 @@ export const OnBlockExplorerChange = (
   // Make secondaryNode the selectedNode
   if (node.id === selectedNode.id && secondaryNode) {
     RemoveSecondaryNode(viewportData, dispatch);
-    SetSelectedNode(secondaryNode, dispatch);
+    SetSelectedNode(nodes, secondaryNode, dispatch);
     return;
   }
 
@@ -77,15 +79,20 @@ export const OnBlockExplorerChange = (
 
   // Change secondaryNode
   if (node.id !== secondaryNode.id) {
-    if (ValidateSecondaryNode(node, secondaryNode)) dispatch(setSecondaryNode(node));
+    if (ValidateChangeSecondaryNode(node, secondaryNode)) dispatch(setSecondaryNode(node));
   }
 };
 
 //#region helpers
-function ValidateSecondaryNode(node: Node, secondaryNode: Node) {
+function ValidateChangeSecondaryNode(node: Node, secondaryNode: Node) {
   if (IsFamily(node, secondaryNode)) return !IsDirectChild(node, secondaryNode);
   if (!IsFamily(node, secondaryNode)) return true;
   return false;
+}
+
+function ValidateNewSecondaryNode(node: Node, selectedNode: Node) {
+  if (IsFamily(node, selectedNode)) return !IsDirectChild(node, selectedNode);
+  return true;
 }
 
 function RemoveSelectedNode(node: Node, dispatch: Dispatch) {
@@ -94,9 +101,11 @@ function RemoveSelectedNode(node: Node, dispatch: Dispatch) {
   dispatch(setBlockNodeVisibility(node, true));
 }
 
-function SetSelectedNode(node: Node, dispatch: Dispatch) {
+function SetSelectedNode(nodes: Node[], node: Node, dispatch: Dispatch) {
+  dispatch(removeActiveNode());
   dispatch(setActiveNode(node.id, !node.selected));
   dispatch(setBlockNodeVisibility(node, false));
+  ShowChildren(nodes, node, dispatch);
 }
 
 function ToggleChildNode(node: Node, dispatch: Dispatch) {
@@ -104,13 +113,20 @@ function ToggleChildNode(node: Node, dispatch: Dispatch) {
   dispatch(setBlockNodeVisibility(node, shouldBeHidden));
 }
 
-function SetSecondaryNode(node: Node, viewportData: ViewportData, dispatch: Dispatch) {
+function SetSecondaryNode(nodes: Node[], node: Node, viewportData: ViewportData, dispatch: Dispatch) {
   dispatch(setSecondaryNode(node));
+  ShowChildren(nodes, node, dispatch);
   SetFitToScreen(viewportData, true);
 }
 
 function RemoveSecondaryNode(viewportData: ViewportData, dispatch: Dispatch) {
   dispatch(removeSecondaryNode());
   SetFitToScreen(viewportData, false);
+}
+
+function ShowChildren(nodes: Node[], node: Node, dispatch: Dispatch) {
+  nodes.forEach((n) => {
+    if (n.parentNodeId === node.id) dispatch(setBlockNodeVisibility(n, false));
+  });
 }
 //#endregion

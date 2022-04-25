@@ -12,6 +12,7 @@ import { ViewportData } from "../../../../../models/project";
 
 interface Props {
   node: Node;
+  nodes: Node[];
   selectedNode: Node;
   secondaryNode: Node;
   dispatch: Dispatch;
@@ -29,6 +30,7 @@ interface Props {
  */
 export const BlockAspectElement = ({
   node,
+  nodes,
   selectedNode,
   secondaryNode,
   dispatch,
@@ -44,7 +46,7 @@ export const BlockAspectElement = ({
       isChecked={node.selected || node.id === secondaryNode?.id}
       isMiniCheckbox={IsMiniCheckBox(node, secondaryNode, selectedNode)}
       isAspectNode={IsAspectNode(node)}
-      onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, viewportData, dispatch)}
+      onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, nodes, viewportData, dispatch)}
       label={node.label}
       icon={GetAspectIcon(node)}
     />

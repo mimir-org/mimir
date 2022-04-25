@@ -43,6 +43,7 @@ export const BlockProjectComponent = () => {
             key={node.id}
             username={username}
             node={node}
+            nodes={nodes}
             selectedNode={selectedNode}
             secondaryNode={secondaryNode}
             indent={node.level}

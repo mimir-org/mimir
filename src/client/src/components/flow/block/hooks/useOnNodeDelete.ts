@@ -4,7 +4,7 @@ import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions"
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
-import { CloseInspector } from "../handlers";
+import { CloseInspector } from "../handlers/OnBlockSelectionChange";
 
 /**
  * Hook that runs when a node is deleted from Mimir in BlockView.
@@ -26,7 +26,7 @@ const useOnNodeDelete = (
 
   nodesToDelete.forEach((node) => {
     DeleteRelatedEdges(node.id, project, dispatch);
-    IsOffPage(node) ? HandleOffPageNodeDelete(node.id, project, dispatch) : HandleRelatedEdges(node.id, project, dispatch);
+    IsOffPage(node) ? HandleOffPageNodeDelete(node, project, dispatch) : HandleRelatedEdges(node.id, project, dispatch);
     dispatch(deleteNode(node.id));
   });
 

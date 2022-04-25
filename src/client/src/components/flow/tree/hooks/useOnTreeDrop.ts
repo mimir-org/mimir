@@ -13,6 +13,7 @@ export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
+  selectedNode: Node;
   user: User;
   icons: BlobData[];
   library: LibraryState;
@@ -28,14 +29,13 @@ interface OnDropParameters {
  * @param params
  */
 const useOnTreeDrop = (params: OnDropParameters) => {
-  const { event, project, dispatch } = params;
+  const { event, project, selectedNode, dispatch } = params;
 
   event.stopPropagation();
   event.preventDefault();
 
   if (DoesNotContainApplicationData(event)) return;
 
-  const selectedNode = project?.nodes.find((n) => n.selected);
   const isSubProject = IsSubProject(event);
 
   if (isSubProject) HandleSubProjectDrop(event, project, dispatch);

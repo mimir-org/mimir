@@ -7,16 +7,15 @@ import { HandleComponent } from "../../handle";
 import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
-import { Connector } from "../../../../../models";
+import { Connector, Node } from "../../../../../models";
 import { Color } from "../../../../../compLibrary/colors/Color";
-import { GetParentNode } from "../../../../../helpers/Family";
 
 /**
  * Component for an OffPageNode in BlockView.
  * @param params
  * @returns an OffPageNode that can be connected to other nodes.
  */
-const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
+const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -30,8 +29,8 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
 
   // The position of the OffPageNode is based on its grandparent => the large parentBlockNode
-  const offPageParent = GetParentNode(data.id);
-  const offPageGrandParent = GetParentNode(offPageParent?.id);
+  const offPageParent = project.nodes.find((n) => n.id === data.parentNodeId);
+  const offPageGrandParent = project.nodes.find((n) => n.id === offPageParent?.parentNodeId);
 
   const parentNodeTerminal = isTarget
     ? offPageParent?.connectors.find((c: Connector) => c.id === edge?.fromConnectorId)
