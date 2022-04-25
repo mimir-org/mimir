@@ -113,7 +113,7 @@ export const TextResources = {
   INSPECTOR_VALIDATE: "Validate",
 
   INSPECTOR_PARAMS_CLEAR_ALL: "Clear all Entities",
-  INSPECTOR_PARAMS_DEFAULT: "Show Default Entities",
+  INSPECTOR_PARAMS_DEFAULT: "Show all Entities",
   INSPECTOR_PARAMS_COMBINATION: "Select combinations",
   INSPECTOR_PARAMS_SELECT_ALL: "Select all",
 
@@ -165,7 +165,7 @@ export const TextResources = {
   LIBRARY_ASPECT_TOGGLE: "Toggle",
   LIBRARY_ASPECT_FILTER_ON: "filter on",
   LIBRARY_ASPECT_FILTER_OFF: "filter off",
-  LIBRARY_CATEGORY_RECENT: "Recently changed",
+  LIBRARY_CATEGORY_RECENT: "Recently created",
   LIBRARY_CATEGORY_ALL: "Types",
 
   // ExplorerModule

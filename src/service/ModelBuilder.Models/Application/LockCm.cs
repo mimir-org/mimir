@@ -1,20 +1,17 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Application
 {
-    public class LockEdgeAm
+    public class LockCm
     {
-        [Required]
         public string Id { get; set; }
-
-        [Required]
-        public string ProjectId { get; set; }
-
-        [Required]
         public bool IsLocked { get; set; }
-
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
+
+        [EnumDataType(typeof(EntityType))]
+        public EntityType Type { get; set; }
     }
 }

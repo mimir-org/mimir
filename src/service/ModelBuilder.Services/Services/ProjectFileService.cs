@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
-using Mb.Models.Data;
 using Mb.Models.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Services.Contracts;
@@ -23,7 +22,8 @@ namespace Mb.Services.Services
 
         #region Constructors
 
-        public ProjectFileService(IModuleService moduleService, IProjectService projectService, ICommonRepository commonRepository)
+        public ProjectFileService(IModuleService moduleService, IProjectService projectService,
+            ICommonRepository commonRepository)
         {
             _moduleService = moduleService;
             _projectService = projectService;
@@ -49,45 +49,18 @@ namespace Mb.Services.Services
 
             var validation = projectFile.ValidateObject();
             if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.", validation);
+                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.",
+                    validation);
 
-            if (_moduleService.Modules.All(x => x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(x.ModuleDescription.Id.ToString(), projectFile.ParserId.ToString(), StringComparison.CurrentCultureIgnoreCase)))
+            if (_moduleService.Modules.All(x =>
+                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(
+                        x.ModuleDescription.Id.ToString(), projectFile.ParserId.ToString(),
+                        StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {projectFile.ParserId}");
 
             var par = _moduleService.Resolve<IModelBuilderParser>(projectFile.ParserId);
             var project = await par.DeserializeProjectAm(Encoding.UTF8.GetBytes(projectFile.FileContent));
             return project;
-        }
-
-        /// <summary>
-        /// Import project, if exist update project
-        /// </summary>
-        /// <param name="projectFile"></param>
-        /// <returns></returns>
-        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
-        public async Task ImportProject(ProjectFileAm projectFile)
-        {
-            if (projectFile == null)
-                throw new ModelBuilderInvalidOperationException("ProjectFile is null");
-
-            var validation = projectFile.ValidateObject();
-            if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.", validation);
-
-            var project = await ResolveProject(projectFile);
-
-            if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Iri)))
-                throw new ModelBuilderInvalidOperationException("You can't import an project that is null or missing id");
-
-            var exist = _projectService.ProjectExist(project.Id, project.Iri);
-
-            if (exist)
-            {
-                await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
-                return;
-            }
-
-            _ = await _projectService.CreateProject(project);
         }
 
         /// <summary>
@@ -117,12 +90,15 @@ namespace Mb.Services.Services
         {
             var par = _moduleService.Resolve<IModelBuilderParser>(projectConverter.ParserId);
             if (par == null)
-                throw new ModelBuilderInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
+                throw new ModelBuilderInvalidOperationException(
+                    $"There is no parser with id: {projectConverter.ParserId}");
 
-            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri, projectConverter.Project, _commonRepository.GetDomain());
+            await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri,
+                projectConverter.Project, _commonRepository.GetDomain());
             var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Iri);
             if (project == null)
-                throw new ModelBuilderNullReferenceException($"Couldn't save project with id: {projectConverter.Project.Id}");
+                throw new ModelBuilderNullReferenceException(
+                    $"Couldn't save project with id: {projectConverter.Project.Id}");
 
             var bytes = await par.SerializeProject(project);
             var projectFile = new ProjectFileAm
@@ -136,5 +112,42 @@ namespace Mb.Services.Services
         }
 
         #endregion
+
+        #region Private
+
+        /// <summary>
+        /// Import project, if exist update project
+        /// </summary>
+        /// <param name="projectFile"></param>
+        /// <returns></returns>
+        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
+        private async Task ImportProject(ProjectFileAm projectFile)
+        {
+            if (projectFile == null)
+                throw new ModelBuilderInvalidOperationException("ProjectFile is null");
+
+            var validation = projectFile.ValidateObject();
+            if (!validation.IsValid)
+                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.",
+                    validation);
+
+            var project = await ResolveProject(projectFile);
+
+            if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Iri)))
+                throw new ModelBuilderInvalidOperationException(
+                    "You can't import an project that is null or missing id");
+
+            var exist = _projectService.ProjectExist(project.Id, project.Iri);
+
+            if (exist)
+            {
+                await _projectService.UpdateProject(project.Id, project.Iri, project, _commonRepository.GetDomain());
+                return;
+            }
+
+            _ = await _projectService.CreateProject(project);
+        }
+
+        #endregion Private
     }
 }

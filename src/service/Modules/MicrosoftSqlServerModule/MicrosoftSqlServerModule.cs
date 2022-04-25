@@ -30,8 +30,10 @@ namespace MicrosoftSqlServerModule
 
             services.AddDbContext<ModelBuilderDbContext>(options =>
             {
+                options.UseSqlServer(dbConfig.ConnectionString,
+                    sqlOptions => sqlOptions.MigrationsAssembly("ModelBuilder.Core"));
                 //options.EnableSensitiveDataLogging();
-                options.UseSqlServer(dbConfig.ConnectionString, sqlOptions => sqlOptions.MigrationsAssembly("ModelBuilder.Core"));
+                //options.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
             return services;

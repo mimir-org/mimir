@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using Mb.Models.Abstract;
 using Mb.Models.Data;
@@ -37,7 +38,8 @@ namespace Mb.Services.Services
             if (id == Guid.Empty)
                 throw new ModelBuilderModuleException("Module id is required");
 
-            var instance = Modules.FirstOrDefault(x => string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase))?.Instance;
+            var instance = Modules.FirstOrDefault(x => string.Equals(x.ModuleDescription.Id.ToString(), id.ToString(),
+                StringComparison.CurrentCultureIgnoreCase))?.Instance;
             if (instance is T obj)
             {
                 return obj;
@@ -46,7 +48,8 @@ namespace Mb.Services.Services
             throw new NotSupportedException("The type is not supported or empty");
         }
 
-        private IEnumerable<Models.Application.Module> CreateModules<T>(ModuleType moduleType) where T : IModuleInterface
+        private IEnumerable<Models.Application.Module> CreateModules<T>(ModuleType moduleType)
+            where T : IModuleInterface
         {
             var data = new List<Models.Application.Module>();
 
@@ -54,18 +57,19 @@ namespace Mb.Services.Services
                 return data;
 
             foreach (var instance in Assemblies
-                .Select(assembly => assembly.GetTypes()
-                .Where(x => x.GetInterfaces().Contains(typeof(T)) &&
-                            x.GetConstructor(Type.EmptyTypes) != null)
-                .Select(Activator.CreateInstance)
-                .FirstOrDefault()))
+                         .Select(assembly => assembly.GetTypes()
+                             .Where(x => x.GetInterfaces().Contains(typeof(T)) &&
+                                         x.GetConstructor(Type.EmptyTypes) != null)
+                             .Select(Activator.CreateInstance)
+                             .FirstOrDefault()))
             {
                 if (instance is not T obj)
                     continue;
 
                 data.Add(new Models.Application.Module
                 {
-                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescription { Id = Guid.Empty, Name = "Missing description" },
+                    ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescription
+                    { Id = Guid.Empty, Name = "Missing description" },
                     Instance = obj,
                     ModuleType = moduleType
                 });
@@ -86,7 +90,9 @@ namespace Mb.Services.Services
             {
                 try
                 {
-                    var hasModuleInterface = assembly.GetTypes().Any(x => x.GetInterfaces().Contains(typeof(IModuleInterface)) && x.GetConstructor(Type.EmptyTypes) != null);
+                    var hasModuleInterface = assembly.GetTypes().Any(x =>
+                        x.GetInterfaces().Contains(typeof(IModuleInterface)) &&
+                        x.GetConstructor(Type.EmptyTypes) != null);
                     if (!hasModuleInterface)
                         continue;
 
@@ -100,8 +106,28 @@ namespace Mb.Services.Services
                 {
                     throw new ModelBuilderModuleException($"Can't create modules. Error: {e.Message}");
                 }
-
             }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine();
+            sb.AppendLine("#############################################################################");
+            sb.AppendLine("############## Mimir services started. ######################################");
+            sb.AppendLine("#############################################################################");
+
+            if (Modules != null && Modules.Any())
+            {
+                foreach (var m in Modules.OrderBy(x => x.ModuleType))
+                {
+                    sb.AppendLine(m.ToString());
+                }
+
+                sb.AppendLine("#############################################################################");
+            }
+
+            return sb.ToString();
         }
     }
 }

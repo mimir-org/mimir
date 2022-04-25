@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using AutoMapper;
-using AutoMapper.Configuration;
 using Mb.Core.Profiles;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
@@ -17,6 +16,7 @@ using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
 using Mb.Models.Settings;
 using Mb.Services.Contracts;
+using Mb.Services.HostedServices;
 using Mb.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +45,8 @@ namespace Mb.Core.Extensions
                     .Where(x => x.IsClass && !x.IsAbstract && x.IsPublic);
         }
 
-        public static IServiceCollection AddModelBuilderModule(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddModelBuilderModule(this IServiceCollection services,
+            IConfiguration configuration)
         {
             // ModelBuilder Configurations
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -68,9 +69,10 @@ namespace Mb.Core.Extensions
             services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = false; });
 
             // Dependency injection
-
             services.AddMemoryCache();
             services.AddSingleton<ICacheRepository, InMemoryCacheRepository>();
+            services.AddHostedService<TimedCacheService>();
+
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<INodeRepository, NodeRepository>();
@@ -84,6 +86,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IVersionRepository, VersionRepository>();
             services.AddScoped<IWebSocketRepository, WebSocketRepository>();
             services.AddScoped<ILibRepository, LibRepository>();
+            services.AddScoped<IModelBuilderProcRepository, ModelBuilderProcRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ILibraryService, LibraryService>();
@@ -93,9 +96,6 @@ namespace Mb.Core.Extensions
             services.AddScoped<IProjectFileService, ProjectFileService>();
             services.AddScoped<ICooperateService, CooperateService>();
             services.AddScoped<ILockService, LockService>();
-            //services.AddSingleton<IWorkerService, WorkerService>();
-
-            //services.AddHostedService<IWorkerService>();
 
             services.AddHttpContextAccessor();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
@@ -103,12 +103,16 @@ namespace Mb.Core.Extensions
 
             // Automatic dependency injection for all modules
             var moduleService = new ModuleService();
-            services.AddServicesWithAttributeOfType<SingletonAttribute>(moduleService.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<SingletonAttribute>(
+                moduleService.Assemblies ?? new List<Assembly>());
             services.AddServicesWithAttributeOfType<ScopeAttribute>(moduleService.Assemblies ?? new List<Assembly>());
-            services.AddServicesWithAttributeOfType<TransientAttribute>(moduleService.Assemblies ?? new List<Assembly>());
+            services.AddServicesWithAttributeOfType<TransientAttribute>(
+                moduleService.Assemblies ?? new List<Assembly>());
 
             services.AddSingleton<IModuleService>(_ => moduleService);
-            var modules = moduleService.Modules.Where(x => x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService || x.ModuleType == ModuleType.Parser).ToList();
+            var modules = moduleService.Modules.Where(x =>
+                x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService ||
+                x.ModuleType == ModuleType.Parser).ToList();
 
             // Auto-mapper
             var cfg = new MapperConfigurationExpression();
@@ -116,7 +120,9 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new EdgeProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
-            cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
+            cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(),
+                provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
             cfg.AddProfile<CollaborationPartnerProfile>();
@@ -166,6 +172,8 @@ namespace Mb.Core.Extensions
                 endpoints.MapHub<ModelBuilderHub>("/hub/modelbuilder");
             });
 
+            logger.LogInformation(moduleService.ToString());
+
             return app;
         }
 
@@ -179,7 +187,8 @@ namespace Mb.Core.Extensions
                 return;
 
             var commonService = serviceScope.ServiceProvider.GetRequiredService<ICommonService>();
-            var currentCollaborationPartner = commonService?.GetCollaborationPartnerByDomain(appSettings.CollaborationPartner.Domain).Result;
+            var currentCollaborationPartner = commonService
+                ?.GetCollaborationPartnerByDomain(appSettings.CollaborationPartner.Domain).Result;
 
             if (currentCollaborationPartner != null)
             {
@@ -199,7 +208,8 @@ namespace Mb.Core.Extensions
             appSettings.CollaborationPartner = currentCollaborationPartner;
         }
 
-        private static void CreateModules(this IServiceCollection services, IServiceProvider provider, IConfiguration configuration, IEnumerable<Module> modules)
+        private static void CreateModules(this IServiceCollection services, IServiceProvider provider,
+            IConfiguration configuration, IEnumerable<Module> modules)
         {
             var logger = provider.GetService<ILogger<IModuleService>>();
 
@@ -222,7 +232,8 @@ namespace Mb.Core.Extensions
             }
         }
 
-        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IServiceProvider provider, IEnumerable<Module> modules)
+        private static void CreateProfiles(this IMapperConfigurationExpression cfg, IServiceProvider provider,
+            IEnumerable<Module> modules)
         {
             var logger = provider.GetService<ILogger<IModuleService>>();
 

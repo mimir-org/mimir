@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 // ReSharper disable StringLiteralTypo
 
 namespace EventHubModule
@@ -85,7 +86,8 @@ namespace EventHubModule
         private void UpdateFromEnvironmentVariables(EventHubConfiguration configuration)
         {
             // Producer
-            var producerConnectionString = Environment.GetEnvironmentVariable("EventHubConfiguration_ProducerConnectionString");
+            var producerConnectionString =
+                Environment.GetEnvironmentVariable("EventHubConfiguration_ProducerConnectionString");
             var producerEventHubName = Environment.GetEnvironmentVariable("EventHubConfiguration_ProducerEventHubName");
 
             if (!string.IsNullOrEmpty(producerConnectionString))
@@ -95,10 +97,13 @@ namespace EventHubModule
                 configuration.ProducerEventHubName = producerEventHubName.Trim();
 
             // Consumer
-            var consumerConnectionString = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerConnectionString");
+            var consumerConnectionString =
+                Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerConnectionString");
             var consumerEventHubName = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerEventHubName");
-            var consumerBlobStorageConnectionString = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerBlobStorageConnectionString");
-            var consumerBlobContainerName = Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerBlobContainerName");
+            var consumerBlobStorageConnectionString =
+                Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerBlobStorageConnectionString");
+            var consumerBlobContainerName =
+                Environment.GetEnvironmentVariable("EventHubConfiguration_ConsumerBlobContainerName");
 
             if (!string.IsNullOrEmpty(consumerConnectionString))
                 configuration.ConsumerConnectionString = consumerConnectionString.Trim();
@@ -111,7 +116,6 @@ namespace EventHubModule
 
             if (!string.IsNullOrEmpty(consumerBlobContainerName))
                 configuration.ConsumerBlobContainerName = consumerBlobContainerName.Trim();
-
         }
 
         private void ProcessData(object? sender, ImfData e)
@@ -123,20 +127,27 @@ namespace EventHubModule
             try
             {
                 if (moduleService == null)
-                    throw new ModelBuilderModuleException("Can't process data. ModuleService is null in EventHubModule.");
+                    throw new ModelBuilderModuleException(
+                        "Can't process data. ModuleService is null in EventHubModule.");
 
                 if (projectService == null)
-                    throw new ModelBuilderModuleException("Can't process data. ProjectService is null in EventHubModule.");
+                    throw new ModelBuilderModuleException(
+                        "Can't process data. ProjectService is null in EventHubModule.");
 
-                var parserModule = moduleService.Modules.FirstOrDefault(x => x.ModuleType == ModuleType.Parser && string.Equals(x.ModuleDescription.Id.ToString(), e.Parser, StringComparison.CurrentCultureIgnoreCase));
+                var parserModule = moduleService.Modules.FirstOrDefault(x =>
+                    x.ModuleType == ModuleType.Parser && string.Equals(x.ModuleDescription.Id.ToString(), e.Parser,
+                        StringComparison.CurrentCultureIgnoreCase));
                 if (parserModule == null)
-                    throw new ModelBuilderModuleException($"Can't process data. Can't find a parser with name: {e.Parser} in EventHubModule.");
+                    throw new ModelBuilderModuleException(
+                        $"Can't process data. Can't find a parser with name: {e.Parser} in EventHubModule.");
 
                 if (!(parserModule.Instance is IModelBuilderParser parser))
-                    throw new ModelBuilderModuleException("Can't process data. Parser is not of type IModelBuilderParser in EventHubModule.");
+                    throw new ModelBuilderModuleException(
+                        "Can't process data. Parser is not of type IModelBuilderParser in EventHubModule.");
 
                 if (string.IsNullOrEmpty(e.Document))
-                    throw new ModelBuilderModuleException("Can't process data. Document is null or empty in EventModule.");
+                    throw new ModelBuilderModuleException(
+                        "Can't process data. Document is null or empty in EventModule.");
 
 
                 var project = parser.DeserializeProjectAm(Encoding.UTF8.GetBytes(e.Document))?.Result;
@@ -148,9 +159,9 @@ namespace EventHubModule
                 }
 
                 var hasProject = projectService.ProjectExist(project.Id, project.Iri);
-                _ = hasProject ?
-                    projectService.UpdateProject(project.Id, project.Iri, project, e.SenderDomain) :
-                    projectService.CreateProject(project);
+                _ = hasProject
+                    ? projectService.UpdateProject(project.Id, project.Iri, project, e.SenderDomain)
+                    : projectService.CreateProject(project);
             }
             catch (Exception ex)
             {

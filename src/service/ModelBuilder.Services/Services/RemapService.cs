@@ -524,12 +524,6 @@ namespace Mb.Services.Services
             terminal.Id = terminalReplacement.ToId;
             terminal.Iri = terminalReplacement.ToIri;
 
-            if (terminal.NodeId == replacement.FromId)
-            {
-                terminal.NodeId = replacement.FromId;
-                terminal.NodeIri = replacement.ToIri;
-            }
-
             if (!string.IsNullOrWhiteSpace(terminal.TerminalTypeId) && string.IsNullOrWhiteSpace(terminal.TerminalTypeIri))
             {
                 terminal.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + terminal.TerminalTypeId;

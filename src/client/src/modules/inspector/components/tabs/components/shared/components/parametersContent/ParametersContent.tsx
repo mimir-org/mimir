@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
-import { CombinedAttributeFilter, Project } from "../../../../../../../../models";
+import { CombinedAttributeFilter } from "../../../../../../../../models";
 import { GetAttributeCombinations } from "./helpers/GetAttributeCombinations";
 import { GetParametersColor } from "./helpers/GetParametersColor";
 import { GetAttributes } from "./helpers/GetAttributes";
@@ -37,8 +37,6 @@ interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
-  project: Project;
-  elementIsLocked: boolean;
   attributeLikeItems?: AttributeLikeItem[];
 }
 
@@ -46,8 +44,6 @@ export const ParametersContent = ({
   parametersElement,
   inspectorParentElement,
   terminalParentElement,
-  project,
-  elementIsLocked,
   attributeLikeItems,
 }: Props) => {
   const dispatch = useAppDispatch();
@@ -60,24 +56,30 @@ export const ParametersContent = ({
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
+  const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
+  const [colorMapping] = useState(new Map<string, [string, string]>());
   const attributeCombinations = useMemo(
     () => GetAttributeCombinations(attributeFilters, attributes),
     [attributeFilters, attributes]
   );
+
+  const OnShowAllEntites = () => {
+    if (!isCreateLibraryType) {
+      shouldShowDefaultEntities.current = true;
+      OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
+    }
+  };
 
   useEffect(() => {
     IsCreateLibraryType(inspectorParentElement) &&
       OnIsCreateLibraryType(parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch);
   }, [inspectorParentElement, parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch]);
 
-  if (!isCreateLibraryType && shouldShowDefaultEntities.current) {
-    OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
-    shouldShowDefaultEntities.current = false;
-  }
-
-  const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
-
-  const [colorMapping] = useState(new Map<string, [string, string]>());
+  useEffect(() => {
+    if (!isCreateLibraryType && shouldShowDefaultEntities.current) {
+      OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
+    }
+  }, [attributeCombinations, attributeFilters, dispatch, isCreateLibraryType, parametersElement.id, shouldShowDefaultEntities]);
 
   return (
     <ParametersContentContainer>
@@ -97,12 +99,7 @@ export const ParametersContent = ({
           >
             {TextResources.INSPECTOR_PARAMS_CLEAR_ALL}
           </ParameterButton>
-          <ParameterButton
-            className={`link ${isCreateLibraryType && "hide-link"}`}
-            onClick={() =>
-              !isCreateLibraryType && OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch)
-            }
-          >
+          <ParameterButton className={`link ${isCreateLibraryType && "hide-link"}`} onClick={OnShowAllEntites}>
             {TextResources.INSPECTOR_PARAMS_DEFAULT}
           </ParameterButton>
         </ParametersContentMenu>
@@ -118,7 +115,6 @@ export const ParametersContent = ({
               <ParameterRow
                 key={filterName}
                 element={parametersElement}
-                elementIsLocked={elementIsLocked}
                 inspectorParentElement={inspectorParentElement}
                 terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
@@ -126,7 +122,6 @@ export const ParametersContent = ({
                 attributeLikeItems={attributeLikeItems}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 username={username}
-                project={project}
                 filterName={filterName}
                 headerColor={headerColor}
                 bodyColor={bodyColor}

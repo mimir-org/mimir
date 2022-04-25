@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -702,12 +702,14 @@ namespace Mb.Core.Migrations
                         .HasColumnName("Id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(511)
+                        .HasColumnType("nvarchar(511)")
                         .HasColumnName("Description");
 
                     b.Property<string>("Iri")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
                         .HasColumnName("Iri");
 
                     b.Property<bool>("IsSubProject")
@@ -716,26 +718,29 @@ namespace Mb.Core.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(63)
+                        .HasColumnType("nvarchar(63)")
                         .HasColumnName("Name");
 
                     b.Property<string>("ProjectOwner")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(63)
+                        .HasColumnType("nvarchar(63)")
                         .HasColumnName("ProjectOwner");
 
-                    b.Property<DateTime>("Updated")
+                    b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
                         .HasColumnName("Updated");
 
                     b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(63)
+                        .HasColumnType("nvarchar(63)")
                         .HasColumnName("UpdatedBy");
 
                     b.Property<string>("Version")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)")
                         .HasColumnName("Version");
 
                     b.HasKey("Id");
