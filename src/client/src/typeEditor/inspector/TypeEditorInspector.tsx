@@ -124,9 +124,9 @@ export const TypeEditorInspector = ({ createLibraryType, typeEditorPropertiesRef
         simpleLikeItems={simpleLikeItems}
         inspectorRef={inspectorRef}
         isInspectorOpen={inspectorOpen}
-        changeInspectorVisibilityAction={changeTypeEditorInspectorVisibility}
-        changeInspectorHeightAction={changeTypeEditorInspectorHeight}
-        changeInspectorTabAction={changeTypeEditorInspectorTab}
+        inspectorVisibilityAction={changeTypeEditorInspectorVisibility}
+        inspectorHeightAction={changeTypeEditorInspectorHeight}
+        inspectorTabAction={changeTypeEditorInspectorTab}
         onToggle={onToggleWrapped}
       />
     </AnimatedInspector>

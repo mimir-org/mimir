@@ -28,7 +28,7 @@ export const BlockProjectComponent = () => {
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedNode = nodes?.find((n) => n.selected);
 
-  const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project);
+  const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project?.edges);
 
   if (!project || !nodes) return null;
 
@@ -47,7 +47,7 @@ export const BlockProjectComponent = () => {
             secondaryNode={secondaryNode}
             indent={node.level}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node.id, project)}
+            isLeaf={!HasChildren(node.id, project.edges)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
             setLockingNode={setLockingNode}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}

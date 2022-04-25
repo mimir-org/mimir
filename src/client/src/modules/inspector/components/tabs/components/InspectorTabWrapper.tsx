@@ -14,7 +14,7 @@ interface Props {
   element?: InspectorElement;
   index: number;
   activeTabIndex: number;
-  changeInspectorTabAction?: (index: number) => Action;
+  inspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
 }
@@ -23,7 +23,7 @@ export const InspectorTabWrapper = ({
   element,
   index,
   activeTabIndex,
-  changeInspectorTabAction,
+  inspectorTabAction,
   children,
   inspectorRef,
   isInspectorOpen,
@@ -32,13 +32,13 @@ export const InspectorTabWrapper = ({
   const isTabOpen = activeTabIndex === index;
 
   const onClick = useCallback(() => {
-    dispatch(changeInspectorTabAction(index));
+    dispatch(inspectorTabAction(index));
     if (!isInspectorOpen) {
       dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
       dispatch(changeInspectorHeight(Size.MODULE_OPEN));
       SetPanelHeight(inspectorRef, Size.MODULE_OPEN);
     }
-  }, [dispatch, changeInspectorTabAction, index, isInspectorOpen, inspectorRef]);
+  }, [dispatch, inspectorTabAction, index, isInspectorOpen, inspectorRef]);
 
   return (
     <>

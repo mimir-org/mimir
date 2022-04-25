@@ -18,11 +18,11 @@ export const HandleOffPageEdgeDelete = (edgeToDelete: Edge, project: Project, di
   project.nodes.forEach((node) => {
     if (!IsOffPage(node)) return;
 
-    const relatedTransportEdge = GetRelatedTransportEdge(node.id, edgeToDelete, project);
+    const relatedTransportEdge = GetRelatedTransportEdge(node.id, edgeToDelete, project.edges);
     if (!relatedTransportEdge) return;
 
-    const partOfEdge = GetRelatedPartOfEdge(node, project);
-    const parentNodeId = GetParentNode(node.id, project)?.id;
+    const partOfEdge = GetRelatedPartOfEdge(node, project.edges);
+    const parentNodeId = GetParentNode(node.id)?.id;
     const parentNodeConn = GetParentConnector(relatedTransportEdge, node.id);
 
     dispatch(setOffPageStatus(parentNodeId, parentNodeConn?.id, false));

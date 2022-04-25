@@ -184,7 +184,7 @@ export const inspectorActiveTabSelector = createAppSelector(
 
 export const heightSelector = createAppSelector(
   (state) => state.inspector.height,
-  (width) => width
+  (width) => width // TODO: ?
 );
 
 export const darkModeSelector = createAppSelector(
@@ -220,6 +220,11 @@ export const projectIsSubProjectSelector = createAppSelector(
 export const secondaryNodeSelector = createAppSelector(
   (state) => state.secondaryNode.node,
   (node) => node as Node
+);
+
+export const selectedNodeSelector = createAppSelector(
+  (state) => state.projectState.project?.nodes?.find((n) => n.selected),
+  (node) => node
 );
 
 export const iconSelector = createAppSelector(

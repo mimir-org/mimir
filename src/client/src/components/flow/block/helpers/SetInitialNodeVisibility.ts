@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { IsDirectChild } from "../../../../helpers/Family";
 import { Node } from "../../../../models";
 import { setBlockNodeVisibility } from "../../../../redux/store/project/actions";
 
@@ -7,9 +8,12 @@ import { setBlockNodeVisibility } from "../../../../redux/store/project/actions"
  * @param nodes
  * @param dispatch
  */
-const SetInitialNodeVisibility = (nodes: Node[], dispatch: Dispatch) => {
+const SetInitialNodeVisibility = (nodes: Node[], selectedNode: Node, dispatch: Dispatch) => {
+  dispatch(setBlockNodeVisibility(selectedNode, false));
+  console.log("INITIAL: ", selectedNode);
+
   nodes?.forEach((n) => {
-    if (n.selected) dispatch(setBlockNodeVisibility(n, false));
+    if (IsDirectChild(n, selectedNode)) dispatch(setBlockNodeVisibility(n, false));
     else dispatch(setBlockNodeVisibility(n, true));
   });
 };

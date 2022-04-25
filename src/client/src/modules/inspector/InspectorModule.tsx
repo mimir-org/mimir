@@ -22,7 +22,7 @@ interface Props {
 }
 
 /**
- * Component for the Inspector Module that shows the data for each object in Flow.
+ * Component for the Inspector Module that shows the data for each object in Mimir.
  * @param interface
  * @returns a module with multiple tabs for different operations.
  */
@@ -41,7 +41,7 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
   const edge = edges.find((x) => x.selected);
-  const node = IsBlockView() ? nodes?.find((x) => x.blockSelected) : nodes?.find((x) => x.selected);
+  const node = nodes.find((x) => (IsBlockView() ? x.blockSelected : x.selected));
 
   const resizePanelRef = useRef(null);
   const element: InspectorElement = node || edge;
@@ -49,7 +49,7 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   useAutoMinimizeInspector(inspectorRef);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
 
-  const changeInspectorVisibilityAction = useCallback(
+  const inspectorVisibilityAction = useCallback(
     (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
     [type]
   );
@@ -79,8 +79,8 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
         activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
         isInspectorOpen={inspectorOpen}
-        changeInspectorVisibilityAction={changeInspectorVisibilityAction}
-        changeInspectorHeightAction={changeInspectorHeight}
+        inspectorVisibilityAction={inspectorVisibilityAction}
+        inspectorHeightAction={changeInspectorHeight}
       />
     </AnimatedInspector>
   );

@@ -3,10 +3,12 @@ import { Size } from "../../../../../compLibrary/size/Size";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 
 /**
- * Function to open/close the Inspector Module.
+ * Component to open/close the Inspector Module.
  * @param dispatch
- * @param type - Module type
  * @param open
+ * @param inspectorRef
+ * @param changeInspectorVisibilityAction
+ * @param changeInspectorHeightAction
  */
 export const OnToggleClick = (
   dispatch: Dispatch,

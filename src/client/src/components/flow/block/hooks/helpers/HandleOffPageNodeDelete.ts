@@ -20,13 +20,13 @@ import {
  * @param dispatch
  */
 export const HandleOffPageNodeDelete = (nodeToDeleteId: string, project: Project, dispatch: Dispatch) => {
-  const parentNodeId = GetParentNode(nodeToDeleteId, project)?.id;
+  const parentNodeId = GetParentNode(nodeToDeleteId)?.id;
   if (!parentNodeId) return;
 
-  const transportEdge = GetTransportEdge(nodeToDeleteId, parentNodeId, project);
-  const partOfEdge = GetPartOfEdge(nodeToDeleteId, parentNodeId, project);
+  const transportEdge = GetTransportEdge(nodeToDeleteId, parentNodeId, project.edges);
+  const partOfEdge = GetPartOfEdge(nodeToDeleteId, parentNodeId, project.edges);
   const parentConnectorId = GetParentConnector(transportEdge, nodeToDeleteId)?.id;
-  const connectedEdge = GetConnectedEdge(parentConnectorId, project);
+  const connectedEdge = GetConnectedEdge(parentConnectorId, project.edges);
 
   if (transportEdge && !connectedEdge) dispatch(setOffPageStatus(parentNodeId, parentConnectorId, false));
   if (connectedEdge) HandleConnectedOffPageDelete(project, transportEdge, connectedEdge, dispatch);
@@ -44,14 +44,14 @@ export const HandleOffPageNodeDelete = (nodeToDeleteId: string, project: Project
  * @param dispatch
  */
 export const HandleConnectedOffPageDelete = (project: Project, transportEdge: Edge, referenceEdge: Edge, dispatch: Dispatch) => {
-  const oppositeTransportEdge = GetOppositeTransportEdge(project, referenceEdge);
+  const oppositeTransportEdge = GetOppositeTransportEdge(project.edges, referenceEdge);
 
   const oppositeOffPageNode = IsOffPage(oppositeTransportEdge.toNode)
     ? oppositeTransportEdge.toNode
     : oppositeTransportEdge.fromNode;
 
-  const oppositeParentId = GetParentNode(oppositeOffPageNode?.id, project)?.id;
-  const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode?.id, oppositeParentId, project);
+  const oppositeParentId = GetParentNode(oppositeOffPageNode?.id)?.id;
+  const oppositePartOfEdge = GetPartOfEdge(oppositeOffPageNode?.id, oppositeParentId, project.edges);
 
   dispatch(deleteEdge(referenceEdge.id));
   dispatch(deleteEdge(transportEdge.id));

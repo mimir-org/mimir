@@ -60,7 +60,7 @@ const HandleParentDeleted = (nodeId: string, project: Project, dispatch: Dispatc
 };
 
 const HandleSiblingDeleted = (nodeId: string, project: Project, dispatch: Dispatch) => {
-  const parent = FindParentEdge(nodeId, project)?.fromNode;
+  const parent = FindParentEdge(nodeId, project?.edges)?.fromNode;
   if (!parent) return;
 
   const siblings = GetChildren(parent.id, project).filter((n) => n.id !== nodeId);

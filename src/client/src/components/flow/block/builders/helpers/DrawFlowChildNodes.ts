@@ -36,7 +36,7 @@ function ValidateEdge(edge: Edge, selectedNode: Node) {
 }
 
 function ValidateOffPage(project: Project, offPageNode: Node, selectedNode: Node, secondaryNode: Node, flowNodes: FlowNode[]) {
-  const offPageParentId = GetParentNode(offPageNode?.id, project)?.id;
+  const offPageParentId = GetParentNode(offPageNode?.id)?.id;
 
   if (!secondaryNode) return flowNodes?.some((elem) => elem?.id === offPageParentId);
   if (!IsFamily(selectedNode, secondaryNode)) return false;

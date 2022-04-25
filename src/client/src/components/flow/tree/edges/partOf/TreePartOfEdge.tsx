@@ -7,7 +7,7 @@ import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 /**
  * Component for PartOfEdges in TreeView.
  * @param params
- * @returns a vertical edge between nodes of the same Aspect.
+ * @returns an edge between nodes of the same Aspect.
  */
 const TreePartOfEdge = ({ id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
   const color = GetAspectColor(data.edge.fromNode, AspectColorType.Main);

@@ -12,6 +12,7 @@ import { AttributeLikeItem } from "../../../../../../../../../types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { FontSize } from "../../../../../../../../../../../compLibrary/font";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
+import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -43,11 +44,11 @@ export const Parameter = ({ attribute, combination, headerColor, bodyColor, onLo
         {isAttribute && (
           <>
             <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
-              <VisuallyHidden>{isLocked ? "Unlock parameter" : "Lock parameter"}</VisuallyHidden>
+              <VisuallyHidden>{isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK}</VisuallyHidden>
               {isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />}
             </ParameterButton>
             <ParameterButton onClick={() => onClose(attribute.id)}>
-              <VisuallyHidden>Close parameter</VisuallyHidden>
+              <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
               <img src={CloseIcon} alt="x mark" />
             </ParameterButton>
           </>

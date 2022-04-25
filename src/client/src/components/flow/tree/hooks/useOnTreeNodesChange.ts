@@ -33,7 +33,7 @@ const useOnTreeNodesChange = (
   });
 
   // Execute all changes
-  setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
+  setNodes((n) => applyNodeChanges(changes, n));
   DeleteMimirNodes(mimirNodesToDelete, inspectorRef, project, dispatch);
 };
 

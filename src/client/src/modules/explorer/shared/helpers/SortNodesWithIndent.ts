@@ -66,7 +66,6 @@ const SortNodesByIndent = (buckets: Map<number, Node[]>) => {
  * @param node Node to find parent of
  * @param indent Indent level of node
  * @param sortedNodedWithIndent Current (partial) array of nodes with indent.
- * @returns
  */
 const AddNodeFromBucket = (node: Node, indent: number, sortedNodedWithIndent: [Node, number][]) => {
   for (let i = 0; i < sortedNodedWithIndent.length; i++) {

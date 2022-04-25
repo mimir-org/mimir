@@ -233,7 +233,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           project: {
             ...project,
             nodes: nodes.map((n) => (elements.includes(n) ? { ...n, hidden } : n)),
-            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, hidden } : e)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNodeId === node.id ? { ...e, hidden } : e)),
           },
         };
       }
@@ -267,7 +267,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
           project: {
             ...project,
             nodes: nodes.map((n) => (elements.includes(n) ? { ...n, blockHidden } : n)),
-            edges: edges.map((e) => (elements.includes(e) || e.toNode === node ? { ...e, blockHidden } : e)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNodeId === node.id ? { ...e, blockHidden } : e)),
           },
         };
       }
@@ -289,7 +289,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected } : { ...n, selected: false })),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected } : { ...n })),
           edges,
         },
       };
@@ -300,7 +300,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => ({ ...n, selected: false })),
+          nodes: nodes.map((n) => (n.selected ? { ...n, selected: false } : { ...n })),
           edges,
         },
       };
@@ -311,25 +311,33 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
 
       return {
         ...state,
-        project: { ...project, edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected } : { ...e, selected: false })) },
+        project: {
+          ...project,
+          nodes,
+          edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected } : { ...e })),
+        },
       };
     }
 
     case Types.REMOVE_ACTIVE_EDGE: {
       return {
         ...state,
-        project: { ...project, edges: edges?.map((e) => ({ ...e, selected: false })) },
+        project: {
+          ...project,
+          nodes,
+          edges: edges?.map((e) => (e.selected ? { ...e, selected: false } : { ...e })),
+        },
       };
     }
 
     case Types.SET_ACTIVE_BLOCKNODE: {
-      const blockId = action.payload.nodeId;
+      const blockNodeId = action.payload.nodeId;
 
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === blockId ? { ...n, blockSelected: true } : { ...n, blockSelected: false })),
+          nodes: nodes.map((n) => (n.id === blockNodeId ? { ...n, blockSelected: true } : { ...n })),
           edges,
         },
       };
@@ -340,7 +348,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => ({ ...n, blockSelected: false })),
+          nodes: nodes.map((n) => (n.blockSelected ? { ...n, blockSelected: false } : { ...n })),
           edges,
         },
       };

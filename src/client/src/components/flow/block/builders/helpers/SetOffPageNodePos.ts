@@ -11,11 +11,11 @@ import { Position } from "../../../../../models/project";
  * @returns a Position object.
  */
 const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: Node, project: Project) => {
-  if (!offPageNode || !parentNode) return null;
+  if (!offPageNode || !parentNode || !project) return null;
 
   // Handle OffPageNodes from the SecondaryNode
   if (secondaryNode !== undefined) {
-    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode, project);
+    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode);
     if (splitOffPagePos !== null) return splitOffPagePos;
   }
 
@@ -75,9 +75,9 @@ function HandleTargetOffPagePos(parentNode: Node, offPageNode: Node) {
  * @param project
  * @returns a Position object.
  */
-function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, project: Project) {
-  const offPageParentId = GetParentNode(offPageNode?.id, project)?.id;
-  const parentBlock = GetParentNode(offPageParentId, project);
+function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node) {
+  const offPageParentId = GetParentNode(offPageNode?.id)?.id;
+  const parentBlock = GetParentNode(offPageParentId);
 
   if (parentBlock?.id !== secondaryNode?.id) return null;
 

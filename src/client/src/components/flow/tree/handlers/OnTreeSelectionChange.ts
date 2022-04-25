@@ -33,6 +33,7 @@ export const HandleTreeNodeSelection = (
 
 function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
   dispatch(removeActiveEdge());
+  dispatch(removeActiveNode());
   dispatch(setActiveNode(flowNode.id, true));
   OpenInspector(dispatch);
 }

@@ -26,9 +26,9 @@ interface Props {
   activeTabIndex: number;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
-  changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
-  changeInspectorHeightAction: ChangeInspectorHeightAction;
-  changeInspectorTabAction?: ChangeInspectorTabAction;
+  inspectorVisibilityAction: ChangeInspectorVisibilityAction;
+  inspectorHeightAction: ChangeInspectorHeightAction;
+  inspectorTabAction?: ChangeInspectorTabAction;
   onToggle?: OnToogleHandler;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
@@ -45,9 +45,9 @@ export const InspectorHeader = ({
   activeTabIndex,
   inspectorRef,
   isInspectorOpen,
-  changeInspectorVisibilityAction,
-  changeInspectorHeightAction,
-  changeInspectorTabAction,
+  inspectorVisibilityAction,
+  inspectorHeightAction,
+  inspectorTabAction,
   icons,
   attributeLikeItems,
   terminalLikeItems,
@@ -62,7 +62,7 @@ export const InspectorHeader = ({
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
         simpleLikeItems={simpleLikeItems}
-        changeInspectorTabAction={changeInspectorTabAction}
+        inspectorTabAction={inspectorTabAction}
         inspectorRef={inspectorRef}
         isInspectorOpen={isInspectorOpen}
       />
@@ -75,8 +75,8 @@ export const InspectorHeader = ({
         username={username}
         open={open}
         inspectorRef={inspectorRef}
-        changeInspectorVisibilityAction={changeInspectorVisibilityAction}
-        changeInspectorHeightAction={changeInspectorHeightAction}
+        inspectorVisibilityAction={inspectorVisibilityAction}
+        inspectorHeightAction={inspectorHeightAction}
         dispatch={dispatch}
       />
     </InspectorHeaderContainer>

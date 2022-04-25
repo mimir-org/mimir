@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
-import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
@@ -45,6 +45,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  // const selectedNode = project?.nodes?.find((n) => n.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -66,22 +67,17 @@ export const FlowTree = ({ inspectorRef }: Props) => {
     return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) =>
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
     HandleTreeNodeSelection(selectedItems, project, inspectorRef, dispatch);
+  };
 
-  const OnNodesChange = useCallback(
-    (changes: NodeChange[]) => {
-      return hooks.useOnTreeNodesChange(project, changes, setNodes, dispatch, inspectorRef);
-    },
-    [project]
-  );
+  const OnNodesChange = useCallback((changes: NodeChange[]) => {
+    return hooks.useOnTreeNodesChange(project, changes, setNodes, dispatch, inspectorRef);
+  }, []);
 
-  const OnEdgesChange = useCallback(
-    (changes: EdgeChange[]) => {
-      return hooks.useOnTreeEdgesChange(project, changes, setEdges, dispatch, inspectorRef);
-    },
-    [project]
-  );
+  const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
+    return hooks.useOnTreeEdgesChange(project, changes, setEdges, dispatch, inspectorRef);
+  }, []);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -104,7 +100,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowTreeEdges(project, animatedEdge));
-  }, [project?.edges, animatedEdge]);
+  }, [project?.edges?.length, animatedEdge]);
 
   // Show only partOf edges by default
   useEffect(() => {
@@ -146,4 +142,4 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   );
 };
 
-export default FlowTree;
+export default memo(FlowTree);

@@ -104,7 +104,7 @@ function CalculateDropZone(
   const zoom = getViewPort().zoom;
   const x = getViewPort().x;
 
-  const parentNode = GetParentNode(sourceNode?.id, project);
+  const parentNode = GetParentNode(sourceNode?.id);
   const parentPosX = parentNode?.positionBlockX;
 
   const isSecondaryNode = parentNode?.id === secondaryNode?.id;

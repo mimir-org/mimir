@@ -18,6 +18,7 @@ import {
  * Component to handle selection of Nodes in BlockView.
  * @param selectedItems
  * @param project
+ * @param selectedNode
  * @param inspectorRef
  * @param dispatch
  */
@@ -32,13 +33,14 @@ export const HandleBlockNodeSelection = (
   const edges = selectedItems.edges;
 
   if (!nodes.length && !edges.length) HandleNoSelect(project, inspectorRef, dispatch);
-  else if (edges.length === 1) HandleBlockEdgeSelect(edges[0], dispatch);
   else if (nodes.length === 1) HandleBlockNodeSelect(nodes[0], selectedNode, dispatch);
-  else if (nodes.length > 1) HandleMultiSelect(dispatch);
+  else if (edges.length === 1) HandleBlockEdgeSelect(edges[0], dispatch);
+  else if (nodes.length > 1) HandleMultiSelect(nodes, selectedNode, dispatch);
 };
 
 function HandleBlockNodeSelect(flowNode: FlowNode, selectedNode: Node, dispatch: Dispatch) {
   if (flowNode.id !== selectedNode?.id) {
+    dispatch(removeActiveBlockNode());
     dispatch(setActiveBlockNode(flowNode.id));
     dispatch(removeActiveEdge());
     OpenInspector(dispatch);
@@ -51,7 +53,13 @@ function HandleBlockEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
   OpenInspector(dispatch);
 }
 
-function HandleMultiSelect(dispatch: Dispatch) {
+function HandleMultiSelect(nodes: FlowNode[], selectedNode: Node, dispatch: Dispatch) {
+  let isSelected = false;
+  nodes.forEach((n) => {
+    if (n.id === selectedNode.id) isSelected = true;
+  });
+
+  if (isSelected) return;
   dispatch(removeActiveBlockNode());
   dispatch(removeActiveEdge());
 }

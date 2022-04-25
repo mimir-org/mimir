@@ -12,6 +12,13 @@ import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
 import { IsPartOfTerminal } from "../../../../../components/flow/helpers/Connectors";
 
+/**
+ * Component to handle delete clicks coming from the Inspector delete button.
+ * @param project
+ * @param element
+ * @param dispatch
+ * @param inspectorRef
+ */
 export const OnDeleteClick = (
   project: Project,
   element: InspectorElement,
@@ -26,7 +33,7 @@ export const OnDeleteClick = (
   SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 };
 
-const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
+function HandleNodeDelete(node: Node, project: Project, dispatch: Dispatch) {
   if (IsAspectNode(node) || node.isLocked) return;
 
   project.edges.forEach((e) => {
@@ -36,10 +43,10 @@ const HandleNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
 
   UpdateSiblingIndexOnNodeDelete(node?.id, project, dispatch);
   dispatch(deleteNode(node?.id));
-};
+}
 
-const HandleEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {
+function HandleEdgeDelete(edge: Edge, project: Project, dispatch: Dispatch) {
   if (edge.isLocked) return;
   if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
   dispatch(deleteEdge(edge.id));
-};
+}

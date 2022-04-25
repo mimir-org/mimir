@@ -20,7 +20,7 @@ interface Props {
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
   simpleLikeItems?: SimpleLikeItem[];
-  changeInspectorTabAction?: (index: number) => Action;
+  inspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
 }
@@ -32,7 +32,7 @@ const InspectorTabs = ({
   attributeLikeItems,
   terminalLikeItems,
   simpleLikeItems,
-  changeInspectorTabAction = changeInspectorTab,
+  inspectorTabAction = changeInspectorTab,
   inspectorRef,
   isInspectorOpen,
 }: Props) => {
@@ -57,7 +57,7 @@ const InspectorTabs = ({
                 element={element}
                 index={i}
                 activeTabIndex={activeTabIndex}
-                changeInspectorTabAction={changeInspectorTabAction}
+                inspectorTabAction={inspectorTabAction}
                 inspectorRef={inspectorRef}
                 isInspectorOpen={isInspectorOpen}
               >

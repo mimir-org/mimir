@@ -5,7 +5,7 @@ import { AspectColorType, Connector, Node } from "../../../../../models";
 import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
-import { nodeSelector, useAppDispatch, useParametricAppSelector } from "../../../../../redux/store";
+import { useAppDispatch } from "../../../../../redux/store";
 import { GetTreeNodeTerminal } from "./helpers/GetTreeNodeTerminal";
 
 /**
@@ -18,7 +18,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);
   const [renderTerminals, setRenderTerminals] = useState(true);
   const [timer, setTimer] = useState(false);
-  const node = useParametricAppSelector(nodeSelector, data.id);
 
   useEffect(() => {
     if (timer) {
@@ -30,11 +29,12 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     }
   }, [timer]);
 
+  // This callback prevents all terminals from fetching on each render
   const GetTerminal = useCallback((conn: Connector) => {
-    return GetTreeNodeTerminal(node, conn, dispatch, setIsHover, isHover);
+    return GetTreeNodeTerminal(data, conn, dispatch, setIsHover, isHover);
   }, []);
 
-  if (!node) return null;
+  if (!data) return null;
 
   const mouseNodeLeave = () => {
     setTimer(true);
@@ -56,20 +56,20 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
 
   return (
     <TreeNodeBox
-      colorMain={GetAspectColor(node, AspectColorType.Main)}
-      colorSelected={GetAspectColor(node, AspectColorType.Selected)}
-      selected={node.selected}
-      visible={!node.hidden}
+      colorMain={GetAspectColor(data, AspectColorType.Main)}
+      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+      selected={data.selected}
+      visible={!data.hidden}
       onMouseEnter={() => mouseEnter()}
       onMouseLeave={() => mouseNodeLeave()}
       onMouseUp={() => mouseUp()}
       onMouseDown={() => mouseDown()}
     >
       {renderTerminals &&
-        node?.connectors?.map((conn) => {
+        data.connectors?.map((conn) => {
           return GetTerminal(conn);
         })}
-      <TreeLogoComponent node={node} />
+      <TreeLogoComponent node={data} />
     </TreeNodeBox>
   );
 };

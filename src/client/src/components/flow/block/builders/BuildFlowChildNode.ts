@@ -10,6 +10,8 @@ import { IsOffPage } from "../../../../helpers/Aspects";
  * On top of the FlowNode a layer with Mimir functionality is created. See the BlockNode component.
  * @param childNode
  * @param parentNode
+ * @param secondaryNode
+ * @param project
  * @returns a node that sits inside the container of the ParentNode.
  */
 const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: Node, project: Project) => {
@@ -29,7 +31,7 @@ const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: No
     data: childNode,
     position: position,
     hidden: childNode.blockHidden,
-    selected: childNode.selected,
+    selected: childNode.blockSelected,
     draggable: true,
     selectable: true,
     connectable: true,

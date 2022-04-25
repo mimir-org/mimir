@@ -27,7 +27,7 @@ export const HandleConnectedOffPageNode = (node: Node, project: Project, size: B
     const nodeExists = HasConnectedOffPageNode(project.edges, edge, isTarget);
     if (nodeExists) return;
 
-    const nodeParent = GetParentNode(node.id, project);
+    const nodeParent = GetParentNode(node.id);
 
     const xPos = isTarget ? nodeParent?.positionBlockX : size.width;
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
@@ -66,8 +66,8 @@ function OnlyOneNodeVisible(edge: Edge, isTarget: boolean, project: Project) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 
-  const sourceNodeParentId = GetParentNode(sourceNode?.id, project);
-  const targetNodeParentId = GetParentNode(targetNode?.id, project);
+  const sourceNodeParentId = GetParentNode(sourceNode?.id);
+  const targetNodeParentId = GetParentNode(targetNode?.id);
   const targetNodeVisible = sourceNodeParentId === targetNodeParentId;
 
   return !targetNodeVisible;

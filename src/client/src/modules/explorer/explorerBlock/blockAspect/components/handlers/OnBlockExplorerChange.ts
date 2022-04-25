@@ -7,7 +7,6 @@ import { ViewportData } from "../../../../../../models/project";
 import {
   removeActiveBlockNode,
   removeActiveNode,
-  setActiveBlockNode,
   setActiveNode,
   setBlockNodeVisibility,
 } from "../../../../../../redux/store/project/actions";
@@ -97,7 +96,6 @@ function RemoveSelectedNode(node: Node, dispatch: Dispatch) {
 
 function SetSelectedNode(node: Node, dispatch: Dispatch) {
   dispatch(setActiveNode(node.id, !node.selected));
-  dispatch(setActiveBlockNode(node.id));
   dispatch(setBlockNodeVisibility(node, false));
 }
 

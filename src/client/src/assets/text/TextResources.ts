@@ -25,6 +25,7 @@ export const TextResources = {
   LOCK_OBJECT: "Lock object(s)",
   UNLOCK_OBJECT: "Unlock object(s)",
   PARTOF_RELATIONSHIP: "Part of Relationship",
+  FAVORITES: "Favorites",
 
   // MODULES
   LIBRARY: "Library",
@@ -119,6 +120,9 @@ export const TextResources = {
   PARAMS_COMBINATION: "Select combinations",
   PARAMS_SELECT_ALL: "Select all",
   PARAMS_SEARCH: "Select Entity...",
+  PARAMS_CLOSE: "Close parameter",
+  PARAMS_LOCK: "Lock parameter",
+  PARAMS_UNLOCK: "Unlock parameter",
   TERMINALS_SEARCH: "Search Terminal Type",
   SIMPLETYPES_SEARCH: "Search Simple Types",
 

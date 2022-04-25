@@ -29,14 +29,13 @@ export const BlockChildComponent = ({
   onConnectorClick,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
-  const selected = node?.blockSelected;
 
   return (
     <NodeBox
       node={node}
       colorMain={colorMain}
       colorSelected={colorSelected}
-      selected={selected}
+      selected={node?.blockSelected}
       onMouseEnter={() => OnHover(setShowMenuButton)}
       onMouseLeave={() => OnMouseOut(setShowMenuButton)}
     >

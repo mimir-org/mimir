@@ -27,33 +27,32 @@ const BlockParentNode: FC<NodeProps> = ({ data }) => {
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
-  const node = project?.nodes?.find((x) => x.id === data.id);
-  const selectedNode = project?.nodes.find((n) => n.selected);
+  const selectedNode = project?.nodes?.find((n) => n.selected);
 
   useEffect(() => {
-    InitParentSize(node, dispatch);
+    InitParentSize(data, dispatch);
   }, []);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node?.connectors, selectedNode, secondaryNode));
-  }, [selectedNode, secondaryNode, node?.connectors]);
+    setTerminals(FilterTerminals(data?.connectors, selectedNode, secondaryNode));
+  }, [data?.connectors, selectedNode, secondaryNode]);
 
-  if (!node) return null;
+  if (!data) return null;
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={node} terminals={terminals.in} isInput />
+      <HandleComponent node={data} terminals={terminals.in} isInput />
       <BlockParentComponent
-        node={node}
+        node={data}
         splitView={secondaryNode !== null}
         inputTerminals={terminals.in}
         outputTerminals={terminals.out}
-        isNavigationActive={node.id !== secondaryNode?.id}
-        onNavigateUpClick={() => OnBlockParentClick(dispatch, node.id, project)}
-        onNavigateDownClick={() => OnBlockChildClick(dispatch, node.id, project)}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node.id, dispatch, project.edges)}
+        isNavigationActive={data.id !== secondaryNode?.id}
+        onNavigateUpClick={() => OnBlockParentClick(dispatch, data.id)}
+        onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={node} terminals={terminals.out} />
+      <HandleComponent node={data} terminals={terminals.out} />
     </BoxWrapper>
   );
 };

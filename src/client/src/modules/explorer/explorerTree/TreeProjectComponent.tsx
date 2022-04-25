@@ -24,8 +24,8 @@ export const TreeProjectComponent = () => {
   const [invisibleNodes, setInvisibleNodes] = useState(new Set<string>());
   const [lockingNode, setLockingNode] = useState(null);
 
-  const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project);
-  const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
+  const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project?.edges);
+  const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project?.edges);
   const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
   if (!nodes) return null;
@@ -44,7 +44,7 @@ export const TreeProjectComponent = () => {
             nodes={nodes}
             indent={node.level}
             isExpanded={expanded}
-            isLeaf={!HasChildren(node.id, project)}
+            isLeaf={!HasChildren(node.id, project?.edges)}
             isAncestorVisible={ancestorsVisible(node)}
             isVisible={isVisible(node)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}

@@ -75,7 +75,7 @@ function HandleRemove(
  */
 function HandlePosition(change: NodePositionChange, selectedNode: Node, project: Project, filteredList: NodeChange[]) {
   if (change.id === selectedNode.id) return;
-  if (ValidateNodePosition(change.id, change.position, project)) filteredList.push(change);
+  if (ValidateNodePosition(change.id, change.position)) filteredList.push(change);
 }
 
 /**
@@ -85,8 +85,8 @@ function HandlePosition(change: NodePositionChange, selectedNode: Node, project:
  * @param project
  * @returns a boolean value.
  */
-function ValidateNodePosition(nodeId: string, position: XYPosition, project: Project) {
-  const parentNode = GetParentNode(nodeId, project);
+function ValidateNodePosition(nodeId: string, position: XYPosition) {
+  const parentNode = GetParentNode(nodeId);
 
   if (!position || !parentNode) return false;
 

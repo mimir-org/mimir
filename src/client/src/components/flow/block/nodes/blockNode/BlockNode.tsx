@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
@@ -29,41 +29,40 @@ const BlockNode: FC<NodeProps> = ({ data }) => {
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
-  const node = useParametricAppSelector(selectors.nodeSelector, data.id);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const selectedNode = project?.nodes.find((n) => n.selected);
+  const selectedNode = project?.nodes?.find((n) => n.selected);
   const isElectro = useAppSelector(selectors.electroSelector);
 
   // Check for elements that require OffPage nodes
   useEffect(() => {
-    HandleConnectedOffPageNode(node, project, size, dispatch);
-    HandleRequiredOffPageNode(node, project.edges, size, dispatch);
+    HandleConnectedOffPageNode(data, project, size, dispatch);
+    HandleRequiredOffPageNode(data, project.edges, size, dispatch);
   }, [secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(node?.connectors, selectedNode, secondaryNode));
-  }, [selectedNode, secondaryNode, node?.connectors]);
+    setTerminals(FilterTerminals(data?.connectors, selectedNode, secondaryNode));
+  }, [selectedNode, secondaryNode, data?.connectors]);
 
   // Update node size based on active terminals
   useEffect(() => {
     setSize(SetChildNodeSize(terminals, isElectro));
   }, [isElectro, terminals]);
 
-  if (!node) return null;
+  if (!data) return null;
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={node} terminals={terminals.in} isInput />
+      <HandleComponent node={data} terminals={terminals.in} isInput />
       <BlockChildComponent
-        node={node}
-        colorMain={GetAspectColor(node, AspectColorType.Main)}
-        colorSelected={GetAspectColor(node, AspectColorType.Selected)}
+        node={data}
+        colorMain={GetAspectColor(data, AspectColorType.Main)}
+        colorSelected={GetAspectColor(data, AspectColorType.Selected)}
         inputTerminals={terminals.in}
         outputTerminals={terminals.out}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node.id, dispatch, project.edges)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={node} terminals={terminals.out} />
+      <HandleComponent node={data} terminals={terminals.out} />
     </BoxWrapper>
   );
 };
