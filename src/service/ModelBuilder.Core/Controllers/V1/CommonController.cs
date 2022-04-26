@@ -1,15 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
+using Mb.Models.Settings;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Mimirorg.Common.Models;
+using Mimirorg.TypeLibrary.Models.Client;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -28,13 +34,18 @@ namespace Mb.Core.Controllers.V1
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
         private readonly IModuleService _moduleService;
+        private readonly ILibRepository _libRepository;
+        private readonly ICacheRepository _cacheRepository;
+        private readonly ApplicationSetting _applicationSetting;
 
-        public CommonController(ICommonService commonService, ILogger<CommonController> logger,
-            IModuleService moduleService)
+        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ILibRepository libRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
         {
             _commonService = commonService;
             _logger = logger;
             _moduleService = moduleService;
+            _libRepository = libRepository;
+            _cacheRepository = cacheRepository;
+            _applicationSetting = applicationSetting?.Value;
         }
 
         /// <summary>
@@ -134,6 +145,61 @@ namespace Mb.Core.Controllers.V1
                     .Select(x => x.ModuleDescription)
                     .ToList();
 
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Invalidate cache
+        /// </summary>
+        /// <returns>No content</returns>
+        [HttpPost("cache/invalidate")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
+        public async Task<IActionResult> InvalidateCache([FromBody] CacheInvalidation cacheInvalidation)
+        {
+            try
+            {
+                if (cacheInvalidation == null || string.IsNullOrWhiteSpace(cacheInvalidation.Secret) ||
+                    _applicationSetting == null || string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret))
+                    return new ForbidResult();
+
+                if (!cacheInvalidation.Secret.Equals(_applicationSetting.TypeLibrarySecret))
+                    return new ForbidResult();
+
+                await _cacheRepository.DeleteCacheAsync(cacheInvalidation.Key.ToString());
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Get attribute qualifiers
+        /// </summary>
+        /// <returns>No content</returns>
+        [HttpGet("qualifier")]
+        [ProducesResponseType(typeof(List<AttributeQualifierLibCm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
+        public async Task<IActionResult> GetQualifier()
+        {
+            try
+            {
+                var data = await _libRepository.GetAttributeQualifiers();
                 return Ok(data);
             }
             catch (Exception e)

@@ -72,6 +72,7 @@ namespace Mb.Core.Extensions
             services.AddMemoryCache();
             services.AddSingleton<ICacheRepository, InMemoryCacheRepository>();
             services.AddHostedService<TimedCacheService>();
+            services.AddSingleton<IHttpRepository, HttpRepository>();
 
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();

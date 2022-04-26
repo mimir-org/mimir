@@ -13,13 +13,17 @@ namespace Mb.Models.Data.TypeEditor
         public string Name { get; set; }
         public string Description { get; set; }
 
-        [Required] public string RdsId { get; set; }
-        [Required] public string RdsName { get; set; }
+        [Required]
+        public string RdsId { get; set; }
+
+        [Required]
+        public string RdsName { get; set; }
 
         public string PurposeId { get; set; }
         public Purpose Purpose { get; set; }
 
-        [Required] public string StatusId { get; set; }
+        [Required]
+        public string StatusId { get; set; }
 
         public string TypeId { get; set; }
         public string SemanticReference { get; set; }

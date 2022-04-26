@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Mimirorg.TypeLibrary.Models.Client;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -25,11 +27,14 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ILibraryService _libraryService;
+        private readonly ILibRepository _libRepository;
 
-        public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService)
+        public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService,
+            ILibRepository libRepository)
         {
             _logger = logger;
             _libraryService = libraryService;
+            _libRepository = libRepository;
         }
 
         /// <summary>
