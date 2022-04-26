@@ -94,7 +94,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowTreeNodes(project));
-  }, [project?.nodes?.length, selectedNode]);
+  }, [project?.nodes?.length]);
 
   // Rebuild edges
   useEffect(() => {

@@ -8,6 +8,7 @@ import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
 import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
+import { removeActiveBlockNode, removeActiveEdge, removeActiveNode } from "../../../redux/store/project/actions";
 
 export const OnElectroClick = (dispatch: Dispatch) => {
   dispatch(toggleElectroView());
@@ -31,6 +32,7 @@ export const OnBlockViewClick = (numberOfSelectedElements: number, viewportData:
 };
 
 export const OnTreeViewClick = (dispatch: Dispatch) => {
+  RemoveActiveElements(dispatch);
   dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
 };
 
@@ -48,4 +50,10 @@ function ValidateBlockViewClick(numberOfSelectedElements: number, dispatch: Disp
   }
 
   return true;
+}
+
+function RemoveActiveElements(dispatch: Dispatch) {
+  dispatch(removeActiveNode());
+  dispatch(removeActiveBlockNode());
+  dispatch(removeActiveEdge());
 }
