@@ -58,7 +58,6 @@ export const CreateOffPageObject = (data: OffPageData) => {
     parentNodeId: sourceNode.id,
   } as Node;
 
-  //#region Connectors
   const inputConnector = {
     id: CreateId(),
     name: "OffPageInput",
@@ -102,9 +101,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
   offPageNode.connectors.push(inputConnector);
   offPageNode.connectors.push(outputConnector);
   offPageNode.connectors.push(partOfConnector);
-  //#endregion
 
-  //#region Edges
   const partOfEdge = {
     id: CreateId(),
     fromConnector: sourcePartOfConn,
@@ -134,7 +131,6 @@ export const CreateOffPageObject = (data: OffPageData) => {
     kind: EDGE_KIND,
     projectId: sourceNode.projectId,
   } as Edge;
-  //#endregion
 
   return { offPageNode, partOfEdge, transportEdge } as OffPageObject;
 };

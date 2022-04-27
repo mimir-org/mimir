@@ -1,8 +1,9 @@
 import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Project, Node } from "../../../../models";
+import { Project, Node, Edge } from "../../../../models";
 import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
+import { IsEdgeConnectedToNode } from "../../helpers/IsEdgeConnectedToNode";
 import { CloseInspector } from "../handlers";
 
 /**
@@ -23,18 +24,19 @@ const useOnTreeNodesChange = (
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
+  if (!project) return;
   const verifiedFlowChanges = [] as NodeChange[];
   const mimirNodesToDelete = [] as Node[];
 
   // Verify changes
   changes.forEach((change) => {
-    if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, mimirNodesToDelete, project?.nodes);
+    if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, mimirNodesToDelete, project.nodes);
     verifiedFlowChanges.push(change);
   });
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(changes, n));
-  DeleteMimirNodes(mimirNodesToDelete, inspectorRef, project, dispatch);
+  DeleteMimirNodes(mimirNodesToDelete, inspectorRef, project.edges, dispatch);
 };
 
 /**
@@ -59,19 +61,19 @@ function HandleRemoveChange(change: NodeRemoveChange, verifiedChanges: NodeChang
  * Function to delete verified Mimir Nodes. After the nodes are deleted the Inspector closes.
  * @param nodesToDelete
  * @param inspectorRef
- * @param project
+ * @param edges
  * @param dispatch
  */
 function DeleteMimirNodes(
   nodesToDelete: Node[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  project: Project,
+  edges: Edge[],
   dispatch: Dispatch
 ) {
   if (!nodesToDelete.length) return;
 
   nodesToDelete.forEach((node) => {
-    DeleteRelatedEdges(node.id, project, dispatch);
+    DeleteRelatedEdges(node.id, edges, dispatch);
     dispatch(deleteNode(node.id));
   });
 
@@ -82,12 +84,12 @@ function DeleteMimirNodes(
  * Function to delete all edges related to a node that is to be deleted.
  * Note: the edges must be deleted before the node.
  * @param nodeId
- * @param project
+ * @param edges
  * @param dispatch
  */
-function DeleteRelatedEdges(nodeId: string, project: Project, dispatch: Dispatch) {
-  project.edges.forEach((edge) => {
-    if (edge.fromNodeId === nodeId || edge.toNodeId === nodeId) dispatch(deleteEdge(edge.id));
+function DeleteRelatedEdges(nodeId: string, edges: Edge[], dispatch: Dispatch) {
+  edges.forEach((edge) => {
+    if (IsEdgeConnectedToNode(edge, nodeId)) dispatch(deleteEdge(edge.id));
   });
 }
 

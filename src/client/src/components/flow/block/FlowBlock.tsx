@@ -36,8 +36,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [nodes, setNodes] = useNodesState([]);
-  const [edges, setEdges] = useEdgesState([]);
+  const [flowNodes, setNodes] = useNodesState([]);
+  const [flowEdges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
@@ -79,9 +79,12 @@ const FlowBlock = ({ inspectorRef }: Props) => {
     return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
-  const OnNodesChange = useCallback((changes: NodeChange[]) => {
-    return hooks.useOnNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
-  }, []);
+  const OnNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      return hooks.useOnNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
+    },
+    [selectedBlockNode]
+  );
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
     return hooks.useOnEdgesChange(changes, setEdges, inspectorRef, project, dispatch);
@@ -97,7 +100,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
       setIsFetching(true);
       SetInitialParentId(project?.nodes);
       setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-      setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
+      setEdges(BuildFlowBlockEdges(project, secondaryNode, flowNodes, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -112,7 +115,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(project, secondaryNode, nodes, animatedEdge));
+    setEdges(BuildFlowBlockEdges(project, secondaryNode, flowNodes, animatedEdge));
   }, [project?.edges, project?.nodes, animatedEdge]);
 
   useEffect(() => {
@@ -136,8 +139,8 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
       <ReactFlow
         onInit={OnInit}
-        nodes={nodes}
-        edges={edges}
+        nodes={flowNodes}
+        edges={flowEdges}
         nodeTypes={useMemo(() => GetBlockNodeTypes, [])}
         edgeTypes={useMemo(() => GetBlockEdgeTypes, [])}
         onNodesDelete={null}

@@ -69,7 +69,7 @@ function DeleteMimirEdges(
   dispatch: Dispatch
 ) {
   verifiedMimirEdges.forEach((edge) => {
-    HandleOffPageEdgeDelete(edge, project, dispatch);
+    HandleOffPageEdgeDelete(edge, project.nodes, project.edges, dispatch);
     dispatch(deleteEdge(edge.id));
   });
 

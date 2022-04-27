@@ -22,10 +22,10 @@ const DrawFlowChildNodes = (project: Project, primaryNode: Node, secondaryNode: 
     const targetNode = nodes.find((n) => n.id === edge.toNodeId);
     if (!targetNode) return;
 
-    const childNode = BuildFlowChildNode(targetNode, primaryNode, secondaryNode, project);
+    const childNode = BuildFlowChildNode(targetNode, primaryNode, secondaryNode, nodes);
     let isValid = true;
 
-    if (IsOffPage(targetNode)) isValid = ValidateOffPage(project, targetNode, primaryNode, secondaryNode, flowNodes);
+    if (IsOffPage(targetNode)) isValid = ValidateOffPage(nodes, edges, targetNode, primaryNode, secondaryNode, flowNodes);
     if (isValid && childNode) flowNodes.push(childNode);
   });
 };
@@ -35,7 +35,14 @@ function ValidateEdge(edge: Edge, selectedNode: Node) {
   return IsPartOfTerminal(edge.toConnector) && IsFamily(selectedNode, edge.toNode) && edge.fromNodeId === selectedNode?.id;
 }
 
-function ValidateOffPage(project: Project, offPageNode: Node, selectedNode: Node, secondaryNode: Node, flowNodes: FlowNode[]) {
+function ValidateOffPage(
+  nodes: Node[],
+  edges: Edge[],
+  offPageNode: Node,
+  selectedNode: Node,
+  secondaryNode: Node,
+  flowNodes: FlowNode[]
+) {
   const offPageParentId = offPageNode.parentNodeId;
 
   if (!secondaryNode) return flowNodes.some((elem) => elem?.id === offPageParentId);
@@ -44,14 +51,14 @@ function ValidateOffPage(project: Project, offPageNode: Node, selectedNode: Node
   const inputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
   const outputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
 
-  const edgeToOffPage = project.edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === inputTerminal?.id);
-  const edgeFromOffPage = project.edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === outputTerminal?.id);
+  const edgeToOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.toConnectorId === inputTerminal?.id);
+  const edgeFromOffPage = edges.find((x) => IsTransport(x.fromConnector) && x.fromConnectorId === outputTerminal?.id);
 
   if (!edgeFromOffPage && !edgeToOffPage) return false;
 
   const node = edgeFromOffPage
-    ? project.nodes.find((n) => n.id === edgeFromOffPage.toNodeId)
-    : project.nodes.find((n) => n.id === edgeToOffPage.fromNodeId);
+    ? nodes.find((n) => n.id === edgeFromOffPage.toNodeId)
+    : nodes.find((n) => n.id === edgeToOffPage.fromNodeId);
 
   const terminal = edgeFromOffPage
     ? node?.connectors?.find((c) => c.id === edgeFromOffPage.toConnectorId)

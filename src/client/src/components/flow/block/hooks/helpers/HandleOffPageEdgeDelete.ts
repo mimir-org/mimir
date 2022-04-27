@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../../helpers/Aspects";
-import { Edge, Project } from "../../../../../models";
+import { Edge, Node } from "../../../../../models";
 import { deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import { GetParentConnector, GetRelatedPartOfEdge, GetRelatedTransportEdge } from "./OffPageDeleteFunctions";
 
@@ -8,20 +8,21 @@ import { GetParentConnector, GetRelatedPartOfEdge, GetRelatedTransportEdge } fro
  * When deleting an edge it needs to be checked if that edge has generated some connected OffPage elements.
  * If so, all related edges and nodes are deleted.
  * @param edgeToDelete
- * @param project
+ * @param nodes
+ * @param edges
  * @param dispatch
  */
-export const HandleOffPageEdgeDelete = (edgeToDelete: Edge, project: Project, dispatch: Dispatch) => {
+export const HandleOffPageEdgeDelete = (edgeToDelete: Edge, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
   if (!edgeToDelete) return;
 
-  project.nodes.forEach((node) => {
+  nodes.forEach((node) => {
     if (!IsOffPage(node)) return;
 
-    const relatedTransportEdge = GetRelatedTransportEdge(node.id, edgeToDelete, project.edges);
+    const relatedTransportEdge = GetRelatedTransportEdge(node.id, edgeToDelete, edges);
     if (!relatedTransportEdge) return;
 
-    const partOfEdge = GetRelatedPartOfEdge(node, project.edges);
-    const parentNodeId = node?.parentNodeId;
+    const partOfEdge = GetRelatedPartOfEdge(node, edges);
+    const parentNodeId = node.parentNodeId;
     const parentNodeConn = GetParentConnector(relatedTransportEdge, node.id);
 
     dispatch(setOffPageStatus(parentNodeId, parentNodeConn?.id, false));

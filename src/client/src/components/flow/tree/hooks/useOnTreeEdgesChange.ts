@@ -1,6 +1,6 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Edge, Project } from "../../../../models";
+import { Edge, Node, Project } from "../../../../models";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { deleteEdge } from "../../../../redux/store/project/actions";
 import { CloseInspector } from "../handlers";
@@ -11,6 +11,7 @@ import { CloseInspector } from "../handlers";
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
  * If an edge is marked as removed, the function DeleteMimirEdges runs and handles the removal of Mimir edges.
  * @param project
+ * @param selectedNode
  * @param changes
  * @param setEdges
  * @param dispatch
@@ -18,17 +19,20 @@ import { CloseInspector } from "../handlers";
  */
 const useOnTreeEdgesChange = (
   project: Project,
+  selectedNode: Node,
   changes: EdgeChange[],
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
+  if (!project) return;
   const verifiedFlowChanges = [] as EdgeChange[];
   const mimirEdgesToDelete = [] as Edge[];
 
   // Verify changes
   changes.forEach((change) => {
-    if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, mimirEdgesToDelete, project);
+    if (change.type === "remove")
+      return HandleRemoveChange(change, verifiedFlowChanges, mimirEdgesToDelete, project, selectedNode);
     verifiedFlowChanges.push(change);
   });
 
@@ -44,14 +48,15 @@ const useOnTreeEdgesChange = (
  * @param verifiedChanges
  * @param mimirEdgesToDelete
  * @param project
+ * @param selectedNode
  */
 function HandleRemoveChange(
   change: NodeRemoveChange,
   verifiedChanges: EdgeChange[],
   mimirEdgesToDelete: Edge[],
-  project: Project
+  project: Project,
+  selectedNode: Node
 ) {
-  const selectedNode = project.nodes.find((n) => n.selected);
   if (IsAspectNode(selectedNode)) return;
 
   const mimirEdge = project.edges?.find((n) => n.id === change.id);

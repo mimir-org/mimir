@@ -1,25 +1,24 @@
 import { Size } from "../../../../../compLibrary/size/Size";
-import { Node, Project } from "../../../../../models";
+import { Node } from "../../../../../models";
 import { Position } from "../../../../../models/project";
 
 /**
  * Component to force an OffPageNode to fit the position of the ParentNode.
  * @param offPageNode
  * @param parentNode
- * @param project
+ * @param nodes
  * @returns a Position object.
  */
-const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: Node, project: Project) => {
-  if (!offPageNode || !parentNode || !project) return null;
+const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: Node, nodes: Node[]) => {
+  if (!offPageNode || !parentNode || !nodes) return null;
 
   // Handle OffPageNodes from the SecondaryNode
   if (secondaryNode !== undefined) {
-    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode, project);
+    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode, nodes);
     if (splitOffPagePos !== null) return splitOffPagePos;
   }
 
   if (offPageNode.isOffPageTarget) return HandleTargetOffPagePos(parentNode, offPageNode);
-
   return HandleSourceOffPagePos(parentNode, offPageNode);
 };
 
@@ -71,17 +70,17 @@ function HandleTargetOffPagePos(parentNode: Node, offPageNode: Node) {
  * Function to force the position of an OffPageNode that is a child of the SecondaryNode.
  * @param secondaryNode
  * @param offPageNode
- * @param project
+ * @param nodes
  * @returns a Position object.
  */
-function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, project: Project) {
-  const offPageParentId = offPageNode?.parentNodeId;
-  const parentBlock = project.nodes.find((n) => n.id === offPageParentId);
+function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, nodes: Node[]) {
+  const parentNode = nodes.find((n) => n.id === offPageNode.parentNodeId);
+  const grandParentNode = nodes.find((n) => n.id === parentNode.parentNodeId);
 
-  if (parentBlock?.id !== secondaryNode?.id) return null;
+  if (grandParentNode?.id !== secondaryNode.id) return null;
 
-  if (offPageNode.isOffPageTarget) return HandleTargetOffPagePos(parentBlock, offPageNode);
-  return HandleSourceOffPagePos(parentBlock, offPageNode);
+  if (offPageNode.isOffPageTarget) return HandleTargetOffPagePos(grandParentNode, offPageNode);
+  return HandleSourceOffPagePos(grandParentNode, offPageNode);
 }
 
 export default SetOffPageNodePos;

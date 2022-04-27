@@ -31,14 +31,14 @@ const useOnNodesChange = (
 
   // Verify changes
   changes.forEach((c) => {
-    if (c.type === "position") return HandlePosition(c, selectedNode, project, verifiedFlowChanges);
+    if (c.type === "position") return HandlePosition(c, selectedNode, verifiedFlowChanges);
     if (c.type === "remove") return HandleRemove(c.id, selectedNode, selectedBlockNode, verifiedFlowChanges, verifiedMimirNodes);
     verifiedFlowChanges.push(c);
   });
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
-  useOnNodeDelete(verifiedMimirNodes, inspectorRef, project, dispatch);
+  useOnNodeDelete(verifiedMimirNodes, inspectorRef, project.nodes, project.edges, dispatch);
 };
 
 /**
@@ -70,10 +70,9 @@ function HandleRemove(
  * Function to handle position changes.
  * @param change
  * @param selectedNode
- * @param project
  * @param filteredList
  */
-function HandlePosition(change: NodePositionChange, selectedNode: Node, project: Project, filteredList: NodeChange[]) {
+function HandlePosition(change: NodePositionChange, selectedNode: Node, filteredList: NodeChange[]) {
   if (change.id === selectedNode.id) return;
   if (ValidateNodePosition(change.id, change.position)) filteredList.push(change);
 }
@@ -82,12 +81,10 @@ function HandlePosition(change: NodePositionChange, selectedNode: Node, project:
  * Function to validate that a Node's position is not outside the boundary of its ParentNode in BlockView.
  * @param nodeId
  * @param position
- * @param project
  * @returns a boolean value.
  */
 function ValidateNodePosition(nodeId: string, position: XYPosition) {
   const parentNode = GetParentNode(nodeId);
-
   if (!position || !parentNode) return false;
 
   const x = position.x;
@@ -95,7 +92,7 @@ function ValidateNodePosition(nodeId: string, position: XYPosition) {
 
   const margin = 30;
   const xMin = parentNode.positionBlockX;
-  const xMax = parentNode.width - Size.NODE_WIDTH;
+  const xMax = parentNode.positionBlockX + parentNode.width - Size.NODE_WIDTH;
   const yMin = margin;
   const yMax = parentNode.height - Size.NODE_HEIGHT;
 

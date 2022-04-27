@@ -1,5 +1,5 @@
 import { Node as FlowNode } from "react-flow-renderer";
-import { Node, Project } from "../../../../models";
+import { Node } from "../../../../models";
 import { GetNodeTypeString, SetChildNodePos, SetOffPageNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers/Aspects";
@@ -11,17 +11,17 @@ import { IsOffPage } from "../../../../helpers/Aspects";
  * @param childNode
  * @param parentNode
  * @param secondaryNode
- * @param project
+ * @param nodes
  * @returns a node that sits inside the container of the ParentNode.
  */
-const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: Node, project: Project) => {
+const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: Node, nodes: Node[]) => {
   if (!childNode) return null;
 
   const type = GetNodeTypeString(childNode);
   const nodePos = { x: childNode.positionBlockX, y: childNode.positionBlockY };
 
   const position = IsOffPage(childNode)
-    ? SetOffPageNodePos(childNode, parentNode, secondaryNode, project)
+    ? SetOffPageNodePos(childNode, parentNode, secondaryNode, nodes)
     : SetChildNodePos(nodePos, parentNode);
 
   return {
