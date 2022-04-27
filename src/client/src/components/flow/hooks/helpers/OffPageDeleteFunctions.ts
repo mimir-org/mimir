@@ -13,11 +13,16 @@ export function GetTransportEdge(nodeId: string, parentNodeId: string, edges: Ed
 }
 
 export function GetOppositeTransportEdge(edges: Edge[], edge: Edge) {
-  return edges.find((e) => IsOffPageEdge(e) && IsEdgeConnected(e, edge));
+  return edges.find(
+    (e) => (IsOffPageEdge(e) && e.fromConnectorId === edge.fromConnectorId) || e.toConnectorId === edge.toConnectorId
+  );
 }
 
-export function GetRelatedTransportEdge(nodeId: string, elementEdge: Edge, edges: Edge[]) {
-  return edges.find((e) => IsEdgeConnectedToNode(e, nodeId) && IsEdgeConnected(e, elementEdge));
+export function GetRelatedTransportEdge(nodeId: string, edge: Edge, edges: Edge[]) {
+  return edges.find(
+    (e) =>
+      (IsEdgeConnectedToNode(e, nodeId) && e.fromConnectorId === edge.fromConnectorId) || e.toConnectorId === edge.toConnectorId
+  );
 }
 
 export function GetPartOfEdge(nodeId: string, parentNodeId: string, edges: Edge[]) {
@@ -43,8 +48,4 @@ export function GetConnectedEdge(connectorId: string, edges: Edge[]) {
 
 export function GetParentConnector(transportEdge: Edge, nodeId: string) {
   return transportEdge.fromConnector.nodeId === nodeId ? transportEdge.toConnector : transportEdge.fromConnector;
-}
-
-function IsEdgeConnected(edge: Edge, secondEdge: Edge) {
-  return edge.fromConnectorId === secondEdge.fromConnectorId || edge.toConnectorId === secondEdge.toConnectorId;
 }

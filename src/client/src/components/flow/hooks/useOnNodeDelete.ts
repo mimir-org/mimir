@@ -11,7 +11,6 @@ import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
  * Hook that runs when a node is deleted from Mimir. This hook is used both in TreeView and BlockView.
  * A node can be deleted with the delete button from a keyboard, or the delete button in Mimir's Inspector.
  * If a Node is deleted the connected Edges are also deleted.
- * If an Edge is deleted the connect Nodes will not be deleted, except an edge between OffPageNodes.
  * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
  * @param nodesToDelete
  * @param nodes
@@ -52,7 +51,7 @@ function DeleteRelatedEdges(nodeId: string, edges: Edge[], dispatch: Dispatch) {
 }
 
 /**
- * Function to handle related edges to a node that is to be rmoved.
+ * Function to handle related edges to a node that is to be removed.
  * @param nodeToRemoveId
  * @param edges
  * @param nodes
