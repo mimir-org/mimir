@@ -3,7 +3,7 @@ import { Node } from "../../../../models";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { ConvertNodeToFlow } from "../../converters";
 
-export const BuildFlowTreeNodes = (nodes: Node[]) => {
+const BuildFlowTreeNodes = (nodes: Node[]) => {
   if (!nodes.length) return [];
   const flowNodes: FlowNode[] = [];
 
@@ -15,3 +15,5 @@ export const BuildFlowTreeNodes = (nodes: Node[]) => {
 
   return flowNodes;
 };
+
+export default BuildFlowTreeNodes;
