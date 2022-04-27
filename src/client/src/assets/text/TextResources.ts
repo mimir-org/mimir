@@ -7,7 +7,9 @@ export const TextResources = {
   CREATE: "Create",
   SAVE: "Save",
   OPEN: "Open",
+  CLOSE: "Close project",
   CANCEL: "Cancel",
+  CANCEL_CLOSE: "Cancel close",
   YES: "Yes",
   NO: "No",
   OK: "Ok",
@@ -186,6 +188,7 @@ export const TextResources = {
   PROJECT_CREATE: "Create project",
   PROJECT_SEARCH: "Search Projects",
   PROJECT_OPEN: "Open project",
+  PROJECT_CLOSE: "Close project",
   PROJECT_RECENT: "Recent projects",
   PROJECT_OWNER: "Owner",
   PROJECT_VERSION: "Version",
@@ -222,6 +225,7 @@ export const TextResources = {
   PROJECT_CONFIRM_SAVE: " Save this project before opening/starting another?",
   PROJECT_FILE_NAME: "File name",
 
+  PROJECT_CLOSE_LABEL: "Please make sure you save before you close the project",
   PROJECT_SUBPROJECT: "Save subproject",
   PROJECT_MENU_SELECT: "Please select an option from the project menu to continue using Mímir",
 

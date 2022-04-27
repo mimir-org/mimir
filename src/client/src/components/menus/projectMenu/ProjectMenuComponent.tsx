@@ -21,7 +21,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
-  const isNoActiveProject = !project;
+  const hasActiveProject = project && project.id;
   const [selectedNodeIds] = useSelectedFlowElements();
   const menuRef = useRef(null);
 
@@ -46,9 +46,15 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       />
       <MenuElement
         text={TextResources.PROJECT_SAVE}
-        icon={isNoActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
+        icon={!hasActiveProject ? Icons.SaveInactiveIcon : Icons.SaveIcon}
         onClick={() => projectMenuAction(() => Click.OnSaveProjectClick(dispatch, project))}
-        disabled={isNoActiveProject}
+        disabled={!hasActiveProject}
+      />
+      <MenuElement
+        text={TextResources.PROJECT_CLOSE}
+        icon={!hasActiveProject ? Icons.CloseInactiveProjectIcon : Icons.CloseProjectIcon}
+        onClick={() => projectMenuAction(() => Click.OnCloseProjectClick(dispatch))}
+        disabled={!hasActiveProject}
         bottomLine
       />
       <MenuElement
@@ -58,9 +64,9 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       />
       <MenuElement
         text={TextResources.PROJECT_EXPORT}
-        icon={isNoActiveProject ? Icons.ExportProjectInactiveIcon : Icons.ExportProjectIcon}
+        icon={!hasActiveProject ? Icons.ExportProjectInactiveIcon : Icons.ExportProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnExportProjectFile(dispatch))}
-        disabled={isNoActiveProject}
+        disabled={!hasActiveProject}
         bottomLine
       />
       {/* <MenuElement

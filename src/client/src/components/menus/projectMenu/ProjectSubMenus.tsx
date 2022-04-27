@@ -2,6 +2,7 @@ import { MENU_TYPE } from "../../../models/project";
 import { activeMenuSelector, projectIsSubProjectSelector, useAppSelector } from "../../../redux/store";
 import { CommitProjectMenu } from "./components/subMenus/commitProject/CommitProjectMenu";
 import { CreateProjectMenu } from "./components/subMenus/createProject/CreateProjectMenu";
+import { CloseProjectMenu } from "./components/subMenus/closeProject/CloseProjectMenu";
 import { CreateSubProjectMenu } from "./components/subMenus/createSubProject/CreateSubProjectMenu";
 import { ExportLibraryFileMenu } from "./components/subMenus/exportLibraryFile/ExportLibraryFileMenu";
 import { ExportProjectFileMenu } from "./components/subMenus/exportProjectFile/ExportProjectFileMenu";
@@ -20,6 +21,7 @@ export const ProjectSubMenus = () => {
 
   const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;
   const isCreateProjectMenuOpen = activeMenu === MENU_TYPE.CREATE_PROJECT_MENU;
+  const isCloseProjectMenuOpen = activeMenu === MENU_TYPE.CLOSE_PROJECT_MENU;
   const isImportProjectFileMenuOpen = activeMenu === MENU_TYPE.IMPORT_PROJECT_FILE_MENU;
   const isExportProjectFileMenuOpen = activeMenu === MENU_TYPE.EXPORT_PROJECT_FILE_MENU;
   const isImportLibraryFileMenuOpen = activeMenu === MENU_TYPE.IMPORT_LIBRARY_FILE_MENU;
@@ -31,6 +33,7 @@ export const ProjectSubMenus = () => {
     <>
       {isOpenProjectMenuOpen && <OpenProjectMenu />}
       {isCreateProjectMenuOpen && <CreateProjectMenu />}
+      {isCloseProjectMenuOpen && <CloseProjectMenu />}
       {isImportProjectFileMenuOpen && <ImportProjectFileMenu />}
       {isExportProjectFileMenuOpen && <ExportProjectFileMenu />}
       {isImportLibraryFileMenuOpen && <ImportFileLibraryMenu />}

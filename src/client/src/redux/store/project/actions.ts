@@ -184,6 +184,13 @@ export function changeSelectedProject(projectId: string): Types.ProjectActionTyp
   };
 }
 
+export function closeProject(): Types.ProjectActionTypes {
+  return {
+    type: Types.CLOSE_PROJECT,
+    payload: null,
+  };
+}
+
 export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
   return {
     type: Types.CHANGE_ALL_NODES,
