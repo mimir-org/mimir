@@ -35,6 +35,7 @@ function HandleNodeDelete(
   dispatch: Dispatch
 ) {
   const nodesToDelete = [] as Node[];
+
   if (!IsAspectNode(node) && !node.isLocked) {
     nodesToDelete.push(node);
     UpdateSiblingIndexOnNodeDelete(node?.id, nodes, edges, dispatch);

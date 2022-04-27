@@ -28,14 +28,8 @@ const useOnEdgesChange = (
 
   // Verify changes
   changes.forEach((c) => {
-    if (c.type === "remove") {
-      edges.forEach((e) => {
-        if (ValidateEdgeRemoval(c, e)) {
-          verfifiedMimirEdges.push(e);
-          verifiedFlowChanges.push(c);
-        }
-      });
-    } else verifiedFlowChanges.push(c);
+    if (c.type === "remove") return HandleRemoveEdge(c, edges, verifiedFlowChanges, verfifiedMimirEdges);
+    verifiedFlowChanges.push(c);
   });
 
   // Execute all changes
@@ -44,14 +38,24 @@ const useOnEdgesChange = (
 };
 
 /**
- * Function to verify if an edge is valid to be removed.
+ * Function to handle removal of an edge. This function handles FlowEdges and MimirEdges separately.
+ * A confirmed element to be deleted is added to both lists - flowChanges and mimirEdgesToDelete.
  * @param change
- * @param edge
- * @returns a boolean value.
+ * @param edges
+ * @param verifiedFlowChanges
+ * @param verfifiedMimirEdges
  */
-function ValidateEdgeRemoval(change: EdgeRemoveChange, edge: Edge) {
-  if (edge.id === change.id) return !edge.isLocked;
-  return false;
+function HandleRemoveEdge(
+  change: EdgeRemoveChange,
+  edges: Edge[],
+  verifiedFlowChanges: EdgeChange[],
+  verfifiedMimirEdges: Edge[]
+) {
+  const edgeToRemove = edges.find((e) => e.id === change.id);
+  if (edgeToRemove.isLocked) return null;
+
+  verifiedFlowChanges.push(change);
+  verfifiedMimirEdges.push(edgeToRemove);
 }
 
 export default useOnEdgesChange;

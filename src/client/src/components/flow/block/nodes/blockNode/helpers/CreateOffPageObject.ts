@@ -12,6 +12,7 @@ import {
   Node,
   RelationType,
   ConnectorVisibility,
+  NODE_KIND,
 } from "../../../../../../models";
 
 export interface OffPageObject {
@@ -56,6 +57,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     projectId: sourceNode.projectId,
     isOffPageTarget: isTarget,
     parentNodeId: sourceNode.id,
+    kind: NODE_KIND,
   } as Node;
 
   const inputConnector = {
