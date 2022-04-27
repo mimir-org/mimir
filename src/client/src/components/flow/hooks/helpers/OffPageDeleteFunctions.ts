@@ -1,8 +1,8 @@
-import { IsOffPage } from "../../../../../helpers/Aspects";
-import { Node, Edge } from "../../../../../models";
-import { IsPartOfTerminal, IsTransport } from "../../../helpers/Connectors";
-import { IsEdgeConnectedToNode } from "../../../helpers/IsEdgeConnectedToNode";
-import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
+import { IsOffPage } from "../../../../helpers/Aspects";
+import { Edge, Node } from "../../../../models";
+import { IsOffPageEdge } from "../../block/helpers/IsOffPageEdge";
+import { IsPartOfTerminal, IsTransport } from "../../helpers/Connectors";
+import { IsEdgeConnectedToNode } from "../../helpers/IsEdgeConnectedToNode";
 
 export function GetTransportEdge(nodeId: string, parentNodeId: string, edges: Edge[]) {
   return edges.find(

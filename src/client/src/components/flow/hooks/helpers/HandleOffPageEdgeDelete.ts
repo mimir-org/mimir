@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { IsOffPage } from "../../../../../helpers/Aspects";
-import { Edge, Node } from "../../../../../models";
-import { deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
+import { IsOffPage } from "../../../../helpers/Aspects";
+import { Edge, Node } from "../../../../models";
+import { deleteEdge, deleteNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { GetParentConnector, GetRelatedPartOfEdge, GetRelatedTransportEdge } from "./OffPageDeleteFunctions";
 
 /**

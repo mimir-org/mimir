@@ -5,7 +5,5 @@ export { default as useOnConnectStart } from "./useOnConnectStart";
 export { default as useOnConnectStop } from "./useOnConnectStop";
 export { default as useOnConnect } from "./useOnConnect";
 
-export { default as useOnNodeDelete } from "./useOnNodeDelete";
-
 export { default as useOnNodesChange } from "./useOnNodesChange";
 export { default as useOnEdgesChange } from "./useOnEdgesChange";

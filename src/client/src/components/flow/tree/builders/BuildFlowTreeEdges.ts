@@ -11,8 +11,9 @@ export const BuildFlowTreeEdges = (project: Project, animated: boolean) => {
 
   project.edges.forEach((edge) => {
     const edgeType = GetTreeEdgeType(edge.fromConnector);
-    let treeEdge = null;
-    if (!IsOffPage(edge.toNode)) treeEdge = BuildTreeEdge(edge, edgeType, project.nodes, animated);
+    if (IsOffPage(edge.toNode)) return;
+
+    const treeEdge = BuildTreeEdge(edge, edgeType, project.nodes, animated);
     if (treeEdge) flowEdges.push(treeEdge);
   });
 
@@ -20,8 +21,8 @@ export const BuildFlowTreeEdges = (project: Project, animated: boolean) => {
 };
 
 function BuildTreeEdge(edge: Edge, edgeType: EdgeType, nodes: Node[], animated: boolean) {
-  const sourceNode = nodes?.find((node) => node.id === edge.fromNodeId);
-  const targetNode = nodes?.find((node) => node.id === edge.toNodeId);
+  const sourceNode = nodes.find((node) => node.id === edge.fromNodeId);
+  const targetNode = nodes.find((node) => node.id === edge.toNodeId);
 
   if (edge.fromNode && edge.toNode) return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
 }

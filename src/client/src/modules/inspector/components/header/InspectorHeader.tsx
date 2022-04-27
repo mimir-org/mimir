@@ -70,7 +70,8 @@ export const InspectorHeader = ({
       {GetInspectorHeaderText(element, icons)}
 
       <InspectorButtonRow
-        project={project}
+        nodes={project?.nodes}
+        edges={project?.edges}
         element={element}
         username={username}
         open={open}

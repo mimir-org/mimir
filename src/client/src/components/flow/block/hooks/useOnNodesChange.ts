@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
 import { GetParentNode } from "../../../../helpers/Family";
 import { Project, Node } from "../../../../models";
-import { useOnNodeDelete } from ".";
+import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
 
 /**
  * Hook that runs whenever a Node has a change in BlockView.
@@ -38,7 +38,7 @@ const useOnNodesChange = (
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
-  useOnNodeDelete(verifiedMimirNodes, inspectorRef, project.nodes, project.edges, dispatch);
+  useOnNodeDelete(verifiedMimirNodes, project.nodes, project.edges, inspectorRef, dispatch);
 };
 
 /**

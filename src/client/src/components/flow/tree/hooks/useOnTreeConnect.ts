@@ -2,7 +2,7 @@ import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { IsPartOfTerminal, IsPartOfConnection, IsTransport } from "../../helpers/Connectors";
 import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
-import { Node, Project } from "../../../../models";
+import { Node, Edge, Project } from "../../../../models";
 import { ConvertDataToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
@@ -27,18 +27,19 @@ const useOnTreeConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
   const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
-  const source = project.nodes.find((node) => node.id === connection.source);
+  const source = project.nodes.find((n) => n.id === connection.source);
   const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
-  const target = project.nodes.find((node) => node.id === connection.target);
+  const target = project.nodes.find((n) => n.id === connection.target);
   const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
-  const existingEdge = GetExistingEdge(project, connection, source, target);
+  const existingEdge = GetExistingEdge(project.edges, connection, source, target);
 
-  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, target, dispatch);
+  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project.edges, target, dispatch);
 
   const currentEdge = existingEdge ?? ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, library);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
-  if (IsPartOfTerminal(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
+  if (IsPartOfTerminal(currentEdge?.fromConnector))
+    UpdateSiblingIndexOnEdgeConnect(currentEdge, project.nodes, project.edges, dispatch);
 
   const type = GetTreeEdgeType(sourceConn);
   const animated = animatedEdge && IsTransport(sourceConn);
@@ -48,11 +49,9 @@ const useOnTreeConnect = (params: Params) => {
   });
 };
 
-function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch) {
+function HandlePartOfEdge(edges: Edge[], targetNode: Node, dispatch: Dispatch) {
   //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
-  const existingPartOfEdge = project.edges?.find(
-    (edge) => edge.toNodeId === targetNode.id && IsPartOfTerminal(edge?.fromConnector)
-  );
+  const existingPartOfEdge = edges.find((edge) => edge.toNodeId === targetNode.id && IsPartOfTerminal(edge?.fromConnector));
   if (existingPartOfEdge) dispatch(deleteEdge(existingPartOfEdge.id));
 }
 

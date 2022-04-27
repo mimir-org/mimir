@@ -1,52 +1,60 @@
-import { Size } from "../../../../../compLibrary/size/Size";
-import { Edge, Node, Project } from "../../../../../models";
-import { MODULE_TYPE } from "../../../../../models/project";
-import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
-import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
-import { deleteEdge, deleteNode } from "../../../../../redux/store/project/actions";
-import { changeInspectorHeight } from "../../../redux/inspectorSlice";
+import { Edge, Node } from "../../../../../models";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
 import { IsPartOfTerminal } from "../../../../../components/flow/helpers/Connectors";
+import { useOnNodeDelete } from "../../../../../components/flow/hooks/useOnNodeDelete";
+import { useOnEdgeDelete } from "../../../../../components/flow/hooks/useOnEdgeDelete";
 
 /**
  * Component to handle delete clicks coming from the Inspector delete button.
- * @param project
+ * @param nodes
+ * @param edges
  * @param element
  * @param dispatch
  * @param inspectorRef
  */
 export const OnDeleteClick = (
-  project: Project,
+  nodes: Node[],
+  edges: Edge[],
   element: InspectorElement,
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
-  if (IsNode(element)) HandleNodeDelete(element, project, dispatch);
-  else if (IsEdge(element)) HandleEdgeDelete(element, project, dispatch);
-
-  dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
-  SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
+  if (IsNode(element)) HandleNodeDelete(element, nodes, edges, inspectorRef, dispatch);
+  else if (IsEdge(element)) HandleEdgeDelete(element, nodes, edges, inspectorRef, dispatch);
 };
 
-function HandleNodeDelete(node: Node, project: Project, dispatch: Dispatch) {
-  if (IsAspectNode(node) || node.isLocked) return;
+function HandleNodeDelete(
+  node: Node,
+  nodes: Node[],
+  edges: Edge[],
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  dispatch: Dispatch
+) {
+  const nodesToDelete = [] as Node[];
+  if (!IsAspectNode(node) && !node.isLocked) {
+    nodesToDelete.push(node);
+    UpdateSiblingIndexOnNodeDelete(node?.id, nodes, edges, dispatch);
+  }
 
-  project.edges.forEach((e) => {
-    if (e.fromNodeId === node.id) dispatch(deleteEdge(e.id));
-    if (e.toNodeId === node.id) dispatch(deleteEdge(e.id));
-  });
-
-  UpdateSiblingIndexOnNodeDelete(node?.id, project, dispatch);
-  dispatch(deleteNode(node?.id));
+  useOnNodeDelete(nodesToDelete, nodes, edges, inspectorRef, dispatch);
 }
 
-function HandleEdgeDelete(edge: Edge, project: Project, dispatch: Dispatch) {
-  if (edge.isLocked) return;
-  if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, project, dispatch);
-  dispatch(deleteEdge(edge.id));
+function HandleEdgeDelete(
+  edge: Edge,
+  nodes: Node[],
+  edges: Edge[],
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  dispatch: Dispatch
+) {
+  const edgesToDelete = [] as Edge[];
+  if (!edge.isLocked) {
+    if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, nodes, edges, dispatch);
+    edgesToDelete.push(edge);
+  }
+
+  useOnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
 }

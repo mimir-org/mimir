@@ -29,7 +29,7 @@ interface OnDropParameters {
  * @param params
  */
 const useOnTreeDrop = (params: OnDropParameters) => {
-  const { event, project, selectedNode, dispatch } = params;
+  const { event, project, dispatch } = params;
 
   event.stopPropagation();
   event.preventDefault();
@@ -39,12 +39,18 @@ const useOnTreeDrop = (params: OnDropParameters) => {
   const isSubProject = IsSubProject(event);
 
   if (isSubProject) HandleSubProjectDrop(event, project, dispatch);
-  else HandleNodeDrop(params, selectedNode);
+  else HandleNodeDrop(params);
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
+/**
+ * Function to handle a SubProject dropped from the Library.
+ * @param event
+ * @param project
+ * @param dispatch
+ */
 function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
   const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibrarySubProjectItem;
 
@@ -57,7 +63,11 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
   })();
 }
 
-function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters, selectedNode: Node) {
+/**
+ * Function to handle a node dropped from the Library.
+ * @param OnDropParameters
+ */
+function HandleNodeDrop({ event, project, user, icons, library, dispatch, selectedNode }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
 
   // The dropped node automatically finds a parent
@@ -66,7 +76,7 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
   const treePosition = SetTreeNodePosition(parentNode, project);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
-  const targetNode = ConvertDataToNode(data, treePosition, blockPosition, project.id, icons, user);
+  const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));

@@ -2,7 +2,7 @@
 import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
-import { memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
@@ -36,8 +36,8 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [nodes, setNodes] = useNodesState([]);
-  const [edges, setEdges] = useEdgesState([]);
+  const [flowNodes, setNodes] = useNodesState([]);
+  const [flowEdges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
@@ -68,7 +68,8 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
-    HandleTreeNodeSelection(selectedItems, project, inspectorRef, dispatch);
+    if (!project) return;
+    HandleTreeNodeSelection(selectedItems, inspectorRef, dispatch);
   };
 
   const OnNodesChange = useCallback(
@@ -78,15 +79,18 @@ export const FlowTree = ({ inspectorRef }: Props) => {
     [selectedNode]
   );
 
-  const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
-    return hooks.useOnTreeEdgesChange(project, selectedNode, changes, setEdges, dispatch, inspectorRef);
-  }, []);
+  const OnEdgesChange = useCallback(
+    (changes: EdgeChange[]) => {
+      return hooks.useOnTreeEdgesChange(project, selectedNode, changes, setEdges, dispatch, inspectorRef);
+    },
+    [selectedNode]
+  );
 
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      setNodes(BuildFlowTreeNodes(project));
+      setNodes(BuildFlowTreeNodes(project?.nodes));
       setEdges(BuildFlowTreeEdges(project, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
@@ -96,7 +100,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowTreeNodes(project));
+    setNodes(BuildFlowTreeNodes(project.nodes));
   }, [project?.nodes?.length]);
 
   // Rebuild edges
@@ -120,8 +124,8 @@ export const FlowTree = ({ inspectorRef }: Props) => {
 
       <ReactFlow
         onInit={OnInit}
-        nodes={nodes}
-        edges={edges}
+        nodes={flowNodes}
+        edges={flowEdges}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
         onConnect={OnConnect}
@@ -145,4 +149,4 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   );
 };
 
-export default memo(FlowTree);
+export default FlowTree;

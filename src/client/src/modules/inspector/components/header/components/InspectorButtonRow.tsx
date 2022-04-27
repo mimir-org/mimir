@@ -8,7 +8,7 @@ import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton } from "../../../../../compLibrary/buttons";
 import { InspectorButtonType } from "../../../../../compLibrary/buttons/inspector/InspectorButton";
-import { Project } from "../../../../../models";
+import { Node, Edge } from "../../../../../models";
 import { IsCreateLibraryType, IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject } from "react";
@@ -21,7 +21,8 @@ import {
 } from "./InspectorButtonRow.styled";
 
 interface Props {
-  project: Project;
+  nodes: Node[];
+  edges: Edge[];
   element: InspectorElement;
   username: string;
   open: boolean;
@@ -32,7 +33,8 @@ interface Props {
 }
 
 export const InspectorButtonRow = ({
-  project,
+  nodes,
+  edges,
   element,
   username,
   open,
@@ -43,7 +45,7 @@ export const InspectorButtonRow = ({
 }: Props) => {
   const isLocked = IsCreateLibraryType(element) ? true : element?.isLocked;
   const isElementSelected = !!element;
-  const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedNode = nodes?.find((n) => n.selected);
   const deleteDisabled = isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === selectedNode);
 
   let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;
@@ -59,7 +61,7 @@ export const InspectorButtonRow = ({
             description={element?.isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
           />
           <InspectorButton
-            onClick={() => !deleteDisabled && OnDeleteClick(project, element, dispatch, inspectorRef)}
+            onClick={() => !deleteDisabled && OnDeleteClick(nodes, edges, element, dispatch, inspectorRef)}
             type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
             description={TextResources.DELETE_OBJECT}
             disabled={deleteDisabled}

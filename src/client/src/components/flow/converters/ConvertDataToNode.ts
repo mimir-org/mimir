@@ -8,6 +8,7 @@ import { Position } from "../../../models/project";
  * Function to convert data to a Mimir Node.
  * @param data
  * @param treePosition
+ * @param parentNode
  * @param blockPosition
  * @param projectId
  * @param icons
@@ -17,6 +18,7 @@ import { Position } from "../../../models/project";
 const ConvertDataToNode = (
   data: LibItem,
   treePosition: Position,
+  parentNode: Node,
   blockPosition: Position,
   projectId: string,
   icons: BlobData[],
@@ -55,6 +57,7 @@ const ConvertDataToNode = (
     kind: NODE_KIND,
     hidden: false,
     blockHidden: false,
+    parentNodeId: parentNode.id,
   } as Node;
 
   if (node.connectors) {

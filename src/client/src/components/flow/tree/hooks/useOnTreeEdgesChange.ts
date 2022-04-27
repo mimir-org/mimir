@@ -2,8 +2,7 @@ import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from
 import { Dispatch } from "redux";
 import { Edge, Node, Project } from "../../../../models";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { deleteEdge } from "../../../../redux/store/project/actions";
-import { CloseInspector } from "../handlers";
+import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
 
 /**
  * Hook that runs whenever an Edge has a change in TreeView.
@@ -25,7 +24,6 @@ const useOnTreeEdgesChange = (
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
-  if (!project) return;
   const verifiedFlowChanges = [] as EdgeChange[];
   const mimirEdgesToDelete = [] as Edge[];
 
@@ -38,7 +36,7 @@ const useOnTreeEdgesChange = (
 
   // Execute all changes
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
-  DeleteMimirEdges(mimirEdgesToDelete, inspectorRef, dispatch);
+  useOnEdgeDelete(mimirEdgesToDelete, project?.nodes, project?.edges, inspectorRef, dispatch);
 };
 
 /**
@@ -70,22 +68,6 @@ function HandleRemoveChange(
 
   const removeChange = { id: change.id, type: "remove" } as EdgeChange;
   verifiedChanges.push(removeChange);
-}
-
-/**
- * Function to delete verified Mimir Edges. After the edges are deleted the Inspector closes.
- * @param edgesToDelete
- * @param inspectorRef
- * @param dispatch
- */
-function DeleteMimirEdges(edgesToDelete: Edge[], inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
-  if (!edgesToDelete.length) return;
-
-  edgesToDelete.forEach((edge) => {
-    dispatch(deleteEdge(edge.id));
-  });
-
-  CloseInspector(inspectorRef, dispatch);
 }
 
 export default useOnTreeEdgesChange;

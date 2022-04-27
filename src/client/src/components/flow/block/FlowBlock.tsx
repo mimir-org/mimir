@@ -87,7 +87,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   );
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
-    return hooks.useOnEdgesChange(changes, setEdges, inspectorRef, project, dispatch);
+    return hooks.useOnEdgesChange(changes, setEdges, inspectorRef, project.nodes, project.edges, dispatch);
   }, []);
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
