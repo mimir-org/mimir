@@ -97,7 +97,7 @@ namespace Mb.Services.Services
             var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, ProjectId = lockAm.ProjectId, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList();
             lockDms.AddRange(_mapper.Map<List<LockDm>>(lockAms));
 
-            if(!lockDms.Any())
+            if (!lockDms.Any())
                 return;
 
             //Save to database
