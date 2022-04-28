@@ -93,7 +93,7 @@ namespace Mb.Services.Services
                     throw new ModelBuilderBadRequestException("EntityType not found.");
             }
 
-            var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList();
+            var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, ProjectId = lockAm.ProjectId, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList();
             lockDms.AddRange(_mapper.Map<List<LockDm>>(lockAms));
 
             if(!lockDms.Any())
@@ -118,7 +118,7 @@ namespace Mb.Services.Services
 
             //Send websocket updates to clients
             var lockCms = _mapper.Map<List<LockCm>>(lockDms);
-            await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update, lockDms[0]?.ProjectId);
+            await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update, lockCms[0]?.ProjectId);
         }
 
         private string GetKey(string id, string iri)
