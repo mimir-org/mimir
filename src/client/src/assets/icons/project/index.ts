@@ -6,6 +6,8 @@ export { default as ImportLibraryIcon } from "./importProjectLibrary.svg";
 export { default as NewProjectIcon } from "./newProject.svg";
 export { default as CreateProjectIcon } from "./createProject.svg";
 export { default as OpenProjectIcon } from "./openProject.svg";
+export { default as CloseProjectIcon } from "./closeProject.svg";
+export { default as CloseInactiveProjectIcon } from "./closeProjectInactive.svg";
 export { default as SaveIcon } from "./save.svg";
 export { default as SaveInactiveIcon } from "./saveInactive.svg";
 export { default as CommitProjectIcon } from "./commitProject.svg";

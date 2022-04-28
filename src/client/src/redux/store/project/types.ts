@@ -14,6 +14,7 @@ import {
 } from "../../../models";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
+export const CLOSE_PROJECT = "CLOSE_PROJECT";
 export const COMMIT_PROJECT = "COMMIT_PROJECT";
 export const COMMIT_PROJECT_SUCCESS_OR_ERROR = "COMMIT_PROJECT_SUCCESS_OR_ERROR";
 export const SAVE_PROJECT_SUCCESS_OR_ERROR = "SAVE_PROJECT_SUCCESS_OR_ERROR";
@@ -88,6 +89,11 @@ export interface FetchingProjectAction {
     id: string;
     project: Project;
   };
+}
+
+export interface CloseProjectAction {
+  type: typeof CLOSE_PROJECT;
+  payload: null;
 }
 
 export interface SearchProjectAction {
@@ -522,6 +528,7 @@ export type ProjectActionTypes =
   | SetLocationNodeSize
   | SaveProjectAction
   | SaveProjectActionFinished
+  | CloseProjectAction
   | ChangeSelectedProject
   | UpdateBlockPositionAction
   | ChangeAllNodes
