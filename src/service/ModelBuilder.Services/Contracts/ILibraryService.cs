@@ -35,7 +35,7 @@ namespace Mb.Services.Contracts
         Task CreateSimpleTypes(ICollection<SimpleTypeAm> simpleTypes);
         IEnumerable<SimpleType> GetSimpleTypes();
         void ClearAllChangeTracker();
-        IEnumerable<Rds> GetRds();
+        Task<ICollection<Rds>> GetRds();
         IEnumerable<TerminalType> GetTerminals();
         Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
     }

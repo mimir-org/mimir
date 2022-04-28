@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using AutoMapper;
 using Mb.Core.Profiles;
+using Mb.Core.Profiles.TypeLibrary;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
 using Mb.Models.Abstract;
@@ -121,8 +122,7 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new EdgeProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
-            cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(),
-                provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
             cfg.AddProfile<CollaborationPartnerProfile>();
@@ -132,6 +132,8 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new SimpleProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new NodeLibProfile());
+            cfg.AddProfile(new Generic());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);

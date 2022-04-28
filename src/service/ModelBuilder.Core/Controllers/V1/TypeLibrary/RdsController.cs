@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Mb.Models.Data.TypeEditor;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -40,11 +41,11 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(typeof(IEnumerable<Rds>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetAllRds()
+        public async Task<IActionResult> GetAllRds()
         {
             try
             {
-                var data = _libraryService.GetRds();
+                var data = await _libraryService.GetRds();
                 return Ok(data);
             }
             catch (Exception e)

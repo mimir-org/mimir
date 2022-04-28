@@ -182,9 +182,10 @@ namespace Mb.Services.Services
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Rds> GetRds()
+        public async Task<ICollection<Rds>> GetRds()
         {
-            throw new System.NotImplementedException();
+            var rds = await _libraryRepository.GetRds();
+            return rds.ToList();
         }
 
         public IEnumerable<TerminalType> GetTerminals()

@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor;
 using Mb.Models.Settings;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Enums;
@@ -17,11 +20,13 @@ namespace Mb.Data.Repositories
         private readonly IHttpRepository _httpRepository;
         private readonly ICacheRepository _cacheRepository;
         private readonly ApplicationSetting _applicationSetting;
+        private readonly IMapper _mapper;
 
-        public LibraryRepository(IHttpRepository httpRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
+        public LibraryRepository(IHttpRepository httpRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting, IMapper mapper)
         {
             _httpRepository = httpRepository;
             _cacheRepository = cacheRepository;
+            _mapper = mapper;
             _applicationSetting = applicationSetting?.Value;
         }
 
@@ -39,8 +44,7 @@ namespace Mb.Data.Repositories
 
         public void Untrack()
         {
-            throw new NotImplementedException();
-            //_enumBaseRepository.Context.ChangeTracker.Clear();
+            
         }
 
         public async Task<List<AttributeQualifierLibCm>> GetAttributeQualifiers()
@@ -61,19 +65,30 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString = null)
         {
-            throw new NotImplementedException();
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryaspectnode");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AspectNode.ToString(),
+                async () => await _httpRepository.GetData<List<NodeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+
+            var nodes = _mapper.Map<List<LibraryNodeItem>>(data);
+            return string.IsNullOrWhiteSpace(searchString)
+                ? nodes
+                : nodes.Where(x => x.Name.ToLower().Contains(searchString.ToLower()));
         }
 
-        public Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
         {
-            throw new NotImplementedException();
+            var data = new List<LibraryInterfaceItem>();
+            var a = "";
+            return await Task.FromResult(data);
         }
 
-        public Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null)
+        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null)
         {
-            throw new NotImplementedException();
+            var data = new List<LibraryTransportItem>();
+            return await Task.FromResult(data);
         }
 
         public Task<T> GetLibraryItem<T>(string id) where T : class, new()
@@ -83,7 +98,18 @@ namespace Mb.Data.Repositories
 
         public void ClearAllChangeTracker()
         {
-            throw new NotImplementedException();
+            
+        }
+
+        public async Task<IEnumerable<Rds>> GetRds()
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryrds");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Rds.ToString(),
+                async () => await _httpRepository.GetData<List<RdsLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+
+            var rds = _mapper.Map<List<Rds>>(data);
+            return rds;
         }
     }
 }
