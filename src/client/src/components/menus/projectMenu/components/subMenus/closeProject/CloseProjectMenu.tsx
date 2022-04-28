@@ -18,8 +18,8 @@ export const CloseProjectMenu = () => {
       <InfoModalContent title={TextResources.PROJECT_CLOSE}>
         <p>{TextResources.PROJECT_CLOSE_LABEL}</p>
         <ButtonBox>
-          <Button onClick={onExit} text={TextResources.CANCEL_CLOSE} />
-          <Button onClick={onAction} text={TextResources.CLOSE} icon={RightArrowIcon} />
+          <Button onClick={onExit} text={TextResources.CANCEL} />
+          <Button onClick={onAction} text={TextResources.PROJECT_CLOSE} icon={RightArrowIcon} />
         </ButtonBox>
       </InfoModalContent>
     </Modal>
