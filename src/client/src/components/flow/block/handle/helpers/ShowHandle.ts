@@ -3,17 +3,13 @@ import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible, IsConnectorVi
 
 /**
  * Component to determine if a handle/connector should be displayed in BlockView.
- * @param conn
+ * @param connector
  * @param isInput
  * @returns a boolean value.
  */
-const ShowHandle = (conn: Connector, isInput: boolean) => {
-  if (IsBidirectionalTerminal(conn)) {
-    if (isInput) return IsInputVisible(conn);
-    return IsOutputVisible(conn);
-  }
-
-  return IsConnectorVisible(conn);
+const ShowHandle = (connector: Connector, isInput: boolean) => {
+  if (IsBidirectionalTerminal(connector)) return isInput ? IsInputVisible(connector) : IsOutputVisible(connector);
+  return IsConnectorVisible(connector);
 };
 
 export default ShowHandle;

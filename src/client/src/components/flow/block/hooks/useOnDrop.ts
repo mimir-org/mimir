@@ -55,7 +55,7 @@ function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryN
     if (!parentNode) return;
   }
 
-  const treePosition = SetTreeNodePosition(parentNode, project);
+  const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
   const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, icons, user);

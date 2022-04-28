@@ -19,13 +19,13 @@ export const HandleTreeNodeSelection = (
   inspectorRef: MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
-  const nodes = selectedItems.nodes;
-  const edges = selectedItems.edges;
+  const selectedFlowNodes = selectedItems.nodes;
+  const selectedFlowEdges = selectedItems.edges;
 
-  if (!nodes.length && !edges.length) HandleNoSelect(inspectorRef, dispatch);
-  else if (nodes.length === 1) HandleNodeSelect(nodes[0], dispatch);
-  else if (edges.length === 1) HandleEdgeSelect(edges[0], dispatch);
-  else if (nodes.length > 1) HandleMultiSelect(dispatch);
+  if (!selectedFlowNodes.length && !selectedFlowEdges.length) HandleNoSelect(inspectorRef, dispatch);
+  else if (selectedFlowNodes.length === 1) HandleNodeSelect(selectedFlowNodes[0], dispatch);
+  else if (selectedFlowEdges.length === 1) HandleEdgeSelect(selectedFlowEdges[0], dispatch);
+  else if (selectedFlowNodes.length > 1) HandleMultiSelect(dispatch);
 };
 
 function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {

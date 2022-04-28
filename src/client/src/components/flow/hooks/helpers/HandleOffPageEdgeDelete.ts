@@ -22,12 +22,14 @@ export const HandleOffPageEdgeDelete = (edgeToDelete: Edge, nodes: Node[], edges
     if (!relatedTransportEdge) return;
 
     const partOfEdge = GetRelatedPartOfEdge(node, edges);
-    const parentNodeId = node.parentNodeId;
-    const parentNodeConn = GetParentConnector(relatedTransportEdge, node.id);
+    if (!partOfEdge) return;
 
-    dispatch(setOffPageStatus(parentNodeId, parentNodeConn?.id, false));
+    const parentNodeConn = GetParentConnector(relatedTransportEdge, node.id);
+    if (!parentNodeConn) return;
+
+    dispatch(setOffPageStatus(node.parentNodeId, parentNodeConn.id, false));
     dispatch(deleteEdge(relatedTransportEdge.id));
-    dispatch(deleteEdge(partOfEdge?.id));
+    dispatch(deleteEdge(partOfEdge.id));
     dispatch(deleteNode(node.id));
   });
 };

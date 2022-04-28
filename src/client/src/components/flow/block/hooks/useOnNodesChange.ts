@@ -2,7 +2,7 @@ import { applyNodeChanges, NodeChange, Node as FlowNode, XYPosition, NodePositio
 import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
 import { GetParentNode } from "../../../../helpers/Family";
-import { Project, Node } from "../../../../models";
+import { Node, Edge } from "../../../../models";
 import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
 
 /**
@@ -11,14 +11,18 @@ import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
  * NodeDimensionChange | NodePositionChange | NodeSelectionChange | NodeRemoveChange | NodeAddChange | NodeResetChange
  * If a node is marked as removed, the hook useOnNodeDelete runs and handles removal of Mimir nodes and edges.
  * If a node is marked with a position change, HandlePositionChange is called, and validates the position.
- * @param project
+ * @param nodes
+ * @param edges
  * @param selectedNode
  * @param selectedBlockNode
  * @param changes
  * @param setNodes
+ * @param dispatch
+ * @param inspectorRef
  */
 const useOnNodesChange = (
-  project: Project,
+  nodes: Node[],
+  edges: Edge[],
   selectedNode: Node,
   selectedBlockNode: Node,
   changes: NodeChange[],
@@ -38,7 +42,7 @@ const useOnNodesChange = (
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
-  useOnNodeDelete(verifiedMimirNodes, project.nodes, project.edges, inspectorRef, dispatch);
+  useOnNodeDelete(verifiedMimirNodes, nodes, edges, inspectorRef, dispatch);
 };
 
 /**

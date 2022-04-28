@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { CreateConnectedOffPageNode } from "./CreateConnectedOffPageNode";
 import { IsOffPage } from "../../../../../../helpers/Aspects";
-import { Edge, Node, Project } from "../../../../../../models";
+import { Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsTransportConnection } from "../../../../helpers/Connectors";
 
@@ -11,24 +11,24 @@ import { IsTransportConnection } from "../../../../helpers/Connectors";
  * The OffPageNode is only a visual element, and is not part of the project's data model.
  * This component is called from the BlockNode component.
  * @param node
- * @param project
+ * @param nodes
+ * @param edges
  * @param size
  * @param dispatch
  */
-export const HandleConnectedOffPageNode = (node: Node, project: Project, size: BlockNodeSize, dispatch: Dispatch) => {
-  if (!project || !node) return;
+export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
+  if (!node || !nodes.length || !edges.length) return;
 
-  project.edges.forEach((edge) => {
+  edges.forEach((edge) => {
     if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, isTarget, project)) return;
+    if (!OnlyOneNodeVisible(edge, isTarget)) return;
+    if (HasConnectedOffPageNode(edges, edge, isTarget)) return;
 
-    const nodeExists = HasConnectedOffPageNode(project.edges, edge, isTarget);
-    if (nodeExists) return;
+    const nodeParent = nodes.find((n) => n.id === node.parentNodeId);
+    if (!nodeParent) return;
 
-    const nodeParent = project.nodes.find((n) => n.id === node.parentNodeId);
-
-    const xPos = isTarget ? nodeParent?.positionBlockX : size.width;
+    const xPos = isTarget ? nodeParent.positionBlockX : size.width;
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
     const position = { x: xPos, y: node.positionBlockY };
 
@@ -39,8 +39,8 @@ export const HandleConnectedOffPageNode = (node: Node, project: Project, size: B
 //#region Helpers
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
   const existingEdge = isTargetNode
-    ? edges.find((x) => x.toConnectorId === edge.toConnectorId && IsOffPage(x.fromNode))
-    : edges.find((x) => x.fromConnectorId === edge.fromConnectorId && IsOffPage(x.toNode));
+    ? edges.find((e) => e.toConnectorId === edge.toConnectorId && IsOffPage(e.fromNode))
+    : edges.find((e) => e.fromConnectorId === edge.fromConnectorId && IsOffPage(e.toNode));
 
   return existingEdge !== undefined;
 }
@@ -58,15 +58,14 @@ function IsValidTransport(edge: Edge, nodeId: string) {
  * If both nodes are visible there is no need to draw a Connected OffPageNode.
  * @param edge
  * @param isTarget
- * @param project
  * @returns a boolean value.
  */
-function OnlyOneNodeVisible(edge: Edge, isTarget: boolean, project: Project) {
+function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
   const sourceNode = isTarget ? edge.fromNode : edge.toNode;
   const targetNode = isTarget ? edge.toNode : edge.fromNode;
 
-  const sourceNodeParentId = project.nodes.find((n) => n.id === sourceNode?.parentNodeId);
-  const targetNodeParentId = project.nodes.find((n) => n.id === targetNode?.parentNodeId);
+  const sourceNodeParentId = sourceNode?.parentNodeId;
+  const targetNodeParentId = targetNode?.parentNodeId;
   const targetNodeVisible = sourceNodeParentId === targetNodeParentId;
 
   return !targetNodeVisible;

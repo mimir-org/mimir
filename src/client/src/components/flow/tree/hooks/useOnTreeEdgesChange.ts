@@ -1,6 +1,6 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Edge, Node, Project } from "../../../../models";
+import { Edge, Node } from "../../../../models";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
 
@@ -9,7 +9,8 @@ import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
  * In the Flow Library a change is defined by the following types:
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
  * If an edge is marked as removed, the function DeleteMimirEdges runs and handles the removal of Mimir edges.
- * @param project
+ * @param nodes
+ * @param edges
  * @param selectedNode
  * @param changes
  * @param setEdges
@@ -17,7 +18,8 @@ import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
  * @param inspectorRef
  */
 const useOnTreeEdgesChange = (
-  project: Project,
+  nodes: Node[],
+  edges: Edge[],
   selectedNode: Node,
   changes: EdgeChange[],
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
@@ -30,13 +32,13 @@ const useOnTreeEdgesChange = (
   // Verify changes
   changes.forEach((change) => {
     if (change.type === "remove")
-      return HandleRemoveChange(change, verifiedFlowChanges, mimirEdgesToDelete, project, selectedNode);
+      return HandleRemoveChange(change, verifiedFlowChanges, mimirEdgesToDelete, nodes, edges, selectedNode);
     verifiedFlowChanges.push(change);
   });
 
   // Execute all changes
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
-  useOnEdgeDelete(mimirEdgesToDelete, project?.nodes, project?.edges, inspectorRef, dispatch);
+  useOnEdgeDelete(mimirEdgesToDelete, nodes, edges, inspectorRef, dispatch);
 };
 
 /**
@@ -45,23 +47,25 @@ const useOnTreeEdgesChange = (
  * @param change
  * @param verifiedChanges
  * @param mimirEdgesToDelete
- * @param project
+ * @param nodes
+ * @param edges
  * @param selectedNode
  */
 function HandleRemoveChange(
   change: NodeRemoveChange,
   verifiedChanges: EdgeChange[],
   mimirEdgesToDelete: Edge[],
-  project: Project,
+  nodes: Node[],
+  edges: Edge[],
   selectedNode: Node
 ) {
   if (IsAspectNode(selectedNode)) return;
 
-  const mimirEdge = project.edges?.find((n) => n.id === change.id);
+  const mimirEdge = edges?.find((n) => n.id === change.id);
   if (!mimirEdge || mimirEdge.isLocked) return;
 
-  const fromNode = project.nodes.find((n) => n.id === mimirEdge.fromNodeId);
-  const toNode = project.nodes.find((n) => n.id === mimirEdge.toNodeId);
+  const fromNode = nodes.find((n) => n.id === mimirEdge.fromNodeId);
+  const toNode = nodes.find((n) => n.id === mimirEdge.toNodeId);
   if (fromNode?.isLocked || toNode?.isLocked) return;
 
   mimirEdgesToDelete.push(mimirEdge);

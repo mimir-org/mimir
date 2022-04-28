@@ -73,7 +73,7 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch, select
   // The dropped node automatically finds a parent
   const parentNode = SetParentNodeOnDrop(selectedNode, data, project.nodes);
 
-  const treePosition = SetTreeNodePosition(parentNode, project);
+  const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
   const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, icons, user);

@@ -1,7 +1,7 @@
 import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Project, Node } from "../../../../models";
+import { Node, Edge } from "../../../../models";
 import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
 
 /**
@@ -9,14 +9,16 @@ import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
  * In the Flow Library a change is defined by the following types:
  * NodeDimensionChange | NodePositionChange | NodeSelectionChange | NodeRemoveChange | NodeAddChange | NodeResetChange
  * If a node is marked as removed, the function DeleteMimirNodes runs and handles removal of Mimir nodes and edges.
- * @param project
+ * @param nodes
+ * @param edges
  * @param changes
  * @param setNodes
  * @param dispatch
  * @param inspectorRef
  */
 const useOnTreeNodesChange = (
-  project: Project,
+  nodes: Node[],
+  edges: Edge[],
   changes: NodeChange[],
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>,
   dispatch: Dispatch,
@@ -27,13 +29,13 @@ const useOnTreeNodesChange = (
 
   // Verify changes
   changes.forEach((change) => {
-    if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, verifiedMimirNodes, project.nodes);
+    if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, verifiedMimirNodes, nodes);
     verifiedFlowChanges.push(change);
   });
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(changes, n));
-  useOnNodeDelete(verifiedMimirNodes, project?.nodes, project?.edges, inspectorRef, dispatch);
+  useOnNodeDelete(verifiedMimirNodes, nodes, edges, inspectorRef, dispatch);
 };
 
 /**

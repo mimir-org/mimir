@@ -30,24 +30,24 @@ export const FilterTerminals = (connectors: Connector[], selectedNode: Node, sec
   return { in: inputs, out: outputs } as Terminals;
 };
 
-function FilterTerminal(selectedNode: Node, secondary: Node, c: Connector) {
-  if (secondary) return FilterSplitViewTerminal(selectedNode, secondary, c);
-  if (IsLocation(selectedNode)) return IsLocationTerminal(c);
-  return IsTransport(c);
+function FilterTerminal(selectedNode: Node, secondaryNode: Node, connector: Connector) {
+  if (secondaryNode) return FilterSplitViewTerminal(selectedNode, secondaryNode, connector);
+  if (IsLocation(selectedNode)) return IsLocationTerminal(connector);
+  return IsTransport(connector);
 }
 
-function FilterSplitViewTerminal(selectedNode: Node, secondary: Node, c: Connector) {
+function FilterSplitViewTerminal(selectedNode: Node, secondaryNode: Node, connector: Connector) {
   if (IsProduct(selectedNode)) {
-    if (IsFunction(secondary)) return IsProductTerminal(c);
-    if (IsLocation(secondary)) return IsLocationTerminal(c);
-    if (IsProduct(secondary)) return IsTransport(c);
+    if (IsFunction(secondaryNode)) return IsProductTerminal(connector);
+    if (IsLocation(secondaryNode)) return IsLocationTerminal(connector);
+    if (IsProduct(secondaryNode)) return IsTransport(connector);
   }
 
   if (IsFunction(selectedNode)) {
-    if (IsFunction(secondary)) return IsTransport(c);
-    if (IsLocation(secondary)) return IsLocationTerminal(c);
-    if (IsProduct(secondary)) return IsProductTerminal(c);
+    if (IsFunction(secondaryNode)) return IsTransport(connector);
+    if (IsLocation(secondaryNode)) return IsLocationTerminal(connector);
+    if (IsProduct(secondaryNode)) return IsProductTerminal(connector);
   }
 
-  return IsLocationTerminal(c);
+  return IsLocationTerminal(connector);
 }

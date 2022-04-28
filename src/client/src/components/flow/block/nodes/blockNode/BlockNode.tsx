@@ -30,14 +30,14 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
   const project = useAppSelector(selectors.projectSelector);
+  const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedNode = project?.nodes?.find((n) => n.selected);
-  const isElectro = useAppSelector(selectors.electroSelector);
 
   // Check for elements that require OffPage nodes
   useEffect(() => {
-    HandleConnectedOffPageNode(data, project, size, dispatch);
-    HandleRequiredOffPageNode(data, project.edges, size, dispatch);
+    HandleConnectedOffPageNode(data, project?.nodes, project?.edges, size, dispatch);
+    HandleRequiredOffPageNode(data, project?.edges, size, dispatch);
   }, [secondaryNode]);
 
   useEffect(() => {

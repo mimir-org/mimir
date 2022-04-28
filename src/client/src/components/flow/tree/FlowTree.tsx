@@ -40,12 +40,14 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   const [flowEdges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const selectedNode = project?.nodes?.find((n) => n.selected);
+  const project = useAppSelector(selectors.projectSelector);
+  const mimirNodes = project?.nodes ?? [];
+  const mimirEdges = project?.edges ?? [];
+  const selectedNode = mimirNodes.find((n) => n.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -74,14 +76,15 @@ export const FlowTree = ({ inspectorRef }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      return hooks.useOnTreeNodesChange(project, changes, setNodes, dispatch, inspectorRef);
+      console.log("CHANGE NODE");
+      return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
     },
     [selectedNode]
   );
 
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
-      return hooks.useOnTreeEdgesChange(project, selectedNode, changes, setEdges, dispatch, inspectorRef);
+      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, dispatch, inspectorRef);
     },
     [selectedNode]
   );
@@ -90,8 +93,8 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      setNodes(BuildFlowTreeNodes(project?.nodes));
-      setEdges(BuildFlowTreeEdges(project, animatedEdge));
+      setNodes(BuildFlowTreeNodes(mimirNodes));
+      setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -100,19 +103,21 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   // Rebuild nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowTreeNodes(project.nodes));
-  }, [project?.nodes?.length]);
+    console.log("NODES");
+    setNodes(BuildFlowTreeNodes(mimirNodes));
+  }, [mimirNodes.length]);
 
   // Rebuild edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowTreeEdges(project, animatedEdge));
-  }, [project?.edges?.length, animatedEdge]);
+    console.log("EDGES");
+    setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, animatedEdge));
+  }, [mimirEdges.length, animatedEdge]);
 
   // Show only partOf edges by default
   useEffect(() => {
     setIsFetching(true);
-    SetInitialEdgeVisibility(project?.edges, dispatch);
+    SetInitialEdgeVisibility(mimirEdges, dispatch);
     setIsFetching(false);
   }, []);
 

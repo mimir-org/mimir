@@ -40,16 +40,18 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const [flowEdges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const selectedNode = project?.nodes?.find((n) => n.selected);
-  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
-  const secondaryNode = project?.nodes?.find((x) => x.id === secondaryNodeRef?.id);
-  const selectedEdge = project?.edges?.find((e) => e.selected);
+  const project = useAppSelector(selectors.projectSelector);
+  const mimirNodes = project?.nodes ?? [];
+  const mimirEdges = project?.edges ?? [];
+  const selectedNode = mimirNodes.find((n) => n.selected);
+  const selectedBlockNode = mimirNodes.find((n) => n.blockSelected);
+  const secondaryNode = mimirNodes.find((n) => n.id === secondaryNodeRef?.id);
+  const selectedEdge = mimirEdges.find((e) => e.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -60,7 +62,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   };
 
   const OnConnectStop = (e: MouseEvent) => {
-    return hooks.useOnConnectStop(e, project, selectedNode, secondaryNode, getViewport, dispatch);
+    return hooks.useOnConnectStop(e, mimirNodes, mimirEdges, selectedNode, secondaryNode, getViewport, dispatch);
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
@@ -82,29 +84,39 @@ const FlowBlock = ({ inspectorRef }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      return hooks.useOnNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
+      return hooks.useOnNodesChange(
+        mimirNodes,
+        mimirEdges,
+        selectedNode,
+        selectedBlockNode,
+        changes,
+        setNodes,
+        dispatch,
+        inspectorRef
+      );
     },
     [selectedBlockNode]
   );
 
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
-      return hooks.useOnEdgesChange(changes, setEdges, inspectorRef, project.nodes, project.edges, dispatch);
+      return hooks.useOnEdgesChange(changes, setEdges, inspectorRef, mimirNodes, mimirEdges, dispatch);
     },
     [selectedEdge]
   );
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
-    OnBlockSelectionChange(selectedItems, project, selectedNode, inspectorRef, dispatch);
+    if (!project) return;
+    OnBlockSelectionChange(selectedItems, selectedNode, inspectorRef, dispatch);
   };
 
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
-      SetInitialParentId(project?.nodes);
-      setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-      setEdges(BuildFlowBlockEdges(project, secondaryNode, flowNodes, animatedEdge));
+      SetInitialParentId(mimirNodes);
+      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedNode, secondaryNode));
+      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedNode, secondaryNode, flowNodes, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -113,14 +125,14 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowBlockNodes(project, selectedNode, secondaryNode));
-  }, [project?.nodes, secondaryNode]);
+    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedNode, secondaryNode));
+  }, [mimirNodes, secondaryNode]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(project, secondaryNode, flowNodes, animatedEdge));
-  }, [project?.edges, project?.nodes, animatedEdge]);
+    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedNode, secondaryNode, flowNodes, animatedEdge));
+  }, [mimirEdges, mimirNodes, animatedEdge]);
 
   useEffect(() => {
     CloseInspector(inspectorRef, dispatch);
@@ -130,7 +142,7 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   useEffect(() => {
     setIsFetching(true);
     setTimeout(() => {
-      SetInitialEdgeVisibility(project?.edges, dispatch);
+      SetInitialEdgeVisibility(mimirEdges, dispatch);
       setIsFetching(false);
     }, 200);
   }, []);
@@ -147,8 +159,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
         edges={flowEdges}
         nodeTypes={useMemo(() => GetBlockNodeTypes, [])}
         edgeTypes={useMemo(() => GetBlockEdgeTypes, [])}
-        onNodesDelete={null}
-        onEdgesDelete={null}
         onNodesChange={OnNodesChange}
         onEdgesChange={OnEdgesChange}
         onConnect={OnConnect}

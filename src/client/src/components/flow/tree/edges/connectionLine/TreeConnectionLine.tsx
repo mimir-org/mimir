@@ -28,9 +28,5 @@ export const TreeConnectionLine = ({
 };
 
 function GetStyle(color: string) {
-  return {
-    fill: "none",
-    stroke: color,
-    strokeWidth: 1.5,
-  };
+  return { fill: "none", stroke: color, strokeWidth: 1.5 };
 }

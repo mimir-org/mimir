@@ -59,8 +59,7 @@ function DeleteRelatedEdges(nodeId: string, edges: Edge[], dispatch: Dispatch) {
  */
 function HandleRelatedEdges(nodeToRemoveId: string, edges: Edge[], nodes: Node[], dispatch: Dispatch) {
   edges.forEach((edge) => {
-    const isRelated = IsEdgeConnectedToNode(edge, nodeToRemoveId);
-    if (!isRelated) return;
+    if (!IsEdgeConnectedToNode(edge, nodeToRemoveId)) return;
 
     HandleOffPageEdgeDelete(edge, nodes, edges, dispatch);
     dispatch(deleteEdge(edge.id));

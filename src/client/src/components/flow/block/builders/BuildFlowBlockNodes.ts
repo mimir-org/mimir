@@ -1,5 +1,5 @@
 import { Node as FlowNode } from "react-flow-renderer";
-import { Node, Project } from "../../../../models";
+import { Node, Edge } from "../../../../models";
 import { BuildFlowParentNode, BuildFlowSecondaryParentNode } from ".";
 import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
 
@@ -8,14 +8,13 @@ import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
  * These nodes contain the data for the nodes. In addition to the FlowNodes, MimirNodes
  * are created, with the extra functionality needed for Mimir. The FlowNodes and MimirEdges co-exist
  * and share the same id and position.
- * @param project
+ * @param mimirNodes
+ * @param mimirEdges
  * @param primaryNode
  * @param secondaryNode
  * @returns all validated FlowNodes.
  */
-const BuildFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode: Node) => {
-  if (!project) return [];
-
+const BuildFlowBlockNodes = (mimirNodes: Node[], mimirEdges: Edge[], primaryNode: Node, secondaryNode: Node) => {
   const flowNodes: FlowNode[] = [];
   const splitView = secondaryNode !== undefined && secondaryNode !== null;
 
@@ -29,10 +28,10 @@ const BuildFlowBlockNodes = (project: Project, primaryNode: Node, secondaryNode:
     if (!parentSecondaryBlock) return flowNodes;
 
     flowNodes.push(parentSecondaryBlock);
-    DrawFlowSecondaryChildren(project, primaryNode, secondaryNode, flowNodes);
+    DrawFlowSecondaryChildren(mimirNodes, mimirEdges, primaryNode, secondaryNode, flowNodes);
   }
 
-  DrawFlowChildNodes(project, primaryNode, secondaryNode, flowNodes);
+  DrawFlowChildNodes(mimirNodes, mimirEdges, primaryNode, secondaryNode, flowNodes);
 
   return flowNodes;
 };

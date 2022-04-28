@@ -45,7 +45,7 @@ export const GetBlockNodeTerminal = (
         position={pos}
         id={connector.id}
         className={"react-flow__handle-block"}
-        isValidConnection={(connection) => IsValidBlockConnection(connection, project, dispatch)}
+        isValidConnection={(connection) => IsValidBlockConnection(connection, project.nodes, project.edges, dispatch)}
       />
     </HandleBox>
   );

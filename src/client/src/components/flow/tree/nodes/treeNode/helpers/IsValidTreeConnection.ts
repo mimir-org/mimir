@@ -9,13 +9,13 @@ import { setValidation } from "../../../../../../redux/store/validation/validati
 /**
  * Function to check if a connection/edge in TreeView is valid.
  * @param node
- * @param conn
+ * @param connection
  * @param dispatch
  * @returns a boolean value.
  */
-export const IsValidTreeConnection = (node: Node, conn: Connection, dispatch: Dispatch) => {
+export const IsValidTreeConnection = (node: Node, connection: Connection, dispatch: Dispatch) => {
   const nodes = GetMimirNodes();
-  const parentNode = nodes.find((x) => x.id === conn.source);
+  const parentNode = nodes.find((x) => x.id === connection.source);
   const isValidAspect = IsFamily(node, parentNode);
 
   document.addEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch), { once: true });
