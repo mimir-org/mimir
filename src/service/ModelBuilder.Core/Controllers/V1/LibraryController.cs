@@ -27,10 +27,10 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ILibraryService _libraryService;
-        private readonly ILibRepository _libRepository;
+        private readonly ILibraryRepository _libRepository;
 
         public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService,
-            ILibRepository libRepository)
+            ILibraryRepository libRepository)
         {
             _logger = logger;
             _libraryService = libraryService;

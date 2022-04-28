@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
-using Mb.TypeEditor.Services.Contracts;
+using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 // ReSharper disable StringLiteralTypo
 
-namespace Mb.TypeEditor.Core.Controllers.V1
+namespace Mb.Core.Controllers.V1.TypeLibrary
 {
     /// <summary>
     /// Terminal type services
@@ -27,12 +25,12 @@ namespace Mb.TypeEditor.Core.Controllers.V1
     public class TerminalTypeController : ControllerBase
     {
         private readonly ILogger<TerminalTypeController> _logger;
-        private readonly ITerminalTypeService _terminalTypeService;
+        private readonly ILibraryService _libraryService;
 
-        public TerminalTypeController(ILogger<TerminalTypeController> logger, ITerminalTypeService terminalTypeService)
+        public TerminalTypeController(ILogger<TerminalTypeController> logger, ILibraryService libraryService)
         {
             _logger = logger;
-            _terminalTypeService = terminalTypeService;
+            _libraryService = libraryService;
         }
 
         /// <summary>
@@ -47,7 +45,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         {
             try
             {
-                var data = _terminalTypeService.GetTerminals().ToList();
+                var data = _libraryService.GetTerminals().ToList();
                 return Ok(data);
             }
             catch (Exception e)
@@ -69,39 +67,8 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         {
             try
             {
-                var data = _terminalTypeService.GetTerminalsByCategory().ToList();
+                var data = _libraryService.GetTerminalsByCategory().ToList();
                 return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Create a terminal type
-        /// </summary>
-        /// <param name="createTerminalType"></param>
-        /// <returns></returns>
-        [HttpPost("")]
-        [ProducesResponseType(typeof(AttributeType), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> CreateTerminalType([FromBody] CreateTerminalType createTerminalType)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            try
-            {
-                var createdTerminalType = await _terminalTypeService.CreateTerminalType(createTerminalType);
-                if (createdTerminalType == null)
-                    return BadRequest("The terminal type already exist");
-
-                return Ok(createdTerminalType);
             }
             catch (Exception e)
             {

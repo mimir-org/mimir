@@ -3,7 +3,6 @@ using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
 using Mb.Core.Extensions;
-using Mb.TypeEditor.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -71,7 +70,7 @@ namespace Mb.Api
 
             services.AddMicrosoftSqlServerModule();
             services.AddApplicationInsightsLoggingModule();
-            services.AddTypeEditorModule(Configuration).AddModelBuilderModule(Configuration);
+            services.AddModelBuilderModule(Configuration);
         }
 
         public virtual void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -85,7 +84,7 @@ namespace Mb.Api
             // Use Azure Active Directory Module and Swagger Module
             app.UseAzureActiveDirectoryModule(_activeDirectoryConfiguration, _swaggerConfiguration);
 
-            app.UseModelBuilderModule().UseTypeEditorModule();
+            app.UseModelBuilderModule();
         }
 
         private static bool NoOriginsAreProvided(string[] origins)

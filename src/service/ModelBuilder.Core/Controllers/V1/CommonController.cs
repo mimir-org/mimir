@@ -34,11 +34,11 @@ namespace Mb.Core.Controllers.V1
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
         private readonly IModuleService _moduleService;
-        private readonly ILibRepository _libRepository;
+        private readonly ILibraryRepository _libRepository;
         private readonly ICacheRepository _cacheRepository;
         private readonly ApplicationSetting _applicationSetting;
 
-        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ILibRepository libRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
+        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ILibraryRepository libRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
         {
             _commonService = commonService;
             _logger = logger;

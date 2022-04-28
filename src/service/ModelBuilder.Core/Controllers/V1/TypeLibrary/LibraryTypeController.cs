@@ -8,7 +8,7 @@ using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
-using Mb.TypeEditor.Services.Contracts;
+using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
 // ReSharper disable StringLiteralTypo
-namespace Mb.TypeEditor.Core.Controllers.V1
+namespace Mb.Core.Controllers.V1.TypeLibrary
 {
     /// <summary>
     /// Library type services
@@ -30,12 +30,12 @@ namespace Mb.TypeEditor.Core.Controllers.V1
     public class LibraryTypeController : ControllerBase
     {
         private readonly ILogger<LibraryTypeController> _logger;
-        private readonly ILibraryTypeService _libraryTypeService;
+        private readonly ILibraryService _libraryService;
 
-        public LibraryTypeController(ILogger<LibraryTypeController> logger, ILibraryTypeService libraryTypeService)
+        public LibraryTypeController(ILogger<LibraryTypeController> logger, ILibraryService libraryService)
         {
             _logger = logger;
-            _libraryTypeService = libraryTypeService;
+            _libraryService = libraryService;
         }
 
         #region Get
@@ -52,7 +52,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         {
             try
             {
-                var allTypes = _libraryTypeService.GetAllTypes().ToList();
+                var allTypes = _libraryService.GetAllTypes().ToList();
                 return Ok(allTypes);
             }
             catch (Exception e)
@@ -80,7 +80,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
 
             try
             {
-                var data = await _libraryTypeService.ConvertToCreateLibraryType(id, filter);
+                var data = await _libraryService.ConvertToCreateLibraryType(id, filter);
                 return Ok(data);
             }
             catch (ModelBuilderNotFoundException e)
@@ -113,7 +113,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         {
             try
             {
-                var types = _libraryTypeService.GetSimpleTypes().ToList();
+                var types = _libraryService.GetSimpleTypes().ToList();
                 return Ok(types);
             }
             catch (Exception e)
@@ -152,14 +152,14 @@ namespace Mb.TypeEditor.Core.Controllers.V1
                 switch (libraryType.ObjectType)
                 {
                     case ObjectType.ObjectBlock:
-                        var ob = await _libraryTypeService.CreateLibraryType<LibraryNodeItem>(libraryType);
+                        var ob = await _libraryService.CreateLibraryType<LibraryNodeItem>(libraryType);
                         return Ok(ob);
                     case ObjectType.Transport:
-                        var ln = await _libraryTypeService.CreateLibraryType<LibraryTransportItem>(libraryType);
+                        var ln = await _libraryService.CreateLibraryType<LibraryTransportItem>(libraryType);
                         return Ok(ln);
                     case ObjectType.Interface:
                         var libraryInterfaceItem =
-                            await _libraryTypeService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
+                            await _libraryService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
                         return Ok(libraryInterfaceItem);
                     default:
                         throw new ModelBuilderInvalidOperationException(
@@ -211,14 +211,14 @@ namespace Mb.TypeEditor.Core.Controllers.V1
                 switch (libraryType.ObjectType)
                 {
                     case ObjectType.ObjectBlock:
-                        var ob = await _libraryTypeService.UpdateLibraryType<LibraryNodeItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
+                        var ob = await _libraryService.UpdateLibraryType<LibraryNodeItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
                         return Ok(ob);
                     case ObjectType.Transport:
-                        var ln = await _libraryTypeService.UpdateLibraryType<LibraryTransportItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
+                        var ln = await _libraryService.UpdateLibraryType<LibraryTransportItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
                         return Ok(ln);
                     case ObjectType.Interface:
                         var libraryInterfaceItem =
-                            await _libraryTypeService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
+                            await _libraryService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
                         return Ok(libraryInterfaceItem);
                     default:
                         throw new ModelBuilderInvalidOperationException(
@@ -233,38 +233,6 @@ namespace Mb.TypeEditor.Core.Controllers.V1
             catch (ModelBuilderNotFoundException e)
             {
                 ModelState.AddModelError("Bad request", e.Message);
-                return BadRequest(ModelState);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Create a simple type
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("simpleType")]
-        [ProducesResponseType(typeof(IEnumerable<LibraryType>), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> CreateSimpleType(SimpleTypeAm simpleType)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                var createdType = await _libraryTypeService.CreateSimpleType(simpleType);
-                return StatusCode(201, createdType);
-            }
-            catch (ModelBuilderDuplicateException e)
-            {
-                ModelState.AddModelError("Duplicate", e.Message);
                 return BadRequest(ModelState);
             }
             catch (Exception e)
@@ -296,7 +264,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
 
             try
             {
-                await _libraryTypeService.DeleteType(id);
+                await _libraryService.DeleteType(id);
                 return Ok(true);
             }
             catch (ModelBuilderNotFoundException e)

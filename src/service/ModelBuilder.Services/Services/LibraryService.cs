@@ -4,23 +4,26 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
+using Mb.Models.Data.Enums;
+using Mb.Models.Data.TypeEditor;
+using Mb.Models.Enums;
 using Mb.Services.Contracts;
-using Mb.TypeEditor.Data.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mb.Services.Services
 {
     public class LibraryService : ILibraryService
     {
-        private readonly ILibraryRepository _libraryRepository;
         private readonly IProjectRepository _projectRepository;
+        private readonly ILibraryRepository _libraryRepository;
         private readonly IMapper _mapper;
 
-        public LibraryService(ILibraryRepository libraryRepository, IProjectRepository projectRepository, IMapper mapper)
+        public LibraryService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository)
         {
-            _libraryRepository = libraryRepository;
             _projectRepository = projectRepository;
             _mapper = mapper;
+            _libraryRepository = libraryRepository;
         }
 
         /// <summary>
@@ -96,6 +99,102 @@ namespace Mb.Services.Services
             });
 
             return librarySubProjectItems;
+        }
+
+        public IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<BlobDataAm> GetBlobData()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<EnumBase> GetAllOfType(EnumType enumType)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<LocationTypeAm> GetAllLocationTypes()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<CreateLibraryType> GetAllTypes()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion,
+            bool updateMinorVersion) where T : class, new()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task DeleteType(string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<SimpleType> CreateSimpleType(SimpleTypeAm simpleType)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task CreateSimpleTypes(ICollection<SimpleTypeAm> simpleTypes)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<SimpleType> GetSimpleTypes()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ClearAllChangeTracker()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Rds> GetRds()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<TerminalType> GetTerminals()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Dictionary<string, List<TerminalType>> GetTerminalsByCategory()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

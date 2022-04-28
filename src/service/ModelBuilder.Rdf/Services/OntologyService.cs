@@ -19,14 +19,14 @@ namespace ModelBuilder.Rdf.Services
     public class OntologyService : IOntologyService
     {
         private readonly IOntologyRepository _ontologyRepository;
-        private readonly ILibRepository _libRepository;
+        private readonly ILibraryRepository _libRepository;
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
         private readonly IMapper _mapper;
 
         #region Constructors
 
-        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository,
+        public OntologyService(IOntologyRepository ontologyRepository, ILibraryRepository libRepository,
             INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository)
         {
             _ontologyRepository = ontologyRepository;

@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Mb.Models.Data.TypeEditor;
-using Mb.TypeEditor.Services.Contracts;
+using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Mb.TypeEditor.Core.Controllers.V1
+namespace Mb.Core.Controllers.V1.TypeLibrary
 {
     /// <summary>
     /// Rds services
@@ -22,12 +22,12 @@ namespace Mb.TypeEditor.Core.Controllers.V1
     public class RdsController : ControllerBase
     {
         private readonly ILogger<RdsController> _logger;
-        private readonly IRdsService _rdsService;
+        private readonly ILibraryService _libraryService;
 
-        public RdsController(ILogger<RdsController> logger, IRdsService rdsService)
+        public RdsController(ILogger<RdsController> logger, ILibraryService libraryService)
         {
             _logger = logger;
-            _rdsService = rdsService;
+            _libraryService = libraryService;
         }
 
         #region Get
@@ -44,7 +44,7 @@ namespace Mb.TypeEditor.Core.Controllers.V1
         {
             try
             {
-                var data = _rdsService.GetRds();
+                var data = _libraryService.GetRds();
                 return Ok(data);
             }
             catch (Exception e)
