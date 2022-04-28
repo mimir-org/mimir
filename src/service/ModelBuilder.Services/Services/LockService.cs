@@ -23,15 +23,17 @@ namespace Mb.Services.Services
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
         private readonly ICooperateService _cooperateService;
+        private readonly ICacheRepository _cacheRepository;
         private readonly IMapper _mapper;
         private readonly DatabaseConfiguration _databaseConfiguration;
 
-        public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper)
+        public LockService(INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, ICooperateService cooperateService, IOptions<DatabaseConfiguration> databaseConfiguration, IMapper mapper, ICacheRepository cacheRepository)
         {
             _nodeRepository = nodeRepository;
             _edgeRepository = edgeRepository;
             _attributeRepository = attributeRepository;
             _cooperateService = cooperateService;
+            _cacheRepository = cacheRepository;
             _mapper = mapper;
             _databaseConfiguration = databaseConfiguration?.Value;
         }
@@ -94,6 +96,10 @@ namespace Mb.Services.Services
             var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList();
             lockDms.AddRange(_mapper.Map<List<LockDm>>(lockAms));
 
+            if(!lockDms.Any())
+                return;
+
+            //Save to database
             using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
             {
                 await using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
@@ -102,12 +108,37 @@ namespace Mb.Services.Services
                     _attributeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Attribute).ToList());
                     _nodeRepository.BulkUpdateLockStatus(new BulkOperations(), conn, lockDms.Where(x => x.Type is EntityType.Node).ToList());
                 }
-
                 trans.Complete();
             }
 
+            //Refresh cache
+            var key = GetKey(lockAm.ProjectId, null);
+            await _cacheRepository.DeleteCacheAsync(key);
+            _cacheRepository.RefreshList.Enqueue((lockAm.ProjectId, null));
+
+            //Send websocket updates to clients
             var lockCms = _mapper.Map<List<LockCm>>(lockDms);
-            await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update);
+            await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update, lockDms[0]?.ProjectId);
+        }
+
+        private string GetKey(string id, string iri)
+        {
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                return null;
+
+            string key;
+
+            if (!string.IsNullOrWhiteSpace(id))
+                key = id.Split('_').Last();
+            else
+            {
+                var uri = new Uri(iri);
+                key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
+                if (key.StartsWith("ID"))
+                    key = key.Remove(0, 2);
+            }
+
+            return key;
         }
     }
 }

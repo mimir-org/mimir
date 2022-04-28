@@ -32,10 +32,10 @@ namespace Mb.Data.Repositories
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveEdgeData, workerStatus, data);
         }
 
-        public async Task SendLockData(List<LockCm> lockCms, WorkerStatus workerStatus)
+        public async Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus)
         {
             var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettings);
-            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
+            await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
         }
     }
 }
