@@ -11,6 +11,7 @@ using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
+using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
@@ -112,33 +113,13 @@ namespace Mb.Services.Services
             }
 
             //Refresh cache
-            var key = GetKey(lockAm.ProjectId, null);
+            var key = lockAm.ProjectId.RemoveDomain();
             await _cacheRepository.DeleteCacheAsync(key);
             _cacheRepository.RefreshList.Enqueue((lockAm.ProjectId, null));
 
             //Send websocket updates to clients
             var lockCms = _mapper.Map<List<LockCm>>(lockDms);
             await _cooperateService.SendLockUpdates(lockCms, WorkerStatus.Update, lockCms[0]?.ProjectId);
-        }
-
-        private string GetKey(string id, string iri)
-        {
-            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
-                return null;
-
-            string key;
-
-            if (!string.IsNullOrWhiteSpace(id))
-                key = id.Split('_').Last();
-            else
-            {
-                var uri = new Uri(iri);
-                key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
-                if (key.StartsWith("ID"))
-                    key = key.Remove(0, 2);
-            }
-
-            return key;
         }
     }
 }
