@@ -389,13 +389,14 @@ export function importProjectAction(file: File, parserId: string): Types.Project
   };
 }
 
-export function lockEntity(id: string, isLocked: boolean, type: EntityType): Types.LockEntity {
+export function lockEntity(id: string, projectId: string, isLocked: boolean, type: EntityType): Types.LockEntity {
   return {
     type: Types.LOCK_ENTITY,
     payload: {
       id: id,
-      isLocked,
-      type,
+      projectId: projectId,
+      isLocked: isLocked,
+      type: type,
     },
   };
 }

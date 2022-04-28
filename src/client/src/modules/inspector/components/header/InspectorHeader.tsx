@@ -1,6 +1,6 @@
 import InspectorTabs from "../tabs/InspectorTabs";
 import { MutableRefObject } from "react";
-import { BlobData, Project } from "../../../../models";
+import { Project } from "../../../../models";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
@@ -33,7 +33,6 @@ interface Props {
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
   simpleLikeItems?: SimpleLikeItem[];
-  icons?: BlobData[];
 }
 
 export const InspectorHeader = ({
@@ -48,7 +47,6 @@ export const InspectorHeader = ({
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
   changeInspectorTabAction,
-  icons,
   attributeLikeItems,
   terminalLikeItems,
   simpleLikeItems,
@@ -67,7 +65,7 @@ export const InspectorHeader = ({
         isInspectorOpen={isInspectorOpen}
       />
 
-      {GetInspectorHeaderText(element, icons)}
+      {GetInspectorHeaderText(element)}
 
       <InspectorButtonRow
         project={project}
