@@ -6,6 +6,7 @@ export { default as GetReferenceDesignation } from "./GetReferenceDesignation";
 
 export { default as GetDateNowUtc } from "./GetDateNowUtc";
 export { default as SetFitToScreen } from "./SetFitToScreen";
+export { default as IsStartPage } from "./IsStartPage";
 
 export * from "./UseSelectFlowElements";
 export * from "./UseSelectedFlowElements";
