@@ -12,12 +12,13 @@ export const OnLockClick = (element: InspectorElement, isLocked: boolean, isLock
 };
 
 const handleLockOnline = (element: InspectorElement, isLocked: boolean, dispatch: Dispatch) => {
-  dispatch(lockEntity(element.id, isLocked, IsNode(element) ? EntityType.Node : EntityType.Edge));
+  dispatch(lockEntity(element.id, element.projectId, isLocked, IsNode(element) ? EntityType.Node : EntityType.Edge));
 };
 
 const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {
   const lockObj: LockCm = {
     id: element.id,
+    projectId: "",
     isLocked: isLocked,
     isLockedStatusBy: isLockedBy,
     isLockedStatusDate: new Date().toISOString(),

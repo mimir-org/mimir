@@ -18,8 +18,7 @@ import {
 /**
  * Union type of possible top elements chosen in inspector, i.e. what can be selected in by the inspector.
  */
-export type InspectorElement = Node | Edge | CreateLibraryType;
-export type InspectorAdminElement = Node | Transport | Interface;
+export type InspectorElement = Node | Edge;
 
 /**
  * Union type of possible top elements chosen for terminals view in inspector, i.e. what element owns the terminals shown in terminals view.

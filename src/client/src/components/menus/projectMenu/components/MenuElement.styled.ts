@@ -36,5 +36,6 @@ export const MenuElementButton = styled.button<MenuElementStyledProps>`
 `;
 
 export const MenuElementText = styled.span`
+  padding-top: 1px;
   font-size: ${FontSize.STANDARD};
 `;

@@ -100,6 +100,26 @@ namespace Mb.Models.Extensions
             return Uri.IsWellFormedUriString(iri, UriKind.Absolute);
         }
 
+        public static string RemoveDomain(this string id, string iri = null)
+        {
+            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+                return null;
+
+            string key;
+
+            if (!string.IsNullOrWhiteSpace(id))
+                key = id.Split('_').Last();
+            else
+            {
+                var uri = new Uri(iri);
+                key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
+                if (key.StartsWith("ID"))
+                    key = key.Remove(0, 2);
+            }
+
+            return key;
+        }
+
         #region Private
 
         private static string IncrementVersion(string version, bool incrementMajor, bool incrementMinor, bool incrementCommit)

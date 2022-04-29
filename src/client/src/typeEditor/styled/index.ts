@@ -42,9 +42,3 @@ export { default as InfoWrapper } from "./Preview/InfoWrapper";
 export { default as InfoText } from "./Preview/InfoText";
 export { default as InfoSymbolWrapper } from "./Preview/InfoSymbolWrapper";
 export { default as ButtonsContainer } from "./Preview/ButtonsContainer";
-
-// Inspector
-export { default as TypeEditorInspectorWrapper } from "./Inspector/TypeEditorInspectorWrapper";
-
-// Misc
-export { default as ErrorMessageBox } from "./ErrorMessageBox";

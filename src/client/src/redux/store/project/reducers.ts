@@ -1,5 +1,6 @@
 import * as Types from "./types";
 import { Edge, Node } from "../../../models";
+import { CreateEmptyProject } from "../../../models/data/Project";
 import { IsAspectNode, IsFamily } from "../../../helpers";
 import {
   getEdgeInterfaceAttributeMap,
@@ -34,6 +35,11 @@ const initialState: Types.ProjectState = {
 // TODO: Refactor to reduce complexity
 export function projectReducer(state = initialState, action: Types.ProjectActionTypes) {
   switch (action.type) {
+    case Types.CLOSE_PROJECT:
+      return {
+        ...state,
+        project: CreateEmptyProject(),
+      };
     case Types.SAVE_PROJECT:
       return {
         ...state,
