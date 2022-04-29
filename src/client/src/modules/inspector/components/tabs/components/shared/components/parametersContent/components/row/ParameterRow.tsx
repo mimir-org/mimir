@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { projectIdSelector, useAppSelector } from "../../../../../../../../../../redux/store";
 import { CombinedAttribute } from "../../../../../../../../../../models";
 import { PARAMETER_ENTITY_WIDTH, Parameter } from "./components/Parameter";
 import { Body, Box } from "./ParameterRow.styled";
@@ -51,6 +52,7 @@ export const ParameterRow = ({
   bodyColor,
   dispatch,
 }: Props) => {
+  const projectId = useAppSelector(projectIdSelector);
   const attributes = attributeLikeItems ?? GetAttributes(element);
   const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
@@ -96,7 +98,9 @@ export const ParameterRow = ({
             onChange={(id, value, unitId) =>
               OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
             }
-            onLock={(attribute, isLocked) => OnLockParameter(inspectorParentElement, attribute, isLocked, username, dispatch)}
+            onLock={(attribute, isLocked) =>
+              OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, dispatch)
+            }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />
         ))}

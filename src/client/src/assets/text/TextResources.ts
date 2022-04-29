@@ -186,6 +186,7 @@ export const TextResources = {
   PROJECT_CREATE: "Create project",
   PROJECT_SEARCH: "Search Projects",
   PROJECT_OPEN: "Open project",
+  PROJECT_CLOSE: "Close project",
   PROJECT_RECENT: "Recent projects",
   OWNER: "Owner",
   VERSION: "Version",
@@ -221,6 +222,7 @@ export const TextResources = {
   FILE_NAME: "File name",
 
   SAVE_SUBPROJECT: "Save subproject",
+  PROJECT_CLOSE_LABEL: "Please make sure you save before you close the project.",
   PROJECT_MENU_SELECT: "Please select an option from the project menu to continue using Mímir",
 
   // Error

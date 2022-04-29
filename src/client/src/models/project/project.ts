@@ -32,6 +32,7 @@ export const MENU_TYPE = {
   PROJECT_MENU: "ProjectMenu",
   OPEN_PROJECT_MENU: "OpenProjectMenu",
   CREATE_PROJECT_MENU: "CreateProjectMenu",
+  CLOSE_PROJECT_MENU: "CloseProjectMenu",
   IMPORT_PROJECT_FILE_MENU: "ImportProjectFile",
   EXPORT_PROJECT_FILE_MENU: "ExportProjectFile",
   IMPORT_LIBRARY_FILE_MENU: "ImportLibraryFile",

@@ -40,8 +40,8 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
 
   const nodes = project?.nodes ?? [];
   const edges = project?.edges ?? [];
-  const edge = edges.find((x) => x.selected);
-  const node = nodes.find((x) => (IsBlockView() ? x.blockSelected : x.selected));
+  const edge = edges.find((e) => e.selected);
+  const node = nodes.find((e) => (IsBlockView() ? e.blockSelected : e.selected));
 
   const resizePanelRef = useRef(null);
   const element: InspectorElement = node || edge;
@@ -49,7 +49,7 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   useAutoMinimizeInspector(inspectorRef);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
 
-  const inspectorVisibilityAction = useCallback(
+  const changeInspectorVisibilityAction = useCallback(
     (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
     [type]
   );
@@ -79,8 +79,8 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
         activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
         isInspectorOpen={inspectorOpen}
-        inspectorVisibilityAction={inspectorVisibilityAction}
-        inspectorHeightAction={changeInspectorHeight}
+        changeInspectorVisibilityAction={changeInspectorVisibilityAction}
+        changeInspectorHeightAction={changeInspectorHeight}
       />
     </AnimatedInspector>
   );

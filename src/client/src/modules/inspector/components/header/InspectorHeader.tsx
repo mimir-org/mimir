@@ -1,6 +1,6 @@
 import InspectorTabs from "../tabs/InspectorTabs";
 import { MutableRefObject } from "react";
-import { BlobData, Project } from "../../../../models";
+import { Project } from "../../../../models";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
@@ -26,14 +26,13 @@ interface Props {
   activeTabIndex: number;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
-  inspectorVisibilityAction: ChangeInspectorVisibilityAction;
-  inspectorHeightAction: ChangeInspectorHeightAction;
-  inspectorTabAction?: ChangeInspectorTabAction;
+  changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
+  changeInspectorHeightAction: ChangeInspectorHeightAction;
+  changeInspectorTabAction?: ChangeInspectorTabAction;
   onToggle?: OnToogleHandler;
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
   simpleLikeItems?: SimpleLikeItem[];
-  icons?: BlobData[];
 }
 
 export const InspectorHeader = ({
@@ -45,10 +44,9 @@ export const InspectorHeader = ({
   activeTabIndex,
   inspectorRef,
   isInspectorOpen,
-  inspectorVisibilityAction,
-  inspectorHeightAction,
-  inspectorTabAction,
-  icons,
+  changeInspectorVisibilityAction,
+  changeInspectorHeightAction,
+  changeInspectorTabAction,
   attributeLikeItems,
   terminalLikeItems,
   simpleLikeItems,
@@ -62,12 +60,12 @@ export const InspectorHeader = ({
         attributeLikeItems={attributeLikeItems}
         terminalLikeItems={terminalLikeItems}
         simpleLikeItems={simpleLikeItems}
-        inspectorTabAction={inspectorTabAction}
+        changeInspectorTabAction={changeInspectorTabAction}
         inspectorRef={inspectorRef}
         isInspectorOpen={isInspectorOpen}
       />
 
-      {GetInspectorHeaderText(element, icons)}
+      {GetInspectorHeaderText(element)}
 
       <InspectorButtonRow
         nodes={project?.nodes}
@@ -76,8 +74,8 @@ export const InspectorHeader = ({
         username={username}
         open={open}
         inspectorRef={inspectorRef}
-        inspectorVisibilityAction={inspectorVisibilityAction}
-        inspectorHeightAction={inspectorHeightAction}
+        changeInspectorVisibilityAction={changeInspectorVisibilityAction}
+        changeInspectorHeightAction={changeInspectorHeightAction}
         dispatch={dispatch}
       />
     </InspectorHeaderContainer>

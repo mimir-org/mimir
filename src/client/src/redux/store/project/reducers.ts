@@ -2,6 +2,7 @@ import * as Types from "./types";
 import { Connector, Edge, Node, Simple } from "../../../models";
 import { IsAspectNode } from "../../../helpers/Aspects";
 import { IsFamily } from "../../../helpers/Family";
+import { CreateEmptyProject } from "../../../models/data/Project";
 import {
   getEdgeInterfaceAttributeMap,
   getEdgeInterfaceTerminalAttributeMap,
@@ -39,6 +40,11 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
   const edges = state.project?.edges;
 
   switch (action.type) {
+    case Types.CLOSE_PROJECT:
+      return {
+        ...state,
+        project: CreateEmptyProject(),
+      };
     case Types.SAVE_PROJECT:
       return {
         ...state,

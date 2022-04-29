@@ -121,6 +121,18 @@ export function changeSelectedProject(projectId: string): Types.ProjectActionTyp
   return { type: Types.CHANGE_SELECTED_PROJECT, payload: { projectId } };
 }
 
+export function closeProject(): Types.ProjectActionTypes {
+  return { type: Types.CLOSE_PROJECT, payload: null };
+}
+
+// export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
+//   return {
+//     type: Types.CHANGE_ALL_NODES,
+//     payload: { visible },
+//   };
+// }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeNodeValue(nodeId: string, propName: string, propValue: any): Types.ChangeNodePropValue {
   return { type: Types.CHANGE_NODE_PROP_VALUE, payload: { nodeId, propName, propValue } };
 }
@@ -224,8 +236,8 @@ export function importProjectAction(file: File, parserId: string): Types.Project
   return { type: Types.IMPORT_PROJECT, payload: { file, parserId } };
 }
 
-export function lockEntity(id: string, isLocked: boolean, type: EntityType): Types.LockEntity {
-  return { type: Types.LOCK_ENTITY, payload: { id, isLocked, type } };
+export function lockEntity(id: string, projectId: string, isLocked: boolean, type: EntityType): Types.LockEntity {
+  return { type: Types.LOCK_ENTITY, payload: { id, projectId, isLocked, type } };
 }
 
 export function setLockedNode(lock: LockCm): Types.SetLockNode {

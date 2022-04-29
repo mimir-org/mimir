@@ -1,12 +1,10 @@
 import { IsAspectNode } from "../../../../../helpers/Aspects";
-import { GetSelectedIcon } from "../../../../../typeEditor/helpers";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorHeader.styled";
 import { InspectorElement } from "../../../types";
-import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Symbol } from "../../../../../compLibrary/symbol";
-import { BlobData } from "../../../../../models";
 
-export const GetInspectorHeaderText = (element: InspectorElement, icons: BlobData[]) => {
+export const GetInspectorHeaderText = (element: InspectorElement) => {
   if (IsNode(element)) {
     return (
       <InspectorHeaderNodeInfo>
@@ -20,15 +18,6 @@ export const GetInspectorHeaderText = (element: InspectorElement, icons: BlobDat
     return (
       <InspectorHeaderNodeInfo>
         <InspectorHeaderNodeInfoText>{element?.id}</InspectorHeaderNodeInfoText>
-      </InspectorHeaderNodeInfo>
-    );
-  }
-
-  if (IsCreateLibraryType(element)) {
-    return (
-      <InspectorHeaderNodeInfo>
-        <Symbol base64={GetSelectedIcon(element, icons)?.data} text={element?.name} />
-        <InspectorHeaderNodeInfoText>{element?.name}</InspectorHeaderNodeInfoText>
       </InspectorHeaderNodeInfo>
     );
   }

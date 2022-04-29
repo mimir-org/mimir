@@ -11,6 +11,8 @@ export const OnConnectorClick = (conn: Connector, isInput: boolean, nodeId: stri
 
   if (!visible) return;
 
+  // TODO: what to do with edges for hidden connectors
+
   // const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
   // if (edge) dispatch(deleteEdge(edge.id));
 };

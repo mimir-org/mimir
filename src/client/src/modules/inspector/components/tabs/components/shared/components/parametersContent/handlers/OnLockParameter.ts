@@ -8,25 +8,33 @@ import { lockEntity, setLockedAttribute } from "../../../../../../../../../redux
 export const OnLockParameter = (
   inspectorParentElement: InspectorElement,
   attribute: Attribute,
+  projectId: string,
   isLocked: boolean,
   isLockedBy: string,
   dispatch: Dispatch
 ) => {
   if (IsUnsaved(inspectorParentElement)) {
-    handleLockOffline(attribute, isLocked, isLockedBy, dispatch);
+    handleLockOffline(attribute, projectId, isLocked, isLockedBy, dispatch);
   } else {
-    handleLockOnline(attribute, isLocked, dispatch);
+    handleLockOnline(attribute, projectId, isLocked, dispatch);
   }
 };
 
-const handleLockOnline = (attribute: Attribute, isLocked: boolean, dispatch: Dispatch) => {
-  dispatch(lockEntity(attribute.id, isLocked, EntityType.Attribute));
+const handleLockOnline = (attribute: Attribute, projectId: string, isLocked: boolean, dispatch: Dispatch) => {
+  dispatch(lockEntity(attribute.id, projectId, isLocked, EntityType.Attribute));
 };
 
-const handleLockOffline = (attribute: Attribute, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {
+const handleLockOffline = (
+  attribute: Attribute,
+  projectId: string,
+  isLocked: boolean,
+  isLockedBy: string,
+  dispatch: Dispatch
+) => {
   dispatch(
     setLockedAttribute({
       id: attribute.id,
+      projectId: projectId,
       isLocked: isLocked,
       isLockedStatusBy: isLockedBy,
       isLockedStatusDate: new Date().toISOString(),

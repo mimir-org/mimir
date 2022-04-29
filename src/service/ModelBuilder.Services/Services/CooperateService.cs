@@ -62,9 +62,9 @@ namespace Mb.Services.Services
             return Task.CompletedTask;
         }
 
-        public Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus)
+        public Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, string projectId)
         {
-            _webSocketRepository.SendLockData(lockCms, workerStatus);
+            _webSocketRepository.SendLockData(lockCms, projectId, workerStatus);
 
             return Task.CompletedTask;
         }

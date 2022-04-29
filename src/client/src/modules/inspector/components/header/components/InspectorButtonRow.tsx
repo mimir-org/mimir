@@ -27,8 +27,8 @@ interface Props {
   username: string;
   open: boolean;
   inspectorRef: MutableRefObject<HTMLDivElement>;
-  inspectorVisibilityAction: ChangeInspectorVisibilityAction;
-  inspectorHeightAction: (height: number) => Action;
+  changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
+  changeInspectorHeightAction: (height: number) => Action;
   dispatch: Dispatch;
 }
 
@@ -39,8 +39,8 @@ export const InspectorButtonRow = ({
   username,
   open,
   inspectorRef,
-  inspectorVisibilityAction,
-  inspectorHeightAction,
+  changeInspectorVisibilityAction,
+  changeInspectorHeightAction,
   dispatch,
 }: Props) => {
   const isLocked = IsCreateLibraryType(element) ? true : element?.isLocked;
@@ -72,7 +72,9 @@ export const InspectorButtonRow = ({
         <span tabIndex={isElementSelected ? -1 : 0}>
           <InspectorButtonRowToggleContainer
             disabled={!isElementSelected}
-            onClick={() => OnToggleClick(dispatch, open, inspectorRef, inspectorVisibilityAction, inspectorHeightAction)}
+            onClick={() =>
+              OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+            }
           >
             <InspectorButtonRowToggleTitle>{TextResources.INSPECTOR}</InspectorButtonRowToggleTitle>
             <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />

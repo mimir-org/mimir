@@ -64,9 +64,6 @@ namespace Mb.Models.Data
                    ToNodeIri == other.ToNodeIri &&
                    TransportId == other.TransportId &&
                    InterfaceId == other.InterfaceId &&
-                   IsLocked == other.IsLocked &&
-                   IsLockedStatusBy == other.IsLockedStatusBy &&
-                   Nullable.Equals(IsLockedStatusDate, other.IsLockedStatusDate) &&
                    MasterProjectId == other.MasterProjectId &&
                    MasterProjectIri == other.MasterProjectIri &&
                    ProjectId == other.ProjectId &&
@@ -95,9 +92,6 @@ namespace Mb.Models.Data
             hashCode.Add(ToNodeIri);
             hashCode.Add(TransportId);
             hashCode.Add(InterfaceId);
-            hashCode.Add(IsLocked);
-            hashCode.Add(IsLockedStatusBy);
-            hashCode.Add(IsLockedStatusDate);
             hashCode.Add(MasterProjectId);
             hashCode.Add(MasterProjectIri);
             hashCode.Add(ProjectId);
