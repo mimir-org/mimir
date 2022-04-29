@@ -146,8 +146,7 @@ namespace Mb.Services.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion,
-            bool updateMinorVersion) where T : class, new()
+        public Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new()
         {
             throw new System.NotImplementedException();
         }

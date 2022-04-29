@@ -29,7 +29,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.BlobId))
                 .ForMember(dest => dest.Simples, opt => opt.MapFrom(src => src.Simples))
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose {Id = src.PurposeId, Name = src.PurposeName}))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.PurposeName }))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))

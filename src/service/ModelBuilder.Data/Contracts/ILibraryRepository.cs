@@ -16,7 +16,7 @@ namespace Mb.Data.Contracts
         // Type Library
         Task<List<AttributeQualifierLibCm>> GetAttributeQualifiers();
         Task<List<AttributeSourceLibCm>> GetAttributeSources();
-        
+
         Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString = null);
         Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null);
         Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null);

@@ -44,7 +44,7 @@ namespace Mb.Data.Repositories
 
         public void Untrack()
         {
-            
+
         }
 
         public async Task<List<AttributeQualifierLibCm>> GetAttributeQualifiers()
@@ -81,7 +81,6 @@ namespace Mb.Data.Repositories
         public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
         {
             var data = new List<LibraryInterfaceItem>();
-            var a = "";
             return await Task.FromResult(data);
         }
 
@@ -98,7 +97,7 @@ namespace Mb.Data.Repositories
 
         public void ClearAllChangeTracker()
         {
-            
+
         }
 
         public async Task<IEnumerable<Rds>> GetRds()
