@@ -107,12 +107,12 @@ namespace Mb.Models.Extensions
 
             var key = item.Split('_').Last();
 
-            if (!key.Equals(item)) 
+            if (!key.Equals(item))
                 return key;
 
             var uri = new Uri(item);
             key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
-                
+
             if (key.ToUpper().StartsWith("ID"))
                 key = key.Remove(0, 2);
 
