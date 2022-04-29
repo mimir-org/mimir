@@ -113,7 +113,7 @@ namespace Mb.Services.Services
             }
 
             //Refresh cache
-            var key = lockAm.ProjectId.RemoveDomain();
+            var key = lockAm.ProjectId.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
             _cacheRepository.RefreshList.Enqueue((lockAm.ProjectId, null));
 

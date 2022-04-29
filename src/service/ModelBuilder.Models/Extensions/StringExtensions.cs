@@ -100,22 +100,21 @@ namespace Mb.Models.Extensions
             return Uri.IsWellFormedUriString(iri, UriKind.Absolute);
         }
 
-        public static string RemoveDomain(this string id, string iri = null)
+        public static string ResolveKey(this string item)
         {
-            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
+            if (string.IsNullOrWhiteSpace(item))
                 return null;
 
-            string key;
+            var key = item.Split('_').Last();
 
-            if (!string.IsNullOrWhiteSpace(id))
-                key = id.Split('_').Last();
-            else
-            {
-                var uri = new Uri(iri);
-                key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
-                if (key.StartsWith("ID"))
-                    key = key.Remove(0, 2);
-            }
+            if (!key.Equals(item)) 
+                return key;
+
+            var uri = new Uri(item);
+            key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
+                
+            if (key.ToUpper().StartsWith("ID"))
+                key = key.Remove(0, 2);
 
             return key;
         }
