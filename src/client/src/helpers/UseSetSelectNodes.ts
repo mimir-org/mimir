@@ -3,7 +3,7 @@ import { useCallback } from "react";
 
 export type SetFlowNodeFunction = (mimirNodesIds: string[]) => void;
 
-export const UseSetSelectNodes = (): [SetFlowNodeFunction] => {
+export const useSetSelectNodes = (): [SetFlowNodeFunction] => {
   const setSelectedNodes = useStore().addSelectedNodes;
   const flowNodes = useReactFlow().getNodes();
 

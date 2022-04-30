@@ -5,18 +5,20 @@ import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsNodeInTreeExplorerChecked } from "./helpers/IsNodeInTreeExplorerChecked";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
 import { Icon } from "../../../../../compLibrary/icon";
-import { GetAspectColor, UseSetSelectNodes } from "../../../../../helpers";
+import { GetAspectColor } from "../../../../../helpers";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetSelectedNodes } from "../../../../../helpers/Selected";
 import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";
+import { Dispatch } from "redux";
+import { memo } from "react";
 
 interface Props {
   node: Node;
-  nodes: Node[];
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
   indent?: number;
+  dispatch: Dispatch;
 }
 
 /**
@@ -24,9 +26,9 @@ interface Props {
  * @param interface
  * @returns an element with either an Aspect header or a checkbox.
  */
-export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExpanded, indent }: Props) => {
+const TreeAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent, dispatch }: Props) => {
   const selectedNodes = GetSelectedNodes();
-  const [setActiveNodeElement] = UseSetSelectNodes();
+  const isChecked = IsNodeInTreeExplorerChecked(node.id, selectedNodes);
 
   return (
     <AspectElementWrapper indent={GetIndentLevel(indent)}>
@@ -38,8 +40,8 @@ export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExp
       ) : (
         <CheckboxTreeExplorer
           color={GetAspectColor(node, AspectColorType.Selected)}
-          isChecked={IsNodeInTreeExplorerChecked(node.id, selectedNodes)}
-          onChange={() => OnSelectActiveNode(node, nodes, selectedNodes, setActiveNodeElement)}
+          isChecked={isChecked}
+          onChange={() => OnSelectActiveNode(node, isChecked, dispatch)}
           label={node.label}
         />
       )}
@@ -47,3 +49,5 @@ export const TreeAspectElement = ({ node, nodes, isLeaf, isExpanded, onToggleExp
     </AspectElementWrapper>
   );
 };
+
+export default memo(TreeAspectElement);

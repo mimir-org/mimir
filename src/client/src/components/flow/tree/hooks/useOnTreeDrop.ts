@@ -13,7 +13,6 @@ export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
-  selectedNode: Node;
   user: User;
   icons: BlobData[];
   library: LibraryState;
@@ -67,8 +66,9 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
  * Function to handle a node dropped from the Library.
  * @param OnDropParameters
  */
-function HandleNodeDrop({ event, project, user, icons, library, dispatch, selectedNode }: OnDropParameters) {
+function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
+  const selectedNode = project?.nodes?.find((n) => n.selected);
 
   // The dropped node automatically finds a parent
   const parentNode = SetParentNodeOnDrop(selectedNode, data, project.nodes);

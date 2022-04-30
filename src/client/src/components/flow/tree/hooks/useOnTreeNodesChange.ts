@@ -1,3 +1,4 @@
+import { MutableRefObject } from "react";
 import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
@@ -22,12 +23,12 @@ const useOnTreeNodesChange = (
   changes: NodeChange[],
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>,
   dispatch: Dispatch,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>
+  inspectorRef: MutableRefObject<HTMLDivElement>
 ) => {
   const verifiedFlowChanges = [] as NodeChange[];
   const verifiedMimirNodes = [] as Node[];
 
-  // Verify changes
+  // // Verify changes
   changes.forEach((change) => {
     if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, verifiedMimirNodes, nodes);
     verifiedFlowChanges.push(change);

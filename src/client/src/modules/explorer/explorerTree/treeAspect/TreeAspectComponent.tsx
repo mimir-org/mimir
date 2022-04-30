@@ -2,16 +2,16 @@ import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { VisibleComponent } from "../../shared/components/VisibleComponent";
 import { LockComponent } from "../../shared/components/LockComponent";
 import { Node } from "../../../../models";
-import { TreeAspectElement } from "./components/TreeAspectElement";
+import { TreeAspectElement } from "./components/";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { OnTreeExplorerChange } from "./handlers/OnTreeExplorerChange";
 import { TextResources } from "../../../../assets/text/TextResources";
+import { memo } from "react";
 
 interface Props {
   username: string;
   node: Node;
-  nodes: Node[];
   indent: number;
   isLeaf: boolean;
   isExpanded: boolean;
@@ -29,10 +29,9 @@ interface Props {
  * @param interface
  * @returns a TreeAspectElement.
  */
-export const TreeAspectComponent = ({
+const TreeAspectComponent = ({
   username,
   node,
-  nodes,
   isExpanded,
   indent,
   isLeaf,
@@ -66,12 +65,14 @@ export const TreeAspectComponent = ({
       />
       <TreeAspectElement
         node={node}
-        nodes={nodes}
         isExpanded={isExpanded}
         isLeaf={isLeaf}
         onToggleExpanded={onToggleExpanded}
         indent={indent}
+        dispatch={dispatch}
       />
     </AspectContainer>
   );
 };
+
+export default memo(TreeAspectComponent);

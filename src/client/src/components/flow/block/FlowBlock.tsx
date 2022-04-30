@@ -9,6 +9,7 @@ import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine"
 import { Size } from "../../../compLibrary/size/Size";
 import { CloseInspector, OnBlockSelectionChange } from "./handlers/OnBlockSelectionChange";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
+import { Project } from "../../../models";
 import ReactFlow, {
   Node as FlowNode,
   Edge as FlowEdge,
@@ -23,6 +24,7 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 interface Props {
+  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
 }
 
@@ -31,7 +33,7 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = ({ inspectorRef }: Props) => {
+const FlowBlock = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
@@ -45,7 +47,6 @@ const FlowBlock = ({ inspectorRef }: Props) => {
   const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const project = useAppSelector(selectors.projectSelector);
   const mimirNodes = project?.nodes ?? [];
   const mimirEdges = project?.edges ?? [];
   const selectedNode = mimirNodes.find((n) => n.selected);

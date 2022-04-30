@@ -5,8 +5,8 @@ import { AspectColorType, Connector, Node } from "../../../../../models";
 import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
-import { useAppDispatch } from "../../../../../redux/store";
 import { GetTreeNodeTerminal } from "./helpers/GetTreeNodeTerminal";
+import { useAppDispatch } from "../../../../../redux/store";
 
 /**
  * Component to display a node in TreeView.

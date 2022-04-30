@@ -1,5 +1,5 @@
-import { useReactFlow } from "react-flow-renderer";
 import red from "../redux/store";
+import { useReactFlow } from "react-flow-renderer";
 
 export const GetSelectedEdges = () => {
   return useReactFlow()
@@ -19,4 +19,8 @@ export const GetFlowNodes = () => {
 
 export const GetMimirNodes = () => {
   return red.store.getState().projectState?.project?.nodes;
+};
+
+export const GetMimirEdges = () => {
+  return red.store.getState().projectState?.project?.edges;
 };

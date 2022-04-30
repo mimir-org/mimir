@@ -79,9 +79,9 @@ export const Home = ({ dispatch }: Props) => {
       ) : (
         <>
           <ToolbarComponent />
-          {!isBlockView && <ExplorerTreeModule />}
+          {!isBlockView && <ExplorerTreeModule dispatch={dispatch} />}
           {isBlockView && <ExplorerBlockModule />}
-          <FlowModule inspectorRef={inspectorRef} flowView={flowView} />
+          <FlowModule project={project} inspectorRef={inspectorRef} flowView={flowView} />
           <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule nodes={project?.nodes} dispatch={dispatch} />
           {/* <TypeEditorComponent /> */}

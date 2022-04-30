@@ -10,6 +10,7 @@ import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../compLibrary/size/Size";
 import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
+import { Project } from "../../../models";
 import ReactFlow, {
   Background,
   Edge as FlowEdge,
@@ -24,6 +25,7 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 interface Props {
+  project: Project;
   inspectorRef: MutableRefObject<HTMLDivElement>;
 }
 
@@ -32,22 +34,21 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-export const FlowTree = ({ inspectorRef }: Props) => {
+export const FlowTree = ({ project, inspectorRef }: Props) => {
   const dispatch = useAppDispatch();
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [flowNodes, setNodes] = useNodesState([]);
-  const [flowEdges, setEdges] = useEdgesState([]);
+  const [flowNodes, setNodes] = useNodesState<FlowNode>([] as FlowNode[]);
+  const [flowEdges, setEdges] = useEdgesState<FlowEdge>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
-  const project = useAppSelector(selectors.projectSelector);
-  const mimirNodes = project?.nodes ?? [];
-  const mimirEdges = project?.edges ?? [];
-  const selectedNode = mimirNodes.find((n) => n.selected);
+  const mimirNodes = project?.nodes;
+  const mimirEdges = project?.edges;
+  // const selectedNode = project?.nodes?.find((n) => n.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -58,15 +59,16 @@ export const FlowTree = ({ inspectorRef }: Props) => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
+  const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, n: FlowNode) => {
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
+  }, []);
 
   const OnConnect = (connection: FlowEdge | Connection) => {
     return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, selectedNode, user, icons, library, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
@@ -74,20 +76,13 @@ export const FlowTree = ({ inspectorRef }: Props) => {
     HandleTreeNodeSelection(selectedItems, inspectorRef, dispatch);
   };
 
-  const OnNodesChange = useCallback(
-    (changes: NodeChange[]) => {
-      console.log("CHANGE NODE");
-      return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
-    },
-    [selectedNode]
-  );
+  const OnNodesChange = useCallback((changes: NodeChange[]) => {
+    return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
+  }, []);
 
-  const OnEdgesChange = useCallback(
-    (changes: EdgeChange[]) => {
-      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, dispatch, inspectorRef);
-    },
-    [selectedNode]
-  );
+  const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
+    return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, changes, setEdges, dispatch, inspectorRef);
+  }, []);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -98,21 +93,20 @@ export const FlowTree = ({ inspectorRef }: Props) => {
       setHasRendered(true);
       setIsFetching(false);
     }
-  }, [project]);
+  }, []);
 
   // Rebuild nodes
   useEffect(() => {
-    if (!project) return;
-    console.log("NODES");
-    setNodes(BuildFlowTreeNodes(mimirNodes));
-  }, [mimirNodes.length]);
+    if (project) {
+      setNodes(BuildFlowTreeNodes(mimirNodes));
+    }
+  }, [mimirNodes?.length]);
 
   // Rebuild edges
   useEffect(() => {
     if (!project) return;
-    console.log("EDGES");
     setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, animatedEdge));
-  }, [mimirEdges.length, animatedEdge]);
+  }, [mimirEdges?.length, animatedEdge]);
 
   // Show only partOf edges by default
   useEffect(() => {
@@ -122,7 +116,8 @@ export const FlowTree = ({ inspectorRef }: Props) => {
   }, []);
 
   return (
-    <div className="reactflow-wrapper" ref={flowWrapper}>
+    <>
+      <div className="reactflow-wrapper" ref={flowWrapper}></div>
       <SpinnerWrapper fetching={isFetching}>
         <Spinner />
       </SpinnerWrapper>
@@ -150,7 +145,7 @@ export const FlowTree = ({ inspectorRef }: Props) => {
       >
         <Background />
       </ReactFlow>
-    </div>
+    </>
   );
 };
 
