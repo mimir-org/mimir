@@ -65,7 +65,7 @@ namespace Mb.Data.Repositories
             if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
                 throw new ModelBuilderNullReferenceException("The ID and IRI can't both be null.");
 
-            var key = id.RemoveDomain(iri);
+            var key = !string.IsNullOrWhiteSpace(id) ? id.ResolveKey() : iri.ResolveKey();
 
             if (!string.IsNullOrWhiteSpace(key))
             {
@@ -164,7 +164,7 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            var key = updated.Id.RemoveDomain(updated.Iri);
+            var key = !string.IsNullOrWhiteSpace(updated.Id) ? updated.Id.ResolveKey() : updated.Iri.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
             _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Iri));
         }
@@ -252,7 +252,7 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            var key = project.Id.RemoveDomain(project.Iri);
+            var key = !string.IsNullOrWhiteSpace(project.Id) ? project.Id.ResolveKey() : project.Iri.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
         }
 
