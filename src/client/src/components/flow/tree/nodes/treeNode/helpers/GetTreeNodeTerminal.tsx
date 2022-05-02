@@ -16,7 +16,7 @@ import { GetMimirEdges } from "../../../../../../helpers/Selected";
  * @param dispatch
  * @param setIsHover
  * @param isHover
- * @returns a JSX element.
+ * @returns a terminal.
  */
 export const GetTreeNodeTerminal = (
   node: Node,
@@ -26,6 +26,7 @@ export const GetTreeNodeTerminal = (
   isHover: boolean
 ) => {
   const [type, pos] = GetHandleType(connector);
+
   if (!ShouldRenderTerminal(connector)) return null;
 
   return (

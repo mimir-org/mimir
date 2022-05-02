@@ -36,22 +36,13 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
 
   if (!data) return null;
 
-  const mouseNodeLeave = () => {
+  const mouseUp = () => setRenderTerminals(true);
+  const mouseDown = () => setRenderTerminals(false);
+  const mouseEnter = () => setIsHover(true);
+  const mouseLeave = () => {
     setTimer(true);
-    setRenderTerminals(false);
-  };
-
-  const mouseUp = () => {
+    setIsHover(false);
     setRenderTerminals(true);
-  };
-
-  const mouseDown = () => {
-    setRenderTerminals(false);
-  };
-
-  const mouseEnter = () => {
-    setIsHover(true);
-    setRenderTerminals(false);
   };
 
   return (
@@ -61,14 +52,13 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       selected={data.selected}
       visible={!data.hidden}
       onMouseEnter={() => mouseEnter()}
-      onMouseLeave={() => mouseNodeLeave()}
+      onMouseLeave={() => mouseLeave()}
       onMouseUp={() => mouseUp()}
       onMouseDown={() => mouseDown()}
     >
-      {renderTerminals &&
-        data.connectors?.map((conn) => {
-          return GetTerminal(conn);
-        })}
+      {data.connectors?.map((conn) => {
+        if (renderTerminals) return GetTerminal(conn);
+      })}
       <TreeLogoComponent node={data} />
     </TreeNodeBox>
   );
