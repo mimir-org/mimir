@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { Color } from "../../compLibrary/colors/Color";
 import { Size } from "../../compLibrary/size/Size";
 
-interface ToolBarBoxProps {
+interface ToolbarBoxProps {
   libOpen: boolean;
   explorerOpen: boolean;
 }
 
-export const ToolBarBox = styled.div<ToolBarBoxProps>`
+export const ToolbarBox = styled.div<ToolbarBoxProps>`
   display: flex;
   justify-content: space-between;
 

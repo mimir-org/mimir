@@ -1,6 +1,6 @@
 import { OnLockClick } from "../handlers/OnLockClick";
 import { OnDeleteClick } from "../handlers/OnDeleteClick";
-import { OnToggleClick } from "../handlers/OnToggleClick";
+import { OnToggleInspectorClick } from "../handlers/OnToggleInspectorClick";
 import { Action, Dispatch } from "redux";
 import { Icon } from "../../../../../compLibrary/icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
@@ -26,6 +26,7 @@ interface Props {
   element: InspectorElement;
   username: string;
   open: boolean;
+  tabsVisible: boolean;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
   changeInspectorHeightAction: (height: number) => Action;
@@ -38,6 +39,7 @@ export const InspectorButtonRow = ({
   element,
   username,
   open,
+  tabsVisible,
   inspectorRef,
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
@@ -46,14 +48,15 @@ export const InspectorButtonRow = ({
   const isLocked = IsCreateLibraryType(element) ? true : element?.isLocked;
   const isElementSelected = !!element;
   const selectedNode = nodes?.find((n) => n.selected);
-  const deleteDisabled = isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === selectedNode);
+  const deleteDisabled =
+    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element?.id === selectedNode?.id);
 
   let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;
   if (!isElementSelected) inspectorToggleText = TextResources.INACTIVE_PANEL;
 
   return (
     <InspectorButtonRowContainer>
-      {!IsCreateLibraryType(element) && isElementSelected && (
+      {!IsCreateLibraryType(element) && isElementSelected && tabsVisible && (
         <>
           <InspectorButton
             onClick={() => OnLockClick(element, !element.isLocked, username, dispatch)}
@@ -71,9 +74,9 @@ export const InspectorButtonRow = ({
       <Tooltip content={inspectorToggleText}>
         <span tabIndex={isElementSelected ? -1 : 0}>
           <InspectorButtonRowToggleContainer
-            disabled={!isElementSelected}
+            disabled={!isElementSelected || !tabsVisible}
             onClick={() =>
-              OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+              OnToggleInspectorClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
             }
           >
             <InspectorButtonRowToggleTitle>{TextResources.INSPECTOR}</InspectorButtonRowToggleTitle>

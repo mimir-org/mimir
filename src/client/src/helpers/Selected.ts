@@ -1,5 +1,5 @@
 import red from "../redux/store";
-import { useReactFlow } from "react-flow-renderer";
+import { Node as FlowNode, useReactFlow } from "react-flow-renderer";
 
 export const GetSelectedEdges = () => {
   return useReactFlow()
@@ -7,7 +7,7 @@ export const GetSelectedEdges = () => {
     .filter((edge) => edge.selected);
 };
 
-export const GetSelectedNodes = () => {
+export const GetSelectedFlowNodes = (): FlowNode[] => {
   return useReactFlow()
     .getNodes()
     .filter((n) => n.selected);

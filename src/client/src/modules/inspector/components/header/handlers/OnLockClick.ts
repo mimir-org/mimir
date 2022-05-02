@@ -19,7 +19,7 @@ const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLocke
   const lockObj: LockCm = {
     id: element.id,
     projectId: "",
-    isLocked: isLocked,
+    isLocked,
     isLockedStatusBy: isLockedBy,
     isLockedStatusDate: new Date().toISOString(),
     type: IsNode(element) ? EntityType.Node : EntityType.Edge,

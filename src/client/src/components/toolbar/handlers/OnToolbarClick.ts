@@ -31,8 +31,12 @@ export const OnBlockViewClick = (numberOfSelectedElements: number, viewportData:
   dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW as ViewType));
 };
 
-export const OnTreeViewClick = (dispatch: Dispatch) => {
-  RemoveActiveElements(dispatch);
+export const OnTreeViewClick = (setSelectedNodes: (nodeIds: string[]) => void, dispatch: Dispatch) => {
+  // When opening TreeView all selectedItems are removed
+  setSelectedNodes([]);
+  dispatch(removeActiveNode());
+  dispatch(removeActiveBlockNode());
+  dispatch(removeActiveEdge());
   dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
 };
 
@@ -50,10 +54,4 @@ function ValidateBlockViewClick(numberOfSelectedElements: number, dispatch: Disp
   }
 
   return true;
-}
-
-function RemoveActiveElements(dispatch: Dispatch) {
-  dispatch(removeActiveNode());
-  dispatch(removeActiveBlockNode());
-  dispatch(removeActiveEdge());
 }

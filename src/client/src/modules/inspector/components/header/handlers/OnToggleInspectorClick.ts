@@ -10,7 +10,7 @@ import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
  * @param changeInspectorVisibilityAction
  * @param changeInspectorHeightAction
  */
-export const OnToggleClick = (
+export const OnToggleInspectorClick = (
   dispatch: Dispatch,
   open: boolean,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,

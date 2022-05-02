@@ -106,10 +106,10 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     [selectedEdge]
   );
 
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
+  const OnSelectionChange = useCallback((selectedItems: OnSelectionChangeParams) => {
     if (!project) return;
     OnBlockSelectionChange(selectedItems, selectedNode, inspectorRef, dispatch);
-  };
+  }, []);
 
   // Build initial elements from Project
   useEffect(() => {
@@ -121,7 +121,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
       setHasRendered(true);
       setIsFetching(false);
     }
-  }, [project]);
+  }, []);
 
   // Rerender nodes
   useEffect(() => {

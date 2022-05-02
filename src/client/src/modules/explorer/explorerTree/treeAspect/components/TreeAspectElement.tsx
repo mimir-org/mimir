@@ -7,17 +7,16 @@ import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrappe
 import { Icon } from "../../../../../compLibrary/icon";
 import { GetAspectColor } from "../../../../../helpers";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
-import { GetSelectedNodes } from "../../../../../helpers/Selected";
 import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";
 import { Dispatch } from "redux";
-import { memo } from "react";
+import { GetSelectedFlowNodes } from "../../../../../helpers/Selected";
 
 interface Props {
   node: Node;
   isLeaf: boolean;
   isExpanded: boolean;
   onToggleExpanded: () => void;
-  indent?: number;
+  indent: number;
   dispatch: Dispatch;
 }
 
@@ -27,8 +26,9 @@ interface Props {
  * @returns an element with either an Aspect header or a checkbox.
  */
 const TreeAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent, dispatch }: Props) => {
-  const selectedNodes = GetSelectedNodes();
-  const isChecked = IsNodeInTreeExplorerChecked(node.id, selectedNodes);
+  const selectedFlowNodes = GetSelectedFlowNodes();
+  const isChecked = IsNodeInTreeExplorerChecked(node.id, selectedFlowNodes);
+  console.log("TREE ASPECT: ", selectedFlowNodes);
 
   return (
     <AspectElementWrapper indent={GetIndentLevel(indent)}>
@@ -50,4 +50,4 @@ const TreeAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent,
   );
 };
 
-export default memo(TreeAspectElement);
+export default TreeAspectElement;

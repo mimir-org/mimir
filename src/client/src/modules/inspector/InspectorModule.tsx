@@ -38,13 +38,11 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
   const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
-  const nodes = project?.nodes ?? [];
-  const edges = project?.edges ?? [];
-  const edge = edges.find((e) => e.selected);
-  const node = nodes.find((e) => (IsBlockView() ? e.blockSelected : e.selected));
+  const selectedEdge = project?.edges.find((e) => e.selected);
+  const selectedNode = project?.nodes.find((n) => (IsBlockView() ? n.blockSelected : n.selected));
 
   const resizePanelRef = useRef(null);
-  const element: InspectorElement = node || edge;
+  const element = (selectedNode || selectedEdge) as InspectorElement;
 
   useAutoMinimizeInspector(inspectorRef);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);

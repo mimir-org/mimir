@@ -48,7 +48,7 @@ export const FlowTree = ({ project, inspectorRef }: Props) => {
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const mimirNodes = project?.nodes;
   const mimirEdges = project?.edges;
-  // const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedNode = mimirNodes?.find((n) => n.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -73,12 +73,15 @@ export const FlowTree = ({ project, inspectorRef }: Props) => {
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
     if (!project) return;
-    HandleTreeNodeSelection(selectedItems, inspectorRef, dispatch);
+    return HandleTreeNodeSelection(selectedItems, inspectorRef, dispatch);
   };
 
-  const OnNodesChange = useCallback((changes: NodeChange[]) => {
-    return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
-  }, []);
+  const OnNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
+    },
+    [selectedNode]
+  );
 
   const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
     return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, changes, setEdges, dispatch, inspectorRef);
@@ -97,16 +100,15 @@ export const FlowTree = ({ project, inspectorRef }: Props) => {
 
   // Rebuild nodes
   useEffect(() => {
-    if (project) {
-      setNodes(BuildFlowTreeNodes(mimirNodes));
-    }
-  }, [mimirNodes?.length]);
+    if (!project) return;
+    setNodes(BuildFlowTreeNodes(mimirNodes));
+  }, [mimirNodes?.length, selectedNode]);
 
   // Rebuild edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, animatedEdge));
-  }, [mimirEdges?.length, animatedEdge]);
+  }, [mimirEdges, animatedEdge]);
 
   // Show only partOf edges by default
   useEffect(() => {

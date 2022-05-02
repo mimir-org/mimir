@@ -1,18 +1,13 @@
-import { Color } from "../../../../../compLibrary/colors/Color";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
+import { GetAspectColor } from "../../../../../helpers";
+import { AspectColorType, Node } from "../../../../../models";
 import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
 
-export const GetInspectorColor = (element: InspectorElement) => {
-  if (IsNode(element) || IsCreateLibraryType(element)) {
-    if (IsFunction(element)) return Color.LEMON_YELLOW_CRAYOLA;
-    if (IsLocation(element)) return Color.PINK_LACE;
-    if (IsProduct(element)) return Color.CELESTE;
-  } else if (IsEdge(element)) {
-    if (IsFunction(element.fromNode)) return Color.LEMON_YELLOW_CRAYOLA;
-    if (IsLocation(element.fromNode)) return Color.PINK_LACE;
-    if (IsProduct(element.fromNode)) return Color.CELESTE;
-  }
+export const GetInspectorColor = (element: InspectorElement, tabsVisible: boolean) => {
+  if (!tabsVisible) return null;
+
+  if (IsNode(element) || IsCreateLibraryType(element)) return GetAspectColor(element as Node, AspectColorType.Header);
+  if (IsEdge(element)) return GetAspectColor(element.fromNode, AspectColorType.Header);
 
   return null;
 };

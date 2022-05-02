@@ -27,7 +27,8 @@ export const FlowModuleContainer = styled.div`
   }
 
   .react-flow__pane {
-    height: 97% !important;
+    top: 40px; // Place the pane below the Header and ToolbarComponent
+    height: 93% !important; // Place the pane above the InspectorComponent
   }
 
   .react-flow__handle.connectable {

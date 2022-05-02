@@ -28,7 +28,7 @@ const useOnTreeNodesChange = (
   const verifiedFlowChanges = [] as NodeChange[];
   const verifiedMimirNodes = [] as Node[];
 
-  // // Verify changes
+  // Verify changes
   changes.forEach((change) => {
     if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, verifiedMimirNodes, nodes);
     verifiedFlowChanges.push(change);

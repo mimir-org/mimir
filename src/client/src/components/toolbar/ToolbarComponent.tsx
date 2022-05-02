@@ -3,19 +3,22 @@ import * as selectors from "../header/helpers/selectors";
 import * as handlers from "./handlers/OnToolbarClick";
 import { ToolbarElement } from "./components/ToolbarElement";
 import { VIEW_TYPE, ViewportData } from "../../models/project";
-import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
+import { ToolbarButtonGroup, ToolbarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { GetSelectedNodes } from "../../helpers/Selected";
-import { useReactFlow } from "react-flow-renderer";
+import { GetSelectedFlowNodes } from "../../helpers/Selected";
+import { useReactFlow, useStore } from "react-flow-renderer";
+import { memo } from "react";
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
  * @returns a menu with icons for different features.
  */
-export const ToolbarComponent = () => {
+const ToolbarComponent = () => {
   const dispatch = useAppDispatch();
   const { setViewport, setCenter } = useReactFlow();
+  const setSelectedNodes = useStore().addSelectedNodes;
+  const selectedFlowNodes = GetSelectedFlowNodes();
   const viewportData = { setViewport, setCenter } as ViewportData;
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
@@ -23,10 +26,10 @@ export const ToolbarComponent = () => {
   const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const selectedNodes = GetSelectedNodes();
+  // console.log("TOOLBAR: ", selectedFlowNodes);
 
   return (
-    <ToolBarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
+    <ToolbarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
       <ToolbarButtonGroup>
         {!isTreeView && (
           <>
@@ -50,14 +53,14 @@ export const ToolbarComponent = () => {
           active={isTreeView}
           label={TextResources.TREEVIEW}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
-          onClick={() => handlers.OnTreeViewClick(dispatch)}
+          onClick={() => handlers.OnTreeViewClick(setSelectedNodes, dispatch)}
           borderLeft
         />
         <ToolbarElement
           active={!isTreeView}
           label={TextResources.BLOCKVIEW}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => handlers.OnBlockViewClick(selectedNodes.length, viewportData, dispatch)}
+          onClick={() => handlers.OnBlockViewClick(selectedFlowNodes.length, viewportData, dispatch)}
           borderLeft
         />
         <ToolbarElement
@@ -68,6 +71,8 @@ export const ToolbarComponent = () => {
           borderLeft
         />
       </ToolbarButtonGroup>
-    </ToolBarBox>
+    </ToolbarBox>
   );
 };
+
+export default memo(ToolbarComponent);

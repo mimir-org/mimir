@@ -22,10 +22,10 @@ export const HandleTreeNodeSelection = (
   const selectedFlowNodes = selectedItems.nodes;
   const selectedFlowEdges = selectedItems.edges;
 
-  if (!selectedFlowNodes.length && !selectedFlowEdges.length) HandleNoSelect(inspectorRef, dispatch);
-  else if (selectedFlowNodes.length === 1) HandleNodeSelect(selectedFlowNodes[0], dispatch);
+  if (selectedFlowNodes.length === 1) HandleNodeSelect(selectedFlowNodes[0], dispatch);
   else if (selectedFlowEdges.length === 1) HandleEdgeSelect(selectedFlowEdges[0], dispatch);
-  else if (selectedFlowNodes.length > 1) HandleMultiSelect(dispatch);
+  else if (selectedFlowNodes.length > 1) HandleMultiSelect(inspectorRef, dispatch);
+  else if (!selectedFlowNodes.length && !selectedFlowEdges.length) HandleNoSelect(inspectorRef, dispatch);
 };
 
 function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
@@ -41,8 +41,9 @@ function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
   OpenInspector(dispatch);
 }
 
-function HandleMultiSelect(dispatch: Dispatch) {
-  dispatch(removeActiveNode());
+function HandleMultiSelect(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
+  CloseInspector(inspectorRef, dispatch);
+  // dispatch(removeActiveNode());
   dispatch(removeActiveEdge());
 }
 

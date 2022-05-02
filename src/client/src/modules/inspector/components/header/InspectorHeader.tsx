@@ -6,6 +6,7 @@ import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
 import { Dispatch } from "redux";
+import { GetSelectedFlowNodes } from "../../../../helpers/Selected";
 import {
   AttributeLikeItem,
   ChangeInspectorHeightAction,
@@ -51,21 +52,27 @@ export const InspectorHeader = ({
   terminalLikeItems,
   simpleLikeItems,
 }: Props) => {
-  return (
-    <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(element)}>
-      <InspectorTabs
-        project={project}
-        element={element}
-        activeTabIndex={activeTabIndex}
-        attributeLikeItems={attributeLikeItems}
-        terminalLikeItems={terminalLikeItems}
-        simpleLikeItems={simpleLikeItems}
-        changeInspectorTabAction={changeInspectorTabAction}
-        inspectorRef={inspectorRef}
-        isInspectorOpen={isInspectorOpen}
-      />
+  const selectedFlowNodes = GetSelectedFlowNodes();
+  const tabsVisible = selectedFlowNodes?.length < 2;
 
-      {GetInspectorHeaderText(element)}
+  return (
+    <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(element, tabsVisible)}>
+      {tabsVisible && (
+        <>
+          <InspectorTabs
+            project={project}
+            element={element}
+            activeTabIndex={activeTabIndex}
+            attributeLikeItems={attributeLikeItems}
+            terminalLikeItems={terminalLikeItems}
+            simpleLikeItems={simpleLikeItems}
+            changeInspectorTabAction={changeInspectorTabAction}
+            inspectorRef={inspectorRef}
+            isInspectorOpen={isInspectorOpen}
+          />
+          {GetInspectorHeaderText(element)}
+        </>
+      )}
 
       <InspectorButtonRow
         nodes={project?.nodes}
@@ -73,6 +80,7 @@ export const InspectorHeader = ({
         element={element}
         username={username}
         open={open}
+        tabsVisible={tabsVisible}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeightAction}

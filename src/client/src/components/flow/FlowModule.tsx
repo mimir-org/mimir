@@ -23,4 +23,5 @@ const FlowModule = ({ project, inspectorRef, flowView }: Props) => (
     {flowView === VIEW_TYPE.TYPE_EDITOR && <TypeEditorComponent />}
   </FlowModuleContainer>
 );
+
 export default FlowModule;

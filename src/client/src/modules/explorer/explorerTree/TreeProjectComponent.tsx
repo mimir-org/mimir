@@ -1,7 +1,7 @@
 import { Node } from "../../../models";
 import { TreeAspectComponent } from "./treeAspect/";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { usernameSelector, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
@@ -63,4 +63,4 @@ const TreeProjectComponent = ({ dispatch }: Props) => {
   );
 };
 
-export default memo(TreeProjectComponent);
+export default TreeProjectComponent;

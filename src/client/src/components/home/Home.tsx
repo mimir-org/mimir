@@ -20,7 +20,7 @@ import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
-import { ToolbarComponent } from "../toolbar/ToolbarComponent";
+import { ToolbarComponent } from "../toolbar/";
 import {
   fetchCollaborationPartners,
   fetchCombinedAttributeFilters,

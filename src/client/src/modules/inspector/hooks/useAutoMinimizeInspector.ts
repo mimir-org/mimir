@@ -5,7 +5,7 @@ import { changeInspectorHeight } from "../redux/inspectorSlice";
 import { setModuleVisibility } from "../../../redux/store/modules/modulesSlice";
 import { useAppDispatch } from "../../../redux/store";
 import { MODULE_TYPE } from "../../../models/project";
-import { GetSelectedNodes } from "../../../helpers/Selected";
+import { GetSelectedFlowNodes } from "../../../helpers/Selected";
 
 /**
  * Hook for minimizing inspector panel based on criteria within this hook.
@@ -13,14 +13,14 @@ import { GetSelectedNodes } from "../../../helpers/Selected";
  */
 export const useAutoMinimizeInspector = (inspectorRef: MutableRefObject<HTMLElement>) => {
   const dispatch = useAppDispatch();
-  const selectedNodes = GetSelectedNodes();
-  const numberOfSelectedElements = selectedNodes?.length;
+  const selectedNodes = GetSelectedFlowNodes();
+  const numberOfSelectedNodes = selectedNodes?.length;
 
   useEffect(() => {
-    const minimizeCriteria = [numberOfSelectedElements > 1];
+    const minimizeCriteria = [numberOfSelectedNodes > 1];
     minimizeCriteria.every(Boolean) && SetPanelHeight(inspectorRef, Size.MODULE_CLOSED);
 
     dispatch(changeInspectorHeight(Size.MODULE_CLOSED));
     dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: false, animate: true }));
-  }, [numberOfSelectedElements, inspectorRef, dispatch]);
+  }, [numberOfSelectedNodes, inspectorRef, dispatch]);
 };

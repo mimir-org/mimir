@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { GetTreeEdgeTypes, GetTreeNodeTypes } from "../components/flow/tree/helpers";
-import { GetSelectedEdges, GetSelectedNodes } from "./Selected";
+import { GetSelectedEdges, GetSelectedFlowNodes } from "./Selected";
 
 export const useSelectedFlowElements = () => {
-  const selectedNodes = GetSelectedNodes();
+  const selectedNodes = GetSelectedFlowNodes();
   const selectedEdges = GetSelectedEdges();
 
   const nodeIds = useMemo(() => selectedNodes?.filter((ele) => GetTreeNodeTypes[ele.type]).map((ele) => ele.id), [selectedNodes]);

@@ -7,7 +7,6 @@ import { Dispatch } from "redux";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { OnTreeExplorerChange } from "./handlers/OnTreeExplorerChange";
 import { TextResources } from "../../../../assets/text/TextResources";
-import { memo } from "react";
 
 interface Props {
   username: string;
@@ -75,4 +74,4 @@ const TreeAspectComponent = ({
   );
 };
 
-export default memo(TreeAspectComponent);
+export default TreeAspectComponent;
