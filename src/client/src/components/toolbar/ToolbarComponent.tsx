@@ -26,7 +26,6 @@ const ToolbarComponent = () => {
   const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  // console.log("TOOLBAR: ", selectedFlowNodes);
 
   return (
     <ToolbarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
@@ -53,15 +52,17 @@ const ToolbarComponent = () => {
           active={isTreeView}
           label={TextResources.TREEVIEW}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
-          onClick={() => handlers.OnTreeViewClick(setSelectedNodes, dispatch)}
+          onClick={() => handlers.OnTreeViewClick(setSelectedNodes, isTreeView, dispatch)}
           borderLeft
+          clickable={!isTreeView}
         />
         <ToolbarElement
           active={!isTreeView}
           label={TextResources.BLOCKVIEW}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => handlers.OnBlockViewClick(selectedFlowNodes.length, viewportData, dispatch)}
+          onClick={() => handlers.OnBlockViewClick(selectedFlowNodes.length, viewportData, isTreeView, dispatch)}
           borderLeft
+          clickable={isTreeView}
         />
         <ToolbarElement
           active={isVisualFilterOpen}

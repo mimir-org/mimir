@@ -1,5 +1,6 @@
-import { Node as FlowNode } from "react-flow-renderer";
+import { GetSelectedFlowNodes } from "../../../../../../helpers/Selected";
 
-export const IsNodeInTreeExplorerChecked = (nodeId: string, selectedFlowNodes: FlowNode[]) => {
+export const IsNodeInTreeExplorerChecked = (nodeId: string) => {
+  const selectedFlowNodes = GetSelectedFlowNodes();
   return selectedFlowNodes?.some((n) => n.id === nodeId);
 };
