@@ -3,7 +3,6 @@ using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Attribute = Mb.Models.Data.Attribute;
 
 namespace Mb.Models.Configurations

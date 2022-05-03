@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -44,11 +44,11 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetBlobData()
+        public async Task<IActionResult> GetBlobData()
         {
             try
             {
-                var blobs = _libraryService.GetBlobData().ToList();
+                var blobs = await _libraryService.GetBlobData();
                 return Ok(blobs);
             }
             catch (Exception e)

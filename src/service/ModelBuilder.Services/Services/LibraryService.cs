@@ -53,39 +53,39 @@ namespace Mb.Services.Services
         /// Get all node types
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString)
+        public async Task<List<LibraryNodeItem>> GetNodeTypes(string searchString)
         {
             var nodes = await _libraryRepository.GetNodeTypes();
+            if (!string.IsNullOrWhiteSpace(searchString))
+                nodes = nodes.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
 
-            return string.IsNullOrWhiteSpace(searchString)
-                ? nodes
-                : nodes.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower()));
+            return _mapper.Map<List<LibraryNodeItem>>(nodes);
         }
 
         /// <summary>
         /// Get all transport types
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString)
+        public async Task<List<LibraryTransportItem>> GetTransportTypes(string searchString)
         {
             var transports = await _libraryRepository.GetTransportTypes();
+            if (!string.IsNullOrWhiteSpace(searchString))
+                transports = transports.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
 
-            return string.IsNullOrWhiteSpace(searchString)
-                ? transports
-                : transports.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower()));
+            return _mapper.Map<List<LibraryTransportItem>>(transports);
         }
 
         /// <summary>
         /// Get all interface types
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString)
+        public async Task<List<LibraryInterfaceItem>> GetInterfaceTypes(string searchString)
         {
             var interfaces = await _libraryRepository.GetInterfaceTypes();
+            if (!string.IsNullOrWhiteSpace(searchString))
+                interfaces = interfaces.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower())).ToList();
 
-            return string.IsNullOrWhiteSpace(searchString)
-                ? interfaces
-                : interfaces.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower()));
+            return _mapper.Map<List<LibraryInterfaceItem>>(interfaces);
         }
 
         /// <summary>
@@ -160,17 +160,25 @@ namespace Mb.Services.Services
             if (aspect != Aspect.NotSet)
                 data = data.Where(x => (int) x.Aspect == (int) aspect).ToList();
 
-            return _mapper.Map<List<AttributeType>>(data); 
+            return _mapper.Map<List<AttributeType>>(data);
         }
 
-        public IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes()
+        public async Task<List<SimpleType>> GetSimpleTypes()
         {
-            throw new System.NotImplementedException();
+            var data = await _libraryRepository.GetSimpleTypes();
+            return _mapper.Map<List<SimpleType>>(data);
         }
 
-        public IEnumerable<BlobDataAm> GetBlobData()
+        public async Task<List<PredefinedAttributeAm>> GetPredefinedAttributes()
         {
-            throw new System.NotImplementedException();
+            var data = await _libraryRepository.GetPredefinedAttributes();
+            return _mapper.Map<List<PredefinedAttributeAm>>(data);
+        }
+
+        public async Task<List<BlobDataAm>> GetBlobData()
+        {
+            var data = await _libraryRepository.GetBlobData();
+            return _mapper.Map<List<BlobDataAm>>(data);
         }
 
         public Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false)
@@ -204,26 +212,6 @@ namespace Mb.Services.Services
         }
 
         public Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<SimpleType> CreateSimpleType(SimpleTypeAm simpleType)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task CreateSimpleTypes(ICollection<SimpleTypeAm> simpleTypes)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<SimpleType> GetSimpleTypes()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ClearAllChangeTracker()
         {
             throw new System.NotImplementedException();
         }

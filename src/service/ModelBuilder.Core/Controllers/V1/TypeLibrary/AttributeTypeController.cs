@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
@@ -68,11 +67,11 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(typeof(ICollection<PredefinedAttributeAm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetPredefinedAttributes()
+        public async Task<IActionResult> GetPredefinedAttributes()
         {
             try
             {
-                var data = _libraryService.GetPredefinedAttributes().ToList();
+                var data = await _libraryService.GetPredefinedAttributes();
                 return Ok(data);
             }
             catch (Exception e)

@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
@@ -20,7 +21,7 @@ namespace Mb.Core.Profiles.TypeLibrary
 
             CreateMap<SimpleLibCm, Simple>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
-            
+
             CreateMap<TransportLibCm, LibraryTransportItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
@@ -33,7 +34,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose{Id = src.PurposeId, Name = src.Name}))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.Name }))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
@@ -106,6 +107,62 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationSubTypes, opt => opt.MapFrom(src => src.Children));
+
+            CreateMap<BlobLibCm, BlobDataAm>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
+
+            CreateMap<TransportLibCm, LibraryTransportItem>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.StatusId, opt => opt.Ignore())
+                .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
+                .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.LibraryType, opt => opt.Ignore())
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.PurposeName }))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
+                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
+
+            CreateMap<InterfaceLibCm, LibraryInterfaceItem>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.StatusId, opt => opt.Ignore())
+                .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
+                .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
+                .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.LibraryType, opt => opt.Ignore())
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.PurposeName }))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
+                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
+
+            CreateMap<SimpleLibCm, SimpleType>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
+                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.Attributes))
+                .ForMember(dest => dest.NodeTypes, opt => opt.Ignore());
+
+            CreateMap<AttributePredefinedLibCm, PredefinedAttributeAm>()
+                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.Values, opt => opt.MapFrom(src => src.ValueStringList.ToDictionary(x => x, x => false)))
+                .ForMember(dest => dest.IsMultiSelect, opt => opt.MapFrom(src => src.IsMultiSelect));
         }
     }
 }

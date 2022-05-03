@@ -11,14 +11,13 @@ namespace Mb.Services.Contracts
     public interface ILibraryService
     {
         Task<Library> GetLibTypes(string searchString);
-        Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString);
-        Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString);
-        Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString);
+        Task<List<LibraryNodeItem>> GetNodeTypes(string searchString);
+        Task<List<LibraryTransportItem>> GetTransportTypes(string searchString);
+        Task<List<LibraryInterfaceItem>> GetInterfaceTypes(string searchString);
         Task<IEnumerable<LibrarySubProjectItem>> GetSubProjects(string searchString = null);
 
         // Type Editor
         // TODO: Should be removed after type editor client is finished
-
         Task<List<AttributeQualifier>> GetAttributeQualifiers();
         Task<List<AttributeSource>> GetAttributeSources();
         Task<List<AttributeFormat>> GetAttributeFormats();
@@ -26,13 +25,15 @@ namespace Mb.Services.Contracts
         Task<List<Purpose>> GetPurposes();
         Task<List<LocationTypeAm>> GetAspectAttributes();
         Task<List<Unit>> GetUnits();
-
         Task<List<AttributeType>> GetAttributeTypes(Aspect aspect);
-        IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes();
-        IEnumerable<BlobDataAm> GetBlobData();
-        //Task<ICollection<EnumBase>> GetAllOfType(EnumType enumType);
-        //IEnumerable<LocationTypeAm> GetAllLocationTypes();
+        Task<List<BlobDataAm>> GetBlobData();
+        Task<List<SimpleType>> GetSimpleTypes();
+        Task<List<PredefinedAttributeAm>> GetPredefinedAttributes();
+        Task<ICollection<Rds>> GetRds();
+        IEnumerable<TerminalType> GetTerminals();
+        Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
 
+        // Create, edit and delete
         Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false);
         IEnumerable<CreateLibraryType> GetAllTypes();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
@@ -40,12 +41,5 @@ namespace Mb.Services.Contracts
         Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new();
         Task DeleteType(string id);
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
-        Task<SimpleType> CreateSimpleType(SimpleTypeAm simpleType);
-        Task CreateSimpleTypes(ICollection<SimpleTypeAm> simpleTypes);
-        IEnumerable<SimpleType> GetSimpleTypes();
-        void ClearAllChangeTracker();
-        Task<ICollection<Rds>> GetRds();
-        IEnumerable<TerminalType> GetTerminals();
-        Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
     }
 }

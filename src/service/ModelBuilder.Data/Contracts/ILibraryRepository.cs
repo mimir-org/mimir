@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mb.Models.Application;
 using Mb.Models.Data.TypeEditor;
 using Mimirorg.TypeLibrary.Models.Client;
 
@@ -8,11 +7,6 @@ namespace Mb.Data.Contracts
 {
     public interface ILibraryRepository
     {
-        //T GetObjectById<T>(string id) where T : EnumBase;
-        //IEnumerable<T> GetObject<T>() where T : EnumBase;
-        //void Untrack();
-
-        // Type Library
         Task<List<AttributeQualifierLibCm>> GetAttributeQualifiers();
         Task<List<AttributeSourceLibCm>> GetAttributeSources();
         Task<List<AttributeFormatLibCm>> GetAttributeFormats();
@@ -21,12 +15,13 @@ namespace Mb.Data.Contracts
         Task<List<AttributeAspectLibCm>> GetAspectAttributes();
         Task<List<UnitLibCm>> GetUnits();
         Task<List<AttributeLibCm>> GetAttributes();
+        Task<List<BlobLibCm>> GetBlobData();
+        Task<List<SimpleLibCm>> GetSimpleTypes();
+        Task<List<AttributePredefinedLibCm>> GetPredefinedAttributes();
 
-        Task<IEnumerable<LibraryNodeItem>> GetNodeTypes();
-        Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null);
-        Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null);
-        Task<T> GetLibraryItem<T>(string id) where T : class, new();
-        void ClearAllChangeTracker();
-        Task<IEnumerable<Rds>> GetRds();
+        Task<List<NodeLibCm>> GetNodeTypes();
+        Task<List<InterfaceLibCm>> GetInterfaceTypes();
+        Task<List<TransportLibCm>> GetTransportTypes();
+        Task<List<Rds>> GetRds();
     }
 }

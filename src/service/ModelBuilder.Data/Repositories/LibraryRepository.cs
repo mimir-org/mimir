@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -108,43 +107,67 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes()
+        public async Task<List<BlobLibCm>> GetBlobData()
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryblob");
+            var data = await _cacheRepository.GetOrCreateAsync("Blob",
+                async () => await _httpRepository.GetData<List<BlobLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+
+            return data;
+        }
+
+        public async Task<List<SimpleLibCm>> GetSimpleTypes()
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("librarysimple");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.SimpleType.ToString(),
+                async () => await _httpRepository.GetData<List<SimpleLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+
+            return data;
+        }
+
+        public async Task<List<AttributePredefinedLibCm>> GetPredefinedAttributes()
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryattribute/predefined");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributePredefined.ToString(),
+                async () => await _httpRepository.GetData<List<AttributePredefinedLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+
+            return data;
+        }
+
+        public async Task<List<NodeLibCm>> GetNodeTypes()
         {
             // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl("libraryaspectnode");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AspectNode.ToString(),
                 async () => await _httpRepository.GetData<List<NodeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
-            return _mapper.Map<List<LibraryNodeItem>>(data);
+            return data;
         }
 
-        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString = null)
+        public async Task<List<InterfaceLibCm>> GetInterfaceTypes()
         {
-            var data = new List<LibraryInterfaceItem>();
-            return await Task.FromResult(data);
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryinterface");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Interface.ToString(),
+                async () => await _httpRepository.GetData<List<InterfaceLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+
+            return data;
         }
 
-        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString = null)
+        public async Task<List<TransportLibCm>> GetTransportTypes()
         {
             // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl("librarytransport");
-            var data = await _cacheRepository.GetOrCreateAsync("Transport",
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Transport.ToString(),
                 async () => await _httpRepository.GetData<List<TransportLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
-            return _mapper.Map<List<LibraryTransportItem>>(data);
+            return data;
         }
 
-        public Task<T> GetLibraryItem<T>(string id) where T : class, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ClearAllChangeTracker()
-        {
-
-        }
-
-        public async Task<IEnumerable<Rds>> GetRds()
+        public async Task<List<Rds>> GetRds()
         {
             // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl("libraryrds");

@@ -109,11 +109,11 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetSimpleTypes()
+        public async Task<IActionResult> GetSimpleTypes()
         {
             try
             {
-                var types = _libraryService.GetSimpleTypes().ToList();
+                var types = await _libraryService.GetSimpleTypes();
                 return Ok(types);
             }
             catch (Exception e)

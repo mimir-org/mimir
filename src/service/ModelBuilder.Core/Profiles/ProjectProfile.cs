@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Data.Extensions;
