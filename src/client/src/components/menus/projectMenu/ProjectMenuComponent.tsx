@@ -23,6 +23,8 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const activeMenu = useAppSelector(activeMenuSelector);
   const hasActiveProject = project && project.id;
   const [selectedNodeIds] = GetSelectedFlowElementsIds();
+  const hasSelectedNodes = selectedNodeIds?.length > 0;
+
   const menuRef = useRef(null);
 
   const projectMenuAction = (callback: () => void) => {
@@ -77,9 +79,9 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         /> */}
       <MenuElement
         text={TextResources.SUBPROJECT_SAVE}
-        icon={selectedNodeIds ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
+        icon={hasSelectedNodes ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
-        disabled={!selectedNodeIds}
+        disabled={!hasSelectedNodes}
       />
       <MenuElement
         text={TextResources.PROJECT_IMPORT_LIB_TYPES}
