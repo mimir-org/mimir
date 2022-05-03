@@ -146,9 +146,6 @@ namespace Mb.Models.Data
                    Label == other.Label &&
                    PositionX == other.PositionX &&
                    PositionY == other.PositionY &&
-                   IsLocked == other.IsLocked &&
-                   IsLockedStatusBy == other.IsLockedStatusBy &&
-                   Nullable.Equals(IsLockedStatusDate, other.IsLockedStatusDate) &&
                    PositionBlockX == other.PositionBlockX &&
                    PositionBlockY == other.PositionBlockY &&
                    Level == other.Level &&
@@ -192,9 +189,6 @@ namespace Mb.Models.Data
             hashCode.Add(Label);
             hashCode.Add(PositionX);
             hashCode.Add(PositionY);
-            hashCode.Add(IsLocked);
-            hashCode.Add(IsLockedStatusBy);
-            hashCode.Add(IsLockedStatusDate);
             hashCode.Add(PositionBlockX);
             hashCode.Add(PositionBlockY);
             hashCode.Add(Level);

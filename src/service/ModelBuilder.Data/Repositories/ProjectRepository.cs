@@ -12,10 +12,12 @@ using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Exceptions;
+using Mb.Models.Extensions;
 using Mb.Models.Records;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
+
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
 
@@ -34,7 +36,11 @@ namespace Mb.Data.Repositories
         private readonly ISimpleRepository _simpleRepository;
         private readonly ICacheRepository _cacheRepository;
 
-        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository, IEdgeRepository edgeRepository, IAttributeRepository attributeRepository, IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository, IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository, ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
+        public ProjectRepository(ModelBuilderDbContext dbContext, IMapper mapper, INodeRepository nodeRepository,
+            IEdgeRepository edgeRepository, IAttributeRepository attributeRepository,
+            IOptions<DatabaseConfiguration> databaseConfiguration, ITransportRepository transportRepository,
+            IConnectorRepository connectorRepository, IInterfaceRepository interfaceRepository,
+            ISimpleRepository simpleRepository, ICacheRepository cacheRepository) : base(dbContext)
         {
             _mapper = mapper;
             _nodeRepository = nodeRepository;
@@ -59,7 +65,7 @@ namespace Mb.Data.Repositories
             if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
                 throw new ModelBuilderNullReferenceException("The ID and IRI can't both be null.");
 
-            var key = GetKey(id, iri);
+            var key = !string.IsNullOrWhiteSpace(id) ? id.ResolveKey() : iri.ResolveKey();
 
             if (!string.IsNullOrWhiteSpace(key))
             {
@@ -109,7 +115,8 @@ namespace Mb.Data.Repositories
         public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
             if (original == null || updated == null || data == null)
-                throw new ModelBuilderNullReferenceException("Original project, updated project and project edit can't be null.");
+                throw new ModelBuilderNullReferenceException(
+                    "Original project, updated project and project edit can't be null.");
 
             var bulk = new BulkOperations();
 
@@ -157,9 +164,9 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            var key = GetKey(updated.Id, updated.Iri);
+            var key = !string.IsNullOrWhiteSpace(updated.Id) ? updated.Id.ResolveKey() : updated.Iri.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
-
+            _cacheRepository.RefreshList.Enqueue((updated.Id, updated.Iri));
         }
 
         /// <summary>
@@ -172,7 +179,7 @@ namespace Mb.Data.Repositories
         {
             var bulk = new BulkOperations();
 
-            using (var trans = new TransactionScope())
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
             {
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
@@ -206,6 +213,7 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
+            _cacheRepository.RefreshList.Enqueue((project.Id, project.Iri));
             return Task.CompletedTask;
         }
 
@@ -219,7 +227,7 @@ namespace Mb.Data.Repositories
         {
             var bulk = new BulkOperations();
 
-            using (var trans = new TransactionScope())
+            using (var trans = new TransactionScope(TransactionScopeOption.Required, new TimeSpan(0, 0, 10, 0)))
             {
                 using (var conn = new SqlConnection(_databaseConfiguration.ConnectionString))
                 {
@@ -244,7 +252,7 @@ namespace Mb.Data.Repositories
                 trans.Complete();
             }
 
-            var key = GetKey(project.Id, project.Iri);
+            var key = !string.IsNullOrWhiteSpace(project.Id) ? project.Id.ResolveKey() : project.Iri.ResolveKey();
             await _cacheRepository.DeleteCacheAsync(key);
         }
 
@@ -285,39 +293,12 @@ namespace Mb.Data.Repositories
                     .Include("Nodes.Simples.Attributes")
                     .AsNoTracking()
                     .AsSplitQuery()
-                    .OrderByDescending(x => x.Name)
                     .FirstOrDefault();
 
             if (project != null && project.Nodes.Any())
                 project.Nodes = project.Nodes.OrderBy(x => x.Order).ToList();
 
             return Task.FromResult(project);
-        }
-
-        /// <summary>
-        /// Get cache key based on id and iri
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="iri"></param>
-        /// <returns></returns>
-        private string GetKey(string id, string iri)
-        {
-            if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
-                return null;
-
-            string key;
-
-            if (!string.IsNullOrWhiteSpace(id))
-                key = id.Split('_').Last();
-            else
-            {
-                var uri = new Uri(iri);
-                key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
-                if (key.StartsWith("ID"))
-                    key = key.Remove(0, 2);
-            }
-
-            return key;
         }
 
         #endregion

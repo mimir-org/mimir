@@ -22,7 +22,7 @@ namespace ModelBuilder.Rdf.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ModelBuilder.Rdf.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ModelBuilder.Rdf.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace ModelBuilder.Rdf.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:allowedUnit.
         /// </summary>
-        internal static string AllowedUnit {
+        public static string AllowedUnit {
             get {
                 return ResourceManager.GetString("AllowedUnit", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:bidirectionalTerminal.
         /// </summary>
-        internal static string BidirectionalTerminal {
+        public static string BidirectionalTerminal {
             get {
                 return ResourceManager.GetString("BidirectionalTerminal", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:connectedTo.
         /// </summary>
-        internal static string ConnectedTo {
+        public static string ConnectedTo {
             get {
                 return ResourceManager.GetString("ConnectedTo", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:created.
         /// </summary>
-        internal static string Created {
+        public static string Created {
             get {
                 return ResourceManager.GetString("Created", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:createdBy.
         /// </summary>
-        internal static string CreatedBy {
+        public static string CreatedBy {
             get {
                 return ResourceManager.GetString("CreatedBy", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to xsd:dateTime.
         /// </summary>
-        internal static string DateTime {
+        public static string DateTime {
             get {
                 return ResourceManager.GetString("DateTime", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to lis:datumUOM.
         /// </summary>
-        internal static string DatumUOM {
+        public static string DatumUOM {
             get {
                 return ResourceManager.GetString("DatumUOM", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to lis:datumValue.
         /// </summary>
-        internal static string DatumValue {
+        public static string DatumValue {
             get {
                 return ResourceManager.GetString("DatumValue", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to rdfs:comment.
         /// </summary>
-        internal static string Desc {
+        public static string Desc {
             get {
                 return ResourceManager.GetString("Desc", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:domain.
         /// </summary>
-        internal static string Domain {
+        public static string Domain {
             get {
                 return ResourceManager.GetString("Domain", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to xsd:float.
         /// </summary>
-        internal static string Float {
+        public static string Float {
             get {
                 return ResourceManager.GetString("Float", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:FunctionalSystemBlock.
         /// </summary>
-        internal static string FSB {
+        public static string FSB {
             get {
                 return ResourceManager.GetString("FSB", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:FunctionalSystemBlockTerminal.
         /// </summary>
-        internal static string FSBTerminal {
+        public static string FSBTerminal {
             get {
                 return ResourceManager.GetString("FSBTerminal", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:fulfilledBy.
         /// </summary>
-        internal static string FulfilledBy {
+        public static string FulfilledBy {
             get {
                 return ResourceManager.GetString("FulfilledBy", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasAspect.
         /// </summary>
-        internal static string HasAspect {
+        public static string HasAspect {
             get {
                 return ResourceManager.GetString("HasAspect", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasBidirectionalTerminal.
         /// </summary>
-        internal static string HasBidirectionalTerminal {
+        public static string HasBidirectionalTerminal {
             get {
                 return ResourceManager.GetString("HasBidirectionalTerminal", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasBlockPosX.
         /// </summary>
-        internal static string HasBlockPositionX {
+        public static string HasBlockPositionX {
             get {
                 return ResourceManager.GetString("HasBlockPositionX", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasBlockPosY.
         /// </summary>
-        internal static string HasBlockPositionY {
+        public static string HasBlockPositionY {
             get {
                 return ResourceManager.GetString("HasBlockPositionY", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasChild.
         /// </summary>
-        internal static string HasChild {
+        public static string HasChild {
             get {
                 return ResourceManager.GetString("HasChild", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:color.
         /// </summary>
-        internal static string HasColor {
+        public static string HasColor {
             get {
                 return ResourceManager.GetString("HasColor", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:defaultFlowDirection.
         /// </summary>
-        internal static string HasDefaultFlowDirection {
+        public static string HasDefaultFlowDirection {
             get {
                 return ResourceManager.GetString("HasDefaultFlowDirection", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:discipline.
         /// </summary>
-        internal static string HasDiscipline {
+        public static string HasDiscipline {
             get {
                 return ResourceManager.GetString("HasDiscipline", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasHeight.
         /// </summary>
-        internal static string HasHeight {
+        public static string HasHeight {
             get {
                 return ResourceManager.GetString("HasHeight", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasInTerminal.
         /// </summary>
-        internal static string HasInputTerminal {
+        public static string HasInputTerminal {
             get {
                 return ResourceManager.GetString("HasInputTerminal", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasLocation.
         /// </summary>
-        internal static string HasLocation {
+        public static string HasLocation {
             get {
                 return ResourceManager.GetString("HasLocation", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasMasterProject.
         /// </summary>
-        internal static string HasMasterProject {
+        public static string HasMasterProject {
             get {
                 return ResourceManager.GetString("HasMasterProject", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasNodeFromConnection.
         /// </summary>
-        internal static string HasNodeFromConnection {
+        public static string HasNodeFromConnection {
             get {
                 return ResourceManager.GetString("HasNodeFromConnection", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasNodeToConnection.
         /// </summary>
-        internal static string HasNodeToConnection {
+        public static string HasNodeToConnection {
             get {
                 return ResourceManager.GetString("HasNodeToConnection", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasOutTerminal.
         /// </summary>
-        internal static string HasOutputTerminal {
+        public static string HasOutputTerminal {
             get {
                 return ResourceManager.GetString("HasOutputTerminal", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasOwner.
         /// </summary>
-        internal static string HasOwner {
+        public static string HasOwner {
             get {
                 return ResourceManager.GetString("HasOwner", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasParent.
         /// </summary>
-        internal static string HasParent {
+        public static string HasParent {
             get {
                 return ResourceManager.GetString("HasParent", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to lis:hasPhysicalQuantity.
         /// </summary>
-        internal static string HasPhysicalQuantity {
+        public static string HasPhysicalQuantity {
             get {
                 return ResourceManager.GetString("HasPhysicalQuantity", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasPosX.
         /// </summary>
-        internal static string HasPositionX {
+        public static string HasPositionX {
             get {
                 return ResourceManager.GetString("HasPositionX", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasPosY.
         /// </summary>
-        internal static string HasPositionY {
+        public static string HasPositionY {
             get {
                 return ResourceManager.GetString("HasPositionY", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasPurpose.
         /// </summary>
-        internal static string HasPurpose {
+        public static string HasPurpose {
             get {
                 return ResourceManager.GetString("HasPurpose", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:hasSimpleType.
         /// </summary>
-        internal static string HasSimpleType {
+        public static string HasSimpleType {
             get {
                 return ResourceManager.GetString("HasSimpleType", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:symbol.
         /// </summary>
-        internal static string HasSymbol {
+        public static string HasSymbol {
             get {
                 return ResourceManager.GetString("HasSymbol", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:hasWidth.
         /// </summary>
-        internal static string HasWidth {
+        public static string HasWidth {
             get {
                 return ResourceManager.GetString("HasWidth", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:inTerminal.
         /// </summary>
-        internal static string InputTerminal {
+        public static string InputTerminal {
             get {
                 return ResourceManager.GetString("InputTerminal", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to xsd:integer.
         /// </summary>
-        internal static string Integer {
+        public static string Integer {
             get {
                 return ResourceManager.GetString("Integer", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:IntegratedObject.
         /// </summary>
-        internal static string IntegratedObject {
+        public static string IntegratedObject {
             get {
                 return ResourceManager.GetString("IntegratedObject", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:Interface.
         /// </summary>
-        internal static string Interface {
+        public static string Interface {
             get {
                 return ResourceManager.GetString("Interface", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:isAspectOf.
         /// </summary>
-        internal static string IsAspectOf {
+        public static string IsAspectOf {
             get {
                 return ResourceManager.GetString("IsAspectOf", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:isRequired.
         /// </summary>
-        internal static string IsRequired {
+        public static string IsRequired {
             get {
                 return ResourceManager.GetString("IsRequired", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to rdfs:label.
         /// </summary>
-        internal static string Label {
+        public static string Label {
             get {
                 return ResourceManager.GetString("Label", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:lastUpdated.
         /// </summary>
-        internal static string LastUpdated {
+        public static string LastUpdated {
             get {
                 return ResourceManager.GetString("LastUpdated", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:type.
         /// </summary>
-        internal static string LibraryType {
+        public static string LibraryType {
             get {
                 return ResourceManager.GetString("LibraryType", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:rds.
         /// </summary>
-        internal static string MimirRds {
+        public static string MimirRds {
             get {
                 return ResourceManager.GetString("MimirRds", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:name.
         /// </summary>
-        internal static string Name {
+        public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:OutTerminal.
         /// </summary>
-        internal static string OutputTerminal {
+        public static string OutputTerminal {
             get {
                 return ResourceManager.GetString("OutputTerminal", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to lis:PhysicalQuantity.
         /// </summary>
-        internal static string PhysicalQuantity {
+        public static string PhysicalQuantity {
             get {
                 return ResourceManager.GetString("PhysicalQuantity", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:Project.
         /// </summary>
-        internal static string Project {
+        public static string Project {
             get {
                 return ResourceManager.GetString("Project", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to lis:qualityQuantifiedAs.
         /// </summary>
-        internal static string QualityQuantifiedAs {
+        public static string QualityQuantifiedAs {
             get {
                 return ResourceManager.GetString("QualityQuantifiedAs", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:rds.
         /// </summary>
-        internal static string RDS {
+        public static string RDS {
             get {
                 return ResourceManager.GetString("RDS", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to lis:ScalarQuantityDatum.
         /// </summary>
-        internal static string ScalarQuantityDatum {
+        public static string ScalarQuantityDatum {
             get {
                 return ResourceManager.GetString("ScalarQuantityDatum", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to lis:Scale.
         /// </summary>
-        internal static string Scale {
+        public static string Scale {
             get {
                 return ResourceManager.GetString("Scale", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:selectType.
         /// </summary>
-        internal static string SelectType {
+        public static string SelectType {
             get {
                 return ResourceManager.GetString("SelectType", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:selectValue.
         /// </summary>
-        internal static string SelectValue {
+        public static string SelectValue {
             get {
                 return ResourceManager.GetString("SelectValue", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:simpleType.
         /// </summary>
-        internal static string SimpleType {
+        public static string SimpleType {
             get {
                 return ResourceManager.GetString("SimpleType", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:streamTerminal.
         /// </summary>
-        internal static string StreamTerminal {
+        public static string StreamTerminal {
             get {
                 return ResourceManager.GetString("StreamTerminal", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to rdfs:subClassOf.
         /// </summary>
-        internal static string SubClassOf {
+        public static string SubClassOf {
             get {
                 return ResourceManager.GetString("SubClassOf", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:terminalDirection.
         /// </summary>
-        internal static string TerminalDirectionType {
+        public static string TerminalDirectionType {
             get {
                 return ResourceManager.GetString("TerminalDirectionType", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:Transmitter.
         /// </summary>
-        internal static string Transmitter {
+        public static string Transmitter {
             get {
                 return ResourceManager.GetString("Transmitter", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:Transport.
         /// </summary>
-        internal static string Transport {
+        public static string Transport {
             get {
                 return ResourceManager.GetString("Transport", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to rdf:type.
         /// </summary>
-        internal static string Type {
+        public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to imf:updatedBy.
         /// </summary>
-        internal static string UpdatedBy {
+        public static string UpdatedBy {
             get {
                 return ResourceManager.GetString("UpdatedBy", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to owl:versionInfo.
         /// </summary>
-        internal static string Version {
+        public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace ModelBuilder.Rdf.Properties {
         /// <summary>
         ///   Looks up a localized string similar to mimir:visibility.
         /// </summary>
-        internal static string Visibility {
+        public static string Visibility {
             get {
                 return ResourceManager.GetString("Visibility", resourceCulture);
             }

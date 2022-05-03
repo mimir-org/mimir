@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dotNetRDF" Version="2.7.2" />
+    <PackageReference Include="dotNetRDF" Version="2.7.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,7 +36,7 @@
     <EmbeddedResource Update="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

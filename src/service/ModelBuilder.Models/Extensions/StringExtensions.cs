@@ -100,6 +100,25 @@ namespace Mb.Models.Extensions
             return Uri.IsWellFormedUriString(iri, UriKind.Absolute);
         }
 
+        public static string ResolveKey(this string item)
+        {
+            if (string.IsNullOrWhiteSpace(item))
+                return null;
+
+            var key = item.Split('_').Last();
+
+            if (!key.Equals(item))
+                return key;
+
+            var uri = new Uri(item);
+            key = string.IsNullOrEmpty(uri.Fragment) ? uri.Segments.Last() : uri.Fragment[1..];
+
+            if (key.ToUpper().StartsWith("ID"))
+                key = key.Remove(0, 2);
+
+            return key;
+        }
+
         #region Private
 
         private static string IncrementVersion(string version, bool incrementMajor, bool incrementMinor, bool incrementCommit)

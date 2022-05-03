@@ -12,8 +12,6 @@ namespace Mb.Services.Contracts
         Task SendDataUpdates(ProjectEditData editData, string projectId);
         Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId);
         Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId);
-        Task SendLockAttributeUpdates(IReadOnlyCollection<(LockAttributeAm lockAttributeAm, WorkerStatus workerStatus)> map, string projectId);
-        Task SendLockNodeUpdates(IReadOnlyCollection<(LockNodeAm lockNodeAm, WorkerStatus workerStatus)> map, string projectId);
-        Task SendLockEdgeUpdates(IReadOnlyCollection<(LockEdgeAm lockEdgeAm, WorkerStatus workerStatus)> map, string projectId);
+        Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, string projectId);
     }
 }

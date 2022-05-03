@@ -11,14 +11,14 @@ namespace Mb.Models.Configurations
             builder.HasKey(x => x.Id);
             builder.ToTable("Project");
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
-            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired();
-            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
+            builder.Property(p => p.Iri).HasColumnName("Iri").IsRequired().HasMaxLength(255);
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired().HasMaxLength(63);
             builder.Property(p => p.IsSubProject).HasColumnName("IsSubProject").IsRequired();
-            builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
-            builder.Property(p => p.ProjectOwner).HasColumnName("ProjectOwner").IsRequired();
-            builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
-            builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
-            builder.Property(p => p.Version).HasColumnName("Version").IsRequired();
+            builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false).HasMaxLength(511);
+            builder.Property(p => p.ProjectOwner).HasColumnName("ProjectOwner").IsRequired().HasMaxLength(63);
+            builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired(false).HasMaxLength(63);
+            builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired(false);
+            builder.Property(p => p.Version).HasColumnName("Version").IsRequired().HasMaxLength(7);
 
             builder.HasMany(x => x.Nodes).WithOne(y => y.Project).HasForeignKey(y => y.ProjectId).IsRequired();
             builder.HasMany(x => x.Edges).WithOne(y => y.Project).HasForeignKey(y => y.ProjectId).IsRequired();

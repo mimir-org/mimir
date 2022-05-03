@@ -1,3 +1,4 @@
+using System.Web;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
@@ -25,8 +26,8 @@ namespace ModelBuilder.Rdf.Extensions
             switch (connector)
             {
                 case Terminal terminal:
-                    ontologyService.AssertNode($"eq:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
-                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"eq:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}");
+                    ontologyService.AssertNode($"mimir:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
+                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{terminal.TerminalCategoryId}-{HttpUtility.UrlEncode(terminal.Name)}");
                     ontologyService.AssertNode(terminal.Iri, Resources.Type, edge != null ? Resources.StreamTerminal : Resources.FSBTerminal);
                     ontologyService.AssertNode(terminal.Iri, Resources.Label, terminal.Name, true);
                     ontologyService.AssertNode(terminal.Iri, Resources.TerminalDirectionType, terminal.Type.ToString(), true);
@@ -71,6 +72,7 @@ namespace ModelBuilder.Rdf.Extensions
                                 else
                                     ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, edge.ToConnectorIri);
                             }
+
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -84,6 +86,7 @@ namespace ModelBuilder.Rdf.Extensions
                             attribute.AssertAttributeValue(ontologyService, projectData);
                         }
                     }
+
                     break;
             }
         }

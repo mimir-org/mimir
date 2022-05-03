@@ -9,8 +9,6 @@
 @prefix imf: <http://ns.imfid.org/imf#>.
 @prefix mimir: <http://ns.imfid.org/mimir#> .
 @prefix lis: <http://standards.iso.org/iso/15926/part14/> .
-@prefix sor: <https://rdf.equinor.com/sor/mimir/> .
-@prefix eq: <https://rdf.equinor.com/raw/mimir/> .
 
 # Industry specific
 @prefix rds: <http://example.com/rds>.

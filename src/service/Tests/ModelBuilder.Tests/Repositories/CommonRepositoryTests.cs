@@ -58,6 +58,7 @@ namespace ModelBuilder.Tests.Repositories
         [InlineData("equinor.com_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", "https://rdf.equinor.com/IDEE73A40C-CB90-4183-8126-A1AFB01CA3A9", "equinor.com_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", "https://rdf.equinor.com/IDEE73A40C-CB90-4183-8126-A1AFB01CA3A9")]
         [InlineData("", "https://rdf.equinor.com/IDEE73A40C-CB90-4183-8126-A1AFB01CA3A9", "equinor.com_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", "https://rdf.equinor.com/IDEE73A40C-CB90-4183-8126-A1AFB01CA3A9")]
         [InlineData("equinor.com_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", "", "equinor.com_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", "https://rdf.equinor.com/IDEE73A40C-CB90-4183-8126-A1AFB01CA3A9")]
+        [InlineData("aibel.com_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", "", "aibel.com_EE73A40C-CB90-4183-8126-A1AFB01CA3A9", "https://rdf.aibel.com/IDEE73A40C-CB90-4183-8126-A1AFB01CA3A9")]
         public void CreateOrUseIdAndIri_Returns_Correct_Ids(string fromId, string fromIri, string expectedId, string expectedIri)
         {
             var replacement = new ReplacementId { FromId = fromId, FromIri = fromIri };

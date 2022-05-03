@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
-import { CombinedAttribute, Project } from "../../../../../../../../../../models";
+import { projectIdSelector, useAppSelector } from "../../../../../../../../../../redux/store";
+import { CombinedAttribute } from "../../../../../../../../../../models";
 import { PARAMETER_ENTITY_WIDTH, Parameter } from "./components/Parameter";
 import { Body, Box } from "./ParameterRow.styled";
 import { Entity } from "./styled/Entity";
@@ -24,10 +25,8 @@ const FILTER_ENTITY_WIDTH = 191;
 
 interface Props {
   element: InspectorParametersElement;
-  elementIsLocked: boolean;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
-  project: Project;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   attributeLikeItems?: AttributeLikeItem[];
@@ -41,10 +40,8 @@ interface Props {
 
 export const ParameterRow = ({
   element,
-  elementIsLocked,
   inspectorParentElement,
   terminalParentElement,
-  project,
   combinations,
   selectedCombinations,
   attributeLikeItems,
@@ -55,6 +52,7 @@ export const ParameterRow = ({
   bodyColor,
   dispatch,
 }: Props) => {
+  const projectId = useAppSelector(projectIdSelector);
   const attributes = attributeLikeItems ?? GetAttributes(element);
   const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
 
@@ -101,17 +99,7 @@ export const ParameterRow = ({
               OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
             }
             onLock={(attribute, isLocked) =>
-              OnLockParameter(
-                element,
-                inspectorParentElement,
-                terminalParentElement,
-                elementIsLocked,
-                project,
-                attribute,
-                isLocked,
-                username,
-                dispatch
-              )
+              OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, dispatch)
             }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />
