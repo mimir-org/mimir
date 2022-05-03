@@ -11,7 +11,16 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  construct-sha_short:
+    runs-on: ubuntu-latest
+    outputs:
+      sha_short: ${{ steps.vars.sha_short }}
+    steps:
+      - name: Set short commit sha as output.
+        id: vars
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
   build-client:
+    needs: construct-short-sha
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
@@ -19,7 +28,7 @@ jobs:
         dev
         test
       build_args: |
-        MIMIR_VERSION=Dev-${{ github.sha }}
+        MIMIR_VERSION=Dev-${{ needs.construct-sha_short.outputs.sha_short }}
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
