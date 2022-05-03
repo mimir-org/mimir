@@ -7,7 +7,7 @@ import { ToolbarButtonGroup, ToolbarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
-import { useReactFlow, useStore } from "react-flow-renderer";
+import { useReactFlow, useStoreApi } from "react-flow-renderer";
 import { memo } from "react";
 
 /**
@@ -17,7 +17,7 @@ import { memo } from "react";
 const ToolbarComponent = () => {
   const dispatch = useAppDispatch();
   const { setViewport, setCenter } = useReactFlow();
-  const setSelectedNodes = useStore().addSelectedNodes;
+  const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
   const selectedFlowNodes = GetSelectedFlowNodes();
   const viewportData = { setViewport, setCenter } as ViewportData;
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);

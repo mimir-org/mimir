@@ -6,7 +6,7 @@ import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
 import { useRef } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { useSelectedFlowElements } from "../../../helpers";
+import { GetSelectedFlowElementsIds } from "../../../helpers/GetSelectedFlowElementsIds";
 import { activeMenuSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
 
 interface Props {
@@ -22,7 +22,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const project = useAppSelector(projectSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
   const hasActiveProject = project && project.id;
-  const [selectedNodeIds] = useSelectedFlowElements();
+  const [selectedNodeIds] = GetSelectedFlowElementsIds();
   const menuRef = useRef(null);
 
   const projectMenuAction = (callback: () => void) => {

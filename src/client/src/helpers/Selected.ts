@@ -1,7 +1,7 @@
 import red from "../redux/store";
-import { Node as FlowNode, useReactFlow } from "react-flow-renderer";
+import { Node as FlowNode, Edge as FlowEdge, useReactFlow } from "react-flow-renderer";
 
-export const GetSelectedEdges = () => {
+export const GetSelectedFlowEdges = (): FlowEdge[] => {
   return useReactFlow()
     .getEdges()
     .filter((edge) => edge.selected);
