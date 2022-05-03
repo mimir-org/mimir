@@ -18,6 +18,8 @@ jobs:
       tags: |
         demo
         demoaibel
+      build_args: |
+        MIMIR_VERSION=Demo-${{ github.sha }}
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final

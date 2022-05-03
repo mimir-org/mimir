@@ -18,6 +18,8 @@ jobs:
       tags: |
         dev
         test
+      build_args: |
+        MIMIR_VERSION=Dev-${{ github.sha }}
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final

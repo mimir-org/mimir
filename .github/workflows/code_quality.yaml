@@ -161,6 +161,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
         with:
           image: ${{ env.image_name }}
-          args: |
-            --file=src/service/Dockerfile
-            --severity-threshold=medium
+          args: --file=src/service/Dockerfile --severity-threshold=medium
