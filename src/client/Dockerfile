@@ -1,5 +1,4 @@
 FROM node:16.14.0-alpine AS base
-ARG MIMIR_VERSION=2.0
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json package-lock.json ./
@@ -20,7 +19,7 @@ FROM base as build
 RUN npm run build
 
 FROM nginx:1.21-alpine AS final
-ARG MIMIR_VERSION
+ARG MIMIR_VERSION=2.0
 ENV MIMIR_ENV_MIMIR_VERSION=$MIMIR_VERSION
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
