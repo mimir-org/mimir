@@ -16,6 +16,8 @@ jobs:
     with:
       repository: mimir-client
       tags: stage
+      build_args: |
+        MIMIR_VERSION=Staging-${{ github.sha }}
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
