@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Models;
-using Mimirorg.TypeLibrary.Models.Client;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -34,16 +33,14 @@ namespace Mb.Core.Controllers.V1
         private readonly ILogger<CommonController> _logger;
         private readonly ICommonService _commonService;
         private readonly IModuleService _moduleService;
-        private readonly ILibraryRepository _libRepository;
         private readonly ICacheRepository _cacheRepository;
         private readonly ApplicationSetting _applicationSetting;
 
-        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ILibraryRepository libRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
+        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
         {
             _commonService = commonService;
             _logger = logger;
             _moduleService = moduleService;
-            _libRepository = libRepository;
             _cacheRepository = cacheRepository;
             _applicationSetting = applicationSetting?.Value;
         }
@@ -177,30 +174,6 @@ namespace Mb.Core.Controllers.V1
 
                 await _cacheRepository.DeleteCacheAsync(cacheInvalidation.Key.ToString());
                 return NoContent();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
-
-        /// <summary>
-        /// Get attribute qualifiers
-        /// </summary>
-        /// <returns>No content</returns>
-        [HttpGet("qualifier")]
-        [ProducesResponseType(typeof(List<AttributeQualifierLibCm>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetQualifier()
-        {
-            try
-            {
-                var data = await _libRepository.GetAttributeQualifiers();
-                return Ok(data);
             }
             catch (Exception e)
             {

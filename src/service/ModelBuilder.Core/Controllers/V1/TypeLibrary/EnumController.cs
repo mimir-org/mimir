@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
@@ -45,12 +46,34 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetAllEnumsOfType([FromRoute] EnumType enumType)
+        public async Task<IActionResult> GetAllEnumsOfType([FromRoute] EnumType enumType)
         {
             try
             {
-                var data = _libraryService.GetAllOfType(enumType);
-                return Ok(data);
+                switch (enumType)
+                {
+                    case EnumType.AttributeCondition:
+                        return Ok(await _libraryService.GetAttributeConditions());
+                    case EnumType.AttributeFormat:
+                        return Ok(await _libraryService.GetAttributeFormats());
+                    case EnumType.AttributeQualifier:
+                        return Ok(await _libraryService.GetAttributeQualifiers());
+                    case EnumType.Unit:
+                        return Ok(await _libraryService.GetUnits());
+                    case EnumType.AttributeSource:
+                        return Ok(await _libraryService.GetAttributeSources());
+                    case EnumType.TerminalCategory:
+                        return Ok(null);
+                    case EnumType.BuildStatus:
+                        return Ok(null);
+                    case EnumType.PredefinedAttributeCategory:
+                        return Ok(null);
+                    case EnumType.Purpose:
+                        return Ok(await _libraryService.GetPurposes());
+                    default:
+                        ModelState.AddModelError(nameof(enumType), "Enum type is out of range");
+                        return BadRequest(ModelState);
+                }
             }
             catch (Exception e)
             {
@@ -69,11 +92,11 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetLocationTypes()
+        public async Task<IActionResult> GetLocationTypes()
         {
             try
             {
-                var data = _libraryService.GetAllLocationTypes().ToList();
+                var data = await _libraryService.GetAspectAttributes();
                 return Ok(data);
             }
             catch (Exception e)

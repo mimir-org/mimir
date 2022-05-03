@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
@@ -45,11 +46,11 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(typeof(ICollection<AttributeType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetAttributeTypes(Aspect aspect)
+        public async Task<IActionResult> GetAttributeTypes(Aspect aspect)
         {
             try
             {
-                var data = _libraryService.GetAttributeTypes(aspect).ToList();
+                var data = await _libraryService.GetAttributeTypes(aspect);
                 return Ok(data);
             }
             catch (Exception e)

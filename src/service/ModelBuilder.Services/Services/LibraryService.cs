@@ -33,9 +33,9 @@ namespace Mb.Services.Services
         /// <returns></returns>
         public async Task<Library> GetLibTypes(string searchString)
         {
-            var objectBlocks = await _libraryRepository.GetNodeTypes(searchString);
-            var transports = await _libraryRepository.GetTransportTypes(searchString);
-            var interfaces = await _libraryRepository.GetInterfaceTypes(searchString);
+            var objectBlocks = await GetNodeTypes(searchString);
+            var transports = await GetTransportTypes(searchString);
+            var interfaces = await GetInterfaceTypes(searchString);
             var subProjects = await GetSubProjects(searchString);
 
             var library = new Library
@@ -53,28 +53,39 @@ namespace Mb.Services.Services
         /// Get all node types
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes()
+        public async Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString)
         {
-            return await _libraryRepository.GetNodeTypes();
+            var nodes = await _libraryRepository.GetNodeTypes();
+
+            return string.IsNullOrWhiteSpace(searchString)
+                ? nodes
+                : nodes.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower()));
         }
 
         /// <summary>
         /// Get all transport types
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes()
+        public async Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString)
         {
-            return await _libraryRepository.GetTransportTypes();
+            var transports = await _libraryRepository.GetTransportTypes();
+
+            return string.IsNullOrWhiteSpace(searchString)
+                ? transports
+                : transports.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower()));
         }
 
         /// <summary>
         /// Get all interface types
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes()
+        public async Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString)
         {
-            return await _libraryRepository.GetInterfaceTypes();
+            var interfaces = await _libraryRepository.GetInterfaceTypes();
 
+            return string.IsNullOrWhiteSpace(searchString)
+                ? interfaces
+                : interfaces.Where(x => x.Name != null && x.Name.ToLower().Contains(searchString.ToLower()));
         }
 
         /// <summary>
@@ -101,9 +112,55 @@ namespace Mb.Services.Services
             return librarySubProjectItems;
         }
 
-        public IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect)
+        public async Task<List<AttributeQualifier>> GetAttributeQualifiers()
         {
-            throw new System.NotImplementedException();
+            var data = await _libraryRepository.GetAttributeQualifiers();
+            return _mapper.Map<List<AttributeQualifier>>(data);
+        }
+
+        public async Task<List<AttributeSource>> GetAttributeSources()
+        {
+            var data = await _libraryRepository.GetAttributeSources();
+            return _mapper.Map<List<AttributeSource>>(data);
+        }
+
+        public async Task<List<AttributeFormat>> GetAttributeFormats()
+        {
+            var data = await _libraryRepository.GetAttributeFormats();
+            return _mapper.Map<List<AttributeFormat>>(data);
+        }
+
+        public async Task<List<AttributeCondition>> GetAttributeConditions()
+        {
+            var data = await _libraryRepository.GetAttributeConditions();
+            return _mapper.Map<List<AttributeCondition>>(data);
+        }
+
+        public async Task<List<Purpose>> GetPurposes()
+        {
+            var data = await _libraryRepository.GetPurposes();
+            return _mapper.Map<List<Purpose>>(data);
+        }
+
+        public async Task<List<LocationTypeAm>> GetAspectAttributes()
+        {
+            var data = await _libraryRepository.GetAspectAttributes();
+            return _mapper.Map<List<LocationTypeAm>>(data);
+        }
+
+        public async Task<List<Unit>> GetUnits()
+        {
+            var data = await _libraryRepository.GetUnits();
+            return _mapper.Map<List<Unit>>(data);
+        }
+
+        public async Task<List<AttributeType>> GetAttributeTypes(Aspect aspect)
+        {
+            var data = await _libraryRepository.GetAttributes();
+            if (aspect != Aspect.NotSet)
+                data = data.Where(x => (int) x.Aspect == (int) aspect).ToList();
+
+            return _mapper.Map<List<AttributeType>>(data); 
         }
 
         public IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes()
@@ -112,16 +169,6 @@ namespace Mb.Services.Services
         }
 
         public IEnumerable<BlobDataAm> GetBlobData()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<EnumBase> GetAllOfType(EnumType enumType)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<LocationTypeAm> GetAllLocationTypes()
         {
             throw new System.NotImplementedException();
         }

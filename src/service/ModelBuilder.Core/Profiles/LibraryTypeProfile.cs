@@ -238,21 +238,15 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated));
         }
 
-        private async Task<List<Connector>> CreateConnectors(ICollection<NodeTypeTerminalType> nodeTypeTerminalTypes,
-            ResolutionContext context)
+        private async Task<List<Connector>> CreateConnectors(ICollection<NodeTypeTerminalType> nodeTypeTerminalTypes, ResolutionContext context)
         {
             //Run these in 6 parallel threads
-            var partOfInput = CreateRelationConnector(RelationType.PartOf, ConnectorType.Input, "Part of Relationship");
-            var partOfOutput =
-                CreateRelationConnector(RelationType.PartOf, ConnectorType.Output, "Part of Relationship");
-            var hasLocationInput =
-                CreateRelationConnector(RelationType.HasLocation, ConnectorType.Input, "Has Location");
-            var hasLocationOutput =
-                CreateRelationConnector(RelationType.HasLocation, ConnectorType.Output, "Has Location");
-            var fulfilledByInput =
-                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Input, "Fulfilled By");
-            var fulfilledByOutput =
-                CreateRelationConnector(RelationType.FulfilledBy, ConnectorType.Output, "Fulfilled By");
+            var partOfInput = RelationType.PartOf.CreateRelationConnector(ConnectorType.Input);
+            var partOfOutput = RelationType.PartOf.CreateRelationConnector(ConnectorType.Output);
+            var hasLocationInput = RelationType.HasLocation.CreateRelationConnector(ConnectorType.Input);
+            var hasLocationOutput = RelationType.HasLocation.CreateRelationConnector(ConnectorType.Output);
+            var fulfilledByInput = RelationType.FulfilledBy.CreateRelationConnector(ConnectorType.Input);
+            var fulfilledByOutput = RelationType.FulfilledBy.CreateRelationConnector(ConnectorType.Output);
 
             //Wait for all threads to finish
             await Task.WhenAll(partOfInput, partOfOutput, hasLocationInput, hasLocationOutput, fulfilledByInput,
@@ -285,22 +279,6 @@ namespace Mb.Core.Profiles
             });
 
             return connectors;
-        }
-
-        private async Task<Connector> CreateRelationConnector(RelationType relationType, ConnectorType connectorType,
-            string name)
-        {
-            var relation = new Relation
-            {
-                Id = Guid.NewGuid().ToString().ToLower(),
-                Name = name,
-                Type = connectorType,
-                RelationType = relationType,
-                NodeId = null,
-                Node = null
-            };
-
-            return await Task.Run(() => relation);
         }
 
         private static IEnumerable<NodeTypeTerminalType> CreateTerminalTypes(

@@ -133,7 +133,9 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new SimpleProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new NodeLibProfile());
-            cfg.AddProfile(new Generic());
+            cfg.AddProfile(new AttributeLibProfile());
+            cfg.AddProfile(new GenericProfile());
+            cfg.AddProfile(new TerminalLibProfile());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);

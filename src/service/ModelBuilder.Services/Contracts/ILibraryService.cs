@@ -11,19 +11,28 @@ namespace Mb.Services.Contracts
     public interface ILibraryService
     {
         Task<Library> GetLibTypes(string searchString);
-        Task<IEnumerable<LibraryNodeItem>> GetNodeTypes();
-        Task<IEnumerable<LibraryTransportItem>> GetTransportTypes();
-        Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes();
+        Task<IEnumerable<LibraryNodeItem>> GetNodeTypes(string searchString);
+        Task<IEnumerable<LibraryTransportItem>> GetTransportTypes(string searchString);
+        Task<IEnumerable<LibraryInterfaceItem>> GetInterfaceTypes(string searchString);
         Task<IEnumerable<LibrarySubProjectItem>> GetSubProjects(string searchString = null);
 
         // Type Editor
         // TODO: Should be removed after type editor client is finished
 
-        IEnumerable<AttributeType> GetAttributeTypes(Aspect aspect);
+        Task<List<AttributeQualifier>> GetAttributeQualifiers();
+        Task<List<AttributeSource>> GetAttributeSources();
+        Task<List<AttributeFormat>> GetAttributeFormats();
+        Task<List<AttributeCondition>> GetAttributeConditions();
+        Task<List<Purpose>> GetPurposes();
+        Task<List<LocationTypeAm>> GetAspectAttributes();
+        Task<List<Unit>> GetUnits();
+
+        Task<List<AttributeType>> GetAttributeTypes(Aspect aspect);
         IEnumerable<PredefinedAttributeAm> GetPredefinedAttributes();
         IEnumerable<BlobDataAm> GetBlobData();
-        IEnumerable<EnumBase> GetAllOfType(EnumType enumType);
-        IEnumerable<LocationTypeAm> GetAllLocationTypes();
+        //Task<ICollection<EnumBase>> GetAllOfType(EnumType enumType);
+        //IEnumerable<LocationTypeAm> GetAllLocationTypes();
+
         Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false);
         IEnumerable<CreateLibraryType> GetAllTypes();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
