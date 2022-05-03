@@ -18,7 +18,10 @@ jobs:
     steps:
       - name: Set short commit sha as output.
         id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        run: echo "::set-output name=sha_short::$(echo ${GITHUB_SHA} | cut -c1-8`)"
+
+      - name: Check outputs
+        run: echo ${{ steps.vars.outputs.sha_short }}
   build-client:
     needs: construct-sha-short
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
