@@ -1,4 +1,4 @@
-import config from "../../models/Config";
+import config from "../../../models/Config";
 
 /**
  * Matches version against expected release format.
@@ -7,6 +7,6 @@ import config from "../../models/Config";
  * @example 2.5.0 is valid. 2.4.3-rc1 is valid.
  * @example 2.0 is invalid. dev-aff1231 is invalid.
  */
-export const isReleaseVersion = (): boolean => {
+export const IsReleaseVersion = () => {
   return config.MIMIR_VERSION.match(/(?:\d\.){2}\d.*/) !== null;
 };
