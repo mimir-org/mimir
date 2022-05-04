@@ -7,7 +7,6 @@ import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
 import { OnTreeChange } from "./handlers/OnTreeChange";
 import { TextResources } from "../../../../assets/text/TextResources";
-
 interface Props {
   project: Project;
   username: string;
@@ -18,6 +17,8 @@ interface Props {
   isExpanded: boolean;
   isAncestorVisible: boolean;
   isVisible: boolean;
+  isNodeLocking: boolean;
+  setLockingNode: (node: Node) => void;
   onToggleExpanded: () => void;
   onSetVisibleElement: (visible: boolean, nodeId: string) => void;
   dispatch: Dispatch;
@@ -38,6 +39,8 @@ export const TreeAspectComponent = ({
   isLeaf,
   isAncestorVisible,
   isVisible,
+  isNodeLocking,
+  setLockingNode,
   onSetVisibleElement,
   onToggleExpanded,
   dispatch,
@@ -56,9 +59,10 @@ export const TreeAspectComponent = ({
     />
     <LockComponent
       isLocked={node.isLocked}
+      nodeIsLocking={isNodeLocking}
       unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
       lockText={TextResources.EXPLORER_LOCK_OBJECT}
-      onToggleLocked={() => OnLockNode(node, project, username, dispatch)}
+      onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
     />
     <TreeAspectElement
       node={node}

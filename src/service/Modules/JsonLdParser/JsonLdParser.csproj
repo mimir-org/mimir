@@ -5,18 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\imfframe.jsonld" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Data\imfframe.jsonld">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
-    <PackageReference Include="dotNetRDF" Version="2.7.2" />
+    <PackageReference Include="dotNetRDF" Version="2.7.4" />
   </ItemGroup>
 
   <ItemGroup>

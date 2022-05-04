@@ -125,10 +125,7 @@ namespace Mb.Models.Data
                    SimpleIri == other.SimpleIri &&
                    SelectValuesString == other.SelectValuesString &&
                    SelectType == other.SelectType &&
-                   Discipline == other.Discipline &&
-                   IsLocked == other.IsLocked &&
-                   IsLockedStatusBy == other.IsLockedStatusBy &&
-                   Nullable.Equals(IsLockedStatusDate, other.IsLockedStatusDate);
+                   Discipline == other.Discipline;
         }
 
         public override bool Equals(object obj)
@@ -167,9 +164,6 @@ namespace Mb.Models.Data
             hashCode.Add((int) SelectType);
             hashCode.Add((int) Discipline);
             hashCode.Add(Tags);
-            hashCode.Add(IsLocked);
-            hashCode.Add(IsLockedStatusBy);
-            hashCode.Add(IsLockedStatusDate);
             return hashCode.ToHashCode();
         }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Application;
 using Mb.Models.Data;
@@ -9,8 +10,6 @@ namespace Mb.Data.Contracts
     {
         Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus);
         Task SendEdgeData(Edge edge, string projectId, WorkerStatus workerStatus);
-        Task SendLockAttributeData(LockAttributeAm am, string projectId, WorkerStatus workerStatus);
-        Task SendLockNodeData(LockNodeAm am, string projectId, WorkerStatus workerStatus);
-        Task SendLockEdgeData(LockEdgeAm am, string projectId, WorkerStatus workerStatus);
+        Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus);
     }
 }

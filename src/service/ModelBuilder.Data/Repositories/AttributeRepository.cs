@@ -3,7 +3,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Configurations;
+using Mb.Models.Enums;
+using Mb.Models.Exceptions;
 using SqlBulkTools;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -134,14 +137,17 @@ namespace Mb.Data.Repositories
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
-        /// <param name="attributes">The attributes to be updated</param>
-        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes)
+        /// <param name="lockDms">The attributes to be updated</param>
+        public void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms)
         {
-            if (attributes == null || !attributes.Any())
+            if (lockDms == null || !lockDms.Any())
                 return;
 
-            bulk.Setup<Attribute>()
-                .ForCollection(attributes)
+            if (lockDms.Any(x => x.Type is not EntityType.Attribute))
+                throw new ModelBuilderBadRequestException("EntityType is not of type Attribute");
+
+            bulk.Setup<LockDm>()
+                .ForCollection(lockDms)
                 .WithTable("Attribute")
                 .AddColumn(x => x.Id)
                 .AddColumn(x => x.IsLocked)

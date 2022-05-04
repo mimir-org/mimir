@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dotNetRDF" Version="2.7.2" />
+    <PackageReference Include="dotNetRDF" Version="2.7.4" />
     <PackageReference Include="Mimirorg.Common" Version="0.5.2" />
     <PackageReference Include="Mimirorg.TypeLibrary" Version="0.5.2" />
   </ItemGroup>
@@ -38,7 +38,7 @@
     <EmbeddedResource Update="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 

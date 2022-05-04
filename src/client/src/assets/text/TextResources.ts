@@ -113,7 +113,7 @@ export const TextResources = {
   INSPECTOR_VALIDATE: "Validate",
 
   INSPECTOR_PARAMS_CLEAR_ALL: "Clear all Entities",
-  INSPECTOR_PARAMS_DEFAULT: "Show Default Entities",
+  INSPECTOR_PARAMS_DEFAULT: "Show all Entities",
   INSPECTOR_PARAMS_COMBINATION: "Select combinations",
   INSPECTOR_PARAMS_SELECT_ALL: "Select all",
 
@@ -186,6 +186,7 @@ export const TextResources = {
   PROJECT_CREATE: "Create project",
   PROJECT_SEARCH: "Search Projects",
   PROJECT_OPEN: "Open project",
+  PROJECT_CLOSE: "Close project",
   PROJECT_RECENT: "Recent projects",
   PROJECT_OWNER: "Owner",
   PROJECT_VERSION: "Version",
@@ -222,6 +223,7 @@ export const TextResources = {
   PROJECT_CONFIRM_SAVE: " Save this project before opening/starting another?",
   PROJECT_FILE_NAME: "File name",
 
+  PROJECT_CLOSE_LABEL: "Please make sure you save before you close the project",
   PROJECT_SUBPROJECT: "Save subproject",
   PROJECT_MENU_SELECT: "Please select an option from the project menu to continue using Mímir",
 
@@ -287,9 +289,6 @@ export const TextResources = {
   VALIDATION_OFFPAGE: "An off-page node can only be connected with a node of the same type.",
   VALIDATION_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",
-
-  // Version
-  MIMIR_VERSION: "Version 1.0",
 
   // Modal
   MODAL_CLOSE: "Close menu",

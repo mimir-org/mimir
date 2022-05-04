@@ -1,9 +1,10 @@
-import { StartPageBackground, StartPageImage } from "./StartPage.styled";
+import { StartPageBackground, StartPageImage, StartPageVersion } from "./StartPage.styled";
 import { MimirLogo } from "../../assets/icons/mimir";
 import { useAppDispatch } from "../../redux/store";
 import { MENU_TYPE } from "../../models/project";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { useEffectOnce } from "../../hooks/useEffectOnce";
+import config from "../../models/Config";
 
 /**
  * The start page for Mimir
@@ -19,6 +20,9 @@ export const StartPage = () => {
   return (
     <StartPageBackground>
       <StartPageImage src={MimirLogo} alt="mimir-logo" />
+      <StartPageVersion>
+        <div>Version {config.MIMIR_VERSION}</div>
+      </StartPageVersion>
     </StartPageBackground>
   );
 };

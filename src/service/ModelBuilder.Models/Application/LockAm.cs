@@ -1,9 +1,9 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Enums;
 
 namespace Mb.Models.Application
 {
-    public class LockNodeAm
+    public class LockAm
     {
         [Required]
         public string Id { get; set; }
@@ -14,7 +14,8 @@ namespace Mb.Models.Application
         [Required]
         public bool IsLocked { get; set; }
 
-        public string IsLockedStatusBy { get; set; }
-        public DateTime? IsLockedStatusDate { get; set; }
+        [Required]
+        [EnumDataType(typeof(EntityType))]
+        public EntityType Type { get; set; }
     }
 }

@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Mb.Models.Abstract;
+using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using SqlBulkTools;
 
 namespace Mb.Data.Contracts
 {
-    public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext, Mb.Models.Data.Attribute>
+    public interface IAttributeRepository : IGenericRepository<ModelBuilderDbContext, Attribute>
     {
         /// <summary>
         /// Bulk attributes upsert
@@ -38,7 +39,7 @@ namespace Mb.Data.Contracts
         /// </summary>
         /// <param name="bulk">Bulk operations</param>
         /// <param name="conn">Sql Connection</param>
-        /// <param name="attributes">The attributes to be updated</param>
-        void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<Attribute> attributes);
+        /// <param name="lockDms">The attributes to be updated</param>
+        void BulkUpdateLockStatus(BulkOperations bulk, SqlConnection conn, List<LockDm> lockDms);
     }
 }
