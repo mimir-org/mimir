@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../redux/store";
 import { MENU_TYPE } from "../../models/project";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { useEffectOnce } from "../../hooks/useEffectOnce";
+import { isReleaseVersion } from "./helpers";
 import config from "../../models/Config";
 
 /**
@@ -13,6 +14,8 @@ import config from "../../models/Config";
 export const StartPage = () => {
   const dispatch = useAppDispatch();
 
+  const version = isReleaseVersion() ? `Version ${config.MIMIR_VERSION} ` : `Development Version ${config.MIMIR_VERSION}`;
+
   useEffectOnce(() => {
     dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
   });
@@ -21,7 +24,7 @@ export const StartPage = () => {
     <StartPageBackground>
       <StartPageImage src={MimirLogo} alt="mimir-logo" />
       <StartPageVersion>
-        <div>Version {config.MIMIR_VERSION}</div>
+        <div>{version}</div>
       </StartPageVersion>
     </StartPageBackground>
   );
