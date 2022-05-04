@@ -10,6 +10,7 @@ const config: MimirEnv = {
   TENANT_ID: assignValue("TENANT_ID"),
   APP_INSIGHTS_CONNECTION_STRING: assignValue("APP_INSIGHTS_CONNECTION_STRING"),
   COMPANY: assignValue("COMPANY"),
+  MIMIR_VERSION: assignValue("MIMIR_VERSION"),
 };
 
 export default config;

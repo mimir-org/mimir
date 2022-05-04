@@ -284,9 +284,6 @@ export const TextResources = {
   VALIDATION_CONNECTION: "A terminal can only have one connection.",
   VALIDATION_RELATIONS_CONNECTORS: "A connection between these nodes already exists.",
 
-  // Version
-  MIMIR_VERSION: "Version 1.0",
-
   // Modal
   MODAL_CLOSE: "Close menu",
 
