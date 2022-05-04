@@ -30,7 +30,7 @@ namespace Mb.Services.Contracts
         Task<List<SimpleType>> GetSimpleTypes();
         Task<List<PredefinedAttributeAm>> GetPredefinedAttributes();
         Task<ICollection<Rds>> GetRds();
-        IEnumerable<TerminalType> GetTerminals();
+        Task<List<TerminalType>> GetTerminals();
         Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
 
         // Create, edit and delete
@@ -41,7 +41,7 @@ namespace Mb.Services.Contracts
         Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false);
         IEnumerable<CreateLibraryType> GetAllTypes();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
-        
+
         Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new();
         Task DeleteType(string id);
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);

@@ -202,7 +202,7 @@ namespace Mb.Services.Services
             throw new System.NotImplementedException();
         }
 
-        
+
 
         public Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new()
         {
@@ -222,17 +222,24 @@ namespace Mb.Services.Services
         public async Task<ICollection<Rds>> GetRds()
         {
             var rds = await _libraryRepository.GetRds();
-            return rds.ToList();
+            return _mapper.Map<List<Rds>>(rds);
         }
 
-        public IEnumerable<TerminalType> GetTerminals()
+        public async Task<List<TerminalType>> GetTerminals()
         {
-            throw new System.NotImplementedException();
+            var terminals = await _libraryRepository.GetTerminalTypes();
+            return _mapper.Map<List<TerminalType>>(terminals);
         }
 
         public Dictionary<string, List<TerminalType>> GetTerminalsByCategory()
         {
-            throw new System.NotImplementedException();
+            var terminals = GetTerminals().Result;
+
+            return terminals
+                .Where(x => x.TerminalCategory != null)
+                .AsEnumerable()
+                .GroupBy(x => x.TerminalCategory.Name)
+                .ToDictionary(g => g.Key, g => g.ToList());
         }
 
         public async Task<LibraryNodeItem> CreateNodeType(CreateLibraryType createLibraryType)

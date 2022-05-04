@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Data.TypeEditor;
 using Mb.Models.Settings;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Enums;
@@ -17,13 +15,11 @@ namespace Mb.Data.Repositories
         private readonly IHttpRepository _httpRepository;
         private readonly ICacheRepository _cacheRepository;
         private readonly ApplicationSetting _applicationSetting;
-        private readonly IMapper _mapper;
 
-        public LibraryRepository(IHttpRepository httpRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting, IMapper mapper)
+        public LibraryRepository(IHttpRepository httpRepository, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
         {
             _httpRepository = httpRepository;
             _cacheRepository = cacheRepository;
-            _mapper = mapper;
             _applicationSetting = applicationSetting?.Value;
         }
 
@@ -111,7 +107,7 @@ namespace Mb.Data.Repositories
         {
             // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl("libraryblob");
-            var data = await _cacheRepository.GetOrCreateAsync("Blob",
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Blob.ToString(),
                 async () => await _httpRepository.GetData<List<BlobLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
             return data;
@@ -167,15 +163,23 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public async Task<List<Rds>> GetRds()
+        public async Task<List<RdsLibCm>> GetRds()
         {
             // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl("libraryrds");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Rds.ToString(),
                 async () => await _httpRepository.GetData<List<RdsLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
-            var rds = _mapper.Map<List<Rds>>(data);
-            return rds;
+            return data;
+        }
+
+        public async Task<List<TerminalLibCm>> GetTerminalTypes()
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryterminal");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Terminal.ToString(),
+                async () => await _httpRepository.GetData<List<TerminalLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+            return data;
         }
 
         public async Task<NodeLibCm> CreateNodeType(NodeLibAm node)

@@ -16,15 +16,15 @@ namespace Mb.Core.Profiles.TypeLibrary
         {
             CreateMap<NodeLibCm, LibraryNodeItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsCode))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.StatusId, opt => opt.Ignore())
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
-                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.BlobId))
+                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.Symbol))
                 .ForMember(dest => dest.Simples, opt => opt.MapFrom(src => src.Simples))
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.PurposeName }))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = null, Name = src.PurposeName })) // TODO: Fix id and discipline
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))

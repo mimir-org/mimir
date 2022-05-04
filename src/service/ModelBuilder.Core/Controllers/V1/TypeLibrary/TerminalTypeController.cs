@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Mb.Models.Data.TypeEditor;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -41,11 +42,11 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         [ProducesResponseType(typeof(ICollection<TerminalType>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetTerminalTypes()
+        public async Task<IActionResult> GetTerminalTypes()
         {
             try
             {
-                var data = _libraryService.GetTerminals().ToList();
+                var data = await _libraryService.GetTerminals();
                 return Ok(data);
             }
             catch (Exception e)
