@@ -118,8 +118,7 @@ export const FlowTree = ({ project, inspectorRef }: Props) => {
   }, []);
 
   return (
-    <>
-      <div className="reactflow-wrapper" ref={flowWrapper}></div>
+    <div className="reactflow-wrapper" ref={flowWrapper}>
       <SpinnerWrapper fetching={isFetching}>
         <Spinner />
       </SpinnerWrapper>
@@ -147,7 +146,7 @@ export const FlowTree = ({ project, inspectorRef }: Props) => {
       >
         <Background />
       </ReactFlow>
-    </>
+    </div>
   );
 };
 

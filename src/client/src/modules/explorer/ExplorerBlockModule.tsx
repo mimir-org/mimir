@@ -9,13 +9,12 @@ import { Icon } from "../../compLibrary/icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./shared/styled/ExplorerModule.styled";
 import { useAppSelector, explorerSelector, useAppDispatch } from "../../redux/store";
-import { memo } from "react";
 
 /**
  * Component for the Explorer Module in Mimir's BlockView.
  * @returns a module where all nodes in Mimir are listed.
  */
-const ExplorerBlockModule = () => {
+export const ExplorerBlockModule = () => {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(explorerSelector);
   const type = MODULE_TYPE.EXPLORER;
@@ -35,5 +34,3 @@ const ExplorerBlockModule = () => {
     </AnimatedModule>
   );
 };
-
-export default memo(ExplorerBlockModule);

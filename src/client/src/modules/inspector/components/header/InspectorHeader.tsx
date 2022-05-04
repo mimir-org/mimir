@@ -1,4 +1,5 @@
-import InspectorTabs from "../tabs/InspectorTabs";
+import { Node as FlowNode } from "react-flow-renderer";
+import { InspectorTabs } from "../tabs/InspectorTabs";
 import { MutableRefObject } from "react";
 import { Project } from "../../../../models";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
@@ -6,7 +7,6 @@ import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
 import { Dispatch } from "redux";
-import { GetSelectedFlowNodes } from "../../../../helpers/Selected";
 import {
   AttributeLikeItem,
   ChangeInspectorHeightAction,
@@ -24,6 +24,7 @@ interface Props {
   username: string;
   dispatch: Dispatch;
   open: boolean;
+  isBlockView: boolean;
   activeTabIndex: number;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
@@ -34,6 +35,7 @@ interface Props {
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
   simpleLikeItems?: SimpleLikeItem[];
+  selectedFlowNodes: FlowNode[];
 }
 
 export const InspectorHeader = ({
@@ -42,6 +44,7 @@ export const InspectorHeader = ({
   username,
   dispatch,
   open,
+  isBlockView,
   activeTabIndex,
   inspectorRef,
   isInspectorOpen,
@@ -51,9 +54,9 @@ export const InspectorHeader = ({
   attributeLikeItems,
   terminalLikeItems,
   simpleLikeItems,
+  selectedFlowNodes,
 }: Props) => {
-  const selectedFlowNodes = GetSelectedFlowNodes();
-  const tabsVisible = selectedFlowNodes?.length < 2;
+  const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
 
   return (
     <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(element, tabsVisible)}>

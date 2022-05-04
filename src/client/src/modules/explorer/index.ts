@@ -1,2 +1,2 @@
-export { default as ExplorerTreeModule } from "./ExplorerTreeModule";
-export { default as ExplorerBlockModule } from "./ExplorerBlockModule";
+export { ExplorerTreeModule } from "./ExplorerTreeModule";
+export { ExplorerBlockModule } from "./ExplorerBlockModule";

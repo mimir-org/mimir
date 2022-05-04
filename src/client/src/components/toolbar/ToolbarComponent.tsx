@@ -8,13 +8,12 @@ import { TextResources } from "../../assets/text/TextResources";
 import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
 import { useReactFlow, useStoreApi } from "react-flow-renderer";
-import { memo } from "react";
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
  * @returns a menu with icons for different features.
  */
-const ToolbarComponent = () => {
+export const ToolbarComponent = () => {
   const dispatch = useAppDispatch();
   const { setViewport, setCenter } = useReactFlow();
   const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
@@ -75,5 +74,3 @@ const ToolbarComponent = () => {
     </ToolbarBox>
   );
 };
-
-export default memo(ToolbarComponent);

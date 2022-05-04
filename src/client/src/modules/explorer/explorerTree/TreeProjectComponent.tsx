@@ -1,5 +1,5 @@
 import { Node } from "../../../models";
-import { TreeAspectComponent } from "./treeAspect/";
+import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
@@ -18,7 +18,7 @@ interface Props {
  * Component for a single Project in Mimir, displayed in the Explorer Module of TreeView.
  * @returns drop-down menus with checkboxes for each Aspect.
  */
-const TreeProjectComponent = ({ dispatch }: Props) => {
+export const TreeProjectComponent = ({ dispatch }: Props) => {
   const username = useAppSelector(usernameSelector);
   const projectState = useAppSelector(projectStateSelector);
   const project = projectState?.project;
@@ -62,5 +62,3 @@ const TreeProjectComponent = ({ dispatch }: Props) => {
     </ProjectContentContainer>
   );
 };
-
-export default TreeProjectComponent;

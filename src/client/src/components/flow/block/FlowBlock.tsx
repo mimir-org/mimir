@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
-import { CloseInspector, OnBlockSelectionChange } from "./handlers/OnBlockSelectionChange";
+import { OnBlockSelectionChange } from "./handlers/OnBlockSelectionChange";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
 import { Project } from "../../../models";
 import ReactFlow, {
@@ -135,10 +135,6 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedNode, secondaryNode, flowNodes, animatedEdge));
   }, [mimirEdges, mimirNodes, animatedEdge]);
 
-  useEffect(() => {
-    CloseInspector(inspectorRef, dispatch);
-  }, [inspectorRef, dispatch]);
-
   // Show transport edges by default, timeout is added due to loading of OffPage nodes
   useEffect(() => {
     setIsFetching(true);
@@ -178,6 +174,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
         onlyRenderVisibleElements
         zoomOnScroll
         panOnDrag
+        selectionKeyCode={null}
       ></ReactFlow>
     </div>
   );

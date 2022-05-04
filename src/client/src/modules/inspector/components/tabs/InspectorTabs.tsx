@@ -25,7 +25,7 @@ interface Props {
   isInspectorOpen: boolean;
 }
 
-const InspectorTabs = ({
+export const InspectorTabs = ({
   project,
   element,
   activeTabIndex,
@@ -68,5 +68,3 @@ const InspectorTabs = ({
     </>
   );
 };
-
-export default InspectorTabs;

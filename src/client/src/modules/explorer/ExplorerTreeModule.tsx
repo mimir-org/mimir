@@ -1,4 +1,4 @@
-import { TreeProjectComponent } from "./explorerTree/";
+import { TreeProjectComponent } from "./explorerTree/TreeProjectComponent";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
 import { Size } from "../../compLibrary/size/Size";
@@ -9,7 +9,6 @@ import { Icon } from "../../compLibrary/icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./shared/styled/ExplorerModule.styled";
 import { useAppSelector, explorerSelector } from "../../redux/store";
-import { memo } from "react";
 import { Dispatch } from "redux";
 
 interface Props {
@@ -20,7 +19,7 @@ interface Props {
  * Component for the Explorer Module in Mimir's TreeView.
  * @returns a module where all nodes in Mimir are listed.
  */
-const ExplorerTreeModule = ({ dispatch }: Props) => {
+export const ExplorerTreeModule = ({ dispatch }: Props) => {
   const isOpen = useAppSelector(explorerSelector);
   const type = MODULE_TYPE.EXPLORER;
 
@@ -39,5 +38,3 @@ const ExplorerTreeModule = ({ dispatch }: Props) => {
     </AnimatedModule>
   );
 };
-
-export default memo(ExplorerTreeModule);

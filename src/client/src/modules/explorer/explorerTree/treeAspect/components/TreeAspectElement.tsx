@@ -24,7 +24,7 @@ interface Props {
  * @param interface
  * @returns an element with either an Aspect header or a checkbox.
  */
-const TreeAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent, dispatch }: Props) => {
+export const TreeAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent, dispatch }: Props) => {
   const isChecked = IsNodeInTreeExplorerChecked(node.id);
 
   return (
@@ -46,5 +46,3 @@ const TreeAspectElement = ({ node, isLeaf, isExpanded, onToggleExpanded, indent,
     </AspectElementWrapper>
   );
 };
-
-export default TreeAspectElement;

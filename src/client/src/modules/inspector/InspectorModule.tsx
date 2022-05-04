@@ -14,6 +14,7 @@ import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { GetSelectedFlowNodes } from "../../helpers/Selected";
 
 interface Props {
   project: Project;
@@ -34,17 +35,19 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
   const inspectorOpen = useAppSelector(selectors.inspectorSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
+  const isBlockView = IsBlockView();
+  const selectedFlowNodes = GetSelectedFlowNodes();
 
   const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
   const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
   const selectedEdge = project?.edges.find((e) => e.selected);
-  const selectedNode = project?.nodes.find((n) => (IsBlockView() ? n.blockSelected : n.selected));
+  const selectedNode = project?.nodes.find((n) => (isBlockView ? n.blockSelected : n.selected));
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;
 
-  useAutoMinimizeInspector(inspectorRef);
+  useAutoMinimizeInspector(inspectorRef, isBlockView, selectedFlowNodes);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
 
   const changeInspectorVisibilityAction = useCallback(
@@ -74,11 +77,13 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
         username={username}
         dispatch={dispatch}
         open={inspectorOpen}
+        isBlockView={isBlockView}
         activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
         isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeight}
+        selectedFlowNodes={selectedFlowNodes}
       />
     </AnimatedInspector>
   );

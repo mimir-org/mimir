@@ -2,15 +2,15 @@ import { useMemo } from "react";
 import { GetSelectedFlowEdges, GetSelectedFlowNodes } from "./Selected";
 
 /**
- * Component to get the id's of selected FlowEdges and FlowNodes.
+ * Component to get the id's of selected FlowNodes and FlowEdges.
  * @returns two arrays, one for FlowNodes, one for FlowEdges.
  */
 export const GetSelectedFlowElementsIds = () => {
-  const selectedNodes = GetSelectedFlowNodes();
-  const selectedEdges = GetSelectedFlowEdges();
+  const selectedFlowNodes = GetSelectedFlowNodes();
+  const selectedFlowEdges = GetSelectedFlowEdges();
 
-  const nodeIds = useMemo(() => selectedNodes?.map((node) => node.id), [selectedNodes]);
-  const edgeIds = useMemo(() => selectedEdges?.map((edge) => edge.id), [selectedEdges]);
+  const nodeIds = useMemo(() => selectedFlowNodes?.map((node) => node.id), [selectedFlowNodes]);
+  const edgeIds = useMemo(() => selectedFlowEdges?.map((edge) => edge.id), [selectedFlowEdges]);
 
   return [nodeIds, edgeIds];
 };

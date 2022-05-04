@@ -10,7 +10,7 @@ export const GetSelectedFlowEdges = (): FlowEdge[] => {
 export const GetSelectedFlowNodes = (): FlowNode[] => {
   return useReactFlow()
     .getNodes()
-    .filter((n) => n.selected);
+    .filter((node) => node.selected);
 };
 
 export const GetFlowNodes = () => {

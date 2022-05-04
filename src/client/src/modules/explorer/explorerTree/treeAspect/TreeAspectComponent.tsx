@@ -2,7 +2,7 @@ import { AspectContainer } from "../../shared/styled/AspectContainer";
 import { VisibleComponent } from "../../shared/components/VisibleComponent";
 import { LockComponent } from "../../shared/components/LockComponent";
 import { Node } from "../../../../models";
-import { TreeAspectElement } from "./components/";
+import { TreeAspectElement } from "./components/TreeAspectElement";
 import { Dispatch } from "redux";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { OnTreeExplorerChange } from "./handlers/OnTreeExplorerChange";
@@ -28,7 +28,7 @@ interface Props {
  * @param interface
  * @returns a TreeAspectElement.
  */
-const TreeAspectComponent = ({
+export const TreeAspectComponent = ({
   username,
   node,
   isExpanded,
@@ -73,5 +73,3 @@ const TreeAspectComponent = ({
     </AspectContainer>
   );
 };
-
-export default TreeAspectComponent;
