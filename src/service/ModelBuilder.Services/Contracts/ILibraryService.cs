@@ -34,10 +34,14 @@ namespace Mb.Services.Contracts
         Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
 
         // Create, edit and delete
+        Task<LibraryNodeItem> CreateNodeType(CreateLibraryType createLibraryType);
+        Task<LibraryTransportItem> CreateTransportType(CreateLibraryType createLibraryType);
+        Task<LibraryInterfaceItem> CreateInterfaceType(CreateLibraryType createLibraryType);
+
         Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false);
         IEnumerable<CreateLibraryType> GetAllTypes();
         Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
-        Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new();
+        
         Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new();
         Task DeleteType(string id);
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);

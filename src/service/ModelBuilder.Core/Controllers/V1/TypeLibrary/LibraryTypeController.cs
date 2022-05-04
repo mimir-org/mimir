@@ -152,18 +152,17 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
                 switch (libraryType.ObjectType)
                 {
                     case ObjectType.ObjectBlock:
-                        var ob = await _libraryService.CreateLibraryType<LibraryNodeItem>(libraryType);
+                        var ob = await _libraryService.CreateNodeType(libraryType);
                         return Ok(ob);
                     case ObjectType.Transport:
-                        var ln = await _libraryService.CreateLibraryType<LibraryTransportItem>(libraryType);
+                        var ln = await _libraryService.CreateTransportType(libraryType);
                         return Ok(ln);
                     case ObjectType.Interface:
                         var libraryInterfaceItem =
-                            await _libraryService.CreateLibraryType<LibraryInterfaceItem>(libraryType);
+                            await _libraryService.CreateInterfaceType(libraryType);
                         return Ok(libraryInterfaceItem);
                     default:
-                        throw new ModelBuilderInvalidOperationException(
-                            $"Can't create type of: {libraryType.ObjectType}");
+                        throw new ModelBuilderInvalidOperationException($"Can't create type of: {libraryType.ObjectType}");
                 }
             }
             catch (ModelBuilderDuplicateException e)

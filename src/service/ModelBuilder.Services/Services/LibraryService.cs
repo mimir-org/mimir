@@ -10,6 +10,7 @@ using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
 using Mb.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Mimirorg.TypeLibrary.Models.Application;
 
 namespace Mb.Services.Services
 {
@@ -181,6 +182,11 @@ namespace Mb.Services.Services
             return _mapper.Map<List<BlobDataAm>>(data);
         }
 
+        public Task<LibraryInterfaceItem> CreateInterfaceType(CreateLibraryType createLibraryType)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false)
         {
             throw new System.NotImplementedException();
@@ -196,10 +202,7 @@ namespace Mb.Services.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<T> CreateLibraryType<T>(CreateLibraryType createLibraryType) where T : class, new()
-        {
-            throw new System.NotImplementedException();
-        }
+        
 
         public Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new()
         {
@@ -228,6 +231,19 @@ namespace Mb.Services.Services
         }
 
         public Dictionary<string, List<TerminalType>> GetTerminalsByCategory()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<LibraryNodeItem> CreateNodeType(CreateLibraryType createLibraryType)
+        {
+            var data = _mapper.Map<NodeLibAm>(createLibraryType);
+            var createdType = await _libraryRepository.CreateNodeType(data);
+            var node = _mapper.Map<LibraryNodeItem>(createdType);
+            return node;
+        }
+
+        public Task<LibraryTransportItem> CreateTransportType(CreateLibraryType createLibraryType)
         {
             throw new System.NotImplementedException();
         }

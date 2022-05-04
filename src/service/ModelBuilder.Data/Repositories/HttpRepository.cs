@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Microsoft.Extensions.Logging;
@@ -41,7 +42,7 @@ namespace Mb.Data.Repositories
             using var response = await _httpClient.GetAsync(uri);
             if (!response.IsSuccessStatusCode)
                 throw new MimirorgInvalidOperationException(
-                    $"Could not get data from Type Library on uri: {uri}. Response code: {response.StatusCode}, Response status: {response.ReasonPhrase}");
+                    $"Could not get data from http on uri: {uri}. Response code: {response.StatusCode}, Response status: {response.ReasonPhrase}");
             try
             {
                 var responseBody = await response.Content.ReadAsStringAsync();
@@ -56,6 +57,46 @@ namespace Mb.Data.Repositories
                 throw new MimirorgInvalidOperationException($"Can't resolve objects from uri: {uri}.");
             }
         }
+
+        /// <summary>
+        /// Post http data with given type and given return type
+        /// </summary>
+        /// <typeparam name="TRet">The response type</typeparam>
+        /// <typeparam name="TObj">The type of object to send</typeparam>
+        /// <param name="uri">Uri to service</param>
+        /// <param name="data">Data to send</param>
+        /// <returns>Type TRet</returns>
+        /// <exception cref="MimirorgInvalidOperationException">Throws if status code is not success or could not cast object as TRet</exception>
+        public async Task<TRet> PostData<TRet, TObj>(string uri, TObj data) where TRet : class, new() where TObj : class, new()
+        {
+            StringContent content = null;
+
+            if (data != null)
+            {
+                var json = JsonConvert.SerializeObject(data);
+                content = new StringContent(json, Encoding.UTF8, "application/json");
+            }
+
+            using var response = await _httpClient.PostAsync(uri, content);
+            if (!response.IsSuccessStatusCode)
+                throw new MimirorgInvalidOperationException(
+                    $"Could not post data to http on uri: {uri}. Response code: {response.StatusCode}, Response status: {response.ReasonPhrase}");
+            try
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var obj = JsonConvert.DeserializeObject<TRet>(responseBody);
+                // Need to cast object explicit, because json convert gives wrong assembly information for debugging.
+                // ReSharper disable once RedundantCast
+                return (TRet) obj;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Can't resolve objects from uri: {uri}. Error: {e.Message}");
+                throw new MimirorgInvalidOperationException($"Can't resolve objects from uri: {uri}.");
+            }
+        }
+
+        
 
         #endregion
     }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Data.TypeEditor;
+using Mimirorg.TypeLibrary.Models.Application;
 using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Data.Contracts
@@ -18,10 +19,10 @@ namespace Mb.Data.Contracts
         Task<List<BlobLibCm>> GetBlobData();
         Task<List<SimpleLibCm>> GetSimpleTypes();
         Task<List<AttributePredefinedLibCm>> GetPredefinedAttributes();
-
         Task<List<NodeLibCm>> GetNodeTypes();
         Task<List<InterfaceLibCm>> GetInterfaceTypes();
         Task<List<TransportLibCm>> GetTransportTypes();
         Task<List<Rds>> GetRds();
+        Task<NodeLibCm> CreateNodeType(NodeLibAm node);
     }
 }

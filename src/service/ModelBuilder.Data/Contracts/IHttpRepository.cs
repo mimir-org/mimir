@@ -13,5 +13,16 @@ namespace Mb.Data.Contracts
         /// <returns>Type T</returns>
         /// <exception cref="MimirorgInvalidOperationException">Throws if status code is not success or could not cast object as T</exception>
         Task<T> GetData<T>(string uri) where T : class, new();
+
+        /// <summary>
+        /// Post http data with given type and given return type
+        /// </summary>
+        /// <typeparam name="TRet">The response type</typeparam>
+        /// <typeparam name="TObj">The type of object to send</typeparam>
+        /// <param name="uri">Uri to service</param>
+        /// <param name="data">Data to send</param>
+        /// <returns>Type TRet</returns>
+        /// <exception cref="MimirorgInvalidOperationException">Throws if status code is not success or could not cast object as TRet</exception>
+        Task<TRet> PostData<TRet, TObj>(string uri, TObj data) where TRet : class, new() where TObj : class, new();
     }
 }

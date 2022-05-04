@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Settings;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Enums;
+using Mimirorg.TypeLibrary.Models.Application;
 using Mimirorg.TypeLibrary.Models.Client;
 using ILibraryRepository = Mb.Data.Contracts.ILibraryRepository;
 
@@ -176,6 +176,13 @@ namespace Mb.Data.Repositories
 
             var rds = _mapper.Map<List<Rds>>(data);
             return rds;
+        }
+
+        public async Task<NodeLibCm> CreateNodeType(NodeLibAm node)
+        {
+            var url = _applicationSetting.ApiUrl("libraryaspectnode");
+            var data = await _httpRepository.PostData<NodeLibCm, NodeLibAm>(url, node);
+            return data;
         }
     }
 }
