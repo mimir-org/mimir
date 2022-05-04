@@ -75,9 +75,9 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
+  const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, activeNode: FlowNode) => {
     return hooks.useOnDragStop(activeNode, dispatch);
-  };
+  }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
     return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
