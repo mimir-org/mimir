@@ -60,6 +60,7 @@ export const ProjectComponent = () => {
               isExpanded={expanded}
               isLeaf={!HasChildren(node, project)}
               isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+              isGlobalLocking={projectState.isLocking}
               setLockingNode={setLockingNode}
               elements={elements}
               onToggleExpanded={expandHandler}
@@ -80,6 +81,7 @@ export const ProjectComponent = () => {
             isAncestorVisible={areAncestorsVisible(node)}
             isVisible={isVisible(node)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+            isGlobalLocking={projectState.isLocking}
             setLockingNode={setLockingNode}
             onToggleExpanded={expandHandler}
             onSetVisibleElement={onSetVisibleElement}

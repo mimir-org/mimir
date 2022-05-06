@@ -10,11 +10,12 @@ interface Props {
   onToggleLocked: () => void;
   unlockText: string;
   lockText: string;
+  disabled: boolean;
 }
 
-export const LockComponent = ({ isLocked, nodeIsLocking, onToggleLocked, unlockText, lockText }: Props) => (
+export const LockComponent = ({ isLocked, nodeIsLocking, onToggleLocked, unlockText, lockText, disabled }: Props) => (
   <Tooltip content={isLocked ? unlockText : lockText} offset={[0, 5]}>
-    <AspectButton isLocked={isLocked} onClick={onToggleLocked}>
+    <AspectButton isLocked={isLocked} onClick={onToggleLocked} disabled={disabled}>
       {nodeIsLocking ? (
         <LockSpinner>
           <Spinner />

@@ -7,6 +7,7 @@ import { Dispatch } from "redux";
 import { OnLockNode } from "../shared/handlers/OnLockNode";
 import { OnTreeChange } from "./handlers/OnTreeChange";
 import { TextResources } from "../../../../assets/text/TextResources";
+import { Divider } from "../../../../compLibrary/divider";
 interface Props {
   project: Project;
   username: string;
@@ -18,6 +19,7 @@ interface Props {
   isAncestorVisible: boolean;
   isVisible: boolean;
   isNodeLocking: boolean;
+  isGlobalLocking: boolean;
   setLockingNode: (node: Node) => void;
   onToggleExpanded: () => void;
   onSetVisibleElement: (visible: boolean, nodeId: string) => void;
@@ -40,6 +42,7 @@ export const TreeAspectComponent = ({
   isAncestorVisible,
   isVisible,
   isNodeLocking,
+  isGlobalLocking,
   setLockingNode,
   onSetVisibleElement,
   onToggleExpanded,
@@ -57,13 +60,16 @@ export const TreeAspectComponent = ({
         OnTreeChange(node, project, dispatch);
       }}
     />
+    <Divider variant={"vertical"} />
     <LockComponent
       isLocked={node.isLocked}
       nodeIsLocking={isNodeLocking}
       unlockText={TextResources.EXPLORER_UNLOCK_OBJECT}
       lockText={TextResources.EXPLORER_LOCK_OBJECT}
       onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
+      disabled={isGlobalLocking}
     />
+    <Divider variant={"vertical"} />
     <TreeAspectElement
       node={node}
       nodes={nodes}
