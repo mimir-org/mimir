@@ -38,7 +38,7 @@ export const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
         />
 
         {categories?.map((category) => {
-          const categoryItems = items.filter((item) => item.terminalCategoryId === category.id);
+          const categoryItems = items.filter((item) => item.terminalCategory === category.id);
           return (
             <TerminalCategoryFilter
               key={category.id}

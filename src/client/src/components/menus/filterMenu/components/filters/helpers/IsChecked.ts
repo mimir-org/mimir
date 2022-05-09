@@ -17,7 +17,7 @@ export const IsTerminalTypeChecked = (edges: Edge[], terminalCategoryId: string,
   return !edges.some(
     (x) =>
       x.isHidden &&
-      x.fromConnector.terminalCategoryId === terminalCategoryId &&
+      x.fromConnector.terminalCategory === terminalCategoryId &&
       x.fromConnector.terminalTypeId === terminalTypeId &&
       IsTransport(x.fromConnector)
   );
@@ -25,6 +25,6 @@ export const IsTerminalTypeChecked = (edges: Edge[], terminalCategoryId: string,
 
 export const IsTerminalCategoryChecked = (edges: Edge[], terminalCategoryId: string) => {
   return !edges.some(
-    (x) => x.isHidden && x.fromConnector.terminalCategoryId === terminalCategoryId && IsTransport(x.fromConnector)
+    (x) => x.isHidden && x.fromConnector.terminalCategory === terminalCategoryId && IsTransport(x.fromConnector)
   );
 };

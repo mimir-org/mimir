@@ -81,7 +81,7 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       <Dropdown
         label={TypeEditorTextResources.PURPOSE}
         categories={GetPurposes(purposes)}
-        onChange={(data: Purpose) => onChange("purpose", data.id)}
+        onChange={(data: Purpose) => onChange("purpose", data.name)}
         defaultValue={createLibraryType && createLibraryType.purpose?.toString()}
         placeholder={TypeEditorTextResources.PURPOSE_PLACEHOLDER}
       />
@@ -113,7 +113,7 @@ const TypeEditorInputs = ({ onChange, createLibraryType, icons, locationTypes, p
       <Dropdown
         label={TypeEditorTextResources.SYMBOL}
         categories={GetFilteredBlobData(icons)}
-        onChange={(data: BlobData) => onChange("symbolId", data.id)}
+        onChange={(data: BlobData) => onChange("symbolId", data.data)}
         placeholder={TypeEditorTextResources.SYMBOL_PLACEHOLDER}
         defaultValue={createLibraryType && createLibraryType.symbolId}
       />

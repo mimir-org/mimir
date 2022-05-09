@@ -15,7 +15,7 @@ namespace Mb.Data.Contracts
         Task<List<AttributeAspectLibCm>> GetAspectAttributes();
         Task<List<UnitLibCm>> GetUnits();
         Task<List<AttributeLibCm>> GetAttributes();
-        Task<List<BlobLibCm>> GetBlobData();
+        Task<List<SymbolLibCm>> GetSymbols();
         Task<List<SimpleLibCm>> GetSimpleTypes();
         Task<List<AttributePredefinedLibCm>> GetPredefinedAttributes();
         Task<List<NodeLibCm>> GetNodeTypes();

@@ -178,7 +178,7 @@ namespace Mb.Services.Services
 
         public async Task<List<BlobDataAm>> GetBlobData()
         {
-            var data = await _libraryRepository.GetBlobData();
+            var data = await _libraryRepository.GetSymbols();
             return _mapper.Map<List<BlobDataAm>>(data);
         }
 
@@ -236,9 +236,9 @@ namespace Mb.Services.Services
             var terminals = GetTerminals().Result;
 
             return terminals
-                .Where(x => x.TerminalCategory != null)
+                .Where(x => !string.IsNullOrEmpty(x.TerminalCategory))
                 .AsEnumerable()
-                .GroupBy(x => x.TerminalCategory.Name)
+                .GroupBy(x => x.TerminalCategory)
                 .ToDictionary(g => g.Key, g => g.ToList());
         }
 

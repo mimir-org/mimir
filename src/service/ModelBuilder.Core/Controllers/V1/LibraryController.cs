@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -26,14 +25,11 @@ namespace Mb.Core.Controllers.V1
     {
         private readonly ILogger<ProjectController> _logger;
         private readonly ILibraryService _libraryService;
-        private readonly ILibraryRepository _libRepository;
 
-        public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService,
-            ILibraryRepository libRepository)
+        public LibraryController(ILogger<ProjectController> logger, ILibraryService libraryService)
         {
             _logger = logger;
             _libraryService = libraryService;
-            _libRepository = libRepository;
         }
 
         /// <summary>

@@ -74,8 +74,8 @@ export const ListContent = ({
               <ObjectBlockElement
                 key={element.name}
                 name={element.name}
-                categoryId={element.id}
-                defaultTerminals={GetDefaultTerminals(element.id, createLibraryType)}
+                categoryId={element.name}
+                defaultTerminals={GetDefaultTerminals(element.name, createLibraryType)}
                 terminalTypes={element.items}
                 onChange={(key, data) => onTerminalCategoryChange(key, data)}
               />

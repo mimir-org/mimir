@@ -28,7 +28,7 @@ export const IsProductTerminal = (conn: Connector) => {
 };
 
 export const IsTransport = (conn: Connector) => {
-  return conn?.terminalCategoryId !== undefined;
+  return conn?.terminalCategory !== undefined;
 };
 
 // Connections
@@ -45,7 +45,7 @@ export const IsProductConnection = (source: Connector, target: Connector) => {
 };
 
 export const IsTransportConnection = (source: Connector, target: Connector) => {
-  return source?.terminalCategoryId !== undefined && target?.terminalCategoryId !== undefined;
+  return source?.terminalCategory !== undefined && target?.terminalCategory !== undefined;
 };
 
 // ConnectorVisibility

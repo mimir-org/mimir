@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Application;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Models.Application;
 using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Core.Profiles.TypeLibrary
@@ -24,7 +26,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
                 .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.Symbol))
                 .ForMember(dest => dest.Simples, opt => opt.MapFrom(src => src.Simples))
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = null, Name = src.PurposeName })) // TODO: Fix id and discipline
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeName, Name = src.PurposeName }))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
@@ -33,6 +35,35 @@ namespace Mb.Core.Profiles.TypeLibrary
                 {
                     dest.Connectors = Task.Run(() => CreateConnectors(src.NodeTerminals, context)).Result;
                 });
+
+            CreateMap<CreateLibraryType, NodeLibAm>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.RdsName, opt => opt.MapFrom(src => SplitRds(src, true)))
+                .ForMember(dest => dest.RdsCode, opt => opt.MapFrom(src => SplitRds(src, false)))
+                .ForMember(dest => dest.PurposeName, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.CompanyId, opt => opt.Ignore()) // TODO: We need to resolve company id
+                .ForMember(dest => dest.SimpleIdList, opt => opt.MapFrom(src => src.SimpleTypes))
+                .ForMember(dest => dest.AttributeIdList, opt => opt.MapFrom(src => src.AttributeTypes))
+                .ForMember(dest => dest.NodeTerminals, opt => opt.MapFrom(src => src.TerminalTypes))
+                .ForMember(dest => dest.SelectedAttributePredefined, opt => opt.MapFrom(src => src.PredefinedAttributes))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.SymbolId))
+                .ForMember(dest => dest.AttributeAspectIri, opt => opt.MapFrom(src => src.LocationType))
+                .ForMember(dest => dest.Version, opt => opt.Ignore())
+                .ForMember(dest => dest.ParentId, opt => opt.Ignore());
+        }
+
+        private string SplitRds(CreateLibraryType createLibraryType, bool isName)
+        {
+            if (createLibraryType?.RdsId == null)
+                return null;
+
+            var split = createLibraryType.RdsId.Split("#");
+            if (split.Length != 2)
+                return null;
+
+            return isName ? split[1] : split[0];
         }
 
         private async Task<List<Connector>> CreateConnectors(ICollection<NodeTerminalLibCm> nodeTypeTerminalTypes, ResolutionContext context)
@@ -69,7 +100,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                     Parallel.For(0, nodeTypeTerminalType.Number, _ =>
                     {
                         var terminal = context.Mapper.Map<Terminal>(nodeTypeTerminalType.Terminal);
-                        terminal.Type = (ConnectorType) nodeTypeTerminalType.ConnectorDirection;
+                        terminal.Type = (ConnectorType) (int) nodeTypeTerminalType.ConnectorDirection;
                         connectors.Add(terminal);
                     });
                 }

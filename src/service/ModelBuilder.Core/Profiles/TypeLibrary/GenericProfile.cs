@@ -6,6 +6,7 @@ using Mb.Models.Data;
 using Mb.Models.Data.Enums;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Models.Application;
 using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Core.Profiles.TypeLibrary
@@ -25,7 +26,7 @@ namespace Mb.Core.Profiles.TypeLibrary
             CreateMap<TransportLibCm, LibraryTransportItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsCode))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
@@ -34,7 +35,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.Name }))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.Name, Name = src.Name }))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
@@ -89,7 +90,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.Children, opt => opt.Ignore())
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
-                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
+                .ForMember(dest => dest.Discipline, opt => opt.Ignore());
 
             CreateMap<UnitLibCm, Unit>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -108,16 +109,16 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
                 .ForMember(dest => dest.LocationSubTypes, opt => opt.MapFrom(src => src.Children));
 
-            CreateMap<BlobLibCm, BlobDataAm>()
+            CreateMap<SymbolLibCm, BlobDataAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
-                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
+                .ForMember(dest => dest.Discipline, opt => opt.Ignore());
 
             CreateMap<TransportLibCm, LibraryTransportItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsCode))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
@@ -127,7 +128,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.LibraryType, opt => opt.Ignore())
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.PurposeName }))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeName, Name = src.PurposeName }))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
@@ -136,7 +137,7 @@ namespace Mb.Core.Profiles.TypeLibrary
             CreateMap<InterfaceLibCm, LibraryInterfaceItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
-                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsId))
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => src.RdsCode))
                 .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
@@ -146,7 +147,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.LibraryType, opt => opt.Ignore())
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeId, Name = src.PurposeName }))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeName, Name = src.PurposeName }))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
@@ -163,6 +164,16 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                 .ForMember(dest => dest.Values, opt => opt.MapFrom(src => src.ValueStringList.ToDictionary(x => x, x => false)))
                 .ForMember(dest => dest.IsMultiSelect, opt => opt.MapFrom(src => src.IsMultiSelect));
+
+            CreateMap<TerminalTypeItem, NodeTerminalLibAm>()
+                .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalTypeId))
+                .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
+                .ForMember(dest => dest.ConnectorDirection, opt => opt.MapFrom(src => src.ConnectorType));
+
+            CreateMap<PredefinedAttributeAm, SelectedAttributePredefinedLibAm>()
+                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.IsMultiSelect, opt => opt.MapFrom(src => src.IsMultiSelect))
+                .ForMember(dest => dest.Values, opt => opt.MapFrom(src => src.Values));
         }
     }
 }

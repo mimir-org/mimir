@@ -8,7 +8,7 @@ const GetFilteredBlobData = (blobs: BlobData[]): DropDownCategoryItem<BlobData>[
 
   blobs.forEach((blob) => {
     categories[0].items.push({
-      id: blob.id,
+      id: blob.data,
       description: blob.name,
       name: blob.name,
       image: blob.data,

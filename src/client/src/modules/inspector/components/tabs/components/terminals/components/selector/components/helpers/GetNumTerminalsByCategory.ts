@@ -6,8 +6,8 @@ export const GetNumTerminalsByCategory = (terminals: TerminalLikeItem[]): Map<st
 
   for (const terminal of terminals) {
     numterminalsByCategory.set(
-      terminal.terminalCategoryId,
-      (numterminalsByCategory.get(terminal.terminalCategoryId) ?? 0) + GetNumberOfTerminals(terminal)
+      terminal.terminalCategory,
+      (numterminalsByCategory.get(terminal.terminalCategory) ?? 0) + GetNumberOfTerminals(terminal)
     );
   }
 

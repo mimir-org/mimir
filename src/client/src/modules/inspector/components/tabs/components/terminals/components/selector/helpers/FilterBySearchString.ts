@@ -12,9 +12,9 @@ export const FilterBySearchString = (
       (x) =>
         x &&
         ((x.name && x.name.toLowerCase().includes(searchString.toLowerCase())) ||
-          (x.terminalCategoryId &&
+          (x.terminalCategory &&
             terminalCategories
-              .find((cat) => cat.id === x.terminalCategoryId)
+              .find((cat) => cat.id === x.terminalCategory)
               ?.name.toLowerCase()
               .includes(searchString.toLowerCase())))
     )) ||

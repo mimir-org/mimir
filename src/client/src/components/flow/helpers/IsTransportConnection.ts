@@ -1,7 +1,7 @@
 import { Connector } from "../../../models";
 
 const IsTransportConnection = (source: Connector, target: Connector) => {
-  return source?.terminalCategoryId !== undefined && target?.terminalCategoryId !== undefined;
+  return source?.terminalCategory !== undefined && target?.terminalCategory !== undefined;
 };
 
 export default IsTransportConnection;

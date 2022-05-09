@@ -9,16 +9,15 @@ import { TerminalCategory } from "../TransportFilter";
  */
 export const PopulateTerminalCategories = (transportItems: Connector[]) => {
   const categories = [] as TerminalCategory[];
-
-  transportItems?.forEach((item) => {
-    if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory?.name)) {
-      const category = {
-        id: item.terminalCategoryId,
-        name: item.terminalCategory?.name ?? TextResources.FILTER_CATEGORY,
-      } as TerminalCategory;
-      categories.push(category);
-    }
-  });
+  // transportItems?.forEach((item) => {
+  //   if (!categories.some((x) => x.id === item.terminalCategory || x.name === item.terminalCategory?.name)) {
+  //     const category = {
+  //       id: item.terminalCategoryId,
+  //       name: item.terminalCategory?.name ?? TextResources.FILTER_CATEGORY,
+  //     } as TerminalCategory;
+  //     categories.push(category);
+  //   }
+  // });
 
   return categories;
 };

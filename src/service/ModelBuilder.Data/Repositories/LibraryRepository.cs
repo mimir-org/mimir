@@ -103,12 +103,12 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public async Task<List<BlobLibCm>> GetBlobData()
+        public async Task<List<SymbolLibCm>> GetSymbols()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryblob");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Blob.ToString(),
-                async () => await _httpRepository.GetData<List<BlobLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
+            var url = _applicationSetting.ApiUrl("librarysymbol");
+            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Symbol.ToString(),
+                async () => await _httpRepository.GetData<List<SymbolLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
             return data;
         }
@@ -136,7 +136,7 @@ namespace Mb.Data.Repositories
         public async Task<List<NodeLibCm>> GetNodeTypes()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryaspectnode");
+            var url = _applicationSetting.ApiUrl("librarynode");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AspectNode.ToString(),
                 async () => await _httpRepository.GetData<List<NodeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -184,7 +184,7 @@ namespace Mb.Data.Repositories
 
         public async Task<NodeLibCm> CreateNodeType(NodeLibAm node)
         {
-            var url = _applicationSetting.ApiUrl("libraryaspectnode");
+            var url = _applicationSetting.ApiUrl("librarynode");
             var data = await _httpRepository.PostData<NodeLibCm, NodeLibAm>(url, node);
             return data;
         }

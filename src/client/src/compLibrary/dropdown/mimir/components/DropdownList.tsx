@@ -35,16 +35,18 @@ export const DropdownList = ({
   <DropdownListBox borderRadius={borderRadius} borderColor={borderColor} top={listTop}>
     {items?.map((item) => {
       return (
-        <DropdownListItem
-          fontSize={fontSize}
-          height={height}
-          borderRadius={borderRadius}
-          onClick={() => handleChange(item)}
-          key={item[keyProp]}
-        >
-          {valueImageProp && <Symbol base64={item[valueImageProp]} text={item[valueProp]} />}
-          <p>{item.name ?? item.key}</p>
-        </DropdownListItem>
+        <>
+          <DropdownListItem
+            fontSize={fontSize}
+            height={height}
+            borderRadius={borderRadius}
+            onClick={() => handleChange(item)}
+            key={item[keyProp]}
+          >
+            {valueImageProp && <Symbol source={item[valueImageProp]} text={item[valueProp]} />}
+            <p>{item.name ?? item.key}</p>
+          </DropdownListItem>
+        </>
       );
     })}
   </DropdownListBox>
