@@ -1,8 +1,7 @@
-import { ButtonContainer } from "./InspectorButton.styled";
-import { useState } from "react";
-import { GetActiveButtonIcon, GetButtonIcon, GetButtonText } from "./helpers";
+import { ButtonContainer, InspectorLockSpinner } from "./InspectorButton.styled";
+import { GetButtonIcon, GetButtonText } from "./helpers";
 import { Tooltip } from "../../tooltip/Tooltip";
-
+import { Spinner } from "../../animated";
 interface Props {
   onClick: () => void;
   type: InspectorButtonType;
@@ -25,19 +24,18 @@ export enum InspectorButtonType {
  * @returns a button to be used in the Inspector Header.
  */
 const InspectorButton = ({ onClick, type, description, disabled }: Props) => {
-  const [active, setActive] = useState(false);
-
+  const showSpinner = disabled && (type === InspectorButtonType.Unlock || type === InspectorButtonType.Lock);
   return (
     <Tooltip content={description} disabled={disabled} offset={[0, 10]}>
-      <ButtonContainer
-        onClick={() => onClick()}
-        onMouseDown={() => setActive(true)}
-        onMouseUp={() => setActive(false)}
-        onMouseLeave={() => setActive(false)}
-        disabled={disabled}
-      >
+      <ButtonContainer onClick={() => onClick()} disabled={disabled}>
         {GetButtonText(type)}
-        {active ? GetActiveButtonIcon(type) : GetButtonIcon(type)}
+        {showSpinner ? (
+          <InspectorLockSpinner>
+            <Spinner variant="small" />
+          </InspectorLockSpinner>
+        ) : (
+          GetButtonIcon(type)
+        )}
       </ButtonContainer>
     </Tooltip>
   );

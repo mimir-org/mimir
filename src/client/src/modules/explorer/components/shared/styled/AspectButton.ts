@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors/Color";
 
 interface Props {
   isHidden?: boolean;

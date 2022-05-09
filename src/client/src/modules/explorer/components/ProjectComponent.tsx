@@ -3,7 +3,7 @@ import { Node } from "../../../models";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SortNodesWithIndent } from "./helpers/SortNodesWithIndent";
 import { GetSelectedNode, IsBlockView, IsOffPage } from "../../../helpers";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
@@ -38,6 +38,10 @@ export const ProjectComponent = () => {
   const areAncestorsExpanded = (elem: Node) => !IsAncestorInSet(elem, closedNodes, project);
   const areAncestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, project);
   const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
+
+  useEffect(() => {
+    if (lockingNode !== null && !projectState.isLocking) setLockingNode(null);
+  }, [lockingNode, projectState.isLocking]);
 
   if (!project || !nodes) return null;
 
