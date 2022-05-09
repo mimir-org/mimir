@@ -9,8 +9,8 @@ import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
-import { Button } from "../../compLibrary/buttons";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/animated";
+import { Button } from "../../compLibrary/buttons";
 
 type AppProps = {
   pca: IPublicClientApplication;
@@ -35,7 +35,7 @@ export const App = ({ pca }: AppProps) => {
       <AuthenticatedTemplate>
         <GlobalStyle />
         <SpinnerWrapper fetching={isFetching}>
-          <Spinner />
+          <Spinner variant="big" />
         </SpinnerWrapper>
         <Home dispatch={dispatch} />
       </AuthenticatedTemplate>
