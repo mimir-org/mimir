@@ -11,6 +11,7 @@ export const OnLockParameter = (
   projectId: string,
   isLocked: boolean,
   isLockedBy: string,
+  setLockingAttribute: (attribute: Attribute) => void,
   dispatch: Dispatch
 ) => {
   if (IsUnsaved(inspectorParentElement)) {
@@ -18,6 +19,7 @@ export const OnLockParameter = (
   } else {
     handleLockOnline(attribute, projectId, isLocked, dispatch);
   }
+  setLockingAttribute(attribute);
 };
 
 const handleLockOnline = (attribute: Attribute, projectId: string, isLocked: boolean, dispatch: Dispatch) => {

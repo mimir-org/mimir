@@ -7,9 +7,7 @@ import { ParameterButton } from "./styled/ParameterButton";
 import { Dropdown } from "./components/dropdown/Dropdown";
 import { ParameterRow } from "./components/row/ParameterRow";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { IsCreateLibraryType } from "../../../../../../helpers/IsType";
 import { OnShowAllFilters } from "./handlers/OnShowAllFilters";
-import { OnIsCreateLibraryType } from "./handlers/OnIsCreateLibraryType";
 import { OnChangeFilterChoice } from "./handlers/OnChangeFilterChoice";
 import { OnClearAllFilters } from "./handlers/OnClearAllFilters";
 import {
@@ -49,7 +47,6 @@ export const ParametersContent = ({
   const dispatch = useAppDispatch();
 
   const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
-  const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
   const username = useAppSelector(usernameSelector);
 
   const shouldShowDefaultEntities = useRef(true);
@@ -64,22 +61,15 @@ export const ParametersContent = ({
   );
 
   const OnShowAllEntites = () => {
-    if (!isCreateLibraryType) {
-      shouldShowDefaultEntities.current = true;
-      OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
-    }
+    shouldShowDefaultEntities.current = true;
+    OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
   };
 
   useEffect(() => {
-    IsCreateLibraryType(inspectorParentElement) &&
-      OnIsCreateLibraryType(parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch);
-  }, [inspectorParentElement, parametersElement, attributeFilters, selectedFilters, attributeCombinations, dispatch]);
-
-  useEffect(() => {
-    if (!isCreateLibraryType && shouldShowDefaultEntities.current) {
+    if (shouldShowDefaultEntities.current) {
       OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
     }
-  }, [attributeCombinations, attributeFilters, dispatch, isCreateLibraryType, parametersElement.id, shouldShowDefaultEntities]);
+  }, [attributeCombinations, attributeFilters, dispatch, parametersElement.id, shouldShowDefaultEntities]);
 
   return (
     <ParametersContentContainer>
@@ -93,13 +83,10 @@ export const ParametersContent = ({
             selectedItems={selectedFilters}
           />
 
-          <ParameterButton
-            className={`link ${isCreateLibraryType && "hide-link"}`}
-            onClick={() => !isCreateLibraryType && OnClearAllFilters(parametersElement.id, dispatch)}
-          >
+          <ParameterButton className={`link`} onClick={() => OnClearAllFilters(parametersElement.id, dispatch)}>
             {TextResources.INSPECTOR_PARAMS_CLEAR_ALL}
           </ParameterButton>
-          <ParameterButton className={`link ${isCreateLibraryType && "hide-link"}`} onClick={OnShowAllEntites}>
+          <ParameterButton className={`link`} onClick={OnShowAllEntites}>
             {TextResources.INSPECTOR_PARAMS_DEFAULT}
           </ParameterButton>
         </ParametersContentMenu>
