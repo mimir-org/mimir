@@ -4,7 +4,7 @@ import { Tooltip } from "../../../../compLibrary/tooltip/Tooltip";
 import { VisibleOffIcon, VisibleOnIcon, VisibleSubOffIcon } from "../../../../assets/icons/visible";
 
 interface Props {
-  hidden: boolean;
+  isHidden: boolean;
   isVisible: boolean;
   isAncestorVisible: boolean;
   onToggleVisible: () => void;
@@ -12,17 +12,17 @@ interface Props {
   hideText: string;
 }
 
-export const VisibleComponent = ({ hidden, isAncestorVisible, isVisible, onToggleVisible, showText, hideText }: Props) => (
-  <Tooltip content={hidden ? showText : hideText} offset={[0, 5]}>
-    <AspectButton hidden={hidden} isVisible={isVisible} onClick={onToggleVisible}>
-      <Icon size={15} src={GetIcon(hidden, isAncestorVisible, isVisible)} alt="" />
+export const VisibleComponent = ({ isHidden, isAncestorVisible, isVisible, onToggleVisible, showText, hideText }: Props) => (
+  <Tooltip content={isHidden ? showText : hideText} offset={[0, 5]}>
+    <AspectButton isHidden={isHidden} isVisible={isVisible} onClick={onToggleVisible}>
+      <Icon size={15} src={GetIcon(isHidden, isAncestorVisible, isVisible)} alt="" />
     </AspectButton>
   </Tooltip>
 );
 
-function GetIcon(hidden: boolean, isAncestorVisible: boolean, isVisible: boolean) {
-  if (isVisible && !hidden) return VisibleOnIcon;
-  if (!isVisible && hidden) return VisibleOffIcon;
+function GetIcon(isHidden: boolean, isAncestorVisible: boolean, isVisible: boolean) {
+  if (isVisible && !isHidden) return VisibleOnIcon;
+  if (!isVisible && isHidden) return VisibleOffIcon;
   if (isVisible && !isAncestorVisible) return VisibleSubOffIcon;
   return VisibleOnIcon;
 }

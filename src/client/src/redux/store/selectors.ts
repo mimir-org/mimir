@@ -8,6 +8,11 @@ export const isProjectStateFetchingSelector = createAppSelector(
   (fetching) => fetching
 );
 
+export const isProjectStateGloballyLockingSelector = createAppSelector(
+  (state) => state.projectState.isLocking,
+  (isLocking) => isLocking
+);
+
 export const isLibraryStateFetchingSelector = createAppSelector(
   (state) => state.library.fetching,
   (fetching) => fetching

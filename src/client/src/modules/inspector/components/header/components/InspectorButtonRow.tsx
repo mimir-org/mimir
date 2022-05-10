@@ -9,10 +9,11 @@ import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton } from "../../../../../compLibrary/buttons";
 import { InspectorButtonType } from "../../../../../compLibrary/buttons/inspector/InspectorButton";
 import { Node, Edge } from "../../../../../models";
-import { IsCreateLibraryType, IsNode } from "../../../helpers/IsType";
+import { IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
-import { MutableRefObject } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import { IsBlockView } from "../../../../../helpers";
+import { isProjectStateGloballyLockingSelector, useAppSelector } from "../../../../../redux/store";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import {
   InspectorButtonRowContainer,
@@ -45,23 +46,32 @@ export const InspectorButtonRow = ({
   changeInspectorHeightAction,
   dispatch,
 }: Props) => {
-  const isLocked = IsCreateLibraryType(element) ? true : element?.isLocked;
+  const [onLock, setOnLock] = useState(false);
+  const isLocked = element?.isLocked;
   const isElementSelected = !!element;
   const selectedNode = nodes?.find((n) => n.selected);
+
   const deleteDisabled =
     isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element?.id === selectedNode?.id);
+
+  const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
 
   let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;
   if (!isElementSelected) inspectorToggleText = TextResources.INACTIVE_PANEL;
 
+  useEffect(() => {
+    if (!isGlobalLocking && onLock) setOnLock(false);
+  }, [isGlobalLocking, onLock]);
+
   return (
     <InspectorButtonRowContainer>
-      {!IsCreateLibraryType(element) && isElementSelected && tabsVisible && (
+      {isElementSelected && (
         <>
           <InspectorButton
-            onClick={() => OnLockClick(element, !element.isLocked, username, dispatch)}
+            onClick={() => OnLockClick(element, !element.isLocked, username, setOnLock, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
             description={element?.isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
+            disabled={onLock && isGlobalLocking}
           />
           <InspectorButton
             onClick={() => !deleteDisabled && OnDeleteClick(nodes, edges, element, dispatch, inspectorRef)}

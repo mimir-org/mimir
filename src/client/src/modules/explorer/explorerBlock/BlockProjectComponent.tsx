@@ -3,7 +3,7 @@ import { Node } from "../../../models";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
@@ -30,6 +30,10 @@ export const BlockProjectComponent = () => {
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project?.edges);
 
+  useEffect(() => {
+    if (lockingNode !== null && !projectState.isLocking) setLockingNode(null);
+  }, [lockingNode, projectState.isLocking]);
+
   if (!project || !nodes) return null;
 
   return (
@@ -50,6 +54,7 @@ export const BlockProjectComponent = () => {
             isExpanded={expanded}
             isLeaf={!HasChildren(node.id, project.edges)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+            isGlobalLocking={projectState.isLocking}
             setLockingNode={setLockingNode}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             dispatch={dispatch}

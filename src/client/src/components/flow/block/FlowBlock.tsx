@@ -8,7 +8,7 @@ import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInit
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
 import { OnBlockSelectionChange } from "./handlers/OnBlockSelectionChange";
-import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
+import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Project } from "../../../models";
 import ReactFlow, {
   Node as FlowNode,

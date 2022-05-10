@@ -10,7 +10,7 @@ import { IPublicClientApplication } from "@azure/msal-browser";
 import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Button } from "../../compLibrary/buttons";
-import { Spinner, SpinnerWrapper } from "../../compLibrary/spinner/Spinner";
+import { Spinner, SpinnerWrapper } from "../../compLibrary/spinner/";
 
 type AppProps = {
   pca: IPublicClientApplication;
@@ -33,7 +33,7 @@ export const App = ({ pca }: AppProps) => {
       <AuthenticatedTemplate>
         <GlobalStyle />
         <SpinnerWrapper fetching={isFetching}>
-          <Spinner />
+          <Spinner variant="big" />
         </SpinnerWrapper>
         <Home dispatch={dispatch} />
       </AuthenticatedTemplate>

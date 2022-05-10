@@ -1,7 +1,7 @@
 import { Node } from "../../../models";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
 import { usernameSelector, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
@@ -33,6 +33,10 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
   const ancestorsVisible = (elem: Node) => !IsAncestorInSet(elem, invisibleNodes, edges);
   const isVisible = (elem: Node) => !invisibleNodes.has(elem.id);
 
+  useEffect(() => {
+    if (lockingNode !== null && !projectState.isLocking) setLockingNode(null);
+  }, [lockingNode, projectState.isLocking]);
+
   if (!nodes) return null;
 
   return (
@@ -52,6 +56,7 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
             isAncestorVisible={ancestorsVisible(node)}
             isVisible={isVisible(node)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}
+            isGlobalLocking={projectState.isLocking}
             setLockingNode={setLockingNode}
             onToggleExpanded={() => OnExpandExplorerElement(!expanded, node.id, closedNodes, setClosedNodes)}
             onSetVisibleElement={() => OnSetVisibleElement(true, node.id, invisibleNodes, setInvisibleNodes)}

@@ -114,6 +114,7 @@ export const TextResources = {
 
   INSPECTOR_FILTER: "Filter",
   INSPECTOR_LOCK: "Lock",
+  INSPECTOR_UNLOCK: "Unlock",
 
   PARAMS_CLEAR_ALL: "Clear all Entities",
   PARAMS_DEFAULT: "Show all Entities",

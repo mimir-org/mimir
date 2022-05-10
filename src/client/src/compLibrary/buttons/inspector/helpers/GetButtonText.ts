@@ -9,7 +9,7 @@ const GetButtonText = (type: InspectorButtonType) => {
     case InspectorButtonType.Lock:
       return TextResources.INSPECTOR_LOCK;
     case InspectorButtonType.Unlock:
-      return TextResources.OPEN;
+      return TextResources.INSPECTOR_UNLOCK;
     case InspectorButtonType.Delete:
     case InspectorButtonType.DeleteDisabled:
       return TextResources.DELETE;

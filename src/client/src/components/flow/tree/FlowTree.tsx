@@ -9,7 +9,7 @@ import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../compLibrary/size/Size";
 import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
-import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/Spinner";
+import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Project } from "../../../models";
 import ReactFlow, {
   Background,

@@ -6,6 +6,7 @@ import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { ViewportData } from "../../../../models/project";
 import { AspectContainer } from "../../shared/styled/AspectContainer";
+import { Divider } from "../../../../compLibrary/divider";
 
 interface Props {
   username: string;
@@ -17,6 +18,7 @@ interface Props {
   isLeaf: boolean;
   isExpanded: boolean;
   isNodeLocking: boolean;
+  isGlobalLocking: boolean;
   setLockingNode: (node: Node) => void;
   onToggleExpanded: () => void;
   dispatch: Dispatch;
@@ -38,6 +40,7 @@ export const BlockAspectComponent = ({
   indent,
   isLeaf,
   isNodeLocking,
+  isGlobalLocking,
   setLockingNode,
   dispatch,
   onToggleExpanded,
@@ -50,7 +53,9 @@ export const BlockAspectComponent = ({
       lockText={TextResources.LOCK_OBJECT}
       nodeIsLocking={isNodeLocking}
       onToggleLocked={() => OnLockNode(node, username, setLockingNode, dispatch)}
+      disabled={isGlobalLocking}
     />
+    <Divider variant={"vertical"} />
     <BlockAspectElement
       node={node}
       nodes={nodes}
