@@ -25,4 +25,3 @@ export const FilterElement = ({ onChange, isChecked, visible, label, isHeader, i
       </ElementLabel>
     </ElementBox>
   );
-export default FilterElement;

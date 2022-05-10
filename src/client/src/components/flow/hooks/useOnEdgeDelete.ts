@@ -23,6 +23,7 @@ export const useOnEdgeDelete = (
   if (!edgesToDelete.length) return;
 
   edgesToDelete.forEach((edge) => {
+    if (!edge) return;
     HandleOffPageEdgeDelete(edge, nodes, edges, dispatch);
     dispatch(deleteEdge(edge.id));
   });

@@ -8,7 +8,8 @@ import { InspectorElement } from "../../../types";
 import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from "./InspectorTabWrapper.styled";
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
-import { GetInspectorText, GetTabsColor, GetTabId } from "../helpers";
+import { GetInspectorText, GetInspectorTabsColor, GetTabId } from "../helpers";
+import { Node } from "../../../../../models";
 
 interface Props {
   element?: InspectorElement;
@@ -17,6 +18,8 @@ interface Props {
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
+  isOffPage: boolean;
+  nodes: Node[];
 }
 
 export const InspectorTabWrapper = ({
@@ -27,22 +30,24 @@ export const InspectorTabWrapper = ({
   children,
   inspectorRef,
   isInspectorOpen,
+  isOffPage,
+  nodes,
 }: PropsWithChildren<Props>) => {
   const dispatch = useAppDispatch();
   const isTabOpen = activeTabIndex === index;
 
   const onClick = useCallback(() => {
     dispatch(changeInspectorTabAction(index));
-    if (!isInspectorOpen) {
-      dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
-      dispatch(changeInspectorHeight(Size.MODULE_OPEN));
-      SetPanelHeight(inspectorRef, Size.MODULE_OPEN);
-    }
+    if (isInspectorOpen) return;
+
+    dispatch(setModuleVisibility({ type: MODULE_TYPE.INSPECTOR, visible: true, animate: true }));
+    dispatch(changeInspectorHeight(Size.MODULE_OPEN));
+    SetPanelHeight(inspectorRef, Size.MODULE_OPEN);
   }, [dispatch, changeInspectorTabAction, index, isInspectorOpen, inspectorRef]);
 
   return (
     <>
-      <InspectorTabHeader active={isTabOpen} onClick={onClick} color={GetTabsColor(element)}>
+      <InspectorTabHeader active={isTabOpen} onClick={onClick} color={GetInspectorTabsColor(nodes, element, isOffPage)}>
         <InspectorTabHeaderTitle active={isTabOpen}>{GetInspectorText(index)}</InspectorTabHeaderTitle>
       </InspectorTabHeader>
 

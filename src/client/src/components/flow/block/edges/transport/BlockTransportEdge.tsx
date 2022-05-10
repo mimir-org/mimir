@@ -3,7 +3,7 @@ import { Color } from "../../../../../compLibrary/colors/Color";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers/Connectors";
-import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
+import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
 /**
  * Component for a TransportEdge.
@@ -52,7 +52,7 @@ export const BlockTransportEdge = ({
       </marker>
       <path
         id={id}
-        style={GetEdgeStyle(color, visible)}
+        style={GetBlockEdgeStyle(color, visible)}
         className="path-blockTransportEdge"
         d={transportPath}
         markerStart={isBidirectional ? `url(#${arrowId})` : null}

@@ -14,22 +14,20 @@ import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
  * @param selectedNode
  * @param changes
  * @param setEdges
- * @param dispatch
  * @param inspectorRef
+ * @param dispatch
  */
 const useOnTreeEdgesChange = (
   nodes: Node[],
   edges: Edge[],
-
+  selectedNode: Node,
   changes: EdgeChange[],
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
-  dispatch: Dispatch,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>
+  inspectorRef: React.MutableRefObject<HTMLDivElement>,
+  dispatch: Dispatch
 ) => {
   const verifiedFlowChanges = [] as EdgeChange[];
   const mimirEdgesToDelete = [] as Edge[];
-
-  const selectedNode = nodes?.find((n) => n.selected);
 
   // Verify changes
   changes.forEach((change) => {

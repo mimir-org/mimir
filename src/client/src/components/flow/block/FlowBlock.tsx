@@ -85,31 +85,25 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      return hooks.useOnNodesChange(
-        mimirNodes,
-        mimirEdges,
-        selectedNode,
-        selectedBlockNode,
-        changes,
-        setNodes,
-        dispatch,
-        inspectorRef
-      );
+      return hooks.useOnNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
     },
     [selectedBlockNode]
   );
 
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
-      return hooks.useOnEdgesChange(changes, setEdges, inspectorRef, mimirNodes, mimirEdges, dispatch);
+      return hooks.useOnEdgesChange(changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, project, dispatch);
     },
-    [selectedEdge]
+    [selectedEdge, selectedBlockNode, selectedNode]
   );
 
-  const OnSelectionChange = useCallback((selectedItems: OnSelectionChangeParams) => {
-    if (!project) return;
-    OnBlockSelectionChange(selectedItems, selectedNode, inspectorRef, dispatch);
-  }, []);
+  const OnSelectionChange = useCallback(
+    (selectedItems: OnSelectionChangeParams) => {
+      if (!project) return;
+      OnBlockSelectionChange(selectedItems, selectedNode, inspectorRef, dispatch);
+    },
+    [selectedBlockNode]
+  );
 
   // Build initial elements from Project
   useEffect(() => {
@@ -133,7 +127,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedNode, secondaryNode, flowNodes, animatedEdge));
-  }, [mimirEdges, mimirNodes, animatedEdge]);
+  }, [mimirEdges, mimirNodes, animatedEdge, selectedBlockNode]);
 
   // Show transport edges by default, timeout is added due to loading of OffPage nodes
   useEffect(() => {
@@ -141,7 +135,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
     setTimeout(() => {
       SetInitialEdgeVisibility(mimirEdges, dispatch);
       setIsFetching(false);
-    }, 200);
+    }, 500);
   }, []);
 
   return (

@@ -3,7 +3,7 @@ import { Color } from "../../../../../compLibrary/colors/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { Node } from "../../../../../models";
 import { useAppSelector, electroSelector } from "../../../../../redux/store";
-import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
+import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
 /**
  * Component for a RelationEdge. The color of the RelationEdge is a combination of the sourceNode and targetNode's AspectColor.
@@ -46,10 +46,10 @@ export const BlockRelationEdge = ({
         <path d="M 0 0 L 10 5 L 0 10 z" fill={Color.BLACK} />
       </marker>
 
-      <path style={GetEdgeStyle(sourceColor, visible)} className="path-blockRelationSourceEdge" d={bezierPath} />
+      <path style={GetBlockEdgeStyle(sourceColor, visible)} className="path-blockRelationSourceEdge" d={bezierPath} />
 
       <path
-        style={GetEdgeStyle(targetColor, visible)}
+        style={GetBlockEdgeStyle(targetColor, visible)}
         strokeDasharray="5,10"
         strokeLinecap="square"
         className="path-blockRelationTargetEdge"

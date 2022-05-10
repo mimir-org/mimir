@@ -5,6 +5,7 @@ import { Connector, Edge } from "../../../../../models";
 import { OnAllTransportsChange } from "./handlers";
 import { PopulateTerminalCategories, AllTransportsChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
+import { memo } from "react";
 
 export interface TerminalCategory {
   id: string;
@@ -24,7 +25,7 @@ interface Props {
  * @param interface
  * @returns one parent checkbox, and one checkbox for each child.
  */
-export const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
+const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
   const categories = PopulateTerminalCategories(items);
 
   return (
@@ -56,4 +57,4 @@ export const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
   );
 };
 
-export default TransportFilter;
+export default memo(TransportFilter);

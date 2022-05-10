@@ -3,7 +3,7 @@ import { Color } from "../../../../../compLibrary/colors/Color";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers/Connectors";
-import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
+import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
 /**
  * Component for an OffPageEdge.
@@ -40,7 +40,7 @@ export const BlockOffPageEdge = ({ id, sourceX, sourceY, targetX, targetY, sourc
         strokeDasharray="0.3,10"
         strokeLinecap="square"
         id={id}
-        style={GetEdgeStyle(color, visible)}
+        style={GetBlockEdgeStyle(color, visible)}
         className="path-blockOffPageEdge"
         d={transportPath}
         markerStart={isBidirectional ? `url(#${arrowId})` : null}

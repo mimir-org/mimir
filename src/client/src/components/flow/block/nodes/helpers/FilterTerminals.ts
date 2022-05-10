@@ -21,7 +21,7 @@ import {
  */
 export const FilterTerminals = (connectors: Connector[], selectedNode: Node, secondaryNode: Node) => {
   const sortedConnectors = connectors
-    ?.filter((c) => !IsPartOfTerminal(c) && FilterTerminal(selectedNode, secondaryNode, c))
+    ?.filter((c) => FilterTerminal(selectedNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
 
   const inputs = sortedConnectors?.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t)) ?? [];
@@ -33,6 +33,7 @@ export const FilterTerminals = (connectors: Connector[], selectedNode: Node, sec
 function FilterTerminal(selectedNode: Node, secondaryNode: Node, connector: Connector) {
   if (secondaryNode) return FilterSplitViewTerminal(selectedNode, secondaryNode, connector);
   if (IsLocation(selectedNode)) return IsLocationTerminal(connector);
+  if (IsProduct(selectedNode)) return IsTransport(connector) || IsPartOfTerminal(connector);
   return IsTransport(connector);
 }
 

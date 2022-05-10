@@ -6,12 +6,14 @@ import { HandleContainer } from "./HandleComponent.styled";
 import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { GetBlockNodeTerminal } from "./helpers/GetBlockNodeTerminal";
 import { ShowHandle } from "./helpers";
+import { IsProduct } from "../../../../helpers/Aspects";
 
 interface Props {
   node: Node;
   terminals: Connector[];
   offPage?: boolean;
   isInput?: boolean;
+  isParent?: boolean;
 }
 
 /**
@@ -19,7 +21,7 @@ interface Props {
  * @param interface
  * @returns a Flow Handle element with an icon that corresponds with the terminal type.
  */
-export const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
+export const HandleComponent = ({ node, terminals, offPage, isInput, isParent }: Props) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const isElectro = useAppSelector(electroSelector);
@@ -35,7 +37,8 @@ export const HandleComponent = ({ node, terminals, offPage, isInput }: Props) =>
   return (
     <HandleContainer isElectro={isElectro}>
       {terminals.map((c) => {
-        if (ShowHandle(c, isInput)) return GetBlockNodeTerminal(project, c, offPage, dispatch, isElectro, visible, setVisible);
+        if (ShowHandle(c, isInput, IsProduct(node)))
+          return GetBlockNodeTerminal(project, node, c, dispatch, isElectro, isParent, visible, setVisible);
       })}
     </HandleContainer>
   );

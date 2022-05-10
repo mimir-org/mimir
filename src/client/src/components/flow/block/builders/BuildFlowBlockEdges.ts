@@ -1,4 +1,5 @@
 import { Edge as FlowEdge, Node as FlowNode } from "react-flow-renderer";
+import { IsProduct } from "../../../../helpers/Aspects";
 import { Node, Edge } from "../../../../models";
 import { IsPartOfTerminal } from "../../helpers/Connectors";
 import { GetBlockEdgeType } from "../helpers";
@@ -27,7 +28,7 @@ const BuildFlowBlockEdges = (
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
-    if (IsPartOfTerminal(edge.fromConnector)) return;
+    if (IsPartOfTerminal(edge.fromConnector) && !ValidatePartOfEdge(edge)) return;
 
     const sourceNodeIsDisplayed = flowNodes.some((flowNode) => flowNode.id === edge.fromNodeId);
     const targetNodeIsDisplayed = flowNodes.some((flowNode) => flowNode.id === edge.toNodeId);
@@ -42,5 +43,14 @@ const BuildFlowBlockEdges = (
 
   return flowEdges;
 };
+
+/**
+ * A partOf edge should only be visible between Product nodes.
+ * @param edge
+ * @returns a boolean value.
+ */
+function ValidatePartOfEdge(edge: Edge) {
+  return IsProduct(edge.fromNode) && IsProduct(edge.toNode);
+}
 
 export default BuildFlowBlockEdges;

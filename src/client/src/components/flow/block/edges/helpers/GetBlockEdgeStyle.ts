@@ -1,4 +1,4 @@
-export const GetEdgeStyle = (color: string, visible: boolean) => {
+export const GetBlockEdgeStyle = (color: string, visible: boolean) => {
   return {
     stroke: color,
     opacity: visible ? 1 : 0,

@@ -49,6 +49,7 @@ export const FlowTree = ({ project, inspectorRef }: Props) => {
   const mimirNodes = project?.nodes;
   const mimirEdges = project?.edges;
   const selectedNode = mimirNodes?.find((n) => n.selected);
+  const selectedEdge = mimirEdges?.find((e) => e.selected);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -83,9 +84,13 @@ export const FlowTree = ({ project, inspectorRef }: Props) => {
     [selectedNode]
   );
 
-  const OnEdgesChange = useCallback((changes: EdgeChange[]) => {
-    return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, changes, setEdges, dispatch, inspectorRef);
-  }, []);
+  const OnEdgesChange = useCallback(
+    (changes: EdgeChange[]) => {
+      if (!project) return;
+      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, dispatch);
+    },
+    [selectedEdge]
+  );
 
   // Build initial elements from Project
   useEffect(() => {

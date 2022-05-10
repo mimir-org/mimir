@@ -1,11 +1,12 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { InspectorTabs } from "../tabs/InspectorTabs";
 import { MutableRefObject } from "react";
-import { Project } from "../../../../models";
+import { Aspect, Project } from "../../../../models";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
+import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
 import {
   AttributeLikeItem,
@@ -57,9 +58,10 @@ export const InspectorHeader = ({
   selectedFlowNodes,
 }: Props) => {
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
+  const isOffPage = IsNode(element) ? element.aspect === Aspect.None : false;
 
   return (
-    <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(element, tabsVisible)}>
+    <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, isOffPage, tabsVisible)}>
       {tabsVisible && (
         <>
           <InspectorTabs
@@ -72,6 +74,7 @@ export const InspectorHeader = ({
             changeInspectorTabAction={changeInspectorTabAction}
             inspectorRef={inspectorRef}
             isInspectorOpen={isInspectorOpen}
+            isOffPage={isOffPage}
           />
           {GetInspectorHeaderText(element)}
         </>

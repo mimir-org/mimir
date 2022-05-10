@@ -25,9 +25,8 @@ export const GetTreeNodeTerminal = (
   setIsHover: React.Dispatch<React.SetStateAction<boolean>>,
   isHover: boolean
 ) => {
-  const [type, pos] = GetHandleType(connector);
-
   if (!ShouldRenderTerminal(connector)) return null;
+  const [type, pos] = GetHandleType(connector);
 
   return (
     <TreeHandleBox
@@ -53,11 +52,11 @@ function ShouldRenderTerminal(connector: Connector) {
   if (IsPartOfTerminal(connector)) return true;
 
   const edges = GetMimirEdges();
+  let isConnectedToEdgde = false;
 
   edges.forEach((e) => {
-    const edge = e.fromConnectorId === connector.id || e.toConnectorId === connector.id;
-    if (edge) return true;
+    if (e.fromConnectorId === connector.id || e.toConnectorId === connector.id) isConnectedToEdgde = true;
   });
 
-  return false;
+  return isConnectedToEdgde;
 }

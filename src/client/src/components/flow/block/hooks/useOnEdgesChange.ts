@@ -1,6 +1,6 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Edge, Node } from "../../../../models";
+import { Edge, Node, Project } from "../../../../models";
 import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
 
 /**
@@ -9,26 +9,31 @@ import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
  * If an edge is marked as remove, a separate validation is executed.
  * @param changes
+ * @param selectedBlockNode
+ * @param selectedEdge
  * @param setEdges
  * @param inspectorRef
- * @param nodes
- * @param edges
+ * @param project
  * @param dispatch
  */
 const useOnEdgesChange = (
   changes: EdgeChange[],
+  selectedBlockNode: Node,
+  selectedEdge: Edge,
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  nodes: Node[],
-  edges: Edge[],
+  project: Project,
   dispatch: Dispatch
 ) => {
+  const edges = project?.edges;
+  const nodes = project?.nodes;
   const verifiedFlowChanges = [] as EdgeChange[];
   const verfifiedMimirEdges = [] as Edge[];
 
   // Verify changes
   changes.forEach((c) => {
-    if (c.type === "remove") return HandleRemoveEdge(c, edges, verifiedFlowChanges, verfifiedMimirEdges);
+    if (c.type === "remove")
+      return HandleRemoveEdge(c, edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, verfifiedMimirEdges);
     verifiedFlowChanges.push(c);
   });
 
@@ -42,17 +47,28 @@ const useOnEdgesChange = (
  * A confirmed element to be deleted is added to both lists - flowChanges and mimirEdgesToDelete.
  * @param change
  * @param edges
+ * @param selectedBlockNode
+ * @param selectedEdge
  * @param verifiedFlowChanges
  * @param verfifiedMimirEdges
  */
 function HandleRemoveEdge(
   change: EdgeRemoveChange,
   edges: Edge[],
+  selectedBlockNode: Node,
+  selectedEdge: Edge,
   verifiedFlowChanges: EdgeChange[],
   verfifiedMimirEdges: Edge[]
 ) {
   const edgeToRemove = edges.find((e) => e.id === change.id);
-  if (edgeToRemove.isLocked) return null;
+  if (!edgeToRemove || edgeToRemove.isLocked) return;
+
+  const isConnectedToSelectedBlockNode =
+    edgeToRemove.fromNodeId === selectedBlockNode?.id || edgeToRemove.toNodeId === selectedBlockNode?.id;
+
+  const isSelectedEdge = change.id === selectedEdge?.id;
+
+  if (!isConnectedToSelectedBlockNode && !isSelectedEdge) return;
 
   verifiedFlowChanges.push(change);
   verfifiedMimirEdges.push(edgeToRemove);

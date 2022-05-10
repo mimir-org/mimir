@@ -1,21 +1,26 @@
 import { useReactFlow } from "react-flow-renderer";
-import { animatedEdgeSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
-import { ConvertFlowElements } from "./helpers/GetFilterElements";
+import { ConvertFlowElements } from "./helpers/ConvertFlowElements";
 import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
+import { Dispatch } from "redux";
+
+interface Props {
+  edgeAnimation: boolean;
+  dispatch: Dispatch;
+}
 
 /**
  * Component for the Visual Filter.
  * @returns a menu with multiple checkboxes to control visibility of items in Mimir.
  */
-export const VisualFilterComponent = () => {
-  const dispatch = useAppDispatch();
+const VisualFilterComponent = ({ edgeAnimation, dispatch }: Props) => {
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const edgeAnimation = useAppSelector(animatedEdgeSelector);
+  // const edgeAnimation = useAppSelector(animatedEdgeSelector);
   const flowNodes = useReactFlow().getNodes();
   const flowEdges = useReactFlow().getEdges();
   const { mimirNodes, mimirEdges } = ConvertFlowElements(flowNodes, flowEdges);
@@ -30,7 +35,7 @@ export const VisualFilterComponent = () => {
     <VisualFilterContainer libraryOpen={libOpen}>
       <VisualFilterHeader>{TextResources.VISUAL_FILTER}</VisualFilterHeader>
       <VisualFilterMenuColumn>
-        <AnimationFilter edgeAnimation={edgeAnimation} dispatch={dispatch} />
+        <AnimationFilter isAnimated={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter
           edges={mimirEdges}
           nodes={mimirNodes}
@@ -50,3 +55,5 @@ export const VisualFilterComponent = () => {
     </VisualFilterContainer>
   );
 };
+
+export default VisualFilterComponent;

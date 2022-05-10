@@ -30,9 +30,12 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   }, [timer]);
 
   // This callback prevents all terminals from fetching on each render
-  const GetTerminal = useCallback((conn: Connector) => {
-    return GetTreeNodeTerminal(data, conn, dispatch, setIsHover, isHover);
-  }, []);
+  const GetTerminal = useCallback(
+    (conn: Connector) => {
+      return GetTreeNodeTerminal(data, conn, dispatch, setIsHover, isHover);
+    },
+    [isHover]
+  );
 
   if (!data) return null;
 
@@ -56,9 +59,10 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       onMouseUp={() => mouseUp()}
       onMouseDown={() => mouseDown()}
     >
-      {data.connectors?.map((conn) => {
-        if (renderTerminals) return GetTerminal(conn);
-      })}
+      {renderTerminals &&
+        data.connectors?.map((conn) => {
+          return GetTerminal(conn);
+        })}
       <TreeLogoComponent node={data} />
     </TreeNodeBox>
   );

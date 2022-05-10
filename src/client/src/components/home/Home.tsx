@@ -17,9 +17,9 @@ import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
 import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
-import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { animatedEdgeSelector, isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
-import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
+import { VisualFilterComponent } from "../menus/filterMenu/";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
 import {
   fetchCollaborationPartners,
@@ -45,6 +45,7 @@ export const Home = ({ dispatch }: Props) => {
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
   const isBlockView = flowView === VIEW_TYPE.BLOCKVIEW;
   const inspectorRef = useRef(null);
+  const edgeAnimation = useAppSelector(animatedEdgeSelector);
 
   useEffect(() => {
     dispatch(fetchLibraryInterfaceTypes());
@@ -85,7 +86,7 @@ export const Home = ({ dispatch }: Props) => {
           <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule nodes={project?.nodes} dispatch={dispatch} />
           {/* <TypeEditorComponent /> */}
-          {isFilterOpen && <VisualFilterComponent />}
+          {isFilterOpen && <VisualFilterComponent edgeAnimation={edgeAnimation} dispatch={dispatch} />}
         </>
       )}
       <ProjectSubMenus />
