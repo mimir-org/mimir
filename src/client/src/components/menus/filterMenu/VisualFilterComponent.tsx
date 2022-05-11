@@ -24,11 +24,11 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
   const flowEdges = useReactFlow().getEdges();
   const { mimirNodes, mimirEdges } = ConvertFlowElements(flowNodes, flowEdges);
 
-  const transportItems: Connector[] = [];
-  const relationItems: Connector[] = [];
-  const partOfItems: Connector[] = [];
+  const transportConnectors = [] as Connector[];
+  const relationConnectors = [] as Connector[];
+  const partOfConnectors = [] as Connector[];
 
-  PopulateFilterLists(mimirEdges, mimirNodes, transportItems, relationItems, partOfItems);
+  PopulateFilterLists(mimirEdges, mimirNodes, transportConnectors, relationConnectors, partOfConnectors);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
@@ -38,18 +38,23 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
         <PartOfFilter
           edges={mimirEdges}
           nodes={mimirNodes}
-          items={partOfItems}
+          connectors={partOfConnectors}
           dispatch={dispatch}
-          visible={!!partOfItems.length}
+          visible={!!partOfConnectors.length}
         />
         <RelationFilter
           edges={mimirEdges}
           nodes={mimirNodes}
-          items={relationItems}
+          connectors={relationConnectors}
           dispatch={dispatch}
-          visible={!!relationItems.length}
+          visible={!!relationConnectors.length}
         />
-        <TransportFilter edges={mimirEdges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
+        <TransportFilter
+          edges={mimirEdges}
+          connectors={transportConnectors}
+          dispatch={dispatch}
+          visible={!!transportConnectors.length}
+        />
       </VisualFilterMenuColumn>
     </VisualFilterContainer>
   );

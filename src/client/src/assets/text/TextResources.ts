@@ -291,4 +291,8 @@ export const TextResources = {
 
   // Resize
   RESIZE_NODE: "Resize node",
+
+  // Company names
+  EQUINOR: "equinor.com",
+  AIBEL: "aibel.com",
 };

@@ -57,7 +57,8 @@ export const GetInactiveTerminals = (nodes: Node[]) => {
 
   nodes.forEach((n) => {
     n.connectors?.forEach((c) => {
-      if (!IsConnectorVisible(c)) terminals.push(c);
+      if (IsConnectorVisible(c)) return;
+      terminals.push(c);
     });
   });
 

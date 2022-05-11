@@ -102,10 +102,10 @@ export function FindSiblingNodes(parentNode: Node, nodes: Node[], edges: Edge[])
   const siblings: Node[] = [];
 
   edges?.forEach((edge) => {
-    if (edge.fromNodeId === parentNode.id) {
-      const sibling = nodes?.find((n) => n.id === edge.toNodeId && n.level === parentNode.level + 1);
-      if (sibling) siblings.push(sibling);
-    }
+    if (edge.fromNodeId !== parentNode.id) return;
+
+    const sibling = nodes?.find((n) => n.id === edge.toNodeId && n.level === parentNode.level + 1);
+    if (sibling) siblings.push(sibling);
   });
 
   return siblings;

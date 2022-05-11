@@ -1,5 +1,5 @@
 import red from "../../../../redux/store";
-import { IsParentOf } from "../../../../helpers/Family";
+import { IsFamily, IsParentOf } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node } from "../../../../models";
 import { IsPartOfTerminal } from "../../../../components/flow/helpers/Connectors";
@@ -15,7 +15,7 @@ const SortNodesWithIndent = (nodes: Node[]) => {
  * @param nodes Nodes to sort.
  */
 export const InitialSortNodes = (nodes: Node[]) => {
-  return nodes?.sort((a, b) => (a.aspect === b.aspect ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
+  return nodes?.sort((a, b) => (IsFamily(a, b) ? IsAspectNodeNum(b) - IsAspectNodeNum(a) : b.aspect - a.aspect));
 };
 
 /**

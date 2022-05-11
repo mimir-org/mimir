@@ -16,18 +16,18 @@ import { useOnEdgeDelete } from "../../../../../components/flow/hooks/useOnEdgeD
  * @param dispatch
  * @param inspectorRef
  */
-export const OnDeleteClick = (
+export const OnInspectorDeleteClick = (
   nodes: Node[],
   edges: Edge[],
   element: InspectorElement,
   dispatch: Dispatch,
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
-  if (IsNode(element)) HandleNodeDelete(element, nodes, edges, inspectorRef, dispatch);
-  else if (IsEdge(element)) HandleEdgeDelete(element, nodes, edges, inspectorRef, dispatch);
+  if (IsNode(element)) return HandleInspectorNodeDelete(element, nodes, edges, inspectorRef, dispatch);
+  if (IsEdge(element)) return HandleInspectorEdgeDelete(element, nodes, edges, inspectorRef, dispatch);
 };
 
-function HandleNodeDelete(
+function HandleInspectorNodeDelete(
   node: Node,
   nodes: Node[],
   edges: Edge[],
@@ -44,7 +44,7 @@ function HandleNodeDelete(
   useOnNodeDelete(nodesToDelete, nodes, edges, inspectorRef, dispatch);
 }
 
-function HandleEdgeDelete(
+function HandleInspectorEdgeDelete(
   edge: Edge,
   nodes: Node[],
   edges: Edge[],
@@ -52,6 +52,7 @@ function HandleEdgeDelete(
   dispatch: Dispatch
 ) {
   const edgesToDelete = [] as Edge[];
+
   if (!edge.isLocked) {
     if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, nodes, edges, dispatch);
     edgesToDelete.push(edge);

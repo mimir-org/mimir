@@ -7,8 +7,9 @@ import { Project } from "../../../../models";
 import { ConvertDataToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { IsOffPage } from "../../../../helpers/Aspects";
-import { GetBlockEdgeType, HandleOffPageConnect } from "../helpers";
+import { GetBlockEdgeType } from "../helpers";
 import { IsTransport } from "../../helpers/Connectors";
+import { HandleOffPageConnect } from "./helpers/HandleOffPageConnect";
 
 export interface Params {
   connection: FlowEdge | Connection;
@@ -27,17 +28,17 @@ export interface Params {
 const useOnConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
   const { project, connection, lib, animatedEdge, setEdges, dispatch } = params;
-
   const id = CreateId();
   const source = project.nodes.find((node) => node.id === connection.source);
-  const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
   const target = project.nodes.find((node) => node.id === connection.target);
-  const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
 
   if (IsOffPage(source) && IsOffPage(target)) {
     HandleOffPageConnect(params, source, target);
     return;
   }
+
+  const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
+  const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
 
   const edge = ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, lib);
   dispatch(createEdge(edge));
@@ -46,7 +47,7 @@ const useOnConnect = (params: Params) => {
   const animated = animatedEdge && IsTransport(sourceConn);
 
   return setEdges((els) => {
-    return addEdge({ ...connection, id, type, animated, data: { source, target, edge: edge } }, els);
+    return addEdge({ ...connection, id, type, animated, data: { source, target, edge } }, els);
   });
 };
 

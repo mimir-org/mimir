@@ -1,5 +1,5 @@
 import { OnLockClick } from "../handlers/OnLockClick";
-import { OnDeleteClick } from "../handlers/OnDeleteClick";
+import { OnInspectorDeleteClick } from "../handlers/OnInspectorDeleteClick";
 import { OnToggleInspectorClick } from "../handlers/OnToggleInspectorClick";
 import { Action, Dispatch } from "redux";
 import { Icon } from "../../../../../compLibrary/icon";
@@ -74,7 +74,7 @@ export const InspectorButtonRow = ({
             disabled={onLock && isGlobalLocking}
           />
           <InspectorButton
-            onClick={() => !deleteDisabled && OnDeleteClick(nodes, edges, element, dispatch, inspectorRef)}
+            onClick={() => !deleteDisabled && OnInspectorDeleteClick(nodes, edges, element, dispatch, inspectorRef)}
             type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
             description={TextResources.DELETE_OBJECT}
             disabled={deleteDisabled}

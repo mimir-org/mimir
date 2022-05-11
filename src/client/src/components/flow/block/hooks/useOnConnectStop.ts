@@ -42,9 +42,9 @@ const useOnConnectStop = (
   if (!IsTransport(sourceConn) || IsOffPage(sourceNode)) return;
 
   const existingEdge = edges.find(
-    (e) =>
-      (e.fromConnectorId === sourceConn.id && IsTransport(e.fromConnector)) ||
-      (e.toConnectorId === sourceConn.id && IsTransport(e.toConnector))
+    (edge) =>
+      (edge.fromConnectorId === sourceConn.id && IsTransport(edge.fromConnector)) ||
+      (edge.toConnectorId === sourceConn.id && IsTransport(edge.toConnector))
   );
 
   if (existingEdge) {

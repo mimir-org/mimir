@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { IsOffPage } from "../../../helpers/Aspects";
 import { Node, Edge } from "../../../models";
 import { deleteEdge } from "../../../redux/store/project/actions";
 import { CloseInspector } from "../tree/handlers";
@@ -24,7 +25,7 @@ export const useOnEdgeDelete = (
 
   edgesToDelete.forEach((edge) => {
     if (!edge) return;
-    HandleOffPageEdgeDelete(edge, nodes, edges, dispatch);
+    if (IsOffPage(edge.fromNode) || IsOffPage(edge.toNode)) HandleOffPageEdgeDelete(edge, nodes, edges, dispatch);
     dispatch(deleteEdge(edge.id));
   });
 

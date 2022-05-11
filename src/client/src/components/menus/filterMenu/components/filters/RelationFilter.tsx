@@ -8,7 +8,7 @@ import { FilterElement } from "../FilterElement";
 interface Props {
   edges: Edge[];
   nodes: Node[];
-  items: Connector[];
+  connectors: Connector[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -18,7 +18,7 @@ interface Props {
  * @param interface
  * @returns checkboxes to toggle relations that exist in Mimir.
  */
-export const RelationFilter = ({ edges, nodes, items, dispatch, visible }: Props) =>
+export const RelationFilter = ({ edges, nodes, connectors, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement
@@ -28,7 +28,7 @@ export const RelationFilter = ({ edges, nodes, items, dispatch, visible }: Props
         visible={visible}
         isHeader
       />
-      {items.map((conn) => {
+      {connectors.map((conn) => {
         const edge = edges.find((x) => x.fromConnectorId === conn.id);
         return (
           <FilterElement

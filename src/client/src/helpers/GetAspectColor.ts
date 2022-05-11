@@ -12,17 +12,18 @@ type Item = Node | LibItem;
  * @returns the color according to the chosen criteriums.
  */
 const GetAspectColor = (node: Item, colorType: AspectColorType, isTransparent?: boolean) => {
-  if (isTransparent) {
-    if (IsFunction(node)) return "rgba(251, 201, 19, 0.1)";
-    if (IsProduct(node)) return "rgba(6, 144, 152, 0.1)";
-    if (IsLocation(node)) return "rgba(163, 0, 167, 0.1)";
-  }
-
+  if (isTransparent) return GetTransparentColor(node);
   if (colorType === AspectColorType.Main) return GetMainColor(node);
   if (colorType === AspectColorType.Selected) return GetSelectedColor(node);
   if (colorType === AspectColorType.Header) return GetHeaderColor(node);
   if (colorType === AspectColorType.Tab) return GetTabColor(node);
 };
+
+function GetTransparentColor(node: Item) {
+  if (IsFunction(node)) return "rgba(251, 201, 19, 0.1)";
+  if (IsProduct(node)) return "rgba(6, 144, 152, 0.1)";
+  if (IsLocation(node)) return "rgba(163, 0, 167, 0.1)";
+}
 
 function GetMainColor(node: Item) {
   if (IsFunction(node)) return Color.LEMON_YELLOW;

@@ -5,13 +5,14 @@ import { AibelInvertedLogo } from "../assets/icons/aibel/inspector";
 import { EquinorInvertedLogo } from "../assets/icons/equinor/inspector";
 import { InspectorElement } from "../modules/inspector/types";
 import { IsCreateLibraryType } from "../modules/inspector/helpers/IsType";
+import { TextResources } from "../assets/text/TextResources";
 
 export const GetCompanyLogoForNode = (company: string, node: Node) => {
   let companyValue = company;
 
   if (node.domain) companyValue = node.domain;
-  if (companyValue === "aibel.com") return AibelLogo;
-  if (companyValue === "equinor.com") return EquinorLogo;
+  if (companyValue === TextResources.AIBEL) return AibelLogo;
+  if (companyValue === TextResources.EQUINOR) return EquinorLogo;
   return null;
 };
 
@@ -21,13 +22,13 @@ export const GetCompanyLogoForInspector = (company: string, elem: InspectorEleme
   if (IsCreateLibraryType(elem)) return null;
   else if (elem.domain) companyValue = elem.domain;
 
-  if (companyValue === "aibel.com") return AibelLogo;
-  if (companyValue === "equinor.com") return EquinorLogo;
+  if (companyValue === TextResources.AIBEL) return AibelLogo;
+  if (companyValue === TextResources.EQUINOR) return EquinorLogo;
   return null;
 };
 
 export const GetCompanyLogoForHeader = (company: string) => {
-  if (company === "aibel.com") return AibelInvertedLogo;
-  if (company === "equinor.com") return EquinorInvertedLogo;
+  if (company === TextResources.AIBEL) return AibelInvertedLogo;
+  if (company === TextResources.EQUINOR) return EquinorInvertedLogo;
   return null;
 };

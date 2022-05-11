@@ -8,7 +8,7 @@ import { FilterElement } from "../FilterElement";
 interface Props {
   category: TerminalCategory;
   edges: Edge[];
-  items: Connector[];
+  connectors: Connector[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -20,7 +20,7 @@ interface Props {
  * @param interface
  * @returns a parent checkbox and a checkbox for each child.
  */
-export const TerminalCategoryFilter = ({ category, edges, items, dispatch, visible }: Props) => {
+export const TerminalCategoryFilter = ({ category, edges, connectors, dispatch, visible }: Props) => {
   const isCategoryChecked = IsTerminalCategoryChecked(edges, category.id);
 
   return (
@@ -35,7 +35,7 @@ export const TerminalCategoryFilter = ({ category, edges, items, dispatch, visib
           isSubHeader
         />
 
-        {items.map((conn) => {
+        {connectors.map((conn) => {
           const isChecked = IsTerminalTypeChecked(edges, category.id, conn.terminalTypeId);
           return (
             <FilterElement

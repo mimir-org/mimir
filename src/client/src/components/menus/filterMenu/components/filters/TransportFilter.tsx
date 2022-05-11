@@ -14,7 +14,7 @@ export interface TerminalCategory {
 
 interface Props {
   edges: Edge[];
-  items: Connector[];
+  connectors: Connector[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -25,8 +25,8 @@ interface Props {
  * @param interface
  * @returns one parent checkbox, and one checkbox for each child.
  */
-const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
-  const categories = PopulateTerminalCategories(items);
+const TransportFilter = ({ edges, connectors, dispatch, visible }: Props) => {
+  const categories = PopulateTerminalCategories(connectors);
 
   return (
     visible && (
@@ -40,15 +40,15 @@ const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
         />
 
         {categories?.map((category) => {
-          const categoryItems = items.filter((item) => item.terminalCategoryId === category.id);
+          const categoryConnectors = connectors.filter((conn) => conn.terminalCategoryId === category.id);
           return (
             <TerminalCategoryFilter
               key={category.id}
               category={category}
               edges={edges}
-              items={categoryItems}
+              connectors={categoryConnectors}
               dispatch={dispatch}
-              visible={!!categoryItems.length}
+              visible={!!categoryConnectors.length}
             />
           );
         })}
