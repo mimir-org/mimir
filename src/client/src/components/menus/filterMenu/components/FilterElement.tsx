@@ -20,7 +20,7 @@ export const FilterElement = ({ onChange, isChecked, visible, label, isHeader, i
   visible && (
     <ElementBox isHeader={isHeader} isSubHeader={isSubHeader} indent={indent}>
       <Checkbox isChecked={isChecked} onChange={onChange} id={CreateId()} marginLeft={indent * 8} />
-      <ElementLabel isHeader={isHeader} isSubHeader={isSubHeader} onClick={onChange}>
+      <ElementLabel isHeader={isHeader} isSubHeader={isSubHeader}>
         {label}
       </ElementLabel>
     </ElementBox>

@@ -2,26 +2,30 @@ import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
 import * as handlers from "./handlers/OnToolbarClick";
 import { ToolbarElement } from "./components/ToolbarElement";
-import { VIEW_TYPE, ViewportData } from "../../models/project";
+import { ViewportData } from "../../models/project";
 import { ToolbarButtonGroup, ToolbarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { useAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
 import { useReactFlow, useStoreApi } from "react-flow-renderer";
+import { Dispatch } from "redux";
+
+interface Props {
+  isTreeView: boolean;
+  dispatch: Dispatch;
+}
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
  * @returns a menu with icons for different features.
  */
-export const ToolbarComponent = () => {
-  const dispatch = useAppDispatch();
+export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
   const { setViewport, setCenter } = useReactFlow();
   const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
   const selectedFlowNodes = GetSelectedFlowNodes();
   const viewportData = { setViewport, setCenter } as ViewportData;
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
-  const isTreeView = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.TREEVIEW);
   const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);

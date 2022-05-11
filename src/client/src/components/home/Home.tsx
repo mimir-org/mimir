@@ -7,7 +7,7 @@ import { InspectorModule } from "../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../modules/library/LibraryModule";
 import { ProjectSubMenus } from "../menus/projectMenu/ProjectSubMenus";
 import { search } from "../../redux/store/project/actions";
-import { FlowModule } from "../flow";
+import { FlowModule } from "../flow/FlowModule";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
 import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
@@ -17,9 +17,9 @@ import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
 import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
-import { animatedEdgeSelector, isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
-import { VisualFilterComponent } from "../menus/filterMenu/";
+import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
 import {
   fetchCollaborationPartners,
@@ -38,14 +38,14 @@ interface Props {
  * @returns all the modules and components in the Mimir application.
  */
 export const Home = ({ dispatch }: Props) => {
-  const project = useAppSelector(selectors.projectSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
   const isFilterOpen = useAppSelector(selectors.filterSelector);
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
-  const isBlockView = flowView === VIEW_TYPE.BLOCKVIEW;
+  const activeMenu = useAppSelector(selectors.activeMenuSelector);
+  const isProjectMenuOpen = activeMenu !== null;
+  const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
   const inspectorRef = useRef(null);
-  const edgeAnimation = useAppSelector(animatedEdgeSelector);
 
   useEffect(() => {
     dispatch(fetchLibraryInterfaceTypes());
@@ -70,7 +70,7 @@ export const Home = ({ dispatch }: Props) => {
 
   useEffect(() => {
     ToggleColorProfile(isDarkMode);
-  }, [isDarkMode, isBlockView]);
+  }, [isDarkMode, isTreeView]);
 
   return (
     <>
@@ -79,18 +79,17 @@ export const Home = ({ dispatch }: Props) => {
         <StartPage />
       ) : (
         <>
-          <ToolbarComponent />
-          {!isBlockView && <ExplorerTreeModule dispatch={dispatch} />}
-          {isBlockView && <ExplorerBlockModule />}
-          <FlowModule project={project} inspectorRef={inspectorRef} flowView={flowView} />
-          <InspectorModule project={project} inspectorRef={inspectorRef} dispatch={dispatch} />
-          <LibraryModule nodes={project?.nodes} dispatch={dispatch} />
-          {/* <TypeEditorComponent /> */}
-          {isFilterOpen && <VisualFilterComponent edgeAnimation={edgeAnimation} dispatch={dispatch} />}
+          <ToolbarComponent isTreeView={isTreeView} dispatch={dispatch} />
+          {isTreeView && <ExplorerTreeModule dispatch={dispatch} />}
+          {!isTreeView && <ExplorerBlockModule dispatch={dispatch} />}
+          <FlowModule inspectorRef={inspectorRef} flowView={flowView} dispatch={dispatch} />
+          <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
+          <LibraryModule dispatch={dispatch} />
+          {isFilterOpen && <VisualFilterComponent dispatch={dispatch} />}
+          <ValidationModule />
         </>
       )}
-      <ProjectSubMenus />
-      <ValidationModule />
+      {isProjectMenuOpen && <ProjectSubMenus activeMenu={activeMenu} />}
       <ErrorModule />
     </>
   );

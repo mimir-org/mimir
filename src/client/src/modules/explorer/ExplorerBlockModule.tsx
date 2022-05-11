@@ -8,14 +8,18 @@ import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { Icon } from "../../compLibrary/icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./shared/styled/ExplorerModule.styled";
-import { useAppSelector, explorerSelector, useAppDispatch } from "../../redux/store";
+import { useAppSelector, explorerSelector } from "../../redux/store";
+import { Dispatch } from "redux";
+
+interface Props {
+  dispatch: Dispatch;
+}
 
 /**
  * Component for the Explorer Module in Mimir's BlockView.
  * @returns a module where all nodes in Mimir are listed.
  */
-export const ExplorerBlockModule = () => {
-  const dispatch = useAppDispatch();
+export const ExplorerBlockModule = ({ dispatch }: Props) => {
   const isOpen = useAppSelector(explorerSelector);
   const type = MODULE_TYPE.EXPLORER;
 

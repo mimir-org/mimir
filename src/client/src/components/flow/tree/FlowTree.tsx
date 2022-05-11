@@ -4,13 +4,13 @@ import * as hooks from "./hooks";
 import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { updatePosition } from "../../../redux/store/project/actions";
-import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../compLibrary/size/Size";
 import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
-import { Project } from "../../../models";
+import { Dispatch } from "redux";
 import ReactFlow, {
   Background,
   Edge as FlowEdge,
@@ -25,8 +25,8 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 interface Props {
-  project: Project;
   inspectorRef: MutableRefObject<HTMLDivElement>;
+  dispatch: Dispatch;
 }
 
 /**
@@ -34,14 +34,14 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-export const FlowTree = ({ project, inspectorRef }: Props) => {
-  const dispatch = useAppDispatch();
+export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
   const [flowNodes, setNodes] = useNodesState<FlowNode>([] as FlowNode[]);
   const [flowEdges, setEdges] = useEdgesState<FlowEdge>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);

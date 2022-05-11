@@ -3,13 +3,13 @@ import * as selectors from "./helpers/selectors";
 import * as hooks from "./hooks";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
-import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
+import { useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
 import { OnBlockSelectionChange } from "./handlers/OnBlockSelectionChange";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
-import { Project } from "../../../models";
+import { Dispatch } from "redux";
 import ReactFlow, {
   Node as FlowNode,
   Edge as FlowEdge,
@@ -24,8 +24,8 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 interface Props {
-  project: Project;
   inspectorRef: React.MutableRefObject<HTMLDivElement>;
+  dispatch: Dispatch;
 }
 
 /**
@@ -33,8 +33,7 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = ({ project, inspectorRef }: Props) => {
-  const dispatch = useAppDispatch();
+const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
@@ -42,6 +41,7 @@ const FlowBlock = ({ project, inspectorRef }: Props) => {
   const [flowEdges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
+  const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const icons = useAppSelector(selectors.iconSelector);
   const lib = useAppSelector(selectors.librarySelector);

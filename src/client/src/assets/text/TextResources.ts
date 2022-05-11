@@ -26,6 +26,7 @@ export const TextResources = {
   UNLOCK_OBJECT: "Unlock object(s)",
   PARTOF_RELATIONSHIP: "Part of Relationship",
   FAVORITES: "Favorites",
+  CLOSE_WINDOW: "Close window",
 
   // MODULES
   LIBRARY: "Library",

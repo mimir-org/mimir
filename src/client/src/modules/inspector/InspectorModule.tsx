@@ -6,7 +6,6 @@ import { TextResources } from "../../assets/text/TextResources";
 import { MODULE_TYPE } from "../../models/project";
 import { InspectorElement } from "./types";
 import { InspectorResizePanel } from "./InspectorModule.styled";
-import { Project } from "../../models";
 import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
@@ -17,7 +16,6 @@ import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
 
 interface Props {
-  project: Project;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
@@ -27,8 +25,9 @@ interface Props {
  * @param interface
  * @returns a module with multiple tabs for different operations.
  */
-export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
+export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
+  const project = useAppSelector(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
   const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);

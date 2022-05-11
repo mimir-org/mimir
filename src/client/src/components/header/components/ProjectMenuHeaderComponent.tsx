@@ -1,6 +1,5 @@
-import * as selectors from "../../home/helpers/selectors";
-import InstructionBoxComponent from "./InstructionBoxComponent";
 import { useState } from "react";
+import { InstructionBoxComponent } from "./InstructionBoxComponent";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
 import { Icon } from "../../../compLibrary/icon";
@@ -8,7 +7,7 @@ import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuComponent } from "../../menus/projectMenu";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
 import { ProjectHeaderButtonContainer, ProjectHeaderButton } from "./ProjectMenuHeaderComponent.styled";
-import { useAppSelector, useParametricAppSelector, isActiveMenuSelector } from "../../../redux/store";
+import { useAppSelector, useParametricAppSelector, isActiveMenuSelector, projectNameSelector } from "../../../redux/store";
 
 /**
  * Component for the ProjectMenu element in the header of Mimir.
@@ -16,7 +15,7 @@ import { useAppSelector, useParametricAppSelector, isActiveMenuSelector } from "
  */
 export const ProjectMenuHeaderComponent = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const projectName = useAppSelector(selectors.projectNameSelector);
+  const projectName = useAppSelector(projectNameSelector);
   const isInstructionOpen = useParametricAppSelector(isActiveMenuSelector, MENU_TYPE.INSTRUCTION_PROJECT_MENU) && !isUserMenuOpen;
 
   return (

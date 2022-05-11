@@ -6,32 +6,33 @@ import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { ModuleFooter } from "./components/footer/ModuleFooter";
-import { LibraryTab, CollectionsActions, LibItem, Aspect, Node } from "../../models";
+import { LibraryTab, CollectionsActions, LibItem, Aspect } from "../../models";
 import {
   useAppSelector,
   useParametricAppSelector,
   animatedModuleSelector,
   libOpenSelector,
   librarySelector,
+  nodesSelector,
 } from "../../redux/store";
 
 interface Props {
-  nodes: Node[];
   dispatch: Dispatch;
 }
 
 /**
- * Component for Mimir's type library, templates and subprojects
+ * Component for Mimir's type library, templates and subprojects.
  * @param interface
  * @returns a module with tabs and its contents
  */
-export const LibraryModule = ({ nodes, dispatch }: Props) => {
+export const LibraryModule = ({ dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
   const [selectedTypes, setSelectedTypes] = useState([] as LibItem[]);
   const [selectedElement, setSelectedElement] = useState<LibItem>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
+  const nodes = useAppSelector(nodesSelector);
 
   const showFooter = collectionState !== CollectionsActions.ManageCollection;
   const lib = MODULE_TYPE.LIBRARY;

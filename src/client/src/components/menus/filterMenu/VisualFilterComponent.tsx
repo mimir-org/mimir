@@ -1,5 +1,5 @@
 import { useReactFlow } from "react-flow-renderer";
-import { useAppSelector } from "../../../redux/store";
+import { animatedEdgeSelector, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
@@ -10,7 +10,6 @@ import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
 import { Dispatch } from "redux";
 
 interface Props {
-  edgeAnimation: boolean;
   dispatch: Dispatch;
 }
 
@@ -18,9 +17,9 @@ interface Props {
  * Component for the Visual Filter.
  * @returns a menu with multiple checkboxes to control visibility of items in Mimir.
  */
-const VisualFilterComponent = ({ edgeAnimation, dispatch }: Props) => {
+export const VisualFilterComponent = ({ dispatch }: Props) => {
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  // const edgeAnimation = useAppSelector(animatedEdgeSelector);
+  const edgeAnimation = useAppSelector(animatedEdgeSelector);
   const flowNodes = useReactFlow().getNodes();
   const flowEdges = useReactFlow().getEdges();
   const { mimirNodes, mimirEdges } = ConvertFlowElements(flowNodes, flowEdges);
@@ -55,5 +54,3 @@ const VisualFilterComponent = ({ edgeAnimation, dispatch }: Props) => {
     </VisualFilterContainer>
   );
 };
-
-export default VisualFilterComponent;

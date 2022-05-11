@@ -26,6 +26,7 @@ export enum InspectorButtonType {
  */
 const InspectorButton = ({ onClick, type, description, disabled }: Props) => {
   const showSpinner = disabled && (type === InspectorButtonType.Unlock || type === InspectorButtonType.Lock);
+
   return (
     <Tooltip content={description} disabled={disabled} offset={[0, 10]}>
       <ButtonContainer onClick={() => onClick()} disabled={disabled}>

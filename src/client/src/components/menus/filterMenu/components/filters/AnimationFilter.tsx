@@ -14,15 +14,13 @@ interface Props {
  * @param interface
  * @returns a checkbox to toggle Edge animation on/off.
  */
-const AnimationFilter = ({ isAnimated, dispatch }: Props) => {
-  return (
-    <FilterElement
-      label={TextResources.ANIMATION}
-      onChange={() => dispatch(toggleEdgeAnimation())}
-      isChecked={isAnimated}
-      visible
-    />
-  );
-};
+const AnimationFilter = ({ isAnimated, dispatch }: Props) => (
+  <FilterElement
+    label={TextResources.ANIMATION}
+    onChange={() => dispatch(toggleEdgeAnimation())}
+    isChecked={isAnimated}
+    visible
+  />
+);
 
 export default memo(AnimationFilter);
