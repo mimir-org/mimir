@@ -110,6 +110,7 @@ export const TextResources = {
   INSPECTOR_DELETE_NODE: "Delete",
   INSPECTOR_FILTER: "Filter",
   INSPECTOR_LOCK: "Lock",
+  INSPECTOR_UNLOCK: "Unlock",
   INSPECTOR_VALIDATE: "Validate",
 
   INSPECTOR_PARAMS_CLEAR_ALL: "Clear all Entities",

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ParameterDescriptor } from "./ParameterDescriptor";
 import { Entity } from "../styled/Entity";
 import { Color } from "../../../../../../../../../../../compLibrary/colors/Color";
-import { ParameterButton } from "../../../styled/ParameterButton";
+import { ParameterButton, ParameterLockSpinner } from "../../../styled/ParameterButton";
 import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
 import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { Attribute, CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
@@ -12,6 +12,7 @@ import { AttributeLikeItem } from "../../../../../../../../../types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { FontSize } from "../../../../../../../../../../../compLibrary/font";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
+import { Spinner } from "../../../../../../../../../../../compLibrary/animated";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -20,17 +21,30 @@ interface Props {
   combination: CombinedAttribute;
   headerColor: string;
   bodyColor: string;
+  isGloballyLocking: boolean;
+  lockingAttribute: Attribute;
   onChange: (id: string, value: string, unitId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: (id: string) => void;
 }
 
-export const Parameter = ({ attribute, combination, headerColor, bodyColor, onLock, onClose, onChange }: Props) => {
+export const Parameter = ({
+  attribute,
+  combination,
+  headerColor,
+  bodyColor,
+  isGloballyLocking,
+  lockingAttribute,
+  onLock,
+  onClose,
+  onChange,
+}: Props) => {
   const [value, setValue] = useState("");
   const isAttribute = IsAttribute(attribute);
   const attributeValue = isAttribute ? attribute.value ?? "" : "";
   const isLocked = isAttribute ? attribute.isLocked : false;
   const unit = isAttribute ? attribute.selectedUnitId ?? attribute.units?.[0]?.id : attribute.units?.[0]?.id;
+  const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
 
   useEffect(() => {
     IsAttribute(attribute) && setValue(attributeValue);
@@ -44,7 +58,15 @@ export const Parameter = ({ attribute, combination, headerColor, bodyColor, onLo
           <>
             <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
               <VisuallyHidden>{isLocked ? "Unlock parameter" : "Lock parameter"}</VisuallyHidden>
-              {isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />}
+              {attributeIsLocking ? (
+                <ParameterLockSpinner>
+                  <Spinner variant="small" />
+                </ParameterLockSpinner>
+              ) : isLocked ? (
+                <LockClosedParameterComponent fill={headerColor} />
+              ) : (
+                <LockOpenComponent />
+              )}
             </ParameterButton>
             <ParameterButton onClick={() => onClose(attribute.id)}>
               <VisuallyHidden>Close parameter</VisuallyHidden>
