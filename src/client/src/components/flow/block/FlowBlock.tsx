@@ -121,7 +121,7 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedNode, secondaryNode));
-  }, [mimirNodes, secondaryNode]);
+  }, [mimirNodes, secondaryNode, selectedBlockNode]);
 
   // Rerender edges
   useEffect(() => {

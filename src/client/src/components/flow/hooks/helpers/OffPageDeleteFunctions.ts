@@ -1,10 +1,10 @@
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { Edge, Node } from "../../../../models";
-import { IsOffPageEdge } from "../../block/helpers/IsOffPageEdge";
+
 import { IsPartOfTerminal, IsTransport } from "../../helpers/Connectors";
 import { IsEdgeConnectedToNode } from "../../helpers/IsEdgeConnectedToNode";
 
-export function GetTransportEdge(nodeId: string, parentNodeId: string, edges: Edge[]) {
+export function GetOffPageEdge(nodeId: string, parentNodeId: string, edges: Edge[]) {
   return edges.find(
     (e) =>
       (e.fromConnector.nodeId === parentNodeId && IsTransport(e.fromConnector) && e.toConnector.nodeId === nodeId) ||
@@ -12,9 +12,11 @@ export function GetTransportEdge(nodeId: string, parentNodeId: string, edges: Ed
   );
 }
 
-export function GetOppositeTransportEdge(edges: Edge[], edge: Edge) {
+export function GetOppositeOffPageEdge(edges: Edge[], mainEdge: Edge, offPageEdge: Edge) {
   return edges.find(
-    (e) => (IsOffPageEdge(e) && e.fromConnectorId === edge.fromConnectorId) || e.toConnectorId === edge.toConnectorId
+    (e) =>
+      (IsOffPage(e.fromNode) && e.id !== offPageEdge.id && e.toConnectorId === mainEdge.toConnectorId) ||
+      (IsOffPage(e.toNode) && e.id !== offPageEdge.id && e.fromConnectorId === mainEdge.fromConnectorId)
   );
 }
 
