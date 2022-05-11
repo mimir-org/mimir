@@ -96,7 +96,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributeLibCm>> GetAttributes()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattribute");
+            var url = _applicationSetting.ApiUrl("attribute");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Attribute.ToString(),
                 async () => await _httpRepository.GetData<List<AttributeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -184,8 +184,73 @@ namespace Mb.Data.Repositories
 
         public async Task<NodeLibCm> CreateNodeType(NodeLibAm node)
         {
+            // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl("librarynode");
             var data = await _httpRepository.PostData<NodeLibCm, NodeLibAm>(url, node);
+            return data;
+        }
+
+        public async Task<NodeLibCm> UpdateNodeType(string id, NodeLibAm node)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl($"librarynode/{id}");
+            var data = await _httpRepository.PutData<NodeLibCm, NodeLibAm>(url, node);
+            return data;
+        }
+
+        public async Task<TransportLibCm> CreateTransportType(TransportLibAm transport)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("librarytransport");
+            var data = await _httpRepository.PostData<TransportLibCm, TransportLibAm>(url, transport);
+            return data;
+        }
+
+        public async Task<TransportLibCm> UpdateTransportType(string id, TransportLibAm transport)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl($"librarytransport/{id}");
+            var data = await _httpRepository.PutData<TransportLibCm, TransportLibAm>(url, transport);
+            return data;
+        }
+
+        public async Task<InterfaceLibCm> CreateInterfaceType(InterfaceLibAm inter)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl("libraryinterface");
+            var data = await _httpRepository.PostData<InterfaceLibCm, InterfaceLibAm>(url, inter);
+            return data;
+        }
+
+        public async Task<InterfaceLibCm> UpdateInterfaceType(string id, InterfaceLibAm inter)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl($"libraryinterface/{id}");
+            var data = await _httpRepository.PutData<InterfaceLibCm, InterfaceLibAm>(url, inter);
+            return data;
+        }
+
+        public async Task<bool> DeleteNode(string id)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl($"librarynode/{id}");
+            var data = await _httpRepository.DeleteDataStruct<bool>(url);
+            return data;
+        }
+
+        public async Task<bool> DeleteTransport(string id)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl($"librarytransport/{id}");
+            var data = await _httpRepository.DeleteDataStruct<bool>(url);
+            return data;
+        }
+
+        public async Task<bool> DeleteInterface(string id)
+        {
+            // ReSharper disable once StringLiteralTypo
+            var url = _applicationSetting.ApiUrl($"libraryinterface/{id}");
+            var data = await _httpRepository.DeleteDataStruct<bool>(url);
             return data;
         }
     }

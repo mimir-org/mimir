@@ -1,4 +1,5 @@
 using AutoMapper;
+using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
@@ -35,6 +36,12 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.TerminalTypeIri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes));
+
+            CreateMap<NodeTerminalLibCm, TerminalTypeItem>()
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.Terminal != null ? src.Terminal.Id : null))
+                .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
+                .ForMember(dest => dest.ConnectorType, opt => opt.MapFrom(src => (ConnectorType)(int) src.ConnectorDirection))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Terminal != null ? src.Terminal.ParentName : null));
         }
     }
 }

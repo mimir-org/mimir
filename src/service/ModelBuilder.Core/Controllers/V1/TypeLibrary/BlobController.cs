@@ -48,7 +48,7 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         {
             try
             {
-                var blobs = await _libraryService.GetBlobData();
+                var blobs = await _libraryService.GetSymbols();
                 return Ok(blobs);
             }
             catch (Exception e)

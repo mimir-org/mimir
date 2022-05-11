@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
-using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data.TypeEditor;
 using Mb.Models.Enums;
@@ -39,28 +37,6 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
         }
 
         #region Get
-
-        /// <summary>
-        /// Get all library types
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("")]
-        [ProducesResponseType(typeof(ICollection<LibraryType>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Policy = "Read")]
-        public IActionResult GetAllLibraryTypes()
-        {
-            try
-            {
-                var allTypes = _libraryService.GetAllTypes().ToList();
-                return Ok(allTypes);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, "Internal Server Error");
-            }
-        }
 
         /// <summary>
         /// Get CreateLibraryType from LibraryTypeId
@@ -210,14 +186,13 @@ namespace Mb.Core.Controllers.V1.TypeLibrary
                 switch (libraryType.ObjectType)
                 {
                     case ObjectType.ObjectBlock:
-                        var ob = await _libraryService.UpdateLibraryType<LibraryNodeItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
+                        var ob = await _libraryService.UpdateNodeItem(id, libraryType);
                         return Ok(ob);
                     case ObjectType.Transport:
-                        var ln = await _libraryService.UpdateLibraryType<LibraryTransportItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
+                        var ln = await _libraryService.UpdateTransportItem(id, libraryType);
                         return Ok(ln);
                     case ObjectType.Interface:
-                        var libraryInterfaceItem =
-                            await _libraryService.UpdateLibraryType<LibraryInterfaceItem>(id, libraryType, updateMajorVersion, updateMinorVersion);
+                        var libraryInterfaceItem = await _libraryService.UpdateInterfaceItem(id, libraryType);
                         return Ok(libraryInterfaceItem);
                     default:
                         throw new ModelBuilderInvalidOperationException(

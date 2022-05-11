@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Application.TypeEditor;
 using Mb.Models.Data;
@@ -14,7 +16,7 @@ namespace Mb.Core.Profiles.TypeLibrary
 {
     public class NodeLibProfile : Profile
     {
-        public NodeLibProfile()
+        public NodeLibProfile(ICommonRepository commonRepository)
         {
             CreateMap<NodeLibCm, LibraryNodeItem>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -35,6 +37,72 @@ namespace Mb.Core.Profiles.TypeLibrary
                 {
                     dest.Connectors = Task.Run(() => CreateConnectors(src.NodeTerminals, context)).Result;
                 });
+
+            CreateMap<NodeLibCm, CreateLibraryType>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => commonRepository.GetDomain()))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.ObjectBlock))
+                .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => !string.IsNullOrWhiteSpace(src.RdsCode) && !string.IsNullOrWhiteSpace(src.Name) ? $"{src.RdsCode.Trim()}#{src.RdsName.Trim()}" : null))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeName))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.MapFrom(src => src.NodeTerminals))
+                .ForMember(dest => dest.SymbolId, opt => opt.MapFrom(src => src.Symbol))
+                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.Attributes != null ? src.Attributes.Select(x => x.Id).ToList() : new List<string>()))
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.MapFrom(src => src.SelectedAttributePredefined))
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
+                .ForMember(dest => dest.SimpleTypes, opt => opt.MapFrom(src => src.Simples != null ? src.Simples.Select(x => x.Id).ToList() : new List<string>()))
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
+                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
+
+            CreateMap<TransportLibCm, CreateLibraryType>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => commonRepository.GetDomain()))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.Transport))
+                .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => !string.IsNullOrWhiteSpace(src.RdsCode) && !string.IsNullOrWhiteSpace(src.Name) ? $"{src.RdsCode.Trim()}#{src.RdsName.Trim()}" : null))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeName))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
+                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.Attributes != null ? src.Attributes.Select(x => x.Id).ToList() : new List<string>()))
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(x => x.TerminalId))
+                .ForMember(dest => dest.SimpleTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
+                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
+
+            CreateMap<InterfaceLibCm, CreateLibraryType>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Domain, opt => opt.MapFrom(src => commonRepository.GetDomain()))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Aspect, opt => opt.MapFrom(src => src.Aspect))
+                .ForMember(dest => dest.ObjectType, opt => opt.MapFrom(src => ObjectType.Interface))
+                .ForMember(dest => dest.SemanticReference, opt => opt.Ignore())
+                .ForMember(dest => dest.RdsId, opt => opt.MapFrom(src => !string.IsNullOrWhiteSpace(src.RdsCode) && !string.IsNullOrWhiteSpace(src.Name) ? $"{src.RdsCode.Trim()}#{src.RdsName.Trim()}" : null))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeName))
+                .ForMember(dest => dest.TerminalTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.SymbolId, opt => opt.Ignore())
+                .ForMember(dest => dest.AttributeTypes, opt => opt.MapFrom(src => src.Attributes != null ? src.Attributes.Select(x => x.Id).ToList() : new List<string>()))
+                .ForMember(dest => dest.PredefinedAttributes, opt => opt.Ignore())
+                .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(x => x.TerminalId))
+                .ForMember(dest => dest.SimpleTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
+                .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
+                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
 
             CreateMap<CreateLibraryType, NodeLibAm>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))

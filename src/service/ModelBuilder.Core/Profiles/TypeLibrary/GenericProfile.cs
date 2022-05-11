@@ -174,6 +174,12 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
                 .ForMember(dest => dest.IsMultiSelect, opt => opt.MapFrom(src => src.IsMultiSelect))
                 .ForMember(dest => dest.Values, opt => opt.MapFrom(src => src.Values));
+
+            CreateMap<SelectedAttributePredefinedLibCm, PredefinedAttributeAm>()
+                .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.Values, opt => opt.MapFrom(src => src.Values))
+                .ForMember(dest => dest.IsMultiSelect, opt => opt.MapFrom(src => src.IsMultiSelect));
+
         }
     }
 }

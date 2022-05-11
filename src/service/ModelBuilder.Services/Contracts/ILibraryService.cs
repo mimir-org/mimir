@@ -26,7 +26,7 @@ namespace Mb.Services.Contracts
         Task<List<LocationTypeAm>> GetAspectAttributes();
         Task<List<Unit>> GetUnits();
         Task<List<AttributeType>> GetAttributeTypes(Aspect aspect);
-        Task<List<BlobDataAm>> GetBlobData();
+        Task<List<BlobDataAm>> GetSymbols();
         Task<List<SimpleType>> GetSimpleTypes();
         Task<List<PredefinedAttributeAm>> GetPredefinedAttributes();
         Task<ICollection<Rds>> GetRds();
@@ -38,11 +38,10 @@ namespace Mb.Services.Contracts
         Task<LibraryTransportItem> CreateTransportType(CreateLibraryType createLibraryType);
         Task<LibraryInterfaceItem> CreateInterfaceType(CreateLibraryType createLibraryType);
 
-        Task<LibraryType> GetTypeById(string id, bool ignoreNotFound = false);
-        IEnumerable<CreateLibraryType> GetAllTypes();
-        Task<IEnumerable<LibraryType>> CreateLibraryTypes(ICollection<CreateLibraryType> createLibraryTypes);
+        Task<LibraryNodeItem> UpdateNodeItem(string id, CreateLibraryType createLibraryType);
+        Task<LibraryTransportItem> UpdateTransportItem(string id, CreateLibraryType createLibraryType);
+        Task<LibraryInterfaceItem> UpdateInterfaceItem(string id, CreateLibraryType createLibraryType);
 
-        Task<T> UpdateLibraryType<T>(string id, CreateLibraryType createLibraryType, bool updateMajorVersion, bool updateMinorVersion) where T : class, new();
         Task DeleteType(string id);
         Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
     }

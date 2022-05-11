@@ -96,7 +96,90 @@ namespace Mb.Data.Repositories
             }
         }
 
+        /// <summary>
+        /// Put http data with given type and given return type
+        /// </summary>
+        /// <typeparam name="TRet">The response type</typeparam>
+        /// <typeparam name="TObj">The type of object to send</typeparam>
+        /// <param name="uri">Uri to service</param>
+        /// <param name="data">Data to send</param>
+        /// <returns>Type TRet</returns>
+        public async Task<TRet> PutData<TRet, TObj>(string uri, TObj data) where TRet : class, new() where TObj : class, new()
+        {
+            StringContent content = null;
 
+            if (data != null)
+            {
+                var json = JsonConvert.SerializeObject(data);
+                content = new StringContent(json, Encoding.UTF8, "application/json");
+            }
+
+            using var response = await _httpClient.PutAsync(uri, content);
+            if (!response.IsSuccessStatusCode)
+                throw new MimirorgInvalidOperationException(
+                    $"Could not put data to http on uri: {uri}. Response code: {response.StatusCode}, Response status: {response.ReasonPhrase}");
+            try
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var obj = JsonConvert.DeserializeObject<TRet>(responseBody);
+                // Need to cast object explicit, because json convert gives wrong assembly information for debugging.
+                // ReSharper disable once RedundantCast
+                return (TRet) obj;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Can't resolve objects from uri: {uri}. Error: {e.Message}");
+                throw new MimirorgInvalidOperationException($"Can't resolve objects from uri: {uri}.");
+            }
+        }
+
+        public async Task<TRet> DeleteData<TRet>(string uri) where TRet : class, new()
+        {
+            using var response = await _httpClient.DeleteAsync(uri);
+            if (!response.IsSuccessStatusCode)
+                throw new MimirorgInvalidOperationException(
+                    $"Could not delete data to http on uri: {uri}. Response code: {response.StatusCode}, Response status: {response.ReasonPhrase}");
+            try
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var obj = JsonConvert.DeserializeObject<TRet>(responseBody);
+                // Need to cast object explicit, because json convert gives wrong assembly information for debugging.
+                // ReSharper disable once RedundantCast
+                return (TRet) obj;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Can't resolve objects from uri: {uri}. Error: {e.Message}");
+                throw new MimirorgInvalidOperationException($"Can't resolve objects from uri: {uri}.");
+            }
+        }
+
+        /// <summary>
+        /// Delete http data with given type and given return type
+        /// </summary>
+        /// <typeparam name="TRet">The response type</typeparam>
+        /// <param name="uri">Uri to service</param>
+        /// <returns>Type TRet</returns>
+        public async Task<TRet> DeleteDataStruct<TRet>(string uri) where TRet : struct
+        {
+            using var response = await _httpClient.DeleteAsync(uri);
+            if (!response.IsSuccessStatusCode)
+                throw new MimirorgInvalidOperationException(
+                    $"Could not delete data to http on uri: {uri}. Response code: {response.StatusCode}, Response status: {response.ReasonPhrase}");
+            try
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var obj = JsonConvert.DeserializeObject<TRet>(responseBody);
+                // Need to cast object explicit, because json convert gives wrong assembly information for debugging.
+                // ReSharper disable once RedundantCast
+                return (TRet) obj;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Can't resolve objects from uri: {uri}. Error: {e.Message}");
+                throw new MimirorgInvalidOperationException($"Can't resolve objects from uri: {uri}.");
+            }
+        }
 
         #endregion
     }

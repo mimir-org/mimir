@@ -24,5 +24,13 @@ namespace Mb.Data.Contracts
         Task<List<RdsLibCm>> GetRds();
         Task<List<TerminalLibCm>> GetTerminalTypes();
         Task<NodeLibCm> CreateNodeType(NodeLibAm node);
+        Task<NodeLibCm> UpdateNodeType(string id, NodeLibAm node);
+        Task<TransportLibCm> CreateTransportType(TransportLibAm transport);
+        Task<TransportLibCm> UpdateTransportType(string id, TransportLibAm transport);
+        Task<InterfaceLibCm> CreateInterfaceType(InterfaceLibAm inter);
+        Task<InterfaceLibCm> UpdateInterfaceType(string id, InterfaceLibAm inter);
+        Task<bool> DeleteNode(string id);
+        Task<bool> DeleteTransport(string id);
+        Task<bool> DeleteInterface(string id);
     }
 }
