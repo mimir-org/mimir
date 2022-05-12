@@ -1,59 +1,50 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IsConnectorVisible } from "../../../../../../helpers";
-import { Connector, EDGE_KIND, Edge, Node } from "../../../../../../models";
-import { EDGE_TYPE } from "../../../../../../models/project";
-import { IsTransport } from "../../../../../flow/helpers";
+import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
+import { Connector, Edge, Node } from "../../../../../../models";
+import { IsTransport, IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
 
 /**
  * Method to find all terminals of a Node.
- * @param elements
- * @returns a list of all terminals.
+ * @param flowNodes
+ * @returns a list of all terminals used in the Visual Filter.
  */
-export const GetAllTerminals = (elements: any[]) => {
+export const GetAllTerminals = (flowNodes: FlowNode[]) => {
   const terminals: Connector[] = [];
-  const edgeTypes = Object.values(EDGE_TYPE);
 
-  elements?.forEach((elem) => {
-    const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
-
-    if (!isEdge) {
-      const node = elem.data as Node;
-      node.connectors?.forEach((c: Connector) => {
-        if (IsTransport(c)) terminals.push(c);
-      });
-    }
+  flowNodes?.forEach((flowNode) => {
+    const node = flowNode.data as Node;
+    node.connectors?.forEach((c: Connector) => {
+      if (IsTransport(c)) terminals.push(c);
+    });
   });
 
   return terminals;
 };
 
 /**
- * Method to find a node's active terminals - terminals that have an edge
- * @param elements
+ * Method to find a node's active terminals - terminals that have an edge.
+ * @param flowEdges
  * @param nodes
- * @returns a list of active terminals and edges
+ * @returns an object with two lists - one for edges and one for terminals.
  */
-export const GetActiveTerminals = (elements: any[], nodes: Node[]) => {
-  const activeElements: any[] = [];
-  const edgeTypes = Object.values(EDGE_TYPE);
+export const GetActiveTerminals = (flowEdges: FlowEdge[], nodes: Node[]) => {
+  const activeEdges: Edge[] = [];
+  const activeTerminals: Connector[] = [];
 
-  elements?.forEach((elem) => {
-    const isEdge = edgeTypes.some((x) => x === elem.type?.toString() || elem.kind === EDGE_KIND);
+  flowEdges?.forEach((elem) => {
+    const edge = elem.data.edge as Edge;
 
-    if (isEdge) {
-      const edge = elem.data.edge as Edge;
+    const sourceNode = nodes.find((n) => n.id === edge.fromNodeId);
+    const targetNode = nodes.find((n) => n.id === edge.toNodeId);
+    const sourceConn = sourceNode?.connectors.find((c) => c.id === edge.fromConnectorId);
+    const targetConn = targetNode?.connectors.find((c) => c.id === edge.toConnectorId);
 
-      const sourceNode = nodes.find((n) => n.id === edge.fromNodeId);
-      const targetNode = nodes.find((n) => n.id === edge.toNodeId);
-      const sourceConn = sourceNode?.connectors.find((c) => c.id === edge.fromConnectorId);
-      const targetConn = targetNode?.connectors.find((c) => c.id === edge.toConnectorId);
-
-      activeElements.push(edge);
-      activeElements.push(sourceConn);
-      activeElements.push(targetConn);
-    }
+    activeEdges.push(edge);
+    activeTerminals.push(sourceConn);
+    activeTerminals.push(targetConn);
   });
-  return activeElements;
+
+  return { activeEdges, activeTerminals };
 };
 
 /**
@@ -66,7 +57,8 @@ export const GetInactiveTerminals = (nodes: Node[]) => {
 
   nodes.forEach((n) => {
     n.connectors?.forEach((c) => {
-      if (!IsConnectorVisible(c)) terminals.push(c);
+      if (IsConnectorVisible(c)) return;
+      terminals.push(c);
     });
   });
 

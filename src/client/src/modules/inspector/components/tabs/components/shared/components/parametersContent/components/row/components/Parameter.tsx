@@ -12,7 +12,8 @@ import { AttributeLikeItem } from "../../../../../../../../../types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { FontSize } from "../../../../../../../../../../../compLibrary/font";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
-import { Spinner } from "../../../../../../../../../../../compLibrary/animated";
+import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
+import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -69,7 +70,7 @@ export const Parameter = ({
               )}
             </ParameterButton>
             <ParameterButton onClick={() => onClose(attribute.id)}>
-              <VisuallyHidden>Close parameter</VisuallyHidden>
+              <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
               <img src={CloseIcon} alt="x mark" />
             </ParameterButton>
           </>

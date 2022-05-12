@@ -1,11 +1,15 @@
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
 import { Edge, Node, WorkerStatus } from "../index";
+import { ProjectState } from "../../redux/store/project/types";
+import Config from "../Config";
+import { LockCm } from "../application/LockCm";
+import { EntityType } from "../enums/EntityType";
 import {
   addNode,
   createEdge,
-  removeEdge,
-  removeNode,
+  deleteEdge,
+  deleteNode,
   setLockedAttribute,
   setLockedAttributes,
   setLockedEdge,
@@ -15,12 +19,9 @@ import {
   updateEdge,
   updateNode,
 } from "../../redux/store/project/actions";
-import { ProjectState } from "../../redux/store/project/types";
-import Config from "../Config";
-import { LockCm } from "../application/LockCm";
-import { EntityType } from "../enums/EntityType";
 
 let instance = null;
+
 export class WebSocket {
   private _connection: HubConnection;
   private _running: boolean;
@@ -41,6 +42,7 @@ export class WebSocket {
       .withAutomaticReconnect()
       .build();
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     instance = this;
     return instance;
   }
@@ -103,10 +105,12 @@ export class WebSocket {
     }
 
     if (!this._projectState?.project.nodes.some((x) => x.id === node.id)) return;
-
-    if (eventType === WorkerStatus.Delete) this._dispatch(removeNode(node.id));
-
-    if (eventType === WorkerStatus.Update) this._dispatch(updateNode(node));
+    if (eventType === WorkerStatus.Delete) {
+      this._dispatch(deleteNode(node.id));
+    }
+    if (eventType === WorkerStatus.Update) {
+      this._dispatch(updateNode(node));
+    }
   };
 
   private handleReceivedEdgeData = (eventType: WorkerStatus, data: string) => {
@@ -119,10 +123,12 @@ export class WebSocket {
     }
 
     if (!this._projectState?.project.edges.some((x) => x.id === edge.id)) return;
-
-    if (eventType === WorkerStatus.Delete) this._dispatch(removeEdge(edge.id));
-
-    if (eventType === WorkerStatus.Update) this._dispatch(updateEdge(edge));
+    if (eventType === WorkerStatus.Delete) {
+      this._dispatch(deleteEdge(edge.id));
+    }
+    if (eventType === WorkerStatus.Update) {
+      this._dispatch(updateEdge(edge));
+    }
   };
 
   private handleReceiveLockData = (_: WorkerStatus, data: string) => {

@@ -10,6 +10,7 @@ interface Props {
   element: InspectorElement;
   simpleLikeItems?: SimpleLikeItem[];
 }
+
 /**
  * Component for SimpleTypes in the Inspector for all Product aspects.
  * @param node

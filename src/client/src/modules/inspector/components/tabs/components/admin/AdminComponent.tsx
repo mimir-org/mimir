@@ -3,7 +3,7 @@ import { Project } from "../../../../../../models";
 import { AdminContentWrapper, AdminLogo } from "./AdminComponent.styled";
 import { InspectorElement } from "../../../../types";
 import { statusSelector, useAppSelector } from "../../../../../../redux/store";
-import { GetCompanyLogoForInspector } from "../../../../../../helpers";
+import { GetCompanyLogoForInspector } from "../../../../../../helpers/GetCompanyLogo";
 import { GetAdminContent } from "./helpers/GetAdminContent";
 
 interface Props {

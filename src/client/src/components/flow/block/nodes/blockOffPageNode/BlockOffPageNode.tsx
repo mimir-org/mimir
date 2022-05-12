@@ -4,19 +4,19 @@ import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle";
+import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
-import { GetParent, IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
-import { Connector } from "../../../../../models";
-import { GetSelectedBlockNode } from "../../../../../helpers";
+import { Connector, Node } from "../../../../../models";
 import { Color } from "../../../../../compLibrary/colors/Color";
+import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 
 /**
  * Component for an OffPageNode in BlockView.
  * @param params
  * @returns an OffPageNode that can be connected to other nodes.
  */
-const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
+const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -30,19 +30,19 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
 
   // The position of the OffPageNode is based on its grandparent => the large parentBlockNode
-  const offPageParent = GetParent(data.id);
-  const parentBlockNode = GetParent(offPageParent?.id);
+  const offPageParent = project.nodes.find((n) => n.id === data.parentNodeId);
+  const offPageGrandParent = project.nodes.find((n) => n.id === offPageParent?.parentNodeId);
 
   const parentNodeTerminal = isTarget
-    ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
-    : offPageParent?.connectors.find((c) => c.id === edge?.toConnectorId);
+    ? offPageParent?.connectors.find((c: Connector) => c.id === edge?.fromConnectorId)
+    : offPageParent?.connectors.find((c: Connector) => c.id === edge?.toConnectorId);
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
-    UpdateOffPagePosition(data, parentBlockNode, offPageTerminal, size, dispatch);
-  }, [data?.positionBlockX, size, parentBlockNode?.positionBlockX, secondaryNode]);
+    UpdateOffPagePosition(data, offPageGrandParent, offPageTerminal, size, dispatch);
+  }, [data?.positionBlockX, size, offPageGrandParent?.positionBlockX, secondaryNode]);
 
-  if (!data || !offPageParent || !parentBlockNode) return null;
+  if (!data || !offPageParent || !offPageGrandParent) return null;
 
   const iconColor = offPageTerminal?.color ?? Color.BLACK;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
@@ -51,11 +51,13 @@ const BlockOffPageNode: FC<NodeProps> = ({ data }) => {
   const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
 
   return (
-    <OffPageBox id={"BlockOffPageNode-" + data.id} isSelected={data === GetSelectedBlockNode()} color={iconColor}>
-      <HandleComponent node={data} terminals={inputTerminals} offPage />
-      <OffPageIcon style={{ fill: iconColor }} className="icon" />
-      <HandleComponent node={data} terminals={outputTerminals} offPage />
-    </OffPageBox>
+    <Tooltip content={data.label} placement={"top"} offset={[0, 10]}>
+      <OffPageBox id={`BlockOffPageNode-${data.id}`} selected={data.blockSelected} color={iconColor}>
+        <HandleComponent node={data} terminals={inputTerminals} offPage />
+        <OffPageIcon style={{ fill: iconColor }} className="icon" />
+        <HandleComponent node={data} terminals={outputTerminals} offPage />
+      </OffPageBox>
+    </Tooltip>
   );
 };
 

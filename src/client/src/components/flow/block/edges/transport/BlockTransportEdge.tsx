@@ -2,8 +2,8 @@ import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
-import { IsBidirectionalTerminal } from "../../../helpers";
-import { GetEdgeStyle } from "../helpers/GetEdgeStyle";
+import { IsBidirectionalTerminal } from "../../../helpers/Connectors";
+import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 
 /**
  * Component for a TransportEdge.
@@ -24,7 +24,7 @@ export const BlockTransportEdge = ({
   const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
   const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
-  const visible = !data?.edge?.isHidden;
+  const visible = !data?.edge?.hidden;
   const color = sourceConn?.color;
   const borderRadius = 20;
   const arrowId = `arrow-${id}`;
@@ -34,16 +34,7 @@ export const BlockTransportEdge = ({
   sourceX += isBidirectional ? margin / 2 : 0;
   targetX -= !isElectro ? margin : 0;
 
-  const smoothPath = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-    borderRadius,
-  });
-
+  const smoothPath = getSmoothStepPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, borderRadius });
   const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
 
   return (
@@ -61,7 +52,7 @@ export const BlockTransportEdge = ({
       </marker>
       <path
         id={id}
-        style={GetEdgeStyle(color, visible)}
+        style={GetBlockEdgeStyle(color, visible)}
         className="path-blockTransportEdge"
         d={transportPath}
         markerStart={isBidirectional ? `url(#${arrowId})` : null}

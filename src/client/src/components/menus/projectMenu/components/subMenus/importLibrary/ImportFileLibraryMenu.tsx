@@ -32,7 +32,7 @@ export const ImportFileLibraryMenu = () => {
         <Label>
           {TextResources.PROJECT_IMPORT_FILE}: {selectedText}
         </Label>
-        <Button onClick={() => openFileSelector()} text={TextResources.PROJECT_BROWSE} />
+        <Button onClick={() => openFileSelector()} text={TextResources.BROWSE} />
         <ButtonBox>
           <Button onClick={onExit} text={TextResources.CANCEL} />
           <Button

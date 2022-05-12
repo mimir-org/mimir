@@ -3,8 +3,9 @@ import { Project, ProjectFileAm, WebSocket } from "../../../models";
 import { ConvertProject, MapProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOf } from "../../../components/flow/helpers";
 import { search } from "../../store/project/actions";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
+import Config from "../../../models/Config";
 import {
   ApiError,
   GetApiErrorForBadRequest,
@@ -32,7 +33,6 @@ import {
   SEARCH_PROJECT_SUCCESS_OR_ERROR,
   SaveProjectAction,
 } from "../../store/project/types";
-import Config from "../../../models/Config";
 
 export function* getProject(action: FetchingProjectAction) {
   try {
@@ -52,37 +52,25 @@ export function* getProject(action: FetchingProjectAction) {
         errorData: data,
       } as ApiError;
 
-      const payload = {
-        project: null,
-        apiError: apiError,
-      };
+      const payload = { project: null, apiError: apiError };
 
-      yield put({
-        type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      yield put({ type: FETCHING_PROJECT_SUCCESS_OR_ERROR, payload });
       return;
     }
 
-    const project = response.data;
+    const project = response.data as Project;
 
     MapProperties(project, action.payload.project, {});
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
-        if (!IsPartOf(edge.fromConnector)) edge.isHidden = true;
+        if (!IsPartOfTerminal(edge.fromConnector)) edge.hidden = true;
       });
     }
 
-    const payload = {
-      project: project,
-      apiError: null,
-    };
+    const payload = { project, apiError: null };
 
-    yield put({
-      type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: FETCHING_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
     const apiError = {
       key: FETCHING_PROJECT_SUCCESS_OR_ERROR,
@@ -90,15 +78,9 @@ export function* getProject(action: FetchingProjectAction) {
       errorData: null,
     } as ApiError;
 
-    const payload = {
-      project: null,
-      apiError: apiError,
-    };
+    const payload = { project: null, apiError };
 
-    yield put({
-      type: FETCHING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: FETCHING_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }
 
@@ -117,27 +99,14 @@ export function* searchProject(action) {
         errorData: data,
       } as ApiError;
 
-      const payload = {
-        projectList: null,
-        apiError: apiError,
-      };
-
-      yield put({
-        type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      const payload = { projectList: null, apiError };
+      yield put({ type: SEARCH_PROJECT_SUCCESS_OR_ERROR, payload });
       return;
     }
 
-    const payload = {
-      projectList: response.data,
-      apiError: null,
-    };
+    const payload = { projectList: response.data, apiError: null };
 
-    yield put({
-      type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: SEARCH_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
     const apiError = {
       key: SEARCH_PROJECT_SUCCESS_OR_ERROR,
@@ -145,14 +114,8 @@ export function* searchProject(action) {
       errorData: null,
     } as ApiError;
 
-    const payload = {
-      projectList: null,
-      apiError: apiError,
-    };
-    yield put({
-      type: SEARCH_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    const payload = { projectList: null, apiError };
+    yield put({ type: SEARCH_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }
 
@@ -171,30 +134,18 @@ export function* createProject(action) {
         errorData: data,
       } as ApiError;
 
-      const payload = {
-        project: null,
-        apiError: apiError,
-      };
+      const payload = { project: null, apiError };
 
-      yield put({
-        type: CREATING_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
       return;
     }
 
     const project = response.data as Project;
     project.edges = [];
 
-    const payload = {
-      project: project,
-      apiError: null,
-    };
+    const payload = { project, apiError: null };
 
-    yield put({
-      type: CREATING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
     const apiError = {
       key: CREATING_PROJECT_SUCCESS_OR_ERROR,
@@ -202,14 +153,8 @@ export function* createProject(action) {
       errorData: null,
     } as ApiError;
 
-    const payload = {
-      project: null,
-      apiError: apiError,
-    };
-    yield put({
-      type: CREATING_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    const payload = { project: null, apiError };
+    yield put({ type: CREATING_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }
 
@@ -228,26 +173,15 @@ export function* createSubProject(action: CreateSubProject) {
         errorData: data,
       } as ApiError;
 
-      const payload = {
-        project: null,
-        apiError: apiError,
-      };
+      const payload = { project: null, apiError };
 
-      yield put({
-        type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
       return;
     }
 
-    const payload = {
-      apiError: null,
-    };
+    const payload = { apiError: null };
 
-    yield put({
-      type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
     const apiError = {
       key: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
@@ -255,14 +189,8 @@ export function* createSubProject(action: CreateSubProject) {
       errorData: null,
     } as ApiError;
 
-    const payload = {
-      project: null,
-      apiError: apiError,
-    };
-    yield put({
-      type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    const payload = { project: null, apiError };
+    yield put({ type: CREATING_SUB_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }
 
@@ -301,17 +229,13 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     }
 
     const data = response.data as ProjectFileAm;
-    const blob = new Blob([data.fileContent], {
-      type: data.fileFormat.contentType,
-    });
+    const blob = new Blob([data.fileContent], { type: data.fileFormat.contentType });
 
     saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
 
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-      payload: {
-        apiError: null,
-      },
+      payload: { apiError: null },
     });
   } catch (error) {
     yield put({
@@ -367,25 +291,15 @@ export function* commitProject(action: CommitProject) {
         errorData: data,
       } as ApiError;
 
-      const payload = {
-        apiError: apiError,
-      };
+      const payload = { apiError };
 
-      yield put({
-        type: COMMIT_PROJECT_SUCCESS_OR_ERROR,
-        payload: payload,
-      });
+      yield put({ type: COMMIT_PROJECT_SUCCESS_OR_ERROR, payload });
       return;
     }
 
-    const payload = {
-      apiError: null,
-    };
+    const payload = { apiError: null };
 
-    yield put({
-      type: COMMIT_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: COMMIT_PROJECT_SUCCESS_OR_ERROR, payload });
   } catch (error) {
     const apiError = {
       key: COMMIT_PROJECT_SUCCESS_OR_ERROR,
@@ -393,14 +307,9 @@ export function* commitProject(action: CommitProject) {
       errorData: null,
     } as ApiError;
 
-    const payload = {
-      apiError: apiError,
-    };
+    const payload = { apiError };
 
-    yield put({
-      type: COMMIT_PROJECT_SUCCESS_OR_ERROR,
-      payload: payload,
-    });
+    yield put({ type: COMMIT_PROJECT_SUCCESS_OR_ERROR, payload });
   }
 }
 

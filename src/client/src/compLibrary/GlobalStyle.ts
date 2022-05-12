@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import { FontType } from "./font";
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   // CSS RESET (https://www.joshwcomeau.com/css/custom-css-reset/)
   *, *::before, *::after {
     box-sizing: border-box;
@@ -66,5 +66,3 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 0;
   }
 `;
-
-export default GlobalStyle;

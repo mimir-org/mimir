@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Connector, Node } from "../../../../models";
-import { Handle, useUpdateNodeInternals } from "react-flow-renderer";
-import { GetBlockHandleType, IsValidBlockConnection, ShowHandle } from "./helpers";
-import { HandleBox, HandleContainer } from "./HandleComponent.styled";
-import { GetTerminalColor } from "../helpers";
-import { OnMouseEnter, OnMouseLeave } from "./handlers";
+import { useUpdateNodeInternals } from "react-flow-renderer";
+import { HandleContainer } from "./HandleComponent.styled";
 import { electroSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { HandleIcon } from "./components/HandleIcon";
+import { GetBlockNodeTerminal } from "./helpers/GetBlockNodeTerminal";
+import { ShowHandle } from "./helpers";
+import { IsProduct } from "../../../../helpers/Aspects";
 
 interface Props {
   node: Node;
   terminals: Connector[];
   offPage?: boolean;
   isInput?: boolean;
+  isParent?: boolean;
 }
 
 /**
@@ -21,12 +21,11 @@ interface Props {
  * @param interface
  * @returns a Flow Handle element with an icon that corresponds with the terminal type.
  */
-export const HandleComponent = ({ node, terminals, offPage, isInput }: Props) => {
+export const HandleComponent = ({ node, terminals, offPage, isInput, isParent }: Props) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(projectSelector);
   const isElectro = useAppSelector(electroSelector);
   const [visible, setVisible] = useState(!offPage);
-  const className = "react-flow__handle-block";
   const updateNodeInternals = useUpdateNodeInternals();
 
   useEffect(() => {
@@ -37,31 +36,9 @@ export const HandleComponent = ({ node, terminals, offPage, isInput }: Props) =>
 
   return (
     <HandleContainer isElectro={isElectro}>
-      {terminals.map((conn) => {
-        if (ShowHandle(conn, isInput)) {
-          const [type, pos] = GetBlockHandleType(conn, isElectro);
-          const color = GetTerminalColor(conn);
-
-          return (
-            <HandleBox
-              visible={visible}
-              id={"handle-" + conn.id}
-              key={conn.id}
-              onMouseEnter={offPage ? () => OnMouseEnter(setVisible) : null}
-              onMouseLeave={offPage ? () => OnMouseLeave(setVisible) : null}
-            >
-              <HandleIcon conn={conn} color={color} className={className} />
-              <Handle
-                type={type}
-                position={pos}
-                id={conn.id}
-                className={className}
-                isValidConnection={(connection) => IsValidBlockConnection(connection, project, dispatch)}
-              />
-            </HandleBox>
-          );
-        }
-        return null;
+      {terminals.map((c) => {
+        if (ShowHandle(c, isInput, IsProduct(node)))
+          return GetBlockNodeTerminal(project, node, c, dispatch, isElectro, isParent, visible, setVisible);
       })}
     </HandleContainer>
   );

@@ -1,5 +1,5 @@
 import { Connector } from "../../../../../models";
-import { IsBidirectionalTerminal } from "../../../helpers";
+import { IsBidirectionalTerminal } from "../../../helpers/Connectors";
 import { BidirectionalTerminal } from "../../../../../assets/icons/bidirectional";
 import { ConnectorIcon } from "../../../../../assets/icons/connectors";
 

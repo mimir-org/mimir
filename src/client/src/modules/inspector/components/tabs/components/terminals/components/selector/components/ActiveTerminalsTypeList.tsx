@@ -37,7 +37,7 @@ export const ActiveTerminalsTypeList = ({
       return [...Array(numberOfItemsToRender).keys()].map((i) => (
         <TerminalListElement
           key={terminal.id + i}
-          isSelected={
+          selected={
             selectedTerminalIdentifier?.id === terminal.id &&
             selectedTerminalIdentifier?.index === i &&
             selectedTerminalIdentifier?.connectorType === connectorType
@@ -55,7 +55,7 @@ export const ActiveTerminalsTypeList = ({
     <TerminalsListElementWrapper>
       <TerminalTypeListElement
         onClick={() => onTypeClick(terminalType, connectorType)}
-        isSelected={
+        selected={
           selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminalIdentifier?.connectorType === connectorType
         }
       >

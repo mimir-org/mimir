@@ -1,9 +1,9 @@
-import * as Click from "./handlers";
 import { TerminalsMenu, TerminalsMenuButton } from "./components";
 import { Connector, Node } from "../../../../models";
 import { useState } from "react";
 import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
-import { IsConnectorVisible } from "../../../../helpers";
+import { IsConnectorVisible, IsLocationTerminal, IsPartOfTerminal } from "../../helpers/Connectors";
+import { OnBlur, OnInputMenuClick } from "./handlers/OnTerminals";
 
 interface Props {
   node: Node;
@@ -28,19 +28,19 @@ export const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isI
         node={node}
         isParent={isParent}
         showMenuButton={showMenuButton}
-        terminals={terminals}
-        onClick={() => Click.OnInputMenu(setShowMenu, showMenu)}
+        terminals={terminals.filter((t) => !IsPartOfTerminal(t) && !IsLocationTerminal(t))}
+        onClick={() => OnInputMenuClick(setShowMenu, showMenu)}
         isInput={isInput}
       />
       {showMenu && (
         <TerminalsMenu
           node={node}
           isInput={isInput}
-          terminals={terminals}
+          terminals={terminals.filter((t) => !IsPartOfTerminal(t) && !IsLocationTerminal(t))}
           hasActiveTerminals={terminals.some((conn) => IsConnectorVisible(conn))}
           isParent={isParent}
           onClick={onClick}
-          onBlur={() => Click.OnBlur(setShowMenu, showMenu)}
+          onBlur={() => OnBlur(setShowMenu, showMenu)}
         />
       )}
     </TerminalMenuWrapper>

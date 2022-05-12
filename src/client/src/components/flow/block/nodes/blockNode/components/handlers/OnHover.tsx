@@ -1,5 +1,3 @@
-const OnHover = (showTerminalButton) => {
+export const OnHover = (showTerminalButton: React.Dispatch<React.SetStateAction<boolean>>) => {
   showTerminalButton(true);
 };
-
-export default OnHover;

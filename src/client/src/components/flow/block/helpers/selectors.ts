@@ -3,7 +3,6 @@ export {
   iconSelector,
   librarySelector,
   userStateSelector,
-  filterSelector,
   animatedEdgeSelector,
-  flowTransformSelector,
+  projectSelector,
 } from "../../../../redux/store/selectors";

@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { CreateRequiredOffPageNode } from "./CreateRequiredOffPageNode";
-import { IsOffPage } from "../../../../../../helpers";
+import { IsOffPage } from "../../../../../../helpers/Aspects";
 import { Connector, Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { IsInputTerminal, IsInputVisible } from "../../../../helpers";
+import { IsInputTerminal, IsInputVisible } from "../../../../helpers/Connectors";
 
 /**
  * Component to check if any terminals have a required OffPageNode flag. If so, an OffPageNode is created.
@@ -18,9 +18,7 @@ export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: Block
   if (!edges.length || !node) return;
 
   node.connectors.forEach((conn) => {
-    if (!conn.isRequired) return;
-    const nodeExists = HasRequiredOffPageNode(edges, conn);
-    if (nodeExists) return;
+    if (!conn.isRequired || HasRequiredOffPageNode(edges, conn)) return;
 
     const isRequired = true;
     const position = { x: size.width, y: node.positionBlockY };
@@ -29,10 +27,11 @@ export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: Block
 };
 
 function HasRequiredOffPageNode(edges: Edge[], connector: Connector) {
-  const existingEdge =
-    IsInputTerminal(connector) || IsInputVisible(connector)
-      ? edges.find((edge) => IsOffPage(edge.fromNode) && edge.toConnector?.id === connector.id)
-      : edges.find((edge) => IsOffPage(edge.toNode) && edge.fromConnector?.id === connector.id);
+  const isInput = IsInputTerminal(connector) || IsInputVisible(connector);
+
+  const existingEdge = isInput
+    ? edges.find((edge) => IsOffPage(edge.fromNode) && edge.toConnector.id === connector.id)
+    : edges.find((edge) => IsOffPage(edge.toNode) && edge.fromConnector.id === connector.id);
 
   return existingEdge !== undefined;
 }

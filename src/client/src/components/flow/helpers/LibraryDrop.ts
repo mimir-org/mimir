@@ -1,15 +1,14 @@
 import CreateId from "./CreateId";
-import { Connector, ConnectorVisibility, Node, Project } from "../../../models";
-import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers";
-import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal } from ".";
+import { Connector, ConnectorVisibility, Node, Edge, Project } from "../../../models";
+import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { IsPartOf } from "./IsPartOf";
-import { ConvertToEdge } from "../converters";
+import { ConvertDataToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../compLibrary/size/Size";
 import { Position } from "../../../models/project";
+import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal, IsPartOfTerminal } from "./Connectors";
 
 /**
  * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
@@ -27,11 +26,11 @@ export function HandleCreatePartOfEdge(
   dispatch: Dispatch
 ) {
   targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((x) => IsPartOf(x) && IsOutputTerminal(x));
-  const targetConn = targetNode.connectors?.find((x) => IsPartOf(x) && IsInputTerminal(x));
-  const partofEdge = ConvertToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  const sourceConn = sourceNode.connectors?.find((c) => IsPartOfTerminal(c) && IsOutputTerminal(c));
+  const targetConn = targetNode.connectors?.find((c) => IsPartOfTerminal(c) && IsInputTerminal(c));
+  const partofEdge = ConvertDataToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
-  SetSiblingIndexOnNodeDrop(targetNode, project, sourceNode.id);
+  SetSiblingIndexOnNodeDrop(targetNode, project.nodes, project.edges, sourceNode.id);
   dispatch(createEdge(partofEdge));
 }
 
@@ -53,12 +52,13 @@ export function InitConnectorVisibility(connector: Connector, targetNode: Node) 
 /**
  * Function to calculate the TreeView position of a dropped Node.
  * @param parentNode
- * @param project
+ * @param nodes
+ * @param edges
  * @returns a Position object.
  */
-export function SetTreeNodePosition(parentNode: Node, project: Project) {
+export function SetTreeNodePosition(parentNode: Node, nodes: Node[], edges: Edge[]) {
   const marginY = 220;
-  const x = SetTreeNodeXPosition(parentNode, project);
+  const x = SetTreeNodeXPosition(parentNode, nodes, edges);
   return { x, y: parentNode.positionY + marginY } as Position;
 }
 
@@ -66,12 +66,13 @@ export function SetTreeNodePosition(parentNode: Node, project: Project) {
  * Function to position a node in the TreeView canvas when a node is dropped from the LibraryModule.
  * This function will position the node middle-out relative to existing sibling nodes.
  * @param parentNode
- * @param project
+ * @param nodes
+ * @param edges
  * @returns a value for the X position.
  */
-export function SetTreeNodeXPosition(parentNode: Node, project: Project) {
+export function SetTreeNodeXPosition(parentNode: Node, nodes: Node[], edges: Edge[]) {
   const isAspect = IsAspectNode(parentNode);
-  const siblings = FindSiblingNodes(parentNode, project);
+  const siblings = FindSiblingNodes(parentNode, nodes, edges);
   const increaseX = siblings.length % 2 === 0;
 
   const marginX = Size.NODE_WIDTH + 70;
@@ -92,18 +93,19 @@ export function SetTreeNodeXPosition(parentNode: Node, project: Project) {
 /**
  * Function to find a dropped Node's sibling nodes.
  * @param parentNode
- * @param project
+ * @param nodes
+ * @param edges
  * @returns a list of nodes.
  */
-export function FindSiblingNodes(parentNode: Node, project: Project) {
+export function FindSiblingNodes(parentNode: Node, nodes: Node[], edges: Edge[]) {
   if (!parentNode) return [];
   const siblings: Node[] = [];
 
-  project.edges?.forEach((edge) => {
-    if (edge.fromNodeId === parentNode.id) {
-      const sibling = project.nodes?.find((n) => n.id === edge.toNodeId && n.level === parentNode.level + 1);
-      siblings.push(sibling);
-    }
+  edges?.forEach((edge) => {
+    if (edge.fromNodeId !== parentNode.id) return;
+
+    const sibling = nodes?.find((n) => n.id === edge.toNodeId && n.level === parentNode.level + 1);
+    if (sibling) siblings.push(sibling);
   });
 
   return siblings;

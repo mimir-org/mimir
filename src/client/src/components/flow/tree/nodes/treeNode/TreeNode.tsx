@@ -1,15 +1,13 @@
-import { FC, memo, useEffect, useState } from "react";
-import { Handle, NodeProps } from "react-flow-renderer";
-import { AspectColorType, Node } from "../../../../../models";
-import { TreeNodeStyled } from "./TreeNode.styled";
-import { HandleBox } from "../styled/HandleBox";
-import { GetHandleType } from "../helpers/GetHandleType";
-import { IsPartOf } from "../../../helpers";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { FC, memo, useCallback, useEffect, useState } from "react";
+import { NodeProps } from "react-flow-renderer";
+import { AspectColorType, Connector, Node } from "../../../../../models";
+import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
-import { GetAspectColor, GetSelectedNode } from "../../../../../helpers";
-import { IsValidTreeConnection } from "./helpers/IsValidTreeConnection";
-import { SetTopPos } from "../helpers/SetTopPos";
-import { nodesSelector, useAppDispatch, useAppSelector } from "../../../../../redux/store";
+import { GetAspectColor } from "../../../../../helpers";
+import { GetTreeNodeTerminal } from "./helpers/GetTreeNodeTerminal";
+import { useAppDispatch } from "../../../../../redux/store";
+import { IsPartOfTerminal } from "../../../helpers/Connectors";
 
 /**
  * Component to display a node in TreeView.
@@ -20,8 +18,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
-  const nodes = useAppSelector(nodesSelector);
-  const node = nodes?.find((x) => x.id === data.id);
+  const [renderTerminals, setRenderTerminals] = useState(true);
 
   useEffect(() => {
     if (timer) {
@@ -29,49 +26,47 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
         setTimer(false);
         setIsHover(false);
       }, 5000);
-      return () => {
-        window.clearInterval(clock);
-      };
+      return () => window.clearInterval(clock);
     }
   }, [timer]);
 
-  if (!node) return null;
+  // This callback prevents all terminals from fetching on each render
+  const GetTerminal = useCallback(
+    (conn: Connector) => {
+      return GetTreeNodeTerminal(data, conn, dispatch, setIsHover, isHover);
+    },
+    [isHover]
+  );
 
-  const mouseNodeLeave = () => setTimer(true);
+  if (!data) return null;
+
+  const mouseUp = () => setRenderTerminals(true);
+  const mouseDown = () => setRenderTerminals(false);
+  const mouseEnter = () => setIsHover(true);
+  const mouseLeave = () => {
+    setTimer(true);
+    setIsHover(false);
+  };
+
+  const terminals = data.connectors.filter((c) => IsPartOfTerminal(c));
 
   return (
-    <TreeNodeStyled
-      colorMain={GetAspectColor(node, AspectColorType.Main)}
-      colorSelected={GetAspectColor(node, AspectColorType.Selected)}
-      isSelected={node === GetSelectedNode()}
-      visible={!node.isHidden}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => mouseNodeLeave()}
+    <TreeNodeBox
+      colorMain={GetAspectColor(data, AspectColorType.Main)}
+      colorSelected={GetAspectColor(data, AspectColorType.Selected)}
+      selected={data.selected}
+      visible={!data.hidden}
+      onMouseEnter={() => mouseEnter()}
+      onMouseLeave={() => mouseLeave()}
+      onMouseUp={() => mouseUp()}
+      onMouseDown={() => mouseDown()}
     >
-      {node.connectors?.map((conn) => {
-        const [type, pos] = GetHandleType(conn);
-
-        return (
-          <HandleBox
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
-            key={"handle-treeview-" + conn.id}
-            visible={IsPartOf(conn) && isHover}
-            position={pos}
-            topPos={SetTopPos(pos)}
-          >
-            <Handle
-              type={type}
-              position={pos}
-              id={conn.id}
-              className="function-treeview-handler"
-              isValidConnection={(connection) => IsValidTreeConnection(node, connection, nodes, dispatch)}
-            />
-          </HandleBox>
-        );
-      })}
-      <TreeLogoComponent node={node} />
-    </TreeNodeStyled>
+      {renderTerminals &&
+        terminals.map((conn) => {
+          return GetTerminal(conn);
+        })}
+      <TreeLogoComponent node={data} />
+    </TreeNodeBox>
   );
 };
 

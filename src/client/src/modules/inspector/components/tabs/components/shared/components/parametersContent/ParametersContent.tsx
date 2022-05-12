@@ -84,10 +84,10 @@ export const ParametersContent = ({
           />
 
           <ParameterButton className={`link`} onClick={() => OnClearAllFilters(parametersElement.id, dispatch)}>
-            {TextResources.INSPECTOR_PARAMS_CLEAR_ALL}
+            {TextResources.PARAMS_CLEAR_ALL}
           </ParameterButton>
           <ParameterButton className={`link`} onClick={OnShowAllEntites}>
-            {TextResources.INSPECTOR_PARAMS_DEFAULT}
+            {TextResources.PARAMS_DEFAULT}
           </ParameterButton>
         </ParametersContentMenu>
       </ParametersContentHeader>

@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import ExitButton from "../../compLibrary/modal/components/ExitButton";
+import { ExitButton } from "../../compLibrary/modal/components/ExitButton";
 import { useEffect, useState } from "react";
 import { TextResources } from "../../assets/text/TextResources";
 import { BadRequestData } from "../../models/webclient";
@@ -55,61 +55,32 @@ const ErrorModule = () => {
 
     if (projectState.apiError) {
       projectState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "Project",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "Project", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (libraryState.apiError) {
       libraryState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "Library",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "Library", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (commonState.apiError) {
       commonState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "Common",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "Common", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (userState.apiError) {
       userState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({
-            module: "User",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+        if (error) errorList.push({ module: "User", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
     if (typeEditorState.apiError) {
       typeEditorState.apiError.forEach((error) => {
         if (error)
-          errorList.push({
-            module: "TypeEditor",
-            key: error.key,
-            message: error.errorMessage,
-            errorData: error.errorData,
-          });
+          errorList.push({ module: "TypeEditor", key: error.key, message: error.errorMessage, errorData: error.errorData });
       });
     }
 
@@ -122,15 +93,15 @@ const ErrorModule = () => {
       <InfoModalContent title={TextResources.ERROR_GENERIC} color={Color.ULTRA_RED}>
         <ExitButton onClick={closeHeader} />
         <ErrorBody>
-          {errors?.map((x, index) => {
+          {errors?.map((err, index) => {
             return (
-              <ErrorItem key={x.module + index}>
-                <ErrorItemTitle>{x.module}</ErrorItemTitle>
-                <ErrorItemText>{x.message}</ErrorItemText>
-                {x.errorData?.items?.map((y) => {
+              <ErrorItem key={err.module + index}>
+                <ErrorItemTitle>{err.module}</ErrorItemTitle>
+                <ErrorItemText>{err.message}</ErrorItemText>
+                {err.errorData?.items?.map((item) => {
                   return (
-                    <ErrorItemText key={y.key}>
-                      {y.key}: {JSON.stringify(y.value)}
+                    <ErrorItemText key={item.key}>
+                      {item.key}: {JSON.stringify(item.value)}
                     </ErrorItemText>
                   );
                 })}
@@ -142,4 +113,5 @@ const ErrorModule = () => {
     </Modal>
   );
 };
+
 export default ErrorModule;

@@ -1,5 +1,5 @@
 import { MENU_TYPE } from "../../../models/project";
-import { activeMenuSelector, projectIsSubProjectSelector, useAppSelector } from "../../../redux/store";
+import { projectIsSubProjectSelector, useAppSelector } from "../../../redux/store";
 import { CommitProjectMenu } from "./components/subMenus/commitProject/CommitProjectMenu";
 import { CreateProjectMenu } from "./components/subMenus/createProject/CreateProjectMenu";
 import { CloseProjectMenu } from "./components/subMenus/closeProject/CloseProjectMenu";
@@ -10,13 +10,17 @@ import { ImportFileLibraryMenu } from "./components/subMenus/importLibrary/Impor
 import { ImportProjectFileMenu } from "./components/subMenus/importProjectFile/ImportProjectFileMenu";
 import { OpenProjectMenu } from "./components/subMenus/openProject/OpenProjectMenu";
 
+interface Props {
+  activeMenu: string;
+}
+
 /**
  * Component for all sub-menus in the Mimir project menu.
+ * The sub-menus are all the options listed in the the ProjectMenuComponent.
  * This component is called from the Home component.
  * @returns all sub-menus.
  */
-export const ProjectSubMenus = () => {
-  const activeMenu = useAppSelector(activeMenuSelector);
+export const ProjectSubMenus = ({ activeMenu }: Props) => {
   const isSubProject = useAppSelector(projectIsSubProjectSelector);
 
   const isOpenProjectMenuOpen = activeMenu === MENU_TYPE.OPEN_PROJECT_MENU;

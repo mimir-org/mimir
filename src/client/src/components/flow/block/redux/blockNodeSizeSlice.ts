@@ -1,6 +1,6 @@
 import { Size } from "../../../../compLibrary/size/Size";
-import { BlockNodeSize } from "./types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { BlockNodeSize } from "../../../../models/project";
 
 const initialState = {
   size: { width: Size.BLOCK_NODE_WIDTH, height: Size.BLOCK_NODE_HEIGHT },

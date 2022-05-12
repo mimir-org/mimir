@@ -16,7 +16,7 @@ export const ActiveSimpleTypesList = ({ simpleTypes, selectedSimpleTypeId, onSel
         <TerminalsListElementWrapper key={type.id}>
           <TerminalsCategoryListElement
             radius={0}
-            isSelected={selectedSimpleTypeId === type.id}
+            selected={selectedSimpleTypeId === type.id}
             onClick={() => onSelect(type)}
             color={i % 2 ? undefined : Color.LAVANDER_WEB_LIST}
           >

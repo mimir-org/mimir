@@ -68,7 +68,7 @@ export const Dropdown = ({
   };
 
   return (
-    items?.length > 0 && (
+    items?.length && (
       <DropdownBox
         disabled={disabled}
         tabIndex={0}

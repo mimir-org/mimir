@@ -8,9 +8,10 @@ import { EnumBase, Node, Project } from "../../../../../../../models";
 import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
-import { GetRdsId, GetReferenceDesignation, IsAspectNode, IsProduct } from "../../../../../../../helpers";
+import { GetRdsId, GetReferenceDesignation } from "../../../../../../../helpers";
 import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
+import { IsAspectNode, IsProduct } from "../../../../../../../helpers/Aspects";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -38,17 +39,17 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           <Input fontSize={FontSize.STANDARD} readOnly value={node.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_RDS}</div>
+          <div>{TextResources.ADMIN_RDS}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_SEMANTIC_ID}</div>
+          <div>{TextResources.ADMIN_SEMANTIC_ID}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={node.semanticReference ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_SERVICE}</div>
+          <div>{TextResources.ADMIN_SERVICE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={node.isLocked}
@@ -57,17 +58,17 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_TYPE}</div>
+          <div>{TextResources.ADMIN_TYPE}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={node.name} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_BY}</div>
+          <div>{TextResources.ADMIN_UPDATED_BY}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={node.updatedBy ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_DATE}</div>
+          <div>{TextResources.ADMIN_UPDATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
@@ -77,7 +78,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_CREATED_DATE}</div>
+          <div>{TextResources.ADMIN_CREATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
@@ -87,7 +88,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_DESIGNATION}</div>
+          <div>{TextResources.ADMIN_DESIGNATION}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
@@ -99,7 +100,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
       </TabColumn>
       <TabColumn width={125}>
         <div className="statusDropdown">
-          <div>{TextResources.INSPECTOR_ADMIN_STATUS}</div>
+          <div>{TextResources.ADMIN_STATUS}</div>
           <Dropdown
             label=""
             items={statuses}
@@ -112,19 +113,19 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           ></Dropdown>
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_VERSION}</div>
+          <div>{TextResources.ADMIN_VERSION}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={node.version ?? ""} onChange={() => null} inputType="" />
         </div>
         {IsProduct(node) && (
           <div>
-            <div>{TextResources.INSPECTOR_ADMIN_COST}</div>
+            <div>{TextResources.ADMIN_COST}</div>
             <Input fontSize={FontSize.STANDARD} readOnly value={""} onChange={() => null} inputType="" />
           </div>
         )}
       </TabColumn>
       <TabColumn width={465}>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_DESCRIPTION}</div>
+          <div>{TextResources.ADMIN_DESCRIPTION}</div>
           <TextArea
             height={200}
             value={node.description ?? ""}

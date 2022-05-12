@@ -4,9 +4,5 @@ import { TextResources } from "../../../../../../../../../assets/text/TextResour
 
 export const getSharedCategory = (items: LibItem[]): LibraryCategory => {
   const sortedByAspectThenByName = [...items].sort((a, b) => a.aspect - b.aspect || a.name.localeCompare(b.name));
-
-  return {
-    name: TextResources.LIBRARY_CATEGORY_ALL,
-    nodes: sortedByAspectThenByName,
-  };
+  return { name: TextResources.CATEGORY_ALL, nodes: sortedByAspectThenByName };
 };

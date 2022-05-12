@@ -1,5 +1,5 @@
 import { Edge, Node } from "../models";
-import { IsFunction, IsLocation, IsProduct } from "../helpers";
+import { IsFunction, IsLocation, IsProduct } from "./Aspects";
 import { TextResources } from "../assets/text/TextResources";
 
 export const GetRdsId = (node: Node) => {
@@ -13,7 +13,6 @@ export const GetRdsIdEdge = (edge: Edge) => {
   const element = edge.transport ?? edge.interface;
 
   if (!edge || !edge.fromNode || !element || !element.rds) return "";
-
   if (IsFunction(edge.fromNode)) return TextResources.RDS_FUNCTION + element.rds;
   if (IsProduct(edge.fromNode)) return TextResources.RDS_PRODUCT + element.rds;
   if (IsLocation(edge.fromNode)) return TextResources.RDS_LOCATION + element.rds;

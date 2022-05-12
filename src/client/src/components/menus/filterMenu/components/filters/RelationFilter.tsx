@@ -1,13 +1,14 @@
 import { Dispatch } from "redux";
-import { FilterElement } from "./FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector, Edge } from "../../../../../models";
+import { Connector, Edge, Node } from "../../../../../models";
 import { OnAllRelationsChange, OnFilterChange } from "./handlers";
 import { AllRelationsChecked } from "./helpers";
+import { FilterElement } from "../FilterElement";
 
 interface Props {
   edges: Edge[];
-  items: Connector[];
+  nodes: Node[];
+  connectors: Connector[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -17,7 +18,7 @@ interface Props {
  * @param interface
  * @returns checkboxes to toggle relations that exist in Mimir.
  */
-export const RelationFilter = ({ edges, items, dispatch, visible }: Props) =>
+export const RelationFilter = ({ edges, nodes, connectors, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement
@@ -27,14 +28,14 @@ export const RelationFilter = ({ edges, items, dispatch, visible }: Props) =>
         visible={visible}
         isHeader
       />
-      {items.map((conn) => {
+      {connectors.map((conn) => {
         const edge = edges.find((x) => x.fromConnectorId === conn.id);
         return (
           <FilterElement
             key={conn.id}
             label={conn.name}
-            onChange={() => OnFilterChange(edge, edges, dispatch)}
-            isChecked={!edge.isHidden}
+            onChange={() => OnFilterChange(edge, edges, nodes, dispatch)}
+            isChecked={!edge.hidden}
             indent={2}
             visible
           />

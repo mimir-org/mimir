@@ -1,6 +1,6 @@
-import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
 import { Connector, Node } from "../../../../../models";
-import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers";
+import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers/Connectors";
 
 /**
  * Validator for an edge in BlockView. The basis for drawing an edge in BlockView is that the source node
@@ -41,6 +41,7 @@ function ValidateSplitView(
     if (IsFunction(splitNode)) return IsTransportConnection(source, target);
     if (IsProduct(splitNode)) return IsTransportConnection(source, target);
   }
+
   if (IsProduct(splitNode)) return IsProductConnection(source, target);
   if (IsLocation(splitNode)) return IsLocationConnection(source, target);
   if (IsFunction(splitNode)) return IsTransportConnection(source, target) || IsOffPage(fromNode) || IsOffPage(toNode);

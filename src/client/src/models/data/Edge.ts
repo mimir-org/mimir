@@ -11,6 +11,7 @@ export interface Edge {
   domain: string;
   projectId: string;
   projectIri: string;
+
   fromConnectorId: string;
   fromConnector: Connector;
 
@@ -25,6 +26,7 @@ export interface Edge {
 
   fromConnectorIri: string;
   toConnectorIri: string;
+
   fromNodeIri: string;
   toNodeIri: string;
 
@@ -34,14 +36,17 @@ export interface Edge {
   interfaceId: string;
   interface: Interface;
 
-  isHidden: boolean;
   masterProjectId: string;
   masterProjectIri: string;
-  isSelected: boolean;
 
   isLocked: boolean;
   isLockedStatusBy: string;
   isLockedStatusDate: string;
 
   kind: string;
+
+  // Only for client
+  selected: boolean;
+  hidden: boolean;
+  blockHidden?: boolean;
 }

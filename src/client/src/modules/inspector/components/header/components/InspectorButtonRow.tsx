@@ -1,6 +1,6 @@
 import { OnLockClick } from "../handlers/OnLockClick";
-import { OnDeleteClick } from "../handlers/OnDeleteClick";
-import { OnToggleClick } from "../handlers/OnToggleClick";
+import { OnInspectorDeleteClick } from "../handlers/OnInspectorDeleteClick";
+import { OnToggleInspectorClick } from "../handlers/OnToggleInspectorClick";
 import { Action, Dispatch } from "redux";
 import { Icon } from "../../../../../compLibrary/icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
@@ -8,12 +8,13 @@ import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton } from "../../../../../compLibrary/buttons";
 import { InspectorButtonType } from "../../../../../compLibrary/buttons/inspector/InspectorButton";
-import { Project } from "../../../../../models";
+import { Node, Edge } from "../../../../../models";
 import { IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";
-import { GetSelectedNode, IsAspectNode, IsBlockView } from "../../../../../helpers";
+import { IsBlockView } from "../../../../../helpers";
 import { isProjectStateGloballyLockingSelector, useAppSelector } from "../../../../../redux/store";
+import { IsAspectNode } from "../../../../../helpers/Aspects";
 import {
   InspectorButtonRowContainer,
   InspectorButtonRowToggleTitle,
@@ -21,10 +22,12 @@ import {
 } from "./InspectorButtonRow.styled";
 
 interface Props {
-  project: Project;
+  nodes: Node[];
+  edges: Edge[];
   element: InspectorElement;
   username: string;
   open: boolean;
+  tabsVisible: boolean;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   changeInspectorVisibilityAction: ChangeInspectorVisibilityAction;
   changeInspectorHeightAction: (height: number) => Action;
@@ -32,10 +35,12 @@ interface Props {
 }
 
 export const InspectorButtonRow = ({
-  project,
+  nodes,
+  edges,
   element,
   username,
   open,
+  tabsVisible,
   inspectorRef,
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
@@ -44,12 +49,15 @@ export const InspectorButtonRow = ({
   const [onLock, setOnLock] = useState(false);
   const isLocked = element?.isLocked;
   const isElementSelected = !!element;
+  const selectedNode = nodes?.find((n) => n.selected);
+
   const deleteDisabled =
-    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element === GetSelectedNode());
+    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element?.id === selectedNode?.id);
+
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
 
-  let inspectorToggleText = open ? TextResources.INSPECTOR_CLOSE : TextResources.INSPECTOR_EXPAND;
-  if (!isElementSelected) inspectorToggleText = TextResources.INSPECTOR_INACTIVE_PANEL;
+  let inspectorToggleText = open ? TextResources.CLOSE : TextResources.EXPAND;
+  if (!isElementSelected) inspectorToggleText = TextResources.INACTIVE_PANEL;
 
   useEffect(() => {
     if (!isGlobalLocking && onLock) setOnLock(false);
@@ -62,13 +70,13 @@ export const InspectorButtonRow = ({
           <InspectorButton
             onClick={() => OnLockClick(element, !element.isLocked, username, setOnLock, dispatch)}
             type={element?.isLocked ? InspectorButtonType.Unlock : InspectorButtonType.Lock}
-            description={element?.isLocked ? TextResources.INSPECTOR_UNLOCK_OBJECT : TextResources.INSPECTOR_LOCK_OBJECT}
+            description={element?.isLocked ? TextResources.UNLOCK_OBJECT : TextResources.LOCK_OBJECT}
             disabled={onLock && isGlobalLocking}
           />
           <InspectorButton
-            onClick={() => !deleteDisabled && OnDeleteClick(project, element, dispatch, inspectorRef)}
+            onClick={() => !deleteDisabled && OnInspectorDeleteClick(nodes, edges, element, dispatch, inspectorRef)}
             type={!deleteDisabled ? InspectorButtonType.Delete : InspectorButtonType.DeleteDisabled}
-            description={TextResources.INSPECTOR_DELETE_OBJECT}
+            description={TextResources.DELETE_OBJECT}
             disabled={deleteDisabled}
           />
         </>
@@ -76,12 +84,12 @@ export const InspectorButtonRow = ({
       <Tooltip content={inspectorToggleText}>
         <span tabIndex={isElementSelected ? -1 : 0}>
           <InspectorButtonRowToggleContainer
-            disabled={!isElementSelected}
+            disabled={!isElementSelected || !tabsVisible}
             onClick={() =>
-              OnToggleClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
+              OnToggleInspectorClick(dispatch, open, inspectorRef, changeInspectorVisibilityAction, changeInspectorHeightAction)
             }
           >
-            <InspectorButtonRowToggleTitle>{TextResources.MODULE_INSPECTOR}</InspectorButtonRowToggleTitle>
+            <InspectorButtonRowToggleTitle>{TextResources.INSPECTOR}</InspectorButtonRowToggleTitle>
             <Icon size={15} src={open ? DownIcon : UpIcon} alt="toggle-icon" />
           </InspectorButtonRowToggleContainer>
         </span>

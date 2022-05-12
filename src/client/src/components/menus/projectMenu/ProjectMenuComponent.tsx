@@ -6,8 +6,8 @@ import { ProjectMenuBox } from "./ProjectMenuComponent.styled";
 import { TextResources } from "../../../assets/text/TextResources";
 import { useRef } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { useSelectedFlowElements } from "../../../helpers";
 import { activeMenuSelector, projectSelector, useAppDispatch, useAppSelector } from "../../../redux/store";
+import { GetSelectedFlowNodes } from "../../../helpers/Selected";
 
 interface Props {
   setIsUserMenuOpen: (value: boolean) => void;
@@ -22,7 +22,9 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   const project = useAppSelector(projectSelector);
   const activeMenu = useAppSelector(activeMenuSelector);
   const hasActiveProject = project && project.id;
-  const [selectedNodeIds] = useSelectedFlowElements();
+  const selectedFlowNodes = GetSelectedFlowNodes();
+  const hasSelectedNodes = selectedFlowNodes.length > 0;
+
   const menuRef = useRef(null);
 
   const projectMenuAction = (callback: () => void) => {
@@ -76,10 +78,10 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
           disabled={!projectState?.project?.isSubProject}
         /> */}
       <MenuElement
-        text={TextResources.PROJECT_SUBPROJECT_SAVE}
-        icon={selectedNodeIds ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
+        text={TextResources.SUBPROJECT_SAVE}
+        icon={hasSelectedNodes ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}
         onClick={() => projectMenuAction(() => Click.OnCreateSubProject(dispatch))}
-        disabled={!selectedNodeIds}
+        disabled={!hasSelectedNodes}
       />
       <MenuElement
         text={TextResources.PROJECT_IMPORT_LIB_TYPES}
