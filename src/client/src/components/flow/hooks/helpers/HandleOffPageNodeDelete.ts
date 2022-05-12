@@ -6,7 +6,7 @@ import { deleteEdge, deleteNode, setOffPageStatus } from "../../../../redux/stor
 /**
  * Component to handle deleting an OffPageNode. There are two kinds of OffPage nodes -> Required and Connected.
  * A Required OffPageNode is deleted along with its transport edge and partOf edge, through HandleRequiredOffPageDelete.
- * A Connected OffPageNode is handled by HandleConnectedOffPageNode
+ * A Connected OffPageNode is handled by HandleConnectedOffPageDelete.
  * @param nodeToDelete
  * @param nodes
  * @param edges
@@ -17,23 +17,33 @@ export const HandleOffPageNodeDelete = (nodeToDelete: Node, nodes: Node[], edges
   if (!parentNodeId) return;
 
   const transportEdge = helpers.GetOffPageTransportEdge(nodeToDelete.id, parentNodeId, edges);
-  const partOfEdge = helpers.GetPartOfEdge(nodeToDelete.id, parentNodeId, edges);
-  const parentConnectorId = helpers.GetParentConnector(transportEdge, nodeToDelete.id)?.id;
 
-  if (nodeToDelete.isOffPageRequired) return HandleRequiredOffPageDelete(parentNodeId, parentConnectorId, partOfEdge, dispatch);
-  return HandleConnectedOffPageDelete(partOfEdge, transportEdge, parentConnectorId, nodes, edges, dispatch);
+  return nodeToDelete.isOffPageRequired
+    ? HandleRequiredOffPageDelete(nodeToDelete, transportEdge, parentNodeId, edges, dispatch)
+    : HandleConnectedOffPageDelete(nodeToDelete, transportEdge, nodes, edges, dispatch);
 };
 
 /**
- * Handler for deleting a Required OffPageNode.
+ * Handler for deleting a Required OffPageNode and releated edges.
+ * @param offPageNode
+ * @param transportEdge
  * @param parentNodeId
- * @param parentConnectorId
- * @param partOfEdge
  * @param dispatch
  */
-function HandleRequiredOffPageDelete(parentNodeId: string, parentConnectorId: string, partOfEdge: Edge, dispatch: Dispatch) {
-  dispatch(setOffPageStatus(parentNodeId, parentConnectorId, false));
+export function HandleRequiredOffPageDelete(
+  offPageNode: Node,
+  transportEdge: Edge,
+  parentNodeId: string,
+  edges: Edge[],
+  dispatch: Dispatch
+) {
+  const partOfEdge = helpers.GetPartOfEdge(offPageNode.id, parentNodeId, edges);
+  const parentConnectorId = helpers.GetParentConnectorId(transportEdge, offPageNode.id);
+
   if (partOfEdge) dispatch(deleteEdge(partOfEdge.id));
+  if (transportEdge) dispatch(deleteEdge(transportEdge.id));
+  dispatch(setOffPageStatus(parentNodeId, parentConnectorId, false));
+  if (offPageNode) dispatch(deleteNode(offPageNode.id));
 }
 
 /**
@@ -41,39 +51,60 @@ function HandleRequiredOffPageDelete(parentNodeId: string, parentConnectorId: st
  * A Connected OffPageNode appears if a node has a transport connection to a node not displayed on the screen.
  * When deleting a Connected OffPageNode, the actual transport edge that the OffPageNode refers to is deleted.
  * The opposite Connected OffPageNode and edges are also removed.
- * @param partOfEdge
  * @param transportEdge
- * @param parentConnectorId
  * @param nodes
  * @param edges
  * @param dispatch
  */
 export function HandleConnectedOffPageDelete(
-  partOfEdge: Edge,
+  offPageNode: Node,
   transportEdge: Edge,
-  parentConnectorId: string,
   nodes: Node[],
   edges: Edge[],
   dispatch: Dispatch
 ) {
+  const partOfEdge = helpers.GetPartOfEdge(offPageNode.id, offPageNode.parentNodeId, edges);
+  const parentConnectorId = helpers.GetParentConnectorId(transportEdge, offPageNode.id);
+
   const mainEdge = helpers.GetConnectedEdge(parentConnectorId, edges);
   const counterTransportEdge = helpers.GetCounterTransportEdge(edges, mainEdge, transportEdge);
   const counterOffPageNode = helpers.GetCounterOffPageNode(nodes, counterTransportEdge);
   const counterParentId = counterOffPageNode?.parentNodeId;
   const counterPartOfEdge = helpers.GetPartOfEdge(counterOffPageNode?.id, counterParentId, edges);
 
-  DeleteOffPageElements(partOfEdge, transportEdge, mainEdge, dispatch);
-  DeleteCounterOffPageElements(counterPartOfEdge, counterTransportEdge, counterOffPageNode, dispatch);
+  DeleteConnectedOffPageElements(offPageNode, partOfEdge, transportEdge, mainEdge, dispatch);
+  DeleteConnectedCounterOffPageElements(counterPartOfEdge, counterTransportEdge, counterOffPageNode, dispatch);
 }
 
 /**
- * Function to delete all counter OffPageElements.
+ * Function to delete connected OffPageElements.
+ * @param offPageNode
+ * @param partOfEdge
+ * @param transportEdge
+ * @param mainEdge
+ * @param dispatch
+ */
+export function DeleteConnectedOffPageElements(
+  offPageNode: Node,
+  partOfEdge: Edge,
+  transportEdge: Edge,
+  mainEdge: Edge,
+  dispatch: Dispatch
+) {
+  if (partOfEdge) dispatch(deleteEdge(partOfEdge.id));
+  if (transportEdge) dispatch(deleteEdge(transportEdge.id));
+  if (mainEdge) dispatch(deleteEdge(mainEdge.id));
+  if (offPageNode) dispatch(deleteNode(offPageNode.id));
+}
+
+/**
+ * Function to delete connected counter OffPageElements.
  * @param counterPartOfEdge
  * @param counterTransportEdge
  * @param counterOffPageNode
  * @param dispatch
  */
-export function DeleteCounterOffPageElements(
+export function DeleteConnectedCounterOffPageElements(
   counterPartOfEdge: Edge,
   counterTransportEdge: Edge,
   counterOffPageNode: Node,
@@ -82,25 +113,4 @@ export function DeleteCounterOffPageElements(
   if (counterPartOfEdge) dispatch(deleteEdge(counterPartOfEdge.id));
   if (counterTransportEdge) dispatch(deleteEdge(counterTransportEdge.id));
   if (counterOffPageNode) dispatch(deleteNode(counterOffPageNode.id));
-}
-
-/**
- * Function to delete all OffPageElements.
- * @param partOfEdge
- * @param transportEdge
- * @param mainEdge
- * @param dispatch
- * @param offPageNode
- */
-export function DeleteOffPageElements(
-  partOfEdge: Edge,
-  transportEdge: Edge,
-  mainEdge: Edge,
-  dispatch: Dispatch,
-  offPageNode?: Node
-) {
-  if (partOfEdge) dispatch(deleteEdge(partOfEdge.id));
-  if (transportEdge) dispatch(deleteEdge(transportEdge.id));
-  if (mainEdge) dispatch(deleteEdge(mainEdge.id));
-  if (offPageNode) dispatch(deleteNode(offPageNode.id));
 }

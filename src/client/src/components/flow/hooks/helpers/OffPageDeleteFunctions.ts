@@ -51,6 +51,6 @@ export function GetConnectedEdge(connId: string, edges: Edge[]) {
   );
 }
 
-export function GetParentConnector(transportEdge: Edge, nodeId: string) {
-  return transportEdge.fromConnector.nodeId === nodeId ? transportEdge.toConnector : transportEdge.fromConnector;
+export function GetParentConnectorId(transportEdge: Edge, nodeId: string) {
+  return transportEdge.fromConnector.nodeId === nodeId ? transportEdge.toConnectorId : transportEdge.fromConnectorId;
 }
