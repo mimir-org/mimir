@@ -35,7 +35,7 @@ export const MenuHeader = styled.div<MenuHeaderProps>`
   color: ${Color.WHITE};
 
   p {
-    padding: 10px;
+    padding-left: 10px;
     text-decoration: ${(props) => props.open && "underline"};
   }
 
