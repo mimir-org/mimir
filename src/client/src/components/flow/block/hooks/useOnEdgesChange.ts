@@ -61,10 +61,9 @@ function HandleRemoveEdge(
   const edgeToRemove = edges.find((e) => e.id === change.id);
   if (!edgeToRemove || edgeToRemove.isLocked) return;
 
+  const isSelectedEdge = change.id === selectedEdge?.id;
   const isConnectedToSelectedBlockNode =
     edgeToRemove.fromNodeId === selectedBlockNode?.id || edgeToRemove.toNodeId === selectedBlockNode?.id;
-
-  const isSelectedEdge = change.id === selectedEdge?.id;
 
   if (!isConnectedToSelectedBlockNode && !isSelectedEdge) return;
 

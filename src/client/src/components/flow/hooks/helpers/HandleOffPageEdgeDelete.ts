@@ -2,7 +2,9 @@ import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { Edge, Node } from "../../../../models";
 import { deleteEdge } from "../../../../redux/store/project/actions";
-import { HandleConnectedOffPageDelete, HandleRequiredOffPageDelete } from "./HandleOffPageNodeDelete";
+import { IsTransport } from "../../helpers/Connectors";
+import { HandleConnectedOffPageDelete } from "./HandleConnectedOffPageDelete";
+import { HandleRequiredOffPageDelete } from "./HandleRequiredOffPageDelete";
 
 /**
  * When deleting an edge it needs to be checked if that edge has generated some connected OffPage elements.
@@ -13,10 +15,7 @@ import { HandleConnectedOffPageDelete, HandleRequiredOffPageDelete } from "./Han
  * @param dispatch
  */
 export const HandleOffPageEdgeDelete = (edgeToDelete: Edge, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
-  if (!edgeToDelete) return;
-
-  // Find offpage node, if any
-  const offPageNode = FindOffPageNode(nodes, edgeToDelete);
+  const offPageNode = FindOffPageNode(nodes, edges, edgeToDelete);
 
   if (offPageNode) {
     return offPageNode.isOffPageRequired
@@ -27,7 +26,17 @@ export const HandleOffPageEdgeDelete = (edgeToDelete: Edge, nodes: Node[], edges
   dispatch(deleteEdge(edgeToDelete.id));
 };
 
-function FindOffPageNode(nodes: Node[], edgeToDelete: Edge) {
+function FindOffPageNode(nodes: Node[], edges: Edge[], edgeToDelete: Edge) {
   if (IsOffPage(edgeToDelete.toNode)) return nodes.find((n) => n.id === edgeToDelete.toNodeId);
   if (IsOffPage(edgeToDelete.fromNode)) return nodes.find((n) => n.id === edgeToDelete.fromNodeId);
+
+  // Search for Connected OffPageNodes
+  const toConnectorId = edgeToDelete.toConnectorId;
+  const fromConnectorId = edgeToDelete.fromConnectorId;
+
+  const fromEdge = edges.find((e) => e.toConnectorId === toConnectorId && IsTransport(e.toConnector) && IsOffPage(e.fromNode));
+  if (fromEdge) return nodes.find((n) => n.id === fromEdge.fromNodeId);
+
+  const toEdge = edges.find((e) => e.fromConnectorId === fromConnectorId && IsTransport(e.fromConnector) && IsOffPage(e.toNode));
+  if (toEdge) return nodes.find((n) => n.id === toEdge.toNodeId);
 }
