@@ -7,7 +7,7 @@ import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
 import { GetTreeNodeTerminal } from "./helpers/GetTreeNodeTerminal";
 import { useAppDispatch } from "../../../../../redux/store";
-import { IsPartOfTerminal } from "../../../helpers/Connectors";
+import { FilterTreeTerminals } from "./helpers/FilterTreeTerminals";
 
 /**
  * Component to display a node in TreeView.
@@ -18,7 +18,12 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
   const [timer, setTimer] = useState(false);
+  const [terminals, setTerminals] = useState([] as Connector[]);
   const [renderTerminals, setRenderTerminals] = useState(true);
+
+  useEffect(() => {
+    setTerminals(FilterTreeTerminals(data?.connectors));
+  }, []);
 
   useEffect(() => {
     if (timer) {
@@ -47,8 +52,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     setTimer(true);
     setIsHover(false);
   };
-
-  const terminals = data.connectors.filter((c) => IsPartOfTerminal(c));
 
   return (
     <TreeNodeBox
