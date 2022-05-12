@@ -31,7 +31,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
     <VisualFilterContainer libraryOpen={libOpen}>
       <VisualFilterHeader>{TextResources.VISUAL_FILTER}</VisualFilterHeader>
       <VisualFilterMenuColumn>
-        <AnimationFilter isAnimated={edgeAnimation} dispatch={dispatch} />
+        <AnimationFilter isAnimated={edgeAnimation} visible={!!transportConnectors.length} dispatch={dispatch} />
         <PartOfFilter
           edges={edges}
           nodes={nodes}

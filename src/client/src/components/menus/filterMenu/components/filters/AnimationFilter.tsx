@@ -6,6 +6,7 @@ import { memo } from "react";
 
 interface Props {
   isAnimated: boolean;
+  visible: boolean;
   dispatch: Dispatch;
 }
 
@@ -14,12 +15,12 @@ interface Props {
  * @param interface
  * @returns a checkbox to toggle Edge animation on/off.
  */
-const AnimationFilter = ({ isAnimated, dispatch }: Props) => (
+const AnimationFilter = ({ isAnimated, visible, dispatch }: Props) => (
   <FilterElement
     label={TextResources.ANIMATION}
     onChange={() => dispatch(toggleEdgeAnimation())}
     isChecked={isAnimated}
-    visible
+    visible={visible}
   />
 );
 
