@@ -82,7 +82,7 @@ namespace Mb.Models.Data
         public string SelectValuesString { get; set; }
         public SelectType SelectType { get; set; }
         public Discipline Discipline { get; set; }
-        public virtual HashSet<string> Tags { get; set; }
+        //public virtual HashSet<string> Tags { get; set; }
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
@@ -163,7 +163,7 @@ namespace Mb.Models.Data
             hashCode.Add(SelectValuesString);
             hashCode.Add((int) SelectType);
             hashCode.Add((int) Discipline);
-            hashCode.Add(Tags);
+            //hashCode.Add(Tags);
             return hashCode.ToHashCode();
         }
 

@@ -126,7 +126,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributePredefinedLibCm>> GetPredefinedAttributes()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattribute/predefined");
+            var url = _applicationSetting.ApiUrl("attribute/predefined");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributePredefined.ToString(),
                 async () => await _httpRepository.GetData<List<AttributePredefinedLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 

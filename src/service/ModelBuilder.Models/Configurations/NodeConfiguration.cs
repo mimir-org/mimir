@@ -47,8 +47,6 @@ namespace Mb.Models.Configurations
             builder.HasIndex(x => x.ProjectId).IsUnique(false);
             builder.HasIndex(x => x.ProjectIri).IsUnique(false);
             builder.HasIndex(x => x.Name).IsUnique(false);
-
-            builder.HasOne(x => x.Status).WithMany(y => y.Nodes).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.Format, opt => opt.Ignore())
 
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(x => x.Units))
-                .ForMember(dest => dest.Tags, opt => opt.Ignore())
+                //.ForMember(dest => dest.Tags, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()))
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(x => x.Select))
@@ -76,7 +76,7 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.SimpleIri, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()))
-                .ForMember(dest => dest.Tags, opt => opt.Ignore())
+                //.ForMember(dest => dest.Tags, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(x => x.Select))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(x => x.Discipline))
                 .ForMember(dest => dest.IsLocked, opt => opt.Ignore())

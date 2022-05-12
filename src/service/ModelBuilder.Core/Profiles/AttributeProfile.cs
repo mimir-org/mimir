@@ -24,7 +24,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SourceId, opt => opt.MapFrom(src => src.SourceId))
                 .ForMember(dest => dest.ConditionId, opt => opt.MapFrom(src => src.ConditionId))
                 .ForMember(dest => dest.FormatId, opt => opt.MapFrom(src => src.FormatId))
-                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.ConvertToObject))
@@ -55,8 +54,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
-                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString))
-                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags));
+                .ForMember(dest => dest.SelectValuesString, opt => opt.MapFrom(src => src.SelectValuesString));
 
             CreateMap<AttributeAm, Attribute>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -93,7 +91,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline))
                 .ForMember(dest => dest.SelectValues, opt => opt.Ignore())
-                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.SelectValuesString,
                     opt => opt.MapFrom(src => src.SelectValues == null ? null : src.SelectValues.ConvertToString()));
 
@@ -123,7 +120,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
-                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
 
             CreateMap<UnitAm, Unit>()

@@ -29,7 +29,6 @@ namespace Mb.Models.Configurations
 
             builder.HasOne(x => x.OutputTerminal).WithMany(y => y.OutputInterfaces).HasForeignKey(x => x.OutputTerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.InputTerminal).WithMany(y => y.InputInterfaces).HasForeignKey(x => x.InputTerminalId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Status).WithMany(y => y.Interfaces).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

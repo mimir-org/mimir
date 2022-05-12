@@ -29,8 +29,6 @@ namespace Mb.Models.Data.TypeEditor
         public string FormatId { get; set; }
         public AttributeFormat Format { get; set; }
 
-        public virtual HashSet<string> Tags { get; set; }
-
         [NotMapped]
         public ICollection<string> SelectValues => string.IsNullOrEmpty(SelectValuesString) ? null : SelectValuesString.ConvertToArray();
 

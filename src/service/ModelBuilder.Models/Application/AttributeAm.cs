@@ -82,8 +82,6 @@ namespace Mb.Models.Application
         [EnumDataType(typeof(Discipline))]
         public Discipline Discipline { get; set; }
 
-        public virtual HashSet<string> Tags { get; set; }
-
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
