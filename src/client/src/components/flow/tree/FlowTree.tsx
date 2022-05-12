@@ -72,14 +72,17 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
     return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
-  const OnSelectionChange = useCallback((selectedItems: OnSelectionChangeParams) => {
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
     if (!project) return;
     return HandleTreeNodeSelection(selectedItems, inspectorRef, dispatch);
-  }, []);
+  };
 
-  const OnNodesChange = useCallback((changes: NodeChange[]) => {
-    return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
-  }, []);
+  const OnNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
+    },
+    [selectedNode]
+  );
 
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {

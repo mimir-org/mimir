@@ -1,11 +1,9 @@
-import { useReactFlow } from "react-flow-renderer";
-import { animatedEdgeSelector, useAppSelector } from "../../../redux/store";
+import { animatedEdgeSelector, edgesSelector, nodesSelector, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
-import { ConvertFlowElements } from "./helpers/ConvertFlowElements";
 import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
 import { Dispatch } from "redux";
 
@@ -20,15 +18,14 @@ interface Props {
 export const VisualFilterComponent = ({ dispatch }: Props) => {
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const edgeAnimation = useAppSelector(animatedEdgeSelector);
-  const flowNodes = useReactFlow().getNodes();
-  const flowEdges = useReactFlow().getEdges();
-  const { mimirNodes, mimirEdges } = ConvertFlowElements(flowNodes, flowEdges);
+  const nodes = useAppSelector(nodesSelector);
+  const edges = useAppSelector(edgesSelector);
 
   const transportConnectors = [] as Connector[];
   const relationConnectors = [] as Connector[];
   const partOfConnectors = [] as Connector[];
 
-  PopulateFilterLists(mimirEdges, mimirNodes, transportConnectors, relationConnectors, partOfConnectors);
+  PopulateFilterLists(edges, nodes, transportConnectors, relationConnectors, partOfConnectors);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
@@ -36,21 +33,21 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
       <VisualFilterMenuColumn>
         <AnimationFilter isAnimated={edgeAnimation} dispatch={dispatch} />
         <PartOfFilter
-          edges={mimirEdges}
-          nodes={mimirNodes}
+          edges={edges}
+          nodes={nodes}
           connectors={partOfConnectors}
           dispatch={dispatch}
           visible={!!partOfConnectors.length}
         />
         <RelationFilter
-          edges={mimirEdges}
-          nodes={mimirNodes}
+          edges={edges}
+          nodes={nodes}
           connectors={relationConnectors}
           dispatch={dispatch}
           visible={!!relationConnectors.length}
         />
         <TransportFilter
-          edges={mimirEdges}
+          edges={edges}
           connectors={transportConnectors}
           dispatch={dispatch}
           visible={!!transportConnectors.length}

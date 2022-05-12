@@ -277,6 +277,11 @@ export const nodesSelector = createAppSelector(
   (nodes) => nodes ?? []
 );
 
+export const edgesSelector = createAppSelector(
+  (state) => state.projectState?.project?.edges,
+  (edges) => edges ?? []
+);
+
 export const nodeSelector = createParametricAppSelector(
   (state) => state.projectState?.project?.nodes,
   (_, id: string) => id,

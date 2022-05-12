@@ -19,7 +19,7 @@ interface Props {
 export const FilterElement = ({ onChange, isChecked, visible, label, isHeader, isSubHeader, indent = 1 }: Props) =>
   visible && (
     <ElementBox isHeader={isHeader} isSubHeader={isSubHeader} indent={indent}>
-      <Checkbox isChecked={isChecked} onChange={onChange} id={CreateId()} marginLeft={indent * 8} />
+      <Checkbox isChecked={isChecked} onChange={() => onChange()} id={CreateId()} marginLeft={indent * 8} />
       <ElementLabel isHeader={isHeader} isSubHeader={isSubHeader}>
         {label}
       </ElementLabel>
