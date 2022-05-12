@@ -8,38 +8,36 @@ import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
  * In the Flow Library a change is defined by the following types:
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
  * If an edge is marked as remove, a separate validation is executed.
+ * @param project
  * @param changes
  * @param selectedBlockNode
  * @param selectedEdge
  * @param setEdges
  * @param inspectorRef
- * @param project
  * @param dispatch
  */
 const useOnEdgesChange = (
+  project: Project,
   changes: EdgeChange[],
   selectedBlockNode: Node,
   selectedEdge: Edge,
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>,
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  project: Project,
   dispatch: Dispatch
 ) => {
-  const edges = project?.edges;
-  const nodes = project?.nodes;
   const verifiedFlowChanges = [] as EdgeChange[];
   const verfifiedMimirEdges = [] as Edge[];
 
   // Verify changes
   changes.forEach((c) => {
     if (c.type === "remove")
-      return HandleRemoveEdge(c, edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, verfifiedMimirEdges);
+      return HandleRemoveEdge(c, project.edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, verfifiedMimirEdges);
     verifiedFlowChanges.push(c);
   });
 
   // Execute all changes
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
-  useOnEdgeDelete(verfifiedMimirEdges, nodes, edges, inspectorRef, dispatch);
+  useOnEdgeDelete(verfifiedMimirEdges, project.nodes, project.edges, inspectorRef, dispatch);
 };
 
 /**

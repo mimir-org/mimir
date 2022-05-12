@@ -56,4 +56,5 @@ export interface Node {
   hidden?: boolean;
   blockHidden?: boolean;
   isOffPageTarget?: boolean;
+  isOffPageRequired?: boolean;
 }

@@ -30,7 +30,7 @@ export const useOnNodeDelete = (
   nodesToDelete.forEach((node) => {
     DeleteRelatedEdges(node.id, edges, dispatch);
 
-    IsOffPage(node) ? HandleOffPageNodeDelete(node, edges, dispatch) : HandleRelatedEdges(node.id, edges, nodes, dispatch);
+    IsOffPage(node) ? HandleOffPageNodeDelete(node, nodes, edges, dispatch) : HandleRelatedEdges(node.id, nodes, edges, dispatch);
     dispatch(deleteNode(node.id));
   });
 
@@ -53,11 +53,11 @@ function DeleteRelatedEdges(nodeId: string, edges: Edge[], dispatch: Dispatch) {
 /**
  * Function to handle related edges to a node that is to be removed.
  * @param nodeToRemoveId
- * @param edges
  * @param nodes
+ * @param edges
  * @param dispatch
  */
-function HandleRelatedEdges(nodeToRemoveId: string, edges: Edge[], nodes: Node[], dispatch: Dispatch) {
+function HandleRelatedEdges(nodeToRemoveId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) {
   edges.forEach((edge) => {
     if (!IsEdgeConnectedToNode(edge, nodeToRemoveId)) return;
 

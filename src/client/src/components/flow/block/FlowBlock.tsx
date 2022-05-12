@@ -92,7 +92,7 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
 
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
-      return hooks.useOnEdgesChange(changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, project, dispatch);
+      return hooks.useOnEdgesChange(project, changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, dispatch);
     },
     [selectedEdge, selectedBlockNode, selectedNode]
   );

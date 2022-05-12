@@ -40,7 +40,7 @@ const useOnNodesChange = (
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
-  useOnNodeDelete(verifiedMimirNodes, project?.nodes, project?.edges, inspectorRef, dispatch);
+  useOnNodeDelete(verifiedMimirNodes, project.nodes, project.edges, inspectorRef, dispatch);
 };
 
 /**

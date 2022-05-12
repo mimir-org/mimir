@@ -25,6 +25,7 @@ export interface OffPageData {
   sourceNode: Node;
   sourceConnector: Connector;
   position: Position;
+  isRequired: boolean;
 }
 
 /**
@@ -55,9 +56,10 @@ export const CreateOffPageObject = (data: OffPageData) => {
     masterProjectId: sourceNode.masterProjectId,
     statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,
-    isOffPageTarget: isTarget,
     parentNodeId: sourceNode.id,
     kind: NODE_KIND,
+    isOffPageRequired: data.isRequired,
+    isOffPageTarget: isTarget,
   } as Node;
 
   const inputConnector = {
