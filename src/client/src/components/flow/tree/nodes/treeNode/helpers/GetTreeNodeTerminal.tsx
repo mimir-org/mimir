@@ -6,7 +6,6 @@ import { Handle } from "react-flow-renderer";
 import { IsPartOfTerminal } from "../../../../helpers/Connectors";
 import { Dispatch } from "redux";
 import { SetTopPos } from "../../helpers/SetTopPos";
-import { GetMimirEdges } from "../../../../../../helpers/Selected";
 
 /**
  * Component to get a single terminal for a Node in TreeView.
@@ -25,7 +24,6 @@ export const GetTreeNodeTerminal = (
   setIsHover: React.Dispatch<React.SetStateAction<boolean>>,
   isHover: boolean
 ) => {
-  if (!ShouldRenderTerminal(connector)) return null;
   const [type, pos] = GetHandleType(connector);
 
   return (
@@ -47,16 +45,3 @@ export const GetTreeNodeTerminal = (
     </TreeHandleBox>
   );
 };
-
-function ShouldRenderTerminal(connector: Connector) {
-  if (IsPartOfTerminal(connector)) return true;
-
-  const edges = GetMimirEdges();
-  let isConnectedToEdgde = false;
-
-  edges.forEach((e) => {
-    if (e.fromConnectorId === connector.id || e.toConnectorId === connector.id) isConnectedToEdgde = true;
-  });
-
-  return isConnectedToEdgde;
-}

@@ -7,6 +7,7 @@ import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
 import { GetTreeNodeTerminal } from "./helpers/GetTreeNodeTerminal";
 import { useAppDispatch } from "../../../../../redux/store";
+import { IsPartOfTerminal } from "../../../helpers/Connectors";
 
 /**
  * Component to display a node in TreeView.
@@ -16,8 +17,8 @@ import { useAppDispatch } from "../../../../../redux/store";
 const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
-  const [renderTerminals, setRenderTerminals] = useState(true);
   const [timer, setTimer] = useState(false);
+  const [renderTerminals, setRenderTerminals] = useState(true);
 
   useEffect(() => {
     if (timer) {
@@ -45,8 +46,9 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
   const mouseLeave = () => {
     setTimer(true);
     setIsHover(false);
-    setRenderTerminals(true);
   };
+
+  const terminals = data.connectors.filter((c) => IsPartOfTerminal(c));
 
   return (
     <TreeNodeBox
@@ -60,7 +62,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
       onMouseDown={() => mouseDown()}
     >
       {renderTerminals &&
-        data.connectors?.map((conn) => {
+        terminals.map((conn) => {
           return GetTerminal(conn);
         })}
       <TreeLogoComponent node={data} />
