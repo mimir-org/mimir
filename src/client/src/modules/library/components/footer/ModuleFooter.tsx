@@ -15,12 +15,12 @@ interface Props {
   libOpen: boolean;
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
-  setCollectionState: (action: CollectionsActions) => void;
   selectedElement: LibItem | null;
-  resetSelectedElement: () => void;
   selectedTypes: LibItem[];
-  setSelectedTypes: (types: LibItem[]) => void;
   collections: Collection[];
+  resetSelectedElement: () => void;
+  setCollectionState: (action: CollectionsActions) => void;
+  setSelectedTypes: (types: LibItem[]) => void;
   dispatch: Dispatch;
 }
 
@@ -34,12 +34,12 @@ export const ModuleFooter = ({
   libOpen,
   activeTab,
   collectionState,
-  setCollectionState,
   selectedElement,
-  resetSelectedElement,
   selectedTypes,
-  setSelectedTypes,
   collections,
+  resetSelectedElement,
+  setCollectionState,
+  setSelectedTypes,
   dispatch,
 }: Props) => {
   const [confirmDeleteBoxVisible, setConfirmDeleteBoxVisible] = useState(false);
