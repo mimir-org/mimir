@@ -21,10 +21,13 @@ const DrawFlowChildNodes = (nodes: Node[], edges: Edge[], selectedNode: Node, se
     if (!targetNode) return;
 
     const childNode = BuildFlowChildNode(targetNode, selectedNode, secondaryNode, nodes);
+    if (!childNode) return;
     let isValid = true;
 
     if (IsOffPage(targetNode)) isValid = ValidateOffPage(nodes, edges, targetNode, selectedNode, secondaryNode, flowNodes);
-    if (isValid && childNode) flowNodes.push(childNode);
+    if (!isValid) return;
+
+    flowNodes.push(childNode);
   });
 };
 

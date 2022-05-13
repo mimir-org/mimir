@@ -21,6 +21,7 @@ import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
+import { TypeEditorComponent } from "../../typeEditor";
 import {
   fetchCollaborationPartners,
   fetchCombinedAttributeFilters,
@@ -85,6 +86,7 @@ export const Home = ({ dispatch }: Props) => {
           <FlowModule inspectorRef={inspectorRef} flowView={flowView} dispatch={dispatch} />
           <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule dispatch={dispatch} />
+          <TypeEditorComponent />
           {isFilterOpen && <VisualFilterComponent dispatch={dispatch} />}
           <ValidationModule />
         </>
