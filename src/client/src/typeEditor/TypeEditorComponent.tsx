@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { typeEditorStateSelector, useAppDispatch, useAppSelector } from "../redux/store";
 import { fetchBlobData, fetchInitialData, fetchSimpleTypes } from "./redux/typeEditorSlice";
 import { CloseIcon } from "../assets/icons/close";
@@ -87,4 +87,4 @@ export const TypeEditorComponent = () => {
   );
 };
 
-export default TypeEditorComponent;
+export default memo(TypeEditorComponent);
