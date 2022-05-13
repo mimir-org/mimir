@@ -2,9 +2,10 @@ import { ConnectorType, TerminalType, TerminalTypeItem } from "../../../../model
 import { TerminalElementWrapper } from "../../../styled";
 import { CloseIcon } from "../../../../assets/icons/close";
 import { OnDirectionChange, OnQuantityChange, OnTerminalIdChange } from "./handlers";
-import { DirectionalDropdown, SearchDropDown } from "../../../../compLibrary";
 import { NumericValueInput } from "../../../../compLibrary/input/text";
 import { TypeEditorTextResources } from "../../../assets/TypeEditorTextResources";
+import { DirectionalDropdown } from "../../../../compLibrary/dropdown/DirectionalDropdown";
+import { SearchDropDown } from "../../../../compLibrary/dropdown/SearchDropDown";
 
 interface Props {
   terminals: TerminalType[];

@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { getFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
-import { GetSelectedNode, IsBlockView } from "../../../../../../../../helpers";
+import { IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
 import { filterByAspect } from "./helpers/FilterByAspect";
-import { Aspect, CollectionsActions, LibItem } from "../../../../../../../../models";
+import { Aspect, CollectionsActions, LibItem, Node } from "../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
 import { getValidLibItems } from "./helpers/GetValidLibItems";
 import { getSharedCategory } from "./helpers/GetSharedCategory";
@@ -18,6 +18,7 @@ interface Props {
   selectedElement: LibItem | null;
   setSelectedElement: (value: LibItem) => void;
   aspectFilters: Aspect[];
+  selectedNode: Node;
 }
 
 export const NodeCollectionList = ({
@@ -28,12 +29,12 @@ export const NodeCollectionList = ({
   selectedElement,
   setSelectedElement,
   aspectFilters,
+  selectedNode,
 }: Props) => {
   const dispatch = useDispatch();
   const libState = useAppSelector(librarySelector);
   const customCategory = useAppSelector(customCategorySelector);
   const isBlockView = IsBlockView();
-  const selectedNode = GetSelectedNode();
 
   const validLibItems = useMemo(
     () => getValidLibItems(selectedNode, libState, isBlockView),

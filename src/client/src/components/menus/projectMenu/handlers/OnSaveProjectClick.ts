@@ -1,6 +1,6 @@
 import { Project } from "../../../../models";
 import { save } from "../../../../redux/store/project/actions";
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage } from "../../../../helpers/Aspects";
 import { Dispatch } from "redux";
 
 export const OnSaveProjectClick = (dispatch: Dispatch, project: Project) => {

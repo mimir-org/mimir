@@ -1,10 +1,10 @@
+/* eslint-disable require-yield */
 import { CooperateActionTypes } from "..";
 import { WebSocket, WorkerStatus } from "../../../models";
 
 /**
  * Triggers when a node is added
  */
-// eslint-disable-next-line require-yield
 export function* nodeAdded(action: CooperateActionTypes) {
   const webSocket = new WebSocket();
   if (webSocket.isRunning()) {
@@ -16,7 +16,6 @@ export function* nodeAdded(action: CooperateActionTypes) {
 /**
  * Triggers when an edge is added
  */
-// eslint-disable-next-line require-yield
 export function* edgeAdded(action: CooperateActionTypes) {
   const webSocket = new WebSocket();
   if (webSocket.isRunning()) {

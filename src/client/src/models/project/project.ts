@@ -1,3 +1,4 @@
+import { SetCenter, SetViewport } from "react-flow-renderer";
 import { LibItem } from "../";
 
 export const ATTRIBUTE_TAB = {
@@ -13,6 +14,7 @@ export const EDGE_TYPE = {
   BLOCK_TRANSPORT: "BlockTransportEdgeType",
   BLOCK_OFFPAGE: "BlockOffPageEdgeType",
   BLOCK_RELATION: "BlockRelationEdgeType",
+  BLOCK_PARTOF: "BlockPartOfEdgeType",
   TREE_PARTOF: "TreePartOfEdgeType",
   TREE_RELATION: "TreeRelationEdgeType",
   TREE_TRANSPORT: "TreeTransportEdgeType",
@@ -43,12 +45,7 @@ export const MENU_TYPE = {
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;
-export const VIEW_TYPE = {
-  STARTPAGE: "startpage",
-  BLOCKVIEW: "blockview",
-  TREEVIEW: "treeview",
-  TYPE_EDITOR: "type-editor",
-};
+export const VIEW_TYPE = { STARTPAGE: "startpage", BLOCKVIEW: "blockview", TREEVIEW: "treeview", TYPE_EDITOR: "type-editor" };
 
 export interface LibraryCategory {
   name: string;
@@ -69,4 +66,9 @@ export interface Position {
 export interface BlockNodeSize {
   width: number;
   height: number;
+}
+
+export interface ViewportData {
+  setViewport: SetViewport;
+  setCenter: SetCenter;
 }

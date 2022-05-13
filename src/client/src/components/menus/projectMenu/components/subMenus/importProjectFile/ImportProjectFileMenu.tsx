@@ -47,7 +47,7 @@ export const ImportProjectFileMenu = () => {
         <Label>
           {TextResources.PROJECT_IMPORT_FILE}: {selectedText}
         </Label>
-        <Button onClick={() => openFileSelector()} text={TextResources.PROJECT_BROWSE} />
+        <Button onClick={() => openFileSelector()} text={TextResources.BROWSE} />
         <ButtonBox>
           <Button onClick={onExit} text={TextResources.CANCEL} />
           <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.PROJECT_IMPORT} icon={ImportProjectIcon} />

@@ -1,10 +1,11 @@
-import { GetRdsId, IsAspectNode } from ".";
+import { GetRdsId } from ".";
 import { Edge, Node, Project } from "../models";
+import { IsAspectNode } from "./Aspects";
 import { FindParentEdge } from "./ParentNode";
 
-const findParentNode = (currentNode: Node, project: Project) => {
+const findParentNode = (currentNode: Node, edges: Edge[]) => {
   if (!currentNode || IsAspectNode(currentNode)) return null;
-  return FindParentEdge(currentNode, project)?.fromNode;
+  return FindParentEdge(currentNode.id, edges)?.fromNode;
 };
 
 const GetReferenceDesignation = (node: Node, project: Project) => {
@@ -15,7 +16,7 @@ const GetReferenceDesignation = (node: Node, project: Project) => {
 
   while (nextNode) {
     if (nextNode?.rds) refs.push(GetRdsId(nextNode));
-    nextNode = findParentNode(nextNode, project);
+    nextNode = findParentNode(nextNode, project.edges);
   }
 
   refs.push(`<${project.name.toUpperCase()}>`);

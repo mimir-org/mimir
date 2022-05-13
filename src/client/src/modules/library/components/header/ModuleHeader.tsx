@@ -18,15 +18,15 @@ interface Props {
 }
 
 /**
- * Header component for library module
+ * Header component for the Library Module.
  * @param interface
- * @returns library module tabs, search input and filters
+ * @returns Library Module tabs, search input and filters.
  */
 
 export const ModuleHeader = ({ libOpen, dispatch, activeTab, setActiveTab, search, aspectFilters, setAspectFilters }: Props) => (
   <LibHeader>
     {!libOpen ? (
-      <ExpandButton text={TextResources.LIBRARY_EXPAND_PANEL} offset={[0, 5]} dispatch={dispatch} />
+      <ExpandButton text={TextResources.EXPAND_LIB_PANEL} offset={[0, 5]} dispatch={dispatch} />
     ) : (
       <>
         <ModuleTabs isOpen={libOpen} activeTab={activeTab} setActiveTab={setActiveTab} dispatch={dispatch} />

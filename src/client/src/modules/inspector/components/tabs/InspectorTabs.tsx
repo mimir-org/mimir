@@ -23,9 +23,10 @@ interface Props {
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
+  isOffPage: boolean;
 }
 
-const InspectorTabs = ({
+export const InspectorTabs = ({
   project,
   element,
   activeTabIndex,
@@ -35,6 +36,7 @@ const InspectorTabs = ({
   changeInspectorTabAction = changeInspectorTab,
   inspectorRef,
   isInspectorOpen,
+  isOffPage,
 }: Props) => {
   const shouldShowTabs = ShouldShowTabs(element);
 
@@ -60,6 +62,8 @@ const InspectorTabs = ({
                 changeInspectorTabAction={changeInspectorTabAction}
                 inspectorRef={inspectorRef}
                 isInspectorOpen={isInspectorOpen}
+                isOffPage={isOffPage}
+                nodes={project?.nodes}
               >
                 {tab}
               </InspectorTabWrapper>
@@ -68,5 +72,3 @@ const InspectorTabs = ({
     </>
   );
 };
-
-export default InspectorTabs;

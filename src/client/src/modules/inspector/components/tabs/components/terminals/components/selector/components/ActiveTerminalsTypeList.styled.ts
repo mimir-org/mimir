@@ -3,7 +3,7 @@ import { FontSize } from "../../../../../../../../../compLibrary/font";
 import { Color } from "../../../../../../../../../compLibrary/colors/Color";
 
 interface TerminalListElementProps {
-  isSelected: boolean;
+  selected: boolean;
 }
 
 export const TerminalListElement = styled.div<TerminalListElementProps>`
@@ -13,8 +13,8 @@ export const TerminalListElement = styled.div<TerminalListElementProps>`
   display: flex;
   background-color: ${(props) => props.color};
 
-  text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
+  text-decoration: ${(props) => (props.selected ? "underline" : "none")};
+  font-weight: ${(props) => (props.selected ? "bold" : "normal")};
 
   .dropdownIcon {
     margin: auto 20px auto auto;
@@ -30,7 +30,7 @@ export const TerminalListElement = styled.div<TerminalListElementProps>`
 `;
 
 export interface TerminalTypeListElementProps {
-  isSelected: boolean;
+  selected: boolean;
 }
 
 export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
@@ -40,7 +40,7 @@ export const TerminalTypeListElement = styled.div<TerminalTypeListElementProps>`
   font-size: ${FontSize.SMALL};
   display: flex;
   background-color: ${(props) => props.color};
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
+  font-weight: ${(props) => (props.selected ? "bold" : "normal")};
 
   :before {
     content: "";

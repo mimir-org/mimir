@@ -12,10 +12,6 @@ export function* changeNodeUpdated(action) {
 
   yield put({
     type: types.CHANGE_NODE_UPDATED,
-    payload: {
-      nodeId: action.payload.nodeId,
-      updated: GetDateNowUtc(),
-      userName: account?.name ?? "",
-    },
+    payload: { nodeId: action.payload.nodeId, updated: GetDateNowUtc(), userName: account?.name ?? "" },
   });
 }

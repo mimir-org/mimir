@@ -1,2 +1,2 @@
-export { default as OnHover } from "./OnHover";
-export { default as OnMouseOut } from "./OnMouseOut";
+export { OnHover } from "./OnHover";
+export { OnMouseOut } from "./OnMouseOut";

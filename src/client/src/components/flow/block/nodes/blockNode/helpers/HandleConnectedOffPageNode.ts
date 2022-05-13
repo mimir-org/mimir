@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { CreateConnectedOffPageNode } from "./CreateConnectedOffPageNode";
-import { IsOffPage } from "../../../../../../helpers";
+import { IsOffPage } from "../../../../../../helpers/Aspects";
 import { Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { GetParent, IsTransportConnection } from "../../../../helpers";
+import { IsTransportConnection } from "../../../../helpers/Connectors";
 
 /**
  * Component to draw an OffPageNode that is connected.
@@ -11,24 +11,24 @@ import { GetParent, IsTransportConnection } from "../../../../helpers";
  * The OffPageNode is only a visual element, and is not part of the project's data model.
  * This component is called from the BlockNode component.
  * @param node
+ * @param nodes
  * @param edges
  * @param size
  * @param dispatch
  */
-
-export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
-  if (!edges.length || !node) return;
+export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edge[], size: BlockNodeSize, dispatch: Dispatch) => {
+  if (!node || !nodes.length || !edges.length) return;
 
   edges.forEach((edge) => {
-    if (!IsValidTransport(edge, node)) return;
+    if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, isTarget)) return;
 
-    const nodeExists = HasConnectedOffPageNode(edges, edge, isTarget);
-    if (nodeExists) return;
+    if (HasConnectedOffPageNode(edges, edge, isTarget)) return;
 
-    const nodeParent = GetParent(node.id);
-    const xPos = isTarget ? nodeParent?.positionBlockX : size.width;
+    const nodeParent = nodes.find((n) => n.id === node.parentNodeId);
+    if (!nodeParent) return;
+
+    const xPos = isTarget ? nodeParent.positionBlockX : size.width;
     const connector = node.connectors.find((c) => (isTarget ? c.id === edge.toConnectorId : c.id === edge.fromConnectorId));
     const position = { x: xPos, y: node.positionBlockY };
 
@@ -36,39 +36,18 @@ export const HandleConnectedOffPageNode = (node: Node, edges: Edge[], size: Bloc
   });
 };
 
-//#region Helpers
 function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
   const existingEdge = isTargetNode
-    ? edges.find((x) => x.toConnectorId === edge.toConnectorId && IsOffPage(x.fromNode))
-    : edges.find((x) => x.fromConnectorId === edge.fromConnectorId && IsOffPage(x.toNode));
+    ? edges.find((e) => e.toConnectorId === edge.toConnectorId && IsOffPage(e.fromNode))
+    : edges.find((e) => e.fromConnectorId === edge.fromConnectorId && IsOffPage(e.toNode));
 
   return existingEdge !== undefined;
 }
 
-function IsValidTransport(edge: Edge, node: Node) {
-  return (
-    IsTransportConnection(edge.fromConnector, edge.toConnector) &&
-    (node.id === edge.fromNodeId || node.id === edge.toNodeId) &&
-    !IsOffPage(edge.toNode) &&
-    !IsOffPage(edge.fromNode)
-  );
+function IsValidTransport(edge: Edge, nodeId: string) {
+  const isTransport = IsTransportConnection(edge.fromConnector, edge.toConnector);
+  const isNotOffPageTransport = !IsOffPage(edge.toNode) && !IsOffPage(edge.fromNode);
+  const nodeHasEdge = nodeId === edge.fromNodeId || nodeId === edge.toNodeId;
+
+  return isTransport && nodeHasEdge && isNotOffPageTransport;
 }
-
-/**
- * Function to verify that only one node from a connection is displayed on the screen.
- * If both nodes are visible there is no need to draw a Connected OffPageNode.
- * @param edge
- * @param isTarget
- * @returns a boolean value.
- */
-function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
-  const sourceNode = isTarget ? edge.fromNode : edge.toNode;
-  const targetNode = isTarget ? edge.toNode : edge.fromNode;
-
-  const sourceNodeParent = GetParent(sourceNode?.id);
-  const targetNodeParent = GetParent(targetNode?.id);
-  const targetNodeVisible = sourceNodeParent?.id === targetNodeParent?.id;
-
-  return !targetNodeVisible;
-}
-//#endregion

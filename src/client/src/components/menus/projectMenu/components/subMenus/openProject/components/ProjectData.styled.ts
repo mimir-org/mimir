@@ -3,7 +3,7 @@ import { Color } from "../../../../../../../compLibrary/colors/Color";
 import { FontSize, FontWeight } from "../../../../../../../compLibrary/font";
 
 interface ProjectDataBoxProps {
-  isSelected: boolean;
+  selected: boolean;
 }
 
 export const ProjectDataBox = styled.button<ProjectDataBoxProps>`
@@ -13,8 +13,8 @@ export const ProjectDataBox = styled.button<ProjectDataBoxProps>`
   align-items: center;
   height: 33px;
   padding: 0 10px 0 6px;
-  font-weight: ${(props) => (props.isSelected ? FontWeight.BOLD : FontWeight.NORMAL)};
-  text-decoration: ${(props) => props.isSelected && "underline"};
+  font-weight: ${(props) => (props.selected ? FontWeight.BOLD : FontWeight.NORMAL)};
+  text-decoration: ${(props) => props.selected && "underline"};
   font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
   border: none;

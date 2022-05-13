@@ -10,9 +10,9 @@ interface Props {
 export const ParameterDescriptor = ({ qualifier, source, condition }: Props) => (
   <ParameterDescriptorsWrapper>
     <div className="descriptors-top">
-      <div>{TextResources.INSPECTOR_QUALIFIER}</div>
-      <div>{TextResources.INSPECTOR_SOURCE}</div>
-      <div>{TextResources.INSPECTOR_CONDITION}</div>
+      <div>{TextResources.QUALIFIER}</div>
+      <div>{TextResources.SOURCE}</div>
+      <div>{TextResources.CONDITION}</div>
     </div>
     <div className="descriptors-bottom">
       <div>{qualifier}</div>

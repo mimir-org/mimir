@@ -8,7 +8,7 @@ interface Props {
   onChange: (num: number) => void;
 }
 
-const DirectionalDropdown = ({ value, onChange }: Props) => {
+export const DirectionalDropdown = ({ value, onChange }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const stringIsNumber = (v: string) => isNaN(Number(v)) === false;
 
@@ -48,5 +48,3 @@ const DirectionalDropdown = ({ value, onChange }: Props) => {
     </DropdownContainer>
   );
 };
-
-export default DirectionalDropdown;

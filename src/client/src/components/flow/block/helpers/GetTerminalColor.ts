@@ -1,11 +1,11 @@
-import { IsLocationTerminal, IsProductTerminal } from "../../helpers";
+import { IsLocationTerminal, IsProductTerminal } from "../../helpers/Connectors";
 import { Color } from "../../../../compLibrary/colors/Color";
 import { Connector } from "../../../../models";
 
-const GetTerminalColor = (conn: Connector) => {
-  if (conn?.color) return conn.color;
-  if (IsProductTerminal(conn)) return Color.VIRIDIAN_GREEN;
-  if (IsLocationTerminal(conn)) return Color.PURPLE_MUNSELL;
+const GetTerminalColor = (connector: Connector) => {
+  if (connector?.color) return connector.color;
+  if (IsProductTerminal(connector)) return Color.VIRIDIAN_GREEN;
+  if (IsLocationTerminal(connector)) return Color.PURPLE_MUNSELL;
   return Color.BLACK;
 };
 

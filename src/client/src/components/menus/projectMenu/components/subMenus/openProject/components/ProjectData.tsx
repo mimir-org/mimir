@@ -1,10 +1,10 @@
 import Moment from "react-moment";
-import OnOpenClick from "../handlers/OnOpenClick";
 import { changeSelectedProject } from "../../../../../../../redux/store/project/actions";
 import { ProjectItemCm } from "../../../../../../../models";
 import { ProjectDataBox } from "./ProjectData.styled";
 import { Dispatch } from "redux";
 import { projectSelector, useAppSelector } from "../../../../../../../redux/store";
+import { OnOpenClick } from "../handlers/OnOpenClick";
 
 interface Props {
   projects: ProjectItemCm[];
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const ProjectData = ({ projects, projectId, projectName, projectVersion, projectOwner, updated, dispatch }: Props) => {
-  const isSelected = projects.find((x) => x.id === projectId).selected;
+  const selected = projects.find((x) => x.id === projectId).selected;
   const currentProject = useAppSelector(projectSelector);
 
   const handleClick = (e) => {
@@ -26,7 +26,7 @@ export const ProjectData = ({ projects, projectId, projectName, projectVersion, 
   };
 
   return (
-    <ProjectDataBox onClick={handleClick} isSelected={isSelected}>
+    <ProjectDataBox onClick={handleClick} selected={selected}>
       <span className="name">{projectName}</span>
       <span className="owner">{projectOwner}</span>
       <span className="version">{projectVersion}</span>

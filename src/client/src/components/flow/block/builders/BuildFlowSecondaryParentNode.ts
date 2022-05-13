@@ -1,4 +1,4 @@
-import { FlowElement } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Node } from "../../../../models";
@@ -34,11 +34,12 @@ const BuildFlowSecondaryParentNode = (primaryNode: Node, secondaryNode: Node) =>
     type: type,
     data: secondaryNode,
     position: position,
-    isHidden: secondaryNode.isHidden,
-    isSelected: secondaryNode.isSelected,
+    hidden: false,
+    selected: secondaryNode.selected,
     draggable: false,
     selectable: false,
-  } as FlowElement;
+    // parentNode: secondaryNode.parentNodeId,
+  } as FlowNode;
 };
 
 export default BuildFlowSecondaryParentNode;

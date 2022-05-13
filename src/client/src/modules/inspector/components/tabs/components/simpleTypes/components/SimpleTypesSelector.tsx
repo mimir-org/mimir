@@ -25,7 +25,7 @@ export const SimpleTypesSelector = ({ simpleTypes, onSelect, selectedSimpleTypeI
         fontStyle={"italic"}
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}
-        placeholder={TextResources.INSPECTOR_SIMPLETYPES_SEARCH}
+        placeholder={TextResources.SIMPLETYPES_SEARCH}
         onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
       />
       <ActiveSimpleTypesList simpleTypes={simpleTypes} selectedSimpleTypeId={selectedSimpleTypeId} onSelect={onSelect} />

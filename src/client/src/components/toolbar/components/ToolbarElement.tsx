@@ -9,6 +9,7 @@ interface Props {
   label: string;
   borderLeft?: boolean;
   borderRight?: boolean;
+  clickable?: boolean;
 }
 
 /**
@@ -16,9 +17,15 @@ interface Props {
  * @param interface
  * @returns a clickable box in the ToolBar.
  */
-export const ToolbarElement = ({ active, onClick, icon, label, borderLeft, borderRight }: Props) => (
+export const ToolbarElement = ({ active, onClick, icon, label, borderLeft, borderRight, clickable = true }: Props) => (
   <Tooltip content={label} placement={"bottom"} offset={[0, 10]}>
-    <ToolElementBox active={active} borderLeft={borderLeft} borderRight={borderRight} onClick={() => onClick()}>
+    <ToolElementBox
+      active={active}
+      borderLeft={borderLeft}
+      borderRight={borderRight}
+      clickable={clickable}
+      onClick={() => onClick()}
+    >
       <Icon size={15} src={icon} alt={label} />
     </ToolElementBox>
   </Tooltip>

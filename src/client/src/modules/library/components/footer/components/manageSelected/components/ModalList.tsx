@@ -18,21 +18,21 @@ interface Props {
 }
 
 export const ModalList = ({ collections, selectedCollections, setSelectedCollections }: Props) => {
-  const isSelected = (id: string) => {
+  const selected = (id: string) => {
     return selectedCollections?.includes(id);
   };
 
   return (
     <ModalListContent>
-      <ModalListColumnText>{TextResources.LIBRARY_MODAL_COLLECTION_CREATED}</ModalListColumnText>
+      <ModalListColumnText>{TextResources.COLLECTION_CREATED}</ModalListColumnText>
       <ModalListElementsContainer>
         {collections?.map((c) => {
           return (
-            <ModalListElement key={c.id} isSelected={isSelected(c.id)}>
+            <ModalListElement key={c.id} selected={selected(c.id)}>
               <Checkbox
                 id={c.id}
-                isChecked={isSelected(c.id)}
-                onChange={() => OnCheckboxChange(c.id, isSelected, selectedCollections, setSelectedCollections)}
+                isChecked={selected(c.id)}
+                onChange={() => OnCheckboxChange(c.id, selected, selectedCollections, setSelectedCollections)}
               />
               <ModalListElementText>{c.name}</ModalListElementText>
               <ModalListElementText>{c.name}</ModalListElementText>

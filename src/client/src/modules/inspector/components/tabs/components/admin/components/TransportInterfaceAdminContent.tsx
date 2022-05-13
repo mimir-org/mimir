@@ -37,11 +37,11 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
           <Input fontSize={FontSize.STANDARD} readOnly value={element.id ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_RDS}</div>
+          <div>{TextResources.ADMIN_RDS}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsIdEdge(edge) ?? ""} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_SEMANTIC_ID}</div>
+          <div>{TextResources.ADMIN_SEMANTIC_ID}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
@@ -53,7 +53,7 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
       </TabColumn>
       <TabColumn width={250}>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_SERVICE}</div>
+          <div>{TextResources.ADMIN_SERVICE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly={edge.isLocked}
@@ -63,17 +63,17 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
           />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_TYPE}</div>
+          <div>{TextResources.ADMIN_TYPE}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={element.name} onChange={() => null} inputType="" />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_BY}</div>
+          <div>{TextResources.ADMIN_UPDATED_BY}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={element.updatedBy ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={125}>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_UPDATED_DATE}</div>
+          <div>{TextResources.ADMIN_UPDATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
@@ -83,7 +83,7 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
           />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_CREATED_DATE}</div>
+          <div>{TextResources.ADMIN_CREATED_DATE}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
@@ -93,7 +93,7 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
           />
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_DESIGNATION}</div>
+          <div>{TextResources.ADMIN_DESIGNATION}</div>
           <Input
             fontSize={FontSize.STANDARD}
             readOnly
@@ -105,7 +105,7 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
       </TabColumn>
       <TabColumn width={125}>
         <div className="statusDropdown">
-          <div>{TextResources.INSPECTOR_ADMIN_STATUS}</div>
+          <div>{TextResources.ADMIN_STATUS}</div>
           <Dropdown
             label=""
             items={statuses}
@@ -119,13 +119,13 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
           ></Dropdown>
         </div>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_VERSION}</div>
+          <div>{TextResources.ADMIN_VERSION}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={element.version ?? ""} onChange={() => null} inputType="" />
         </div>
       </TabColumn>
       <TabColumn width={465}>
         <div>
-          <div>{TextResources.INSPECTOR_ADMIN_DESCRIPTION}</div>
+          <div>{TextResources.ADMIN_DESCRIPTION}</div>
           <TextArea
             height={200}
             value={element.description ?? ""}

@@ -4,20 +4,20 @@ import { TerminalCategory } from "../TransportFilter";
 
 /**
  * Function to find all Terminal Categories on Mimir's Transport Edges.
- * @param transportItems
+ * @param transportConnectors
  * @returns a list of the type TerminalCategory, used by Visual Filter.
  */
-export const PopulateTerminalCategories = (transportItems: Connector[]) => {
+export const PopulateTerminalCategories = (transportConnectors: Connector[]) => {
   const categories = [] as TerminalCategory[];
 
-  transportItems?.forEach((item) => {
-    if (!categories.some((x) => x.id === item.terminalCategoryId || x.name === item.terminalCategory?.name)) {
-      const category = {
-        id: item.terminalCategoryId,
-        name: item.terminalCategory?.name ?? TextResources.FILTER_CATEGORY,
-      } as TerminalCategory;
-      categories.push(category);
-    }
+  transportConnectors?.forEach((conn) => {
+    const id = conn.terminalCategoryId;
+    const name = conn.terminalCategory?.name;
+
+    if (categories.some((c) => c.id === id || c.name === name)) return;
+
+    const category = { id, name: name ?? TextResources.CATEGORY } as TerminalCategory;
+    categories.push(category);
   });
 
   return categories;

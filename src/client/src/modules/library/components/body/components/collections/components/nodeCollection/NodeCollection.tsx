@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 import { NodeElement } from "./NodeElement";
 import { CollectionsActions, LibItem } from "../../../../../../../../models";
 import { NodeCollectionButton, NodeCollectionButtonText, NodeCollectionContainer } from "./NodeCollection.styled";
+import { TextResources } from "../../../../../../../../assets/text/TextResources";
 
 interface Props {
   collectionState: CollectionsActions;
@@ -34,7 +35,7 @@ export const NodeCollection = ({
   setSelectedTypes,
 }: Props) => {
   const [expanded, setExpanded] = useState(true);
-  const isCustomCategory = category.name === "Favorites";
+  const isCustomCategory = category.name === TextResources.FAVORITES;
 
   useEffect(() => {
     if (searchList && searchList.length > 0 && searchList.includes(category)) {

@@ -36,7 +36,7 @@ export const TerminalsSelector = ({
         fontStyle={"italic"}
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}
-        placeholder={TextResources.INSPECTOR_TERMINALS_SEARCH}
+        placeholder={TextResources.TERMINALS_SEARCH}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchString(e.currentTarget.value)}
       />
       <ActiveTerminalsList

@@ -1,7 +1,5 @@
-import red from "../../../../../../redux/store";
-import { Connector, Node } from "../../../../../../models";
+import { Node, Connector } from "../../../../../../models";
 
-export const GetConnectorNode = (connector: Connector) => {
-  const nodes = red.store.getState().projectState?.project.nodes;
-  return nodes.find((node) => node.connectors.find((conn) => conn.id === connector.id)) as Node;
+export const GetConnectorNode = (connector: Connector, nodes: Node[]) => {
+  return nodes.find((node) => node.connectors.find((conn) => conn.id === connector.id));
 };

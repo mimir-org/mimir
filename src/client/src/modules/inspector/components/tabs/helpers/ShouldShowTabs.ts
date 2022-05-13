@@ -1,11 +1,14 @@
-import { IsRelationEdge } from "../../../../../components/flow/helpers/IsRelationEdge";
+import { IsRelationEdge } from "./IsRelationEdge";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
-import { IsProduct } from "../../../../../helpers";
+import { IsProduct } from "../../../../../helpers/Aspects";
 
 export const ShouldShowTabs = (element: InspectorElement) => {
+  const shouldShowAdmin = !!element.objectType || !!element.locationType;
+
   const shouldShowParameters =
     IsNode(element) || (IsEdge(element) && !IsRelationEdge(element) && !!(element.transport || element.interface));
+
   const shouldShowTerminals = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowRelations = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowSimpleTypes = IsNode(element) && IsProduct(element);

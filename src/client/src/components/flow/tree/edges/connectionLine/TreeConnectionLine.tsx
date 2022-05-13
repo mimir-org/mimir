@@ -1,4 +1,4 @@
-import { ArrowHeadType, ConnectionLineComponentProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
+import { MarkerType, ConnectionLineComponentProps, getMarkerEnd, getSmoothStepPath } from "react-flow-renderer";
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType } from "../../../../../models";
 
@@ -17,15 +17,8 @@ export const TreeConnectionLine = ({
   targetPosition,
 }: ConnectionLineComponentProps) => {
   const color = GetAspectColor(sourceNode?.data, AspectColorType.Main);
-  const markerEnd = getMarkerEnd(ArrowHeadType.ArrowClosed, null);
-  const smoothPath = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const markerEnd = getMarkerEnd(MarkerType.ArrowClosed, null);
+  const smoothPath = getSmoothStepPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return (
     <g>
@@ -35,9 +28,5 @@ export const TreeConnectionLine = ({
 };
 
 function GetStyle(color: string) {
-  return {
-    fill: "none",
-    stroke: color,
-    strokeWidth: 1.5,
-  };
+  return { fill: "none", stroke: color, strokeWidth: 1.5 };
 }

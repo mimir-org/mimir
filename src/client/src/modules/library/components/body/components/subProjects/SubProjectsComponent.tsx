@@ -3,7 +3,7 @@ import { SubProjectsText, SubProjectsWrapper } from "./SubProjectsComponent.styl
 
 export const SubProjectsComponent = () => (
   <SubProjectsWrapper>
-    <SubProjectsText>{TextResources.LIBRARY_SUBPROJECTS_INFO}</SubProjectsText>
-    <SubProjectsText>{TextResources.LIBRARY_SUBPROJECTS_NONE}</SubProjectsText>
+    <SubProjectsText>{TextResources.SUBPROJECTS_INFO}</SubProjectsText>
+    <SubProjectsText>{TextResources.SUBPROJECTS_NONE}</SubProjectsText>
   </SubProjectsWrapper>
 );

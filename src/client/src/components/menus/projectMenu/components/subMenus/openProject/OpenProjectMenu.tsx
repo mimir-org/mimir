@@ -7,7 +7,7 @@ import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { OnReturnShowInstructionClick } from "../../../handlers";
-import { OnOpen } from "./handlers";
+import { OnOpenClick } from "./handlers/OnOpenClick";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 
 /**
@@ -22,7 +22,7 @@ export const OpenProjectMenu = () => {
   const projectId = selectedProject?.id;
   const projectDescription = selectedProject?.description;
   const isActionDisabled = !projectId || projectId === "";
-  const onAction = () => OnOpen(projectId, currentProject, dispatch);
+  const onAction = () => OnOpenClick(projectId, currentProject, dispatch);
   const onExit = () => OnReturnShowInstructionClick(dispatch);
 
   return (

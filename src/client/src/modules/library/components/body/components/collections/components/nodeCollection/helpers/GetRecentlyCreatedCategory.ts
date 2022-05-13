@@ -9,8 +9,5 @@ export const getRecentlyCreatedCategory = (items: LibItem[]): LibraryCategory =>
     .filter((i) => moment.utc(i.created).isSameOrAfter(lastDay))
     .sort((a, b) => moment.utc(b.created).valueOf() - moment.utc(a.created).valueOf());
 
-  return {
-    name: TextResources.LIBRARY_CATEGORY_RECENT,
-    nodes: recentlyCreatedLibItems,
-  };
+  return { name: TextResources.CATEGORY_RECENT, nodes: recentlyCreatedLibItems };
 };

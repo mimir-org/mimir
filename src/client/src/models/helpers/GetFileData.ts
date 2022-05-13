@@ -4,10 +4,10 @@ import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
 import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text/TextResources";
-import { IsAspectNode, IsFamily } from "../../helpers";
+import { IsAspectNode } from "../../helpers/Aspects";
+import { IsOutputTerminal, IsPartOfTerminal } from "../../components/flow/helpers/Connectors";
+import { IsFamily } from "../../helpers/Family";
 import Config from "../Config";
-import { ConnectorType } from "../enums/ConnectorType";
-import { RelationType } from "../enums/RelationType";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -23,7 +23,7 @@ const readFile = (event: any): Promise<any> => {
   });
 };
 
-const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[]]> => {
+export const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[]]> => {
   try {
     let targetNodeId = event.target?.attributes["data-id"]?.value;
     if (!targetNodeId) targetNodeId = event.target?.offsetParent?.attributes["data-id"]?.value;
@@ -32,9 +32,7 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
     const targetNode = project.nodes.find((x) => x.id === targetNodeId);
     if (!targetNode) return [[], []];
 
-    const targetnodeConnector = targetNode.connectors.find(
-      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
-    );
+    const targetnodeConnector = targetNode.connectors.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
 
     if (!targetnodeConnector) return [[], []];
 
@@ -46,9 +44,7 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
     const url = Config.API_BASE_URL + "project/import/";
     const response = await post(url, loadedProject);
 
-    if (response.status !== 200) {
-      throw Error(TextResources.ERROR_SAVE_UPDATE_PROJECT);
-    }
+    if (response.status !== 200) throw Error(TextResources.ERROR_SAVE_UPDATE_PROJECT);
 
     const subProject = response.data as Project;
     if (!subProject) throw Error(TextResources.ERROR_SAVE_UPDATE_PROJECT);
@@ -58,9 +54,7 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
     const rootNode = subProject.nodes.find((x) => x.isRoot && IsFamily(x, targetNode));
 
     // Find the connector that should do a remap
-    const rootNodeConnector = rootNode.connectors.find(
-      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
-    );
+    const rootNodeConnector = rootNode.connectors.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
 
     // Find edges that should change parent
     const edges = subProject.edges.filter((x) => x.fromConnectorId === rootNodeConnector.id);
@@ -92,5 +86,3 @@ const GetFileData = async (event: any, project: Project): Promise<[Node[], Edge[
     throw Error(TextResources.ERROR_GETFILEDATA);
   }
 };
-
-export default GetFileData;

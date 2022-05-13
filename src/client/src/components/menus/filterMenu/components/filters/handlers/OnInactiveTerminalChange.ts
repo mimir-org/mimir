@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { IsConnectorVisible } from "../../../../../../helpers";
 import { ConnectorVisibility, Node } from "../../../../../../models";
 import { changeActiveConnector } from "../../../../../../redux/store/project/actions";
+import { IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
 
 export const OnInactiveTerminalChange = (nodes: Node[], dispatch: Dispatch, visible: boolean) => {
   const terminals = [];

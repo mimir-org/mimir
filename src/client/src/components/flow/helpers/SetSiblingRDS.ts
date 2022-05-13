@@ -1,18 +1,19 @@
 import { Dispatch } from "redux";
-import { Edge, Node, Project } from "../../../models";
+import { Edge, Node } from "../../../models";
 import { FindParentEdge } from "../../../helpers/ParentNode";
 import { changeNodeValue } from "../../../redux/store/project/actions";
-import { GetChildren } from "./GetChildren";
+import { IsPartOfTerminal } from "./Connectors";
 
 /**
  * Updates the sibling index of nodes affected by an Edge being connected.
  * @param edge Edge to be connected.
- * @param project Project edge is part of.
+ * @param nodes
+ * @param edges
  * @param dispatch Dispatch function for redux store.
  */
-export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, project: Project, dispatch: Dispatch) => {
+export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
   const parentId = edge.fromNodeId;
-  const children = [...GetChildren(parentId, project), edge.toNode];
+  const children = [...GetChildren(parentId, nodes, edges), edge.toNode];
 
   children.forEach((child, i) => ResetRDS(child, i, dispatch));
 };
@@ -20,51 +21,53 @@ export const UpdateSiblingIndexOnEdgeConnect = (edge: Edge, project: Project, di
 /**
  * Updates the sibling index of nodes affected by an Edge being deleted.
  * @param edge Edge to be deleted.
- * @param project Project edge is part of.
+ * @param nodes
+ * @param edges
  * @param dispatch Dispatch function for redux store.
  */
-export const UpdateSiblingIndexOnEdgeDelete = (edge: Edge, project: Project, dispatch: Dispatch) => {
+export const UpdateSiblingIndexOnEdgeDelete = (edge: Edge, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
   ClearRDS(edge.toNode, dispatch);
-  HandleSiblingDeleted(edge.toNode, project, dispatch);
+  HandleSiblingDeleted(edge.toNodeId, nodes, edges, dispatch);
 };
 
 /**
  * Updates the sibling index of nodes affected by a Node being deleted.
- * @param node Node to be deleted.
- * @param project Project node is part of.
+ * @param nodeId Node to be deleted.
+ * @param nodes
+ * @param edges
  * @param dispatch Dispatch function for redux store.
  */
-export const UpdateSiblingIndexOnNodeDelete = (node: Node, project: Project, dispatch: Dispatch) => {
-  HandleParentDeleted(node, project, dispatch);
-  HandleSiblingDeleted(node, project, dispatch);
+export const UpdateSiblingIndexOnNodeDelete = (nodeId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+  HandleParentDeleted(nodeId, nodes, edges, dispatch);
+  HandleSiblingDeleted(nodeId, nodes, edges, dispatch);
 };
 
 /**
  * Sets the sibling index of node being dropped into project.
  * @param node Node being dropped.
- * @param project Project node is part of.
+ * @param nodes
+ * @param edges
  * @param parentId Parent Node of node.
  */
-export const SetSiblingIndexOnNodeDrop = (node: Node, project: Project, parentId: string) => {
+export const SetSiblingIndexOnNodeDrop = (node: Node, nodes: Node[], edges: Edge[], parentId: string) => {
   if (!parentId) return null;
 
-  const siblings = GetChildren(parentId, project);
-
+  const siblings = GetChildren(parentId, nodes, edges);
   node.rds += siblings.length;
 };
 
-const HandleParentDeleted = (node: Node, project: Project, dispatch: Dispatch) => {
-  const children = GetChildren(node?.id, project).filter((n) => n.id !== node.id);
+const HandleParentDeleted = (nodeId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+  const children = GetChildren(nodeId, nodes, edges).filter((n) => n.id !== nodeId);
   if (!children || !children.length) return;
 
   children.forEach((child) => ClearRDS(child, dispatch));
 };
 
-const HandleSiblingDeleted = (node: Node, project: Project, dispatch: Dispatch) => {
-  const parent = FindParentEdge(node, project)?.fromNode;
+const HandleSiblingDeleted = (nodeId: string, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+  const parent = FindParentEdge(nodeId, edges)?.fromNode;
   if (!parent) return;
 
-  const siblings = GetChildren(parent.id, project).filter((n) => n.id !== node.id);
+  const siblings = GetChildren(parent.id, nodes, edges).filter((n) => n.id !== nodeId);
   if (!siblings || !siblings.length) return;
 
   siblings.forEach((sibling, i) => ResetRDS(sibling, i, dispatch));
@@ -86,3 +89,8 @@ const ResetRDS = (node: Node, index: number, dispatch: Dispatch) => {
   const newRDS = StripSiblingIndex(node.rds) + index;
   dispatch(changeNodeValue(node.id, "rds", newRDS));
 };
+
+const GetChildren = (nodeId: string, nodes: Node[], edges: Edge[]) =>
+  nodes?.filter((otherNode) =>
+    edges?.find((edge) => edge.fromNodeId === nodeId && edge.toNodeId === otherNode?.id && IsPartOfTerminal(edge.fromConnector))
+  );

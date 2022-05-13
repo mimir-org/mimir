@@ -1,17 +1,18 @@
+import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
-import { CreateId, IsPartOf, IsPartOfConnection, IsTransport, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
-import { addEdge, Connection, Elements, Edge as FlowEdge } from "react-flow-renderer";
-import { createEdge, removeEdge } from "../../../../redux/store/project/actions";
-import { Node, Project } from "../../../../models";
-import { ConvertToEdge } from "../../converters";
+import { IsPartOfTerminal, IsPartOfConnection, IsTransport } from "../../helpers/Connectors";
+import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
+import { Node, Edge, Project } from "../../../../models";
+import { ConvertDataToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
+import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
 
 interface Params {
   connection: FlowEdge | Connection;
   project: Project;
-  setElements: React.Dispatch<React.SetStateAction<Elements>>;
+  setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>;
   dispatch: Dispatch;
   library: LibraryState;
   animatedEdge: boolean;
@@ -22,45 +23,36 @@ interface Params {
  * @param params
  * @returns an Edge connection.
  */
-const useOnConnectTree = (params: Params) => {
+const useOnTreeConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, library, animatedEdge, setElements, dispatch } = params;
+  const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
-  const sourceNode = project.nodes.find((node) => node.id === connection.source);
-  const sourceConn = sourceNode.connectors.find((c) => c.id === connection.sourceHandle);
-  const targetNode = project.nodes.find((node) => node.id === connection.target);
-  const targetConn = targetNode.connectors.find((c) => c.id === connection.targetHandle);
-  const existingEdge = GetExistingEdge(project, connection, sourceNode, targetNode);
+  const source = project.nodes.find((n) => n.id === connection.source);
+  const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
+  const target = project.nodes.find((n) => n.id === connection.target);
+  const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
+  const existingEdge = GetExistingEdge(project.edges, connection, source, target);
 
-  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project, targetNode, dispatch);
+  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project.edges, target, dispatch);
 
-  const currentEdge = existingEdge ?? ConvertToEdge(id, sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  const currentEdge = existingEdge ?? ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, library);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
-  if (IsPartOf(currentEdge?.fromConnector)) UpdateSiblingIndexOnEdgeConnect(currentEdge, project, dispatch);
+  if (IsPartOfTerminal(currentEdge?.fromConnector))
+    UpdateSiblingIndexOnEdgeConnect(currentEdge, project.nodes, project.edges, dispatch);
 
-  return setElements((els) => {
-    return addEdge(
-      {
-        ...connection,
-        id: id,
-        type: GetTreeEdgeType(sourceConn),
-        animated: animatedEdge && IsTransport(sourceConn),
-        data: {
-          source: sourceNode,
-          target: targetNode,
-          edge: currentEdge,
-        },
-      },
-      els
-    );
+  const type = GetTreeEdgeType(sourceConn);
+  const animated = animatedEdge && IsTransport(sourceConn);
+
+  return setEdges((els) => {
+    return addEdge({ ...connection, id, type, animated, data: { source, target, edge: currentEdge } }, els);
   });
 };
 
-function HandlePartOfEdge(project: Project, targetNode: Node, dispatch: Dispatch) {
+function HandlePartOfEdge(edges: Edge[], targetNode: Node, dispatch: Dispatch) {
   //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
-  const existingPartOfEdge = project.edges?.find((edge) => edge.toNodeId === targetNode.id && IsPartOf(edge?.fromConnector));
-  if (existingPartOfEdge) dispatch(removeEdge(existingPartOfEdge.id));
+  const existingPartOfEdge = edges.find((edge) => edge.toNodeId === targetNode.id && IsPartOfTerminal(edge?.fromConnector));
+  if (existingPartOfEdge) dispatch(deleteEdge(existingPartOfEdge.id));
 }
 
-export default useOnConnectTree;
+export default useOnTreeConnect;

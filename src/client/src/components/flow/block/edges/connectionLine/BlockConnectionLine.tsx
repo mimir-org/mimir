@@ -37,9 +37,5 @@ export const BlockConnectionLine = ({
 };
 
 function GetStyle(color: string) {
-  return {
-    fill: "none",
-    stroke: color,
-    strokeWidth: 2,
-  };
+  return { fill: "none", stroke: color, strokeWidth: 2 };
 }

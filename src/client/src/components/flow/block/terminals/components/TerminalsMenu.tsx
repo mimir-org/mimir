@@ -1,6 +1,6 @@
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType, Connector, Node } from "../../../../../models";
-import { SetTerminalsMenuOffset } from "../helpers";
+import { SetTerminalsMenuOffset } from "../helpers/SetTerminalsMenuOffset";
 import { TerminalsBox } from "./TerminalsMenu.styled";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { TerminalsMenuElement } from "./TerminalsMenuElement";
@@ -26,7 +26,7 @@ export const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, is
 
   return (
     <TerminalsBox
-      id={"terminals-dropdown-" + node.id}
+      id={`terminals-dropdown-${node.id}`}
       tabIndex={0}
       onBlur={onBlur}
       color={GetAspectColor(node, AspectColorType.Selected)}
