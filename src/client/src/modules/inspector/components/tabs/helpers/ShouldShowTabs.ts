@@ -5,8 +5,7 @@ import { IsProduct } from "../../../../../helpers";
 
 export const ShouldShowTabs = (element: InspectorElement) => {
   const shouldShowParameters =
-    (IsNode(element) && element.attributes.length > 0) ||
-    (IsEdge(element) && !IsRelationEdge(element) && !!(element.transport || element.interface));
+    IsNode(element) || (IsEdge(element) && !IsRelationEdge(element) && !!(element.transport || element.interface));
   const shouldShowTerminals = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowRelations = IsNode(element) || (IsEdge(element) && !IsRelationEdge(element));
   const shouldShowSimpleTypes = IsNode(element) && IsProduct(element);

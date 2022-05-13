@@ -6,19 +6,22 @@ interface ProjectDataBoxProps {
   isSelected: boolean;
 }
 
-export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
+export const ProjectDataBox = styled.button<ProjectDataBoxProps>`
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 30px;
+  height: 33px;
   padding: 0 10px 0 6px;
   font-weight: ${(props) => (props.isSelected ? FontWeight.BOLD : FontWeight.NORMAL)};
   text-decoration: ${(props) => props.isSelected && "underline"};
   font-size: ${FontSize.SMALL};
   color: ${Color.BLACK};
+  border: none;
+  background: transparent;
   cursor: pointer;
 
-  p {
+  span {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -27,6 +30,7 @@ export const ProjectDataBox = styled.div<ProjectDataBoxProps>`
 
   .name {
     width: 40%;
+    text-align: left;
   }
 
   .owner {
