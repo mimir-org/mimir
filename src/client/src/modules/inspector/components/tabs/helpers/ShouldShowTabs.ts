@@ -4,8 +4,6 @@ import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { IsProduct } from "../../../../../helpers/Aspects";
 
 export const ShouldShowTabs = (element: InspectorElement) => {
-  const shouldShowAdmin = !!element.objectType || !!element.locationType;
-
   const shouldShowParameters =
     IsNode(element) || (IsEdge(element) && !IsRelationEdge(element) && !!(element.transport || element.interface));
 
