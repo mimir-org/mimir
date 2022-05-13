@@ -1,10 +1,10 @@
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
 import { InspectorElement } from "../../../types";
-import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../helpers/IsType";
 
 export const GetTabsColor = (element: InspectorElement) => {
-  if (IsNode(element) || IsCreateLibraryType(element)) {
+  if (IsNode(element)) {
     if (IsFunction(element)) return Color.JASMINE;
     if (IsLocation(element)) return Color.PINK;
     if (IsProduct(element)) return Color.DARK_TURQUOISE;

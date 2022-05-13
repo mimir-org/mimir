@@ -1,10 +1,10 @@
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
-import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
 
 export const GetInspectorColor = (element: InspectorElement) => {
-  if (IsNode(element) || IsCreateLibraryType(element)) {
+  if (IsNode(element)) {
     if (IsFunction(element)) return Color.LEMON_YELLOW_CRAYOLA;
     if (IsLocation(element)) return Color.PINK_LACE;
     if (IsProduct(element)) return Color.CELESTE;

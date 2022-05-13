@@ -5,7 +5,6 @@ import {
   CombinedAttribute,
   Connector,
   ConnectorType,
-  CreateLibraryType,
   Edge,
   Interface,
   Node,
@@ -24,7 +23,7 @@ export type InspectorElement = Node | Edge;
  * Union type of possible top elements chosen for terminals view in inspector, i.e. what element owns the terminals shown in terminals view.
  * In the case of InspectorElement which is Edge, the edge's transport/interface owns the terminals.
  */
-export type InspectorTerminalsElement = Node | Transport | Interface | CreateLibraryType;
+export type InspectorTerminalsElement = Node | Transport | Interface;
 
 /**
  * Union type of possible top elements chosen for parameters view in inspector, i.e. what element owns the attributes shown in parameters view.
