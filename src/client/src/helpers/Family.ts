@@ -1,5 +1,4 @@
 import red from "../redux/store/index";
-import { useReactFlow } from "react-flow-renderer";
 import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
 import { LibItem, Node } from "../models";
 
@@ -14,8 +13,8 @@ export const IsDirectChild = (child: Node, parent: Node) => {
 };
 
 export const IsParentOf = (parentId: string, childId: string) => {
-  const flowEdges = useReactFlow().getEdges();
-  const edge = flowEdges?.find((e) => e.data.edge.toNode?.id === childId && e.data.edge.fromNode?.id === parentId)?.data?.edge;
+  const edges = red.store.getState().projectState.project.edges;
+  const edge = edges?.find((e) => e.toNode?.id === childId && e.fromNode?.id === parentId);
 
   return edge && IsPartOfTerminal(edge.fromConnector);
 };

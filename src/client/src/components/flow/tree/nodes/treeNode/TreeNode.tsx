@@ -35,7 +35,6 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
     }
   }, [timer]);
 
-  // This callback prevents all terminals from fetching on each render
   const GetTerminal = useCallback(
     (conn: Connector) => {
       return GetTreeNodeTerminal(data, conn, dispatch, setIsHover, isHover);

@@ -2,7 +2,7 @@ import { Node } from "../../../models";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
-import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
+import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
 import { usernameSelector, useAppSelector, projectStateSelector } from "../../../redux/store";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
@@ -41,7 +41,7 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
 
   return (
     <ProjectContentContainer>
-      {InitialSortNodes(nodes).map((node) => {
+      {SortNodesWithIndent(nodes).map(([node, indent]) => {
         if (ancestorsCollapsed(node)) return null;
         const expanded = !closedNodes.has(node.id);
 
@@ -50,7 +50,7 @@ export const TreeProjectComponent = ({ dispatch }: Props) => {
             key={node.id}
             username={username}
             node={node}
-            indent={node.level}
+            indent={indent}
             isExpanded={expanded}
             isLeaf={!HasChildren(node.id, edges)}
             isAncestorVisible={ancestorsVisible(node)}

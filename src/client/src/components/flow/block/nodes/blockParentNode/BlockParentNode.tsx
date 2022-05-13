@@ -12,7 +12,7 @@ import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
 
-export type Terminals = { in: Connector[]; out: Connector[] };
+export type Terminals = { inputs: Connector[]; outputs: Connector[] };
 
 /**
  * Component for a ParentNode in BlockView.
@@ -22,7 +22,7 @@ export type Terminals = { in: Connector[]; out: Connector[] };
  */
 const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const initialTerminals = { in: [], out: [] } as Terminals;
+  const initialTerminals = { inputs: [], outputs: [] } as Terminals;
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
@@ -41,18 +41,18 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={data} terminals={terminals.in} isInput isParent />
+      <HandleComponent node={data} terminals={terminals.inputs} isInput isParent />
       <BlockParentComponent
         node={data}
         splitView={secondaryNode !== null}
-        inputTerminals={terminals.in}
-        outputTerminals={terminals.out}
+        inputTerminals={terminals.inputs}
+        outputTerminals={terminals.outputs}
         isNavigationActive={data.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={data} terminals={terminals.out} isParent />
+      <HandleComponent node={data} terminals={terminals.outputs} isParent />
     </BoxWrapper>
   );
 };

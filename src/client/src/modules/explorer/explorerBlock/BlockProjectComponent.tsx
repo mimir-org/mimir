@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
-import { InitialSortNodes } from "../shared/helpers/SortNodesWithIndent";
+import { SortNodesWithIndent } from "../shared/helpers/SortNodesWithIndent";
 import { ProjectContentContainer } from "../shared/styled/ProjectComponent.styled";
 import { IsOffPage } from "../../../helpers/Aspects";
 import { OnExpandExplorerElement } from "../shared/handlers/OnExpandExplorerElement";
@@ -38,7 +38,7 @@ export const BlockProjectComponent = () => {
 
   return (
     <ProjectContentContainer>
-      {InitialSortNodes(nodes).map((node) => {
+      {SortNodesWithIndent(nodes).map(([node, indent]) => {
         if (ancestorsCollapsed(node)) return null;
         const expanded = !closedNodes.has(node.id);
 
@@ -50,7 +50,7 @@ export const BlockProjectComponent = () => {
             nodes={nodes}
             selectedNode={selectedNode}
             secondaryNode={secondaryNode}
-            indent={node.level}
+            indent={indent}
             isExpanded={expanded}
             isLeaf={!HasChildren(node.id, project.edges)}
             isNodeLocking={lockingNode?.id === node.id && projectState.isLocking}

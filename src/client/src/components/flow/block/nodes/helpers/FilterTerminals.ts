@@ -27,7 +27,7 @@ export const FilterTerminals = (connectors: Connector[], selectedNode: Node, sec
   const inputs = sortedConnectors?.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t)) ?? [];
   const outputs = sortedConnectors?.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t)) ?? [];
 
-  return { in: inputs, out: outputs } as Terminals;
+  return { inputs, outputs } as Terminals;
 };
 
 function FilterTerminal(selectedNode: Node, secondaryNode: Node, connector: Connector) {

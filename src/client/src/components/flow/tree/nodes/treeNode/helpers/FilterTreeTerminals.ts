@@ -13,12 +13,14 @@ export const FilterTreeTerminals = (connectors: Connector[]) => {
   const edges = GetMimirEdges();
 
   connectors.forEach((conn) => {
-    if (IsPartOfTerminal(conn)) terminals.push(conn);
-    else {
-      edges.forEach((edge) => {
-        if (edge.toConnectorId === conn.id || edge.fromConnectorId === conn.id) terminals.push(conn);
-      });
+    if (IsPartOfTerminal(conn)) {
+      terminals.push(conn);
+      return;
     }
+    edges.forEach((edge) => {
+      if (edge.toConnectorId !== conn.id && edge.fromConnectorId !== conn.id) return;
+      terminals.push(conn);
+    });
   });
 
   return terminals;

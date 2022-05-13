@@ -18,11 +18,11 @@ export const SetChildNodeSize = (terminals: Terminals, electro: boolean) => {
   let width = Size.NODE_WIDTH;
   let height = Size.NODE_HEIGHT;
 
-  terminals.in.forEach((t) => {
+  terminals.inputs.forEach((t) => {
     IsConnectorVisible(t) && IsInputTerminal(t) && inTerminals++;
   });
 
-  terminals.out.forEach((t) => {
+  terminals.outputs.forEach((t) => {
     IsConnectorVisible(t) && IsOutputTerminal(t) && outTerminals++;
   });
 

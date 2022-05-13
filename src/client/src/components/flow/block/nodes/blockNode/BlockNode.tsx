@@ -25,7 +25,7 @@ import { Terminals } from "../blockParentNode/BlockParentNode";
  */
 const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const initialTerminals = { in: [], out: [] } as Terminals;
+  const initialTerminals = { inputs: [], outputs: [] } as Terminals;
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
@@ -53,16 +53,16 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={data} terminals={terminals.in} isInput />
+      <HandleComponent node={data} terminals={terminals.inputs} isInput />
       <BlockChildComponent
         node={data}
         colorMain={GetAspectColor(data, AspectColorType.Main)}
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-        inputTerminals={terminals.in}
-        outputTerminals={terminals.out}
+        inputTerminals={terminals.inputs}
+        outputTerminals={terminals.outputs}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={data} terminals={terminals.out} />
+      <HandleComponent node={data} terminals={terminals.outputs} />
     </BoxWrapper>
   );
 };
