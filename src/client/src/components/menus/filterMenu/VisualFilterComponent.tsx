@@ -1,4 +1,4 @@
-import { animatedEdgeSelector, edgesSelector, nodesSelector, useAppSelector } from "../../../redux/store";
+import { animatedEdgeSelector, edgesSelector, flowViewSelector, nodesSelector, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
@@ -6,6 +6,7 @@ import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
 import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
 import { Dispatch } from "redux";
+import { VIEW_TYPE } from "../../../models/project";
 
 interface Props {
   dispatch: Dispatch;
@@ -18,6 +19,8 @@ interface Props {
 export const VisualFilterComponent = ({ dispatch }: Props) => {
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
   const edgeAnimation = useAppSelector(animatedEdgeSelector);
+  const flowView = useAppSelector(flowViewSelector);
+  const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
   const nodes = useAppSelector(nodesSelector);
   const edges = useAppSelector(edgesSelector);
 
@@ -25,7 +28,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
   const relationConnectors = [] as Connector[];
   const partOfConnectors = [] as Connector[];
 
-  PopulateFilterLists(edges, nodes, transportConnectors, relationConnectors, partOfConnectors);
+  PopulateFilterLists(edges, nodes, transportConnectors, relationConnectors, partOfConnectors, isTreeView);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>

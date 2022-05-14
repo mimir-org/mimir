@@ -1,4 +1,5 @@
 import { Connector, Edge, Node } from "../../../../models";
+import { IsOffPageEdge } from "../../../flow/block/helpers/IsOffPageEdge";
 import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../flow/helpers/Connectors";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";
 
@@ -15,9 +16,12 @@ export const PopulateFilterLists = (
   nodes: Node[],
   transportItems: Connector[],
   relationItems: Connector[],
-  partOfItems: Connector[]
+  partOfItems: Connector[],
+  isTreeView: boolean
 ) => {
   edges.forEach((edge) => {
+    if (isTreeView && IsOffPageEdge(edge)) return;
+
     const sourceConn = edge.fromConnector;
 
     if (IsTransport(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
