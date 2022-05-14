@@ -35,7 +35,7 @@ const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: No
     draggable: true,
     selectable: true,
     connectable: true,
-    // parentNode: childNode.parentNodeId,
+    parentNode: parentNode.id,
   } as FlowNode;
 };
 

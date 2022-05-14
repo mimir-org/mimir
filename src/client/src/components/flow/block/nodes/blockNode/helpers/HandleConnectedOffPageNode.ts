@@ -22,6 +22,7 @@ export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edg
   edges.forEach((edge) => {
     if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
+    if (!OnlyOneNodeVisible(edge, isTarget)) return;
 
     if (HasConnectedOffPageNode(edges, edge, isTarget)) return;
 
@@ -50,4 +51,21 @@ function IsValidTransport(edge: Edge, nodeId: string) {
   const nodeHasEdge = nodeId === edge.fromNodeId || nodeId === edge.toNodeId;
 
   return isTransport && nodeHasEdge && isNotOffPageTransport;
+}
+
+/**
+ * Function to verify that only one node from a connection is displayed on the screen.
+ * If the sourceNode and the targetNode has the same parent, both nodes will be visible.
+ * If both nodes are visible there is no need to draw a Connected OffPageNode.
+ * @param edge
+ * @param isTarget
+ * @returns a boolean value.
+ */
+function OnlyOneNodeVisible(edge: Edge, isTarget: boolean) {
+  const sourceNode = isTarget ? edge.fromNode : edge.toNode;
+  const targetNode = isTarget ? edge.toNode : edge.fromNode;
+
+  const nodesHaveSameParent = sourceNode?.parentNodeId === targetNode?.parentNodeId;
+
+  return !nodesHaveSameParent;
 }
