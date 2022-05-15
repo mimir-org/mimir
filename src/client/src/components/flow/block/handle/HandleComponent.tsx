@@ -40,6 +40,7 @@ export const HandleComponent = ({ node, project, terminals, isElectro, isOffPage
         if (!ShowHandle(conn, isInput, IsProduct(node))) return null;
         return (
           <BlockNodeTerminal
+            key={`handle-${conn.id}`}
             project={project}
             node={node}
             connector={conn}

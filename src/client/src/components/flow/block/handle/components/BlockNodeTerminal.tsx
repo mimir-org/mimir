@@ -39,7 +39,6 @@ export const BlockNodeTerminal = ({ project, node, connector, dispatch, isElectr
       top={GetHandleTopPosition(node, connector, isElectro, isParent)}
       left={GetHandleLeftPosition(node, connector, isElectro, isParent)}
       isPartOf={IsPartOfTerminal(connector)}
-      key={connector.id}
       onMouseEnter={isOffPage ? () => OnMouseEnter(setVisible) : null}
       onMouseLeave={isOffPage ? () => OnMouseLeave(setVisible) : null}
     >

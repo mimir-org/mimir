@@ -18,7 +18,7 @@ export const OpenProjectMenu = () => {
   const dispatch = useAppDispatch();
   const currentProject = useAppSelector(selectors.projectSelector);
   const projectList = useAppSelector(selectors.projectListSelector);
-  const selectedProject = projectList?.find((x) => x.selected);
+  const selectedProject = projectList?.find((p) => p.selected);
   const projectId = selectedProject?.id;
   const projectDescription = selectedProject?.description;
   const isActionDisabled = !projectId || projectId === "";

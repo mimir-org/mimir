@@ -37,7 +37,16 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
 
   const GetTerminal = useCallback(
     (conn: Connector) => {
-      return <TreeNodeTerminal node={data} connector={conn} isHover={isHover} setIsHover={setIsHover} dispatch={dispatch} />;
+      return (
+        <TreeNodeTerminal
+          key={`handle-${conn.id}`}
+          node={data}
+          connector={conn}
+          isHover={isHover}
+          setIsHover={setIsHover}
+          dispatch={dispatch}
+        />
+      );
     },
     [isHover]
   );

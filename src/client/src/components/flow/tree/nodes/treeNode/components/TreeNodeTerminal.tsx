@@ -28,7 +28,6 @@ export const TreeNodeTerminal = ({ node, connector, isHover, setIsHover, dispatc
     <TreeHandleBox
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      key={`handle-treeview-${connector.id}`}
       visible={IsPartOfTerminal(connector) && isHover}
       position={pos}
       topPos={SetTopPos(pos)}
