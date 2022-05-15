@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const ParameterButton = styled.button`
   background: transparent;
+  display: flex;
+  align-items: center;
   position: relative;
   border: 0;
   padding: 0;
@@ -18,7 +20,7 @@ export const ParameterLockSpinner = styled.span`
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 10px;
+  top: 7px;
   right: -8px;
   display: flex;
   transform: translate(-50%, -50%);

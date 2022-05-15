@@ -3,6 +3,8 @@ import { changeSelectedProject } from "../../../../../../../redux/store/project/
 import { ProjectItemCm } from "../../../../../../../models";
 import { ProjectDataBox } from "./ProjectData.styled";
 import { Dispatch } from "redux";
+import { projectSelector, useAppSelector } from "../../../../../../../redux/store";
+import { OnOpenClick } from "../handlers/OnOpenClick";
 
 interface Props {
   projects: ProjectItemCm[];
@@ -16,16 +18,21 @@ interface Props {
 
 export const ProjectData = ({ projects, projectId, projectName, projectVersion, projectOwner, updated, dispatch }: Props) => {
   const selected = projects.find((x) => x.id === projectId).selected;
-  const onClick = () => dispatch(changeSelectedProject(projectId));
+  const currentProject = useAppSelector(projectSelector);
+
+  const handleClick = (e) => {
+    dispatch(changeSelectedProject(projectId));
+    if (e.detail === 2) OnOpenClick(projectId, currentProject, dispatch);
+  };
 
   return (
-    <ProjectDataBox onClick={onClick} selected={selected}>
-      <p className="name">{projectName}</p>
-      <p className="owner">{projectOwner}</p>
-      <p className="version">{projectVersion}</p>
-      <p className="edited">
+    <ProjectDataBox onClick={handleClick} selected={selected}>
+      <span className="name">{projectName}</span>
+      <span className="owner">{projectOwner}</span>
+      <span className="version">{projectVersion}</span>
+      <span className="edited">
         <Moment format="DD/MM/YYYY ">{updated}</Moment>
-      </p>
+      </span>
     </ProjectDataBox>
   );
 };

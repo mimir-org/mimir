@@ -1,6 +1,6 @@
 import { GetAspectColor } from "../../../../../helpers";
 import { AspectColorType, Node } from "../../../../../models";
-import { IsCreateLibraryType, IsEdge, IsNode } from "../../../helpers/IsType";
+import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
 
 /**
@@ -21,7 +21,7 @@ export const GetInspectorColor = (nodes: Node[], element: InspectorElement, IsOf
     return GetAspectColor(offPageParent, AspectColorType.Header);
   }
 
-  if (IsNode(element) || IsCreateLibraryType(element)) return GetAspectColor(element as Node, AspectColorType.Header);
+  if (IsNode(element)) return GetAspectColor(element as Node, AspectColorType.Header);
   if (IsEdge(element)) return GetAspectColor(element.fromNode, AspectColorType.Header);
 
   return null;
