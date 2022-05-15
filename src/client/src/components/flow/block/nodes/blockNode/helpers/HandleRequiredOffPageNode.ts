@@ -26,6 +26,12 @@ export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: Block
   });
 };
 
+/**
+ * Function to check if connector already has a required OffPageNode.
+ * @param edges
+ * @param connector
+ * @returns a boolean value.
+ */
 function HasRequiredOffPageNode(edges: Edge[], connector: Connector) {
   const isInput = IsInputTerminal(connector) || IsInputVisible(connector);
 

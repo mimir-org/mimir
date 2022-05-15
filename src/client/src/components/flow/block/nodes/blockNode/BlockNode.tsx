@@ -53,7 +53,14 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={data} terminals={terminals.inputs} isInput />
+      <HandleComponent
+        node={data}
+        project={project}
+        terminals={terminals.inputs}
+        isElectro={isElectro}
+        dispatch={dispatch}
+        isInput
+      />
       <BlockChildComponent
         node={data}
         colorMain={GetAspectColor(data, AspectColorType.Main)}
@@ -62,7 +69,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         outputTerminals={terminals.outputs}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={data} terminals={terminals.outputs} />
+      <HandleComponent node={data} project={project} terminals={terminals.outputs} isElectro={isElectro} dispatch={dispatch} />
     </BoxWrapper>
   );
 };

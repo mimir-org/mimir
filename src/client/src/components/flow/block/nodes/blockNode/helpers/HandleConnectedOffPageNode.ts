@@ -4,6 +4,7 @@ import { IsOffPage } from "../../../../../../helpers/Aspects";
 import { Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsTransportConnection } from "../../../../helpers/Connectors";
+import { IsOffPageEdge } from "../../../helpers/IsOffPageEdge";
 
 /**
  * Component to draw an OffPageNode that is connected.
@@ -22,9 +23,7 @@ export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edg
   edges.forEach((edge) => {
     if (!IsValidTransport(edge, node.id)) return;
     const isTarget = edge.toNodeId === node.id;
-    if (!OnlyOneNodeVisible(edge, isTarget)) return;
-
-    if (HasConnectedOffPageNode(edges, edge, isTarget)) return;
+    if (!OnlyOneNodeVisible(edge, isTarget) || HasConnectedOffPageNode(edges, edge, isTarget)) return;
 
     const nodeParent = nodes.find((n) => n.id === node.parentNodeId);
     if (!nodeParent) return;
@@ -37,20 +36,33 @@ export const HandleConnectedOffPageNode = (node: Node, nodes: Node[], edges: Edg
   });
 };
 
-function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
-  const existingEdge = isTargetNode
-    ? edges.find((e) => e.toConnectorId === edge.toConnectorId && IsOffPage(e.fromNode))
-    : edges.find((e) => e.fromConnectorId === edge.fromConnectorId && IsOffPage(e.toNode));
-
-  return existingEdge !== undefined;
-}
-
+/**
+ * Function to verify if an edge is a valid transport edge.
+ * @param edge
+ * @param nodeId
+ * @returns a boolean value.
+ */
 function IsValidTransport(edge: Edge, nodeId: string) {
   const isTransport = IsTransportConnection(edge.fromConnector, edge.toConnector);
-  const isNotOffPageTransport = !IsOffPage(edge.toNode) && !IsOffPage(edge.fromNode);
+  const isNotOffPageTransport = IsOffPageEdge(edge);
   const nodeHasEdge = nodeId === edge.fromNodeId || nodeId === edge.toNodeId;
 
-  return isTransport && nodeHasEdge && isNotOffPageTransport;
+  return isTransport && isNotOffPageTransport && nodeHasEdge;
+}
+
+/**
+ * Function to check if a connected OffPageNode for an edge already exists.
+ * @param edges
+ * @param edge
+ * @param isTargetNode
+ * @returns a boolean value.
+ */
+function HasConnectedOffPageNode(edges: Edge[], edge: Edge, isTargetNode: boolean) {
+  const existingEdge = isTargetNode
+    ? edges.find((e) => IsOffPage(e.fromNode) && e.toConnectorId === edge.toConnectorId)
+    : edges.find((e) => IsOffPage(e.toNode) && e.fromConnectorId === edge.fromConnectorId);
+
+  return existingEdge !== undefined;
 }
 
 /**

@@ -20,6 +20,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
+  const isElectro = useAppSelector(selectors.electroSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
   const edge = project?.edges?.find((x) => IsTransport(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
@@ -53,9 +54,23 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   return (
     <Tooltip content={data.label} placement={"top"} offset={[0, 10]}>
       <OffPageBox id={`BlockOffPageNode-${data.id}`} selected={data.blockSelected} color={iconColor}>
-        <HandleComponent node={data} terminals={inputTerminals} offPage />
+        <HandleComponent
+          node={data}
+          project={project}
+          terminals={inputTerminals}
+          isElectro={isElectro}
+          dispatch={dispatch}
+          offPage
+        />
         <OffPageIcon style={{ fill: iconColor }} className="icon" />
-        <HandleComponent node={data} terminals={outputTerminals} offPage />
+        <HandleComponent
+          node={data}
+          project={project}
+          terminals={outputTerminals}
+          isElectro={isElectro}
+          dispatch={dispatch}
+          offPage
+        />
       </OffPageBox>
     </Tooltip>
   );

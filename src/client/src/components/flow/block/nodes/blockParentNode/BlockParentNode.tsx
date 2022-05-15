@@ -41,7 +41,15 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={data} terminals={terminals.inputs} isInput isParent />
+      <HandleComponent
+        node={data}
+        project={project}
+        terminals={terminals.inputs}
+        isElectro={isElectro}
+        dispatch={dispatch}
+        isInput
+        isParent
+      />
       <BlockParentComponent
         node={data}
         splitView={secondaryNode !== null}
@@ -52,7 +60,14 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={data} terminals={terminals.outputs} isParent />
+      <HandleComponent
+        node={data}
+        project={project}
+        terminals={terminals.outputs}
+        isElectro={isElectro}
+        dispatch={dispatch}
+        isParent
+      />
     </BoxWrapper>
   );
 };
