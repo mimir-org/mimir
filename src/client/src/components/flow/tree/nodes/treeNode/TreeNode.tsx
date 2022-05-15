@@ -5,7 +5,7 @@ import { AspectColorType, Connector, Node } from "../../../../../models";
 import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";
-import { GetTreeNodeTerminal } from "./helpers/GetTreeNodeTerminal";
+import { TreeNodeTerminal } from "./components/TreeNodeTerminal";
 import { useAppDispatch } from "../../../../../redux/store";
 import { FilterTreeTerminals } from "./helpers/FilterTreeTerminals";
 
@@ -37,7 +37,7 @@ const TreeNode: FC<NodeProps<Node>> = ({ data }) => {
 
   const GetTerminal = useCallback(
     (conn: Connector) => {
-      return GetTreeNodeTerminal(data, conn, dispatch, setIsHover, isHover);
+      return <TreeNodeTerminal node={data} connector={conn} isHover={isHover} setIsHover={setIsHover} dispatch={dispatch} />;
     },
     [isHover]
   );

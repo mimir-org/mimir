@@ -60,7 +60,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           terminals={inputTerminals}
           isElectro={isElectro}
           dispatch={dispatch}
-          offPage
+          isOffPage
         />
         <OffPageIcon style={{ fill: iconColor }} className="icon" />
         <HandleComponent
@@ -69,7 +69,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
           terminals={outputTerminals}
           isElectro={isElectro}
           dispatch={dispatch}
-          offPage
+          isOffPage
         />
       </OffPageBox>
     </Tooltip>
