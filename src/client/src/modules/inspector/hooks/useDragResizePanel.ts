@@ -31,9 +31,7 @@ export const useDragResizePanel = (
   );
 
   useEffect(() => {
-    if (resizePanelRef.current) {
-      resizePanelRef.current.addEventListener("mousedown", onMouseDownCallback);
-    }
+    if (resizePanelRef.current) resizePanelRef.current.addEventListener("mousedown", onMouseDownCallback);
 
     return () => {
       document.removeEventListener("mousemove", resizeCallback);
@@ -54,11 +52,8 @@ const resize = (
   const prevHeight = getComputedHeight(inspectorRef);
   let newHeight = prevHeight + dy;
 
-  if (maxHeight && newHeight > maxHeight) {
-    newHeight = maxHeight;
-  } else if (newHeight < MIN_HEIGHT) {
-    newHeight = MIN_HEIGHT;
-  }
+  if (maxHeight && newHeight > maxHeight) newHeight = maxHeight;
+  else if (newHeight < MIN_HEIGHT) newHeight = MIN_HEIGHT;
 
   setHeightProperty(inspectorRef, newHeight);
 

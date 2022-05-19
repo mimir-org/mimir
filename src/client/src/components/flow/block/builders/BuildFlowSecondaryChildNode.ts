@@ -1,8 +1,8 @@
+import { Node as FlowNode } from "react-flow-renderer";
 import { Node } from "../../../../models";
-import { FlowElement } from "react-flow-renderer";
 import { GetNodeTypeString, SetSecondaryChildNodePos } from "./helpers";
 import { CreateId } from "../../helpers";
-import { IsOffPage } from "../../../../helpers";
+import { IsOffPage } from "../../../../helpers/Aspects";
 
 /**
  * Component to create a child node for the SecondaryParentNode in BlockView.
@@ -26,12 +26,13 @@ const BuildFlowSecondaryChildNode = (primaryNode: Node, secondaryNode: Node, chi
     type: type,
     data: childNode,
     position: position,
-    isHidden: childNode.isHidden,
-    isSelected: childNode.isSelected,
+    hidden: childNode.blockHidden,
+    selected: childNode.blockSelected,
     draggable: true,
     selectable: true,
     connectable: true,
-  } as FlowElement;
+    // parentNode: childNode.parentNodeId,
+  } as FlowNode;
 };
 
 export default BuildFlowSecondaryChildNode;

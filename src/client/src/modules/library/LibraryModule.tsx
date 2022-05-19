@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { useState } from "react";
-import { AnimatedModule } from "../../compLibrary/animated";
+import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
 import { Size } from "../../compLibrary/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
@@ -13,6 +13,7 @@ import {
   animatedModuleSelector,
   libOpenSelector,
   librarySelector,
+  nodesSelector,
 } from "../../redux/store";
 
 interface Props {
@@ -20,11 +21,10 @@ interface Props {
 }
 
 /**
- * Component for Mimir's type library, templates and subprojects
+ * Component for Mimir's type library, templates and subprojects.
  * @param interface
  * @returns a module with tabs and its contents
  */
-
 export const LibraryModule = ({ dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
@@ -32,12 +32,14 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const [selectedTypes, setSelectedTypes] = useState([] as LibItem[]);
   const [selectedElement, setSelectedElement] = useState<LibItem>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
+  const nodes = useAppSelector(nodesSelector);
 
   const showFooter = collectionState !== CollectionsActions.ManageCollection;
   const lib = MODULE_TYPE.LIBRARY;
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
   const collections = useAppSelector(librarySelector).collections;
+  const selectedNode = nodes?.find((n) => n.selected);
 
   const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
   const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
@@ -52,8 +54,6 @@ export const LibraryModule = ({ dispatch }: Props) => {
         search={(text: string) => setSearchString(text)}
         aspectFilters={aspectFilters}
         setAspectFilters={setAspectFilters}
-        // collectionState={collectionState}
-        // setCollectionState={setCollectionState}
       />
       <ModuleBody
         libOpen={libOpen}
@@ -66,6 +66,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
         aspectFilters={aspectFilters}
+        selectedNode={selectedNode}
       />
       {showFooter && (
         <ModuleFooter

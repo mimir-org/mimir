@@ -1,6 +1,6 @@
+import { IsFamily } from "../../../../../../../../../helpers/Family";
 import { LibItem, Node } from "../../../../../../../../../models";
 import { LibraryState } from "../../../../../../../../../redux/store/library/types";
-import { IsFamily } from "../../../../../../../../../helpers";
 
 const isValidLibComponent = (libNode: LibItem, selectedNode: Node, isBlockView: boolean) => {
   if (!isBlockView) return true;

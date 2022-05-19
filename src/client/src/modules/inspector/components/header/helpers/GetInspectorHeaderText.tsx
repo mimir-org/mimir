@@ -1,4 +1,4 @@
-import { IsAspectNode } from "../../../../../helpers";
+import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorHeader.styled";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";

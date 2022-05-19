@@ -15,7 +15,7 @@ export const AppBox = styled.div<AppBoxProps>`
 export const LoginBox = styled.div`
   width: 100px;
   height: 40px;
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: center;
   align-items: center;

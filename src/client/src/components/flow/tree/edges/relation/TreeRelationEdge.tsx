@@ -1,6 +1,6 @@
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors/Color";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { Node } from "../../../../../models";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 
@@ -10,7 +10,7 @@ import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
  * @returns a hasLocation or fullfilledBy edge in TreeView.
  */
 export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, data }: EdgeProps) => {
-  const visible = !data?.edge?.isHidden;
+  const visible = !data?.edge?.hidden;
   const sourceColor = GetRelationColor(data.source);
   const targetColor = GetRelationColor(data.target);
 
@@ -18,14 +18,7 @@ export const TreeRelationEdge = ({ sourceX, sourceY, targetX, targetY, sourcePos
   targetX += 8;
   sourceX -= 8;
 
-  const bezierPath = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const bezierPath = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return (
     <>

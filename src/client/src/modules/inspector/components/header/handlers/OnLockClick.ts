@@ -6,9 +6,16 @@ import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
 import { EntityType } from "../../../../../models/enums/EntityType";
 
-export const OnLockClick = (element: InspectorElement, isLocked: boolean, isLockedBy: string, dispatch: Dispatch) => {
+export const OnLockClick = (
+  element: InspectorElement,
+  isLocked: boolean,
+  isLockedBy: string,
+  setOnLock: (onLocked: boolean) => void,
+  dispatch: Dispatch
+) => {
   if (!IsUnsaved(element)) handleLockOnline(element, isLocked, dispatch);
   else handleLockOffline(element, isLocked, isLockedBy, dispatch);
+  setOnLock(true);
 };
 
 const handleLockOnline = (element: InspectorElement, isLocked: boolean, dispatch: Dispatch) => {
@@ -19,7 +26,7 @@ const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLocke
   const lockObj: LockCm = {
     id: element.id,
     projectId: "",
-    isLocked: isLocked,
+    isLocked,
     isLockedStatusBy: isLockedBy,
     isLockedStatusDate: new Date().toISOString(),
     type: IsNode(element) ? EntityType.Node : EntityType.Edge,

@@ -34,7 +34,7 @@ export const MenuHeader = styled.button`
 
   .searchText {
     margin: 0;
-    padding: 10px;
+    padding: 2px 10px;
     opacity: 0.5;
     font-style: italic;
   }

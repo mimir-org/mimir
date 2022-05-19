@@ -1,9 +1,10 @@
 import { Symbol } from "../../../../../../../../compLibrary/symbol";
-import { GetAspectColor, GetObjectIcon } from "../../../../../../../../helpers";
+import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, LibItem, ObjectType } from "../../../../../../../../models";
 import { getTypeIcon } from "./helpers/GetTypeIcon";
 import { Icon } from "../../../../../../../../compLibrary/icon";
 import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
+import { LibNodeInterface, LibNodeTransport } from "../../../../../../../../assets/icons/library";
 
 interface Props {
   item: LibItem;
@@ -18,3 +19,10 @@ export const NodeElementIconComponent = ({ item }: Props) => (
     )}
   </NodeElementIconContainer>
 );
+
+function GetObjectIcon(item: LibItem) {
+  if (item.libraryType === ObjectType.Interface) return LibNodeInterface;
+  if (item.libraryType === ObjectType.Transport) return LibNodeTransport;
+
+  return null;
+}

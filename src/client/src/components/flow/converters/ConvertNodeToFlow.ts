@@ -1,13 +1,14 @@
-import { FlowElement } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { Aspect, Node } from "../../../models";
 
 /**
- * Component to convert a Mimir Node to a FlowElement that interacts with the Flow library.
+ * Component to convert a Mimir Node to a FlowNode that interacts with the Flow library.
  * @param node
- * @returns a FlowElement
+ * @returns a FlowNode.
  */
 const ConvertNodeToFlow = (node: Node) => {
   if (!node) return null;
+
   const position = { x: node.positionX, y: node.positionY };
 
   return {
@@ -15,18 +16,18 @@ const ConvertNodeToFlow = (node: Node) => {
     type: GetNodeType(node),
     data: node,
     position: position,
-    isHidden: false, // Opacity is controlled by the styled component
-    isSelected: node.isSelected,
+    hidden: false, // Opacity is controlled by the styled component
+    selected: node.selected,
     draggable: true,
     selectable: true,
     connectable: true,
-  } as FlowElement;
+  } as FlowNode;
 };
 
-const GetNodeType = (node: Node) => {
+function GetNodeType(node: Node) {
   let typeName = node.isRoot ? "Aspect" : "";
   typeName += Aspect[node.aspect];
   return typeName;
-};
+}
 
 export default ConvertNodeToFlow;

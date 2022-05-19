@@ -1,6 +1,6 @@
 import * as icons from "../../../../../../assets/icons/offpage";
 import { Connector } from "../../../../../../models";
-import { IsInputTerminal } from "../../../../helpers";
+import { IsInputTerminal } from "../../../../helpers/Connectors";
 
 const GetOffPageIcon = (offPageterminal: Connector, sourceTerminal: Connector) => {
   if (IsInputTerminal(offPageterminal)) {

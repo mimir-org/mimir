@@ -25,8 +25,8 @@ export const CommitProjectMenu = () => {
 
   return (
     <Modal isBlurred isOpen onExit={onExit}>
-      <InfoModalContent title={TextResources.PROJECT_COMMIT_PROJECT}>
-        <Label>{TextResources.PROJECT_COMMIT_PARTNER}</Label>
+      <InfoModalContent title={TextResources.COMMIT_PROJECT}>
+        <Label>{TextResources.PARTNER}</Label>
         <Dropdown
           label="Collaboration partner"
           valueProp="name"
@@ -34,7 +34,7 @@ export const CommitProjectMenu = () => {
           keyProp="id"
           onChange={(item: CollaborationPartner) => setCollaborationPartner(item)}
         />
-        <Label>{TextResources.PROJECT_COMMIT_PARSER}</Label>
+        <Label>{TextResources.COMMIT_PARSER}</Label>
         <Dropdown
           label="Collaboration partner"
           valueProp="name"
@@ -44,7 +44,7 @@ export const CommitProjectMenu = () => {
         />
         <ButtonBox>
           <Button onClick={onExit} text={TextResources.CANCEL} />
-          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.PROJECT_COMMIT} icon={CommitProjectIcon} />
+          <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.COMMIT} icon={CommitProjectIcon} />
         </ButtonBox>
       </InfoModalContent>
     </Modal>

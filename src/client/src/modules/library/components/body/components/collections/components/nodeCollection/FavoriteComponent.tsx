@@ -16,7 +16,7 @@ interface Props {
  */
 export const FavoriteComponent = ({ addFavorite, onClick }: Props) => {
   const icon = addFavorite ? AddFavoriteIcon : RemoveFavoriteIcon;
-  const text = addFavorite ? TextResources.LIBRARY_ADD_FAVORITE : TextResources.LIBRARY_REMOVE_FAVORITE;
+  const text = addFavorite ? TextResources.ADD_FAVORITE : TextResources.REMOVE_FAVORITE;
 
   return (
     <Tooltip content={text} offset={[0, 5]}>

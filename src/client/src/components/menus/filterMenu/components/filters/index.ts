@@ -1,4 +1,4 @@
-export { AnimationFilter } from "./AnimationFilter";
+export { default as AnimationFilter } from "./AnimationFilter";
 export { PartOfFilter } from "./PartOfFilter";
 export { RelationFilter } from "./RelationFilter";
-export { TransportFilter } from "./TransportFilter";
+export { default as TransportFilter } from "./TransportFilter";

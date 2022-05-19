@@ -1,42 +1,60 @@
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { animatedEdgeSelector, edgesSelector, flowViewSelector, nodesSelector, useAppSelector } from "../../../redux/store";
 import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
-import { IsLibrary } from "../../../helpers";
-import { GetFilterElements } from "./helpers/GetFilterElements";
+import { IsLibrary } from "../../../helpers/Modules";
 import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
-import { Elements } from "react-flow-renderer";
+import { Dispatch } from "redux";
+import { VIEW_TYPE } from "../../../models/project";
 
 interface Props {
-  elements: Elements;
-  edgeAnimation: boolean;
+  dispatch: Dispatch;
 }
 
 /**
  * Component for the Visual Filter.
- * @param interface
  * @returns a menu with multiple checkboxes to control visibility of items in Mimir.
  */
-export const VisualFilterComponent = ({ elements, edgeAnimation }: Props) => {
-  const dispatch = useAppDispatch();
+export const VisualFilterComponent = ({ dispatch }: Props) => {
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const { nodes, edges } = GetFilterElements(elements);
+  const edgeAnimation = useAppSelector(animatedEdgeSelector);
+  const flowView = useAppSelector(flowViewSelector);
+  const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
+  const nodes = useAppSelector(nodesSelector);
+  const edges = useAppSelector(edgesSelector);
 
-  const transportItems: Connector[] = [];
-  const relationItems: Connector[] = [];
-  const partOfItems: Connector[] = [];
+  const transportConnectors = [] as Connector[];
+  const relationConnectors = [] as Connector[];
+  const partOfConnectors = [] as Connector[];
 
-  PopulateFilterLists(edges, transportItems, relationItems, partOfItems);
+  PopulateFilterLists(edges, nodes, transportConnectors, relationConnectors, partOfConnectors, isTreeView);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
-      <VisualFilterHeader>{TextResources.FILTER_HEADING}</VisualFilterHeader>
+      <VisualFilterHeader>{TextResources.VISUAL_FILTER}</VisualFilterHeader>
       <VisualFilterMenuColumn>
-        <AnimationFilter edgeAnimation={edgeAnimation} dispatch={dispatch} />
-        <PartOfFilter edges={edges} nodes={nodes} items={partOfItems} dispatch={dispatch} visible={!!partOfItems.length} />
-        <RelationFilter edges={edges} items={relationItems} dispatch={dispatch} visible={!!relationItems.length} />
-        <TransportFilter edges={edges} items={transportItems} dispatch={dispatch} visible={!!transportItems.length} />
+        <AnimationFilter isAnimated={edgeAnimation} visible={!!transportConnectors.length} dispatch={dispatch} />
+        <PartOfFilter
+          edges={edges}
+          nodes={nodes}
+          connectors={partOfConnectors}
+          dispatch={dispatch}
+          visible={!!partOfConnectors.length}
+        />
+        <RelationFilter
+          edges={edges}
+          nodes={nodes}
+          connectors={relationConnectors}
+          dispatch={dispatch}
+          visible={!!relationConnectors.length}
+        />
+        <TransportFilter
+          edges={edges}
+          connectors={transportConnectors}
+          dispatch={dispatch}
+          visible={!!transportConnectors.length}
+        />
       </VisualFilterMenuColumn>
     </VisualFilterContainer>
   );

@@ -1,18 +1,20 @@
 import { Dispatch } from "redux";
-import { IsConnectorVisible } from "../../../../../helpers";
-import { Connector, ConnectorVisibility, Edge, Node } from "../../../../../models";
-import { changeActiveConnector, removeEdge } from "../../../../../redux/store/project/actions";
+import { Connector, ConnectorVisibility } from "../../../../../models";
+import { changeActiveConnector } from "../../../../../redux/store/project/actions";
+import { IsConnectorVisible } from "../../../helpers/Connectors";
 
-export const OnConnectorClick = (conn: Connector, isInput: boolean, node: Node, dispatch: Dispatch, edges: Edge[]) => {
+export const OnConnectorClick = (conn: Connector, isInput: boolean, nodeId: string, dispatch: Dispatch) => {
   const visible = IsConnectorVisible(conn);
   const connectorVisibility = SetConnectorVisibility(conn, isInput);
 
-  dispatch(changeActiveConnector(node.id, conn.id, connectorVisibility));
+  dispatch(changeActiveConnector(nodeId, conn.id, connectorVisibility));
 
-  if (visible) {
-    const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
-    if (edge) dispatch(removeEdge(edge.id));
-  }
+  if (!visible) return;
+
+  // TODO: what to do with edges for hidden connectors
+
+  // const edge = edges.find((e) => e.fromConnector.id === conn.id || e.toConnector.id === conn.id);
+  // if (edge) dispatch(deleteEdge(edge.id));
 };
 
 function SetConnectorVisibility(conn: Connector, isInput: boolean) {
@@ -20,5 +22,5 @@ function SetConnectorVisibility(conn: Connector, isInput: boolean) {
 
   if (visible) return ConnectorVisibility.None;
   if (isInput) return ConnectorVisibility.InputVisible;
-  else return ConnectorVisibility.OutputVisible;
+  return ConnectorVisibility.OutputVisible;
 }

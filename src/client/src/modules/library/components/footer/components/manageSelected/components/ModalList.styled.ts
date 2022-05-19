@@ -51,7 +51,7 @@ export const ModalListElementsContainer = styled.div`
 export const ModalListElementText = styled.span``;
 
 interface ModalListElementProps {
-  isSelected: boolean;
+  selected: boolean;
 }
 
 export const ModalListElement = styled.div<ModalListElementProps>`
@@ -75,7 +75,7 @@ export const ModalListElement = styled.div<ModalListElementProps>`
   }
 
   > ${ModalListElementText} {
-    text-decoration: ${(props) => props.isSelected && "underline"};
-    font-weight: ${(props) => props.isSelected && FontWeight.BOLD};
+    text-decoration: ${(props) => props.selected && "underline"};
+    font-weight: ${(props) => props.selected && FontWeight.BOLD};
   }
 `;

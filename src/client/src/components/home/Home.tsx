@@ -7,19 +7,21 @@ import { InspectorModule } from "../../modules/inspector/InspectorModule";
 import { LibraryModule } from "../../modules/library/LibraryModule";
 import { ProjectSubMenus } from "../menus/projectMenu/ProjectSubMenus";
 import { search } from "../../redux/store/project/actions";
-import { FlowModule } from "../flow";
+import { FlowModule } from "../flow/FlowModule";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
-import { TypeEditorComponent } from "../../typeEditor";
 import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
 import { HeaderComponent } from "../header/HeaderComponent";
-import { ExplorerModule } from "../../modules/explorer/ExplorerModule";
+import { ExplorerTreeModule, ExplorerBlockModule } from "../../modules/explorer/";
 import { fetchUser } from "../../redux/store/user/userSlice";
 import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
-import { MENU_TYPE, VIEW_TYPE, ViewType } from "../../models/project";
-import { ToggleDarkModeColor } from "../../helpers";
+import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
+import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
+import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
+import { ToolbarComponent } from "../toolbar/ToolbarComponent";
+import { TypeEditorComponent } from "../../typeEditor";
 import {
   fetchCollaborationPartners,
   fetchCombinedAttributeFilters,
@@ -37,11 +39,14 @@ interface Props {
  * @returns all the modules and components in the Mimir application.
  */
 export const Home = ({ dispatch }: Props) => {
-  const projectState = useAppSelector(selectors.projectStateSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
-  const inspectorRef = useRef(null);
+  const isFilterOpen = useAppSelector(selectors.filterSelector);
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
+  const activeMenu = useAppSelector(selectors.activeMenuSelector);
+  const isProjectMenuOpen = activeMenu !== null;
+  const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
+  const inspectorRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchLibraryInterfaceTypes());
@@ -59,16 +64,14 @@ export const Home = ({ dispatch }: Props) => {
   useEffect(() => {
     dispatch(changeActiveMenu(null));
     const timeout = setTimeout(() => {
-      if (flowView === (VIEW_TYPE.STARTPAGE as ViewType)) {
-        dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
-      }
+      if (isStartPage) dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
     }, 2500);
     return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
-    ToggleDarkModeColor(isDarkMode);
-  }, [isDarkMode]);
+    ToggleColorProfile(isDarkMode);
+  }, [isDarkMode, isTreeView]);
 
   return (
     <>
@@ -77,15 +80,18 @@ export const Home = ({ dispatch }: Props) => {
         <StartPage />
       ) : (
         <>
-          <ExplorerModule dispatch={dispatch} />
-          <FlowModule project={projectState?.project} inspectorRef={inspectorRef} flowView={flowView} />
-          <InspectorModule project={projectState?.project} inspectorRef={inspectorRef} dispatch={dispatch} />
+          <ToolbarComponent isTreeView={isTreeView} dispatch={dispatch} />
+          {isTreeView && <ExplorerTreeModule dispatch={dispatch} />}
+          {!isTreeView && <ExplorerBlockModule dispatch={dispatch} />}
+          <FlowModule inspectorRef={inspectorRef} flowView={flowView} dispatch={dispatch} />
+          <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule dispatch={dispatch} />
+          {isFilterOpen && <VisualFilterComponent dispatch={dispatch} />}
           <TypeEditorComponent />
+          <ValidationModule />
         </>
       )}
-      <ProjectSubMenus />
-      <ValidationModule />
+      {isProjectMenuOpen && <ProjectSubMenus activeMenu={activeMenu} />}
       <ErrorModule />
     </>
   );

@@ -8,6 +8,11 @@ export const isProjectStateFetchingSelector = createAppSelector(
   (fetching) => fetching
 );
 
+export const isProjectStateGloballyLockingSelector = createAppSelector(
+  (state) => state.projectState.isLocking,
+  (isLocking) => isLocking
+);
+
 export const isLibraryStateFetchingSelector = createAppSelector(
   (state) => state.library.fetching,
   (fetching) => fetching
@@ -125,19 +130,9 @@ export const customCategorySelector = createAppSelector(
   (customCategory) => customCategory
 );
 
-export const blockElementsSelector = createAppSelector(
-  (state) => state.blockElements.elements,
-  (elements) => elements
-);
-
 export const nodeSizeSelector = createAppSelector(
   (state) => state.blockNodeSize.size,
   (size) => size
-);
-
-export const flowTransformSelector = createAppSelector(
-  (state) => state.flowTransform,
-  (flowTransform) => flowTransform
 );
 
 export const flowViewSelector = createAppSelector(
@@ -194,7 +189,7 @@ export const inspectorActiveTabSelector = createAppSelector(
 
 export const heightSelector = createAppSelector(
   (state) => state.inspector.height,
-  (width) => width
+  (width) => width // TODO: ?
 );
 
 export const darkModeSelector = createAppSelector(
@@ -230,6 +225,11 @@ export const projectIsSubProjectSelector = createAppSelector(
 export const secondaryNodeSelector = createAppSelector(
   (state) => state.secondaryNode.node,
   (node) => node as Node
+);
+
+export const selectedNodeSelector = createAppSelector(
+  (state) => state.projectState.project?.nodes?.find((n) => n.selected),
+  (node) => node
 );
 
 export const iconSelector = createAppSelector(
@@ -275,6 +275,11 @@ export const typeEditorInspectorActiveTabSelector = createAppSelector(
 export const nodesSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
   (nodes) => nodes ?? []
+);
+
+export const edgesSelector = createAppSelector(
+  (state) => state.projectState?.project?.edges,
+  (edges) => edges ?? []
 );
 
 export const nodeSelector = createParametricAppSelector(

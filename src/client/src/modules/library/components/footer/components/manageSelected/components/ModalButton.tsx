@@ -43,7 +43,7 @@ export const ModalButton = ({
           );
           onExit();
         }}
-        text={TextResources.LIBRARY_MODAL_ADD_COLLECTION}
+        text={TextResources.ADD_COLLECTION}
       />
     )}
   </ModalButtonsWrapper>

@@ -1,7 +1,7 @@
 import { Connector, Edge, Node } from "../../../models";
 import { GetLegendInfo } from "./GetLegendInfo";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOf } from "../../../components/flow/helpers";
+import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
 import { Legend } from "./types";
 
 export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
@@ -9,11 +9,11 @@ export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
     let found = false;
 
     edges.forEach((edge) => {
-      if (!IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden) {
+      if (!IsBlockView() && edge.fromConnectorId === conn.id && !edge.hidden) {
         found = true;
         return;
       }
-      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.isHidden && !IsPartOf(conn)) found = true;
+      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.hidden && !IsPartOfTerminal(conn)) found = true;
     });
     return found;
   };
@@ -22,11 +22,6 @@ export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
     ?.filter((conn) => IsActive(conn))
     .map((x) => {
       const [name, color] = GetLegendInfo(x, node);
-
-      return {
-        key: x.id,
-        name: name,
-        color: color,
-      };
+      return { key: x.id, name, color };
     });
 };

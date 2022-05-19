@@ -15,12 +15,12 @@ interface Props {
   libOpen: boolean;
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
-  setCollectionState: (action: CollectionsActions) => void;
   selectedElement: LibItem | null;
-  resetSelectedElement: () => void;
   selectedTypes: LibItem[];
-  setSelectedTypes: (types: LibItem[]) => void;
   collections: Collection[];
+  resetSelectedElement: () => void;
+  setCollectionState: (action: CollectionsActions) => void;
+  setSelectedTypes: (types: LibItem[]) => void;
   dispatch: Dispatch;
 }
 
@@ -29,17 +29,16 @@ interface Props {
  * @param interface
  * @returns a footer with buttons based on activeTab
  */
-
 export const ModuleFooter = ({
   libOpen,
   activeTab,
   collectionState,
-  setCollectionState,
   selectedElement,
-  resetSelectedElement,
   selectedTypes,
-  setSelectedTypes,
   collections,
+  resetSelectedElement,
+  setCollectionState,
+  setSelectedTypes,
   dispatch,
 }: Props) => {
   const [confirmDeleteBoxVisible, setConfirmDeleteBoxVisible] = useState(false);
@@ -51,7 +50,7 @@ export const ModuleFooter = ({
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => OnOpenTypeEditor(resetSelectedElement, dispatch)}
-        text={TextResources.LIBRARY_NEW_TYPE}
+        text={TextResources.NEW_TYPE}
         icon={NewType}
       />
       <Button
@@ -59,14 +58,14 @@ export const ModuleFooter = ({
         onClick={() =>
           OnOpenTypeEditorWithItem(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)
         }
-        text={TextResources.LIBRARY_EDIT_TYPE}
+        text={TextResources.EDIT_TYPE}
         icon={EditType}
         disabled={selectedElement === null || selectedElement.libraryType === ObjectType.NotSet}
       />
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => setConfirmDeleteBoxVisible(true)}
-        text={TextResources.LIBRARY_DELETE_TYPE}
+        text={TextResources.DELETE_TYPE}
         icon={DeleteType}
         disabled={selectedElement === null}
       />

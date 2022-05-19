@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 interface Props {
   colorMain: string;
-  isSelected: boolean;
+  selected: boolean;
 }
 
-export const AspectNodeStyled = styled.div<Props>`
+export const AspectNodeBox = styled.div<Props>`
   padding-top: 10px;
   width: 90px;
   height: 55px;
@@ -13,7 +13,7 @@ export const AspectNodeStyled = styled.div<Props>`
   font-size: 11px;
   border-radius: 10px;
   border: 3px solid;
-  border-color: ${(props) => (props.isSelected ? props.colorMain : "transparent")};
+  border-color: ${(props) => (props.selected ? props.colorMain : "transparent")};
   transition: border 250ms ease-in-out;
 
   &:hover,
