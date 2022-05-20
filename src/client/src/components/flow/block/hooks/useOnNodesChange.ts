@@ -1,7 +1,6 @@
-import { applyNodeChanges, NodeChange, Node as FlowNode, XYPosition, NodePositionChange } from "react-flow-renderer";
+import { applyNodeChanges, NodeChange, Node as FlowNode, NodePositionChange, XYPosition } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
-import { GetParentNode } from "../../../../helpers/Family";
 import { Node, Project } from "../../../../models";
 import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
 
@@ -12,7 +11,6 @@ import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
  * If a node is marked as removed, the hook useOnNodeDelete runs and handles removal of Mimir nodes and edges.
  * If a node is marked with a position change, HandlePositionChange is called, and validates the position.
  * @param project
- * @param selectedNode
  * @param selectedBlockNode
  * @param changes
  * @param setNodes
@@ -21,7 +19,6 @@ import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
  */
 const useOnNodesChange = (
   project: Project,
-  selectedNode: Node,
   selectedBlockNode: Node,
   changes: NodeChange[],
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>,
@@ -33,7 +30,7 @@ const useOnNodesChange = (
 
   // Verify changes
   changes.forEach((c) => {
-    if (c.type === "position") return HandlePosition(c, selectedNode, verifiedFlowChanges);
+    if (c.type === "position") return HandlePosition(c, selectedBlockNode, verifiedFlowChanges);
     if (c.type === "remove") return HandleRemove(c.id, selectedBlockNode, verifiedFlowChanges, verifiedMimirNodes);
     verifiedFlowChanges.push(c);
   });
@@ -64,23 +61,23 @@ function HandleRemove(id: string, selectedBlockNode: Node, verifiedFlowChanges: 
 /**
  * Function to handle position changes.
  * @param change
- * @param selectedNode
+ * @param selectedBlockNode
  * @param filteredList
  */
-function HandlePosition(change: NodePositionChange, selectedNode: Node, filteredList: NodeChange[]) {
-  if (change.id === selectedNode.id) return;
-  if (ValidateNodePosition(change.id, change.position)) filteredList.push(change);
+function HandlePosition(change: NodePositionChange, selectedBlockNode: Node, filteredList: NodeChange[]) {
+  if (!ValidateNodePosition(selectedBlockNode, change.id, change.position)) return;
+  filteredList.push(change);
 }
 
 /**
  * Function to validate that a Node's position is not outside the boundary of its ParentNode in BlockView.
- * @param nodeId
+ * @param parentNode
+ * @param id
  * @param position
  * @returns a boolean value.
  */
-function ValidateNodePosition(nodeId: string, position: XYPosition) {
-  const parentNode = GetParentNode(nodeId);
-  if (!position || !parentNode) return false;
+function ValidateNodePosition(parentNode: Node, id: string, position: XYPosition) {
+  if (!parentNode || !position || id === parentNode.id) return false;
 
   const x = position.x;
   const y = position.y;

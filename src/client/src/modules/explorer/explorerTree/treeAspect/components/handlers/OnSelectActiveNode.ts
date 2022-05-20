@@ -4,5 +4,5 @@ import { removeActiveNode, setActiveNode } from "../../../../../../redux/store/p
 
 export const OnSelectActiveNode = (mimirNode: Node, isChecked: boolean, dispatch: Dispatch) => {
   if (isChecked) dispatch(removeActiveNode());
-  else dispatch(setActiveNode(mimirNode.id, true));
+  else dispatch(setActiveNode(mimirNode.id));
 };

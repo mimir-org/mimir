@@ -289,13 +289,13 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_ACTIVE_NODE: {
-      const { nodeId, selected } = action.payload;
+      const { nodeId } = action.payload;
 
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected } : { ...n })),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected: true } : { ...n })),
           edges,
         },
       };

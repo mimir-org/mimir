@@ -35,7 +35,7 @@ export const BlockChildComponent = ({
       node={node}
       colorMain={colorMain}
       colorSelected={colorSelected}
-      selected={node?.blockSelected}
+      selected={node.selected}
       onMouseEnter={() => OnHover(setShowMenuButton)}
       onMouseLeave={() => OnMouseOut(setShowMenuButton)}
     >

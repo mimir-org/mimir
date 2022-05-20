@@ -12,7 +12,7 @@ interface Props {
   username: string;
   node: Node;
   nodes: Node[];
-  selectedNode: Node;
+  selectedBlockNode: Node;
   secondaryNode: Node;
   indent: number;
   isLeaf: boolean;
@@ -34,7 +34,7 @@ export const BlockAspectComponent = ({
   username,
   node,
   nodes,
-  selectedNode,
+  selectedBlockNode,
   secondaryNode,
   isExpanded,
   indent,
@@ -62,7 +62,7 @@ export const BlockAspectComponent = ({
       isExpanded={isExpanded}
       isLeaf={isLeaf}
       onToggleExpanded={onToggleExpanded}
-      selectedNode={selectedNode}
+      selectedBlockNode={selectedBlockNode}
       secondaryNode={secondaryNode}
       dispatch={dispatch}
       indent={indent}

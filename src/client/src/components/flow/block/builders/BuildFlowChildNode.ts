@@ -1,7 +1,6 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { Node } from "../../../../models";
 import { GetNodeTypeString, SetChildNodePos, SetOffPageNodePos } from "./helpers";
-import { CreateId } from "../../helpers";
 import { IsOffPage } from "../../../../helpers/Aspects";
 
 /**
@@ -25,13 +24,12 @@ const BuildFlowChildNode = (childNode: Node, parentNode: Node, secondaryNode: No
     : SetChildNodePos(nodePos, parentNode);
 
   return {
-    key: CreateId(),
     id: childNode.id,
     type: type,
     data: childNode,
     position: position,
-    hidden: childNode.blockHidden,
-    selected: childNode.blockSelected,
+    hidden: false,
+    selected: childNode.selected,
     draggable: true,
     selectable: true,
     connectable: true,

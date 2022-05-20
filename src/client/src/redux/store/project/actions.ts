@@ -93,8 +93,8 @@ export function setLocationNodeSize(nodeId: string, key: string, value: number):
   return { type: Types.SET_LOCATION_NODE_SIZE, payload: { nodeId, key, value } };
 }
 
-export function setActiveNode(nodeId: string, selected: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_ACTIVE_NODE, payload: { nodeId, selected } };
+export function setActiveNode(nodeId: string): Types.ProjectActionTypes {
+  return { type: Types.SET_ACTIVE_NODE, payload: { nodeId } };
 }
 
 export function removeActiveNode(): Types.ProjectActionTypes {
@@ -124,13 +124,6 @@ export function changeSelectedProject(projectId: string): Types.ProjectActionTyp
 export function closeProject(): Types.ProjectActionTypes {
   return { type: Types.CLOSE_PROJECT, payload: null };
 }
-
-// export function changeAllNodes(visible: boolean): Types.ProjectActionTypes {
-//   return {
-//     type: Types.CHANGE_ALL_NODES,
-//     payload: { visible },
-//   };
-// }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function changeNodeValue(nodeId: string, propName: string, propValue: any): Types.ChangeNodePropValue {

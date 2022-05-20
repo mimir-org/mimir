@@ -184,7 +184,7 @@ export interface SetLocationNodeSize {
 
 export interface SetActiveNode {
   type: typeof SET_ACTIVE_NODE;
-  payload: { nodeId: string; selected: boolean };
+  payload: { nodeId: string };
 }
 
 export interface RemoveActiveNode {

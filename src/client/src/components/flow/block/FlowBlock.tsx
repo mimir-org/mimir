@@ -85,7 +85,7 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      return hooks.useOnNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
+      return hooks.useOnNodesChange(project, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
     },
     [selectedBlockNode]
   );
@@ -94,24 +94,21 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     (changes: EdgeChange[]) => {
       return hooks.useOnEdgesChange(project, changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, dispatch);
     },
-    [selectedEdge, selectedBlockNode, selectedNode]
+    [selectedEdge, selectedBlockNode]
   );
 
-  const OnSelectionChange = useCallback(
-    (selectedItems: OnSelectionChangeParams) => {
-      if (!project) return;
-      OnBlockSelectionChange(selectedItems, selectedNode, inspectorRef, dispatch);
-    },
-    [selectedBlockNode]
-  );
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
+    if (!project) return;
+    OnBlockSelectionChange(selectedItems, selectedBlockNode, inspectorRef, dispatch);
+  };
 
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
       SetInitialParentId(mimirNodes);
-      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedNode, secondaryNode));
-      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedNode, secondaryNode, flowNodes, animatedEdge));
+      setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
+      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -120,13 +117,13 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   // Rerender nodes
   useEffect(() => {
     if (!project) return;
-    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedNode, secondaryNode));
+    setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
   }, [mimirNodes, secondaryNode, selectedBlockNode]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedNode, secondaryNode, flowNodes, animatedEdge));
+    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
   }, [mimirEdges, mimirNodes, animatedEdge, selectedBlockNode]);
 
   // Show transport edges by default, timeout is added due to loading of OffPage nodes
@@ -168,7 +165,6 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
         onlyRenderVisibleElements
         zoomOnScroll
         panOnDrag
-        selectionKeyCode={null}
       ></ReactFlow>
     </div>
   );

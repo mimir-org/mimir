@@ -16,7 +16,7 @@ export const OnBlockParentClick = (dispatch: Dispatch, childNode: Node) => {
   dispatch(removeActiveNode());
   dispatch(removeActiveBlockNode());
   dispatch(setActiveBlockNode(parentNodeId));
-  dispatch(setActiveNode(parentNodeId, true));
+  dispatch(setActiveNode(parentNodeId));
 };
 
 export const OnBlockChildClick = (dispatch: Dispatch, nodeId: string) => {
@@ -26,5 +26,5 @@ export const OnBlockChildClick = (dispatch: Dispatch, nodeId: string) => {
   dispatch(removeActiveNode());
   dispatch(removeActiveBlockNode());
   dispatch(setActiveBlockNode(childNodeId));
-  dispatch(setActiveNode(childNodeId, true));
+  dispatch(setActiveNode(childNodeId));
 };
