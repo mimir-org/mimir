@@ -194,7 +194,7 @@ export interface RemoveSelectedNode {
 
 export interface SetSelectedEdge {
   type: typeof SET_SELECTED_EDGE;
-  payload: { edgeId: string; isActive: boolean };
+  payload: { edgeId: string };
 }
 
 export interface RemoveSelectedEdge {

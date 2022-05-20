@@ -109,8 +109,8 @@ export function removeSelectedBlockNode(): Types.ProjectActionTypes {
   return { type: Types.REMOVE_SELECTED_BLOCKNODE, payload: null };
 }
 
-export function setSelectedEdge(edgeId: string, isActive: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_SELECTED_EDGE, payload: { edgeId, isActive } };
+export function setSelectedEdge(edgeId: string): Types.ProjectActionTypes {
+  return { type: Types.SET_SELECTED_EDGE, payload: { edgeId } };
 }
 
 export function removeSelectedEdge(): Types.ProjectActionTypes {

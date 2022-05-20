@@ -47,7 +47,7 @@ function HandleBlockNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
 
 function HandleBlockEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
   dispatch(removeSelectedNode());
-  dispatch(setSelectedEdge(flowEdge.id, true));
+  dispatch(setSelectedEdge(flowEdge.id));
 }
 
 function HandleNoSelect(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {

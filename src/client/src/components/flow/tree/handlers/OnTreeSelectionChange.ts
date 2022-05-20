@@ -40,7 +40,7 @@ function HandleNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
 }
 
 function HandleEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
-  dispatch(setSelectedEdge(flowEdge?.id, true));
+  dispatch(setSelectedEdge(flowEdge?.id));
   dispatch(removeSelectedNode());
 }
 

@@ -313,14 +313,14 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.SET_SELECTED_EDGE: {
-      const { edgeId, isActive: selected } = action.payload;
+      const { edgeId } = action.payload;
 
       return {
         ...state,
         project: {
           ...project,
           nodes,
-          edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected } : { ...e })),
+          edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected: true } : { ...e })),
         },
       };
     }
