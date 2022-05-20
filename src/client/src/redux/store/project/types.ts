@@ -38,12 +38,12 @@ export const SET_NODE_VISIBILITY = "SET_NODE_VISIBILITY";
 export const SET_BLOCK_NODE_VISIBILITY = "SET_BLOCK_NODE_VISIBILITY";
 export const SET_EDGE_VISIBILITY = "SET_EDGE_VISIBILITY";
 export const SET_BLOCK_EDGE_VISIBILITY = "SET_BLOCK_EDGE_VISIBILITY";
-export const SET_ACTIVE_NODE = "SET_ACTIVE_NODE";
-export const REMOVE_ACTIVE_NODE = "REMOVE_ACTIVE_NODE";
-export const SET_ACTIVE_BLOCKNODE = "SET_ACTIVE_BLOCKNODE";
-export const REMOVE_ACTIVE_BLOCKNODE = "REMOVE_ACTIVE_BLOCKNODE";
-export const SET_ACTIVE_EDGE = "SET_ACTIVE_EDGE";
-export const REMOVE_ACTIVE_EDGE = "REMOVE_ACTIVE_EDGE";
+export const SET_SELECTED_NODE = "SET_SELECTED_NODE";
+export const REMOVE_SELECTED_NODE = "REMOVE_SELECTED_NODE";
+export const SET_SELECTED_BLOCKNODE = "SET_SELECTED_BLOCKNODE";
+export const REMOVE_SELECTED_BLOCKNODE = "REMOVE_SELECTED_BLOCKNODE";
+export const SET_SELECTED_EDGE = "SET_SELECTED_EDGE";
+export const REMOVE_SELECTED_EDGE = "REMOVE_SELECTED_EDGE";
 export const SET_LOCATION_NODE_SIZE = "SET_LOCATION_NODE_SIZE";
 export const CHANGE_SELECTED_PROJECT = "CHANGE_SELECTED_PROJECT";
 export const CHANGE_NODE_PROP_VALUE = "CHANGE_NODE_PROP_VALUE";
@@ -182,33 +182,33 @@ export interface SetLocationNodeSize {
   payload: { nodeId: string; key: string; value: number };
 }
 
-export interface SetActiveNode {
-  type: typeof SET_ACTIVE_NODE;
+export interface SetSelectedNode {
+  type: typeof SET_SELECTED_NODE;
   payload: { nodeId: string };
 }
 
-export interface RemoveActiveNode {
-  type: typeof REMOVE_ACTIVE_NODE;
+export interface RemoveSelectedNode {
+  type: typeof REMOVE_SELECTED_NODE;
   payload: null;
 }
 
-export interface SetActiveEdge {
-  type: typeof SET_ACTIVE_EDGE;
+export interface SetSelectedEdge {
+  type: typeof SET_SELECTED_EDGE;
   payload: { edgeId: string; isActive: boolean };
 }
 
-export interface RemoveActiveEdge {
-  type: typeof REMOVE_ACTIVE_EDGE;
+export interface RemoveSelectedEdge {
+  type: typeof REMOVE_SELECTED_EDGE;
   payload: null;
 }
 
-export interface SetActiveBlockNode {
-  type: typeof SET_ACTIVE_BLOCKNODE;
+export interface SetSelectedBlockNode {
+  type: typeof SET_SELECTED_BLOCKNODE;
   payload: { nodeId: string };
 }
 
-export interface RemoveActiveBlockNode {
-  type: typeof REMOVE_ACTIVE_BLOCKNODE;
+export interface RemoveSelectedBlockNode {
+  type: typeof REMOVE_SELECTED_BLOCKNODE;
   payload: null;
 }
 
@@ -411,12 +411,12 @@ export type ProjectActionTypes =
   | SetBlockNodeVisibility
   | SetEdgeVisibility
   | SetBlockEdgeVisibility
-  | SetActiveNode
-  | RemoveActiveNode
-  | SetActiveEdge
-  | RemoveActiveEdge
-  | SetActiveBlockNode
-  | RemoveActiveBlockNode
+  | SetSelectedNode
+  | RemoveSelectedNode
+  | SetSelectedEdge
+  | RemoveSelectedEdge
+  | SetSelectedBlockNode
+  | RemoveSelectedBlockNode
   | SetLocationNodeSize
   | SaveProjectAction
   | SaveProjectActionFinished

@@ -10,11 +10,11 @@ import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
 import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
 import {
-  removeActiveBlockNode,
-  removeActiveEdge,
-  removeActiveNode,
-  setActiveNode,
-  setActiveBlockNode,
+  removeSelectedBlockNode,
+  removeSelectedEdge,
+  removeSelectedNode,
+  setSelectedNode,
+  setSelectedBlockNode,
 } from "../../../redux/store/project/actions";
 
 export const OnElectroClick = (dispatch: Dispatch) => dispatch(toggleElectroView());
@@ -35,8 +35,8 @@ export const OnBlockViewClick = (
 
   SetFitToScreen(viewportData, false);
   dispatch(removeSecondaryNode());
-  dispatch(setActiveBlockNode(selectedFlowNodes[0].id));
-  dispatch(setActiveNode(selectedFlowNodes[0].id));
+  dispatch(setSelectedBlockNode(selectedFlowNodes[0].id));
+  dispatch(setSelectedNode(selectedFlowNodes[0].id));
   dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW as ViewType));
 };
 
@@ -45,9 +45,9 @@ export const OnTreeViewClick = (setSelectedNodes: (nodeIds: string[]) => void, i
 
   // When opening TreeView all selectedItems are removed
   setSelectedNodes([]);
-  dispatch(removeActiveNode());
-  dispatch(removeActiveBlockNode());
-  dispatch(removeActiveEdge());
+  dispatch(removeSelectedNode());
+  dispatch(removeSelectedBlockNode());
+  dispatch(removeSelectedEdge());
   dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
 };
 

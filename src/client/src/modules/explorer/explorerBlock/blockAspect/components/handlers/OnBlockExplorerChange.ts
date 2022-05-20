@@ -5,9 +5,9 @@ import { Node } from "../../../../../../models";
 import { SetFitToScreen } from "../../../../../../helpers";
 import { ViewportData } from "../../../../../../models/project";
 import {
-  removeActiveBlockNode,
-  removeActiveNode,
-  setActiveBlockNode,
+  removeSelectedBlockNode,
+  removeSelectedNode,
+  setSelectedBlockNode,
   setBlockNodeVisibility,
 } from "../../../../../../redux/store/project/actions";
 
@@ -96,14 +96,14 @@ function ValidateNewSecondaryNode(node: Node, selectedNode: Node) {
 }
 
 function RemoveSelectedBlockNode(node: Node, dispatch: Dispatch) {
-  dispatch(removeActiveNode());
-  dispatch(removeActiveBlockNode());
+  dispatch(removeSelectedNode());
+  dispatch(removeSelectedBlockNode());
   dispatch(setBlockNodeVisibility(node, true));
 }
 
 function SetSelectedBlockNode(nodes: Node[], node: Node, dispatch: Dispatch) {
-  dispatch(removeActiveNode());
-  dispatch(setActiveBlockNode(node.id));
+  dispatch(removeSelectedNode());
+  dispatch(setSelectedBlockNode(node.id));
   dispatch(setBlockNodeVisibility(node, false));
   ShowChildren(nodes, node, dispatch);
 }

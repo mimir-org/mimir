@@ -7,7 +7,12 @@ import { MODULE_TYPE } from "../../../../models/project";
 import { SetPanelHeight } from "../../../../modules/inspector/helpers/SetPanelHeight";
 import { changeInspectorHeight } from "../../../../modules/inspector/redux/inspectorSlice";
 import { setModuleVisibility } from "../../../../redux/store/modules/modulesSlice";
-import { removeActiveEdge, removeActiveNode, setActiveNode, setActiveEdge } from "../../../../redux/store/project/actions";
+import {
+  removeSelectedEdge,
+  removeSelectedNode,
+  setSelectedNode,
+  setSelectedEdge,
+} from "../../../../redux/store/project/actions";
 
 /**
  * Component to handle selection of Nodes in BlockView.
@@ -35,19 +40,19 @@ export const OnBlockSelectionChange = (
 
 function HandleBlockNodeSelect(flowNode: FlowNode, dispatch: Dispatch) {
   if (!flowNode) return;
-  dispatch(removeActiveNode());
-  dispatch(setActiveNode(flowNode.id));
+  dispatch(removeSelectedNode());
+  dispatch(setSelectedNode(flowNode.id));
   flowNode.selected = true;
 }
 
 function HandleBlockEdgeSelect(flowEdge: FlowEdge, dispatch: Dispatch) {
-  dispatch(removeActiveNode());
-  dispatch(setActiveEdge(flowEdge.id, true));
+  dispatch(removeSelectedNode());
+  dispatch(setSelectedEdge(flowEdge.id, true));
 }
 
 function HandleNoSelect(inspectorRef: React.MutableRefObject<HTMLDivElement>, dispatch: Dispatch) {
   // dispatch(removeActiveNode());
-  dispatch(removeActiveEdge());
+  dispatch(removeSelectedEdge());
   CloseInspector(inspectorRef, dispatch);
 }
 

@@ -93,28 +93,28 @@ export function setLocationNodeSize(nodeId: string, key: string, value: number):
   return { type: Types.SET_LOCATION_NODE_SIZE, payload: { nodeId, key, value } };
 }
 
-export function setActiveNode(nodeId: string): Types.ProjectActionTypes {
-  return { type: Types.SET_ACTIVE_NODE, payload: { nodeId } };
+export function setSelectedNode(nodeId: string): Types.ProjectActionTypes {
+  return { type: Types.SET_SELECTED_NODE, payload: { nodeId } };
 }
 
-export function removeActiveNode(): Types.ProjectActionTypes {
-  return { type: Types.REMOVE_ACTIVE_NODE, payload: null };
+export function removeSelectedNode(): Types.ProjectActionTypes {
+  return { type: Types.REMOVE_SELECTED_NODE, payload: null };
 }
 
-export function setActiveBlockNode(nodeId: string): Types.ProjectActionTypes {
-  return { type: Types.SET_ACTIVE_BLOCKNODE, payload: { nodeId } };
+export function setSelectedBlockNode(nodeId: string): Types.ProjectActionTypes {
+  return { type: Types.SET_SELECTED_BLOCKNODE, payload: { nodeId } };
 }
 
-export function removeActiveBlockNode(): Types.ProjectActionTypes {
-  return { type: Types.REMOVE_ACTIVE_BLOCKNODE, payload: null };
+export function removeSelectedBlockNode(): Types.ProjectActionTypes {
+  return { type: Types.REMOVE_SELECTED_BLOCKNODE, payload: null };
 }
 
-export function setActiveEdge(edgeId: string, isActive: boolean): Types.ProjectActionTypes {
-  return { type: Types.SET_ACTIVE_EDGE, payload: { edgeId, isActive } };
+export function setSelectedEdge(edgeId: string, isActive: boolean): Types.ProjectActionTypes {
+  return { type: Types.SET_SELECTED_EDGE, payload: { edgeId, isActive } };
 }
 
-export function removeActiveEdge(): Types.ProjectActionTypes {
-  return { type: Types.REMOVE_ACTIVE_EDGE, payload: null };
+export function removeSelectedEdge(): Types.ProjectActionTypes {
+  return { type: Types.REMOVE_SELECTED_EDGE, payload: null };
 }
 
 export function changeSelectedProject(projectId: string): Types.ProjectActionTypes {
