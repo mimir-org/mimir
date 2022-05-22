@@ -1,8 +1,15 @@
-import { applyNodeChanges, NodeChange, Node as FlowNode, NodePositionChange, XYPosition } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Node, Project } from "../../../../models";
 import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
+import {
+  applyNodeChanges,
+  NodeChange,
+  Node as FlowNode,
+  NodePositionChange,
+  XYPosition,
+  NodeRemoveChange,
+} from "react-flow-renderer";
 
 /**
  * Hook that runs whenever a Node has a change in BlockView.
@@ -31,30 +38,32 @@ const useOnNodesChange = (
   // Verify changes
   changes.forEach((c) => {
     if (c.type === "position") return HandlePosition(c, selectedBlockNode, verifiedFlowChanges);
-    if (c.type === "remove") return HandleRemove(c.id, selectedBlockNode, verifiedFlowChanges, verifiedMimirNodes);
+    if (c.type === "remove") return HandleRemove(c, selectedBlockNode, verifiedFlowChanges, verifiedMimirNodes);
     verifiedFlowChanges.push(c);
   });
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
-  useOnNodeDelete(verifiedMimirNodes, project.nodes, project.edges, inspectorRef, dispatch);
+  useOnNodeDelete(verifiedMimirNodes, project.nodes, project.edges, inspectorRef, dispatch, selectedBlockNode);
 };
 
 /**
  * Function to handle removal of a node. This function handles FlowNodes and MimirNodes separately.
  * A confirmed element to be deleted is added to both lists - flowChanges and mimirNodesToDelete.
- * @param id
+ * @param change
  * @param selectedBlockNode
  * @param verifiedFlowChanges
  * @param verifiedMimirNodes
  */
-function HandleRemove(id: string, selectedBlockNode: Node, verifiedFlowChanges: NodeChange[], verifiedMimirNodes: Node[]) {
-  if (!selectedBlockNode || selectedBlockNode.isLocked || id !== selectedBlockNode.id) return;
+function HandleRemove(
+  change: NodeRemoveChange,
+  selectedBlockNode: Node,
+  verifiedFlowChanges: NodeChange[],
+  verifiedMimirNodes: Node[]
+) {
+  if (change.id === selectedBlockNode?.id) return;
 
-  // Flow only detects deletion of a selectedNode. In BlockView we want to delete the selectedBlockNode
-  const nodeChange = { id: selectedBlockNode.id, type: "remove" } as NodeChange;
-
-  verifiedFlowChanges.push(nodeChange);
+  verifiedFlowChanges.push(change);
   verifiedMimirNodes.push(selectedBlockNode);
 }
 

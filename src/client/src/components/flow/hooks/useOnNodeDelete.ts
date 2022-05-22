@@ -15,6 +15,7 @@ import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
  * @param nodesToDelete
  * @param nodes
  * @param edges
+ * @param selectedBlockNode
  * @param inspectorRef
  * @param dispatch
  */
@@ -23,11 +24,13 @@ export const useOnNodeDelete = (
   nodes: Node[],
   edges: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  selectedBlockNode?: Node
 ) => {
   if (!nodesToDelete.length) return;
 
   nodesToDelete.forEach((node) => {
+    if (node.id === selectedBlockNode.id) return;
     DeleteRelatedEdges(node.id, edges, dispatch);
 
     if (IsOffPage(node)) return HandleOffPageNodeDelete(node, nodes, edges, dispatch);

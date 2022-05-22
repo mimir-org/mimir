@@ -29,7 +29,7 @@ interface Props {
 }
 
 /**
- * Component for the Flow library in BlockView.
+ * Component for the Flow library in BlockView. This is the main component in Mimir.
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
@@ -118,13 +118,13 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
-  }, [mimirNodes, secondaryNode, selectedBlockNode]);
+  }, [mimirNodes, secondaryNode]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
-  }, [mimirEdges, mimirNodes, animatedEdge, selectedBlockNode]);
+  }, [mimirEdges, mimirNodes, animatedEdge]);
 
   // Show transport edges by default, timeout is added due to loading of OffPage nodes
   useEffect(() => {
