@@ -7,7 +7,6 @@ import { useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
 import { Size } from "../../../compLibrary/size/Size";
-import { OnBlockSelectionChange } from "./handlers/OnBlockSelectionChange";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
 import ReactFlow, {
@@ -18,7 +17,6 @@ import ReactFlow, {
   useEdgesState,
   useReactFlow,
   ReactFlowInstance,
-  OnSelectionChangeParams,
   NodeChange,
   EdgeChange,
 } from "react-flow-renderer";
@@ -85,22 +83,17 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      return hooks.useOnNodesChange(project, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
+      return hooks.useOnBlockNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
     },
-    [selectedBlockNode]
+    [selectedBlockNode, selectedNode]
   );
 
   const OnEdgesChange = useCallback(
     (changes: EdgeChange[]) => {
-      return hooks.useOnEdgesChange(project, changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, dispatch);
+      return hooks.useOnBlockEdgesChange(project, changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, dispatch);
     },
     [selectedEdge, selectedBlockNode]
   );
-
-  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
-    if (!project) return;
-    OnBlockSelectionChange(selectedItems, selectedBlockNode, inspectorRef, dispatch);
-  };
 
   // Build initial elements from Project
   useEffect(() => {
@@ -156,7 +149,6 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
         connectionLineComponent={BlockConnectionLine}
-        onSelectionChange={(e) => OnSelectionChange(e)}
         deleteKeyCode={"Delete"}
         zoomOnDoubleClick={false}
         defaultZoom={Size.ZOOM_DEFAULT}

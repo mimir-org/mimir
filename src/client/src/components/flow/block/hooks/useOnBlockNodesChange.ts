@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Node, Project } from "../../../../models";
 import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
+import { removeSelectedEdge, removeSelectedNode, setSelectedNode } from "../../../../redux/store/project/actions";
 import {
   applyNodeChanges,
   NodeChange,
@@ -9,6 +10,7 @@ import {
   NodePositionChange,
   XYPosition,
   NodeRemoveChange,
+  NodeSelectionChange,
 } from "react-flow-renderer";
 
 /**
@@ -18,14 +20,16 @@ import {
  * If a node is marked as removed, the hook useOnNodeDelete runs and handles removal of Mimir nodes and edges.
  * If a node is marked with a position change, HandlePositionChange is called, and validates the position.
  * @param project
+ * @param selectedNode
  * @param selectedBlockNode
  * @param changes
  * @param setNodes
  * @param dispatch
  * @param inspectorRef
  */
-const useOnNodesChange = (
+const useOnBlockNodesChange = (
   project: Project,
+  selectedNode: Node,
   selectedBlockNode: Node,
   changes: NodeChange[],
   setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>,
@@ -33,19 +37,35 @@ const useOnNodesChange = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>
 ) => {
   const verifiedFlowChanges = [] as NodeChange[];
-  const verifiedMimirNodes = [] as Node[];
+  const mimirNodesToDelete = [] as Node[];
 
   // Verify changes
-  changes.forEach((c) => {
-    if (c.type === "position") return HandlePosition(c, selectedBlockNode, verifiedFlowChanges);
-    if (c.type === "remove") return HandleRemove(c, selectedBlockNode, verifiedFlowChanges, verifiedMimirNodes);
-    verifiedFlowChanges.push(c);
+  changes.forEach((change) => {
+    if (change.type === "select") return HandleSelect(change, selectedNode, verifiedFlowChanges, dispatch);
+    if (change.type === "position") return HandlePosition(change, selectedBlockNode, verifiedFlowChanges);
+    if (change.type === "remove") return HandleRemove(change, selectedBlockNode, verifiedFlowChanges, mimirNodesToDelete);
+    verifiedFlowChanges.push(change);
   });
 
-  // Execute all changes
+  // Execute verified changes
   setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
-  useOnNodeDelete(verifiedMimirNodes, project.nodes, project.edges, inspectorRef, dispatch, selectedBlockNode);
+  useOnNodeDelete(mimirNodesToDelete, project.nodes, project.edges, inspectorRef, dispatch, selectedBlockNode);
 };
+
+/**
+ * Function to handle selection of a node in BlockView.
+ * @param change
+ * @param selectedNode
+ * @param verifiedFlowChanges
+ * @param dispatch
+ */
+function HandleSelect(change: NodeSelectionChange, selectedNode: Node, verifiedFlowChanges: NodeChange[], dispatch: Dispatch) {
+  if (change.id === selectedNode?.id) return;
+  dispatch(removeSelectedEdge());
+  dispatch(removeSelectedNode());
+  dispatch(setSelectedNode(change.id));
+  verifiedFlowChanges.push(change);
+}
 
 /**
  * Function to handle removal of a node. This function handles FlowNodes and MimirNodes separately.
@@ -53,18 +73,18 @@ const useOnNodesChange = (
  * @param change
  * @param selectedBlockNode
  * @param verifiedFlowChanges
- * @param verifiedMimirNodes
+ * @param mimirNodesToDelete
  */
 function HandleRemove(
   change: NodeRemoveChange,
   selectedBlockNode: Node,
   verifiedFlowChanges: NodeChange[],
-  verifiedMimirNodes: Node[]
+  mimirNodesToDelete: Node[]
 ) {
   if (change.id === selectedBlockNode?.id) return;
 
   verifiedFlowChanges.push(change);
-  verifiedMimirNodes.push(selectedBlockNode);
+  mimirNodesToDelete.push(selectedBlockNode);
 }
 
 /**
@@ -103,4 +123,4 @@ function ValidateNodePosition(parentNode: Node, id: string, position: XYPosition
   return validX && validY;
 }
 
-export default useOnNodesChange;
+export default useOnBlockNodesChange;

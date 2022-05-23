@@ -1,6 +1,7 @@
-import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange } from "react-flow-renderer";
+import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange, EdgeSelectionChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { Edge, Node, Project } from "../../../../models";
+import { removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
 import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
 
 /**
@@ -16,7 +17,7 @@ import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
  * @param inspectorRef
  * @param dispatch
  */
-const useOnEdgesChange = (
+const useOnBlockEdgesChange = (
   project: Project,
   changes: EdgeChange[],
   selectedBlockNode: Node,
@@ -26,19 +27,35 @@ const useOnEdgesChange = (
   dispatch: Dispatch
 ) => {
   const verifiedFlowChanges = [] as EdgeChange[];
-  const verfifiedMimirEdges = [] as Edge[];
+  const mimirEdgesToDelete = [] as Edge[];
 
   // Verify changes
   changes.forEach((c) => {
+    if (c.type === "select") return HandleSelect(c, selectedEdge, verifiedFlowChanges, dispatch);
     if (c.type === "remove")
-      return HandleRemoveEdge(c, project.edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, verfifiedMimirEdges);
+      return HandleRemove(c, project.edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, mimirEdgesToDelete);
     verifiedFlowChanges.push(c);
   });
 
-  // Execute all changes
+  // Execute verified changes
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
-  useOnEdgeDelete(verfifiedMimirEdges, project.nodes, project.edges, inspectorRef, dispatch);
+  useOnEdgeDelete(mimirEdgesToDelete, project.nodes, project.edges, inspectorRef, dispatch);
 };
+
+/**
+ * Function to handle selection of an edge in BlockView.
+ * @param change
+ * @param selectedEdge
+ * @param verifiedFlowChanges
+ * @param dispatch
+ */
+function HandleSelect(change: EdgeSelectionChange, selectedEdge: Edge, verifiedFlowChanges: EdgeChange[], dispatch: Dispatch) {
+  if (change.id === selectedEdge?.id) return;
+
+  dispatch(removeSelectedNode());
+  dispatch(setSelectedEdge(change.id));
+  verifiedFlowChanges.push(change);
+}
 
 /**
  * Function to handle removal of an edge. This function handles FlowEdges and MimirEdges separately.
@@ -50,7 +67,7 @@ const useOnEdgesChange = (
  * @param verifiedFlowChanges
  * @param verfifiedMimirEdges
  */
-function HandleRemoveEdge(
+function HandleRemove(
   change: EdgeRemoveChange,
   edges: Edge[],
   selectedBlockNode: Node,
@@ -71,4 +88,4 @@ function HandleRemoveEdge(
   verfifiedMimirEdges.push(edgeToRemove);
 }
 
-export default useOnEdgesChange;
+export default useOnBlockEdgesChange;
