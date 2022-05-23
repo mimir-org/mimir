@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Node, Project } from "../../../../models";
-import { OnNodeDelete } from "../../hooks/OnNodeDelete";
+import { OnNodeDelete } from "../../handlers/OnNodeDelete";
 import { removeSelectedEdge, removeSelectedNode, setSelectedNode } from "../../../../redux/store/project/actions";
 import {
   applyNodeChanges,

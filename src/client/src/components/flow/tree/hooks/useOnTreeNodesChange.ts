@@ -3,7 +3,7 @@ import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node, Edge } from "../../../../models";
-import { OnNodeDelete } from "../../hooks/OnNodeDelete";
+import { OnNodeDelete } from "../../handlers/OnNodeDelete";
 
 /**
  * Hook that runs whenever a Node has a change in TreeView.
@@ -34,24 +34,24 @@ const useOnTreeNodesChange = (
     verifiedFlowChanges.push(change);
   });
 
-  // Execute all changes
+  // Execute verified changes
   setNodes((n) => applyNodeChanges(changes, n));
   if (nodesToDelete.length) OnNodeDelete(nodesToDelete, nodes, edges, inspectorRef, dispatch);
 };
 
 /**
  * Function to handle removal of a node. This function handles FlowNodes and MimirNodes separately.
- * A confirmed element to be deleted is added to both lists - flowChanges and mimirNodesToDelete.
+ * A confirmed element to be deleted is added to both lists - flowChanges and nodesToDelete.
  * @param change
  * @param verifiedChanges
- * @param verifiedMimirNodes
+ * @param nodesToDelete
  * @param nodes
  */
-function HandleRemoveChange(change: NodeRemoveChange, verifiedChanges: NodeChange[], verifiedMimirNodes: Node[], nodes: Node[]) {
+function HandleRemoveChange(change: NodeRemoveChange, verifiedChanges: NodeChange[], nodesToDelete: Node[], nodes: Node[]) {
   const mimirNode = nodes?.find((n) => n.id === change.id);
   if (!mimirNode || IsAspectNode(mimirNode) || mimirNode.isLocked) return;
 
-  verifiedMimirNodes.push(mimirNode);
+  nodesToDelete.push(mimirNode);
 
   const removeChange = { id: change.id, type: "remove" } as NodeChange;
   verifiedChanges.push(removeChange);
