@@ -4,7 +4,7 @@ import { CloseInspector } from "../tree/handlers";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
 
 /**
- * Hook that runs when an edge is deleted from Mimir. This hook is used both in TreeView and BlockView.
+ * Component that runs when an edge is deleted from Mimir. This hook is used both in TreeView and BlockView.
  * An edge can be deleted with the delete button from a keyboard, or the delete button in Mimir's Inspector.
  * @param edgesToDelete
  * @param nodes
@@ -12,15 +12,13 @@ import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
  * @param inspectorRef
  * @param dispatch
  */
-export const useOnEdgeDelete = (
+export const OnEdgeDelete = (
   edgesToDelete: Edge[],
   nodes: Node[],
   edges: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
-  if (!edgesToDelete.length) return;
-
   edgesToDelete.forEach((edge) => {
     if (!edge) return;
     HandleOffPageEdgeDelete(edge, nodes, edges, dispatch);

@@ -3,7 +3,7 @@ import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node, Edge } from "../../../../models";
-import { useOnNodeDelete } from "../../hooks/useOnNodeDelete";
+import { OnNodeDelete } from "../../hooks/OnNodeDelete";
 
 /**
  * Hook that runs whenever a Node has a change in TreeView.
@@ -26,17 +26,17 @@ const useOnTreeNodesChange = (
   inspectorRef: MutableRefObject<HTMLDivElement>
 ) => {
   const verifiedFlowChanges = [] as NodeChange[];
-  const verifiedMimirNodes = [] as Node[];
+  const nodesToDelete = [] as Node[];
 
   // Verify changes
   changes.forEach((change) => {
-    if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, verifiedMimirNodes, nodes);
+    if (change.type === "remove") return HandleRemoveChange(change, verifiedFlowChanges, nodesToDelete, nodes);
     verifiedFlowChanges.push(change);
   });
 
   // Execute all changes
   setNodes((n) => applyNodeChanges(changes, n));
-  useOnNodeDelete(verifiedMimirNodes, nodes, edges, inspectorRef, dispatch);
+  if (nodesToDelete.length) OnNodeDelete(nodesToDelete, nodes, edges, inspectorRef, dispatch);
 };
 
 /**

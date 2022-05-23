@@ -2,7 +2,7 @@ import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange, EdgeS
 import { Dispatch } from "redux";
 import { Edge, Node, Project } from "../../../../models";
 import { removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
-import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
+import { OnEdgeDelete } from "../../hooks/OnEdgeDelete";
 
 /**
  * Hook that runs whenever an Edge has a change in BlockView.
@@ -26,20 +26,21 @@ const useOnBlockEdgesChange = (
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
   dispatch: Dispatch
 ) => {
+  const nodes = project.nodes;
+  const edges = project.edges;
   const verifiedFlowChanges = [] as EdgeChange[];
-  const mimirEdgesToDelete = [] as Edge[];
+  const edgesToDelete = [] as Edge[];
 
   // Verify changes
   changes.forEach((c) => {
     if (c.type === "select") return HandleSelect(c, selectedEdge, verifiedFlowChanges, dispatch);
-    if (c.type === "remove")
-      return HandleRemove(c, project.edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, mimirEdgesToDelete);
+    if (c.type === "remove") return HandleRemove(c, edges, selectedBlockNode, selectedEdge, verifiedFlowChanges, edgesToDelete);
     verifiedFlowChanges.push(c);
   });
 
   // Execute verified changes
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
-  useOnEdgeDelete(mimirEdgesToDelete, project.nodes, project.edges, inspectorRef, dispatch);
+  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
 };
 
 /**

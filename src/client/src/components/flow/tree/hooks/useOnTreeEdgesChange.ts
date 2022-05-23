@@ -2,7 +2,7 @@ import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from
 import { Dispatch } from "redux";
 import { Edge, Node } from "../../../../models";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
+import { OnEdgeDelete } from "../../hooks/OnEdgeDelete";
 
 /**
  * Hook that runs whenever an Edge has a change in TreeView.
@@ -28,18 +28,17 @@ const useOnTreeEdgesChange = (
   dispatch: Dispatch
 ) => {
   const verifiedFlowChanges = [] as EdgeChange[];
-  const mimirEdgesToDelete = [] as Edge[];
+  const edgesToDelete = [] as Edge[];
 
   // Verify changes
   changes.forEach((change) => {
-    if (change.type === "remove")
-      return HandleRemoveChange(change, verifiedFlowChanges, mimirEdgesToDelete, nodes, edges, selectedNode);
+    if (change.type === "remove") return HandleRemove(change, verifiedFlowChanges, edgesToDelete, nodes, edges, selectedNode);
     verifiedFlowChanges.push(change);
   });
 
-  // Execute all changes
+  // Execute verified changes
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
-  useOnEdgeDelete(mimirEdgesToDelete, nodes, edges, inspectorRef, dispatch);
+  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
 };
 
 /**
@@ -52,7 +51,7 @@ const useOnTreeEdgesChange = (
  * @param edges
  * @param selectedNode
  */
-function HandleRemoveChange(
+function HandleRemove(
   change: NodeRemoveChange,
   verifiedChanges: EdgeChange[],
   mimirEdgesToDelete: Edge[],
