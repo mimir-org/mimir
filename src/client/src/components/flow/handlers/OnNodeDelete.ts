@@ -9,8 +9,8 @@ import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
 
 /**
  * Component that runs when a node is deleted from Mimir. This component is used both in TreeView and BlockView.
- * A node can be deleted with the delete button from a keyboard, or the delete button in Mimir's Inspector.
- * If a Node is deleted the connected Edges are also deleted.
+ * A node can be deleted with the delete key from the keyboard, or the delete button in Mimir's Inspector.
+ * If a Node is deleted the related Edges are also deleted.
  * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
  * @param nodesToDelete
  * @param nodes

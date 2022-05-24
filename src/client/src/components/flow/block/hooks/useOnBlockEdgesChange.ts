@@ -8,7 +8,9 @@ import { OnEdgeDelete } from "../../handlers";
  * Hook that runs whenever an Edge has a change in BlockView.
  * In the Flow Library a change is defined by the following types:
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
- * If an edge is marked as remove, a separate validation is executed.
+ * If an edge is marked as selected, HandleSelect dispatches the edge to be selected.
+ * If an edge is marked as removed, HandleRemove validates the changes and the component OnEdgeDelete handles the removal.
+ * The other types of changes are executed automatically.
  * @param project
  * @param changes
  * @param selectedBlockNode
@@ -39,8 +41,8 @@ const useOnBlockEdgesChange = (
   });
 
   // Execute verified changes
-  setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
   if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
+  setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
 };
 
 /**
@@ -52,7 +54,6 @@ const useOnBlockEdgesChange = (
  */
 function HandleSelect(change: EdgeSelectionChange, selectedEdge: Edge, verifiedFlowChanges: EdgeChange[], dispatch: Dispatch) {
   if (change.id === selectedEdge?.id) return;
-
   dispatch(removeSelectedNode());
   dispatch(setSelectedEdge(change.id));
   verifiedFlowChanges.push(change);
@@ -60,13 +61,13 @@ function HandleSelect(change: EdgeSelectionChange, selectedEdge: Edge, verifiedF
 
 /**
  * Function to handle removal of an edge. This function handles FlowEdges and MimirEdges separately.
- * A confirmed element to be deleted is added to both lists - flowChanges and mimirEdgesToDelete.
+ * A confirmed element to be deleted is added to both lists - verifiedFlowChanges and edgesToDelete.
  * @param change
  * @param edges
  * @param selectedBlockNode
  * @param selectedEdge
  * @param verifiedFlowChanges
- * @param verfifiedMimirEdges
+ * @param edgesToDelete
  */
 function HandleRemove(
   change: EdgeRemoveChange,
@@ -74,7 +75,7 @@ function HandleRemove(
   selectedBlockNode: Node,
   selectedEdge: Edge,
   verifiedFlowChanges: EdgeChange[],
-  verfifiedMimirEdges: Edge[]
+  edgesToDelete: Edge[]
 ) {
   const edgeToRemove = edges.find((e) => e.id === change.id);
   if (!edgeToRemove || edgeToRemove.isLocked) return;
@@ -86,7 +87,7 @@ function HandleRemove(
   if (!isConnectedToSelectedBlockNode && !isSelectedEdge) return;
 
   verifiedFlowChanges.push(change);
-  verfifiedMimirEdges.push(edgeToRemove);
+  edgesToDelete.push(edgeToRemove);
 }
 
 export default useOnBlockEdgesChange;

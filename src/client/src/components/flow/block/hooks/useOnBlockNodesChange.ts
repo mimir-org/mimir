@@ -1,14 +1,13 @@
 import { Dispatch } from "redux";
-import { Size } from "../../../../compLibrary/size/Size";
 import { Node, Project } from "../../../../models";
 import { OnNodeDelete } from "../../handlers/";
 import { removeSelectedEdge, removeSelectedNode, setSelectedNode } from "../../../../redux/store/project/actions";
+import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
 import {
   applyNodeChanges,
   NodeChange,
   Node as FlowNode,
   NodePositionChange,
-  XYPosition,
   NodeRemoveChange,
   NodeSelectionChange,
 } from "react-flow-renderer";
@@ -17,9 +16,10 @@ import {
  * Hook that runs whenever a Node has a change in BlockView.
  * In the Flow Library a change is defined by the following types:
  * NodeDimensionChange | NodePositionChange | NodeSelectionChange | NodeRemoveChange | NodeAddChange | NodeResetChange
- * If a node is marked as removed, the hook useOnNodeDelete runs and handles removal of Mimir nodes and edges.
- * If a node is marked with a position change, HandlePosition is called, and validates the position.
  * If a node is marked as selected, HandleSelect dispatches the node to be selected.
+ * If a node is marked with a position change, HandlePosition is called, and validates the position.
+ * If a node is marked as removed, HandleRemove validates the changes and the component OnNodeDelete handles the removal.
+ * The other types of changes are executed automatically.
  * @param project
  * @param selectedNode
  * @param selectedBlockNode
@@ -51,8 +51,8 @@ const useOnBlockNodesChange = (
   });
 
   // Execute verified changes
-  setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
   if (nodesToDelete.length) OnNodeDelete(nodesToDelete, mimirNodes, mimirEdges, inspectorRef, dispatch, selectedBlockNode);
+  setNodes((n) => applyNodeChanges(verifiedFlowChanges, n));
 };
 
 /**
@@ -64,6 +64,7 @@ const useOnBlockNodesChange = (
  */
 function HandleSelect(change: NodeSelectionChange, selectedNode: Node, verifiedFlowChanges: NodeChange[], dispatch: Dispatch) {
   if (change.id === selectedNode?.id) return;
+
   dispatch(removeSelectedEdge());
   dispatch(removeSelectedNode());
   dispatch(setSelectedNode(change.id));
@@ -71,30 +72,7 @@ function HandleSelect(change: NodeSelectionChange, selectedNode: Node, verifiedF
 }
 
 /**
- * Function to handle removal of a node. This function handles FlowNodes and MimirNodes separately.
- * A confirmed element to be deleted is added to both lists - flowChanges and mimirNodesToDelete.
- * The selectedBlockNode can not be deleted from BlockView.
- * @param flowChange
- * @param selectedBlockNode
- * @param verifiedFlowChanges
- * @param mimirNodesToDelete
- */
-function HandleRemove(
-  flowChange: NodeRemoveChange,
-  selectedBlockNode: Node,
-  verifiedFlowChanges: NodeChange[],
-  mimirNodesToDelete: Node[],
-  mimirNodes: Node[]
-) {
-  if (flowChange.id === selectedBlockNode?.id) return;
-  const nodeToDelete = mimirNodes.find((n) => n.id === flowChange.id);
-
-  verifiedFlowChanges.push(flowChange);
-  mimirNodesToDelete.push(nodeToDelete);
-}
-
-/**
- * Function to handle position changes.
+ * Function to handle position changes. A validation runs before a position change is executed.
  * @param change
  * @param selectedBlockNode
  * @param filteredList
@@ -105,28 +83,26 @@ function HandlePosition(change: NodePositionChange, selectedBlockNode: Node, fil
 }
 
 /**
- * Function to validate that a Node's position is not outside the boundary of its ParentNode in BlockView.
- * @param parentNode
- * @param id
- * @param position
- * @returns a boolean value.
+ * Function to handle removal of a node. This function handles FlowNodes and MimirNodes separately.
+ * A confirmed element to be deleted is added to both lists - verifiedFlowChanges and mimirNodesToDelete.
+ * The selectedBlockNode can not be deleted from BlockView.
+ * @param flowRemoveChange
+ * @param selectedBlockNode
+ * @param verifiedFlowChanges
+ * @param mimirNodesToDelete
  */
-function ValidateNodePosition(parentNode: Node, id: string, position: XYPosition) {
-  if (!parentNode || !position || id === parentNode.id) return false;
+function HandleRemove(
+  flowRemoveChange: NodeRemoveChange,
+  selectedBlockNode: Node,
+  verifiedFlowChanges: NodeChange[],
+  mimirNodesToDelete: Node[],
+  mimirNodes: Node[]
+) {
+  if (flowRemoveChange.id === selectedBlockNode?.id) return;
+  const nodeToDelete = mimirNodes.find((n) => n.id === flowRemoveChange.id);
 
-  const x = position.x;
-  const y = position.y;
-
-  const margin = 30;
-  const xMin = parentNode.positionBlockX;
-  const xMax = parentNode.positionBlockX + parentNode.width - Size.NODE_WIDTH;
-  const yMin = margin;
-  const yMax = parentNode.height - Size.NODE_HEIGHT;
-
-  const validX = x > xMin && x < xMax;
-  const validY = y > yMin && y < yMax;
-
-  return validX && validY;
+  verifiedFlowChanges.push(flowRemoveChange);
+  mimirNodesToDelete.push(nodeToDelete);
 }
 
 export default useOnBlockNodesChange;

@@ -8,7 +8,8 @@ import { OnEdgeDelete } from "../../handlers/";
  * Hook that runs whenever an Edge has a change in TreeView.
  * In the Flow Library a change is defined by the following types:
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
- * If an edge is marked as removed, the function DeleteMimirEdges runs and handles the removal of Mimir edges.
+ * If an edge is marked as removed, HandleRemove validates the changes and the component OnEdgeDelete handles the removal.
+ * The other types of changes are executed automatically.
  * @param nodes
  * @param edges
  * @param selectedNode
@@ -37,24 +38,24 @@ const useOnTreeEdgesChange = (
   });
 
   // Execute verified changes
-  setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
   if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
+  setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
 };
 
 /**
  * Function to handle removal of an edge. This function handles FlowEdges and MimirEdges separately.
- * A confirmed element to be deleted is added to both lists - verifiedChanges and mimirEdgesToDelete.
+ * A confirmed element to be deleted is added to both lists - verifiedFlowChanges and edgesToDelete.
  * @param change
- * @param verifiedChanges
- * @param mimirEdgesToDelete
+ * @param verifiedFlowChanges
+ * @param edgesToDelete
  * @param nodes
  * @param edges
  * @param selectedNode
  */
 function HandleRemove(
   change: NodeRemoveChange,
-  verifiedChanges: EdgeChange[],
-  mimirEdgesToDelete: Edge[],
+  verifiedFlowChanges: EdgeChange[],
+  edgesToDelete: Edge[],
   nodes: Node[],
   edges: Edge[],
   selectedNode: Node
@@ -68,10 +69,10 @@ function HandleRemove(
   const toNode = nodes.find((n) => n.id === mimirEdge.toNodeId);
   if (fromNode?.isLocked || toNode?.isLocked) return;
 
-  mimirEdgesToDelete.push(mimirEdge);
+  edgesToDelete.push(mimirEdge);
 
   const removeChange = { id: change.id, type: "remove" } as EdgeChange;
-  verifiedChanges.push(removeChange);
+  verifiedFlowChanges.push(removeChange);
 }
 
 export default useOnTreeEdgesChange;
