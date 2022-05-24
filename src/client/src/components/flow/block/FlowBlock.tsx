@@ -31,7 +31,7 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
+export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
@@ -100,8 +100,8 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     if (!hasRendered && project) {
       setIsFetching(true);
       SetInitialParentId(mimirNodes);
-      SetInitialEdgeVisibility(mimirEdges, dispatch);
       setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
+      SetInitialEdgeVisibility(mimirEdges, dispatch);
       setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
@@ -153,5 +153,3 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     </div>
   );
 };
-
-export default FlowBlock;

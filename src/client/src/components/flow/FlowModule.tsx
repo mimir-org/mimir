@@ -1,5 +1,5 @@
 import { FlowTree } from "./tree/FlowTree";
-import { FlowBlock } from "./block/";
+import { FlowBlock } from "./block/FlowBlock";
 import { VIEW_TYPE, ViewType } from "../../models/project";
 import { TypeEditorComponent } from "../../typeEditor";
 import { FlowModuleContainer } from "./FlowModule.styled";
