@@ -28,6 +28,10 @@ interface Props {
 
 /**
  * Component for the Flow library in BlockView. This is the main component in Mimir.
+ * In BlockView the selectedBlockNode is the node marked with a full checkbox in the Explorer, and functions as a ParentNode.
+ * The selectedNode is the child node that is selected on the canvas.
+ * The secondaryNode is the second ParentNode, displayed to the right of the parentNode.
+ * The secondaryNode is only set if two parents are chosen from the Explorer, this state is called SplitView.
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
@@ -125,7 +129,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
       <SpinnerWrapper fetching={isFetching}>
         <Spinner />
       </SpinnerWrapper>
-
       <ReactFlow
         onInit={OnInit}
         nodes={flowNodes}

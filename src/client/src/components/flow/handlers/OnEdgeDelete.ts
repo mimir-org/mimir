@@ -4,8 +4,8 @@ import { CloseInspector } from "../tree/handlers";
 import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
 
 /**
- * Component that runs when an edge is deleted from Mimir. This hook is used both in TreeView and BlockView.
- * An edge can be deleted with the delete button from a keyboard, or the delete button in Mimir's Inspector.
+ * Component that runs when an edge is deleted from Mimir. This component is used both in TreeView and BlockView.
+ * An edge can be deleted with the delete key from the keyboard, or the delete button in Mimir's Inspector.
  * @param edgesToDelete
  * @param nodes
  * @param edges

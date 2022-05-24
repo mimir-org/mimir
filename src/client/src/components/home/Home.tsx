@@ -44,7 +44,7 @@ export const Home = ({ dispatch }: Props) => {
   const isFilterOpen = useAppSelector(selectors.filterSelector);
   const isStartPage = useParametricAppSelector(isActiveViewSelector, VIEW_TYPE.STARTPAGE);
   const activeMenu = useAppSelector(selectors.activeMenuSelector);
-  const isProjectMenuOpen = activeMenu !== null;
+  const isProjectMenuOpen = activeMenu != null;
   const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
   const inspectorRef = useRef(null);
 
