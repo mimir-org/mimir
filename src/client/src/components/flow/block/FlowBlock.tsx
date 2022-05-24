@@ -95,11 +95,12 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     [selectedEdge, selectedBlockNode]
   );
 
-  // Build initial elements from Project
+  // Build initial elements from Project on first render
   useEffect(() => {
     if (!hasRendered && project) {
       setIsFetching(true);
       SetInitialParentId(mimirNodes);
+      SetInitialEdgeVisibility(mimirEdges, dispatch);
       setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
       setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
       setHasRendered(true);
@@ -118,15 +119,6 @@ const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
   }, [mimirEdges, mimirNodes, animatedEdge]);
-
-  // Show transport edges by default, timeout is added due to loading of OffPage nodes
-  useEffect(() => {
-    setIsFetching(true);
-    setTimeout(() => {
-      SetInitialEdgeVisibility(mimirEdges, dispatch);
-      setIsFetching(false);
-    }, 500);
-  }, []);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>
