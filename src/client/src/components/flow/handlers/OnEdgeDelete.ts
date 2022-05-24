@@ -12,7 +12,7 @@ import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
  * @param inspectorRef
  * @param dispatch
  */
-export const OnEdgeDelete = (
+const OnEdgeDelete = (
   edgesToDelete: Edge[],
   nodes: Node[],
   edges: Edge[],
@@ -26,3 +26,5 @@ export const OnEdgeDelete = (
 
   CloseInspector(inspectorRef, dispatch);
 };
+
+export default OnEdgeDelete;

@@ -19,7 +19,7 @@ import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
  * @param dispatch
  * @param selectedBlockNode
  */
-export const OnNodeDelete = (
+const OnNodeDelete = (
   nodesToDelete: Node[],
   nodes: Node[],
   edges: Edge[],
@@ -39,6 +39,8 @@ export const OnNodeDelete = (
 
   CloseInspector(inspectorRef, dispatch);
 };
+
+export default OnNodeDelete;
 
 /**
  * Function to delete all edges related to a node that is to be deleted.

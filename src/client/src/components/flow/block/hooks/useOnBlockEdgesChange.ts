@@ -2,7 +2,7 @@ import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange, EdgeS
 import { Dispatch } from "redux";
 import { Edge, Node, Project } from "../../../../models";
 import { removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
-import { OnEdgeDelete } from "../../handlers/OnEdgeDelete";
+import { OnEdgeDelete } from "../../handlers";
 
 /**
  * Hook that runs whenever an Edge has a change in BlockView.

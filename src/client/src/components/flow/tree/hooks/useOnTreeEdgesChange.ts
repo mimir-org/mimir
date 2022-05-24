@@ -2,7 +2,7 @@ import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from
 import { Dispatch } from "redux";
 import { Edge, Node } from "../../../../models";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { OnEdgeDelete } from "../../handlers/OnEdgeDelete";
+import { OnEdgeDelete } from "../../handlers/";
 
 /**
  * Hook that runs whenever an Edge has a change in TreeView.

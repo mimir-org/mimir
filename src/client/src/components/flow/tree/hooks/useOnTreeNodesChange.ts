@@ -3,7 +3,7 @@ import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { Node, Edge } from "../../../../models";
-import { OnNodeDelete } from "../../handlers/OnNodeDelete";
+import { OnNodeDelete } from "../../handlers/";
 
 /**
  * Hook that runs whenever a Node has a change in TreeView.
