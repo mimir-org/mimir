@@ -5,8 +5,7 @@ import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
 import { IsPartOfTerminal } from "../../../../../components/flow/helpers/Connectors";
-import { useOnNodeDelete } from "../../../../../components/flow/hooks/useOnNodeDelete";
-import { useOnEdgeDelete } from "../../../../../components/flow/hooks/useOnEdgeDelete";
+import { OnNodeDelete, OnEdgeDelete } from "../../../../../components/flow/handlers";
 
 /**
  * Component to handle delete clicks coming from the Inspector delete button.
@@ -41,7 +40,7 @@ function HandleInspectorNodeDelete(
     UpdateSiblingIndexOnNodeDelete(node?.id, nodes, edges, dispatch);
   }
 
-  useOnNodeDelete(nodesToDelete, nodes, edges, inspectorRef, dispatch);
+  OnNodeDelete(nodesToDelete, nodes, edges, inspectorRef, dispatch);
 }
 
 function HandleInspectorEdgeDelete(
@@ -58,5 +57,5 @@ function HandleInspectorEdgeDelete(
     edgesToDelete.push(edge);
   }
 
-  useOnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
+  OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
 }

@@ -1,4 +1,4 @@
-import CreateId from "./CreateId";
+import { CreateId } from "./";
 import { Connector, ConnectorVisibility, Node, Edge, Project } from "../../../models";
 import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
 import { LibraryState } from "../../../redux/store/library/types";
@@ -59,7 +59,9 @@ export function InitConnectorVisibility(connector: Connector, targetNode: Node) 
 export function SetTreeNodePosition(parentNode: Node, nodes: Node[], edges: Edge[]) {
   const marginY = 220;
   const x = SetTreeNodeXPosition(parentNode, nodes, edges);
-  return { x, y: parentNode.positionY + marginY } as Position;
+  const y = parentNode.positionY + marginY;
+
+  return { x, y } as Position;
 }
 
 /**

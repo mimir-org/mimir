@@ -27,7 +27,7 @@ const BuildFlowSecondaryChildNode = (primaryNode: Node, secondaryNode: Node, chi
     data: childNode,
     position: position,
     hidden: childNode.blockHidden,
-    selected: childNode.blockSelected,
+    selected: childNode.selected,
     draggable: true,
     selectable: true,
     connectable: true,

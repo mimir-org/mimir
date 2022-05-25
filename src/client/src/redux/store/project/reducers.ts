@@ -288,20 +288,20 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_ACTIVE_NODE: {
-      const { nodeId, selected } = action.payload;
+    case Types.SET_SELECTED_NODE: {
+      const { nodeId } = action.payload;
 
       return {
         ...state,
         project: {
           ...project,
-          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected } : { ...n })),
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected: true } : { ...n })),
           edges,
         },
       };
     }
 
-    case Types.REMOVE_ACTIVE_NODE: {
+    case Types.REMOVE_SELECTED_NODE: {
       return {
         ...state,
         project: {
@@ -312,20 +312,20 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_ACTIVE_EDGE: {
-      const { edgeId, isActive: selected } = action.payload;
+    case Types.SET_SELECTED_EDGE: {
+      const { edgeId } = action.payload;
 
       return {
         ...state,
         project: {
           ...project,
           nodes,
-          edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected } : { ...e })),
+          edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected: true } : { ...e })),
         },
       };
     }
 
-    case Types.REMOVE_ACTIVE_EDGE: {
+    case Types.REMOVE_SELECTED_EDGE: {
       return {
         ...state,
         project: {
@@ -336,7 +336,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.SET_ACTIVE_BLOCKNODE: {
+    case Types.SET_SELECTED_BLOCKNODE: {
       const blockNodeId = action.payload.nodeId;
 
       return {
@@ -349,7 +349,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
     }
 
-    case Types.REMOVE_ACTIVE_BLOCKNODE: {
+    case Types.REMOVE_SELECTED_BLOCKNODE: {
       return {
         ...state,
         project: {

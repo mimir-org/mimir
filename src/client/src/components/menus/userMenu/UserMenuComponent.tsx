@@ -33,16 +33,6 @@ export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         <UserNameRoleText>{userState?.user?.role ?? TextResources.USER}</UserNameRoleText>
       </UserNameBox>
 
-      {/* <Element onClick={() => null}>
-        <Icon size={20} src={Settings} className="icon" alt="settings" />
-        <p className="text">{TextResources.SETTINGS}</p>
-      </Element> */}
-
-      {/* <Element onClick={() => null}>
-        <Icon size={20} className="icon" alt="notifications" />
-        <p className="text">{TextResources.NOTIFICATION}</p>
-      </Element> */}
-
       <Element onClick={() => OnToggleDarkMode(dispatch, isDarkMode)}>
         <Icon size={20} src={isDarkMode ? LightMode : DarkMode} />
         <Text>{isDarkMode ? TextResources.LIGHT_MODE : TextResources.DARK_MODE}</Text>

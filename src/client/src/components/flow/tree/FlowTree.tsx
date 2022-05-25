@@ -138,6 +138,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
+        onNodesDelete={null}
         nodeTypes={useMemo(() => GetTreeNodeTypes, [])}
         edgeTypes={useMemo(() => GetTreeEdgeTypes, [])}
         defaultZoom={0.7}

@@ -5,9 +5,9 @@ import { Node } from "../../../../../../models";
 import { SetFitToScreen } from "../../../../../../helpers";
 import { ViewportData } from "../../../../../../models/project";
 import {
-  removeActiveBlockNode,
-  removeActiveNode,
-  setActiveNode,
+  removeSelectedBlockNode,
+  removeSelectedNode,
+  setSelectedBlockNode,
   setBlockNodeVisibility,
 } from "../../../../../../redux/store/project/actions";
 
@@ -18,7 +18,7 @@ import {
  * SplitView is when two parentNodes are displayed - one selectedNode and one secondaryNode.
  * Two parentNodes of the same Aspect can be displayed, unless it is a direct parent/child relation.
  * @param node
- * @param selectedNode
+ * @param selectedBlockNode
  * @param secondaryNode
  * @param nodes
  * @param viewportData
@@ -26,7 +26,7 @@ import {
  */
 export const OnBlockExplorerChange = (
   node: Node,
-  selectedNode: Node,
+  selectedBlockNode: Node,
   secondaryNode: Node,
   nodes: Node[],
   viewportData: ViewportData,
@@ -34,27 +34,27 @@ export const OnBlockExplorerChange = (
 ) => {
   if (!node) return;
 
-  // Set selectedNode
-  if (!selectedNode) {
-    SetSelectedNode(nodes, node, dispatch);
+  // Set selectedBlockNode
+  if (!selectedBlockNode) {
+    SetSelectedBlockNode(nodes, node, dispatch);
     return;
   }
 
-  // Toggle selectedNode off
-  if (node.id === selectedNode.id && !secondaryNode) {
-    RemoveSelectedNode(node, dispatch);
+  // Toggle selectedBlockNode off
+  if (node.id === selectedBlockNode.id && !secondaryNode) {
+    RemoveSelectedBlockNode(node, dispatch);
     return;
   }
 
-  // Toggle child of selectedNode
-  if (IsDirectChild(node, selectedNode)) {
+  // Toggle child of selectedBlockNode
+  if (IsDirectChild(node, selectedBlockNode)) {
     ToggleChildNode(node, dispatch);
     return;
   }
 
   // Add secondaryNode
   if (!secondaryNode) {
-    if (ValidateNewSecondaryNode(node, selectedNode)) SetSecondaryNode(nodes, node, viewportData, dispatch);
+    if (ValidateNewSecondaryNode(node, selectedBlockNode)) SetSecondaryNode(nodes, node, viewportData, dispatch);
     return;
   }
 
@@ -64,10 +64,10 @@ export const OnBlockExplorerChange = (
     return;
   }
 
-  // Make secondaryNode the selectedNode
-  if (node.id === selectedNode.id && secondaryNode) {
+  // Make secondaryNode the selectedBlockNode
+  if (node.id === selectedBlockNode.id && secondaryNode) {
     RemoveSecondaryNode(viewportData, dispatch);
-    SetSelectedNode(nodes, secondaryNode, dispatch);
+    SetSelectedBlockNode(nodes, secondaryNode, dispatch);
     return;
   }
 
@@ -95,15 +95,15 @@ function ValidateNewSecondaryNode(node: Node, selectedNode: Node) {
   return true;
 }
 
-function RemoveSelectedNode(node: Node, dispatch: Dispatch) {
-  dispatch(removeActiveNode());
-  dispatch(removeActiveBlockNode());
+function RemoveSelectedBlockNode(node: Node, dispatch: Dispatch) {
+  dispatch(removeSelectedNode());
+  dispatch(removeSelectedBlockNode());
   dispatch(setBlockNodeVisibility(node, true));
 }
 
-function SetSelectedNode(nodes: Node[], node: Node, dispatch: Dispatch) {
-  dispatch(removeActiveNode());
-  dispatch(setActiveNode(node.id, !node.selected));
+function SetSelectedBlockNode(nodes: Node[], node: Node, dispatch: Dispatch) {
+  dispatch(removeSelectedNode());
+  dispatch(setSelectedBlockNode(node.id));
   dispatch(setBlockNodeVisibility(node, false));
   ShowChildren(nodes, node, dispatch);
 }

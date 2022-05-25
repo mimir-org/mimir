@@ -26,7 +26,7 @@ export const BlockProjectComponent = () => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const project = projectState?.project;
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
-  const selectedNode = nodes?.find((n) => n.selected);
+  const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project?.edges);
 
@@ -48,7 +48,7 @@ export const BlockProjectComponent = () => {
             username={username}
             node={node}
             nodes={nodes}
-            selectedNode={selectedNode}
+            selectedBlockNode={selectedBlockNode}
             secondaryNode={secondaryNode}
             indent={indent}
             isExpanded={expanded}

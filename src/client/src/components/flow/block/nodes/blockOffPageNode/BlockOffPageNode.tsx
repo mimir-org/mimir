@@ -53,7 +53,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
 
   return (
     <Tooltip content={data.label} placement={"top"} offset={[0, 10]}>
-      <OffPageBox id={`BlockOffPageNode-${data.id}`} selected={data.blockSelected} color={iconColor}>
+      <OffPageBox id={`BlockOffPageNode-${data.id}`} selected={data.selected} color={iconColor}>
         <HandleComponent
           node={data}
           project={project}

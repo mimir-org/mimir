@@ -59,7 +59,19 @@ const useOnConnectStop = (
   SaveEventData(null, "edgeEvent");
 };
 
-//#region OffPage Functions
+/**
+ * Function to validate if a mouse drag is a valid OffPage drop.
+ * A drop is valid if the mouse is released within the zones for generating an OffPageNode.
+ * These zones are generated in CalculateDropZone.
+ * @param nodes
+ * @param clientX
+ * @param getViewPort
+ * @param sourceNode
+ * @param primaryNode
+ * @param secondaryNode
+ * @param sourceConn
+ * @returns a boolean value.
+ */
 function ValidateOffPageDrop(
   nodes: Node[],
   clientX: number,
@@ -69,7 +81,7 @@ function ValidateOffPageDrop(
   secondaryNode: Node,
   sourceConn: Connector
 ) {
-  const splitView = secondaryNode !== undefined;
+  const splitView = secondaryNode != undefined;
   const isTarget = IsOutputTerminal(sourceConn) || IsOutputVisible(sourceConn);
   const dropZone = CalculateDropZone(getViewPort, nodes, sourceNode, primaryNode, secondaryNode, isTarget);
 
@@ -85,7 +97,10 @@ function ValidateOffPageDrop(
 
 /**
  * The dropzone for an OffPageNode depends on the canvas' zoom level and position. This function handles these calculations.
- * If the OffPageNode is a source, the dropzone is located to the left of the ParentNode, else the dropzone is to the right of the ParentNode.
+ * If the OffPageNode is a source, the dropzone is located to the left of the ParentNode.
+ * If the OffPageNode is a target, the dropzone is located to the right of the ParentNode.
+ * If splitView is activated, the dropzone is a little more delicate. The area between the two parent nodes serves as a dropzone,
+ * in addition to the area left of the primaryNode, and the area to the right of the secondaryNode.
  * @param getViewPort
  * @param nodes
  * @param sourceNode
@@ -127,6 +142,5 @@ function CalculateDropZone(
 
   return dropZone;
 }
-//#endregion
 
 export default useOnConnectStop;

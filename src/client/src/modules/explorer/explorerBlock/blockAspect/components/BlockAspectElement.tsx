@@ -13,7 +13,7 @@ import { ViewportData } from "../../../../../models/project";
 interface Props {
   node: Node;
   nodes: Node[];
-  selectedNode: Node;
+  selectedBlockNode: Node;
   secondaryNode: Node;
   dispatch: Dispatch;
   isLeaf: boolean;
@@ -31,7 +31,7 @@ interface Props {
 export const BlockAspectElement = ({
   node,
   nodes,
-  selectedNode,
+  selectedBlockNode,
   secondaryNode,
   dispatch,
   isLeaf,
@@ -43,10 +43,10 @@ export const BlockAspectElement = ({
   <AspectElementWrapper indent={GetIndentLevel(indent)}>
     <CheckboxBlockExplorer
       color={GetAspectColor(node, AspectColorType.Selected)}
-      isChecked={node.selected || node.id === secondaryNode?.id}
-      isMiniCheckbox={IsMiniCheckBox(node, secondaryNode, selectedNode)}
+      isChecked={node.blockSelected || node.id === secondaryNode?.id}
+      isMiniCheckbox={IsMiniCheckBox(node, secondaryNode, selectedBlockNode)}
       isAspectNode={IsAspectNode(node)}
-      onChange={() => OnBlockExplorerChange(node, selectedNode, secondaryNode, nodes, viewportData, dispatch)}
+      onChange={() => OnBlockExplorerChange(node, selectedBlockNode, secondaryNode, nodes, viewportData, dispatch)}
       label={node.label}
       icon={GetAspectIcon(node)}
     />

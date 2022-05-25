@@ -41,7 +41,7 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
   const selectedEdge = project?.edges.find((e) => e.selected);
-  const selectedNode = project?.nodes.find((n) => (isBlockView ? n.blockSelected : n.selected));
+  const selectedNode = project?.nodes.find((n) => n.selected);
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;

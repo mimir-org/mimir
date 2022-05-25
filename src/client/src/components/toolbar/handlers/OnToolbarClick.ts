@@ -1,3 +1,4 @@
+import { Node as FlowNode } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { toggleElectroView } from "../../../redux/store/electro/electroSlice";
 import { setFilterMenuVisibility } from "../../menus/projectMenu/components/subMenus/redux/menuSlice";
@@ -8,7 +9,13 @@ import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../assets/text/TextResources";
 import { removeSecondaryNode } from "../../../redux/store/secondaryNode/actions";
-import { removeActiveBlockNode, removeActiveEdge, removeActiveNode } from "../../../redux/store/project/actions";
+import {
+  removeSelectedBlockNode,
+  removeSelectedEdge,
+  removeSelectedNode,
+  setSelectedNode,
+  setSelectedBlockNode,
+} from "../../../redux/store/project/actions";
 
 export const OnElectroClick = (dispatch: Dispatch) => dispatch(toggleElectroView());
 export const OnFilterClick = (dispatch: Dispatch, open: boolean) => dispatch(setFilterMenuVisibility(!open));
@@ -19,15 +26,17 @@ export const OnFitToScreenClick = (isTreeView: boolean, viewportData: ViewportDa
 };
 
 export const OnBlockViewClick = (
-  numberOfSelectedElements: number,
+  selectedFlowNodes: FlowNode[],
   viewportData: ViewportData,
   isTreeView: boolean,
   dispatch: Dispatch
 ) => {
-  if (!isTreeView || !ValidateBlockViewClick(numberOfSelectedElements, dispatch)) return;
+  if (!isTreeView || !ValidateBlockViewClick(selectedFlowNodes.length, dispatch)) return;
 
   SetFitToScreen(viewportData, false);
   dispatch(removeSecondaryNode());
+  dispatch(setSelectedBlockNode(selectedFlowNodes[0].id));
+  dispatch(setSelectedNode(selectedFlowNodes[0].id));
   dispatch(changeFlowView(VIEW_TYPE.BLOCKVIEW as ViewType));
 };
 
@@ -36,9 +45,9 @@ export const OnTreeViewClick = (setSelectedNodes: (nodeIds: string[]) => void, i
 
   // When opening TreeView all selectedItems are removed
   setSelectedNodes([]);
-  dispatch(removeActiveNode());
-  dispatch(removeActiveBlockNode());
-  dispatch(removeActiveEdge());
+  dispatch(removeSelectedNode());
+  dispatch(removeSelectedBlockNode());
+  dispatch(removeSelectedEdge());
   dispatch(changeFlowView(VIEW_TYPE.TREEVIEW as ViewType));
 };
 

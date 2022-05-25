@@ -9,7 +9,7 @@ import { LibraryState } from "../../../../redux/store/library/types";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetBlockEdgeType } from "../helpers";
 import { IsTransport } from "../../helpers/Connectors";
-import { HandleOffPageConnect } from "./helpers/HandleOffPageConnect";
+import { HandleOffPageConnect } from "./handlers/HandleOffPageConnect";
 
 export interface Params {
   connection: FlowEdge | Connection;

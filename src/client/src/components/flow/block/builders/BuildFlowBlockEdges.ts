@@ -12,7 +12,7 @@ import { BuildFlowBlockEdge } from "./BuildFlowBlockEdge";
  * and share the same id and position.
  * @param mimirNodes
  * @param mimirEdges
- * @param selectedNode
+ * @param selectedBlockNode
  * @param secondaryNode
  * @param animatedEdge
  * @returns all validated FlowEdges.
@@ -20,7 +20,7 @@ import { BuildFlowBlockEdge } from "./BuildFlowBlockEdge";
 const BuildFlowBlockEdges = (
   mimirNodes: Node[],
   mimirEdges: Edge[],
-  selectedNode: Node,
+  selectedBlockNode: Node,
   secondaryNode: Node,
   flowNodes: FlowNode[],
   animatedEdge: boolean
@@ -36,7 +36,7 @@ const BuildFlowBlockEdges = (
     if (!sourceNodeIsDisplayed || !targetNodeIsDisplayed) return;
 
     const edgeType = GetBlockEdgeType(edge.fromConnector, edge.fromNode, edge.toNode);
-    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedNode, secondaryNode, animatedEdge);
+    const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, animatedEdge);
 
     if (blockEdge) flowEdges.push(blockEdge);
   });

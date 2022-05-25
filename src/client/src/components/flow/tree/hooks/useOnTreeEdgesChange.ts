@@ -2,13 +2,14 @@ import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from
 import { Dispatch } from "redux";
 import { Edge, Node } from "../../../../models";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { useOnEdgeDelete } from "../../hooks/useOnEdgeDelete";
+import { OnEdgeDelete } from "../../handlers/";
 
 /**
  * Hook that runs whenever an Edge has a change in TreeView.
  * In the Flow Library a change is defined by the following types:
  * EdgeSelectionChange | EdgeRemoveChange | EdgeAddChange | EdgeResetChange
- * If an edge is marked as removed, the function DeleteMimirEdges runs and handles the removal of Mimir edges.
+ * If an edge is marked as removed, HandleRemove validates the changes and the component OnEdgeDelete handles the removal.
+ * The other types of changes are executed automatically.
  * @param nodes
  * @param edges
  * @param selectedNode
@@ -28,34 +29,33 @@ const useOnTreeEdgesChange = (
   dispatch: Dispatch
 ) => {
   const verifiedFlowChanges = [] as EdgeChange[];
-  const mimirEdgesToDelete = [] as Edge[];
+  const edgesToDelete = [] as Edge[];
 
   // Verify changes
   changes.forEach((change) => {
-    if (change.type === "remove")
-      return HandleRemoveChange(change, verifiedFlowChanges, mimirEdgesToDelete, nodes, edges, selectedNode);
+    if (change.type === "remove") return HandleRemove(change, verifiedFlowChanges, edgesToDelete, nodes, edges, selectedNode);
     verifiedFlowChanges.push(change);
   });
 
-  // Execute all changes
+  // Execute verified changes
+  if (edgesToDelete.length) OnEdgeDelete(edgesToDelete, nodes, edges, inspectorRef, dispatch);
   setEdges((e) => applyEdgeChanges(verifiedFlowChanges, e));
-  useOnEdgeDelete(mimirEdgesToDelete, nodes, edges, inspectorRef, dispatch);
 };
 
 /**
  * Function to handle removal of an edge. This function handles FlowEdges and MimirEdges separately.
- * A confirmed element to be deleted is added to both lists - verifiedChanges and mimirEdgesToDelete.
+ * A confirmed element to be deleted is added to both lists - verifiedFlowChanges and edgesToDelete.
  * @param change
- * @param verifiedChanges
- * @param mimirEdgesToDelete
+ * @param verifiedFlowChanges
+ * @param edgesToDelete
  * @param nodes
  * @param edges
  * @param selectedNode
  */
-function HandleRemoveChange(
+function HandleRemove(
   change: NodeRemoveChange,
-  verifiedChanges: EdgeChange[],
-  mimirEdgesToDelete: Edge[],
+  verifiedFlowChanges: EdgeChange[],
+  edgesToDelete: Edge[],
   nodes: Node[],
   edges: Edge[],
   selectedNode: Node
@@ -69,10 +69,10 @@ function HandleRemoveChange(
   const toNode = nodes.find((n) => n.id === mimirEdge.toNodeId);
   if (fromNode?.isLocked || toNode?.isLocked) return;
 
-  mimirEdgesToDelete.push(mimirEdge);
+  edgesToDelete.push(mimirEdge);
 
   const removeChange = { id: change.id, type: "remove" } as EdgeChange;
-  verifiedChanges.push(removeChange);
+  verifiedFlowChanges.push(removeChange);
 }
 
 export default useOnTreeEdgesChange;

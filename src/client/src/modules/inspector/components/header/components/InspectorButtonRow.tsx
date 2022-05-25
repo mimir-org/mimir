@@ -49,10 +49,10 @@ export const InspectorButtonRow = ({
   const [onLock, setOnLock] = useState(false);
   const isLocked = element?.isLocked;
   const isElementSelected = !!element;
-  const selectedNode = nodes?.find((n) => n.selected);
+  const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 
   const deleteDisabled =
-    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element?.id === selectedNode?.id);
+    isLocked || (IsNode(element) && IsAspectNode(element)) || (IsBlockView() && element?.id === selectedBlockNode?.id);
 
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
 

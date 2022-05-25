@@ -1,12 +1,13 @@
-import { animatedEdgeSelector, edgesSelector, flowViewSelector, nodesSelector, useAppSelector } from "../../../redux/store";
+import * as selectors from "./helpers/selectors";
 import { Connector } from "../../../models";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
-import { PopulateFilterLists } from "./helpers/PopulateFilterLists";
+import { PopulateFilterLists, IsPartOfFilterVisible } from "./helpers/";
 import { Dispatch } from "redux";
 import { VIEW_TYPE } from "../../../models/project";
+import { useAppSelector } from "../../../redux/store";
 
 interface Props {
   dispatch: Dispatch;
@@ -18,11 +19,12 @@ interface Props {
  */
 export const VisualFilterComponent = ({ dispatch }: Props) => {
   const libOpen = useAppSelector((s) => s.modules.types.find((x) => IsLibrary(x.type)).visible);
-  const edgeAnimation = useAppSelector(animatedEdgeSelector);
-  const flowView = useAppSelector(flowViewSelector);
+  const edgeAnimation = useAppSelector(selectors.animatedEdgeSelector);
+  const flowView = useAppSelector(selectors.flowViewSelector);
+  const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
-  const nodes = useAppSelector(nodesSelector);
-  const edges = useAppSelector(edgesSelector);
+  const nodes = useAppSelector(selectors.nodesSelector);
+  const edges = useAppSelector(selectors.edgesSelector);
 
   const transportConnectors = [] as Connector[];
   const relationConnectors = [] as Connector[];
@@ -40,7 +42,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
           nodes={nodes}
           connectors={partOfConnectors}
           dispatch={dispatch}
-          visible={!!partOfConnectors.length}
+          visible={IsPartOfFilterVisible(isTreeView, partOfConnectors, nodes, secondaryNode)}
         />
         <RelationFilter
           edges={edges}

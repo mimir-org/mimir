@@ -9,32 +9,39 @@ import { IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, IsTransport } from
  * Component to draw all children FlowNodes in BlockView.
  * @param nodes
  * @param edges
- * @param selectedNode
+ * @param selectedBlockNode
  * @param secondaryNode
  * @param flowNodes
  */
-const DrawFlowChildNodes = (nodes: Node[], edges: Edge[], selectedNode: Node, secondaryNode: Node, flowNodes: FlowNode[]) => {
+const DrawFlowChildNodes = (
+  nodes: Node[],
+  edges: Edge[],
+  selectedBlockNode: Node,
+  secondaryNode: Node,
+  flowNodes: FlowNode[]
+) => {
   edges.forEach((edge) => {
-    if (!ValidateEdge(edge, selectedNode)) return;
+    if (!ValidateEdge(edge, selectedBlockNode)) return;
 
     const targetNode = nodes.find((n) => n.id === edge.toNodeId);
     if (!targetNode) return;
 
-    const childNode = BuildFlowChildNode(targetNode, selectedNode, secondaryNode, nodes);
+    const childNode = BuildFlowChildNode(targetNode, selectedBlockNode, secondaryNode, nodes);
     if (!childNode) return;
-
     let isValid = true;
 
-    if (IsOffPage(targetNode)) isValid = ValidateOffPage(nodes, edges, targetNode, selectedNode, secondaryNode, flowNodes);
+    if (IsOffPage(targetNode)) isValid = ValidateOffPage(nodes, edges, targetNode, selectedBlockNode, secondaryNode, flowNodes);
     if (!isValid) return;
 
     flowNodes.push(childNode);
   });
 };
 
-function ValidateEdge(edge: Edge, selectedNode: Node) {
+function ValidateEdge(edge: Edge, selectedBlockNode: Node) {
   if (IsOffPage(edge.toNode)) return IsPartOfTerminal(edge.toConnector);
-  return IsPartOfTerminal(edge.toConnector) && IsFamily(selectedNode, edge.toNode) && edge.fromNodeId === selectedNode.id;
+  return (
+    IsPartOfTerminal(edge.toConnector) && IsFamily(selectedBlockNode, edge.toNode) && edge.fromNodeId === selectedBlockNode.id
+  );
 }
 
 /**

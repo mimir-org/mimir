@@ -8,26 +8,27 @@ import { HandleOffPageEdgeDelete } from "./helpers/HandleOffPageEdgeDelete";
 import { HandleOffPageNodeDelete } from "./helpers/HandleOffPageNodeDelete";
 
 /**
- * Hook that runs when a node is deleted from Mimir. This hook is used both in TreeView and BlockView.
- * A node can be deleted with the delete button from a keyboard, or the delete button in Mimir's Inspector.
- * If a Node is deleted the connected Edges are also deleted.
+ * Component that runs when a node is deleted from Mimir. This component is used both in TreeView and BlockView.
+ * A node can be deleted with the delete key from the keyboard, or the delete button in Mimir's Inspector.
+ * If a Node is deleted the related Edges are also deleted.
  * The removal of an Edge between OffPageNodes will also remove the connected Nodes.
  * @param nodesToDelete
  * @param nodes
  * @param edges
  * @param inspectorRef
  * @param dispatch
+ * @param selectedBlockNode
  */
-export const useOnNodeDelete = (
+const OnNodeDelete = (
   nodesToDelete: Node[],
   nodes: Node[],
   edges: Edge[],
   inspectorRef: React.MutableRefObject<HTMLDivElement>,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  selectedBlockNode?: Node
 ) => {
-  if (!nodesToDelete.length) return;
-
   nodesToDelete.forEach((node) => {
+    if (node.id === selectedBlockNode?.id) return;
     DeleteRelatedEdges(node.id, edges, dispatch);
 
     if (IsOffPage(node)) return HandleOffPageNodeDelete(node, nodes, edges, dispatch);
@@ -38,6 +39,8 @@ export const useOnNodeDelete = (
 
   CloseInspector(inspectorRef, dispatch);
 };
+
+export default OnNodeDelete;
 
 /**
  * Function to delete all edges related to a node that is to be deleted.

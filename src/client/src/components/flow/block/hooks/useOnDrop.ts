@@ -1,10 +1,10 @@
+import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
-import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Position } from "../../../../models/project";
 import { IsFamily } from "../../../../helpers/Family";
@@ -42,6 +42,10 @@ const useOnDrop = (params: OnDropParameters) => {
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
+/**
+ * Function to handle the drop from the Library Module.
+ * @param params
+ */
 function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
 
@@ -68,7 +72,7 @@ function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryN
 }
 
 /**
- * Function to calculate the BlockView position of a dropped Node.
+ * Function to calculate the BlockView position of a dropped node.
  * @param getViewport
  * @param event
  * @returns a Position object.
@@ -76,6 +80,7 @@ function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryN
 function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<HTMLDivElement>) {
   const defaultMarginX = 45;
   const defaultMarginY = 43;
+
   let x = event.clientX - defaultMarginX - getViewport().x;
   let y = event.clientY - defaultMarginY - getViewport().y;
 
@@ -91,7 +96,7 @@ function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<H
 
 /**
  * Function to define the dropzone for a SecondaryNode.
- * A Node will have the SecondaryNode as parent if dropped over its area.
+ * A node will have the SecondaryNode as parent if dropped over its area.
  * @param getViewport
  * @returns an X value where the SecondaryNode is placed.
  */

@@ -11,7 +11,7 @@ import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTran
  * @param relationItems
  * @param partOfItems
  */
-export const PopulateFilterLists = (
+const PopulateFilterLists = (
   edges: Edge[],
   nodes: Node[],
   transportItems: Connector[],
@@ -30,3 +30,5 @@ export const PopulateFilterLists = (
     else if (IsPartOfTerminal(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);
   });
 };
+
+export default PopulateFilterLists;

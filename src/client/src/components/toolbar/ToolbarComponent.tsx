@@ -63,7 +63,7 @@ export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
           active={!isTreeView}
           label={TextResources.BLOCKVIEW}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => handlers.OnBlockViewClick(selectedFlowNodes.length, viewportData, isTreeView, dispatch)}
+          onClick={() => handlers.OnBlockViewClick(selectedFlowNodes, viewportData, isTreeView, dispatch)}
           borderLeft
           clickable={isTreeView}
         />
