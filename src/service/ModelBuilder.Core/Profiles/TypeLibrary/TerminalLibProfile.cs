@@ -40,7 +40,7 @@ namespace Mb.Core.Profiles.TypeLibrary
             CreateMap<NodeTerminalLibCm, TerminalTypeItem>()
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.Terminal != null ? src.Terminal.Id : null))
                 .ForMember(dest => dest.Number, opt => opt.MapFrom(src => src.Number))
-                .ForMember(dest => dest.ConnectorType, opt => opt.MapFrom(src => (ConnectorType)(int) src.ConnectorDirection))
+                .ForMember(dest => dest.ConnectorType, opt => opt.MapFrom(src => (ConnectorType) (int) src.ConnectorDirection))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Terminal != null ? src.Terminal.ParentName : null));
         }
     }
