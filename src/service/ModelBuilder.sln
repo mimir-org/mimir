@@ -23,12 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubModule", "Modules\E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdfNTriplesParser", "Modules\RdfNTriplesParser\RdfNTriplesParser.csproj", "{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.TypeEditor.Core", "ModelBuilder.TypeEditor.Core\ModelBuilder.TypeEditor.Core.csproj", "{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.TypeEditor.Data", "ModelBuilder.TypeEditor.Data\ModelBuilder.TypeEditor.Data.csproj", "{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.TypeEditor.Services", "ModelBuilder.TypeEditor.Services\ModelBuilder.TypeEditor.Services.csproj", "{B1620697-0192-4395-891C-3E286F576EC5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Data", "ModelBuilder.Data\ModelBuilder.Data.csproj", "{3BECF11E-ED10-449F-A173-2CFA61B4E798}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelBuilder.Services", "ModelBuilder.Services\ModelBuilder.Services.csproj", "{5AEC3F29-9519-404C-A780-29F87476268B}"
@@ -115,30 +109,6 @@ Global
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}.Release|x86.ActiveCfg = Release|Any CPU
 		{C16FF8AB-3AF0-403B-AACC-F4A7F41EE277}.Release|x86.Build.0 = Release|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Debug|x86.Build.0 = Debug|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Release|x86.ActiveCfg = Release|Any CPU
-		{176F1C47-B9D0-4BB0-B5AE-811F541C24E7}.Release|x86.Build.0 = Release|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Debug|x86.Build.0 = Debug|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Release|x86.ActiveCfg = Release|Any CPU
-		{6C9601BF-B4EF-48E9-90A1-6D79F6AF5193}.Release|x86.Build.0 = Release|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Debug|x86.Build.0 = Debug|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Release|x86.ActiveCfg = Release|Any CPU
-		{B1620697-0192-4395-891C-3E286F576EC5}.Release|x86.Build.0 = Release|Any CPU
 		{3BECF11E-ED10-449F-A173-2CFA61B4E798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BECF11E-ED10-449F-A173-2CFA61B4E798}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BECF11E-ED10-449F-A173-2CFA61B4E798}.Debug|x86.ActiveCfg = Debug|Any CPU

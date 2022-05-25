@@ -47,7 +47,7 @@ export const BlockChildComponent = ({
         showMenuButton={showMenuButton}
       />
       <SymbolBox>
-        <Symbol base64={node.symbol} text={node.name} />
+        <Symbol source={node.symbol} text={node.name} />
       </SymbolBox>
       <LogoBox>
         <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />

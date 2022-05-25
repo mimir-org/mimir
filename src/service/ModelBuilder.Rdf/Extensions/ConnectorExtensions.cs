@@ -26,8 +26,8 @@ namespace ModelBuilder.Rdf.Extensions
             switch (connector)
             {
                 case Terminal terminal:
-                    ontologyService.AssertNode($"mimir:Transmitter-{terminal.TerminalCategoryId}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
-                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{terminal.TerminalCategoryId}-{HttpUtility.UrlEncode(terminal.Name)}");
+                    ontologyService.AssertNode($"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalCategory)}-{terminal.Name}", Resources.SubClassOf, Resources.Transmitter);
+                    ontologyService.AssertNode(terminal.Iri, Resources.Type, $"mimir:Transmitter-{HttpUtility.UrlEncode(terminal.TerminalCategory)}-{HttpUtility.UrlEncode(terminal.Name)}");
                     ontologyService.AssertNode(terminal.Iri, Resources.Type, edge != null ? Resources.StreamTerminal : Resources.FSBTerminal);
                     ontologyService.AssertNode(terminal.Iri, Resources.Label, terminal.Name, true);
                     ontologyService.AssertNode(terminal.Iri, Resources.TerminalDirectionType, terminal.Type.ToString(), true);
@@ -139,8 +139,8 @@ namespace ModelBuilder.Rdf.Extensions
             var transmitter = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.Type)?.Select(x => x.Object).FirstOrDefault(x => x.ToString().Contains("Transmitter"));
             if (transmitter != null)
             {
-                var terminalCategoryId = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
-                terminal.TerminalCategoryId = string.IsNullOrWhiteSpace(terminalCategoryId) ? null : terminalCategoryId;
+                var terminalCategory = transmitter.ToString().Split("Transmitter-").Last().Split("-").First();
+                terminal.TerminalCategory = string.IsNullOrWhiteSpace(terminalCategory) ? null : terminalCategory;
             }
 
             terminal.Attributes = new List<AttributeAm>();

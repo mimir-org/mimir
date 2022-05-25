@@ -11,8 +11,8 @@ export const PopulateTerminalCategories = (transportConnectors: Connector[]) => 
   const categories = [] as TerminalCategory[];
 
   transportConnectors?.forEach((conn) => {
-    const id = conn.terminalCategoryId;
-    const name = conn.terminalCategory?.name;
+    const id = conn.terminalCategory;
+    const name = conn.terminalCategory;
 
     if (categories.some((c) => c.id === id || c.name === name)) return;
 

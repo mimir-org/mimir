@@ -8,7 +8,7 @@ const GetPurposes = (purposes: Purpose[]): DropDownCategoryItem<Purpose>[] => {
 
   purposes.forEach((purpose) => {
     categories[0].items.push({
-      id: purpose.id,
+      id: purpose.name,
       name: purpose.name,
       description: purpose.name,
       image: null,

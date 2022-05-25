@@ -1,4 +1,3 @@
-using System;
 using Mb.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -30,7 +29,6 @@ namespace Mb.Models.Configurations
 
             builder.HasOne(x => x.OutputTerminal).WithMany(y => y.OutputTransports).HasForeignKey(x => x.OutputTerminalId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(x => x.InputTerminal).WithMany(y => y.InputTransports).HasForeignKey(x => x.InputTerminalId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(x => x.Status).WithMany(y => y.Transports).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

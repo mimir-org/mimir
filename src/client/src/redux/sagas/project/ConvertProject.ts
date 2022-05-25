@@ -73,7 +73,7 @@ export interface ConnectorAm {
 
   // Terminal
   color: string;
-  terminalCategoryId: string;
+  terminalCategory: string;
   attributes: AttributeAm[];
   terminalTypeId: string;
   terminalTypeIri: string;
@@ -269,7 +269,7 @@ const ConvertConnectors = (connectors: Connector[]) => {
       nodeIri: connector.nodeIri,
       relationType: connector.relationType,
       color: connector.color,
-      terminalCategoryId: connector.terminalCategoryId,
+      terminalCategory: connector.terminalCategory,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
       terminalTypeIri: connector.terminalTypeIri,
@@ -295,7 +295,7 @@ const ConvertConnector = (connector: Connector) => {
     nodeIri: connector.nodeIri,
     relationType: connector.relationType,
     color: connector.color,
-    terminalCategoryId: connector.terminalCategoryId,
+    terminalCategory: connector.terminalCategory,
     attributes: ConvertAttributes(connector.attributes),
     terminalTypeId: connector.terminalTypeId,
     terminalTypeIri: connector.terminalTypeIri,

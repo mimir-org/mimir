@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Mb.Models.Data.Enums;
 using Newtonsoft.Json;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -9,8 +8,7 @@ namespace Mb.Models.Data
     public class Terminal : Connector, IEquatable<Terminal>
     {
         public string Color { get; set; }
-        public string TerminalCategoryId { get; set; }
-        public TerminalCategory TerminalCategory { get; set; }
+        public string TerminalCategory { get; set; }
         public string TerminalTypeId { get; set; }
         public string TerminalTypeIri { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
@@ -36,7 +34,7 @@ namespace Mb.Models.Data
             if (ReferenceEquals(this, other)) return true;
             return base.Equals(other) &&
                    Color == other.Color &&
-                   TerminalCategoryId == other.TerminalCategoryId &&
+                   TerminalCategory == other.TerminalCategory &&
                    TerminalTypeId == other.TerminalTypeId &&
                    TerminalTypeIri == other.TerminalTypeIri;
         }
@@ -50,7 +48,7 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategoryId, TerminalTypeId, TerminalTypeIri);
+            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri);
         }
 
         #endregion

@@ -64,7 +64,7 @@ export const ActiveTerminalsList = ({
         return (
           <TerminalsListElementWrapper key={category.id}>
             <TerminalsCategoryListElement
-              selected={selectedTerminal?.terminalCategoryId === category.id}
+              selected={selectedTerminal?.terminalCategory === category.id}
               radius={0}
               onClick={() =>
                 OnCategoryClick(category, isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)

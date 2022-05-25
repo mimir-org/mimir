@@ -77,7 +77,7 @@ const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, has
       return (
         <div onClick={() => handleChange(item)} key={item.id}>
           <DropdownMenuListItem>
-            {item.image && <Symbol base64={item.image} text={item.description} />}
+            {item.image && <Symbol source={item.image} text={item.description} />}
             <p>{item.description}</p>
           </DropdownMenuListItem>
         </div>
@@ -91,7 +91,7 @@ const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, has
       <div className="dropdown-label">{label}</div>
       <div onClick={disabled ? null : () => setIsListOpen(!isListOpen)}>
         <DropdownMenuHeader>
-          {selectedItem && selectedItem.image && <Symbol base64={selectedItem.image} text={selectedItem.description} />}
+          {selectedItem && selectedItem.image && <Symbol source={selectedItem.image} text={selectedItem.description} />}
           <p>{selectedItem?.description ?? placeholder}</p>
           <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
         </DropdownMenuHeader>

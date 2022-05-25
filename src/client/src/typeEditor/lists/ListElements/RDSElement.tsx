@@ -12,7 +12,7 @@ interface Props {
 export const RDSElement = ({ rds, defaultValue, onChange }: Props) => (
   <RdsListElement key={rds.id} isSelected={rds.id === defaultValue}>
     <RadioButtonContainer
-      id={rds.id}
+      id={rds.id + "#" + rds.name}
       label={rds?.id + " - " + rds.name}
       listType={ListType.Rds}
       onChange={(key, data) => onChange(key, data)}

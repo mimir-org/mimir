@@ -17,14 +17,12 @@ export const IsTerminalTypeChecked = (edges: Edge[], terminalCategoryId: string,
   return !edges.some(
     (e) =>
       e.hidden &&
-      e.fromConnector.terminalCategoryId === terminalCategoryId &&
+      e.fromConnector.terminalCategory === terminalCategoryId &&
       e.fromConnector.terminalTypeId === terminalTypeId &&
       IsTransport(e.fromConnector)
   );
 };
 
 export const IsTerminalCategoryChecked = (edges: Edge[], terminalCategoryId: string) => {
-  return !edges.some(
-    (e) => e.hidden && e.fromConnector.terminalCategoryId === terminalCategoryId && IsTransport(e.fromConnector)
-  );
+  return !edges.some((e) => e.hidden && e.fromConnector.terminalCategory === terminalCategoryId && IsTransport(e.fromConnector));
 };

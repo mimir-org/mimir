@@ -25,7 +25,7 @@ const ConvertDataToNode = (
   user: User
 ) => {
   const now = GetDateNowUtc();
-  const symbol = icons?.find((x) => x.id === data.symbolId)?.data;
+  const symbol = icons?.find((x) => x.data === data.symbolId)?.data;
 
   const node = {
     id: CreateId(),

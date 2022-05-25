@@ -3,6 +3,7 @@ using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Models.Client;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
@@ -91,10 +92,10 @@ namespace ModelBuilder.Rdf.Extensions
         {
             var attributeFormat = projectData.AttributeFormats[attribute.Format];
 
-            if (attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.SemanticReference))
+            if (attributeFormat == null || string.IsNullOrWhiteSpace(attributeFormat.Name))
                 return;
 
-            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, attributeFormat.SemanticReference));
+            ontologyService.AssertNode(attribute.IriDatum(), Resources.DatumValue, ontologyService.CreateLiteralNode(attribute.Value, attributeFormat.Name));
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="attribute">Attribute selected unit</param>
         /// <param name="projectData">Record of ICollections</param>
         /// <returns>The selected unit, if not it returns null</returns>
-        public static Unit GetSelectedUnit(this Attribute attribute, ProjectData projectData)
+        public static UnitLibCm GetSelectedUnit(this Attribute attribute, ProjectData projectData)
         {
             if (string.IsNullOrEmpty(attribute.SelectedUnitId) || !projectData.Units.Any())
                 return null;

@@ -40,7 +40,7 @@ const TransportFilter = ({ edges, connectors, dispatch, visible }: Props) => {
         />
 
         {categories?.map((category) => {
-          const categoryConnectors = connectors.filter((conn) => conn.terminalCategoryId === category.id);
+          const categoryConnectors = connectors.filter((conn) => conn.terminalCategory === category.id);
           return (
             <TerminalCategoryFilter
               key={category.id}

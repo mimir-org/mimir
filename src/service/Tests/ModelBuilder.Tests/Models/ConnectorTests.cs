@@ -25,7 +25,7 @@ namespace ModelBuilder.Tests.Models
                 IsRequired = false,
                 TerminalTypeIri = "https://rdf.equinor.com/1234",
                 RelationType = RelationType.NotSet,
-                TerminalCategoryId = "12345",
+                TerminalCategory = "TerminalParent",
                 TerminalTypeId = "12345",
                 SemanticReference = null
 

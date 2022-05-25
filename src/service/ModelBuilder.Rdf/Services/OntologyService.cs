@@ -4,9 +4,7 @@ using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
 using Mb.Models.Exceptions;
-using Mb.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 using ModelBuilder.Rdf.Extensions;
 using ModelBuilder.Rdf.Models;
@@ -19,14 +17,14 @@ namespace ModelBuilder.Rdf.Services
     public class OntologyService : IOntologyService
     {
         private readonly IOntologyRepository _ontologyRepository;
-        private readonly ILibRepository _libRepository;
+        private readonly ILibraryRepository _libRepository;
         private readonly INodeRepository _nodeRepository;
         private readonly IEdgeRepository _edgeRepository;
         private readonly IMapper _mapper;
 
         #region Constructors
 
-        public OntologyService(IOntologyRepository ontologyRepository, ILibRepository libRepository,
+        public OntologyService(IOntologyRepository ontologyRepository, ILibraryRepository libRepository,
             INodeRepository nodeRepository, IMapper mapper, IEdgeRepository edgeRepository)
         {
             _ontologyRepository = ontologyRepository;
@@ -343,42 +341,26 @@ namespace ModelBuilder.Rdf.Services
         private ProjectData GetApplicationData(string projectIri)
         {
             var edges = _edgeRepository.GetAll().Where(x => x.ProjectIri == projectIri).ToList();
-            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery()
-                .Where(x => x.ProjectIri == projectIri).ToList();
-            var units = _libRepository.GetObject<Unit>().ToList();
-
-            var attributeFormatsWithId = _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Id, x => x);
-            var attributeFormatsWithName =
-                _libRepository.GetObject<AttributeFormat>()?.ToDictionary(x => x.Name, x => x);
-
-            var attributeConditionsWithId =
-                _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Id, x => x);
-            var attributeConditionsWithName =
-                _libRepository.GetObject<AttributeCondition>()?.ToDictionary(x => x.Name, x => x);
-
-            var attributeSourcesWithId = _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Id, x => x);
-            var attributeSourcesWithName =
-                _libRepository.GetObject<AttributeSource>()?.ToDictionary(x => x.Name, x => x);
-
-            var attributeQualifiersWithId =
-                _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Id, x => x);
-            var attributeQualifiersWithName =
-                _libRepository.GetObject<AttributeQualifier>()?.ToDictionary(x => x.Name, x => x);
+            var nodes = _nodeRepository.GetAll().Include(x => x.Connectors).AsSplitQuery().Where(x => x.ProjectIri == projectIri).ToList();
+            var attributeFormats = _libRepository.GetAttributeFormats().Result;
+            var attributeConditions = _libRepository.GetAttributeConditions().Result;
+            var attributeSources = _libRepository.GetAttributeSources().Result;
+            var attributeQualifiers = _libRepository.GetAttributeQualifiers().Result;
+            var units = _libRepository.GetUnits().Result;
 
             var projectData = new ProjectData
             {
                 Edges = _mapper.Map<List<EdgeAm>>(edges),
                 Nodes = _mapper.Map<List<NodeAm>>(nodes),
                 Units = units,
-                AttributeFormats = attributeFormatsWithId.Merge(attributeFormatsWithName),
-                AttributeConditions = attributeConditionsWithId.Merge(attributeConditionsWithName),
-                AttributeSources = attributeSourcesWithId.Merge(attributeSourcesWithName),
-                AttributeQualifiers = attributeQualifiersWithId.Merge(attributeQualifiersWithName)
+                AttributeFormats = attributeFormats?.ToDictionary(x => x.Name, x => x),
+                AttributeConditions = attributeConditions?.ToDictionary(x => x.Name, x => x),
+                AttributeSources = attributeSources?.ToDictionary(x => x.Name, x => x),
+                AttributeQualifiers = attributeQualifiers?.ToDictionary(x => x.Name, x => x)
             };
 
             _edgeRepository.Context.ChangeTracker.Clear();
             _nodeRepository.Context.ChangeTracker.Clear();
-            _libRepository.Untrack();
 
             return projectData;
         }

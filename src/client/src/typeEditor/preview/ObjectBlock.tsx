@@ -45,7 +45,7 @@ export const ObjectBlock = ({ createLibraryType, rdsLabel, inputTerminals, outpu
         <InfoText>{createLibraryType.name}</InfoText>
         {symbol && (
           <InfoSymbolWrapper>
-            <Symbol base64={symbol.data} text={symbol.name} />
+            <Symbol source={symbol.data} text={symbol.name} />
           </InfoSymbolWrapper>
         )}
       </InfoWrapper>
