@@ -96,7 +96,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
     (changes: EdgeChange[]) => {
       return hooks.useOnBlockEdgesChange(project, changes, selectedBlockNode, selectedEdge, setEdges, inspectorRef, dispatch);
     },
-    [selectedEdge, selectedBlockNode]
+    [selectedEdge]
   );
 
   // Build initial elements from Project on first render
@@ -106,7 +106,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
       SetInitialParentId(mimirNodes);
       setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
       SetInitialEdgeVisibility(mimirEdges, dispatch);
-      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
+      setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
       setHasRendered(true);
       setIsFetching(false);
     }
@@ -116,12 +116,12 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
-  }, [mimirNodes, secondaryNode]);
+  }, [mimirNodes, mimirEdges, secondaryNode]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
-    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, flowNodes, animatedEdge));
+    setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
   }, [mimirEdges, mimirNodes, animatedEdge]);
 
   return (

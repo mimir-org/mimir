@@ -1,4 +1,4 @@
-import { Edge as FlowEdge, Node as FlowNode } from "react-flow-renderer";
+import { Edge as FlowEdge } from "react-flow-renderer";
 import { IsProduct } from "../../../../helpers/Aspects";
 import { Node, Edge } from "../../../../models";
 import { IsPartOfTerminal } from "../../helpers/Connectors";
@@ -7,8 +7,8 @@ import { BuildFlowBlockEdge } from "./BuildFlowBlockEdge";
 
 /**
  * Component to draw all Flow edges in BlockView.
- * These elements contain the data for edges. In addition to the FlowEdges, Mimir Edges
- * are created, with the extra functionality needed for Mimir. The FlowEdges and MimirEdges co-exist
+ * These elements contain the data for edges. In addition to the FlowEdges, Mimir Edges are created,
+ * with the extra functionality needed for Mimir. The FlowEdges and MimirEdges co-exist
  * and share the same id and position.
  * @param mimirNodes
  * @param mimirEdges
@@ -22,22 +22,14 @@ const BuildFlowBlockEdges = (
   mimirEdges: Edge[],
   selectedBlockNode: Node,
   secondaryNode: Node,
-  flowNodes: FlowNode[],
   animatedEdge: boolean
 ) => {
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
     if (IsPartOfTerminal(edge.fromConnector) && !ValidatePartOfEdge(edge)) return;
-
-    const sourceNodeIsDisplayed = flowNodes.some((flowNode) => flowNode.id === edge.fromNodeId);
-    const targetNodeIsDisplayed = flowNodes.some((flowNode) => flowNode.id === edge.toNodeId);
-
-    if (!sourceNodeIsDisplayed || !targetNodeIsDisplayed) return;
-
     const edgeType = GetBlockEdgeType(edge.fromConnector, edge.fromNode, edge.toNode);
     const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, animatedEdge);
-
     if (blockEdge) flowEdges.push(blockEdge);
   });
 
