@@ -24,7 +24,5 @@ export const IsTerminalTypeChecked = (edges: Edge[], terminalCategoryId: string,
 };
 
 export const IsTerminalCategoryChecked = (edges: Edge[], terminalCategoryId: string) => {
-  return !edges.some(
-    (e) => e.hidden && e.fromConnector.terminalCategory === terminalCategoryId && IsTransport(e.fromConnector)
-  );
+  return !edges.some((e) => e.hidden && e.fromConnector.terminalCategory === terminalCategoryId && IsTransport(e.fromConnector));
 };
