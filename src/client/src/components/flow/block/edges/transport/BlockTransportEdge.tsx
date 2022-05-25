@@ -30,9 +30,8 @@ export const BlockTransportEdge = ({
   const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
-  const margin = 6;
-  sourceX += isBidirectional ? margin / 2 : 0;
-  targetX -= !isElectro ? margin : 0;
+  sourceX = SetSourceMarginForArrow(isBidirectional, isElectro, sourceX);
+  targetX = SetTargetMarginForArrow(isElectro, targetX);
 
   const smoothPath = getSmoothStepPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, borderRadius });
   const transportPath = isElectro ? GetElectroPath(sourceX, sourceY, targetX, targetY) : smoothPath;
@@ -62,15 +61,36 @@ export const BlockTransportEdge = ({
   );
 };
 
-// TODO: fix this on next Edge update
+function SetSourceMarginForArrow(isBidirectional: boolean, isElectro: boolean, sourceX: number) {
+  const margin = 30;
+  if (isElectro) return sourceX;
+  if (isBidirectional) return sourceX + margin;
+  return sourceX + 5;
+}
+
+function SetTargetMarginForArrow(isElectro: boolean, targetX: number) {
+  const margin = 30;
+  return isElectro ? targetX : targetX - margin;
+}
+
+/**
+ * Function to change the transport path in vertical mode.
+ * Note: this is meant as a short-term solution, until a new solution for Edges is in place.
+ * @param sourceX
+ * @param sourceY
+ * @param targetX
+ * @param targetY
+ * @returns a SVG path
+ */
 function GetElectroPath(sourceX: number, sourceY: number, targetX: number, targetY: number) {
+  const marginLarge = 27;
   const margin = 20;
   const marginSmall = 15;
 
-  const start = `M${sourceX} ${sourceY + 5}`;
-  const pathSource = `S${sourceX} ${sourceY - margin * 3} ${sourceX} ${sourceY + marginSmall}`;
-  const pathTarget = `${targetX} ${targetY - margin * 4}  ${targetX} ${targetY - margin} ${targetX} ${targetY - margin * 2}`;
-  const stop = `${targetX} ${targetY - 5}`;
+  const start = `M${sourceX} ${sourceY + marginLarge}`;
+  const pathSource = `S${sourceX} ${sourceY - margin * 3} ${sourceX} ${sourceY + marginSmall + margin}`;
+  const pathTarget = `${targetX} ${targetY - margin * 4}  ${targetX} ${targetY - margin * 2} ${targetX} ${targetY - margin * 2}`;
+  const stop = `${targetX} ${targetY - marginLarge}`;
 
   return `${start} ${pathSource} ${pathTarget} ${stop}`;
 }
