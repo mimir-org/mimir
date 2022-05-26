@@ -4,7 +4,7 @@ import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } fro
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
-import { PopulateFilterLists, IsPartOfFilterVisible } from "./helpers/";
+import { PopulateFilterLists, IsPartOfFilterVisible, IsRelationFilterVisible } from "./helpers/";
 import { Dispatch } from "redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { useAppSelector } from "../../../redux/store";
@@ -23,6 +23,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
   const flowView = useAppSelector(selectors.flowViewSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
+  const isSplitView = secondaryNode != null;
   const nodes = useAppSelector(selectors.nodesSelector);
   const edges = useAppSelector(selectors.edgesSelector);
 
@@ -49,7 +50,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
           nodes={nodes}
           connectors={relationConnectors}
           dispatch={dispatch}
-          visible={!!relationConnectors.length}
+          visible={IsRelationFilterVisible(isTreeView, isSplitView, relationConnectors)}
         />
         <TransportFilter
           edges={edges}
