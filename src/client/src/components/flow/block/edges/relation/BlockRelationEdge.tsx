@@ -1,4 +1,4 @@
-import { EdgeProps, getBezierPath } from "react-flow-renderer";
+import { EdgeProps, getSimpleBezierPath } from "react-flow-renderer";
 import { Color } from "../../../../../compLibrary/colors/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { Node } from "../../../../../models";
@@ -27,10 +27,13 @@ export const BlockRelationEdge = ({
   const arrowId = `arrow-${id}`;
 
   // Adjust to make room for marker arrow
-  const margin = 6;
-  targetX -= !isElectro ? margin : 0;
+  const margin = 28;
+  sourceX += !isElectro && margin;
+  targetX -= !isElectro && margin;
+  sourceY += isElectro && margin;
+  targetY -= isElectro && margin;
 
-  const bezierPath = getBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
+  const bezierPath = getSimpleBezierPath({ sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition });
 
   return (
     <>

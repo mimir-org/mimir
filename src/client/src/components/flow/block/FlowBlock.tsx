@@ -31,7 +31,7 @@ interface Props {
  * In BlockView the selectedBlockNode is the node marked with a full checkbox in the Explorer, and functions as a ParentNode.
  * The selectedNode is the child node that is selected on the canvas.
  * The secondaryNode is the second ParentNode, displayed to the right of the parentNode.
- * The secondaryNode is only set if two parents are chosen from the Explorer, this state is called SplitView.
+ * The secondaryNode is only set if two parents are chosen from the Explorer, this state is called Split View.
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
