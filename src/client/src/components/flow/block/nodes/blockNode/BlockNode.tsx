@@ -32,7 +32,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const project = useAppSelector(selectors.projectSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
   // Check for elements that require OffPage nodes
   useEffect(() => {
@@ -41,8 +41,8 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   }, [secondaryNode]);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(data?.connectors, selectedNode, secondaryNode));
-  }, [selectedNode, secondaryNode, data?.connectors]);
+    setTerminals(FilterTerminals(data?.connectors, selectedBlockNode, secondaryNode));
+  }, [selectedBlockNode, secondaryNode, data?.connectors]);
 
   // Update node size based on active terminals
   useEffect(() => {
