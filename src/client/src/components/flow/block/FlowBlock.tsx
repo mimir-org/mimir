@@ -125,13 +125,13 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   useEffect(() => {
     if (!project) return;
     setNodes(BuildFlowBlockNodes(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode));
-  }, [mimirNodes, mimirEdges, secondaryNode]);
+  }, [mimirNodes, secondaryNode]);
 
   // Rerender edges
   useEffect(() => {
     if (!project) return;
     setEdges(BuildFlowBlockEdges(mimirNodes, mimirEdges, selectedBlockNode, secondaryNode, animatedEdge));
-  }, [mimirEdges, mimirNodes, animatedEdge]);
+  }, [mimirEdges, mimirNodes, animatedEdge, secondaryNode]);
 
   return (
     <div className="reactflow-wrapper" ref={flowWrapper}>

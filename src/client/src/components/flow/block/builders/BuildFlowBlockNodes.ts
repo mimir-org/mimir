@@ -5,8 +5,8 @@ import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
 
 /**
  * Component to draw all Flow nodes in BlockView.
- * These nodes contain the data for the nodes. In addition to the FlowNodes, MimirNodes
- * are created, with the extra functionality needed for Mimir. The FlowNodes and MimirEdges co-exist
+ * These nodes contain the data for the nodes. In addition to the FlowNodes, MimirNodes are created,
+ * with the extra functionality needed for Mimir. The FlowNodes and MimirEdges co-exist
  * and share the same id and position.
  * @param mimirNodes
  * @param mimirEdges

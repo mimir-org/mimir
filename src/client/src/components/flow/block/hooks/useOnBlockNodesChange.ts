@@ -44,7 +44,7 @@ const useOnBlockNodesChange = (params: OnChangeParams) => {
   const verifiedFlowChanges = [] as NodeChange[];
   const nodesToDelete = [] as Node[];
 
-  // Verify changes
+  // Handle changes
   changes.forEach((c) => {
     if (c.type === "select") return HandleSelect(c, selectedNode, verifiedFlowChanges, dispatch);
     if (c.type === "position") return HandlePosition(c, selectedBlockNode, selectedNode, secondaryNode, verifiedFlowChanges);
