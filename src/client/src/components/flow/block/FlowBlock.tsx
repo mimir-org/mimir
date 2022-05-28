@@ -87,7 +87,16 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
 
   const OnNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      return hooks.useOnBlockNodesChange(project, selectedNode, selectedBlockNode, changes, setNodes, dispatch, inspectorRef);
+      return hooks.useOnBlockNodesChange({
+        project,
+        selectedNode,
+        selectedBlockNode,
+        secondaryNode,
+        changes,
+        setNodes,
+        dispatch,
+        inspectorRef,
+      });
     },
     [selectedNode]
   );

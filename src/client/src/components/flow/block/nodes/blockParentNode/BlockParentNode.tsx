@@ -27,15 +27,15 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
-  const selectedNode = project?.nodes?.find((n) => n.selected);
+  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
   useEffect(() => {
     InitParentSize(data, dispatch);
   }, []);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(data?.connectors, selectedNode, secondaryNode));
-  }, [data?.connectors, selectedNode, secondaryNode]);
+    setTerminals(FilterTerminals(data?.connectors, selectedBlockNode, secondaryNode));
+  }, [data?.connectors, selectedBlockNode, secondaryNode]);
 
   if (!data) return null;
 
@@ -52,7 +52,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       />
       <BlockParentComponent
         node={data}
-        splitView={secondaryNode !== null}
+        splitView={secondaryNode != null}
         inputTerminals={terminals.inputs}
         outputTerminals={terminals.outputs}
         isNavigationActive={data.id !== secondaryNode?.id}

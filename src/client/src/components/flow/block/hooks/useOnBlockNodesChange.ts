@@ -3,6 +3,7 @@ import { Node, Project } from "../../../../models";
 import { OnNodeDelete } from "../../handlers/";
 import { removeSelectedEdge, removeSelectedNode, setSelectedNode } from "../../../../redux/store/project/actions";
 import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
+import { IsFamily } from "../../../../helpers/Family";
 import {
   applyNodeChanges,
   NodeChange,
@@ -12,6 +13,17 @@ import {
   NodeSelectionChange,
 } from "react-flow-renderer";
 
+interface OnChangeParams {
+  project: Project;
+  selectedNode: Node;
+  selectedBlockNode: Node;
+  secondaryNode: Node;
+  changes: NodeChange[];
+  setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>;
+  dispatch: Dispatch;
+  inspectorRef: React.MutableRefObject<HTMLDivElement>;
+}
+
 /**
  * Hook that runs whenever a Node has a change in BlockView.
  * In the Flow Library a change is defined by the following types:
@@ -20,34 +32,21 @@ import {
  * If a node is marked with a position change, HandlePosition is called, and validates the position.
  * If a node is marked as removed, HandleRemove validates the changes and the component OnNodeDelete handles the removal.
  * The other types of changes are executed automatically.
- * @param project
- * @param selectedNode
- * @param selectedBlockNode
- * @param changes
- * @param setNodes
- * @param dispatch
- * @param inspectorRef
+ * @param params
  */
-const useOnBlockNodesChange = (
-  project: Project,
-  selectedNode: Node,
-  selectedBlockNode: Node,
-  changes: NodeChange[],
-  setNodes: React.Dispatch<React.SetStateAction<FlowNode[]>>,
-  dispatch: Dispatch,
-  inspectorRef: React.MutableRefObject<HTMLDivElement>
-) => {
+const useOnBlockNodesChange = (params: OnChangeParams) => {
+  const { project, selectedNode, selectedBlockNode, secondaryNode, changes, setNodes, dispatch, inspectorRef } = params;
   const mimirNodes = project.nodes;
   const mimirEdges = project.edges;
   const verifiedFlowChanges = [] as NodeChange[];
   const nodesToDelete = [] as Node[];
 
   // Verify changes
-  changes.forEach((change) => {
-    if (change.type === "select") return HandleSelect(change, selectedNode, verifiedFlowChanges, dispatch);
-    if (change.type === "position") return HandlePosition(change, selectedBlockNode, verifiedFlowChanges);
-    if (change.type === "remove") return HandleRemove(change, selectedBlockNode, verifiedFlowChanges, nodesToDelete, mimirNodes);
-    verifiedFlowChanges.push(change);
+  changes.forEach((c) => {
+    if (c.type === "select") return HandleSelect(c, selectedNode, verifiedFlowChanges, dispatch);
+    if (c.type === "position") return HandlePosition(c, selectedBlockNode, selectedNode, secondaryNode, verifiedFlowChanges);
+    if (c.type === "remove") return HandleRemove(c, selectedBlockNode, verifiedFlowChanges, nodesToDelete, mimirNodes);
+    verifiedFlowChanges.push(c);
   });
 
   // Execute verified changes
@@ -77,8 +76,17 @@ function HandleSelect(change: NodeSelectionChange, selectedNode: Node, verifiedF
  * @param selectedBlockNode
  * @param filteredList
  */
-function HandlePosition(change: NodePositionChange, selectedBlockNode: Node, filteredList: NodeChange[]) {
-  if (!ValidateNodePosition(selectedBlockNode, change.id, change.position)) return;
+function HandlePosition(
+  change: NodePositionChange,
+  selectedBlockNode: Node,
+  selectedNode: Node,
+  secondaryNode: Node,
+  filteredList: NodeChange[]
+) {
+  const splitView = secondaryNode != undefined;
+  const parentNode = splitView && IsFamily(selectedNode, secondaryNode) ? secondaryNode : selectedBlockNode;
+
+  if (!ValidateNodePosition(parentNode, change.id, change.position)) return;
   filteredList.push(change);
 }
 

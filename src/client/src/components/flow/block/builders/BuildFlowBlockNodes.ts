@@ -16,7 +16,7 @@ import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
  */
 const BuildFlowBlockNodes = (mimirNodes: Node[], mimirEdges: Edge[], primaryNode: Node, secondaryNode: Node) => {
   const flowNodes: FlowNode[] = [];
-  const splitView = secondaryNode !== undefined && secondaryNode !== null;
+  const splitView = secondaryNode != undefined;
 
   const parentBlockNode = BuildFlowParentNode(primaryNode);
   if (!parentBlockNode) return flowNodes;
