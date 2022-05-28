@@ -32,6 +32,9 @@ interface OnChangeParams {
  * If a node is marked with a position change, HandlePosition is called, and validates the position.
  * If a node is marked as removed, HandleRemove validates the changes and the component OnNodeDelete handles the removal.
  * The other types of changes are executed automatically.
+ * The selectedBlockNode is the node marked with a full checkbox in the Explorer, this is the parentNode in BlockView.
+ * The selectedNode is the node selected with the mouse cursor on the canvas.
+ * The secondaryNode is the second node marked with a full checkbox in the Explorer. This is the second parentNode in BlockView.
  * @param params
  */
 const useOnBlockNodesChange = (params: OnChangeParams) => {

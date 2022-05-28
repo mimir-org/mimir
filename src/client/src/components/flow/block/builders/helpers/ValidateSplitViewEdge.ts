@@ -3,8 +3,8 @@ import { Connector, Node } from "../../../../../models";
 import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers/Connectors";
 
 /**
- * Validator for an edge in SplitView. The basis for drawing an edge in BlockView is that the source node
- * and the target node are in the elements array - meaning that the nodes are drawn to the screen.
+ * Validator for an edge in SplitView.
+ * If an edge should be displayed is defined by the nature of the nodes visible on the canvas.
  * @param selectedBlockNode
  * @param secondaryNode
  * @param sourceNode
