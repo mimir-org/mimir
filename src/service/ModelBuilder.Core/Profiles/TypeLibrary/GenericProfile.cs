@@ -36,9 +36,9 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.Ignore())
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.Name, Name = src.Name }))
-                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
-                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.Updated, opt => opt.Ignore())
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created));
 
             CreateMap<AttributeQualifierLibCm, AttributeQualifier>()
@@ -129,8 +129,8 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.LibraryType, opt => opt.Ignore())
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeName, Name = src.PurposeName }))
-                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
-                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.Updated, opt => opt.Ignore())
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
 
@@ -148,8 +148,8 @@ namespace Mb.Core.Profiles.TypeLibrary
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.LibraryType, opt => opt.Ignore())
                 .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => new Purpose { Id = src.PurposeName, Name = src.PurposeName }))
-                .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
-                .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
+                .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.Updated, opt => opt.Ignore())
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy));
 
