@@ -1,90 +1,280 @@
-# Mimir
+<div align="center">
 
-[![CI - PROD](https://github.com/equinor/ti-spine-modelbuilder/actions/workflows/prod.yaml/badge.svg)](https://github.com/equinor/ti-spine-modelbuilder/actions/workflows/prod.yaml)
+  <img src="src/client/src/assets/icons/mimir/mimirDarkLogo.png" alt="logo" width="250" height="auto" />
+  <h1>Mímir</h1>
+  
+  <p>
+    A tool that provides the creation of an asset-design based on the IMF language. 
+  </p>
 
+<!-- Badges -->
+<p>
+  <a href="https://github.com/mimir-org/mimir/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/mimir-org/typelibrary" alt="contributors" />
+  </a>
+  <a href="https://github.com/mimir-org/mimir/commits/main">
+    <img src="https://img.shields.io/github/last-commit/mimir-org/typelibrary" alt="last update" />
+  </a>
+  <a href="https://github.com/mimir-org/mimir/issues/">
+    <img src="https://img.shields.io/github/issues/mimir-org/typelibrary" alt="open issues" />
+  </a>
+  <a href="https://github.com/mimir-org/mimir/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/mimir-org/typelibrary.svg" alt="license" />
+  </a>
+</p>
+   
+<h4>
+    <a href="https://github.com/mimir-org/mimir/issues">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/mimir-org/mimir/issues">Request Feature</a>
+  </h4>
+</div>
 
+<br />
 
+<!-- Table of Contents -->
 
-## Client Configuration
+# :notebook_with_decorative_cover: Table of Contents
 
+- [About the Project](#star2-about-the-project)
+  - [Tech Stack](#space_invader-tech-stack)
+  - [Features](#dart-features)
+  - [Design system](#art-design-system)
+  - [Environment Variables](#key-environment-variables)
+- [Getting Started](#toolbox-getting-started)
+  - [Prerequisites](#bangbang-prerequisites)
+  - [Running Locally](#running-running)
+- [Usage](#eyes-usage)
+- [Contributing](#wave-contributing)
+  - [Code of Conduct](#scroll-code-of-conduct)
+- [License](#warning-license)
+- [Contact](#handshake-contact)
+- [Acknowledgements](#gem-acknowledgements)
 
-### Overview
+<!-- About the Project -->
 
-Environment variables are injected into client at startup of container. In particular:
+## :star2: About the Project
 
-- Environment variables starting with the prefix 'MIMIR_ENV_***' are looked up from the container's environment.
-- Environment variables are then processed into a valid json object, injected into index.html and made available under window.__MIMIR_ENV
+<!-- TechStack -->
 
-### Required
+### :space_invader: Tech Stack
 
-**MIMIR_ENV_API_BASE_URL**: API base url for server api. Must include api version, E.g. http://localhost:5000/v1.0/
+<details>
+  <summary>Client</summary>
+  <ul>
+    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
+    <li><a href="https://reactjs.org/">React.js</a></li>
+    <li><a href="https://react-redux.js.org/">React Redux</a></li>
+    <li><a href="https://redux-toolkit.js.org/">Redux Toolkit</a></li>
+    <li><a href="https://reactflow.dev/">React Flow</a></li>
+   <li><a href="https://redux-saga.js.org/">Redux-Saga</a></li>
+    <li><a href="https://atomiks.github.io/tippyjs/">Tippy.js</a></li>
+    <li><a href="https://styled-components.com/">styled-components</a></li>
+  </ul>
+</details>
 
-**MIMIR_ENV_SOCKET_BASE_URL**: Socket base url for server api. E.g. http://localhost:5000/
+<details>
+  <summary>Server</summary>
+  <ul>
+    <li><a href="https://dotnet.microsoft.com/en-us/languages/csharp">C#</a></li>
+    <li><a href="https://docs.microsoft.com/en-us/aspnet/core/">ASP.NET</a></li>
+    <li><a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/">MSAL.NET</a></li>
+    <li><a href="https://www.newtonsoft.com/json">Json.NET</a></li>    
+    <li><a href="https://docs.microsoft.com/en-us/ef/">Entity Framework</a></li>
+    <li><a href="https://automapper.org/">AutoMapper</a></li>
+    <li><a href="https://xunit.net/">xUnit.NET</a></li>  
+    <li><a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore">Swashbuckle</a></li>    
+    <li><a href="https://github.com/pankleks/TypeScriptBuilder">TypeScriptBuilder</a></li>
+  </ul>
+</details>
 
-**MIMIR_ENV_APP_ID**: Application id of Server app registration in Azure AD. E.g. aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb
+<details>
+<summary>Database</summary>
+  <ul>
+    <li><a href="https://www.microsoft.com/en-us/sql-server/">MSSQL</a></li>
+  </ul>
+</details>
 
-**MIMIR_ENV_CLIENT_ID**: Application id (Client id) of Client app registration in Azure AD. E.g. aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb
+<details>
+<summary>DevOps</summary>
+  <ul>
+    <li><a href="https://www.docker.com/">Docker</a></li>
+    <li><a href="https://github.com/features/actions">Github Actions</a></li>
+    <li><a href="https://www.terraform.io/">Terraform</a></li>
+  </ul>
+</details>
 
-**MIMIR_ENV_TENANT_ID**: Tenant id of Azure AD tenant used. E.g. aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb
+<!-- Features -->
 
-**MIMIR_ENV_COMPANY**: Company domain. E.g. equinor.com, or aibel.com.
+### :dart: Features
 
-### Optional
+Coming soon...
 
+<!-- Design System -->
 
-**MIMIR_ENV_APP_INSIGHTS_CONNECTION_STRING**: Connection string for application insights. Must include instrumentation key and endpoint address.
-## Server Configuration
+### :art: Design System
 
-### Overview
+<a href="https://github.com/mimir-org/mimir/tree/main/src/client/src/compLibrary">Component library</a>
 
-Server application is configured via appsettings.json (available within docker image, under /app), and accepts overrides via environment variables, using supported pattern by .NET [Microsoft Docs link](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0&viewFallbackFrom=aspnetcore-2.2#evcp).
+<!-- Env Variables -->
 
-In order to override setting:
- ```json
-    {
-      ...
-        "AzureActiveDirectoryConfiguration": {  
-              "TenantId": "aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb",
-        },
-      ...
-    }
+### :key: Environment Variables
+
+#### Client
+
+To run this project, you will need to add the following environment variables to your .env.local file
+
+`REACT_APP_API_BASE_URL`
+
+`REACT_APP_SOCKET_BASE_URL`
+
+If you are running the server locally then the values will most likely be
+
+```js
+// where x and y = api version
+REACT_APP_API_BASE_URL = http://localhost:5001/v{x}.{y}/
+REACT_APP_SOCKET_BASE_URL = http://localhost:5001/
 ```
 
-provide the environment AzureActiveDirectoryConfiguration__TenantId=******
+#### Server
 
-In order to override an element in a list, use the element index as a separate element in the path, e.g. xxx__list1__0__Id=****.
+To run this project, you will need to add the following environment variables to your .appsettings.local.json file inside the ModelBuilder.Api project
 
+```json
+{
+  "DatabaseConfiguration": {
+    "DataSource": "database source",
+    "Port": "database port",
+    "InitialCatalog": "database name",
+    "DbUser": "username",
+    "Password": "password"
+  },
+}
+```
 
-## Required
+Here is an example of local file from a developer running the database in a docker container
 
-NB: Examples of environment variables which are currently supported (inspect appsettings.json for complete list).
+```json
+{
+  "DatabaseConfiguration": {
+    "DataSource": "localhost",
+    "Port": 1433,
+    "InitialCatalog": "ModelBuilder",
+    "DbUser": "sa",
+    "Password": "locallysourcedpassword"
+  },
+  
+}
+```
 
-<br>
+<!-- Getting Started -->
 
-**ASPNETCORE_ENVIRONMENT**: Set .NET core environment.
+## :toolbox: Getting Started
 
-**ApplicationSetting__CollaborationPartner__Name**: Name of collaboration partner, e.g. Equinor.
+<!-- Prerequisites -->
 
-**ApplicationSetting__CollaborationPartner__Domain**: Domain of collaboration partner, e.g. equinor.com
+### :bangbang: Prerequisites
 
-**ApplicationSetting__CollaborationPartner__Iris__0**: RDF domain of collaboration partner, e.g. rdf.equinor.com
+This project uses .NET 6 for the server and NPM as package manager for the client,
+make sure that you have these installed before continuing.
 
-**AzureActiveDirectoryConfiguration__TenantId**: Tenant id of Azure AD tentant.
+Start by cloning the project
 
-**AzureActiveDirectoryConfiguration__ClientId** Application id of Server application app registration in Azure AD.
+```git
+git clone git@github.com:mimir-org/mimir.git
+```
 
-**CorsConfiguration__ValidOrigins**: Comma separated string of valid origins for CORS. E.g. http://localhost:3000,https://my.domain.com
+Navigate to the new directory
 
-**DatabaseConfiguration__DataSource**: Identifier for database server. e.g. 
+```bash
+cd ./mimir
+```
 
-**DatabaseConfiguration__Port**: Port of database server. E.g. 1443.
+<!-- Running Locally -->
 
-**DatabaseConfiguration__InitialCatalog**: Identifier for database used on database server. 
+### :running: Running
 
-**DatabaseConfiguration__DbUser**: Server application Database username
+|                       | Client                                 | Server                                              |
+| --------------------- | -------------------------------------- | --------------------------------------------------- |
+| :gear: Installation   | `cd src/client` <br /> `npm install`   | `cd src/service` <br /> `dotnet build`               |
+| :running: Run Locally | `cd src/client` <br /> `npm run local` | `cd src/service/ModelBuilder.Api` <br /> `dotnet run` |
 
-**DatabaseConfiguration__Password**: Server application Database password.
+<!-- Usage -->
 
+## :eyes: Usage
 
+Coming soon...
 
+<!-- Contributing -->
 
+## :wave: Contributing
+
+Coming soon...
+
+<!-- Code of Conduct -->
+
+### :scroll: Code of Conduct
+
+Coming soon...
+
+<!-- License -->
+
+## :warning: License
+
+Distributed under the MIT License. 
+
+<!-- Contact -->
+
+## :handshake: Contact
+
+Mimir-org - orgmimir@gmail.com
+
+Project Link: [https://github.com/mimir-org/mimir](https://github.com/mimir-org/mimir)
+
+<!-- Acknowledgments -->
+
+## :gem: Acknowledgements
+
+Coming soon...
+
+## 💅🏻 Code style
+
+The project uses ESLint to enforce code style. This is governed by the .eslintrc.js file in client/.
+
+To run linting checks against the codebase:
+
+```bash
+    npm run lint
+```
+
+Create react app integrates with ESLint, and will throw warnings/errors on build, if there are style warnings/errors.
+
+### Vscode Eslint integration
+
+If using vscode, use the ESLint (by Microsoft) extension to integrate ESLint check into vscode.
+
+## 📏 Code formatting
+
+The project uses Prettier to enforce code formatting. This is governed by the .prettierrc file in client/.
+
+To format the codebase, run:
+
+```bash
+    npm run format
+```
+
+To check for formatting issues (dry-run), run:
+
+```bash
+    npm run format:check
+```
+
+### VScode Prettier extension
+
+If using vscode, use the Prettier - Code formatter (by Prettier) extension to incorporate prettier into vscode. Additionally, you can configure code formatting when saving files via preferences:
+
+1.  Ctrl + Shift + P to open vscode command prompt.
+2.  Select "Preferences: Open Settings (JSON)"
+3.  Set formatting on save to true:
+
+          "editor.formatOnSave": true,
