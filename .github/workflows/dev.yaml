@@ -1,15 +1,10 @@
 name: CI - DEV
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [dev]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   construct-sha-short:
     runs-on: ubuntu-latest
@@ -25,34 +20,22 @@ jobs:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-client
-      tags: |
-        dev
-        test
       build_args: |
         MIMIR_VERSION=dev-${{ needs.construct-sha-short.outputs.sha_short }}
+      tags: dev
       context: ./src/client
       file: ./src/client/Dockerfile
       target: final
       hash_files_template: "**/package-lock.json"
-      push: true
-    secrets:
-      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
+      push: false
 
   build-server:
     uses: mimir-org/mimir-actions/.github/workflows/docker-build-push-cached.yaml@main
     with:
       repository: mimir-server
-      tags: |
-        dev
-        test
+      tags: dev
       context: ./src/service
       file: ./src/service/Dockerfile
       target: final
       hash_files_template: "**/*.csproj"
-      push: true
-    secrets:
-      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
+      push: false
