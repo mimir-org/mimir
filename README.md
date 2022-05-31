@@ -6,7 +6,10 @@
   <p>
     A tool that provides the creation of an asset-design based on the IMF language. 
   </p>
+  
+[![CI - PROD](https://github.com/mimir-org/mimir/actions/workflows/prod.yaml/badge.svg)](https://github.com/mimir-org/mimir/actions/workflows/prod.yaml)
 
+  
 <!-- Badges -->
 <p>
   <a href="https://github.com/mimir-org/mimir/graphs/contributors">
@@ -122,26 +125,82 @@ Coming soon...
 
 #### Client
 
+Environment variables are injected into client at startup of container. In particular:
+- Environment variables starting with the prefix 'MIMIR_ENV_***' are looked up from the container's environment.
+- Environment variables are then processed into a valid json object, injected into index.html and made available under window.__MIMIR_ENV
+
 To run this project, you will need to add the following environment variables to your .env.local file
+
+##### Required
 
 `REACT_APP_API_BASE_URL`
 
 `REACT_APP_SOCKET_BASE_URL`
 
+`REACT_APP_APP_ID`
+
+`REACT_APP_CLIENT_ID` 
+
+`REACT_APP_TENANT_ID`
+
+`REACT_APP_COMPANY`
+
+`REACT_APP_MIMIR_VERSION`
+
+##### Optional
+
+`REACT_APP_APP_INSIGHTS_CONNECTION_STRING`
+
 If you are running the server locally then the values will most likely be
 
 ```js
-// where x and y = api version
-REACT_APP_API_BASE_URL = http://localhost:5001/v{x}.{y}/
+REACT_APP_API_BASE_URL = http://localhost:5001/v{x}.{y}/ // where x and y variables are the api version
 REACT_APP_SOCKET_BASE_URL = http://localhost:5001/
+REACT_APP_APP_ID = aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb // Application id of Server app registration in Azure AD. E.g. 
+REACT_APP_CLIENT_ID = aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb // Application id (Client id) of Client app registration in Azure AD
+REACT_APP_TENANT_ID = aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb // Tenant id of Azure AD tenant used
+REACT_APP_COMPANY = equinor.com // Company domain
+REACT_APP_MIMIR_VERSION = 2.0 
+REACT_APP_APP_INSIGHTS_CONNECTION_STRING = // Connection string for application insights. Must include instrumentation key and endpoint address.
 ```
 
 #### Server
 
+Server application is configured via appsettings.json (available within docker image, under /app), and accepts overrides via environment variables, using supported pattern by .NET [Microsoft Docs link](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0&viewFallbackFrom=aspnetcore-2.2#evcp).
+
+In order to override setting:
+ ```json
+    {
+      ...
+        "AzureActiveDirectoryConfiguration": {  
+              "TenantId": "aaaaaaaa-xxxx-yyyy-zzzz-bbbbbbbbbbbb",
+        },
+      ...
+    }
+```
+
+provide the environment AzureActiveDirectoryConfiguration__TenantId=******
+
+In order to override an element in a list, use the element index as a separate element in the path, e.g. xxx__list1__0__Id=****.
+
 To run this project, you will need to add the following environment variables to your .appsettings.local.json file inside the ModelBuilder.Api project
+
 
 ```json
 {
+  "CorsConfiguration": {
+    "ValidOrigins": "Comma separated string of valid origins for CORS"
+  },
+  "ApplicationSetting": {
+    "CollaborationPartner": {
+      "Name": "name of collaboration partner",
+      "Domain": "domain of collaboration partner",
+      "Current": true,
+      "Iris": [
+        "RDF domain of collaboration partner"
+      ]
+    }
+  },
   "DatabaseConfiguration": {
     "DataSource": "database source",
     "Port": "database port",
@@ -156,14 +215,26 @@ Here is an example of local file from a developer running the database in a dock
 
 ```json
 {
-  "DatabaseConfiguration": {
+  "CorsConfiguration": {
+    "ValidOrigins": "http://localhost:3000"
+  },
+  "ApplicationSetting": {
+    "CollaborationPartner": {
+      "Name": "Equinor",
+      "Domain": "equinor.com",
+      "Current": true,
+      "Iris": [
+        "rdf.equinor.com"
+      ]
+    },
+  },
+ "DatabaseConfiguration": {
     "DataSource": "localhost",
     "Port": 1433,
     "InitialCatalog": "ModelBuilder",
     "DbUser": "sa",
     "Password": "locallysourcedpassword"
   },
-  
 }
 ```
 
