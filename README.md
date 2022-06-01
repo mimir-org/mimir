@@ -47,12 +47,10 @@
 - [Getting Started](#toolbox-getting-started)
   * [Prerequisites](#bangbang-prerequisites)
   * [Running Locally](#running-running)
-- [Usage](#eyes-usage)
 - [Contributing](#wave-contributing)
   * [Code of Conduct](#scroll-code-of-conduct)
 - [License](#warning-license)
 - [Contact](#handshake-contact)
-- [Acknowledgements](#gem-acknowledgements)
 
 <!-- About the Project -->
 ## :star2: About the Project
@@ -207,7 +205,7 @@ cd ./mimir
 ```
 
 <!-- Running Locally -->
-### :running: Running
+### :running: Running Locally
 |                         | Client      | Server      |
 | ----------------------- | ----------- | ----------- |
 | :gear: Installation     | ```cd src/client``` <br /> ```npm install```   | ```cd src/server``` <br /> ```dotnet build```      |
