@@ -33,7 +33,7 @@ interface Props {
  * The secondaryNode is the second ParentNode, displayed to the right of the parentNode.
  * The secondaryNode is only set if two parents are chosen from the Explorer, this state is called Split View.
  * @param interface
- * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
 export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const { getViewport } = useReactFlow();

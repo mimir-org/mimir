@@ -32,7 +32,7 @@ interface Props {
 /**
  * Component for the Flow library in TreeView.
  * @param interface
- * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
 export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const flowWrapper = useRef(null);

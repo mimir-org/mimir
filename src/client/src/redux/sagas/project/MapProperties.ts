@@ -1,34 +1,35 @@
 import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
 import { IsBlockView } from "../../../helpers";
-import { Project } from "../../../models";
+import { Edge, Node, Project } from "../../../models";
 
-export const MapProperties = (project: Project, oldProject: Project, reMappedIds: { [id: string]: string }) => {
-  if (project?.nodes && oldProject?.nodes) {
-    project.nodes.forEach((node) => {
-      const oldNode = oldProject.nodes.find((x) => x.id === node.id || (reMappedIds[node.id] && x.id === reMappedIds[node.id]));
+export const MapProjectProperties = (project: Project, oldProject: Project, reMappedIds: { [id: string]: string }) => {
+  if (project?.nodes && oldProject?.nodes) MapNodes(project.nodes, oldProject.nodes, reMappedIds);
+  if (project?.edges && oldProject?.edges) MapEdges(project.edges, oldProject.edges, reMappedIds);
+};
 
-      if (oldNode) {
-        node.hidden = oldNode.hidden;
-        node.blockSelected = oldNode.blockSelected;
-        node.selected = oldNode.selected;
-      }
-    });
-  }
+function MapNodes(nodes: Node[], oldNodes: Node[], reMappedIds: { [id: string]: string }) {
+  nodes.forEach((node) => {
+    const oldNode = oldNodes.find((n) => n.id === node.id || (reMappedIds[node.id] && n.id === reMappedIds[node.id]));
+    if (!oldNode) return;
 
-  if (project?.edges && oldProject?.edges) {
-    project.edges.forEach((edge) => {
-      const oldEdge = oldProject.edges.find((x) => x.id === edge.id || (reMappedIds[edge.id] && x.id === reMappedIds[edge.id]));
+    node.hidden = oldNode.hidden;
+    node.blockSelected = oldNode.blockSelected;
+    node.selected = oldNode.selected;
+  });
+}
 
-      if (oldEdge) {
-        edge.hidden = oldEdge.hidden;
-        edge.selected = oldEdge.selected;
-      }
-    });
-  }
+function MapEdges(edges: Edge[], oldEdges: Edge[], reMappedIds: { [id: string]: string }) {
+  edges.forEach((edge) => {
+    const oldEdge = oldEdges.find((e) => e.id === edge.id || (reMappedIds[edge.id] && e.id === reMappedIds[edge.id]));
+    if (!oldEdge) return;
+
+    edge.hidden = oldEdge.hidden;
+    edge.selected = oldEdge.selected;
+  });
 
   if (!IsBlockView()) {
-    project?.edges.forEach((edge) => {
+    edges.forEach((edge) => {
       if (!IsPartOfTerminal(edge.fromConnector)) edge.hidden = true;
     });
   }
-};
+}

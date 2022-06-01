@@ -61,10 +61,7 @@ export const NodeElement = ({
     >
       <NodeElementIconComponent item={item} />
       <NodeElementText>{item.name}</NodeElementText>
-      {/* <LibElementVersion>
-        {TextResources.Library_Type_Version}
-        {item.version}
-      </LibElementVersion> */}
+
       {collectionState === CollectionsActions.ManageType && (
         <Checkbox
           isChecked={selected}

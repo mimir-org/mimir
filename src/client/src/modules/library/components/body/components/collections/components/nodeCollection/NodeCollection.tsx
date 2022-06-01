@@ -50,6 +50,7 @@ export const NodeCollection = ({
       </NodeCollectionButton>
       {expanded &&
         category?.nodes.map((item) => {
+          console.log({ item });
           return (
             <NodeElement
               key={item.id}
