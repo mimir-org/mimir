@@ -10,33 +10,45 @@
   
 <!-- Badges -->
 <p>
+<a href="https://github.com/mimir-org/mimir/actions/workflows/prod.yaml">
+    <img src="https://github.com/mimir-org/mimir/actions/workflows/prod.yaml/badge.svg?branch=main" alt="build status" />
+  </a>
+
   <a href="https://github.com/mimir-org/mimir/graphs/contributors">
     <img src="https://img.shields.io/github/contributors/mimir-org/mimir" alt="contributors" />
   </a>
+  
   <a href="https://github.com/mimir-org/mimir/commits/main">
     <img src="https://img.shields.io/github/last-commit/mimir-org/mimir" alt="last update" />
   </a>
+
   <a href="https://github.com/mimir-org/mimir/issues/">
     <img src="https://img.shields.io/github/issues/mimir-org/mimir" alt="open issues" />
   </a>
+
   <a href="https://github.com/mimir-org/mimir/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/mimir-org/mimir.svg" alt="license" />
   </a>
+
   <a href="https://github.com/mimir-org/mimir/releases">
   <img src="https://img.shields.io/github/v/release/mimir-org/mimir" alt="releases">
   </a>
+
+  <a href="https://hub.docker.com/repository/docker/mimirorg/mimir-client">
+  <img alt="Docker client version" src="https://img.shields.io/docker/v/mimirorg/mimir-client?label=docker%20client%20version">
+  </a>
+
+  <a href="https://hub.docker.com/repository/docker/mimirorg/mimir-client">
+  <img alt="Docker server version" src="https://img.shields.io/docker/v/mimirorg/mimir-server?label=docker%20server%20version">
+  </a>
 </p>
-   
-<h4>
-    <a href="https://github.com/mimir-org/mimir/issues">Report Bug</a>
-  <span> · </span>
-    <a href="https://github.com/mimir-org/mimir/issues">Request Feature</a>
+
+  <h4>
+    <a href="https://github.com/mimir-org/mimir/issues">Report a bug or register a feature</a>
   </h4>
 </div>
 
 <br />
-
-[![CI - PROD](https://github.com/mimir-org/mimir/actions/workflows/prod.yaml/badge.svg?branch=main)](https://github.com/mimir-org/mimir/actions/workflows/prod.yaml)
 
 <!-- Table of Contents -->
 # :notebook_with_decorative_cover: Table of Contents
@@ -54,7 +66,6 @@
 
 <!-- About the Project -->
 ## :star2: About the Project
-
 
 <!-- TechStack -->
 ### :space_invader: Tech Stack
@@ -211,7 +222,7 @@ cd ./mimir
 | :gear: Installation     | ```cd src/client``` <br /> ```npm install```   | ```cd src/server``` <br /> ```dotnet build```      |
 | :running: Run Locally   | ```cd src/client``` <br /> ```npm start``` | ```cd src/server/ModelBuilder.Api``` <br /> ```dotnet run```      |
 
-####Docker
+#### Docker
 
 ```bash
 cd ./mimir
