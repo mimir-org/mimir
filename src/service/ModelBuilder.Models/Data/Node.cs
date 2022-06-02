@@ -53,8 +53,6 @@ namespace Mb.Models.Data
         [Required]
         public string StatusId { get; set; }
 
-
-        public BuildStatus Status { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime Updated { get; set; }
         public DateTime? Created { get; set; }

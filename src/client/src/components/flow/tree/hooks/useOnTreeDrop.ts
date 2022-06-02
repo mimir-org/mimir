@@ -1,12 +1,12 @@
+import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
-import { ConvertToNode } from "../../converters";
+import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { GetSelectedNode, IsAspectNode, IsFamily } from "../../../../helpers";
 import { Dispatch } from "redux";
-import { OnLoadParams } from "react-flow-renderer";
 import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
-import { GetProjectData, GetSubProject, IsSubProject } from "../../helpers";
+import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
+import { IsFamily } from "../../../../helpers/Family";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -16,7 +16,7 @@ interface OnDropParameters {
   user: User;
   icons: BlobData[];
   library: LibraryState;
-  flowInstance: OnLoadParams;
+  flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
@@ -35,16 +35,21 @@ const useOnTreeDrop = (params: OnDropParameters) => {
 
   if (DoesNotContainApplicationData(event)) return;
 
-  const sourceNode = GetSelectedNode();
   const isSubProject = IsSubProject(event);
 
   if (isSubProject) HandleSubProjectDrop(event, project, dispatch);
-  else HandleNodeDrop(params, sourceNode);
+  else HandleNodeDrop(params);
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
+/**
+ * Function to handle a SubProject dropped from the Library.
+ * @param event
+ * @param project
+ * @param dispatch
+ */
 function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
   const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibrarySubProjectItem;
 
@@ -57,14 +62,21 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
   })();
 }
 
-function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters, sourceNode: Node) {
+/**
+ * Function to handle a node dropped from the Library.
+ * @param OnDropParameters
+ */
+function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters) {
   const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  const parentNode = GetParentNode(sourceNode, project, data);
+  const selectedNode = project?.nodes?.find((n) => n.selected);
 
-  const treePosition = SetTreeNodePosition(parentNode, project);
+  // The dropped node automatically finds a parent
+  const parentNode = SetParentNodeOnDrop(selectedNode, data, project.nodes);
+
+  const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
-  const targetNode = ConvertToNode(data, treePosition, blockPosition, project.id, icons, user);
+  const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
   targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
@@ -73,9 +85,18 @@ function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDr
   dispatch(addNode(targetNode));
 }
 
-function GetParentNode(sourceNode: Node, project: Project, data: LibItem) {
-  if (sourceNode && IsFamily(sourceNode, data)) return sourceNode;
-  return project?.nodes.find((n) => IsAspectNode(n) && IsFamily(n, data));
+/**
+ * A dropped node automatically is assigned a parent.
+ * If a node is selected and has the same Aspect as the dropped node, it becomes the parent.
+ * If no node is selected, the root node with the same Aspect becomes the parent.
+ * @param selectedNode
+ * @param data
+ * @param nodes
+ * @returns a Node.
+ */
+function SetParentNodeOnDrop(selectedNode: Node, data: LibItem, nodes: Node[]) {
+  if (selectedNode && IsFamily(selectedNode, data)) return selectedNode;
+  return nodes.find((n) => IsFamily(n, data));
 }
 
 export default useOnTreeDrop;

@@ -1,10 +1,12 @@
-import InspectorTabs from "../tabs/InspectorTabs";
+import { Node as FlowNode } from "react-flow-renderer";
+import { InspectorTabs } from "../tabs/InspectorTabs";
 import { MutableRefObject } from "react";
-import { Project } from "../../../../models";
+import { Aspect, Project } from "../../../../models";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
+import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
 import {
   AttributeLikeItem,
@@ -23,6 +25,7 @@ interface Props {
   username: string;
   dispatch: Dispatch;
   open: boolean;
+  isBlockView: boolean;
   activeTabIndex: number;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
@@ -33,6 +36,7 @@ interface Props {
   attributeLikeItems?: AttributeLikeItem[];
   terminalLikeItems?: TerminalLikeItem[];
   simpleLikeItems?: SimpleLikeItem[];
+  selectedFlowNodes: FlowNode[];
 }
 
 export const InspectorHeader = ({
@@ -41,6 +45,7 @@ export const InspectorHeader = ({
   username,
   dispatch,
   open,
+  isBlockView,
   activeTabIndex,
   inspectorRef,
   isInspectorOpen,
@@ -50,28 +55,38 @@ export const InspectorHeader = ({
   attributeLikeItems,
   terminalLikeItems,
   simpleLikeItems,
+  selectedFlowNodes,
 }: Props) => {
-  return (
-    <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(element)}>
-      <InspectorTabs
-        project={project}
-        element={element}
-        activeTabIndex={activeTabIndex}
-        attributeLikeItems={attributeLikeItems}
-        terminalLikeItems={terminalLikeItems}
-        simpleLikeItems={simpleLikeItems}
-        changeInspectorTabAction={changeInspectorTabAction}
-        inspectorRef={inspectorRef}
-        isInspectorOpen={isInspectorOpen}
-      />
+  const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
+  const isOffPage = IsNode(element) ? element.aspect === Aspect.None : false;
 
-      {GetInspectorHeaderText(element)}
+  return (
+    <InspectorHeaderContainer id="InspectorHeader" color={GetInspectorColor(project?.nodes, element, isOffPage, tabsVisible)}>
+      {tabsVisible && (
+        <>
+          <InspectorTabs
+            project={project}
+            element={element}
+            activeTabIndex={activeTabIndex}
+            attributeLikeItems={attributeLikeItems}
+            terminalLikeItems={terminalLikeItems}
+            simpleLikeItems={simpleLikeItems}
+            changeInspectorTabAction={changeInspectorTabAction}
+            inspectorRef={inspectorRef}
+            isInspectorOpen={isInspectorOpen}
+            isOffPage={isOffPage}
+          />
+          {GetInspectorHeaderText(element)}
+        </>
+      )}
 
       <InspectorButtonRow
-        project={project}
+        nodes={project?.nodes}
+        edges={project?.edges}
         element={element}
         username={username}
         open={open}
+        tabsVisible={tabsVisible}
         inspectorRef={inspectorRef}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeightAction}

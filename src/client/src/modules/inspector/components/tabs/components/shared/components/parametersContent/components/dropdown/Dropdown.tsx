@@ -22,7 +22,7 @@ export const Dropdown = ({ items, selectedItems, onChange }: Props) => {
   return (
     <MenuWrapper>
       <MenuHeader onClick={() => setIsListOpen(!isListOpen)}>
-        <p className="searchText">{TextResources.INSPECTOR_PARAMS_SEARCH}</p>
+        <p className="searchText">{TextResources.PARAMS_SEARCH}</p>
         <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
       </MenuHeader>
       {isListOpen && (

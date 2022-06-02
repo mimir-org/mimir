@@ -1,25 +1,24 @@
 import { Size } from "../../../../../compLibrary/size/Size";
 import { Node } from "../../../../../models";
 import { Position } from "../../../../../models/project";
-import { GetParent } from "../../../helpers";
 
 /**
  * Component to force an OffPageNode to fit the position of the ParentNode.
  * @param offPageNode
  * @param parentNode
+ * @param nodes
  * @returns a Position object.
  */
-const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: Node) => {
-  if (!offPageNode || !parentNode) return null;
+const SetOffPageNodePos = (offPageNode: Node, parentNode: Node, secondaryNode: Node, nodes: Node[]) => {
+  if (!offPageNode || !parentNode || !nodes) return null;
 
   // Handle OffPageNodes from the SecondaryNode
   if (secondaryNode !== undefined) {
-    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode);
+    const splitOffPagePos = HandleSplitViewOffPage(secondaryNode, offPageNode, nodes);
     if (splitOffPagePos !== null) return splitOffPagePos;
   }
 
   if (offPageNode.isOffPageTarget) return HandleTargetOffPagePos(parentNode, offPageNode);
-
   return HandleSourceOffPagePos(parentNode, offPageNode);
 };
 
@@ -36,13 +35,13 @@ function HandleSourceOffPagePos(parentNode: Node, offPageNode: Node) {
   const yMax = parentNode.height;
   const yMin = Size.BLOCK_MARGIN_Y;
 
-  const nodeX = parentNode.positionBlockX - marginX;
-  let nodeY = offPageNode.positionBlockY;
+  const x = parentNode.positionBlockX - marginX;
+  let y = offPageNode.positionBlockY;
 
-  if (nodeY > yMax) nodeY = yMax - marginY;
-  if (nodeY < yMin) nodeY = yMin + marginY;
+  if (y > yMax) y = yMax - marginY;
+  if (y < yMin) y = yMin + marginY;
 
-  return { x: nodeX, y: nodeY } as Position;
+  return { x, y } as Position;
 }
 
 /**
@@ -58,29 +57,30 @@ function HandleTargetOffPagePos(parentNode: Node, offPageNode: Node) {
   const yMax = parentNode.height;
   const yMin = Size.BLOCK_MARGIN_Y;
 
-  const nodeX = parentNode.positionBlockX + parentNode.width - marginX;
-  let nodeY = offPageNode.positionBlockY;
+  const x = parentNode.positionBlockX + parentNode.width - marginX;
+  let y = offPageNode.positionBlockY;
 
-  if (nodeY < yMin) nodeY = yMin - marginY;
-  if (nodeY > yMax) nodeY = yMax - marginY;
+  if (y < yMin) y = yMin - marginY;
+  if (y > yMax) y = yMax - marginY;
 
-  return { x: nodeX, y: nodeY } as Position;
+  return { x, y } as Position;
 }
 
 /**
  * Function to force the position of an OffPageNode that is a child of the SecondaryNode.
  * @param secondaryNode
  * @param offPageNode
+ * @param nodes
  * @returns a Position object.
  */
-function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node) {
-  const offPageParent = GetParent(offPageNode?.id);
-  const parentBlock = GetParent(offPageParent?.id);
+function HandleSplitViewOffPage(secondaryNode: Node, offPageNode: Node, nodes: Node[]) {
+  const parentNode = nodes.find((n) => n.id === offPageNode.parentNodeId);
+  const grandParentNode = nodes.find((n) => n.id === parentNode.parentNodeId);
 
-  if (parentBlock?.id !== secondaryNode?.id) return null;
+  if (grandParentNode?.id !== secondaryNode.id) return null;
 
-  if (offPageNode.isOffPageTarget) return HandleTargetOffPagePos(parentBlock, offPageNode);
-  return HandleSourceOffPagePos(parentBlock, offPageNode);
+  if (offPageNode.isOffPageTarget) return HandleTargetOffPagePos(grandParentNode, offPageNode);
+  return HandleSourceOffPagePos(grandParentNode, offPageNode);
 }
 
 export default SetOffPageNodePos;

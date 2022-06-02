@@ -1,19 +1,19 @@
-import { FlowElement } from "react-flow-renderer";
-import { IsOffPage } from "../../../helpers";
+import { Edge as FlowEdge } from "react-flow-renderer";
+import { IsOffPage } from "../../../helpers/Aspects";
 import { Edge, Node } from "../../../models";
 import { EdgeType } from "../../../models/project";
-import { IsTransport } from "../helpers";
+import { IsTransport } from "../helpers/Connectors";
 
 /**
- * Function to convert a Mimir Edge to a FlowElement that interacts with the Flow Library.
+ * Function to convert a Mimir Edge to a FlowEdge that interacts with the Flow Library.
  * @param edge
  * @param edgeType
- * @param sourceNode
- * @param targetNode
+ * @param source
+ * @param target
  * @param animated
- * @returns a FlowElement.
+ * @returns a FlowEdge.
  */
-const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, targetNode: Node, animated: boolean) => {
+const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, source: Node, target: Node, animated: boolean) => {
   const isAnimated = animated && IsTransport(edge.fromConnector) && !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode);
 
   return {
@@ -26,16 +26,12 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, sourceNode: Node, tar
     arrowHeadType: null,
     animated: isAnimated,
     label: "",
-    data: {
-      source: sourceNode,
-      target: targetNode,
-      edge: edge,
-      isSelected: edge.isSelected,
-    },
-    isHidden: false, // Opacity is controlled by the styled component
-    parentType: sourceNode?.aspect,
-    targetType: targetNode?.aspect,
-  } as FlowElement;
+    data: { source, target, edge, selected: edge.selected },
+    hidden: false, // Opacity is controlled by the styled component
+    parentType: source?.aspect,
+    targetType: target?.aspect,
+    selected: edge.selected,
+  } as FlowEdge;
 };
 
 export default ConvertEdgeToFlow;

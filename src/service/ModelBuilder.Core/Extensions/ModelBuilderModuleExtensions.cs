@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading;
 using AutoMapper;
 using Mb.Core.Profiles;
+using Mb.Core.Profiles.TypeLibrary;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
 using Mb.Models.Abstract;
@@ -72,6 +73,7 @@ namespace Mb.Core.Extensions
             services.AddMemoryCache();
             services.AddSingleton<ICacheRepository, InMemoryCacheRepository>();
             services.AddHostedService<TimedCacheService>();
+            services.AddSingleton<IHttpRepository, HttpRepository>();
 
             services.AddScoped<ICommonRepository, CommonRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
@@ -85,7 +87,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<ISimpleRepository, SimpleRepository>();
             services.AddScoped<IVersionRepository, VersionRepository>();
             services.AddScoped<IWebSocketRepository, WebSocketRepository>();
-            services.AddScoped<ILibRepository, LibRepository>();
+            services.AddScoped<ILibraryRepository, LibraryRepository>();
             services.AddScoped<IModelBuilderProcRepository, ModelBuilderProcRepository>();
 
             services.AddScoped<IProjectService, ProjectService>();
@@ -121,8 +123,7 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new EdgeProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
-            cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(),
-                provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
             cfg.AddProfile<RdsProfile>();
             cfg.AddProfile<CommonProfile>();
             cfg.AddProfile<CollaborationPartnerProfile>();
@@ -132,6 +133,10 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new SimpleProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new NodeLibProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new AttributeLibProfile());
+            cfg.AddProfile(new GenericProfile());
+            cfg.AddProfile(new TerminalLibProfile());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);

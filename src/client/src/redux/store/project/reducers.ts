@@ -1,7 +1,8 @@
 import * as Types from "./types";
-import { Edge, Node } from "../../../models";
+import { Connector, Edge, Node, Simple } from "../../../models";
+import { IsAspectNode } from "../../../helpers/Aspects";
+import { IsFamily } from "../../../helpers/Family";
 import { CreateEmptyProject } from "../../../models/data/Project";
-import { IsAspectNode, IsFamily } from "../../../helpers";
 import {
   getEdgeInterfaceAttributeMap,
   getEdgeInterfaceTerminalAttributeMap,
@@ -34,6 +35,10 @@ const initialState: Types.ProjectState = {
 
 // TODO: Refactor to reduce complexity
 export function projectReducer(state = initialState, action: Types.ProjectActionTypes) {
+  const project = state.project;
+  const nodes = state.project?.nodes;
+  const edges = state.project?.edges;
+
   switch (action.type) {
     case Types.CLOSE_PROJECT:
       return {
@@ -57,13 +62,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       };
 
     case Types.COMMIT_PROJECT_SUCCESS_OR_ERROR:
-      return {
-        ...state,
-        fetching: false,
-        creating: false,
-        apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
-      };
-
     case Types.SAVE_PROJECT_SUCCESS_OR_ERROR:
       return {
         ...state,
@@ -122,508 +120,6 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         apiError: state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload.key) : state.apiError,
       };
 
-    case Types.ADD_NODE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: [...state.project.nodes, action.payload],
-        },
-      };
-
-    case Types.REMOVE_NODE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.filter((x) => x.id !== action.payload),
-        },
-      };
-
-    case Types.ADD_EDGE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: [...state.project.edges, action.payload],
-        },
-      };
-
-    case Types.REMOVE_EDGE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.filter((edge) => edge?.id !== action.payload),
-        },
-      };
-
-    case Types.UPDATE_POSITION:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.nodeId
-              ? {
-                  ...x,
-                  positionX: action.payload.x,
-                  positionY: action.payload.y,
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.UPDATE_BLOCK_POSITION:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project?.nodes.map((x) =>
-            x.id === action.payload.nodeId
-              ? {
-                  ...x,
-                  positionBlockX: action.payload.x,
-                  positionBlockY: action.payload.y,
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.UPDATE_BLOCK_SIZE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project?.nodes.map((x) =>
-            x.id === action.payload.nodeId
-              ? {
-                  ...x,
-                  width: action.payload.size.width,
-                  height: action.payload.size.height,
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.SET_EDGE_VISIBILITY:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((edge) =>
-            edge.id === action.payload.edge.id
-              ? {
-                  ...edge,
-                  isHidden: action.payload.isHidden,
-                }
-              : edge
-          ),
-        },
-      };
-
-    case Types.SET_LOCATION_NODE_SIZE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.nodeId
-              ? {
-                  ...x,
-                  [action.payload.key]: action.payload.value,
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.SET_NODE_VISIBILITY: {
-      const node = action.payload.node;
-      const nodeList = state.project.nodes;
-      const edgeList = state.project.edges;
-      const isParent = action.payload.isParent;
-      const isHidden = !node.isHidden;
-
-      if (IsAspectNode(node)) {
-        return {
-          ...state,
-          project: {
-            ...state.project,
-            nodes: nodeList.map((n) => (IsFamily(node, n) ? { ...n, isHidden: isHidden } : n)),
-            edges: edgeList.map((edge) =>
-              IsFamily(node, edge.fromNode) || IsFamily(node, edge.toNode) || edge.fromNode === node
-                ? { ...edge, isHidden: isHidden }
-                : edge
-            ),
-          },
-        };
-      }
-
-      if (isParent) {
-        const elements: (Node | Edge)[] = [];
-        elements.push(node);
-
-        TraverseTree(edgeList, nodeList, node, elements);
-
-        return {
-          ...state,
-          project: {
-            ...state.project,
-            nodes: nodeList.map((x) => (elements.includes(x) ? { ...x, isHidden: isHidden } : x)),
-            edges: edgeList.map((edge) =>
-              elements.includes(edge) || edge.toNode === node ? { ...edge, isHidden: isHidden } : edge
-            ),
-          },
-        };
-      }
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: nodeList.map((n) => (n.id === node.id ? { ...n, isHidden: isHidden } : n)),
-          edges: edgeList.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, isHidden: isHidden } : e)),
-        },
-      };
-    }
-
-    case Types.SET_ACTIVE_NODE: {
-      const nodeId = action.payload.nodeId;
-      const allNodes = state.project.nodes;
-      const active = action.payload.isActive;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: allNodes?.map((x) => (x.id === nodeId ? { ...x, isSelected: active } : { ...x, isSelected: false })),
-          edges: state.project.edges,
-        },
-      };
-    }
-
-    case Types.SET_ACTIVE_EDGE: {
-      const edgeId = action.payload.edgeId;
-      const edges = state.project.edges;
-      const active = action.payload.isActive;
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: edges?.map((edge) => (edge.id === edgeId ? { ...edge, isSelected: active } : { ...edge, isSelected: false })),
-        },
-      };
-    }
-
-    case Types.SET_ACTIVE_BLOCKNODE: {
-      const blockId = action.payload.nodeId;
-      const nodes = state.project.nodes;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: nodes?.map((x) => (x.id === blockId ? { ...x, isBlockSelected: true } : { ...x, isBlockSelected: false })),
-          edges: state.project.edges,
-        },
-      };
-    }
-
-    case Types.CHANGE_SELECTED_PROJECT: {
-      const projectId = action.payload.projectId;
-      const projects = state.projectList;
-
-      return {
-        ...state,
-        ...state.project,
-        projectList: projects.map((project) =>
-          project.id === projectId ? { ...project, selected: true } : { ...project, selected: false }
-        ),
-      };
-    }
-
-    case Types.CHANGE_ALL_NODES:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map(
-            (x) =>
-              state && {
-                ...x,
-                isHidden: true,
-              }
-          ),
-        },
-      };
-
-    case Types.CHANGE_NODE_PROP_VALUE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.nodeId
-              ? {
-                  ...x,
-                  [action.payload.propName]: action.payload.propValue,
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.CHANGE_NODE_ATTRIBUTE_VALUE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.nodeId
-              ? {
-                  ...x,
-                  attributes: x.attributes.map((attribute) =>
-                    attribute.id === action.payload.id
-                      ? {
-                          ...attribute,
-                          value: action.payload.value,
-                          selectedUnitId: action.payload.unitId,
-                        }
-                      : attribute
-                  ),
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.CHANGE_TRANSPORT_PROP_VALUE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((x) =>
-            x.id === action.payload.edgeId
-              ? {
-                  ...x,
-                  transport: {
-                    ...x.transport,
-                    [action.payload.propName]: action.payload.propValue,
-                  },
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE: {
-      const { id, edgeId, value, unitId } = action.payload;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  transport: {
-                    ...e.transport,
-                    attributes: e.transport.attributes.map((attribute) =>
-                      attribute.id === id
-                        ? {
-                            ...attribute,
-                            value,
-                            selectedUnitId: unitId,
-                          }
-                        : attribute
-                    ),
-                  },
-                }
-              : e
-          ),
-        },
-      };
-    }
-
-    case Types.CHANGE_INTERFACE_PROP_VALUE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((x) =>
-            x.id === action.payload.edgeId
-              ? {
-                  ...x,
-                  interface: {
-                    ...x.interface,
-                    [action.payload.propName]: action.payload.propValue,
-                  },
-                }
-              : x
-          ),
-        },
-      };
-
-    case Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE: {
-      const { id, edgeId, unitId, value } = action.payload;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  interface: {
-                    ...e.transport,
-                    attributes: e.transport.attributes.map((attribute) =>
-                      attribute.id === id
-                        ? {
-                            ...attribute,
-                            selectedUnitId: unitId,
-                            value,
-                          }
-                        : attribute
-                    ),
-                  },
-                }
-              : e
-          ),
-        },
-      };
-    }
-    case Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE: {
-      const { id, terminalId, nodeId, value, unitId } = action.payload;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((n) =>
-            n.id === nodeId
-              ? {
-                  ...n,
-                  connectors: n.connectors.map((conn) =>
-                    conn.id === terminalId
-                      ? {
-                          ...conn,
-                          attributes: conn.attributes.map((attribute) =>
-                            attribute.id === id
-                              ? {
-                                  ...attribute,
-                                  value,
-                                  selectedUnitId: unitId,
-                                }
-                              : attribute
-                          ),
-                        }
-                      : conn
-                  ),
-                }
-              : n
-          ),
-        },
-      };
-    }
-    case Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE: {
-      const { id, terminalId, edgeId, value, unitId } = action.payload;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  transport: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId),
-                }
-              : e
-          ),
-        },
-      };
-    }
-    case Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE: {
-      const { id, terminalId, edgeId, value, unitId } = action.payload;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((e) =>
-            e.id === edgeId
-              ? {
-                  ...e,
-                  interface: GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId),
-                }
-              : e
-          ),
-        },
-      };
-    }
-    case Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE: {
-      const { id, simpleId, nodeId, value, unitId } = action.payload;
-
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((n) =>
-            n.id === nodeId
-              ? {
-                  ...n,
-                  simples: n.simples.map((simple) =>
-                    simple.id === simpleId
-                      ? {
-                          ...simple,
-                          attributes: simple.attributes.map((attribute) =>
-                            attribute.id === id
-                              ? {
-                                  ...attribute,
-                                  value,
-                                  selectedUnitId: unitId,
-                                }
-                              : attribute
-                          ),
-                        }
-                      : simple
-                  ),
-                }
-              : n
-          ),
-        },
-      };
-    }
-
-    case Types.CHANGE_ACTIVE_CONNECTOR:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((n) =>
-            n?.id === action.payload.nodeId
-              ? {
-                  ...n,
-                  connectors: n.connectors.map((conn) =>
-                    conn.id === action.payload.connectorId
-                      ? {
-                          ...conn,
-                          connectorVisibility: action.payload.connectorVisibility,
-                        }
-                      : conn
-                  ),
-                }
-              : n
-          ),
-        },
-      };
-
     case Types.EXPORT_PROJECT_TO_FILE:
       return {
         ...state,
@@ -652,6 +148,379 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
         isLocking: false,
         apiError: action.payload.apiError ? [...state.apiError, action.payload.apiError] : state.apiError,
       };
+
+    case Types.ADD_NODE:
+      return { ...state, project: { ...project, nodes: [...nodes, action.payload] } };
+
+    case Types.DELETE_NODE:
+      return { ...state, project: { ...project, nodes: nodes.filter((n) => n.id !== action.payload) } };
+
+    case Types.ADD_EDGE:
+      return { ...state, project: { ...project, edges: [...edges, action.payload] } };
+
+    case Types.DELETE_EDGE:
+      return { ...state, project: { ...project, edges: edges.filter((e) => e?.id !== action.payload) } };
+
+    case Types.UPDATE_POSITION: {
+      const { nodeId, x: positionX, y: positionY } = action.payload;
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, positionX, positionY } : n)) },
+      };
+    }
+
+    case Types.UPDATE_BLOCK_POSITION: {
+      const { nodeId, x: positionBlockX, y: positionBlockY } = action.payload;
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, positionBlockX, positionBlockY } : n)) },
+      };
+    }
+
+    case Types.UPDATE_BLOCK_SIZE: {
+      const { nodeId } = action.payload;
+      const { width, height } = action.payload.size;
+      return { ...state, project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, width, height } : n)) } };
+    }
+
+    case Types.SET_EDGE_VISIBILITY: {
+      const { edgeId, hidden } = action.payload;
+      return { ...state, project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, hidden } : e)) } };
+    }
+
+    case Types.SET_LOCATION_NODE_SIZE: {
+      const { nodeId, key, value } = action.payload;
+      return { ...state, project: { ...project, nodes: nodes.map((x) => (x.id === nodeId ? { ...x, [key]: value } : x)) } };
+    }
+
+    case Types.SET_BLOCK_EDGE_VISIBILITY: {
+      const { edgeId, blockHidden: hidden } = action.payload;
+      return {
+        ...state,
+        project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, blockHidden: hidden } : e)) },
+      };
+    }
+
+    case Types.SET_NODE_VISIBILITY: {
+      const { node } = action.payload;
+      if (!node) return;
+
+      const hidden = node.hidden === undefined ? true : !node.hidden;
+
+      let isParent = false;
+      const parentEdge = edges?.find((x) => x.fromNodeId === node.id);
+      if (parentEdge) isParent = true;
+
+      if (IsAspectNode(node)) {
+        const isRelated = (e: Edge) => {
+          return IsFamily(node, e.fromNode) || IsFamily(node, e.toNode) || e.fromNodeId === node.id;
+        };
+
+        return {
+          ...state,
+          project: {
+            ...project,
+            nodes: nodes.map((n) => (IsFamily(node, n) ? { ...n, hidden } : n)),
+            edges: edges.map((e) => (isRelated(e) ? { ...e, hidden } : e)),
+          },
+        };
+      }
+
+      if (isParent) {
+        const elements: (Node | Edge)[] = [];
+        elements.push(node);
+
+        TraverseTree(edges, nodes, node, elements);
+
+        return {
+          ...state,
+          project: {
+            ...project,
+            nodes: nodes.map((n) => (elements.includes(n) ? { ...n, hidden } : n)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNodeId === node.id ? { ...e, hidden } : e)),
+          },
+        };
+      }
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.id === node.id ? { ...n, hidden } : n)),
+          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, hidden } : e)),
+        },
+      };
+    }
+
+    case Types.SET_BLOCK_NODE_VISIBILITY: {
+      const { node, blockHidden } = action.payload;
+      if (!node) return;
+
+      let isParent = false;
+      const parentEdge = edges?.find((x) => x.fromNodeId === node.id);
+      if (parentEdge) isParent = true;
+
+      if (isParent) {
+        const elements: (Node | Edge)[] = [];
+        elements.push(node);
+
+        TraverseTree(edges, nodes, node, elements);
+
+        return {
+          ...state,
+          project: {
+            ...project,
+            nodes: nodes.map((n) => (elements.includes(n) ? { ...n, blockHidden } : n)),
+            edges: edges.map((e) => (elements.includes(e) || e.toNodeId === node.id ? { ...e, blockHidden } : e)),
+          },
+        };
+      }
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.id === node.id ? { ...n, blockHidden } : n)),
+          edges: edges.map((e) => (e.fromNodeId === node.id || e.toNodeId === node.id ? { ...e, blockHidden } : e)),
+        },
+      };
+    }
+
+    case Types.SET_SELECTED_NODE: {
+      const { nodeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.id === nodeId ? { ...n, selected: true } : { ...n })),
+          edges,
+        },
+      };
+    }
+
+    case Types.REMOVE_SELECTED_NODE: {
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.selected ? { ...n, selected: false } : { ...n })),
+          edges,
+        },
+      };
+    }
+
+    case Types.SET_SELECTED_EDGE: {
+      const { edgeId } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes,
+          edges: edges?.map((e) => (e.id === edgeId ? { ...e, selected: true } : { ...e })),
+        },
+      };
+    }
+
+    case Types.REMOVE_SELECTED_EDGE: {
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes,
+          edges: edges?.map((e) => (e.selected ? { ...e, selected: false } : { ...e })),
+        },
+      };
+    }
+
+    case Types.SET_SELECTED_BLOCKNODE: {
+      const blockNodeId = action.payload.nodeId;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.id === blockNodeId ? { ...n, blockSelected: true } : { ...n })),
+          edges,
+        },
+      };
+    }
+
+    case Types.REMOVE_SELECTED_BLOCKNODE: {
+      return {
+        ...state,
+        project: {
+          ...project,
+          nodes: nodes.map((n) => (n.blockSelected ? { ...n, blockSelected: false } : { ...n })),
+          edges,
+        },
+      };
+    }
+
+    case Types.CHANGE_SELECTED_PROJECT: {
+      const projectId = action.payload.projectId;
+      const projects = state.projectList;
+
+      return {
+        ...state,
+        ...project,
+        projectList: projects.map((p) => (p.id === projectId ? { ...p, selected: true } : { ...p, selected: false })),
+      };
+    }
+
+    case Types.CHANGE_NODE_PROP_VALUE: {
+      const { nodeId, propName, propValue } = action.payload;
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((x) => (x.id === nodeId ? { ...x, [propName]: propValue } : x)) },
+      };
+    }
+
+    case Types.CHANGE_NODE_ATTRIBUTE_VALUE: {
+      const { id, nodeId, value, unitId: selectedUnitId } = action.payload;
+
+      const getAttr = (n: Node) => {
+        return n.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));
+      };
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, attributes: getAttr(n) } : n)) },
+      };
+    }
+
+    case Types.CHANGE_TRANSPORT_PROP_VALUE: {
+      const { edgeId, propName, propValue } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: { ...e.transport, [propName]: propValue } } : e)),
+        },
+      };
+    }
+
+    case Types.CHANGE_TRANSPORT_ATTRIBUTE_VALUE: {
+      const { id, edgeId, value, unitId: selectedUnitId } = action.payload;
+
+      const getAttr = (e: Edge) => {
+        return e.transport.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a));
+      };
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: { ...e.transport, attributes: getAttr(e) } } : e)),
+        },
+      };
+    }
+
+    case Types.CHANGE_INTERFACE_PROP_VALUE: {
+      const { edgeId, propName, propValue } = action.payload;
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: { ...e.interface, [propName]: propValue } } : e)),
+        },
+      };
+    }
+
+    case Types.CHANGE_INTERFACE_ATTRIBUTE_VALUE: {
+      const { id, edgeId, unitId: selectedUnitId, value } = action.payload;
+
+      const getAttr = (e: Edge) => {
+        return e.transport.attributes.map((a) => (a.id === id ? { ...a, selectedUnitId, value } : a));
+      };
+
+      return {
+        ...state,
+        project: {
+          ...project,
+          edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: { ...e.transport, attributes: getAttr(e) } } : e)),
+        },
+      };
+    }
+
+    case Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE: {
+      const { id, terminalId, nodeId, value, unitId: selectedUnitId } = action.payload;
+
+      const getAttr = (conn: Connector) => {
+        return conn.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));
+      };
+
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) => (conn.id === terminalId ? { ...conn, attributes: getAttr(conn) } : conn));
+      };
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
+      };
+    }
+
+    case Types.CHANGE_TRANSPORT_TERMINAL_ATTRIBUTE_VALUE: {
+      const { id, terminalId, edgeId, value, unitId } = action.payload;
+
+      const getTransport = (e: Edge) => {
+        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.transport, terminalId, id, value, unitId);
+      };
+
+      return {
+        ...state,
+        project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, transport: getTransport(e) } : e)) },
+      };
+    }
+
+    case Types.CHANGE_INTERFACE_TERMINAL_ATTRIBUTE_VALUE: {
+      const { id, terminalId, edgeId, value, unitId } = action.payload;
+
+      const getInterface = (e: Edge) => {
+        return GetUpdatedEdgeInnerWithTerminalAttributeValue(e.interface, terminalId, id, value, unitId);
+      };
+
+      return {
+        ...state,
+        project: { ...project, edges: edges.map((e) => (e.id === edgeId ? { ...e, interface: getInterface(e) } : e)) },
+      };
+    }
+
+    case Types.CHANGE_SIMPLE_ATTRIBUTE_VALUE: {
+      const { id, simpleId, nodeId, value, unitId: selectedUnitId } = action.payload;
+
+      const getAttr = (s: Simple) => {
+        return s.attributes.map((a) => (a.id === id ? { ...a, value, selectedUnitId } : a));
+      };
+
+      const getSimples = (n: Node) => {
+        return n.simples.map((s) => (s.id === simpleId ? { ...s, attributes: getAttr(s) } : s));
+      };
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n.id === nodeId ? { ...n, simples: getSimples(n) } : n)) },
+      };
+    }
+
+    case Types.CHANGE_ACTIVE_CONNECTOR: {
+      const { nodeId, connectorId, connectorVisibility } = action.payload;
+
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) => (conn.id === connectorId ? { ...conn, connectorVisibility } : conn));
+      };
+
+      return {
+        ...state,
+        project: { ...project, nodes: nodes.map((n) => (n?.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
+      };
+    }
 
     case Types.SET_LOCK_NODE: {
       const modifiedState = { ...state, isLocking: false };
@@ -787,104 +656,72 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
       return modifiedState;
     }
 
-    case Types.CHANGE_NODE_UPDATED:
+    case Types.CHANGE_NODE_UPDATED: {
+      const { nodeId, updated, userName: updatedBy } = action.payload;
+
       return {
         ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.nodeId
-              ? {
-                  ...x,
-                  updated: action.payload.updated,
-                  updatedBy: action.payload.userName,
-                }
-              : x
-          ),
-        },
+        project: { ...project, nodes: nodes.map((x) => (x.id === nodeId ? { ...x, updated, updatedBy } : x)) },
       };
+    }
 
     case Types.UPDATE_NODE:
       return {
         ...state,
         project: {
-          ...state.project,
-          nodes: state.project.nodes.map((x) =>
-            x.id === action.payload.id ? { ...action.payload, isSelected: x.isSelected, isBlockSelected: x.isBlockSelected } : x
+          ...project,
+          nodes: nodes.map((n) =>
+            n.id === action.payload.id ? { ...action.payload, selected: n.selected, blockSelected: n.blockSelected } : n
           ),
         },
       };
 
-    case Types.UPDATE_EDGE:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          edges: state.project.edges.map((x) =>
-            x.id === action.payload.id ? { ...action.payload, isSelected: x.isSelected } : x
-          ),
-        },
-      };
-
-    case Types.SET_OFFPAGE_STATUS:
-      return {
-        ...state,
-        project: {
-          ...state.project,
-          nodes: state.project.nodes.map((n) =>
-            n?.id === action.payload.nodeId
-              ? {
-                  ...n,
-                  connectors: n.connectors.map((conn) =>
-                    conn.id === action.payload.connectorId
-                      ? {
-                          ...conn,
-                          isRequired: action.payload.isRequired,
-                        }
-                      : conn
-                  ),
-                }
-              : n
-          ),
-        },
-      };
-
-    case Types.CREATE_REQUIRED_OFFPAGE_NODE: {
-      const nodesWithRequiredStatus = state.project.nodes.map((n) =>
-        n?.id === action.payload.nodeId
-          ? {
-              ...n,
-              connectors: n.connectors.map((conn) =>
-                conn.id === action.payload.connectorId
-                  ? {
-                      ...conn,
-                      isRequired: action.payload.isRequired,
-                    }
-                  : conn
-              ),
-            }
-          : n
-      );
+    case Types.UPDATE_EDGE: {
+      const { id } = action.payload;
 
       return {
         ...state,
-        project: {
-          ...state.project,
-          nodes: [...nodesWithRequiredStatus, action.payload.offPageObject.node],
-          edges: [...state.project.edges, action.payload.offPageObject.partOfEdge, action.payload.offPageObject.transportEdge],
-        },
+        project: { ...project, edges: edges.map((e) => (e.id === id ? { ...action.payload, selected: e.selected } : e)) },
       };
     }
 
-    case Types.CREATE_CONNECTED_OFFPAGE_NODE:
+    case Types.SET_OFFPAGE_STATUS: {
+      const { nodeId, connectorId, isRequired } = action.payload;
+
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) => (conn.id === connectorId ? { ...conn, isRequired } : conn));
+      };
+
       return {
         ...state,
-        project: {
-          ...state.project,
-          nodes: [...state.project.nodes, action.payload.offPageObject.node],
-          edges: [...state.project.edges, action.payload.offPageObject.partOfEdge, action.payload.offPageObject.transportEdge],
-        },
+        project: { ...project, nodes: nodes.map((n) => (n?.id === nodeId ? { ...n, connectors: getConnectors(n) } : n)) },
       };
+    }
+
+    case Types.CREATE_REQUIRED_OFFPAGE_NODE: {
+      const { nodeId, connectorId, isRequired } = action.payload;
+      const { offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
+
+      const getConnectors = (n: Node) => {
+        return n.connectors.map((conn) => (conn.id === connectorId ? { ...conn, isRequired } : conn));
+      };
+
+      const nodesWithRequiredStatus = nodes.map((n) => (n?.id === nodeId ? { ...n, connectors: getConnectors(n) } : n));
+
+      return {
+        ...state,
+        project: { ...project, nodes: [...nodesWithRequiredStatus, offPageNode], edges: [...edges, transportEdge, partOfEdge] },
+      };
+    }
+
+    case Types.CREATE_CONNECTED_OFFPAGE_NODE: {
+      const { offPageNode, transportEdge, partOfEdge } = action.payload.offPageObject;
+
+      return {
+        ...state,
+        project: { ...project, nodes: [...nodes, offPageNode], edges: [...edges, partOfEdge, transportEdge] },
+      };
+    }
 
     default:
       return state;

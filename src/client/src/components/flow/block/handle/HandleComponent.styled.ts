@@ -16,21 +16,22 @@ export const HandleContainer = styled.div<HandleContainerProps>`
 
 interface HandleBoxProps {
   visible: boolean;
+  isPartOf: boolean;
+  top: string;
+  left: string;
 }
 
 export const HandleBox = styled.div<HandleBoxProps>`
-  position: relative;
+  position: ${(props) => (props.isPartOf ? "absolute" : "relative")};
   line-height: 0;
+  transition: top 0.2s ease-out, left 0.2s ease-out;
+
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  transform: revert;
 
   .react-flow__handle-block {
     visibility: ${(props) => (props.visible ? "visible" : "hidden")};
     transition: top 0.2s ease-out, left 0.2s ease-out;
-
-    // Place handle within wrapper
-    top: 0;
-    left: revert;
-    right: revert;
-    bottom: revert;
-    transform: revert;
   }
 `;

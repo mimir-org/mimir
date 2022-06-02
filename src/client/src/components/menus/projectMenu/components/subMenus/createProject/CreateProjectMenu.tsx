@@ -7,7 +7,7 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnShowInstructionClick } from "../../../handlers";
-import { OnProjectCreateClick } from "./handlers";
+import { OnProjectCreateClick } from "./handlers/OnProjectCreateClick";
 import { useAppDispatch } from "../../../../../../redux/store";
 
 export const CreateProjectMenu = () => {
@@ -24,7 +24,7 @@ export const CreateProjectMenu = () => {
         <Input
           onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
           inputType="text"
-          placeholder={TextResources.PROJECT_NAME_PLACEHOLDER}
+          placeholder={TextResources.PROJECT_NAME_NEW}
           value={projectName}
         />
         <ButtonBox>

@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/ParentSelectors";
 import { FC, memo, useEffect, useState } from "react";
-import { NodeProps, useZoomPanHelper } from "react-flow-renderer";
+import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
-import { OnParentClick, OnChildClick } from "./handlers/";
-import { FilterBlockTerminals } from "../helpers/FilterBlockTerminals";
-import { Connector } from "../../../../../models";
+import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
+import { FilterTerminals } from "../helpers/FilterTerminals";
+import { Connector, Node } from "../../../../../models";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
-import { IsBidirectionalTerminal, IsInputTerminal, IsOutputTerminal } from "../../../helpers";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
-import { SetZoomCenterLevel } from "./helpers/SetZoomCenterLevel";
 import { InitParentSize } from "./helpers/InitParentSize";
+
+export type Terminals = { inputs: Connector[]; outputs: Connector[] };
 
 /**
  * Component for a ParentNode in BlockView.
@@ -20,48 +20,54 @@ import { InitParentSize } from "./helpers/InitParentSize";
  * @param data the data for the node.
  * @returns a Mimir ParentNode.
  */
-const BlockParentNode: FC<NodeProps> = ({ data }) => {
+const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const { setCenter } = useZoomPanHelper();
-  const [terminals, setTerminals] = useState<Connector[]>([]);
-  const nodes = useAppSelector(selectors.nodesSelector);
-  const edges = useAppSelector(selectors.edgeSelector);
+  const initialTerminals = { inputs: [], outputs: [] } as Terminals;
+  const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
+  const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
-  const node = nodes?.find((x) => x.id === data.id);
+  const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);
 
   useEffect(() => {
-    const canvasData = SetZoomCenterLevel(secondaryNode !== null);
-    setCenter(canvasData.x, canvasData.y, canvasData.zoom);
-  }, [setCenter, secondaryNode]);
-
-  useEffect(() => {
-    InitParentSize(node, dispatch);
+    InitParentSize(data, dispatch);
   }, []);
 
   useEffect(() => {
-    setTerminals(FilterBlockTerminals(node?.connectors, secondaryNode));
-  }, [secondaryNode, node?.connectors]);
+    setTerminals(FilterTerminals(data?.connectors, selectedBlockNode, secondaryNode));
+  }, [data?.connectors, selectedBlockNode, secondaryNode]);
 
-  if (!node) return null;
-
-  const inputTerminals = terminals.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t));
-  const outputTerminals = terminals.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t));
+  if (!data) return null;
 
   return (
     <BoxWrapper isElectro={isElectro}>
-      <HandleComponent node={node} terminals={inputTerminals} isInput />
-      <BlockParentComponent
-        node={node}
-        splitView={secondaryNode !== null}
-        inputTerminals={inputTerminals}
-        outputTerminals={outputTerminals}
-        isNavigationActive={node.id !== secondaryNode?.id}
-        onNavigateUpClick={() => OnParentClick(dispatch, node)}
-        onNavigateDownClick={() => OnChildClick(dispatch, node, nodes, edges)}
-        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, node, dispatch, edges)}
+      <HandleComponent
+        node={data}
+        project={project}
+        terminals={terminals.inputs}
+        isElectro={isElectro}
+        dispatch={dispatch}
+        isInput
+        isParent
       />
-      <HandleComponent node={node} terminals={outputTerminals} />
+      <BlockParentComponent
+        node={data}
+        splitView={secondaryNode != null}
+        inputTerminals={terminals.inputs}
+        outputTerminals={terminals.outputs}
+        isNavigationActive={data.id !== secondaryNode?.id}
+        onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
+        onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
+        onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
+      />
+      <HandleComponent
+        node={data}
+        project={project}
+        terminals={terminals.outputs}
+        isElectro={isElectro}
+        dispatch={dispatch}
+        isParent
+      />
     </BoxWrapper>
   );
 };

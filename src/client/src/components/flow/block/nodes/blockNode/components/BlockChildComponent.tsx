@@ -1,4 +1,4 @@
-import { GetCompanyLogoForNode, GetSelectedBlockNode } from "../../../../../../helpers";
+import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
 import { Connector, Node } from "../../../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
 import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
@@ -29,14 +29,13 @@ export const BlockChildComponent = ({
   onConnectorClick,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
-  const isSelected = node.id === GetSelectedBlockNode()?.id;
 
   return (
     <NodeBox
       node={node}
       colorMain={colorMain}
       colorSelected={colorSelected}
-      isSelected={isSelected}
+      selected={node.selected}
       onMouseEnter={() => OnHover(setShowMenuButton)}
       onMouseLeave={() => OnMouseOut(setShowMenuButton)}
     >
@@ -48,7 +47,7 @@ export const BlockChildComponent = ({
         showMenuButton={showMenuButton}
       />
       <SymbolBox>
-        <Symbol base64={node.symbol} text={node.name} />
+        <Symbol source={node.symbol} text={node.name} />
       </SymbolBox>
       <LogoBox>
         <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />

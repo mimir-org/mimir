@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
-import { FilterElement } from "./FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { IsConnectorVisible } from "../../../../../helpers";
 import { Connector } from "../../../../../models";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";
+import { IsConnectorVisible } from "../../../../flow/helpers/Connectors";
+import { FilterElement } from "../FilterElement";
 
 interface Props {
   activeTerminals: Connector[];
@@ -31,7 +31,7 @@ export const TerminalsFilter = ({ activeTerminals, allTerminals, dispatch }: Pro
       />
       <FilterElement
         isChecked={activeTerminalsChecked}
-        label={TextResources.FILTER_SHOW_ACTIVE_TERMINALS}
+        label={TextResources.SHOW_ACTIVE_TERMINALS}
         onChange={() => OnActiveTerminalChange(activeTerminals, dispatch, activeTerminalsChecked)}
         visible
       />

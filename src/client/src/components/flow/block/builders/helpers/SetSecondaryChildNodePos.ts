@@ -19,15 +19,15 @@ const SetSecondaryChildNodePos = (primaryNode: Node, secondaryNode: Node, childN
   const yMin = margin;
   const yMax = secondaryNode.height;
 
-  let nodeX = childNodePos.x;
-  let nodeY = childNodePos.y;
+  let x = childNodePos.x;
+  let y = childNodePos.y;
 
-  if (nodeX < xMin) nodeX = xMin + margin;
-  if (nodeX > xMax) nodeX = xMax;
-  if (nodeY < yMin) nodeY = yMin + margin;
-  if (nodeY > yMax) nodeY = yMax - marginY;
+  if (x < xMin) x = xMin + margin;
+  if (x > xMax) x = xMax;
+  if (y < yMin) y = yMin + margin;
+  if (y > yMax) y = yMax - marginY;
 
-  return { x: nodeX, y: nodeY };
+  return { x, y };
 };
 
 export default SetSecondaryChildNodePos;

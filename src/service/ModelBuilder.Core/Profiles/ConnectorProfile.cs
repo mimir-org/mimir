@@ -20,7 +20,7 @@ namespace Mb.Core.Profiles
 
             CreateMap<TerminalAm, Terminal>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-                .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
+                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => src.TerminalCategory))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
                 .ForMember(dest => dest.TerminalTypeIri, opt => opt.MapFrom(src => src.TerminalTypeIri))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
@@ -50,7 +50,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.ConnectorVisibility, opt => opt.MapFrom(src => src.ConnectorVisibility))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId))
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-                .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
+                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => src.TerminalCategory))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
                 .ForMember(dest => dest.TerminalTypeIri, opt => opt.MapFrom(src => src.TerminalTypeIri))
                 .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.IsRequired))
@@ -68,7 +68,7 @@ namespace Mb.Core.Profiles
 
             CreateMap<Terminal, TerminalAm>()
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
-                .ForMember(dest => dest.TerminalCategoryId, opt => opt.MapFrom(src => src.TerminalCategoryId))
+                .ForMember(dest => dest.TerminalCategory, opt => opt.MapFrom(src => src.TerminalCategory))
                 .ForMember(dest => dest.TerminalTypeId, opt => opt.MapFrom(src => src.TerminalTypeId))
                 .ForMember(dest => dest.TerminalTypeIri, opt => opt.MapFrom(src => src.TerminalTypeIri))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))

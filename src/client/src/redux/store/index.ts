@@ -15,13 +15,11 @@ import validationReducer from "./validation/validationSlice";
 import blockNodeSizeReducer from "../../components/flow/block/redux/blockNodeSizeSlice";
 import libraryReducer from "./library/librarySlice";
 import edgeAnimationReducer from "./edgeAnimation/edgeAnimationSlice";
-import flowTransformReducer from "./flowTransform/flowTransformSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { projectReducer } from "./project/reducers";
 import { secondaryReducer } from "./secondaryNode/reducers";
 import { rootSaga } from "../sagas";
-import { blockElementsReducer } from "../../modules/explorer/redux/reducers";
 
 const rootReducers = combineReducers({
   library: libraryReducer,
@@ -41,9 +39,7 @@ const rootReducers = combineReducers({
   blockNodeSize: blockNodeSizeReducer,
   edgeAnimation: edgeAnimationReducer,
   location3D: location3DReducer,
-  blockElements: blockElementsReducer,
   validation: validationReducer,
-  flowTransform: flowTransformReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

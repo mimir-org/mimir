@@ -96,7 +96,7 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.NodeIri)
                 .AddColumn(x => x.IsRequired)
                 .AddColumn(x => x.Color)
-                .AddColumn(x => x.TerminalCategoryId)
+                .AddColumn(x => x.TerminalCategory)
                 .AddColumn(x => x.TerminalTypeId)
                 .AddColumn(x => x.TerminalTypeIri)
                 .AddColumn(x => x.Discriminator)

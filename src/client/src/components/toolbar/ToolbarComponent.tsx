@@ -1,50 +1,50 @@
 import * as Icons from "../../assets/icons/header";
 import * as selectors from "../header/helpers/selectors";
+import * as handlers from "./handlers/OnToolbarClick";
 import { ToolbarElement } from "./components/ToolbarElement";
-import { OnElectroClick, OnFilterClick, OnViewClick } from "./handlers/";
-import { VIEW_TYPE, ViewType } from "../../models/project";
-import { ToolbarButtonGroup, ToolBarBox } from "./ToolbarComponent.styled";
+import { ViewportData } from "../../models/project";
+import { ToolbarButtonGroup, ToolbarBox } from "./ToolbarComponent.styled";
 import { TextResources } from "../../assets/text/TextResources";
-import { useAppDispatch, useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { useStoreState, useZoomPanHelper } from "react-flow-renderer";
-import { SetZoomCenterLevel } from "../flow/block/nodes/blockParentNode/helpers/SetZoomCenterLevel";
+import { useAppSelector } from "../../redux/store";
+import { GetSelectedFlowNodes } from "../../helpers/Selected";
+import { useReactFlow, useStoreApi } from "react-flow-renderer";
+import { Dispatch } from "redux";
+
+interface Props {
+  isTreeView: boolean;
+  dispatch: Dispatch;
+}
 
 /**
  * The ToolBar - the menu below the HeaderMenu at the top of Mimir.
  * @returns a menu with icons for different features.
  */
-const ToolbarComponent = () => {
-  const dispatch = useAppDispatch();
-  const { setCenter } = useZoomPanHelper();
+export const ToolbarComponent = ({ isTreeView, dispatch }: Props) => {
+  const { setViewport, setCenter } = useReactFlow();
+  const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
+  const selectedFlowNodes = GetSelectedFlowNodes();
+  const viewportData = { setViewport, setCenter } as ViewportData;
   const isLibraryOpen = useAppSelector(selectors.libOpenSelector);
   const isExplorerOpen = useAppSelector(selectors.explorerSelector);
-  const isTreeView = useParametricAppSelector(selectors.isActiveViewSelector, VIEW_TYPE.TREEVIEW);
-  const IsVisualFilterOpen = useAppSelector(selectors.filterSelector);
+  const isVisualFilterOpen = useAppSelector(selectors.filterSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const numberOfSelectedElements = useStoreState((x) => x.selectedElements?.length);
-
-  const onResetZoom = () => {
-    if (isTreeView) return;
-    const canvasData = SetZoomCenterLevel(secondaryNode !== null);
-    setCenter(canvasData.x, canvasData.y, canvasData.zoom);
-  };
 
   return (
-    <ToolBarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
+    <ToolbarBox id="ToolBar" libOpen={isLibraryOpen} explorerOpen={isExplorerOpen}>
       <ToolbarButtonGroup>
         {!isTreeView && (
           <>
             <ToolbarElement
-              label={TextResources.TOOLBAR_FITSCREEN}
+              label={TextResources.FITSCREEN}
               icon={Icons.FitScreenIcon}
-              onClick={() => onResetZoom()}
+              onClick={() => handlers.OnFitToScreenClick(isTreeView, viewportData, secondaryNode)}
               borderRight
             />
             <ToolbarElement
-              label={isElectro ? TextResources.TOOLBAR_ELECTRO_OFF : TextResources.TOOLBAR_ELECTRO_ON}
+              label={isElectro ? TextResources.ELECTRO_OFF : TextResources.ELECTRO_ON}
               icon={isElectro ? Icons.Vertical : Icons.Horizontal}
-              onClick={() => OnElectroClick(dispatch)}
+              onClick={() => handlers.OnElectroClick(dispatch)}
               borderRight
             />
           </>
@@ -53,28 +53,28 @@ const ToolbarComponent = () => {
       <ToolbarButtonGroup>
         <ToolbarElement
           active={isTreeView}
-          label={TextResources.TOOLBAR_TREEVIEW}
+          label={TextResources.TREEVIEW}
           icon={isTreeView ? Icons.TreeViewActive : Icons.TreeView}
-          onClick={() => OnViewClick(VIEW_TYPE.TREEVIEW as ViewType, numberOfSelectedElements, dispatch)}
+          onClick={() => handlers.OnTreeViewClick(setSelectedNodes, isTreeView, dispatch)}
           borderLeft
+          clickable={!isTreeView}
         />
         <ToolbarElement
           active={!isTreeView}
-          label={TextResources.TOOLBAR_BLOCKVIEW}
+          label={TextResources.BLOCKVIEW}
           icon={isTreeView ? Icons.BlockView : Icons.BlockViewActive}
-          onClick={() => OnViewClick(VIEW_TYPE.BLOCKVIEW as ViewType, numberOfSelectedElements, dispatch)}
+          onClick={() => handlers.OnBlockViewClick(selectedFlowNodes, viewportData, isTreeView, dispatch)}
           borderLeft
+          clickable={isTreeView}
         />
         <ToolbarElement
-          active={IsVisualFilterOpen}
-          label={IsVisualFilterOpen ? TextResources.TOOLBAR_VISUALFILTERS_CLOSE : TextResources.TOOLBAR_VISUALFILTERS_OPEN}
-          icon={IsVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
-          onClick={() => OnFilterClick(dispatch, IsVisualFilterOpen)}
+          active={isVisualFilterOpen}
+          label={isVisualFilterOpen ? TextResources.VISUALFILTER_CLOSE : TextResources.VISUALFILTER_OPEN}
+          icon={isVisualFilterOpen ? Icons.FilterActive : Icons.Filter}
+          onClick={() => handlers.OnFilterClick(dispatch, isVisualFilterOpen)}
           borderLeft
         />
       </ToolbarButtonGroup>
-    </ToolBarBox>
+    </ToolbarBox>
   );
 };
-
-export default ToolbarComponent;

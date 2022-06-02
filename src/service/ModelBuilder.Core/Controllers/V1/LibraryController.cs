@@ -71,7 +71,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var data = await _libraryService.GetNodeTypes();
+                var data = await _libraryService.GetNodeTypes(null);
                 return Ok(data.ToList());
             }
             catch (Exception e)
@@ -95,7 +95,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var transportTypes = await _libraryService.GetTransportTypes();
+                var transportTypes = await _libraryService.GetTransportTypes(null);
                 return Ok(transportTypes.ToList());
             }
             catch (Exception e)
@@ -119,7 +119,7 @@ namespace Mb.Core.Controllers.V1
         {
             try
             {
-                var interfaceTypes = await _libraryService.GetInterfaceTypes();
+                var interfaceTypes = await _libraryService.GetInterfaceTypes(null);
                 return Ok(interfaceTypes.ToList());
             }
             catch (Exception e)

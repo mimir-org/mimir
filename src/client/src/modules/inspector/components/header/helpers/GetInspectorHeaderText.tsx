@@ -1,4 +1,4 @@
-import { IsAspectNode } from "../../../../../helpers";
+import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { InspectorHeaderNodeInfo, InspectorHeaderNodeInfoText } from "../InspectorHeader.styled";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
@@ -8,7 +8,7 @@ export const GetInspectorHeaderText = (element: InspectorElement) => {
   if (IsNode(element)) {
     return (
       <InspectorHeaderNodeInfo>
-        {!IsAspectNode(element) && <Symbol base64={element?.symbol} text={element?.label ?? element?.name} />}
+        {!IsAspectNode(element) && <Symbol source={element?.symbol} text={element?.label ?? element?.name} />}
         <InspectorHeaderNodeInfoText>{element?.label ?? element?.name}</InspectorHeaderNodeInfoText>
       </InspectorHeaderNodeInfo>
     );

@@ -42,7 +42,7 @@ export const DropdownHeader = ({
   >
     {selectedItem && (
       <>
-        {valueImageProp && <Symbol base64={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
+        {valueImageProp && <Symbol source={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
         <p>{selectedItem.name ?? selectedItem.key}</p>
         <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
       </>

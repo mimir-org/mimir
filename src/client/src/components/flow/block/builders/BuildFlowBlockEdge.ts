@@ -1,18 +1,35 @@
 import { Edge, Node } from "../../../../models";
 import { EdgeType } from "../../../../models/project";
 import { ConvertEdgeToFlow } from "../../converters";
-import { GetSelectedNode } from "../../../../helpers";
-import { ValidateBlockEdge } from "./helpers";
+import { ValidateSplitViewEdge } from "./helpers";
 
-export const BuildFlowBlockEdge = (nodes: Node[], edge: Edge, edgeType: EdgeType, secondaryNode: Node, animated: boolean) => {
+export const BuildFlowBlockEdge = (
+  nodes: Node[],
+  edge: Edge,
+  edgeType: EdgeType,
+  selectedBlockNode: Node,
+  secondaryNode: Node,
+  animated: boolean
+) => {
   const sourceNode = nodes.find((node) => node.id === edge.fromNodeId);
   const targetNode = nodes.find((node) => node.id === edge.toNodeId);
-  const selectedNode = GetSelectedNode();
 
-  if (!sourceNode || !targetNode || !selectedNode) return;
-  const isValid = ValidateBlockEdge(selectedNode, secondaryNode, sourceNode, targetNode, edge.fromConnector, edge.toConnector);
+  if (!sourceNode || !targetNode) return;
+  let isValid = true;
 
-  if (isValid) return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
+  if (secondaryNode != undefined) {
+    isValid = ValidateSplitViewEdge(
+      selectedBlockNode,
+      secondaryNode,
+      sourceNode,
+      targetNode,
+      edge.fromConnector,
+      edge.toConnector
+    );
+  }
+
+  if (!isValid) return null;
+  return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
 };
 
 export default BuildFlowBlockEdge;

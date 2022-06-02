@@ -1,28 +1,29 @@
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers";
-import { Connector, Node, Project } from "../../../../../models";
+import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
+import { Connector, Node, Edge } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
-import { IsLocationTerminal, IsProductTerminal } from "../../../helpers";
+import { IsLocationTerminal, IsProductTerminal } from "../../../helpers/Connectors";
 
 /**
  * Function to check if a connection/edge in BlockView is valid.
  * @param connection
- * @param project
+ * @param nodes
+ * @param edges
  * @param dispatch
  * @returns a boolean value.
  */
-const IsValidBlockConnection = (connection: Connection, project: Project, dispatch: Dispatch) => {
-  const sourceNode = project.nodes.find((x) => x.id === connection.source);
-  const sourceTerminal = sourceNode.connectors.find((x) => x.id === connection.sourceHandle);
-  const targetNode = project.nodes.find((x) => x.id === connection.target);
-  const targetTerminal = targetNode?.connectors.find((x) => x.id === connection.targetHandle);
+const IsValidBlockConnection = (connection: Connection, nodes: Node[], edges: Edge[], dispatch: Dispatch) => {
+  const sourceNode = nodes.find((n) => n.id === connection.source);
+  const sourceTerminal = sourceNode?.connectors.find((c) => c.id === connection.sourceHandle);
+  const targetNode = nodes.find((n) => n.id === connection.target);
+  const targetTerminal = targetNode?.connectors.find((c) => c.id === connection.targetHandle);
 
   const isValidTerminalType = ValidateTerminalType(sourceTerminal, targetTerminal);
   const isValidOffPage = ValidateOffPageNode(sourceNode, targetNode);
-  const isValidTransport = ValidateTransport(sourceTerminal, targetTerminal, sourceNode, targetNode, project);
-  const isValidRelation = ValidateRelation(sourceTerminal, targetTerminal, sourceNode, targetNode, project);
+  const isValidTransport = ValidateTransport(sourceTerminal, targetTerminal, sourceNode, targetNode, edges);
+  const isValidRelation = ValidateRelation(sourceTerminal, targetTerminal, sourceNode, targetNode, edges);
 
   document.addEventListener(
     "mouseup",
@@ -51,10 +52,10 @@ function ValidateTerminalType(sourceTerminal: Connector, targetTerminal: Connect
   return sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
 }
 
-function ValidateTransport(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, project: Project) {
+function ValidateTransport(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {
   if (IsRelationNode(sourceNode) || IsRelationNode(targetNode)) return true;
 
-  return !project.edges.some(
+  return !edges.some(
     (edge) =>
       edge.fromConnectorId === source.id ||
       edge.toConnectorId === source.id ||
@@ -63,13 +64,13 @@ function ValidateTransport(source: Connector, target: Connector, sourceNode: Nod
   );
 }
 
-function ValidateRelation(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, project: Project) {
+function ValidateRelation(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {
   if (IsRelationNode(sourceNode)) {
-    const existingEdge = project.edges.find((x) => x.toConnectorId === target.id && IsRelationTerminal(x.toConnector));
+    const existingEdge = edges.find((e) => e.toConnectorId === target.id && IsRelationTerminal(e.toConnector));
     if (existingEdge) return false;
   }
   if (IsRelationNode(targetNode)) {
-    const existingEdge = project.edges.find((x) => x.fromConnectorId === source.id && IsRelationTerminal(x.fromConnector));
+    const existingEdge = edges.find((e) => e.fromConnectorId === source.id && IsRelationTerminal(e.fromConnector));
     if (existingEdge) return false;
   }
   return true;

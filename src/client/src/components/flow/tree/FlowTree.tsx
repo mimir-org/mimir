@@ -1,29 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import * as helpers from "./helpers/";
 import * as selectors from "./helpers/selectors";
-import { useOnTreeConnect, useOnTreeDrop, useOnTreeRemove } from "./hooks";
-import { BuildTreeElements } from "../tree/builders";
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
-import { setEdgeVisibility, updatePosition } from "../../../redux/store/project/actions";
-import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
-import { VisualFilterComponent } from "../../menus/filterMenu/VisualFilterComponent";
+import * as hooks from "./hooks";
+import { BuildFlowTreeNodes, BuildFlowTreeEdges } from "../tree/builders";
+import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { updatePosition } from "../../../redux/store/project/actions";
+import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
-import { OnTreeSelectionChange } from "../handlers";
-import { Project } from "../../../models";
-import { IsPartOf } from "../helpers";
+import { HandleTreeNodeSelection } from "./handlers";
 import { Size } from "../../../compLibrary/size/Size";
+import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
+import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
+import { Dispatch } from "redux";
 import ReactFlow, {
   Background,
-  Elements,
-  OnLoadParams,
   Edge as FlowEdge,
   Connection,
   Node as FlowNode,
+  useNodesState,
+  useEdgesState,
+  ReactFlowInstance,
+  OnSelectionChangeParams,
+  NodeChange,
+  EdgeChange,
 } from "react-flow-renderer";
 
 interface Props {
-  project: Project;
   inspectorRef: MutableRefObject<HTMLDivElement>;
+  dispatch: Dispatch;
 }
 
 /**
@@ -31,19 +34,24 @@ interface Props {
  * @param interface
  * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
  */
-const FlowTree = ({ project, inspectorRef }: Props) => {
-  const dispatch = useAppDispatch();
+export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const flowWrapper = useRef(null);
-  const [flowInstance, setFlowInstance] = useState<OnLoadParams>(null);
-  const [elements, setElements] = useState<Elements>();
+  const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
+  const [flowNodes, setNodes] = useNodesState<FlowNode>([] as FlowNode[]);
+  const [flowEdges, setEdges] = useEdgesState<FlowEdge>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
-  const visualFilter = useAppSelector(selectors.filterSelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  const mimirNodes = project?.nodes;
+  const mimirEdges = project?.edges;
+  const selectedNode = mimirNodes?.find((n) => n.selected);
+  const selectedEdge = mimirEdges?.find((e) => e.selected);
 
-  const OnLoad = useCallback((_reactFlowInstance: OnLoadParams) => {
+  const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
   }, []);
 
@@ -52,78 +60,99 @@ const FlowTree = ({ project, inspectorRef }: Props) => {
     event.dataTransfer.dropEffect = "move";
   };
 
-  const OnNodeDragStop = (_event: React.DragEvent<HTMLDivElement>, n: FlowNode) =>
+  const OnNodeDragStop = useCallback((_event: React.DragEvent<HTMLDivElement>, n: FlowNode) => {
     dispatch(updatePosition(n.id, n.position.x, n.position.y));
-
-  const OnElementsRemove = (elementsToRemove: Elements) => {
-    return useOnTreeRemove(elementsToRemove, inspectorRef, project, setElements, dispatch);
-  };
+  }, []);
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return useOnTreeConnect({ connection, project, setElements, dispatch, library, animatedEdge });
+    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return useOnTreeDrop({
-      event,
-      project,
-      user,
-      icons,
-      library,
-      flowInstance,
-      flowWrapper,
-      dispatch,
-    });
+    return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
   };
 
-  const onSelectionChange = (selectedElements: Elements) =>
-    OnTreeSelectionChange(selectedElements, project, inspectorRef, dispatch);
+  const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {
+    if (!project) return;
+    return HandleTreeNodeSelection(selectedItems, inspectorRef, dispatch);
+  };
+
+  const OnNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      return hooks.useOnTreeNodesChange(mimirNodes, mimirEdges, changes, setNodes, dispatch, inspectorRef);
+    },
+    [selectedNode]
+  );
+
+  const OnEdgesChange = useCallback(
+    (changes: EdgeChange[]) => {
+      if (!project) return;
+      return hooks.useOnTreeEdgesChange(mimirNodes, mimirEdges, selectedNode, changes, setEdges, inspectorRef, dispatch);
+    },
+    [selectedEdge]
+  );
 
   // Build initial elements from Project
   useEffect(() => {
     if (!hasRendered && project) {
-      setElements(BuildTreeElements(project, animatedEdge));
+      setIsFetching(true);
+      setNodes(BuildFlowTreeNodes(mimirNodes));
+      setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, animatedEdge));
       setHasRendered(true);
+      setIsFetching(false);
     }
-  }, [project]);
+  }, []);
 
-  // Rebuild elements
+  // Rebuild nodes
   useEffect(() => {
-    if (project) setElements(BuildTreeElements(project, animatedEdge));
-  }, [project, animatedEdge]);
+    if (!project) return;
+    setNodes(BuildFlowTreeNodes(mimirNodes));
+  }, [mimirNodes?.length, selectedNode]);
 
+  // Rebuild edges
   useEffect(() => {
-    project?.edges?.forEach((edge) => {
-      if (!IsPartOf(edge.fromConnector)) dispatch(setEdgeVisibility(edge, true));
-    });
+    if (!project) return;
+    setEdges(BuildFlowTreeEdges(mimirNodes, mimirEdges, animatedEdge));
+  }, [mimirEdges, animatedEdge]);
+
+  // Show only partOf edges by default
+  useEffect(() => {
+    setIsFetching(true);
+    SetInitialEdgeVisibility(mimirEdges, dispatch);
+    setIsFetching(false);
   }, []);
 
   return (
-    <>
-      <div className="reactflow-wrapper" ref={flowWrapper}></div>
+    <div className="reactflow-wrapper" ref={flowWrapper}>
+      <SpinnerWrapper fetching={isFetching}>
+        <Spinner />
+      </SpinnerWrapper>
+
       <ReactFlow
-        elements={elements}
+        onInit={OnInit}
+        nodes={flowNodes}
+        edges={flowEdges}
+        onNodesChange={OnNodesChange}
+        onEdgesChange={OnEdgesChange}
         onConnect={OnConnect}
-        onElementsRemove={OnElementsRemove}
-        onLoad={OnLoad}
         onDrop={OnDrop}
         onDragOver={OnDragOver}
         onNodeDragStop={OnNodeDragStop}
-        nodeTypes={helpers.GetTreeNodeTypes}
-        edgeTypes={helpers.GetTreeEdgeTypes}
+        onNodesDelete={null}
+        nodeTypes={useMemo(() => GetTreeNodeTypes, [])}
+        edgeTypes={useMemo(() => GetTreeEdgeTypes, [])}
         defaultZoom={0.7}
         minZoom={0.1}
-        defaultPosition={[800, Size.BLOCK_MARGIN_Y]}
+        defaultPosition={[window.innerWidth / 3, Size.BLOCK_MARGIN_Y]}
         zoomOnDoubleClick={false}
         multiSelectionKeyCode={"Control"}
-        onSelectionChange={(e) => onSelectionChange(e)}
+        onSelectionChange={(e) => OnSelectionChange(e)}
         connectionLineComponent={TreeConnectionLine}
         deleteKeyCode={"Delete"}
       >
         <Background />
       </ReactFlow>
-      {visualFilter && <VisualFilterComponent elements={elements} edgeAnimation={animatedEdge} />}
-    </>
+    </div>
   );
 };
 

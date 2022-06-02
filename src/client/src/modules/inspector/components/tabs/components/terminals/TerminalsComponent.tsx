@@ -19,6 +19,7 @@ export const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
   const [selectedTerminalIdentifier, setSelectedTerminalIdentifier] = useState<SelectedTerminalIdentifier>(null);
   const terminals = terminalLikeItems ?? GetTerminals(element);
   const terminalCategories = useMemo(() => GetFilteredTerminalsList(categoryTypes), [categoryTypes]);
+
   const selectedTerminal = useMemo(
     () => terminals.find((terminal) => terminal.id === selectedTerminalIdentifier?.id),
     [selectedTerminalIdentifier, terminals]

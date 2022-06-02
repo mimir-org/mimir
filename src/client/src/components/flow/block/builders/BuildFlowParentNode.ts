@@ -1,7 +1,6 @@
-import { FlowElement } from "react-flow-renderer";
+import { Node as FlowNode } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { Node } from "../../../../models";
-import { CreateId } from "../../helpers";
 
 /**
  * Component to create a parent node in BlockView.
@@ -21,16 +20,15 @@ const BuildFlowParentNode = (node: Node) => {
   node.positionBlockY = position.y;
 
   return {
-    key: CreateId(),
     id: node.id,
     type: type,
     data: node,
     position: position,
-    isHidden: node.isHidden,
-    isSelected: node.isSelected,
+    hidden: false,
+    selected: false,
     draggable: false,
-    selectable: false,
-  } as FlowElement;
+    selectable: false, // TODO: fix
+  } as FlowNode;
 };
 
 export default BuildFlowParentNode;

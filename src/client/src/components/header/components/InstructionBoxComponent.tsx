@@ -13,7 +13,7 @@ import {
  * @returns the dialog box pointing upwards to project menu
  */
 
-const InstructionBoxComponent = () => (
+export const InstructionBoxComponent = () => (
   <InstructionProjectMenu>
     <InstructionArrowContainer>
       <InstructionArrowCurve />
@@ -24,5 +24,3 @@ const InstructionBoxComponent = () => (
     </InstructionTextBox>
   </InstructionProjectMenu>
 );
-
-export default InstructionBoxComponent;

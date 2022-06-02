@@ -2,6 +2,7 @@ import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get, del, post, HeadersInitDefault } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
+import Config from "../../../models/Config";
 import {
   deleteLibraryItemSuccessOrError,
   exportLibrarySuccessOrError,
@@ -11,7 +12,6 @@ import {
   fetchLibraryTransportTypesSuccessOrError,
   importLibrarySuccessOrError,
 } from "../../store/library/librarySlice";
-import Config from "../../../models/Config";
 
 export function* searchLibrary() {
   const emptyPayload = { nodeTypes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
@@ -51,9 +51,7 @@ export function* exportLibrary(action: PayloadAction<string>) {
       return;
     }
 
-    const blob = new Blob([JSON.stringify(response.data, null, 2)], {
-      type: "application/json",
-    });
+    const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: "application/json" });
     saveAs(blob, action.payload + ".json");
 
     yield put(exportLibrarySuccessOrError(null));
@@ -69,14 +67,8 @@ export function* importLibrary(action: PayloadAction<File>) {
 
     const formData = new FormData();
     formData.append("file", action.payload);
-
     const { ["Content-Type"]: _, ...formPostHeaders } = HeadersInitDefault;
-
-    const response = yield call(post, url, formData, {
-      method: "post",
-      body: formData,
-      headers: { ...formPostHeaders },
-    });
+    const response = yield call(post, url, formData, { method: "post", body: formData, headers: { ...formPostHeaders } });
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, importLibrarySuccessOrError.type);

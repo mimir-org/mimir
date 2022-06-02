@@ -4,9 +4,7 @@ export const REMOVE_SECONDARY_NODE = "REMOVE_SECONDARY_NODE";
 
 export interface SetSecondaryNode {
   type: typeof SET_SECONDARY_NODE;
-  payload: {
-    node: Node;
-  };
+  payload: { node: Node };
 }
 
 export interface RemoveSecondaryNode {

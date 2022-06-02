@@ -47,11 +47,27 @@ namespace Mb.Data.Repositories
         /// <typeparam name="T">Generic return value of function param</typeparam>
         /// <param name="key">Cache key</param>
         /// <param name="item">Function param that create the cache</param>
+        /// <param name="seconds">Override lifetime cache</param>
         /// <returns>T value</returns>
-        public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> item)
+        public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> item, int? seconds)
         {
             if (_memoryCache.TryGetValue(key, out T cacheEntry))
                 return cacheEntry;
+
+            int sec;
+
+            switch (seconds)
+            {
+                case null:
+                    sec = Seconds;
+                    break;
+                case <= 0:
+                    cacheEntry = await item();
+                    return cacheEntry;
+                default:
+                    sec = seconds.Value;
+                    break;
+            }
 
             var cacheLock = _locks.GetOrAdd(key, _ => new SemaphoreSlim(1, 1));
             await cacheLock.WaitAsync();
@@ -61,7 +77,7 @@ namespace Mb.Data.Repositories
                 if (!_memoryCache.TryGetValue(key, out cacheEntry))
                 {
                     cacheEntry = await item();
-                    _memoryCache.Set(key, cacheEntry, DateTimeOffset.Now.AddSeconds(Seconds));
+                    _memoryCache.Set(key, cacheEntry, DateTimeOffset.Now.AddSeconds(sec));
                 }
             }
             finally

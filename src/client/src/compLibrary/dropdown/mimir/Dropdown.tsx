@@ -67,43 +67,41 @@ export const Dropdown = ({
     onChange(value);
   };
 
-  return (
-    items?.length > 0 && (
-      <DropdownBox
+  return items?.length ? (
+    <DropdownBox
+      disabled={disabled}
+      tabIndex={0}
+      onBlur={() => {
+        setIsListOpen(false);
+      }}
+    >
+      <label htmlFor={label} />
+      <DropdownHeader
+        borderRadius={borderRadius}
+        borderColor={borderColor}
+        fontSize={fontSize}
+        height={height}
         disabled={disabled}
-        tabIndex={0}
-        onBlur={() => {
-          setIsListOpen(false);
-        }}
-      >
-        <label htmlFor={label} />
-        <DropdownHeader
-          borderRadius={borderRadius}
+        isListOpen={isListOpen}
+        setIsListOpen={setIsListOpen}
+        selectedItem={selectedItem}
+        valueProp={valueProp}
+        valueImageProp={valueImageProp}
+      />
+      {isListOpen && (
+        <DropdownList
+          items={items}
           borderColor={borderColor}
-          fontSize={fontSize}
+          borderRadius={borderRadius}
           height={height}
-          disabled={disabled}
-          isListOpen={isListOpen}
-          setIsListOpen={setIsListOpen}
-          selectedItem={selectedItem}
+          listTop={listTop}
+          fontSize={fontSize}
           valueProp={valueProp}
           valueImageProp={valueImageProp}
+          keyProp={keyProp}
+          handleChange={(item: DropdownItem) => handleChange(item)}
         />
-        {isListOpen && (
-          <DropdownList
-            items={items}
-            borderColor={borderColor}
-            borderRadius={borderRadius}
-            height={height}
-            listTop={listTop}
-            fontSize={fontSize}
-            valueProp={valueProp}
-            valueImageProp={valueImageProp}
-            keyProp={keyProp}
-            handleChange={(item: DropdownItem) => handleChange(item)}
-          />
-        )}
-      </DropdownBox>
-    )
-  );
+      )}
+    </DropdownBox>
+  ) : null;
 };

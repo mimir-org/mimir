@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const ConfirmDeleteType = ({ isOpen, onExit, onDelete, deleteTargetName }: Props) => {
-  const modalDescription = `${TextResources.LIBRARY_DELETE_TYPE_CONFIRM} ${deleteTargetName}?`;
+  const modalDescription = `${TextResources.DELETE_TYPE_CONFIRM} ${deleteTargetName}?`;
 
   return (
     <Modal isBlurred isOpen={isOpen} onExit={onExit}>

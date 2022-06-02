@@ -1,5 +1,5 @@
 import * as Icons from "../../../../../assets/icons/terminalsMenu";
-import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers";
+import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
 import { Node } from "../../../../../models";
 
 /**
@@ -9,13 +9,14 @@ import { Node } from "../../../../../models";
  * @param isInput
  * @returns an icon
  */
-const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
+export const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
   if (isParent) return Icons.ParentMenu;
 
   if (IsLocation(node)) {
     if (isInput) return Icons.LocationInputMenu;
     return Icons.LocationOutputMenu;
   }
+
   if (IsFunction(node)) {
     if (isInput) return Icons.FunctionInputMenu;
     return Icons.FunctionOutputMenu;
@@ -26,5 +27,3 @@ const GetMenuIcon = (node: Node, isParent: boolean, isInput: boolean) => {
     return Icons.ProductOutputMenu;
   }
 };
-
-export default GetMenuIcon;

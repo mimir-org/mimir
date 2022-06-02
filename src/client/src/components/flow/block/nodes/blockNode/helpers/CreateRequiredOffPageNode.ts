@@ -25,6 +25,7 @@ export const CreateRequiredOffPageNode = (
     sourceNode,
     sourceConnector,
     position,
+    isRequired,
   } as OffPageData;
 
   const offPageObject = CreateOffPageObject(data);

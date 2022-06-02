@@ -25,7 +25,8 @@ namespace Mb.Data.Contracts
         /// <typeparam name="T">Generic return value of function param</typeparam>
         /// <param name="key">Cache key</param>
         /// <param name="item">Function param that create the cache</param>
+        /// <param name="seconds">Override lifetime cache</param>
         /// <returns>T value</returns>
-        Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> item);
+        Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> item, int? seconds = null);
     }
 }

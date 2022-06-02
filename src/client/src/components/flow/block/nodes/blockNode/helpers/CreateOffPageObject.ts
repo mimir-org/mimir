@@ -1,4 +1,5 @@
-import { CreateId, IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOf } from "../../../../helpers";
+import { IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOfTerminal } from "../../../../helpers/Connectors";
+import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../compLibrary/size/Size";
 import {
@@ -11,10 +12,11 @@ import {
   Node,
   RelationType,
   ConnectorVisibility,
+  NODE_KIND,
 } from "../../../../../../models";
 
 export interface OffPageObject {
-  node: Node;
+  offPageNode: Node;
   partOfEdge: Edge;
   transportEdge: Edge;
 }
@@ -23,6 +25,7 @@ export interface OffPageData {
   sourceNode: Node;
   sourceConnector: Connector;
   position: Position;
+  isRequired: boolean;
 }
 
 /**
@@ -37,33 +40,34 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   if (!sourceConnector || !sourceNode) return null;
 
-  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOf(c) && !IsInputTerminal(c));
+  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOfTerminal(c) && !IsInputTerminal(c));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
     id: CreateId(),
-    name: "OffPage-" + sourceNode.name,
-    label: "OffPage-" + sourceNode.label,
+    name: `OffPage-${sourceNode.name}`,
+    label: `OffPage-${sourceNode.label}`,
     aspect: Aspect.None,
     positionBlockX: data.position.x,
     positionBlockY: sourceNode.positionBlockY + Size.NODE_HEIGHT, // Adjust relative to parent
     connectors: [],
     attributes: [],
-    isHidden: false,
+    hidden: false,
     masterProjectId: sourceNode.masterProjectId,
     statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,
+    parentNodeId: sourceNode.id,
+    kind: NODE_KIND,
+    isOffPageRequired: data.isRequired,
     isOffPageTarget: isTarget,
   } as Node;
 
-  //#region Connectors
   const inputConnector = {
     id: CreateId(),
     name: "OffPageInput",
     type: ConnectorType.Input,
     nodeId: offPageNode.id,
     terminalCategory: sourceConnector.terminalCategory,
-    terminalCategoryId: sourceConnector.terminalCategoryId,
     terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
@@ -78,7 +82,6 @@ export const CreateOffPageObject = (data: OffPageData) => {
     type: ConnectorType.Output,
     nodeId: offPageNode.id,
     terminalCategory: sourceConnector.terminalCategory,
-    terminalCategoryId: sourceConnector.terminalCategoryId,
     terminalTypeId: sourceConnector.terminalTypeId,
     attributes: [],
     semanticReference: "",
@@ -100,10 +103,8 @@ export const CreateOffPageObject = (data: OffPageData) => {
   offPageNode.connectors.push(inputConnector);
   offPageNode.connectors.push(outputConnector);
   offPageNode.connectors.push(partOfConnector);
-  //#endregion
 
-  //#region Edges
-  const partofEdge = {
+  const partOfEdge = {
     id: CreateId(),
     fromConnector: sourcePartOfConn,
     fromConnectorId: sourcePartOfConn?.id,
@@ -113,7 +114,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     fromNodeId: sourceNode.id,
     toNode: offPageNode,
     toNodeId: offPageNode.id,
-    isHidden: false,
+    hidden: false,
     kind: EDGE_KIND,
     projectId: sourceNode.projectId,
   } as Edge;
@@ -128,15 +129,10 @@ export const CreateOffPageObject = (data: OffPageData) => {
     fromNodeId: isTarget ? sourceNode.id : offPageNode.id,
     toNode: isTarget ? offPageNode : sourceNode,
     toNodeId: isTarget ? offPageNode.id : sourceNode.id,
-    isHidden: false,
+    hidden: false,
     kind: EDGE_KIND,
     projectId: sourceNode.projectId,
   } as Edge;
-  //#endregion
 
-  return {
-    node: offPageNode,
-    partOfEdge: partofEdge,
-    transportEdge: transportEdge,
-  } as OffPageObject;
+  return { offPageNode, partOfEdge, transportEdge } as OffPageObject;
 };

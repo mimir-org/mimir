@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-import { projectIdSelector, useAppSelector } from "../../../../../../../../../../redux/store";
 import { CombinedAttribute } from "../../../../../../../../../../models";
 import { PARAMETER_ENTITY_WIDTH, Parameter } from "./components/Parameter";
 import { Body, Box } from "./ParameterRow.styled";
@@ -9,11 +8,15 @@ import { RemoveIconComponent } from "../../../../../../../../../../assets/icons/
 import { OnChangeFilterChoice } from "../../handlers/OnChangeFilterChoice";
 import { OnChangeParameterValue } from "../../handlers/OnChangeParameterValue";
 import { OnLockParameter } from "../../handlers/OnLockParameter";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { GetAttributes } from "../../helpers/GetAttributes";
 import { DoesCombinationMatchAttribute } from "../../helpers/GetAttributeCombinations";
 import { OnChangeAttributeCombinationChoice } from "../../handlers/OnChangeAttributeCombinationChoice";
-import { IsCreateLibraryType } from "../../../../../../../../helpers/IsType";
+import {
+  projectIdSelector,
+  isProjectStateGloballyLockingSelector,
+  useAppSelector,
+} from "../../../../../../../../../../redux/store";
 import {
   AttributeLikeItem,
   InspectorElement,
@@ -53,9 +56,9 @@ export const ParameterRow = ({
   dispatch,
 }: Props) => {
   const projectId = useAppSelector(projectIdSelector);
+  const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
+  const [lockingAttribute, setLockingAttribute] = useState(null);
   const attributes = attributeLikeItems ?? GetAttributes(element);
-  const isCreateLibraryType = IsCreateLibraryType(inspectorParentElement);
-
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
     [maxNumSelectedCombinations]
@@ -66,13 +69,13 @@ export const ParameterRow = ({
       <Body width={bodyWidth}>
         <Entity width={FILTER_ENTITY_WIDTH}>
           <Box color={bodyColor} id="ParametersBox">
-            <div className={`icon ${isCreateLibraryType && "hide-icon"}`}>
+            <div className={`icon`}>
               <RemoveIconComponent
                 width={26}
                 height={26}
                 fill={headerColor}
                 stroke={headerColor}
-                onClick={() => !isCreateLibraryType && OnChangeFilterChoice(element.id, filterName, true, dispatch)}
+                onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
               />
             </div>
             <div className="text">{filterName}</div>
@@ -95,11 +98,13 @@ export const ParameterRow = ({
             combination={combination}
             headerColor={headerColor}
             bodyColor={bodyColor}
+            isGloballyLocking={isGlobalLocking}
+            lockingAttribute={lockingAttribute}
             onChange={(id, value, unitId) =>
               OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
             }
             onLock={(attribute, isLocked) =>
-              OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, dispatch)
+              OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, setLockingAttribute, dispatch)
             }
             onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
           />

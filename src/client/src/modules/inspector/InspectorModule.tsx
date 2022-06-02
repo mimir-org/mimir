@@ -6,48 +6,49 @@ import { TextResources } from "../../assets/text/TextResources";
 import { MODULE_TYPE } from "../../models/project";
 import { InspectorElement } from "./types";
 import { InspectorResizePanel } from "./InspectorModule.styled";
-import { Project } from "../../models";
 import { useAutoMinimizeInspector, useDragResizePanel } from "./hooks";
 import { changeInspectorHeight } from "./redux/inspectorSlice";
 import { setModuleVisibility } from "../../redux/store/modules/modulesSlice";
-import { GetSelectedNode, IsBlockView } from "../../helpers";
+import { IsBlockView } from "../../helpers";
 import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
+import { GetSelectedFlowNodes } from "../../helpers/Selected";
 
 interface Props {
-  project: Project;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
 }
 
 /**
- * Component for the Inspector Module that shows the data for each object in Flow.
+ * Component for the Inspector Module that shows the data for each object in Mimir.
  * @param interface
  * @returns a module with multiple tabs for different operations.
  */
-export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
+export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
+  const project = useAppSelector(selectors.projectSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
   const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);
   const inspectorOpen = useAppSelector(selectors.inspectorSelector);
   const libOpen = useAppSelector(selectors.libOpenSelector);
   const explorerOpen = useAppSelector(selectors.explorerSelector);
+  const isBlockView = IsBlockView();
+  const selectedFlowNodes = GetSelectedFlowNodes();
 
   const stop = inspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
   const start = inspectorOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
 
-  const nodes = project?.nodes ?? [];
-  const edges = project?.edges ?? [];
-  const edge = edges.find((x) => x.isSelected);
-  const node = IsBlockView() ? nodes?.find((x) => x.isBlockSelected) : GetSelectedNode();
+  const selectedEdge = project?.edges.find((e) => e.selected);
+  const selectedNode = project?.nodes.find((n) => n.selected);
 
   const resizePanelRef = useRef(null);
-  const element: InspectorElement = node || edge;
+  const element = (selectedNode || selectedEdge) as InspectorElement;
 
-  useAutoMinimizeInspector(inspectorRef);
+  useAutoMinimizeInspector(inspectorRef, isBlockView, selectedFlowNodes);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
+
   const changeInspectorVisibilityAction = useCallback(
     (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
     [type]
@@ -66,7 +67,7 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
       zIndex={5}
       forwardRef={inspectorRef}
     >
-      <Tooltip content={TextResources.INSPECTOR_RESIZE} offset={[0, 10]} delay={150}>
+      <Tooltip content={TextResources.RESIZE} offset={[0, 10]} delay={150}>
         <InspectorResizePanel tabIndex={0} id="ResizePanel" ref={resizePanelRef} isInspectorOpen={inspectorOpen} />
       </Tooltip>
       <InspectorHeader
@@ -75,11 +76,13 @@ export const InspectorModule = ({ project, inspectorRef, dispatch }: Props) => {
         username={username}
         dispatch={dispatch}
         open={inspectorOpen}
+        isBlockView={isBlockView}
         activeTabIndex={activeTabIndex}
         inspectorRef={inspectorRef}
         isInspectorOpen={inspectorOpen}
         changeInspectorVisibilityAction={changeInspectorVisibilityAction}
         changeInspectorHeightAction={changeInspectorHeight}
+        selectedFlowNodes={selectedFlowNodes}
       />
     </AnimatedInspector>
   );

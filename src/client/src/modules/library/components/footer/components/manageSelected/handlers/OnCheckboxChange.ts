@@ -1,12 +1,12 @@
 const OnCheckboxChange = (
   id: string,
-  isSelected: (id: string) => boolean,
+  selected: (id: string) => boolean,
   selectedCollections: string[],
   setSelectedCollections: (select: string[]) => void
 ) => {
   let temp = [...selectedCollections];
-  if (isSelected(id)) temp = temp.filter((a) => a !== id);
-  else if (!isSelected(id) && temp) temp.push(id);
+  if (selected(id)) temp = temp.filter((a) => a !== id);
+  else if (!selected(id) && temp) temp.push(id);
   setSelectedCollections(temp);
 };
 

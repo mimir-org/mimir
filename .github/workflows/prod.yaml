@@ -1,4 +1,4 @@
-name: CI - PROD
+name: CD - PROD
 
 on:
   push:
@@ -8,7 +8,8 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.tag_version.outputs.new_tag }}
+      release_version: ${{ steps.tag_version.outputs.new_tag }}
+      tag: v${{ steps.tag_version.outputs.new_tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,14 +19,13 @@ jobs:
         uses: mimir-org/mimir-actions/generate-release-tag-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          prefix: "v"
 
       - name: Release
         if: ${{ steps.tag_version.outputs.new_tag != '' }}
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release  ${{ steps.tag_version.outputs.new_tag }}
+          tag_name: v${{ steps.tag_version.outputs.new_tag }}
+          name: Release v${{ steps.tag_version.outputs.new_tag }}
           generate_release_notes: true
 
       - name: Check Output Parameters
@@ -47,14 +47,11 @@ jobs:
       file: ./src/client/Dockerfile
       target: final
       build_args: |
-        ENVIR=prod
+        MIMIR_VERSION=${{ needs.create-release.outputs.release_version }}
       hash_files_template: "**/package-lock.json"
       push: true
       use_dockerhub: true
     secrets:
-      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
       DOCKERHUB_ORG: mimirorg
       DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
       DOCKERHUB_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
@@ -75,9 +72,6 @@ jobs:
       push: true
       use_dockerhub: true
     secrets:
-      REGISTRY_SERVER_URLS: ${{ secrets.REGISTRY_SERVER_URL }}
-      REGISTRY_USERNAMES: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORDS: ${{ secrets.REGISTRY_PASSWORD }}
       DOCKERHUB_ORG: mimirorg
       DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
       DOCKERHUB_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}

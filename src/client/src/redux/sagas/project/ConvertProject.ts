@@ -73,7 +73,7 @@ export interface ConnectorAm {
 
   // Terminal
   color: string;
-  terminalCategoryId: string;
+  terminalCategory: string;
   attributes: AttributeAm[];
   terminalTypeId: string;
   terminalTypeIri: string;
@@ -200,26 +200,19 @@ export interface InterfaceAm {
   libraryTypeId: string;
 }
 
-const ConvertUnits = (units: EnumBase[]): UnitAm[] => {
+const ConvertUnits = (units: EnumBase[]) => {
   const converted: UnitAm[] = [];
-
   if (!units) return converted;
 
   units.forEach((unit) => {
-    converted.push({
-      id: unit.id,
-      name: unit.name,
-      description: unit.description,
-      semanticReference: unit.semanticReference,
-    });
+    converted.push({ id: unit.id, name: unit.name, description: unit.description, semanticReference: unit.semanticReference });
   });
 
   return converted;
 };
 
-const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
+const ConvertAttributes = (attributes: Attribute[]) => {
   const converted: AttributeAm[] = [];
-
   if (!attributes) return converted;
 
   attributes.forEach((attribute) => {
@@ -259,9 +252,8 @@ const ConvertAttributes = (attributes: Attribute[]): AttributeAm[] => {
   return converted;
 };
 
-const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
+const ConvertConnectors = (connectors: Connector[]) => {
   const converted: ConnectorAm[] = [];
-
   if (!connectors) return converted;
 
   connectors.forEach((connector) => {
@@ -277,7 +269,7 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
       nodeIri: connector.nodeIri,
       relationType: connector.relationType,
       color: connector.color,
-      terminalCategoryId: connector.terminalCategoryId,
+      terminalCategory: connector.terminalCategory,
       attributes: ConvertAttributes(connector.attributes),
       terminalTypeId: connector.terminalTypeId,
       terminalTypeIri: connector.terminalTypeIri,
@@ -288,8 +280,9 @@ const ConvertConnectors = (connectors: Connector[]): ConnectorAm[] => {
   return converted;
 };
 
-const ConvertConnector = (connector: Connector): ConnectorAm => {
+const ConvertConnector = (connector: Connector) => {
   if (!connector) return {} as ConnectorAm;
+
   return {
     id: connector.id,
     iri: connector.iri,
@@ -302,7 +295,7 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
     nodeIri: connector.nodeIri,
     relationType: connector.relationType,
     color: connector.color,
-    terminalCategoryId: connector.terminalCategoryId,
+    terminalCategory: connector.terminalCategory,
     attributes: ConvertAttributes(connector.attributes),
     terminalTypeId: connector.terminalTypeId,
     terminalTypeIri: connector.terminalTypeIri,
@@ -310,9 +303,8 @@ const ConvertConnector = (connector: Connector): ConnectorAm => {
   };
 };
 
-const ConvertSimples = (simples: Simple[]): SimpleAm[] => {
+const ConvertSimples = (simples: Simple[]) => {
   const converted: SimpleAm[] = [];
-
   if (!simples) return converted;
 
   simples.forEach((simple) => {
@@ -329,7 +321,7 @@ const ConvertSimples = (simples: Simple[]): SimpleAm[] => {
   return converted;
 };
 
-const ConvertTransport = (data: Transport): TransportAm => {
+const ConvertTransport = (data: Transport) => {
   if (!data) return null;
 
   return {
@@ -351,10 +343,10 @@ const ConvertTransport = (data: Transport): TransportAm => {
     createdBy: data.createdBy,
     created: data.created,
     libraryTypeId: data.libraryTypeId,
-  };
+  } as TransportAm;
 };
 
-const ConvertInterface = (data: Interface): InterfaceAm => {
+const ConvertInterface = (data: Interface) => {
   if (!data) return null;
 
   return {
@@ -376,12 +368,11 @@ const ConvertInterface = (data: Interface): InterfaceAm => {
     createdBy: data.createdBy,
     created: data.created,
     libraryTypeId: data.libraryTypeId,
-  };
+  } as InterfaceAm;
 };
 
-const ConvertNodes = (nodes: Node[]): NodeAm[] => {
+const ConvertNodes = (nodes: Node[]) => {
   const convertedNodes: NodeAm[] = [];
-
   if (!nodes) return convertedNodes;
 
   nodes.forEach((node) => {
@@ -427,9 +418,8 @@ const ConvertNodes = (nodes: Node[]): NodeAm[] => {
   return convertedNodes;
 };
 
-const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
+const ConvertEdges = (edges: Edge[]) => {
   const convertedEdges: EdgeAm[] = [];
-
   if (!edges) return convertedEdges;
 
   edges.forEach((edge) => {
@@ -457,7 +447,7 @@ const ConvertEdges = (edges: Edge[]): EdgeAm[] => {
   return convertedEdges;
 };
 
-const ConvertProject = (project: Project): ProjectAm => {
+const ConvertProject = (project: Project) => {
   return {
     id: project.id,
     iri: project.iri,
@@ -468,7 +458,7 @@ const ConvertProject = (project: Project): ProjectAm => {
     projectOwner: project.projectOwner,
     nodes: ConvertNodes(project.nodes),
     edges: ConvertEdges(project.edges),
-  };
+  } as ProjectAm;
 };
 
 export default ConvertProject;

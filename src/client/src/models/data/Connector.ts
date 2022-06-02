@@ -1,4 +1,3 @@
-import { EnumBase } from "../enums/EnumBase";
 import { RelationType } from "../enums/RelationType";
 import { ConnectorType } from "../enums/ConnectorType";
 import { ConnectorVisibility } from "../enums/ConnectorVisibility";
@@ -20,8 +19,7 @@ export interface Connector {
 
   // Terminal
   color: string;
-  terminalCategoryId: string;
-  terminalCategory: EnumBase;
+  terminalCategory: string;
   attributes: Attribute[];
   terminalTypeId: string;
   terminalTypeIri: string;

@@ -1,18 +1,20 @@
 import { Dispatch } from "redux";
 import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
-import { FilterElement } from "./FilterElement";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Connector, Edge } from "../../../../../models";
 import { OnAllTransportsChange } from "./handlers";
 import { PopulateTerminalCategories, AllTransportsChecked } from "./helpers";
+import { FilterElement } from "../FilterElement";
+import { memo } from "react";
 
 export interface TerminalCategory {
   id: string;
   name: string;
 }
+
 interface Props {
   edges: Edge[];
-  items: Connector[];
+  connectors: Connector[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -23,14 +25,14 @@ interface Props {
  * @param interface
  * @returns one parent checkbox, and one checkbox for each child.
  */
-export const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
-  const categories = PopulateTerminalCategories(items);
+const TransportFilter = ({ edges, connectors, dispatch, visible }: Props) => {
+  const categories = PopulateTerminalCategories(connectors);
 
   return (
     visible && (
       <>
         <FilterElement
-          label={TextResources.FILTER_TRANSPORTS}
+          label={TextResources.TRANSPORTS}
           onChange={() => OnAllTransportsChange(edges, dispatch)}
           isChecked={AllTransportsChecked(edges)}
           visible={visible}
@@ -38,15 +40,15 @@ export const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
         />
 
         {categories?.map((category) => {
-          const categoryItems = items.filter((item) => item.terminalCategoryId === category.id);
+          const categoryConnectors = connectors.filter((conn) => conn.terminalCategory === category.id);
           return (
             <TerminalCategoryFilter
               key={category.id}
               category={category}
               edges={edges}
-              items={categoryItems}
+              connectors={categoryConnectors}
               dispatch={dispatch}
-              visible={!!categoryItems.length}
+              visible={!!categoryConnectors.length}
             />
           );
         })}
@@ -55,4 +57,4 @@ export const TransportFilter = ({ edges, items, dispatch, visible }: Props) => {
   );
 };
 
-export default TransportFilter;
+export default memo(TransportFilter);
