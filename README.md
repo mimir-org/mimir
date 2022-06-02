@@ -201,13 +201,13 @@ To set environment variables for server in development, edit the appsettings.jso
 ### :bangbang: Prerequisites
 
 This project uses .NET 6 for the server and NPM as package manager for the client,
-make sure that you have these installed before continuing.
-Mimir has dependency on Type Library Service. Clone that project as well if not running on external server (```git clone git@github.com:mimir-org/typelibrary.git```).
-You also need a MSSQL database running on your machine. See docker-compose for running sql in docker.
+make sure that you have these installed before continuing. Mimir has dependency on Type Library Service, so you also need to clone that project for development purposes.
+Clone that project as well if not running on external server. You also need a MSSQL database running on your machine. See docker-compose for running sql in docker.
 
 Start by cloning the project
 ```git 
 git clone git@github.com:mimir-org/mimir.git
+git clone git@github.com:mimir-org/typelibrary.git
 ```
 
 Navigate to the new directory
