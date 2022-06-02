@@ -241,7 +241,7 @@ This project has adopted the code of conduct defined by the Contributor Covenant
 <!-- License -->
 ## :warning: License
 
-Distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
+Distributed under the MIT License. See [LICENSE](./LICENSE.txt) for more information.
 
 <!-- Contact -->
 ## :handshake: Contact
