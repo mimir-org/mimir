@@ -25,8 +25,7 @@
     "use-file-picker": "^1.4.2"
   },
   "scripts": {
-    "start": "env-cmd -f .env.dev react-scripts start",
-    "local": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "analyze": "source-map-explorer 'build/static/js/*.js'",

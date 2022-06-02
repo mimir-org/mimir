@@ -4,8 +4,7 @@ import { GetApiErrorForBadRequest, GetApiErrorForException, get } from "../../..
 import {
   fetchCollaborationPartnersSuccessOrError,
   fetchCombinedAttributeFiltersSuccessOrError,
-  fetchParsersSuccessOrError,
-  fetchStatusesSuccessOrError,
+  fetchParsersSuccessOrError
 } from "../../store/common/commonSlice";
 
 /**
@@ -26,27 +25,6 @@ export function* getCollaborationPartners() {
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchCollaborationPartnersSuccessOrError.type);
     yield put(fetchCollaborationPartnersSuccessOrError({ collaborationPartners: [], apiError }));
-  }
-}
-
-/**
- * Get all registered statuses
- */
-export function* getStatuses() {
-  try {
-    const url = `${Config.API_BASE_URL}enum/7`;
-    const response = yield call(get, url);
-
-    if (response.status === 400) {
-      const apiError = GetApiErrorForBadRequest(response, fetchStatusesSuccessOrError.type);
-      yield put(fetchStatusesSuccessOrError({ statuses: [], apiError }));
-      return;
-    }
-
-    yield put(fetchStatusesSuccessOrError({ statuses: response.data, apiError: null }));
-  } catch (error) {
-    const apiError = GetApiErrorForException(error, fetchStatusesSuccessOrError.type);
-    yield put(fetchStatusesSuccessOrError({ statuses: [], apiError }));
   }
 }
 
