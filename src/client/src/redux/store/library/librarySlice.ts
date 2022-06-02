@@ -1,6 +1,6 @@
 import { Collection } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { addToCollectionsTypes, DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
+import { AddToCollectionsTypes, DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
@@ -106,7 +106,7 @@ export const librarySlice = createSlice({
     addCollection: (state, action: PayloadAction<Collection>) => {
       state.collections?.push(action.payload);
     },
-    addToCollections: (state, action: PayloadAction<addToCollectionsTypes>) => {
+    addToCollections: (state, action: PayloadAction<AddToCollectionsTypes>) => {
       state.collections = state.collections.map((collection) => {
         if (action.payload.collectionIds.includes(collection.id)) {
           action.payload.types.forEach((type) => {

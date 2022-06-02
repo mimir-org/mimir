@@ -32,7 +32,7 @@ export interface DeleteLibraryItem {
   apiError: ApiError;
 }
 
-export interface addToCollectionsTypes {
+export interface AddToCollectionsTypes {
   types: NodeLibCm[];
   collectionIds: string[];
 }

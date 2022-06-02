@@ -2,7 +2,7 @@ import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Dispatch } from "redux";
 import { CollectionsActions } from "../../../../../../../models";
 import { addToCollections } from "../../../../../../../redux/store/library/librarySlice";
-import { addToCollectionsTypes } from "../../../../../../../redux/store/library/types";
+import { AddToCollectionsTypes } from "../../../../../../../redux/store/library/types";
 
 const OnManageCollection = (
   selectedTypes: NodeLibCm[],
@@ -12,7 +12,7 @@ const OnManageCollection = (
   setAddSelectedToCollection: (open: boolean) => void,
   dispatch: Dispatch
 ) => {
-  const collections: addToCollectionsTypes = {
+  const collections: AddToCollectionsTypes = {
     types: selectedTypes,
     collectionIds: selectedCollections,
   };
