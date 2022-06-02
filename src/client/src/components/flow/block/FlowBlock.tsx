@@ -45,7 +45,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
-  const icons = useAppSelector(selectors.iconSelector);
   const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
@@ -82,7 +81,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
+    return hooks.useOnDrop({ event, project, user, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
   const OnNodesChange = useCallback(

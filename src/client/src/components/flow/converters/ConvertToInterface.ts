@@ -4,7 +4,7 @@ import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
 
 const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
-  const interfaceType = library?.interfaceTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
+  const interfaceType = null; // library?.interfaceTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   if (!interfaceType) return null;
 
   const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;

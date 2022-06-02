@@ -1,7 +1,7 @@
-import { TerminalCategory } from "../../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
+// import { TerminalCategory } from "../../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { TerminalLikeItem } from "../../../../../../../../types";
 
-export const FilterTerminalCategories = (terminalCategories: TerminalCategory[], terminals: TerminalLikeItem[]) =>
+export const FilterTerminalCategories = (terminalCategories: any[], terminals: TerminalLikeItem[]) =>
   terminalCategories
     .filter((cat) => terminals.find((term) => term.terminalCategory === cat.id))
     .map((cat) => ({

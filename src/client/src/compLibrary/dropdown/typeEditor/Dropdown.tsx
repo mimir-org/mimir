@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
-import { LocationTypeCategory } from "../../../typeEditor/styled";
+// import { LocationTypeCategory } from "../../../typeEditor/styled";
 import { Symbol } from "../../symbol";
 import { DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem, DropdownMenuWrapper } from "./Dropdown.styled";
 
@@ -65,11 +65,12 @@ const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, has
   };
 
   const getCategory = (item: DropDownCategoryItem<T>) => {
-    return (
-      <LocationTypeCategory>
-        <p>{item.description}</p>
-      </LocationTypeCategory>
-    );
+    return null;
+    //  (
+    //   <LocationTypeCategory>
+    //     <p>{item.description}</p>
+    //   </LocationTypeCategory>
+    // );
   };
 
   const getItems = (items: DropDownItem<T>[]) => {

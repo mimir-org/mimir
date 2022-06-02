@@ -7,7 +7,6 @@ import { deleteProjectError } from "../../redux/store/project/actions";
 import { deleteCommonError } from "../../redux/store/common/commonSlice";
 import { deleteLibraryError } from "../../redux/store/library/librarySlice";
 import { deleteUserError } from "../../redux/store/user/userSlice";
-import { deleteTypeEditorError } from "../../typeEditor/redux/typeEditorSlice";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
 import { Modal } from "../../compLibrary/modal/Modal";
 import { Color } from "../../compLibrary/colors/Color";
@@ -33,7 +32,6 @@ const ErrorModule = () => {
   const libraryState = useAppSelector(selectors.librarySelector);
   const userState = useAppSelector(selectors.userStateSelector);
   const commonState = useAppSelector(selectors.commonStateSelector);
-  const typeEditorState = useAppSelector(selectors.typeEditorStateSelector);
 
   const closeHeader = () => {
     if (errors) {
@@ -43,7 +41,6 @@ const ErrorModule = () => {
           dispatch(deleteCommonError(error.key));
           dispatch(deleteLibraryError(error.key));
           dispatch(deleteUserError(error.key));
-          dispatch(deleteTypeEditorError(error.key));
         }
       });
     }
@@ -77,16 +74,9 @@ const ErrorModule = () => {
       });
     }
 
-    if (typeEditorState.apiError) {
-      typeEditorState.apiError.forEach((error) => {
-        if (error)
-          errorList.push({ module: "TypeEditor", key: error.key, message: error.errorMessage, errorData: error.errorData });
-      });
-    }
-
     setErrors(errorList);
     setVisible(errorList.length > 0);
-  }, [commonState.apiError, libraryState.apiError, projectState.apiError, userState.apiError, typeEditorState.apiError]);
+  }, [commonState.apiError, libraryState.apiError, projectState.apiError, userState.apiError]);
 
   return (
     <Modal isBlurred isOpen={visible} onExit={closeHeader}>

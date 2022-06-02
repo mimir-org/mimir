@@ -4,21 +4,22 @@ import { Color } from "../../../../../../../../compLibrary/colors/Color";
 import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { GetAspectColor } from "../../../../../../../../helpers";
-import { AspectColorType, CollectionsActions, LibItem, ObjectType } from "../../../../../../../../models";
+import { AspectColorType, CollectionsActions } from "../../../../../../../../models";
 import { NodeElementButton, NodeElementText } from "./NodeElement.styled";
 import { NodeElementIconComponent } from "./NodeElementIconComponent";
 import { OnCheckboxChange, OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
 import { FavoriteComponent } from "./FavoriteComponent";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
-  item: LibItem;
+  item: NodeLibCm;
   customCategory: LibraryCategory;
-  selectedElement: LibItem;
-  setSelectedElement: (value: LibItem) => void;
+  selectedElement: NodeLibCm;
+  setSelectedElement: (value: NodeLibCm) => void;
   isCustomCategory: boolean;
   dispatch: Dispatch;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: NodeLibCm[];
+  setSelectedTypes: (array: NodeLibCm[]) => void;
   collectionState: CollectionsActions;
 }
 
@@ -53,8 +54,8 @@ export const NodeElement = ({
       onMouseLeave={() => setShowAddButton(false)}
       active={selectedElement && selectedElement.id === item.id}
       onClick={() => setSelectedElement(item)}
-      draggable={item.libraryType === ObjectType.ObjectBlock}
-      onDragStart={(event) => item.libraryType === ObjectType.ObjectBlock && onDragStart(event, JSON.stringify(item))}
+      draggable
+      onDragStart={(event) => onDragStart(event, JSON.stringify(item))}
       key={item.id}
       selectedColor={GetAspectColor(item, AspectColorType.Selected, false)}
       hoverColor={GetAspectColor(item, AspectColorType.Header, false)}

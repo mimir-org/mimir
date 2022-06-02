@@ -1,8 +1,8 @@
-import { LibItem } from "../application/LibItem";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 export interface Collection {
   id: string;
   name: string;
-  libItems: LibItem[];
+  libNodes: NodeLibCm[];
   created: Date;
 }

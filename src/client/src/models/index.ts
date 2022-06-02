@@ -42,7 +42,6 @@ export type { User } from "./application/User";
 export type { LockCm } from "./application/LockCm";
 export type { LockAm } from "./application/LockAm";
 export type { Library } from "./application/Library";
-export type { LibItem } from "./application/LibItem";
 export type { FileFormat } from "./application/FileFormat";
 export type { CommitPackage } from "./application/CommitPackage";
 export type { ProjectItemCm } from "./application/ProjectItemCm";

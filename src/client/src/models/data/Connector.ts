@@ -21,11 +21,12 @@ export interface Connector {
   color: string;
   terminalCategory: string;
   attributes: Attribute[];
-  terminalTypeId: string;
-  terminalTypeIri: string;
+
+  terminalTypeId: string; // Id fra NodeLibCm
+  terminalTypeIri: string; // Iri fra NodeLibCm
 
   // Relation
   relationType: RelationType;
 
-  kind: string;
+  kind: string; // "Connector"
 }

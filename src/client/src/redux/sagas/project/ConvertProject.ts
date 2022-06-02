@@ -9,7 +9,6 @@ import {
   Interface,
   Node,
   Project,
-  Purpose,
   RelationType,
   SelectType,
   Simple,
@@ -107,7 +106,7 @@ export interface NodeAm {
   simples: SimpleAm[];
   aspect: Aspect;
   isRoot: boolean;
-  purpose: Purpose;
+  purpose: string;
   created: Date;
   createdBy: string;
   updated: Date;

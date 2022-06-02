@@ -1,6 +1,7 @@
-import { Aspect, CreateLibraryType, LibItem, Node } from "../models";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { Aspect, CreateLibraryType, Node } from "../models";
 
-type Item = Node | LibItem | CreateLibraryType;
+type Item = Node | NodeLibCm | CreateLibraryType;
 
 export const IsAspectNode = (node: Node) => {
   return node?.isRoot;

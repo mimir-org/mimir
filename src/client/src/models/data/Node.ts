@@ -1,7 +1,6 @@
-import { Purpose } from "../enums/Purpose";
 import { EnumBase } from "../enums/EnumBase";
 import { Aspect } from "../enums/Aspect";
-import { Connector } from "./Connector";
+import { Connector } from "..";
 import { Attribute } from "./Attribute";
 import { Simple } from "./Simple";
 
@@ -21,7 +20,7 @@ export interface Node {
   label: string;
   positionX: number;
   positionY: number;
-  purpose: Purpose;
+  purpose: string;
   positionBlockX: number;
   positionBlockY: number;
   level: number;

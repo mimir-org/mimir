@@ -1,12 +1,13 @@
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { IsFamily } from "../../../../../../../../../helpers/Family";
-import { LibItem, Node } from "../../../../../../../../../models";
+import { Node } from "../../../../../../../../../models";
 import { LibraryState } from "../../../../../../../../../redux/store/library/types";
 
-const IsValidLibComponent = (libNode: LibItem, selectedNode: Node, isBlockView: boolean) => {
+const IsValidLibComponent = (libNode: NodeLibCm, selectedNode: Node, isBlockView: boolean) => {
   return isBlockView ? IsFamily(selectedNode, libNode) : true;
 };
 
 export const GetValidLibItems = (selectedNode: Node, state: LibraryState, isBlockView: boolean) => {
-  const allLibItems = [...state.nodeTypes, ...state.interfaceTypes, ...state.transportTypes];
+  const allLibItems = [...state.nodeTypes];
   return allLibItems.filter((i) => IsValidLibComponent(i, selectedNode, isBlockView));
 };

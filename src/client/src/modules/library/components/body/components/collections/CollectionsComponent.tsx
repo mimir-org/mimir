@@ -1,17 +1,18 @@
 import { CollectionsWrapper } from "./CollectionsComponent.styled";
-import { Aspect, CollectionsActions, LibItem, LibraryTab, Node } from "../../../../../../models";
+import { Aspect, CollectionsActions, LibraryTab, Node } from "../../../../../../models";
 import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: NodeLibCm[];
+  setSelectedTypes: (array: NodeLibCm[]) => void;
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
-  selectedElement: LibItem | null;
-  setSelectedElement: (value: LibItem) => void;
+  selectedElement: NodeLibCm | null;
+  setSelectedElement: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: Node;
 }
