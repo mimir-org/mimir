@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
-using Mb.Models.Application;
-using Mb.Models.Data.Enums;
 using Attribute = System.Attribute;
 
 namespace Mb.Models.Extensions
 {
     public static class EnumExtensions
     {
-        /// <summary>
-        /// Create EnumBase from a CreateEnum object as correct type
-        /// </summary>
-        /// <returns></returns>
-        public static EnumBase CreateEnum(this CreateEnum createEnum)
-        {
-            var method = typeof(EnumMapper).GetMethod("CreateEnum");
-            var genericMethod = method?.MakeGenericMethod(createEnum.EnumType.GetEnumTypeFromEnum());
-            return (EnumBase) genericMethod?.Invoke(new EnumMapper(), new object[] { createEnum });
-        }
+        ///// <summary>
+        ///// Create EnumBase from a CreateEnum object as correct type
+        ///// </summary>
+        ///// <returns></returns>
+        //public static EnumBase CreateEnum(this CreateEnum createEnum)
+        //{
+        //    var method = typeof(EnumMapper).GetMethod("CreateEnum");
+        //    var genericMethod = method?.MakeGenericMethod(createEnum.EnumType.GetEnumTypeFromEnum());
+        //    return (EnumBase) genericMethod?.Invoke(new EnumMapper(), new object[] { createEnum });
+        //}
 
         /// <summary>
         /// Get type of enum as a list
@@ -103,18 +101,18 @@ namespace Mb.Models.Extensions
         }
     }
 
-    public class EnumMapper
-    {
-        public T CreateEnum<T>(CreateEnum item) where T : EnumBase, new()
-        {
-            var model = new T
-            {
-                Name = item.Name,
-                Description = item.Description,
-                SemanticReference = item.SemanticReference
-            };
+    //public class EnumMapper
+    //{
+    //    public T CreateEnum<T>(CreateEnum item) where T : EnumBase, new()
+    //    {
+    //        var model = new T
+    //        {
+    //            Name = item.Name,
+    //            Description = item.Description,
+    //            SemanticReference = item.SemanticReference
+    //        };
 
-            return model;
-        }
-    }
+    //        return model;
+    //    }
+    //}
 }

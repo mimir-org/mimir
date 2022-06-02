@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
-using Mb.Models.Application.TypeEditor;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Mimirorg.Common.Extensions;
 using SqlBulkTools;
 
 namespace Mb.Data.Repositories

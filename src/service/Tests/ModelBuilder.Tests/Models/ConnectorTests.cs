@@ -1,6 +1,6 @@
 using Mb.Models.Application;
 using Mb.Models.Enums;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
 using Xunit;
 
 namespace ModelBuilder.Tests.Models

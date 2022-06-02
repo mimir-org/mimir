@@ -1,7 +1,7 @@
-namespace Mb.Models.Data.Enums
-{
-    public class AttributeSource : EnumBase
-    {
+//namespace Mb.Models.Data.Enums
+//{
+//    public class AttributeSource : EnumBase
+//    {
 
-    }
-}
+//    }
+//}

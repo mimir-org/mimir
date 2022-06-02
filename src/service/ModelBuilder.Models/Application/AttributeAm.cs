@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Mb.Models.Attributes;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Models.Application
 {
@@ -32,7 +33,7 @@ namespace Mb.Models.Application
 
         // Unit
         public string SelectedUnitId { get; set; }
-        public virtual ICollection<UnitAm> Units { get; set; }
+        public virtual ICollection<UnitLibCm> Units { get; set; }
 
         // Qualifiers
         // TODO: Remove foreign keys

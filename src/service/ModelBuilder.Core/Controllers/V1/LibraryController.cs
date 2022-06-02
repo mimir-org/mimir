@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Mimirorg.TypeLibrary.Models.Client;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Mb.Core.Controllers.V1
@@ -33,36 +34,11 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all library data by search
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        [HttpGet("")]
-        [ProducesResponseType(typeof(Library), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize(Policy = "Read")]
-        public async Task<IActionResult> GetAll(string name)
-        {
-            try
-            {
-                var data = await _libraryService.GetLibTypes(name);
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        /// <summary>
         /// Get all node types
         /// </summary>
         /// <returns></returns>
         [HttpGet("node")]
-        [ProducesResponseType(typeof(ICollection<LibraryNodeItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<NodeLibCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -86,7 +62,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("transport")]
-        [ProducesResponseType(typeof(ICollection<LibraryTransportItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<TransportLibCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -110,7 +86,7 @@ namespace Mb.Core.Controllers.V1
         /// </summary>
         /// <returns></returns>
         [HttpGet("interface")]
-        [ProducesResponseType(typeof(ICollection<LibraryInterfaceItem>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<InterfaceLibCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -1,7 +1,6 @@
 using System.Web;
 using Mb.Models.Application;
 using Mb.Models.Const;
-using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mimirorg.TypeLibrary.Models.Client;
 using ModelBuilder.Rdf.Models;
@@ -117,9 +116,9 @@ namespace ModelBuilder.Rdf.Extensions
         /// </summary>
         /// <param name="attribute"></param>
         /// <returns>A list of allowed units</returns>
-        public static List<Unit> GetAllowedUnits(this Attribute attribute)
+        public static List<UnitLibCm> GetAllowedUnits(this Attribute attribute)
         {
-            return string.IsNullOrWhiteSpace(attribute.UnitString) ? null : JsonConvert.DeserializeObject<List<Unit>>(attribute.UnitString, DefaultSettings.SerializerSettings);
+            return string.IsNullOrWhiteSpace(attribute.UnitString) ? null : JsonConvert.DeserializeObject<List<UnitLibCm>>(attribute.UnitString, DefaultSettings.SerializerSettings);
         }
 
         /// <summary>
@@ -193,7 +192,7 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.Units = allowedUnitNodes.Select(x =>
             {
                 var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
-                return new UnitAm
+                return new UnitLibCm
                 {
                     Id = value?[0].Trim(),
                     Name = value?[1].Trim()

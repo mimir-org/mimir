@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
+using Mimirorg.TypeLibrary.Models.Client;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -27,7 +27,7 @@ namespace Mb.Models.Data
         public string SelectedUnitId { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Unit> Units
+        public virtual ICollection<UnitLibCm> Units
         {
             get
             {
@@ -35,7 +35,7 @@ namespace Mb.Models.Data
                     return _units;
 
                 return !string.IsNullOrWhiteSpace(UnitString) ?
-                    JsonConvert.DeserializeObject<ICollection<Unit>>(UnitString) :
+                    JsonConvert.DeserializeObject<ICollection<UnitLibCm>>(UnitString) :
                     null;
             }
             set => _units = value;
@@ -91,7 +91,7 @@ namespace Mb.Models.Data
 
         #region Members
 
-        private ICollection<Unit> _units;
+        private ICollection<UnitLibCm> _units;
 
         #endregion
 

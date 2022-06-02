@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Mb.Models.Attributes;
-using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 
@@ -73,7 +72,7 @@ namespace Mb.Models.Application
 
         public string Symbol { get; set; }
 
-        public Purpose Purpose { get; set; }
+        public string Purpose { get; set; }
 
         public DateTime? Created { get; set; }
 

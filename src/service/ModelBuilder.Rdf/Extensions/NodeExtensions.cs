@@ -1,7 +1,6 @@
 using System.Text.RegularExpressions;
 using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Data.Enums;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using ModelBuilder.Rdf.Models;
@@ -81,8 +80,8 @@ namespace ModelBuilder.Rdf.Extensions
             ontologyService.AssertNode(node.Iri, Resources.HasMasterProject, node.MasterProjectIri);
 
 
-            if (!string.IsNullOrEmpty(node.Purpose?.Id))
-                ontologyService.AssertNode(node.Iri, Resources.HasPurpose, $"mimir:{node.Purpose.Id}");
+            if (!string.IsNullOrEmpty(node.PurposeString))
+                ontologyService.AssertNode(node.Iri, Resources.HasPurpose, $"mimir:{node.PurposeString}");
 
             if (node.Symbol != null)
                 ontologyService.AssertNode(node.Iri, Resources.HasSymbol, node.Symbol, true);
@@ -189,9 +188,7 @@ namespace ModelBuilder.Rdf.Extensions
             node.CreatedBy = ontologyService.GetValue(iri, Resources.CreatedBy, false);
             node.Created = ontologyService.GetDateTimeValue(iri, Resources.Created, false);
 
-            // TODO: NodeAm should only have purpose id or name
-            var purposeId = ontologyService.GetValue(iri, Resources.HasPurpose, false);
-            node.Purpose = string.IsNullOrWhiteSpace(purposeId) ? null : new Purpose { Id = purposeId };
+            node.Purpose = ontologyService.GetValue(iri, Resources.HasPurpose, false);
 
             node.Aspect = ontologyService.GetEnumValue<Aspect>(iri, Resources.HasAspect, false);
             node.IsRoot = isRootNode;

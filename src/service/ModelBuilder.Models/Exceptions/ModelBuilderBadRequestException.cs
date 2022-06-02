@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mb.Models.Application;
+using Mimirorg.Common.Models;
 
 namespace Mb.Models.Exceptions
 {

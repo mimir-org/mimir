@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Data.Enums;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
 // ReSharper disable NonReadonlyMemberInGetHashCode
