@@ -2,20 +2,21 @@ import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { Dispatch } from "redux";
 import { NodeElement } from "./NodeElement";
-import { CollectionsActions, LibItem } from "../../../../../../../../models";
+import { CollectionsActions } from "../../../../../../../../models";
 import { NodeCollectionButton, NodeCollectionButtonText, NodeCollectionContainer } from "./NodeCollection.styled";
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   collectionState: CollectionsActions;
   customCategory: LibraryCategory;
   category: LibraryCategory;
-  selectedElement: LibItem | null;
-  setSelectedElement: (value: LibItem) => void;
+  selectedElement: NodeLibCm | null;
+  setSelectedElement: (value: NodeLibCm) => void;
   dispatch: Dispatch;
   searchList?: LibraryCategory[];
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedTypes: NodeLibCm[];
+  setSelectedTypes: (array: NodeLibCm[]) => void;
 }
 
 /**
@@ -50,7 +51,6 @@ export const NodeCollection = ({
       </NodeCollectionButton>
       {expanded &&
         category?.nodes.map((item) => {
-          console.log({ item });
           return (
             <NodeElement
               key={item.id}

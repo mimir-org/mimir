@@ -1,5 +1,5 @@
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { SetCenter, SetViewport } from "react-flow-renderer";
-import { LibItem } from "../";
 
 export const ATTRIBUTE_TAB = {
   ADMIN_INFO: "AdminInfo",
@@ -49,7 +49,7 @@ export const VIEW_TYPE = { STARTPAGE: "startpage", BLOCKVIEW: "blockview", TREEV
 
 export interface LibraryCategory {
   name: string;
-  nodes: LibItem[];
+  nodes: NodeLibCm[];
 }
 
 export interface EdgeEvent {

@@ -5,16 +5,17 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { ModalList } from "./components/ModalList";
-import { Collection, CollectionsActions, LibItem } from "../../../../../../models";
+import { Collection, CollectionsActions } from "../../../../../../models";
 import { ModalListHeader } from "./ManageSelectedTypes.styled";
 import { ModalButton } from "./components/ModalButton";
 import { CreateCollectionComponent } from "./components/CreateCollectionComponent";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   isOpen: boolean;
   onExit: () => void;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (types: LibItem[]) => void;
+  selectedTypes: NodeLibCm[];
+  setSelectedTypes: (types: NodeLibCm[]) => void;
   collections: Collection[];
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;

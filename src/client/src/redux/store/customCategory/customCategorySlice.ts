@@ -1,6 +1,6 @@
 import { LibraryCategory } from "../../../models/project";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { LibItem } from "../../../models";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 const initialCustomCategoryState: LibraryCategory = {
   name: "Favorites",
@@ -11,7 +11,7 @@ export const customCategorySlice = createSlice({
   name: "customCategory",
   initialState: initialCustomCategoryState,
   reducers: {
-    addCustomCategoryNode: (state, action: PayloadAction<LibItem>) => {
+    addCustomCategoryNode: (state, action: PayloadAction<NodeLibCm>) => {
       state.nodes.push(action.payload);
     },
     removeCustomCategoryNode: (state, action: PayloadAction<string>) => {

@@ -6,7 +6,8 @@ import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
 import { ModuleFooter } from "./components/footer/ModuleFooter";
-import { LibraryTab, CollectionsActions, LibItem, Aspect } from "../../models";
+import { LibraryTab, CollectionsActions, Aspect } from "../../models";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import {
   useAppSelector,
   useParametricAppSelector,
@@ -29,8 +30,8 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
-  const [selectedTypes, setSelectedTypes] = useState([] as LibItem[]);
-  const [selectedElement, setSelectedElement] = useState<LibItem>(null);
+  const [selectedTypes, setSelectedTypes] = useState([] as NodeLibCm[]);
+  const [selectedElement, setSelectedElement] = useState<NodeLibCm>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
   const nodes = useAppSelector(nodesSelector);
 

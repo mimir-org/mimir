@@ -5,22 +5,23 @@ import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
 import { onDeleteTypeClick } from "./components/confirmDelete/handlers/OnDeleteTypeClick";
-import { OnOpenTypeEditor, OnOpenTypeEditorWithItem } from "../../../../typeEditor/handlers";
+import { OnOpenTypeEditor } from "../../../../typeEditor/handlers";
 import { GetCollectionIcon, SetCollectionButtonText } from "./helpers/";
 import { Button, ButtonVariant } from "../../../../compLibrary/buttons";
-import { NewType, EditType, DeleteType } from "../../../../assets/icons/library";
-import { Collection, CollectionsActions, LibItem, LibraryTab, ObjectType } from "../../../../models";
+import { NewType, DeleteType } from "../../../../assets/icons/library";
+import { Collection, CollectionsActions, LibraryTab } from "../../../../models";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   libOpen: boolean;
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
-  selectedElement: LibItem | null;
-  selectedTypes: LibItem[];
+  selectedElement: NodeLibCm | null;
+  selectedTypes: NodeLibCm[];
   collections: Collection[];
   resetSelectedElement: () => void;
   setCollectionState: (action: CollectionsActions) => void;
-  setSelectedTypes: (types: LibItem[]) => void;
+  setSelectedTypes: (types: NodeLibCm[]) => void;
   dispatch: Dispatch;
 }
 
@@ -53,7 +54,7 @@ export const ModuleFooter = ({
         text={TextResources.NEW_TYPE}
         icon={NewType}
       />
-      <Button
+      {/* <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() =>
           OnOpenTypeEditorWithItem(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)
@@ -61,7 +62,7 @@ export const ModuleFooter = ({
         text={TextResources.EDIT_TYPE}
         icon={EditType}
         disabled={selectedElement === null || selectedElement.libraryType === ObjectType.NotSet}
-      />
+      /> */}
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => setConfirmDeleteBoxVisible(true)}

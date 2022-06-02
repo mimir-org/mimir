@@ -4,7 +4,7 @@ import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
+import { HandleCreatePartOfEdge, InitConnectorDirection, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Position } from "../../../../models/project";
 import { IsFamily } from "../../../../helpers/Family";
@@ -65,7 +65,7 @@ function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryN
   const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, icons, user);
   if (!targetNode) return;
 
-  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
+  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorDirection(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, lib, dispatch);
 
   dispatch(addNode(targetNode));

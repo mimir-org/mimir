@@ -1,7 +1,7 @@
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 export interface Library {
-  objectBlocks: NodeLibCm[];
+  libNodes: NodeLibCm[];
   // interfaces: LibItem[];
   // transports: LibItem[];
 }
