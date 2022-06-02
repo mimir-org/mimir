@@ -3,7 +3,7 @@ import { addNode, createEdge } from "../../../../redux/store/project/actions";
 import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { BlobData, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
+import { LibrarySubProjectItem, Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
@@ -15,7 +15,6 @@ interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
   user: User;
-  icons: BlobData[];
   library: LibraryState;
   flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;

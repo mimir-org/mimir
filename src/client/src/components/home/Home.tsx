@@ -18,10 +18,8 @@ import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux
 import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
 import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
-import { TypeEditorComponent } from "../../typeEditor";
 import {
   fetchCollaborationPartners,
   fetchCombinedAttributeFilters,
@@ -57,7 +55,6 @@ export const Home = ({ dispatch }: Props) => {
     dispatch(fetchParsers());
     dispatch(fetchStatuses());
     dispatch(fetchCombinedAttributeFilters());
-    dispatch(fetchBlobData());
     dispatch(fetchUser());
   }, [dispatch]);
 
@@ -87,7 +84,6 @@ export const Home = ({ dispatch }: Props) => {
           <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule dispatch={dispatch} />
           {isFilterOpen && <VisualFilterComponent dispatch={dispatch} />}
-          <TypeEditorComponent />
           <ValidationModule />
         </>
       )}

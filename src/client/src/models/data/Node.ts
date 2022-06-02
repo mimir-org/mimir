@@ -1,8 +1,8 @@
 import { EnumBase } from "../enums/EnumBase";
 import { Aspect } from "../enums/Aspect";
-import { SimpleLibCm } from "@mimirorg/typelibrary-types";
 import { Connector } from "..";
 import { Attribute } from "./Attribute";
+import { Simple } from "./Simple";
 
 export const NODE_KIND = "Node";
 
@@ -40,7 +40,7 @@ export interface Node {
   symbol: string;
   connectors: Connector[];
   attributes: Attribute[];
-  simples: SimpleLibCm[];
+  simples: Simple[];
   width: number;
   height: number;
   isLocked: boolean;

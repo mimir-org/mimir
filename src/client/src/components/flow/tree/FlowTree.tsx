@@ -43,7 +43,6 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
-  const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const mimirNodes = project?.nodes;
@@ -69,7 +68,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, user, library, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {

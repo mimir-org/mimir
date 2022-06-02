@@ -24,7 +24,6 @@ export const MODULE_TYPE = {
   EXPLORER: "Explorer",
   INSPECTOR: "Inspector",
   LIBRARY: "Library",
-  TYPEEDITOR: "TypeEditor",
   LEGEND: "Legend",
 };
 
@@ -45,7 +44,7 @@ export const MENU_TYPE = {
 };
 
 export type ViewType = keyof typeof VIEW_TYPE;
-export const VIEW_TYPE = { STARTPAGE: "startpage", BLOCKVIEW: "blockview", TREEVIEW: "treeview", TYPE_EDITOR: "type-editor" };
+export const VIEW_TYPE = { STARTPAGE: "startpage", BLOCKVIEW: "blockview", TREEVIEW: "treeview" };
 
 export interface LibraryCategory {
   name: string;

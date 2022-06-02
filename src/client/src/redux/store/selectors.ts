@@ -28,21 +28,10 @@ export const isCommonStateFetchingSelector = createAppSelector(
   (fetching) => fetching
 );
 
-export const isTypeEditorFetchingSelector = createAppSelector(
-  (state) => state.typeEditor.fetching,
-  (fetching) => fetching
-);
-
 export const isFetchingSelector = combineAppSelectors(
-  [
-    isProjectStateFetchingSelector,
-    isLibraryStateFetchingSelector,
-    isUserStateFetchingSelector,
-    isCommonStateFetchingSelector,
-    isTypeEditorFetchingSelector,
-  ],
-  (isProjectStateFetching, isLibraryStateFetching, isUserStateFetching, isCommonStateFetching, isTypeEditorFetching) =>
-    isProjectStateFetching || isLibraryStateFetching || isUserStateFetching || isCommonStateFetching || isTypeEditorFetching
+  [isProjectStateFetchingSelector, isLibraryStateFetchingSelector, isUserStateFetchingSelector, isCommonStateFetchingSelector],
+  (isProjectStateFetching, isLibraryStateFetching, isUserStateFetching, isCommonStateFetching) =>
+    isProjectStateFetching || isLibraryStateFetching || isUserStateFetching || isCommonStateFetching
 );
 
 export const projectStateSelector = createAppSelector(
@@ -78,11 +67,6 @@ export const commonStateParsersSelector = createAppSelector(
 export const commonStateCollaborationPartnersSelector = createAppSelector(
   (state) => state.commonState.collaborationPartners,
   (collaborationPartners) => collaborationPartners
-);
-
-export const typeEditorStateSelector = createAppSelector(
-  (state) => state.typeEditor,
-  (typeEditor) => typeEditor
 );
 
 export const librarySelector = createAppSelector(
@@ -232,11 +216,6 @@ export const selectedNodeSelector = createAppSelector(
   (node) => node
 );
 
-export const iconSelector = createAppSelector(
-  (state) => state.typeEditor.icons,
-  (icons) => icons
-);
-
 export const electroSelector = createAppSelector(
   (state) => state.electro.visible,
   (visible) => visible
@@ -245,31 +224,6 @@ export const electroSelector = createAppSelector(
 export const edgeSelector = createAppSelector(
   (state) => state.projectState.project?.edges,
   (edges) => edges ?? []
-);
-
-export const attributeTypeSelector = createAppSelector(
-  (state) => state.typeEditor.attributes,
-  (attributeTypes) => attributeTypes
-);
-
-export const terminalTypeSelector = createAppSelector(
-  (state) => state.typeEditor.terminals,
-  (terminals) => terminals ?? []
-);
-
-export const simpleTypeSelector = createAppSelector(
-  (state) => state.typeEditor.simpleTypes,
-  (simpleTypes) => simpleTypes ?? []
-);
-
-export const isTypeEditorInspectorOpen = createAppSelector(
-  (state) => state.typeEditor.inspector.visibility,
-  (visibility) => visibility
-);
-
-export const typeEditorInspectorActiveTabSelector = createAppSelector(
-  (state) => state.typeEditor.inspector.activeTabIndex,
-  (activeTabIndex) => activeTabIndex
 );
 
 export const nodesSelector = createAppSelector(

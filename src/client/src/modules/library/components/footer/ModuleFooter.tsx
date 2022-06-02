@@ -5,10 +5,9 @@ import { LibFooter } from "./ModuleFooter.styled";
 import { ConfirmDeleteType } from "./components/confirmDelete/ConfirmDeleteType";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
 import { onDeleteTypeClick } from "./components/confirmDelete/handlers/OnDeleteTypeClick";
-import { OnOpenTypeEditor } from "../../../../typeEditor/handlers";
 import { GetCollectionIcon, SetCollectionButtonText } from "./helpers/";
 import { Button, ButtonVariant } from "../../../../compLibrary/buttons";
-import { NewType, DeleteType } from "../../../../assets/icons/library";
+import { DeleteType } from "../../../../assets/icons/library";
 import { Collection, CollectionsActions, LibraryTab } from "../../../../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
@@ -48,21 +47,6 @@ export const ModuleFooter = ({
 
   return (
     <LibFooter libOpen={libOpen}>
-      <Button
-        variant={ButtonVariant.WhiteButton}
-        onClick={() => OnOpenTypeEditor(resetSelectedElement, dispatch)}
-        text={TextResources.NEW_TYPE}
-        icon={NewType}
-      />
-      {/* <Button
-        variant={ButtonVariant.WhiteButton}
-        onClick={() =>
-          OnOpenTypeEditorWithItem(selectedElement?.id, selectedElement?.libraryType, resetSelectedElement, dispatch)
-        }
-        text={TextResources.EDIT_TYPE}
-        icon={EditType}
-        disabled={selectedElement === null || selectedElement.libraryType === ObjectType.NotSet}
-      /> */}
       <Button
         variant={ButtonVariant.WhiteButton}
         onClick={() => setConfirmDeleteBoxVisible(true)}

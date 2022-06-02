@@ -1,7 +1,6 @@
 import { Symbol } from "../../../../../../../../compLibrary/symbol";
 import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, ObjectType } from "../../../../../../../../models";
-import { getTypeIcon } from "./helpers/GetTypeIcon";
 import { Icon } from "../../../../../../../../compLibrary/icon";
 import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
 import { LibNodeInterface, LibNodeTransport } from "../../../../../../../../assets/icons/library";

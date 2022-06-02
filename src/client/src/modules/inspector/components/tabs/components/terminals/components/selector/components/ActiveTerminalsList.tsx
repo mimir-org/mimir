@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Color } from "../../../../../../../../../compLibrary/colors/Color";
-import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
+// import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { ConnectorType, TerminalType } from "../../../../../../../../../models";
 import { ActiveTerminalsTypeList } from "./ActiveTerminalsTypeList";
 import { OnCategoryClick } from "./handlers/OnCategoryClick";
@@ -17,7 +17,7 @@ import { GetNumTerminalsByCategory } from "./helpers/GetNumTerminalsByCategory";
 
 interface Props {
   terminals: TerminalLikeItem[];
-  terminalCategories: TerminalCategory[];
+  terminalCategories: any[];
   selectedTerminal: TerminalLikeItem;
   selectedTerminalIdentifier: SelectedTerminalIdentifier;
   onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
@@ -51,7 +51,7 @@ export const ActiveTerminalsList = ({
 
   const numTerminalsByCategoryId = useMemo(() => GetNumTerminalsByCategory(terminals), [terminals]);
 
-  const isCategoryExpanded = (category: TerminalCategory) => expandedCategoriesIds.includes(category.id);
+  const isCategoryExpanded = (category: any) => expandedCategoriesIds.includes(category.id);
   const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
     expandedTypesIds.includes(FormatTypeId(type, connectorType));
 
@@ -66,9 +66,7 @@ export const ActiveTerminalsList = ({
             <TerminalsCategoryListElement
               selected={selectedTerminal?.terminalCategory === category.id}
               radius={0}
-              onClick={() =>
-                OnCategoryClick(category, isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)
-              }
+              onClick={() => OnCategoryClick(isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)}
               color={i % 2 ? undefined : Color.LAVANDER_WEB_LIST}
             >
               <div className="numCategoryTerminals">{numCategoryTerminals}</div>

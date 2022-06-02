@@ -9,7 +9,7 @@ import { changeNodeValue } from "../../../../../../../redux/store/project/action
 import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsId, GetReferenceDesignation } from "../../../../../../../helpers";
-import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
+// import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
 import { useDebounceState } from "../../../../../../../hooks/useDebounceState";
 import { IsAspectNode, IsProduct } from "../../../../../../../helpers/Aspects";
 
@@ -98,7 +98,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
           />
         </div>
       </TabColumn>
-      <TabColumn width={125}>
+      {/* <TabColumn width={125}>
         <div className="statusDropdown">
           <div>{TextResources.ADMIN_STATUS}</div>
           <Dropdown
@@ -122,7 +122,7 @@ export const NodeAdminContent = ({ node, project, statuses }: Props) => {
             <Input fontSize={FontSize.STANDARD} readOnly value={""} onChange={() => null} inputType="" />
           </div>
         )}
-      </TabColumn>
+      </TabColumn> */}
       <TabColumn width={465}>
         <div>
           <div>{TextResources.ADMIN_DESCRIPTION}</div>

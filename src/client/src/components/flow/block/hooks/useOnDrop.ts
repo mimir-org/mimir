@@ -3,11 +3,12 @@ import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
-import { BlobData, LibItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorDirection, SetTreeNodePosition } from "../../helpers/LibraryDrop";
+import { Node, Project, User } from "../../../../models";
+import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Size } from "../../../../compLibrary/size/Size";
 import { Position } from "../../../../models/project";
 import { IsFamily } from "../../../../helpers/Family";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -15,7 +16,6 @@ interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
   user: User;
-  icons: BlobData[];
   lib: LibraryState;
   selectedNode: Node;
   secondaryNode: Node;
@@ -46,8 +46,8 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * Function to handle the drop from the Library Module.
  * @param params
  */
-function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
-  const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
+function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
+  const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
 
   let parentNode = selectedNode;
   if (!parentNode) return;
@@ -62,10 +62,10 @@ function HandleDrop({ event, project, user, icons, lib, selectedNode, secondaryN
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, icons, user);
+  const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, user);
   if (!targetNode) return;
 
-  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorDirection(connector, targetNode)));
+  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
   if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, lib, dispatch);
 
   dispatch(addNode(targetNode));
@@ -117,7 +117,7 @@ function CalculateSecondaryNodeDropZone(getViewport: GetViewport, primaryNode: N
  * @param clientX
  * @returns a Node.
  */
-function FindParent(targetNode: LibItem, selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
+function FindParent(targetNode: NodeLibCm, selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
   if (!IsFamily(targetNode, selectedNode) && !IsFamily(targetNode, secondaryNode)) return null;
   if (!IsFamily(targetNode, selectedNode)) return secondaryNode;
   if (!IsFamily(targetNode, secondaryNode)) return selectedNode;
