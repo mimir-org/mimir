@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { Color } from "../../../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../../../assets/color/Color";
 import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { GetAspectColor } from "../../../../../../../../helpers";

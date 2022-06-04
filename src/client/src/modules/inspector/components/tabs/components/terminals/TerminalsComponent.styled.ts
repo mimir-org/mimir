@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { TERMINALS_COLUMN_HORIZONTAL_PADDING, TERMINALS_COLUMN_WIDTH } from "../shared/styled/TerminalsColumn";
-import { Color } from "../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../assets/color/Color";
 
 export const TerminalsWrapper = styled.div`
   display: flex;

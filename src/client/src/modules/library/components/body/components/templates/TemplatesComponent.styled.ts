@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../compLibrary/colors/Color";
-import { FontSize, FontType } from "../../../../../../compLibrary/font";
+import { Color } from "../../../../../../assets/color/Color";
+import { FontSize, FontType } from "../../../../../../assets/font";
 
 export const TemplatesWrapper = styled.div`
   display: flex;

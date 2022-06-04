@@ -1,6 +1,6 @@
 import { AspectColorType, Connector, Node } from "../../../models";
 import { TextResources } from "../../../assets/text/TextResources";
-import { Color } from "../../../compLibrary/colors/Color";
+import { Color } from "../../../assets/color/Color";
 import { GetAspectColor } from "../../../helpers";
 import {
   IsLocationTerminal,

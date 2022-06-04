@@ -1,5 +1,5 @@
 import { IsLocationTerminal, IsProductTerminal } from "../../helpers/Connectors";
-import { Color } from "../../../../compLibrary/colors/Color";
+import { Color } from "../../../../assets/color/Color";
 import { Connector } from "../../../../models";
 
 const GetTerminalColor = (connector: Connector) => {

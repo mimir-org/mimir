@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { SymbolImage } from "../../../../../../compLibrary/symbol/Symbol.styled";
-import { Color } from "../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../assets/color/Color";
 import { Size } from "../../../../../../compLibrary/size/Size";
 import { Node } from "../../../../../../models";
 import { IsProduct } from "../../../../../../helpers/Aspects";

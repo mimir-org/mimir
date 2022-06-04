@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Size } from "../../../compLibrary/size/Size";
-import { Color } from "../../../compLibrary/colors/Color";
+import { Color } from "../../../assets/color/Color";
 
 interface AnimatedInspectorContainerProps {
   isInspectorOpen: boolean;

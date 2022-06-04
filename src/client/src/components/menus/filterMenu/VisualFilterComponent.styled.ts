@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Size } from "../../../compLibrary/size/Size";
-import { Color } from "../../../compLibrary/colors/Color";
-import { FontSize, FontWeight } from "../../../compLibrary/font";
+import { Color } from "../../../assets/color/Color";
+import { FontSize, FontWeight } from "../../../assets/font";
 
 interface Props {
   libraryOpen: boolean;

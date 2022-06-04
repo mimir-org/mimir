@@ -9,7 +9,7 @@ import { deleteLibraryError } from "../../redux/store/library/librarySlice";
 import { deleteUserError } from "../../redux/store/user/userSlice";
 import { InfoModalContent } from "../../compLibrary/modal/variants/info/InfoModalContent";
 import { Modal } from "../../compLibrary/modal/Modal";
-import { Color } from "../../compLibrary/colors/Color";
+import { Color } from "../../assets/color/Color";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { ErrorBody, ErrorItem, ErrorItemText, ErrorItemTitle } from "./ErrorModule.styled";
 

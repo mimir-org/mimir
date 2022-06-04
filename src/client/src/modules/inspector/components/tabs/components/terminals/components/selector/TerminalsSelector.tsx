@@ -3,7 +3,7 @@ import { ActiveTerminalsList } from "./components/ActiveTerminalsList";
 import { FilterBySearchString } from "./helpers/FilterBySearchString";
 import { TerminalsColumn } from "../../../shared/styled/TerminalsColumn";
 import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../../../types";
-import { FontSize } from "../../../../../../../../compLibrary/font";
+import { FontSize } from "../../../../../../../../assets/font";
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../../compLibrary/input/text";
 

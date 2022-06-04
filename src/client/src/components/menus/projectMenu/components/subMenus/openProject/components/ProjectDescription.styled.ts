@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors/Color";
-import { FontSize } from "../../../../../../../compLibrary/font";
+import { Color } from "../../../../../../../assets/color/Color";
+import { FontSize } from "../../../../../../../assets/font";
 
 export const ProjectDescriptionBox = styled.div`
   box-sizing: border-box;
