@@ -1,3 +1,6 @@
+/**
+ * Component for all static colors in Mimir.
+ */
 export const Color = {
   // PRIMARY
   RUSSIAN_VIOLET: "#3D113F",

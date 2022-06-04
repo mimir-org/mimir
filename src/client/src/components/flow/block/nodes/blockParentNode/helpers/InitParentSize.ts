@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Size } from "../../../../../../compLibrary/size/Size";
+import { Size } from "../../../../../../assets/size/Size";
 import { Node } from "../../../../../../models";
 import { updateBlockSize } from "../../../../../../redux/store/project/actions";
 

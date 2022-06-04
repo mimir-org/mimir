@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
-import { Size } from "../../compLibrary/size/Size";
+import { Size } from "../../assets/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";

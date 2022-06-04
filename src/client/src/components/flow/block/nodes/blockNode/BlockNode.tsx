@@ -9,7 +9,7 @@ import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
 import { FilterTerminals } from "../helpers/FilterTerminals";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
-import { Size } from "../../../../../compLibrary/size/Size";
+import { Size } from "../../../../../assets/size/Size";
 import { GetAspectColor } from "../../../../../helpers";
 import { BlockNodeSize } from "../../../../../models/project";
 import { SetChildNodeSize } from "./helpers/SetChildNodeSize";

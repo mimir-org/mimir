@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { Color } from "../../../assets/color/Color";
 import { FontSize, FontWeight } from "../../../assets/font";
 

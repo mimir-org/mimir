@@ -5,7 +5,7 @@ import { ConvertDataToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
-import { Size } from "../../../../compLibrary/size/Size";
+import { Size } from "../../../../assets/size/Size";
 import { Position } from "../../../../models/project";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";

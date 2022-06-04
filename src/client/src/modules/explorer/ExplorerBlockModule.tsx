@@ -1,7 +1,7 @@
 import { BlockProjectComponent } from "./explorerBlock/BlockProjectComponent";
 import { MODULE_TYPE } from "../../models/project";
 import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
-import { Size } from "../../compLibrary/size/Size";
+import { Size } from "../../assets/size/Size";
 import { OnToggleExplorerClick } from "./shared/handlers/OnToggleExplorerClick";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
