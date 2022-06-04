@@ -5,7 +5,7 @@ import { Size } from "../../compLibrary/size/Size";
 import { OnToggleExplorerClick } from "./shared/handlers/OnToggleExplorerClick";
 import { ExplorerIcon } from "../../assets/icons/modules";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
-import { Icon } from "../../compLibrary/icon";
+import { Icon } from "../../compLibrary/icon/Icon";
 import { TextResources } from "../../assets/text/TextResources";
 import { ExplorerModuleBody, ExplorerModuleHeader } from "./shared/styled/ExplorerModule.styled";
 import { useAppSelector, explorerSelector } from "../../redux/store";

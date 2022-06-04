@@ -4,7 +4,7 @@ import { CheckboxTreeExplorer } from "../../../../../compLibrary/input/checkbox/
 import { OnSelectActiveNode } from "./handlers/OnSelectActiveNode";
 import { IsNodeInTreeExplorerChecked } from "./helpers/IsNodeInTreeExplorerChecked";
 import { AspectElementWrapper } from "../../../shared/styled/AspectElementWrapper";
-import { Icon } from "../../../../../compLibrary/icon";
+import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { GetAspectColor } from "../../../../../helpers";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetAspectIcon, GetIndentLevel } from "../../../shared/helpers/";

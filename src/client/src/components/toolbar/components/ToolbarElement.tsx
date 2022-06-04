@@ -1,6 +1,6 @@
 import { ToolElementBox } from "./ToolbarElement.styled";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
-import { Icon } from "../../../compLibrary/icon";
+import { Icon } from "../../../compLibrary/icon/Icon";
 
 interface Props {
   active?: boolean;

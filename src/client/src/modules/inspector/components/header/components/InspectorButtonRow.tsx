@@ -2,7 +2,7 @@ import { OnLockClick } from "../handlers/OnLockClick";
 import { OnInspectorDeleteClick } from "../handlers/OnInspectorDeleteClick";
 import { OnToggleInspectorClick } from "../handlers/OnToggleInspectorClick";
 import { Action, Dispatch } from "redux";
-import { Icon } from "../../../../../compLibrary/icon";
+import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";

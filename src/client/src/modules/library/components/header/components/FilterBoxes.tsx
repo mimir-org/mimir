@@ -1,4 +1,4 @@
-import { Icon } from "../../../../../compLibrary/icon";
+import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { GetFilterIcon } from "./helpers/GetFilterIcon";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { Aspect } from "../../../../../models";
