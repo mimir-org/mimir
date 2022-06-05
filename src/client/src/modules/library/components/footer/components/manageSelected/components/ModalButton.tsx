@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { RightArrowIcon } from "../../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
-import { Button } from "../../../../../../../compLibrary/buttons";
+import { Button } from "../../../../../../../compLibrary/buttons/standard";
 import { CollectionsActions } from "../../../../../../../models";
 import { OnManageCollection } from "../handlers";
 import { ModalButtonsWrapper } from "../../styled/ModalButtonsWrapper";

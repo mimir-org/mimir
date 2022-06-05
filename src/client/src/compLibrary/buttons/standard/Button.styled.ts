@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../assets/color/Color";
-import { FontSize } from "../../assets/font";
+import { Color } from "../../../assets/color/Color";
+import { FontSize } from "../../../assets/font";
 
 export const ButtonBase = styled.button`
   display: flex;

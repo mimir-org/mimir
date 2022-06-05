@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Button } from "../../../../../../compLibrary/buttons";
+import { Button } from "../../../../../../compLibrary/buttons/standard";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { ExportProjectIcon } from "../../../../../../assets/icons/project";

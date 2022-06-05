@@ -1,5 +1,5 @@
-import { ButtonBase, GreyButton, WhiteButton } from "./Button.styled";
-import { Icon } from "../icon/Icon";
+import { Icon } from "../../icon/Icon";
+import { ButtonBase, WhiteButton, GreyButton } from "./Button.styled";
 
 interface Props {
   onClick: () => void;
