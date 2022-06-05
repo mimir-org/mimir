@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
 // import { LocationTypeCategory } from "../../../typeEditor/styled";
 import { Symbol } from "../../symbol";
-import { DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem, DropdownMenuWrapper } from "./Dropdown.styled";
+import { DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem, DropdownMenuWrapper } from "./InspectorDropdown.styled";
 
 export interface DropDownCategoryItem<T> {
   id: string;
@@ -30,7 +30,7 @@ interface Props<T> {
   placeholder?: string;
 }
 
-const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, hasCategory, placeholder }: Props<T>) => {
+const InspectorDropdown = <T,>({ label, categories, onChange, defaultValue, disabled, hasCategory, placeholder }: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null as DropDownItem<T>);
 
@@ -113,4 +113,4 @@ const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, has
   );
 };
 
-export default Dropdown;
+export default InspectorDropdown;

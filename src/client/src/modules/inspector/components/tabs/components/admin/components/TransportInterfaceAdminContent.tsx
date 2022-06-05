@@ -10,7 +10,7 @@ import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdo
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../../../../helpers";
 import { GetReferenceDesignationEdge } from "../../../../../../../helpers/GetReferenceDesignation";
-import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
+import { DropDownItem } from "../../../../../../../compLibrary/dropdown/inspector/InspectorDropdown";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 

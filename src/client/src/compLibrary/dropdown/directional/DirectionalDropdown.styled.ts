@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../assets/color/Color";
+import { Color } from "../../../assets/color/Color";
 
 export const DropdownContainer = styled.div`
   display: flex;
