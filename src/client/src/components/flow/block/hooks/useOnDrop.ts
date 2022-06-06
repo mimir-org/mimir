@@ -1,7 +1,7 @@
 import { GetViewport, ReactFlowInstance } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
-import { ConvertDataToNode } from "../../converters";
+import { ConvertLibNodeToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Node, Project, User } from "../../../../models";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
@@ -47,7 +47,7 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * @param params
  */
 function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
-  const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
+  const nodeLib = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
 
   let parentNode = selectedNode;
   if (!parentNode) return;
@@ -55,20 +55,20 @@ function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, ge
   // Handle drop in SplitView
   if (secondaryNode) {
     const dropZone = CalculateSecondaryNodeDropZone(getViewport, parentNode);
-    parentNode = FindParent(data, parentNode, secondaryNode, dropZone, event.clientX);
+    parentNode = FindParent(nodeLib, parentNode, secondaryNode, dropZone, event.clientX);
     if (!parentNode) return;
   }
 
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, user);
-  if (!targetNode) return;
+  const node = ConvertLibNodeToNode(nodeLib, treePosition, parentNode, blockPosition, project.id, user);
+  if (!node) return;
 
-  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
-  if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, lib, dispatch);
+  node.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, node)));
+  if (IsFamily(parentNode, node)) HandleCreatePartOfEdge(parentNode, node, project, lib, dispatch);
 
-  dispatch(addNode(targetNode));
+  dispatch(addNode(node));
 }
 
 /**

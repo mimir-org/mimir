@@ -1,4 +1,6 @@
-export { default as ConvertDataToNode } from "./ConvertDataToNode";
+export { default as ConvertLibNodeToNode } from "./ConvertLibNodeToNode";
+export { default as ConvertTerminalLibCmToConnector } from "./ConvertTerminalLibCmToConnector";
+
 export { default as ConvertDataToEdge } from "./ConvertDataToEdge";
 
 export { default as ConvertEdgeToFlow } from "./ConvertEdgeToFlow";

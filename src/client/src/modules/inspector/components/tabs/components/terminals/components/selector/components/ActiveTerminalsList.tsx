@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { Color } from "../../../../../../../../../assets/color/Color";
-// import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { ConnectorType, TerminalType } from "../../../../../../../../../models";
 import { ActiveTerminalsTypeList } from "./ActiveTerminalsTypeList";
 import { OnCategoryClick } from "./handlers/OnCategoryClick";
@@ -14,10 +13,11 @@ import { FormatTypeId } from "./helpers/FormatTypeId";
 import { FilterTerminalCategories } from "./helpers/FilterTerminalCategories";
 import { GetInputAndOutputTerminalsByTerminalType } from "./helpers/GetInputAndOutputTerminalsByTerminalType";
 import { GetNumTerminalsByCategory } from "./helpers/GetNumTerminalsByCategory";
+import { TerminalCategory } from "../../../helpers/GetFilteredTerminalsList";
 
 interface Props {
   terminals: TerminalLikeItem[];
-  terminalCategories: any[];
+  terminalCategories: TerminalCategory[];
   selectedTerminal: TerminalLikeItem;
   selectedTerminalIdentifier: SelectedTerminalIdentifier;
   onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;

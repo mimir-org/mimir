@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
-import { Button } from "../../compLibrary/buttons/standard";
+import { Button } from "../../compLibrary/buttons/standar";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/spinner/";
 
 type AppProps = {

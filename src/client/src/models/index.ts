@@ -13,10 +13,11 @@ export { WorkerStatus } from "./enums/WorkerStatus";
 export { CommitStatus } from "./enums/CommitStatus";
 export { RelationType } from "./enums/RelationType";
 export { LibraryFilter } from "./enums/LibraryFilter";
-export { ConnectorType } from "./enums/ConnectorType";
 export { AspectColorType } from "./enums/AspectColorType";
 export { CollectionsActions } from "./enums/CollectionsActions";
 export { ConnectorVisibility } from "./enums/ConnectorVisibility";
+
+export { ConnectorType } from "./enums/ConnectorType";
 
 export { ATTRIBUTE_KIND } from "./data/Attribute";
 export { CONNECTOR_KIND } from "./data/Connector";
