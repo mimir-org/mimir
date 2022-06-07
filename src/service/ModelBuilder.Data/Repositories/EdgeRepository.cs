@@ -5,15 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mimirorg.Common.Extensions;
 using SqlBulkTools;
+using Mimirorg.TypeLibrary.Enums;
+using Mimirorg.Common.Exceptions;
+using Mb.Models.Common;
 
 namespace Mb.Data.Repositories
 {
@@ -235,7 +236,7 @@ namespace Mb.Data.Repositories
                 return;
 
             if (lockDms.Any(x => x.Type is not EntityType.Edge))
-                throw new ModelBuilderBadRequestException("EntityType is not of type Edge");
+                throw new MimirorgBadRequestException("EntityType is not of type Edge");
 
             bulk.Setup<LockDm>()
                 .ForCollection(lockDms)

@@ -8,15 +8,15 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Models.Records;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
+using Mb.Models.Client;
 
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
@@ -63,7 +63,7 @@ namespace Mb.Data.Repositories
         public async Task<Project> GetAsyncComplete(string id, string iri)
         {
             if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
-                throw new ModelBuilderNullReferenceException("The ID and IRI can't both be null.");
+                throw new MimirorgNullReferenceException("The ID and IRI can't both be null.");
 
             var key = !string.IsNullOrWhiteSpace(id) ? id.ResolveKey() : iri.ResolveKey();
 
@@ -115,7 +115,7 @@ namespace Mb.Data.Repositories
         public async Task UpdateProject(Project original, Project updated, ProjectEditData data)
         {
             if (original == null || updated == null || data == null)
-                throw new ModelBuilderNullReferenceException(
+                throw new MimirorgNullReferenceException(
                     "Original project, updated project and project edit can't be null.");
 
             var bulk = new BulkOperations();

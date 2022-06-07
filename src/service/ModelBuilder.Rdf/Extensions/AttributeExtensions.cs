@@ -1,5 +1,4 @@
 using System.Web;
-using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Enums;
 using Mimirorg.TypeLibrary.Models.Client;
@@ -7,8 +6,10 @@ using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
 using Newtonsoft.Json;
+using Mimirorg.TypeLibrary.Enums;
 using Attribute = Mb.Models.Data.Attribute;
 using AttributeDatumObject = ModelBuilder.Rdf.Models.AttributeDatumObject;
+using Mb.Models.Application;
 
 namespace ModelBuilder.Rdf.Extensions
 {
@@ -202,7 +203,7 @@ namespace ModelBuilder.Rdf.Extensions
             var selectValueNodes = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.SelectValue).Select(x => x.Object).ToList();
             attribute.SelectValues = selectValueNodes.Select(x => x.ResolveValue(false)).ToList();
 
-            attribute.SelectType = ontologyService.GetEnumValue<SelectType>(iri, Resources.SelectType, false);
+            attribute.SelectType = ontologyService.GetEnumValue<Select>(iri, Resources.SelectType, false);
             attribute.Discipline = ontologyService.GetEnumValue<Discipline>(iri, Resources.HasDiscipline, false);
         }
     }

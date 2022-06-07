@@ -11,7 +11,6 @@ export interface Attribute {
   entity: string;
   value: string;
   selectedUnitId: string;
-  unit: EnumBase;
   qualifier: string;
   source: string;
   condition: string;
@@ -30,7 +29,6 @@ export interface Attribute {
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
-  tags: Set<string>;
   interfaceId: string;
   interfaceIri: string;
   isLocked: boolean;

@@ -6,12 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
+using Mb.Models.Application;
 
 namespace Mb.Services.Services
 {
@@ -40,26 +40,32 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectFile"></param>
         /// <returns></returns>
-        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
-        /// <exception cref="ModelBuilderBadRequestException"></exception>
+        /// <exception cref="MimirorgInvalidOperationException"></exception>
+        /// <exception cref="MimirorgBadRequestException"></exception>
         /// <exception cref="ModelBuilderModuleException"></exception>
         public async Task<ProjectAm> ResolveProject(ProjectFileAm projectFile)
         {
             if (projectFile == null)
-                throw new ModelBuilderInvalidOperationException("ProjectFile is null");
+                throw new MimirorgInvalidOperationException("ProjectFile is null");
 
             var validation = projectFile.ValidateObject();
             if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.",
-                    validation);
+                throw new MimirorgBadRequestException("Couldn't resolve project, the ProjectFile is not valid.", validation);
+
+            if (!Guid.TryParse(projectFile.ParserId, out var parserId))
+            {
+                throw new MimirorgBadRequestException("The Id must be in Guid format.");
+            }
 
             if (_moduleService.Modules.All(x =>
-                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(
+                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
                         x.ModuleDescription.Id.ToString(), projectFile.ParserId.ToString(),
                         StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {projectFile.ParserId}");
 
-            var par = _moduleService.Resolve<IModelBuilderParser>(projectFile.ParserId);
+            
+
+            var par = _moduleService.Resolve<IModelBuilderParser>(parserId);
             var project = await par.DeserializeProjectAm(Encoding.UTF8.GetBytes(projectFile.FileContent));
             return project;
         }
@@ -77,7 +83,7 @@ namespace Mb.Services.Services
             await using var stream = new MemoryStream();
             await file.CopyToAsync(stream, cancellationToken);
             var fileContent = Encoding.UTF8.GetString(stream.ToArray());
-            await ImportProject(new ProjectFileAm { ParserId = id, FileContent = fileContent });
+            await ImportProject(new ProjectFileAm { ParserId = id.ToString(), FileContent = fileContent });
         }
 
         /// <summary>
@@ -85,20 +91,24 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectConverter"></param>
         /// <returns></returns>
-        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
-        /// <exception cref="ModelBuilderNullReferenceException"></exception>
+        /// <exception cref="MimirorgInvalidOperationException"></exception>
+        /// <exception cref="MimirorgNullReferenceException"></exception>
         public async Task<ProjectFileAm> ConvertProject(ProjectConverterAm projectConverter)
         {
-            var par = _moduleService.Resolve<IModelBuilderParser>(projectConverter.ParserId);
+            if (!Guid.TryParse(projectConverter.ParserId, out var parserId))
+            {
+                throw new MimirorgInvalidOperationException("The Id must be in Guid format.");
+            }
+
+            var par = _moduleService.Resolve<IModelBuilderParser>(parserId);
             if (par == null)
-                throw new ModelBuilderInvalidOperationException(
-                    $"There is no parser with id: {projectConverter.ParserId}");
+                throw new MimirorgInvalidOperationException($"There is no parser with id: {projectConverter.ParserId}");
 
             await _projectService.UpdateProject(projectConverter.Project.Id, projectConverter.Project.Iri,
                 projectConverter.Project, _commonRepository.GetDomain());
             var project = await _projectService.GetProject(projectConverter.Project.Id, projectConverter.Project.Iri);
             if (project == null)
-                throw new ModelBuilderNullReferenceException(
+                throw new MimirorgNullReferenceException(
                     $"Couldn't save project with id: {projectConverter.Project.Id}");
 
             var bytes = await par.SerializeProject(project);
@@ -121,21 +131,21 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="projectFile"></param>
         /// <returns></returns>
-        /// <exception cref="ModelBuilderInvalidOperationException"></exception>
+        /// <exception cref="MimirorgInvalidOperationException"></exception>
         private async Task ImportProject(ProjectFileAm projectFile)
         {
             if (projectFile == null)
-                throw new ModelBuilderInvalidOperationException("ProjectFile is null");
+                throw new MimirorgInvalidOperationException("ProjectFile is null");
 
             var validation = projectFile.ValidateObject();
             if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException("Couldn't resolve project, the ProjectFile is not valid.",
+                throw new MimirorgBadRequestException("Couldn't resolve project, the ProjectFile is not valid.",
                     validation);
 
             var project = await ResolveProject(projectFile);
 
             if (project == null || (string.IsNullOrEmpty(project.Id) && string.IsNullOrEmpty(project.Iri)))
-                throw new ModelBuilderInvalidOperationException(
+                throw new MimirorgInvalidOperationException(
                     "You can't import an project that is null or missing id");
 
             var exist = _projectService.ProjectExist(project.Id, project.Iri);

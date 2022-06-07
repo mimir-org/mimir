@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using SqlBulkTools;

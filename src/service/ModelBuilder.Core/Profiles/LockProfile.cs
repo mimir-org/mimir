@@ -1,6 +1,8 @@
 using System;
 using AutoMapper;
 using Mb.Models.Application;
+using Mb.Models.Client;
+using Mb.Models.Common;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
 

@@ -5,6 +5,8 @@ using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
 using Mimirorg.TypeLibrary.Models.Client;
+using TypeScriptBuilder;
+using Mimirorg.TypeLibrary.Enums;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -42,36 +44,46 @@ namespace Mb.Models.Data
         }
 
         [JsonIgnore]
+        [TSExclude]
         public string UnitString { get; set; }
 
-        // Qualifiers
         public string Qualifier { get; set; }
         public string Source { get; set; }
         public string Condition { get; set; }
         public string Format { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Terminal Terminal { get; set; }
+
         public virtual string TerminalId { get; set; }
         public virtual string TerminalIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Node Node { get; set; }
+
         public virtual string NodeId { get; set; }
         public virtual string NodeIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Transport Transport { get; set; }
+
         public virtual string TransportId { get; set; }
         public virtual string TransportIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Interface Interface { get; set; }
+
         public virtual string InterfaceId { get; set; }
         public virtual string InterfaceIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Simple Simple { get; set; }
+
         public virtual string SimpleId { get; set; }
         public virtual string SimpleIri { get; set; }
 
@@ -79,10 +91,11 @@ namespace Mb.Models.Data
         public ICollection<string> SelectValues => string.IsNullOrEmpty(SelectValuesString) ? null : SelectValuesString.ConvertToArray();
 
         [JsonIgnore]
+        [TSExclude]
         public string SelectValuesString { get; set; }
-        public SelectType SelectType { get; set; }
+
+        public Select SelectType { get; set; }
         public Discipline Discipline { get; set; }
-        //public virtual HashSet<string> Tags { get; set; }
         public bool IsLocked { get; set; }
         public string IsLockedStatusBy { get; set; }
         public DateTime? IsLockedStatusDate { get; set; }
@@ -91,6 +104,7 @@ namespace Mb.Models.Data
 
         #region Members
 
+        [TSExclude]
         private ICollection<UnitLibCm> _units;
 
         #endregion
@@ -163,7 +177,6 @@ namespace Mb.Models.Data
             hashCode.Add(SelectValuesString);
             hashCode.Add((int) SelectType);
             hashCode.Add((int) Discipline);
-            //hashCode.Add(Tags);
             return hashCode.ToHashCode();
         }
 

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Mimirorg.TypeLibrary.Models.Client;
@@ -228,8 +228,8 @@ namespace Mb.Services.Services
         ///// <param name="id"></param>
         ///// <param name="filter"></param>
         ///// <returns></returns>
-        ///// <exception cref="ModelBuilderNotFoundException"></exception>
-        ///// <exception cref="ModelBuilderInvalidOperationException"></exception>
+        ///// <exception cref="MimirorgNotFoundException"></exception>
+        ///// <exception cref="MimirorgInvalidOperationException"></exception>
         //public async Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter)
         //{
         //    switch (filter)
@@ -239,7 +239,7 @@ namespace Mb.Services.Services
         //            var node = nodes.FirstOrDefault(x => x.Id == id);
 
         //            if (node == null)
-        //                throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+        //                throw new MimirorgNotFoundException($"There is no type with id: {id} and filter: {filter}");
         //            return _mapper.Map<CreateLibraryType>(node);
 
         //        case LibraryFilter.Interface:
@@ -247,7 +247,7 @@ namespace Mb.Services.Services
         //            var interfaceType = interfaces.FirstOrDefault(x => x.Id == id);
 
         //            if (interfaceType == null)
-        //                throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+        //                throw new MimirorgNotFoundException($"There is no type with id: {id} and filter: {filter}");
 
         //            return _mapper.Map<CreateLibraryType>(interfaceType);
 
@@ -256,12 +256,12 @@ namespace Mb.Services.Services
         //            var transportType = transports.FirstOrDefault(x => x.Id == id);
 
         //            if (transportType == null)
-        //                throw new ModelBuilderNotFoundException($"There is no type with id: {id} and filter: {filter}");
+        //                throw new MimirorgNotFoundException($"There is no type with id: {id} and filter: {filter}");
 
         //            return _mapper.Map<CreateLibraryType>(transportType);
 
         //        default:
-        //            throw new ModelBuilderInvalidOperationException("Filter type mismatch");
+        //            throw new MimirorgInvalidOperationException("Filter type mismatch");
         //    }
         //}
 

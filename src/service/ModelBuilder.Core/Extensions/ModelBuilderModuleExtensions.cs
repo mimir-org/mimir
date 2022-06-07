@@ -11,6 +11,7 @@ using Mb.Data.Repositories;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Attributes;
+using Mb.Models.Common;
 using Mb.Models.Configurations;
 using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
@@ -29,7 +30,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using Module = Mb.Models.Application.Module;
+using Module = Mb.Models.Common.Module;
 
 namespace Mb.Core.Extensions
 {

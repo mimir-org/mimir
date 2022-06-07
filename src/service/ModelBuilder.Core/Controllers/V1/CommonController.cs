@@ -4,9 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Models.Settings;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using Mb.Models.Application;
+using Mb.Models.Client;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -84,7 +85,7 @@ namespace Mb.Core.Controllers.V1
                 var data = _commonService.CreateCollaborationPartnerAsync(collaborationPartner);
                 return StatusCode(StatusCodes.Status201Created, data);
             }
-            catch (ModelBuilderDuplicateException e)
+            catch (MimirorgDuplicateException e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
                 return StatusCode(500, e.Message);

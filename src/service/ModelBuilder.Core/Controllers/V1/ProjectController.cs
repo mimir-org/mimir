@@ -6,15 +6,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using Mb.Models.Application;
+using Mb.Models.Client;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -65,7 +66,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Edit")]
-        public async Task<IActionResult> CreateNewProject([FromBody] CreateProject project)
+        public async Task<IActionResult> CreateNewProject([FromBody] CreateProjectAm project)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -130,7 +131,7 @@ namespace Mb.Core.Controllers.V1
                 var data = await _projectService.GetProject(id, null);
                 return Ok(data);
             }
-            catch (ModelBuilderNotFoundException)
+            catch (MimirorgNotFoundException)
             {
                 return NoContent();
             }
@@ -163,7 +164,7 @@ namespace Mb.Core.Controllers.V1
                 var project = await _projectFileService.ConvertProject(projectConverter);
                 return Ok(project);
             }
-            catch (ModelBuilderBadRequestException e)
+            catch (MimirorgBadRequestException e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
 
@@ -207,11 +208,11 @@ namespace Mb.Core.Controllers.V1
                 await _projectService.UpdateProject(id, null, projectAm, _commonRepository.GetDomain());
                 return Ok(null);
             }
-            catch (ModelBuilderDuplicateException e)
+            catch (MimirorgDuplicateException e)
             {
                 return Conflict(e.Message);
             }
-            catch (ModelBuilderNotFoundException e)
+            catch (MimirorgNotFoundException e)
             {
                 return NotFound(e.Message);
             }
@@ -240,11 +241,11 @@ namespace Mb.Core.Controllers.V1
                 await _projectService.DeleteProject(id);
                 return Ok();
             }
-            catch (ModelBuilderNotFoundException e)
+            catch (MimirorgNotFoundException e)
             {
                 return NotFound(e.Message);
             }
-            catch (ModelBuilderInvalidOperationException e)
+            catch (MimirorgInvalidOperationException e)
             {
                 return StatusCode(500, e.Message);
             }
@@ -279,7 +280,7 @@ namespace Mb.Core.Controllers.V1
                 ModelState.AddModelError("DownloadProject", e.Message);
                 return BadRequest(ModelState);
             }
-            catch (ModelBuilderNotFoundException e)
+            catch (MimirorgNotFoundException e)
             {
                 ModelState.AddModelError("DownloadProject", e.Message);
                 return BadRequest(ModelState);
@@ -319,7 +320,7 @@ namespace Mb.Core.Controllers.V1
                 await _projectFileService.ImportProject(file, cancellationToken, new Guid(parser));
                 return StatusCode(StatusCodes.Status201Created);
             }
-            catch (ModelBuilderBadRequestException e)
+            catch (MimirorgBadRequestException e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
 
@@ -336,7 +337,7 @@ namespace Mb.Core.Controllers.V1
                 ModelState.AddModelError("UploadProject", e.Message);
                 return BadRequest(ModelState);
             }
-            catch (ModelBuilderDuplicateException e)
+            catch (MimirorgDuplicateException e)
             {
                 ModelState.AddModelError("UploadProject", e.Message);
                 return BadRequest(ModelState);

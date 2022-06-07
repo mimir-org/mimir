@@ -5,16 +5,18 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Exceptions;
 using Mb.Models.Records;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Mimirorg.Common.Extensions;
+using Mimirorg.TypeLibrary.Enums;
+using Mb.Models.Common;
+using Mb.Models.Application;
+using Mb.Models.Client;
 
 namespace Mb.Services.Services
 {
@@ -74,13 +76,13 @@ namespace Mb.Services.Services
         /// <param name="id"></param>
         /// <param name="iri"></param>
         /// <returns>The actual project</returns>
-        /// <exception cref="ModelBuilderNotFoundException">Throws if the project does not exist</exception>
+        /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
         public async Task<Project> GetProject(string id, string iri)
         {
             var project = await _projectRepository.GetAsyncComplete(id, iri);
 
             if (project == null)
-                throw new ModelBuilderNotFoundException($"Could not find project with id: {id} or iri: {iri}");
+                throw new MimirorgNotFoundException($"Could not find project with id: {id} or iri: {iri}");
 
             return project;
         }
@@ -90,7 +92,7 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="createProject"></param>
         /// <returns></returns>
-        public async Task<Project> CreateProject(CreateProject createProject)
+        public async Task<Project> CreateProject(CreateProjectAm createProject)
         {
             var project = CreateInitProject(createProject, false);
             await _projectRepository.CreateAsync(project);
@@ -103,34 +105,34 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="project">The project that should be created</param>
         /// <returns>A create project task</returns>
-        /// <exception cref="ModelBuilderDuplicateException">Throws if there is already a project, node or edge with same id.</exception>
-        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null</exception>
-        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid</exception>
+        /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, node or edge with same id.</exception>
+        /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
+        /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
         public async Task<Project> CreateProject(ProjectAm project)
         {
             if (project == null)
-                throw new ModelBuilderNullReferenceException("The project that should be created is null.");
+                throw new MimirorgNullReferenceException("The project that should be created is null.");
 
             var validation = project.ValidateObject();
             if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException($"Couldn't create project with name: {project.Name}",
+                throw new MimirorgBadRequestException($"Couldn't create project with name: {project.Name}",
                     validation);
 
             var existingProject = ProjectExist(project.Id, project.Iri);
             ClearAllChangeTracker();
 
             if (existingProject)
-                throw new ModelBuilderDuplicateException($"Project already exist - id: {project.Id}");
+                throw new MimirorgDuplicateException($"Project already exist - id: {project.Id}");
 
             if (_edgeRepository.GetAll().AsEnumerable().Any(x => project.Edges.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException("One or more edges already exist");
+                throw new MimirorgDuplicateException("One or more edges already exist");
 
             if (_nodeRepository.GetAll().AsEnumerable().Any(x => project.Nodes.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException("One or more nodes already exist");
+                throw new MimirorgDuplicateException("One or more nodes already exist");
 
             var allConnectors = project.Nodes.AsEnumerable().SelectMany(x => x.Connectors).ToList();
             if (_connectorRepository.GetAll().AsEnumerable().Any(x => allConnectors.Any(y => y.Id == x.Id)))
-                throw new ModelBuilderDuplicateException("One or more connectors already exist");
+                throw new MimirorgDuplicateException("One or more connectors already exist");
 
             // Remap and create new id's
             _remapService.Remap(project);
@@ -169,16 +171,16 @@ namespace Mb.Services.Services
             try
             {
                 if (subProjectAm == null)
-                    throw new ModelBuilderNullReferenceException("Sub-project is null");
+                    throw new MimirorgNullReferenceException("Sub-project is null");
 
                 var validation = subProjectAm.ValidateObject();
                 if (!validation.IsValid)
-                    throw new ModelBuilderBadRequestException(
+                    throw new MimirorgBadRequestException(
                         $"Couldn't create sub-project with name: {subProjectAm.Name}", validation);
 
                 var fromProject = await _projectRepository.GetAsyncComplete(subProjectAm.FromProjectId, null);
                 if (fromProject == null)
-                    throw new ModelBuilderInvalidOperationException("The original project does not exist");
+                    throw new MimirorgInvalidOperationException("The original project does not exist");
 
                 fromProject.Nodes = fromProject.Nodes.Where(x => x.IsRoot || subProjectAm.Nodes.Any(y => x.Id == y))
                     .ToList();
@@ -217,29 +219,29 @@ namespace Mb.Services.Services
         /// <param name="invokedByDomain"></param>
         /// <param name="iri"></param>
         /// <returns>Update Project Task</returns>
-        /// <exception cref="ModelBuilderInvalidOperationException">Throws if invoking domain is not set.</exception>
-        /// <exception cref="ModelBuilderNotFoundException">Throws if project is missing from database.</exception>
-        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
-        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid.</exception>
+        /// <exception cref="MimirorgInvalidOperationException">Throws if invoking domain is not set.</exception>
+        /// <exception cref="MimirorgNotFoundException">Throws if project is missing from database.</exception>
+        /// <exception cref="MimirorgNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
+        /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
         /// TODO: We need to handle invokedByDomain in update process
         public async Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain)
         {
             if ((string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri)) || project == null)
-                throw new ModelBuilderNullReferenceException("Id or Iri must have value. Project can't be null.");
+                throw new MimirorgNullReferenceException("Id or Iri must have value. Project can't be null.");
 
             if (string.IsNullOrWhiteSpace(invokedByDomain))
-                throw new ModelBuilderInvalidOperationException("Domain can't be null or empty");
+                throw new MimirorgInvalidOperationException("Domain can't be null or empty");
 
             var validation = project.ValidateObject();
             if (!validation.IsValid)
-                throw new ModelBuilderBadRequestException($"Couldn't update project with name: {project.Name}",
+                throw new MimirorgBadRequestException($"Couldn't update project with name: {project.Name}",
                     validation);
 
             var original = await _projectRepository.GetAsyncComplete(id, iri);
             ClearAllChangeTracker();
 
             if (original == null)
-                throw new ModelBuilderNotFoundException($"The project with id:{id}, could not be found.");
+                throw new MimirorgNotFoundException($"The project with id:{id}, could not be found.");
 
             // Remap and create new id's
             _ = _remapService.Remap(project);
@@ -271,7 +273,7 @@ namespace Mb.Services.Services
         {
             var existingProject = await GetProject(projectId, null);
             if (existingProject == null)
-                throw new ModelBuilderNotFoundException($"There is no project with id: {projectId}");
+                throw new MimirorgNotFoundException($"There is no project with id: {projectId}");
 
             var projectData = new ProjectData();
             await _remapService.DeConstruct(existingProject, projectData);
@@ -289,7 +291,7 @@ namespace Mb.Services.Services
             var project = await GetProject(projectId, null);
 
             if (_moduleService.Modules.All(x =>
-                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(
+                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
                         x.ModuleDescription.Id.ToString(), id.ToString(), StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with id: {id}");
 
@@ -303,15 +305,15 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="package"></param>
         /// <returns></returns>
-        public async Task CommitProject(CommitPackage package)
+        public async Task CommitProject(CommitPackageAm package)
         {
             // TODO: We are missing UX here to define what to do in this workflow. For now, we only send data.
 
             if (string.IsNullOrWhiteSpace(package?.ProjectId))
-                throw new ModelBuilderNullReferenceException("Can't commit a null reference commit package");
+                throw new MimirorgNullReferenceException("Can't commit a null reference commit package");
 
             if (_moduleService.Modules.All(x =>
-                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty && !string.Equals(
+                    x.ModuleDescription != null && x.ModuleDescription.Id != Guid.Empty.ToString() && !string.Equals(
                         x.ModuleDescription.Id.ToString(), package.Parser, StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {package.Parser}");
 
@@ -436,7 +438,7 @@ namespace Mb.Services.Services
                 Id = connectorId,
                 Iri = connectorIri,
                 Name = connectorName,
-                Type = ConnectorType.Output,
+                Type = ConnectorDirection.Output,
                 NodeId = node.Id,
                 NodeIri = node.Iri,
                 RelationType = RelationType.PartOf
@@ -463,7 +465,7 @@ namespace Mb.Services.Services
             node.Level = level;
             node.Order = order;
             var connector = node.Connectors.OfType<Relation>().FirstOrDefault(x =>
-                x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf);
+                x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf);
 
             if (connector == null)
                 return order;
@@ -474,20 +476,20 @@ namespace Mb.Services.Services
                 (current, child) => ResolveNodeLevelAndOrder(child, project, level + 1, current + 1));
         }
 
-        private Project CreateInitProject(CreateProject createProject, bool isSubProject)
+        private Project CreateInitProject(CreateProjectAm createProject, bool isSubProject)
         {
             const string version = "1.0.0";
 
             if (string.IsNullOrWhiteSpace(createProject?.Name))
-                throw new ModelBuilderInvalidOperationException(
+                throw new MimirorgInvalidOperationException(
                     "You need to give the new project a name");
 
             if (createProject.Name.Length < 2)
-                throw new ModelBuilderInvalidOperationException(
+                throw new MimirorgInvalidOperationException(
                     "Project name must be minimum 2 characters");
 
             if (_projectRepository.GetAll().Any(x => x.Name.ToLower() == createProject.Name.ToLower()))
-                throw new ModelBuilderInvalidOperationException(
+                throw new MimirorgInvalidOperationException(
                     "There already exist a project with the same name");
 
             var (projectId, projectIri) = _commonRepository.CreateOrUseIdAndIri(null, null);

@@ -50,7 +50,6 @@ export interface AttributeAm {
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
-  tags: Set<string>;
   isLocked: boolean;
   isLockedBy: string;
 }
@@ -242,7 +241,6 @@ const ConvertAttributes = (attributes: Attribute[]) => {
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
       discipline: attribute.discipline,
-      tags: attribute.tags,
       isLocked: attribute.isLocked,
       isLockedBy: attribute.isLockedStatusBy,
     });

@@ -2,15 +2,15 @@ using System.Globalization;
 using System.Text;
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using ModelBuilder.Rdf.Extensions;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Repositories;
 using VDS.RDF;
 using StringWriter = VDS.RDF.Writing.StringWriter;
+using Mb.Models.Application;
 
 namespace ModelBuilder.Rdf.Services
 {

@@ -1,4 +1,4 @@
-using Mb.Models.Attributes;
+using Mimirorg.Common.Attributes;
 using Mimirorg.Common.Extensions;
 using Xunit;
 

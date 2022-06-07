@@ -1,6 +1,7 @@
 using Mb.Models.Application;
 using Mb.Models.Enums;
 using Mimirorg.Common.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 using Xunit;
 
 namespace ModelBuilder.Tests.Models
@@ -18,7 +19,7 @@ namespace ModelBuilder.Tests.Models
                 Name = "Terminal",
                 Attributes = null,
                 Color = "#ffffff",
-                Type = ConnectorType.Input,
+                Type = ConnectorDirection.Input,
                 ConnectorVisibility = ConnectorVisibility.None,
                 NodeId = null,
                 NodeIri = null,
@@ -60,10 +61,10 @@ namespace ModelBuilder.Tests.Models
         }
 
         [Theory]
-        [InlineData((ConnectorType) 1000, ConnectorVisibility.InputVisible, RelationType.NotSet)]
-        [InlineData(ConnectorType.Input, (ConnectorVisibility) 1000, RelationType.NotSet)]
-        [InlineData(ConnectorType.Input, ConnectorVisibility.InputVisible, (RelationType) 1000)]
-        public void Enum_Value_Out_Of_Range_Validate_False(ConnectorType connectorType, ConnectorVisibility connectorVisibility, RelationType relationType)
+        [InlineData((ConnectorDirection) 1000, ConnectorVisibility.InputVisible, RelationType.NotSet)]
+        [InlineData(ConnectorDirection.Input, (ConnectorVisibility) 1000, RelationType.NotSet)]
+        [InlineData(ConnectorDirection.Input, ConnectorVisibility.InputVisible, (RelationType) 1000)]
+        public void Enum_Value_Out_Of_Range_Validate_False(ConnectorDirection connectorType, ConnectorVisibility connectorVisibility, RelationType relationType)
         {
             var obj = _terminal.DeepCopy();
             obj.Type = connectorType;

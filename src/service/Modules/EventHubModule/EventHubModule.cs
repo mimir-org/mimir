@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EventHubModule.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Mb.Models.Common;
 
 // ReSharper disable StringLiteralTypo
 
@@ -30,7 +30,7 @@ namespace EventHubModule
         {
             return new ModuleDescription
             {
-                Id = new Guid("1D86BEE5-C7C4-4822-8BCD-964F9284E285"),
+                Id = new Guid("1D86BEE5-C7C4-4822-8BCD-964F9284E285").ToString(),
                 Name = "Event Hub Module"
             };
         }

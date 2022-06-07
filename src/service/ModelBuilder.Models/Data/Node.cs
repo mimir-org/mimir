@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 

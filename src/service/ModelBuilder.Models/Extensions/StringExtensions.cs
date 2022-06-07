@@ -1,9 +1,9 @@
+using Mimirorg.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Mb.Models.Exceptions;
 
 namespace Mb.Models.Extensions
 {
@@ -39,27 +39,6 @@ namespace Mb.Models.Extensions
             return sb.ToString();
         }
 
-        //public static (string terminalCategoryId, string terminalTypeId) CreateCategoryIdAndTerminalTypeId(this string terminalName, string terminalCategoryId)
-        //{
-        //    if (string.IsNullOrEmpty(terminalCategoryId) || string.IsNullOrEmpty(terminalName))
-        //        throw new ModelBuilderNullReferenceException("Category and terminal can't be null");
-
-        //    var category = new TerminalCategory
-        //    {
-        //        Id = terminalCategoryId
-        //    };
-
-        //    var createTerminalType = new CreateTerminalType
-        //    {
-        //        Name = terminalName,
-        //        TerminalCategoryId = category.Id
-        //    };
-
-        //    var terminalTypeId = createTerminalType.Key.CreateMd5();
-
-        //    return (category.Id, terminalTypeId);
-        //}
-
         public static string IncrementMajorVersion(this string version)
         {
             return IncrementVersion(version, true, false, false);
@@ -82,7 +61,7 @@ namespace Mb.Models.Extensions
 
             var name = role.Split('_', StringSplitOptions.RemoveEmptyEntries);
             if (name.Length != 2)
-                throw new ModelBuilderInvalidOperationException("The role name contains fail format.");
+                throw new MimirorgInvalidOperationException("The role name contains fail format.");
 
             return name[^1];
         }

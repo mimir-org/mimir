@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mb.Models.Application;
+using Mb.Models.Common;
 using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Contracts

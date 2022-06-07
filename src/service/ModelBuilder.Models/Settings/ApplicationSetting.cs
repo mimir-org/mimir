@@ -1,5 +1,5 @@
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 
 namespace Mb.Models.Settings
 {
@@ -13,10 +13,10 @@ namespace Mb.Models.Settings
         public string ApiUrl(string relativePath)
         {
             if (relativePath == null)
-                throw new ModelBuilderNullReferenceException("Relative path can't be null");
+                throw new MimirorgNullReferenceException("Relative path can't be null");
 
             if (string.IsNullOrWhiteSpace(TypeLibraryRootUri) || string.IsNullOrWhiteSpace(TypeLibraryVersion))
-                throw new ModelBuilderConfigurationException("Type Library configuration is null or missing");
+                throw new MimirorgConfigurationException("Type Library configuration is null or missing");
 
             return
                 $@"{TypeLibraryRootUri.Trim().Trim('/')}/{TypeLibraryVersion.Trim().Trim('/')}/{relativePath.TrimStart('/')}";

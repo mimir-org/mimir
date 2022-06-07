@@ -3,6 +3,8 @@ using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.Common.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
@@ -280,7 +282,7 @@ namespace ModelBuilder.Rdf.Extensions
                 {
                     Iri = iri.StripAndCreateIdIri(),
                     Name = RelationType.PartOf.GetDisplayName(),
-                    Type = ConnectorType.Output,
+                    Type = ConnectorDirection.Output,
                     NodeIri = iri,
                     RelationType = RelationType.PartOf,
                     ConnectorVisibility = ConnectorVisibility.None
@@ -294,7 +296,7 @@ namespace ModelBuilder.Rdf.Extensions
             {
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.PartOf.GetDisplayName(),
-                Type = ConnectorType.Input,
+                Type = ConnectorDirection.Input,
                 NodeIri = iri,
                 RelationType = RelationType.PartOf,
                 ConnectorVisibility = ConnectorVisibility.None
@@ -304,7 +306,7 @@ namespace ModelBuilder.Rdf.Extensions
             {
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.HasLocation.GetDisplayName(),
-                Type = ConnectorType.Input,
+                Type = ConnectorDirection.Input,
                 NodeIri = iri,
                 RelationType = RelationType.HasLocation,
                 ConnectorVisibility = ConnectorVisibility.None
@@ -314,7 +316,7 @@ namespace ModelBuilder.Rdf.Extensions
             {
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.HasLocation.GetDisplayName(),
-                Type = ConnectorType.Output,
+                Type = ConnectorDirection.Output,
                 NodeIri = iri,
                 RelationType = RelationType.HasLocation,
                 ConnectorVisibility = ConnectorVisibility.None
@@ -324,7 +326,7 @@ namespace ModelBuilder.Rdf.Extensions
             {
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.FulfilledBy.GetDisplayName(),
-                Type = ConnectorType.Input,
+                Type = ConnectorDirection.Input,
                 NodeIri = iri,
                 RelationType = RelationType.FulfilledBy,
                 ConnectorVisibility = ConnectorVisibility.None
@@ -334,7 +336,7 @@ namespace ModelBuilder.Rdf.Extensions
             {
                 Iri = iri.StripAndCreateIdIri(),
                 Name = RelationType.FulfilledBy.GetDisplayName(),
-                Type = ConnectorType.Output,
+                Type = ConnectorDirection.Output,
                 NodeIri = iri,
                 RelationType = RelationType.FulfilledBy,
                 ConnectorVisibility = ConnectorVisibility.None

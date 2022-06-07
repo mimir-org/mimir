@@ -1,6 +1,8 @@
 using AutoMapper;
 using Mb.Data.Contracts;
 using Mb.Models.Application;
+using Mb.Models.Client;
+using Mb.Models.Common;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;

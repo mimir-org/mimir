@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Models.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +42,7 @@ namespace RdfNTriplesParser
         {
             return new ModuleDescription
             {
-                Id = new Guid("59ED4298-EE6A-443D-A465-35053E9B4581"),
+                Id = new Guid("59ED4298-EE6A-443D-A465-35053E9B4581").ToString(),
                 Name = "Mimir RDF N-Triples"
             };
         }

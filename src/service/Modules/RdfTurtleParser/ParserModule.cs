@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Models.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +42,7 @@ namespace RdfTurtleParser
         {
             return new ModuleDescription
             {
-                Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6"),
+                Id = new Guid("D0986895-3C60-4B50-9711-40496D8363D6").ToString(),
                 Name = "Mimir RDF Turtle"
             };
         }

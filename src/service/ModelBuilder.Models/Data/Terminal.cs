@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
+    [TSFlat]
     public class Terminal : Connector, IEquatable<Terminal>
     {
         public string Color { get; set; }

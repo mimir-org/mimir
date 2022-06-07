@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
+using Mb.Models.Client;
 using Mb.Models.Const;
 using Mb.Models.Data;
 using Mb.Models.Data.Hubs;
