@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { FontSize, FontType } from "../../../../../compLibrary/font";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { FontSize, FontType } from "../../../../../assets/font";
+import { Color } from "../../../../../assets/color/Color";
 
 export const SearchAreaWrapper = styled.div`
   display: flex;

@@ -6,7 +6,7 @@ import { GetAvatarInitials } from "../helpers/GetAvatarInitials";
 import { useAppSelector } from "../../../redux/store";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";
 import { AvatarButton, AvatarCircle, AvatarComponentContainer, AvatarInitials } from "./AvatarComponent.styled";
-import { Icon } from "../../../compLibrary/icon";
+import { Icon } from "../../../compLibrary/icon/Icon";
 import { useState } from "react";
 import { UserMenuComponent } from "../../menus/userMenu/";
 

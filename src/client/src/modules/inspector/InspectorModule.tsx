@@ -1,6 +1,6 @@
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
-import { Size } from "../../compLibrary/size/Size";
+import { Size } from "../../assets/size/Size";
 import { Tooltip } from "../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../assets/text/TextResources";
 import { MODULE_TYPE } from "../../models/project";

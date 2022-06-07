@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { Action, Dispatch } from "redux";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 
 const BORDER_SIZE = 44;
 const MIN_HEIGHT = Size.MODULE_CLOSED;

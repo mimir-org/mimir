@@ -1,6 +1,6 @@
 import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
-import { ConvertDataToNode } from "../../converters";
+import { ConvertLibNodeToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { LibrarySubProjectItem, Node, Project, User } from "../../../../models";
@@ -45,43 +45,25 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
 /**
- * Function to handle a SubProject dropped from the Library.
- * @param event
- * @param project
- * @param dispatch
- */
-function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
-  const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibrarySubProjectItem;
-
-  (async () => {
-    const subProject = await GetSubProject(eventData.id);
-    const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, subProject);
-
-    nodesToCreate.forEach((node) => dispatch(addNode(node)));
-    edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
-  })();
-}
-
-/**
  * Function to handle a node dropped from the Library.
+ * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param OnDropParameters
  */
 function HandleNodeDrop({ event, project, user, library, dispatch }: OnDropParameters) {
-  const node = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
+  const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
   const selectedNode = project?.nodes?.find((n) => n.selected);
 
   // The dropped node automatically finds a parent
-  const parentNode = SetParentNodeOnDrop(selectedNode, node, project.nodes);
+  const parentNode = SetParentNodeOnDrop(selectedNode, libNode, project.nodes);
 
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
-  const targetNode = ConvertDataToNode(node, treePosition, parentNode, blockPosition, project.id, user);
-  if (!targetNode) return;
+  const node = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user);
 
-  if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
+  if (IsFamily(parentNode, node)) HandleCreatePartOfEdge(parentNode, node, project, library, dispatch);
 
-  dispatch(addNode(targetNode));
+  dispatch(addNode(node));
 }
 
 /**
@@ -99,3 +81,21 @@ function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[])
 }
 
 export default useOnTreeDrop;
+
+/**
+ * Function to handle a SubProject dropped from the Library.
+ * @param event
+ * @param project
+ * @param dispatch
+ */
+function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: Project, dispatch: Dispatch) {
+  const eventData = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibrarySubProjectItem;
+
+  (async () => {
+    const subProject = await GetSubProject(eventData.id);
+    const [nodesToCreate, edgesToCreate] = GetProjectData(event, project, subProject);
+
+    nodesToCreate.forEach((node) => dispatch(addNode(node)));
+    edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
+  })();
+}

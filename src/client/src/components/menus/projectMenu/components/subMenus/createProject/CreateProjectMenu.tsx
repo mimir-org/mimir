@@ -1,4 +1,4 @@
-import { Button } from "../../../../../../compLibrary/buttons";
+import { Button } from "../../../../../../compLibrary/buttons/standar";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CreateProjectIcon } from "../../../../../../assets/icons/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";

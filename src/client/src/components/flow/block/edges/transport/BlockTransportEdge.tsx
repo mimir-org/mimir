@@ -1,5 +1,5 @@
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../assets/color/Color";
 import { Connector } from "../../../../../models";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { IsBidirectionalTerminal } from "../../../helpers/Connectors";

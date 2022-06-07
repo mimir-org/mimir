@@ -3,13 +3,14 @@ import { ActiveTerminalsList } from "./components/ActiveTerminalsList";
 import { FilterBySearchString } from "./helpers/FilterBySearchString";
 import { TerminalsColumn } from "../../../shared/styled/TerminalsColumn";
 import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../../../types";
-import { FontSize } from "../../../../../../../../compLibrary/font";
+import { FontSize } from "../../../../../../../../assets/font";
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../../compLibrary/input/text";
+import { TerminalCategory } from "../../helpers/GetFilteredTerminalsList";
 
 interface Props {
   terminals: TerminalLikeItem[];
-  // terminalCategories: TerminalCategory[];
+  terminalCategories: TerminalCategory[];
   selectedTerminal: TerminalLikeItem;
   selectedTerminalIdentifier: SelectedTerminalIdentifier;
   onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
@@ -17,17 +18,17 @@ interface Props {
 
 export const TerminalsSelector = ({
   terminals,
-  // terminalCategories,
+  terminalCategories,
   selectedTerminal,
   selectedTerminalIdentifier,
   onSelectTerminal,
 }: Props) => {
   const [searchString, setSearchString] = useState("");
 
-  // const filteredTerminals = useMemo(
-  //   () => FilterBySearchString(terminals, terminalCategories, searchString),
-  //   [terminals, terminalCategories, searchString]
-  // );
+  const filteredTerminals = useMemo(
+    () => FilterBySearchString(terminals, terminalCategories, searchString),
+    [terminals, terminalCategories, searchString]
+  );
 
   return (
     <TerminalsColumn>
@@ -40,8 +41,8 @@ export const TerminalsSelector = ({
         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchString(e.currentTarget.value)}
       />
       <ActiveTerminalsList
-        terminals={[]}
-        terminalCategories={[]}
+        terminals={filteredTerminals}
+        terminalCategories={terminalCategories}
         selectedTerminal={selectedTerminal}
         selectedTerminalIdentifier={selectedTerminalIdentifier}
         onSelectTerminal={onSelectTerminal}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize } from "../../font";
+import { FontSize } from "../../../assets/font";
 
 const Label = styled.label`
   font-size: ${FontSize.STANDARD};

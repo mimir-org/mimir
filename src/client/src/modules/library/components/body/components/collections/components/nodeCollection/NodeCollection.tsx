@@ -11,12 +11,12 @@ interface Props {
   collectionState: CollectionsActions;
   customCategory: LibraryCategory;
   category: LibraryCategory;
-  selectedElement: NodeLibCm | null;
-  setSelectedElement: (value: NodeLibCm) => void;
+  selectedLibNode: NodeLibCm | null;
+  setSelectedLibNode: (value: NodeLibCm) => void;
   dispatch: Dispatch;
   searchList?: LibraryCategory[];
-  selectedTypes: NodeLibCm[];
-  setSelectedTypes: (array: NodeLibCm[]) => void;
+  selectedLibNodes: NodeLibCm[];
+  setSelectedLibNodes: (array: NodeLibCm[]) => void;
 }
 
 /**
@@ -28,12 +28,12 @@ export const NodeCollection = ({
   collectionState,
   category,
   customCategory,
-  selectedElement,
-  setSelectedElement,
+  selectedLibNode,
+  setSelectedLibNode,
   dispatch,
   searchList,
-  selectedTypes,
-  setSelectedTypes,
+  selectedLibNodes,
+  setSelectedLibNodes,
 }: Props) => {
   const [expanded, setExpanded] = useState(true);
   const isCustomCategory = category.name === TextResources.FAVORITES;
@@ -56,12 +56,12 @@ export const NodeCollection = ({
               key={item.id}
               item={item}
               customCategory={customCategory}
-              selectedElement={selectedElement}
-              setSelectedElement={setSelectedElement}
+              selectedLibNode={selectedLibNode}
+              setSelectedLibNode={setSelectedLibNode}
               isCustomCategory={isCustomCategory}
               dispatch={dispatch}
-              selectedTypes={selectedTypes}
-              setSelectedTypes={setSelectedTypes}
+              selectedLibNodes={selectedLibNodes}
+              setSelectedLibNodes={setSelectedLibNodes}
               collectionState={collectionState}
             />
           );

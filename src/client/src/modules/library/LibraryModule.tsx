@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
-import { Size } from "../../compLibrary/size/Size";
+import { Size } from "../../assets/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
@@ -28,8 +28,8 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
-  const [selectedTypes, setSelectedTypes] = useState([] as NodeLibCm[]);
-  const [selectedElement, setSelectedElement] = useState<NodeLibCm>(null);
+  const [selectedLibNodes, setSelectedLibNodes] = useState([] as NodeLibCm[]);
+  const [selectedLibNode, setSelectedLibNode] = useState<NodeLibCm>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
   const nodes = useAppSelector(nodesSelector);
   const lib = MODULE_TYPE.LIBRARY;
@@ -54,13 +54,13 @@ export const LibraryModule = ({ dispatch }: Props) => {
       <ModuleBody
         libOpen={libOpen}
         activeTab={activeTab}
-        selectedTypes={selectedTypes}
-        setSelectedTypes={setSelectedTypes}
+        selectedLibNodes={selectedLibNodes}
+        setSelectedLibNodes={setSelectedLibNodes}
         collectionState={collectionState}
         setCollectionState={setCollectionState}
         searchString={searchString}
-        selectedElement={selectedElement}
-        setSelectedElement={setSelectedElement}
+        selectedLibNode={selectedLibNode}
+        setSelectedLibNode={setSelectedLibNode}
         aspectFilters={aspectFilters}
         selectedNode={selectedNode}
       />

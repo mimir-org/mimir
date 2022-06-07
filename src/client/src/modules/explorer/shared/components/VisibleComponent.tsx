@@ -1,5 +1,5 @@
 import { AspectButton } from "../styled/AspectButton";
-import { Icon } from "../../../../compLibrary/icon";
+import { Icon } from "../../../../compLibrary/icon/Icon";
 import { Tooltip } from "../../../../compLibrary/tooltip/Tooltip";
 import { VisibleOffIcon, VisibleOnIcon, VisibleSubOffIcon } from "../../../../assets/icons/visible";
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../colors/Color";
-import { FontSize } from "../../font";
+import { Color } from "../../../assets/color/Color";
+import { FontSize } from "../../../assets/font";
 
 export const NumericValueInputStyled = styled.div`
   input {

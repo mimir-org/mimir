@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
-// import { LocationTypeCategory } from "../../../typeEditor/styled";
 import { Symbol } from "../../symbol";
-import { DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem, DropdownMenuWrapper } from "./Dropdown.styled";
+import { DropdownMenuHeader, DropdownMenuList, DropdownMenuListItem, DropdownMenuWrapper } from "./InspectorDropdown.styled";
+import { LocationTypeCategory } from "./styled/LocationTypeCategory";
 
 export interface DropDownCategoryItem<T> {
   id: string;
@@ -30,18 +30,16 @@ interface Props<T> {
   placeholder?: string;
 }
 
-const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, hasCategory, placeholder }: Props<T>) => {
+const InspectorDropdown = <T,>({ label, categories, onChange, defaultValue, disabled, hasCategory, placeholder }: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null as DropDownItem<T>);
 
   const findSelectedItem = useCallback(() => {
     let selected = null as DropDownItem<T>;
 
-    categories?.forEach((x) => {
-      x.items?.forEach((y) => {
-        if (y.id === defaultValue) {
-          selected = y;
-        }
+    categories?.forEach((c) => {
+      c.items?.forEach((i) => {
+        if (i.id === defaultValue) selected = i;
       });
     });
     return selected;
@@ -65,12 +63,11 @@ const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, has
   };
 
   const getCategory = (item: DropDownCategoryItem<T>) => {
-    return null;
-    //  (
-    //   <LocationTypeCategory>
-    //     <p>{item.description}</p>
-    //   </LocationTypeCategory>
-    // );
+    return (
+      <LocationTypeCategory>
+        <p>{item.description}</p>
+      </LocationTypeCategory>
+    );
   };
 
   const getItems = (items: DropDownItem<T>[]) => {
@@ -113,4 +110,4 @@ const Dropdown = <T,>({ label, categories, onChange, defaultValue, disabled, has
   );
 };
 
-export default Dropdown;
+export default InspectorDropdown;

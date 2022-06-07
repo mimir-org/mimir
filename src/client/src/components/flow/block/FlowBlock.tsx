@@ -6,7 +6,7 @@ import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
 import ReactFlow, {

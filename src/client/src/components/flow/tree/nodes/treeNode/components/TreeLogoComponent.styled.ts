@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontWeight } from "../../../../../../compLibrary/font";
+import { FontWeight } from "../../../../../../assets/font";
 import { SymbolImage } from "../../../../../../compLibrary/symbol/Symbol.styled";
 
 export const TreeLogoWrapper = styled.div`

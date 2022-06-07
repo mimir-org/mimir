@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Size } from "../../compLibrary/size/Size";
-import { Color } from "../../compLibrary/colors/Color";
-import { FontSize } from "../../compLibrary/font";
+import { Size } from "../../assets/size/Size";
+import { Color } from "../../assets/color/Color";
+import { FontSize } from "../../assets/font";
 
 export const LegendBody = styled.div`
   width: ${Size.MODULE_OPEN}px;

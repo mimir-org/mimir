@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../colors/Color";
-import { Icon } from "../../../icon";
+import { Color } from "../../../../assets/color/Color";
+import { Icon } from "../../../icon/Icon";
 
 interface NotificationModalContentContainerProps {
   isWarning: boolean;

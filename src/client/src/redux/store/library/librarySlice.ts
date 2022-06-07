@@ -6,7 +6,7 @@ import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 const initialLibraryState: LibraryState = {
   fetching: false,
-  nodeTypes: [],
+  libNodes: [],
   apiError: [],
   // transportTypes: [],
   // interfaceTypes: [],
@@ -20,7 +20,7 @@ export const librarySlice = createSlice({
   reducers: {
     fetchLibrary: (state) => {
       state.fetching = true;
-      state.nodeTypes = [];
+      state.libNodes = [];
       // state.transportTypes = [];
       // state.interfaceTypes = [];
       state.apiError = state.apiError
@@ -29,7 +29,7 @@ export const librarySlice = createSlice({
     },
     fetchLibrarySuccessOrError: (state, action: PayloadAction<FetchLibrary>) => {
       state.fetching = false;
-      const { nodeTypes, subProjectTypes } = action.payload;
+      const { libNodes: nodeTypes, subProjectTypes } = action.payload;
       Object.assign(state, { nodeTypes, subProjectTypes });
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
@@ -79,7 +79,7 @@ export const librarySlice = createSlice({
       // action.payload.libraryType === ObjectType.Interface && state.interfaceTypes.push(action.payload);
       // action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
       // action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
-      state.nodeTypes.push(action.payload);
+      state.libNodes.push(action.payload);
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     deleteLibraryItem: (state, action: PayloadAction<string>) => {
@@ -91,13 +91,13 @@ export const librarySlice = createSlice({
         state.apiError.push(apiError);
       } else {
         // state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== id);
-        state.nodeTypes = state.nodeTypes.filter((x) => x.id !== id);
+        state.libNodes = state.libNodes.filter((x) => x.id !== id);
         // state.transportTypes = state.transportTypes.filter((x) => x.id !== id);
       }
     },
     removeLibraryItem: (state, action: PayloadAction<string>) => {
       // state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== action.payload);
-      state.nodeTypes = state.nodeTypes.filter((x) => x.id !== action.payload);
+      state.libNodes = state.libNodes.filter((x) => x.id !== action.payload);
       // state.transportTypes = state.transportTypes.filter((x) => x.id !== action.payload);
     },
     deleteLibraryError: (state, action: PayloadAction<string>) => {
@@ -109,7 +109,7 @@ export const librarySlice = createSlice({
     addToCollections: (state, action: PayloadAction<AddToCollectionsTypes>) => {
       state.collections = state.collections.map((collection) => {
         if (action.payload.collectionIds.includes(collection.id)) {
-          action.payload.types.forEach((type) => {
+          action.payload.libNodes.forEach((type) => {
             return !collection.libNodes.includes(type) ? collection.libNodes.push(type) : null;
           });
         }

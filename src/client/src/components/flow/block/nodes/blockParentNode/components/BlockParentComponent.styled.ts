@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../assets/color/Color";
 
 interface ParentBoxProps {
   selected: boolean;

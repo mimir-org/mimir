@@ -1,6 +1,6 @@
 import red from "../redux/store/index";
 import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
-import { Edge, Node } from "../models";
+import { Node } from "../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 type Item = Node | NodeLibCm;
@@ -21,14 +21,14 @@ export const IsParentOf = (parentId: string, childId: string) => {
 };
 
 export const GetParentNode = (childNodeId: string) => {
-  const edges = red.store.getState().projectState.project.edges as Edge[];
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const edges = red.store.getState().projectState.project.edges;
+  const nodes = red.store.getState().projectState.project.nodes;
 
   const parentEdge = edges.find((e) => e.toNodeId === childNodeId && IsPartOfTerminal(e.toConnector));
   return nodes.find((n) => n.id === parentEdge?.fromNodeId);
 };
 
 export const GetSelectedNode = () => {
-  const nodes = red.store.getState().projectState.project.nodes as Node[];
+  const nodes = red.store.getState().projectState.project.nodes;
   return nodes.find((n) => n.selected);
 };

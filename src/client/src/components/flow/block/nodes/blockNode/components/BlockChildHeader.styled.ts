@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontWeight } from "../../../../../../compLibrary/font";
+import { FontWeight } from "../../../../../../assets/font";
 
 export const NodeBoxHeader = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors/Color";
-import { FontSize, FontWeight } from "../../../../../../../compLibrary/font";
+import { Color } from "../../../../../../../assets/color/Color";
+import { FontSize, FontWeight } from "../../../../../../../assets/font";
 
 export const ProjectListBox = styled.div`
   position: relative;

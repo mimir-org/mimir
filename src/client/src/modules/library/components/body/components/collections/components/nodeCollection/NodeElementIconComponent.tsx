@@ -1,7 +1,7 @@
 import { Symbol } from "../../../../../../../../compLibrary/symbol";
 import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, ObjectType } from "../../../../../../../../models";
-import { Icon } from "../../../../../../../../compLibrary/icon";
+import { Icon } from "../../../../../../../../compLibrary/icon/Icon";
 import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
 import { LibNodeInterface, LibNodeTransport } from "../../../../../../../../assets/icons/library";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";

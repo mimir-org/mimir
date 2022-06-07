@@ -1,6 +1,6 @@
 import { ExitButtonContainer } from "./ExitButton.styled";
 import { VisuallyHidden } from "../../util";
-import { Icon } from "../../icon";
+import { Icon } from "../../icon/Icon";
 import { CloseIcon } from "../../../assets/icons/close";
 import { TextResources } from "../../../assets/text/TextResources";
 

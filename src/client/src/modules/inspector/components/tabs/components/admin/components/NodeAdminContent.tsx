@@ -3,7 +3,7 @@ import moment from "moment/moment.js";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
-import { FontSize } from "../../../../../../../compLibrary/font";
+import { FontSize } from "../../../../../../../assets/font";
 import { EnumBase, Node, Project } from "../../../../../../../models";
 import { changeNodeValue } from "../../../../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";

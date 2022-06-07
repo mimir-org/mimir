@@ -1,7 +1,7 @@
 import { RelationType } from "../enums/RelationType";
-import { ConnectorType } from "../enums/ConnectorType";
 import { ConnectorVisibility } from "../enums/ConnectorVisibility";
 import { Attribute } from "./Attribute";
+import { ConnectorType } from "../enums/ConnectorType";
 
 export const CONNECTOR_KIND = "Connector";
 

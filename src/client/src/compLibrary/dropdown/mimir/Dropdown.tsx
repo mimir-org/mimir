@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Color } from "../../colors/Color";
-import { FontSize } from "../../font";
+import { Color } from "../../../assets/color/Color";
+import { FontSize } from "../../../assets/font";
 import { DropdownBox } from "./Dropdown.styled";
 import { DropdownHeader } from "./components/DropdownHeader";
 import { DropdownList } from "./components/DropdownList";

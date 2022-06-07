@@ -1,4 +1,4 @@
-import { Size } from "../compLibrary/size/Size";
+import { Size } from "../assets/size/Size";
 import { ViewportData } from "../models/project";
 
 /**

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize, FontWeight } from "../../compLibrary/font";
+import { FontSize, FontWeight } from "../../assets/font";
 
 export const ErrorBody = styled.div`
   max-height: 440px;

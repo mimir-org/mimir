@@ -42,7 +42,7 @@ export const ActiveTerminalsTypeList = ({
             selectedTerminalIdentifier?.index === i &&
             selectedTerminalIdentifier?.connectorType === connectorType
           }
-          onClick={() => onSelectTerminal({ id: terminal.id, index: i, connectorType: connectorType })}
+          onClick={() => onSelectTerminal({ id: terminal.id, index: i, connectorType })}
         >
           {formatTerminalTypeName(terminal.name, connectorType)}
         </TerminalListElement>

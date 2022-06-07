@@ -2,7 +2,7 @@ import { Connector, Node } from "../../../../../../models";
 import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
-import { Color } from "../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../assets/color/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
