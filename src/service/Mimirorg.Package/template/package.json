@@ -1,6 +1,6 @@
 {
   "name": "@mimirorg/modelbuilder-types",
-  "version": "0.0.1",
+  "version": "2.0.1",
   "description": "Generated Typescript interfaces for ModelBuilder Application and Client models",
   "main": "",
   "types": "index.d.ts",
