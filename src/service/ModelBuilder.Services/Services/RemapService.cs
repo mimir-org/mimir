@@ -11,6 +11,7 @@ using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Mb.Models.Records;
 using Mb.Services.Contracts;
+using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Services.Services
 {
@@ -269,7 +270,7 @@ namespace Mb.Services.Services
                     continue;
 
                 edge.FromNodeId = rootNode.Id;
-                edge.FromConnectorId = rootNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf)?.Id;
+                edge.FromConnectorId = rootNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
             }
         }
 

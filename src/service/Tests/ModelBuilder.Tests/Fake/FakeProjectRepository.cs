@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
+using Mb.Models.Client;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Records;

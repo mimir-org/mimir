@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Mb.Models.Abstract;
-using Module = Mb.Models.Application.Module;
+using Module = Mb.Models.Common.Module;
 
 namespace Mb.Services.Contracts
 {

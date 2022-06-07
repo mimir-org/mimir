@@ -4,7 +4,7 @@ import { TextResources } from "../../../assets/text/TextResources";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { memo, useRef } from "react";
 import { OnToggleDarkMode, OnLogOutClick } from "./handlers/OnUserMenuClick";
-import { Icon } from "../../../compLibrary/icon";
+import { Icon } from "../../../compLibrary/icon/Icon";
 import { DarkMode, LightMode, LogoutIcon } from "../../../assets/icons/header";
 import { useAppDispatch, useAppSelector, userStateSelector } from "../../../redux/store";
 import { Box, Element, Text, UserNameBox, UserNameRoleText, UserNameText } from "./UserMenuComponent.styled";

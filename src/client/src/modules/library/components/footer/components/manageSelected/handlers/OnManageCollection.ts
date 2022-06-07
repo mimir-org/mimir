@@ -1,18 +1,19 @@
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Dispatch } from "redux";
-import { CollectionsActions, LibItem } from "../../../../../../../models";
+import { CollectionsActions } from "../../../../../../../models";
 import { addToCollections } from "../../../../../../../redux/store/library/librarySlice";
-import { addToCollectionsTypes } from "../../../../../../../redux/store/library/types";
+import { AddToCollectionsTypes } from "../../../../../../../redux/store/library/types";
 
 const OnManageCollection = (
-  selectedTypes: LibItem[],
+  selectedTypes: NodeLibCm[],
   selectedCollections: string[],
   setCollectionState: (action: CollectionsActions) => void,
-  setSelectedTypes: (types: LibItem[]) => void,
+  setSelectedTypes: (types: NodeLibCm[]) => void,
   setAddSelectedToCollection: (open: boolean) => void,
   dispatch: Dispatch
 ) => {
-  const collections: addToCollectionsTypes = {
-    types: selectedTypes,
+  const collections: AddToCollectionsTypes = {
+    libNodes: selectedTypes,
     collectionIds: selectedCollections,
   };
   dispatch(addToCollections(collections));

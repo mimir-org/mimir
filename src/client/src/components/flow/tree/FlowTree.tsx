@@ -7,7 +7,7 @@ import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
@@ -32,7 +32,7 @@ interface Props {
 /**
  * Component for the Flow library in TreeView.
  * @param interface
- * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
 export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const flowWrapper = useRef(null);
@@ -43,7 +43,6 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
-  const icons = useAppSelector(selectors.iconSelector);
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const mimirNodes = project?.nodes;
@@ -69,7 +68,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, user, library, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {

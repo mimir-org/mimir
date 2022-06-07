@@ -4,7 +4,7 @@ using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Common;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Models.Extensions;
 
 namespace Mb.Data.Repositories
@@ -43,7 +43,7 @@ namespace Mb.Data.Repositories
         {
             Init();
             if (_currentCollaborationPartner == null)
-                throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
+                throw new MimirorgNullReferenceException("There are missing application setting for current collaboration partner");
 
             return $"{_currentCollaborationPartner.Domain}_{Guid.NewGuid().ToString().ToLower()}";
         }
@@ -56,7 +56,7 @@ namespace Mb.Data.Repositories
         {
             Init();
             if (_currentCollaborationPartner == null)
-                throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
+                throw new MimirorgNullReferenceException("There are missing application setting for current collaboration partner");
 
             return _currentCollaborationPartner.Domain;
         }
@@ -228,15 +228,15 @@ namespace Mb.Data.Repositories
             var domain = id.ResolveDomain();
 
             if (string.IsNullOrWhiteSpace(domain))
-                throw new ModelBuilderConfigurationException($"Missing domain from id {id}");
+                throw new MimirorgConfigurationException($"Missing domain from id {id}");
 
             if (_collaborationPartners == null || !_collaborationPartners.Any() || _collaborationPartners.All(x => x.Domain != domain))
-                throw new ModelBuilderConfigurationException($"There are missing application settings for collaboration partners or domain {domain}");
+                throw new MimirorgConfigurationException($"There are missing application settings for collaboration partners or domain {domain}");
 
             var iri = _collaborationPartners.FirstOrDefault(x => x.Domain == domain)?.Iris?.FirstOrDefault();
 
             if (iri == null)
-                throw new ModelBuilderConfigurationException($"Collaboration partner for {domain} not found");
+                throw new MimirorgConfigurationException($"Collaboration partner for {domain} not found");
 
             return iri.StartsWith("http")
                 ? $"{iri.TrimEnd('/')}/ID{SplitId(id)}"

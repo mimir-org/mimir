@@ -2,12 +2,13 @@ using System;
 using System.Threading.Tasks;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Extensions
 {
     public static class RelationExtensions
     {
-        public static async Task<Connector> CreateRelationConnector(this RelationType relationType, ConnectorType connectorType)
+        public static async Task<Connector> CreateRelationConnector(this RelationType relationType, ConnectorDirection connectorType)
         {
             var name = string.Empty;
 

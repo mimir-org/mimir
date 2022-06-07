@@ -42,25 +42,25 @@ import {
   searchProject,
   updateProject,
 } from "./project/saga";
-import {
-  getAttributes,
-  getBlobData,
-  getInitialData,
-  getLocationTypes,
-  getPredefinedAttributes,
-  getRDS,
-  getSelectedCreateLibraryType,
-  getSimpleTypes,
-  getTerminals,
-  saveType,
-} from "./typeEditor/saga";
-import {
-  fetchBlobData,
-  fetchCreateLibraryType,
-  fetchInitialData,
-  fetchSimpleTypes,
-  saveLibraryType,
-} from "../../typeEditor/redux/typeEditorSlice";
+// import {
+//   getAttributes,
+//   getBlobData,
+//   getInitialData,
+//   getLocationTypes,
+//   getPredefinedAttributes,
+//   getRDS,
+//   getSelectedCreateLibraryType,
+//   getSimpleTypes,
+//   getTerminals,
+//   saveType,
+// } from "./typeEditor/saga";
+// import {
+//   fetchBlobData,
+//   fetchCreateLibraryType,
+//   fetchInitialData,
+//   fetchSimpleTypes,
+//   saveLibraryType,
+// } from "../../typeEditor/redux/typeEditorSlice";
 
 //TODO: Add takeEvery for LOCK_ on
 function* sagas() {
@@ -80,16 +80,16 @@ function* sagas() {
     takeEvery(fetchLibraryInterfaceTypes, getInterfaceTypes),
     takeEvery(exportLibraryAction, exportLibrary),
     takeEvery(importLibraryAction, importLibrary),
-    takeEvery(fetchInitialData, getInitialData),
-    takeEvery(fetchInitialData, getLocationTypes),
-    takeEvery(fetchInitialData, getRDS),
-    takeEvery(fetchInitialData, getTerminals),
-    takeEvery(fetchInitialData, getPredefinedAttributes),
-    takeEvery(fetchInitialData, getAttributes),
-    takeEvery(fetchSimpleTypes, getSimpleTypes),
-    takeEvery(fetchBlobData, getBlobData),
-    takeEvery(fetchCreateLibraryType, getSelectedCreateLibraryType),
-    takeEvery(saveLibraryType, saveType),
+    // takeEvery(fetchInitialData, getInitialData),
+    // takeEvery(fetchInitialData, getLocationTypes),
+    // takeEvery(fetchInitialData, getRDS),
+    // takeEvery(fetchInitialData, getTerminals),
+    // takeEvery(fetchInitialData, getPredefinedAttributes),
+    // takeEvery(fetchInitialData, getAttributes),
+    // takeEvery(fetchSimpleTypes, getSimpleTypes),
+    // takeEvery(fetchBlobData, getBlobData),
+    // takeEvery(fetchCreateLibraryType, getSelectedCreateLibraryType),
+    // takeEvery(saveLibraryType, saveType),
     takeEvery(deleteLibraryAction, deleteLibraryItem),
   ]);
 }

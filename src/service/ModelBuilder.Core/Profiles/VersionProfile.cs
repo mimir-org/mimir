@@ -1,6 +1,6 @@
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
+using Mb.Models.Client;
 using Mb.Models.Data;
 
 namespace Mb.Core.Profiles

@@ -6,7 +6,7 @@ import { Connector, Node, Edge } from "../../../../models";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { IsOutputTerminal, IsOutputVisible, IsTransport } from "../../helpers/Connectors";
 import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequiredOffPageNode";
-import { Size } from "../../../../compLibrary/size/Size";
+import { Size } from "../../../../assets/size/Size";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Models.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +43,7 @@ namespace JsonLdParser
         {
             return new ModuleDescription
             {
-                Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943"),
+                Id = new Guid("4E143178-9DC7-413F-8F0B-B4D89F8AD943").ToString(),
                 Name = "Mimir IMF JSON-LD"
             };
         }

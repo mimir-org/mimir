@@ -1,10 +1,9 @@
 using System;
 using AutoMapper;
-using Mb.Data.Extensions;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using Mimirorg.Common.Extensions;
 
 namespace Mb.Core.Profiles
 {
@@ -45,11 +44,11 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.PurposeString, opt => opt.MapFrom(src => src.Purpose))
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
                 .ForMember(dest => dest.ProjectIri, opt => opt.MapFrom(src => src.ProjectIri))
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
-                .ForMember(dest => dest.PurposeString, opt => opt.MapFrom(src => SerializePurpose(src)));
+                .ForMember(dest => dest.PurposeString, opt => opt.MapFrom(src => src.Purpose));
 
             CreateMap<Node, NodeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -75,7 +74,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
                 .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Symbol))
-                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.Purpose))
+                .ForMember(dest => dest.Purpose, opt => opt.MapFrom(src => src.PurposeString))
                 .ForMember(dest => dest.Connectors, opt => opt.MapFrom(src => src.Connectors))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.Simples, opt => opt.MapFrom(src => src.Simples))
@@ -86,14 +85,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot));
-        }
-
-        private object SerializePurpose(NodeAm src)
-        {
-            if (src?.Purpose == null)
-                return null;
-
-            return JsonConvert.SerializeObject(src.Purpose);
         }
     }
 }

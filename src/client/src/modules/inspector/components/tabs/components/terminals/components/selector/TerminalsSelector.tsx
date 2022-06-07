@@ -1,12 +1,12 @@
 import { ChangeEvent, useMemo, useState } from "react";
-import { TerminalCategory } from "../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { ActiveTerminalsList } from "./components/ActiveTerminalsList";
 import { FilterBySearchString } from "./helpers/FilterBySearchString";
 import { TerminalsColumn } from "../../../shared/styled/TerminalsColumn";
 import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../../../types";
-import { FontSize } from "../../../../../../../../compLibrary/font";
+import { FontSize } from "../../../../../../../../assets/font";
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../../compLibrary/input/text";
+import { TerminalCategory } from "../../helpers/GetFilteredTerminalsList";
 
 interface Props {
   terminals: TerminalLikeItem[];
@@ -24,6 +24,7 @@ export const TerminalsSelector = ({
   onSelectTerminal,
 }: Props) => {
   const [searchString, setSearchString] = useState("");
+
   const filteredTerminals = useMemo(
     () => FilterBySearchString(terminals, terminalCategories, searchString),
     [terminals, terminalCategories, searchString]

@@ -1,9 +1,9 @@
 using System;
 using AutoMapper;
-using Mb.Data.Extensions;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
+using Mimirorg.Common.Extensions;
 
 namespace Mb.Core.Profiles
 {

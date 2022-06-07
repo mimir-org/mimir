@@ -1,5 +1,5 @@
 import { MutableRefObject } from "react";
-import { Size } from "../../compLibrary/size/Size";
+import { Size } from "../../assets/size/Size";
 import { VisuallyHidden } from "../../compLibrary/util";
 import { CloseIcon, ExpandIcon } from "../../assets/icons/controls";
 import { TextResources } from "../../assets/text/TextResources";

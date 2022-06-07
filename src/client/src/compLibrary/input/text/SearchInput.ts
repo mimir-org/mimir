@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../colors/Color";
-import { FontSize, FontWeight } from "../../font";
+import { Color } from "../../../assets/color/Color";
+import { FontSize, FontWeight } from "../../../assets/font";
 import { SearchIcon } from "../../../assets/icons/common";
 
 const SearchInput = styled.input`

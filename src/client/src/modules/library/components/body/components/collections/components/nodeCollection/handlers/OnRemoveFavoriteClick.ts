@@ -1,9 +1,9 @@
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Dispatch } from "redux";
-import { LibItem } from "../../../../../../../../../models";
 import { removeCustomCategoryNode } from "../../../../../../../../../redux/store/customCategory/customCategorySlice";
 
-const OnRemoveFavoriteClick = (item: LibItem, dispatch: Dispatch) => {
-  dispatch(removeCustomCategoryNode(item.id));
+const OnRemoveFavoriteClick = (node: NodeLibCm, dispatch: Dispatch) => {
+  dispatch(removeCustomCategoryNode(node.id));
 };
 
 export default OnRemoveFavoriteClick;

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using Mb.Models.Application;
+using Mb.Models.Client;
 using Mb.Models.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +45,7 @@ namespace Mb.Core.Controllers.V1
             {
                 var role = User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultRoleClaimType)?.Value.ResolveNameFromRoleClaim();
                 var name = User.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
-                var user = new User
+                var user = new UserCm
                 {
                     Name = name,
                     Email = User.Identity?.Name,

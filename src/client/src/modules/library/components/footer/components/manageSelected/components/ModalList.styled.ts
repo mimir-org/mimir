@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../compLibrary/colors/Color";
-import { FontSize, FontType, FontWeight } from "../../../../../../../compLibrary/font";
+import { Color } from "../../../../../../../assets/color/Color";
+import { FontSize, FontType, FontWeight } from "../../../../../../../assets/font";
 
 export const ModalListContent = styled.div`
   display: flex;

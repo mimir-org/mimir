@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Mb.Models.Attributes;
-using Mb.Models.Data.Enums;
-using Mb.Models.Enums;
+using Mimirorg.Common.Attributes;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application
 {
@@ -73,7 +71,7 @@ namespace Mb.Models.Application
 
         public string Symbol { get; set; }
 
-        public Purpose Purpose { get; set; }
+        public string Purpose { get; set; }
 
         public DateTime? Created { get; set; }
 
@@ -96,50 +94,54 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            var validations = new List<ValidationResult>();
+
             if (string.IsNullOrWhiteSpace(Rds) && !IsRoot)
-                yield return new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(IsRoot) });
+                validations.Add(new ValidationResult($"{nameof(Rds)} can't be null or empty", new List<string> { nameof(Rds), nameof(IsRoot) }));
 
             if (Aspect == Aspect.None)
-                yield return new ValidationResult($"Aspect {nameof(Aspect.None)} is not allowed", new List<string> { nameof(Aspect) });
+                validations.Add(new ValidationResult($"Aspect {nameof(Aspect.None)} is not allowed", new List<string> { nameof(Aspect) }));
 
             if (Aspect == Aspect.NotSet)
-                yield return new ValidationResult($"Aspect {nameof(Aspect.NotSet)} is not allowed", new List<string> { nameof(Aspect) });
+                validations.Add(new ValidationResult($"Aspect {nameof(Aspect.NotSet)} is not allowed", new List<string> { nameof(Aspect) }));
 
-            if (Connectors != null && Connectors.Any())
+            if (Connectors != null)
             {
                 foreach (var connector in Connectors)
                 {
                     var result = connector.Validate(validationContext);
                     foreach (var validationResult in result)
                     {
-                        yield return validationResult;
+                        validations.Add(validationResult);
                     }
                 }
             }
 
-            if (Attributes != null && Attributes.Any())
+            if (Attributes != null)
             {
                 foreach (var attribute in Attributes)
                 {
                     var result = attribute.Validate(validationContext);
                     foreach (var validationResult in result)
                     {
-                        yield return validationResult;
+                        validations.Add(validationResult);
                     }
                 }
             }
 
-            if (Simples != null && Simples.Any())
+            if (Simples != null)
             {
                 foreach (var simple in Simples)
                 {
                     var result = simple.Validate(validationContext);
                     foreach (var validationResult in result)
                     {
-                        yield return validationResult;
+                        validations.Add(validationResult);
                     }
                 }
             }
+
+            return validations;
         }
 
         #endregion Validate

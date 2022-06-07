@@ -6,12 +6,12 @@ using System.Reflection;
 using System.Threading;
 using AutoMapper;
 using Mb.Core.Profiles;
-using Mb.Core.Profiles.TypeLibrary;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
 using Mb.Models.Attributes;
+using Mb.Models.Common;
 using Mb.Models.Configurations;
 using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
@@ -30,7 +30,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using Module = Mb.Models.Application.Module;
+using Module = Mb.Models.Common.Module;
 
 namespace Mb.Core.Extensions
 {
@@ -118,25 +118,17 @@ namespace Mb.Core.Extensions
 
             // Auto-mapper
             var cfg = new MapperConfigurationExpression();
-            cfg.AddProfile(new AttributeProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new AttributeProfile());
             cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new EdgeProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile<RdsProfile>();
-            cfg.AddProfile<CommonProfile>();
             cfg.AddProfile<CollaborationPartnerProfile>();
-            cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
-            cfg.AddProfile(new SimpleProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new SimpleProfile());
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new NodeLibProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new AttributeLibProfile());
-            cfg.AddProfile(new GenericProfile());
-            cfg.AddProfile(new TerminalLibProfile());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);

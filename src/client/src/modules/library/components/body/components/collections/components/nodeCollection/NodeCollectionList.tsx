@@ -1,33 +1,34 @@
 import { useMemo } from "react";
-import { getFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
+import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
 import { IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { NodeCollection } from "./NodeCollection";
-import { filterByAspect } from "./helpers/FilterByAspect";
-import { Aspect, CollectionsActions, LibItem, Node } from "../../../../../../../../models";
+import { FilterByAspect } from "./helpers/FilterByAspect";
+import { Aspect, CollectionsActions, Node } from "../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
-import { getValidLibItems } from "./helpers/GetValidLibItems";
-import { getSharedCategory } from "./helpers/GetSharedCategory";
-import { getRecentlyCreatedCategory } from "./helpers/GetRecentlyCreatedCategory";
+import { GetValidLibItems } from "./helpers/GetValidLibItems";
+import { GetSharedCategory } from "./helpers/GetSharedCategory";
+import { GetRecentlyCreatedCategory } from "./helpers/GetRecentlyCreatedCategory";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   collectionState: CollectionsActions;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedLibNodes: NodeLibCm[];
+  setSelectedLibNodes: (array: NodeLibCm[]) => void;
   searchString: string;
-  selectedElement: LibItem | null;
-  setSelectedElement: (value: LibItem) => void;
+  selectedLibNode: NodeLibCm | null;
+  setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: Node;
 }
 
 export const NodeCollectionList = ({
   collectionState,
-  selectedTypes,
-  setSelectedTypes,
+  selectedLibNodes,
+  setSelectedLibNodes,
   searchString,
-  selectedElement,
-  setSelectedElement,
+  selectedLibNode,
+  setSelectedLibNode,
   aspectFilters,
   selectedNode,
 }: Props) => {
@@ -37,39 +38,43 @@ export const NodeCollectionList = ({
   const isBlockView = IsBlockView();
 
   const validLibItems = useMemo(
-    () => getValidLibItems(selectedNode, libState, isBlockView),
+    () => GetValidLibItems(selectedNode, libState, isBlockView),
     [selectedNode, libState, isBlockView]
   );
 
-  const allLibItems = getSharedCategory(validLibItems);
-  const recentlyChangedLibItems = getRecentlyCreatedCategory(validLibItems);
+  const allLibItems = GetSharedCategory(validLibItems);
+  const recentlyChangedLibItems = GetRecentlyCreatedCategory(validLibItems);
 
   const filteredCategories = useMemo(
-    () => getFilteredLibCategories([recentlyChangedLibItems, allLibItems], searchString),
+    () => GetFilteredLibCategories([recentlyChangedLibItems, allLibItems], searchString),
     [recentlyChangedLibItems, allLibItems, searchString]
   );
+
+  // console.log({ libState });
+  // console.log({ allLibItems });
+  const categories = FilterByAspect(filteredCategories, aspectFilters);
 
   return (
     <>
       <NodeCollection
-        selectedTypes={selectedTypes}
-        setSelectedTypes={setSelectedTypes}
-        selectedElement={selectedElement}
-        setSelectedElement={setSelectedElement}
+        selectedLibNodes={selectedLibNodes}
+        setSelectedLibNodes={setSelectedLibNodes}
+        selectedLibNode={selectedLibNode}
+        setSelectedLibNode={setSelectedLibNode}
         key={customCategory.name}
         category={customCategory}
         customCategory={customCategory}
         dispatch={dispatch}
         collectionState={collectionState}
       />
-      {filterByAspect(filteredCategories, aspectFilters).map((category) => {
+      {categories.map((category) => {
         return (
           <NodeCollection
             collectionState={collectionState}
-            selectedTypes={selectedTypes}
-            setSelectedTypes={setSelectedTypes}
-            selectedElement={selectedElement}
-            setSelectedElement={setSelectedElement}
+            selectedLibNodes={selectedLibNodes}
+            setSelectedLibNodes={setSelectedLibNodes}
+            selectedLibNode={selectedLibNode}
+            setSelectedLibNode={setSelectedLibNode}
             key={category.name}
             category={category}
             customCategory={customCategory}

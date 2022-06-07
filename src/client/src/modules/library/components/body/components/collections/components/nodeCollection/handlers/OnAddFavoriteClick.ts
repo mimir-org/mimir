@@ -1,11 +1,11 @@
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Dispatch } from "redux";
-import { LibItem } from "../../../../../../../../../models";
 import { LibraryCategory } from "../../../../../../../../../models/project";
 import { addCustomCategoryNode } from "../../../../../../../../../redux/store/customCategory/customCategorySlice";
 
-const OnAddFavoriteClick = (item: LibItem, customCategory: LibraryCategory, dispatch: Dispatch) => {
-  if (!customCategory?.nodes?.some((n) => n.id === item.id)) {
-    dispatch(addCustomCategoryNode(item));
+const OnAddFavoriteClick = (node: NodeLibCm, customCategory: LibraryCategory, dispatch: Dispatch) => {
+  if (!customCategory?.nodes?.some((n) => n.id === node.id)) {
+    dispatch(addCustomCategoryNode(node));
   }
 };
 

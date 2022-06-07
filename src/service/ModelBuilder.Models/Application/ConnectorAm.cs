@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Attributes;
+using Mimirorg.Common.Attributes;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application
 {
@@ -20,8 +21,8 @@ namespace Mb.Models.Application
         [Required]
         public string Name { get; set; }
 
-        [EnumDataType(typeof(ConnectorType))]
-        public ConnectorType Type { get; set; }
+        [EnumDataType(typeof(ConnectorDirection))]
+        public ConnectorDirection Type { get; set; }
 
         public string SemanticReference { get; set; }
 
@@ -47,14 +48,16 @@ namespace Mb.Models.Application
         [ValidIri]
         public string TerminalTypeIri { get; set; }
 
-        public virtual ICollection<AttributeAm> Attributes { get; set; }
+        public ICollection<AttributeAm> Attributes { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            var validations = new List<ValidationResult>();
+
             if (RelationType == RelationType.NotSet)
             {
                 if (string.IsNullOrWhiteSpace(TerminalTypeId) && string.IsNullOrWhiteSpace(TerminalTypeIri))
-                    yield return new ValidationResult($"{nameof(TerminalTypeId)} or {nameof(TerminalTypeIri)} is required when object is terminal", new List<string> { nameof(TerminalTypeId), nameof(TerminalTypeIri) });
+                    validations.Add(new ValidationResult($"{nameof(TerminalTypeId)} or {nameof(TerminalTypeIri)} is required when object is terminal", new List<string> { nameof(TerminalTypeId), nameof(TerminalTypeIri) }));
             }
 
             if (Attributes != null)
@@ -64,10 +67,12 @@ namespace Mb.Models.Application
                     var validationResults = attributeAm.Validate(validationContext);
                     foreach (var validationResult in validationResults)
                     {
-                        yield return validationResult;
+                        validations.Add(validationResult);
                     }
                 }
             }
+
+            return validations;
         }
     }
 }

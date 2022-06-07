@@ -3,11 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Mb.Models.Application;
+using Mb.Models.Client;
 
 namespace Mb.Services.Services
 {
@@ -112,7 +113,7 @@ namespace Mb.Services.Services
             var notExistingTypes = collaborationPartners.Where(x => existingTypes.All(y => y.Name != x.Name && y.Domain != x.Domain)).ToList();
 
             if (!notExistingTypes.Any())
-                throw new ModelBuilderDuplicateException("There is already registered a collaboration partners with names or domains");
+                throw new MimirorgDuplicateException("There is already registered a collaboration partners with names or domains");
 
             foreach (var item in notExistingTypes)
             {
@@ -128,12 +129,12 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="collaborationPartner"></param>
         /// <returns></returns>
-        /// <exception cref="ModelBuilderDuplicateException"></exception>
+        /// <exception cref="MimirorgDuplicateException"></exception>
         public async Task<CollaborationPartner> CreateCollaborationPartnerAsync(CollaborationPartnerAm collaborationPartner)
         {
             var existingType = await _collaborationPartnerRepository.FindBy(x => x.Name == collaborationPartner.Name || x.Domain == collaborationPartner.Domain).FirstOrDefaultAsync();
             if (existingType != null)
-                throw new ModelBuilderDuplicateException("There is already registered a collaboration partner with name or domain");
+                throw new MimirorgDuplicateException("There is already registered a collaboration partner with name or domain");
 
             var cp = _mapper.Map<CollaborationPartner>(collaborationPartner);
             await _collaborationPartnerRepository.CreateAsync(cp);

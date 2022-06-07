@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 import { ConvertDataToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { Position } from "../../../models/project";
 import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal, IsPartOfTerminal } from "./Connectors";
 

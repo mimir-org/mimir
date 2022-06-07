@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { Project, ProjectFileAm, WebSocket } from "../../../models";
-import { ConvertProject, MapProperties } from ".";
+import { ConvertProject, MapProjectProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { search } from "../../store/project/actions";
@@ -60,7 +60,7 @@ export function* getProject(action: FetchingProjectAction) {
 
     const project = response.data as Project;
 
-    MapProperties(project, action.payload.project, {});
+    MapProjectProperties(project, action.payload.project, {});
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
@@ -240,9 +240,7 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
   } catch (error) {
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-      payload: {
-        apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
-      },
+      payload: { apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR) },
     });
   }
 }

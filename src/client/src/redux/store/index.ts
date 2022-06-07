@@ -1,5 +1,4 @@
 import createSagaMiddleware from "redux-saga";
-import typeEditorReducer from "../../typeEditor/redux/typeEditorSlice";
 import inspectorReducer from "../../modules/inspector/redux/inspectorSlice";
 import userReducer from "./user/userSlice";
 import modulesReducer from "./modules/modulesSlice";
@@ -23,7 +22,6 @@ import { rootSaga } from "../sagas";
 
 const rootReducers = combineReducers({
   library: libraryReducer,
-  typeEditor: typeEditorReducer,
   inspector: inspectorReducer,
   userState: userReducer,
   projectState: projectReducer,

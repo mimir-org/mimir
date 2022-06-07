@@ -1,8 +1,9 @@
 import red from "../redux/store/index";
 import { IsPartOfTerminal } from "../components/flow/helpers/Connectors";
-import { LibItem, Node } from "../models";
+import { Node } from "../models";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
-type Item = Node | LibItem;
+type Item = Node | NodeLibCm;
 
 export const IsFamily = (element: Item, elementToCheck: Item) => {
   return element?.aspect === elementToCheck?.aspect;
@@ -28,5 +29,6 @@ export const GetParentNode = (childNodeId: string) => {
 };
 
 export const GetSelectedNode = () => {
-  return red.store.getState().projectState.project.nodes.find((n) => n.selected);
+  const nodes = red.store.getState().projectState.project.nodes;
+  return nodes.find((n) => n.selected);
 };

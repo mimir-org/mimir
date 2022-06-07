@@ -2,6 +2,7 @@ using System.Web;
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
@@ -10,6 +11,8 @@ namespace ModelBuilder.Rdf.Extensions
 {
     public static class ConnectorExtensions
     {
+        public static object ConnectorType { get; private set; }
+
         /// <summary>
         /// Assert terminal
         /// </summary>
@@ -38,7 +41,7 @@ namespace ModelBuilder.Rdf.Extensions
 
                     switch (terminal.Type)
                     {
-                        case ConnectorType.Input:
+                        case ConnectorDirection.Input:
                             ontologyService.AssertNode(ownerIri, Resources.HasInputTerminal, terminal.Iri);
                             ontologyService.AssertNode(terminal.Iri, Resources.Type, Resources.InputTerminal);
 
@@ -48,7 +51,7 @@ namespace ModelBuilder.Rdf.Extensions
                             if (edge != null)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasNodeFromConnection, edge.FromConnectorIri);
                             break;
-                        case ConnectorType.Output:
+                        case ConnectorDirection.Output:
                             ontologyService.AssertNode(ownerIri, Resources.HasOutputTerminal, terminal.Iri);
                             ontologyService.AssertNode(terminal.Iri, Resources.Type, Resources.OutputTerminal);
 
@@ -58,7 +61,7 @@ namespace ModelBuilder.Rdf.Extensions
                             if (edge != null)
                                 ontologyService.AssertNode(terminal.Iri, Resources.HasNodeToConnection, edge.ToConnectorIri);
                             break;
-                        case ConnectorType.Bidirectional:
+                        case ConnectorDirection.Bidirectional:
                             ontologyService.AssertNode(ownerIri, Resources.HasBidirectionalTerminal, terminal.Iri);
                             ontologyService.AssertNode(terminal.Iri, Resources.Type, Resources.BidirectionalTerminal);
 
@@ -125,7 +128,7 @@ namespace ModelBuilder.Rdf.Extensions
             terminal.Iri = iri;
             terminal.NodeIri = nodeIri;
             terminal.Name = ontologyService.GetValue(iri, Resources.Label, false);
-            terminal.Type = ontologyService.GetEnumValue<ConnectorType>(iri, Resources.TerminalDirectionType, false);
+            terminal.Type = ontologyService.GetEnumValue<ConnectorDirection>(iri, Resources.TerminalDirectionType, false);
             terminal.ConnectorVisibility = ontologyService.GetEnumValue<ConnectorVisibility>(iri, Resources.Visibility, false);
 
             var isRequiredString = ontologyService.GetValue(iri, Resources.IsRequired, false);

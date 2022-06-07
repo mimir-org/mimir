@@ -1,4 +1,4 @@
-import { Color } from "../../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../../assets/color/Color";
 import { SimpleLikeItem } from "../../../../../types";
 import { TerminalsCategoryListElement } from "../../shared/styled/TerminalsCategoryListElement";
 import { TerminalsListElementWrapper } from "../../shared/styled/TerminalsListElementWrapper";

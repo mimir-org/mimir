@@ -1,5 +1,5 @@
 import { XYPosition } from "react-flow-renderer";
-import { Size } from "../../../../../compLibrary/size/Size";
+import { Size } from "../../../../../assets/size/Size";
 import { Node } from "../../../../../models";
 
 /**

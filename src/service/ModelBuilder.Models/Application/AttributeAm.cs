@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Attributes;
-using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.Common.Attributes;
+using Mimirorg.TypeLibrary.Enums;
+using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Models.Application
 {
-    public class AttributeAm : IValidatableObject
+    public class AttributeAm
     {
         [RequiredOne(nameof(Iri))]
         public string Id { get; set; }
@@ -32,7 +33,7 @@ namespace Mb.Models.Application
 
         // Unit
         public string SelectedUnitId { get; set; }
-        public virtual ICollection<UnitAm> Units { get; set; }
+        public virtual ICollection<UnitLibCm> Units { get; set; }
 
         // Qualifiers
         // TODO: Remove foreign keys
@@ -76,8 +77,8 @@ namespace Mb.Models.Application
 
         public ICollection<string> SelectValues { get; set; }
 
-        [EnumDataType(typeof(SelectType))]
-        public SelectType SelectType { get; set; }
+        [EnumDataType(typeof(Select))]
+        public Select SelectType { get; set; }
 
         [EnumDataType(typeof(Discipline))]
         public Discipline Discipline { get; set; }
@@ -88,6 +89,8 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            var validations = new List<ValidationResult>();
+
             if (string.IsNullOrEmpty(TerminalId) &&
                 string.IsNullOrEmpty(TerminalIri) &&
                 string.IsNullOrEmpty(NodeId) &&
@@ -100,7 +103,7 @@ namespace Mb.Models.Application
                 string.IsNullOrEmpty(SimpleIri)
                )
             {
-                yield return new ValidationResult("One of this fields is required", new[]
+                validations.Add(new ValidationResult("One of this fields is required", new[]
                 {
                     nameof(TerminalId),
                     nameof(TerminalIri),
@@ -112,8 +115,10 @@ namespace Mb.Models.Application
                     nameof(InterfaceIri),
                     nameof(SimpleId),
                     nameof(SimpleIri)
-                });
+                }));
             }
+
+            return validations;
         }
     }
 }

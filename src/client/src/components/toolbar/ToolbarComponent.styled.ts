@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../compLibrary/colors/Color";
-import { Size } from "../../compLibrary/size/Size";
+import { Color } from "../../assets/color/Color";
+import { Size } from "../../assets/size/Size";
 
 interface ToolbarBoxProps {
   libOpen: boolean;

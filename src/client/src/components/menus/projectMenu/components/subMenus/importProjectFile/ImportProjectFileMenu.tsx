@@ -1,8 +1,8 @@
 import * as selectors from "./helpers/selectors";
-import { Button } from "../../../../../../compLibrary/buttons";
+import { Button } from "../../../../../../compLibrary/buttons/standar";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
-import { FontSize } from "../../../../../../compLibrary/font";
+import { FontSize } from "../../../../../../assets/font";
 import { ImportProjectIcon } from "../../../../../../assets/icons/project";
 import { Label } from "../../../../../../compLibrary/input/text";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";

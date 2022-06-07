@@ -1,18 +1,17 @@
 import { Dispatch } from "redux";
 import { useState } from "react";
 import { AnimatedModule } from "../../compLibrary/animated/AnimatedModule";
-import { Size } from "../../compLibrary/size/Size";
+import { Size } from "../../assets/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
-import { ModuleFooter } from "./components/footer/ModuleFooter";
-import { LibraryTab, CollectionsActions, LibItem, Aspect } from "../../models";
+import { LibraryTab, CollectionsActions, Aspect } from "../../models";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import {
   useAppSelector,
   useParametricAppSelector,
   animatedModuleSelector,
   libOpenSelector,
-  librarySelector,
   nodesSelector,
 } from "../../redux/store";
 
@@ -29,16 +28,13 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const [activeTab, setActiveTab] = useState(LibraryTab.Library);
   const [searchString, setSearchString] = useState("");
   const [collectionState, setCollectionState] = useState(CollectionsActions.ReadOnly);
-  const [selectedTypes, setSelectedTypes] = useState([] as LibItem[]);
-  const [selectedElement, setSelectedElement] = useState<LibItem>(null);
+  const [selectedLibNodes, setSelectedLibNodes] = useState([] as NodeLibCm[]);
+  const [selectedLibNode, setSelectedLibNode] = useState<NodeLibCm>(null);
   const [aspectFilters, setAspectFilters] = useState<Aspect[]>([Aspect.Function, Aspect.Product, Aspect.Location]);
   const nodes = useAppSelector(nodesSelector);
-
-  const showFooter = collectionState !== CollectionsActions.ManageCollection;
   const lib = MODULE_TYPE.LIBRARY;
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
-  const collections = useAppSelector(librarySelector).collections;
   const selectedNode = nodes?.find((n) => n.selected);
 
   const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
@@ -58,30 +54,16 @@ export const LibraryModule = ({ dispatch }: Props) => {
       <ModuleBody
         libOpen={libOpen}
         activeTab={activeTab}
-        selectedTypes={selectedTypes}
-        setSelectedTypes={setSelectedTypes}
+        selectedLibNodes={selectedLibNodes}
+        setSelectedLibNodes={setSelectedLibNodes}
         collectionState={collectionState}
         setCollectionState={setCollectionState}
         searchString={searchString}
-        selectedElement={selectedElement}
-        setSelectedElement={setSelectedElement}
+        selectedLibNode={selectedLibNode}
+        setSelectedLibNode={setSelectedLibNode}
         aspectFilters={aspectFilters}
         selectedNode={selectedNode}
       />
-      {showFooter && (
-        <ModuleFooter
-          libOpen={libOpen}
-          activeTab={activeTab}
-          collectionState={collectionState}
-          setCollectionState={setCollectionState}
-          selectedElement={selectedElement}
-          resetSelectedElement={() => setSelectedElement(null)}
-          selectedTypes={selectedTypes}
-          setSelectedTypes={setSelectedTypes}
-          collections={collections}
-          dispatch={dispatch}
-        />
-      )}
     </AnimatedModule>
   );
 };

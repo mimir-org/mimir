@@ -1,19 +1,20 @@
-import { Aspect, CollectionsActions, LibItem, LibraryTab, Node } from "../../../../models";
+import { Aspect, CollectionsActions, LibraryTab, Node } from "../../../../models";
 import { ModuleContent } from "./ModuleBody.styled";
 import { CollectionsComponent } from "./components/collections/CollectionsComponent";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
 import { TemplatesComponent } from "./components/templates/TemplatesComponent";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   libOpen: boolean;
   activeTab: LibraryTab;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedLibNodes: NodeLibCm[];
+  setSelectedLibNodes: (array: NodeLibCm[]) => void;
   collectionState: CollectionsActions;
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
-  selectedElement: LibItem | null;
-  setSelectedElement: (value: LibItem) => void;
+  selectedLibNode: NodeLibCm | null;
+  setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: Node;
 }
@@ -26,13 +27,13 @@ interface Props {
 export const ModuleBody = ({
   libOpen,
   activeTab,
-  selectedTypes,
-  setSelectedTypes,
+  selectedLibNodes,
+  setSelectedLibNodes,
   collectionState,
   setCollectionState,
   searchString,
-  selectedElement,
-  setSelectedElement,
+  selectedLibNode,
+  setSelectedLibNode,
   aspectFilters,
   selectedNode,
 }: Props) => {
@@ -45,13 +46,13 @@ export const ModuleBody = ({
       {showCollections && (
         <CollectionsComponent
           activeTab={activeTab}
-          selectedTypes={selectedTypes}
-          setSelectedTypes={setSelectedTypes}
+          selectedLibNodes={selectedLibNodes}
+          setSelectedLibNodes={setSelectedLibNodes}
           collectionState={collectionState}
           setCollectionState={setCollectionState}
           searchString={searchString}
-          selectedElement={selectedElement}
-          setSelectedElement={setSelectedElement}
+          selectedLibNode={selectedLibNode}
+          setSelectedLibNode={setSelectedLibNode}
           aspectFilters={aspectFilters}
           selectedNode={selectedNode}
         />

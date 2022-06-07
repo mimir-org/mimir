@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize, FontWeight } from "../../../../../../compLibrary/font";
+import { FontSize, FontWeight } from "../../../../../../assets/font";
 
 export const ModalListHeader = styled.div`
   font-size: ${FontSize.SUBHEADER};

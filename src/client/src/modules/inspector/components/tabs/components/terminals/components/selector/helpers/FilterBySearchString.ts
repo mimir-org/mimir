@@ -1,9 +1,9 @@
-import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
+// import { TerminalCategory } from "../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 import { TerminalLikeItem } from "../../../../../../../types";
 
 export const FilterBySearchString = (
   terminals: TerminalLikeItem[],
-  terminalCategories: TerminalCategory[],
+  terminalCategories: any[],
   searchString: string
 ): TerminalLikeItem[] =>
   (searchString &&

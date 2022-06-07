@@ -1,28 +1,29 @@
 import { CollectionsWrapper } from "./CollectionsComponent.styled";
-import { Aspect, CollectionsActions, LibItem, LibraryTab, Node } from "../../../../../../models";
+import { Aspect, CollectionsActions, LibraryTab, Node } from "../../../../../../models";
 import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   activeTab: LibraryTab;
   collectionState: CollectionsActions;
-  selectedTypes: LibItem[];
-  setSelectedTypes: (array: LibItem[]) => void;
+  selectedLibNodes: NodeLibCm[];
+  setSelectedLibNodes: (array: NodeLibCm[]) => void;
   setCollectionState: (action: CollectionsActions) => void;
   searchString: string;
-  selectedElement: LibItem | null;
-  setSelectedElement: (value: LibItem) => void;
+  selectedLibNode: NodeLibCm | null;
+  setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: Node;
 }
 
 export const CollectionsComponent = ({
   collectionState,
-  selectedTypes,
-  setSelectedTypes,
+  selectedLibNodes,
+  setSelectedLibNodes,
   searchString,
-  selectedElement,
-  setSelectedElement,
+  selectedLibNode,
+  setSelectedLibNode,
   aspectFilters,
   selectedNode,
 }: Props) => {
@@ -35,10 +36,10 @@ export const CollectionsComponent = ({
       ) : (
         <NodeCollectionList
           searchString={searchString}
-          selectedElement={selectedElement}
-          setSelectedElement={setSelectedElement}
-          selectedTypes={selectedTypes}
-          setSelectedTypes={setSelectedTypes}
+          selectedLibNode={selectedLibNode}
+          setSelectedLibNode={setSelectedLibNode}
+          selectedLibNodes={selectedLibNodes}
+          setSelectedLibNodes={setSelectedLibNodes}
           collectionState={collectionState}
           aspectFilters={aspectFilters}
           selectedNode={selectedNode}

@@ -8,7 +8,7 @@ import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Connector, Node } from "../../../../../models";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../assets/color/Color";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 
 /**

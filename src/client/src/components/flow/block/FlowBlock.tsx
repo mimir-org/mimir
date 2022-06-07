@@ -6,7 +6,7 @@ import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
 import ReactFlow, {
@@ -33,7 +33,7 @@ interface Props {
  * The secondaryNode is the second ParentNode, displayed to the right of the parentNode.
  * The secondaryNode is only set if two parents are chosen from the Explorer, this state is called Split View.
  * @param interface
- * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
 export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const { getViewport } = useReactFlow();
@@ -45,7 +45,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
-  const icons = useAppSelector(selectors.iconSelector);
   const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
@@ -82,7 +81,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
+    return hooks.useOnDrop({ event, project, user, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
   const OnNodesChange = useCallback(

@@ -9,7 +9,6 @@ import {
   Interface,
   Node,
   Project,
-  Purpose,
   RelationType,
   SelectType,
   Simple,
@@ -51,7 +50,6 @@ export interface AttributeAm {
   selectValues: string[];
   selectType: SelectType;
   discipline: Discipline;
-  tags: Set<string>;
   isLocked: boolean;
   isLockedBy: string;
 }
@@ -107,7 +105,7 @@ export interface NodeAm {
   simples: SimpleAm[];
   aspect: Aspect;
   isRoot: boolean;
-  purpose: Purpose;
+  purpose: string;
   created: Date;
   createdBy: string;
   updated: Date;
@@ -243,7 +241,6 @@ const ConvertAttributes = (attributes: Attribute[]) => {
       selectValues: attribute.selectValues,
       selectType: attribute.selectType,
       discipline: attribute.discipline,
-      tags: attribute.tags,
       isLocked: attribute.isLocked,
       isLockedBy: attribute.isLockedStatusBy,
     });

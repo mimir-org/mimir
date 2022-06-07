@@ -4,8 +4,7 @@ import {
   CommonState,
   FetchCollaboratorPartnersFinished,
   FetchCombinedAttributeFilterFinished,
-  FetchParsersFinished,
-  FetchStatusesFinished,
+  FetchParsersFinished
 } from "./types";
 
 const initialCommonState: CommonState = {
@@ -31,18 +30,6 @@ export const commonSlice = createSlice({
     fetchCollaborationPartnersSuccessOrError: (state, action: PayloadAction<FetchCollaboratorPartnersFinished>) => {
       state.fetching = false;
       state.collaborationPartners = action.payload.collaborationPartners;
-      action.payload.apiError && state.apiError.push(action.payload.apiError);
-    },
-    fetchStatuses: (state) => {
-      state.fetching = true;
-      state.statuses = [];
-      state.apiError = state.apiError
-        ? state.apiError.filter((elem) => elem.key !== fetchStatusesSuccessOrError.type)
-        : state.apiError;
-    },
-    fetchStatusesSuccessOrError: (state, action: PayloadAction<FetchStatusesFinished>) => {
-      state.fetching = false;
-      state.statuses = action.payload.statuses;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     fetchCombinedAttributeFilters: (state) => {
@@ -82,8 +69,6 @@ export const {
   fetchCombinedAttributeFiltersSuccessOrError,
   fetchParsers,
   fetchParsersSuccessOrError,
-  fetchStatuses,
-  fetchStatusesSuccessOrError,
   deleteCommonError,
 } = commonSlice.actions;
 

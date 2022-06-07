@@ -1,7 +1,7 @@
 import { RelationType } from "../enums/RelationType";
-import { ConnectorType } from "../enums/ConnectorType";
 import { ConnectorVisibility } from "../enums/ConnectorVisibility";
 import { Attribute } from "./Attribute";
+import { ConnectorType } from "../enums/ConnectorType";
 
 export const CONNECTOR_KIND = "Connector";
 
@@ -21,11 +21,12 @@ export interface Connector {
   color: string;
   terminalCategory: string;
   attributes: Attribute[];
-  terminalTypeId: string;
-  terminalTypeIri: string;
+
+  terminalTypeId: string; // Id fra NodeLibCm
+  terminalTypeIri: string; // Iri fra NodeLibCm
 
   // Relation
   relationType: RelationType;
 
-  kind: string;
+  kind: string; // "Connector"
 }

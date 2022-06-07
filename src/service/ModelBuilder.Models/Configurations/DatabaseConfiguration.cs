@@ -1,4 +1,4 @@
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 
 namespace Mb.Models.Configurations
 {
@@ -18,7 +18,7 @@ namespace Mb.Models.Configurations
         {
             if (string.IsNullOrWhiteSpace(DataSource) || Port <= 0 || string.IsNullOrWhiteSpace(InitialCatalog) ||
                 string.IsNullOrWhiteSpace(DbUser) || string.IsNullOrWhiteSpace(Password))
-                throw new ModelBuilderConfigurationException("DatabaseConfiguration is missing or invalid");
+                throw new MimirorgConfigurationException("DatabaseConfiguration is missing or invalid");
 
             return $@"Data Source={DataSource},{Port};Initial Catalog={InitialCatalog};Integrated Security=False;User ID={DbUser};Password='{Password}';TrustServerCertificate=True;MultipleActiveResultSets=True";
         }

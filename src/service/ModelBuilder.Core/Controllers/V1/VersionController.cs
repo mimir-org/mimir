@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using Mb.Models.Client;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -56,7 +56,7 @@ namespace Mb.Core.Controllers.V1
                 var versionCmList = await _versionService.GetAllVersions();
                 return Ok(versionCmList);
             }
-            catch (ModelBuilderNotFoundException)
+            catch (MimirorgNotFoundException)
             {
                 return NoContent();
             }
@@ -86,7 +86,7 @@ namespace Mb.Core.Controllers.V1
                 var versionCmList = await _versionService.GetAllVersions(typeId);
                 return Ok(versionCmList);
             }
-            catch (ModelBuilderNotFoundException)
+            catch (MimirorgNotFoundException)
             {
                 return NoContent();
             }
@@ -116,7 +116,7 @@ namespace Mb.Core.Controllers.V1
                 var project = await _versionService.GetProject(int.Parse(id));
                 return Ok(project);
             }
-            catch (ModelBuilderNotFoundException)
+            catch (MimirorgNotFoundException)
             {
                 return NoContent();
             }
@@ -146,7 +146,7 @@ namespace Mb.Core.Controllers.V1
                 var versionCm = await _versionService.CreateVersion(projectId);
                 return Ok(versionCm);
             }
-            catch (ModelBuilderNotFoundException)
+            catch (MimirorgNotFoundException)
             {
                 return NoContent();
             }
@@ -176,7 +176,7 @@ namespace Mb.Core.Controllers.V1
                 await _versionService.DeleteVersion(int.Parse(id));
                 return Ok();
             }
-            catch (ModelBuilderNotFoundException)
+            catch (MimirorgNotFoundException)
             {
                 return NoContent();
             }

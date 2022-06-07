@@ -4,7 +4,7 @@ import { SearchBar } from "./SearchBar";
 import { ProjectDescription } from "./ProjectDescription";
 import { ProjectItemCm } from "../../../../../../../models";
 import { CreateProjectIcon, ImportProjectIcon } from "../../../../../../../assets/icons/project";
-import { Button } from "../../../../../../../compLibrary/buttons";
+import { Button } from "../../../../../../../compLibrary/buttons/standar";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import {

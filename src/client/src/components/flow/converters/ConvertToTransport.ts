@@ -4,7 +4,7 @@ import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
 
 const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
-  const transportType = library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
+  const transportType = null; //library?.transportTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
   if (!transportType) return null;
 
   const transportId = CreateId();

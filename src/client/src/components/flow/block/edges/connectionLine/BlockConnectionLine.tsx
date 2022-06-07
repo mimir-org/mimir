@@ -1,5 +1,5 @@
 import { ConnectionLineComponentProps } from "react-flow-renderer";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../assets/color/Color";
 import { Connector } from "../../../../../models";
 import { IsInputTerminal } from "../../../helpers/Connectors";
 import { GetTerminalColor } from "../../helpers";

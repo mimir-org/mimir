@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mb.Models.Application;
+using Mb.Models.Client;
+using Mb.Models.Common;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 
 namespace Mb.Services.Contracts
 {
@@ -26,7 +28,7 @@ namespace Mb.Services.Contracts
         /// <param name="id"></param>
         /// <param name="iri"></param>
         /// <returns>The actual project</returns>
-        /// <exception cref="ModelBuilderNotFoundException">Throws if the project does not exist</exception>
+        /// <exception cref="MimirorgNotFoundException">Throws if the project does not exist</exception>
         Task<Project> GetProject(string id, string iri);
 
         /// <summary>
@@ -34,9 +36,9 @@ namespace Mb.Services.Contracts
         /// </summary>
         /// <param name="project">The project that should be created</param>
         /// <returns>A create project task</returns>
-        /// <exception cref="ModelBuilderDuplicateException">Throws if there is already a project, node or edge with same id.</exception>
-        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null</exception>
-        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid</exception>
+        /// <exception cref="MimirorgDuplicateException">Throws if there is already a project, node or edge with same id.</exception>
+        /// <exception cref="MimirorgNullReferenceException">Throws if project is null</exception>
+        /// <exception cref="MimirorgBadRequestException">Throws if project is not valid</exception>
         Task<Project> CreateProject(ProjectAm project);
 
         /// <summary>
@@ -54,20 +56,20 @@ namespace Mb.Services.Contracts
         /// <param name="invokedByDomain"></param>
         /// <param name="iri"></param>
         /// <returns>Update Project Task</returns>
-        /// <exception cref="ModelBuilderInvalidOperationException">Throws if invoking domain is not set.</exception>
-        /// <exception cref="ModelBuilderNotFoundException">Throws if project is missing from database.</exception>
-        /// <exception cref="ModelBuilderNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
-        /// <exception cref="ModelBuilderBadRequestException">Throws if project is not valid.</exception>
+        /// <exception cref="MimirorgInvalidOperationException">Throws if invoking domain is not set.</exception>
+        /// <exception cref="MimirorgNotFoundException">Throws if project is missing from database.</exception>
+        /// <exception cref="MimirorgNullReferenceException">Throws if project is null, or missing both id and iri.</exception>
+        /// <exception cref="MimirorgBadRequestException">Throws if project is not valid.</exception>
         Task UpdateProject(string id, string iri, ProjectAm project, string invokedByDomain);
 
 
 
-        Task<Project> CreateProject(CreateProject createProject);
+        Task<Project> CreateProject(CreateProjectAm createProject);
 
 
         Task DeleteProject(string projectId);
         Task<(byte[] file, FileFormat format)> CreateFile(string projectId, Guid id);
-        Task CommitProject(CommitPackage package);
+        Task CommitProject(CommitPackageAm package);
         bool ProjectExist(string projectId, string projectIri);
     }
 }

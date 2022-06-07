@@ -1,12 +1,13 @@
 import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
-import { ConvertDataToNode } from "../../converters";
+import { ConvertLibNodeToNode } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { BlobData, LibItem, LibrarySubProjectItem, Node, Project, User } from "../../../../models";
-import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
+import { LibrarySubProjectItem, Node, Project, User } from "../../../../models";
+import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
@@ -14,7 +15,6 @@ interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
   user: User;
-  icons: BlobData[];
   library: LibraryState;
   flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;
@@ -45,6 +45,44 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
 /**
+ * Function to handle a node dropped from the Library.
+ * The dropped node is of the type NodeLibCm, and it is converted to a Node.
+ * @param OnDropParameters
+ */
+function HandleNodeDrop({ event, project, user, library, dispatch }: OnDropParameters) {
+  const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
+  const selectedNode = project?.nodes?.find((n) => n.selected);
+
+  // The dropped node automatically finds a parent
+  const parentNode = SetParentNodeOnDrop(selectedNode, libNode, project.nodes);
+
+  const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
+  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
+
+  const node = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user);
+
+  if (IsFamily(parentNode, node)) HandleCreatePartOfEdge(parentNode, node, project, library, dispatch);
+
+  dispatch(addNode(node));
+}
+
+/**
+ * A dropped node automatically is assigned a parent.
+ * If a node is selected and has the same Aspect as the dropped node, it becomes the parent.
+ * If no node is selected, the root node with the same Aspect becomes the parent.
+ * @param selectedNode
+ * @param node
+ * @param nodes
+ * @returns a Node.
+ */
+function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[]) {
+  if (selectedNode && IsFamily(selectedNode, node)) return selectedNode;
+  return nodes.find((n) => IsFamily(n, node));
+}
+
+export default useOnTreeDrop;
+
+/**
  * Function to handle a SubProject dropped from the Library.
  * @param event
  * @param project
@@ -61,42 +99,3 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
     edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
   })();
 }
-
-/**
- * Function to handle a node dropped from the Library.
- * @param OnDropParameters
- */
-function HandleNodeDrop({ event, project, user, icons, library, dispatch }: OnDropParameters) {
-  const data = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as LibItem;
-  const selectedNode = project?.nodes?.find((n) => n.selected);
-
-  // The dropped node automatically finds a parent
-  const parentNode = SetParentNodeOnDrop(selectedNode, data, project.nodes);
-
-  const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
-  const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
-
-  const targetNode = ConvertDataToNode(data, treePosition, parentNode, blockPosition, project.id, icons, user);
-  if (!targetNode) return;
-
-  targetNode.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, targetNode)));
-  if (IsFamily(parentNode, targetNode)) HandleCreatePartOfEdge(parentNode, targetNode, project, library, dispatch);
-
-  dispatch(addNode(targetNode));
-}
-
-/**
- * A dropped node automatically is assigned a parent.
- * If a node is selected and has the same Aspect as the dropped node, it becomes the parent.
- * If no node is selected, the root node with the same Aspect becomes the parent.
- * @param selectedNode
- * @param data
- * @param nodes
- * @returns a Node.
- */
-function SetParentNodeOnDrop(selectedNode: Node, data: LibItem, nodes: Node[]) {
-  if (selectedNode && IsFamily(selectedNode, data)) return selectedNode;
-  return nodes.find((n) => IsFamily(n, data));
-}
-
-export default useOnTreeDrop;

@@ -1,7 +1,7 @@
 import { LibraryIcon } from "../../../../../assets/icons/modules";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { ExpandButtonContainer } from "./ExpandButton.styled";
-import { Icon } from "../../../../../compLibrary/icon";
+import { Icon } from "../../../../../compLibrary/icon/Icon";
 import { OnLibraryClick } from "../handlers/OnLibraryClick";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { Dispatch } from "redux";

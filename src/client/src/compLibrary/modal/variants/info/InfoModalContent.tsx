@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Dialog } from "@headlessui/react";
-import { Icon } from "../../../icon";
+import { Icon } from "../../../icon/Icon";
 import {
   InfoModalContentContainer,
   InfoModalHeader,

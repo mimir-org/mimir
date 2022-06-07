@@ -1,8 +1,8 @@
 import { Aspect } from "../../../../../../../../../models";
 import { LibraryCategory } from "../../../../../../../../../models/project";
 
-export const filterByAspect = (libCategories: LibraryCategory[], aspectFilters: Aspect[]): LibraryCategory[] => {
-  const categories = JSON.parse(JSON.stringify(libCategories));
+export const FilterByAspect = (libCategories: LibraryCategory[], aspectFilters: Aspect[]): LibraryCategory[] => {
+  const categories = JSON.parse(JSON.stringify(libCategories)) as LibraryCategory[];
 
   return categories.map((cat) => {
     cat.nodes = cat.nodes.filter((node) => {

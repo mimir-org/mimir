@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../colors/Color";
+import { Color } from "../../assets/color/Color";
 
 interface Props {
   variant?: "horizontal" | "vertical";

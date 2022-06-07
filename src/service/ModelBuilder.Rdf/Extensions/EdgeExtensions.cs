@@ -1,6 +1,7 @@
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Enums;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
@@ -127,8 +128,8 @@ namespace ModelBuilder.Rdf.Extensions
             if (fromNode == null || toNode == null)
                 throw new InvalidDataException($"Can't create an edge. Can't find connected nodes from IRI. From: {fromNode?.Iri} to {toNode?.Iri}");
 
-            var fromConnector = fromNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorType.Output && x.RelationType == relation.RelationType);
-            var toConnector = toNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorType.Input && x.RelationType == relation.RelationType);
+            var fromConnector = fromNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == relation.RelationType);
+            var toConnector = toNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorDirection.Input && x.RelationType == relation.RelationType);
 
             if (fromConnector == null || toConnector == null)
                 throw new InvalidDataException($"Can't create an edge. Can't find connectors from IRI. From: {fromConnector?.Iri} to {toConnector?.Iri}");
