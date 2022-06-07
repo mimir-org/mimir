@@ -13,7 +13,7 @@ const OnManageCollection = (
   dispatch: Dispatch
 ) => {
   const collections: AddToCollectionsTypes = {
-    types: selectedTypes,
+    libNodes: selectedTypes,
     collectionIds: selectedCollections,
   };
   dispatch(addToCollections(collections));

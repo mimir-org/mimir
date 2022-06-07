@@ -62,8 +62,7 @@ function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, ge
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const node = ConvertLibNodeToNode(nodeLib, treePosition, parentNode, blockPosition, project.id, user);
-  if (!node) return;
+  const node = ConvertLibNodeToNode(nodeLib, parentNode, treePosition, blockPosition, project.id, user);
 
   node.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, node)));
   if (IsFamily(parentNode, node)) HandleCreatePartOfEdge(parentNode, node, project, lib, dispatch);

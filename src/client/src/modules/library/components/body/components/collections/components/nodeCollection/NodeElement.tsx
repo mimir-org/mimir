@@ -14,12 +14,12 @@ import { NodeLibCm } from "@mimirorg/typelibrary-types";
 interface Props {
   item: NodeLibCm;
   customCategory: LibraryCategory;
-  selectedElement: NodeLibCm;
-  setSelectedElement: (value: NodeLibCm) => void;
+  selectedLibNode: NodeLibCm;
+  setSelectedLibNode: (value: NodeLibCm) => void;
   isCustomCategory: boolean;
   dispatch: Dispatch;
-  selectedTypes: NodeLibCm[];
-  setSelectedTypes: (array: NodeLibCm[]) => void;
+  selectedLibNodes: NodeLibCm[];
+  setSelectedLibNodes: (array: NodeLibCm[]) => void;
   collectionState: CollectionsActions;
 }
 
@@ -31,16 +31,16 @@ interface Props {
 export const NodeElement = ({
   item,
   customCategory,
-  selectedElement,
-  setSelectedElement,
+  selectedLibNode,
+  setSelectedLibNode,
   isCustomCategory,
-  selectedTypes,
-  setSelectedTypes,
+  selectedLibNodes,
+  setSelectedLibNodes,
   collectionState,
   dispatch,
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
-  const selected = selectedTypes.some((x) => x.id === item.id);
+  const selected = selectedLibNodes.some((n) => n.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
 
   const onDragStart = (event, node) => {
@@ -52,8 +52,8 @@ export const NodeElement = ({
     <NodeElementButton
       onMouseEnter={() => setShowAddButton(true)}
       onMouseLeave={() => setShowAddButton(false)}
-      active={selectedElement && selectedElement.id === item.id}
-      onClick={() => setSelectedElement(item)}
+      active={selectedLibNode?.id === item.id}
+      onClick={() => setSelectedLibNode(item)}
       draggable
       onDragStart={(event) => onDragStart(event, JSON.stringify(item))}
       key={item.id}
@@ -66,7 +66,7 @@ export const NodeElement = ({
       {collectionState === CollectionsActions.ManageType && (
         <Checkbox
           isChecked={selected}
-          onChange={() => OnCheckboxChange(item, selectedTypes, setSelectedTypes, selected)}
+          onChange={() => OnCheckboxChange(item, selectedLibNodes, setSelectedLibNodes, selected)}
           color={Color.BLACK}
         />
       )}

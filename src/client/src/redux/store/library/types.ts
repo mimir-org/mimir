@@ -5,7 +5,7 @@ import { ApiError } from "../../../models/webclient";
 // State types
 export interface LibraryState {
   fetching: boolean;
-  nodeTypes: NodeLibCm[] | null;
+  libNodes: NodeLibCm[] | null;
   apiError: ApiError[];
   // transportTypes: LibItem[];
   // interfaceTypes: LibItem[];
@@ -15,7 +15,7 @@ export interface LibraryState {
 
 // Action types
 export interface FetchLibrary {
-  nodeTypes: NodeLibCm[];
+  libNodes: NodeLibCm[];
   // transportTypes: NodeLibCm[];
   // interfaceTypes: NodeLibCm[];
   subProjectTypes: LibrarySubProjectItem[];
@@ -23,7 +23,7 @@ export interface FetchLibrary {
 }
 
 export interface FetchLibraryItems {
-  libraryItems: NodeLibCm[];
+  libNodes: NodeLibCm[];
   apiError: ApiError;
 }
 
@@ -33,6 +33,6 @@ export interface DeleteLibraryItem {
 }
 
 export interface AddToCollectionsTypes {
-  types: NodeLibCm[];
+  libNodes: NodeLibCm[];
   collectionIds: string[];
 }

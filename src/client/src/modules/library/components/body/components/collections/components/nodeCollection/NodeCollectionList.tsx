@@ -13,22 +13,22 @@ import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   collectionState: CollectionsActions;
-  selectedTypes: NodeLibCm[];
-  setSelectedTypes: (array: NodeLibCm[]) => void;
+  selectedLibNodes: NodeLibCm[];
+  setSelectedLibNodes: (array: NodeLibCm[]) => void;
   searchString: string;
-  selectedElement: NodeLibCm | null;
-  setSelectedElement: (value: NodeLibCm) => void;
+  selectedLibNode: NodeLibCm | null;
+  setSelectedLibNode: (value: NodeLibCm) => void;
   aspectFilters: Aspect[];
   selectedNode: Node;
 }
 
 export const NodeCollectionList = ({
   collectionState,
-  selectedTypes,
-  setSelectedTypes,
+  selectedLibNodes,
+  setSelectedLibNodes,
   searchString,
-  selectedElement,
-  setSelectedElement,
+  selectedLibNode,
+  setSelectedLibNode,
   aspectFilters,
   selectedNode,
 }: Props) => {
@@ -50,15 +50,17 @@ export const NodeCollectionList = ({
     [recentlyChangedLibItems, allLibItems, searchString]
   );
 
+  // console.log({ libState });
+  // console.log({ allLibItems });
   const categories = FilterByAspect(filteredCategories, aspectFilters);
 
   return (
     <>
       <NodeCollection
-        selectedTypes={selectedTypes}
-        setSelectedTypes={setSelectedTypes}
-        selectedElement={selectedElement}
-        setSelectedElement={setSelectedElement}
+        selectedLibNodes={selectedLibNodes}
+        setSelectedLibNodes={setSelectedLibNodes}
+        selectedLibNode={selectedLibNode}
+        setSelectedLibNode={setSelectedLibNode}
         key={customCategory.name}
         category={customCategory}
         customCategory={customCategory}
@@ -69,10 +71,10 @@ export const NodeCollectionList = ({
         return (
           <NodeCollection
             collectionState={collectionState}
-            selectedTypes={selectedTypes}
-            setSelectedTypes={setSelectedTypes}
-            selectedElement={selectedElement}
-            setSelectedElement={setSelectedElement}
+            selectedLibNodes={selectedLibNodes}
+            setSelectedLibNodes={setSelectedLibNodes}
+            selectedLibNode={selectedLibNode}
+            setSelectedLibNode={setSelectedLibNode}
             key={category.name}
             category={category}
             customCategory={customCategory}

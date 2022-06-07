@@ -59,7 +59,7 @@ function HandleNodeDrop({ event, project, user, library, dispatch }: OnDropParam
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
-  const node = ConvertLibNodeToNode(libNode, treePosition, parentNode, blockPosition, project.id, user);
+  const node = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user);
 
   if (IsFamily(parentNode, node)) HandleCreatePartOfEdge(parentNode, node, project, library, dispatch);
 

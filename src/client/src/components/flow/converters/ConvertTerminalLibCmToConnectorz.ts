@@ -1,6 +1,7 @@
-import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Connector, ConnectorType, ConnectorVisibility, RelationType } from "../../../models";
 import { CreateId } from "../helpers";
+import { ConvertAttributeLibCmToAttribute } from ".";
+import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
 
 const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
@@ -18,6 +19,7 @@ export default ConvertTerminalLibCmToConnector;
 function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
   const direction = ConvertConnectorType(item.connectorDirection);
   const connectorVisibility = SetConnectorVisibility(direction);
+  const attributes = ConvertAttributeLibCmToAttribute(item.terminal.attributes);
 
   return {
     id: CreateId(),
@@ -32,7 +34,7 @@ function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
     isRequired: false,
     color: item.terminal.color,
     terminalCategory: "",
-    attributes: [], // TODO: fix list
+    attributes,
     terminalTypeId: "",
     terminalTypeIri: "",
     relationType: RelationType.NotSet,
@@ -41,9 +43,10 @@ function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
 }
 
 function ConvertConnectorType(connectorDirection: ConnectorDirection) {
-  if (connectorDirection === ConnectorDirection.Input) return ConnectorType.Input;
-  if (connectorDirection === ConnectorDirection.Output) return ConnectorType.Output;
-  if (connectorDirection === ConnectorDirection.Bidirectional) return ConnectorType.Bidirectional;
+  // if (connectorDirection === ConnectorDirection.Input) return ConnectorType.Input;
+  // if (connectorDirection === ConnectorDirection.Output) return ConnectorType.Output;
+  // if (connectorDirection === ConnectorDirection.Bidirectional) return ConnectorType.Bidirectional;
+  return ConnectorType.Input; // TODO: fix
 }
 
 /**

@@ -8,6 +8,6 @@ const IsValidLibComponent = (libNode: NodeLibCm, selectedNode: Node, isBlockView
 };
 
 export const GetValidLibItems = (selectedNode: Node, state: LibraryState, isBlockView: boolean) => {
-  const allLibItems = [...state.nodeTypes];
+  const allLibItems = [...state.libNodes];
   return allLibItems.filter((i) => IsValidLibComponent(i, selectedNode, isBlockView));
 };

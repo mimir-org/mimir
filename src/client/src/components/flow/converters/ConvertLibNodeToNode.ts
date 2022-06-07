@@ -3,14 +3,14 @@ import { Size } from "../../../assets/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { ConvertTerminalLibCmToConnector } from "./";
+import { ConvertAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectorz, ConvertSimpleLibCmToSimple } from "./";
 
 /**
- * Function to convert a libNode to a Mimir Node.
+ * Function to convert a libNode dropped from the Library to a Mimir Node.
  * The libNode is of the type NodeLibCm.
  * @param libNode
- * @param treePosition
  * @param parentNode
+ * @param treePosition
  * @param blockPosition
  * @param projectId
  * @param user
@@ -18,28 +18,30 @@ import { ConvertTerminalLibCmToConnector } from "./";
  */
 const ConvertLibNodeToNode = (
   libNode: NodeLibCm,
-  treePosition: Position,
   parentNode: Node,
+  treePosition: Position,
   blockPosition: Position,
   projectId: string,
   user: User
 ) => {
   const now = GetDateNowUtc();
-  const connectors = ConvertTerminalLibCmToConnector(libNode.nodeTerminals, libNode.id);
+  const connectors = ConvertTerminalLibCmToConnectorz(libNode.nodeTerminals, libNode.id);
+  const attributes = ConvertAttributeLibCmToAttribute(libNode.attributes);
+  const simples = ConvertSimpleLibCmToSimple(libNode.simples);
 
   return {
     id: libNode.id,
     rds: libNode.rdsCode,
     projectId: projectId,
     name: libNode.name,
-    label: libNode.name,
+    label: libNode.name, // TODO: label?
     positionX: treePosition.x,
     positionY: treePosition.y,
     positionBlockX: blockPosition.x,
     positionBlockY: blockPosition.y,
     connectors,
-    attributes: [],
-    simples: [],
+    attributes,
+    simples,
     aspect: libNode.aspect,
     statusId: "",
     version: libNode.version,

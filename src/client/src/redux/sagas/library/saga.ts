@@ -14,7 +14,7 @@ import {
 } from "../../store/library/librarySlice";
 
 export function* searchLibrary() {
-  const emptyPayload = { nodeTypes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
+  const emptyPayload = { libNodes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
 
   try {
     const url = `${Config.API_BASE_URL}library`;
@@ -27,7 +27,7 @@ export function* searchLibrary() {
     }
 
     const payload = {
-      nodeTypes: response.data.objectBlocks,
+      libNodes: response.data.objectBlocks,
       transportTypes: response.data.transports,
       interfaceTypes: response.data.interfaces,
       subProjectTypes: response.data.subProjects,
@@ -91,14 +91,14 @@ export function* getTransportTypes() {
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, fetchLibraryTransportTypesSuccessOrError.type);
-      yield put(fetchLibraryTransportTypesSuccessOrError({ libraryItems: [], apiError }));
+      yield put(fetchLibraryTransportTypesSuccessOrError({ libNodes: [], apiError }));
       return;
     }
 
-    yield put(fetchLibraryTransportTypesSuccessOrError({ libraryItems: response.data, apiError: null }));
+    yield put(fetchLibraryTransportTypesSuccessOrError({ libNodes: response.data, apiError: null }));
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryTransportTypesSuccessOrError.type);
-    yield put(fetchLibraryTransportTypesSuccessOrError({ libraryItems: [], apiError }));
+    yield put(fetchLibraryTransportTypesSuccessOrError({ libNodes: [], apiError }));
   }
 }
 
@@ -109,14 +109,14 @@ export function* getInterfaceTypes() {
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, fetchLibraryInterfaceTypesSuccessOrError.type);
-      yield put(fetchLibraryInterfaceTypesSuccessOrError({ libraryItems: [], apiError }));
+      yield put(fetchLibraryInterfaceTypesSuccessOrError({ libNodes: [], apiError }));
       return;
     }
 
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libraryItems: response.data, apiError: null }));
+    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libNodes: response.data, apiError: null }));
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryInterfaceTypesSuccessOrError.type);
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libraryItems: [], apiError }));
+    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libNodes: [], apiError }));
   }
 }
 
