@@ -36,7 +36,6 @@ namespace Mb.Models.Application
         public virtual ICollection<UnitLibCm> Units { get; set; }
 
         // Qualifiers
-        // TODO: Remove foreign keys
         [Required]
         public string Qualifier { get; set; }
 

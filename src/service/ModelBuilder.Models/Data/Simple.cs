@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -16,6 +17,7 @@ namespace Mb.Models.Data
         public virtual string NodeIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public Node Node { get; set; }
 
         public bool Equals(Simple other)

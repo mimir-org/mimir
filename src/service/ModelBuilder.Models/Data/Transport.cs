@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -34,10 +35,10 @@ namespace Mb.Models.Data
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }
         public string CreatedBy { get; set; }
-        public string LibraryTypeId { get; set; }
-        //public BuildStatus Status { get; set; }
+        public string LibraryTypeId { get; set; }        
 
         [JsonIgnore]
+        [TSExclude]
         public ICollection<Edge> Edges { get; set; }
 
         public void IncrementMinorVersion()

@@ -17,15 +17,19 @@ namespace Mb.Models.Data
         public string Discriminator => nameof(Terminal);
 
         [JsonIgnore]
+        [TSExclude]
         public ICollection<Transport> InputTransports { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public ICollection<Transport> OutputTransports { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public ICollection<Interface> InputInterfaces { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public ICollection<Interface> OutputInterfaces { get; set; }
 
         #region IEquatable

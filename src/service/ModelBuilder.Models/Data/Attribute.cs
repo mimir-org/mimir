@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
 using Mimirorg.TypeLibrary.Models.Client;

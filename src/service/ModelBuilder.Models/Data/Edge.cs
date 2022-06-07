@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -44,6 +45,7 @@ namespace Mb.Models.Data
         public virtual string ProjectIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Project Project { get; set; }
 
         #region IEquatable

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -79,12 +79,15 @@ namespace Mb.Models.Data
         public virtual string ProjectIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Project Project { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual ICollection<Edge> FromEdges { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual ICollection<Edge> ToEdges { get; set; }
 
         public int? Width { get; set; }
