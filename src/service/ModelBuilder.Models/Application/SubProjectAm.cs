@@ -27,7 +27,7 @@ namespace Mb.Models.Application
                 validateionResults.Add(new ValidationResult("Number of nodes must be greater than 0", new List<string> { "Nodes" }));
             }
 
-            if(Nodes.HasDuplicateValues())
+            if (Nodes.HasDuplicateValues())
                 validateionResults.Add(new ValidationResult("Duplicate node id's detected", new List<string> { "Nodes" }));
 
             if (Nodes.HasEmptyValues())

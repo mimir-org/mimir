@@ -129,7 +129,7 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new SimpleProfile());
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
-            
+
             // Create profiles
             cfg.CreateProfiles(provider, modules);
 

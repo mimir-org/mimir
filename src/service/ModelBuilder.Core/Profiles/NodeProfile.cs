@@ -85,6 +85,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Updated, opt => opt.MapFrom(src => src.Updated))
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.IsRoot, opt => opt.MapFrom(src => src.IsRoot));
-        }        
+        }
     }
 }

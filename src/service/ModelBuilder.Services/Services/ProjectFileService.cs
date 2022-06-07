@@ -63,7 +63,7 @@ namespace Mb.Services.Services
                         StringComparison.CurrentCultureIgnoreCase)))
                 throw new ModelBuilderModuleException($"There is no parser with key: {projectFile.ParserId}");
 
-            
+
 
             var par = _moduleService.Resolve<IModelBuilderParser>(parserId);
             var project = await par.DeserializeProjectAm(Encoding.UTF8.GetBytes(projectFile.FileContent));

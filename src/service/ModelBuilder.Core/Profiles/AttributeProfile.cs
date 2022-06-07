@@ -74,7 +74,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
-                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));            
+                .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));
         }
     }
 }

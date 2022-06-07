@@ -24,6 +24,6 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom(src => src.Attributes))
                 .ForMember(dest => dest.NodeIri, opt => opt.MapFrom(src => src.NodeIri))
                 .ForMember(dest => dest.NodeId, opt => opt.MapFrom(src => src.NodeId));
-        }        
+        }
     }
 }
