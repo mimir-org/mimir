@@ -1,8 +1,8 @@
-import { IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOfRelation } from "../../../../helpers/Connectors";
+import { IsInputTerminal, IsOutputTerminal, IsOutputVisible } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
-import { Aspect, Connector, ConnectorDirection, ConnectorVisibility, Edge, Node } from "@mimirorg/modelbuilder-types";
+import { Connector, Edge, Node, ConnectorDirection, ConnectorVisibility, Aspect } from "@mimirorg/modelbuilder-types";
 
 export interface OffPageObject {
   offPageNode: Node;

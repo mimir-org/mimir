@@ -28,7 +28,7 @@ const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLocke
     projectId: "",
     isLocked,
     isLockedStatusBy: isLockedBy,
-    isLockedStatusDate: new Date(), //.toISOString(),
+    isLockedStatusDate: new Date(),
     type: IsNode(element) ? EntityType.Node : EntityType.Edge,
   };
 

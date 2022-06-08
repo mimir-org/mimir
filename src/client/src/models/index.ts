@@ -2,12 +2,11 @@ export { WebSocket } from "./client/WebSocket";
 export type { FileData } from "./client/FileData";
 export type { Collection } from "./client/Collection";
 
-export type { Purpose } from "./enums/Purpose";
 export type { EnumBase } from "./enums/EnumBase";
 export { ObjectType } from "./enums/ObjectType";
 export { LibraryTab } from "./enums/LibraryTab";
 export { WorkerStatus } from "./enums/WorkerStatus";
-export { CommitStatus } from "./enums/CommitStatus";
+
 export { LibraryFilter } from "./enums/LibraryFilter";
 export { AspectColorType } from "./enums/AspectColorType";
 export { CollectionsActions } from "./enums/CollectionsActions";
@@ -31,7 +30,6 @@ export type { CombinedAttributeFilter } from "./application/CombinedAttributeFil
 
 //Type Editor
 export type { Rds } from "./data/typeEditor/Rds";
-export type { BlobData } from "./data/typeEditor/BlobData";
 export type { SimpleType } from "./data/typeEditor/SimpleType";
 export type { TerminalType } from "./data/typeEditor/TerminalType";
 export type { AttributeType } from "./data/typeEditor/AttributeType";
