@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
@@ -47,6 +48,16 @@ namespace Mb.Models.Data
         [JsonIgnore]
         [TSExclude]
         public virtual Project Project { get; set; }
+
+        // Only for client
+        [NotMapped]
+        public bool? Selected { get; set; }
+
+        [NotMapped]
+        public bool? Hidden { get; set; }
+
+        [NotMapped]
+        public bool? BlockHidden { get; set; }
 
         #region IEquatable
 

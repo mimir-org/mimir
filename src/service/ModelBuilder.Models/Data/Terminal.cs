@@ -6,7 +6,6 @@ using TypeScriptBuilder;
 
 namespace Mb.Models.Data
 {
-    [TSFlat]
     public class Terminal : Connector, IEquatable<Terminal>
     {
         public string Color { get; set; }
