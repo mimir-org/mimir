@@ -35,7 +35,7 @@ namespace Mb.Models.Data
         public DateTime? Updated { get; set; }
         public DateTime? Created { get; set; }
         public string CreatedBy { get; set; }
-        public string LibraryTypeId { get; set; }        
+        public string LibraryTypeId { get; set; }
 
         [JsonIgnore]
         [TSExclude]
