@@ -1,6 +1,6 @@
 import { GetConnectorNode } from "./index";
 import { IsFamily } from "../../../../../../helpers/Family";
-import { Node, Connector } from "../../../../../../models";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { IsLocationRelation, IsProductRelation } from "../../../../../flow/helpers/Connectors";
 
 export const VerifyTransportItem = (items: Connector[], sourceConn: Connector) =>

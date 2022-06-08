@@ -1,6 +1,6 @@
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { IsFamily } from "../../../../../../../../../helpers/Family";
-import { Node } from "../../../../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { LibraryState } from "../../../../../../../../../redux/store/library/types";
 
 const IsValidLibComponent = (libNode: NodeLibCm, selectedNode: Node, isBlockView: boolean) => {

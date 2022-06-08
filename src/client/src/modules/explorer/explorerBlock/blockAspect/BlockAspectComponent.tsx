@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { LockComponent } from "../../shared/components/LockComponent";
-import { Node } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { BlockAspectElement } from "./components/BlockAspectElement";
 import { OnLockNode } from "../../shared/handlers/OnLockNode";
 import { TextResources } from "../../../../assets/text/TextResources";

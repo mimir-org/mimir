@@ -1,8 +1,8 @@
-import { Aspect, Node as ModelNode } from "@mimirorg/modelbuilder-types";
+import { Aspect, Node } from "@mimirorg/modelbuilder-types";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { CreateLibraryType, Node } from "../models";
+import { CreateLibraryType } from "../models";
 
-type Item = Node | ModelNode | NodeLibCm | CreateLibraryType;
+type Item = Node | NodeLibCm | CreateLibraryType;
 
 export const IsAspectNode = (node: Node) => {
   return node?.isRoot;

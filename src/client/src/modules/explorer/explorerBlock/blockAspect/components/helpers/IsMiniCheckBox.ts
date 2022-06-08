@@ -1,6 +1,6 @@
 import { IsAspectNode } from "../../../../../../helpers/Aspects";
 import { IsDirectChild } from "../../../../../../helpers/Family";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to determine if a node in the BlockExplorer should have the mini checkmark checked.

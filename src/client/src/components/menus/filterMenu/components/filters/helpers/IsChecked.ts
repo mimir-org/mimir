@@ -1,4 +1,4 @@
-import { Edge } from "../../../../../../models";
+import { Edge } from "@mimirorg/modelbuilder-types";
 import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../../../flow/helpers/Connectors";
 
 export const AllRelationsChecked = (edges: Edge[]) => {

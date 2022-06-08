@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector, Edge } from "../../../../../models";
+import { Connector, Edge } from "@mimirorg/modelbuilder-types";
 import { OnAllTransportsChange } from "./handlers";
 import { PopulateTerminalCategories, AllTransportsChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";

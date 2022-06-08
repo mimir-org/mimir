@@ -1,9 +1,9 @@
 import { CollectionsWrapper } from "./CollectionsComponent.styled";
-import { CollectionsActions, LibraryTab, Node } from "../../../../../../models";
+import { CollectionsActions, LibraryTab } from "../../../../../../models";
 import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Aspect } from "@mimirorg/modelbuilder-types";
+import { Node, Aspect } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   activeTab: LibraryTab;

@@ -1,4 +1,4 @@
-import { Connector, Edge, Node } from "../../../../models";
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { IsOffPageEdge } from "../../../flow/block/helpers/IsOffPageEdge";
 import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../flow/helpers/Connectors";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";

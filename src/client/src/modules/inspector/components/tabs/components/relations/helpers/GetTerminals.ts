@@ -1,4 +1,4 @@
-import { Connector, Edge } from "../../../../../../../models";
+import { Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { IsInputTerminal, IsOutputTerminal } from "../../../../../../../components/flow/helpers/Connectors";
 import { InspectorElement } from "../../../../../types";
 import { IsEdge, IsNode } from "../../../../../helpers/IsType";

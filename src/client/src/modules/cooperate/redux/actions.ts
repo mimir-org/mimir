@@ -1,4 +1,4 @@
-import { Edge, Node } from "../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import * as Types from "./types";
 
 export function cooperateAddNode(node: Node): Types.CooperateActionTypes {

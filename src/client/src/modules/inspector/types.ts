@@ -1,6 +1,6 @@
-import { Attribute, Connector, Transport, Simple, Interface, ConnectorDirection } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Attribute, Connector, Transport, Simple, Interface, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { Action, Dispatch } from "redux";
-import { AttributeType, CombinedAttribute, Edge, Node, SimpleType, TerminalTypeExtended } from "../../models";
+import { AttributeType, CombinedAttribute, SimpleType, TerminalTypeExtended } from "../../models";
 
 /**
  * Union type of possible top elements chosen in inspector, i.e. what can be selected in by the inspector.

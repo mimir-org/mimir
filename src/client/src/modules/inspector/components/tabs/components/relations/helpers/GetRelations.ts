@@ -1,5 +1,5 @@
 import { IsRelationEdge } from "../../../helpers/IsRelationEdge";
-import { Edge, Node } from "../../../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 
 const GetRelations = (node: Node, edges: Edge[]): Edge[] =>
   edges

@@ -27,9 +27,10 @@ export const IsProductRelation = (conn: Relation) => {
   return conn?.relationType === RelationType.FulfilledBy;
 };
 
-// export const IsTransport = (conn: Connector) => {
-//   return conn?.terminalCategory !== undefined;
-// };
+export const IsTransport = (conn: Connector) => {
+  return false;
+  //return conn?.terminalCategory !== undefined; // TODO: fix
+};
 
 // Connections
 export const IsLocationConnection = (source: Relation, target: Relation) => {
@@ -44,9 +45,10 @@ export const IsProductConnection = (source: Relation, target: Relation) => {
   return source?.relationType === RelationType.FulfilledBy && target?.relationType === RelationType.FulfilledBy;
 };
 
-// export const IsTransportConnection = (source: Connector, target: Connector) => {
-//   return source?.terminalCategory !== undefined && target?.terminalCategory !== undefined;
-// };
+export const IsTransportConnection = (source: Connector, target: Connector) => {
+  return false;
+  //return source?.terminalCategory !== undefined && target?.terminalCategory !== undefined; // TODO:fix
+};
 
 // ConnectorVisibility
 export const IsInputVisible = (connector: Connector) => {

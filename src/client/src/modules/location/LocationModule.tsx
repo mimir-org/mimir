@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { OnRender, OnWindowResize } from "./handlers";
 import { CreateCamera, CreateControls, CreateCubes, CreateLights, CreateRenderer, CreateScene } from "./creators";
 import { LocationModuleContainer } from "./LocationModule.styled";
-import { Node } from "../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { RenderCubes } from "./helpers";
 
 interface Props {

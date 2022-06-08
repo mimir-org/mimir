@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { Color } from "../../../../assets/color/Color";
 import { FontSize } from "../../../../assets/font";
 import { GetAspectColor } from "../../../../helpers";
-import { AspectColorType, Node } from "../../../../models";
+import { AspectColorType } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

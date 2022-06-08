@@ -1,4 +1,3 @@
-import { Node } from "../../../../../../models";
 import { GetHandleType } from "../../helpers/GetHandleType";
 import { IsValidTreeConnection } from "../helpers/IsValidTreeConnection";
 import { TreeHandleBox } from "../../styled/TreeHandleBox";
@@ -6,7 +5,7 @@ import { Handle } from "react-flow-renderer";
 import { IsPartOfRelation } from "../../../../helpers/Connectors";
 import { Dispatch } from "redux";
 import { SetTopPos } from "../../helpers/SetTopPos";
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

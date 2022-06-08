@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Edge } from "../../../../models";
+import { Edge } from "@mimirorg/modelbuilder-types";
 import { setEdgeVisibility } from "../../../../redux/store/project/actions";
 import { IsPartOfRelation } from "../../helpers/Connectors";
 

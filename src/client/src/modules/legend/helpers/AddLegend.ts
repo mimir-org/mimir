@@ -1,9 +1,8 @@
-import { Edge, Node } from "../../../models";
 import { GetLegendInfo } from "./GetLegendInfo";
 import { IsBlockView } from "../../../helpers";
 import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import { Legend } from "./types";
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
 
 export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
   const IsActive = (conn: Connector) => {

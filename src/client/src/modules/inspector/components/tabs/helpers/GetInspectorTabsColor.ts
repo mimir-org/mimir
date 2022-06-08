@@ -1,7 +1,8 @@
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
-import { AspectColorType, Node } from "../../../../../models";
+import { AspectColorType } from "../../../../../models";
 import { GetAspectColor } from "../../../../../helpers";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to get the color for the tabs in the Inspector Module.

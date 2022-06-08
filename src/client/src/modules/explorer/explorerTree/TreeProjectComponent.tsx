@@ -1,4 +1,4 @@
-import { Node, Project } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ interface Props {
 export const TreeProjectComponent = ({ dispatch }: Props) => {
   const username = useAppSelector(usernameSelector);
   const projectState = useAppSelector(projectStateSelector);
-  const project = projectState?.project as Project;
+  const project = projectState?.project;
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const edges = project?.edges;
 

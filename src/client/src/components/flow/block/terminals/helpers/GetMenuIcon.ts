@@ -1,6 +1,6 @@
 import * as Icons from "../../../../../assets/icons/terminalsMenu";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Function to get an icon for the terminals menu in BlockView.

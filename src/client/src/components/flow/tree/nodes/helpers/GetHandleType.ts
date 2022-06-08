@@ -1,5 +1,5 @@
 import { HandleType, Position } from "react-flow-renderer";
-import { Connector } from "../../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 import {
   IsInputTerminal,
   IsOutputTerminal,

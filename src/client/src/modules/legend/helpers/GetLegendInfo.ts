@@ -1,4 +1,5 @@
-import { AspectColorType, Connector, Node } from "../../../models";
+import { AspectColorType } from "../../../models";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { Color } from "../../../assets/color/Color";
 import { GetAspectColor } from "../../../helpers";

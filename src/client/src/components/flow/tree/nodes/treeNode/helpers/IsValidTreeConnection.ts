@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { IsFamily } from "../../../../../../helpers/Family";
 import { GetMimirNodes } from "../../../../../../helpers/Selected";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
 
 /**

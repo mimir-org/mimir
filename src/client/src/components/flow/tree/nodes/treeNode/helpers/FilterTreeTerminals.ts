@@ -1,5 +1,5 @@
 import { GetMimirEdges } from "../../../../../../helpers/Selected";
-import { Connector } from "../../../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../../helpers/Connectors";
 
 /**

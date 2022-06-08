@@ -1,8 +1,7 @@
-import { Connector } from "../../../models";
 import { CreateId } from "../helpers";
 import { ConvertAttributeLibCmToAttribute } from ".";
 import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
-import { ConnectorVisibility, RelationType } from "@mimirorg/modelbuilder-types";
+import { Connector, ConnectorVisibility, RelationType } from "@mimirorg/modelbuilder-types";
 
 const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];

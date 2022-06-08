@@ -9,7 +9,7 @@ import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from ".
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 import { GetInspectorText, GetInspectorTabsColor, GetTabId } from "../helpers";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   element?: InspectorElement;

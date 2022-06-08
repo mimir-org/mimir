@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { removeSelectedNode, setSelectedNode } from "../../../../../../redux/store/project/actions";
 
 export const OnSelectActiveNode = (mimirNode: Node, isChecked: boolean, dispatch: Dispatch) => {

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Connector, Edge } from "../../../../../models";
+import { Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
 import { TerminalCategory } from "./TransportFilter";

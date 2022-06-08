@@ -2,7 +2,7 @@ import { TerminalsMenu, TerminalsMenuButton } from "./components";
 import { useState } from "react";
 import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
 import { IsConnectorVisible } from "../../helpers/Connectors";
-import { OnBlur, OnInputMenuClick } from "./handlers/OnTerminals";
+import { OnBlur, OnInputMenuClick } from "./handlers/OnTerminalClick";
 import { Node, Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {

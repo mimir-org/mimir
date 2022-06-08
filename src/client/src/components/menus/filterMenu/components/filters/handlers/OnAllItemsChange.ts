@@ -1,6 +1,5 @@
-import { Connector, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
+import { Edge, Connector, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
-import { Edge } from "../../../../../../models";
 import { changeActiveConnector, setEdgeVisibility } from "../../../../../../redux/store/project/actions";
 import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../../../flow/helpers/Connectors";
 

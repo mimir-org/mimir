@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { toggleElectroView } from "../../../redux/store/electro/electroSlice";
 import { setFilterMenuVisibility } from "../../menus/projectMenu/components/subMenus/redux/menuSlice";
 import { SetFitToScreen } from "../../../helpers";
-import { Node } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { ViewportData, ViewType, VIEW_TYPE } from "../../../models/project";
 import { changeFlowView } from "../../../redux/store/flow/flowSlice";
 import { setValidation } from "../../../redux/store/validation/validationSlice";

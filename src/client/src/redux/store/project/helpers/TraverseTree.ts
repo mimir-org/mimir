@@ -1,6 +1,6 @@
 import { IsPartOfRelation } from "../../../../components/flow/helpers/Connectors";
 import { IsFamily } from "../../../../helpers/Family";
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 
 const TraverseTree = (edgeList: Edge[], nodeList: Node[], parentNode: Node, elements: (Node | Edge)[]) => {
   const children: Node[] = [];

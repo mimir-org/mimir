@@ -1,7 +1,7 @@
 import red from "../../../../redux/store";
 import { IsFamily, IsParentOf } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Node } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../../components/flow/helpers/Connectors";
 
 const SortNodesWithIndent = (nodes: Node[]) => {

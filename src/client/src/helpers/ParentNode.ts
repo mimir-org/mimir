@@ -1,4 +1,4 @@
-import { Node, Edge } from "../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../components/flow/helpers/Connectors";
 
 export const FindParentEdge = (nodeId: string, edges: Edge[]) => {

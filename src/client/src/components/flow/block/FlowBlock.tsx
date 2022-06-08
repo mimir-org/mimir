@@ -9,7 +9,6 @@ import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine"
 import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
-import { Project } from "../../../models";
 import ReactFlow, {
   Node as FlowNode,
   Edge as FlowEdge,
@@ -44,7 +43,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const [flowEdges, setEdges] = useEdgesState([]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector) as Project;
+  const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;

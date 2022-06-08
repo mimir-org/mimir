@@ -1,4 +1,4 @@
-import { Edge, Node } from "../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { InspectorElement } from "../../../types";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Dispatch } from "redux";

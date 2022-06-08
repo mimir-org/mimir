@@ -1,14 +1,14 @@
 import { FC, memo, useEffect, useState } from "react";
 import { Handle, NodeProps } from "react-flow-renderer";
 import { TreeHandleBox } from "../styled/TreeHandleBox";
-import { AspectColorType, Node } from "../../../../../models";
+import { AspectColorType } from "../../../../../models";
 import { GetHandleType } from "../helpers/GetHandleType";
 import { GetFlowAspectIcon } from "./helpers/GetFlowAspectIcon";
 import { OnMouseLeave } from "./handlers/OnMouseLeave";
 import { AspectNodeBox } from "./AspectNode.styled";
 import { GetAspectColor } from "../../../../../helpers";
 import { SetTopPos } from "../helpers/SetTopPos";
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 
 const AspectNode: FC<NodeProps<Node>> = ({ data }) => {
   const [isHover, setIsHover] = useState(false);

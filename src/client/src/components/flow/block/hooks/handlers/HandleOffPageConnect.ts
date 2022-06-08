@@ -1,5 +1,5 @@
 import { addEdge } from "react-flow-renderer";
-import { Node, Edge } from "../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EDGE_TYPE } from "../../../../../models/project";
 import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import { ConvertDataToEdge } from "../../../converters";

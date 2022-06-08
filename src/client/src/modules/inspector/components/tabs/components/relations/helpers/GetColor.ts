@@ -1,6 +1,6 @@
 import { Color } from "../../../../../../../assets/color/Color";
 import { IsLocationRelation, IsProductRelation } from "../../../../../../../components/flow/helpers/Connectors";
-import { Connector } from "../../../../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 
 export const GetListItemColor = (index: number) => (index % 2 ? undefined : Color.LAVANDER_WEB_LIST);
 

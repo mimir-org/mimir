@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector } from "../../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";
 import { IsConnectorVisible } from "../../../../flow/helpers/Connectors";
 import { FilterElement } from "../FilterElement";

@@ -1,4 +1,5 @@
-import { Node, User } from "../../../models";
+import { User } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { Size } from "../../../assets/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
@@ -50,7 +51,7 @@ const ConvertLibNodeToNode = (
     level: 0,
     height: Size.BLOCK_NODE_HEIGHT, // Only used in BlockView
     width: Size.BLOCK_NODE_WIDTH, // Only used in BlockView
-    purpose: libNode.purposeName,
+    purposeString: libNode.purposeName,
     created: libNode.created,
     createdBy: libNode.createdBy,
     updated: now,
