@@ -1,5 +1,5 @@
 import { CreateId } from "./";
-import { Connector, ConnectorVisibility, Node, Edge, Project } from "../../../models";
+import { Project } from "../../../models";
 import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
@@ -8,7 +8,8 @@ import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../assets/size/Size";
 import { Position } from "../../../models/project";
-import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal, IsPartOfTerminal } from "./Connectors";
+import { IsProductRelation, IsLocationRelation, IsOutputTerminal, IsInputTerminal, IsPartOfRelation } from "./Connectors";
+import { Node, Edge, ConnectorVisibility, Connector } from "@mimirorg/modelbuilder-types";
 
 /**
  * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
@@ -26,8 +27,8 @@ export function HandleCreatePartOfEdge(
   dispatch: Dispatch
 ) {
   targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((c) => IsPartOfTerminal(c) && IsOutputTerminal(c));
-  const targetConn = targetNode.connectors?.find((c) => IsPartOfTerminal(c) && IsInputTerminal(c));
+  const sourceConn = sourceNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputTerminal(c));
+  const targetConn = targetNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputTerminal(c));
   const partofEdge = ConvertDataToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project.nodes, project.edges, sourceNode.id);
@@ -41,8 +42,8 @@ export function HandleCreatePartOfEdge(
  * @returns the ConnectorVisibility status.
  */
 export function InitConnectorVisibility(connector: Connector, targetNode: Node) {
-  const isLocation = IsLocation(targetNode) && IsLocationTerminal(connector);
-  const isProduct = IsProduct(targetNode) && IsProductTerminal(connector);
+  const isLocation = IsLocation(targetNode) && IsLocationRelation(connector);
+  const isProduct = IsProduct(targetNode) && IsProductRelation(connector);
 
   if (!isLocation && !isProduct) return ConnectorVisibility.None;
   if (IsInputTerminal(connector)) return ConnectorVisibility.InputVisible;

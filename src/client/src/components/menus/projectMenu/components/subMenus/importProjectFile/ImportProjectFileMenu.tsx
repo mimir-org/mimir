@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Button } from "../../../../../../compLibrary/buttons/standar";
+import { Button } from "../../../../../../compLibrary/buttons/standard";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { FontSize } from "../../../../../../assets/font";
@@ -10,9 +10,9 @@ import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/i
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useFilePicker } from "use-file-picker";
 import { useState } from "react";
-import { ModuleDescription } from "../../../../../../models";
 import { OnImportProjectFileClick, OnReturnClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 
 export const ImportProjectFileMenu = () => {
   const dispatch = useAppDispatch();

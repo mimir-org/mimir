@@ -1,7 +1,4 @@
-import { RelationType } from "../enums/RelationType";
-import { ConnectorVisibility } from "../enums/ConnectorVisibility";
-import { Attribute } from "./Attribute";
-import { ConnectorType } from "../enums/ConnectorType";
+import { Attribute, ConnectorVisibility, ConnectorDirection, RelationType } from "@mimirorg/modelbuilder-types";
 
 export const CONNECTOR_KIND = "Connector";
 
@@ -10,7 +7,7 @@ export interface Connector {
   iri: string;
   domain: string;
   name: string;
-  type: ConnectorType;
+  type: ConnectorDirection;
   semanticReference: string;
   nodeId: string;
   nodeIri: string;
@@ -28,5 +25,5 @@ export interface Connector {
   // Relation
   relationType: RelationType;
 
-  kind: string; // "Connector"
+  kind: string;
 }

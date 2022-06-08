@@ -1,5 +1,5 @@
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../../../../assets/text/TextResources";
-import { Connector } from "../../../../../../models";
 import { TerminalCategory } from "../TransportFilter";
 
 /**

@@ -12,13 +12,14 @@ import { GetRelations } from "./helpers/GetRelations";
 import { GetNameNode, GetNameRelation, GetNameTerminal, GetNameTransport } from "./helpers/GetName";
 import { GetActiveRelationColor, GetListItemColor } from "./helpers/GetColor";
 import { useStoreApi } from "react-flow-renderer";
+import { Edge } from "../../../../../../models";
 
 interface Props {
   element: InspectorElement;
 }
 
 export const RelationsComponent = ({ element }: Props) => {
-  const edges = useAppSelector(edgeSelector);
+  const edges = useAppSelector(edgeSelector) as Edge[];
   const connectors = useMemo(() => GetConnectors(element), [element]);
   const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
   const transports = useMemo(() => GetTransports(edges, element), [edges, element]);

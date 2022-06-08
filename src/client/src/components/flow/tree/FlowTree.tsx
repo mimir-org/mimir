@@ -11,6 +11,7 @@ import { Size } from "../../../assets/size/Size";
 import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
+import { Project } from "../../../models";
 import ReactFlow, {
   Background,
   Edge as FlowEdge,
@@ -41,7 +42,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const [flowEdges, setEdges] = useEdgesState<FlowEdge>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector(selectors.projectSelector) as Project;
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);

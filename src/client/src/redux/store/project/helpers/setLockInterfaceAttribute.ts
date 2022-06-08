@@ -6,7 +6,7 @@ interface SetLockInterfaceAttribute {
   interfaceId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: string;
+  isLockedStatusDate: Date;
 }
 
 export const setLockInterfaceAttribute = (lock: SetLockInterfaceAttribute, state: Types.ProjectState) => {

@@ -1,7 +1,7 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { IsProduct } from "../../../../helpers/Aspects";
-import { Node, Edge } from "../../../../models";
-import { IsPartOfTerminal } from "../../helpers/Connectors";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { IsPartOfRelation } from "../../helpers/Connectors";
 import { GetBlockEdgeType } from "../helpers";
 import { BuildFlowBlockEdge } from "./BuildFlowBlockEdge";
 
@@ -27,7 +27,7 @@ const BuildFlowBlockEdges = (
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
-    if (IsPartOfTerminal(edge.fromConnector) && !ValidatePartOfEdge(edge)) return;
+    if (IsPartOfRelation(edge.fromConnector) && !ValidatePartOfEdge(edge)) return;
     const edgeType = GetBlockEdgeType(edge.fromConnector, edge.fromNode, edge.toNode);
     const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, animatedEdge);
     if (blockEdge) flowEdges.push(blockEdge);

@@ -1,9 +1,9 @@
 import { TerminalsMenu, TerminalsMenuButton } from "./components";
-import { Connector, Node } from "../../../../models";
 import { useState } from "react";
 import { TerminalMenuWrapper } from "./TerminalsMenuComponent.styled";
 import { IsConnectorVisible } from "../../helpers/Connectors";
 import { OnBlur, OnInputMenuClick } from "./handlers/OnTerminals";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

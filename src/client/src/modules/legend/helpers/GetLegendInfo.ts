@@ -3,9 +3,9 @@ import { TextResources } from "../../../assets/text/TextResources";
 import { Color } from "../../../assets/color/Color";
 import { GetAspectColor } from "../../../helpers";
 import {
-  IsLocationTerminal,
-  IsPartOfTerminal,
-  IsProductTerminal,
+  IsLocationRelation,
+  IsPartOfRelation,
+  IsProductRelation,
   IsTransport,
 } from "../../../components/flow/helpers/Connectors";
 
@@ -19,19 +19,19 @@ export const GetLegendInfo = (conn: Connector, node: Node) => {
     return [name, color];
   }
 
-  if (IsPartOfTerminal(conn)) {
+  if (IsPartOfRelation(conn)) {
     name = TextResources.PARTOF_RELATIONSHIP;
     color = GetAspectColor(node, AspectColorType.Main);
     return [name, color];
   }
 
-  if (IsLocationTerminal(conn)) {
+  if (IsLocationRelation(conn)) {
     name = conn.name;
     color = Color.PINK_LACE;
     return [name, color];
   }
 
-  if (IsProductTerminal(conn)) {
+  if (IsProductRelation(conn)) {
     name = conn.name;
     color = Color.ELECTRIC_BLUE;
     return [name, color];

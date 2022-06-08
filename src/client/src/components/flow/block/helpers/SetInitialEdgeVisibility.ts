@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Edge } from "../../../../models";
+import { Edge } from "@mimirorg/modelbuilder-types";
 import { IsRelationEdge } from "../../../../modules/inspector/components/tabs/helpers";
 import { setEdgeVisibility } from "../../../../redux/store/project/actions";
 import { IsTransport } from "../../helpers/Connectors";

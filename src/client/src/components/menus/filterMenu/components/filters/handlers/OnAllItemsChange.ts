@@ -1,21 +1,22 @@
+import { Connector, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
-import { Connector, ConnectorVisibility, Edge } from "../../../../../../models";
+import { Edge } from "../../../../../../models";
 import { changeActiveConnector, setEdgeVisibility } from "../../../../../../redux/store/project/actions";
-import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../../../flow/helpers/Connectors";
 
 export const OnAllRelationsChange = (edges: Edge[], dispatch: Dispatch) => {
-  const hidden = edges.some((e) => (IsLocationTerminal(e.fromConnector) || IsProductTerminal(e.fromConnector)) && e.hidden);
+  const hidden = edges.some((e) => (IsLocationRelation(e.fromConnector) || IsProductRelation(e.fromConnector)) && e.hidden);
 
   edges.forEach((e) => {
-    if (IsLocationTerminal(e.fromConnector) || IsProductTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e.id, !hidden));
+    if (IsLocationRelation(e.fromConnector) || IsProductRelation(e.fromConnector)) dispatch(setEdgeVisibility(e.id, !hidden));
   });
 };
 
 export const OnAllPartOfChange = (edges: Edge[], dispatch: Dispatch) => {
-  const hidden = edges.some((e) => IsPartOfTerminal(e.fromConnector) && e.hidden);
+  const hidden = edges.some((e) => IsPartOfRelation(e.fromConnector) && e.hidden);
 
   edges.forEach((e) => {
-    if (IsPartOfTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e.id, !hidden));
+    if (IsPartOfRelation(e.fromConnector)) dispatch(setEdgeVisibility(e.id, !hidden));
   });
 };
 

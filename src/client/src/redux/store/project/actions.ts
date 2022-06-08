@@ -2,18 +2,8 @@
 import * as Types from "./types";
 import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
 import { BlockNodeSize } from "../../../models/project";
-import { EntityType } from "../../../models/enums/EntityType";
-import {
-  CommitPackage,
-  Connector,
-  ConnectorVisibility,
-  Edge,
-  LockCm,
-  Node,
-  Project,
-  ProjectConverterAm,
-  Simple,
-} from "../../../models";
+import { CommitPackage, LockCm, Project, ProjectConverterAm } from "../../../models";
+import { Node, Edge, Simple, ConnectorVisibility, EntityType, Connector } from "@mimirorg/modelbuilder-types";
 
 export function commitProject(commitPackage: CommitPackage): Types.ProjectActionTypes {
   return { type: Types.COMMIT_PROJECT, payload: commitPackage };

@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
-import { Edge, Node } from "../../../../../../models";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
 import { GetConnectorNode } from "../helpers";
 import { IsFamily } from "../../../../../../helpers/Family";
-import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../../../flow/helpers/Connectors";
+import { Edge, Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to toggle a specific element on/off in Visual Filter.
@@ -13,15 +13,15 @@ import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } 
  * @param dispatch
  */
 export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], dispatch: Dispatch) => {
-  const partOf = IsPartOfTerminal(actualEdge.fromConnector);
-  const location = IsLocationTerminal(actualEdge.fromConnector);
-  const fulfilledBy = IsProductTerminal(actualEdge.fromConnector);
+  const partOf = IsPartOfRelation(actualEdge.fromConnector);
+  const location = IsLocationRelation(actualEdge.fromConnector);
+  const fulfilledBy = IsProductRelation(actualEdge.fromConnector);
   const transport = IsTransport(actualEdge.fromConnector);
 
   // Find edges to be displayed or hidden
   edges.forEach((e) => {
     // PartOf
-    if (partOf && IsPartOfTerminal(e.fromConnector)) {
+    if (partOf && IsPartOfRelation(e.fromConnector)) {
       const source = GetConnectorNode(e.fromConnector, nodes);
       IsFamily(source, actualEdge.fromNode) && dispatch(setEdgeVisibility(e.id, !e.hidden));
     }
@@ -33,7 +33,7 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], d
     }
 
     // Relations
-    if ((location && IsLocationTerminal(e.fromConnector)) || (fulfilledBy && IsProductTerminal(e.fromConnector)))
+    if ((location && IsLocationRelation(e.fromConnector)) || (fulfilledBy && IsProductRelation(e.fromConnector)))
       dispatch(setEdgeVisibility(e.id, !e.hidden));
   });
 };

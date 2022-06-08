@@ -2,7 +2,7 @@ import { MutableRefObject } from "react";
 import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Node, Edge } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { OnNodeDelete } from "../../handlers/";
 
 /**

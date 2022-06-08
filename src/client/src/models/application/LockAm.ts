@@ -1,4 +1,4 @@
-import { EntityType } from "../enums/EntityType";
+import { EntityType } from "@mimirorg/modelbuilder-types";
 
 export interface LockAm {
   id: string;

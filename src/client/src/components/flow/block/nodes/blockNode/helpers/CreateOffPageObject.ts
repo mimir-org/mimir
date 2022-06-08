@@ -1,19 +1,8 @@
-import { IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOfTerminal } from "../../../../helpers/Connectors";
+import { IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOfRelation } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
-import {
-  Aspect,
-  CONNECTOR_KIND,
-  Connector,
-  ConnectorType,
-  EDGE_KIND,
-  Edge,
-  Node,
-  RelationType,
-  ConnectorVisibility,
-  NODE_KIND,
-} from "../../../../../../models";
+import { Aspect, Connector, ConnectorVisibility, Edge, Node, RelationType } from "@mimirorg/modelbuilder-types";
 
 export interface OffPageObject {
   offPageNode: Node;
@@ -40,7 +29,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   if (!sourceConnector || !sourceNode) return null;
 
-  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOfTerminal(c) && !IsInputTerminal(c));
+  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOfRelation(c) && !IsInputTerminal(c));
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
@@ -57,7 +46,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,
     parentNodeId: sourceNode.id,
-    kind: NODE_KIND,
+    kind: sourceNode.kind,
     isOffPageRequired: data.isRequired,
     isOffPageTarget: isTarget,
   } as Node;

@@ -1,9 +1,10 @@
-import { ConnectorType, TerminalType } from "../../../../../../../../../../models";
+import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
+import { TerminalType } from "../../../../../../../../../../models";
 import { FormatTypeId } from "../helpers/FormatTypeId";
 
 export const OnTypeClick = (
   type: TerminalType,
-  connectorType: ConnectorType,
+  connectorType: ConnectorDirection,
   expanded: boolean,
   selectedTypesIds: string[],
   setSelectedTypesIds: (categoryIds: string[]) => void

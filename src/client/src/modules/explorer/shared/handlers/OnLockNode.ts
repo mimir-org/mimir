@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { EntityType } from "../../../../models/enums/EntityType";
 import { Node } from "../../../../models";
 import { lockEntity, setLockedNode } from "../../../../redux/store/project/actions";
 import { IsUnsaved } from "../../../../helpers";
+import { EntityType } from "@mimirorg/modelbuilder-types";
 
 export const OnLockNode = (node: Node, isLockedBy: string, setLockingNode: (node: Node) => void, dispatch: Dispatch) => {
   setLockingNode(node);

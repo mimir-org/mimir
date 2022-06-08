@@ -4,7 +4,7 @@ import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { UpdateSiblingIndexOnEdgeDelete, UpdateSiblingIndexOnNodeDelete } from "../../../../../components/flow/helpers";
-import { IsPartOfTerminal } from "../../../../../components/flow/helpers/Connectors";
+import { IsPartOfRelation } from "../../../../../components/flow/helpers/Connectors";
 import { OnNodeDelete, OnEdgeDelete } from "../../../../../components/flow/handlers";
 
 /**
@@ -53,7 +53,7 @@ function HandleInspectorEdgeDelete(
   const edgesToDelete = [] as Edge[];
 
   if (!edge.isLocked) {
-    if (IsPartOfTerminal(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, nodes, edges, dispatch);
+    if (IsPartOfRelation(edge.fromConnector)) UpdateSiblingIndexOnEdgeDelete(edge, nodes, edges, dispatch);
     edgesToDelete.push(edge);
   }
 

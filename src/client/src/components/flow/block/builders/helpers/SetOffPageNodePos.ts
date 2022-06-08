@@ -1,5 +1,5 @@
 import { Size } from "../../../../../assets/size/Size";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { Position } from "../../../../../models/project";
 
 /**

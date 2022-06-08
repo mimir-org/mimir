@@ -1,5 +1,5 @@
+import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeLibCm } from "@mimirorg/typelibrary-types";
-import { Attribute } from "../../../models";
 
 const ConvertAttributeLibCmToAttribute = (atrributes: AttributeLibCm[]) => {
   return [] as Attribute[];

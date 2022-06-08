@@ -1,5 +1,5 @@
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
-import { Connector, Node } from "../../../../../models";
 import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers/Connectors";
 
 /**

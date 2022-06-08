@@ -1,7 +1,7 @@
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { IsAspectNode } from "../../../../../helpers/Aspects";
 import { GetMenuIcon } from "../helpers/GetMenuIcon";
 import { TerminalsButtonBox } from "./TerminalsMenuButton.styled";
-import { Connector, Node } from "../../../../../models";
 
 interface Props {
   node: Node;

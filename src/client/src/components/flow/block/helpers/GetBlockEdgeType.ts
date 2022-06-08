@@ -1,13 +1,13 @@
 import { IsOffPage } from "../../../../helpers/Aspects";
-import { Connector, Node } from "../../../../models";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { EDGE_TYPE, EdgeType } from "../../../../models/project";
-import { IsTransport, IsLocationTerminal, IsProductTerminal, IsPartOfTerminal } from "../../helpers/Connectors";
+import { IsTransport, IsLocationRelation, IsProductRelation, IsPartOfRelation } from "../../helpers/Connectors";
 
 const GetBlockEdgeType = (connector: Connector, sourceNode: Node, targetNode: Node): EdgeType => {
   if (IsOffPage(sourceNode) || IsOffPage(targetNode)) return EDGE_TYPE.BLOCK_OFFPAGE as EdgeType;
   if (IsTransport(connector)) return EDGE_TYPE.BLOCK_TRANSPORT as EdgeType;
-  if (IsLocationTerminal(connector) || IsProductTerminal(connector)) return EDGE_TYPE.BLOCK_RELATION as EdgeType;
-  if (IsPartOfTerminal(connector)) return EDGE_TYPE.BLOCK_PARTOF as EdgeType;
+  if (IsLocationRelation(connector) || IsProductRelation(connector)) return EDGE_TYPE.BLOCK_RELATION as EdgeType;
+  if (IsPartOfRelation(connector)) return EDGE_TYPE.BLOCK_PARTOF as EdgeType;
 };
 
 export default GetBlockEdgeType;

@@ -1,8 +1,8 @@
+import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { TerminalType } from "./TerminalType";
-import { ConnectorType } from "../../enums/ConnectorType";
 
 export interface TerminalTypeExtended extends TerminalType {
-  type: ConnectorType;
+  type: ConnectorDirection;
   terminalTypeId: string;
   number: number;
 }

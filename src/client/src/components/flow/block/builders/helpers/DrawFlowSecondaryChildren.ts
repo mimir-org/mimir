@@ -1,7 +1,7 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowSecondaryChildNode } from "..";
 import { IsFamily, IsDirectChild } from "../../../../../helpers/Family";
-import { Node, Edge } from "../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to draw all secondaryNode children nodes in BlockView.

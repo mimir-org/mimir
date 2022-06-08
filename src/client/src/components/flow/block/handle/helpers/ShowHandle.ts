@@ -1,10 +1,10 @@
-import { Connector } from "../../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 import {
   IsBidirectionalTerminal,
   IsInputVisible,
   IsOutputVisible,
   IsConnectorVisible,
-  IsPartOfTerminal,
+  IsPartOfRelation,
 } from "../../../helpers/Connectors";
 
 /**
@@ -16,7 +16,7 @@ import {
  */
 const ShowHandle = (connector: Connector, isInput: boolean, isProduct: boolean) => {
   if (IsBidirectionalTerminal(connector)) return isInput ? IsInputVisible(connector) : IsOutputVisible(connector);
-  if (isProduct) return IsConnectorVisible(connector) || IsPartOfTerminal(connector);
+  if (isProduct) return IsConnectorVisible(connector) || IsPartOfRelation(connector);
   return IsConnectorVisible(connector);
 };
 

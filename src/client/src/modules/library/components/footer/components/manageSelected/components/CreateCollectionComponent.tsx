@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Button } from "../../../../../../../compLibrary/buttons/standar";
+import { Button } from "../../../../../../../compLibrary/buttons/standard";
 import { Input } from "../../../../../../../compLibrary/input/text";
 import { CreateCollectionWrapper, CollectionNameInput } from "./CreateCollectionComponent.styled";
 import { OnCreateCollection } from "../handlers";

@@ -14,6 +14,7 @@ import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
+import { Project } from "../../models";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;
@@ -27,7 +28,7 @@ interface Props {
  */
 export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
   const type = MODULE_TYPE.INSPECTOR;
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector(selectors.projectSelector) as Project;
   const username = useAppSelector(selectors.usernameSelector);
   const animate = useParametricAppSelector(selectors.animatedModuleSelector, type);
   const activeTabIndex = useAppSelector(selectors.inspectorActiveTabSelector);

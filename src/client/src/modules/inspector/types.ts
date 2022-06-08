@@ -1,18 +1,6 @@
+import { Attribute, Connector, Transport, Simple, Interface, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { Action, Dispatch } from "redux";
-import {
-  Attribute,
-  AttributeType,
-  CombinedAttribute,
-  Connector,
-  ConnectorType,
-  Edge,
-  Interface,
-  Node,
-  Simple,
-  SimpleType,
-  TerminalTypeExtended,
-  Transport,
-} from "../../models";
+import { AttributeType, CombinedAttribute, Edge, Node, SimpleType, TerminalTypeExtended } from "../../models";
 
 /**
  * Union type of possible top elements chosen in inspector, i.e. what can be selected in by the inspector.
@@ -37,7 +25,7 @@ export type SimpleLikeItem = Simple | SimpleType;
 
 export type SelectedTerminalIdentifier = {
   id: string;
-  connectorType: ConnectorType;
+  connectorType: ConnectorDirection;
   index: number;
 };
 

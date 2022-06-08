@@ -1,6 +1,6 @@
 import { Connector, Edge, Node } from "../../../../models";
 import { IsOffPageEdge } from "../../../flow/block/helpers/IsOffPageEdge";
-import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../flow/helpers/Connectors";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";
 
 /**
@@ -25,9 +25,9 @@ const PopulateFilterLists = (
     const sourceConn = edge.fromConnector;
 
     if (IsTransport(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
-    else if (IsLocationTerminal(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
-    else if (IsProductTerminal(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
-    else if (IsPartOfTerminal(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);
+    else if (IsLocationRelation(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
+    else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
+    else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);
   });
 };
 

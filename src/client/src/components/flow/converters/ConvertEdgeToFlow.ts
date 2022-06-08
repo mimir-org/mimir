@@ -1,6 +1,6 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { IsOffPage } from "../../../helpers/Aspects";
-import { Edge, Node } from "../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EdgeType } from "../../../models/project";
 import { IsTransport } from "../helpers/Connectors";
 

@@ -1,5 +1,5 @@
+import { Node, Aspect } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode } from "react-flow-renderer";
-import { Aspect, Node } from "../../../models";
 
 /**
  * Component to convert a Mimir Node to a FlowNode that interacts with the Flow library.

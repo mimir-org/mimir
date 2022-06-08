@@ -1,3 +1,4 @@
-import { ConnectorType, TerminalType } from "../../../../../../../../../../models";
+import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
+import { TerminalType } from "../../../../../../../../../../models";
 
-export const FormatTypeId = (type: TerminalType, connectorType: ConnectorType) => `${type.id} ${connectorType}`;
+export const FormatTypeId = (type: TerminalType, connectorType: ConnectorDirection) => `${type.id} ${connectorType}`;

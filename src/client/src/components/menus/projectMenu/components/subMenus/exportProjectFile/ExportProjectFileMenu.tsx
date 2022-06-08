@@ -1,20 +1,21 @@
 import * as selectors from "./helpers/selectors";
-import { Button } from "../../../../../../compLibrary/buttons/standar";
+import { Button } from "../../../../../../compLibrary/buttons/standard";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { ExportProjectIcon } from "../../../../../../assets/icons/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
-import { ModuleDescription } from "../../../../../../models";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { ChangeEvent, useState } from "react";
 import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { Project } from "../../../../../../models";
 
 export const ExportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector(selectors.projectSelector) as Project;
   const parsers = useAppSelector(selectors.commonStateParsersSelector);
   const [parser, setParser] = useState(parsers?.[0]);
   const [fileName, setFileName] = useState("");

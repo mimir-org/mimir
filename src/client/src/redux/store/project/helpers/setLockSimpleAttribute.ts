@@ -7,7 +7,7 @@ interface SetLockSimpleAttribute {
   nodeId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: string;
+  isLockedStatusDate: Date;
 }
 
 export const setLockSimpleAttribute = (lock: SetLockSimpleAttribute, state: Types.ProjectState) => {

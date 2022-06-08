@@ -1,6 +1,6 @@
 import Moment from "react-moment";
 import { changeSelectedProject } from "../../../../../../../redux/store/project/actions";
-import { ProjectItemCm } from "../../../../../../../models";
+import { Project, ProjectItemCm } from "../../../../../../../models";
 import { ProjectDataBox } from "./ProjectData.styled";
 import { Dispatch } from "redux";
 import { projectSelector, useAppSelector } from "../../../../../../../redux/store";
@@ -18,7 +18,7 @@ interface Props {
 
 export const ProjectData = ({ projects, projectId, projectName, projectVersion, projectOwner, updated, dispatch }: Props) => {
   const selected = projects.find((x) => x.id === projectId).selected;
-  const currentProject = useAppSelector(projectSelector);
+  const currentProject = useAppSelector(projectSelector) as Project;
 
   const handleClick = (e) => {
     dispatch(changeSelectedProject(projectId));

@@ -1,6 +1,7 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, EdgeRemoveChange, EdgeSelectionChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Edge, Node, Project } from "../../../../models";
+import { Project } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { removeSelectedNode, setSelectedEdge } from "../../../../redux/store/project/actions";
 import { OnEdgeDelete } from "../../handlers";
 

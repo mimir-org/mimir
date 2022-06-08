@@ -1,4 +1,4 @@
-import { IsPartOfTerminal } from "../../../../components/flow/helpers/Connectors";
+import { IsPartOfRelation } from "../../../../components/flow/helpers/Connectors";
 import { IsFamily } from "../../../../helpers/Family";
 import { Edge, Node } from "../../../../models";
 
@@ -10,7 +10,7 @@ const TraverseTree = (edgeList: Edge[], nodeList: Node[], parentNode: Node, elem
       const node = nodeList.find((x) => x.id === edge.toNodeId);
       const connector = node?.connectors?.find((x) => x.id === edge?.toConnectorId);
 
-      if (IsFamily(node, parentNode) && IsPartOfTerminal(connector)) {
+      if (IsFamily(node, parentNode) && IsPartOfRelation(connector)) {
         children.push(node);
         elements.push(node);
       }

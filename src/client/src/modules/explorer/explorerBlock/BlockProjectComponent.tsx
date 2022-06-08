@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Node } from "../../../models";
+import { Node, Project } from "../../../models";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
@@ -24,7 +24,7 @@ export const BlockProjectComponent = () => {
   const projectState = useAppSelector(selectors.projectStateSelector);
   const username = useAppSelector(selectors.usernameSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
-  const project = projectState?.project;
+  const project = projectState?.project as Project;
   const nodes = project?.nodes?.filter((n) => !IsOffPage(n));
   const selectedBlockNode = nodes?.find((n) => n.blockSelected);
 

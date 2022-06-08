@@ -1,8 +1,9 @@
-import { Connector, Node } from "../../../../../../models";
+import { Node } from "../../../../../../models";
 import { createConnectedOffPageNode } from "../../../../../../redux/store/project/actions";
 import { OffPageData, CreateOffPageObject } from "./CreateOffPageObject";
 import { Position } from "../../../../../../models/project";
 import { Dispatch } from "redux";
+import { Connector } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to create an OffPageNode that is connected.

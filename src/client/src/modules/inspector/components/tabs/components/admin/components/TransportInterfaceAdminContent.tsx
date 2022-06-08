@@ -4,13 +4,14 @@ import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../assets/font";
-import { Edge, EnumBase, Interface, Project, Transport } from "../../../../../../../models";
+import { Edge, EnumBase, Project, Transport } from "../../../../../../../models";
 import { changeInterfaceValue, changeTransportValue } from "../../../../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../../../../helpers";
 import { GetReferenceDesignationEdge } from "../../../../../../../helpers/GetReferenceDesignation";
 import { DropDownItem } from "../../../../../../../compLibrary/dropdown/inspector/InspectorDropdown";
+import { Interface } from "@mimirorg/modelbuilder-types";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 

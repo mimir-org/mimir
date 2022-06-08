@@ -1,4 +1,4 @@
-import { Attribute, Connector, ConnectorType, Transport, TRANSPORT_KIND } from "../../../models";
+import { Attribute, Connector, ConnectorDirection, Transport } from "@mimirorg/modelbuilder-types";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
@@ -14,26 +14,26 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
   const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Connector;
 
   inputTerminal.id = CreateId();
-  inputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorType.Bidirectional : ConnectorType.Input;
+  inputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorDirection.Bidirectional : ConnectorDirection.Input;
   inputTerminal.nodeId = null;
 
   outputTerminal.id = CreateId();
-  outputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorType.Bidirectional : ConnectorType.Output;
+  outputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorDirection.Bidirectional : ConnectorDirection.Output;
   outputTerminal.nodeId = null;
 
-  if (inputTerminal?.attributes) {
-    inputTerminal.attributes.forEach((x) => {
-      x.id = CreateId();
-      x.terminalId = inputTerminal.id;
-    });
-  }
+  // if (inputTerminal?.attributes) {
+  //   inputTerminal.attributes.forEach((x) => {
+  //     x.id = CreateId();
+  //     x.terminalId = inputTerminal.id;
+  //   });
+  // }
 
-  if (outputTerminal?.attributes) {
-    outputTerminal.attributes.forEach((x) => {
-      x.id = CreateId();
-      x.terminalId = outputTerminal.id;
-    });
-  }
+  // if (outputTerminal?.attributes) {
+  //   outputTerminal.attributes.forEach((x) => {
+  //     x.id = CreateId();
+  //     x.terminalId = outputTerminal.id;
+  //   });
+  // }
 
   return {
     id: transportId,
@@ -55,7 +55,7 @@ const ConvertToTransport = (sourceConn: Connector, library: LibraryState) => {
     createdBy: transportType.createdBy,
     created: transportType.created,
     libraryTypeId: transportType.id,
-    kind: TRANSPORT_KIND,
+    kind: transportType.kind,
   } as Transport;
 };
 

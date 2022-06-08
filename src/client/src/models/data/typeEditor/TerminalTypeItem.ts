@@ -1,10 +1,10 @@
-import { ConnectorType } from "../../enums/ConnectorType";
+import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
 
 export interface TerminalTypeItem {
   terminalId: string;
   terminalTypeId: string;
   selected: boolean;
-  connectorType: ConnectorType;
+  connectorType: ConnectorDirection;
   number: number;
   categoryId: string;
 }

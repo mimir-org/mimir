@@ -1,11 +1,12 @@
 import { Dispatch } from "redux";
-import { Aspect, LibraryTab } from "../../../../models";
+import { LibraryTab } from "../../../../models";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { LibHeader } from "./ModuleHeader.styled";
 import { ModuleTabs } from "./components/ModuleTabs";
 import { SearchArea } from "./components/SearchArea";
 import { FilterBoxes } from "./components/FilterBoxes";
 import { ExpandButton } from "./components/ExpandButton";
+import { Aspect } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   libOpen: boolean;

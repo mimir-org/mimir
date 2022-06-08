@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../helpers/Aspects";
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { deleteEdge } from "../../../../redux/store/project/actions";
 import { IsTransport } from "../../helpers/Connectors";
 import { HandleConnectedOffPageDelete } from "./HandleConnectedOffPageDelete";

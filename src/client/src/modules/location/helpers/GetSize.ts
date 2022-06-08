@@ -1,5 +1,5 @@
+import { Attribute } from "@mimirorg/modelbuilder-types";
 import { PixelCalculator } from ".";
-import { Attribute } from "../../../models";
 
 export interface Size {
   width: number;

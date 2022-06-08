@@ -1,6 +1,6 @@
 import { applyEdgeChanges, EdgeChange, Edge as FlowEdge, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { OnEdgeDelete } from "../../handlers/";
 

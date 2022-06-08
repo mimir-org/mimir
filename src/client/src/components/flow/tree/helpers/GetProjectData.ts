@@ -1,7 +1,8 @@
 import { CreateId } from "../../helpers";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { IsFamily } from "../../../../helpers/Family";
-import { ConnectorType, Edge, Node, Project, RelationType } from "../../../../models";
+import { Project } from "../../../../models";
+import { ConnectorDirection, RelationType, Edge, Node } from "@mimirorg/modelbuilder-types";
 
 const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project, subProject: Project): [Node[], Edge[]] => {
   try {
@@ -15,7 +16,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
     if (!targetNode) return [[], []];
 
     const targetnodeConnector = targetNode.connectors.find(
-      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
+      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorDirection.Output
     );
 
     if (!targetnodeConnector) return [[], []];
@@ -26,7 +27,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
 
     // Find the connector that should do a remap
     const rootNodeConnector = rootNode.connectors.find(
-      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
+      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorDirection.Output
     );
 
     // Find if project has any nodes from this project before

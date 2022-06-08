@@ -1,4 +1,4 @@
-import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
+import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import { IsBlockView } from "../../../helpers";
 import { Edge, Node, Project } from "../../../models";
 
@@ -29,7 +29,7 @@ function MapEdges(edges: Edge[], oldEdges: Edge[], reMappedIds: { [id: string]: 
 
   if (!IsBlockView()) {
     edges.forEach((edge) => {
-      if (!IsPartOfTerminal(edge.fromConnector)) edge.hidden = true;
+      if (!IsPartOfRelation(edge.fromConnector)) edge.hidden = true;
     });
   }
 }

@@ -1,7 +1,7 @@
+import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
 import { useState } from "react";
 import { CollapseIcon, ExpandIcon } from "../../../assets/icons/chevron";
 import { DropdownContainer, DropdownHeader, DropdownList } from "./DirectionalDropdown.styled";
-import { ConnectorType } from "../../../models";
 
 interface Props {
   value: number;
@@ -16,7 +16,7 @@ export const DirectionalDropdown = ({ value, onChange }: Props) => {
     <DropdownContainer>
       <label htmlFor="direction" />
       <DropdownHeader onClick={() => setIsListOpen(!isListOpen)}>
-        <p>{ConnectorType[value]}</p>
+        <p>{ConnectorDirection[value]}</p>
         <img
           src={isListOpen ? ExpandIcon : CollapseIcon}
           alt="expand-icon"
@@ -27,7 +27,7 @@ export const DirectionalDropdown = ({ value, onChange }: Props) => {
 
       {isListOpen && (
         <DropdownList>
-          {Object.keys(ConnectorType)
+          {Object.keys(ConnectorDirection)
             .filter(stringIsNumber)
             .map((item) => {
               return (
@@ -39,7 +39,7 @@ export const DirectionalDropdown = ({ value, onChange }: Props) => {
                     onChange(Number(item));
                   }}
                 >
-                  {ConnectorType[item]}
+                  {ConnectorDirection[item]}
                 </div>
               );
             })}

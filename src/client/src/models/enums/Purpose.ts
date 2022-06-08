@@ -1,4 +1,4 @@
-import { Discipline } from "./Discipline";
+import { Discipline } from "@mimirorg/modelbuilder-types";
 
 export interface Purpose {
   id: string;

@@ -5,8 +5,9 @@ import { Size } from "../../assets/size/Size";
 import { MODULE_TYPE } from "../../models/project";
 import { ModuleHeader } from "./components/header/ModuleHeader";
 import { ModuleBody } from "./components/body/ModuleBody";
-import { LibraryTab, CollectionsActions, Aspect } from "../../models";
+import { LibraryTab, CollectionsActions, Node } from "../../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { Aspect } from "@mimirorg/modelbuilder-types";
 import {
   useAppSelector,
   useParametricAppSelector,
@@ -35,7 +36,7 @@ export const LibraryModule = ({ dispatch }: Props) => {
   const lib = MODULE_TYPE.LIBRARY;
   const animate = useParametricAppSelector(animatedModuleSelector, lib);
   const libOpen = useAppSelector(libOpenSelector);
-  const selectedNode = nodes?.find((n) => n.selected);
+  const selectedNode = nodes?.find((n) => n.selected) as Node;
 
   const startLib = libOpen ? Size.MODULE_CLOSED : Size.MODULE_OPEN;
   const stopLib = libOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;

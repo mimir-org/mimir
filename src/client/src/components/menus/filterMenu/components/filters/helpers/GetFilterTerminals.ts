@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
-import { Connector, Edge, Node } from "../../../../../../models";
 import { IsTransport, IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
 
 /**

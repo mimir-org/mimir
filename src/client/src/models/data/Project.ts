@@ -1,5 +1,4 @@
-import { Edge } from "./Edge";
-import { Node } from "./Node";
+import { Edge, Node } from "@mimirorg/modelbuilder-types";
 
 export interface Project {
   id: string;

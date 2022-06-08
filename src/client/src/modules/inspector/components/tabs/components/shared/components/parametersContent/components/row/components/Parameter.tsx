@@ -5,7 +5,7 @@ import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { ParameterButton, ParameterLockSpinner } from "../../../styled/ParameterButton";
 import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
 import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
-import { Attribute, CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
+import { CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
 import { AttributeLikeItem } from "../../../../../../../../../types";
@@ -14,6 +14,7 @@ import { FontSize } from "../../../../../../../../../../../assets/font";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
+import { Attribute } from "@mimirorg/modelbuilder-types";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 

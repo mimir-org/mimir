@@ -2,13 +2,14 @@ import { GetViewport } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { EdgeEvent } from "../../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
-import { Connector, Node, Edge } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { IsOutputTerminal, IsOutputVisible, IsTransport } from "../../helpers/Connectors";
 import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Size } from "../../../../assets/size/Size";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
 import { TextResources } from "../../../../assets/text/TextResources";
+import { Connector } from "@mimirorg/modelbuilder-types";
 
 /**
  * Hook that runs when a user drags a connection from a terminal and releases the mouse button in BlockView.

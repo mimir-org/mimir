@@ -7,9 +7,10 @@ import { HandleComponent } from "../../handle";
 import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
-import { Connector, Node } from "../../../../../models";
+import { Project } from "../../../../../models";
 import { Color } from "../../../../../assets/color/Color";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component for an OffPageNode in BlockView.
@@ -18,7 +19,7 @@ import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
  */
 const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector(selectors.projectSelector) as Project;
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);

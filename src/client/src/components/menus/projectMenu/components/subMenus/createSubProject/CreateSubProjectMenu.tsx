@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Button } from "../../../../../../compLibrary/buttons/standar";
+import { Button } from "../../../../../../compLibrary/buttons/standard";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CreateSubProjectIcon } from "../../../../../../assets/icons/project";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";

@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Connector } from "../../../models";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
@@ -24,7 +24,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isTreeView = flowView === VIEW_TYPE.TREEVIEW;
   const isSplitView = secondaryNode != null;
-  const nodes = useAppSelector(selectors.nodesSelector);
+  const nodes = useAppSelector(selectors.nodesSelector) as Node[];
   const edges = useAppSelector(selectors.edgesSelector);
 
   const transportConnectors = [] as Connector[];

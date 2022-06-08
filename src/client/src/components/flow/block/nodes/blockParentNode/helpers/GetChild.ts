@@ -1,5 +1,5 @@
 import red from "../../../../../../redux/store/index";
-import { IsPartOfTerminal } from "../../../../helpers/Connectors";
+import { IsPartOfRelation } from "../../../../helpers/Connectors";
 
 /**
  * Function to find a node's childNode
@@ -12,7 +12,7 @@ export const GetChild = (nodeId: string) => {
   const edges = red.store.getState().projectState.project.edges;
   const nodes = red.store.getState().projectState.project.nodes;
 
-  const childEdge = edges.find((e) => e.fromNodeId === nodeId && IsPartOfTerminal(e.toConnector));
+  const childEdge = edges.find((e) => e.fromNodeId === nodeId && IsPartOfRelation(e.toConnector));
   const childNode = nodes.find((n) => n.id === childEdge?.toNodeId);
 
   return childNode?.id ?? nodeId;

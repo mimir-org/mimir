@@ -1,5 +1,5 @@
+import { Edge, Node } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode } from "react-flow-renderer";
-import { Node, Edge } from "../../../../models";
 import { BuildFlowParentNode, BuildFlowSecondaryParentNode } from ".";
 import { DrawFlowChildNodes, DrawFlowSecondaryChildren } from "./helpers";
 

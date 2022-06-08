@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../../../../../helpers";
 import { EntityType } from "../../../../../../../../../models/enums/EntityType";
-import { Attribute } from "../../../../../../../../../models";
 import { InspectorElement } from "../../../../../../../types";
 import { lockEntity, setLockedAttribute } from "../../../../../../../../../redux/store/project/actions";
+import { Attribute } from "@mimirorg/modelbuilder-types";
 
 export const OnLockParameter = (
   inspectorParentElement: InspectorElement,

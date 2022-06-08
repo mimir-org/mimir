@@ -1,12 +1,12 @@
 import { Edge } from "../../../../../../models";
-import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../../../flow/helpers/Connectors";
 
 export const AllRelationsChecked = (edges: Edge[]) => {
-  return !edges.some((e) => e.hidden && (IsLocationTerminal(e.fromConnector) || IsProductTerminal(e.fromConnector)));
+  return !edges.some((e) => e.hidden && (IsLocationRelation(e.fromConnector) || IsProductRelation(e.fromConnector)));
 };
 
 export const AllPartOfChecked = (edges: Edge[]) => {
-  return !edges.some((e) => e.hidden && IsPartOfTerminal(e.fromConnector));
+  return !edges.some((e) => e.hidden && IsPartOfRelation(e.fromConnector));
 };
 
 export const AllTransportsChecked = (edges: Edge[]) => {

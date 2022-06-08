@@ -1,4 +1,4 @@
-import { Node } from "../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { MODULE_TYPE } from "../../models/project";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";

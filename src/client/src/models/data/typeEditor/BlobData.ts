@@ -1,4 +1,4 @@
-import { Discipline } from "../../enums/Discipline";
+import { Discipline } from "@mimirorg/modelbuilder-types";
 
 export interface BlobData {
   id: string;

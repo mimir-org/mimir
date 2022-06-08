@@ -1,10 +1,11 @@
-import { CombinedAttributeFilter, ModuleDescription } from "../../../models";
+import { CombinedAttributeFilter } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 import {
   CommonState,
   FetchCollaboratorPartnersFinished,
   FetchCombinedAttributeFilterFinished,
-  FetchParsersFinished
+  FetchParsersFinished,
 } from "./types";
 
 const initialCommonState: CommonState = {

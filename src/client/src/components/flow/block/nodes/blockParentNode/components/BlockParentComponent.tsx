@@ -1,4 +1,3 @@
-import { Connector, Node } from "../../../../../../models";
 import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
@@ -10,6 +9,7 @@ import { useAppDispatch } from "../../../../../../redux/store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

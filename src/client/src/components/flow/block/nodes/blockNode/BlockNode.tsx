@@ -3,7 +3,7 @@ import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
-import { AspectColorType, Node } from "../../../../../models";
+import { AspectColorType, Project } from "../../../../../models";
 import { HandleComponent } from "../../handle";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
@@ -16,6 +16,7 @@ import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Terminals } from "../blockParentNode/BlockParentNode";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component for a child Node in BlockView.
@@ -29,7 +30,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector(selectors.projectSelector) as Project;
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);

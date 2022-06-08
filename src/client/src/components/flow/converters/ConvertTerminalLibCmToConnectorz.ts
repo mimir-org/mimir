@@ -1,7 +1,8 @@
-import { Connector, ConnectorType, ConnectorVisibility, RelationType } from "../../../models";
+import { Connector } from "../../../models";
 import { CreateId } from "../helpers";
 import { ConvertAttributeLibCmToAttribute } from ".";
 import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
+import { ConnectorVisibility, RelationType } from "@mimirorg/modelbuilder-types";
 
 const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
@@ -17,8 +18,7 @@ const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nod
 export default ConvertTerminalLibCmToConnector;
 
 function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
-  const direction = ConvertConnectorType(item.connectorDirection);
-  const connectorVisibility = SetConnectorVisibility(direction);
+  const connectorVisibility = SetConnectorVisibility(item.connectorDirection);
   const attributes = ConvertAttributeLibCmToAttribute(item.terminal.attributes);
 
   return {
@@ -26,7 +26,7 @@ function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
     iri: item.terminal.iri,
     domain: "",
     name: item.terminal.name,
-    type: direction,
+    type: item.connectorDirection,
     semanticReference: item.terminal.contentReferences[0], // TODO: fix list
     nodeId,
     nodeIri: "",
@@ -42,20 +42,13 @@ function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
   } as Connector;
 }
 
-function ConvertConnectorType(connectorDirection: ConnectorDirection) {
-  // if (connectorDirection === ConnectorDirection.Input) return ConnectorType.Input;
-  // if (connectorDirection === ConnectorDirection.Output) return ConnectorType.Output;
-  // if (connectorDirection === ConnectorDirection.Bidirectional) return ConnectorType.Bidirectional;
-  return ConnectorType.Input; // TODO: fix
-}
-
 /**
  * Helper function to initialize the correct visibility status for a Connector.
  * @param direction
  * @returns the ConnectorVisibility status.
  */
-function SetConnectorVisibility(direction: ConnectorType) {
-  if (direction === ConnectorType.Input) return ConnectorVisibility.InputVisible;
-  if (direction === ConnectorType.Output) return ConnectorVisibility.OutputVisible;
+function SetConnectorVisibility(direction: ConnectorDirection) {
+  if (direction === ConnectorDirection.Input) return ConnectorVisibility.InputVisible;
+  if (direction === ConnectorDirection.Output) return ConnectorVisibility.OutputVisible;
   return ConnectorVisibility.None;
 }

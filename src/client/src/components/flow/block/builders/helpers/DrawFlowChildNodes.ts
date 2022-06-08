@@ -2,8 +2,8 @@ import { Node as FlowNode } from "react-flow-renderer";
 import { BuildFlowChildNode } from "..";
 import { IsOffPage } from "../../../../../helpers/Aspects";
 import { IsFamily } from "../../../../../helpers/Family";
-import { Edge, Node } from "../../../../../models";
-import { IsInputTerminal, IsOutputTerminal, IsPartOfTerminal, IsTransport } from "../../../helpers/Connectors";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
+import { IsInputTerminal, IsOutputTerminal, IsPartOfRelation, IsTransport } from "../../../helpers/Connectors";
 
 /**
  * Component to draw all children FlowNodes in BlockView.
@@ -38,9 +38,9 @@ const DrawFlowChildNodes = (
 };
 
 function ValidateEdge(edge: Edge, selectedBlockNode: Node) {
-  if (IsOffPage(edge.toNode)) return IsPartOfTerminal(edge.toConnector);
+  if (IsOffPage(edge.toNode)) return IsPartOfRelation(edge.toConnector);
   return (
-    IsPartOfTerminal(edge.toConnector) && IsFamily(selectedBlockNode, edge.toNode) && edge.fromNodeId === selectedBlockNode.id
+    IsPartOfRelation(edge.toConnector) && IsFamily(selectedBlockNode, edge.toNode) && edge.fromNodeId === selectedBlockNode.id
   );
 }
 

@@ -1,10 +1,11 @@
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
-import { Connector, Node, Edge } from "../../../../../models";
+import { Node, Edge } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
-import { IsLocationTerminal, IsProductTerminal } from "../../../helpers/Connectors";
+import { IsLocationRelation, IsProductRelation } from "../../../helpers/Connectors";
 
 /**
  * Function to check if a connection/edge in BlockView is valid.
@@ -40,7 +41,7 @@ function IsRelationNode(node: Node) {
 }
 
 function IsRelationTerminal(connector: Connector) {
-  return IsLocationTerminal(connector) || IsProductTerminal(connector);
+  return IsLocationRelation(connector) || IsProductRelation(connector);
 }
 
 function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {
@@ -49,7 +50,7 @@ function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {
 }
 
 function ValidateTerminalType(sourceTerminal: Connector, targetTerminal: Connector) {
-  return sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
+  return true; // sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
 }
 
 function ValidateTransport(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {

@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
-import { Node, Project } from "../../../../models";
+import { Project } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { OnNodeDelete } from "../../handlers/";
 import { removeSelectedEdge, removeSelectedNode, setSelectedNode } from "../../../../redux/store/project/actions";
 import { ValidateNodePosition } from "./helpers/ValidateNodePosition";
