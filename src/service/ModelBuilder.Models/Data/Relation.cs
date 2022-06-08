@@ -1,11 +1,9 @@
 using System;
 using Mb.Models.Enums;
-using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
 {
-    [TSFlat]
     public class Relation : Connector, IEquatable<Relation>
     {
         public RelationType RelationType { get; set; }
