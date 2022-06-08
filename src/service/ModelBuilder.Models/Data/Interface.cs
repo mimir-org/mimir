@@ -36,7 +36,7 @@ namespace Mb.Models.Data
         public DateTime? Created { get; set; }
         public string CreatedBy { get; set; }
         public string LibraryTypeId { get; set; }
-        
+
         [JsonIgnore]
         [TSExclude]
         public ICollection<Edge> Edges { get; set; }
