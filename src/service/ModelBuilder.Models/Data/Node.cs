@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Extensions;
 using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
@@ -93,6 +94,28 @@ namespace Mb.Models.Data
         public int? Width { get; set; }
 
         public int? Height { get; set; }
+
+        // Only for client
+        [NotMapped]
+        public string ParentNodeId { get; set; }
+
+        [NotMapped]
+        public bool? Selected { get; set; }
+
+        [NotMapped]
+        public bool? BlockSelected { get; set; }
+
+        [NotMapped]
+        public bool? Hidden { get; set; }
+
+        [NotMapped]
+        public bool? BlockHidden { get; set; }
+
+        [NotMapped]
+        public bool? IsOffPageTarget { get; set; }
+
+        [NotMapped]
+        public bool? IsOffPageRequired { get; set; }
 
         #endregion
 
