@@ -12,7 +12,7 @@ export const GetChild = (nodeId: string) => {
   const edges = red.store.getState().projectState.project.edges;
   const nodes = red.store.getState().projectState.project.nodes;
 
-  const childEdge = edges.find((e) => e.fromNodeId === nodeId && IsPartOfRelation(e.toConnector));
+  const childEdge = edges.find((e) => e.fromNodeId === nodeId); //&& IsPartOfRelation(e.toConnector)); // TODO: fix
   const childNode = nodes.find((n) => n.id === childEdge?.toNodeId);
 
   return childNode?.id ?? nodeId;

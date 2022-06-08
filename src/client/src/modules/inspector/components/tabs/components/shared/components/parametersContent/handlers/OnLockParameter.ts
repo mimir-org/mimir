@@ -1,9 +1,8 @@
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../../../../../helpers";
-import { EntityType } from "../../../../../../../../../models/enums/EntityType";
 import { InspectorElement } from "../../../../../../../types";
 import { lockEntity, setLockedAttribute } from "../../../../../../../../../redux/store/project/actions";
-import { Attribute } from "@mimirorg/modelbuilder-types";
+import { Attribute, EntityType } from "@mimirorg/modelbuilder-types";
 
 export const OnLockParameter = (
   inspectorParentElement: InspectorElement,
@@ -39,7 +38,7 @@ const handleLockOffline = (
       projectId: projectId,
       isLocked: isLocked,
       isLockedStatusBy: isLockedBy,
-      isLockedStatusDate: new Date().toISOString(),
+      isLockedStatusDate: new Date(), //.toISOString(),
       type: EntityType.Attribute,
     })
   );

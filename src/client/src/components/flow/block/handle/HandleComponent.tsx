@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { Project } from "../../../../models";
 import { useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleContainer } from "./HandleComponent.styled";
 import { BlockNodeTerminal } from "./components/BlockNodeTerminal";
 import { ShowHandle } from "./helpers";
 import { IsProduct } from "../../../../helpers/Aspects";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Project, Node, Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

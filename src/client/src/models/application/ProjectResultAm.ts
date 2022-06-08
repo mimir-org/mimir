@@ -1,4 +1,4 @@
-import { Project } from "../data/Project";
+import { Project } from "@mimirorg/modelbuilder-types";
 
 export interface ProjectResultAm {
   project: Project;

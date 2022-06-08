@@ -1,6 +1,6 @@
 import { MutableRefObject } from "react";
 import { Action } from "redux";
-import { Project } from "../../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { changeInspectorTab } from "../../redux/inspectorSlice";
 import { ShouldShowTabs } from "./helpers";
 import { AttributeLikeItem, InspectorElement, SimpleLikeItem, TerminalLikeItem } from "../../types";

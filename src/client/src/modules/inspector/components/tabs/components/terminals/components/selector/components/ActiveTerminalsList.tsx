@@ -65,7 +65,7 @@ export const ActiveTerminalsList = ({
         return (
           <TerminalsListElementWrapper key={category.id}>
             <TerminalsCategoryListElement
-              selected={selectedTerminal?.terminalCategory === category.id}
+              selected={false} // selectedTerminal?.terminalCategory === category.id} // TODO: fix
               radius={0}
               onClick={() => OnCategoryClick(isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)}
               color={i % 2 ? undefined : Color.LAVANDER_WEB_LIST}

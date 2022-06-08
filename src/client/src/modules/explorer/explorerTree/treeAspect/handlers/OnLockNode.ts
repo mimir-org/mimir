@@ -13,7 +13,7 @@ export const OnLockNode = (node: Node, isLockedBy: string, setLockingNode: (node
         projectId: node.projectId,
         isLocked: !node.isLocked,
         isLockedStatusBy: isLockedBy,
-        isLockedStatusDate: new Date().toISOString(),
+        isLockedStatusDate: new Date(), //.toISOString(),
         type: EntityType.Node,
       })
     );

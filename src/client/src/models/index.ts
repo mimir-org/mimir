@@ -12,8 +12,6 @@ export { LibraryFilter } from "./enums/LibraryFilter";
 export { AspectColorType } from "./enums/AspectColorType";
 export { CollectionsActions } from "./enums/CollectionsActions";
 
-export type { Project } from "./data/Project";
-
 export type { CreateLibraryType } from "./data/CreateLibraryType";
 export type { PredefinedAttribute } from "./data/PredefinedAttribute";
 

@@ -1,11 +1,5 @@
 import { Connector } from "@mimirorg/modelbuilder-types";
-import {
-  IsBidirectionalTerminal,
-  IsInputVisible,
-  IsOutputVisible,
-  IsConnectorVisible,
-  IsPartOfRelation,
-} from "../../../helpers/Connectors";
+import { IsBidirectionalTerminal, IsInputVisible, IsOutputVisible, IsConnectorVisible } from "../../../helpers/Connectors";
 
 /**
  * Component to determine if a handle/connector should be displayed in BlockView.
@@ -16,7 +10,7 @@ import {
  */
 const ShowHandle = (connector: Connector, isInput: boolean, isProduct: boolean) => {
   if (IsBidirectionalTerminal(connector)) return isInput ? IsInputVisible(connector) : IsOutputVisible(connector);
-  if (isProduct) return IsConnectorVisible(connector) || IsPartOfRelation(connector);
+  // if (isProduct) return IsConnectorVisible(connector) || IsPartOfRelation(connector); // TODO: fix
   return IsConnectorVisible(connector);
 };
 

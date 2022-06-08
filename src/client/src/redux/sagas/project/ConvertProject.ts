@@ -1,5 +1,5 @@
-import { Project } from "../../../models/";
 import {
+  Project,
   Edge,
   Node,
   Attribute,

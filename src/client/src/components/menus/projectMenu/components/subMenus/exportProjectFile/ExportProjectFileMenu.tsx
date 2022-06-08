@@ -11,11 +11,10 @@ import { Input, Label } from "../../../../../../compLibrary/input/text";
 import { OnReturnClick, OnExportProjectFileClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 import { ModuleDescription } from "@mimirorg/modelbuilder-types";
-import { Project } from "../../../../../../models";
 
 export const ExportProjectFileMenu = () => {
   const dispatch = useAppDispatch();
-  const project = useAppSelector(selectors.projectSelector) as Project;
+  const project = useAppSelector(selectors.projectSelector);
   const parsers = useAppSelector(selectors.commonStateParsersSelector);
   const [parser, setParser] = useState(parsers?.[0]);
   const [fileName, setFileName] = useState("");

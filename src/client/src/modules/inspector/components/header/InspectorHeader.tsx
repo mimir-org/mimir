@@ -1,14 +1,13 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { InspectorTabs } from "../tabs/InspectorTabs";
 import { MutableRefObject } from "react";
-import { Project } from "../../../../models";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
 import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
-import { Aspect } from "@mimirorg/modelbuilder-types";
+import { Aspect, Project } from "@mimirorg/modelbuilder-types";
 import {
   AttributeLikeItem,
   ChangeInspectorHeightAction,

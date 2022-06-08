@@ -1,13 +1,13 @@
 import { Edge, Node } from "@mimirorg/modelbuilder-types";
 import { IsOffPage } from "../../../../helpers/Aspects";
-import { IsPartOfRelation, IsTransport } from "../../helpers/Connectors";
+import { IsPartOfRelation, IsTerminal } from "../../helpers/Connectors";
 import { IsEdgeConnectedToNode } from "../../helpers/IsEdgeConnectedToNode";
 
 export function GetOffPageTransportEdge(nodeId: string, parentNodeId: string, edges: Edge[]) {
   return edges.find(
     (e) =>
-      (e.fromConnector.nodeId === parentNodeId && IsTransport(e.fromConnector) && e.toConnector.nodeId === nodeId) ||
-      (e.toConnector.nodeId === parentNodeId && IsTransport(e.toConnector) && e.fromConnector.nodeId === nodeId)
+      (e.fromConnector.nodeId === parentNodeId && IsTerminal(e.fromConnector) && e.toConnector.nodeId === nodeId) ||
+      (e.toConnector.nodeId === parentNodeId && IsTerminal(e.toConnector) && e.fromConnector.nodeId === nodeId)
   );
 }
 

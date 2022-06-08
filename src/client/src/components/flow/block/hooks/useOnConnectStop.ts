@@ -4,7 +4,7 @@ import { EdgeEvent } from "../../../../models/project";
 import { LoadEventData, SaveEventData } from "../../../../redux/store/localStorage";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsOffPage } from "../../../../helpers/Aspects";
-import { IsOutputTerminal, IsOutputVisible, IsTransport } from "../../helpers/Connectors";
+import { IsOutputTerminal, IsOutputVisible, IsTerminal } from "../../helpers/Connectors";
 import { CreateRequiredOffPageNode } from "../nodes/blockNode/helpers/CreateRequiredOffPageNode";
 import { Size } from "../../../../assets/size/Size";
 import { setValidation } from "../../../../redux/store/validation/validationSlice";
@@ -40,12 +40,12 @@ const useOnConnectStop = (
   const sourceNode = nodes.find((n) => n.id === edgeEvent.nodeId);
   const sourceConn = sourceNode?.connectors.find((conn) => conn.id === edgeEvent.sourceId);
 
-  if (!IsTransport(sourceConn) || IsOffPage(sourceNode)) return;
+  if (!IsTerminal(sourceConn) || IsOffPage(sourceNode)) return;
 
   const existingEdge = edges.find(
     (edge) =>
-      (edge.fromConnectorId === sourceConn.id && IsTransport(edge.fromConnector)) ||
-      (edge.toConnectorId === sourceConn.id && IsTransport(edge.toConnector))
+      (edge.fromConnectorId === sourceConn.id && IsTerminal(edge.fromConnector)) ||
+      (edge.toConnectorId === sourceConn.id && IsTerminal(edge.toConnector))
   );
 
   if (existingEdge) {

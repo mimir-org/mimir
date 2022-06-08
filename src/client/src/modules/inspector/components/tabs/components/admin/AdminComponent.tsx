@@ -1,5 +1,5 @@
 import Config from "../../../../../../models/Config";
-import { Project } from "../../../../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { AdminContentWrapper, AdminLogo } from "./AdminComponent.styled";
 import { InspectorElement } from "../../../../types";
 import { statusSelector, useAppSelector } from "../../../../../../redux/store";

@@ -2,7 +2,6 @@ import { GetHandleType } from "../../helpers/GetHandleType";
 import { IsValidTreeConnection } from "../helpers/IsValidTreeConnection";
 import { TreeHandleBox } from "../../styled/TreeHandleBox";
 import { Handle } from "react-flow-renderer";
-import { IsPartOfRelation } from "../../../../helpers/Connectors";
 import { Dispatch } from "redux";
 import { SetTopPos } from "../../helpers/SetTopPos";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
@@ -28,7 +27,7 @@ export const TreeNodeTerminal = ({ node, connector, isHover, setIsHover, dispatc
     <TreeHandleBox
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      visible={IsPartOfRelation(connector) && isHover}
+      visible={false} // IsPartOfRelation(connector) && isHover} // TODO: fix
       position={pos}
       topPos={SetTopPos(pos)}
     >

@@ -3,7 +3,8 @@ import { MapWrapper } from "./MapComponent.styled";
 import { Size } from "../../../assets/size/Size";
 import { heightSelector, inspectorSelector, libOpenSelector, useAppSelector } from "../../../redux/store";
 import { GetAspectColor } from "../../../helpers";
-import { AspectColorType, Node } from "../../../models";
+import { AspectColorType } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 export const MiniMapComponent = () => {
   const libOpen = useAppSelector(libOpenSelector);

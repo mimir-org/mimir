@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
-import { Project, ProjectFileAm, WebSocket } from "../../../models";
+import { ProjectFileAm, WebSocket } from "../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { ConvertProject, MapProjectProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";

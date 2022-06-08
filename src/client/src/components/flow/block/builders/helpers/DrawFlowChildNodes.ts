@@ -3,7 +3,7 @@ import { BuildFlowChildNode } from "..";
 import { IsOffPage } from "../../../../../helpers/Aspects";
 import { IsFamily } from "../../../../../helpers/Family";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
-import { IsInputTerminal, IsOutputTerminal, IsPartOfRelation, IsTransport } from "../../../helpers/Connectors";
+import { IsInputTerminal, IsOutputTerminal, IsTerminal } from "../../../helpers/Connectors";
 
 /**
  * Component to draw all children FlowNodes in BlockView.
@@ -38,10 +38,9 @@ const DrawFlowChildNodes = (
 };
 
 function ValidateEdge(edge: Edge, selectedBlockNode: Node) {
-  if (IsOffPage(edge.toNode)) return IsPartOfRelation(edge.toConnector);
-  return (
-    IsPartOfRelation(edge.toConnector) && IsFamily(selectedBlockNode, edge.toNode) && edge.fromNodeId === selectedBlockNode.id
-  );
+  // if (IsOffPage(edge.toNode)) return IsPartOfRelation(edge.toConnector);
+  return true; //IsPartOfRelation(edge.toConnector) && IsFamily(selectedBlockNode, edge.toNode) && edge.fromNodeId === selectedBlockNode.id
+  // TODO: fix
 }
 
 /**
@@ -67,11 +66,11 @@ function ValidateOffPage(
   if (!secondaryNode) return flowNodes.some((elem) => elem.id === offPageParentId);
   if (!IsFamily(selectedNode, secondaryNode)) return false;
 
-  const inputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsInputTerminal(c));
-  const outputTerminal = offPageNode.connectors.find((c) => IsTransport(c) && IsOutputTerminal(c));
+  const inputTerminal = offPageNode.connectors.find((c) => IsTerminal(c) && IsInputTerminal(c));
+  const outputTerminal = offPageNode.connectors.find((c) => IsTerminal(c) && IsOutputTerminal(c));
 
-  const edgeToOffPage = edges.find((e) => IsTransport(e.fromConnector) && e.toConnectorId === inputTerminal?.id);
-  const edgeFromOffPage = edges.find((e) => IsTransport(e.fromConnector) && e.fromConnectorId === outputTerminal?.id);
+  const edgeToOffPage = edges.find((e) => IsTerminal(e.fromConnector) && e.toConnectorId === inputTerminal?.id);
+  const edgeFromOffPage = edges.find((e) => IsTerminal(e.fromConnector) && e.fromConnectorId === outputTerminal?.id);
 
   if (!edgeFromOffPage && !edgeToOffPage) return false;
 

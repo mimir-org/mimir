@@ -1,6 +1,6 @@
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { IsOffPageEdge } from "../../../flow/block/helpers/IsOffPageEdge";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../flow/helpers/Connectors";
 import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";
 
 /**
@@ -24,7 +24,7 @@ const PopulateFilterLists = (
 
     const sourceConn = edge.fromConnector;
 
-    if (IsTransport(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
+    if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
     else if (IsLocationRelation(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
     else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
     else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);

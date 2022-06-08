@@ -3,13 +3,13 @@ import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { CreateId } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
-import { Project } from "../../../../models";
 import { ConvertDataToEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetBlockEdgeType } from "../helpers";
-import { IsTransport } from "../../helpers/Connectors";
+import { IsTerminal } from "../../helpers/Connectors";
 import { HandleOffPageConnect } from "./handlers/HandleOffPageConnect";
+import { Project } from "@mimirorg/modelbuilder-types";
 
 export interface Params {
   connection: FlowEdge | Connection;
@@ -44,7 +44,7 @@ const useOnConnect = (params: Params) => {
   dispatch(createEdge(edge));
 
   const type = GetBlockEdgeType(sourceConn, source, target);
-  const animated = animatedEdge && IsTransport(sourceConn);
+  const animated = animatedEdge && IsTerminal(sourceConn);
 
   return setEdges((els) => {
     return addEdge({ ...connection, id, type, animated, data: { source, target, edge } }, els);

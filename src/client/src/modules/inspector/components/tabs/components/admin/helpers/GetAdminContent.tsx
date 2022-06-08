@@ -1,4 +1,5 @@
-import { EnumBase, Project } from "../../../../../../../models";
+import { EnumBase } from "../../../../../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { IsEdge, IsNode } from "../../../../../helpers/IsType";
 import { InspectorElement } from "../../../../../types";
 import { NodeAdminContent } from "../components/NodeAdminContent";

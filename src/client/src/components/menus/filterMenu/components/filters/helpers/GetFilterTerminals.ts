@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode, Edge as FlowEdge } from "react-flow-renderer";
-import { IsTransport, IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
+import { IsTerminal, IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
 
 /**
  * Method to find all terminals of a Node.
@@ -14,7 +14,7 @@ export const GetAllTerminals = (flowNodes: FlowNode[]) => {
   flowNodes?.forEach((flowNode) => {
     const node = flowNode.data as Node;
     node.connectors?.forEach((c: Connector) => {
-      if (IsTransport(c)) terminals.push(c);
+      if (IsTerminal(c)) terminals.push(c);
     });
   });
 

@@ -3,7 +3,7 @@ import { changeActiveMenu } from "../../redux/menuSlice";
 import { Dispatch } from "redux";
 import { changeFlowView } from "../../../../../../../redux/store/flow/flowSlice";
 import { get } from "../../../../../../../redux/store/project/actions";
-import { Project } from "../../../../../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 
 export const OnOpenClick = (projectId: string, project: Project, dispatch: Dispatch) => {
   dispatch(get(projectId, project));

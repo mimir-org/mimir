@@ -1,6 +1,5 @@
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
-import { Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { updateBlockPosition } from "../../../../../../redux/store/project/actions";
 import { IsInputTerminal } from "../../../../helpers/Connectors";

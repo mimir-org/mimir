@@ -56,9 +56,7 @@ export const ActiveTerminalsTypeList = ({
     <TerminalsListElementWrapper>
       <TerminalTypeListElement
         onClick={() => onTypeClick(terminalType, connectorType)}
-        selected={
-          selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminalIdentifier?.connectorType === connectorType
-        }
+        selected={selectedTerminalIdentifier?.connectorType === connectorType} // selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminalIdentifier?.connectorType === connectorType  // TODO: fix
       >
         <div className="numTypeTerminals">{numTerminals}</div>
         {formatTerminalTypeName(terminalType.name, connectorType)}

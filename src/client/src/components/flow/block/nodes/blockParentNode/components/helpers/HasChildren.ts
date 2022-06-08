@@ -1,6 +1,5 @@
 import red from "../../../../../../../redux/store";
-import { IsPartOfRelation } from "../../../../../helpers/Connectors";
-import { Node } from "../../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to check if a node has children nodes.
@@ -11,5 +10,5 @@ export const HasChildren = (node: Node) => {
   const edges = red.store.getState().projectState.project?.edges;
   const edge = edges?.find((e) => e.fromNodeId === node?.id);
 
-  return edge && IsPartOfRelation(edge.fromConnector);
+  return edge; //&& IsPartOfRelation(edge.fromConnector); // TODO: fix
 };

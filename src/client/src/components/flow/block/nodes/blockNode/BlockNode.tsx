@@ -3,7 +3,7 @@ import * as selectors from "./helpers/BlockNodeSelectors";
 import { FC, memo, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
-import { AspectColorType, Project } from "../../../../../models";
+import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
@@ -30,7 +30,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
-  const project = useAppSelector(selectors.projectSelector) as Project;
+  const project = useAppSelector(selectors.projectSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);

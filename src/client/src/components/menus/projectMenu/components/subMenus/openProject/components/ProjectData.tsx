@@ -1,10 +1,11 @@
 import Moment from "react-moment";
 import { changeSelectedProject } from "../../../../../../../redux/store/project/actions";
-import { Project, ProjectItemCm } from "../../../../../../../models";
+import { ProjectItemCm } from "../../../../../../../models";
 import { ProjectDataBox } from "./ProjectData.styled";
 import { Dispatch } from "redux";
 import { projectSelector, useAppSelector } from "../../../../../../../redux/store";
 import { OnOpenClick } from "../handlers/OnOpenClick";
+import { Project } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   projects: ProjectItemCm[];

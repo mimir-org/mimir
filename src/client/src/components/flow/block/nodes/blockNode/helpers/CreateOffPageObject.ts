@@ -2,7 +2,7 @@ import { IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOfRelation } 
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
-import { Aspect, Connector, ConnectorVisibility, Edge, Node, RelationType } from "@mimirorg/modelbuilder-types";
+import { Aspect, Connector, ConnectorDirection, ConnectorVisibility, Edge, Node } from "@mimirorg/modelbuilder-types";
 
 export interface OffPageObject {
   offPageNode: Node;
@@ -29,7 +29,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   if (!sourceConnector || !sourceNode) return null;
 
-  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOfRelation(c) && !IsInputTerminal(c));
+  const sourcePartOfConn = sourceNode.connectors.find((c) => !IsInputTerminal(c)); //IsPartOfRelation(c) && !IsInputTerminal(c)); // TODO: fix
   const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
@@ -54,39 +54,35 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const inputConnector = {
     id: CreateId(),
     name: "OffPageInput",
-    type: ConnectorType.Input,
+    type: ConnectorDirection.Input,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector.terminalCategory,
-    terminalTypeId: sourceConnector.terminalTypeId,
-    attributes: [],
-    semanticReference: "",
+    // terminalCategory: sourceConnector.terminalCategory,
+    // terminalTypeId: sourceConnector.terminalTypeId,
     connectorVisibility: ConnectorVisibility.InputVisible,
-    color: sourceConnector.color,
-    kind: CONNECTOR_KIND,
+    // color: sourceConnector.color,
+    kind: "Connector",
   } as Connector;
 
   const outputConnector = {
     id: CreateId(),
     name: "OffPageOutput",
-    type: ConnectorType.Output,
+    type: ConnectorDirection.Output,
     nodeId: offPageNode.id,
-    terminalCategory: sourceConnector.terminalCategory,
-    terminalTypeId: sourceConnector.terminalTypeId,
-    attributes: [],
-    semanticReference: "",
+    // terminalCategory: sourceConnector.terminalCategory,
+    // terminalTypeId: sourceConnector.terminalTypeId,
     connectorVisibility: ConnectorVisibility.OutputVisible,
-    color: sourceConnector.color,
-    kind: CONNECTOR_KIND,
+    // color: sourceConnector.color,
+    kind: "Connector",
   } as Connector;
 
   const partOfConnector = {
     id: CreateId(),
     name: "OffPagePartOf",
-    type: ConnectorType.Input,
-    relationType: RelationType.PartOf,
-    nodeId: offPageNode.id,
-    attributes: [],
-    semanticReference: "",
+    type: ConnectorDirection.Input,
+    // relationType: RelationType.PartOf,
+    // nodeId: offPageNode.id,
+    // attributes: [],
+    // semanticReference: "",
   } as Connector;
 
   offPageNode.connectors.push(inputConnector);
@@ -104,7 +100,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     toNode: offPageNode,
     toNodeId: offPageNode.id,
     hidden: false,
-    kind: EDGE_KIND,
+    kind: "Edge",
     projectId: sourceNode.projectId,
   } as Edge;
 
@@ -119,7 +115,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     toNode: isTarget ? offPageNode : sourceNode,
     toNodeId: isTarget ? offPageNode.id : sourceNode.id,
     hidden: false,
-    kind: EDGE_KIND,
+    kind: "Edge",
     projectId: sourceNode.projectId,
   } as Edge;
 

@@ -14,7 +14,7 @@ import { AnimatedInspector, InspectorHeader } from "./components";
 import { MutableRefObject, useCallback, useRef } from "react";
 import { useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { GetSelectedFlowNodes } from "../../helpers/Selected";
-import { Project } from "../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   inspectorRef: MutableRefObject<HTMLDivElement>;

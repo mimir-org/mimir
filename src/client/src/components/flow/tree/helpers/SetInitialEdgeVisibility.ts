@@ -11,9 +11,11 @@ import { IsPartOfRelation } from "../../helpers/Connectors";
 const SetInitialEdgeVisibility = (edges: Edge[], dispatch: Dispatch) => {
   const hidden = true;
 
-  edges?.forEach((e) => {
-    if (!IsPartOfRelation(e.fromConnector)) dispatch(setEdgeVisibility(e.id, hidden));
-  });
+  // edges?.forEach((e) => {
+  //   if (!IsPartOfRelation(e.fromConnector)) dispatch(setEdgeVisibility(e.id, hidden));
+  // });
 };
+
+// TODO: fix
 
 export default SetInitialEdgeVisibility;

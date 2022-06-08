@@ -6,12 +6,11 @@ import {
   IsInputVisible,
   IsOutputVisible,
   IsBidirectionalTerminal,
-  IsPartOfRelation,
 } from "../../../helpers/Connectors";
 
 export const GetHandleType = (conn: Connector): [HandleType, Position] => {
-  const sourcePosition = IsPartOfRelation(conn) ? Position.Bottom : Position.Right;
-  const targetPosition = IsPartOfRelation(conn) ? Position.Top : Position.Left;
+  const sourcePosition = Position.Right; // IsPartOfRelation(conn) ? Position.Bottom : Position.Right;
+  const targetPosition = Position.Left; // IsPartOfRelation(conn) ? Position.Top : Position.Left; // TODO: fix
 
   if (IsInputTerminal(conn) || (IsBidirectionalTerminal(conn) && IsInputVisible(conn))) return ["target", targetPosition];
   if (IsOutputTerminal(conn) || (IsBidirectionalTerminal(conn) && IsOutputVisible(conn))) return ["source", sourcePosition];

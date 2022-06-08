@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
 import { GetConnectorNode } from "../helpers";
 import { IsFamily } from "../../../../../../helpers/Family";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../../../flow/helpers/Connectors";
 import { Edge, Node } from "@mimirorg/modelbuilder-types";
 
 /**
@@ -16,7 +16,7 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], d
   const partOf = IsPartOfRelation(actualEdge.fromConnector);
   const location = IsLocationRelation(actualEdge.fromConnector);
   const fulfilledBy = IsProductRelation(actualEdge.fromConnector);
-  const transport = IsTransport(actualEdge.fromConnector);
+  const transport = IsTerminal(actualEdge.fromConnector);
 
   // Find edges to be displayed or hidden
   edges.forEach((e) => {
@@ -27,9 +27,9 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], d
     }
 
     // Transport
-    if (transport && IsTransport(e.fromConnector)) {
-      if (e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId)
-        dispatch(setEdgeVisibility(e.id, !e.hidden));
+    if (transport && IsTerminal(e.fromConnector)) {
+      // if (e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId)
+      //   dispatch(setEdgeVisibility(e.id, !e.hidden));
     }
 
     // Relations
@@ -37,3 +37,5 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], d
       dispatch(setEdgeVisibility(e.id, !e.hidden));
   });
 };
+
+// TODO: fix

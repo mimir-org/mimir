@@ -27,7 +27,7 @@ const BuildFlowBlockEdges = (
   const flowEdges: FlowEdge[] = [];
 
   mimirEdges.forEach((edge) => {
-    if (IsPartOfRelation(edge.fromConnector) && !ValidatePartOfEdge(edge)) return;
+    //if (IsPartOfRelation(edge.fromConnector) && !ValidatePartOfEdge(edge)) return; TODO : fix
     const edgeType = GetBlockEdgeType(edge.fromConnector, edge.fromNode, edge.toNode);
     const blockEdge = BuildFlowBlockEdge(mimirNodes, edge, edgeType, selectedBlockNode, secondaryNode, animatedEdge);
     if (blockEdge) flowEdges.push(blockEdge);

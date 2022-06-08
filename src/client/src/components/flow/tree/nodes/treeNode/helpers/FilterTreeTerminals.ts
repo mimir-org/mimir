@@ -1,6 +1,5 @@
 import { GetMimirEdges } from "../../../../../../helpers/Selected";
 import { Connector } from "@mimirorg/modelbuilder-types";
-import { IsPartOfRelation } from "../../../../helpers/Connectors";
 
 /**
  * Component to filter terminals used in TreeView. The filtering is done to reduce renders.
@@ -12,11 +11,13 @@ export const FilterTreeTerminals = (connectors: Connector[]) => {
   const terminals = [] as Connector[];
   const edges = GetMimirEdges();
 
+  // TODO: fix
+
   connectors.forEach((conn) => {
-    if (IsPartOfRelation(conn)) {
-      terminals.push(conn);
-      return;
-    }
+    // if (IsPartOfRelation(conn)) {
+    //   terminals.push(conn);
+    //   return;
+    // }
     edges.forEach((edge) => {
       if (edge.toConnectorId !== conn.id && edge.fromConnectorId !== conn.id) return;
       terminals.push(conn);

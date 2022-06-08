@@ -21,15 +21,16 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeValue = <T extends HasInput
   unitId: string
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeValue(attribute, value, unitId);
-  if (element.inputTerminalId === terminalId) {
-    element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  } else {
-    element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  }
+  // if (element.inputTerminalId === terminalId) {
+  //   element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // } else {
+  //   element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // }
+  // TODO: fix
   return element;
 };
 
@@ -45,15 +46,15 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeIsLocked = <T extends HasIn
   isLockedStatusDate: Date
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeIsLocked(attribute, isLocked, isLockedBy, isLockedStatusDate);
-  if (element.inputTerminalId === terminalId) {
-    element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  } else {
-    element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  }
+  // if (element.inputTerminalId === terminalId) {
+  //   element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // } else {
+  //   element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // }
   return element;
 };
 

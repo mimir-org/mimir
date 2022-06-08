@@ -1,7 +1,8 @@
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { changeActiveMenu } from "../../redux/menuSlice";
 import { exportProjectToFile } from "../../../../../../../redux/store/project/actions";
-import { Project, ProjectConverterAm } from "../../../../../../../models";
+import { ProjectConverterAm } from "../../../../../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { ConvertProject } from "../../../../../../../redux/sagas/project";
 import { Dispatch } from "redux";
 

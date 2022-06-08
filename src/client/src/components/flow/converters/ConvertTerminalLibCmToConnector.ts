@@ -1,14 +1,14 @@
 import { CreateId } from "../helpers";
 import { ConvertAttributeLibCmToAttribute } from ".";
 import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
-import { Connector, ConnectorVisibility, RelationType } from "@mimirorg/modelbuilder-types";
+import { Connector, ConnectorVisibility, Terminal } from "@mimirorg/modelbuilder-types";
 
 const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
 
   nodeTerminals.forEach((t) => {
-    const connector = CreateConnector(t, nodeId);
-    for (let i = 0; i < t.number; i++) connectors.push(connector);
+    const connector = CreateTerminal(t, nodeId);
+    for (let i = 0; i < t.quantity; i++) connectors.push(connector);
   });
 
   return connectors;
@@ -16,7 +16,7 @@ const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nod
 
 export default ConvertTerminalLibCmToConnector;
 
-function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
+function CreateTerminal(item: NodeTerminalLibCm, nodeId: string) {
   const connectorVisibility = SetConnectorVisibility(item.connectorDirection);
   const attributes = ConvertAttributeLibCmToAttribute(item.terminal.attributes);
 
@@ -26,7 +26,6 @@ function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
     domain: "",
     name: item.terminal.name,
     type: item.connectorDirection,
-    semanticReference: item.terminal.contentReferences[0], // TODO: fix list
     nodeId,
     nodeIri: "",
     connectorVisibility,
@@ -36,9 +35,9 @@ function CreateConnector(item: NodeTerminalLibCm, nodeId: string) {
     attributes,
     terminalTypeId: "",
     terminalTypeIri: "",
-    relationType: RelationType.NotSet,
     kind: item.kind,
-  } as Connector;
+    discriminator: "terminal",
+  } as Terminal;
 }
 
 /**

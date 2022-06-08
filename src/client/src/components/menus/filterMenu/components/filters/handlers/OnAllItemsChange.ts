@@ -1,7 +1,7 @@
 import { Edge, Connector, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { changeActiveConnector, setEdgeVisibility } from "../../../../../../redux/store/project/actions";
-import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTransport } from "../../../../../flow/helpers/Connectors";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../../../flow/helpers/Connectors";
 
 export const OnAllRelationsChange = (edges: Edge[], dispatch: Dispatch) => {
   const hidden = edges.some((e) => (IsLocationRelation(e.fromConnector) || IsProductRelation(e.fromConnector)) && e.hidden);
@@ -20,10 +20,10 @@ export const OnAllPartOfChange = (edges: Edge[], dispatch: Dispatch) => {
 };
 
 export const OnAllTransportsChange = (edges: Edge[], dispatch: Dispatch) => {
-  const hidden = edges.some((e) => IsTransport(e.fromConnector) && e.hidden);
+  const hidden = edges.some((e) => IsTerminal(e.fromConnector) && e.hidden);
 
   edges.forEach((e) => {
-    if (IsTransport(e.fromConnector)) dispatch(setEdgeVisibility(e.id, !hidden));
+    if (IsTerminal(e.fromConnector)) dispatch(setEdgeVisibility(e.id, !hidden));
   });
 };
 
@@ -38,7 +38,7 @@ export const OnAllTerminalsChange = (terminals: Connector[], dispatch: Dispatch,
 
 export const OnTerminalCategoryChange = (edges: Edge[], terminalCategoryId: string, isChecked: boolean, dispatch: Dispatch) => {
   edges.forEach((edge) => {
-    if (IsTransport(edge.fromConnector)) {
+    if (IsTerminal(edge.fromConnector)) {
       if (edge.fromConnector.terminalCategory === terminalCategoryId) dispatch(setEdgeVisibility(edge.id, isChecked));
     }
   });

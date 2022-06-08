@@ -1,9 +1,8 @@
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
-import { Node, Edge } from "../../../../../models";
 import { setValidation } from "../../../../../redux/store/validation/validationSlice";
 import { IsLocationRelation, IsProductRelation } from "../../../helpers/Connectors";
 
@@ -41,7 +40,8 @@ function IsRelationNode(node: Node) {
 }
 
 function IsRelationTerminal(connector: Connector) {
-  return IsLocationRelation(connector) || IsProductRelation(connector);
+  return false;
+  // return IsLocationRelation(connector) || IsProductRelation(connector);
 }
 
 function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {
@@ -50,7 +50,7 @@ function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {
 }
 
 function ValidateTerminalType(sourceTerminal: Connector, targetTerminal: Connector) {
-  return true; // sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId;
+  return true; // sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId; // TODO: fix
 }
 
 function ValidateTransport(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {

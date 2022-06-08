@@ -1,6 +1,6 @@
+import { Node } from "@mimirorg/modelbuilder-types";
 import { XYPosition } from "react-flow-renderer";
 import { Size } from "../../../../../assets/size/Size";
-import { Node } from "../../../../../models";
 
 /**
  * Component to validate that a Node's position is not outside the boundary of its ParentNode in BlockView.

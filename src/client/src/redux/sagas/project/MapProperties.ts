@@ -1,6 +1,6 @@
 import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import { IsBlockView } from "../../../helpers";
-import { Edge, Node, Project } from "../../../models";
+import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 
 export const MapProjectProperties = (project: Project, oldProject: Project, reMappedIds: { [id: string]: string }) => {
   if (project?.nodes && oldProject?.nodes) MapNodes(project.nodes, oldProject.nodes, reMappedIds);

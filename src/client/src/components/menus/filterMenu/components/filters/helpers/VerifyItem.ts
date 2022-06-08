@@ -4,7 +4,8 @@ import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { IsLocationRelation, IsProductRelation } from "../../../../../flow/helpers/Connectors";
 
 export const VerifyTransportItem = (items: Connector[], sourceConn: Connector) =>
-  !items.some((conn) => conn.terminalTypeId === sourceConn.terminalTypeId) && items.push(sourceConn);
+  // !items.some((conn) => conn.terminalTypeId === sourceConn.terminalTypeId) && // TODO: fix
+  items.push(sourceConn);
 
 export const VerifyRelationItem = (items: Connector[], sourceConn: Connector) =>
   !items.some((conn) => IsLocationRelation(conn)) && items.push(sourceConn);
