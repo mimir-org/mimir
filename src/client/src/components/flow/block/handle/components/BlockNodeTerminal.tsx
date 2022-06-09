@@ -8,6 +8,7 @@ import { GetBlockHandleType, IsValidBlockConnection } from "../helpers";
 import { IsOffPage } from "../../../../../helpers/Aspects";
 import { GetHandleLeftPosition, GetHandleTopPosition } from "../helpers/GetTerminalPosition";
 import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
+import { IsPartOfRelation } from "../../../helpers/Connectors";
 
 interface Props {
   project: Project;
@@ -37,7 +38,7 @@ export const BlockNodeTerminal = ({ project, node, connector, dispatch, isElectr
       visible={visible}
       top={GetHandleTopPosition(node, connector, isElectro, isParent)}
       left={GetHandleLeftPosition(node, connector, isElectro, isParent)}
-      isPartOf={false} //IsPartOfRelation(connector)} // TODO: fix
+      isPartOf={IsPartOfRelation(connector)}
       onMouseEnter={isOffPage ? () => OnMouseEnter(setVisible) : null}
       onMouseLeave={isOffPage ? () => OnMouseLeave(setVisible) : null}
     >

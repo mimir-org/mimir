@@ -8,7 +8,18 @@ import {
   Terminal,
 } from "@mimirorg/modelbuilder-types";
 
-// ConnectorTypes
+// ConnectorType
+export function IsRelationConnector(connectorToBeChecked: Connector): connectorToBeChecked is Relation {
+  if ((connectorToBeChecked as Relation).type) return true;
+  return false;
+}
+
+export function IsTerminal(connectorToBeChecked: Connector): connectorToBeChecked is Terminal {
+  if ((connectorToBeChecked as Terminal).type) return true;
+  return false;
+}
+
+// ConnectorDirection
 export const IsInputTerminal = (terminal: TerminalLikeItem) => {
   return terminal?.type === ConnectorDirection.Input;
 };
@@ -22,16 +33,6 @@ export const IsBidirectionalTerminal = (terminal: TerminalLikeItem) => {
 };
 
 // RelationTypes
-export function IsRelationConnector(connectorToBeChecked: Connector): connectorToBeChecked is Relation {
-  if ((connectorToBeChecked as Relation).type) return true;
-  return false;
-}
-
-export function IsTerminal(connectorToBeChecked: Connector): connectorToBeChecked is Terminal {
-  if ((connectorToBeChecked as Terminal).type) return true;
-  return false;
-}
-
 export const IsPartOfRelation = (conn: Connector) => {
   const isRelation = IsRelationConnector(conn);
   if (isRelation) return conn?.relationType === RelationType.PartOf;

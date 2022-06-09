@@ -40,8 +40,7 @@ function IsRelationNode(node: Node) {
 }
 
 function IsRelationTerminal(connector: Connector) {
-  return false;
-  // return IsLocationRelation(connector) || IsProductRelation(connector);
+  return IsLocationRelation(connector) || IsProductRelation(connector);
 }
 
 function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {

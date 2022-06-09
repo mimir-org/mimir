@@ -33,13 +33,13 @@ const useOnTreeConnect = (params: Params) => {
   const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
   const existingEdge = GetExistingEdge(project.edges, connection, source, target);
 
-  // if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project.edges, target, dispatch);
+  if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project.edges, target, dispatch);
 
   const currentEdge = existingEdge ?? ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, library);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
-  // if (IsPartOfRelation(currentEdge?.fromConnector))
-  // UpdateSiblingIndexOnEdgeConnect(currentEdge, project.nodes, project.edges, dispatch);
+  if (IsPartOfRelation(currentEdge?.fromConnector))
+    UpdateSiblingIndexOnEdgeConnect(currentEdge, project.nodes, project.edges, dispatch);
 
   const type = GetTreeEdgeType(sourceConn);
   const animated = animatedEdge && IsTerminal(sourceConn);
@@ -49,11 +49,10 @@ const useOnTreeConnect = (params: Params) => {
   });
 };
 
-// TODO: fix
-// function HandlePartOfEdge(edges: Edge[], targetNode: Node, dispatch: Dispatch) {
-//   //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
-//   const existingPartOfEdge = edges.find((edge) => edge.toNodeId === targetNode.id && IsPartOfRelation(edge?.fromConnector));
-//   if (existingPartOfEdge) dispatch(deleteEdge(existingPartOfEdge.id));
-// }
+function HandlePartOfEdge(edges: Edge[], targetNode: Node, dispatch: Dispatch) {
+  //  If a node has a partOf relation the new relation will replace it, => only one parent allowed.
+  const existingPartOfEdge = edges.find((edge) => edge.toNodeId === targetNode.id && IsPartOfRelation(edge?.fromConnector));
+  if (existingPartOfEdge) dispatch(deleteEdge(existingPartOfEdge.id));
+}
 
 export default useOnTreeConnect;
