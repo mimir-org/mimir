@@ -38,7 +38,7 @@ const handleLockOffline = (
       projectId: projectId,
       isLocked: isLocked,
       isLockedStatusBy: isLockedBy,
-      isLockedStatusDate: new Date(), //.toISOString(),
+      isLockedStatusDate: new Date(),
       type: EntityType.Attribute,
     })
   );
