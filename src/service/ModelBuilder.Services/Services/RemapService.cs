@@ -93,8 +93,6 @@ namespace Mb.Services.Services
         /// id is missing or legal.The function will also create iri for all objects.</remarks>
         public IDictionary<string, string> Remap(ProjectAm project)
         {
-            CastConnectors(project);
-
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
@@ -270,7 +268,7 @@ namespace Mb.Services.Services
                     continue;
 
                 edge.FromNodeId = rootNode.Id;
-                edge.FromConnectorId = rootNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
+                edge.FromConnectorId = rootNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
             }
         }
 
@@ -351,11 +349,10 @@ namespace Mb.Services.Services
                     connector.NodeIri = replacement.ToIri;
                 }
 
-                if (!string.IsNullOrWhiteSpace(connector.TerminalTypeId) && string.IsNullOrWhiteSpace(connector.TerminalTypeIri))
+                if (connector is TerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalTypeId) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
                 {
-                    connector.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + connector.TerminalTypeId;
+                    am.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + am.TerminalTypeId;
                 }
-
 
                 yield return connector;
             }
@@ -531,32 +528,6 @@ namespace Mb.Services.Services
             }
 
             return terminal;
-        }
-
-        // Cast connectors to relations and terminals
-        private void CastConnectors(ProjectAm project)
-        {
-            foreach (var node in project.Nodes)
-            {
-                var connectors = new List<ConnectorAm>();
-                foreach (var connector in node.Connectors)
-                {
-                    if (connector.RelationType != RelationType.NotSet)
-                    {
-                        var relationAm = new RelationAm();
-                        _mapper.Map(connector, relationAm);
-                        connectors.Add(relationAm);
-                    }
-                    else
-                    {
-                        var terminalAm = new TerminalAm();
-                        _mapper.Map(connector, terminalAm);
-                        connectors.Add(terminalAm);
-                    }
-                }
-
-                node.Connectors = connectors;
-            }
         }
 
         #endregion

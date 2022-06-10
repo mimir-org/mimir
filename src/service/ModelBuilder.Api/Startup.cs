@@ -3,6 +3,7 @@ using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
 using Mb.Core.Extensions;
+using Mb.Models.Converters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +32,7 @@ namespace Mb.Api
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                //o.SerializerSettings.Converters.Add(new StringEnumConverter()); //
+                o.SerializerSettings.Converters.Add(new ConnectorConverter()); //
                 //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             });
 
