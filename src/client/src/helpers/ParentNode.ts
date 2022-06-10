@@ -2,11 +2,11 @@ import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../components/flow/helpers/Connectors";
 
 export const FindParentEdge = (nodeId: string, edges: Edge[]) => {
-  return edges.find((x) => x.toNodeId === nodeId && IsPartOfRelation(x.fromConnector));
+  return edges.find((e) => e.toNodeId === nodeId && IsPartOfRelation(e.fromConnector));
 };
 
 const FindChildrenEdge = (nodeId: string, edges: Edge[]) => {
-  return edges.find((x) => x.fromNodeId === nodeId && IsPartOfRelation(x.fromConnector));
+  return edges.find((e) => e.fromNodeId === nodeId && IsPartOfRelation(e.fromConnector));
 };
 
 export const HasChildren = (_nodeId: string, edges: Edge[]) => {

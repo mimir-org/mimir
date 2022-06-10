@@ -291,4 +291,5 @@ export const TextResources = {
   // Company names
   EQUINOR: "equinor.com",
   AIBEL: "aibel.com",
+  GABBI: "gabbi",
 };

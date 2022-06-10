@@ -13,7 +13,7 @@ import { IsTerminal } from "../helpers/Connectors";
  * @param animated
  * @returns a FlowEdge.
  */
-const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, source: Node, target: Node, animated: boolean) => {
+const ConvertEdgeToFlowEdge = (edge: Edge, edgeType: EdgeType, source: Node, target: Node, animated: boolean) => {
   const isAnimated = animated && IsTerminal(edge.fromConnector) && !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode);
 
   return {
@@ -34,4 +34,4 @@ const ConvertEdgeToFlow = (edge: Edge, edgeType: EdgeType, source: Node, target:
   } as FlowEdge;
 };
 
-export default ConvertEdgeToFlow;
+export default ConvertEdgeToFlowEdge;
