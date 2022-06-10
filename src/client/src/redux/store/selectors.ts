@@ -1,7 +1,8 @@
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, Project } from "@mimirorg/modelbuilder-types";
 import { MODULE_TYPE } from "../../models/project";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
+import { ProjectState } from "./project/types";
 
 export const isProjectStateFetchingSelector = createAppSelector(
   (state) => state.projectState.fetching,
@@ -36,7 +37,7 @@ export const isFetchingSelector = combineAppSelectors(
 
 export const projectStateSelector = createAppSelector(
   (state) => state.projectState,
-  (projectState) => projectState
+  (projectState) => projectState as ProjectState
 );
 
 export const projectNameSelector = createAppSelector(
@@ -188,7 +189,7 @@ export const location3DSelector = createAppSelector(
 
 export const projectSelector = createAppSelector(
   (state) => state.projectState.project,
-  (project) => project
+  (project) => project as Project
 );
 
 export const projectIdSelector = createAppSelector(

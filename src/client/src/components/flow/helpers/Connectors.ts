@@ -34,40 +34,34 @@ export const IsBidirectionalTerminal = (terminal: TerminalLikeItem) => {
 
 // RelationTypes
 export const IsPartOfRelation = (conn: Connector) => {
-  const isRelation = IsRelationConnector(conn);
-  if (isRelation) return conn?.relationType === RelationType.PartOf;
-  return false;
+  return IsRelationConnector(conn) ? conn?.relationType === RelationType.PartOf : false;
 };
 
 export const IsLocationRelation = (conn: Connector) => {
-  const isRelation = IsRelationConnector(conn);
-  if (isRelation) return conn?.relationType === RelationType.HasLocation;
-  return false;
+  return IsRelationConnector(conn) ? conn?.relationType === RelationType.HasLocation : false;
 };
 
 export const IsProductRelation = (conn: Connector) => {
-  const isRelation = IsRelationConnector(conn);
-  if (isRelation) return conn?.relationType === RelationType.FulfilledBy;
-  return false;
+  return IsRelationConnector(conn) ? conn?.relationType === RelationType.FulfilledBy : false;
 };
 
 // Connections
 export const IsLocationConnection = (source: Connector, target: Connector) => {
-  const isRelation = IsRelationConnector(source) && IsRelationConnector(target);
-  if (isRelation) return source?.relationType === RelationType.HasLocation && target?.relationType === RelationType.HasLocation;
-  return false;
+  return IsRelationConnector(source) && IsRelationConnector(target)
+    ? source?.relationType === RelationType.HasLocation && target?.relationType === RelationType.HasLocation
+    : false;
 };
 
-export const IsPartOfConnection = (sourceConn: Connector, targetConn: Connector) => {
-  const isRelation = IsRelationConnector(sourceConn) && IsRelationConnector(targetConn);
-  if (isRelation) return IsPartOfRelation(sourceConn) && IsPartOfRelation(targetConn);
-  return false;
+export const IsPartOfConnection = (source: Connector, target: Connector) => {
+  return IsRelationConnector(source) && IsRelationConnector(target)
+    ? IsPartOfRelation(source) && IsPartOfRelation(target)
+    : false;
 };
 
-export const IsProductConnection = (source: Relation, target: Relation) => {
-  const isRelation = IsRelationConnector(source) && IsRelationConnector(target);
-  if (isRelation) return source?.relationType === RelationType.FulfilledBy && target?.relationType === RelationType.FulfilledBy;
-  return false;
+export const IsProductConnection = (source: Connector, target: Connector) => {
+  return IsRelationConnector(source) && IsRelationConnector(target)
+    ? source?.relationType === RelationType.FulfilledBy && target?.relationType === RelationType.FulfilledBy
+    : false;
 };
 
 export const IsTransportConnection = (source: Connector, target: Connector) => {

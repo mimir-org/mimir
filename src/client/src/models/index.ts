@@ -16,15 +16,12 @@ export type { PredefinedAttribute } from "./data/PredefinedAttribute";
 
 export type { User } from "./application/User";
 export type { LockCm } from "./application/LockCm";
-export type { LockAm } from "./application/LockAm";
+
 export type { Library } from "./application/Library";
-export type { FileFormat } from "./application/FileFormat";
 export type { CommitPackage } from "./application/CommitPackage";
 export type { ProjectItemCm } from "./application/ProjectItemCm";
 export type { ProjectFileAm } from "./application/ProjectFileAm";
-export type { ProjectResultAm } from "./application/ProjectResultAm";
 export type { CombinedAttribute } from "./application/CombinedAttribute";
-export type { ProjectConverterAm } from "./application/ProjectConverterAm";
 export type { LibrarySubProjectItem } from "./application/LibrarySubProjectItem";
 export type { CombinedAttributeFilter } from "./application/CombinedAttributeFilter";
 

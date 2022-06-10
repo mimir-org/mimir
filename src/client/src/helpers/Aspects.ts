@@ -8,6 +8,10 @@ export const IsAspectNode = (node: Node) => {
   return node?.isRoot;
 };
 
+export const IsOffPage = (node: Node) => {
+  return node?.aspect === Aspect.None;
+};
+
 export const IsLocation = (item: Item) => {
   return item?.aspect === Aspect.Location;
 };
@@ -18,8 +22,4 @@ export const IsProduct = (item: Item) => {
 
 export const IsFunction = (item: Item) => {
   return item?.aspect === Aspect.Function;
-};
-
-export const IsOffPage = (node: Node) => {
-  return node?.aspect === Aspect.None;
 };
