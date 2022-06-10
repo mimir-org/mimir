@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Generated Typescript interfaces for ModelBuilder Application and Client models",
   "main": "",
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "keywords": [],
   "author": "MimirOrg",
   "license": "MIT"
