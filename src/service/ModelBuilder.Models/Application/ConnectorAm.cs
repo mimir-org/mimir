@@ -36,29 +36,11 @@ namespace Mb.Models.Application
 
         public bool IsRequired { get; set; }
 
-        // Relation
-        [EnumDataType(typeof(RelationType))]
-        public RelationType RelationType { get; set; }
-
-        // Terminal
-        public string Color { get; set; }
-        public string TerminalCategory { get; set; }
-        public string TerminalTypeId { get; set; }
-
-        [ValidIri]
-        public string TerminalTypeIri { get; set; }
-
         public ICollection<AttributeAm> Attributes { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validations = new List<ValidationResult>();
-
-            if (RelationType == RelationType.NotSet)
-            {
-                if (string.IsNullOrWhiteSpace(TerminalTypeId) && string.IsNullOrWhiteSpace(TerminalTypeIri))
-                    validations.Add(new ValidationResult($"{nameof(TerminalTypeId)} or {nameof(TerminalTypeIri)} is required when object is terminal", new List<string> { nameof(TerminalTypeId), nameof(TerminalTypeIri) }));
-            }
 
             if (Attributes != null)
             {

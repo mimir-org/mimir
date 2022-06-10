@@ -17,6 +17,7 @@ using Mimirorg.Common.Models;
 using Swashbuckle.AspNetCore.Annotations;
 using Mb.Models.Application;
 using Mb.Models.Client;
+using Mb.Models.Converters;
 
 namespace Mb.Core.Controllers.V1
 {
