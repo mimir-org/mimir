@@ -1,5 +1,5 @@
 import { Node, Connector } from "@mimirorg/modelbuilder-types";
-import { IsInputTerminal, IsOutputTerminal, IsPartOfRelation } from "../../../helpers/Connectors";
+import { IsInputConnector, IsOutputConnector, IsPartOfRelation } from "../../../helpers/Connectors";
 
 export const GetHandleLeftPosition = (node: Node, connector: Connector, isElectro: boolean, isParent: boolean) => {
   if (!IsPartOfRelation(connector)) return "revert";
@@ -11,13 +11,13 @@ export const GetHandleTopPosition = (node: Node, connector: Connector, isElectro
   if (!IsPartOfRelation(connector)) return "0px";
   if (isElectro) return GetElectroTopPosition(isParent);
 
-  if (IsInputTerminal(connector)) return isParent ? node.height + "px" : "0px";
-  if (IsOutputTerminal(connector)) return isParent ? "0px" : "115px";
+  if (IsInputConnector(connector)) return isParent ? node.height + "px" : "0px";
+  if (IsOutputConnector(connector)) return isParent ? "0px" : "115px";
 };
 
 export const GetElectroLeftPosition = (node: Node, connector: Connector, isParent: boolean) => {
-  if (isParent) return IsInputTerminal(connector) ? node.width + "px" : "0px";
-  return IsInputTerminal(connector) ? "0px" : "180x";
+  if (isParent) return IsInputConnector(connector) ? node.width + "px" : "0px";
+  return IsInputConnector(connector) ? "0px" : "180x";
 };
 
 export const GetElectroTopPosition = (isParent: boolean) => {

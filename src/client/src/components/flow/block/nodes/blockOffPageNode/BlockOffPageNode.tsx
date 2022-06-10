@@ -4,7 +4,7 @@ import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle";
-import { IsInputTerminal, IsOutputTerminal, IsTerminal } from "../../../helpers/Connectors";
+import { IsInputConnector, IsOutputConnector, IsTerminal } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Color } from "../../../../../assets/color/Color";
@@ -24,8 +24,8 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const size = useAppSelector(selectors.nodeSizeSelector);
   const edge = project?.edges?.find((x) => IsTerminal(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
-  const intputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTerminal(c));
-  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTerminal(c));
+  const intputTerminal = data?.connectors.find((c: Connector) => IsInputConnector(c) && IsTerminal(c));
+  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputConnector(c) && IsTerminal(c));
 
   const isTarget = edge?.toNodeId === data.id;
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
@@ -48,8 +48,8 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const iconColor = Color.BLACK; //offPageTerminal?.color ?? Color.BLACK; // TODO: fix
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
-  const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));
-  const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
+  const inputTerminals = data.connectors.filter((t: Connector) => IsInputConnector(t));
+  const outputTerminals = data.connectors.filter((t: Connector) => IsOutputConnector(t));
 
   return (
     <Tooltip content={data.label} placement={"top"} offset={[0, 10]}>

@@ -1,4 +1,4 @@
-export { default as useOnDrop } from "./useOnDrop";
+export { default as useOnBlockDrop } from "./useOnBlockDrop";
 export { default as useOnDragStop } from "./useOnDragStop";
 
 export { default as useOnConnectStart } from "./useOnConnectStart";

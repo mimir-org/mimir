@@ -7,7 +7,7 @@ import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../assets/size/Size";
 import { Position } from "../../../models/project";
-import { IsOutputTerminal, IsInputTerminal, IsPartOfRelation, IsLocationRelation, IsProductRelation } from "./Connectors";
+import { IsOutputConnector, IsInputConnector, IsPartOfRelation, IsLocationRelation, IsProductRelation } from "./Connectors";
 import { Node, Edge, ConnectorVisibility, Connector, Project } from "@mimirorg/modelbuilder-types";
 
 /**
@@ -26,8 +26,8 @@ export function HandleCreatePartOfEdge(
   dispatch: Dispatch
 ) {
   targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputTerminal(c));
-  const targetConn = targetNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputTerminal(c));
+  const sourceConn = sourceNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
+  const targetConn = targetNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputConnector(c));
   const partofEdge = ConvertDataToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
 
   SetSiblingIndexOnNodeDrop(targetNode, project.nodes, project.edges, sourceNode.id);
@@ -45,8 +45,8 @@ export function InitConnectorVisibility(connector: Connector, targetNode: Node) 
   const isProduct = IsProduct(targetNode) && IsProductRelation(connector);
 
   if (!isLocation && !isProduct) return ConnectorVisibility.None;
-  if (IsInputTerminal(connector)) return ConnectorVisibility.InputVisible;
-  if (IsOutputTerminal(connector)) return ConnectorVisibility.OutputVisible;
+  if (IsInputConnector(connector)) return ConnectorVisibility.InputVisible;
+  if (IsOutputConnector(connector)) return ConnectorVisibility.OutputVisible;
 }
 
 /**

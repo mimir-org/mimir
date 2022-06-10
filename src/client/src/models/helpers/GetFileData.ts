@@ -4,7 +4,7 @@ import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text/TextResources";
 import { IsAspectNode } from "../../helpers/Aspects";
-import { IsOutputTerminal, IsPartOfRelation } from "../../components/flow/helpers/Connectors";
+import { IsOutputConnector, IsPartOfRelation } from "../../components/flow/helpers/Connectors";
 import { IsFamily } from "../../helpers/Family";
 import { Node, Edge, Project, ProjectAm } from "@mimirorg/modelbuilder-types";
 
@@ -31,7 +31,7 @@ export const GetFileData = async (event: any, project: Project): Promise<[Node[]
     const targetNode = project.nodes.find((x) => x.id === targetNodeId);
     if (!targetNode) return [[], []];
 
-    const targetnodeConnector = targetNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputTerminal(c));
+    const targetnodeConnector = targetNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
 
     if (!targetnodeConnector) return [[], []];
 
@@ -53,7 +53,7 @@ export const GetFileData = async (event: any, project: Project): Promise<[Node[]
     const rootNode = subProject.nodes.find((x) => x.isRoot && IsFamily(x, targetNode));
 
     // Find the connector that should do a remap
-    const rootNodeConnector = rootNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputTerminal(c));
+    const rootNodeConnector = rootNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
 
     // Find edges that should change parent
     const edges = subProject.edges.filter((e) => e.fromConnectorId === rootNodeConnector.id);

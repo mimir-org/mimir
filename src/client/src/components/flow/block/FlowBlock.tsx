@@ -81,7 +81,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnDrop({ event, project, user, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
+    return hooks.useOnBlockDrop({ event, project, user, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
   const OnNodesChange = useCallback(

@@ -1,7 +1,7 @@
 import { Connector } from "@mimirorg/modelbuilder-types";
 import { ConnectionLineComponentProps } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
-import { IsInputTerminal } from "../../../helpers/Connectors";
+import { IsInputConnector } from "../../../helpers/Connectors";
 import { GetTerminalColor } from "../../helpers";
 
 /**
@@ -18,7 +18,7 @@ export const BlockConnectionLine = ({
   sourceNode,
 }: ConnectionLineComponentProps) => {
   const connector = sourceNode.data?.connectors?.find((conn: Connector) => conn.id === sourceHandle.id) as Connector;
-  const isTarget = IsInputTerminal(connector);
+  const isTarget = IsInputConnector(connector);
   const arrowId = `arrow-${connector.id}`;
 
   // These paths define which way the connection line and the markerArrow arrow will point

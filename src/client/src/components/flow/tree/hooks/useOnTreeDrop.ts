@@ -36,9 +36,7 @@ const useOnTreeDrop = (params: OnDropParameters) => {
 
   if (DoesNotContainApplicationData(event)) return;
 
-  const isSubProject = IsSubProject(event);
-
-  if (isSubProject) HandleSubProjectDrop(event, project, dispatch);
+  if (IsSubProject(event)) HandleSubProjectDrop(event, project, dispatch);
   else HandleNodeDrop(params);
 };
 
@@ -57,6 +55,7 @@ function HandleNodeDrop({ event, project, user, library, dispatch }: OnDropParam
   // The dropped node automatically finds a parent
   const parentNode = SetParentNodeOnDrop(selectedNode, libNode, project.nodes);
 
+  // Position for both treeView and blockView must be set
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
@@ -68,7 +67,7 @@ function HandleNodeDrop({ event, project, user, library, dispatch }: OnDropParam
 }
 
 /**
- * A dropped node automatically is assigned a parent.
+ * A dropped node is automatically assigned a parent.
  * If a node is selected and has the same Aspect as the dropped node, it becomes the parent.
  * If no node is selected, the root node with the same Aspect becomes the parent.
  * @param selectedNode
@@ -81,10 +80,9 @@ function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[])
   return nodes.find((n) => IsFamily(n, node));
 }
 
-export default useOnTreeDrop;
-
 /**
  * Function to handle a SubProject dropped from the Library.
+ * The functionality for SubProject is not yet fully implemented in Mimir.
  * @param event
  * @param project
  * @param dispatch
@@ -100,3 +98,5 @@ function HandleSubProjectDrop(event: React.DragEvent<HTMLDivElement>, project: P
     edgesToCreate.forEach((edge) => dispatch(createEdge(edge)));
   })();
 }
+
+export default useOnTreeDrop;

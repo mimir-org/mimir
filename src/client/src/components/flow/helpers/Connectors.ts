@@ -20,12 +20,12 @@ export function IsTerminal(connectorToBeChecked: Connector): connectorToBeChecke
 }
 
 // ConnectorDirection
-export const IsInputTerminal = (terminal: TerminalLikeItem) => {
+export const IsInputConnector = (terminal: TerminalLikeItem) => {
   return terminal?.type === ConnectorDirection.Input;
 };
 
-export const IsOutputTerminal = (terminal: Connector) => {
-  return terminal?.type === ConnectorDirection.Output;
+export const IsOutputConnector = (connector: Connector) => {
+  return connector?.type === ConnectorDirection.Output;
 };
 
 export const IsBidirectionalTerminal = (terminal: TerminalLikeItem) => {
