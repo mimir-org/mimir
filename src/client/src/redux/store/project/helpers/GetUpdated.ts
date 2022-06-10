@@ -1,4 +1,4 @@
-import { Attribute, Connector } from "../../../../models";
+import { Attribute, Connector } from "@mimirorg/modelbuilder-types";
 
 /**
  * "Union" interface for Transport and Interface.
@@ -21,15 +21,16 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeValue = <T extends HasInput
   unitId: string
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeValue(attribute, value, unitId);
-  if (element.inputTerminalId === terminalId) {
-    element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  } else {
-    element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  }
+  // if (element.inputTerminalId === terminalId) {
+  //   element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // } else {
+  //   element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // }
+  // TODO: fix
   return element;
 };
 
@@ -42,18 +43,18 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeIsLocked = <T extends HasIn
   attributeId: string,
   isLocked: boolean,
   isLockedBy: string,
-  isLockedStatusDate: string
+  isLockedStatusDate: Date
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeIsLocked(attribute, isLocked, isLockedBy, isLockedStatusDate);
-  if (element.inputTerminalId === terminalId) {
-    element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  } else {
-    element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
-      MapAttribute(attribute, attributeId, UpdateAttribute)
-    );
-  }
+  // if (element.inputTerminalId === terminalId) {
+  //   element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // } else {
+  //   element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
+  //     MapAttribute(attribute, attributeId, UpdateAttribute)
+  //   );
+  // }
   return element;
 };
 
@@ -70,7 +71,7 @@ export const UpdateAttributeIsLocked = (
   attribute: Attribute,
   isLocked: boolean,
   isLockedStatusBy: string,
-  isLockedStatusDate: string
+  isLockedStatusDate: Date
 ): Attribute => ({
   ...attribute,
   isLocked,

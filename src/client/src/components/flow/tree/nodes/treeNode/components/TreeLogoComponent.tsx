@@ -1,5 +1,5 @@
 import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./TreeLogoComponent.styled";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";

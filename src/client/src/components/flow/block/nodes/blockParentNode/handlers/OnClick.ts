@@ -1,6 +1,6 @@
 import { GetChild } from "../helpers/GetChild";
 import { Dispatch } from "redux";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import {
   removeSelectedBlockNode,
   removeSelectedEdge,

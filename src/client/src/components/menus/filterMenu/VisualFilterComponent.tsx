@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Connector } from "../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";

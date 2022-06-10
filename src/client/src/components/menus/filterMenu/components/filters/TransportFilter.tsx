@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector, Edge } from "../../../../../models";
+import { Connector, Edge } from "@mimirorg/modelbuilder-types";
 import { OnAllTransportsChange } from "./handlers";
 import { PopulateTerminalCategories, AllTransportsChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
@@ -40,7 +40,7 @@ const TransportFilter = ({ edges, connectors, dispatch, visible }: Props) => {
         />
 
         {categories?.map((category) => {
-          const categoryConnectors = connectors.filter((conn) => conn.terminalCategory === category.id);
+          const categoryConnectors = connectors; // .filter((conn) => conn.terminalCategory === category.id); // TODO: fix
           return (
             <TerminalCategoryFilter
               key={category.id}

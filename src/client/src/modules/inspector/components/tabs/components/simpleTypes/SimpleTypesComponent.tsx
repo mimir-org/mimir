@@ -1,10 +1,10 @@
-import { Simple } from "../../../../../../models";
 import { SimpleTypesSelector } from "./components/SimpleTypesSelector";
 import { useState } from "react";
 import { InspectorElement, SimpleLikeItem } from "../../../../types";
 import { GetSimpleTypes } from "./helpers/GetSimpleTypes";
 import { TerminalsParametersWrapper, TerminalsWrapper } from "../terminals/TerminalsComponent.styled";
 import { ParametersContent } from "../shared/components/parametersContent/ParametersContent";
+import { Simple } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   element: InspectorElement;

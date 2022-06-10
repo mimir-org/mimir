@@ -6,7 +6,7 @@ interface SetLockNodeAttribute {
   nodeId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: string;
+  isLockedStatusDate: Date;
 }
 
 export const setLockNodeAttribute = (lock: SetLockNodeAttribute, state: Types.ProjectState) => {

@@ -1,10 +1,10 @@
 import { addEdge } from "react-flow-renderer";
-import { Node, Edge } from "../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EDGE_TYPE } from "../../../../../models/project";
 import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
 import { ConvertDataToEdge } from "../../../converters";
 import { CreateId } from "../../../helpers";
-import { IsTransport } from "../../../helpers/Connectors";
+import { IsTerminal } from "../../../helpers/Connectors";
 import { Params } from "../useOnConnect";
 import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
 
@@ -51,12 +51,12 @@ export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNod
 
 function GetSourceTerminal(edges: Edge[], sourceParentId: string, sourceNodeId: string) {
   return edges.find(
-    (e) => e.fromConnector.nodeId === sourceParentId && IsTransport(e.fromConnector) && e.toConnector.nodeId === sourceNodeId
+    (e) => e.fromConnector.nodeId === sourceParentId && IsTerminal(e.fromConnector) && e.toConnector.nodeId === sourceNodeId
   ).fromConnector;
 }
 
 function GetTargetTerminal(edges: Edge[], targetParentId: string, targetNodeId: string) {
   return edges.find(
-    (e) => e.toConnector.nodeId === targetParentId && IsTransport(e.toConnector) && e.fromConnector.nodeId === targetNodeId
+    (e) => e.toConnector.nodeId === targetParentId && IsTerminal(e.toConnector) && e.fromConnector.nodeId === targetNodeId
   ).toConnector;
 }

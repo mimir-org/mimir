@@ -1,5 +1,6 @@
+import { Aspect, Node } from "@mimirorg/modelbuilder-types";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Aspect, CreateLibraryType, Node } from "../models";
+import { CreateLibraryType } from "../models";
 
 type Item = Node | NodeLibCm | CreateLibraryType;
 

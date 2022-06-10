@@ -1,51 +1,77 @@
-import { Connector, ConnectorType, ConnectorVisibility, RelationType } from "../../../models";
 import { TerminalLikeItem } from "../../../modules/inspector/types";
+import {
+  Connector,
+  ConnectorDirection,
+  ConnectorVisibility,
+  RelationType,
+  Relation,
+  Terminal,
+} from "@mimirorg/modelbuilder-types";
 
-// ConnectorTypes
+// ConnectorType
+export function IsRelationConnector(connectorToBeChecked: Connector): connectorToBeChecked is Relation {
+  if ((connectorToBeChecked as Relation).type) return true;
+  return false;
+}
+
+export function IsTerminal(connectorToBeChecked: Connector): connectorToBeChecked is Terminal {
+  if ((connectorToBeChecked as Terminal).type) return true;
+  return false;
+}
+
+// ConnectorDirection
 export const IsInputTerminal = (terminal: TerminalLikeItem) => {
-  return terminal?.type === ConnectorType.Input;
+  return terminal?.type === ConnectorDirection.Input;
 };
 
 export const IsOutputTerminal = (terminal: Connector) => {
-  return terminal?.type === ConnectorType.Output;
+  return terminal?.type === ConnectorDirection.Output;
 };
 
 export const IsBidirectionalTerminal = (terminal: TerminalLikeItem) => {
-  return terminal?.type === ConnectorType.Bidirectional;
+  return terminal?.type === ConnectorDirection.Bidirectional;
 };
 
 // RelationTypes
-export const IsPartOfTerminal = (conn: Connector) => {
-  return conn?.relationType === RelationType.PartOf;
+export const IsPartOfRelation = (conn: Connector) => {
+  const isRelation = IsRelationConnector(conn);
+  if (isRelation) return conn?.relationType === RelationType.PartOf;
+  return false;
 };
 
-export const IsLocationTerminal = (conn: Connector) => {
-  return conn?.relationType === RelationType.HasLocation;
+export const IsLocationRelation = (conn: Connector) => {
+  const isRelation = IsRelationConnector(conn);
+  if (isRelation) return conn?.relationType === RelationType.HasLocation;
+  return false;
 };
 
-export const IsProductTerminal = (conn: Connector) => {
-  return conn?.relationType === RelationType.FulfilledBy;
-};
-
-export const IsTransport = (conn: Connector) => {
-  return conn?.terminalCategory !== undefined;
+export const IsProductRelation = (conn: Connector) => {
+  const isRelation = IsRelationConnector(conn);
+  if (isRelation) return conn?.relationType === RelationType.FulfilledBy;
+  return false;
 };
 
 // Connections
 export const IsLocationConnection = (source: Connector, target: Connector) => {
-  return source?.relationType === RelationType.HasLocation && target?.relationType === RelationType.HasLocation;
+  const isRelation = IsRelationConnector(source) && IsRelationConnector(target);
+  if (isRelation) return source?.relationType === RelationType.HasLocation && target?.relationType === RelationType.HasLocation;
+  return false;
 };
 
 export const IsPartOfConnection = (sourceConn: Connector, targetConn: Connector) => {
-  return IsPartOfTerminal(sourceConn) && IsPartOfTerminal(targetConn);
+  const isRelation = IsRelationConnector(sourceConn) && IsRelationConnector(targetConn);
+  if (isRelation) return IsPartOfRelation(sourceConn) && IsPartOfRelation(targetConn);
+  return false;
 };
 
-export const IsProductConnection = (source: Connector, target: Connector) => {
-  return source?.relationType === RelationType.FulfilledBy && target?.relationType === RelationType.FulfilledBy;
+export const IsProductConnection = (source: Relation, target: Relation) => {
+  const isRelation = IsRelationConnector(source) && IsRelationConnector(target);
+  if (isRelation) return source?.relationType === RelationType.FulfilledBy && target?.relationType === RelationType.FulfilledBy;
+  return false;
 };
 
 export const IsTransportConnection = (source: Connector, target: Connector) => {
-  return source?.terminalCategory !== undefined && target?.terminalCategory !== undefined;
+  return IsTerminal(source) && IsTerminal(target);
 };
 
 // ConnectorVisibility

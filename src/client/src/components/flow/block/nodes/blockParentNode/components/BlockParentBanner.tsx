@@ -1,10 +1,11 @@
+import Config from "../../../../../../models/Config";
 import { GetAspectColor, GetRdsPrefix } from "../../../../../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../../../models";
+import { AspectColorType } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParentBanner.styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { Navigation } from "./Navigation";
 import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
-import Config from "../../../../../../models/Config";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

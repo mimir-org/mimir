@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { Edge, Node } from "../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { FindParentEdge } from "../../../helpers/ParentNode";
 import { changeNodeValue } from "../../../redux/store/project/actions";
-import { IsPartOfTerminal } from "./Connectors";
+import { IsPartOfRelation } from "./Connectors";
 
 /**
  * Updates the sibling index of nodes affected by an Edge being connected.
@@ -92,5 +92,5 @@ const ResetRDS = (node: Node, index: number, dispatch: Dispatch) => {
 
 const GetChildren = (nodeId: string, nodes: Node[], edges: Edge[]) =>
   nodes?.filter((otherNode) =>
-    edges?.find((edge) => edge.fromNodeId === nodeId && edge.toNodeId === otherNode?.id && IsPartOfTerminal(edge.fromConnector))
+    edges?.find((edge) => edge.fromNodeId === nodeId && edge.toNodeId === otherNode?.id && IsPartOfRelation(edge.fromConnector))
   );

@@ -1,4 +1,5 @@
-import { CollaborationPartner, CombinedAttributeFilter, EnumBase, ModuleDescription } from "../../../models";
+import { CollaborationPartner, ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { CombinedAttributeFilter, EnumBase } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 // State types

@@ -1,5 +1,5 @@
 import { IsProduct } from "../../../../helpers/Aspects";
-import { Connector, Node } from "../../../../models";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 
 /**
  * Helper function to define if the Visual Filter should display options for partOf connectors.

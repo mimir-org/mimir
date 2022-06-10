@@ -1,10 +1,10 @@
+import { EntityType } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { IsUnsaved } from "../../../../../helpers";
 import { LockCm } from "../../../../../models";
 import { lockEntity, setLockedEdge, setLockedNode } from "../../../../../redux/store/project/actions";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
-import { EntityType } from "../../../../../models/enums/EntityType";
 
 export const OnLockClick = (
   element: InspectorElement,
@@ -28,7 +28,7 @@ const handleLockOffline = (element: InspectorElement, isLocked: boolean, isLocke
     projectId: "",
     isLocked,
     isLockedStatusBy: isLockedBy,
-    isLockedStatusDate: new Date().toISOString(),
+    isLockedStatusDate: new Date(),
     type: IsNode(element) ? EntityType.Node : EntityType.Edge,
   };
 

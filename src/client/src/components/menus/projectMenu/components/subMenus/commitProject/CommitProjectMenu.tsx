@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Button } from "../../../../../../compLibrary/buttons/standar";
+import { Button } from "../../../../../../compLibrary/buttons/standard";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { CommitProjectIcon } from "../../../../../../assets/icons/project";
 import { Dropdown } from "../../../../../../compLibrary/dropdown/mimir/Dropdown";
@@ -8,9 +8,9 @@ import { Modal } from "../../../../../../compLibrary/modal/Modal";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useState } from "react";
-import { CollaborationPartner, ModuleDescription } from "../../../../../../models";
 import { OnCommitProjectClick, OnReturnClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
+import { ModuleDescription, CollaborationPartner } from "@mimirorg/modelbuilder-types";
 
 export const CommitProjectMenu = () => {
   const dispatch = useAppDispatch();

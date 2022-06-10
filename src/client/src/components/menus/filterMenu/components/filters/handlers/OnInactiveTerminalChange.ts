@@ -1,5 +1,5 @@
+import { Node, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
-import { ConnectorVisibility, Node } from "../../../../../../models";
 import { changeActiveConnector } from "../../../../../../redux/store/project/actions";
 import { IsConnectorVisible } from "../../../../../flow/helpers/Connectors";
 

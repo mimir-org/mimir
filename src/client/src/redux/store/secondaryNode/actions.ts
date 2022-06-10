@@ -1,4 +1,4 @@
-import { Node } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { SET_SECONDARY_NODE, REMOVE_SECONDARY_NODE } from "./types";
 
 export function setSecondaryNode(node: Node) {

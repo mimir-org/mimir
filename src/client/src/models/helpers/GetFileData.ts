@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Edge, Node, Project } from "..";
-import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
+import Config from "../Config";
 import { post } from "../webclient";
 import { CreateId } from "../../components/flow/helpers";
 import { TextResources } from "../../assets/text/TextResources";
 import { IsAspectNode } from "../../helpers/Aspects";
-import { IsOutputTerminal, IsPartOfTerminal } from "../../components/flow/helpers/Connectors";
+import { IsOutputTerminal, IsPartOfRelation } from "../../components/flow/helpers/Connectors";
 import { IsFamily } from "../../helpers/Family";
-import Config from "../Config";
+import { Node, Edge, Project, ProjectAm } from "@mimirorg/modelbuilder-types";
 
 const readFile = (event: any): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -32,7 +31,7 @@ export const GetFileData = async (event: any, project: Project): Promise<[Node[]
     const targetNode = project.nodes.find((x) => x.id === targetNodeId);
     if (!targetNode) return [[], []];
 
-    const targetnodeConnector = targetNode.connectors.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
+    const targetnodeConnector = targetNode.connectors.find((x) => IsPartOfRelation(x) && IsOutputTerminal(x));
 
     if (!targetnodeConnector) return [[], []];
 
@@ -54,7 +53,7 @@ export const GetFileData = async (event: any, project: Project): Promise<[Node[]
     const rootNode = subProject.nodes.find((x) => x.isRoot && IsFamily(x, targetNode));
 
     // Find the connector that should do a remap
-    const rootNodeConnector = rootNode.connectors.find((x) => IsPartOfTerminal(x) && IsOutputTerminal(x));
+    const rootNodeConnector = rootNode.connectors.find((x) => IsPartOfRelation(x) && IsOutputTerminal(x));
 
     // Find edges that should change parent
     const edges = subProject.edges.filter((x) => x.fromConnectorId === rootNodeConnector.id);

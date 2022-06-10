@@ -1,7 +1,8 @@
 import { GetAspectColor } from "../../../../../helpers";
-import { AspectColorType, Node } from "../../../../../models";
+import { AspectColorType } from "../../../../../models";
 import { IsEdge, IsNode } from "../../../helpers/IsType";
 import { InspectorElement } from "../../../types";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to set the color of the Inspector Header. The color is defined by the Aspect of the selected element.

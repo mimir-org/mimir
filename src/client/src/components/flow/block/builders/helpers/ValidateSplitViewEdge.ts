@@ -1,6 +1,6 @@
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
-import { Connector, Node } from "../../../../../models";
-import { IsLocationConnection, IsProductConnection, IsTransportConnection } from "../../../helpers/Connectors";
+import { IsTransportConnection } from "../../../helpers/Connectors";
 
 /**
  * Validator for an edge in SplitView.
@@ -27,18 +27,19 @@ const ValidateSplitViewEdge = (
 };
 
 function ValidateLocation(sourceConn: Connector, targetConn: Connector) {
-  return IsLocationConnection(sourceConn, targetConn);
+  return false;
+  // return IsLocationConnection(sourceConn, targetConn); // TODO: fix
 }
 
 function ValidateProduct(secondaryNode: Node, sourceConn: Connector, targetConn: Connector) {
-  if (IsLocation(secondaryNode)) return IsLocationConnection(sourceConn, targetConn);
+  // if (IsLocation(secondaryNode)) return IsLocationConnection(sourceConn, targetConn);
   if (IsFunction(secondaryNode)) return IsTransportConnection(sourceConn, targetConn);
   if (IsProduct(secondaryNode)) return IsTransportConnection(sourceConn, targetConn);
 }
 
 function ValidateFunction(secondaryNode: Node, sourceNode: Node, targetNode: Node, sourceConn: Connector, targetConn: Connector) {
-  if (IsProduct(secondaryNode)) return IsProductConnection(sourceConn, targetConn);
-  if (IsLocation(secondaryNode)) return IsLocationConnection(sourceConn, targetConn);
+  // if (IsProduct(secondaryNode)) return IsProductConnection(sourceConn, targetConn);
+  // if (IsLocation(secondaryNode)) return IsLocationConnection(sourceConn, targetConn);
   if (IsFunction(secondaryNode))
     return IsTransportConnection(sourceConn, targetConn) || IsOffPage(sourceNode) || IsOffPage(targetNode);
 }

@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { LibFooter } from "./ModuleFooter.styled";
 import { ManageSelectedTypes } from "./components/manageSelected/ManageSelectedTypes";
 import { GetCollectionIcon, SetCollectionButtonText } from "./helpers/";
-import { Button, ButtonVariant } from "../../../../compLibrary/buttons/standar";
+import { Button, ButtonVariant } from "../../../../compLibrary/buttons/standard";
 import { Collection, CollectionsActions, LibraryTab } from "../../../../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 

@@ -1,3 +1,3 @@
-import { Edge } from "../../../../../models";
+import { Edge } from "@mimirorg/modelbuilder-types";
 
-export const IsRelationEdge = (edge: Edge) => !!edge.fromConnector?.relationType;
+export const IsRelationEdge = (edge: Edge) => false; // !!edge.fromConnector?.relationType; // TODO: fix

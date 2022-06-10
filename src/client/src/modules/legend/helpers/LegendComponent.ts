@@ -1,5 +1,5 @@
 import { Legend } from "./types";
-import { Project } from "../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { AddLegend } from "./AddLegend";
 
 export const LegendComponent = (project: Project) => {

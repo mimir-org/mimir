@@ -1,9 +1,10 @@
-import { Aspect, CollectionsActions, LibraryTab, Node } from "../../../../models";
+import { CollectionsActions, LibraryTab } from "../../../../models";
 import { ModuleContent } from "./ModuleBody.styled";
 import { CollectionsComponent } from "./components/collections/CollectionsComponent";
 import { SubProjectsComponent } from "./components/subProjects/SubProjectsComponent";
 import { TemplatesComponent } from "./components/templates/TemplatesComponent";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { Node, Aspect } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   libOpen: boolean;

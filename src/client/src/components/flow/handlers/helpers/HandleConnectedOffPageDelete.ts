@@ -1,6 +1,6 @@
 import * as helpers from "./OffPageDeleteFunctions";
 import { Dispatch } from "redux";
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { deleteEdge, deleteNode } from "../../../../redux/store/project/actions";
 
 /**

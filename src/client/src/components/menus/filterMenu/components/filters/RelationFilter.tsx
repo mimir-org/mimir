@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector, Edge, Node } from "../../../../../models";
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { OnAllRelationsChange, OnFilterChange } from "./handlers";
 import { AllRelationsChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";

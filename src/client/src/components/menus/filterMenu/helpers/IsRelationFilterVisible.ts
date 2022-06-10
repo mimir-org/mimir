@@ -1,4 +1,4 @@
-import { Connector } from "../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 
 /**
  * Helper component to define if the Visual Filter should display options for relations connectors.

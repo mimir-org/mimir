@@ -1,5 +1,6 @@
 import { AspectExpandButton } from "../../../shared/components/AspectExpandButton";
-import { AspectColorType, Node } from "../../../../../models";
+import { AspectColorType } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { GetAspectColor } from "../../../../../helpers";
 import { CheckboxBlockExplorer } from "../../../../../compLibrary/input/checkbox/explorer/block/CheckboxBlockExplorer";
 import { OnBlockExplorerChange } from "./handlers/OnBlockExplorerChange";

@@ -1,8 +1,8 @@
 import red from "../../../../redux/store";
 import { IsFamily, IsParentOf } from "../../../../helpers/Family";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Node } from "../../../../models";
-import { IsPartOfTerminal } from "../../../../components/flow/helpers/Connectors";
+import { Node } from "@mimirorg/modelbuilder-types";
+import { IsPartOfRelation } from "../../../../components/flow/helpers/Connectors";
 
 const SortNodesWithIndent = (nodes: Node[]) => {
   InitialSortNodes(nodes);
@@ -88,9 +88,9 @@ const IsAspectNodeNum = (node: Node) => (IsAspectNode(node) ? 1 : 0);
  */
 const SetIndentLevel = (node: Node, count: number): number => {
   const edges = red.store.getState().projectState.project.edges;
-  const nodes = red.store.getState().projectState.project.nodes;
+  const nodes = red.store.getState().projectState.project.nodes as Node[];
 
-  const edge = edges.find((e) => e.toNode.id === node.id && IsPartOfTerminal(e.toConnector));
+  const edge = edges.find((e) => e.toNode.id === node.id && IsPartOfRelation(e.toConnector));
   if (!edge) return count;
 
   count++;

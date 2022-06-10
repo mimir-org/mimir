@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Color } from "../../../../../../../../../assets/color/Color";
-import { ConnectorType, TerminalType } from "../../../../../../../../../models";
+import { TerminalType } from "../../../../../../../../../models";
 import { ActiveTerminalsTypeList } from "./ActiveTerminalsTypeList";
 import { OnCategoryClick } from "./handlers/OnCategoryClick";
 import { OnTypeClick } from "./handlers/OnTypeClick";
@@ -14,6 +14,7 @@ import { FilterTerminalCategories } from "./helpers/FilterTerminalCategories";
 import { GetInputAndOutputTerminalsByTerminalType } from "./helpers/GetInputAndOutputTerminalsByTerminalType";
 import { GetNumTerminalsByCategory } from "./helpers/GetNumTerminalsByCategory";
 import { TerminalCategory } from "../../../helpers/GetFilteredTerminalsList";
+import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   terminals: TerminalLikeItem[];
@@ -35,7 +36,7 @@ export const ActiveTerminalsList = ({
     terminalCategories
       .map((cat) => cat.items)
       .flat()
-      .map((type) => [FormatTypeId(type, ConnectorType.Input), FormatTypeId(type, ConnectorType.Output)])
+      .map((type) => [FormatTypeId(type, ConnectorDirection.Input), FormatTypeId(type, ConnectorDirection.Output)])
       .flat()
   );
 
@@ -52,7 +53,7 @@ export const ActiveTerminalsList = ({
   const numTerminalsByCategoryId = useMemo(() => GetNumTerminalsByCategory(terminals), [terminals]);
 
   const isCategoryExpanded = (category: any) => expandedCategoriesIds.includes(category.id);
-  const isTypeExpanded = (type: TerminalType, connectorType: ConnectorType) =>
+  const isTypeExpanded = (type: TerminalType, connectorType: ConnectorDirection) =>
     expandedTypesIds.includes(FormatTypeId(type, connectorType));
 
   return (
@@ -64,7 +65,7 @@ export const ActiveTerminalsList = ({
         return (
           <TerminalsListElementWrapper key={category.id}>
             <TerminalsCategoryListElement
-              selected={selectedTerminal?.terminalCategory === category.id}
+              selected={false} // selectedTerminal?.terminalCategory === category.id} // TODO: fix
               radius={0}
               onClick={() => OnCategoryClick(isCategoryExpanded(category), expandedCategoriesIds, setExpandedCategoriesIds)}
               color={i % 2 ? undefined : Color.LAVANDER_WEB_LIST}
@@ -87,7 +88,7 @@ export const ActiveTerminalsList = ({
                   terminalType: terminalType,
                   selectedTerminal: selectedTerminal,
                   selectedTerminalIdentifier: selectedTerminalIdentifier,
-                  onTypeClick: (type: TerminalType, connectorType: ConnectorType) =>
+                  onTypeClick: (type: TerminalType, connectorType: ConnectorDirection) =>
                     OnTypeClick(type, connectorType, isTypeExpanded(type, connectorType), expandedTypesIds, setExpandedTypesIds),
                   onSelectTerminal,
                 };
@@ -98,16 +99,16 @@ export const ActiveTerminalsList = ({
                       <ActiveTerminalsTypeList
                         {...terminalTypeListProps}
                         terminals={inputTerminals}
-                        connectorType={ConnectorType.Input}
-                        expanded={isTypeExpanded(terminalType, ConnectorType.Input)}
+                        connectorType={ConnectorDirection.Input}
+                        expanded={isTypeExpanded(terminalType, ConnectorDirection.Input)}
                       />
                     )}
                     {outputTerminals?.length > 0 && (
                       <ActiveTerminalsTypeList
                         {...terminalTypeListProps}
                         terminals={outputTerminals}
-                        connectorType={ConnectorType.Output}
-                        expanded={isTypeExpanded(terminalType, ConnectorType.Output)}
+                        connectorType={ConnectorDirection.Output}
+                        expanded={isTypeExpanded(terminalType, ConnectorDirection.Output)}
                       />
                     )}
                   </React.Fragment>

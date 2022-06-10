@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
 import { IsOffPage } from "../../../../helpers/Aspects";
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { deleteEdge } from "../../../../redux/store/project/actions";
-import { IsTransport } from "../../helpers/Connectors";
+import { IsTerminal } from "../../helpers/Connectors";
 import { HandleConnectedOffPageDelete } from "./HandleConnectedOffPageDelete";
 import { HandleRequiredOffPageDelete } from "./HandleRequiredOffPageDelete";
 
@@ -34,9 +34,9 @@ function FindOffPageNode(nodes: Node[], edges: Edge[], edgeToDelete: Edge) {
   const toConnectorId = edgeToDelete.toConnectorId;
   const fromConnectorId = edgeToDelete.fromConnectorId;
 
-  const fromEdge = edges.find((e) => e.toConnectorId === toConnectorId && IsTransport(e.toConnector) && IsOffPage(e.fromNode));
+  const fromEdge = edges.find((e) => e.toConnectorId === toConnectorId && IsTerminal(e.toConnector) && IsOffPage(e.fromNode));
   if (fromEdge) return nodes.find((n) => n.id === fromEdge.fromNodeId);
 
-  const toEdge = edges.find((e) => e.fromConnectorId === fromConnectorId && IsTransport(e.fromConnector) && IsOffPage(e.toNode));
+  const toEdge = edges.find((e) => e.fromConnectorId === fromConnectorId && IsTerminal(e.fromConnector) && IsOffPage(e.toNode));
   if (toEdge) return nodes.find((n) => n.id === toEdge.toNodeId);
 }

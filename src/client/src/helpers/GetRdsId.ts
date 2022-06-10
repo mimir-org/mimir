@@ -1,4 +1,4 @@
-import { Edge, Node } from "../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsFunction, IsLocation, IsProduct } from "./Aspects";
 import { TextResources } from "../assets/text/TextResources";
 

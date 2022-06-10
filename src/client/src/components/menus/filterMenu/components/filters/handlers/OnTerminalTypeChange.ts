@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { Edge } from "../../../../../../models";
+import { Edge } from "@mimirorg/modelbuilder-types";
 import { setEdgeVisibility } from "../../../../../../redux/store/project/actions";
-import { IsTransport } from "../../../../../flow/helpers/Connectors";
+import { IsTerminal } from "../../../../../flow/helpers/Connectors";
 
 export const OnTerminalTypeChange = (
   edges: Edge[],
@@ -11,7 +11,7 @@ export const OnTerminalTypeChange = (
   dispatch: Dispatch
 ) => {
   edges?.forEach((edge) => {
-    if (IsTransport(edge.fromConnector)) {
+    if (IsTerminal(edge.fromConnector)) {
       if (edge.fromConnector.terminalCategory === terminalCategoryId && edge.fromConnector.terminalTypeId === terminalTypeId)
         dispatch(setEdgeVisibility(edge.id, isChecked));
     }

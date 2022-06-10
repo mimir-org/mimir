@@ -1,4 +1,4 @@
-import { Edge, Node } from "../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 
 export const COOPERATE_ADD_NODE = "COOPERATE_ADD_NODE";
 export const COOPERATE_ADD_EDGE = "COOPERATE_ADD_EDGE";

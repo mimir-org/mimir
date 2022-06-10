@@ -1,8 +1,8 @@
 import { Dispatch } from "redux";
-import { Edge } from "../../../../models";
+import { Edge } from "@mimirorg/modelbuilder-types";
 import { IsRelationEdge } from "../../../../modules/inspector/components/tabs/helpers";
 import { setEdgeVisibility } from "../../../../redux/store/project/actions";
-import { IsTransport } from "../../helpers/Connectors";
+import { IsTerminal } from "../../helpers/Connectors";
 
 /**
  * Component to set the visibility of transport edges on first render of BlockView.
@@ -13,7 +13,7 @@ const SetInitialEdgeVisibility = (edges: Edge[], dispatch: Dispatch) => {
   const hidden = false;
 
   edges?.forEach((edge) => {
-    if (IsTransport(edge.fromConnector) || IsTransport(edge.toConnector) || IsRelationEdge(edge))
+    if (IsTerminal(edge.fromConnector) || IsTerminal(edge.toConnector) || IsRelationEdge(edge))
       dispatch(setEdgeVisibility(edge.id, hidden));
   });
 };

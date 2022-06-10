@@ -1,4 +1,4 @@
-import { Connector, Edge, Node } from "../../../../../../../models";
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import {
   RelationsContainer,
   RelationsHeader,

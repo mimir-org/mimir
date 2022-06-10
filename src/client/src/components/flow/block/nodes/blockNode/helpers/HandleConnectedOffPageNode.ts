@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { CreateConnectedOffPageNode } from "./CreateConnectedOffPageNode";
 import { IsOffPage } from "../../../../../../helpers/Aspects";
-import { Edge, Node } from "../../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsTransportConnection } from "../../../../helpers/Connectors";
 import { IsOffPageEdge } from "../../../helpers/IsOffPageEdge";

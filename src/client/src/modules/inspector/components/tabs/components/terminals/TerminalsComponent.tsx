@@ -5,7 +5,6 @@ import { TerminalsWrapper, TerminalsParametersWrapper } from "./TerminalsCompone
 import { InspectorElement, SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../types";
 import { GetTerminalParentElement } from "./helpers/GetTerminalParentElement";
 import { GetTerminals } from "./helpers/GetTerminals";
-
 import { GetFilteredTerminalsList } from "./helpers/GetFilteredTerminalsList";
 
 interface Props {
@@ -40,7 +39,7 @@ export const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
-            attributeLikeItems={selectedTerminal.attributes}
+            attributeLikeItems={[]} // selectedTerminal.attributes} // TODO: fix
           />
         </TerminalsParametersWrapper>
       )}

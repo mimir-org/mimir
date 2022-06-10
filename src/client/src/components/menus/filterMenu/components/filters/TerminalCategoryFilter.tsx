@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { Connector, Edge } from "../../../../../models";
+import { Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
-import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
+import { IsTerminalCategoryChecked } from "./helpers";
 import { TerminalCategory } from "./TransportFilter";
 import { FilterElement } from "../FilterElement";
 
@@ -36,12 +36,12 @@ export const TerminalCategoryFilter = ({ category, edges, connectors, dispatch, 
         />
 
         {connectors.map((conn) => {
-          const isChecked = IsTerminalTypeChecked(edges, category.id, conn.terminalTypeId);
+          const isChecked = false; // IsTerminalTypeChecked(edges, category.id, conn.terminalTypeId);
           return (
             <FilterElement
               key={conn.id}
               label={conn.name}
-              onChange={() => OnTerminalTypeChange(edges, category.id, conn.terminalTypeId, isChecked, dispatch)}
+              onChange={() => OnTerminalTypeChange(edges, category.id, null, isChecked, dispatch)} // TODO: fix conn.terminalTypeId
               isChecked={isChecked}
               visible={visible}
               indent={3}

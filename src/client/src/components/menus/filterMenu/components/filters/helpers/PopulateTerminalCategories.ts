@@ -1,5 +1,5 @@
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../../../../assets/text/TextResources";
-import { Connector } from "../../../../../../models";
 import { TerminalCategory } from "../TransportFilter";
 
 /**
@@ -10,9 +10,11 @@ import { TerminalCategory } from "../TransportFilter";
 export const PopulateTerminalCategories = (transportConnectors: Connector[]) => {
   const categories = [] as TerminalCategory[];
 
+  // TODO: fix
+
   transportConnectors?.forEach((conn) => {
-    const id = conn.terminalCategory;
-    const name = conn.terminalCategory;
+    const id = ""; // conn.terminalCategory;
+    const name = ""; // conn.terminalCategory;
 
     if (categories.some((c) => c.id === id || c.name === name)) return;
 

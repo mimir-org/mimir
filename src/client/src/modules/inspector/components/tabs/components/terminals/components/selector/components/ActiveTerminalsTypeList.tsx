@@ -1,4 +1,4 @@
-import { ConnectorType, TerminalType } from "../../../../../../../../../models";
+import { TerminalType } from "../../../../../../../../../models";
 import { TerminalsListElementWrapper } from "../../../../shared/styled/TerminalsListElementWrapper";
 import { TerminalListElement, TerminalTypeListElement } from "./ActiveTerminalsTypeList.styled";
 import { CollapseAccordionNestedIcon, ExpandAccordionNestedIcon } from "../../../../../../../../../assets/icons/toogle";
@@ -6,15 +6,16 @@ import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../../../
 import { useCallback, useMemo } from "react";
 import { CountNumberOfTerminals, GetNumberOfTerminals } from "./helpers/GetNumTerminals";
 import { formatTerminalTypeName } from "./helpers/FormatTerminalTypeName";
+import { ConnectorDirection } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   terminalType: TerminalType;
-  connectorType: ConnectorType;
+  connectorType: ConnectorDirection;
   expanded: boolean;
   terminals: TerminalLikeItem[];
   selectedTerminal: TerminalLikeItem;
   selectedTerminalIdentifier: SelectedTerminalIdentifier;
-  onTypeClick: (type: TerminalType, connectorType: ConnectorType) => void;
+  onTypeClick: (type: TerminalType, connectorType: ConnectorDirection) => void;
   onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
 }
 
@@ -55,9 +56,7 @@ export const ActiveTerminalsTypeList = ({
     <TerminalsListElementWrapper>
       <TerminalTypeListElement
         onClick={() => onTypeClick(terminalType, connectorType)}
-        selected={
-          selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminalIdentifier?.connectorType === connectorType
-        }
+        selected={selectedTerminalIdentifier?.connectorType === connectorType} // selectedTerminal?.terminalTypeId === terminalType.id && selectedTerminalIdentifier?.connectorType === connectorType  // TODO: fix
       >
         <div className="numTypeTerminals">{numTerminals}</div>
         {formatTerminalTypeName(terminalType.name, connectorType)}

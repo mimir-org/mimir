@@ -1,10 +1,10 @@
 import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
-import { Connector, Node } from "../../../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
 import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import Config from "../../../../../../models/Config";
 
 interface Props {

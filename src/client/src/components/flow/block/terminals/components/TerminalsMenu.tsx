@@ -1,9 +1,10 @@
 import { GetAspectColor } from "../../../../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../../models";
+import { AspectColorType } from "../../../../../models";
 import { SetTerminalsMenuOffset } from "../helpers/SetTerminalsMenuOffset";
 import { TerminalsBox } from "./TerminalsMenu.styled";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
 import { TerminalsMenuElement } from "./TerminalsMenuElement";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

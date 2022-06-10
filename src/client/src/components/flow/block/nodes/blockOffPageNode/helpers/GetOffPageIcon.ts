@@ -1,5 +1,5 @@
 import * as icons from "../../../../../../assets/icons/offpage";
-import { Connector } from "../../../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { IsInputTerminal } from "../../../../helpers/Connectors";
 
 const GetOffPageIcon = (offPageterminal: Connector, sourceTerminal: Connector) => {

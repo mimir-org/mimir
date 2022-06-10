@@ -1,5 +1,5 @@
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
-import { Connector } from "../../../../../models";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 
 /**
@@ -18,7 +18,7 @@ export const TreeTransportEdge = ({
   data,
 }: EdgeProps) => {
   const sourceConnector = data.source.connectors?.find((x: Connector) => x.id === data.edge.fromConnector.id) as Connector;
-  const color = sourceConnector?.color;
+  const color = "#000"; //  sourceConnector?.color; // TODO: fix color
 
   // Adjust to match connector
   targetX -= 6;

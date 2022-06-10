@@ -1,4 +1,4 @@
-import { Project } from "../../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { save } from "../../../../redux/store/project/actions";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { Dispatch } from "redux";

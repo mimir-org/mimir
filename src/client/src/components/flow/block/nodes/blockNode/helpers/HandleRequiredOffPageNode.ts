@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { CreateRequiredOffPageNode } from "./CreateRequiredOffPageNode";
 import { IsOffPage } from "../../../../../../helpers/Aspects";
-import { Connector, Edge, Node } from "../../../../../../models";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { IsInputTerminal, IsInputVisible } from "../../../../helpers/Connectors";
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to check if any terminals have a required OffPageNode flag. If so, an OffPageNode is created.

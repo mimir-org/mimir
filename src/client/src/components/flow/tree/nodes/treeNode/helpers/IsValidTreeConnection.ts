@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { IsFamily } from "../../../../../../helpers/Family";
 import { GetMimirNodes } from "../../../../../../helpers/Selected";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { setValidation } from "../../../../../../redux/store/validation/validationSlice";
 
 /**
@@ -14,8 +14,8 @@ import { setValidation } from "../../../../../../redux/store/validation/validati
  * @returns a boolean value.
  */
 export const IsValidTreeConnection = (node: Node, connection: Connection, dispatch: Dispatch) => {
-  const nodes = GetMimirNodes();
-  const parentNode = nodes.find((x) => x.id === connection.source);
+  const nodes = GetMimirNodes() as Node[];
+  const parentNode = nodes.find((n) => n.id === connection.source);
   const isValidAspect = IsFamily(node, parentNode);
 
   document.addEventListener("mouseup", () => onMouseUp(isValidAspect, dispatch), { once: true });

@@ -1,4 +1,4 @@
-import { Button } from "../../../../../../compLibrary/buttons/standar";
+import { Button } from "../../../../../../compLibrary/buttons/standard";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { ImportLibraryIcon } from "../../../../../../assets/icons/project";
 import { Label } from "../../../../../../compLibrary/input/text";

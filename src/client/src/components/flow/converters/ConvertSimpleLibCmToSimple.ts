@@ -1,5 +1,5 @@
+import { Simple } from "@mimirorg/modelbuilder-types";
 import { SimpleLibCm } from "@mimirorg/typelibrary-types";
-import { Simple } from "../../../models";
 
 const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[]) => {
   return [] as Simple[];

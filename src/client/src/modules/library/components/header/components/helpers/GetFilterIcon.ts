@@ -1,4 +1,4 @@
-import { Aspect } from "../../../../../../models";
+import { Aspect } from "@mimirorg/modelbuilder-types";
 import {
   Function,
   FunctionFilterOff,

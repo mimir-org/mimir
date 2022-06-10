@@ -6,7 +6,7 @@ import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterTerminals } from "../helpers/FilterTerminals";
-import { Connector, Node } from "../../../../../models";
+import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
@@ -24,7 +24,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
   const initialTerminals = { inputs: [], outputs: [] } as Terminals;
   const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
-  const project = useAppSelector(selectors.projectSelector);
+  const project = useAppSelector(selectors.projectSelector) as Project;
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const selectedBlockNode = project?.nodes?.find((n) => n.blockSelected);

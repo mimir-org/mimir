@@ -1,4 +1,4 @@
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EdgeType } from "../../../../models/project";
 import { ConvertEdgeToFlow } from "../../converters";
 import { ValidateSplitViewEdge } from "./helpers";

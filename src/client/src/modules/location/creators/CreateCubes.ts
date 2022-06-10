@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { Color } from "../../../assets/color/Color";
-import { Node } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { GetAttributeMap, GetSize } from "../helpers";
 
 const CreateCube = (scene: THREE.Scene, node: Node): THREE.Object3D[] => {

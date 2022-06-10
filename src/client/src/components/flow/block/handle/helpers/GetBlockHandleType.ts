@@ -1,11 +1,11 @@
-import { Connector } from "../../../../../models";
+import { Connector } from "@mimirorg/modelbuilder-types";
 import { HandleType, Position } from "react-flow-renderer";
 import {
   IsInputTerminal,
   IsInputVisible,
   IsOutputTerminal,
   IsOutputVisible,
-  IsPartOfTerminal,
+  IsPartOfRelation,
 } from "../../../helpers/Connectors";
 
 /**
@@ -16,7 +16,7 @@ import {
  * @returns a tuple with type and position.
  */
 const GetBlockHandleType = (conn: Connector, electro: boolean, isParent: boolean): [HandleType, Position] => {
-  if (IsPartOfTerminal(conn)) return GetPartOfHandleType(conn, electro, isParent);
+  if (IsPartOfRelation(conn)) return GetPartOfHandleType(conn, electro, isParent);
 
   const sourcePosition = electro ? Position.Top : Position.Left;
   const targetPosition = electro ? Position.Bottom : Position.Right;

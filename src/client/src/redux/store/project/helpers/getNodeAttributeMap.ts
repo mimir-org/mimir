@@ -1,4 +1,4 @@
-import { Node } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 export const getNodeAttributeMap = (nodes: Node[]) => {
   const map: { [attributeId: string]: { nodeId: string } } = {};

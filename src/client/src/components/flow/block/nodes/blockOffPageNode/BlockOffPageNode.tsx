@@ -4,12 +4,12 @@ import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle";
-import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers/Connectors";
+import { IsInputTerminal, IsOutputTerminal, IsTerminal } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
-import { Connector, Node } from "../../../../../models";
 import { Color } from "../../../../../assets/color/Color";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component for an OffPageNode in BlockView.
@@ -22,10 +22,10 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
-  const edge = project?.edges?.find((x) => IsTransport(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
+  const edge = project?.edges?.find((x) => IsTerminal(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
-  const intputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
-  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
+  const intputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTerminal(c));
+  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTerminal(c));
 
   const isTarget = edge?.toNodeId === data.id;
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
@@ -45,7 +45,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
 
   if (!data || !offPageParent || !offPageGrandParent) return null;
 
-  const iconColor = offPageTerminal?.color ?? Color.BLACK;
+  const iconColor = Color.BLACK; //offPageTerminal?.color ?? Color.BLACK; // TODO: fix
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
   const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));

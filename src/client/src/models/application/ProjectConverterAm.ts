@@ -1,4 +1,4 @@
-import { ProjectAm } from "../../redux/sagas/project/ConvertProject";
+import { ProjectAm } from "@mimirorg/modelbuilder-types";
 
 export interface ProjectConverterAm {
   parserId: string;

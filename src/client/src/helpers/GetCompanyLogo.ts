@@ -1,4 +1,4 @@
-import { Node } from "../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { AibelLogo } from "../assets/icons/aibel/nodes";
 import { EquinorLogo } from "../assets/icons/equinor/nodes";
 import { AibelInvertedLogo } from "../assets/icons/aibel/inspector";

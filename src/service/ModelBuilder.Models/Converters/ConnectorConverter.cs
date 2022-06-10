@@ -10,8 +10,8 @@ namespace Mb.Models.Converters
         public override ConnectorAm ReadJson(JsonReader reader, Type objectType, ConnectorAm existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var jObj = JObject.Load(reader);
-            
-            if(jObj.ContainsKey(FirstCharToLowerCase(nameof(RelationAm.RelationType))) || jObj.ContainsKey(nameof(RelationAm.RelationType)))
+
+            if (jObj.ContainsKey(FirstCharToLowerCase(nameof(RelationAm.RelationType))) || jObj.ContainsKey(nameof(RelationAm.RelationType)))
                 return jObj.ToObject<RelationAm>();
 
             return jObj.ToObject<TerminalAm>();
@@ -31,5 +31,5 @@ namespace Mb.Models.Converters
 
             return str;
         }
-    }    
+    }
 }

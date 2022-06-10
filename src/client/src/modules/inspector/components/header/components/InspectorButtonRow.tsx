@@ -7,7 +7,7 @@ import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
 import { DownIcon, UpIcon } from "../../../../../assets/icons/toogle";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { InspectorButton, InspectorButtonType } from "../../../../../compLibrary/buttons/inspector/";
-import { Node, Edge } from "../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsNode } from "../../../helpers/IsType";
 import { ChangeInspectorVisibilityAction, InspectorElement } from "../../../types";
 import { MutableRefObject, useEffect, useState } from "react";

@@ -1,6 +1,6 @@
-import { Connector, Edge, Node, EDGE_KIND } from "../../../models";
 import { LibraryState } from "../../../redux/store/library/types";
 import { ConvertToInterface, ConvertToTransport } from ".";
+import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
 
 /**
  * Function to convert data to a Mimir Edge.
@@ -37,7 +37,7 @@ const ConvertDataToEdge = (
     masterProjectId: projectId,
     transport: ConvertToTransport(fromConnector, library),
     interface: ConvertToInterface(fromConnector, library),
-    kind: EDGE_KIND,
+    kind: "Edge",
   } as Edge;
 };
 

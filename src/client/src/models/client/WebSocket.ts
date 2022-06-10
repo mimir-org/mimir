@@ -1,10 +1,10 @@
+import Config from "../Config";
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { Dispatch } from "redux";
-import { Edge, Node, WorkerStatus } from "../index";
+import { WorkerStatus } from "../index";
 import { ProjectState } from "../../redux/store/project/types";
-import Config from "../Config";
 import { LockCm } from "../application/LockCm";
-import { EntityType } from "../enums/EntityType";
+import { Node, Edge, EntityType } from "@mimirorg/modelbuilder-types";
 import {
   addNode,
   createEdge,

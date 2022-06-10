@@ -1,9 +1,9 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector, Edge, Node } from "../../../../../models";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
 import { AllPartOfChecked, GetPartOfName } from "./helpers";
 import { FilterElement } from "../FilterElement";
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   edges: Edge[];

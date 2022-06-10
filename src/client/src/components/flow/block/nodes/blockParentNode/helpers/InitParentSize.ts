@@ -1,6 +1,6 @@
+import { Node } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { Size } from "../../../../../../assets/size/Size";
-import { Node } from "../../../../../../models";
 import { updateBlockSize } from "../../../../../../redux/store/project/actions";
 
 /**

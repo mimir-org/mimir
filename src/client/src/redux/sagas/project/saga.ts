@@ -1,10 +1,11 @@
 import { call, put } from "redux-saga/effects";
-import { Project, ProjectFileAm, WebSocket } from "../../../models";
+import { ProjectFileAm, WebSocket } from "../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { ConvertProject, MapProjectProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { search } from "../../store/project/actions";
-import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
+import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
 import {
   ApiError,
@@ -64,7 +65,7 @@ export function* getProject(action: FetchingProjectAction) {
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
-        if (!IsPartOfTerminal(edge.fromConnector)) edge.hidden = true;
+        if (!IsPartOfRelation(edge.fromConnector)) edge.hidden = true;
       });
     }
 

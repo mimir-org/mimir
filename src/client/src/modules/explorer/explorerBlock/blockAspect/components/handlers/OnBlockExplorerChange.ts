@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { removeSecondaryNode, setSecondaryNode } from "../../../../../../redux/store/secondaryNode/actions";
 import { IsDirectChild, IsFamily } from "../../../../../../helpers/Family";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { SetFitToScreen } from "../../../../../../helpers";
 import { ViewportData } from "../../../../../../models/project";
 import {

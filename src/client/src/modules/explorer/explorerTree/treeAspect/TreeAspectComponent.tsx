@@ -1,4 +1,4 @@
-import { Node } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../assets/text/TextResources";
 import { Divider } from "../../../../compLibrary/divider";

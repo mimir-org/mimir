@@ -1,4 +1,4 @@
-import { Node } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { TreeAspectComponent } from "./treeAspect/TreeAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";
 import { useEffect, useState } from "react";
