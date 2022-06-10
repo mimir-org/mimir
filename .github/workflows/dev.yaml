@@ -93,6 +93,8 @@ jobs:
 
           cp -a ../src/service/Mimirorg.Package/template/. ./
 
+          npx tsc index.ts --declaration
+
           npm version ${{ needs.create-prerelease.outputs.raw_tag }}
 
       - name: Publish npm package
