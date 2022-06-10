@@ -8,7 +8,7 @@ const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nod
 
   nodeTerminals.forEach((t) => {
     const connector = CreateConnector(t, nodeId);
-    for (let i = 0; i < t.number; i++) connectors.push(connector);
+    for (let i = 0; i < t.quantity; i++) connectors.push(connector);
   });
 
   return connectors;
