@@ -25,7 +25,6 @@ namespace ModelBuilder.Tests.Models
                 NodeIri = null,
                 IsRequired = false,
                 TerminalTypeIri = "https://rdf.equinor.com/1234",
-                RelationType = RelationType.NotSet,
                 TerminalCategory = "TerminalParent",
                 TerminalTypeId = "12345",
                 SemanticReference = null
@@ -61,15 +60,14 @@ namespace ModelBuilder.Tests.Models
         }
 
         [Theory]
-        [InlineData((ConnectorDirection) 1000, ConnectorVisibility.InputVisible, RelationType.NotSet)]
-        [InlineData(ConnectorDirection.Input, (ConnectorVisibility) 1000, RelationType.NotSet)]
-        [InlineData(ConnectorDirection.Input, ConnectorVisibility.InputVisible, (RelationType) 1000)]
-        public void Enum_Value_Out_Of_Range_Validate_False(ConnectorDirection connectorType, ConnectorVisibility connectorVisibility, RelationType relationType)
+        [InlineData((ConnectorDirection) 1000, ConnectorVisibility.InputVisible)]
+        [InlineData(ConnectorDirection.Input, (ConnectorVisibility) 1000)]
+        [InlineData(ConnectorDirection.Input, ConnectorVisibility.InputVisible)]
+        public void Enum_Value_Out_Of_Range_Validate_False(ConnectorDirection connectorType, ConnectorVisibility connectorVisibility)
         {
             var obj = _terminal.DeepCopy();
             obj.Type = connectorType;
             obj.ConnectorVisibility = connectorVisibility;
-            obj.RelationType = relationType;
             var validation = obj.ValidateObject();
             Assert.False(validation.IsValid);
         }
