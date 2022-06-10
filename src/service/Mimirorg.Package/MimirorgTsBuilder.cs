@@ -10,7 +10,7 @@ namespace Mimirorg.Package
             try
             {
                 CreateTypeScriptFile(new List<string>() { "Mb.Models.Data", "Mb.Models.Application" },
-                    "template/index.d.ts");
+                    "template/index.ts");
             }
             catch (Exception e)
             {
@@ -24,7 +24,7 @@ namespace Mimirorg.Package
             var ts = new TypeScriptGenerator(new TypeScriptGeneratorOptions
             {
                 IgnoreNamespaces = true,
-                EmitIinInterface = false,
+                EmitIinInterface = false
             });
 
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
