@@ -68,7 +68,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
+    return hooks.useOnBlockConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {

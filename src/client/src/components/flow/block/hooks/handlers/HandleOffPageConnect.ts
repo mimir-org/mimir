@@ -5,7 +5,7 @@ import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../.
 import { ConvertDataToEdge } from "../../../converters";
 import { CreateId } from "../../../helpers";
 import { IsTerminal } from "../../../helpers/Connectors";
-import { Params } from "../useOnConnect";
+import { Params } from "../useOnBlockConnect";
 import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
 
 /**

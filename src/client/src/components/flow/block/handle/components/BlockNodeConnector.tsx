@@ -22,12 +22,12 @@ interface Props {
 }
 
 /**
- * Component for a BlockNode terminal. React Flow's terminal is a Handle Component.
+ * Component for a BlockNode connector. React Flow's connector is of the type Handle Component.
  * On top of the Handle component a wrapper with Mimir design and logic is placed.
  * @param interface
  * @returns a JSX Element containing a Handle component from Flow.
  */
-export const BlockNodeTerminal = ({ project, node, connector, dispatch, isElectro, isParent, visible, setVisible }: Props) => {
+export const BlockNodeConnector = ({ project, node, connector, dispatch, isElectro, isParent, visible, setVisible }: Props) => {
   const [type, pos] = GetBlockHandleType(connector, isElectro, isParent);
   const color = GetTerminalColor(connector);
   const isOffPage = IsOffPage(node);
