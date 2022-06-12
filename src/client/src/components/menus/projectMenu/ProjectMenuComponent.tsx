@@ -71,12 +71,6 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
         disabled={!hasActiveProject}
         bottomLine
       />
-      {/* <MenuElement
-          text={TextResources.Project_Commit_Project}
-          icon={Icons.CommitProjectIcon}
-          onClick={() => projectMenuAction(() => Click.OnCommit(dispatch))}
-          disabled={!projectState?.project?.isSubProject}
-        /> */}
       <MenuElement
         text={TextResources.SUBPROJECT_SAVE}
         icon={hasSelectedNodes ? Icons.CreateSubProjectIcon : Icons.CreateSubProjectInactiveIcon}

@@ -1,4 +1,5 @@
 import { Node, Project } from "@mimirorg/modelbuilder-types";
+import { ProjectItemCm } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
 import { AttributeLikeItem } from "../../modules/inspector/types";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
@@ -199,7 +200,7 @@ export const projectIdSelector = createAppSelector(
 
 export const projectListSelector = createAppSelector(
   (state) => state.projectState.projectList,
-  (projectList) => projectList
+  (projectList) => projectList as ProjectItemCm[]
 );
 
 export const projectIsSubProjectSelector = createAppSelector(
@@ -213,8 +214,8 @@ export const secondaryNodeSelector = createAppSelector(
 );
 
 export const selectedNodeSelector = createAppSelector(
-  (state) => state.projectState.project?.nodes?.find((n) => n.selected),
-  (node) => node
+  (state) => state.projectState.project?.nodes?.find((n: Node) => n.selected),
+  (node) => node as Node
 );
 
 export const electroSelector = createAppSelector(

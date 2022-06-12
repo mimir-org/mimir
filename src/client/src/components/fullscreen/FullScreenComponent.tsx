@@ -29,7 +29,6 @@ export const FullScreenComponent = ({ inspectorRef }: Props) => {
   const isLibOpen = useAppSelector(libOpenSelector);
   const isInspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
-
   if (height === undefined) height = isInspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   return (

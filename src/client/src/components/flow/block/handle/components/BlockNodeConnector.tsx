@@ -1,12 +1,12 @@
 import { Handle } from "react-flow-renderer";
 import { Dispatch } from "redux";
-import { GetTerminalColor } from "../../helpers";
+import { GetConnectorColor } from "../../helpers";
 import { HandleIcon } from "./HandleIcon";
 import { HandleBox } from "../HandleComponent.styled";
 import { OnMouseEnter, OnMouseLeave } from "../handlers/OnMouseHandler";
 import { GetBlockHandleType, IsValidBlockConnection } from "../helpers";
 import { IsOffPage } from "../../../../../helpers/Aspects";
-import { GetHandleLeftPosition, GetHandleTopPosition } from "../helpers/GetTerminalPosition";
+import { GetHandleLeftPosition, GetHandleTopPosition } from "../helpers/GetConnectorPosition";
 import { Node, Connector, Project } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../helpers/Connectors";
 
@@ -29,7 +29,7 @@ interface Props {
  */
 export const BlockNodeConnector = ({ project, node, connector, dispatch, isElectro, isParent, visible, setVisible }: Props) => {
   const [type, pos] = GetBlockHandleType(connector, isElectro, isParent);
-  const color = GetTerminalColor(connector);
+  const color = GetConnectorColor(connector);
   const isOffPage = IsOffPage(node);
 
   return (

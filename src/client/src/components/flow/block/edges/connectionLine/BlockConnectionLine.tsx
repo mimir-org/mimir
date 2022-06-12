@@ -2,7 +2,7 @@ import { Connector } from "@mimirorg/modelbuilder-types";
 import { ConnectionLineComponentProps } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
 import { IsInputConnector } from "../../../helpers/Connectors";
-import { GetTerminalColor } from "../../helpers";
+import { GetConnectorColor } from "../../helpers";
 
 /**
  * Component to give custom styling to the edge dragged from a Terminal in BlockView.
@@ -47,6 +47,6 @@ export const BlockConnectionLine = ({
 };
 
 function GetStyle(connector: Connector) {
-  const color = GetTerminalColor(connector);
+  const color = GetConnectorColor(connector);
   return { fill: "none", stroke: color, strokeWidth: 2 };
 }
