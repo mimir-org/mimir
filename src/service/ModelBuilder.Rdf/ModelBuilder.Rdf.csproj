@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="dotNetRDF" Version="2.7.4" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.58" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.58" />
+    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.66" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.66" />
   </ItemGroup>
 
   <ItemGroup>
