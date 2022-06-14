@@ -1,16 +1,19 @@
 import { CombinedAttributeFilter } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 import {
   CommonState,
-  FetchCollaboratorPartnersFinished,
+  FetchCompaniesFinished,
   FetchCombinedAttributeFilterFinished,
   FetchParsersFinished,
+  FetchCompanyFinished,
 } from "./types";
 
 const initialCommonState: CommonState = {
   fetching: false,
-  collaborationPartners: [],
+  companies: [] as MimirorgCompanyCm[],
+  company: {} as MimirorgCompanyCm,
   parsers: [] as ModuleDescription[],
   filters: [] as CombinedAttributeFilter[],
   statuses: [],
@@ -21,16 +24,28 @@ export const commonSlice = createSlice({
   name: "common",
   initialState: initialCommonState,
   reducers: {
-    fetchCollaborationPartners: (state) => {
+    fetchCompanies: (state) => {
       state.fetching = true;
-      state.collaborationPartners = [];
+      state.companies = [];
       state.apiError = state.apiError
-        ? state.apiError.filter((elem) => elem.key !== fetchCollaborationPartnersSuccessOrError.type)
+        ? state.apiError.filter((elem) => elem.key !== fetchCompaniesSuccessOrError.type)
         : state.apiError;
     },
-    fetchCollaborationPartnersSuccessOrError: (state, action: PayloadAction<FetchCollaboratorPartnersFinished>) => {
+    fetchCompany: (state) => {
+      state.fetching = true;
+      state.company = {} as MimirorgCompanyCm;
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchCompaniesSuccessOrError.type)
+        : state.apiError;
+    },
+    fetchCompaniesSuccessOrError: (state, action: PayloadAction<FetchCompaniesFinished>) => {
       state.fetching = false;
-      state.collaborationPartners = action.payload.collaborationPartners;
+      state.companies = action.payload.companies;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+    fetchCompanySuccessOrError: (state, action: PayloadAction<FetchCompanyFinished>) => {
+      state.fetching = false;
+      state.company = action.payload.company;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     fetchCombinedAttributeFilters: (state) => {
@@ -64,8 +79,10 @@ export const commonSlice = createSlice({
 });
 
 export const {
-  fetchCollaborationPartners,
-  fetchCollaborationPartnersSuccessOrError,
+  fetchCompany,
+  fetchCompanies,
+  fetchCompaniesSuccessOrError,
+  fetchCompanySuccessOrError,
   fetchCombinedAttributeFilters,
   fetchCombinedAttributeFiltersSuccessOrError,
   fetchParsers,

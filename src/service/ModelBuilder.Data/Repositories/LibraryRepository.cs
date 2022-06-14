@@ -26,7 +26,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributeQualifierLibCm>> GetAttributeQualifiers()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattributequalifier");
+            var url = _applicationSetting.ApiUrl("libraryattribute/qualifier");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeQualifier.ToString(),
                 async () => await _httpRepository.GetData<List<AttributeQualifierLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -36,7 +36,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributeSourceLibCm>> GetAttributeSources()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattributesource");
+            var url = _applicationSetting.ApiUrl("libraryattribute/source");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeSource.ToString(),
                 async () => await _httpRepository.GetData<List<AttributeSourceLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -46,7 +46,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributeFormatLibCm>> GetAttributeFormats()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattributeformat");
+            var url = _applicationSetting.ApiUrl("libraryattribute/format");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeFormat.ToString(),
                 async () => await _httpRepository.GetData<List<AttributeFormatLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -56,7 +56,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributeConditionLibCm>> GetAttributeConditions()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattributecondition");
+            var url = _applicationSetting.ApiUrl("libraryattribute/condition");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeCondition.ToString(),
                 async () => await _httpRepository.GetData<List<AttributeConditionLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -76,7 +76,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributeAspectLibCm>> GetAspectAttributes()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattributeaspect");
+            var url = _applicationSetting.ApiUrl("libraryattribute/aspect");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeAspect.ToString(),
                 async () => await _httpRepository.GetData<List<AttributeAspectLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -96,7 +96,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributeLibCm>> GetAttributes()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("attribute");
+            var url = _applicationSetting.ApiUrl("libraryattribute");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.Attribute.ToString(),
                 async () => await _httpRepository.GetData<List<AttributeLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 
@@ -126,7 +126,7 @@ namespace Mb.Data.Repositories
         public async Task<List<AttributePredefinedLibCm>> GetPredefinedAttributes()
         {
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("attribute/predefined");
+            var url = _applicationSetting.ApiUrl("libraryattribute/predefined");
             var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributePredefined.ToString(),
                 async () => await _httpRepository.GetData<List<AttributePredefinedLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
 

@@ -83,12 +83,12 @@ const ConvertConnectors = (connectors: Connector[]) => {
       connectorVisibility: connector.connectorVisibility,
       nodeId: connector.nodeId,
       nodeIri: connector.nodeIri,
-      relationType: RelationType.NotSet, // connector.relationType,
-      color: "#000",
-      terminalCategory: "",
+      //relationType: RelationType.NotSet, // connector.relationType,
+      //color: "#000",
+      //terminalCategory: "",
       attributes: [], // ConvertAttributes(connector.attributes),
-      terminalTypeId: "", // connector.terminalTypeId,
-      terminalTypeIri: "", // connector.terminalTypeIri,
+      //terminalTypeId: "", // connector.terminalTypeId,
+      //terminalTypeIri: "", // connector.terminalTypeIri,
       isRequired: connector.isRequired,
     });
   });

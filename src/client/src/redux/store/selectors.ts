@@ -66,9 +66,9 @@ export const commonStateParsersSelector = createAppSelector(
   (parsers) => parsers
 );
 
-export const commonStateCollaborationPartnersSelector = createAppSelector(
-  (state) => state.commonState.collaborationPartners,
-  (collaborationPartners) => collaborationPartners
+export const commonStateCompaniesSelector = createAppSelector(
+  (state) => state.commonState.companies,
+  (companies) => companies
 );
 
 export const librarySelector = createAppSelector(

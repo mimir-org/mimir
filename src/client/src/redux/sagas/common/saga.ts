@@ -2,29 +2,52 @@ import { call, put } from "redux-saga/effects";
 import Config from "../../../models/Config";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get } from "../../../models/webclient";
 import {
-  fetchCollaborationPartnersSuccessOrError,
+  fetchCompanySuccessOrError,
+  fetchCompaniesSuccessOrError,
   fetchCombinedAttributeFiltersSuccessOrError,
   fetchParsersSuccessOrError
 } from "../../store/common/commonSlice";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
+
+/**
+ * Get current company
+ */
+export function* getCompany() {
+  try {
+    const url = `${Config.API_BASE_URL}common/company/current`;
+    const response = yield call(get, url);
+
+    if (response.status === 400) {
+      const apiError = GetApiErrorForBadRequest(response, fetchCompanySuccessOrError.type);
+      yield put(fetchCompanySuccessOrError({ company: {} as MimirorgCompanyCm, apiError }));
+      return;
+    }
+
+    yield put(fetchCompanySuccessOrError({ company: response.data, apiError: null }));
+  } catch (error) {
+    const apiError = GetApiErrorForException(error, fetchCompanySuccessOrError.type);
+    yield put(fetchCompanySuccessOrError({ company: {} as MimirorgCompanyCm, apiError }));
+  }
+}
 
 /**
  * Get all registered collaboration partners
  */
-export function* getCollaborationPartners() {
+export function* getCompanies() {
   try {
-    const url = `${Config.API_BASE_URL}common/collaboration-partner`;
+    const url = `${Config.API_BASE_URL}common/company`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
-      const apiError = GetApiErrorForBadRequest(response, fetchCollaborationPartnersSuccessOrError.type);
-      yield put(fetchCollaborationPartnersSuccessOrError({ collaborationPartners: [], apiError }));
+      const apiError = GetApiErrorForBadRequest(response, fetchCompaniesSuccessOrError.type);
+      yield put(fetchCompaniesSuccessOrError({ companies: [], apiError }));
       return;
     }
 
-    yield put(fetchCollaborationPartnersSuccessOrError({ collaborationPartners: response.data, apiError: null }));
+    yield put(fetchCompaniesSuccessOrError({ companies: response.data, apiError: null }));
   } catch (error) {
-    const apiError = GetApiErrorForException(error, fetchCollaborationPartnersSuccessOrError.type);
-    yield put(fetchCollaborationPartnersSuccessOrError({ collaborationPartners: [], apiError }));
+    const apiError = GetApiErrorForException(error, fetchCompaniesSuccessOrError.type);
+    yield put(fetchCompaniesSuccessOrError({ companies: [], apiError }));
   }
 }
 

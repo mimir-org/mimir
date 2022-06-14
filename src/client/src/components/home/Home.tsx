@@ -20,7 +20,7 @@ import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
-import { fetchCollaborationPartners, fetchCombinedAttributeFilters, fetchParsers } from "../../redux/store/common/commonSlice";
+import { fetchCompanies, fetchCompany, fetchCombinedAttributeFilters, fetchParsers } from "../../redux/store/common/commonSlice";
 
 interface Props {
   dispatch: Dispatch;
@@ -42,11 +42,12 @@ export const Home = ({ dispatch }: Props) => {
   const inspectorRef = useRef(null);
 
   useEffect(() => {
+    dispatch(fetchCompany());
     dispatch(fetchLibraryInterfaceTypes());
     dispatch(fetchLibraryTransportTypes());
     dispatch(search(""));
     dispatch(fetchLibrary());
-    dispatch(fetchCollaborationPartners());
+    dispatch(fetchCompanies());
     dispatch(fetchParsers());
     dispatch(fetchCombinedAttributeFilters());
     dispatch(fetchUser());

@@ -6,7 +6,6 @@ using Mimirorg.Common.Exceptions;
 using Mb.Models.Settings;
 using Microsoft.Extensions.Options;
 using Mimirorg.Common.Extensions;
-using Mimirorg.TypeLibrary.Models.Application;
 using StringExtensions = Mb.Models.Extensions.StringExtensions;
 
 namespace Mb.Data.Repositories
@@ -48,11 +47,7 @@ namespace Mb.Data.Repositories
             if (!validate.IsValid)
                 throw new MimirorgConfigurationException("There are missing configuration for application settings");
 
-            var company = _companyRepository.GetCompany(new MimirorgCompanyAuthAm
-            {
-                Domain = _applicationSetting.TypeLibraryDomain,
-                Secret = _applicationSetting.TypeLibrarySecret
-            }).Result;
+            var company = _companyRepository.GetCurrentCompany().Result;
 
             if (company == null)
                 throw new MimirorgConfigurationException("The settings for company is not correct or missing registration in Tyle");
@@ -70,11 +65,7 @@ namespace Mb.Data.Repositories
             if (!validate.IsValid)
                 throw new MimirorgConfigurationException("There are missing configuration for application settings");
 
-            var company = _companyRepository.GetCompany(new MimirorgCompanyAuthAm
-            {
-                Domain = _applicationSetting.TypeLibraryDomain,
-                Secret = _applicationSetting.TypeLibrarySecret
-            }).Result;
+            var company = _companyRepository.GetCurrentCompany().Result;
 
             return company.Domain;
         }

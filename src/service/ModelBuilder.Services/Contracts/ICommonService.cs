@@ -9,6 +9,7 @@ namespace Mb.Services.Contracts
     {
         IEnumerable<CombinedAttributeFilter> GetAllCombinedAttributeFilters();
         Task<ICollection<MimirorgCompanyCm>> GetAllCompanies();
+        Task<MimirorgCompanyCm> GetCurrentCompany();
         Task<MimirorgCompanyCm> GetCompanyByDomain(string domain);
     }
 }

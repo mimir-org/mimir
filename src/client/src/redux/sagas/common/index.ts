@@ -1,14 +1,16 @@
 import { all, takeEvery } from "redux-saga/effects";
-import { getAttributeFilters, getCollaborationPartners, getParsers } from "./saga";
+import { getAttributeFilters, getCompanies, getParsers, getCompany } from "./saga";
 import {
-  fetchCollaborationPartners,
+  fetchCompany,
+  fetchCompanies,
   fetchCombinedAttributeFilters,
   fetchParsers
 } from "../../store/common/commonSlice";
 
 export function* commonSaga() {
   yield all([
-    takeEvery(fetchCollaborationPartners, getCollaborationPartners),
+    takeEvery(fetchCompany, getCompany),
+    takeEvery(fetchCompanies, getCompanies),
     takeEvery(fetchCombinedAttributeFilters, getAttributeFilters),
     takeEvery(fetchParsers, getParsers),
   ]);

@@ -10,15 +10,16 @@ import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useState } from "react";
 import { OnCommitProjectClick, OnReturnClick } from "./handlers";
 import { useAppDispatch, useAppSelector } from "../../../../../../redux/store";
-import { ModuleDescription, CollaborationPartner } from "@mimirorg/modelbuilder-types";
+import { ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
 export const CommitProjectMenu = () => {
   const dispatch = useAppDispatch();
   const parsers = useAppSelector(selectors.commonStateParsersSelector);
   const projectId = useAppSelector(selectors.projectIdSelector);
-  const collaborationPartners = useAppSelector(selectors.commonStateCollaborationPartnersSelector);
+  const companies = useAppSelector(selectors.commonStateCompaniesSelector);
   const [parser, setParser] = useState(parsers[0]);
-  const [collaborationPartner, setCollaborationPartner] = useState(collaborationPartners[0]);
+  const [collaborationPartner, setCollaborationPartner] = useState(companies[0]);
   const isActionDisabled = !(collaborationPartner && parser && projectId);
   const onAction = () => OnCommitProjectClick(dispatch, projectId, parser.id, collaborationPartner.domain);
   const onExit = () => OnReturnClick(dispatch);
@@ -30,9 +31,9 @@ export const CommitProjectMenu = () => {
         <Dropdown
           label="Collaboration partner"
           valueProp="name"
-          items={collaborationPartners}
+          items={companies}
           keyProp="id"
-          onChange={(item: CollaborationPartner) => setCollaborationPartner(item)}
+          onChange={(item: MimirorgCompanyCm) => setCollaborationPartner(item)}
         />
         <Label>{TextResources.COMMIT_PARSER}</Label>
         <Dropdown

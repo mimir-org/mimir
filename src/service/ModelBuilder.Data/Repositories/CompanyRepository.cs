@@ -25,16 +25,22 @@ namespace Mb.Data.Repositories
         {
             // ReSharper disable once StringLiteralTypo
             var url = _applicationSetting.ApiUrl("mimirorgcompany");
-            var data = await _cacheRepository.GetOrCreateAsync("company",
+            var data = await _cacheRepository.GetOrCreateAsync("companies",
                 async () => await _httpRepository.GetData<List<MimirorgCompanyCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 300 : null);
 
             return data;
         }
 
-        public async Task<MimirorgCompanyCm> GetCompany(MimirorgCompanyAuthAm auth)
+        public async Task<MimirorgCompanyCm> GetCurrentCompany()
         {
+            var auth = new MimirorgCompanyAuthAm
+            {
+                Domain = _applicationSetting.TypeLibraryDomain,
+                Secret = _applicationSetting.TypeLibrarySecret
+            };
+
             // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("mimirorgcompany");
+            var url = _applicationSetting.ApiUrl("mimirorgcompany/auth");
 
             var data = await _cacheRepository.GetOrCreateAsync("company",
                 async () => await _httpRepository.PostData<MimirorgCompanyCm, MimirorgCompanyAuthAm>(url, auth), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 300 : null);

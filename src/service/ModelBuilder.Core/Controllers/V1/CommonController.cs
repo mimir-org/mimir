@@ -69,6 +69,29 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
+        /// Get current company
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("company/current")]
+        [ProducesResponseType(typeof(MimirorgCompanyCm), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Policy = "Read")]
+        public async Task<IActionResult> GetCurrentCompany()
+        {
+            try
+            {
+                var data = await _commonService.GetCurrentCompany();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
         /// Returns a list of all combined attributes
         /// </summary>
         /// <returns>List of combined attributes></returns>

@@ -87,6 +87,16 @@ namespace Mb.Services.Services
         }
 
         /// <summary>
+        /// Get current company
+        /// </summary>
+        /// <returns>The registered company</returns>
+        public async Task<MimirorgCompanyCm> GetCurrentCompany()
+        {
+            var company = await _companyRepository.GetCurrentCompany();
+            return company;
+        }
+
+        /// <summary>
         /// Get collaboration partner by domain
         /// </summary>
         /// <param name="domain"></param>
