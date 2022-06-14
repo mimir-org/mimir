@@ -3,7 +3,7 @@ import { BuildFlowChildNode } from "..";
 import { IsOffPage } from "../../../../../helpers/Aspects";
 import { IsFamily } from "../../../../../helpers/Family";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
-import { IsInputTerminal, IsOutputTerminal, IsTerminal, IsPartOfRelation } from "../../../helpers/Connectors";
+import { IsInputConnector, IsOutputConnector, IsTerminal, IsPartOfRelation } from "../../../helpers/Connectors";
 
 /**
  * Component to draw all children FlowNodes in BlockView.
@@ -67,8 +67,8 @@ function ValidateOffPage(
   if (!secondaryNode) return flowNodes.some((elem) => elem.id === offPageParentId);
   if (!IsFamily(selectedNode, secondaryNode)) return false;
 
-  const inputTerminal = offPageNode.connectors.find((c) => IsTerminal(c) && IsInputTerminal(c));
-  const outputTerminal = offPageNode.connectors.find((c) => IsTerminal(c) && IsOutputTerminal(c));
+  const inputTerminal = offPageNode.connectors.find((c) => IsTerminal(c) && IsInputConnector(c));
+  const outputTerminal = offPageNode.connectors.find((c) => IsTerminal(c) && IsOutputConnector(c));
 
   const edgeToOffPage = edges.find((e) => IsTerminal(e.fromConnector) && e.toConnectorId === inputTerminal?.id);
   const edgeFromOffPage = edges.find((e) => IsTerminal(e.fromConnector) && e.fromConnectorId === outputTerminal?.id);

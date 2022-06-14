@@ -28,10 +28,10 @@ interface OnDropParameters {
 /**
  * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas in BlockView.
  * A partOf Edge is created from the dropped Node to its parent.
- * The parent is the selectedNode or the secondaryParentNode.
+ * The parent is the selectedNode (primaryNode) or the secondaryParentNode.
  * @param params
  */
-const useOnDrop = (params: OnDropParameters) => {
+const useOnBlockDrop = (params: OnDropParameters) => {
   const { event } = params;
   event.stopPropagation();
   event.preventDefault();
@@ -44,7 +44,8 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
 /**
- * Function to handle the drop from the Library Module.
+ * Function to handle a node dropped from the Library.
+ * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param params
  */
 function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
@@ -60,6 +61,7 @@ function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, ge
     if (!parentNode) return;
   }
 
+  // Position for both treeView and blockView must be set
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
@@ -109,19 +111,20 @@ function CalculateSecondaryNodeDropZone(getViewport: GetViewport, primaryNode: N
 }
 
 /**
- * Function to determine which parentNode in SplitView that is the parent of a dropped Node.
+ * Function to determine which parentNode in SplitView that will be the parent of a dropped Node.
+ * The parentNode is chosen based on if it is dropped over the primaryNode or the secondaryNode.
  * @param targetNode
- * @param selectedNode
+ * @param primaryNode
  * @param secondaryNode
  * @param dropZone
  * @param clientX
- * @returns a Node.
+ * @returns a parentNode.
  */
-function FindParent(targetNode: NodeLibCm, selectedNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
-  if (!IsFamily(targetNode, selectedNode) && !IsFamily(targetNode, secondaryNode)) return null;
-  if (!IsFamily(targetNode, selectedNode)) return secondaryNode;
-  if (!IsFamily(targetNode, secondaryNode)) return selectedNode;
-  return clientX < dropZone ? selectedNode : secondaryNode;
+function FindParent(targetNode: NodeLibCm, primaryNode: Node, secondaryNode: Node, dropZone: number, clientX: number) {
+  if (!IsFamily(targetNode, primaryNode) && !IsFamily(targetNode, secondaryNode)) return null;
+  if (!IsFamily(targetNode, primaryNode)) return secondaryNode;
+  if (!IsFamily(targetNode, secondaryNode)) return primaryNode;
+  return clientX < dropZone ? primaryNode : secondaryNode;
 }
 
-export default useOnDrop;
+export default useOnBlockDrop;

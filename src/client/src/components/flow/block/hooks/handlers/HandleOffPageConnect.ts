@@ -5,12 +5,12 @@ import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../.
 import { ConvertDataToEdge } from "../../../converters";
 import { CreateId } from "../../../helpers";
 import { IsTerminal } from "../../../helpers/Connectors";
-import { Params } from "../useOnConnect";
+import { Params } from "../useOnBlockConnect";
 import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
 
 /**
  * Component to handle a connection between two OffPageNodes.
- * When the connection is completed the OffPageNodes are deleted,
+ * The OffPageNodes only serves as placeholders, and when the connection is completed the OffPageNodes are deleted,
  * and one new transport edge is created between the parents of the OffPageNodes.
  * This component is called from the useOnConnect hook.
  * @param params

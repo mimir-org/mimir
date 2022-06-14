@@ -1,5 +1,5 @@
 import { Size } from "../../../../../../assets/size/Size";
-import { IsInputTerminal, IsConnectorVisible, IsOutputTerminal } from "../../../../helpers/Connectors";
+import { IsInputConnector, IsConnectorVisible, IsOutputConnector } from "../../../../helpers/Connectors";
 import { Terminals } from "../../blockParentNode/BlockParentNode";
 
 /**
@@ -19,11 +19,11 @@ export const SetChildNodeSize = (terminals: Terminals, electro: boolean) => {
   let height = Size.NODE_HEIGHT;
 
   terminals.inputs.forEach((t) => {
-    IsConnectorVisible(t) && IsInputTerminal(t) && inTerminals++;
+    IsConnectorVisible(t) && IsInputConnector(t) && inTerminals++;
   });
 
   terminals.outputs.forEach((t) => {
-    IsConnectorVisible(t) && IsOutputTerminal(t) && outTerminals++;
+    IsConnectorVisible(t) && IsOutputConnector(t) && outTerminals++;
   });
 
   if (electro) {

@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { useUpdateNodeInternals } from "react-flow-renderer";
 import { HandleContainer } from "./HandleComponent.styled";
-import { BlockNodeTerminal } from "./components/BlockNodeTerminal";
+import { BlockNodeConnector } from "./components/BlockNodeConnector";
 import { ShowHandle } from "./helpers";
 import { IsProduct } from "../../../../helpers/Aspects";
 import { Project, Node, Connector } from "@mimirorg/modelbuilder-types";
@@ -39,7 +39,7 @@ export const HandleComponent = ({ node, project, terminals, isElectro, isOffPage
       {terminals.map((conn) => {
         if (!ShowHandle(conn, isInput, IsProduct(node))) return null;
         return (
-          <BlockNodeTerminal
+          <BlockNodeConnector
             key={`handle-${conn.id}`}
             project={project}
             node={node}

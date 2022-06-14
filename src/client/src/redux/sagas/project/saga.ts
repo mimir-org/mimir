@@ -232,7 +232,9 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     const data = response.data as ProjectFileAm;
     const blob = new Blob([data.fileContent], { type: data.fileFormat.contentType });
 
-    saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
+    // TODO: fix filname, does not exist in model
+    // saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
+    saveAs(blob);
 
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,

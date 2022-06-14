@@ -3,9 +3,9 @@ import { Terminals } from "../blockParentNode/BlockParentNode";
 import { Connector, Node } from "@mimirorg/modelbuilder-types";
 import {
   IsBidirectionalTerminal,
-  IsInputTerminal,
+  IsInputConnector,
   IsLocationRelation,
-  IsOutputTerminal,
+  IsOutputConnector,
   IsPartOfRelation,
   IsProductRelation,
   IsTerminal,
@@ -24,8 +24,8 @@ export const FilterTerminals = (connectors: Connector[], selectedBlockNode: Node
     ?.filter((c) => FilterTerminal(selectedBlockNode, secondaryNode, c))
     ?.sort((a, b) => a.type - b.type || a.name.localeCompare(b.name));
 
-  const inputs = sortedConnectors?.filter((t) => IsInputTerminal(t) || IsBidirectionalTerminal(t)) ?? [];
-  const outputs = sortedConnectors?.filter((t) => IsOutputTerminal(t) || IsBidirectionalTerminal(t)) ?? [];
+  const inputs = sortedConnectors?.filter((t) => IsInputConnector(t) || IsBidirectionalTerminal(t)) ?? [];
+  const outputs = sortedConnectors?.filter((t) => IsOutputConnector(t) || IsBidirectionalTerminal(t)) ?? [];
 
   return { inputs, outputs } as Terminals;
 };

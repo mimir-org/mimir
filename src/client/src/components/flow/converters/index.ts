@@ -6,8 +6,8 @@ export { default as ConvertSimpleLibCmToSimple } from "./ConvertSimpleLibCmToSim
 
 export { default as ConvertDataToEdge } from "./ConvertDataToEdge";
 
-export { default as ConvertEdgeToFlow } from "./ConvertEdgeToFlow";
-export { default as ConvertNodeToFlow } from "./ConvertNodeToFlow";
+export { default as ConvertEdgeToFlowEdge } from "./ConvertEdgeToFlowEdge";
+export { default as ConvertNodeToFlowNode } from "./ConvertNodeToFlowNode";
 
 export { default as ConvertToTransport } from "./ConvertToTransport";
 export { default as ConvertToInterface } from "./ConvertToInterface";

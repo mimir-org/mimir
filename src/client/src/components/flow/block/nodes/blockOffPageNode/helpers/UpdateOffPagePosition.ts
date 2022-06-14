@@ -2,7 +2,7 @@ import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { Dispatch } from "redux";
 import { BlockNodeSize } from "../../../../../../models/project";
 import { updateBlockPosition } from "../../../../../../redux/store/project/actions";
-import { IsInputTerminal } from "../../../../helpers/Connectors";
+import { IsInputConnector } from "../../../../helpers/Connectors";
 
 const UpdateOffPagePosition = (
   node: Node,
@@ -15,7 +15,7 @@ const UpdateOffPagePosition = (
   const inputTerminalPos = parentBlockNode?.positionBlockX + size.width;
   const outputTerminalPos = parentBlockNode?.positionBlockX - margin;
 
-  const xPos = IsInputTerminal(terminal) ? inputTerminalPos : outputTerminalPos;
+  const xPos = IsInputConnector(terminal) ? inputTerminalPos : outputTerminalPos;
   let yPos = node?.positionBlockY;
 
   const yMin = 120;

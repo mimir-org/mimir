@@ -68,7 +68,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
+    return hooks.useOnBlockConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -81,7 +81,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnDrop({ event, project, user, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
+    return hooks.useOnBlockDrop({ event, project, user, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
   const OnNodesChange = useCallback(

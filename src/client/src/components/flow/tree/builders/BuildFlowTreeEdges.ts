@@ -1,7 +1,7 @@
 import { Edge as FlowEdge } from "react-flow-renderer";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetTreeEdgeType } from "../helpers";
-import { ConvertEdgeToFlow } from "../../converters";
+import { ConvertEdgeToFlowEdge } from "../../converters";
 import { EdgeType } from "../../../../models/project";
 import { Edge, Node } from "@mimirorg/modelbuilder-types";
 
@@ -23,7 +23,7 @@ function BuildTreeEdge(edge: Edge, edgeType: EdgeType, nodes: Node[], animated: 
   const sourceNode = nodes.find((node) => node.id === edge.fromNodeId);
   const targetNode = nodes.find((node) => node.id === edge.toNodeId);
 
-  if (edge.fromNode && edge.toNode) return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
+  if (edge.fromNode && edge.toNode) return ConvertEdgeToFlowEdge(edge, edgeType, sourceNode, targetNode, animated);
 }
 
 export default BuildFlowTreeEdges;

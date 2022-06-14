@@ -6,7 +6,7 @@ import { Node as FlowNode } from "react-flow-renderer";
  * @param node
  * @returns a FlowNode.
  */
-const ConvertNodeToFlow = (node: Node) => {
+const ConvertNodeToFlowNode = (node: Node) => {
   if (!node) return null;
 
   const position = { x: node.positionX, y: node.positionY };
@@ -30,4 +30,4 @@ function GetNodeType(node: Node) {
   return typeName;
 }
 
-export default ConvertNodeToFlow;
+export default ConvertNodeToFlowNode;

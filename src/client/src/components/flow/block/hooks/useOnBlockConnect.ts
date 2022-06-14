@@ -25,7 +25,7 @@ export interface Params {
  * @param params
  * @returns an Edge connection.
  */
-const useOnConnect = (params: Params) => {
+const useOnBlockConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
   const { project, connection, lib, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
@@ -51,4 +51,4 @@ const useOnConnect = (params: Params) => {
   });
 };
 
-export default useOnConnect;
+export default useOnBlockConnect;

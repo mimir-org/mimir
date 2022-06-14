@@ -1,4 +1,4 @@
-import { IsInputTerminal, IsOutputTerminal, IsOutputVisible } from "../../../../helpers/Connectors";
+import { IsInputConnector, IsOutputConnector, IsOutputVisible } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
@@ -29,8 +29,8 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   if (!sourceConnector || !sourceNode) return null;
 
-  const sourcePartOfConn = sourceNode.connectors.find((c) => !IsInputTerminal(c)); //IsPartOfRelation(c) && !IsInputTerminal(c)); // TODO: fix
-  const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
+  const sourcePartOfConn = sourceNode.connectors.find((c) => !IsInputConnector(c)); //IsPartOfRelation(c) && !IsInputTerminal(c)); // TODO: fix
+  const isTarget = IsOutputConnector(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
     id: CreateId(),

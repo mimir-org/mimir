@@ -39,7 +39,7 @@ function IsRelationNode(node: Node) {
   return IsLocation(node) || IsProduct(node);
 }
 
-function IsRelationTerminal(connector: Connector) {
+function IsRelationConnector(connector: Connector) {
   return IsLocationRelation(connector) || IsProductRelation(connector);
 }
 
@@ -66,11 +66,11 @@ function ValidateTransport(source: Connector, target: Connector, sourceNode: Nod
 
 function ValidateRelation(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {
   if (IsRelationNode(sourceNode)) {
-    const existingEdge = edges.find((e) => e.toConnectorId === target.id && IsRelationTerminal(e.toConnector));
+    const existingEdge = edges.find((e) => e.toConnectorId === target.id && IsRelationConnector(e.toConnector));
     if (existingEdge) return false;
   }
   if (IsRelationNode(targetNode)) {
-    const existingEdge = edges.find((e) => e.fromConnectorId === source.id && IsRelationTerminal(e.fromConnector));
+    const existingEdge = edges.find((e) => e.fromConnectorId === source.id && IsRelationConnector(e.fromConnector));
     if (existingEdge) return false;
   }
   return true;
