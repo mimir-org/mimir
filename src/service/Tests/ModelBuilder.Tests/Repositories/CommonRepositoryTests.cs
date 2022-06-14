@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Mb.Models.Common;
 using Xunit;
 
@@ -14,32 +13,32 @@ namespace ModelBuilder.Tests.Repositories
             _projectFixture = projectFixture;
         }
 
-        [Fact]
-        public void CreateId_Returns_Correct_Id_Format()
-        {
-            var id = _projectFixture.CommonRepository.CreateId();
-            var current = _projectFixture.CollaborationPartnerRepository.GetAll().FirstOrDefault(x => x.Current);
-            Assert.NotNull(current);
+        //[Fact]
+        //public void CreateId_Returns_Correct_Id_Format()
+        //{
+        //    var id = _projectFixture.CommonRepository.CreateId();
+        //    var current = _projectFixture.CollaborationPartnerRepository.GetAll().FirstOrDefault(x => x.Current);
+        //    Assert.NotNull(current);
 
-            // Check if id has format xxx_xxx
-            var segments = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
-            Assert.True(segments.Length == 2);
+        //    // Check if id has format xxx_xxx
+        //    var segments = id.Split('_', StringSplitOptions.RemoveEmptyEntries);
+        //    Assert.True(segments.Length == 2);
 
-            // Check if guid is ok
-            var isValid = Guid.TryParse(segments[1], out _);
-            Assert.True(isValid);
+        //    // Check if guid is ok
+        //    var isValid = Guid.TryParse(segments[1], out _);
+        //    Assert.True(isValid);
 
-            // Check first element is correct domain
-            Assert.Equal(current.Domain, segments[0]);
-        }
+        //    // Check first element is correct domain
+        //    Assert.Equal(current.Domain, segments[0]);
+        //}
 
-        [Fact]
-        public void GetDomain_Returns_Correct_Domain()
-        {
-            var current = _projectFixture.CollaborationPartnerRepository.GetAll().FirstOrDefault(x => x.Current);
-            Assert.NotNull(current);
-            Assert.Equal("equinor.com", current.Domain);
-        }
+        //[Fact]
+        //public void GetDomain_Returns_Correct_Domain()
+        //{
+        //    var current = _projectFixture.CollaborationPartnerRepository.GetAll().FirstOrDefault(x => x.Current);
+        //    Assert.NotNull(current);
+        //    Assert.Equal("equinor.com", current.Domain);
+        //}
 
         [Theory]
         [InlineData(null, false)]
@@ -78,34 +77,34 @@ namespace ModelBuilder.Tests.Repositories
             Assert.Equal(expectedIri, replacement2.ToIri);
         }
 
-        [Theory]
-        [InlineData(null, null)]
-        [InlineData("", "")]
-        [InlineData("xxx", "yyy")]
-        public void CreateOrUseIdAndIri_Creates_Ok_From_Bad_Data(string fromId, string fromIri)
-        {
-            var replacement = new ReplacementId { FromId = fromId, FromIri = fromIri };
-            var replacement2 = _projectFixture.CommonRepository.CreateOrUseIdAndIri(replacement);
+        //[Theory]
+        //[InlineData(null, null)]
+        //[InlineData("", "")]
+        //[InlineData("xxx", "yyy")]
+        //public void CreateOrUseIdAndIri_Creates_Ok_From_Bad_Data(string fromId, string fromIri)
+        //{
+        //    var replacement = new ReplacementId { FromId = fromId, FromIri = fromIri };
+        //    var replacement2 = _projectFixture.CommonRepository.CreateOrUseIdAndIri(replacement);
 
-            // Check if id has format xxx_xxx
-            var segments = replacement2.ToId.Split('_', StringSplitOptions.RemoveEmptyEntries);
-            Assert.True(segments.Length == 2);
-            Assert.Contains(segments[1], replacement2.ToIri);
+        //    // Check if id has format xxx_xxx
+        //    var segments = replacement2.ToId.Split('_', StringSplitOptions.RemoveEmptyEntries);
+        //    Assert.True(segments.Length == 2);
+        //    Assert.Contains(segments[1], replacement2.ToIri);
 
-            // Check if iri is well formatted
-            var iriFormattedOk = _projectFixture.CommonRepository.HasValidIri(replacement2.ToIri);
-            Assert.True(iriFormattedOk);
-            Assert.Contains("/ID", replacement2.ToIri);
+        //    // Check if iri is well formatted
+        //    var iriFormattedOk = _projectFixture.CommonRepository.HasValidIri(replacement2.ToIri);
+        //    Assert.True(iriFormattedOk);
+        //    Assert.Contains("/ID", replacement2.ToIri);
 
-            // Check if guid is ok
-            var isValid = Guid.TryParse(segments[1], out _);
-            Assert.True(isValid);
+        //    // Check if guid is ok
+        //    var isValid = Guid.TryParse(segments[1], out _);
+        //    Assert.True(isValid);
 
-            // Check first element is correct domain
-            var current = _projectFixture.CollaborationPartnerRepository.GetAll().FirstOrDefault(x => x.Current);
-            Assert.NotNull(current);
-            Assert.Equal(current.Domain, segments[0]);
-        }
+        //    // Check first element is correct domain
+        //    var current = _projectFixture.CollaborationPartnerRepository.GetAll().FirstOrDefault(x => x.Current);
+        //    Assert.NotNull(current);
+        //    Assert.Equal(current.Domain, segments[0]);
+        //}
 
         [Theory]
         [InlineData(null, "https://hansa.no/asdefrg")]

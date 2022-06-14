@@ -9,9 +9,7 @@ using Mb.Core.Profiles;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Attributes;
-using Mb.Models.Common;
 using Mb.Models.Configurations;
 using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
@@ -81,7 +79,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IEdgeRepository, EdgeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
-            services.AddScoped<ICollaborationPartnerRepository, CollaborationPartnerRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ISimpleRepository, SimpleRepository>();
@@ -113,7 +111,8 @@ namespace Mb.Core.Extensions
 
             services.AddSingleton<IModuleService>(_ => moduleService);
             var modules = moduleService.Modules.Where(x =>
-                x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService ||
+                x.ModuleType == ModuleType.Plugin ||
+                x.ModuleType == ModuleType.SyncService ||
                 x.ModuleType == ModuleType.Parser).ToList();
 
             // Auto-mapper
@@ -124,7 +123,6 @@ namespace Mb.Core.Extensions
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile<CollaborationPartnerProfile>();
             cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new SimpleProfile());
@@ -153,8 +151,6 @@ namespace Mb.Core.Extensions
             var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
 
             context.Database.Migrate();
-            serviceScope.CreateOrUpdateCurrentCollaborationPartner();
-
             var moduleReaderAwaiter = moduleService.InitialModules().ConfigureAwait(true).GetAwaiter();
 
             while (!moduleReaderAwaiter.IsCompleted)
@@ -175,35 +171,6 @@ namespace Mb.Core.Extensions
         }
 
         #region Private Methods
-
-        private static void CreateOrUpdateCurrentCollaborationPartner(this IServiceScope serviceScope)
-        {
-            // Define default collaboration settings
-            var appSettings = serviceScope.ServiceProvider.GetRequiredService<IOptions<ApplicationSetting>>()?.Value;
-            if (appSettings?.CollaborationPartner == null)
-                return;
-
-            var commonService = serviceScope.ServiceProvider.GetRequiredService<ICommonService>();
-            var currentCollaborationPartner = commonService
-                ?.GetCollaborationPartnerByDomain(appSettings.CollaborationPartner.Domain).Result;
-
-            if (currentCollaborationPartner != null)
-            {
-                appSettings.CollaborationPartner = currentCollaborationPartner;
-                return;
-            }
-
-            var cp = new CollaborationPartnerAm
-            {
-                Current = true,
-                Domain = appSettings.CollaborationPartner.Domain,
-                Iris = appSettings.CollaborationPartner.Iris,
-                Name = appSettings.CollaborationPartner.Name
-            };
-
-            currentCollaborationPartner = commonService?.CreateCollaborationPartnerAsync(cp).Result;
-            appSettings.CollaborationPartner = currentCollaborationPartner;
-        }
 
         private static void CreateModules(this IServiceCollection services, IServiceProvider provider,
             IConfiguration configuration, IEnumerable<Module> modules)

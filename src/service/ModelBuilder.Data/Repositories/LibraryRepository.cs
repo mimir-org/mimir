@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Settings;
 using Microsoft.Extensions.Options;
-using Mimirorg.Common.Enums;
+using Mimirorg.TypeLibrary.Enums;
 using Mimirorg.TypeLibrary.Models.Application;
 using Mimirorg.TypeLibrary.Models.Client;
 using ILibraryRepository = Mb.Data.Contracts.ILibraryRepository;
