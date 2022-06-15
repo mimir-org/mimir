@@ -23,20 +23,20 @@ function CreateTerminal(item: NodeTerminalLibCm, nodeId: string) {
   return {
     id: CreateId(),
     iri: item.terminal.iri,
-    domain: "",
+    domain: item.terminal.iri,
     name: item.terminal.name,
     type: item.connectorDirection,
     nodeId,
-    nodeIri: "",
+    nodeIri: "", // TODO: fix
     connectorVisibility,
     isRequired: false,
     color: item.terminal.color,
-    terminalCategory: "",
+    terminalCategory: "", // TODO: fix
     attributes,
-    terminalTypeId: "",
-    terminalTypeIri: "",
+    terminalTypeId: "", // TODO: fix
+    terminalTypeIri: "", // TODO: fix
     kind: item.kind,
-    discriminator: "terminal",
+    discriminator: "terminal", // TODO: fix
   } as Terminal;
 }
 

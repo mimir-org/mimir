@@ -71,6 +71,11 @@ export const commonStateCompaniesSelector = createAppSelector(
   (companies) => companies
 );
 
+export const commonStateCompanySelector = createAppSelector(
+  (state) => state.commonState.company,
+  (company) => company
+);
+
 export const librarySelector = createAppSelector(
   (state) => state.library,
   (library) => library
