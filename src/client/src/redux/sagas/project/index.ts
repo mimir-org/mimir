@@ -1,2 +1,2 @@
-export { default as ConvertProjectToProjectAm } from "./ConvertProject";
+export { default as ConvertProjectToProjectAm } from "./ConvertProjectToProjectAm";
 export * from "./MapProperties";

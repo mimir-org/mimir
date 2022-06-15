@@ -18,7 +18,6 @@ import {
   Transport,
   NodeAm,
   EdgeAm,
-  RelationType,
   RelationAm,
   Relation,
 } from "@mimirorg/modelbuilder-types";
@@ -45,7 +44,7 @@ const ConvertProjectToProjectAm = (project: Project) => {
 };
 
 function ConvertNodesToNodeAm(nodes: Node[]) {
-  const convertedNodes: NodeAm[] = [];
+  const convertedNodes = [] as NodeAm[];
   if (!nodes.length) return convertedNodes;
 
   nodes.forEach((node) => {
@@ -71,7 +70,7 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
       masterProjectId: node.masterProjectId,
       masterProjectIri: node.masterProjectIri,
       symbol: node.symbol,
-      connectors: ConvertConnectors(node.connectors),
+      connectors: ConvertConnectorsToConnectorsAm(node.connectors),
       attributes: ConvertAttributesToAttributesAm(node.attributes),
       simples: ConvertSimplesToSimplesAm(node.simples),
       aspect: node.aspect,
@@ -93,8 +92,8 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
 }
 
 function ConvertEdgesToEdgesAm(edges: Edge[]) {
-  const convertedEdges: EdgeAm[] = [];
-  if (!edges) return convertedEdges;
+  const convertedEdges = [] as EdgeAm[];
+  if (!edges.length) return convertedEdges;
 
   edges.forEach((edge) => {
     const edgeAm = {
@@ -123,10 +122,9 @@ function ConvertEdgesToEdgesAm(edges: Edge[]) {
   return convertedEdges;
 }
 
-function ConvertConnectors(connectors: Connector[]) {
-  if (!connectors.length) return [];
-
+function ConvertConnectorsToConnectorsAm(connectors: Connector[]) {
   const convertedConnectors = [] as ConnectorAm[];
+  if (!connectors.length) return convertedConnectors;
 
   connectors.forEach((connector) => {
     if (IsRelationConnector(connector)) convertedConnectors.push(ConvertRelationToRelationAm(connector));
@@ -144,12 +142,12 @@ function ConvertRelationToRelationAm(relation: Relation) {
     iri: relation.iri,
     domain: relation.domain,
     name: relation.name,
-    attributes: [],
+    attributes: [], // TODO: what about attributes in Relation?
     connectorVisibility: relation.connectorVisibility,
     isRequired: relation.isRequired,
     nodeId: relation.nodeId,
     nodeIri: relation.nodeIri,
-    semanticReference: "",
+    semanticReference: "", // TODO: fix
     type: relation.type,
     relationType: relation.relationType,
   } as RelationAm;
@@ -168,51 +166,50 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
     connectorVisibility: terminal.connectorVisibility,
     nodeId: terminal.nodeId,
     nodeIri: terminal.nodeIri,
-    relationType: RelationType.NotSet,
     color: terminal.color,
     terminalCategory: terminal.terminalCategory,
     attributes: ConvertAttributesToAttributesAm(terminal.attributes),
     terminalTypeId: terminal.terminalTypeId,
     terminalTypeIri: terminal.terminalTypeIri,
     isRequired: terminal.isRequired,
-  };
+  } as TerminalAm;
 }
 
 function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
-  const convertedAttributes: AttributeAm[] = [];
+  const convertedAttributes = [] as AttributeAm[];
   if (!attributes.length) return convertedAttributes;
 
-  attributes.forEach((attribute) => {
+  attributes.forEach((attr) => {
     convertedAttributes.push({
-      id: attribute.id,
-      iri: attribute.iri,
-      domain: attribute.domain,
-      entity: attribute.entity,
-      value: attribute.value,
-      selectedUnitId: attribute.selectedUnitId,
-      qualifier: attribute.qualifier,
-      source: attribute.source,
-      condition: attribute.condition,
-      format: attribute.format,
-      terminalId: attribute.terminalId,
-      terminalIri: attribute.terminalIri,
-      nodeId: attribute.nodeId,
-      nodeIri: attribute.nodeIri,
-      transportId: attribute.transportId,
-      transportIri: attribute.transportIri,
-      interfaceId: attribute.interfaceId,
-      interfaceIri: attribute.interfaceIri,
-      attributeTypeId: attribute.attributeTypeId,
-      attributeTypeIri: attribute.attributeTypeIri,
-      simpleId: attribute.simpleId,
-      simpleIri: attribute.simpleIri,
-      units: attribute.units,
-      selectValues: attribute.selectValues,
-      selectType: attribute.selectType,
-      discipline: attribute.discipline,
-      isLocked: attribute.isLocked,
-      isLockedStatusBy: attribute.isLockedStatusBy,
-      isLockedStatusDate: attribute.isLockedStatusDate,
+      id: attr.id,
+      iri: attr.iri,
+      domain: attr.domain,
+      entity: attr.entity,
+      value: attr.value,
+      selectedUnitId: attr.selectedUnitId,
+      qualifier: attr.qualifier,
+      source: attr.source,
+      condition: attr.condition,
+      format: attr.format,
+      terminalId: attr.terminalId,
+      terminalIri: attr.terminalIri,
+      nodeId: attr.nodeId,
+      nodeIri: attr.nodeIri,
+      transportId: attr.transportId,
+      transportIri: attr.transportIri,
+      interfaceId: attr.interfaceId,
+      interfaceIri: attr.interfaceIri,
+      attributeTypeId: attr.attributeTypeId,
+      attributeTypeIri: attr.attributeTypeIri,
+      simpleId: attr.simpleId,
+      simpleIri: attr.simpleIri,
+      units: attr.units,
+      selectValues: attr.selectValues,
+      selectType: attr.selectType,
+      discipline: attr.discipline,
+      isLocked: attr.isLocked,
+      isLockedStatusBy: attr.isLockedStatusBy,
+      isLockedStatusDate: attr.isLockedStatusDate,
     });
   });
 
@@ -220,8 +217,8 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
 }
 
 function ConvertSimplesToSimplesAm(simples: Simple[]) {
-  const converted: SimpleAm[] = [];
-  if (!simples) return converted;
+  const converted = [] as SimpleAm[];
+  if (!simples.length) return converted;
 
   simples.forEach((simple) => {
     converted.push({

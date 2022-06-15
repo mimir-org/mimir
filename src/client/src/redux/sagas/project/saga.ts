@@ -1,7 +1,7 @@
 import { call, put } from "redux-saga/effects";
 import { ProjectFileAm, WebSocket } from "../../../models";
 import { Project } from "@mimirorg/modelbuilder-types";
-import { ConvertProject, MapProjectProperties } from ".";
+import { ConvertProjectToProjectAm, MapProjectProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { search } from "../../store/project/actions";
@@ -198,7 +198,7 @@ export function* createSubProject(action: CreateSubProject) {
 export function* updateProject(action: SaveProjectAction) {
   try {
     const url = `${Config.API_BASE_URL}project/update/${action.payload.project.id}`;
-    const proj = ConvertProject(action.payload.project);
+    const proj = ConvertProjectToProjectAm(action.payload.project);
     const response = yield call(post, url, proj);
 
     if (response.status === 400) {
@@ -222,9 +222,7 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     if (response.status === 400) {
       yield put({
         type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-        payload: {
-          apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
-        },
+        payload: { apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR) },
       });
       return;
     }
