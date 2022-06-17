@@ -233,6 +233,14 @@ docker-compose up -d
 ## :wave: Contributing
 We welcome community pull requests for bug fixes, enhancements, and documentation. See [How to contribute](./Contribute.md) for more information.
 
+<!-- Architecture sketches overall -->
+## :department_store: Architecture
+<details>
+<summary>Architecture sketches overall</summary>
+<img src="/misc/Mimirorg_overall.drawio.png" alt="logo" width="840" height="auto" />
+</details>
+
+
 <!-- Code of Conduct -->
 ### :scroll: Code of Conduct
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information, see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/about/code-of-conduct).
