@@ -2,7 +2,7 @@ import * as Types from "./types";
 import { IsAspectNode } from "../../../helpers/Aspects";
 import { IsFamily } from "../../../helpers/Family";
 import { CreateEmptyProject } from "../../../models/data/Project";
-import { Edge, Node, Simple, Connector } from "@mimirorg/modelbuilder-types";
+import { Edge, Node, Simple } from "@mimirorg/modelbuilder-types";
 import {
   getEdgeInterfaceAttributeMap,
   getEdgeInterfaceTerminalAttributeMap,

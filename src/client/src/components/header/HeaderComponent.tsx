@@ -20,7 +20,7 @@ export const HeaderComponent = () => {
         <ProjectMenuHeaderComponent />
         <CompanyLogoBox>
           {/* <img src={GetCompanyLogoForHeader(Config.COMPANY)} alt="company logo" /> */}
-          <img src={company.logo} alt="company logo" />
+          <img src={company.logo} alt={company.displayName} />
         </CompanyLogoBox>
         <AvatarComponent />
       </HeaderRightSection>

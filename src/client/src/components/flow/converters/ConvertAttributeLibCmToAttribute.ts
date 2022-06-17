@@ -3,6 +3,7 @@ import { AttributeLibCm } from "@mimirorg/typelibrary-types";
 
 const ConvertAttributeLibCmToAttribute = (atrributes: AttributeLibCm[]) => {
   const convertedAttributes = [] as Attribute[];
+  if (!atrributes.length) return convertedAttributes;
 
   atrributes.forEach((a) => {
     const convertedAttribute = {

@@ -4,6 +4,7 @@ import { ConvertAttributeLibCmToAttribute } from "./";
 
 const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[]) => {
   const convertedSimples = [] as Simple[];
+  if (!convertedSimples.length) return convertedSimples;
 
   simples.forEach((s) => {
     convertedSimples.push({

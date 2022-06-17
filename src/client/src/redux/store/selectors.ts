@@ -1,4 +1,4 @@
-import { Node, Project } from "@mimirorg/modelbuilder-types";
+import { Edge, Node, Project } from "@mimirorg/modelbuilder-types";
 import { ProjectItemCm } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
 import { AttributeLikeItem } from "../../modules/inspector/types";
@@ -235,18 +235,18 @@ export const edgeSelector = createAppSelector(
 
 export const nodesSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
-  (nodes) => nodes ?? []
+  (nodes) => (nodes as Node[]) ?? []
 );
 
 export const edgesSelector = createAppSelector(
   (state) => state.projectState?.project?.edges,
-  (edges) => edges ?? []
+  (edges) => (edges as Edge[]) ?? []
 );
 
 export const nodeSelector = createParametricAppSelector(
   (state) => state.projectState?.project?.nodes,
   (_, id: string) => id,
-  (nodes, id) => nodes.find((n) => n.id === id)
+  (nodes, id) => nodes.find((n: Node) => n.id === id)
 );
 
 export const makeFilterSelector = () =>
