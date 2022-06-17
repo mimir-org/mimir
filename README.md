@@ -237,7 +237,7 @@ We welcome community pull requests for bug fixes, enhancements, and documentatio
 ## :department_store: Architecture
 <details>
 <summary>Architecture sketches overall</summary>
-<img src="/misc/Mimirorg_overall.drawio.png" alt="logo" width="840" height="auto" />
+<img src="/misc/Mimirorg.drawio.svg" alt="logo" width="1024" height="auto" />
 </details>
 
 
