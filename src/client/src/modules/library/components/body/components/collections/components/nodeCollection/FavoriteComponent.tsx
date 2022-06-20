@@ -5,7 +5,7 @@ import { Tooltip } from "../../../../../../../../compLibrary/tooltip/Tooltip";
 import { FavoriteButton } from "./FavoriteComponent.styled";
 
 interface Props {
-  addFavorite?: boolean;
+  addFavorite: boolean;
   onClick: () => void;
 }
 

@@ -40,20 +40,26 @@ export const NodeElement = ({
   collectionState,
   dispatch,
 }: Props) => {
-  const [showAddButton, setShowAddButton] = useState(false);
+  const [showFavoriteButton, setShowFavoriteButton] = useState(false);
   const isSelected = selectedLibNodes.some((n) => n.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
   const isManageType = collectionState === CollectionsActions.ManageType;
+  const shouldShowAddFavoriteButton = showFavoriteButton && !isCustomCategory && !isItemFavorite;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
     event.dataTransfer.effectAllowed = "move";
   };
 
+  const onClick = () => {
+    if (shouldShowAddFavoriteButton) return OnAddFavoriteClick(item, customCategory, dispatch);
+    if (isCustomCategory) return OnRemoveFavoriteClick(item, dispatch);
+  };
+
   return (
     <NodeElementButton
-      onMouseEnter={() => setShowAddButton(true)}
-      onMouseLeave={() => setShowAddButton(false)}
+      onMouseEnter={() => setShowFavoriteButton(true)}
+      onMouseLeave={() => setShowFavoriteButton(false)}
       active={selectedLibNode?.id === item.id}
       onClick={() => setSelectedLibNode(item)}
       draggable
@@ -74,10 +80,7 @@ export const NodeElement = ({
           color={Color.BLACK}
         />
       )}
-      {isCustomCategory && <FavoriteComponent onClick={() => OnRemoveFavoriteClick(item, dispatch)} />}
-      {!isCustomCategory && showAddButton && !isItemFavorite && (
-        <FavoriteComponent addFavorite onClick={() => OnAddFavoriteClick(item, customCategory, dispatch)} />
-      )}
+      <FavoriteComponent addFavorite={shouldShowAddFavoriteButton} onClick={() => onClick()} />
     </NodeElementButton>
   );
 };
