@@ -228,11 +228,6 @@ export const electroSelector = createAppSelector(
   (visible) => visible
 );
 
-export const edgeSelector = createAppSelector(
-  (state) => state.projectState.project?.edges,
-  (edges) => edges ?? []
-);
-
 export const nodesSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
   (nodes) => (nodes as Node[]) ?? []
