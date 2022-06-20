@@ -6,10 +6,11 @@ import { LibraryCategory } from "../../../../../../../../models/project";
 import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, CollectionsActions } from "../../../../../../../../models";
 import { NodeElementButton, NodeElementText } from "./NodeElement.styled";
-import { NodeElementIconComponent } from "./NodeElementIconComponent";
 import { OnCheckboxChange, OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
 import { FavoriteComponent } from "./FavoriteComponent";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
+import { Icon } from "../../../../../../../../compLibrary/icon/Icon";
 
 interface Props {
   item: NodeLibCm;
@@ -40,8 +41,9 @@ export const NodeElement = ({
   dispatch,
 }: Props) => {
   const [showAddButton, setShowAddButton] = useState(false);
-  const selected = selectedLibNodes.some((n) => n.id === item.id);
+  const isSelected = selectedLibNodes.some((n) => n.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
+  const isManageType = collectionState === CollectionsActions.ManageType;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
@@ -57,16 +59,18 @@ export const NodeElement = ({
       draggable
       onDragStart={(event) => onDragStart(event, JSON.stringify(item))}
       key={item.id}
-      selectedColor={GetAspectColor(item, AspectColorType.Selected, false)}
-      hoverColor={GetAspectColor(item, AspectColorType.Header, false)}
+      selectedColor={GetAspectColor(item, AspectColorType.Selected)}
+      hoverColor={GetAspectColor(item, AspectColorType.Header)}
     >
-      <NodeElementIconComponent item={item} />
+      <NodeElementIconContainer color={GetAspectColor(item, AspectColorType.Main)}>
+        <Icon size={20} src={item.symbol} alt="aspect color" draggable="false" />
+      </NodeElementIconContainer>
       <NodeElementText>{item.name}</NodeElementText>
 
-      {collectionState === CollectionsActions.ManageType && (
+      {isManageType && (
         <Checkbox
-          isChecked={selected}
-          onChange={() => OnCheckboxChange(item, selectedLibNodes, setSelectedLibNodes, selected)}
+          isChecked={isSelected}
+          onChange={() => OnCheckboxChange(item, selectedLibNodes, setSelectedLibNodes, isSelected)}
           color={Color.BLACK}
         />
       )}

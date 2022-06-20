@@ -51,8 +51,6 @@ export const NodeCollectionList = ({
     [recentlyChangedLibItems, allLibItems, searchString]
   );
 
-  // console.log({ libState });
-  // console.log({ allLibItems });
   const categories = FilterByAspect(filteredCategories, aspectFilters);
 
   return (

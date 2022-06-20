@@ -39,9 +39,7 @@ export const NodeCollection = ({
   const isCustomCategory = category.name === TextResources.FAVORITES;
 
   useEffect(() => {
-    if (searchList && searchList.length > 0 && searchList.includes(category)) {
-      setExpanded(true);
-    }
+    if (searchList?.length > 0 && searchList.includes(category)) setExpanded(true);
   }, [category, searchList]);
 
   return (
