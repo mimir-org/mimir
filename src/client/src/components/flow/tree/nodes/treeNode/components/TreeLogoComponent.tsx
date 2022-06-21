@@ -1,10 +1,9 @@
 import { LogoBox, SymbolBox, TreeLogoWrapper, TreeNodeNameBox } from "./TreeLogoComponent.styled";
 import { Node } from "@mimirorg/modelbuilder-types";
 import { Symbol } from "../../../../../../compLibrary/symbol";
-import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
-import Config from "../../../../../../models/Config";
+import { commonStateCompanySelector, useAppSelector } from "../../../../../../redux/store";
 
 interface Props {
   node: Node;
@@ -17,6 +16,7 @@ interface Props {
  */
 export const TreeLogoComponent = ({ node }: Props) => {
   const { overflowRef, isOverflowing } = useIsOverflowing<HTMLParagraphElement>();
+  const company = useAppSelector(commonStateCompanySelector);
   const name = node.label ?? node.name;
 
   return (
@@ -30,7 +30,7 @@ export const TreeLogoComponent = ({ node }: Props) => {
         <Symbol source={node.symbol} text={node.name} />
       </SymbolBox>
       <LogoBox>
-        <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
+        <img src={company.logo} alt={company.name} />
       </LogoBox>
     </TreeLogoWrapper>
   );

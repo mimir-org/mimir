@@ -1,14 +1,14 @@
-import Config from "../../../../../../models/Config";
 import { GetAspectColor, GetRdsPrefix } from "../../../../../../helpers";
 import { AspectColorType } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParentBanner.styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { Navigation } from "./Navigation";
-import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
 import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   node: Node;
+  company: MimirorgCompanyCm;
   inputTerminals: Connector[];
   outputTerminals: Connector[];
   isNavigationActive: boolean;
@@ -23,6 +23,7 @@ interface Props {
  */
 export const BlockParentBanner = ({
   node,
+  company,
   inputTerminals,
   outputTerminals,
   isNavigationActive,
@@ -41,7 +42,7 @@ export const BlockParentBanner = ({
       />
       {!node.isRoot && (
         <LogoBox>
-          <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
+          <img src={company.logo} alt={company.name} />
         </LogoBox>
       )}
     </HeaderGroup>

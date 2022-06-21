@@ -5,7 +5,7 @@ import { Color } from "../../../../../../assets/color/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
-import { useAppDispatch } from "../../../../../../redux/store";
+import { commonStateCompanySelector, useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
@@ -41,12 +41,14 @@ export const BlockParentComponent = ({
   const dispatch = useAppDispatch();
   const isLocation = IsLocation(node);
   const resizePanelRef = useRef(null);
+  const company = useAppSelector(commonStateCompanySelector);
   useResizeParentNode(node, resizePanelRef, dispatch);
 
   return (
     <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={node.width} height={node.height}>
       <BlockParentBanner
         node={node}
+        company={company}
         inputTerminals={inputTerminals}
         outputTerminals={outputTerminals}
         isNavigationActive={isNavigationActive}

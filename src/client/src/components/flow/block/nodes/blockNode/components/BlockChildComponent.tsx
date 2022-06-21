@@ -1,11 +1,10 @@
-import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
 import { OnHover, OnMouseOut } from "./handlers";
 import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
 import { Node, Connector } from "@mimirorg/modelbuilder-types";
-import Config from "../../../../../../models/Config";
+import { commonStateCompanySelector, useAppSelector } from "../../../../../../redux/store";
 
 interface Props {
   node: Node;
@@ -29,6 +28,7 @@ export const BlockChildComponent = ({
   onConnectorClick,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
+  const company = useAppSelector(commonStateCompanySelector);
 
   return (
     <NodeBox
@@ -50,7 +50,7 @@ export const BlockChildComponent = ({
         <Symbol source={node.symbol} text={node.name} />
       </SymbolBox>
       <LogoBox>
-        <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
+        <img src={company.logo} alt={company.name} />
       </LogoBox>
     </NodeBox>
   );
