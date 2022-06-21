@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get, del, post, HeadersInitDefault } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
 import Config from "../../../models/Config";
@@ -14,7 +15,7 @@ import {
 } from "../../store/library/librarySlice";
 
 export function* searchLibrary() {
-  const emptyPayload = { libNodes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
+  const emptyPayload = { libNodes: [] as NodeLibCm[] };
 
   try {
     const url = `${Config.API_BASE_URL}library/node`;
@@ -26,12 +27,7 @@ export function* searchLibrary() {
       return;
     }
 
-    const payload = {
-      libNodes: response.data.objectBlocks,
-      transportTypes: response.data.transports,
-      interfaceTypes: response.data.interfaces,
-      subProjectTypes: response.data.subProjects,
-    };
+    const payload = { libNodes: response.data };
 
     yield put(fetchLibrarySuccessOrError({ ...payload, apiError: null }));
   } catch (error) {
