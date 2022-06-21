@@ -17,7 +17,7 @@ export function* searchLibrary() {
   const emptyPayload = { libNodes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
 
   try {
-    const url = `${Config.API_BASE_URL}library`;
+    const url = `${Config.API_BASE_URL}library/node`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
