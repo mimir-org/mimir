@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
@@ -30,10 +31,20 @@ namespace MicrosoftSqlServerModule
 
             services.AddDbContext<ModelBuilderDbContext>(options =>
             {
-                options.UseSqlServer(dbConfig.ConnectionString,
-                    sqlOptions => sqlOptions.MigrationsAssembly("ModelBuilder.Core"));
-                //options.EnableSensitiveDataLogging();
-                //options.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
+                options.UseSqlServer(dbConfig.ConnectionString, sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly("ModelBuilder.Core");
+                    var retryCount = 1;
+                    var retryInterval = 10;
+
+                    if (dbConfig.ConnectRetryCount > 0)
+                        retryCount = dbConfig.ConnectRetryCount;
+
+                    if (dbConfig.ConnectRetryInterval is >= 1 and <= 60)
+                        retryInterval = dbConfig.ConnectRetryInterval;
+
+                    sqlOptions.EnableRetryOnFailure(retryCount, TimeSpan.FromSeconds(retryInterval), new List<int>());
+                });
             });
 
             return services;

@@ -36,6 +36,7 @@
     <ProjectReference Include="..\ModelBuilder.Data\ModelBuilder.Data.csproj" />
     <ProjectReference Include="..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
     <ProjectReference Include="..\ModelBuilder.Services\ModelBuilder.Services.csproj" />
+    <ProjectReference Include="..\Modules\AzureActiveDirectoryModule\AzureActiveDirectoryModule.csproj" />
   </ItemGroup>
 
   <ItemGroup>

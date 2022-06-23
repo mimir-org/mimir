@@ -113,9 +113,7 @@ namespace Mb.Services.Services
         {
             var sb = new StringBuilder();
             sb.AppendLine();
-            sb.AppendLine("#############################################################################");
             sb.AppendLine("############## Mimir services started. ######################################");
-            sb.AppendLine("#############################################################################");
 
             if (Modules != null && Modules.Any())
             {
@@ -124,7 +122,7 @@ namespace Mb.Services.Services
                     sb.AppendLine(m.ToString());
                 }
 
-                sb.AppendLine("#############################################################################");
+                sb.AppendLine("#########################################################################");
             }
 
             return sb.ToString();

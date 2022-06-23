@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using AutoMapper;
+using AzureActiveDirectoryModule.Models;
 using Mb.Core.Profiles;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
@@ -166,6 +167,15 @@ namespace Mb.Core.Extensions
             });
 
             logger.LogInformation(moduleService.ToString());
+
+            var applicationSetting = serviceScope.ServiceProvider.GetRequiredService<IOptions<ApplicationSetting>>();
+            logger.LogInformation(applicationSetting?.Value?.ToString());
+
+            var databaseConfiguration = serviceScope.ServiceProvider.GetRequiredService<IOptions<DatabaseConfiguration>>();
+            logger.LogInformation(databaseConfiguration?.Value?.ToString());
+
+            var azureActiveDirectoryConfiguration = serviceScope.ServiceProvider.GetRequiredService<IOptions<AzureActiveDirectoryConfiguration>>();
+            logger.LogInformation(azureActiveDirectoryConfiguration?.Value?.ToString());
 
             return app;
         }

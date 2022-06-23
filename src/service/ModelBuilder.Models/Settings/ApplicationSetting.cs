@@ -1,3 +1,4 @@
+using System.Text;
 using Mimirorg.Common.Exceptions;
 
 namespace Mb.Models.Settings
@@ -19,6 +20,19 @@ namespace Mb.Models.Settings
 
             return
                 $@"{TypeLibraryRootUri.Trim().Trim('/')}/{TypeLibraryVersion.Trim().Trim('/')}/{relativePath.TrimStart('/')}";
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine();
+            sb.AppendLine("###################### Application settings #################################");
+            sb.AppendLine($"{nameof(TypeLibraryRootUri)}:   {TypeLibraryRootUri}");
+            sb.AppendLine($"{nameof(TypeLibraryVersion)}:   {TypeLibraryVersion}");
+            sb.AppendLine($"{nameof(TypeLibrarySecret)}:    {TypeLibrarySecret}");
+            sb.AppendLine($"{nameof(TypeLibraryDomain)}:    {TypeLibraryDomain}");
+            sb.AppendLine("#############################################################################");
+            return sb.ToString();
         }
     }
 }

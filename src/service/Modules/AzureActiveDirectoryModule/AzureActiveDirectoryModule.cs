@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 
@@ -38,6 +39,7 @@ namespace AzureActiveDirectoryModule
             var activeDirectoryConfiguration = new AzureActiveDirectoryConfiguration();
             activeDirectorySection.Bind(activeDirectoryConfiguration);
             services.Configure<AzureActiveDirectoryConfiguration>(activeDirectorySection.Bind);
+            services.AddSingleton(Options.Create(activeDirectoryConfiguration));
 
             // Swagger configurations
             var swaggerConfiguration = new SwaggerConfiguration

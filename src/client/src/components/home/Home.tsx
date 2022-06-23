@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
@@ -32,6 +31,7 @@ interface Props {
  * @returns all the modules and components in the Mimir application.
  */
 export const Home = ({ dispatch }: Props) => {
+  const projectState = useAppSelector(selectors.projectStateSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
   const isFilterOpen = useAppSelector(selectors.filterSelector);
@@ -55,11 +55,10 @@ export const Home = ({ dispatch }: Props) => {
 
   useEffect(() => {
     dispatch(changeActiveMenu(null));
-    const timeout = setTimeout(() => {
-      if (isStartPage) dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
-    }, 2500);
-    return () => clearTimeout(timeout);
-  }, []);
+    if (isStartPage && !projectState.fetching) {
+      dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
+    }
+  }, [dispatch, isStartPage, projectState.fetching]);
 
   useEffect(() => {
     ToggleColorProfile(isDarkMode);
