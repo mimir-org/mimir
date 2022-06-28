@@ -12,25 +12,25 @@ import { Node, Edge, ConnectorVisibility, Connector, Project } from "@mimirorg/m
 
 /**
  * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
- * @param sourceNode
- * @param targetNode
+ * @param parentNode
+ * @param childNode
  * @param project
  * @param library
  * @param dispatch
  */
 export function HandleCreatePartOfEdge(
-  sourceNode: Node,
-  targetNode: Node,
+  parentNode: Node,
+  childNode: Node,
   project: Project,
   library: LibraryState,
   dispatch: Dispatch
 ) {
-  targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
-  const targetConn = targetNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputConnector(c));
-  const partofEdge = ConvertDataToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+  childNode.level = parentNode.level + 1;
+  const parentConnector = parentNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
+  const childConnector = childNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputConnector(c));
+  const partofEdge = ConvertDataToEdge(CreateId(), parentConnector, childConnector, parentNode, childNode, project.id, library);
 
-  SetSiblingIndexOnNodeDrop(targetNode, project.nodes, project.edges, sourceNode.id);
+  SetSiblingIndexOnNodeDrop(childNode, project.nodes, project.edges, parentNode.id);
   dispatch(createEdge(partofEdge));
 }
 
