@@ -29,7 +29,7 @@ export const UserMenuComponent = ({ setIsUserMenuOpen }: Props) => {
   return (
     <Box id={MENU_TYPE.USER_MENU} ref={menuRef}>
       <UserNameBox>
-        <UserNameText>{userState.user && userState?.user?.name}</UserNameText>
+        <UserNameText>{userState.user && userState.user.name}</UserNameText>
         <UserNameRoleText>{userState?.user?.role ?? TextResources.USER}</UserNameRoleText>
       </UserNameBox>
 

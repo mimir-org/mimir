@@ -2,11 +2,9 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeLibCm } from "@mimirorg/typelibrary-types";
 
 const ConvertAttributeLibCmToAttribute = (atrributes: AttributeLibCm[]) => {
-  const convertedAttributes = [] as Attribute[];
-  if (!atrributes.length) return convertedAttributes;
-
-  atrributes.forEach((a) => {
-    const convertedAttribute = {
+  if (!atrributes.length) return [] as Attribute[];
+  return atrributes.map((a) => {
+    return {
       id: a.id,
       iri: a.iri,
       domain: "",
@@ -39,11 +37,7 @@ const ConvertAttributeLibCmToAttribute = (atrributes: AttributeLibCm[]) => {
       // isLockedStatusBy: string,
       // isLockedStatusDate: Date,
     } as Attribute;
-
-    convertedAttributes.push(convertedAttribute);
   });
-
-  return convertedAttributes;
 };
 
 export default ConvertAttributeLibCmToAttribute;

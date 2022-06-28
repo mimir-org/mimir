@@ -3,11 +3,10 @@ import { SimpleLibCm } from "@mimirorg/typelibrary-types";
 import { ConvertAttributeLibCmToAttribute } from "./";
 
 const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[]) => {
-  const convertedSimples = [] as Simple[];
-  if (!convertedSimples.length) return convertedSimples;
+  if (!simples.length) return [] as Simple[];
 
-  simples.forEach((s) => {
-    convertedSimples.push({
+  return simples.map((s) => {
+    return {
       id: s.id,
       name: s.name,
       iri: s.iri,
@@ -15,10 +14,8 @@ const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[]) => {
       kind: s.kind,
       nodeId: "", // TODO: fix
       nodeIri: "",
-    });
+    };
   });
-
-  return convertedSimples;
 };
 
 export default ConvertSimpleLibCmToSimple;

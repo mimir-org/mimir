@@ -1,6 +1,6 @@
 import { Project } from "@mimirorg/modelbuilder-types";
 
-export const CreateEmptyProject = (): Project => {
+export const CreateEmptyProject = () => {
   return {
     id: "",
     iri: "",
@@ -14,5 +14,5 @@ export const CreateEmptyProject = (): Project => {
     updated: new Date(),
     nodes: [],
     edges: [],
-  };
+  } as Project;
 };
