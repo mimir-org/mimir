@@ -211,7 +211,7 @@ This project uses .NET 6 for the server and NPM as package manager for the clien
 make sure that you have these installed before continuing. Mimir has dependency on Type Library Service, so you also need to clone that project for development purposes.
 Clone that project as well if not running on external server. You also need a MSSQL database running on your machine. See docker-compose for running sql in docker.
 
-### Install and setup
+### Git clone and Docker setup
 
 We recomend that you first create a folder 'Mimirorg' and move into that folder:
 
@@ -238,7 +238,7 @@ You now have two new folders inside the 'Mimiorg' folder.
 ..\Mimirorg\typelibrary
 ```
 
-In this setup we use docker and a docker-compose script. Create a new file named 'docker-compose.yaml' containing this:
+In this setup we use docker and a docker-compose script. Create a new file at the root of the 'Mimirorg' folder and name it 'docker-compose.yaml'. Copy & paste this content into the file:
 
 ```bash
 version: "3.8"
@@ -391,13 +391,6 @@ d914b6d4d538   mcr.microsoft.com/mssql/server:2017-CU8-ubuntu   "/opt/mssql/bin/
 | --------------------- | ------------------------------------ | ---------------------------------------------------- |
 | :gear: Installation   | `cd src/client` <br /> `npm install` | `cd src/server` <br /> `dotnet build`                |
 | :running: Run Locally | `cd src/client` <br /> `npm start`   | `cd src/server/ModelBuilder.Api` <br /> `dotnet run` |
-
-#### Docker
-
-```bash
-cd ./mimir
-docker-compose up -d
-```
 
 <!-- Contributing -->
 
