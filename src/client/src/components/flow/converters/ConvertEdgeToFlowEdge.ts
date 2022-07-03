@@ -14,7 +14,8 @@ import { IsTerminal } from "../helpers/Connectors";
  * @returns a FlowEdge.
  */
 const ConvertEdgeToFlowEdge = (edge: Edge, edgeType: EdgeType, source: Node, target: Node, animated: boolean) => {
-  const isAnimated = animated && IsTerminal(edge.fromConnector) && !IsOffPage(edge.fromNode) && !IsOffPage(edge.toNode);
+  const isOffPage = IsOffPage(edge.fromNode) || IsOffPage(edge.toNode);
+  const isAnimated = animated && !isOffPage && IsTerminal(edge.fromConnector);
 
   return {
     id: edge.id,
