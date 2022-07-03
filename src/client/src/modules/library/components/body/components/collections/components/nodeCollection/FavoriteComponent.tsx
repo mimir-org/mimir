@@ -5,6 +5,7 @@ import { Tooltip } from "../../../../../../../../compLibrary/tooltip/Tooltip";
 import { FavoriteButton } from "./FavoriteComponent.styled";
 
 interface Props {
+  showButton: boolean;
   addFavorite: boolean;
   onClick: () => void;
 }
@@ -14,9 +15,11 @@ interface Props {
  * @param interface
  * @returns an option for adding/removing a favorite via a favorite icon.
  */
-export const FavoriteComponent = ({ addFavorite, onClick }: Props) => {
+export const FavoriteComponent = ({ showButton, addFavorite, onClick }: Props) => {
   const icon = addFavorite ? AddFavoriteIcon : RemoveFavoriteIcon;
   const text = addFavorite ? TextResources.ADD_FAVORITE : TextResources.REMOVE_FAVORITE;
+
+  if (!showButton) return null;
 
   return (
     <Tooltip content={text} offset={[0, 5]}>

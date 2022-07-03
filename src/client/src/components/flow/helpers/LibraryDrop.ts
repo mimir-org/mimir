@@ -67,6 +67,7 @@ export function SetTreeNodePosition(parentNode: Node, nodes: Node[], edges: Edge
 /**
  * Function to position a node in the TreeView canvas when a node is dropped from the LibraryModule.
  * This function will position the node middle-out relative to existing sibling nodes.
+ * Note: This is a simple version of node positioning, and should be extended to a more viable solution.
  * @param parentNode
  * @param nodes
  * @param edges

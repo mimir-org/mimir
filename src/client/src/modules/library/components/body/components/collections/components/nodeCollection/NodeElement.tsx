@@ -44,15 +44,15 @@ export const NodeElement = ({
   const isSelected = selectedLibNodes.some((n) => n.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
   const isManageType = collectionState === CollectionsActions.ManageType;
-  const shouldShowAddFavoriteButton = showFavoriteButton && !isCustomCategory && !isItemFavorite;
+  const shouldAddFavorite = showFavoriteButton && !isCustomCategory && !isItemFavorite;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
     event.dataTransfer.effectAllowed = "move";
   };
 
-  const onClick = () => {
-    if (shouldShowAddFavoriteButton) return OnAddFavoriteClick(item, customCategory, dispatch);
+  const onFavoriteClick = () => {
+    if (shouldAddFavorite) return OnAddFavoriteClick(item, customCategory, dispatch);
     if (isCustomCategory) return OnRemoveFavoriteClick(item, dispatch);
   };
 
@@ -80,7 +80,7 @@ export const NodeElement = ({
           color={Color.BLACK}
         />
       )}
-      <FavoriteComponent addFavorite={shouldShowAddFavoriteButton} onClick={() => onClick()} />
+      <FavoriteComponent showButton={showFavoriteButton} addFavorite={shouldAddFavorite} onClick={() => onFavoriteClick()} />
     </NodeElementButton>
   );
 };

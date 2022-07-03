@@ -7,6 +7,7 @@ import { TextResources } from "../../../assets/text/TextResources";
 const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
 
+  // Add all Terminals
   nodeTerminals.forEach((t) => {
     const connector = CreateTerminal(t, nodeId);
     for (let i = 0; i < t.quantity; i++) connectors.push(connector);
@@ -39,7 +40,7 @@ function CreateRelation(nodeId: string, relationType: RelationType, name: string
     nodeId,
     relationType,
     kind: "Connector",
-    discriminator: "Relation", // TODO: fix?
+    discriminator: "Relation", // TODO: fix
     name: name,
     domain: "runir.net",
     isRequired: false,
