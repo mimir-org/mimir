@@ -17,7 +17,6 @@ interface Props {
   customCategory: LibraryCategory;
   selectedLibNode: NodeLibCm;
   setSelectedLibNode: (value: NodeLibCm) => void;
-  isCustomCategory: boolean;
   dispatch: Dispatch;
   selectedLibNodes: NodeLibCm[];
   setSelectedLibNodes: (array: NodeLibCm[]) => void;
@@ -34,7 +33,6 @@ export const NodeElement = ({
   customCategory,
   selectedLibNode,
   setSelectedLibNode,
-  isCustomCategory,
   selectedLibNodes,
   setSelectedLibNodes,
   collectionState,
@@ -44,7 +42,7 @@ export const NodeElement = ({
   const isSelected = selectedLibNodes.some((n) => n.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
   const isManageType = collectionState === CollectionsActions.ManageType;
-  const shouldAddFavorite = showFavoriteButton && !isItemFavorite;
+  const addNewFavorite = showFavoriteButton && !isItemFavorite;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
@@ -75,11 +73,9 @@ export const NodeElement = ({
           color={Color.BLACK}
         />
       )}
-      <FavoriteComponent
-        showButton={showFavoriteButton}
-        addFavorite={shouldAddFavorite}
-        onClick={() => OnFavoriteClick(item, customCategory, shouldAddFavorite, isCustomCategory, dispatch)}
-      />
+      {showFavoriteButton && (
+        <FavoriteComponent addNewFavorite={addNewFavorite} onClick={() => OnFavoriteClick(item, addNewFavorite, dispatch)} />
+      )}
     </NodeElementButton>
   );
 };

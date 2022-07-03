@@ -4,7 +4,6 @@ import { Dispatch } from "redux";
 import { NodeElement } from "./NodeElement";
 import { CollectionsActions } from "../../../../../../../../models";
 import { NodeCollectionButton, NodeCollectionButtonText, NodeCollectionContainer } from "./NodeCollection.styled";
-import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
@@ -36,10 +35,9 @@ export const NodeCollection = ({
   setSelectedLibNodes,
 }: Props) => {
   const [expanded, setExpanded] = useState(true);
-  const isCustomCategory = category.name === TextResources.FAVORITES;
 
   useEffect(() => {
-    if (searchList?.length > 0 && searchList.includes(category)) setExpanded(true);
+    if (searchList?.length && searchList.includes(category)) setExpanded(true);
   }, [category, searchList]);
 
   return (
@@ -56,7 +54,6 @@ export const NodeCollection = ({
               customCategory={customCategory}
               selectedLibNode={selectedLibNode}
               setSelectedLibNode={setSelectedLibNode}
-              isCustomCategory={isCustomCategory}
               dispatch={dispatch}
               selectedLibNodes={selectedLibNodes}
               setSelectedLibNodes={setSelectedLibNodes}
