@@ -16,10 +16,10 @@ interface Props {
  * @returns an option for adding/removing a favorite via a favorite icon.
  */
 export const FavoriteComponent = ({ showButton, addFavorite, onClick }: Props) => {
+  if (!showButton) return null;
+
   const icon = addFavorite ? AddFavoriteIcon : RemoveFavoriteIcon;
   const text = addFavorite ? TextResources.ADD_FAVORITE : TextResources.REMOVE_FAVORITE;
-
-  if (!showButton) return null;
 
   return (
     <Tooltip content={text} offset={[0, 5]}>

@@ -6,11 +6,11 @@ import { LibraryCategory } from "../../../../../../../../models/project";
 import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, CollectionsActions } from "../../../../../../../../models";
 import { NodeElementButton, NodeElementText } from "./NodeElement.styled";
-import { OnCheckboxChange, OnAddFavoriteClick, OnRemoveFavoriteClick } from "./handlers";
 import { FavoriteComponent } from "./FavoriteComponent";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
 import { Icon } from "../../../../../../../../compLibrary/icon/Icon";
+import { OnCheckboxChange, OnFavoriteClick } from "./handlers";
 
 interface Props {
   item: NodeLibCm;
@@ -44,16 +44,11 @@ export const NodeElement = ({
   const isSelected = selectedLibNodes.some((n) => n.id === item.id);
   const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
   const isManageType = collectionState === CollectionsActions.ManageType;
-  const shouldAddFavorite = showFavoriteButton && !isCustomCategory && !isItemFavorite;
+  const shouldAddFavorite = showFavoriteButton && !isItemFavorite;
 
   const onDragStart = (event, node) => {
     event.dataTransfer.setData("application/reactflow", node);
     event.dataTransfer.effectAllowed = "move";
-  };
-
-  const onFavoriteClick = () => {
-    if (shouldAddFavorite) return OnAddFavoriteClick(item, customCategory, dispatch);
-    if (isCustomCategory) return OnRemoveFavoriteClick(item, dispatch);
   };
 
   return (
@@ -80,7 +75,11 @@ export const NodeElement = ({
           color={Color.BLACK}
         />
       )}
-      <FavoriteComponent showButton={showFavoriteButton} addFavorite={shouldAddFavorite} onClick={() => onFavoriteClick()} />
+      <FavoriteComponent
+        showButton={showFavoriteButton}
+        addFavorite={shouldAddFavorite}
+        onClick={() => OnFavoriteClick(item, customCategory, shouldAddFavorite, isCustomCategory, dispatch)}
+      />
     </NodeElementButton>
   );
 };
