@@ -1,14 +1,10 @@
+import * as helpers from "./helpers";
 import { useMemo } from "react";
-import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
-import { IsBlockView } from "../../../../../../../../helpers";
+import { IsBlockView } from "../../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
 import { LibNodeCollection } from "./LibNodeCollection";
-import { FilterByAspect } from "./helpers/FilterByAspect";
-import { CollectionsActions } from "../../../../../../../../models";
-import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
-import { GetValidLibItems } from "./helpers/GetValidLibItems";
-import { GetSharedCategory } from "./helpers/GetSharedCategory";
-import { GetRecentlyCreatedCategory } from "./helpers/GetRecentlyCreatedCategory";
+import { CollectionsActions } from "../../../../../../../../../models";
+import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../../redux/store";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Node, Aspect } from "@mimirorg/modelbuilder-types";
 
@@ -39,19 +35,19 @@ export const LibNodeCollectionList = ({
   const isBlockView = IsBlockView();
 
   const validLibItems = useMemo(
-    () => GetValidLibItems(selectedNode, libState, isBlockView),
+    () => helpers.GetValidLibItems(selectedNode, libState, isBlockView),
     [selectedNode, libState, isBlockView]
   );
 
-  const allLibItems = GetSharedCategory(validLibItems);
-  const recentlyChangedLibItems = GetRecentlyCreatedCategory(validLibItems);
+  const allLibItems = helpers.GetSharedCategory(validLibItems);
+  const recentlyChangedLibItems = helpers.GetRecentlyCreatedCategory(validLibItems);
 
   const filteredCategories = useMemo(
-    () => GetFilteredLibCategories([recentlyChangedLibItems, allLibItems], searchString),
+    () => helpers.GetFilteredLibCategories([recentlyChangedLibItems, allLibItems], searchString),
     [recentlyChangedLibItems, allLibItems, searchString]
   );
 
-  const categories = FilterByAspect(filteredCategories, aspectFilters);
+  const categories = helpers.FilterByAspect(filteredCategories, aspectFilters);
 
   return (
     <>

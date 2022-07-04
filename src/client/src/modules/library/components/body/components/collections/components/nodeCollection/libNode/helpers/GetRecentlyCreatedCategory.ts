@@ -1,9 +1,9 @@
 import moment from "moment";
-import { LibraryCategory } from "../../../../../../../../../models/project";
-import { TextResources } from "../../../../../../../../../assets/text/TextResources";
+import { LibraryCategory } from "../../../../../../../../../../models/project";
+import { TextResources } from "../../../../../../../../../../assets/text/TextResources";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
-export const GetRecentlyCreatedCategory = (items: NodeLibCm[]): LibraryCategory => {
+const GetRecentlyCreatedCategory = (items: NodeLibCm[]): LibraryCategory => {
   const lastDay = moment.utc().subtract(1, "d");
 
   const recentlyCreatedLibItems = items
@@ -12,3 +12,5 @@ export const GetRecentlyCreatedCategory = (items: NodeLibCm[]): LibraryCategory 
 
   return { name: TextResources.CATEGORY_RECENT, nodes: recentlyCreatedLibItems };
 };
+
+export default GetRecentlyCreatedCategory;

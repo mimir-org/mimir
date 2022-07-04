@@ -1,7 +1,7 @@
-import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../../assets/icons/favorites";
-import { TextResources } from "../../../../../../../../assets/text/TextResources";
-import { Icon } from "../../../../../../../../compLibrary/icon/Icon";
-import { Tooltip } from "../../../../../../../../compLibrary/tooltip/Tooltip";
+import { AddFavoriteIcon, RemoveFavoriteIcon } from "../../../../../../../../../assets/icons/favorites";
+import { TextResources } from "../../../../../../../../../assets/text/TextResources";
+import { Icon } from "../../../../../../../../../compLibrary/icon/Icon";
+import { Tooltip } from "../../../../../../../../../compLibrary/tooltip/Tooltip";
 import { FavoriteButton } from "./FavoriteComponent.styled";
 
 interface Props {

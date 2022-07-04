@@ -1,6 +1,6 @@
-import { LibraryCategory } from "../../../../../../../../../models/project";
+import { LibraryCategory } from "../../../../../../../../../../models/project";
 
-export const GetFilteredLibCategories = (libCategories: LibraryCategory[], searchString: string): LibraryCategory[] => {
+const GetFilteredLibCategories = (libCategories: LibraryCategory[], searchString: string): LibraryCategory[] => {
   const searchStringLower = searchString.toLowerCase();
   if (searchStringLower === "") return libCategories;
 
@@ -10,3 +10,5 @@ export const GetFilteredLibCategories = (libCategories: LibraryCategory[], searc
 
   return mappedLibCategories.filter((cat) => cat.nodes.some((libItem) => libItem.name.toLowerCase().includes(searchStringLower)));
 };
+
+export default GetFilteredLibCategories;

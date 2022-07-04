@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../assets/color/Color";
-import { FontSize, FontType } from "../../../../../../../../assets/font";
+import { Color } from "../../../../../../../../../assets/color/Color";
+import { FontSize, FontType } from "../../../../../../../../../assets/font";
 
 interface LibNodeBoxProps {
   active?: boolean;

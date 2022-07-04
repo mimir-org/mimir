@@ -1,8 +1,8 @@
 import { memo, useEffect, useState } from "react";
-import { LibraryCategory } from "../../../../../../../../models/project";
+import { LibraryCategory } from "../../../../../../../../../models/project";
 import { Dispatch } from "redux";
 import { LibNodeElement } from "./LibNodeElement";
-import { CollectionsActions } from "../../../../../../../../models";
+import { CollectionsActions } from "../../../../../../../../../models";
 import { LibNodeCollectionButton, LibNodeCollectionButtonText, LibNodeCollectionBox } from "./LibNodeCollection.styled";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 

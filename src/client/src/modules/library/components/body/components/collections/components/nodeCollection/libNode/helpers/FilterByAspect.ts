@@ -1,7 +1,7 @@
 import { Aspect } from "@mimirorg/modelbuilder-types";
-import { LibraryCategory } from "../../../../../../../../../models/project";
+import { LibraryCategory } from "../../../../../../../../../../models/project";
 
-export const FilterByAspect = (libCategories: LibraryCategory[], aspectFilters: Aspect[]): LibraryCategory[] => {
+const FilterByAspect = (libCategories: LibraryCategory[], aspectFilters: Aspect[]): LibraryCategory[] => {
   const categories = JSON.parse(JSON.stringify(libCategories)) as LibraryCategory[];
 
   return categories.map((cat) => {
@@ -11,3 +11,5 @@ export const FilterByAspect = (libCategories: LibraryCategory[], aspectFilters: 
     return cat;
   });
 };
+
+export default FilterByAspect;

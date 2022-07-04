@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Dispatch } from "redux";
-import { Color } from "../../../../../../../../assets/color/Color";
-import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
-import { LibraryCategory } from "../../../../../../../../models/project";
-import { GetAspectColor } from "../../../../../../../../helpers";
-import { AspectColorType, CollectionsActions } from "../../../../../../../../models";
-import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
-import { FavoriteComponent } from "./FavoriteComponent";
+import { Color } from "../../../../../../../../../assets/color/Color";
+import { Checkbox } from "../../../../../../../../../compLibrary/input/checkbox/common/Checkbox";
+import { LibraryCategory } from "../../../../../../../../../models/project";
+import { GetAspectColor } from "../../../../../../../../../helpers";
+import { AspectColorType, CollectionsActions } from "../../../../../../../../../models";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { LibNodeIconContainer } from "./LibNodeElementIconComponent.styled";
-import { Icon } from "../../../../../../../../compLibrary/icon/Icon";
-import { OnCheckboxChange, OnFavoriteClick, OnDragStart } from "./handlers";
+import { Icon } from "../../../../../../../../../compLibrary/icon/Icon";
+import { OnFavoriteClick } from "../favorite/handlers/OnFavoriteClick";
+import { FavoriteComponent } from "../favorite/FavoriteComponent";
+import { OnCheckboxChange, OnDragStart } from "./handlers";
+import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
 
 interface Props {
   item: NodeLibCm;

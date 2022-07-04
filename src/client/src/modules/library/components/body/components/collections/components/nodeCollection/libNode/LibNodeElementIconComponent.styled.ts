@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../assets/color/Color";
+import { Color } from "../../../../../../../../../assets/color/Color";
 
 interface LibNodeIconContainerProps {
   color: string;
