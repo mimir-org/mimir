@@ -10,7 +10,7 @@ interface Props {
 }
 
 /**
- * Module for adding/removing a favorite NodeElement from the LibraryModule.
+ * Module for a Favorite NodeElement in the LibraryModule.
  * @param interface
  * @returns an option for adding/removing a favorite via a favorite icon.
  */

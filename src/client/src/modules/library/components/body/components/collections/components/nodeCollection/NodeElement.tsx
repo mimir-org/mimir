@@ -5,7 +5,7 @@ import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/com
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, CollectionsActions } from "../../../../../../../../models";
-import { NodeElementButton, NodeElementText } from "./NodeElement.styled";
+import { NodeElementBox, NodeElementText } from "./NodeElement.styled";
 import { FavoriteComponent } from "./FavoriteComponent";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
@@ -50,7 +50,7 @@ export const NodeElement = ({
   };
 
   return (
-    <NodeElementButton
+    <NodeElementBox
       onMouseEnter={() => setShowFavoriteButton(true)}
       onMouseLeave={() => setShowFavoriteButton(false)}
       active={selectedLibNode?.id === item.id}
@@ -76,6 +76,6 @@ export const NodeElement = ({
       {showFavoriteButton && (
         <FavoriteComponent addNewFavorite={addNewFavorite} onClick={() => OnFavoriteClick(item, addNewFavorite, dispatch)} />
       )}
-    </NodeElementButton>
+    </NodeElementBox>
   );
 };

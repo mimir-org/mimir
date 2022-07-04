@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../assets/color/Color";
 import { FontSize, FontType } from "../../../../../../../../assets/font";
 
-interface NodeElementButtonProps {
+interface NodeElementBoxProps {
   active?: boolean;
   selectedColor?: string;
   hoverColor?: string;
 }
 
-export const NodeElementButton = styled.button<NodeElementButtonProps>`
+export const NodeElementBox = styled.button<NodeElementBoxProps>`
   display: flex;
   align-self: center;
   align-items: center;
