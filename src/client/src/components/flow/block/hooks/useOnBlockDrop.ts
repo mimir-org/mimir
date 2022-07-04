@@ -26,8 +26,8 @@ interface OnDropParameters {
 }
 
 /**
- * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas in BlockView.
- * A partOf Edge is created from the dropped Node to its parent.
+ * Hook that runs when a LibNode from the LibraryModule is dropped onto the Mimir canvas in BlockView.
+ * The LibNode is converted to a Mimir Node, and a partOf Edge is created from the dropped Node to its parent.
  * The parent is the selectedNode (primaryNode) or the secondaryParentNode.
  * @param params
  */
@@ -37,18 +37,18 @@ const useOnBlockDrop = (params: OnDropParameters) => {
   event.preventDefault();
 
   if (DoesNotContainApplicationData(event)) return;
-  HandleDrop(params);
+  HandleLibNodeDrop(params);
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
 /**
- * Function to handle a node dropped from the Library.
+ * Function to handle a LibNode dropped from the Library.
  * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param params
  */
-function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
+function HandleLibNodeDrop({ event, project, user, lib, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
   const nodeLib = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
 
   let parentNode = selectedNode;
@@ -65,12 +65,12 @@ function HandleDrop({ event, project, user, lib, selectedNode, secondaryNode, ge
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const node = ConvertLibNodeToNode(nodeLib, parentNode, treePosition, blockPosition, project.id, user);
+  const convertedNode = ConvertLibNodeToNode(nodeLib, parentNode, treePosition, blockPosition, project.id, user);
 
-  node.connectors?.forEach((connector) => (connector.connectorVisibility = InitConnectorVisibility(connector, node)));
-  if (IsFamily(parentNode, node)) HandleCreatePartOfEdge(parentNode, node, project, lib, dispatch);
+  convertedNode.connectors?.forEach((c) => (c.connectorVisibility = InitConnectorVisibility(c, convertedNode)));
+  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, lib, dispatch);
 
-  dispatch(addNode(node));
+  dispatch(addNode(convertedNode));
 }
 
 /**

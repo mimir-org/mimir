@@ -23,9 +23,9 @@ interface OnDropParameters {
 }
 
 /**
- * Hook that runs when a Node from the LibraryModule is dropped onto the Mimir canvas in TreeView.
- * A partOf Edge is created from the dropped Node to its parent.
- * The parent is the Node that is selected on the canvas, or the AspectNode (root node) if none are selected.
+ * Hook that runs when a LibNode from the LibraryModule is dropped onto the Mimir canvas in TreeView.
+ * The LibNode is converted to a Mimir Node, and a partOf Edge is created from the dropped Node to its parent.
+ * The parent is the Node that is selected on the canvas (selectedNode), or the AspectNode (root node) if none are selected.
  * @param params
  */
 const useOnTreeDrop = (params: OnDropParameters) => {
@@ -37,18 +37,18 @@ const useOnTreeDrop = (params: OnDropParameters) => {
   if (DoesNotContainApplicationData(event)) return;
 
   if (IsSubProject(event)) HandleSubProjectDrop(event, project, dispatch);
-  else HandleNodeDrop(params);
+  else HandleLibNodeDrop(params);
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
   !event.dataTransfer.types.includes(DATA_TRANSFER_APPDATA_TYPE);
 
 /**
- * Function to handle a node dropped from the Library.
+ * Function to handle a LibNode dropped from the Library.
  * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param OnDropParameters
  */
-function HandleNodeDrop({ event, project, user, library, dispatch }: OnDropParameters) {
+function HandleLibNodeDrop({ event, project, user, library, dispatch }: OnDropParameters) {
   const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
   const selectedNode = project?.nodes?.find((n) => n.selected);
 
@@ -59,10 +59,10 @@ function HandleNodeDrop({ event, project, user, library, dispatch }: OnDropParam
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
-  const node = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user);
-  if (IsFamily(parentNode, node)) HandleCreatePartOfEdge(parentNode, node, project, library, dispatch);
+  const convertedNode = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user);
+  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, library, dispatch);
 
-  dispatch(addNode(node));
+  dispatch(addNode(convertedNode));
 }
 
 /**
@@ -81,7 +81,7 @@ function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[])
 
 /**
  * Function to handle a SubProject dropped from the Library.
- * The functionality for SubProject is not yet fully implemented in Mimir.
+ * Note: The functionality for SubProject is not yet fully implemented in Mimir.
  * @param event
  * @param project
  * @param dispatch
