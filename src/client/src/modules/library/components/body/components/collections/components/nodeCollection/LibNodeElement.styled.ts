@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../assets/color/Color";
 import { FontSize, FontType } from "../../../../../../../../assets/font";
 
-interface NodeElementBoxProps {
+interface LibNodeBoxProps {
   active?: boolean;
   selectedColor?: string;
   hoverColor?: string;
 }
 
-export const NodeElementBox = styled.button<NodeElementBoxProps>`
+export const LibNodeBox = styled.button<LibNodeBoxProps>`
   display: flex;
   align-self: center;
   align-items: center;
@@ -41,7 +41,7 @@ export const NodeElementBox = styled.button<NodeElementBoxProps>`
   }
 `;
 
-export const NodeElementText = styled.span`
+export const LibNodeText = styled.span`
   flex: 1;
   text-align: left;
   white-space: nowrap;
@@ -49,7 +49,7 @@ export const NodeElementText = styled.span`
   text-overflow: ellipsis;
 `;
 
-export const NodeElementVersionText = styled.span`
+export const LibNodeVersionText = styled.span`
   flex: 1;
   position: absolute;
   right: 55px;

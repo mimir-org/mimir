@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { Color } from "../../../../../../../../assets/color/Color";
 
-interface NodeElementIconContainerProps {
+interface LibNodeIconContainerProps {
   color: string;
 }
 
-export const NodeElementIconContainer = styled.span<NodeElementIconContainerProps>`
+export const LibNodeIconContainer = styled.span<LibNodeIconContainerProps>`
   display: flex;
   align-items: center;
   justify-content: center;

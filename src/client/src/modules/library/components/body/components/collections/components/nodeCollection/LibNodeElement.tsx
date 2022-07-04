@@ -5,10 +5,10 @@ import { Checkbox } from "../../../../../../../../compLibrary/input/checkbox/com
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { GetAspectColor } from "../../../../../../../../helpers";
 import { AspectColorType, CollectionsActions } from "../../../../../../../../models";
-import { NodeElementBox, NodeElementText } from "./NodeElement.styled";
+import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
 import { FavoriteComponent } from "./FavoriteComponent";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
+import { LibNodeIconContainer } from "./LibNodeElementIconComponent.styled";
 import { Icon } from "../../../../../../../../compLibrary/icon/Icon";
 import { OnCheckboxChange, OnFavoriteClick, OnDragStart } from "./handlers";
 
@@ -24,11 +24,11 @@ interface Props {
 }
 
 /**
- * Component for an element in a LibraryCategory drop-down menu.
+ * Component for a LibNode element in a LibraryCategory drop-down menu.
  * @param interface
- * @returns a draggable element.
+ * @returns a draggable LibNode element.
  */
-export const NodeElement = ({
+export const LibNodeElement = ({
   item,
   customCategory,
   selectedLibNode,
@@ -45,7 +45,7 @@ export const NodeElement = ({
   const addNewFavorite = showFavoriteButton && !isItemFavorite;
 
   return (
-    <NodeElementBox
+    <LibNodeBox
       onMouseEnter={() => setShowFavoriteButton(true)}
       onMouseLeave={() => setShowFavoriteButton(false)}
       active={selectedLibNode?.id === item.id}
@@ -56,10 +56,10 @@ export const NodeElement = ({
       selectedColor={GetAspectColor(item, AspectColorType.Selected)}
       hoverColor={GetAspectColor(item, AspectColorType.Header)}
     >
-      <NodeElementIconContainer color={GetAspectColor(item, AspectColorType.Main)}>
+      <LibNodeIconContainer color={GetAspectColor(item, AspectColorType.Main)}>
         <Icon size={20} src={item.symbol} alt="aspect color" draggable="false" />
-      </NodeElementIconContainer>
-      <NodeElementText>{item.name}</NodeElementText>
+      </LibNodeIconContainer>
+      <LibNodeText>{item.name}</LibNodeText>
 
       {isManageType && (
         <Checkbox
@@ -71,6 +71,6 @@ export const NodeElement = ({
       {showFavoriteButton && (
         <FavoriteComponent addNewFavorite={addNewFavorite} onClick={() => OnFavoriteClick(item, addNewFavorite, dispatch)} />
       )}
-    </NodeElementBox>
+    </LibNodeBox>
   );
 };

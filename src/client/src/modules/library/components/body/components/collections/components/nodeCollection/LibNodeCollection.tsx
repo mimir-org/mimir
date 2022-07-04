@@ -1,9 +1,9 @@
 import { memo, useEffect, useState } from "react";
 import { LibraryCategory } from "../../../../../../../../models/project";
 import { Dispatch } from "redux";
-import { NodeElement } from "./NodeElement";
+import { LibNodeElement } from "./LibNodeElement";
 import { CollectionsActions } from "../../../../../../../../models";
-import { NodeCollectionButton, NodeCollectionButtonText, NodeCollectionContainer } from "./NodeCollection.styled";
+import { LibNodeCollectionButton, LibNodeCollectionButtonText, LibNodeCollectionBox } from "./LibNodeCollection.styled";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
@@ -23,7 +23,7 @@ interface Props {
  * @param interface
  * @returns a drop-down menu of a given Category.
  */
-export const NodeCollection = ({
+export const LibNodeCollection = ({
   collectionState,
   category,
   customCategory,
@@ -41,14 +41,14 @@ export const NodeCollection = ({
   }, [category, searchList]);
 
   return (
-    <NodeCollectionContainer isOpen={expanded}>
-      <NodeCollectionButton isOpen={expanded} onClick={() => setExpanded(!expanded)}>
-        <NodeCollectionButtonText isOpen={expanded}>{category.name}</NodeCollectionButtonText>
-      </NodeCollectionButton>
+    <LibNodeCollectionBox isOpen={expanded}>
+      <LibNodeCollectionButton isOpen={expanded} onClick={() => setExpanded(!expanded)}>
+        <LibNodeCollectionButtonText isOpen={expanded}>{category.name}</LibNodeCollectionButtonText>
+      </LibNodeCollectionButton>
       {expanded &&
         category?.nodes.map((item) => {
           return (
-            <NodeElement
+            <LibNodeElement
               key={item.id}
               item={item}
               customCategory={customCategory}
@@ -61,8 +61,8 @@ export const NodeCollection = ({
             />
           );
         })}
-    </NodeCollectionContainer>
+    </LibNodeCollectionBox>
   );
 };
 
-export default memo(NodeCollection);
+export default memo(LibNodeCollection);

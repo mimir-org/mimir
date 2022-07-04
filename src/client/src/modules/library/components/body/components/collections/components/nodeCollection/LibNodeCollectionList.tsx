@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { GetFilteredLibCategories } from "./helpers/GetFilteredLibCategories";
 import { IsBlockView } from "../../../../../../../../helpers";
 import { useDispatch } from "react-redux";
-import { NodeCollection } from "./NodeCollection";
+import { LibNodeCollection } from "./LibNodeCollection";
 import { FilterByAspect } from "./helpers/FilterByAspect";
 import { CollectionsActions } from "../../../../../../../../models";
 import { customCategorySelector, librarySelector, useAppSelector } from "../../../../../../../../redux/store";
@@ -23,7 +23,7 @@ interface Props {
   selectedNode: Node;
 }
 
-export const NodeCollectionList = ({
+export const LibNodeCollectionList = ({
   collectionState,
   selectedLibNodes,
   setSelectedLibNodes,
@@ -55,7 +55,7 @@ export const NodeCollectionList = ({
 
   return (
     <>
-      <NodeCollection
+      <LibNodeCollection
         selectedLibNodes={selectedLibNodes}
         setSelectedLibNodes={setSelectedLibNodes}
         selectedLibNode={selectedLibNode}
@@ -68,7 +68,7 @@ export const NodeCollectionList = ({
       />
       {categories.map((category) => {
         return (
-          <NodeCollection
+          <LibNodeCollection
             collectionState={collectionState}
             selectedLibNodes={selectedLibNodes}
             setSelectedLibNodes={setSelectedLibNodes}

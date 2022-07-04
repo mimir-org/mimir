@@ -1,6 +1,6 @@
 import { CollectionsWrapper } from "./CollectionsComponent.styled";
 import { CollectionsActions, LibraryTab } from "../../../../../../models";
-import { NodeCollectionList } from "./components/nodeCollection/NodeCollectionList";
+import { LibNodeCollectionList } from "./components/nodeCollection/LibNodeCollectionList";
 import { CollectionsList } from "./components/generalCollection/CollectionsList";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { Node, Aspect } from "@mimirorg/modelbuilder-types";
@@ -28,14 +28,14 @@ export const CollectionsComponent = ({
   aspectFilters,
   selectedNode,
 }: Props) => {
-  const managingCollections = collectionState === CollectionsActions.ManageCollection;
+  const isManagingCollections = collectionState === CollectionsActions.ManageCollection;
 
   return (
-    <CollectionsWrapper manageCollections={managingCollections}>
-      {managingCollections ? (
+    <CollectionsWrapper manageCollections={isManagingCollections}>
+      {isManagingCollections ? (
         <CollectionsList />
       ) : (
-        <NodeCollectionList
+        <LibNodeCollectionList
           searchString={searchString}
           selectedLibNode={selectedLibNode}
           setSelectedLibNode={setSelectedLibNode}

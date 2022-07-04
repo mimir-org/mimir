@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Color } from "../../../../../../../../assets/color/Color";
 import { FontSize, FontType, FontWeight } from "../../../../../../../../assets/font";
 
-interface NodeCollectionContainerProps {
+interface LibNodeCollectionContainerProps {
   isOpen: boolean;
 }
 
-export const NodeCollectionContainer = styled.div<NodeCollectionContainerProps>`
+export const LibNodeCollectionBox = styled.div<LibNodeCollectionContainerProps>`
   display: flex;
   background-color: ${Color.WHITE_SMOKE};
   margin: ${(props) => (props.isOpen ? "2px 0px 2px 0px" : "2px 0px 5px 0px")};
@@ -15,11 +15,11 @@ export const NodeCollectionContainer = styled.div<NodeCollectionContainerProps>`
   flex-direction: column;
 `;
 
-interface NodeCollectionButtonProps {
+interface LibNodeCollectionButtonProps {
   isOpen: boolean;
 }
 
-export const NodeCollectionButton = styled.button<NodeCollectionButtonProps>`
+export const LibNodeCollectionButton = styled.button<LibNodeCollectionButtonProps>`
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -45,11 +45,11 @@ export const NodeCollectionButton = styled.button<NodeCollectionButtonProps>`
   }
 `;
 
-interface NodeCollectionButtonTextProps {
+interface LibNodeCollectionButtonTextProps {
   isOpen: boolean;
 }
 
-export const NodeCollectionButtonText = styled.span<NodeCollectionButtonTextProps>`
+export const LibNodeCollectionButtonText = styled.span<LibNodeCollectionButtonTextProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
