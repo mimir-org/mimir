@@ -10,7 +10,7 @@ import { FavoriteComponent } from "./FavoriteComponent";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { NodeElementIconContainer } from "./NodeElementIconComponent.styled";
 import { Icon } from "../../../../../../../../compLibrary/icon/Icon";
-import { OnCheckboxChange, OnFavoriteClick } from "./handlers";
+import { OnCheckboxChange, OnFavoriteClick, OnDragStart } from "./handlers";
 
 interface Props {
   item: NodeLibCm;
@@ -44,11 +44,6 @@ export const NodeElement = ({
   const isManageType = collectionState === CollectionsActions.ManageType;
   const addNewFavorite = showFavoriteButton && !isItemFavorite;
 
-  const onDragStart = (event, node) => {
-    event.dataTransfer.setData("application/reactflow", node);
-    event.dataTransfer.effectAllowed = "move";
-  };
-
   return (
     <NodeElementBox
       onMouseEnter={() => setShowFavoriteButton(true)}
@@ -56,7 +51,7 @@ export const NodeElement = ({
       active={selectedLibNode?.id === item.id}
       onClick={() => setSelectedLibNode(item)}
       draggable
-      onDragStart={(event) => onDragStart(event, JSON.stringify(item))}
+      onDragStart={(event) => OnDragStart(event, JSON.stringify(item))}
       key={item.id}
       selectedColor={GetAspectColor(item, AspectColorType.Selected)}
       hoverColor={GetAspectColor(item, AspectColorType.Header)}
