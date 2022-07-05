@@ -66,10 +66,9 @@ function HandleLibNodeDrop({ event, project, user, lib, selectedNode, secondaryN
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
   const convertedNode = ConvertLibNodeToNode(nodeLib, parentNode, treePosition, blockPosition, project.id, user);
-
   convertedNode.connectors?.forEach((c) => (c.connectorVisibility = InitConnectorVisibility(c, convertedNode)));
-  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, lib, dispatch);
 
+  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, lib, dispatch);
   dispatch(addNode(convertedNode));
 }
 
@@ -105,8 +104,8 @@ function SetBlockNodePosition(getViewport: GetViewport, event: React.DragEvent<H
 function CalculateSecondaryNodeDropZone(getViewport: GetViewport, primaryNode: Node) {
   const zoom = getViewport().zoom;
   const x = getViewport().x;
-
   const parentNodeWidthScaled = primaryNode.width * zoom;
+
   return x + parentNodeWidthScaled + Size.SPLITVIEW_DISTANCE;
 }
 

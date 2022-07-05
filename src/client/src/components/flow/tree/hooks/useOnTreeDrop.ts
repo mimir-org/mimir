@@ -36,8 +36,7 @@ const useOnTreeDrop = (params: OnDropParameters) => {
 
   if (DoesNotContainApplicationData(event)) return;
 
-  if (IsSubProject(event)) HandleSubProjectDrop(event, project, dispatch);
-  else HandleLibNodeDrop(params);
+  IsSubProject(event) ? HandleSubProjectDrop(event, project, dispatch) : HandleLibNodeDrop(params);
 };
 
 const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =>
@@ -75,8 +74,7 @@ function HandleLibNodeDrop({ event, project, user, library, dispatch }: OnDropPa
  * @returns a Node.
  */
 function SetParentNodeOnDrop(selectedNode: Node, node: NodeLibCm, nodes: Node[]) {
-  if (selectedNode && IsFamily(selectedNode, node)) return selectedNode;
-  return nodes.find((n) => IsFamily(n, node));
+  return IsFamily(selectedNode, node) ? selectedNode : nodes.find((n) => IsFamily(n, node));
 }
 
 /**

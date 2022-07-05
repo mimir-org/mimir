@@ -4,6 +4,12 @@ import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-typ
 import { Connector, ConnectorVisibility, Relation, RelationType, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 
+/**
+ * Component to convert terminals from NodeTerminalLibCm to Connector.
+ * @param nodeTerminals
+ * @param nodeId
+ * @returns a list of Connectors
+ */
 const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
 
@@ -42,7 +48,7 @@ function CreateRelation(nodeId: string, relationType: RelationType, name: string
     kind: "Connector",
     discriminator: "Relation", // TODO: fix
     name: name,
-    domain: "runir.net",
+    domain: "runir.net", // TODO: fix
     isRequired: false,
     connectorVisibility: ConnectorVisibility.None,
   } as Relation;
