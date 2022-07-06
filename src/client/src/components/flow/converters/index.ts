@@ -1,6 +1,6 @@
 export { default as ConvertLibNodeToNode } from "./ConvertLibNodeToNode";
 
-export { default as ConvertTerminalLibCmToConnector } from "./ConvertTerminalLibCmToConnector";
+export { default as ConvertTerminalLibCmToConnectors } from "./ConvertTerminalLibCmToConnectors";
 export { default as ConvertAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 export { default as ConvertSimpleLibCmToSimple } from "./ConvertSimpleLibCmToSimple";
 

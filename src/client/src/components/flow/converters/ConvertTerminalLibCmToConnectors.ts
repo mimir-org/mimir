@@ -8,36 +8,44 @@ import { TextResources } from "../../../assets/text/TextResources";
  * Component to convert terminals from NodeTerminalLibCm to Connector.
  * @param nodeTerminals
  * @param nodeId
- * @returns a list of Connectors
+ * @returns a list of Connectors.
  */
-const ConvertTerminalLibCmToConnector = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
+const ConvertTerminalLibCmToConnectors = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
 
-  // Add all Terminals
   nodeTerminals.forEach((t) => {
-    const connector = CreateTerminal(t, nodeId);
-    for (let i = 0; i < t.quantity; i++) connectors.push(connector);
+    const terminal = CreateTerminal(t, nodeId);
+    const terminalAmount = t.quantity;
+    [...Array(terminalAmount)].forEach(() => connectors.push(terminal));
   });
 
-  // Add all Relations
+  AddAllRelationConnectors(connectors, nodeId);
+
+  return connectors;
+};
+
+export default ConvertTerminalLibCmToConnectors;
+
+/**
+ * Function to add all Relation types to a Node.
+ * @param connectors
+ * @param nodeId
+ */
+function AddAllRelationConnectors(connectors: Connector[], nodeId: string) {
   connectors.push(CreateRelation(nodeId, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Input));
   connectors.push(CreateRelation(nodeId, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Output));
   connectors.push(CreateRelation(nodeId, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Input));
   connectors.push(CreateRelation(nodeId, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Output));
   connectors.push(CreateRelation(nodeId, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Input));
   connectors.push(CreateRelation(nodeId, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Output));
-
-  return connectors;
-};
-
-export default ConvertTerminalLibCmToConnector;
+}
 
 /**
- * Function to add a Relation to a Node.
+ * Function to create a Connector of the Relation type.
  * @param nodeId
  * @param relationType
  * @param connectorDirection
- * @returns a Relation
+ * @returns a Relation.
  */
 function CreateRelation(nodeId: string, relationType: RelationType, name: string, connectorDirection: ConnectorDirection) {
   return {

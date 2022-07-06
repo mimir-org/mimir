@@ -46,11 +46,11 @@ export const LibNodeCollection = ({
         <LibNodeCollectionButtonText isOpen={expanded}>{category.name}</LibNodeCollectionButtonText>
       </LibNodeCollectionButton>
       {expanded &&
-        category?.nodes.map((item) => {
+        category?.nodes.map((node) => {
           return (
             <LibNodeElement
-              key={item.id}
-              item={item}
+              key={node.id}
+              libNode={node}
               customCategory={customCategory}
               selectedLibNode={selectedLibNode}
               setSelectedLibNode={setSelectedLibNode}

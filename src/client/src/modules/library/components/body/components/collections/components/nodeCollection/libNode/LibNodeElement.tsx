@@ -14,7 +14,7 @@ import { OnCheckboxChange, OnDragStart } from "./handlers";
 import { LibNodeBox, LibNodeText } from "./LibNodeElement.styled";
 
 interface Props {
-  item: NodeLibCm;
+  libNode: NodeLibCm;
   customCategory: LibraryCategory;
   selectedLibNode: NodeLibCm;
   setSelectedLibNode: (value: NodeLibCm) => void;
@@ -30,7 +30,7 @@ interface Props {
  * @returns a draggable LibNode element.
  */
 export const LibNodeElement = ({
-  item,
+  libNode,
   customCategory,
   selectedLibNode,
   setSelectedLibNode,
@@ -40,37 +40,37 @@ export const LibNodeElement = ({
   dispatch,
 }: Props) => {
   const [showFavoriteButton, setShowFavoriteButton] = useState(false);
-  const isSelected = selectedLibNodes.some((n) => n.id === item.id);
-  const isItemFavorite = customCategory.nodes?.find((n) => n.id === item.id);
+  const isLibNodeSelected = selectedLibNodes.some((n) => n.id === libNode.id);
+  const isLibNodeFavorite = customCategory.nodes?.find((n) => n.id === libNode.id);
   const isManageType = collectionState === CollectionsActions.ManageType;
-  const addNewFavorite = showFavoriteButton && !isItemFavorite;
+  const addNewFavorite = showFavoriteButton && !isLibNodeFavorite;
 
   return (
     <LibNodeBox
       onMouseEnter={() => setShowFavoriteButton(true)}
       onMouseLeave={() => setShowFavoriteButton(false)}
-      active={selectedLibNode?.id === item.id}
-      onClick={() => setSelectedLibNode(item)}
+      active={selectedLibNode?.id === libNode.id}
+      onClick={() => setSelectedLibNode(libNode)}
+      onDragStart={(event) => OnDragStart(event, JSON.stringify(libNode))}
+      key={libNode.id}
+      selectedColor={GetAspectColor(libNode, AspectColorType.Selected)}
+      hoverColor={GetAspectColor(libNode, AspectColorType.Header)}
       draggable
-      onDragStart={(event) => OnDragStart(event, JSON.stringify(item))}
-      key={item.id}
-      selectedColor={GetAspectColor(item, AspectColorType.Selected)}
-      hoverColor={GetAspectColor(item, AspectColorType.Header)}
     >
-      <LibNodeIconContainer color={GetAspectColor(item, AspectColorType.Main)}>
-        <Icon size={20} src={item.symbol} alt="aspect color" draggable="false" />
+      <LibNodeIconContainer color={GetAspectColor(libNode, AspectColorType.Main)}>
+        <Icon size={20} src={libNode.symbol} alt="aspect color" draggable="false" />
       </LibNodeIconContainer>
-      <LibNodeText>{item.name}</LibNodeText>
+      <LibNodeText>{libNode.name}</LibNodeText>
 
       {isManageType && (
         <Checkbox
-          isChecked={isSelected}
-          onChange={() => OnCheckboxChange(item, selectedLibNodes, setSelectedLibNodes, isSelected)}
+          isChecked={isLibNodeSelected}
+          onChange={() => OnCheckboxChange(libNode, selectedLibNodes, setSelectedLibNodes, isLibNodeSelected)}
           color={Color.BLACK}
         />
       )}
       {showFavoriteButton && (
-        <FavoriteComponent addNewFavorite={addNewFavorite} onClick={() => OnFavoriteClick(item, addNewFavorite, dispatch)} />
+        <FavoriteComponent addNewFavorite={addNewFavorite} onClick={() => OnFavoriteClick(libNode, addNewFavorite, dispatch)} />
       )}
     </LibNodeBox>
   );

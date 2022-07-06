@@ -4,7 +4,7 @@ import { Size } from "../../../assets/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { ConvertAttributeLibCmToAttribute, ConvertTerminalLibCmToConnector, ConvertSimpleLibCmToSimple } from "./";
+import { ConvertAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors, ConvertSimpleLibCmToSimple } from "./";
 
 /**
  * Function to convert a libNode dropped from the Library to a Mimir Node.
@@ -26,7 +26,7 @@ const ConvertLibNodeToNode = (
   user: User
 ) => {
   const now = GetDateNowUtc();
-  const connectors = ConvertTerminalLibCmToConnector(libNode.nodeTerminals, libNode.id);
+  const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, libNode.id);
   const attributes = ConvertAttributeLibCmToAttribute(libNode.attributes);
   const simples = ConvertSimpleLibCmToSimple(libNode.simples);
 
