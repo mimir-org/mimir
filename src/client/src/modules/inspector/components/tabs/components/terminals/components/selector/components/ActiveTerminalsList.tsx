@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState } from "react";
 import { Color } from "../../../../../../../../../assets/color/Color";
 import { TerminalType } from "../../../../../../../../../models";
