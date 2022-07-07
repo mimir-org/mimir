@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Node } from "@mimirorg/modelbuilder-types";
 
 export const getNodeConnectorAttributeMap = (nodes: Node[]) => {

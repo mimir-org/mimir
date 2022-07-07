@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Attribute, Connector } from "@mimirorg/modelbuilder-types";
 
 /**

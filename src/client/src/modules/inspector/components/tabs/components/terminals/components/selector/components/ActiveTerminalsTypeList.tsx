@@ -24,6 +24,7 @@ export const ActiveTerminalsTypeList = ({
   connectorType,
   expanded,
   terminals,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   selectedTerminal,
   selectedTerminalIdentifier,
   onTypeClick,

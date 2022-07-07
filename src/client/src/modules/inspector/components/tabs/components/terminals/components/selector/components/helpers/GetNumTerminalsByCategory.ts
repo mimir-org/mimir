@@ -1,4 +1,5 @@
-import { GetNumberOfTerminals } from "./GetNumTerminals";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { TerminalLikeItem } from "../../../../../../../../types";
 
 export const GetNumTerminalsByCategory = (terminals: TerminalLikeItem[]): Map<string, number> => {
