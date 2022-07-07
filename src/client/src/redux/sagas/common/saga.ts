@@ -5,7 +5,7 @@ import {
   fetchCompanySuccessOrError,
   fetchCompaniesSuccessOrError,
   fetchCombinedAttributeFiltersSuccessOrError,
-  fetchParsersSuccessOrError
+  fetchParsersSuccessOrError,
 } from "../../store/common/commonSlice";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 

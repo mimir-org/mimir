@@ -4,5 +4,5 @@ export {
   darkModeSelector,
   filterSelector,
   activeMenuSelector,
-  projectStateSelector
+  projectStateSelector,
 } from "../../../redux/store/selectors";

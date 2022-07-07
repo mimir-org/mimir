@@ -1,5 +1,5 @@
 import * as Types from "../types";
-import { UpdateAttributeIsLocked } from "./index";
+// import { UpdateAttributeIsLocked } from "./index";
 
 interface SetLockNodeTerminalAttribute {
   id: string;
@@ -11,7 +11,7 @@ interface SetLockNodeTerminalAttribute {
 }
 
 export const setLockNodeTerminalAttribute = (lock: SetLockNodeTerminalAttribute, state: Types.ProjectState) => {
-  const { id, terminalId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = lock;
+  // const { id, terminalId, nodeId, isLocked, isLockedStatusBy, isLockedStatusDate } = lock;
 
   return null;
 

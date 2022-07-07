@@ -6,20 +6,21 @@ import { TextResources } from "../../../assets/text/TextResources";
 
 /**
  * Component to convert terminals from NodeTerminalLibCm to Connector.
- * @param nodeTerminals
+ * This operation is needed when a LibNode is dropped from the Library and converted to a Node.
+ * @param libTerminals
  * @param nodeId
- * @returns a list of Connectors.
+ * @returns a list of Mimir Connectors.
  */
-const ConvertTerminalLibCmToConnectors = (nodeTerminals: NodeTerminalLibCm[], nodeId: string) => {
+const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
 
-  nodeTerminals.forEach((t) => {
+  libTerminals.forEach((t) => {
     const terminal = CreateTerminal(t, nodeId);
     const terminalAmount = t.quantity;
     [...Array(terminalAmount)].forEach(() => connectors.push(terminal));
   });
 
-  AddAllRelationConnectors(connectors, nodeId);
+  AddRelationConnectors(connectors, nodeId);
 
   return connectors;
 };
@@ -28,10 +29,11 @@ export default ConvertTerminalLibCmToConnectors;
 
 /**
  * Function to add all Relation types to a Node.
+ * All Nodes in Mimir have these six relations by default.
  * @param connectors
  * @param nodeId
  */
-function AddAllRelationConnectors(connectors: Connector[], nodeId: string) {
+function AddRelationConnectors(connectors: Connector[], nodeId: string) {
   connectors.push(CreateRelation(nodeId, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Input));
   connectors.push(CreateRelation(nodeId, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Output));
   connectors.push(CreateRelation(nodeId, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Input));

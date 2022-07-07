@@ -3,7 +3,7 @@ import { TerminalLikeItem } from "../../../../../../../types";
 
 export const FilterBySearchString = (
   terminals: TerminalLikeItem[],
-  terminalCategories: any[],
+  // terminalCategories: any[],
   searchString: string
 ): TerminalLikeItem[] =>
   (searchString?.length > 0 &&

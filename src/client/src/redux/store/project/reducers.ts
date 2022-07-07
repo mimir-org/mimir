@@ -450,7 +450,7 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE: {
-      const { id, terminalId, nodeId, value, unitId: selectedUnitId } = action.payload;
+      const { terminalId, nodeId } = action.payload;
 
       // const getAttr = (conn: Connector) => {
       //   return conn.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));

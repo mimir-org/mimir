@@ -24,11 +24,7 @@ export const TerminalsSelector = ({
   onSelectTerminal,
 }: Props) => {
   const [searchString, setSearchString] = useState("");
-
-  const filteredTerminals = useMemo(
-    () => FilterBySearchString(terminals, terminalCategories, searchString),
-    [terminals, terminalCategories, searchString]
-  );
+  const filteredTerminals = useMemo(() => FilterBySearchString(terminals, searchString), [terminals, searchString]);
 
   return (
     <TerminalsColumn>
