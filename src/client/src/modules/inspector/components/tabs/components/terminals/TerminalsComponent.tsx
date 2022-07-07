@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useMemo, useState } from "react";
 import { ParametersContent } from "../shared/components/parametersContent/ParametersContent";

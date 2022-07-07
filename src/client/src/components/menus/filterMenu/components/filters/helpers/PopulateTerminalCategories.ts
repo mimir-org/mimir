@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Connector } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { TerminalCategory } from "../TransportFilter";

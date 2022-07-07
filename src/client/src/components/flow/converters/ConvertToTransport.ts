@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Attribute, Connector, ConnectorDirection, Transport } from "@mimirorg/modelbuilder-types";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";

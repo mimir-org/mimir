@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import { TerminalCategory } from "../../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
 
 export const OnCategoryClick = (

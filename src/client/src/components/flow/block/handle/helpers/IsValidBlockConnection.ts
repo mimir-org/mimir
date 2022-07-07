@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
