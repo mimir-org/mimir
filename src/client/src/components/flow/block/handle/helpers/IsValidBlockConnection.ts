@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { Connection } from "react-flow-renderer";
 import { Dispatch } from "redux";
@@ -21,19 +20,17 @@ const IsValidBlockConnection = (connection: Connection, nodes: Node[], edges: Ed
   const targetNode = nodes.find((n) => n.id === connection.target);
   const targetTerminal = targetNode?.connectors.find((c) => c.id === connection.targetHandle);
 
-  const isValidTerminalType = ValidateTerminalType(sourceTerminal, targetTerminal);
   const isValidOffPage = ValidateOffPageNode(sourceNode, targetNode);
   const isValidTransport = ValidateTransport(sourceTerminal, targetTerminal, sourceNode, targetNode, edges);
   const isValidRelation = ValidateRelation(sourceTerminal, targetTerminal, sourceNode, targetNode, edges);
 
   document.addEventListener(
     "mouseup",
-    () =>
-      onMouseUp(sourceTerminal, targetTerminal, isValidTerminalType, isValidOffPage, isValidTransport, isValidRelation, dispatch),
+    () => onMouseUp(sourceTerminal, targetTerminal, isValidOffPage, isValidTransport, isValidRelation, dispatch),
     { once: true }
   );
 
-  return isValidTerminalType && isValidOffPage && isValidTransport && isValidRelation;
+  return isValidOffPage && isValidTransport && isValidRelation;
 };
 
 function IsRelationNode(node: Node) {
@@ -47,10 +44,6 @@ function IsRelationConnector(connector: Connector) {
 function ValidateOffPageNode(sourceNode: Node, targetNode: Node) {
   if (!IsOffPage(sourceNode) || !IsOffPage(targetNode)) return true;
   return IsOffPage(sourceNode) && IsOffPage(targetNode);
-}
-
-function ValidateTerminalType(sourceTerminal: Connector, targetTerminal: Connector) {
-  return true; // sourceTerminal?.terminalTypeId === targetTerminal?.terminalTypeId; // TODO: fix
 }
 
 function ValidateTransport(source: Connector, target: Connector, sourceNode: Node, targetNode: Node, edges: Edge[]) {
@@ -80,19 +73,17 @@ function ValidateRelation(source: Connector, target: Connector, sourceNode: Node
 const onMouseUp = (
   sourceTerminal: Connector,
   targetTerminal: Connector,
-  validTerminalType: boolean,
   validOffPageNode: boolean,
   validTransport: boolean,
   validRelation: boolean,
   dispatch: Dispatch
 ) => {
   if (!sourceTerminal || !targetTerminal) return;
-  if (!validTerminalType) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_TERMINALS }));
   if (!validOffPageNode) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_OFFPAGE }));
   if (!validTransport || !validRelation) dispatch(setValidation({ valid: false, message: TextResources.VALIDATION_CONNECTION }));
 
   return document.removeEventListener("mouseup", () =>
-    onMouseUp(sourceTerminal, targetTerminal, validTerminalType, validOffPageNode, validTransport, validRelation, dispatch)
+    onMouseUp(sourceTerminal, targetTerminal, validOffPageNode, validTransport, validRelation, dispatch)
   );
 };
 
