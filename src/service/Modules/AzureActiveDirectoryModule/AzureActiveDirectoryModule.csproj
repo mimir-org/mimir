@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ModelBuilder.Models\ModelBuilder.Models.csproj" />
+    <ProjectReference Include="..\..\ModelBuilder.Services\ModelBuilder.Services.csproj" />
   </ItemGroup>
 
 </Project>

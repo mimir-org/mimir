@@ -64,8 +64,7 @@ namespace Mb.Api
             services.AddRouting(o => o.LowercaseUrls = true);
 
             // Add Azure Active Directory Module and Swagger Module
-            var (swaggerConfiguration, activeDirectoryConfiguration) =
-                services.AddAzureActiveDirectoryModule(Configuration);
+            var (swaggerConfiguration, activeDirectoryConfiguration) = services.AddAzureActiveDirectoryModule(Configuration);
             _activeDirectoryConfiguration = activeDirectoryConfiguration;
             _swaggerConfiguration = swaggerConfiguration;
 

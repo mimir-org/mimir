@@ -12,6 +12,7 @@ namespace AzureActiveDirectoryModule.Models
         public string ClientSecret { get; set; }
         public string CallbackPath { get; set; } = @"/signin-oidc";
         public string SignedOutCallbackPath { get; set; } = @"/signout-oidc";
+        public bool Silent { get; set; } = false;
 
         public override string ToString()
         {
@@ -23,6 +24,7 @@ namespace AzureActiveDirectoryModule.Models
             sb.AppendLine("ClientId:              " + ClientId);
             sb.AppendLine("CallbackPath:          " + CallbackPath);
             sb.AppendLine("SignedOutCallbackPath: " + SignedOutCallbackPath);
+            sb.AppendLine("Silent: " + Silent);
             sb.AppendLine("#############################################################################");
 
             return sb.ToString();

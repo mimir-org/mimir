@@ -9,25 +9,29 @@ import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import Config from "./models/Config";
 
 const rootElement = document.getElementById("root");
-export const msalInstance = new PublicClientApplication(msalConfig);
+const isSilent = Config.SILENT === "true";
 
-const accounts = msalInstance.getAllAccounts();
-if (accounts.length > 0) msalInstance.setActiveAccount(accounts[0]);
+export const msalInstance = isSilent ? null : new PublicClientApplication(msalConfig);
 
-msalInstance.handleRedirectPromise().then((response) => {
-  if (response !== null) return;
+if (!isSilent) {
+  const accounts = msalInstance.getAllAccounts();
+  if (accounts.length > 0) msalInstance.setActiveAccount(accounts[0]);
 
-  if (!accounts || accounts.length < 1) msalInstance.loginRedirect(loginRequest);
-  else msalInstance.acquireTokenSilent(loginRequest);
-});
+  msalInstance.handleRedirectPromise().then((response) => {
+    if (response !== null) return;
 
-msalInstance.addEventCallback((event: EventMessage) => {
-  if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
-    const payload = event.payload as AuthenticationResult;
-    const account = payload.account;
-    msalInstance.setActiveAccount(account);
-  }
-});
+    if (!accounts || accounts.length < 1) msalInstance.loginRedirect(loginRequest);
+    else msalInstance.acquireTokenSilent(loginRequest);
+  });
+
+  msalInstance.addEventCallback((event: EventMessage) => {
+    if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
+      const payload = event.payload as AuthenticationResult;
+      const account = payload.account;
+      msalInstance.setActiveAccount(account);
+    }
+  });
+}
 
 if (Config.APP_INSIGHTS_CONNECTION_STRING) {
   const appInsights = new ApplicationInsights({ config: { connectionString: Config.APP_INSIGHTS_CONNECTION_STRING } });
@@ -38,7 +42,7 @@ if (Config.APP_INSIGHTS_CONNECTION_STRING) {
 ReactDOM.render(
   <Provider store={red.store}>
     <ReactFlowProvider>
-      <App pca={msalInstance} />
+      <App pca={isSilent ? null : msalInstance} />
     </ReactFlowProvider>
   </Provider>,
   rootElement

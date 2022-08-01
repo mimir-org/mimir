@@ -4,6 +4,9 @@ import { HttpResponse, RequestInitDefault } from ".";
 import { TextResources } from "../../assets/text/TextResources";
 
 export const Token = async () => {
+  if (!msalInstance)
+    return `Bearer`;
+
   const account = msalInstance.getActiveAccount();
   if (!account) throw Error(TextResources.ERROR_NOACCOUNT);
 

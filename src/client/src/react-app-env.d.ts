@@ -9,6 +9,7 @@ interface MimirEnv {
   COMPANY: string;
   APP_INSIGHTS_CONNECTION_STRING: string;
   MIMIR_VERSION: string;
+  SILENT: string;
 }
 
 // eslint-disable-next-line no-var

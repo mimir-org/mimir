@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using AzureActiveDirectoryModule.Models;
 using Mb.Models.Const;
+using Mb.Services.Handlers;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +24,24 @@ namespace AzureActiveDirectoryModule
             // Active directory configurations
             var activeDirectorySection = configuration.GetSection(nameof(AzureActiveDirectoryConfiguration));
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(
-                    options => { activeDirectorySection.Bind(options); },
-                    options => { activeDirectorySection.Bind(options); })
-                .EnableTokenAcquisitionToCallDownstreamApi(options => activeDirectorySection.Bind(options))
-                .AddDistributedTokenCaches();
+            var activeDirectoryConfiguration = new AzureActiveDirectoryConfiguration();
+            activeDirectorySection.Bind(activeDirectoryConfiguration);
+            services.Configure<AzureActiveDirectoryConfiguration>(activeDirectorySection.Bind);
+            services.AddSingleton(Options.Create(activeDirectoryConfiguration));
+
+            if (activeDirectoryConfiguration.Silent)
+            {
+                services.AddAuthentication("Demo").AddScheme<AuthenticationSchemeOptions, DisabledAuthHandler>("Demo", options => { });
+            }
+            else
+            {
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddMicrosoftIdentityWebApi(
+                        options => { activeDirectorySection.Bind(options); },
+                        options => { activeDirectorySection.Bind(options); })
+                    .EnableTokenAcquisitionToCallDownstreamApi(options => activeDirectorySection.Bind(options))
+                    .AddDistributedTokenCaches();
+            }
 
             services.AddAuthorization(options =>
             {
@@ -35,11 +49,6 @@ namespace AzureActiveDirectoryModule
                 options.AddPolicy(Policies.Edit, policy => policy.RequireRole(Roles.MimirAdministrator, Roles.MimirContributor));
                 options.AddPolicy(Policies.Read, policy => policy.RequireRole(Roles.MimirAdministrator, Roles.MimirContributor, Roles.MimirReader));
             });
-
-            var activeDirectoryConfiguration = new AzureActiveDirectoryConfiguration();
-            activeDirectorySection.Bind(activeDirectoryConfiguration);
-            services.Configure<AzureActiveDirectoryConfiguration>(activeDirectorySection.Bind);
-            services.AddSingleton(Options.Create(activeDirectoryConfiguration));
 
             // Swagger configurations
             var swaggerConfiguration = new SwaggerConfiguration
@@ -50,16 +59,20 @@ namespace AzureActiveDirectoryModule
                 {
                     Name = "Mimir",
                     Email = "orgmimir@gmail.com"
-                },
-                Scopes = new List<Scope>
+                }
+            };
+
+            if (!activeDirectoryConfiguration.Silent)
+            {
+                swaggerConfiguration.Scopes = new List<Scope>
                 {
                     new()
                     {
                         Name = $@"api://{activeDirectoryConfiguration.ClientId}/access_as_user",
                         Description = "User impersonation scope"
                     }
-                }
-            };
+                };
+            }
 
             services.AddApiVersioning(o =>
             {
@@ -91,29 +104,32 @@ namespace AzureActiveDirectoryModule
                 c.CustomSchemaIds(x => x.FullName);
                 c.EnableAnnotations();
 
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                if (!activeDirectoryConfiguration.Silent)
                 {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
+                    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                     {
-                        Implicit = new OpenApiOAuthFlow
+                        Type = SecuritySchemeType.OAuth2,
+                        Flows = new OpenApiOAuthFlows
                         {
-                            AuthorizationUrl = new Uri($"{activeDirectoryConfiguration.Instance}{activeDirectoryConfiguration.TenantId}/oauth2/v2.0/authorize"),
-                            Scopes = swaggerConfiguration.ScopesDictionary
+                            Implicit = new OpenApiOAuthFlow
+                            {
+                                AuthorizationUrl =
+                                    new Uri(
+                                        $"{activeDirectoryConfiguration.Instance}{activeDirectoryConfiguration.TenantId}/oauth2/v2.0/authorize"),
+                                Scopes = swaggerConfiguration.ScopesDictionary
+                            }
                         }
-                    }
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    [new OpenApiSecurityScheme
+                    });
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
                     {
-                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
-                    }] = new string[] { }
-                });
+                        [new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                        }] = new string[] { }
+                    });
+                }
             });
             services.AddSwaggerGenNewtonsoftSupport();
-
-
             return (swaggerConfiguration, activeDirectoryConfiguration);
         }
 
@@ -135,8 +151,13 @@ namespace AzureActiveDirectoryModule
                 }
 
                 c.ConfigObject.AdditionalItems.Add("syntaxHighlight", false);
-                c.OAuthClientId(azureConfig.ClientId);
-                c.OAuthAppName("Azure Active Directory");
+
+                if (!azureConfig.Silent)
+                {
+                    c.OAuthClientId(azureConfig.ClientId);
+                    c.OAuthAppName("Azure Active Directory");
+                }
+
                 c.DisplayOperationId();
                 c.DisplayRequestDuration();
                 c.RoutePrefix = string.Empty;
