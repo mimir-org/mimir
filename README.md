@@ -186,6 +186,8 @@ To set environment variables for server in development, edit the appsettings.jso
 
 `AzureActiveDirectoryConfiguration__ClientId` - Application id of Server application in Azure AD (app registration)
 
+`AzureActiveDirectoryConfiguration__Silent` - Set authentication and authorisation in silent demo mode
+
 `CorsConfiguration__ValidOrigins` - Comma separated string of valid origins for CORS. E.g. http://localhost:3000,https://mimirorg.com
 
 `DatabaseConfiguration__DataSource` - Identifier for database server
@@ -269,10 +271,11 @@ services:
     environment:
      - MIMIR_ENV_API_BASE_URL=http://localhost:5000/v1.0/
      - MIMIR_ENV_SOCKET_BASE_URL=http://localhost:5000/
-     - MIMIR_ENV_APP_ID=2967244a-662f-4462-82bd-7f9bca0a3683
-     - MIMIR_ENV_CLIENT_ID=0c174c7e-e018-41a2-ba84-3d4b4544a16f
-     - MIMIR_ENV_TENANT_ID=3aa4a235-b6e2-48d5-9195-7fcf05b459b0
-     - MIMIR_ENV_APP_INSIGHTS_CONNECTION_STRING=InstrumentationKey=3db89d19-7dfb-452f-b3f2-8b9af3efd6b9;IngestionEndpoint=https://norwayeast-0.in.applicationinsights.azure.com/
+     - MIMIR_ENV_APP_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     - MIMIR_ENV_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     - MIMIR_ENV_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     - MIMIR_ENV_APP_INSIGHTS_CONNECTION_STRING=InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://xxxx.applicationinsights.azure.com/
+     - MIMIR_ENV_SILENT=false
     networks:
      - type_library_network
 
@@ -315,12 +318,13 @@ services:
       - DatabaseConfiguration__InitialCatalog=ModelBuilder
       - DatabaseConfiguration__DbUser=sa
       - DatabaseConfiguration__Password=P4ssw0rd1
-      - AzureActiveDirectoryConfiguration__TenantId=3aa4a235-b6e2-48d5-9195-7fcf05b459b0
-      - AzureActiveDirectoryConfiguration__ClientId=2967244a-662f-4462-82bd-7f9bca0a3683
+      - AzureActiveDirectoryConfiguration__TenantId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - AzureActiveDirectoryConfiguration__ClientId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - AzureActiveDirectoryConfiguration__Silent=false
       - CorsConfiguration__ValidOrigins=http://localhost:3000
       - ApplicationSetting__TypeLibraryRootUri=http://tyleserver/
       - ApplicationSetting__TypeLibraryVersion=v1
-      - ApplicationSetting__TypeLibrarySecret=cedf6a1af9917f6ac2fd8f7a0f4610b418a72c4ac9557cf2256e4ec2226b2060
+      - ApplicationSetting__TypeLibrarySecret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       - ApplicationSetting__TypeLibraryDomain=runir.net
     networks:
       - type_library_network
@@ -364,7 +368,7 @@ To keep it simple in this example we use db user: 'sa' and db passord: 'P4ssw0rd
 To spool up everything in docker use this command when standing in the 'Mimirorg' folder:
 
 ```bash
-docker compose up -d
+docker compose up -d --build
 ```
 
 If you now run this command:
