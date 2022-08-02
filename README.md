@@ -407,7 +407,7 @@ We welcome community pull requests for bug fixes, enhancements, and documentatio
 
 ## :department_store: Architecture
 
-Architecture sketches overall. See [Mimir overall](./Contribute.md) for more information.
+Architecture sketches overall. See [Mimir overall](https://github.com/mimir-org/documents/blob/main/architecture/mimir_architecture_overall.pdf) for more information.
 
 <!-- Code of Conduct -->
 
