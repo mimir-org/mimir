@@ -27,8 +27,7 @@ services:
      - MIMIR_ENV_SOCKET_BASE_URL=http://localhost:5000/
      - MIMIR_ENV_APP_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
      - MIMIR_ENV_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-     - MIMIR_ENV_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-     - MIMIR_ENV_COMPANY=equinor.com     
+     - MIMIR_ENV_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx     
     networks:
      - type_library_network
 

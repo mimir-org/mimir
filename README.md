@@ -139,11 +139,11 @@ To set environment variables for client in development, edit the .env file. For 
 
 `REACT_APP_TENANT_ID` - Azure tenant
 
-`REACT_APP_COMPANY` - Company domain (should be removed)
-
 `REACT_APP_MIMIR_VERSION` - The Mimir version number
 
 `REACT_APP_APP_INSIGHTS_CONNECTION_STRING` - Application insight connection string
+
+`REACT_APP_SILENT` - Turn off MSAL connection
 
 If you are running the server locally then the values will most likely be
 
@@ -157,6 +157,7 @@ REACT_APP_TENANT_ID = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 REACT_APP_COMPANY = company.com
 REACT_APP_MIMIR_VERSION = 2.0
 REACT_APP_APP_INSIGHTS_CONNECTION_STRING = InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;...
+REACT_APP_SILENT = false
 ```
 
 </details>
@@ -179,7 +180,7 @@ To set environment variables for server in development, edit the appsettings.jso
 
 `ApplicationSetting__TypeLibraryVersion` - The version used by Type Library
 
-`ApplicationSetting__TypeLibrarySecret` - he secret registered in Type Library. Used to identify and registered hooks
+`ApplicationSetting__TypeLibrarySecret` - The secret registered in Type Library. Used to identify and registered hooks
 
 `AzureActiveDirectoryConfiguration__TenantId` - Azure tenant
 
