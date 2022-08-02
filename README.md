@@ -407,10 +407,7 @@ We welcome community pull requests for bug fixes, enhancements, and documentatio
 
 ## :department_store: Architecture
 
-<details>
-<summary>Architecture sketches overall</summary>
-<img src="/misc/Mimirorg.drawio.svg" alt="logo" width="1024" height="auto" />
-</details>
+Architecture sketches overall. See [Mimir overall](./Contribute.md) for more information.
 
 <!-- Code of Conduct -->
 
