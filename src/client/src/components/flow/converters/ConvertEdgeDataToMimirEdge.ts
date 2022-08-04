@@ -35,8 +35,8 @@ const ConvertEdgeDataToMimirEdge = (
     toNode,
     hidden: false,
     masterProjectId: projectId,
-    transport: ConvertToTransport(fromConnector, library),
-    interface: ConvertToInterface(fromConnector, library),
+    transport: ConvertToTransport(fromConnector, library), // SE PÅ DENNE
+    interface: ConvertToInterface(fromConnector, library), // SE PÅ DENNE
     kind: "Edge",
   } as Edge;
 };

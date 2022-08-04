@@ -9,19 +9,20 @@ import { TextResources } from "../../../assets/text/TextResources";
  * This operation is needed when a LibNode is dropped from the Library and converted to a Node.
  * @param libTerminals
  * @param nodeId
+ * @param nodeIri
  * @returns a list of Mimir Connectors.
  */
-const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nodeId: string) => {
+const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nodeId: string, nodeIri: string) => {
   const connectors = [] as Connector[];
 
   // Convert all existing terminals
   libTerminals.forEach((t) => {
-    const terminal = CreateTerminal(t, nodeId);
+    const terminal = CreateTerminal(t, nodeId, nodeIri);
     const terminalAmount = t.quantity;
     [...Array(terminalAmount)].forEach(() => connectors.push(terminal));
   });
 
-  AddRelationConnectors(connectors, nodeId);
+  AddRelationConnectors(connectors, nodeId, nodeIri);
 
   return connectors;
 };
@@ -32,9 +33,10 @@ export default ConvertTerminalLibCmToConnectors;
  * Function to create a Terminal based on the NodeTerminalLibCm type.
  * @param item
  * @param nodeId
+ * @param nodeIri
  * @returns a Terminal.
  */
-function CreateTerminal(item: NodeTerminalLibCm, nodeId: string) {
+function CreateTerminal(item: NodeTerminalLibCm, nodeId: string, nodeIri: string) {
   const connectorVisibility = SetConnectorVisibility(item.connectorDirection);
   const attributes = ConvertAttributeLibCmToAttribute(item.terminal.attributes);
 
@@ -45,16 +47,16 @@ function CreateTerminal(item: NodeTerminalLibCm, nodeId: string) {
     name: item.terminal.name,
     type: item.connectorDirection,
     nodeId,
-    nodeIri: "", // TODO: fix
+    nodeIri,
     connectorVisibility,
     isRequired: false,
     color: item.terminal.color,
-    terminalCategory: "", // TODO: fix
+    terminalCategory: item.terminal.parentName,
     attributes,
-    terminalTypeId: "", // TODO: fix
-    terminalTypeIri: "", // TODO: fix
+    terminalTypeId: item.terminal.id,
+    terminalTypeIri: item.terminal.iri,
     kind: item.kind,
-    discriminator: "terminal", // TODO: fix
+    discriminator: "Terminal",
   } as Terminal;
 }
 
@@ -63,37 +65,56 @@ function CreateTerminal(item: NodeTerminalLibCm, nodeId: string) {
  * All Nodes in Mimir have these six relations by default.
  * @param connectors
  * @param nodeId
+ * @param nodeIri
  */
-function AddRelationConnectors(connectors: Connector[], nodeId: string) {
-  connectors.push(CreateRelation(nodeId, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Input));
-  connectors.push(CreateRelation(nodeId, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Output));
-  connectors.push(CreateRelation(nodeId, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Input));
-  connectors.push(CreateRelation(nodeId, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Output));
-  connectors.push(CreateRelation(nodeId, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Input));
-  connectors.push(CreateRelation(nodeId, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Output));
+function AddRelationConnectors(connectors: Connector[], nodeId: string, nodeIri: string) {
+  connectors.push(
+    CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Input)
+  );
+  connectors.push(
+    CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Output)
+  );
+  connectors.push(
+    CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Input)
+  );
+  connectors.push(
+    CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Output)
+  );
+  connectors.push(
+    CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Input)
+  );
+  connectors.push(
+    CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Output)
+  );
 }
 
 /**
  * Function to create a Connector of the Relation type.
  * @param nodeId
+ * @param nodeIri
  * @param relationType
  * @param connectorDirection
  * @returns a Relation.
  */
-function CreateRelation(nodeId: string, relationType: RelationType, name: string, connectorDirection: ConnectorDirection) {
+function CreateRelation(
+  nodeId: string,
+  nodeIri: string,
+  relationType: RelationType,
+  name: string,
+  connectorDirection: ConnectorDirection
+) {
   return {
     id: CreateId(),
     type: connectorDirection,
     nodeId,
-    nodeIri: "https://rdf.runir.net/", // TODO: fix
+    nodeIri,
     relationType,
     kind: "Connector",
-    discriminator: "Relation", // TODO: fix
-    name: name,
-    domain: "runir.net", // TODO: fix
+    discriminator: "Relation",
+    name,
     isRequired: false,
     connectorVisibility: ConnectorVisibility.None,
-    iri: "https://rdf.runir.net/", // TODO: fix
+    iri: null,
   } as Relation;
 }
 
