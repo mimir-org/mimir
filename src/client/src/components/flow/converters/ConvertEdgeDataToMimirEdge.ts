@@ -13,7 +13,7 @@ import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
  * @param library
  * @returns an Edge.
  */
-const ConvertDataToEdge = (
+const ConvertEdgeDataToMimirEdge = (
   id: string,
   fromConnector: Connector,
   toConnector: Connector,
@@ -41,4 +41,4 @@ const ConvertDataToEdge = (
   } as Edge;
 };
 
-export default ConvertDataToEdge;
+export default ConvertEdgeDataToMimirEdge;

@@ -14,6 +14,7 @@ import { TextResources } from "../../../assets/text/TextResources";
 const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nodeId: string) => {
   const connectors = [] as Connector[];
 
+  // Convert all existing terminals
   libTerminals.forEach((t) => {
     const terminal = CreateTerminal(t, nodeId);
     const terminalAmount = t.quantity;
@@ -26,6 +27,36 @@ const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nod
 };
 
 export default ConvertTerminalLibCmToConnectors;
+
+/**
+ * Function to create a Terminal based on the NodeTerminalLibCm type.
+ * @param item
+ * @param nodeId
+ * @returns a Terminal.
+ */
+function CreateTerminal(item: NodeTerminalLibCm, nodeId: string) {
+  const connectorVisibility = SetConnectorVisibility(item.connectorDirection);
+  const attributes = ConvertAttributeLibCmToAttribute(item.terminal.attributes);
+
+  return {
+    id: CreateId(),
+    iri: item.terminal.iri,
+    domain: item.terminal.iri,
+    name: item.terminal.name,
+    type: item.connectorDirection,
+    nodeId,
+    nodeIri: "", // TODO: fix
+    connectorVisibility,
+    isRequired: false,
+    color: item.terminal.color,
+    terminalCategory: "", // TODO: fix
+    attributes,
+    terminalTypeId: "", // TODO: fix
+    terminalTypeIri: "", // TODO: fix
+    kind: item.kind,
+    discriminator: "terminal", // TODO: fix
+  } as Terminal;
+}
 
 /**
  * Function to add all Relation types to a Node.
@@ -54,6 +85,7 @@ function CreateRelation(nodeId: string, relationType: RelationType, name: string
     id: CreateId(),
     type: connectorDirection,
     nodeId,
+    nodeIri: "https://rdf.runir.net/", // TODO: fix
     relationType,
     kind: "Connector",
     discriminator: "Relation", // TODO: fix
@@ -61,37 +93,8 @@ function CreateRelation(nodeId: string, relationType: RelationType, name: string
     domain: "runir.net", // TODO: fix
     isRequired: false,
     connectorVisibility: ConnectorVisibility.None,
+    iri: "https://rdf.runir.net/", // TODO: fix
   } as Relation;
-}
-
-/**
- * Function to create a Terminal based on the NodeTerminalLibCm type.
- * @param item
- * @param nodeId
- * @returns a Terminal
- */
-function CreateTerminal(item: NodeTerminalLibCm, nodeId: string) {
-  const connectorVisibility = SetConnectorVisibility(item.connectorDirection);
-  const attributes = ConvertAttributeLibCmToAttribute(item.terminal.attributes);
-
-  return {
-    id: CreateId(),
-    iri: item.terminal.iri,
-    domain: item.terminal.iri,
-    name: item.terminal.name,
-    type: item.connectorDirection,
-    nodeId,
-    nodeIri: "", // TODO: fix
-    connectorVisibility,
-    isRequired: false,
-    color: item.terminal.color,
-    terminalCategory: "", // TODO: fix
-    attributes,
-    terminalTypeId: "", // TODO: fix
-    terminalTypeIri: "", // TODO: fix
-    kind: item.kind,
-    discriminator: "terminal", // TODO: fix
-  } as Terminal;
 }
 
 /**

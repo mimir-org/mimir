@@ -3,7 +3,7 @@ import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { CreateId } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
-import { ConvertDataToEdge } from "../../converters";
+import { ConvertEdgeDataToMimirEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetBlockEdgeType } from "../helpers";
@@ -40,7 +40,7 @@ const useOnBlockConnect = (params: Params) => {
   const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
   const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
 
-  const edge = ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, lib);
+  const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, lib);
   dispatch(createEdge(edge));
 
   const type = GetBlockEdgeType(sourceConn, source, target);

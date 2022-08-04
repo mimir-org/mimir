@@ -2,13 +2,13 @@ import { CreateId } from "./";
 import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
 import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { ConvertDataToEdge } from "../converters";
+import { ConvertEdgeDataToMimirEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
 import { Size } from "../../../assets/size/Size";
 import { Position } from "../../../models/project";
 import { IsOutputConnector, IsInputConnector, IsPartOfRelation, IsLocationRelation, IsProductRelation } from "./Connectors";
-import { Node, Edge, ConnectorVisibility, Connector, Project } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, ConnectorVisibility, Connector, Project, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 
 /**
  * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
@@ -26,9 +26,18 @@ export function HandleCreatePartOfEdge(
   dispatch: Dispatch
 ) {
   childNode.level = parentNode.level + 1;
-  const parentConnector = parentNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
-  const childConnector = childNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputConnector(c));
-  const partofEdge = ConvertDataToEdge(CreateId(), parentConnector, childConnector, parentNode, childNode, project.id, library);
+  const parentConnector = parentNode.connectors?.find((c) => IsPartOfRelation(c) && c.type === ConnectorDirection.Output);
+  const childConnector = childNode.connectors?.find((c) => IsPartOfRelation(c) && c.type === ConnectorDirection.Input);
+
+  const partofEdge = ConvertEdgeDataToMimirEdge(
+    CreateId(),
+    parentConnector,
+    childConnector,
+    parentNode,
+    childNode,
+    project.id,
+    library
+  );
 
   SetSiblingIndexOnNodeDrop(childNode, project.nodes, project.edges, parentNode.id);
   dispatch(createEdge(partofEdge));

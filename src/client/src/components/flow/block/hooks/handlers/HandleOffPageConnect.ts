@@ -2,7 +2,7 @@ import { addEdge } from "react-flow-renderer";
 import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EDGE_TYPE } from "../../../../../models/project";
 import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
-import { ConvertDataToEdge } from "../../../converters";
+import { ConvertEdgeDataToMimirEdge } from "../../../converters";
 import { CreateId } from "../../../helpers";
 import { IsTerminal } from "../../../helpers/Connectors";
 import { Params } from "../useOnBlockConnect";
@@ -28,7 +28,7 @@ export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNod
 
   if (!sourceTerminal || !targetTerminal) return null;
 
-  const edge = ConvertDataToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, lib);
+  const edge = ConvertEdgeDataToMimirEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, lib);
   dispatch(createEdge(edge));
 
   project.edges.forEach((e) => {

@@ -2,7 +2,7 @@ import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { IsPartOfRelation, IsPartOfConnection, IsTerminal } from "../../helpers/Connectors";
 import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
-import { ConvertDataToEdge } from "../../converters";
+import { ConvertEdgeDataToMimirEdge } from "../../converters";
 import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
@@ -35,7 +35,7 @@ const useOnTreeConnect = (params: Params) => {
 
   if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project.edges, target, dispatch);
 
-  const currentEdge = existingEdge ?? ConvertDataToEdge(id, sourceConn, targetConn, source, target, project.id, library);
+  const currentEdge = existingEdge ?? ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, library);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
   if (IsPartOfRelation(currentEdge?.fromConnector))

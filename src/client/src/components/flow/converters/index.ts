@@ -4,7 +4,7 @@ export { default as ConvertTerminalLibCmToConnectors } from "./ConvertTerminalLi
 export { default as ConvertAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 export { default as ConvertSimpleLibCmToSimple } from "./ConvertSimpleLibCmToSimple";
 
-export { default as ConvertDataToEdge } from "./ConvertDataToEdge";
+export { default as ConvertEdgeDataToMimirEdge } from "./ConvertEdgeDataToMimirEdge";
 
 export { default as ConvertEdgeToFlowEdge } from "./ConvertEdgeToFlowEdge";
 export { default as ConvertNodeToFlowNode } from "./ConvertNodeToFlowNode";

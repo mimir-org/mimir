@@ -10,7 +10,7 @@ import {
 
 // ConnectorType
 export function IsRelationConnector(relationCandidate: Connector): relationCandidate is Relation {
-  if ((relationCandidate as Relation).type) return true;
+  if ((relationCandidate as Relation).relationType) return true;
   return false;
 }
 
@@ -20,7 +20,7 @@ export function IsTerminal(terminalCandidate: Connector): terminalCandidate is T
 }
 
 // ConnectorDirection
-export const IsInputConnector = (terminal: TerminalLikeItem) => {
+export const IsInputConnector = (terminal: Connector) => {
   return terminal?.type === ConnectorDirection.Input;
 };
 

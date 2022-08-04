@@ -24,7 +24,7 @@ export const TextResources = {
   SUBPROJECTS: "Subprojects",
   LOCK_OBJECT: "Lock object(s)",
   UNLOCK_OBJECT: "Unlock object(s)",
-  PARTOF_RELATIONSHIP: "Part of Relationship",
+  PARTOF_RELATIONSHIP: "PartOf",
   FAVORITES: "Favorites",
   CLOSE_WINDOW: "Close window",
 
