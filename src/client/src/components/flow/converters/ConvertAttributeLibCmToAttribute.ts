@@ -1,10 +1,18 @@
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeLibCm } from "@mimirorg/typelibrary-types";
 
-const ConvertAttributeLibCmToAttribute = (atrributes: AttributeLibCm[]) => {
-  if (!atrributes.length) return [] as Attribute[];
+/**
+ * Component to convert AttributeLibCm to the type Attribute.
+ * This convertion is needed when a LibNode is dropped from the Library and converted to a Node.
+ * @param attributes
+ * @param nodeId
+ * @param nodeIri
+ * @returns a list of Attributes.
+ */
+const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: string, nodeIri: string) => {
+  if (!attributes.length) return [] as Attribute[];
 
-  return atrributes.map((a) => {
+  return attributes.map((a) => {
     return {
       id: a.id,
       iri: a.iri,
@@ -22,10 +30,10 @@ const ConvertAttributeLibCmToAttribute = (atrributes: AttributeLibCm[]) => {
       format: a.attributeFormat,
       discipline: a.discipline,
       selectType: a.select, // TODO: ?
+      nodeId,
+      nodeIri,
       // terminalId: string,
       // terminalIri: string,
-      // nodeId: string,
-      // nodeIri: string,
       // transportId: string,
       // transportIri: string,
       // interfaceId: string,

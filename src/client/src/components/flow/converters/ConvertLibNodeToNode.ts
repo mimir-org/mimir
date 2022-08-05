@@ -27,7 +27,7 @@ const ConvertLibNodeToNode = (
 ) => {
   const now = GetDateNowUtc();
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, libNode.id, libNode.iri);
-  const attributes = ConvertAttributeLibCmToAttribute(libNode.attributes);
+  const attributes = ConvertAttributeLibCmToAttribute(libNode.attributes, libNode.id, libNode.iri);
   const simples = ConvertSimpleLibCmToSimple(libNode.simples, libNode.id, libNode.iri);
 
   return {

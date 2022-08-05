@@ -40,7 +40,7 @@ export default ConvertTerminalLibCmToConnectors;
  */
 function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string) {
   const connectorVisibility = SetConnectorVisibility(libTerminal.connectorDirection);
-  const attributes = ConvertAttributeLibCmToAttribute(libTerminal.terminal.attributes);
+  const attributes = ConvertAttributeLibCmToAttribute(libTerminal.terminal.attributes, nodeId, nodeIri);
 
   return {
     id: CreateId(),
