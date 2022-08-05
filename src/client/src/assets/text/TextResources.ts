@@ -288,6 +288,11 @@ export const TextResources = {
   // Resize
   RESIZE_NODE: "Resize node",
 
+  // Discriminators
+  DISCRIMINATOR_TERMINAL: "Terminal",
+  DISCRIMINATOR_RELATION: "Relation",
+  DISCRIMINATOR_CONNECTOR: "Connector",
+
   // Company names
   EQUINOR: "equinor.com",
   AIBEL: "aibel.com",

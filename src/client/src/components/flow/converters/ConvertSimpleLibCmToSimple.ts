@@ -2,7 +2,7 @@ import { Simple } from "@mimirorg/modelbuilder-types";
 import { SimpleLibCm } from "@mimirorg/typelibrary-types";
 import { ConvertAttributeLibCmToAttribute } from "./";
 
-const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[]) => {
+const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[], nodeId: string, nodeIri: string) => {
   if (!simples.length) return [] as Simple[];
 
   return simples.map((s) => {
@@ -12,8 +12,8 @@ const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[]) => {
       iri: s.iri,
       attributes: ConvertAttributeLibCmToAttribute(s.attributes),
       kind: s.kind,
-      nodeId: "", // TODO: fix
-      nodeIri: "",
+      nodeId,
+      nodeIri,
     };
   });
 };

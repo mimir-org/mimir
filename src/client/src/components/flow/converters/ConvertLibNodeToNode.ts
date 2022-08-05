@@ -28,12 +28,12 @@ const ConvertLibNodeToNode = (
   const now = GetDateNowUtc();
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, libNode.id, libNode.iri);
   const attributes = ConvertAttributeLibCmToAttribute(libNode.attributes);
-  const simples = ConvertSimpleLibCmToSimple(libNode.simples);
+  const simples = ConvertSimpleLibCmToSimple(libNode.simples, libNode.id, libNode.iri);
 
   return {
     id: libNode.id,
     rds: libNode.rdsCode,
-    projectId: projectId,
+    projectId,
     name: libNode.name,
     label: libNode.name, // TODO: label?
     positionX: treePosition.x,

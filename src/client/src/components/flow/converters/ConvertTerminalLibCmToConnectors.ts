@@ -7,6 +7,7 @@ import { TextResources } from "../../../assets/text/TextResources";
 /**
  * Component to convert terminals from NodeTerminalLibCm to Connector.
  * This operation is needed when a LibNode is dropped from the Library and converted to a Node.
+ * The LibNode's terminals are of the the type NodeTerminalLibCm.
  * @param libTerminals
  * @param nodeId
  * @param nodeIri
@@ -15,14 +16,15 @@ import { TextResources } from "../../../assets/text/TextResources";
 const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nodeId: string, nodeIri: string) => {
   const connectors = [] as Connector[];
 
-  // Convert all existing terminals
+  // Convert all existing libTerminals
   libTerminals.forEach((t) => {
     const terminal = CreateTerminal(t, nodeId, nodeIri);
     const terminalAmount = t.quantity;
     [...Array(terminalAmount)].forEach(() => connectors.push(terminal));
   });
 
-  AddRelationConnectors(connectors, nodeId, nodeIri);
+  // Create all mandatory relation connectors
+  CreateRelationConnectors(connectors, nodeId, nodeIri);
 
   return connectors;
 };
@@ -31,32 +33,32 @@ export default ConvertTerminalLibCmToConnectors;
 
 /**
  * Function to create a Terminal based on the NodeTerminalLibCm type.
- * @param item
+ * @param libTerminal
  * @param nodeId
  * @param nodeIri
  * @returns a Terminal.
  */
-function CreateTerminal(item: NodeTerminalLibCm, nodeId: string, nodeIri: string) {
-  const connectorVisibility = SetConnectorVisibility(item.connectorDirection);
-  const attributes = ConvertAttributeLibCmToAttribute(item.terminal.attributes);
+function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string) {
+  const connectorVisibility = SetConnectorVisibility(libTerminal.connectorDirection);
+  const attributes = ConvertAttributeLibCmToAttribute(libTerminal.terminal.attributes);
 
   return {
     id: CreateId(),
-    iri: item.terminal.iri,
-    domain: item.terminal.iri,
-    name: item.terminal.name,
-    type: item.connectorDirection,
+    iri: libTerminal.terminal.iri,
+    domain: libTerminal.terminal.iri,
+    name: libTerminal.terminal.name,
+    type: libTerminal.connectorDirection,
     nodeId,
     nodeIri,
     connectorVisibility,
     isRequired: false,
-    color: item.terminal.color,
-    terminalCategory: item.terminal.parentName,
+    color: libTerminal.terminal.color,
+    terminalCategory: libTerminal.terminal.parentName,
     attributes,
-    terminalTypeId: item.terminal.id,
-    terminalTypeIri: item.terminal.iri,
-    kind: item.kind,
-    discriminator: "Terminal",
+    terminalTypeId: libTerminal.terminal.id,
+    terminalTypeIri: libTerminal.terminal.iri,
+    kind: libTerminal.kind,
+    discriminator: TextResources.DISCRIMINATOR_TERMINAL,
   } as Terminal;
 }
 
@@ -67,25 +69,13 @@ function CreateTerminal(item: NodeTerminalLibCm, nodeId: string, nodeIri: string
  * @param nodeId
  * @param nodeIri
  */
-function AddRelationConnectors(connectors: Connector[], nodeId: string, nodeIri: string) {
-  connectors.push(
-    CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Input)
-  );
-  connectors.push(
-    CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, ConnectorDirection.Output)
-  );
-  connectors.push(
-    CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Input)
-  );
-  connectors.push(
-    CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION, ConnectorDirection.Output)
-  );
-  connectors.push(
-    CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Input)
-  );
-  connectors.push(
-    CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY, ConnectorDirection.Output)
-  );
+function CreateRelationConnectors(connectors: Connector[], nodeId: string, nodeIri: string) {
+  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP, true));
+  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.PartOf, TextResources.PARTOF_RELATIONSHIP));
+  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION, true));
+  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.HasLocation, TextResources.HAS_LOCATION));
+  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY, true));
+  connectors.push(CreateRelation(nodeId, nodeIri, RelationType.FulfilledBy, TextResources.FULFILLED_BY));
 }
 
 /**
@@ -93,24 +83,18 @@ function AddRelationConnectors(connectors: Connector[], nodeId: string, nodeIri:
  * @param nodeId
  * @param nodeIri
  * @param relationType
- * @param connectorDirection
+ * @param isInput
  * @returns a Relation.
  */
-function CreateRelation(
-  nodeId: string,
-  nodeIri: string,
-  relationType: RelationType,
-  name: string,
-  connectorDirection: ConnectorDirection
-) {
+function CreateRelation(nodeId: string, nodeIri: string, relationType: RelationType, name: string, isInput?: boolean) {
   return {
     id: CreateId(),
-    type: connectorDirection,
+    type: isInput ? ConnectorDirection.Input : ConnectorDirection.Output,
     nodeId,
     nodeIri,
     relationType,
-    kind: "Connector",
-    discriminator: "Relation",
+    kind: TextResources.DISCRIMINATOR_CONNECTOR,
+    discriminator: TextResources.DISCRIMINATOR_RELATION,
     name,
     isRequired: false,
     connectorVisibility: ConnectorVisibility.None,
