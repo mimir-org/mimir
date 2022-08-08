@@ -1,8 +1,8 @@
 import { CreateId } from "../helpers";
-import { ConvertAttributeLibCmToAttribute } from ".";
 import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Connector, ConnectorVisibility, Relation, RelationType, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
+import { ConvertTerminalAttributeLibCmToAttribute } from "./";
 
 /**
  * Component to convert terminals from NodeTerminalLibCm to Connector.
@@ -39,7 +39,7 @@ export default ConvertTerminalLibCmToConnectors;
  */
 function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string) {
   const connectorVisibility = SetConnectorVisibility(libTerminal.connectorDirection);
-  const attributes = ConvertAttributeLibCmToAttribute(libTerminal.terminal.attributes, nodeId, nodeIri);
+  const attributes = ConvertTerminalAttributeLibCmToAttribute(libTerminal.terminal, nodeId, nodeIri);
 
   return {
     id: CreateId(),

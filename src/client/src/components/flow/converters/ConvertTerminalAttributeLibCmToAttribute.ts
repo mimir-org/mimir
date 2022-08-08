@@ -1,20 +1,20 @@
 import { Attribute } from "@mimirorg/modelbuilder-types";
-import { AttributeLibCm } from "@mimirorg/typelibrary-types";
+import { TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { CreateId } from "../helpers";
 
 /**
- * Component to convert AttributeLibCm to the type Attribute.
+ * Component to convert a Terminal's AttributeLibCm to the type Attribute.
  * This convertion is needed when a LibNode is dropped from the Library and converted to a Node.
- * @param attributes
+ * @param libTerminal
  * @param nodeId
  * @param nodeIri
  * @returns a list of Attributes.
  */
-const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: string, nodeIri: string) => {
-  if (!attributes.length) return [] as Attribute[];
+const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLibCm, nodeId: string, nodeIri: string) => {
+  if (!libTerminal.attributes.length) return [] as Attribute[];
 
-  return attributes.map((a) => {
+  return libTerminal.attributes.map((a) => {
     return {
       id: CreateId(),
       iri: null,
@@ -32,7 +32,7 @@ const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: 
       discipline: a.discipline,
       nodeId,
       nodeIri,
-      terminalId: null,
+      terminalId: libTerminal.id, // TODO: Check this
       transportId: null,
       interfaceId: null,
       simpleId: null,
@@ -45,4 +45,4 @@ const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: 
   });
 };
 
-export default ConvertAttributeLibCmToAttribute;
+export default ConvertTerminalAttributeLibCmToAttribute;
