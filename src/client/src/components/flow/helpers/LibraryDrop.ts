@@ -1,6 +1,5 @@
 import { CreateId } from "./";
 import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
-import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { ConvertEdgeDataToMimirEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
@@ -15,29 +14,14 @@ import { Node, Edge, ConnectorVisibility, Connector, Project } from "@mimirorg/m
  * @param parentNode
  * @param childNode
  * @param project
- * @param library
  * @param dispatch
  */
-export function HandleCreatePartOfEdge(
-  parentNode: Node,
-  childNode: Node,
-  project: Project,
-  library: LibraryState,
-  dispatch: Dispatch
-) {
+export function HandleCreatePartOfEdge(parentNode: Node, childNode: Node, project: Project, dispatch: Dispatch) {
   childNode.level = parentNode.level + 1;
   const parentConnector = parentNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
   const childConnector = childNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputConnector(c));
 
-  const partofEdge = ConvertEdgeDataToMimirEdge(
-    CreateId(),
-    parentConnector,
-    childConnector,
-    parentNode,
-    childNode,
-    project.id,
-    library
-  );
+  const partofEdge = ConvertEdgeDataToMimirEdge(CreateId(), parentConnector, childConnector, parentNode, childNode, project.id);
 
   SetSiblingIndexOnNodeDrop(childNode, project.nodes, project.edges, parentNode.id);
   dispatch(createEdge(partofEdge));

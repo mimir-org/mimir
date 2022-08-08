@@ -1,59 +1,56 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Connector, ConnectorDirection, Interface, Terminal } from "@mimirorg/modelbuilder-types";
-import { LibraryState } from "../../../redux/store/library/types";
+import { GetDateNowUtc } from "../../../helpers";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
+import { UpdateAttributesId } from "./ConvertToTransport";
 
-const ConvertToInterface = (sourceConn: Connector, library: LibraryState) => {
-  const interfaceType = null; // library?.interfaceTypes.find((x) => x.terminalTypeId === sourceConn.terminalTypeId);
-  if (!interfaceType) return null;
+/**
+ * Component to convert a Terminal to the Interface data type.
+ * This conversion is needed when a transport Edge is created between two Nodes.
+ * @param sourceConn
+ * @returns an Interface.
+ */
+const ConvertToInterface = (sourceConn: Terminal, targetConn: Connector) => {
+  // const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
+  // const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
 
   const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
-  const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
+  const outputTerminal = JSON.parse(JSON.stringify(targetConn)) as Terminal;
 
   inputTerminal.id = CreateId();
   inputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorDirection.Bidirectional : ConnectorDirection.Input;
   inputTerminal.nodeId = null;
 
   outputTerminal.id = CreateId();
-  outputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorDirection.Bidirectional : ConnectorDirection.Output;
+  outputTerminal.type = IsBidirectionalTerminal(targetConn) ? ConnectorDirection.Bidirectional : ConnectorDirection.Output;
   outputTerminal.nodeId = null;
 
-  if (inputTerminal?.attributes) {
-    inputTerminal.attributes.forEach((x) => {
-      x.id = CreateId();
-      x.terminalId = inputTerminal.id;
-    });
-  }
+  UpdateAttributesId(inputTerminal);
+  UpdateAttributesId(outputTerminal);
 
-  if (outputTerminal?.attributes) {
-    outputTerminal.attributes.forEach((x) => {
-      x.id = CreateId();
-      x.terminalId = outputTerminal.id;
-    });
-  }
+  const now = GetDateNowUtc();
 
   return {
     id: CreateId(),
     iri: "",
-    version: interfaceType.version,
-    rds: interfaceType.rdsId,
-    name: interfaceType.name,
-    label: interfaceType.name,
-    description: interfaceType.description,
-    statusId: interfaceType.statusId,
-    semanticReference: interfaceType.semanticReference,
-    attributes: interfaceType.attributes,
+    version: "",
+    rds: "",
+    name: "",
+    label: "",
+    description: "",
+    statusId: "",
+    semanticReference: "",
+    attributes: sourceConn.attributes, // TODO: Check this
     inputTerminalId: inputTerminal.id,
     inputTerminal: inputTerminal,
     outputTerminalId: outputTerminal.id,
     outputTerminal: outputTerminal,
-    updatedBy: interfaceType.updatedBy,
-    updated: interfaceType.updated,
-    createdBy: interfaceType.createdBy,
-    created: interfaceType.created,
-    libraryTypeId: interfaceType.id,
-    kind: interfaceType.kind,
+    updatedBy: "",
+    updated: now,
+    createdBy: "",
+    created: now,
+    libraryTypeId: "",
+    kind: "Interface",
   } as Interface;
 };
 

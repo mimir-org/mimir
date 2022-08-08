@@ -1,6 +1,6 @@
-import { LibraryState } from "../../../redux/store/library/types";
 import { ConvertToInterface, ConvertToTransport } from ".";
 import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
+import { IsTerminal } from "../helpers/Connectors";
 
 /**
  * Function to convert data to a Mimir Edge.
@@ -10,7 +10,6 @@ import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
  * @param fromNode
  * @param toNode
  * @param projectId
- * @param library
  * @returns an Edge.
  */
 const ConvertEdgeDataToMimirEdge = (
@@ -19,9 +18,12 @@ const ConvertEdgeDataToMimirEdge = (
   toConnector: Connector,
   fromNode: Node,
   toNode: Node,
-  projectId: string,
-  library: LibraryState
+  projectId: string
 ) => {
+  const isTerminalConnector = IsTerminal(fromConnector) && IsTerminal(toConnector);
+  const convertedTransport = isTerminalConnector ? ConvertToTransport(fromConnector, toConnector) : null;
+  const convertedInterface = isTerminalConnector ? ConvertToInterface(fromConnector, toConnector) : null;
+
   return {
     id,
     projectId,
@@ -35,8 +37,8 @@ const ConvertEdgeDataToMimirEdge = (
     toNode,
     hidden: false,
     masterProjectId: projectId,
-    transport: ConvertToTransport(fromConnector, library), // SE PÅ DENNE
-    interface: ConvertToInterface(fromConnector, library), // SE PÅ DENNE
+    transport: convertedTransport,
+    interface: convertedInterface,
     kind: "Edge",
   } as Edge;
 };

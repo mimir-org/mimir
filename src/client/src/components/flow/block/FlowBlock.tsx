@@ -45,7 +45,6 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
-  const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const mimirNodes = project?.nodes ?? [];
@@ -68,7 +67,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnBlockConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
+    return hooks.useOnBlockConnect({ connection, project, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -81,7 +80,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnBlockDrop({ event, project, user, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
+    return hooks.useOnBlockDrop({ event, project, user, selectedNode, secondaryNode, instance, getViewport, dispatch });
   };
 
   const OnNodesChange = useCallback(

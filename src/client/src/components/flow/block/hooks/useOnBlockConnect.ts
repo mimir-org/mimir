@@ -4,7 +4,6 @@ import { SaveEventData } from "../../../../redux/store/localStorage/localStorage
 import { CreateId } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
 import { ConvertEdgeDataToMimirEdge } from "../../converters";
-import { LibraryState } from "../../../../redux/store/library/types";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetBlockEdgeType } from "../helpers";
 import { IsTerminal } from "../../helpers/Connectors";
@@ -16,7 +15,6 @@ export interface Params {
   project: Project;
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>;
   dispatch: Dispatch;
-  lib: LibraryState;
   animatedEdge: boolean;
 }
 
@@ -27,7 +25,7 @@ export interface Params {
  */
 const useOnBlockConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, lib, animatedEdge, setEdges, dispatch } = params;
+  const { project, connection, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
   const source = project.nodes.find((node) => node.id === connection.source);
   const target = project.nodes.find((node) => node.id === connection.target);
@@ -40,7 +38,7 @@ const useOnBlockConnect = (params: Params) => {
   const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
   const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
 
-  const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, lib);
+  const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id);
   dispatch(createEdge(edge));
 
   const type = GetBlockEdgeType(sourceConn, source, target);

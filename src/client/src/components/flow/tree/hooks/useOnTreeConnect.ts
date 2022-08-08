@@ -3,7 +3,6 @@ import { SaveEventData } from "../../../../redux/store/localStorage/localStorage
 import { IsPartOfRelation, IsPartOfConnection, IsTerminal } from "../../helpers/Connectors";
 import { createEdge, deleteEdge } from "../../../../redux/store/project/actions";
 import { ConvertEdgeDataToMimirEdge } from "../../converters";
-import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { GetExistingEdge, GetTreeEdgeType } from "../helpers";
 import { CreateId, UpdateSiblingIndexOnEdgeConnect } from "../../helpers";
@@ -14,7 +13,6 @@ interface Params {
   project: Project;
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>;
   dispatch: Dispatch;
-  library: LibraryState;
   animatedEdge: boolean;
 }
 
@@ -25,7 +23,7 @@ interface Params {
  */
 const useOnTreeConnect = (params: Params) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, library, animatedEdge, setEdges, dispatch } = params;
+  const { project, connection, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
   const source = project.nodes.find((n) => n.id === connection.source);
   const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
@@ -35,7 +33,7 @@ const useOnTreeConnect = (params: Params) => {
 
   if (IsPartOfConnection(sourceConn, targetConn)) HandlePartOfEdge(project.edges, target, dispatch);
 
-  const currentEdge = existingEdge ?? ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, library);
+  const currentEdge = existingEdge ?? ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id);
   if (!existingEdge) dispatch(createEdge(currentEdge));
 
   if (IsPartOfRelation(currentEdge?.fromConnector))

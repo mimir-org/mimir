@@ -43,7 +43,6 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
-  const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
   const mimirNodes = project?.nodes;
   const mimirEdges = project?.edges;
@@ -64,11 +63,11 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
+    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, user, library, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, user, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {

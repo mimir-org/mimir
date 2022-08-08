@@ -1,6 +1,5 @@
 export {
   secondaryNodeSelector,
-  librarySelector,
   userStateSelector,
   animatedEdgeSelector,
   projectSelector,

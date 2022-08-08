@@ -1,7 +1,6 @@
 import { ReactFlowInstance } from "react-flow-renderer";
 import { addNode, createEdge } from "../../../../redux/store/project/actions";
 import { ConvertLibNodeToNode } from "../../converters";
-import { LibraryState } from "../../../../redux/store/library/types";
 import { Dispatch } from "redux";
 import { LibrarySubProjectItem, User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
@@ -16,7 +15,6 @@ interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
   user: User;
-  library: LibraryState;
   flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;
   dispatch: Dispatch;
@@ -47,7 +45,7 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param OnDropParameters
  */
-function HandleLibNodeDrop({ event, project, user, library, dispatch }: OnDropParameters) {
+function HandleLibNodeDrop({ event, project, user, dispatch }: OnDropParameters) {
   const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
   const selectedNode = project?.nodes?.find((n) => n.selected);
 
@@ -59,7 +57,7 @@ function HandleLibNodeDrop({ event, project, user, library, dispatch }: OnDropPa
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
   const convertedNode = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user);
-  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, library, dispatch);
+  if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, dispatch);
 
   dispatch(addNode(convertedNode));
 }

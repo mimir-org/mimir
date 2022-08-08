@@ -19,7 +19,7 @@ import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
  * @returns a transport edge between the parents of the OffPageNodes.
  */
 export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
-  const { project, connection, lib, dispatch, setEdges } = params;
+  const { project, connection, dispatch, setEdges } = params;
   const id = CreateId();
   const sourceParent = project.nodes.find((n) => n.id === sourceNode?.parentNodeId);
   const targetParent = project.nodes.find((n) => n.id === targetNode?.parentNodeId);
@@ -28,7 +28,7 @@ export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNod
 
   if (!sourceTerminal || !targetTerminal) return null;
 
-  const edge = ConvertEdgeDataToMimirEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, lib);
+  const edge = ConvertEdgeDataToMimirEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id);
   dispatch(createEdge(edge));
 
   project.edges.forEach((e) => {
