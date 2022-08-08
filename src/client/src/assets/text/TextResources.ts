@@ -292,6 +292,7 @@ export const TextResources = {
   DISCRIMINATOR_TERMINAL: "Terminal",
   DISCRIMINATOR_RELATION: "Relation",
   DISCRIMINATOR_CONNECTOR: "Connector",
+  DISCRIMINATOR_ATTRIBUTE: "Attribute",
 
   // Company names
   EQUINOR: "equinor.com",

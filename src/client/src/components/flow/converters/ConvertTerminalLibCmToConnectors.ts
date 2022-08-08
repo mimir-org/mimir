@@ -18,9 +18,8 @@ const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nod
 
   // Convert all existing libTerminals
   libTerminals.forEach((t) => {
-    const terminal = CreateTerminal(t, nodeId, nodeIri);
     const terminalAmount = t.quantity;
-    [...Array(terminalAmount)].forEach(() => connectors.push(terminal));
+    [...Array(terminalAmount)].forEach(() => connectors.push(CreateTerminal(t, nodeId, nodeIri)));
   });
 
   // Create all mandatory relation connectors
@@ -44,7 +43,7 @@ function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri:
 
   return {
     id: CreateId(),
-    iri: libTerminal.terminal.iri,
+    iri: null,
     domain: libTerminal.terminal.iri,
     name: libTerminal.terminal.name,
     type: libTerminal.connectorDirection,

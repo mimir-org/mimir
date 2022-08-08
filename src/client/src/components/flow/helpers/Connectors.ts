@@ -15,13 +15,13 @@ export function IsRelationConnector(relationCandidate: Connector): relationCandi
 }
 
 export function IsTerminal(terminalCandidate: Connector): terminalCandidate is Terminal {
-  if ((terminalCandidate as Terminal).type) return true;
+  if ((terminalCandidate as Terminal).color) return true;
   return false;
 }
 
 // ConnectorDirection
-export const IsInputConnector = (terminal: Connector) => {
-  return terminal?.type === ConnectorDirection.Input;
+export const IsInputConnector = (connector: Connector) => {
+  return connector?.type === ConnectorDirection.Input;
 };
 
 export const IsOutputConnector = (connector: Connector) => {

@@ -17,7 +17,7 @@ interface Props {
 /**
  * The main component for the terminals menu on BlockView nodes.
  * @param interface
- * @returns a button to active the menu, and a drop-down menu containing available terminals.
+ * @returns a button to activate the menu, and a drop-down menu containing available terminals.
  */
 export const TerminalsMenuComponent = ({ node, terminals, onClick, isParent, isInput, showMenuButton = true }: Props) => {
   const [showMenu, setShowMenu] = useState(false);

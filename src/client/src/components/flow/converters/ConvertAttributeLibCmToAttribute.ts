@@ -1,5 +1,7 @@
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeLibCm } from "@mimirorg/typelibrary-types";
+import { TextResources } from "../../../assets/text/TextResources";
+import { CreateId } from "../helpers";
 
 /**
  * Component to convert AttributeLibCm to the type Attribute.
@@ -14,37 +16,31 @@ const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: 
 
   return attributes.map((a) => {
     return {
-      id: a.id,
-      iri: a.iri,
-      domain: "",
-      kind: a.kind,
-      entity: "",
+      id: CreateId(),
+      iri: null,
+      kind: TextResources.DISCRIMINATOR_ATTRIBUTE,
+      entity: a.name,
       value: "",
-      attributeTypeId: "",
-      attributeTypeIri: "",
+      attributeTypeId: a.id,
+      attributeTypeIri: a.iri,
       selectedUnitId: "",
       units: a.units,
-      qualifier: a.attributeQualifier, // TODO: ?
+      qualifier: a.attributeQualifier,
       source: a.attributeSource,
       condition: a.attributeCondition,
       format: a.attributeFormat,
       discipline: a.discipline,
-      selectType: a.select, // TODO: ?
       nodeId,
       nodeIri,
-      // terminalId: string,
-      // terminalIri: string,
-      // transportId: string,
-      // transportIri: string,
-      // interfaceId: string,
-      // interfaceIri: string,
-      // simpleId: string,
-      // simpleIri: string,
-      // selectValues: string[],
-      // selectType: Select,
-      // isLocked: ,
-      // isLockedStatusBy: string,
-      // isLockedStatusDate: Date,
+      terminalId: null,
+      transportId: null,
+      interfaceId: null,
+      simpleId: null,
+      selectValues: a.selectValues,
+      selectType: a.select,
+      isLocked: false,
+      isLockedStatusBy: null,
+      isLockedStatusDate: null,
     } as Attribute;
   });
 };
