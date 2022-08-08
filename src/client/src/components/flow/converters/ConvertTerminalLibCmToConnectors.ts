@@ -2,7 +2,7 @@ import { CreateId } from "../helpers";
 import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Connector, ConnectorVisibility, Relation, RelationType, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
-import { ConvertTerminalAttributeLibCmToAttribute } from "./";
+import { ConvertTerminalAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 
 /**
  * Component to convert terminals from NodeTerminalLibCm to Connector.

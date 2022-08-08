@@ -1,13 +1,13 @@
 export { default as ConvertLibNodeToNode } from "./ConvertLibNodeToNode";
 
 export { default as ConvertTerminalLibCmToConnectors } from "./ConvertTerminalLibCmToConnectors";
-export { default as ConvertNodeAttributeLibCmToAttribute } from "./ConvertNodeAttributeLibCmToAttribute";
-export { default as ConvertTerminalAttributeLibCmToAttribute } from "./ConvertTerminalAttributeLibCmToAttribute";
-export { default as ConvertSimpleAttributeLibCmToAttribute } from "./ConvertSimpleAttributeLibCmToAttribute";
 export { default as ConvertSimpleLibCmToSimple } from "./ConvertSimpleLibCmToSimple";
 
-export { default as ConvertEdgeDataToMimirEdge } from "./ConvertEdgeDataToMimirEdge";
+export { ConvertNodeAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
+export { ConvertTerminalAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
+export { ConvertSimpleAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 
+export { default as ConvertEdgeDataToMimirEdge } from "./ConvertEdgeDataToMimirEdge";
 export { default as ConvertEdgeToFlowEdge } from "./ConvertEdgeToFlowEdge";
 export { default as ConvertNodeToFlowNode } from "./ConvertNodeToFlowNode";
 

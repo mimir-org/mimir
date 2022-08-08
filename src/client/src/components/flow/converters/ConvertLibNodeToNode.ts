@@ -4,8 +4,8 @@ import { Size } from "../../../assets/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors, ConvertSimpleLibCmToSimple } from "./";
 import { CreateId } from "../helpers";
+import { ConvertSimpleLibCmToSimple, ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
 
 /**
  * Function to convert a libNode dropped from the Library to a Mimir Node.

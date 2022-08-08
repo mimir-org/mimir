@@ -1,6 +1,6 @@
 import { Simple } from "@mimirorg/modelbuilder-types";
 import { SimpleLibCm } from "@mimirorg/typelibrary-types";
-import { ConvertSimpleAttributeLibCmToAttribute } from "./";
+import { ConvertSimpleAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 
 /**
  * Component to convert SimpleLibCm to the type Simple.
