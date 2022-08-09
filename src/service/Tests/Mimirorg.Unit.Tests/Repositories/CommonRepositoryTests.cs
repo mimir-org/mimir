@@ -80,6 +80,6 @@ namespace ModelBuilder.Unit.Tests.Repositories
             Assert.Throws<NullReferenceException>(() => _commonRepository.CreateOrUseIdAndIri(null));
         }
 
-        
+
     }
 }
