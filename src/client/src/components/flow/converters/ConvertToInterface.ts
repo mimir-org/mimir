@@ -1,4 +1,5 @@
 import { Connector, ConnectorDirection, Interface, Terminal } from "@mimirorg/modelbuilder-types";
+import { TextResources } from "../../../assets/text/TextResources";
 import { GetDateNowUtc } from "../../../helpers";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
@@ -50,7 +51,7 @@ const ConvertToInterface = (sourceConn: Terminal, targetConn: Connector) => {
     createdBy: "",
     created: now,
     libraryTypeId: "",
-    kind: "Interface",
+    kind: TextResources.KIND_INTERFACE,
   } as Interface;
 };
 

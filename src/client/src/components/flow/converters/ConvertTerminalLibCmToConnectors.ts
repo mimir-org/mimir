@@ -57,7 +57,7 @@ function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri:
     terminalTypeId: libTerminal.terminal.id,
     terminalTypeIri: libTerminal.terminal.iri,
     kind: libTerminal.kind,
-    discriminator: TextResources.DISCRIMINATOR_TERMINAL,
+    discriminator: TextResources.KIND_TERMINAL,
   } as Terminal;
 }
 
@@ -92,8 +92,8 @@ function CreateRelation(nodeId: string, nodeIri: string, relationType: RelationT
     nodeId,
     nodeIri,
     relationType,
-    kind: TextResources.DISCRIMINATOR_CONNECTOR,
-    discriminator: TextResources.DISCRIMINATOR_RELATION,
+    kind: TextResources.KIND_CONNECTOR,
+    discriminator: TextResources.KIND_RELATION,
     name,
     isRequired: false,
     connectorVisibility: ConnectorVisibility.None,

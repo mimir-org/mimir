@@ -1,6 +1,7 @@
 import { ConvertToInterface, ConvertToTransport } from ".";
 import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
 import { IsTerminal } from "../helpers/Connectors";
+import { TextResources } from "../../../assets/text/TextResources";
 
 /**
  * Function to convert data to a Mimir Edge.
@@ -39,7 +40,7 @@ const ConvertEdgeDataToMimirEdge = (
     masterProjectId: projectId,
     transport: convertedTransport,
     interface: convertedInterface,
-    kind: "Edge",
+    kind: TextResources.KIND_EDGE,
   } as Edge;
 };
 
