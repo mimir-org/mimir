@@ -90,7 +90,6 @@ export function* getTransportTypes() {
       yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: [], apiError }));
       return;
     }
-    console.log({ response });
 
     yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: response.data, apiError: null }));
   } catch (error) {

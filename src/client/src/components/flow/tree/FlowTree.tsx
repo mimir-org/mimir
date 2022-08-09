@@ -64,7 +64,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, animatedEdge });
+    return hooks.useOnTreeConnect({ connection, project, library, setEdges, dispatch, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {

@@ -3,16 +3,18 @@ import { addEdge, Connection, Edge as FlowEdge } from "react-flow-renderer";
 import { SaveEventData } from "../../../../redux/store/localStorage/localStorage";
 import { CreateId } from "../../helpers";
 import { createEdge } from "../../../../redux/store/project/actions";
-import { ConvertEdgeDataToMimirEdge } from "../../converters";
 import { IsOffPage } from "../../../../helpers/Aspects";
 import { GetBlockEdgeType } from "../helpers";
 import { IsTerminal } from "../../helpers/Connectors";
 import { HandleOffPageConnect } from "./handlers/HandleOffPageConnect";
 import { Project } from "@mimirorg/modelbuilder-types";
+import { LibraryState } from "../../../../redux/store/library/types";
+import { ConvertEdgeDataToMimirEdge } from "../../converters";
 
-export interface Params {
+export interface OnBlockDropParameters {
   connection: FlowEdge | Connection;
   project: Project;
+  library: LibraryState;
   setEdges: React.Dispatch<React.SetStateAction<FlowEdge[]>>;
   dispatch: Dispatch;
   animatedEdge: boolean;
@@ -23,9 +25,9 @@ export interface Params {
  * @param params
  * @returns an Edge connection.
  */
-const useOnBlockConnect = (params: Params) => {
+const useOnBlockConnect = (params: OnBlockDropParameters) => {
   SaveEventData(null, "edgeEvent");
-  const { project, connection, animatedEdge, setEdges, dispatch } = params;
+  const { project, library, connection, animatedEdge, setEdges, dispatch } = params;
   const id = CreateId();
   const source = project.nodes.find((node) => node.id === connection.source);
   const target = project.nodes.find((node) => node.id === connection.target);
@@ -38,7 +40,7 @@ const useOnBlockConnect = (params: Params) => {
   const sourceConn = source.connectors.find((c) => c.id === connection.sourceHandle);
   const targetConn = target.connectors.find((c) => c.id === connection.targetHandle);
 
-  const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id);
+  const edge = ConvertEdgeDataToMimirEdge(id, sourceConn, targetConn, source, target, project.id, library);
   dispatch(createEdge(edge));
 
   const type = GetBlockEdgeType(sourceConn, source, target);

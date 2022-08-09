@@ -1,6 +1,7 @@
 import { Connector, ConnectorDirection, Interface, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { GetDateNowUtc } from "../../../helpers";
+import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
 import { UpdateAttributesId } from "./ConvertToTransport";
@@ -8,19 +9,24 @@ import { UpdateAttributesId } from "./ConvertToTransport";
 /**
  * Component to convert a Terminal to the Interface data type.
  * This conversion is needed when a transport Edge is created between two Nodes.
- * @param sourceConn
+ * @param sourceTerminal
+ * @param targetTerminal
+ * @param library
  * @returns an Interface.
  */
-const ConvertToInterface = (sourceConn: Terminal, targetConn: Connector) => {
-  const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
-  const outputTerminal = JSON.parse(JSON.stringify(targetConn)) as Terminal;
+const ConvertToInterface = (sourceTerminal: Terminal, targetTerminal: Connector, library: LibraryState) => {
+  const interfaceType = library?.interfaceTypes.find((i) => i.terminalId === sourceTerminal.terminalTypeId); // TODO: check which id to use
+  if (interfaceType == undefined) return null;
+
+  const inputTerminal = JSON.parse(JSON.stringify(sourceTerminal)) as Terminal;
+  const outputTerminal = JSON.parse(JSON.stringify(targetTerminal)) as Terminal;
 
   inputTerminal.id = CreateId();
-  inputTerminal.type = IsBidirectionalTerminal(sourceConn) ? ConnectorDirection.Bidirectional : ConnectorDirection.Input;
+  inputTerminal.type = IsBidirectionalTerminal(sourceTerminal) ? ConnectorDirection.Bidirectional : ConnectorDirection.Input;
   inputTerminal.nodeId = null;
 
   outputTerminal.id = CreateId();
-  outputTerminal.type = IsBidirectionalTerminal(targetConn) ? ConnectorDirection.Bidirectional : ConnectorDirection.Output;
+  outputTerminal.type = IsBidirectionalTerminal(targetTerminal) ? ConnectorDirection.Bidirectional : ConnectorDirection.Output;
   outputTerminal.nodeId = null;
 
   UpdateAttributesId(inputTerminal);
@@ -38,7 +44,7 @@ const ConvertToInterface = (sourceConn: Terminal, targetConn: Connector) => {
     description: "",
     statusId: "",
     semanticReference: "",
-    attributes: sourceConn.attributes, // TODO: Check this
+    attributes: sourceTerminal.attributes, // TODO: Check this
     inputTerminalId: inputTerminal.id,
     inputTerminal: inputTerminal,
     outputTerminalId: outputTerminal.id,

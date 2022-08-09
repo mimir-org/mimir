@@ -1,6 +1,7 @@
 import { ConnectorDirection, Terminal, Transport } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { GetDateNowUtc } from "../../../helpers";
+import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
 
@@ -9,11 +10,14 @@ import { IsBidirectionalTerminal } from "../helpers/Connectors";
  * This conversion is needed when a transport Edge is created between two Nodes.
  * @param sourceTerminal
  * @param targetTerminal
+ * @param library
  * @returns a Transport.
  */
-const ConvertToTransport = (sourceTerminal: Terminal, targetTerminal: Terminal) => {
-  const transportId = CreateId();
+const ConvertToTransport = (sourceTerminal: Terminal, targetTerminal: Terminal, library: LibraryState) => {
+  const transportType = library?.transportTypes.find((t) => t.terminalId === sourceTerminal.terminalTypeId);
+  if (transportType == undefined) return null;
 
+  const transportId = CreateId();
   const inputTerminal = JSON.parse(JSON.stringify(sourceTerminal)) as Terminal;
   const outputTerminal = JSON.parse(JSON.stringify(targetTerminal)) as Terminal;
 
@@ -32,19 +36,15 @@ const ConvertToTransport = (sourceTerminal: Terminal, targetTerminal: Terminal) 
 
   return {
     id: transportId,
-    iri: "",
-    version: "",
-    rds: "",
-    name: "",
-    label: "",
-    description: "",
-    statusId: "",
-    semanticReference: "",
+    name: sourceTerminal.name,
+    label: sourceTerminal.name,
+    description: null,
+    semanticReference: null,
     inputTerminalId: inputTerminal.id,
     inputTerminal,
     outputTerminalId: outputTerminal.id,
     outputTerminal,
-    attributes: sourceTerminal.attributes, // TODO: check this
+    attributes: sourceTerminal.attributes, // TODO: fix conversion of attributes
     updatedBy: "",
     updated: now,
     createdBy: "",

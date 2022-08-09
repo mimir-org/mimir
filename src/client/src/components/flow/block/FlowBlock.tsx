@@ -53,6 +53,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const selectedBlockNode = mimirNodes.find((n) => n.blockSelected);
   const secondaryNode = mimirNodes.find((n) => n.id === secondaryNodeRef?.id);
   const selectedEdge = mimirEdges.find((e) => e.selected);
+  const library = useAppSelector(selectors.librarySelector);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -67,7 +68,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnBlockConnect({ connection, project, animatedEdge, setEdges, dispatch });
+    return hooks.useOnBlockConnect({ connection, project, library, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
