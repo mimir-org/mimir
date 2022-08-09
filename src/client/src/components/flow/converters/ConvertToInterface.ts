@@ -12,9 +12,6 @@ import { UpdateAttributesId } from "./ConvertToTransport";
  * @returns an Interface.
  */
 const ConvertToInterface = (sourceConn: Terminal, targetConn: Connector) => {
-  // const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
-  // const outputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
-
   const inputTerminal = JSON.parse(JSON.stringify(sourceConn)) as Terminal;
   const outputTerminal = JSON.parse(JSON.stringify(targetConn)) as Terminal;
 

@@ -49,11 +49,10 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
  * Component to convert a Terminal's AttributeLibCm to the type Attribute.
  * This convertion is needed when a LibNode is dropped from the Library and converted to a Node.
  * @param libTerminal
- * @param nodeId
- * @param nodeIri
+ * @param id
  * @returns a list of Attributes.
  */
-export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLibCm, nodeId: string, nodeIri: string) => {
+export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLibCm, id: string) => {
   if (!libTerminal.attributes.length) return [] as Attribute[];
 
   return libTerminal.attributes.map((a) => {
@@ -72,9 +71,9 @@ export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLi
       condition: a.attributeCondition,
       format: a.attributeFormat,
       discipline: a.discipline,
-      nodeId,
-      nodeIri,
-      terminalId: libTerminal.id, // TODO: Check this
+      nodeId: null,
+      nodeIri: null,
+      terminalId: id,
       transportId: null,
       interfaceId: null,
       simpleId: null,

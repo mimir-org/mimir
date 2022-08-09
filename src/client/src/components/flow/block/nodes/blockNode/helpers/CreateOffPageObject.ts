@@ -2,7 +2,17 @@ import { IsInputConnector, IsOutputConnector, IsOutputVisible } from "../../../.
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
-import { Connector, Edge, Node, ConnectorDirection, ConnectorVisibility, Aspect } from "@mimirorg/modelbuilder-types";
+import {
+  Connector,
+  Edge,
+  Node,
+  ConnectorDirection,
+  ConnectorVisibility,
+  Aspect,
+  Terminal,
+  Relation,
+  RelationType,
+} from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 
 export interface OffPageObject {
@@ -25,7 +35,7 @@ export interface OffPageData {
  * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
 export const CreateOffPageObject = (data: OffPageData) => {
-  const sourceConnector = data.sourceConnector;
+  const sourceConnector = data.sourceConnector as Terminal;
   const sourceNode = data.sourceNode;
 
   if (!sourceConnector || !sourceNode) return null;
@@ -57,34 +67,32 @@ export const CreateOffPageObject = (data: OffPageData) => {
     name: "OffPageInput",
     type: ConnectorDirection.Input,
     nodeId: offPageNode.id,
-    // terminalCategory: sourceConnector.terminalCategory,
-    // terminalTypeId: sourceConnector.terminalTypeId,
+    terminalCategory: sourceConnector.terminalCategory,
+    terminalTypeId: sourceConnector.terminalTypeId,
     connectorVisibility: ConnectorVisibility.InputVisible,
-    // color: sourceConnector.color,
+    color: sourceConnector.color,
     kind: TextResources.KIND_CONNECTOR,
-  } as Connector;
+  } as Terminal;
 
   const outputConnector = {
     id: CreateId(),
     name: "OffPageOutput",
     type: ConnectorDirection.Output,
     nodeId: offPageNode.id,
-    // terminalCategory: sourceConnector.terminalCategory,
-    // terminalTypeId: sourceConnector.terminalTypeId,
+    terminalCategory: sourceConnector.terminalCategory,
+    terminalTypeId: sourceConnector.terminalTypeId,
     connectorVisibility: ConnectorVisibility.OutputVisible,
-    // color: sourceConnector.color,
+    color: sourceConnector.color,
     kind: TextResources.KIND_CONNECTOR,
-  } as Connector;
+  } as Terminal;
 
   const partOfConnector = {
     id: CreateId(),
     name: "OffPagePartOf",
     type: ConnectorDirection.Input,
-    // relationType: RelationType.PartOf,
-    // nodeId: offPageNode.id,
-    // attributes: [],
-    // semanticReference: "",
-  } as Connector;
+    relationType: RelationType.PartOf,
+    nodeId: offPageNode.id,
+  } as Relation;
 
   offPageNode.connectors.push(inputConnector);
   offPageNode.connectors.push(outputConnector);
@@ -94,7 +102,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     id: CreateId(),
     fromConnector: sourcePartOfConn,
     fromConnectorId: sourcePartOfConn?.id,
-    toConnector: partOfConnector,
+    toConnector: partOfConnector as Connector,
     toConnectorId: partOfConnector?.id,
     fromNode: sourceNode,
     fromNodeId: sourceNode.id,
@@ -107,9 +115,9 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   const transportEdge = {
     id: CreateId(),
-    fromConnector: isTarget ? sourceConnector : outputConnector,
+    fromConnector: isTarget ? (sourceConnector as Connector) : outputConnector,
     fromConnectorId: isTarget ? sourceConnector.id : outputConnector.id,
-    toConnector: isTarget ? inputConnector : sourceConnector,
+    toConnector: isTarget ? (inputConnector as Connector) : sourceConnector,
     toConnectorId: isTarget ? inputConnector.id : sourceConnector.id,
     fromNode: isTarget ? sourceNode : offPageNode,
     fromNodeId: isTarget ? sourceNode.id : offPageNode.id,

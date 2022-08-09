@@ -87,14 +87,15 @@ export function* getTransportTypes() {
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, fetchLibraryTransportTypesSuccessOrError.type);
-      yield put(fetchLibraryTransportTypesSuccessOrError({ libNodes: [], apiError }));
+      yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: [], apiError }));
       return;
     }
+    console.log({ response });
 
-    yield put(fetchLibraryTransportTypesSuccessOrError({ libNodes: response.data, apiError: null }));
+    yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: response.data, apiError: null }));
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryTransportTypesSuccessOrError.type);
-    yield put(fetchLibraryTransportTypesSuccessOrError({ libNodes: [], apiError }));
+    yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: [], apiError }));
   }
 }
 
@@ -105,14 +106,14 @@ export function* getInterfaceTypes() {
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, fetchLibraryInterfaceTypesSuccessOrError.type);
-      yield put(fetchLibraryInterfaceTypesSuccessOrError({ libNodes: [], apiError }));
+      yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: [], apiError }));
       return;
     }
 
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libNodes: response.data, apiError: null }));
+    yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: response.data, apiError: null }));
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryInterfaceTypesSuccessOrError.type);
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libNodes: [], apiError }));
+    yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: [], apiError }));
   }
 }
 

@@ -48,6 +48,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const mimirEdges = project?.edges;
   const selectedNode = mimirNodes?.find((n) => n.selected);
   const selectedEdge = mimirEdges?.find((e) => e.selected);
+  const library = useAppSelector(selectors.librarySelector);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);

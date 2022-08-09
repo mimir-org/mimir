@@ -1,4 +1,4 @@
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { InterfaceLibCm, NodeLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
 import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
@@ -6,6 +6,8 @@ import { ApiError } from "../../../models/webclient";
 export interface LibraryState {
   fetching: boolean;
   libNodes: NodeLibCm[] | null;
+  transportTypes: TransportLibCm[] | null;
+  interfaceTypes: InterfaceLibCm[] | null;
   apiError: ApiError[];
   collections: Collection[];
 }
@@ -18,6 +20,16 @@ export interface FetchLibrary {
 
 export interface FetchLibraryItems {
   libNodes: NodeLibCm[];
+  apiError: ApiError;
+}
+
+export interface FetchTransportTypes {
+  transportTypes: TransportLibCm[];
+  apiError: ApiError;
+}
+
+export interface FetchInterfaceTypes {
+  interfaceTypes: InterfaceLibCm[];
   apiError: ApiError;
 }
 

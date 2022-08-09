@@ -1,14 +1,23 @@
 import { Collection } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AddToCollectionsTypes, DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import {
+  AddToCollectionsTypes,
+  DeleteLibraryItem,
+  FetchInterfaceTypes,
+  FetchLibrary,
+  FetchTransportTypes,
+  LibraryState,
+} from "./types";
 
 const initialLibraryState: LibraryState = {
   fetching: false,
   libNodes: [],
   apiError: [],
   collections: [],
+  transportTypes: [],
+  interfaceTypes: [],
 };
 
 export const librarySlice = createSlice({
@@ -53,9 +62,10 @@ export const librarySlice = createSlice({
         ? state.apiError.filter((elem) => elem.key !== fetchLibraryTransportTypesSuccessOrError.type)
         : state.apiError;
     },
-    fetchLibraryTransportTypesSuccessOrError: (state, action: PayloadAction<FetchLibraryItems>) => {
+
+    fetchLibraryTransportTypesSuccessOrError: (state, action: PayloadAction<FetchTransportTypes>) => {
       state.fetching = false;
-      // state.transportTypes = action.payload.libraryItems;
+      state.transportTypes = action.payload.transportTypes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     fetchLibraryInterfaceTypes: (state) => {
@@ -64,9 +74,9 @@ export const librarySlice = createSlice({
         ? state.apiError.filter((elem) => elem.key !== fetchLibraryInterfaceTypesSuccessOrError.type)
         : state.apiError;
     },
-    fetchLibraryInterfaceTypesSuccessOrError: (state, action: PayloadAction<FetchLibraryItems>) => {
+    fetchLibraryInterfaceTypesSuccessOrError: (state, action: PayloadAction<FetchInterfaceTypes>) => {
       state.fetching = false;
-      // state.transportTypes = action.payload.libraryItems;
+      state.interfaceTypes = action.payload.interfaceTypes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     addLibraryItem: (state, action: PayloadAction<NodeLibCm>) => {
