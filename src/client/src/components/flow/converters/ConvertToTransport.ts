@@ -1,4 +1,5 @@
 import { ConnectorDirection, Terminal, Transport } from "@mimirorg/modelbuilder-types";
+import { TextResources } from "../../../assets/text/TextResources";
 import { GetDateNowUtc } from "../../../helpers";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
@@ -49,7 +50,7 @@ const ConvertToTransport = (sourceTerminal: Terminal, targetTerminal: Terminal) 
     createdBy: "",
     created: now,
     libraryTypeId: "",
-    kind: "Transport",
+    kind: TextResources.KIND_TRANSPORT,
   } as Transport;
 };
 

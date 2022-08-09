@@ -288,11 +288,16 @@ export const TextResources = {
   // Resize
   RESIZE_NODE: "Resize node",
 
-  // Discriminators
-  DISCRIMINATOR_TERMINAL: "Terminal",
-  DISCRIMINATOR_RELATION: "Relation",
-  DISCRIMINATOR_CONNECTOR: "Connector",
-  DISCRIMINATOR_ATTRIBUTE: "Attribute",
+  // Kind
+  KIND_NODE: "Node",
+  KIND_EDGE: "Edge",
+  KIND_TRANSPORT: "Transport",
+  KIND_INTERFACE: "Interface",
+  KIND_SIMPLE: "Simple",
+  KIND_TERMINAL: "Terminal",
+  KIND_RELATION: "Relation",
+  KIND_CONNECTOR: "Connector",
+  KIND_ATTRIBUTE: "Attribute",
 
   // Company names
   EQUINOR: "equinor.com",

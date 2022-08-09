@@ -18,7 +18,7 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
     return {
       id: CreateId(),
       iri: null,
-      kind: TextResources.DISCRIMINATOR_ATTRIBUTE,
+      kind: TextResources.KIND_ATTRIBUTE,
       entity: a.name,
       value: "",
       attributeTypeId: a.id,
@@ -60,7 +60,7 @@ export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLi
     return {
       id: CreateId(),
       iri: null,
-      kind: TextResources.DISCRIMINATOR_ATTRIBUTE,
+      kind: TextResources.KIND_ATTRIBUTE,
       entity: a.name,
       value: "",
       attributeTypeId: a.id,
@@ -102,7 +102,7 @@ export const ConvertSimpleAttributeLibCmToAttribute = (simple: SimpleLibCm, node
     return {
       id: CreateId(),
       iri: null,
-      kind: TextResources.DISCRIMINATOR_ATTRIBUTE,
+      kind: TextResources.KIND_ATTRIBUTE,
       entity: a.name,
       value: "",
       attributeTypeId: a.id,

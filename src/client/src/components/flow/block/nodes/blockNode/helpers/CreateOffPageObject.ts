@@ -3,6 +3,7 @@ import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
 import { Connector, Edge, Node, ConnectorDirection, ConnectorVisibility, Aspect } from "@mimirorg/modelbuilder-types";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 
 export interface OffPageObject {
   offPageNode: Node;
@@ -60,7 +61,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     // terminalTypeId: sourceConnector.terminalTypeId,
     connectorVisibility: ConnectorVisibility.InputVisible,
     // color: sourceConnector.color,
-    kind: "Connector",
+    kind: TextResources.KIND_CONNECTOR,
   } as Connector;
 
   const outputConnector = {
@@ -72,7 +73,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     // terminalTypeId: sourceConnector.terminalTypeId,
     connectorVisibility: ConnectorVisibility.OutputVisible,
     // color: sourceConnector.color,
-    kind: "Connector",
+    kind: TextResources.KIND_CONNECTOR,
   } as Connector;
 
   const partOfConnector = {
@@ -100,7 +101,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     toNode: offPageNode,
     toNodeId: offPageNode.id,
     hidden: false,
-    kind: "Edge",
+    kind: TextResources.KIND_EDGE,
     projectId: sourceNode.projectId,
   } as Edge;
 
@@ -115,7 +116,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     toNode: isTarget ? offPageNode : sourceNode,
     toNodeId: isTarget ? offPageNode.id : sourceNode.id,
     hidden: false,
-    kind: "Edge",
+    kind: TextResources.KIND_EDGE,
     projectId: sourceNode.projectId,
   } as Edge;
 
