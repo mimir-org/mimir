@@ -2,9 +2,8 @@ using Mb.Models.Application;
 using Mb.Models.Enums;
 using Mimirorg.Common.Extensions;
 using Mimirorg.TypeLibrary.Enums;
-using Xunit;
 
-namespace ModelBuilder.Tests.Models
+namespace ModelBuilder.Unit.Tests.Models
 {
     public class ConnectorTests
     {
@@ -62,7 +61,6 @@ namespace ModelBuilder.Tests.Models
         [Theory]
         [InlineData((ConnectorDirection) 1000, ConnectorVisibility.InputVisible)]
         [InlineData(ConnectorDirection.Input, (ConnectorVisibility) 1000)]
-        [InlineData(ConnectorDirection.Input, ConnectorVisibility.InputVisible)]
         public void Enum_Value_Out_Of_Range_Validate_False(ConnectorDirection connectorType, ConnectorVisibility connectorVisibility)
         {
             var obj = _terminal.DeepCopy();
