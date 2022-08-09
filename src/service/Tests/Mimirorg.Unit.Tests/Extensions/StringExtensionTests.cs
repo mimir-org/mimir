@@ -1,11 +1,15 @@
-using System;
 using ModelBuilder.Rdf.Extensions;
-using Xunit;
+using ModelBuilder.Setup;
+using ModelBuilder.Setup.Fixtures;
 
-namespace ModelBuilder.Tests.Extensions
+namespace ModelBuilder.Unit.Tests.Extensions
 {
-    public class StringExtensionTests
+    public class StringExtensionTests : UnitTest<ModelBuilderCommonFixtures>
     {
+        public StringExtensionTests(ModelBuilderCommonFixtures fixture) : base(fixture)
+        {
+        }
+
         [Theory]
         [InlineData(@"https://rdf.equinor.com/raw/mimir/")]
         [InlineData(@"https://rdf.equinor.com")]

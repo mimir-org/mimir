@@ -1,10 +1,6 @@
-using System;
-using System.IO;
-using System.Linq;
 using JsonLdParser;
-using Xunit;
 
-namespace ModelBuilder.Tests.Modules;
+namespace ModelBuilder.Unit.Tests.Modules;
 public class TestJsonLdWriter
 {
     [Fact]
