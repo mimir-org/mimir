@@ -22,7 +22,6 @@ interface Props {
  */
 export const TerminalCategoryFilter = ({ category, edges, terminals, dispatch, visible }: Props) => {
   const isCategoryChecked = IsTerminalCategoryChecked(edges, category.id);
-  console.log({ isCategoryChecked });
 
   return (
     visible && (

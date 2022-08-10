@@ -80,6 +80,7 @@ export const librarySlice = createSlice({
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     addLibraryItem: (state, action: PayloadAction<NodeLibCm>) => {
+      // TODO: fix
       // action.payload.libraryType === ObjectType.Interface && state.interfaceTypes.push(action.payload);
       // action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
       // action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
@@ -94,15 +95,15 @@ export const librarySlice = createSlice({
       if (apiError) {
         state.apiError.push(apiError);
       } else {
-        // state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== id);
+        state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== id);
         state.libNodes = state.libNodes.filter((x) => x.id !== id);
-        // state.transportTypes = state.transportTypes.filter((x) => x.id !== id);
+        state.transportTypes = state.transportTypes.filter((x) => x.id !== id);
       }
     },
     removeLibraryItem: (state, action: PayloadAction<string>) => {
-      // state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== action.payload);
+      state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== action.payload);
       state.libNodes = state.libNodes.filter((x) => x.id !== action.payload);
-      // state.transportTypes = state.transportTypes.filter((x) => x.id !== action.payload);
+      state.transportTypes = state.transportTypes.filter((x) => x.id !== action.payload);
     },
     deleteLibraryError: (state, action: PayloadAction<string>) => {
       state.apiError = state.apiError ? state.apiError.filter((elem) => elem.key !== action.payload) : state.apiError;
