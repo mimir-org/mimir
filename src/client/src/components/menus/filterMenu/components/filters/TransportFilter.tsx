@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector, Edge } from "@mimirorg/modelbuilder-types";
+import { Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { OnAllTransportsChange } from "./handlers";
 import { PopulateTerminalCategories, AllTransportsChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
@@ -14,7 +14,7 @@ export interface TerminalCategory {
 
 interface Props {
   edges: Edge[];
-  connectors: Connector[];
+  terminals: Terminal[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -25,8 +25,8 @@ interface Props {
  * @param interface
  * @returns one parent checkbox, and one checkbox for each child.
  */
-const TransportFilter = ({ edges, connectors, dispatch, visible }: Props) => {
-  const categories = PopulateTerminalCategories(connectors);
+const TransportFilter = ({ edges, terminals, dispatch, visible }: Props) => {
+  const categories = PopulateTerminalCategories(terminals);
 
   return (
     visible && (
@@ -40,7 +40,7 @@ const TransportFilter = ({ edges, connectors, dispatch, visible }: Props) => {
         />
 
         {categories?.map((category) => {
-          const categoryConnectors = connectors; // .filter((conn) => conn.terminalCategory === category.id); // TODO: fix
+          const categoryConnectors = terminals; // .filter((conn) => conn.terminalCategory === category.id); // TODO: fix
           return (
             <TerminalCategoryFilter
               key={category.id}

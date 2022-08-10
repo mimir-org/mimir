@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Connector, Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
@@ -27,17 +27,17 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
   const nodes = useAppSelector(selectors.nodesSelector);
   const edges = useAppSelector(selectors.edgesSelector);
 
-  const transportConnectors = [] as Connector[];
-  const relationConnectors = [] as Connector[];
+  const transportTerminals = [] as Terminal[];
+  const relationConnectors = [] as Relation[];
   const partOfConnectors = [] as Connector[];
 
-  PopulateFilterLists(edges, nodes, transportConnectors, relationConnectors, partOfConnectors, isTreeView);
+  PopulateFilterLists(edges, nodes, transportTerminals, relationConnectors, partOfConnectors, isTreeView);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
       <VisualFilterHeader>{TextResources.VISUAL_FILTER}</VisualFilterHeader>
       <VisualFilterMenuColumn>
-        <AnimationFilter isAnimated={edgeAnimation} visible={!!transportConnectors.length} dispatch={dispatch} />
+        <AnimationFilter isAnimated={edgeAnimation} visible={!!transportTerminals.length} dispatch={dispatch} />
         <PartOfFilter
           edges={edges}
           nodes={nodes}
@@ -52,12 +52,7 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
           dispatch={dispatch}
           visible={IsRelationFilterVisible(isTreeView, isSplitView, relationConnectors)}
         />
-        <TransportFilter
-          edges={edges}
-          connectors={transportConnectors}
-          dispatch={dispatch}
-          visible={!!transportConnectors.length}
-        />
+        <TransportFilter edges={edges} terminals={transportTerminals} dispatch={dispatch} visible={!!transportTerminals.length} />
       </VisualFilterMenuColumn>
     </VisualFilterContainer>
   );

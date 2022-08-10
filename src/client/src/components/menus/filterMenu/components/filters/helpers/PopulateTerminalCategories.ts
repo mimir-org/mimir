@@ -1,21 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { TerminalCategory } from "../TransportFilter";
 
 /**
  * Function to find all Terminal Categories on Mimir's Transport Edges.
- * @param transportConnectors
+ * @param transportTerminals
  * @returns a list of the type TerminalCategory, used by Visual Filter.
  */
-export const PopulateTerminalCategories = (transportConnectors: Connector[]) => {
+export const PopulateTerminalCategories = (transportTerminals: Terminal[]) => {
   const categories = [] as TerminalCategory[];
 
-  // TODO: fix
-
-  transportConnectors?.forEach((conn) => {
-    const id = ""; // conn.terminalCategory;
-    const name = ""; // conn.terminalCategory;
+  transportTerminals?.forEach((t) => {
+    const id = t.id;
+    const name = t.terminalCategory;
 
     if (categories.some((c) => c.id === id || c.name === name)) return;
 

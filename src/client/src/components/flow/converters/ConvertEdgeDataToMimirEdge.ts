@@ -1,11 +1,10 @@
 import { ConvertToInterface, ConvertToTransport } from ".";
 import { Connector, Node, Edge, Terminal } from "@mimirorg/modelbuilder-types";
-
 import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
 
 /**
- * Function to convert data to a Mimir Edge.
+ * Function to convert edge data to a Mimir Edge.
  * @param id
  * @param fromConnector
  * @param toConnector
@@ -46,7 +45,7 @@ export const ConvertEdgeDataToMimirEdge = (
 };
 
 /**
- * Function to convert data to a Mimir partOf Edge.
+ * Function to convert edge data to a Mimir partOf Edge.
  * @param id
  * @param fromConnector
  * @param toConnector
