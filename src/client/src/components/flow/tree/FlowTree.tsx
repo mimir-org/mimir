@@ -48,7 +48,6 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const mimirEdges = project?.edges;
   const selectedNode = mimirNodes?.find((n) => n.selected);
   const selectedEdge = mimirEdges?.find((e) => e.selected);
-  const library = useAppSelector(selectors.librarySelector);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -64,7 +63,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnTreeConnect({ connection, project, library, setEdges, dispatch, animatedEdge });
+    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
