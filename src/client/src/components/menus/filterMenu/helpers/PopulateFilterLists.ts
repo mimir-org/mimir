@@ -1,7 +1,7 @@
-import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { IsOffPageEdge } from "../../../flow/block/helpers/IsOffPageEdge";
 import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../flow/helpers/Connectors";
-import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";
+import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTransportItem } from "../components/filters/helpers";
 
 /**
  * Method to add content to the different categories in the Visual Filter.
@@ -14,9 +14,9 @@ import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTran
 const PopulateFilterLists = (
   edges: Edge[],
   nodes: Node[],
-  transportItems: Connector[],
-  relationItems: Connector[],
-  partOfItems: Connector[],
+  transportItems: Terminal[],
+  relationItems: Relation[],
+  partOfItems: Relation[],
   isTreeView: boolean
 ) => {
   edges.forEach((edge) => {
@@ -25,9 +25,9 @@ const PopulateFilterLists = (
     const sourceConn = edge.fromConnector;
 
     if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
-    else if (IsLocationRelation(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
-    else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
-    else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);
+    else if (IsLocationRelation(sourceConn)) VerifyLocationItem(relationItems, sourceConn as Relation);
+    else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn as Relation);
+    else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn as Relation, nodes);
   });
 };
 

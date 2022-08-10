@@ -37,7 +37,7 @@ const ConvertLibNodeToNode = (
     rds: libNode.rdsCode,
     projectId,
     name: libNode.name,
-    label: libNode.name, // TODO: label?
+    label: libNode.name,
     positionX: treePosition.x,
     positionY: treePosition.y,
     positionBlockX: blockPosition.x,
