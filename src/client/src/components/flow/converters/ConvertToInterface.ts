@@ -1,6 +1,5 @@
 import { Connector, ConnectorDirection, Interface, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
-import { GetDateNowUtc } from "../../../helpers";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
@@ -32,28 +31,22 @@ const ConvertToInterface = (sourceTerminal: Terminal, targetTerminal: Connector,
   UpdateAttributesId(inputTerminal);
   UpdateAttributesId(outputTerminal);
 
-  const now = GetDateNowUtc();
-
   return {
     id: CreateId(),
-    iri: "",
-    version: "",
-    rds: "",
-    name: "",
-    label: "",
-    description: "",
-    statusId: "",
-    semanticReference: "",
-    attributes: sourceTerminal.attributes, // TODO: Check this
+    name: sourceTerminal.name,
+    label: sourceTerminal.name,
+    description: null,
+    semanticReference: null,
+    attributes: sourceTerminal.attributes, // TODO: fix conversion of attributes
     inputTerminalId: inputTerminal.id,
     inputTerminal: inputTerminal,
     outputTerminalId: outputTerminal.id,
     outputTerminal: outputTerminal,
-    updatedBy: "",
-    updated: now,
-    createdBy: "",
-    created: now,
-    libraryTypeId: "",
+    updatedBy: null, // TODO: check
+    updated: null,
+    createdBy: interfaceType.createdBy,
+    created: interfaceType.created,
+    libraryTypeId: interfaceType.id,
     kind: TextResources.KIND_INTERFACE,
   } as Interface;
 };
