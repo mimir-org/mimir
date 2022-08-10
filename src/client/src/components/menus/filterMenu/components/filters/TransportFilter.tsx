@@ -46,7 +46,7 @@ const TransportFilter = ({ edges, terminals, dispatch, visible }: Props) => {
               key={category.id}
               category={category}
               edges={edges}
-              connectors={categoryConnectors}
+              terminals={categoryConnectors}
               dispatch={dispatch}
               visible={!!categoryConnectors.length}
             />

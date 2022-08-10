@@ -36,10 +36,9 @@ export const OnAllTerminalsChange = (terminals: Connector[], dispatch: Dispatch,
   });
 };
 
-export const OnTerminalCategoryChange = (edges: Edge[], terminalCategoryId: string, isChecked: boolean, dispatch: Dispatch) => {
+export const OnTerminalCategoryChange = (edges: Edge[], terminalCategory: string, isChecked: boolean, dispatch: Dispatch) => {
   edges.forEach((edge) => {
-    if (IsTerminal(edge.fromConnector)) {
-      if (edge.fromConnector.terminalCategory === terminalCategoryId) dispatch(setEdgeVisibility(edge.id, isChecked));
-    }
+    if (!IsTerminal(edge.fromConnector)) return;
+    if (edge.fromConnector.terminalCategory === terminalCategory) dispatch(setEdgeVisibility(edge.id, isChecked));
   });
 };

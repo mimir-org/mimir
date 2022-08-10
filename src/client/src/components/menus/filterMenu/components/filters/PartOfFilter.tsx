@@ -3,12 +3,12 @@ import { TextResources } from "../../../../../assets/text/TextResources";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
 import { AllPartOfChecked, GetPartOfName } from "./helpers";
 import { FilterElement } from "../FilterElement";
-import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Relation } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   edges: Edge[];
   nodes: Node[];
-  connectors: Connector[];
+  relations: Relation[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -18,7 +18,7 @@ interface Props {
  * @param interface
  * @returns checkboxes to toggle partOf relations that exist in Mimir.
  */
-export const PartOfFilter = ({ edges, nodes, connectors, dispatch, visible }: Props) =>
+export const PartOfFilter = ({ edges, nodes, relations: connectors, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement

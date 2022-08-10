@@ -1,14 +1,14 @@
 import { Dispatch } from "redux";
-import { Edge, Connector } from "@mimirorg/modelbuilder-types";
+import { Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
-import { IsTerminalCategoryChecked } from "./helpers";
+import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
 import { TerminalCategory } from "./TransportFilter";
 import { FilterElement } from "../FilterElement";
 
 interface Props {
   category: TerminalCategory;
   edges: Edge[];
-  connectors: Connector[];
+  terminals: Terminal[];
   dispatch: Dispatch;
   visible: boolean;
 }
@@ -20,8 +20,9 @@ interface Props {
  * @param interface
  * @returns a parent checkbox and a checkbox for each child.
  */
-export const TerminalCategoryFilter = ({ category, edges, connectors, dispatch, visible }: Props) => {
+export const TerminalCategoryFilter = ({ category, edges, terminals, dispatch, visible }: Props) => {
   const isCategoryChecked = IsTerminalCategoryChecked(edges, category.id);
+  console.log({ isCategoryChecked });
 
   return (
     visible && (
@@ -35,13 +36,13 @@ export const TerminalCategoryFilter = ({ category, edges, connectors, dispatch, 
           isSubHeader
         />
 
-        {connectors.map((conn) => {
-          const isChecked = false; // IsTerminalTypeChecked(edges, category.id, conn.terminalTypeId);
+        {terminals.map((t) => {
+          const isChecked = IsTerminalTypeChecked(edges, t.terminalCategory, t.terminalTypeId);
           return (
             <FilterElement
-              key={conn.id}
-              label={conn.name}
-              onChange={() => OnTerminalTypeChange(edges, category.id, null, isChecked, dispatch)} // TODO: fix conn.terminalTypeId
+              key={t.id}
+              label={t.name}
+              onChange={() => OnTerminalTypeChange(edges, t.terminalCategory, t.terminalTypeId, isChecked, dispatch)}
               isChecked={isChecked}
               visible={visible}
               indent={3}

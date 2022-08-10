@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Connector, Relation, Terminal } from "@mimirorg/modelbuilder-types";
+import { Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
 import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
@@ -29,9 +29,9 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
 
   const transportTerminals = [] as Terminal[];
   const relationConnectors = [] as Relation[];
-  const partOfConnectors = [] as Connector[];
+  const partOfRelations = [] as Relation[];
 
-  PopulateFilterLists(edges, nodes, transportTerminals, relationConnectors, partOfConnectors, isTreeView);
+  PopulateFilterLists(edges, nodes, transportTerminals, relationConnectors, partOfRelations, isTreeView);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
@@ -41,9 +41,9 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
         <PartOfFilter
           edges={edges}
           nodes={nodes}
-          connectors={partOfConnectors}
+          relations={partOfRelations}
           dispatch={dispatch}
-          visible={IsPartOfFilterVisible(isTreeView, partOfConnectors, nodes, secondaryNode)}
+          visible={IsPartOfFilterVisible(isTreeView, partOfRelations, nodes, secondaryNode)}
         />
         <RelationFilter
           edges={edges}
