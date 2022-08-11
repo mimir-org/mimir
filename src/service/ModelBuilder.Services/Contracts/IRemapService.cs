@@ -75,5 +75,7 @@ namespace Mb.Services.Contracts
         /// <remarks>If there is some edges that is not connected to a parent, we need to find
         /// a root node in same aspect, and connect the part of relation to that node.</remarks>
         void RemapParentlessEdges(ProjectAm project);
+
+        MasterProject ResolveMasterProject(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri);
     }
 }

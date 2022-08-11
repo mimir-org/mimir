@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -178,11 +179,9 @@ namespace Mb.Services.Services
                 node.ProjectId = project.ToId;
                 node.ProjectIri = project.ToIri;
 
-                if (string.IsNullOrWhiteSpace(node.MasterProjectId))
-                    node.MasterProjectId = project.ToId;
-
-                if (string.IsNullOrEmpty(node.MasterProjectIri) || !node.MasterProjectIri.IsValidIri())
-                    node.MasterProjectIri = project.ToIri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, node.MasterProjectId, node.MasterProjectIri);
+                node.MasterProjectId = masterProject.Id;
+                node.MasterProjectIri = masterProject.Iri;
 
                 yield return node;
             }
@@ -238,11 +237,9 @@ namespace Mb.Services.Services
                 edge.ToNodeIri = toNodeReplacement.ToIri;
                 edge.FromNodeIri = fromNodeReplacement.ToIri;
 
-                if (string.IsNullOrWhiteSpace(edge.MasterProjectId))
-                    edge.MasterProjectId = project.ToId;
-
-                if (string.IsNullOrEmpty(edge.MasterProjectIri) || !edge.MasterProjectIri.IsValidIri())
-                    edge.MasterProjectIri = project.ToIri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, edge.MasterProjectId, edge.MasterProjectIri);
+                edge.MasterProjectId = masterProject.Id;
+                edge.MasterProjectIri = masterProject.Iri;
 
                 yield return edge;
             }
@@ -270,6 +267,47 @@ namespace Mb.Services.Services
                 edge.FromNodeId = rootNode.Id;
                 edge.FromConnectorId = rootNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
             }
+        }
+
+        public MasterProject ResolveMasterProject(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri)
+        {
+            if (string.IsNullOrWhiteSpace(masterProjectId) && string.IsNullOrWhiteSpace(masterProjectIri))
+                return new MasterProject { Id = projectId, Iri = projectIri };
+
+            if (string.IsNullOrWhiteSpace(projectId) && string.IsNullOrWhiteSpace(projectIri) || string.IsNullOrWhiteSpace(oldProjectId) && string.IsNullOrWhiteSpace(oldProjectIri))
+                throw new NullReferenceException($"{nameof(oldProjectId)} or {nameof(oldProjectIri)} and {nameof(projectId)} or {nameof(projectIri)} must have value.");
+
+            var hasChangedId = (oldProjectId != projectId) || (oldProjectIri != projectIri);
+
+            var id = masterProjectId;
+            var iri = masterProjectIri;
+
+            var oldProjectIdReplacement = new ReplacementId { FromId = oldProjectId, FromIri = oldProjectIri };
+            oldProjectIdReplacement = _commonRepository.CreateOrUseIdAndIri(oldProjectIdReplacement);
+
+            var projectIdReplacement = new ReplacementId { FromId = projectId, FromIri = projectIri };
+            projectIdReplacement = _commonRepository.CreateOrUseIdAndIri(projectIdReplacement);
+
+            if (!string.IsNullOrWhiteSpace(id) && hasChangedId)
+            {
+                if (id.Contains(oldProjectIdReplacement.ToId))
+                    id = projectIdReplacement.ToId;
+            }
+
+            if (!string.IsNullOrWhiteSpace(iri) && hasChangedId)
+            {
+                if (iri.Contains(oldProjectIdReplacement.ToIri))
+                    iri = projectIdReplacement.ToIri;
+            }
+
+            var replacement = new ReplacementId
+            {
+                FromId = id,
+                FromIri = iri
+            };
+
+            replacement = _commonRepository.CreateOrUseIdAndIri(replacement);
+            return new MasterProject { Id = replacement.ToId, Iri = replacement.ToIri };
         }
 
         #endregion
@@ -358,6 +396,7 @@ namespace Mb.Services.Services
             }
         }
 
+        // Should there be a id remap
         private static bool ShouldReplace(string id, string fromId, string iri, string fromIri)
         {
             if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))

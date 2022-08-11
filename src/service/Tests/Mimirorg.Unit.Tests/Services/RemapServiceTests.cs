@@ -7,6 +7,7 @@ using Mb.Services.Services;
 using Microsoft.Extensions.Options;
 using ModelBuilder.Setup;
 using ModelBuilder.Setup.Fixtures;
+// ReSharper disable StringLiteralTypo
 
 namespace ModelBuilder.Unit.Tests.Services
 {
@@ -19,6 +20,26 @@ namespace ModelBuilder.Unit.Tests.Services
         {
             _commonRepository = new CommonRepository(fixture.CompanyRepository.Object, Options.Create(fixture.ApplicationSetting));
             _remapService = new RemapService(_commonRepository, fixture.Mapper.Object);
+        }
+
+        [Theory]
+        [InlineData("runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData("runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", null, "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData("runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", null, "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData("runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", null, null, "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData("runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", "hansa.no_xxx", "https://rdf.hansa.no/IDxxx", "hansa.no_xxx", "https://rdf.hansa.no/IDxxx")]
+        [InlineData("runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", null, "https://rdf.hansa.no/IDxxx", "hansa.no_xxx", "https://rdf.hansa.no/IDxxx")]
+        [InlineData("runir.net_123", "https://rdf.runir.net/ID123", "runir.net_123", "https://rdf.runir.net/ID123", "hansa.no_xxx", null, "hansa.no_xxx", "https://rdf.hansa.no/IDxxx")]
+        [InlineData("runir.net_567", "https://rdf.runir.net/ID567", "runir.net_123", "https://rdf.runir.net/ID123", "runir.net_567", "https://rdf.runir.net/ID567", "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData("runir.net_567", "https://rdf.runir.net/ID567", "runir.net_123", "https://rdf.runir.net/ID123", null, "https://rdf.runir.net/ID567", "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData("runir.net_567", "https://rdf.runir.net/ID567", "runir.net_123", "https://rdf.runir.net/ID123", "runir.net_567", null, "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData(null, "https://rdf.runir.net/ID567", "runir.net_123", "https://rdf.runir.net/ID123", "runir.net_567", null, "runir.net_123", "https://rdf.runir.net/ID123")]
+        [InlineData("runir.net_567", null, "runir.net_123", "https://rdf.runir.net/ID123", "runir.net_567", null, "runir.net_123", "https://rdf.runir.net/ID123")]
+        public void ResolveMasterProject_Returns_Correct(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri, string expectedId, string expectedIri)
+        {
+            var master = _remapService.ResolveMasterProject(oldProjectId, oldProjectIri, projectId, projectIri, masterProjectId, masterProjectIri);
+            Assert.Equal(expectedId, master.Id);
+            Assert.Equal(expectedIri, master.Iri);
         }
 
         [Fact]
@@ -54,7 +75,7 @@ namespace ModelBuilder.Unit.Tests.Services
 
             var mappedNodeFromId = mappedNodes.FirstOrDefault(x => x.ProjectId == "runir.net_5678");
             var mappedNodeFromIri = mappedNodes.FirstOrDefault(x => x.ProjectIri == "https://rdf.runir.net/ID5678");
-            // TODO: should node change master project id if id is not changed?
+            
             //var mappedNodeFromIdMaster = mappedNodes.FirstOrDefault(x => x.MasterProjectId == "runir.net_1234");
             //var mappedNodeFromIriMaster = mappedNodes.FirstOrDefault(x => x.MasterProjectIri == "https://rdf.runir.net/ID1234");
             Assert.NotNull(mappedNodeFromId);
