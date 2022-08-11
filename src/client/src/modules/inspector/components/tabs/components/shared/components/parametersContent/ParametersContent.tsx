@@ -6,7 +6,7 @@ import { GetAttributes } from "./helpers/GetAttributes";
 import { ParameterButton } from "./styled/ParameterButton";
 import { Dropdown } from "./components/dropdown/Dropdown";
 import { ParameterRow } from "./components/row/ParameterRow";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { OnShowAllFilters } from "./handlers/OnShowAllFilters";
 import { OnChangeFilterChoice } from "./handlers/OnChangeFilterChoice";
 import { OnClearAllFilters } from "./handlers/OnClearAllFilters";
@@ -55,6 +55,7 @@ export const ParametersContent = ({
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
   const [colorMapping] = useState(new Map<string, [string, string]>());
+
   const attributeCombinations = useMemo(
     () => GetAttributeCombinations(attributeFilters, attributes),
     [attributeFilters, attributes]
@@ -65,11 +66,11 @@ export const ParametersContent = ({
     OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
   };
 
-  useEffect(() => {
-    if (shouldShowDefaultEntities.current) {
-      OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
-    }
-  }, [attributeCombinations, attributeFilters, dispatch, parametersElement.id, shouldShowDefaultEntities]);
+  // useEffect(() => {
+  //   if (shouldShowDefaultEntities.current) {
+  //     OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
+  //   }
+  // }, [attributeCombinations, attributeFilters, dispatch, parametersElement.id, shouldShowDefaultEntities]);
 
   return (
     <ParametersContentContainer>
