@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
-import { AllPartOfChecked, GetPartOfName } from "./helpers";
+import { AreAllPartOfChecked, GetPartOfName } from "./helpers";
 import { FilterElement } from "../FilterElement";
 import { Node, Edge, Relation } from "@mimirorg/modelbuilder-types";
 
@@ -18,24 +18,24 @@ interface Props {
  * @param interface
  * @returns checkboxes to toggle partOf relations that exist in Mimir.
  */
-export const PartOfFilter = ({ edges, nodes, relations: connectors, dispatch, visible }: Props) =>
+export const PartOfRelationsFilter = ({ edges, nodes, relations, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement
         label={TextResources.PARTOF_RELATIONSHIP}
         onChange={() => OnAllPartOfChange(edges, dispatch)}
-        isChecked={AllPartOfChecked(edges)}
+        isChecked={AreAllPartOfChecked(edges)}
         visible={visible}
         isHeader
       />
-      {connectors.map((conn) => {
-        const edge = edges.find((e) => e.fromConnectorId === conn.id);
-        const node = nodes.find((n) => n.id === conn.nodeId);
-        const name = GetPartOfName(conn, node);
+      {relations.map((r) => {
+        const edge = edges.find((e) => e.fromConnectorId === r.id);
+        const node = nodes.find((n) => n.id === r.nodeId);
+        const name = GetPartOfName(r, node);
 
         return (
           <FilterElement
-            key={conn.id}
+            key={r.id}
             label={name}
             onChange={() => OnFilterChange(edge, edges, nodes, dispatch)}
             isChecked={!edge.hidden}

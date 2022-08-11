@@ -1,5 +1,5 @@
 import { Terminal } from "@mimirorg/modelbuilder-types";
-import { TerminalCategory } from "../TransportFilter";
+import { TerminalCategory } from "../TransportTerminalsFilter";
 
 /**
  * Function to find all Terminal Categories on Mimir's Transport Edges.

@@ -8,14 +8,14 @@ import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTran
  * @param edges
  * @param nodes
  * @param transportItems
- * @param relationItems
+ * @param productAndLocationRelations
  * @param partOfItems
  */
 const PopulateFilterLists = (
   edges: Edge[],
   nodes: Node[],
   transportItems: Terminal[],
-  relationItems: Relation[],
+  productAndLocationRelations: Relation[],
   partOfItems: Relation[],
   isTreeView: boolean
 ) => {
@@ -25,8 +25,8 @@ const PopulateFilterLists = (
     const sourceConn = edge.fromConnector;
 
     if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
-    else if (IsLocationRelation(sourceConn)) VerifyLocationItem(relationItems, sourceConn as Relation);
-    else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn as Relation);
+    else if (IsLocationRelation(sourceConn)) VerifyLocationItem(productAndLocationRelations, sourceConn as Relation);
+    else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(productAndLocationRelations, sourceConn as Relation);
     else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn as Relation, nodes);
   });
 };

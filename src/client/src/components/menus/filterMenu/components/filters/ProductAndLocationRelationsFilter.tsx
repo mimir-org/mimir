@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Node, Edge, Relation } from "@mimirorg/modelbuilder-types";
 import { OnAllRelationsChange, OnFilterChange } from "./handlers";
-import { AllRelationsChecked } from "./helpers";
+import { AreAllProductAndLocationChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
 
 interface Props {
@@ -14,17 +14,17 @@ interface Props {
 }
 
 /**
- * Component for relations filter.
+ * Component for Location and Product filter.
  * @param interface
- * @returns checkboxes to toggle relations that exist in Mimir.
+ * @returns checkboxes to toggle Location and Product relations that exist in Mimir.
  */
-export const RelationFilter = ({ edges, nodes, connectors, dispatch, visible }: Props) =>
+export const ProductAndLocationRelationsFilter = ({ edges, nodes, connectors, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement
         label={TextResources.RELATIONS}
         onChange={() => OnAllRelationsChange(edges, dispatch)}
-        isChecked={AllRelationsChecked(edges)}
+        isChecked={AreAllProductAndLocationChecked(edges)}
         visible={visible}
         isHeader
       />

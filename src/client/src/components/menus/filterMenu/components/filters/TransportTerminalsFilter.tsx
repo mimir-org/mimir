@@ -3,7 +3,7 @@ import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { OnAllTransportsChange } from "./handlers";
-import { PopulateTerminalCategories, AllTransportsChecked } from "./helpers";
+import { PopulateTerminalCategories, AreAllTransportsChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
 import { memo } from "react";
 
@@ -34,7 +34,7 @@ const TransportFilter = ({ edges, terminals, dispatch, visible }: Props) => {
         <FilterElement
           label={TextResources.TRANSPORTS}
           onChange={() => OnAllTransportsChange(edges, dispatch)}
-          isChecked={AllTransportsChecked(edges)}
+          isChecked={AreAllTransportsChecked(edges)}
           visible={visible}
           isHeader
         />

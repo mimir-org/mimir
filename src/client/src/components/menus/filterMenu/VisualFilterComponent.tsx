@@ -1,13 +1,18 @@
 import * as selectors from "./helpers/selectors";
 import { Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
-import { AnimationFilter, PartOfFilter, RelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
-import { PopulateFilterLists, IsPartOfFilterVisible, IsRelationFilterVisible } from "./helpers/";
+import { PopulateFilterLists, ArePartOfRelationsVisible, AreProductAndLocationRelationsVisible } from "./helpers/";
 import { Dispatch } from "redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { useAppSelector } from "../../../redux/store";
+import {
+  AnimationFilter,
+  PartOfRelationsFilter,
+  ProductAndLocationRelationsFilter,
+  TransportTerminalsFilter,
+} from "./components/filters";
 
 interface Props {
   dispatch: Dispatch;
@@ -28,31 +33,36 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
   const edges = useAppSelector(selectors.edgesSelector);
 
   const transportTerminals = [] as Terminal[];
-  const relationConnectors = [] as Relation[];
+  const productAndLocationRelations = [] as Relation[];
   const partOfRelations = [] as Relation[];
 
-  PopulateFilterLists(edges, nodes, transportTerminals, relationConnectors, partOfRelations, isTreeView);
+  PopulateFilterLists(edges, nodes, transportTerminals, productAndLocationRelations, partOfRelations, isTreeView);
 
   return (
     <VisualFilterContainer libraryOpen={libOpen}>
       <VisualFilterHeader>{TextResources.VISUAL_FILTER}</VisualFilterHeader>
       <VisualFilterMenuColumn>
         <AnimationFilter isAnimated={edgeAnimation} visible={!!transportTerminals.length} dispatch={dispatch} />
-        <PartOfFilter
+        <PartOfRelationsFilter
           edges={edges}
           nodes={nodes}
           relations={partOfRelations}
           dispatch={dispatch}
-          visible={IsPartOfFilterVisible(isTreeView, partOfRelations, nodes, secondaryNode)}
+          visible={ArePartOfRelationsVisible(isTreeView, partOfRelations, nodes, secondaryNode)}
         />
-        <RelationFilter
+        <ProductAndLocationRelationsFilter
           edges={edges}
           nodes={nodes}
-          connectors={relationConnectors}
+          connectors={productAndLocationRelations}
           dispatch={dispatch}
-          visible={IsRelationFilterVisible(isTreeView, isSplitView, relationConnectors)}
+          visible={AreProductAndLocationRelationsVisible(isTreeView, isSplitView, productAndLocationRelations)}
         />
-        <TransportFilter edges={edges} terminals={transportTerminals} dispatch={dispatch} visible={!!transportTerminals.length} />
+        <TransportTerminalsFilter
+          edges={edges}
+          terminals={transportTerminals}
+          dispatch={dispatch}
+          visible={!!transportTerminals.length}
+        />
       </VisualFilterMenuColumn>
     </VisualFilterContainer>
   );
