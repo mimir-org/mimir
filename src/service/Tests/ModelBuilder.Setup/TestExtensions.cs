@@ -4,7 +4,7 @@ namespace ModelBuilder.Setup
 {
     public static class TestExtensions
     {
-        public static async Task<T?> GetAndDeserialize<T>(this HttpClient client, string requestUri)
+        public static async Task<T> GetAndDeserialize<T>(this HttpClient client, string requestUri)
         {
             var response = await client.GetAsync(requestUri);
             response.EnsureSuccessStatusCode();
