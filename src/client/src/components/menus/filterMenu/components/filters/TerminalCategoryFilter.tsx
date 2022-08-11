@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
-import { TerminalCategory } from "./TransportFilter";
+import { TerminalCategory } from "./TransportTerminalsFilter";
 import { FilterElement } from "../FilterElement";
 
 interface Props {

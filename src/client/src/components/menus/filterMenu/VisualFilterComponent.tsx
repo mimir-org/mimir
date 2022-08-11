@@ -1,13 +1,18 @@
 import * as selectors from "./helpers/selectors";
 import { Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } from "./VisualFilterComponent.styled";
-import { AnimationFilter, PartOfFilter, ProductAndLocationRelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
 import { PopulateFilterLists, ArePartOfRelationsVisible, AreProductAndLocationRelationsVisible } from "./helpers/";
 import { Dispatch } from "redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { useAppSelector } from "../../../redux/store";
+import {
+  AnimationFilter,
+  PartOfRelationsFilter,
+  ProductAndLocationRelationsFilter,
+  TransportTerminalsFilter,
+} from "./components/filters";
 
 interface Props {
   dispatch: Dispatch;
@@ -38,21 +43,26 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
       <VisualFilterHeader>{TextResources.VISUAL_FILTER}</VisualFilterHeader>
       <VisualFilterMenuColumn>
         <AnimationFilter isAnimated={edgeAnimation} visible={!!transportTerminals.length} dispatch={dispatch} />
-        <PartOfFilter
+        <PartOfRelationsFilter
           edges={edges}
           nodes={nodes}
           relations={partOfRelations}
           dispatch={dispatch}
           visible={ArePartOfRelationsVisible(isTreeView, partOfRelations, nodes, secondaryNode)}
         />
-        <ProductAndLocationRelationFilter
+        <ProductAndLocationRelationsFilter
           edges={edges}
           nodes={nodes}
           connectors={productAndLocationRelations}
           dispatch={dispatch}
           visible={AreProductAndLocationRelationsVisible(isTreeView, isSplitView, productAndLocationRelations)}
         />
-        <TransportFilter edges={edges} terminals={transportTerminals} dispatch={dispatch} visible={!!transportTerminals.length} />
+        <TransportTerminalsFilter
+          edges={edges}
+          terminals={transportTerminals}
+          dispatch={dispatch}
+          visible={!!transportTerminals.length}
+        />
       </VisualFilterMenuColumn>
     </VisualFilterContainer>
   );

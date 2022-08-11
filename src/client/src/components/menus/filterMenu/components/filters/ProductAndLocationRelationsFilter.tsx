@@ -18,7 +18,7 @@ interface Props {
  * @param interface
  * @returns checkboxes to toggle Location and Product relations that exist in Mimir.
  */
-export const ProductAndLocationRelationFilter = ({ edges, nodes, connectors, dispatch, visible }: Props) =>
+export const ProductAndLocationRelationsFilter = ({ edges, nodes, connectors, dispatch, visible }: Props) =>
   visible && (
     <>
       <FilterElement
