@@ -1,13 +1,13 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Terminal } from "@mimirorg/modelbuilder-types";
 import { OnActiveTerminalChange, OnAllTerminalsChange } from "./handlers";
 import { IsConnectorVisible } from "../../../../flow/helpers/Connectors";
 import { FilterElement } from "../FilterElement";
 
 interface Props {
-  activeTerminals: Connector[];
-  allTerminals: Connector[];
+  activeTerminals: Terminal[];
+  allTerminals: Terminal[];
   dispatch: Dispatch;
 }
 

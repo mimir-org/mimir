@@ -4,7 +4,7 @@ import { VisualFilterContainer, VisualFilterHeader, VisualFilterMenuColumn } fro
 import { AnimationFilter, PartOfFilter, ProductAndLocationRelationFilter, TransportFilter } from "./components/filters";
 import { TextResources } from "../../../assets/text/TextResources";
 import { IsLibrary } from "../../../helpers/Modules";
-import { PopulateFilterLists, IsPartOfFilterVisible, IsRelationFilterVisible } from "./helpers/";
+import { PopulateFilterLists, ArePartOfRelationsVisible, AreProductAndLocationRelationsVisible } from "./helpers/";
 import { Dispatch } from "redux";
 import { VIEW_TYPE } from "../../../models/project";
 import { useAppSelector } from "../../../redux/store";
@@ -43,14 +43,14 @@ export const VisualFilterComponent = ({ dispatch }: Props) => {
           nodes={nodes}
           relations={partOfRelations}
           dispatch={dispatch}
-          visible={IsPartOfFilterVisible(isTreeView, partOfRelations, nodes, secondaryNode)}
+          visible={ArePartOfRelationsVisible(isTreeView, partOfRelations, nodes, secondaryNode)}
         />
         <ProductAndLocationRelationFilter
           edges={edges}
           nodes={nodes}
           connectors={productAndLocationRelations}
           dispatch={dispatch}
-          visible={IsRelationFilterVisible(isTreeView, isSplitView, productAndLocationRelations)}
+          visible={AreProductAndLocationRelationsVisible(isTreeView, isSplitView, productAndLocationRelations)}
         />
         <TransportFilter edges={edges} terminals={transportTerminals} dispatch={dispatch} visible={!!transportTerminals.length} />
       </VisualFilterMenuColumn>
