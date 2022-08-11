@@ -75,7 +75,7 @@ namespace ModelBuilder.Unit.Tests.Services
 
             var mappedNodeFromId = mappedNodes.FirstOrDefault(x => x.ProjectId == "runir.net_5678");
             var mappedNodeFromIri = mappedNodes.FirstOrDefault(x => x.ProjectIri == "https://rdf.runir.net/ID5678");
-            
+
             //var mappedNodeFromIdMaster = mappedNodes.FirstOrDefault(x => x.MasterProjectId == "runir.net_1234");
             //var mappedNodeFromIriMaster = mappedNodes.FirstOrDefault(x => x.MasterProjectIri == "https://rdf.runir.net/ID1234");
             Assert.NotNull(mappedNodeFromId);

@@ -32,8 +32,7 @@ namespace Mb.Api
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                o.SerializerSettings.Converters.Add(new ConnectorConverter()); //
-                //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+                o.SerializerSettings.Converters.Add(new ConnectorConverter());
             });
 
             // Add Cors policy

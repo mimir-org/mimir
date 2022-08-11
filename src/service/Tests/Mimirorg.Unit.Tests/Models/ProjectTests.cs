@@ -15,7 +15,7 @@ namespace ModelBuilder.Unit.Tests.Models
 
         private ProjectAm ValidProject()
         {
-            
+
 
             return new ProjectAm
             {
@@ -27,7 +27,7 @@ namespace ModelBuilder.Unit.Tests.Models
                 Description = "Dummy Project",
                 ProjectOwner = "Anna Bond",
                 UpdatedBy = "Anna Bond",
-                Updated = new DateTime(2022,6,1,10,0,0),
+                Updated = new DateTime(2022, 6, 1, 10, 0, 0),
                 Nodes = new List<NodeAm>
                 {
                     new NodeAm

@@ -39,7 +39,7 @@ namespace Mb.Models.Configurations
         {
             if (string.IsNullOrWhiteSpace(DataSource) || Port <= 0 || string.IsNullOrWhiteSpace(InitialCatalog) ||
                 string.IsNullOrWhiteSpace(DbUser) || string.IsNullOrWhiteSpace(Password))
-                throw new MimirorgConfigurationException("DatabaseConfiguration is missing or invalid");
+                return null;
 
             var timeout = 30;
             var retryCount = 1;

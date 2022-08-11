@@ -25,7 +25,7 @@ namespace ModelBuilder.Setup
                     }
                 }
 
-                services.AddDbContext<ModelBuilderDbContext>(options => options.UseInMemoryDatabase("TestDB"));
+                services.AddDbContext<ModelBuilderDbContext>(options => options.UseInMemoryDatabase("TestModelBuilderDB"));
                 services.AddAuthentication("IntegrationUser").AddScheme<AuthenticationSchemeOptions, IntegrationTestAuthenticationHandler>("IntegrationUser", options => { });
             });
         }
