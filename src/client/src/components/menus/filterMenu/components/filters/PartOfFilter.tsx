@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { OnAllPartOfChange, OnFilterChange } from "./handlers";
-import { AllPartOfChecked, GetPartOfName } from "./helpers";
+import { AreAllPartOfChecked, GetPartOfName } from "./helpers";
 import { FilterElement } from "../FilterElement";
 import { Node, Edge, Relation } from "@mimirorg/modelbuilder-types";
 
@@ -24,7 +24,7 @@ export const PartOfFilter = ({ edges, nodes, relations: connectors, dispatch, vi
       <FilterElement
         label={TextResources.PARTOF_RELATIONSHIP}
         onChange={() => OnAllPartOfChange(edges, dispatch)}
-        isChecked={AllPartOfChecked(edges)}
+        isChecked={AreAllPartOfChecked(edges)}
         visible={visible}
         isHeader
       />

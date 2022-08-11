@@ -6,9 +6,9 @@ export { GetAllTerminals, GetActiveTerminals, GetInactiveTerminals } from "./Get
 export { VerifyTransportItem, VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem } from "./VerifyItem";
 
 export {
-  AllTransportsChecked,
-  AllRelationsChecked,
-  AllPartOfChecked,
+  AreAllTransportsChecked,
+  AreAllProductAndLocationChecked,
+  AreAllPartOfChecked,
   IsTerminalCategoryChecked,
   IsTerminalTypeChecked,
 } from "./IsChecked";
