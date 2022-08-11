@@ -9,6 +9,7 @@ interface Props {
 
 export const ParametersComponent = ({ element, attributeLikeItems }: Props) => {
   const parametersElement = GetParametersElement(element);
+  return null;
 
   return (
     <ParametersContent

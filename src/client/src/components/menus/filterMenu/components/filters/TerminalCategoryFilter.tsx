@@ -15,7 +15,7 @@ interface Props {
 
 /**
  * This component is used as a child component for the Transport Filter in the Visual Filter Module.
- * It has one parent - which is the terminal category element. It also has children - the different terminal types that derives
+ * It has one parent - which is the terminal category element. It also has children - the different terminal types that derive
  * from the terminal category.
  * @param interface
  * @returns a parent checkbox and a checkbox for each child.
