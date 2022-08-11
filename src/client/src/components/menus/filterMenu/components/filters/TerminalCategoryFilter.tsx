@@ -21,14 +21,14 @@ interface Props {
  * @returns a parent checkbox and a checkbox for each child.
  */
 export const TerminalCategoryFilter = ({ category, edges, terminals, dispatch, visible }: Props) => {
-  const isCategoryChecked = IsTerminalCategoryChecked(edges, category.id);
+  const isCategoryChecked = IsTerminalCategoryChecked(edges, category.name);
 
   return (
     visible && (
       <>
         <FilterElement
           label={category.name}
-          onChange={() => OnTerminalCategoryChange(edges, category.id, isCategoryChecked, dispatch)}
+          onChange={() => OnTerminalCategoryChange(edges, category.name, isCategoryChecked, dispatch)}
           isChecked={isCategoryChecked}
           visible={visible}
           indent={2}
