@@ -13,7 +13,7 @@ namespace ModelBuilder.Unit.Tests.Models
         {
             _terminal = new TerminalAm
             {
-                Id = "equinor.com_12345",
+                Id = "runir.com_12345",
                 Iri = "https://dummy.com/ID12345",
                 Name = "Terminal",
                 Attributes = null,
@@ -23,11 +23,10 @@ namespace ModelBuilder.Unit.Tests.Models
                 NodeId = null,
                 NodeIri = null,
                 IsRequired = false,
-                TerminalTypeIri = "https://rdf.equinor.com/1234",
+                TerminalTypeIri = "https://rdf.runir.com/1234",
                 TerminalCategory = "TerminalParent",
                 TerminalTypeId = "12345",
                 SemanticReference = null
-
             };
         }
 

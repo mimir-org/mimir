@@ -43,7 +43,7 @@ namespace Mb.Models.Extensions
                     notConnectedEdges.Add(edge);
             }
 
-            return notConnectedEdges;
+            return notConnectedEdges.DistinctBy(x => x.Id).ToList();
         }
     }
 }
