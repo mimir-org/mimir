@@ -7,7 +7,7 @@ import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
 import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
-import { Aspect, Project, Terminal } from "@mimirorg/modelbuilder-types";
+import { Aspect, Project, Terminal, Simple } from "@mimirorg/modelbuilder-types";
 import {
   AttributeLikeItem,
   ChangeInspectorHeightAction,
@@ -15,7 +15,6 @@ import {
   ChangeInspectorVisibilityAction,
   InspectorElement,
   OnToogleHandler,
-  SimpleLikeItem,
 } from "../../types";
 
 interface Props {
@@ -34,7 +33,7 @@ interface Props {
   onToggle?: OnToogleHandler;
   attributeLikeItems?: AttributeLikeItem[];
   terminals: Terminal[];
-  simpleLikeItems?: SimpleLikeItem[];
+  simpleItems?: Simple[];
   selectedFlowNodes: FlowNode[];
 }
 
@@ -53,7 +52,7 @@ export const InspectorHeader = ({
   changeInspectorTabAction,
   attributeLikeItems,
   terminals,
-  simpleLikeItems,
+  simpleItems,
   selectedFlowNodes,
 }: Props) => {
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
@@ -69,7 +68,7 @@ export const InspectorHeader = ({
             activeTabIndex={activeTabIndex}
             attributeLikeItems={attributeLikeItems}
             terminals={terminals}
-            simpleLikeItems={simpleLikeItems}
+            simpleItems={simpleItems}
             changeInspectorTabAction={changeInspectorTabAction}
             inspectorRef={inspectorRef}
             isInspectorOpen={isInspectorOpen}

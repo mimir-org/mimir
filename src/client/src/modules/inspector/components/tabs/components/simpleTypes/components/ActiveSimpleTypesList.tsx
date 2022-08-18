@@ -1,11 +1,11 @@
-import { SimpleLikeItem } from "../../../../../types";
+import { Simple } from "@mimirorg/modelbuilder-types";
 import { TerminalsCategoryElement } from "../../shared/styled/TerminalsCategoryElement";
 import { TerminalsListElementWrapper } from "../../shared/styled/TerminalsListElementWrapper";
 
 interface Props {
-  simpleTypes: SimpleLikeItem[];
+  simpleTypes: Simple[];
   selectedSimpleTypeId: string;
-  onSelect: (item: SimpleLikeItem) => void;
+  onSelect: (item: Simple) => void;
 }
 
 export const ActiveSimpleTypesList = ({ simpleTypes, selectedSimpleTypeId, onSelect }: Props) => (

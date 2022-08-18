@@ -1,4 +1,4 @@
-import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Edge, Relation, Connector } from "@mimirorg/modelbuilder-types";
 import {
   RelationsContainer,
   RelationsHeader,
@@ -6,7 +6,7 @@ import {
   RelationsTerminalListElement,
 } from "./RelationsContent.styled";
 
-type RelationItem = Node | Connector | Edge;
+type RelationItem = Node | Relation | Connector | Edge;
 
 interface Props<T> {
   items: T[];

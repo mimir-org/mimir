@@ -31,6 +31,7 @@ const ConvertLibNodeToNode = (
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, id, libNode.iri);
   const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id, libNode.iri);
   const simples = ConvertSimpleLibCmToSimple(libNode.simples, id, libNode.iri);
+  console.log({ libNode });
 
   return {
     id,

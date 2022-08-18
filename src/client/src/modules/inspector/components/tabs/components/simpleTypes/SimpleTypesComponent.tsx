@@ -1,14 +1,14 @@
 import { SimpleTypesSelector } from "./components/SimpleTypesSelector";
 import { useState } from "react";
-import { InspectorElement, SimpleLikeItem } from "../../../../types";
+import { InspectorElement } from "../../../../types";
 import { GetSimpleTypes } from "./helpers/GetSimpleTypes";
-import { TerminalsParametersWrapper, TerminalsWrapper } from "../terminals/TerminalsComponent.styled";
+import { TerminalsParametersBox, TerminalsBox } from "../terminals/TerminalsComponent.styled";
 import { ParametersContent } from "../shared/components/parametersContent/ParametersContent";
 import { Simple } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   element: InspectorElement;
-  simpleLikeItems?: SimpleLikeItem[];
+  simpleItems?: Simple[];
 }
 
 /**
@@ -16,20 +16,20 @@ interface Props {
  * @param node
  * @returns a drop-down menu where you can access a Node's SimpleTypes and attributes.
  */
-export const SimpleTypesComponent = ({ element, simpleLikeItems }: Props) => {
+export const SimpleTypesComponent = ({ element, simpleItems }: Props) => {
   const [selectedSimpleTypeId, setSelectedSimpleTypeId] = useState<string>(null);
-  const simpleTypes = simpleLikeItems ?? GetSimpleTypes(element);
+  const simpleTypes = simpleItems ?? GetSimpleTypes(element);
   const selectedSimpleType = simpleTypes.find((t) => t.id === selectedSimpleTypeId);
   const onSelect = (item: Simple) => setSelectedSimpleTypeId(item.id);
 
   return (
-    <TerminalsWrapper>
+    <TerminalsBox>
       <SimpleTypesSelector simpleTypes={simpleTypes} selectedSimpleTypeId={selectedSimpleTypeId} onSelect={onSelect} />
       {selectedSimpleType && (
-        <TerminalsParametersWrapper>
+        <TerminalsParametersBox>
           <ParametersContent parametersElement={selectedSimpleType} inspectorParentElement={element} />
-        </TerminalsParametersWrapper>
+        </TerminalsParametersBox>
       )}
-    </TerminalsWrapper>
+    </TerminalsBox>
   );
 };

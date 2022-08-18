@@ -1,19 +1,20 @@
 import { ChangeEvent, useState } from "react";
 import { ActiveSimpleTypesList } from "./ActiveSimpleTypesList";
 import { TerminalsColumn } from "../../shared/styled/TerminalsColumn";
-import { SimpleLikeItem } from "../../../../../types";
-import { FontSize } from "../../../../../../../assets/font";
+import { FontSize, FontWeight } from "../../../../../../../assets/font";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../compLibrary/input/text";
+import { Simple } from "@mimirorg/modelbuilder-types";
 
 interface Props {
-  simpleTypes: SimpleLikeItem[];
+  simpleTypes: Simple[];
   selectedSimpleTypeId: string;
-  onSelect: (item: SimpleLikeItem) => void;
+  onSelect: (item: Simple) => void;
 }
 
 export const SimpleTypesSelector = ({ simpleTypes, onSelect, selectedSimpleTypeId }: Props) => {
   const [searchString, setSearchString] = useState("");
+
   const onChange = (value: string) => {
     setSearchString(value);
   };
@@ -22,7 +23,7 @@ export const SimpleTypesSelector = ({ simpleTypes, onSelect, selectedSimpleTypeI
     <TerminalsColumn>
       <Input
         fontSize={FontSize.STANDARD}
-        fontStyle={"italic"}
+        fontStyle={FontWeight.ITALIC}
         className={searchString.length > 0 ? "" : "input-placeholder"}
         value={searchString}
         placeholder={TextResources.SIMPLETYPES_SEARCH}
