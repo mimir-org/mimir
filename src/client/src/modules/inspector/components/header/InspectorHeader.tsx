@@ -30,7 +30,7 @@ interface Props {
   changeInspectorHeightAction: ChangeInspectorHeightAction;
   changeInspectorTabAction?: ChangeInspectorTabAction;
   onToggle?: OnToogleHandler;
-  attributeItems?: Attribute[];
+  attributes?: Attribute[];
   terminals: Terminal[];
   simpleItems?: Simple[];
   selectedFlowNodes: FlowNode[];
@@ -49,7 +49,7 @@ export const InspectorHeader = ({
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
   changeInspectorTabAction,
-  attributeItems,
+  attributes,
   terminals,
   simpleItems,
   selectedFlowNodes,
@@ -65,7 +65,7 @@ export const InspectorHeader = ({
             project={project}
             element={element}
             activeTabIndex={activeTabIndex}
-            attributeItems={attributeItems}
+            attributes={attributes}
             terminals={terminals}
             simpleItems={simpleItems}
             changeInspectorTabAction={changeInspectorTabAction}

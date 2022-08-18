@@ -31,18 +31,13 @@ interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
-  attributeItems?: Attribute[];
+  attributes?: Attribute[];
 }
 
-export const ParametersContent = ({
-  parametersElement,
-  inspectorParentElement,
-  terminalParentElement,
-  attributeItems,
-}: Props) => {
+export const ParametersContent = ({ parametersElement, inspectorParentElement, terminalParentElement, attributes }: Props) => {
   const dispatch = useAppDispatch();
 
-  const attributes = attributeItems ?? GetAttributes(parametersElement);
+  if (attributes == undefined || attributes == null) attributes = GetAttributes(parametersElement);
   const username = useAppSelector(usernameSelector);
 
   const shouldShowDefaultEntities = useRef(true);
@@ -103,7 +98,7 @@ export const ParametersContent = ({
                 terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
-                attributeItems={attributeItems}
+                attributes={attributes}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 username={username}
                 filterName={filterName}

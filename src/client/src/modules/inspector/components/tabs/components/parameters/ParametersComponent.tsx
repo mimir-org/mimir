@@ -5,13 +5,11 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   element: InspectorElement;
-  attributeItems?: Attribute[];
+  attributes?: Attribute[];
 }
 
-export const ParametersComponent = ({ element, attributeItems }: Props) => {
+export const ParametersComponent = ({ element, attributes }: Props) => {
   const parametersElement = GetParametersElement(element);
 
-  return (
-    <ParametersContent parametersElement={parametersElement} inspectorParentElement={element} attributeItems={attributeItems} />
-  );
+  return <ParametersContent parametersElement={parametersElement} inspectorParentElement={element} attributes={attributes} />;
 };

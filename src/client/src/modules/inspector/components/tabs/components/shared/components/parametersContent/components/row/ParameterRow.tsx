@@ -28,7 +28,7 @@ interface Props {
   terminalParentElement?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
-  attributeItems?: Attribute[];
+  attributes?: Attribute[];
   maxNumSelectedCombinations: number;
   username: string;
   filterName: string;
@@ -43,7 +43,7 @@ export const ParameterRow = ({
   terminalParentElement,
   combinations,
   selectedCombinations,
-  attributeItems,
+  attributes,
   maxNumSelectedCombinations,
   username,
   filterName,
@@ -54,7 +54,8 @@ export const ParameterRow = ({
   const projectId = useAppSelector(projectIdSelector);
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
-  const attributes = attributeItems ?? GetAttributes(element);
+  if (attributes == undefined || attributes == null) attributes = GetAttributes(element);
+
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
     [maxNumSelectedCombinations]

@@ -47,14 +47,13 @@ export const InspectorModule = ({ inspectorRef, dispatch }: Props) => {
 
   const resizePanelRef = useRef(null);
   const element = (selectedNode || selectedEdge) as InspectorElement;
-
   const terminals = selectedNode?.connectors.filter((c) => IsTerminal(c)) as Terminal[];
 
   useAutoMinimizeInspector(inspectorRef, isBlockView, selectedFlowNodes);
   useDragResizePanel(inspectorRef, resizePanelRef, null, dispatch, changeInspectorHeight);
 
   const changeInspectorVisibilityAction = useCallback(
-    (open: boolean) => setModuleVisibility({ type: type, visible: open, animate: true }),
+    (open: boolean) => setModuleVisibility({ type, visible: open, animate: true }),
     [type]
   );
 

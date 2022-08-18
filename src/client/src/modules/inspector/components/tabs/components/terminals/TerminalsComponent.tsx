@@ -33,7 +33,7 @@ export const TerminalsComponent = ({ element, terminals }: Props) => {
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
-            attributeItems={selectedTerminal.attributes}
+            attributes={selectedTerminal.attributes}
           />
         </TerminalsParametersBox>
       )}

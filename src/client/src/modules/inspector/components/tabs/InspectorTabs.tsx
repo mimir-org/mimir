@@ -17,7 +17,7 @@ interface Props {
   project: Project;
   element: InspectorElement;
   activeTabIndex: number;
-  attributeItems?: Attribute[];
+  attributes?: Attribute[];
   terminals: Terminal[];
   simpleItems?: Simple[];
   changeInspectorTabAction?: (index: number) => Action;
@@ -30,7 +30,7 @@ export const InspectorTabs = ({
   project,
   element,
   activeTabIndex,
-  attributeItems,
+  attributes,
   terminals,
   simpleItems,
   changeInspectorTabAction = changeInspectorTab,
@@ -42,7 +42,7 @@ export const InspectorTabs = ({
 
   const tabs = [
     <AdminComponent key={0} element={element} project={project} />,
-    <ParametersComponent key={1} element={element} attributeItems={attributeItems} />,
+    <ParametersComponent key={1} element={element} attributes={attributes} />,
     <TerminalsComponent key={2} element={element} terminals={terminals} />,
     <RelationsComponent key={3} element={element} />,
     <SimpleTypesComponent key={4} element={element} simpleItems={simpleItems} />,
