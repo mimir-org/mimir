@@ -8,7 +8,6 @@ import { Dropdown as CompDropdown } from "../../../../../../../../../../../compL
 import { CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
-import { AttributeLikeItem } from "../../../../../../../../../types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
@@ -19,7 +18,7 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 export const PARAMETER_ENTITY_WIDTH = 255;
 
 interface Props {
-  attribute: AttributeLikeItem;
+  attribute: Attribute;
   combination: CombinedAttribute;
   headerColor: string;
   bodyColor: string;
@@ -45,7 +44,7 @@ export const Parameter = ({
   const isAttribute = IsAttribute(attribute);
   const attributeValue = isAttribute ? attribute.value ?? "" : "";
   const isLocked = isAttribute ? attribute.isLocked : false;
-  const unit = isAttribute ? attribute.selectedUnitId ?? attribute.units?.[0]?.id : attribute.units?.[0]?.id;
+  const unit = attribute.selectedUnitId ?? attribute.units?.[0]?.id; // TODO: check this line
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
 
   useEffect(() => {

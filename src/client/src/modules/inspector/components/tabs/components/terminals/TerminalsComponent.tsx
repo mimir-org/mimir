@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useMemo, useState } from "react";
 import { ParametersContent } from "../shared/components/parametersContent/ParametersContent";
@@ -34,7 +33,7 @@ export const TerminalsComponent = ({ element, terminals }: Props) => {
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
-            attributeLikeItems={selectedTerminal.attributes}
+            attributeItems={selectedTerminal.attributes}
           />
         </TerminalsParametersBox>
       )}

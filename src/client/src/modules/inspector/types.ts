@@ -1,6 +1,6 @@
 import { Action, Dispatch } from "redux";
-import { AttributeType, CombinedAttribute, TerminalTypeExtended } from "../../models";
-import { Node, Edge, Attribute, Connector, Transport, Interface, Terminal, Simple } from "@mimirorg/modelbuilder-types";
+import { CombinedAttribute, TerminalTypeExtended } from "../../models";
+import { Node, Edge, Connector, Transport, Interface, Terminal, Simple } from "@mimirorg/modelbuilder-types";
 
 /**
  * Union type of possible top elements chosen in inspector, i.e. what can be selected in by the inspector.
@@ -17,8 +17,7 @@ export type InspectorTerminalsElement = Node | Transport | Interface;
  * Union type of possible top elements chosen for parameters view in inspector, i.e. what element owns the attributes shown in parameters view.
  * This can either be attributes directly on the object itself (Node, Transport, Interface, Simple), or on its terminals (via terminals view).
  */
-export type InspectorParametersElement = InspectorTerminalsElement | TerminalLikeItem | Simple;
-export type AttributeLikeItem = Attribute | AttributeType;
+export type InspectorParametersElement = InspectorTerminalsElement | Terminal | Simple;
 export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
 export type TerminalLikeItem = Connector | Terminal | TerminalTypeExtended;
 

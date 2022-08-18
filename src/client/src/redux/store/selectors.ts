@@ -1,7 +1,6 @@
-import { Edge, Node, Project } from "@mimirorg/modelbuilder-types";
+import { Attribute, Edge, Node, Project } from "@mimirorg/modelbuilder-types";
 import { ProjectItemCm } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
-import { AttributeLikeItem } from "../../modules/inspector/types";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
 import { ProjectState } from "./project/types";
 
@@ -247,7 +246,7 @@ export const nodeSelector = createParametricAppSelector(
 export const makeFilterSelector = () =>
   createParametricAppSelector(
     (state) => state.commonState.filters,
-    (_, attributes: AttributeLikeItem[]) => attributes,
+    (_, attributes: Attribute[]) => attributes,
     (filters, attributes) => filters.filter((x) => attributes.find((att) => att.entity === x.name)) ?? []
   );
 

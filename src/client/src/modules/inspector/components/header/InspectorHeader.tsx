@@ -7,9 +7,8 @@ import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
 import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
-import { Aspect, Project, Terminal, Simple } from "@mimirorg/modelbuilder-types";
+import { Aspect, Project, Terminal, Simple, Attribute } from "@mimirorg/modelbuilder-types";
 import {
-  AttributeLikeItem,
   ChangeInspectorHeightAction,
   ChangeInspectorTabAction,
   ChangeInspectorVisibilityAction,
@@ -31,7 +30,7 @@ interface Props {
   changeInspectorHeightAction: ChangeInspectorHeightAction;
   changeInspectorTabAction?: ChangeInspectorTabAction;
   onToggle?: OnToogleHandler;
-  attributeLikeItems?: AttributeLikeItem[];
+  attributeItems?: Attribute[];
   terminals: Terminal[];
   simpleItems?: Simple[];
   selectedFlowNodes: FlowNode[];
@@ -50,7 +49,7 @@ export const InspectorHeader = ({
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
   changeInspectorTabAction,
-  attributeLikeItems,
+  attributeItems,
   terminals,
   simpleItems,
   selectedFlowNodes,
@@ -66,7 +65,7 @@ export const InspectorHeader = ({
             project={project}
             element={element}
             activeTabIndex={activeTabIndex}
-            attributeLikeItems={attributeLikeItems}
+            attributeItems={attributeItems}
             terminals={terminals}
             simpleItems={simpleItems}
             changeInspectorTabAction={changeInspectorTabAction}
