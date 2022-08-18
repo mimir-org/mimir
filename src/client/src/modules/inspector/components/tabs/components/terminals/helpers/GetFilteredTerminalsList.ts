@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { TransportLibCm } from "@mimirorg/typelibrary-types";
 import { TerminalType, TerminalTypeDict } from "../../../../../../../models";
 
 export type TerminalCategory = {
@@ -10,9 +8,8 @@ export type TerminalCategory = {
 };
 
 // TODO: TypeEditor fix
-
 export const GetFilteredTerminalsList = (terminals: TerminalTypeDict[]): TerminalCategory[] => {
-  const categories = [];
+  // const categories = [];
   if (!terminals || terminals.length <= 0) return [] as any[];
   return [];
 

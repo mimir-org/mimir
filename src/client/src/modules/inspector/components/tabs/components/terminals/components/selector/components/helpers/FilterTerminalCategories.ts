@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Terminal } from "@mimirorg/modelbuilder-types";
 
 export const FilterTerminalCategories = (terminalCategories: any[], terminals: Terminal[]) => {

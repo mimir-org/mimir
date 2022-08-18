@@ -10,9 +10,8 @@ export const GetTransports = (edges: Edge[], element: InspectorElement): Edge[] 
 };
 
 export const GetTerminals = (connectors: Connector[], edges: Edge[]): [Connector[], Connector[]] => {
-  const inputTerminals = connectors.filter((x) => IsInputConnector(x) && HasEdge(edges, x)); //x.terminalTypeId && IsInputTerminal(x) && HasEdge(edges, x));
-  const outputTerminals = connectors.filter((x) => IsOutputConnector(x) && HasEdge(edges, x)); //x.terminalTypeId && IsOutputTerminal(x) && HasEdge(edges, x));
-  // TODO: fix
+  const inputTerminals = connectors.filter((c) => IsInputConnector(c) && HasEdge(edges, c));
+  const outputTerminals = connectors.filter((c) => IsOutputConnector(c) && HasEdge(edges, c));
 
   return [inputTerminals, outputTerminals];
 };
