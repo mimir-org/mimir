@@ -3,17 +3,18 @@ import { Color } from "../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../assets/font";
 
 interface Props {
+  isCategoryHeader?: boolean;
   selected?: boolean;
   radius: number;
-  color: string;
+  index: number;
 }
 
-export const TerminalsCategoryListElement = styled.div<Props>`
+export const TerminalsCategoryElement = styled.div<Props>`
   padding: 10px;
   min-width: 250px;
   font-size: ${FontSize.SMALL};
   display: flex;
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => (props.index % 2 ? Color.LAVANDER_WEB_LIST : undefined)};
   border-bottom: 1px solid ${Color.LIGHT_SILVER};
 
   text-decoration: ${(props) => (props.selected ? "underline" : "none")};
@@ -29,19 +30,22 @@ export const TerminalsCategoryListElement = styled.div<Props>`
     width: 10px;
     height: 5px;
   }
-  .numCategoryTerminals {
+
+  .terminalsAmount {
     padding-right: 10px;
   }
 
   :hover {
     background-color: ${Color.LAVANDER_WEB_HOVER};
-    cursor: pointer;
-    text-decoration: underline;
+    cursor: ${(props) => (props.isCategoryHeader ? "auto" : "pointer")};
+    text-decoration: ${(props) => (props.isCategoryHeader ? "none" : "underline")};
   }
+
   :first-child {
     border-top-left-radius: ${(props) => props.radius} px;
     border-top-right-radius: ${(props) => props.radius}px;
   }
+
   :last-child {
     border-bottom-left-radius: ${(props) => props.radius}px;
     border-bottom-right-radius: ${(props) => props.radius}px;
@@ -49,6 +53,6 @@ export const TerminalsCategoryListElement = styled.div<Props>`
   }
 `;
 
-TerminalsCategoryListElement.defaultProps = {
+TerminalsCategoryElement.defaultProps = {
   radius: 5,
 };

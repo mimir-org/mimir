@@ -3,36 +3,30 @@ import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useMemo, useState } from "react";
 import { ParametersContent } from "../shared/components/parametersContent/ParametersContent";
 import { TerminalsWrapper, TerminalsParametersWrapper } from "./TerminalsComponent.styled";
-import { InspectorElement, SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../types";
+import { InspectorElement } from "../../../../types";
 import { GetTerminalParentElement } from "./helpers/GetTerminalParentElement";
-import { GetTerminals } from "./helpers/GetTerminals";
-import { GetFilteredTerminalsList } from "./helpers/GetFilteredTerminalsList";
+import { Terminal } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   element: InspectorElement;
-  terminalLikeItems?: TerminalLikeItem[];
+  terminals?: Terminal[];
 }
 
-export const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
+export const TerminalsComponent = ({ element, terminals }: Props) => {
   const terminalParentElement = GetTerminalParentElement(element);
-  const categoryTypes = []; // useAppSelector(terminalTypeSelector);
-  const [selectedTerminalIdentifier, setSelectedTerminalIdentifier] = useState<SelectedTerminalIdentifier>(null);
-  const terminals = terminalLikeItems ?? GetTerminals(element);
-  const terminalCategories = useMemo(() => GetFilteredTerminalsList(categoryTypes), [categoryTypes]);
+  const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
 
   const selectedTerminal = useMemo(
-    () => terminals.find((terminal) => terminal.id === selectedTerminalIdentifier?.id),
-    [selectedTerminalIdentifier, terminals]
+    () => terminals?.find((terminal) => terminal.id === selectedTerminalId),
+    [selectedTerminalId, terminals]
   );
 
   return (
     <TerminalsWrapper>
       <TerminalsSelector
         terminals={terminals}
-        terminalCategories={terminalCategories}
-        selectedTerminal={selectedTerminal}
-        selectedTerminalIdentifier={selectedTerminalIdentifier}
-        onSelectTerminal={(identifier: SelectedTerminalIdentifier) => setSelectedTerminalIdentifier(identifier)}
+        selectedTerminalId={selectedTerminalId}
+        onSelectTerminal={(id: string) => setSelectedTerminalId(id)}
       />
       {selectedTerminal && (
         <TerminalsParametersWrapper>
@@ -40,7 +34,7 @@ export const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
-            attributeLikeItems={[]} // selectedTerminal.attributes} // TODO: fix
+            attributeLikeItems={selectedTerminal.attributes}
           />
         </TerminalsParametersWrapper>
       )}

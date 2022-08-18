@@ -2,6 +2,7 @@ import { IsInputConnector, IsOutputConnector, IsOutputVisible } from "../../../.
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import {
   Connector,
   Edge,
@@ -13,7 +14,6 @@ import {
   Relation,
   RelationType,
 } from "@mimirorg/modelbuilder-types";
-import { TextResources } from "../../../../../../assets/text/TextResources";
 
 export interface OffPageObject {
   offPageNode: Node;

@@ -137,6 +137,7 @@ export const TextResources = {
   EXPAND: "Expand inspector panel",
   CLOSE: "Close inspector panel",
   INACTIVE_PANEL: "Select an object to activate the inspector",
+  INPUT_PLACEHOLDER: "input-placeholder",
 
   // LibraryModule
   COLLECTIONS: "Collections",

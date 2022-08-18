@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// import { TerminalCategory } from "../../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
+import { CategoryObject } from "../TerminalsList";
 
 export const OnCategoryClick = (
+  category: CategoryObject,
   expanded: boolean,
-  selectedCategoriesIds: string[],
-  setSelectedCategoriesIds: (categoryIds: string[]) => void
+  selectedCategories: string[],
+  setSelectedCategories: (categoryIds: string[]) => void
 ) => {
-  return null;
-  // if (expanded) {
-  //   setSelectedCategoriesIds(selectedCategoriesIds.filter((id) => id !== category.id));
-  // } else {
-  //   setSelectedCategoriesIds([...selectedCategoriesIds, category.id]);
-  // }
+  if (expanded) {
+    setSelectedCategories(selectedCategories.filter((name) => name !== category.name));
+  } else {
+    setSelectedCategories([category.name]); // TODO: fix
+  }
 };

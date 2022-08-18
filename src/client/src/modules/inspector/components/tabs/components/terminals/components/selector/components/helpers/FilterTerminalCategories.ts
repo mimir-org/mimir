@@ -1,17 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// import { TerminalCategory } from "../../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
-import { TerminalLikeItem } from "../../../../../../../../types";
+import { Terminal } from "@mimirorg/modelbuilder-types";
 
-export const FilterTerminalCategories = (terminalCategories: any[], terminals: TerminalLikeItem[]) => {
-  return terminalCategories;
+export const FilterTerminalCategories = (terminalCategories: any[], terminals: Terminal[]) => {
+  return terminalCategories
+    .filter((cat) => terminals.find((term) => term.terminalCategory === cat.id))
+    .map((cat) => ({
+      ...cat,
+      items: cat.items.filter((terminalType) => terminals.find((terminal) => terminal.terminalTypeId === terminalType.id)),
+    }));
 };
-
-// terminalCategories
-//   .filter((cat) => terminals.find((term) => term.terminalCategory === cat.id))
-//   .map((cat) => ({
-//     ...cat,
-//     items: cat.items.filter((terminalType) => terminals.find((terminal) => terminal.terminalTypeId === terminalType.id)),
-//   }));
-
-// TODO: fix
