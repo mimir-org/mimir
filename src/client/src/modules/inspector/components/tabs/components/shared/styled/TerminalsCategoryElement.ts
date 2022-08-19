@@ -29,6 +29,10 @@ export const TerminalsCategoryElement = styled.div<Props>`
     margin: auto 20px auto auto;
     width: 10px;
     height: 5px;
+
+    :hover {
+      cursor: pointer;
+    }
   }
 
   .terminalsAmount {

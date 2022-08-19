@@ -1,13 +1,15 @@
-import { ChangeEvent, useState } from "react";
-import { TerminalsCategoryList } from "./components/TerminalsList";
+import { ChangeEvent, useMemo, useState } from "react";
+import { CategoryObject, TerminalsCategoryList } from "./components/TerminalsList";
 import { TerminalsColumn } from "../../../shared/styled/TerminalsColumn";
 import { FontSize, FontWeight } from "../../../../../../../../assets/font";
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../../compLibrary/input/text";
 import { Terminal } from "@mimirorg/modelbuilder-types";
+import { FilterBySearchString } from "../../helpers/FilterBySearchString";
 
 interface Props {
   terminals: Terminal[];
+  terminalCategories: CategoryObject[];
   selectedTerminalId: string;
   onSelectTerminal: (id: string) => void;
 }
@@ -17,9 +19,16 @@ interface Props {
  * @param props
  * @returns an input field for search and a list of terminals.
  */
-export const TerminalsSelector = ({ terminals, selectedTerminalId, onSelectTerminal }: Props) => {
+export const TerminalsSelector = ({ terminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) => {
   const [searchString, setSearchString] = useState("");
-  const className = searchString.length ? "" : TextResources.INPUT_PLACEHOLDER;
+
+  const filteredBySearchTerminals = useMemo(
+    () => FilterBySearchString(terminals, terminalCategories, searchString),
+    [terminals, terminalCategories, searchString]
+  );
+
+  const hasTerminals = filteredBySearchTerminals.length > 0;
+  const className = searchString.length < 1 ? "" : TextResources.INPUT_PLACEHOLDER;
 
   return (
     <TerminalsColumn>
@@ -31,11 +40,14 @@ export const TerminalsSelector = ({ terminals, selectedTerminalId, onSelectTermi
         placeholder={TextResources.TERMINALS_SEARCH}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchString(e.currentTarget.value)}
       />
-      <TerminalsCategoryList
-        terminals={terminals}
-        selectedTerminalId={selectedTerminalId}
-        onSelectTerminal={(id: string) => onSelectTerminal(id)}
-      />
+      {hasTerminals && (
+        <TerminalsCategoryList
+          filteredTerminals={filteredBySearchTerminals}
+          terminalCategories={terminalCategories}
+          selectedTerminalId={selectedTerminalId}
+          onSelectTerminal={(id: string) => onSelectTerminal(id)}
+        />
+      )}
     </TerminalsColumn>
   );
 };

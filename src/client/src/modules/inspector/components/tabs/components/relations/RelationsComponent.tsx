@@ -24,7 +24,6 @@ export const RelationsComponent = ({ element }: Props) => {
   const transports = useMemo(() => GetTransports(edges, element), [edges, element]);
   const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
   const setSelectedEdges = useStoreApi().getState().addSelectedEdges;
-
   const hasConnectors = connectors.length > 0;
 
   return (

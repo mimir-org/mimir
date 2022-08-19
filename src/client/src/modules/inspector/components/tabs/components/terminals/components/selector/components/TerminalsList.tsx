@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from "react";
+import { memo, useState } from "react";
 import { TerminalElement } from "./TerminalElement";
 import { OnCategoryClick } from "./handlers/OnCategoryClick";
 import { CollapseAccordionIcon, ExpandAccordionIcon } from "../../../../../../../../../assets/icons/toogle";
@@ -6,7 +6,6 @@ import { TerminalsCategoryElement } from "../../../../shared/styled/TerminalsCat
 import { TerminalsListElementWrapper } from "../../../../shared/styled/TerminalsListElementWrapper";
 import { TerminalsCategoryListBox } from "./ActiveTerminalsList.styled";
 import { Terminal } from "@mimirorg/modelbuilder-types";
-import { PopulateTerminalCategories } from "./helpers/PopulateTerminalCategories";
 
 export interface CategoryObject {
   name: string;
@@ -14,20 +13,19 @@ export interface CategoryObject {
 }
 
 interface Props {
-  terminals: Terminal[];
+  filteredTerminals: Terminal[];
+  terminalCategories: CategoryObject[];
   selectedTerminalId: string;
   onSelectTerminal: (id: string) => void;
 }
 
 /**
  * Component to display a Node's terminalCategories and its terminals in the Inspector Module.
- * This content is displayed under the tab in the Inspector called "Terminals".
  * @param props
  * @returns terminalCategories and a dropdown for its terminals.
  */
-export const TerminalsCategoryList = ({ terminals, selectedTerminalId, onSelectTerminal }: Props) => {
+export const TerminalsCategoryList = ({ filteredTerminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) => {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-  const terminalCategories = useMemo(() => PopulateTerminalCategories(terminals), [terminals]);
   const isCategoryExpanded = (category: CategoryObject) => expandedCategories?.includes(category.name);
 
   return (
@@ -37,7 +35,7 @@ export const TerminalsCategoryList = ({ terminals, selectedTerminalId, onSelectT
 
         const categoryExpanded = isCategoryExpanded(category);
         const terminalsAmount = category.terminals.length;
-        const sortedTerminals = category.terminals.sort((a, b) => a.type - b.type);
+        const sortedTerminals = filteredTerminals?.sort((a, b) => a.type - b.type);
         const icon = categoryExpanded ? CollapseAccordionIcon : ExpandAccordionIcon;
 
         return (

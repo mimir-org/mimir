@@ -31,15 +31,18 @@ interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
-  attributes?: Attribute[];
+  attributeItems?: Attribute[];
 }
 
-export const ParametersContent = ({ parametersElement, inspectorParentElement, terminalParentElement, attributes }: Props) => {
+export const ParametersContent = ({
+  parametersElement,
+  inspectorParentElement,
+  terminalParentElement,
+  attributeItems,
+}: Props) => {
   const dispatch = useAppDispatch();
-
-  if (attributes == undefined || attributes == null) attributes = GetAttributes(parametersElement);
+  const attributes = attributeItems ?? GetAttributes(parametersElement);
   const username = useAppSelector(usernameSelector);
-
   const shouldShowDefaultEntities = useRef(true);
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
@@ -83,11 +86,11 @@ export const ParametersContent = ({ parametersElement, inspectorParentElement, t
           </ParameterButton>
         </ParametersContentMenu>
       </ParametersContentHeader>
+
       <ParametersRowContainer>
         {hasFilters &&
           Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
             if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
-
             const [headerColor, bodyColor] = colorMapping.get(filterName);
 
             return (
@@ -98,7 +101,7 @@ export const ParametersContent = ({ parametersElement, inspectorParentElement, t
                 terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
-                attributes={attributes}
+                attributeItems={attributes}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 username={username}
                 filterName={filterName}

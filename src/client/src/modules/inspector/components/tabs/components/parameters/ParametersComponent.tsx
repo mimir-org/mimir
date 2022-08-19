@@ -11,5 +11,5 @@ interface Props {
 export const ParametersComponent = ({ element, attributes }: Props) => {
   const parametersElement = GetParametersElement(element);
 
-  return <ParametersContent parametersElement={parametersElement} inspectorParentElement={element} attributes={attributes} />;
+  return <ParametersContent parametersElement={parametersElement} inspectorParentElement={element} attributeItems={attributes} />;
 };
