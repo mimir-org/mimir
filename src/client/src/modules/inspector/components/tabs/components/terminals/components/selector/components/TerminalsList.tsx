@@ -6,11 +6,7 @@ import { TerminalsCategoryElement } from "../../../../shared/styled/TerminalsCat
 import { TerminalsListElementWrapper } from "../../../../shared/styled/TerminalsListElementWrapper";
 import { TerminalsCategoryListBox } from "./ActiveTerminalsList.styled";
 import { Terminal } from "@mimirorg/modelbuilder-types";
-
-export interface CategoryObject {
-  name: string;
-  terminals: Terminal[];
-}
+import { CategoryObject } from "./helpers/PopulateTerminalCategories";
 
 interface Props {
   filteredTerminals: Terminal[];

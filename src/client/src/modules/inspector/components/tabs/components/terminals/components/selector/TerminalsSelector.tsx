@@ -1,11 +1,12 @@
 import { ChangeEvent, useMemo, useState } from "react";
-import { CategoryObject, TerminalsCategoryList } from "./components/TerminalsList";
+import { TerminalsCategoryList } from "./components/TerminalsList";
 import { TerminalsColumn } from "../../../shared/styled/TerminalsColumn";
 import { FontSize, FontWeight } from "../../../../../../../../assets/font";
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../../compLibrary/input/text";
 import { Terminal } from "@mimirorg/modelbuilder-types";
 import { FilterBySearchString } from "../../helpers/FilterBySearchString";
+import { CategoryObject } from "./components/helpers/PopulateTerminalCategories";
 
 interface Props {
   terminals: Terminal[];

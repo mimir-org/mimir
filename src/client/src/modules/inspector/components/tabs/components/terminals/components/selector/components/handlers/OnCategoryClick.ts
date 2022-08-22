@@ -1,4 +1,4 @@
-import { CategoryObject } from "../TerminalsList";
+import { CategoryObject } from "../helpers/PopulateTerminalCategories";
 
 export const OnCategoryClick = (
   category: CategoryObject,
@@ -9,6 +9,6 @@ export const OnCategoryClick = (
   if (expanded) {
     setSelectedCategories(selectedCategories.filter((name) => name !== category.name));
   } else {
-    setSelectedCategories([category.name]); // TODO: fix
+    setSelectedCategories([...selectedCategories, category.name]);
   }
 };

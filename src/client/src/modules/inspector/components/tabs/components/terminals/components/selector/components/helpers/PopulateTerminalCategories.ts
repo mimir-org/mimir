@@ -1,5 +1,9 @@
 import { Terminal } from "@mimirorg/modelbuilder-types";
-import { CategoryObject } from "../TerminalsList";
+
+export interface CategoryObject {
+  name: string;
+  terminals: Terminal[];
+}
 
 /**
  * Component to sort terminals into terminalCategories
