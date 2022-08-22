@@ -128,5 +128,29 @@ namespace Mb.Core.Controllers.V1
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// Get all terminal types
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("terminal")]
+        [ProducesResponseType(typeof(ICollection<TerminalLibCm>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "Read")]
+        public async Task<IActionResult> GetTerminals()
+        {
+            try
+            {
+                var data = await _libraryService.GetTerminalTypes();
+                return Ok(data.ToList());
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }
