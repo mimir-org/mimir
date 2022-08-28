@@ -6,6 +6,7 @@ import { Position } from "../../../models/project";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { CreateId } from "../helpers";
 import { ConvertSimpleLibCmToSimple, ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
+import { TextResources } from "../../../assets/text/TextResources";
 
 /**
  * Function to convert a libNode dropped from the Library to a Mimir Node.
@@ -61,7 +62,7 @@ const ConvertLibNodeToNode = (
     updated: now,
     updatedBy: user?.name,
     libraryTypeId: libNode.id,
-    kind: libNode.kind,
+    kind: TextResources.KIND_NODE,
     hidden: false,
     blockHidden: false,
     parentNodeId: parentNode.id,

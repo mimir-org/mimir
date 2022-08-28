@@ -7,7 +7,7 @@ import { RelationEdgeAdminContent } from "../components/RelationEdgeAdminContent
 import { TransportInterfaceAdminContent } from "../components/TransportInterfaceAdminContent";
 
 export const GetAdminContent = (element: InspectorElement, project: Project, statuses: EnumBase[]) => {
-  if (IsNode(element)) return <NodeAdminContent node={element} project={project} statuses={statuses} />;
+  if (IsNode(element)) return <NodeAdminContent node={element} project={project} />;
 
   if (IsEdge(element)) {
     if (element.transport || element.interface) {
