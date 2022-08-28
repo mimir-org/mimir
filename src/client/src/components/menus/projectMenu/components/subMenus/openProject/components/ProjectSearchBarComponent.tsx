@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { search } from "../../../../../../../redux/store/project/actions";
 import { useAppDispatch } from "../../../../../../../redux/store";
-import { SearchBarContainer, SearchBarInput } from "./SearchBar.styled";
+import { SearchBarContainer, SearchBarInput } from "./ProjectSearchBarComponent.styled";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 
-export const SearchBar = () => {
+export const ProjectSearchBarComponent = () => {
   const dispatch = useAppDispatch();
   const [searchbarInput, setSearchbarInput] = useState("");
 
@@ -20,4 +20,4 @@ export const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default ProjectSearchBarComponent;

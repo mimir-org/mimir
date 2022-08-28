@@ -10,6 +10,7 @@ import {
   fetchLibrary,
   fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibrarySuccessOrError,
+  fetchLibraryTerminalsSuccessOrError,
   fetchLibraryTransportTypesSuccessOrError,
   importLibrarySuccessOrError,
 } from "../../store/library/librarySlice";
@@ -113,6 +114,24 @@ export function* getInterfaceTypes() {
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryInterfaceTypesSuccessOrError.type);
     yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: [], apiError }));
+  }
+}
+
+export function* getTerminals() {
+  try {
+    const url = `${Config.API_BASE_URL}library/terminal`;
+    const response = yield call(get, url);
+
+    if (response.status === 400) {
+      const apiError = GetApiErrorForBadRequest(response, fetchLibraryTerminalsSuccessOrError.type);
+      yield put(fetchLibraryTerminalsSuccessOrError({ terminals: [], apiError }));
+      return;
+    }
+
+    yield put(fetchLibraryTerminalsSuccessOrError({ terminals: response.data, apiError: null }));
+  } catch (error) {
+    const apiError = GetApiErrorForException(error, fetchLibraryTerminalsSuccessOrError.type);
+    yield put(fetchLibraryTerminalsSuccessOrError({ terminals: [], apiError }));
   }
 }
 

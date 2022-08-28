@@ -1,5 +1,5 @@
 import { CreateId } from "../helpers";
-import { ConnectorDirection, NodeTerminalLibCm } from "@mimirorg/typelibrary-types";
+import { ConnectorDirection, NodeTerminalLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { Connector, ConnectorVisibility, Relation, RelationType, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTerminalAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
@@ -8,18 +8,24 @@ import { ConvertTerminalAttributeLibCmToAttribute } from "./ConvertAttributeLibC
  * Component to convert terminals from NodeTerminalLibCm to Connector.
  * This operation is needed when a LibNode is dropped from the Library and converted to a Node.
  * The LibNode's terminals are of the the type NodeTerminalLibCm.
- * @param libTerminals
+ * @param libTerminals - the libTerminals belonging to the libNode
+ * @param allTerminals - all the terminals in the Project
  * @param nodeId
  * @param nodeIri
  * @returns a list of Mimir Connectors.
  */
-const ConvertTerminalLibCmToConnectors = (libTerminals: NodeTerminalLibCm[], nodeId: string, nodeIri: string) => {
+const ConvertTerminalLibCmToConnectors = (
+  libTerminals: NodeTerminalLibCm[],
+  allTerminals: Terminal[],
+  nodeId: string,
+  nodeIri: string
+) => {
   const connectors = [] as Connector[];
 
   // Convert all existing libTerminals
   libTerminals.forEach((t) => {
     const terminalAmount = t.quantity;
-    [...Array(terminalAmount)].forEach(() => connectors.push(CreateTerminal(t, nodeId, nodeIri)));
+    [...Array(terminalAmount)].forEach(() => connectors.push(CreateTerminal(t, nodeId, nodeIri, allTerminals)));
   });
 
   // Create all mandatory relation connectors
@@ -35,9 +41,10 @@ export default ConvertTerminalLibCmToConnectors;
  * @param libTerminal
  * @param nodeId
  * @param nodeIri
+ * @param allTerminals
  * @returns a Terminal.
  */
-function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string) {
+function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string, allTerminals: Terminal[]) {
   const connectorVisibility = SetConnectorVisibility(libTerminal.connectorDirection);
 
   const id = CreateId();
@@ -54,13 +61,27 @@ function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri:
     connectorVisibility,
     isRequired: false,
     color: libTerminal.terminal.color,
-    terminalCategory: libTerminal.terminal.parentName,
+    terminalCategory: GetTerminalCategoryName(libTerminal.terminal, allTerminals),
     attributes,
     terminalTypeId: libTerminal.terminal.id,
     terminalTypeIri: libTerminal.terminal.iri,
     kind: libTerminal.kind,
     discriminator: TextResources.KIND_TERMINAL,
   } as Terminal;
+}
+
+function GetTerminalCategoryName(terminal: TerminalLibCm, allTerminals: Terminal[]) {
+  if (terminal.parentIri === null) {
+    return terminal.name;
+  }
+
+  if (terminal.parentIri !== null) {
+    allTerminals.forEach((t) => {
+      if (terminal.parentIri === t.iri) {
+        return;
+      }
+    });
+  }
 }
 
 /**

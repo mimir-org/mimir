@@ -9,17 +9,21 @@ import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow/FlowModule";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
-import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
-import { HeaderComponent } from "../header/HeaderComponent";
 import { ExplorerTreeModule, ExplorerBlockModule } from "../../modules/explorer/";
 import { fetchUser } from "../../redux/store/user/userSlice";
-import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
-import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
+import { VIEW_TYPE } from "../../models/project";
 import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
 import { fetchCompanies, fetchCompany, fetchCombinedAttributeFilters, fetchParsers } from "../../redux/store/common/commonSlice";
+import { HeaderComponent } from "../header/HeaderComponent";
+import {
+  fetchLibrary,
+  fetchLibraryInterfaceTypes,
+  fetchLibraryTerminals,
+  fetchLibraryTransportTypes,
+} from "../../redux/store/library/librarySlice";
 
 interface Props {
   dispatch: Dispatch;
@@ -31,7 +35,6 @@ interface Props {
  * @returns all the modules and components in the Mimir application.
  */
 export const Home = ({ dispatch }: Props) => {
-  const projectState = useAppSelector(selectors.projectStateSelector);
   const flowView = useAppSelector(selectors.flowViewSelector);
   const isDarkMode = useAppSelector(selectors.darkModeSelector);
   const isFilterOpen = useAppSelector(selectors.filterSelector);
@@ -45,6 +48,7 @@ export const Home = ({ dispatch }: Props) => {
     dispatch(fetchCompany());
     dispatch(fetchLibraryInterfaceTypes());
     dispatch(fetchLibraryTransportTypes());
+    dispatch(fetchLibraryTerminals());
     dispatch(search(""));
     dispatch(fetchLibrary());
     dispatch(fetchCompanies());
@@ -52,13 +56,6 @@ export const Home = ({ dispatch }: Props) => {
     dispatch(fetchCombinedAttributeFilters());
     dispatch(fetchUser());
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(changeActiveMenu(null));
-    if (isStartPage && !projectState.fetching) {
-      dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
-    }
-  }, [dispatch, isStartPage, projectState.fetching]);
 
   useEffect(() => {
     ToggleColorProfile(isDarkMode);

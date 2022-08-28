@@ -1,6 +1,6 @@
 import * as Click from "../../../../handlers";
 import { ProjectList } from "./ProjectList";
-import { SearchBar } from "./SearchBar";
+import { ProjectSearchBarComponent } from "./ProjectSearchBarComponent";
 import { ProjectDescription } from "./ProjectDescription";
 import { ProjectItemCm } from "../../../../../../../models";
 import { CreateProjectIcon, ImportProjectIcon } from "../../../../../../../assets/icons/project";
@@ -24,13 +24,13 @@ interface Props {
  * @param interface
  * @returns the left column of the open project menu: a searchbar and projectslist
  */
-export const ProjectDetails = ({ projects }: Props) => {
+export const ProjectDetailsComponent = ({ projects }: Props) => {
   const dispatch = useAppDispatch();
 
   return (
     <ProjectDetailsContainer>
       <ProjectDetailsSearchContainer>
-        <SearchBar />
+        <ProjectSearchBarComponent />
         <ProjectList projectList={projects} dispatch={dispatch} />
       </ProjectDetailsSearchContainer>
       <ProjectDetailsRightContainer>
@@ -48,4 +48,4 @@ export const ProjectDetails = ({ projects }: Props) => {
   );
 };
 
-export default ProjectDetails;
+export default ProjectDetailsComponent;

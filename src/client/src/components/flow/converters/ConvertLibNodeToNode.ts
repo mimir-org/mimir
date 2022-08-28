@@ -1,5 +1,5 @@
 import { User } from "../../../models";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, Terminal } from "@mimirorg/modelbuilder-types";
 import { Size } from "../../../assets/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
@@ -16,6 +16,7 @@ import { ConvertSimpleLibCmToSimple, ConvertNodeAttributeLibCmToAttribute, Conve
  * @param blockPosition
  * @param projectId
  * @param user
+ * @param allTerminals
  * @returns a Node.
  */
 const ConvertLibNodeToNode = (
@@ -24,11 +25,12 @@ const ConvertLibNodeToNode = (
   treePosition: Position,
   blockPosition: Position,
   projectId: string,
-  user: User
+  user: User,
+  allTerminals: Terminal[]
 ) => {
   const id = CreateId();
   const now = GetDateNowUtc();
-  const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, id, libNode.iri);
+  const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, allTerminals, id, libNode.iri);
   const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id, libNode.iri);
   const simples = ConvertSimpleLibCmToSimple(libNode.simples, id, libNode.iri);
 

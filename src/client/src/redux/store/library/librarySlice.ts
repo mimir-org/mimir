@@ -7,6 +7,7 @@ import {
   DeleteLibraryItem,
   FetchInterfaceTypes,
   FetchLibrary,
+  FetchTerminals,
   FetchTransportTypes,
   LibraryState,
 } from "./types";
@@ -18,6 +19,7 @@ const initialLibraryState: LibraryState = {
   collections: [],
   transportTypes: [],
   interfaceTypes: [],
+  terminals: [],
 };
 
 export const librarySlice = createSlice({
@@ -66,6 +68,18 @@ export const librarySlice = createSlice({
     fetchLibraryTransportTypesSuccessOrError: (state, action: PayloadAction<FetchTransportTypes>) => {
       state.fetching = false;
       state.transportTypes = action.payload.transportTypes;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+
+    fetchLibraryTerminals: (state) => {
+      state.fetching = true;
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchLibraryTerminalsSuccessOrError.type)
+        : state.apiError;
+    },
+    fetchLibraryTerminalsSuccessOrError: (state, action: PayloadAction<FetchTerminals>) => {
+      state.fetching = false;
+      state.terminals = action.payload.terminals;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     fetchLibraryInterfaceTypes: (state) => {
@@ -135,6 +149,8 @@ export const {
   fetchLibraryTransportTypesSuccessOrError,
   fetchLibraryInterfaceTypes,
   fetchLibraryInterfaceTypesSuccessOrError,
+  fetchLibraryTerminals,
+  fetchLibraryTerminalsSuccessOrError,
   addLibraryItem,
   removeLibraryItem,
   deleteLibraryError,

@@ -80,6 +80,11 @@ export const librarySelector = createAppSelector(
   (library) => library
 );
 
+export const terminalsSelector = createAppSelector(
+  (state) => state.library.terminals,
+  (terminals) => terminals
+);
+
 export const statusSelector = createAppSelector(
   (state) => state.commonState.statuses,
   (statuses) => statuses

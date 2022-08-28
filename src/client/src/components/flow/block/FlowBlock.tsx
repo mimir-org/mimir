@@ -13,8 +13,6 @@ import ReactFlow, {
   Node as FlowNode,
   Edge as FlowEdge,
   Connection,
-  useNodesState,
-  useEdgesState,
   useReactFlow,
   ReactFlowInstance,
   NodeChange,
@@ -39,14 +37,15 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [flowNodes, setNodes] = useNodesState([]);
-  const [flowEdges, setEdges] = useEdgesState([]);
+  const [flowNodes, setNodes] = useState<FlowNode[]>([] as FlowNode[]);
+  const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  const terminals = useAppSelector(selectors.terminalsSelector);
   const mimirNodes = project?.nodes ?? [];
   const mimirEdges = project?.edges ?? [];
   const selectedNode = mimirNodes.find((n) => n.selected);
@@ -81,7 +80,17 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnBlockDrop({ event, project, user, selectedNode, secondaryNode, instance, getViewport, dispatch });
+    return hooks.useOnBlockDrop({
+      event,
+      project,
+      user,
+      selectedNode,
+      secondaryNode,
+      instance,
+      getViewport,
+      dispatch,
+      terminals,
+    });
   };
 
   const OnNodesChange = useCallback(

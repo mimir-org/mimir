@@ -7,13 +7,14 @@ import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/Libra
 import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Node, Project } from "@mimirorg/modelbuilder-types";
+import { Node, Project, Terminal } from "@mimirorg/modelbuilder-types";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
 interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
+  terminals: Terminal[];
   user: User;
   flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;
@@ -45,7 +46,7 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param OnDropParameters
  */
-function HandleLibNodeDrop({ event, project, user, dispatch }: OnDropParameters) {
+function HandleLibNodeDrop({ event, project, terminals, user, dispatch }: OnDropParameters) {
   const libNode = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
   const selectedNode = project?.nodes?.find((n) => n.selected);
 
@@ -56,7 +57,7 @@ function HandleLibNodeDrop({ event, project, user, dispatch }: OnDropParameters)
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = { x: parentNode.positionX, y: parentNode.positionY };
 
-  const convertedNode = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user);
+  const convertedNode = ConvertLibNodeToNode(libNode, parentNode, treePosition, blockPosition, project.id, user, terminals);
   if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, dispatch);
 
   dispatch(addNode(convertedNode));

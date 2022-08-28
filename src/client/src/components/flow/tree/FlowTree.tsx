@@ -16,8 +16,6 @@ import ReactFlow, {
   Edge as FlowEdge,
   Connection,
   Node as FlowNode,
-  useNodesState,
-  useEdgesState,
   ReactFlowInstance,
   OnSelectionChangeParams,
   NodeChange,
@@ -37,13 +35,14 @@ interface Props {
 export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [flowNodes, setNodes] = useNodesState<FlowNode>([] as FlowNode[]);
-  const [flowEdges, setEdges] = useEdgesState<FlowEdge>([] as FlowEdge[]);
+  const [flowNodes, setNodes] = useState<FlowNode[]>([] as FlowNode[]);
+  const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  const terminals = useAppSelector(selectors.terminalsSelector);
   const mimirNodes = project?.nodes;
   const mimirEdges = project?.edges;
   const selectedNode = mimirNodes?.find((n) => n.selected);
@@ -67,7 +66,7 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, user, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, terminals, user, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {

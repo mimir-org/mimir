@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertLibNodeToNode } from "../../converters";
 import { User } from "../../../../models";
-import { Project, Node } from "@mimirorg/modelbuilder-types";
+import { Project, Node, Terminal } from "@mimirorg/modelbuilder-types";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Size } from "../../../../assets/size/Size";
 import { Position } from "../../../../models/project";
@@ -15,6 +15,7 @@ export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
+  terminals: Terminal[];
   user: User;
   selectedNode: Node;
   secondaryNode: Node;
@@ -46,7 +47,16 @@ const DoesNotContainApplicationData = (event: React.DragEvent<HTMLDivElement>) =
  * The dropped node is of the type NodeLibCm, and it is converted to a Node.
  * @param params
  */
-function HandleLibNodeDrop({ event, project, user, selectedNode, secondaryNode, getViewport, dispatch }: OnDropParameters) {
+function HandleLibNodeDrop({
+  event,
+  project,
+  terminals,
+  user,
+  selectedNode,
+  secondaryNode,
+  getViewport,
+  dispatch,
+}: OnDropParameters) {
   const nodeLib = JSON.parse(event.dataTransfer.getData(DATA_TRANSFER_APPDATA_TYPE)) as NodeLibCm;
 
   let parentNode = selectedNode;
@@ -63,7 +73,7 @@ function HandleLibNodeDrop({ event, project, user, selectedNode, secondaryNode, 
   const treePosition = SetTreeNodePosition(parentNode, project.nodes, project.edges);
   const blockPosition = SetBlockNodePosition(getViewport, event);
 
-  const convertedNode = ConvertLibNodeToNode(nodeLib, parentNode, treePosition, blockPosition, project.id, user);
+  const convertedNode = ConvertLibNodeToNode(nodeLib, parentNode, treePosition, blockPosition, project.id, user, terminals);
   convertedNode.connectors?.forEach((c) => (c.connectorVisibility = InitConnectorVisibility(c, convertedNode)));
 
   if (IsFamily(parentNode, convertedNode)) HandleCreatePartOfEdge(parentNode, convertedNode, project, dispatch);
