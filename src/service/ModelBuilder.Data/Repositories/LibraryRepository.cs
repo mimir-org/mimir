@@ -73,16 +73,6 @@ namespace Mb.Data.Repositories
             return data;
         }
 
-        public async Task<List<AttributeAspectLibCm>> GetAspectAttributes()
-        {
-            // ReSharper disable once StringLiteralTypo
-            var url = _applicationSetting.ApiUrl("libraryattribute/aspect");
-            var data = await _cacheRepository.GetOrCreateAsync(CacheKey.AttributeAspect.ToString(),
-                async () => await _httpRepository.GetData<List<AttributeAspectLibCm>>(url), string.IsNullOrWhiteSpace(_applicationSetting.TypeLibrarySecret) ? 30 : null);
-
-            return data;
-        }
-
         public async Task<List<UnitLibCm>> GetUnits()
         {
             // ReSharper disable once StringLiteralTypo
