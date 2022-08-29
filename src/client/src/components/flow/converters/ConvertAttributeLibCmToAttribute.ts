@@ -24,7 +24,7 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
       selectedUnitId: "",
-      units: a.units,
+      units: null, // TODO: Check
       qualifier: a.attributeQualifier,
       source: a.attributeSource,
       condition: a.attributeCondition,
@@ -41,6 +41,11 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
       isLocked: false,
       isLockedStatusBy: null,
       isLockedStatusDate: null,
+      domain: null,
+      interfaceIri: null,
+      simpleIri: null,
+      terminalIri: null,
+      transportIri: null,
     } as Attribute;
   });
 };
@@ -65,7 +70,7 @@ export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLi
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
       selectedUnitId: "",
-      units: a.units,
+      units: null, // TODO: fix
       qualifier: a.attributeQualifier,
       source: a.attributeSource,
       condition: a.attributeCondition,
@@ -107,7 +112,7 @@ export const ConvertSimpleAttributeLibCmToAttribute = (simple: SimpleLibCm, node
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
       selectedUnitId: "",
-      units: a.units,
+      units: null, // TODO: fix
       qualifier: a.attributeQualifier,
       source: a.attributeSource,
       condition: a.attributeCondition,
