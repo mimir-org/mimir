@@ -1,9 +1,9 @@
 import { User } from "../../../models";
-import { Node, Terminal } from "@mimirorg/modelbuilder-types";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { Size } from "../../../assets/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { CreateId } from "../helpers";
 import { ConvertSimpleLibCmToSimple, ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
 import { TextResources } from "../../../assets/text/TextResources";
@@ -27,7 +27,7 @@ const ConvertLibNodeToNode = (
   blockPosition: Position,
   projectId: string,
   user: User,
-  allTerminals: Terminal[]
+  allTerminals: TerminalLibCm[]
 ) => {
   const id = CreateId();
   const now = GetDateNowUtc();

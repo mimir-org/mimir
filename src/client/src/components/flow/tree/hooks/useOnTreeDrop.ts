@@ -6,15 +6,15 @@ import { LibrarySubProjectItem, User } from "../../../../models";
 import { HandleCreatePartOfEdge, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { GetProjectData, GetSubProject, IsSubProject } from "../helpers";
 import { IsFamily } from "../../../../helpers/Family";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
-import { Node, Project, Terminal } from "@mimirorg/modelbuilder-types";
+import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
+import { Node, Project } from "@mimirorg/modelbuilder-types";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
 interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
-  terminals: Terminal[];
+  terminals: TerminalLibCm[];
   user: User;
   flowInstance: ReactFlowInstance;
   flowWrapper: React.MutableRefObject<HTMLDivElement>;

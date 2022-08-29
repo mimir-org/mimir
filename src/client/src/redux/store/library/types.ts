@@ -1,5 +1,4 @@
-import { Terminal } from "@mimirorg/modelbuilder-types";
-import { InterfaceLibCm, NodeLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
+import { InterfaceLibCm, NodeLibCm, TerminalLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
 import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
@@ -9,7 +8,7 @@ export interface LibraryState {
   libNodes: NodeLibCm[] | null;
   transportTypes: TransportLibCm[] | null;
   interfaceTypes: InterfaceLibCm[] | null;
-  terminals: Terminal[] | null;
+  terminals: TerminalLibCm[] | null;
   apiError: ApiError[];
   collections: Collection[];
 }
@@ -31,7 +30,7 @@ export interface FetchTransportTypes {
 }
 
 export interface FetchTerminals {
-  terminals: Terminal[];
+  terminals: TerminalLibCm[];
   apiError: ApiError;
 }
 

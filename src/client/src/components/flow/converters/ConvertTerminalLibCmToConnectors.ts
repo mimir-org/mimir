@@ -16,7 +16,7 @@ import { ConvertTerminalAttributeLibCmToAttribute } from "./ConvertAttributeLibC
  */
 const ConvertTerminalLibCmToConnectors = (
   libTerminals: NodeTerminalLibCm[],
-  allTerminals: Terminal[],
+  allTerminals: TerminalLibCm[],
   nodeId: string,
   nodeIri: string
 ) => {
@@ -44,11 +44,11 @@ export default ConvertTerminalLibCmToConnectors;
  * @param allTerminals
  * @returns a Terminal.
  */
-function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string, allTerminals: Terminal[]) {
-  const connectorVisibility = SetConnectorVisibility(libTerminal.connectorDirection);
-
+function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string, allTerminals: TerminalLibCm[]) {
   const id = CreateId();
+  const connectorVisibility = SetConnectorVisibility(libTerminal.connectorDirection);
   const attributes = ConvertTerminalAttributeLibCmToAttribute(libTerminal.terminal, id);
+  const terminalCategory = GetTerminalCategoryName(libTerminal.terminal, allTerminals);
 
   return {
     id,
@@ -61,27 +61,23 @@ function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri:
     connectorVisibility,
     isRequired: false,
     color: libTerminal.terminal.color,
-    terminalCategory: GetTerminalCategoryName(libTerminal.terminal, allTerminals),
+    terminalCategory,
     attributes,
     terminalTypeId: libTerminal.terminal.id,
     terminalTypeIri: libTerminal.terminal.iri,
-    kind: libTerminal.kind,
-    discriminator: TextResources.KIND_TERMINAL,
+    kind: TextResources.KIND_TERMINAL,
+    discriminator: null,
   } as Terminal;
 }
 
-function GetTerminalCategoryName(terminal: TerminalLibCm, allTerminals: Terminal[]) {
-  if (terminal.parentIri === null) {
-    return terminal.name;
+function GetTerminalCategoryName(libTerminal: TerminalLibCm, allTerminals: TerminalLibCm[]) {
+  if (libTerminal.parentName == null) {
+    return libTerminal.name;
   }
 
-  if (terminal.parentIri !== null) {
-    allTerminals.forEach((t) => {
-      if (terminal.parentIri === t.iri) {
-        return;
-      }
-    });
-  }
+  // Recursive traversal to find parent
+  const parentTerminal = allTerminals.find((t) => t.name === libTerminal.parentName);
+  return GetTerminalCategoryName(parentTerminal, allTerminals);
 }
 
 /**

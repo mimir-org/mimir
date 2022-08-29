@@ -3,19 +3,19 @@ import { Dispatch } from "redux";
 import { addNode } from "../../../../redux/store/project/actions";
 import { ConvertLibNodeToNode } from "../../converters";
 import { User } from "../../../../models";
-import { Project, Node, Terminal } from "@mimirorg/modelbuilder-types";
+import { Project, Node } from "@mimirorg/modelbuilder-types";
 import { HandleCreatePartOfEdge, InitConnectorVisibility, SetTreeNodePosition } from "../../helpers/LibraryDrop";
 import { Size } from "../../../../assets/size/Size";
 import { Position } from "../../../../models/project";
 import { IsFamily } from "../../../../helpers/Family";
-import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 
 export const DATA_TRANSFER_APPDATA_TYPE = "application/reactflow";
 
 interface OnDropParameters {
   event: React.DragEvent<HTMLDivElement>;
   project: Project;
-  terminals: Terminal[];
+  terminals: TerminalLibCm[];
   user: User;
   selectedNode: Node;
   secondaryNode: Node;
