@@ -1,6 +1,5 @@
 using System.Web;
 using Mb.Models.Const;
-using Mb.Models.Enums;
 using Mimirorg.TypeLibrary.Models.Client;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
@@ -10,6 +9,7 @@ using Mimirorg.TypeLibrary.Enums;
 using Attribute = Mb.Models.Data.Attribute;
 using AttributeDatumObject = ModelBuilder.Rdf.Models.AttributeDatumObject;
 using Mb.Models.Application;
+using Mb.Models.Data;
 
 namespace ModelBuilder.Rdf.Extensions
 {
@@ -193,9 +193,8 @@ namespace ModelBuilder.Rdf.Extensions
             attribute.Units = allowedUnitNodes.Select(x =>
             {
                 var value = x.ResolveValue(false)?.Split('-', StringSplitOptions.RemoveEmptyEntries);
-                return new UnitLibCm
+                return new Unit
                 {
-                    Id = value?[0].Trim(),
                     Name = value?[1].Trim()
                 };
             }).ToList();

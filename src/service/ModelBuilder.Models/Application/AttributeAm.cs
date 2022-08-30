@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Data;
 using Mb.Models.Extensions;
 using Mimirorg.Common.Attributes;
 using Mimirorg.TypeLibrary.Enums;
-using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Models.Application
 {
@@ -33,7 +33,7 @@ namespace Mb.Models.Application
 
         // Unit
         public string SelectedUnitId { get; set; }
-        public virtual ICollection<UnitLibCm> Units { get; set; }
+        public virtual ICollection<Unit> Units { get; set; }
 
         // Qualifiers
         [Required]

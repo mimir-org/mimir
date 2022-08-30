@@ -29,7 +29,7 @@ namespace Mb.Data.Repositories
 
             transport.InputTerminalId = transport.InputTerminal.Id;
 
-            foreach (var attribute in transport.InputTerminal?.Attributes)
+            foreach (var attribute in transport.InputTerminal.Attributes)
             {
                 attribute.UnitString = attribute.Units != null
                     ? JsonConvert.SerializeObject(attribute.Units)
@@ -45,7 +45,7 @@ namespace Mb.Data.Repositories
 
             transport.OutputTerminalId = transport.OutputTerminal.Id;
 
-            foreach (var attribute in transport.OutputTerminal?.Attributes)
+            foreach (var attribute in transport.OutputTerminal.Attributes)
             {
                 attribute.UnitString = attribute.Units != null
                     ? JsonConvert.SerializeObject(attribute.Units)

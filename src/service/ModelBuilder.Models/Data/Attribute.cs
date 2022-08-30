@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
-using Mimirorg.TypeLibrary.Models.Client;
 using TypeScriptBuilder;
 using Mimirorg.TypeLibrary.Enums;
 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -28,7 +27,7 @@ namespace Mb.Models.Data
         public string SelectedUnitId { get; set; }
 
         [NotMapped]
-        public virtual ICollection<UnitLibCm> Units
+        public virtual ICollection<Unit> Units
         {
             get
             {
@@ -36,7 +35,7 @@ namespace Mb.Models.Data
                     return _units;
 
                 return !string.IsNullOrWhiteSpace(UnitString) ?
-                    JsonConvert.DeserializeObject<ICollection<UnitLibCm>>(UnitString) :
+                    JsonConvert.DeserializeObject<ICollection<Unit>>(UnitString) :
                     null;
             }
             set => _units = value;
@@ -104,7 +103,7 @@ namespace Mb.Models.Data
         #region Members
 
         [TSExclude]
-        private ICollection<UnitLibCm> _units;
+        private ICollection<Unit> _units;
 
         #endregion
 
