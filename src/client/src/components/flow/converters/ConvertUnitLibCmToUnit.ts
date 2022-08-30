@@ -1,16 +1,18 @@
 import { UnitLibCm } from "@mimirorg/typelibrary-types";
-import { UnitLibCm as Unit } from "@mimirorg/modelbuilder-types";
+import { Unit } from "@mimirorg/modelbuilder-types";
+import { CreateId } from "../helpers";
+import { TextResources } from "../../../assets/text/TextResources";
 
 const ConvertUnitLibCmToUnit = (unitLibCms: UnitLibCm[]) => {
   return unitLibCms.map((u) => {
     return {
-      id: u.id,
-      description: u.description,
-      iri: u.iri,
-      kind: u.kind,
+      id: CreateId(),
+      unitTypeId: u.id,
+      unitTypeIri: u.iri,
       name: u.name,
+      description: u.description,
       symbol: u.symbol,
-      typeReferences: u.typeReferences,
+      kind: TextResources.KIND_UNIT,
     } as Unit;
   });
 };

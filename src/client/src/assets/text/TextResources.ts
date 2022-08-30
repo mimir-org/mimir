@@ -299,6 +299,7 @@ export const TextResources = {
   KIND_RELATION: "Relation",
   KIND_CONNECTOR: "Connector",
   KIND_ATTRIBUTE: "Attribute",
+  KIND_UNIT: "Unit",
 
   // Company names
   EQUINOR: "equinor.com",
