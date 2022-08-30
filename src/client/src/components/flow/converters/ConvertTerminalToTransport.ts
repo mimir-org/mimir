@@ -1,21 +1,20 @@
-import { Connector, ConnectorDirection, Interface, Terminal } from "@mimirorg/modelbuilder-types";
+import { ConnectorDirection, Terminal, Transport } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
-import { UpdateAttributesId } from "./ConvertToTransport";
 
 /**
- * Component to convert a Terminal to the Interface data type.
+ * Component to convert a Terminal to the Transport data type.
  * This conversion is needed when a transport Edge is created between two Nodes.
  * @param sourceTerminal
  * @param targetTerminal
  * @param library
- * @returns an Interface.
+ * @returns a Transport.
  */
-const ConvertToInterface = (sourceTerminal: Terminal, targetTerminal: Connector, library: LibraryState) => {
-  const interfaceType = library?.interfaceTypes.find((i) => i.terminalId === sourceTerminal.terminalTypeId); // TODO: check which id to use
-  if (interfaceType == undefined) return null;
+const ConvertTerminalToTransport = (sourceTerminal: Terminal, targetTerminal: Terminal, library: LibraryState) => {
+  const transportType = library?.transportTypes.find((t) => t.terminalId === sourceTerminal.terminalTypeId);
+  if (transportType == undefined) return null;
 
   const inputTerminal = JSON.parse(JSON.stringify(sourceTerminal)) as Terminal;
   const outputTerminal = JSON.parse(JSON.stringify(targetTerminal)) as Terminal;
@@ -37,18 +36,27 @@ const ConvertToInterface = (sourceTerminal: Terminal, targetTerminal: Connector,
     label: sourceTerminal.name,
     description: null,
     semanticReference: null,
-    attributes: sourceTerminal.attributes, // TODO: fix conversion of attributes
     inputTerminalId: inputTerminal.id,
-    inputTerminal: inputTerminal,
+    inputTerminal,
     outputTerminalId: outputTerminal.id,
-    outputTerminal: outputTerminal,
+    outputTerminal,
+    attributes: sourceTerminal.attributes, // TODO: fix conversion of attributes
     updatedBy: null, // TODO: check
-    updated: null,
-    createdBy: interfaceType.createdBy,
-    created: interfaceType.created,
-    libraryTypeId: interfaceType.id,
-    kind: TextResources.KIND_INTERFACE,
-  } as Interface;
+    updated: null, // TODO: check
+    createdBy: transportType.createdBy,
+    created: transportType.created,
+    libraryTypeId: transportType.id,
+    kind: TextResources.KIND_TRANSPORT,
+  } as Transport;
 };
 
-export default ConvertToInterface;
+export function UpdateAttributesId(terminal: Terminal) {
+  if (!terminal?.attributes.length) return;
+
+  terminal.attributes.forEach((a) => {
+    a.id = CreateId();
+    a.terminalId = terminal.id;
+  });
+}
+
+export default ConvertTerminalToTransport;

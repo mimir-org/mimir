@@ -3,7 +3,12 @@ import { Unit } from "@mimirorg/modelbuilder-types";
 import { CreateId } from "../helpers";
 import { TextResources } from "../../../assets/text/TextResources";
 
-const ConvertUnitLibCmToUnit = (unitLibCms: UnitLibCm[]) => {
+/**
+ * Component to convert units from the type UnitLibCm to Unit.
+ * @param unitLibCms
+ * @returns a list of units.
+ */
+const ConvertUnitLibCmToUnits = (unitLibCms: UnitLibCm[]) => {
   return unitLibCms.map((u) => {
     return {
       id: CreateId(),
@@ -17,4 +22,4 @@ const ConvertUnitLibCmToUnit = (unitLibCms: UnitLibCm[]) => {
   });
 };
 
-export default ConvertUnitLibCmToUnit;
+export default ConvertUnitLibCmToUnits;

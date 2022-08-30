@@ -2,7 +2,7 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 import { AttributeLibCm, SimpleLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { CreateId } from "../helpers";
-import ConvertUnitLibCmToUnit from "./ConvertUnitLibCmToUnit";
+import { ConvertUnitLibCmToUnits } from "./";
 
 /**
  * Component to convert a Node's AttributeLibCm to the type Attribute.
@@ -25,7 +25,7 @@ export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
       selectedUnitId: "",
-      units: ConvertUnitLibCmToUnit(a.units),
+      units: ConvertUnitLibCmToUnits(a.units),
       qualifier: a.attributeQualifier,
       source: a.attributeSource,
       condition: a.attributeCondition,
@@ -71,7 +71,7 @@ export const ConvertTerminalAttributeLibCmToAttribute = (libTerminal: TerminalLi
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
       selectedUnitId: "",
-      units: ConvertUnitLibCmToUnit(a.units),
+      units: ConvertUnitLibCmToUnits(a.units),
       qualifier: a.attributeQualifier,
       source: a.attributeSource,
       condition: a.attributeCondition,
@@ -113,7 +113,7 @@ export const ConvertSimpleAttributeLibCmToAttribute = (simple: SimpleLibCm, node
       attributeTypeId: a.id,
       attributeTypeIri: a.iri,
       selectedUnitId: "",
-      units: ConvertUnitLibCmToUnit(a.units),
+      units: ConvertUnitLibCmToUnits(a.units),
       qualifier: a.attributeQualifier,
       source: a.attributeSource,
       condition: a.attributeCondition,
