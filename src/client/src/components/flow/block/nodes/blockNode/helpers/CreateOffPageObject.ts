@@ -1,4 +1,4 @@
-import { IsInputConnector, IsOutputConnector, IsOutputVisible } from "../../../../helpers/Connectors";
+import { IsInputConnector, IsOutputConnector, IsOutputVisible, IsPartOfRelation } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
 import { Size } from "../../../../../../assets/size/Size";
@@ -23,7 +23,7 @@ export interface OffPageObject {
 
 export interface OffPageData {
   sourceNode: Node;
-  sourceConnector: Connector;
+  sourceConnector: Terminal;
   position: Position;
   isRequired: boolean;
 }
@@ -35,12 +35,12 @@ export interface OffPageData {
  * @returns the data type OffPageObject which has a node, a partOf edge and a transport edge.
  */
 export const CreateOffPageObject = (data: OffPageData) => {
-  const sourceConnector = data.sourceConnector as Terminal;
+  const sourceConnector = data.sourceConnector;
   const sourceNode = data.sourceNode;
 
   if (!sourceConnector || !sourceNode) return null;
 
-  const sourcePartOfConn = sourceNode.connectors.find((c) => !IsInputConnector(c)); //IsPartOfRelation(c) && !IsInputTerminal(c)); // TODO: fix
+  const sourcePartOfConn = sourceNode.connectors.find((c) => !IsInputConnector(c) && IsPartOfRelation(c));
   const isTarget = IsOutputConnector(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {

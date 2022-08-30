@@ -9,7 +9,7 @@ import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
 import { Color } from "../../../../../assets/color/Color";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
-import { Node } from "@mimirorg/modelbuilder-types";
+import { Node, Terminal } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component for an OffPageNode in BlockView.
@@ -24,8 +24,8 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const size = useAppSelector(selectors.nodeSizeSelector);
   const edge = project?.edges?.find((x) => IsTerminal(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
-  const intputTerminal = data?.connectors.find((c) => IsInputConnector(c) && IsTerminal(c));
-  const outputTerminal = data?.connectors.find((c) => IsOutputConnector(c) && IsTerminal(c));
+  const intputTerminal = data?.connectors.find((c) => IsInputConnector(c) && IsTerminal(c)) as Terminal;
+  const outputTerminal = data?.connectors.find((c) => IsOutputConnector(c) && IsTerminal(c)) as Terminal;
 
   const isTarget = edge?.toNodeId === data.id;
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
@@ -45,7 +45,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
 
   if (!data || !offPageParent || !offPageGrandParent) return null;
 
-  const iconColor = Color.BLACK; //offPageTerminal?.color ?? Color.BLACK; // TODO: fix
+  const iconColor = offPageTerminal?.color ?? Color.BLACK;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
   const inputTerminals = data.connectors.filter((c) => IsInputConnector(c));

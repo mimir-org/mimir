@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { CreateRequiredOffPageNode } from "./CreateRequiredOffPageNode";
 import { IsOffPage } from "../../../../../../helpers/Aspects";
 import { BlockNodeSize } from "../../../../../../models/project";
-import { IsInputConnector, IsInputVisible } from "../../../../helpers/Connectors";
+import { IsInputConnector, IsInputVisible, IsTerminal } from "../../../../helpers/Connectors";
 import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 
 /**
@@ -18,7 +18,7 @@ export const HandleRequiredOffPageNode = (node: Node, edges: Edge[], size: Block
   if (!edges.length || !node) return;
 
   node.connectors.forEach((conn) => {
-    if (!conn.isRequired || HasRequiredOffPageNode(edges, conn)) return;
+    if (!IsTerminal(conn) || !conn.isRequired || HasRequiredOffPageNode(edges, conn)) return;
 
     const isRequired = true;
     const position = { x: size.width, y: node.positionBlockY };

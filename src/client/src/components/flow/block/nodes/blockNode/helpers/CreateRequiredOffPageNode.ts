@@ -2,7 +2,7 @@ import { createRequiredOffPageNode } from "../../../../../../redux/store/project
 import { CreateOffPageObject, OffPageData } from "./CreateOffPageObject";
 import { Position } from "../../../../../../models/project";
 import { Dispatch } from "redux";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Node, Terminal } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component to create a required OffPageNode.
@@ -16,7 +16,7 @@ import { Node, Connector } from "@mimirorg/modelbuilder-types";
  */
 export const CreateRequiredOffPageNode = (
   sourceNode: Node,
-  sourceConnector: Connector,
+  sourceConnector: Terminal,
   position: Position,
   isRequired: boolean,
   dispatch: Dispatch
