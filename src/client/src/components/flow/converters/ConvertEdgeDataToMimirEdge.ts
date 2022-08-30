@@ -1,4 +1,4 @@
-import { ConvertToInterface, ConvertToTransport } from ".";
+import { ConvertTerminalToInterface, ConvertTerminalToTransport } from ".";
 import { Connector, Node, Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
@@ -22,8 +22,8 @@ export const ConvertEdgeDataToMimirEdge = (
   projectId: string,
   library: LibraryState
 ) => {
-  const convertedTransport = ConvertToTransport(fromConnector as Terminal, toConnector as Terminal, library);
-  const convertedInterface = ConvertToInterface(fromConnector as Terminal, toConnector as Terminal, library);
+  const convertedTransport = ConvertTerminalToTransport(fromConnector as Terminal, toConnector as Terminal, library);
+  const convertedInterface = ConvertTerminalToInterface(fromConnector as Terminal, toConnector as Terminal, library);
 
   return {
     id,
