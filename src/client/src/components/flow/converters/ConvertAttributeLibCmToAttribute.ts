@@ -5,8 +5,9 @@ import { CreateId } from "../helpers";
 import { ConvertUnitLibCmToUnits } from "./";
 
 /**
- * Component to convert a Node's AttributeLibCm to the type Attribute.
- * This convertion is needed when a LibNode is dropped from the Library and converted to a Node.
+ * Component to convert AttributeLibCm to the type Attribute.
+ * This convertion is needed when a LibNode is dropped from the Library and converted to a Node,
+ * or when a Transport is created via the creation of an Edge between two nodes.
  * @param attributes
  * @param nodeId
  * @param nodeIri
