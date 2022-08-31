@@ -16,5 +16,5 @@ export { getEdgeInterfaceTerminalAttributeMap } from "./getEdgeInterfaceTerminal
 export { getEdgeTransportAttributeMap } from "./getEdgeTransportAttributeMap";
 export { getEdgeTransportTerminalAttributeMap } from "./getEdgeTransportTerminalAttributeMap";
 export { getNodeAttributeMap } from "./getNodeAttributeMap";
-export { getNodeConnectorAttributeMap } from "./getNodeConnectorAttributeMap";
+export { GetNodeConnectorAttributeMap as getNodeConnectorAttributeMap } from "./getNodeConnectorAttributeMap";
 export { getNodeSimpleAttributeMap } from "./getNodeSimpleAttributeMap";
