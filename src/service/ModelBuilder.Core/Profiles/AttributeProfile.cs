@@ -24,6 +24,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.AttributeTypeIri, opt => opt.MapFrom(src => src.AttributeTypeIri))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
                 .ForMember(dest => dest.UnitString, opt => opt.MapFrom(src => src.Units != null ? JsonConvert.SerializeObject(src.Units) : null))
+                .ForMember(dest => dest.TypeReferenceString, opt => opt.MapFrom(src => src.TypeReferences != null ? JsonConvert.SerializeObject(src.TypeReferences) : null))
                 .ForMember(dest => dest.Terminal, opt => opt.Ignore())
                 .ForMember(dest => dest.TerminalId, opt => opt.MapFrom(src => src.TerminalId))
                 .ForMember(dest => dest.TerminalIri, opt => opt.MapFrom(src => src.TerminalIri))
@@ -71,6 +72,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.SimpleId, opt => opt.MapFrom(src => src.SimpleId))
                 .ForMember(dest => dest.SimpleIri, opt => opt.MapFrom(src => src.SimpleIri))
                 .ForMember(dest => dest.Units, opt => opt.MapFrom(src => src.Units))
+                .ForMember(dest => dest.TypeReferences, opt => opt.MapFrom(src => src.TypeReferences))
                 .ForMember(dest => dest.SelectValues, opt => opt.MapFrom(src => src.SelectValues))
                 .ForMember(dest => dest.SelectType, opt => opt.MapFrom(src => src.SelectType))
                 .ForMember(dest => dest.Discipline, opt => opt.MapFrom(src => src.Discipline));

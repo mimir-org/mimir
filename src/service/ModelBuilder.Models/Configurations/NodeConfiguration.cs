@@ -16,7 +16,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.ProjectIri).HasColumnName("ProjectIri").IsRequired();
             builder.Property(p => p.Rds).HasColumnName("Rds").IsRequired(false);
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
-            builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferences");
+            builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferenceString");
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.Property(p => p.Label).HasColumnName("Label").IsRequired(false);
             builder.Property(p => p.PositionX).HasColumnName("PositionX").HasColumnType("decimal(18,4)").IsRequired();

@@ -23,6 +23,24 @@ namespace Mb.Models.Data
         public string AttributeTypeId { get; set; }
         public string AttributeTypeIri { get; set; }
 
+        [NotMapped]
+        public virtual ICollection<TypeReference> TypeReferences
+        {
+            get
+            {
+                if (_typeReferences != null)
+                    return _typeReferences;
+
+                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
+            }
+
+            set => _typeReferences = value;
+        }
+
+        [JsonIgnore]
+        [TSExclude]
+        public string TypeReferenceString { get; set; }
+
         // Unit
         public string SelectedUnitId { get; set; }
 
@@ -121,6 +139,7 @@ namespace Mb.Models.Data
                    AttributeTypeIri == other.AttributeTypeIri &&
                    SelectedUnitId == other.SelectedUnitId &&
                    UnitString == other.UnitString &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    Qualifier == other.Qualifier &&
                    Source == other.Source &&
                    Condition == other.Condition &&
@@ -158,6 +177,7 @@ namespace Mb.Models.Data
             hashCode.Add(AttributeTypeIri);
             hashCode.Add(SelectedUnitId);
             hashCode.Add(UnitString);
+            hashCode.Add(TypeReferenceString);
             hashCode.Add(Qualifier);
             hashCode.Add(Source);
             hashCode.Add(Condition);
@@ -179,5 +199,12 @@ namespace Mb.Models.Data
         }
 
         #endregion
+
+        #region Private members
+
+        [TSExclude]
+        private ICollection<TypeReference> _typeReferences;
+
+        #endregion Private members
     }
 }

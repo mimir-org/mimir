@@ -18,7 +18,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.Label).HasColumnName("Label").IsRequired(false);
             builder.Property(p => p.Description).HasColumnName("Description").IsRequired(false);
             builder.Property(p => p.StatusId).HasColumnName("StatusId").IsRequired().HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF");
-            builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferences");
+            builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferenceString");
             builder.Property(p => p.OutputTerminalId).HasColumnName("OutputTerminalId").IsRequired();
             builder.Property(p => p.InputTerminalId).HasColumnName("InputTerminalId").IsRequired();
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired(false);

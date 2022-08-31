@@ -83,7 +83,7 @@ namespace Mb.Models.Data
                    Label == other.Label &&
                    Description == other.Description &&
                    StatusId == other.StatusId &&
-                   Equals(TypeReferences, other.TypeReferences) &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    InputTerminalId == other.InputTerminalId &&
                    OutputTerminalId == other.OutputTerminalId &&
                    UpdatedBy == other.UpdatedBy &&
@@ -111,7 +111,7 @@ namespace Mb.Models.Data
             hashCode.Add(Label);
             hashCode.Add(Description);
             hashCode.Add(StatusId);
-            hashCode.Add(TypeReferences);
+            hashCode.Add(TypeReferenceString);
             hashCode.Add(InputTerminalId);
             hashCode.Add(OutputTerminalId);
             hashCode.Add(UpdatedBy);

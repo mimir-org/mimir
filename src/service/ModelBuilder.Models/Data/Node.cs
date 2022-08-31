@@ -160,7 +160,7 @@ namespace Mb.Models.Data
                    Iri == other.Iri &&
                    Rds == other.Rds &&
                    Description == other.Description &&
-                   Equals(TypeReferences, other.TypeReferences) &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    Name == other.Name &&
                    Label == other.Label &&
                    PositionX == other.PositionX &&
@@ -203,7 +203,7 @@ namespace Mb.Models.Data
             hashCode.Add(Iri);
             hashCode.Add(Rds);
             hashCode.Add(Description);
-            hashCode.Add(TypeReferences);
+            hashCode.Add(TypeReferenceString);
             hashCode.Add(Name);
             hashCode.Add(Label);
             hashCode.Add(PositionX);
