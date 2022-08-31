@@ -50,8 +50,8 @@ const ConvertTerminalToTransport = (
     outputTerminalId: outputTerminal.id,
     outputTerminal,
     attributes: ConvertAttributeLibCmToAttribute(transportType.attributes, nodeId, nodeIri),
-    updatedBy: null, // TODO: check
-    updated: null, // TODO: check
+    updatedBy: null,
+    updated: null,
     createdBy: transportType.createdBy,
     created: transportType.created,
     libraryTypeId: transportType.id,

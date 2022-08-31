@@ -51,7 +51,7 @@ const ConvertTerminalToInterface = (
     inputTerminal: inputTerminal,
     outputTerminalId: outputTerminal.id,
     outputTerminal: outputTerminal,
-    updatedBy: null, // TODO: check
+    updatedBy: null,
     updated: null,
     createdBy: interfaceType.createdBy,
     created: interfaceType.created,
