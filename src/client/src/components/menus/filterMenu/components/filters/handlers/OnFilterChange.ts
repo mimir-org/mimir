@@ -28,8 +28,8 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], d
 
     // Transport
     if (transport && IsTerminal(e.fromConnector)) {
-      // if (e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId)
-      //   dispatch(setEdgeVisibility(e.id, !e.hidden));
+      if (IsTerminal(actualEdge.fromConnector) && e.fromConnector?.terminalTypeId === actualEdge.fromConnector?.terminalTypeId)
+        dispatch(setEdgeVisibility(e.id, !e.hidden));
     }
 
     // Relations
@@ -37,5 +37,3 @@ export const OnFilterChange = (actualEdge: Edge, edges: Edge[], nodes: Node[], d
       dispatch(setEdgeVisibility(e.id, !e.hidden));
   });
 };
-
-// TODO: fix
