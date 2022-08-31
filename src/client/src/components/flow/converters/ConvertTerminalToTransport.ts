@@ -3,6 +3,7 @@ import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
+import { ConvertAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 
 /**
  * Component to convert a Terminal to the Transport data type.
@@ -10,9 +11,17 @@ import { IsBidirectionalTerminal } from "../helpers/Connectors";
  * @param sourceTerminal
  * @param targetTerminal
  * @param library
+ * @param nodeId
+ * @param nodeIri
  * @returns a Transport.
  */
-const ConvertTerminalToTransport = (sourceTerminal: Terminal, targetTerminal: Terminal, library: LibraryState) => {
+const ConvertTerminalToTransport = (
+  sourceTerminal: Terminal,
+  targetTerminal: Terminal,
+  library: LibraryState,
+  nodeId: string,
+  nodeIri: string
+) => {
   const transportType = library?.transportTypes.find((t) => t.terminalId === sourceTerminal.terminalTypeId);
   if (transportType == undefined) return null;
 
@@ -40,7 +49,7 @@ const ConvertTerminalToTransport = (sourceTerminal: Terminal, targetTerminal: Te
     inputTerminal,
     outputTerminalId: outputTerminal.id,
     outputTerminal,
-    attributes: sourceTerminal.attributes, // TODO: fix conversion of attributes
+    attributes: ConvertAttributeLibCmToAttribute(transportType.attributes, nodeId, nodeIri),
     updatedBy: null, // TODO: check
     updated: null, // TODO: check
     createdBy: transportType.createdBy,

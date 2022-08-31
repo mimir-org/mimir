@@ -12,7 +12,7 @@ import { ConvertUnitLibCmToUnits } from "./";
  * @param nodeIri
  * @returns a list of Attributes.
  */
-export const ConvertNodeAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: string, nodeIri: string) => {
+export const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: string, nodeIri: string) => {
   if (!attributes.length) return [] as Attribute[];
 
   return attributes.map((a) => {
