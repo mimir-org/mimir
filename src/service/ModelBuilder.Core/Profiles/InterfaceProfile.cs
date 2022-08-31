@@ -4,6 +4,7 @@ using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
+using Newtonsoft.Json;
 
 namespace Mb.Core.Profiles
 {
@@ -20,7 +21,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.StatusId))
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.TypeReferenceString, opt => opt.MapFrom(src => src.TypeReferences != null ? JsonConvert.SerializeObject(src.TypeReferences) : null))
                 .ForMember(dest => dest.InputTerminal, opt => opt.MapFrom(src => src.InputTerminal))
                 .ForMember(dest => dest.InputTerminalId, opt => opt.MapFrom(src => src.InputTerminalId))
                 .ForMember(dest => dest.OutputTerminal, opt => opt.MapFrom(src => src.OutputTerminal))
@@ -31,8 +32,9 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.LibraryTypeId, opt => opt.MapFrom(src => src.LibraryTypeId))
-                .ForMember(dest => dest.Edges, opt => opt.Ignore());
-
+                .ForMember(dest => dest.Edges, opt => opt.Ignore())
+                .ForMember(dest => dest.TypeReferences, opt => opt.MapFrom(src => src.TypeReferences));
+                
             CreateMap<Interface, InterfaceAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
@@ -42,7 +44,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => src.StatusId))
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.TypeReferences, opt => opt.MapFrom(src => src.TypeReferences))
                 .ForMember(dest => dest.InputTerminal, opt => opt.MapFrom(src => src.InputTerminal))
                 .ForMember(dest => dest.InputTerminalId, opt => opt.MapFrom(src => src.InputTerminalId))
                 .ForMember(dest => dest.OutputTerminal, opt => opt.MapFrom(src => src.OutputTerminal))

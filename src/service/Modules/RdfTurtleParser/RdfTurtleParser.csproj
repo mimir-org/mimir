@@ -7,8 +7,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="dotNetRDF" Version="2.7.5" />
-    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.177" />
-    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.177" />
+    <PackageReference Include="Mimirorg.Common" Version="1.0.0-preview.178" />
+    <PackageReference Include="Mimirorg.TypeLibrary" Version="1.0.0-preview.178" />
   </ItemGroup>
 
   <ItemGroup>
