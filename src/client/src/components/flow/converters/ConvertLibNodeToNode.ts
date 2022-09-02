@@ -1,5 +1,4 @@
 import { User } from "../../../models";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { Size } from "../../../assets/size/Size";
 import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
@@ -8,6 +7,7 @@ import { CreateId } from "../helpers";
 import { ConvertSimpleLibCmToSimple, ConvertAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTypeReference } from "./ConvertTypeReference";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Function to convert a libNode dropped from the Library to a Mimir Node.
@@ -67,7 +67,7 @@ const ConvertLibNodeToNode = (
     hidden: false,
     blockHidden: false,
     parentNodeId: parentNode.id,
-    typeReferences: ConvertTypeReference(libNode.typeReferences)
+    typeReferences: ConvertTypeReference(libNode.typeReferences),
   } as Node;
 };
 

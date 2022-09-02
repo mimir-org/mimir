@@ -6,12 +6,12 @@ import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
 import { FilterConnectors } from "../helpers/FilterConnectors";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
 import { IsPartOfRelation } from "../../../helpers/Connectors";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
 

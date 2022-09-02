@@ -1,4 +1,5 @@
 import { IsRelationConnector, IsTerminal } from "../../../components/flow/helpers/Connectors";
+import { ConvertTypeReference } from "../../../components/flow/converters/ConvertTypeReference";
 import {
   Project,
   Edge,
@@ -58,7 +59,7 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
       version: node.version,
       label: node.label,
       rds: node.rds,
-      typeReferences: node.typeReferences,
+
       description: node.description,
       positionX: node.positionX,
       positionY: node.positionY,
@@ -127,7 +128,7 @@ function ConvertConnectorsToConnectorsAm(connectors: Connector[]) {
   if (!connectors.length) return convertedConnectors;
 
   connectors.forEach((connector) => {
-    if (IsRelationConnector(connector)) convertedConnectors.push(ConvertRelationToRelationAm(connector));
+    if (IsRelationConnector(connector)) convertedConnectors.push(ConvertRelationToRelationAm(connector as Relation));
     else if (IsTerminal(connector)) convertedConnectors.push(ConvertTerminalToTerminalAm(connector));
   });
 
@@ -162,7 +163,6 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
     domain: terminal.domain,
     name: terminal.name,
     type: terminal.type,
-    typeReferences: terminal.typeReferences,
     connectorVisibility: terminal.connectorVisibility,
     nodeId: terminal.nodeId,
     nodeIri: terminal.nodeIri,
@@ -210,7 +210,7 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
       isLocked: attr.isLocked,
       isLockedStatusBy: attr.isLockedStatusBy,
       isLockedStatusDate: attr.isLockedStatusDate,
-      typeReferences: attr.typeReferences,
+      typeReferences: ConvertTypeReference(attr.typeReferences),
     });
   });
 
@@ -246,7 +246,6 @@ function ConvertTransportToTransportAm(data: Transport) {
     label: data.label,
     description: data.description,
     statusId: data.statusId,
-    typeReferences: data.typeReferences,
     attributes: ConvertAttributesToAttributesAm(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertTerminalToTerminalAm(data.inputTerminal),
@@ -271,7 +270,6 @@ function ConvertInterfaceToInterfaceAm(data: Interface) {
     label: data.label,
     description: data.description,
     statusId: data.statusId,
-    typeReferences: data.typeReferences,
     attributes: ConvertAttributesToAttributesAm(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertTerminalToTerminalAm(data.inputTerminal),
