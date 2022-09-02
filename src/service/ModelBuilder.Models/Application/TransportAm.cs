@@ -2,6 +2,7 @@ using Mb.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Data;
 using Mimirorg.Common.Attributes;
 
 namespace Mb.Models.Application
@@ -31,7 +32,7 @@ namespace Mb.Models.Application
 
         public string StatusId { get; set; }
 
-        public string SemanticReference { get; set; }
+        public ICollection<TypeReference> TypeReferences { get; set; }
 
         [Required]
         public string InputTerminalId { get; set; }

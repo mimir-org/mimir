@@ -1,5 +1,7 @@
 using Mimirorg.Common.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Data;
 
 namespace Mb.Models.Application
 {
@@ -15,5 +17,7 @@ namespace Mb.Models.Application
         [ValidIri]
         [RequiredOne(nameof(TerminalTypeId))]
         public string TerminalTypeIri { get; set; }
+
+        public ICollection<TypeReference> TypeReferences { get; set; }
     }
 }

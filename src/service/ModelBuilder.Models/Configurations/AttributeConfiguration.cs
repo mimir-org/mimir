@@ -22,6 +22,7 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.AttributeTypeId).HasColumnName("AttributeTypeId");
             builder.Property(p => p.AttributeTypeIri).HasColumnName("AttributeTypeIri");
             builder.Property(p => p.UnitString).HasColumnName("UnitString");
+            builder.Property(p => p.TypeReferenceString).HasColumnName("TypeReferenceString");
 
             builder.Property(p => p.Qualifier).HasColumnName("Qualifier").HasMaxLength(127);
             builder.Property(p => p.Source).HasColumnName("Source").HasMaxLength(127);

@@ -25,8 +25,7 @@ namespace ModelBuilder.Unit.Tests.Models
                 IsRequired = false,
                 TerminalTypeIri = "https://rdf.runir.com/1234",
                 TerminalCategory = "TerminalParent",
-                TerminalTypeId = "12345",
-                SemanticReference = null
+                TerminalTypeId = "12345"
             };
         }
 

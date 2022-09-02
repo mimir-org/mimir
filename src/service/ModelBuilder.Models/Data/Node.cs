@@ -21,7 +21,24 @@ namespace Mb.Models.Data
         public string Kind => nameof(Node);
         public string Rds { get; set; }
         public string Description { get; set; }
-        public string SemanticReference { get; set; }
+
+        [NotMapped]
+        public virtual ICollection<TypeReference> TypeReferences
+        {
+            get
+            {
+                if (_typeReferences != null)
+                    return _typeReferences;
+
+                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
+            }
+
+            set => _typeReferences = value;
+        }
+
+        [JsonIgnore]
+        [TSExclude]
+        public string TypeReferenceString { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -117,7 +134,7 @@ namespace Mb.Models.Data
         [NotMapped]
         public bool? IsOffPageRequired { get; set; }
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
@@ -143,7 +160,7 @@ namespace Mb.Models.Data
                    Iri == other.Iri &&
                    Rds == other.Rds &&
                    Description == other.Description &&
-                   SemanticReference == other.SemanticReference &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    Name == other.Name &&
                    Label == other.Label &&
                    PositionX == other.PositionX &&
@@ -186,7 +203,7 @@ namespace Mb.Models.Data
             hashCode.Add(Iri);
             hashCode.Add(Rds);
             hashCode.Add(Description);
-            hashCode.Add(SemanticReference);
+            hashCode.Add(TypeReferenceString);
             hashCode.Add(Name);
             hashCode.Add(Label);
             hashCode.Add(PositionX);
@@ -216,5 +233,12 @@ namespace Mb.Models.Data
         }
 
         #endregion
+
+        #region Private members
+
+        [TSExclude]
+        private ICollection<TypeReference> _typeReferences;
+
+        #endregion Private members
     }
 }

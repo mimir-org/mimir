@@ -147,7 +147,7 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Iri)
                 .AddColumn(x => x.Rds)
                 .AddColumn(x => x.Description)
-                .AddColumn(x => x.SemanticReference)
+                .AddColumn(x => x.TypeReferenceString)
                 .AddColumn(x => x.Name)
                 .AddColumn(x => x.Label)
                 .AddColumn(x => x.PositionX)
@@ -273,8 +273,8 @@ namespace Mb.Data.Repositories
                 return;
             }
 
-            //SemanticReference
-            if (originalNode.SemanticReference != node.SemanticReference)
+            //TypeReference
+            if (originalNode.TypeReferenceString != node.TypeReferenceString)
             {
                 node.Version = originalNode.Version.IncrementMinorVersion();
                 return;

@@ -4,6 +4,7 @@ using Mb.Models.Application;
 using Mb.Models.Data;
 using Microsoft.AspNetCore.Http;
 using Mimirorg.Common.Extensions;
+using Newtonsoft.Json;
 
 namespace Mb.Core.Profiles
 {
@@ -16,7 +17,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.TypeReferenceString, opt => opt.MapFrom(src => src.TypeReferences != null ? JsonConvert.SerializeObject(src.TypeReferences) : null))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
                 .ForMember(dest => dest.PositionX, opt => opt.MapFrom(src => src.PositionX))
@@ -66,7 +67,7 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(src => src.Version))
                 .ForMember(dest => dest.Label, opt => opt.MapFrom(src => src.Label))
                 .ForMember(dest => dest.Rds, opt => opt.MapFrom(src => src.Rds))
-                .ForMember(dest => dest.SemanticReference, opt => opt.MapFrom(src => src.SemanticReference))
+                .ForMember(dest => dest.TypeReferences, opt => opt.MapFrom(src => src.TypeReferences))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.PositionX, opt => opt.MapFrom(src => src.PositionX))
                 .ForMember(dest => dest.PositionY, opt => opt.MapFrom(src => src.PositionY))
