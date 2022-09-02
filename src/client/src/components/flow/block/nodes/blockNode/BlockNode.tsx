@@ -42,7 +42,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
     HandleRequiredOffPageNode(data, project?.edges, size, dispatch);
   }, [secondaryNode]);
 
-  // Handle terminals
+  // Handle connectors
   useEffect(() => {
     setConnectors(FilterConnectors(data?.connectors, selectedBlockNode, secondaryNode));
   }, [selectedBlockNode, secondaryNode, data?.connectors]);
@@ -59,7 +59,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        terminals={connectors.inputs}
+        connectors={connectors.inputs}
         isElectro={isElectro}
         dispatch={dispatch}
         isInput
@@ -72,7 +72,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={data} project={project} terminals={connectors.outputs} isElectro={isElectro} dispatch={dispatch} />
+      <HandleComponent node={data} project={project} connectors={connectors.outputs} isElectro={isElectro} dispatch={dispatch} />
     </BoxWrapper>
   );
 };

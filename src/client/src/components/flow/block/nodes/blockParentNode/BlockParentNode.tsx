@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
+import { IsPartOfRelation } from "../../../helpers/Connectors";
 
 export type Connectors = { inputs: Connector[]; outputs: Connector[] };
 
@@ -44,7 +45,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        terminals={connectors.inputs}
+        connectors={connectors.inputs}
         isElectro={isElectro}
         dispatch={dispatch}
         isInput
@@ -53,8 +54,8 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <BlockParentComponent
         node={data}
         splitView={secondaryNode != null}
-        inputTerminals={connectors.inputs}
-        outputTerminals={connectors.outputs}
+        inputTerminals={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
+        outputTerminals={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
         isNavigationActive={data.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
@@ -63,7 +64,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        terminals={connectors.outputs}
+        connectors={connectors.outputs}
         isElectro={isElectro}
         dispatch={dispatch}
         isParent
