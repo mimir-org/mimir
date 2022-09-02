@@ -204,6 +204,7 @@ namespace ModelBuilder.Rdf.Extensions
 
             attribute.SelectType = ontologyService.GetEnumValue<Select>(iri, Resources.SelectType, false);
             attribute.Discipline = ontologyService.GetEnumValue<Discipline>(iri, Resources.HasDiscipline, false);
+
         }
     }
 }
