@@ -49,14 +49,16 @@ export const TerminalsCategoryList = ({ filteredTerminals, terminalCategories, s
 
             {categoryExpanded &&
               sortedTerminals.map((terminal) => {
-                return (
-                  <TerminalElement
-                    key={terminal.id}
-                    terminal={terminal}
-                    selectedTerminalId={selectedTerminalId}
-                    onSelectTerminal={(id: string) => onSelectTerminal(id)}
-                  />
-                );
+                if (terminal.terminalCategory === category.name) {
+                  return (
+                    <TerminalElement
+                      key={terminal.id}
+                      terminal={terminal}
+                      selectedTerminalId={selectedTerminalId}
+                      onSelectTerminal={(id: string) => onSelectTerminal(id)}
+                    />
+                  );
+                }
               })}
           </TerminalsListElementWrapper>
         );
