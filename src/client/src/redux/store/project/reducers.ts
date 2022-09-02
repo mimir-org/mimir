@@ -2,7 +2,7 @@ import * as Types from "./types";
 import { IsAspectNode } from "../../../helpers/Aspects";
 import { IsFamily } from "../../../helpers/Family";
 import { CreateEmptyProject } from "../../../models/data/Project";
-import { Edge, Node, Simple } from "@mimirorg/modelbuilder-types";
+import { Edge, Node, Simple, Terminal } from "@mimirorg/modelbuilder-types";
 import {
   getEdgeInterfaceAttributeMap,
   getEdgeInterfaceTerminalAttributeMap,
@@ -23,6 +23,7 @@ import {
   setLockTransportTerminalAttribute,
   TraverseTree,
 } from "./helpers/";
+import { IsTerminal } from "../../../components/flow/helpers/Connectors";
 
 const initialState: Types.ProjectState = {
   fetching: false,
@@ -450,16 +451,16 @@ export function projectReducer(state = initialState, action: Types.ProjectAction
     }
 
     case Types.CHANGE_NODE_TERMINAL_ATTRIBUTE_VALUE: {
-      const { terminalId, nodeId } = action.payload;
+      const { terminalId, nodeId, id, unitId, value } = action.payload;
 
-      // const getAttr = (conn: Connector) => {
-      //   return conn.attributes.map((attr) => (attr.id === id ? { ...attr, value, selectedUnitId } : attr));
-      // };
-
-      // TODO: fix
+      const getAttr = (conn: Terminal) => {
+        return conn.attributes.map((attr) => (attr.id === id ? { ...attr, value, unitId } : attr));
+      };
 
       const getConnectors = (n: Node) => {
-        return n.connectors.map((conn) => (conn.id === terminalId ? { ...conn, attributes: [] } : conn));
+        return n.connectors.map((conn) =>
+          conn.id === terminalId && IsTerminal(conn) ? { ...conn, attributes: getAttr(conn) } : conn
+        );
       };
 
       return {

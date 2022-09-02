@@ -1,4 +1,4 @@
-import { Connector } from "@mimirorg/modelbuilder-types";
+import { Connector, Terminal } from "@mimirorg/modelbuilder-types";
 import { EdgeProps, getSmoothStepPath } from "react-flow-renderer";
 import { Color } from "../../../../../assets/color/Color";
 import { electroSelector, useAppSelector } from "../../../../../redux/store";
@@ -21,11 +21,11 @@ export const BlockTransportEdge = ({
   data,
 }: EdgeProps) => {
   const isElectro = useAppSelector(electroSelector);
-  const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Connector;
-  const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Connector;
+  const sourceConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.fromConnectorId) as Terminal;
+  const targetConn = data.source.connectors?.find((conn: Connector) => conn.id === data.edge?.toConnectorId) as Terminal;
   const isBidirectional = IsBidirectionalTerminal(sourceConn) || IsBidirectionalTerminal(targetConn);
   const visible = !data?.edge?.hidden;
-  const color = "#000"; // sourceConn?.color; // TODO: fix color
+  const color = sourceConn?.color;
   const borderRadius = 20;
   const arrowId = `arrow-${id}`;
 

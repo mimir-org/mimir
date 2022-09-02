@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-import { Attribute, Connector } from "@mimirorg/modelbuilder-types";
+import { Attribute, Terminal } from "@mimirorg/modelbuilder-types";
 
 /**
  * "Union" interface for Transport and Interface.
  */
 interface HasInputOutputTerminals {
-  inputTerminal: Connector;
+  inputTerminal: Terminal;
   inputTerminalId: string;
-  outputTerminal: Connector;
+  outputTerminal: Terminal;
   outputTerminalId: string;
 }
 
@@ -23,16 +21,15 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeValue = <T extends HasInput
   unitId: string
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeValue(attribute, value, unitId);
-  // if (element.inputTerminalId === terminalId) {
-  //   element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
-  //     MapAttribute(attribute, attributeId, UpdateAttribute)
-  //   );
-  // } else {
-  //   element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
-  //     MapAttribute(attribute, attributeId, UpdateAttribute)
-  //   );
-  // }
-  // TODO: fix
+  if (element.inputTerminalId === terminalId) {
+    element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
+      MapAttribute(attribute, attributeId, UpdateAttribute)
+    );
+  } else {
+    element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
+      MapAttribute(attribute, attributeId, UpdateAttribute)
+    );
+  }
   return element;
 };
 
@@ -48,15 +45,15 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeIsLocked = <T extends HasIn
   isLockedStatusDate: Date
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeIsLocked(attribute, isLocked, isLockedBy, isLockedStatusDate);
-  // if (element.inputTerminalId === terminalId) {
-  //   element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
-  //     MapAttribute(attribute, attributeId, UpdateAttribute)
-  //   );
-  // } else {
-  //   element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
-  //     MapAttribute(attribute, attributeId, UpdateAttribute)
-  //   );
-  // }
+  if (element.inputTerminalId === terminalId) {
+    element.inputTerminal.attributes = element.inputTerminal.attributes.map((attribute) =>
+      MapAttribute(attribute, attributeId, UpdateAttribute)
+    );
+  } else {
+    element.outputTerminal.attributes = element.outputTerminal.attributes.map((attribute) =>
+      MapAttribute(attribute, attributeId, UpdateAttribute)
+    );
+  }
   return element;
 };
 

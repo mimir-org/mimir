@@ -1,14 +1,11 @@
 import { TabColumn } from "./styled/TabColumn";
 import { Input } from "../../../../../../../compLibrary/input/text";
 import { Edge } from "@mimirorg/modelbuilder-types";
-
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 
 interface Props {
   edge: Edge;
 }
-
-// TODO: fix GetRelationName(edge.fromConnector?.relationType)
 
 export const RelationEdgeAdminContent = ({ edge }: Props) => (
   <>
