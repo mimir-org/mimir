@@ -1,6 +1,11 @@
 import { TypeReference } from "@mimirorg/modelbuilder-types";
 import { TypeReferenceCm } from "@mimirorg/typelibrary-types";
 
+/**
+ * Component to convert an array of TypeReferenceCm to an array of TypeReference.
+ * @param typeReferences
+ * @returns a list of TypeReference.
+ */
 export const ConvertTypeReference = (typeReferences: TypeReferenceCm[]) => {
   if (!typeReferences.length) return [] as TypeReference[];
 
