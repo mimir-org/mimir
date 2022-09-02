@@ -13,5 +13,6 @@ namespace Mb.Models.Data
         public string Symbol { get; set; }
         private ICollection<TypeReference> TypeReferences { get; set; }
         public string Kind => nameof(Unit);
+
     }
 }
