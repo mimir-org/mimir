@@ -1,6 +1,6 @@
 import { Size } from "../../../../../../assets/size/Size";
 import { IsInputConnector, IsConnectorVisible, IsOutputConnector } from "../../../../helpers/Connectors";
-import { Terminals } from "../../blockParentNode/BlockParentNode";
+import { Connectors } from "../../blockParentNode/BlockParentNode";
 
 /**
  * Component to resize a child BlockNode based on the amount of active terminals.
@@ -8,7 +8,7 @@ import { Terminals } from "../../blockParentNode/BlockParentNode";
  * @param electro
  * @returns a size object with data for width and height.
  */
-export const SetChildNodeSize = (terminals: Terminals, electro: boolean) => {
+export const SetChildNodeSize = (terminals: Connectors, electro: boolean) => {
   const maximum = 5;
   const increaseX = 30;
   const increaseY = 25;

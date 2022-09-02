@@ -11,7 +11,7 @@ import { Project, Node, Connector } from "@mimirorg/modelbuilder-types";
 interface Props {
   node: Node;
   project: Project;
-  terminals: Connector[];
+  connectors: Connector[];
   isElectro: boolean;
   dispatch: Dispatch;
   isOffPage?: boolean;
@@ -20,11 +20,11 @@ interface Props {
 }
 
 /**
- * Component for the terminals displayed on the nodes in BlockView.
+ * Component for the connectors displayed on the nodes in BlockView.
  * @param interface
- * @returns a Flow Handle element with an icon that corresponds with the terminal type.
+ * @returns a Flow Handle element with an icon that corresponds with the connector type.
  */
-export const HandleComponent = ({ node, project, terminals, isElectro, isOffPage, isInput, isParent, dispatch }: Props) => {
+export const HandleComponent = ({ node, project, connectors, isElectro, isOffPage, isInput, isParent, dispatch }: Props) => {
   const [visible, setVisible] = useState(!isOffPage);
   const updateNodeInternals = useUpdateNodeInternals();
 
@@ -32,11 +32,11 @@ export const HandleComponent = ({ node, project, terminals, isElectro, isOffPage
     setTimeout(() => {
       updateNodeInternals(node?.id);
     }, 200);
-  }, [isElectro, terminals]);
+  }, [isElectro, connectors]);
 
   return (
     <HandleContainer isElectro={isElectro}>
-      {terminals.map((conn) => {
+      {connectors.map((conn) => {
         if (!ShowHandle(conn, isInput, IsProduct(node))) return null;
         return (
           <BlockNodeConnector

@@ -48,8 +48,8 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const iconColor = offPageTerminal?.color ?? Color.BLACK;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
-  const inputTerminals = data.connectors.filter((c) => IsInputConnector(c));
-  const outputTerminals = data.connectors.filter((c) => IsOutputConnector(c));
+  const inputConnectors = data.connectors.filter((c) => IsInputConnector(c));
+  const outputConnectors = data.connectors.filter((c) => IsOutputConnector(c));
 
   return (
     <Tooltip content={data.label} placement={"top"} offset={[0, 10]}>
@@ -57,7 +57,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
         <HandleComponent
           node={data}
           project={project}
-          terminals={inputTerminals}
+          connectors={inputConnectors}
           isElectro={isElectro}
           dispatch={dispatch}
           isOffPage
@@ -66,7 +66,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
         <HandleComponent
           node={data}
           project={project}
-          terminals={outputTerminals}
+          connectors={outputConnectors}
           isElectro={isElectro}
           dispatch={dispatch}
           isOffPage

@@ -14,8 +14,8 @@ import { Node, Connector } from "@mimirorg/modelbuilder-types";
 interface Props {
   node: Node;
   splitView: boolean;
-  inputTerminals: Connector[];
-  outputTerminals: Connector[];
+  inputConnectors: Connector[];
+  outputConnectors: Connector[];
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
@@ -31,8 +31,8 @@ interface Props {
 export const BlockParentComponent = ({
   node,
   splitView,
-  inputTerminals,
-  outputTerminals,
+  inputConnectors,
+  outputConnectors,
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
@@ -49,8 +49,8 @@ export const BlockParentComponent = ({
       <BlockParentBanner
         node={node}
         company={company}
-        inputTerminals={inputTerminals}
-        outputTerminals={outputTerminals}
+        inputConnectors={inputConnectors}
+        outputConnectors={outputConnectors}
         isNavigationActive={isNavigationActive}
         onNavigateUpClick={() => onNavigateUpClick()}
         onNavigateDownClick={() => onNavigateDownClick()}

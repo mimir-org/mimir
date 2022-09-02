@@ -7,7 +7,7 @@ import { AspectColorType } from "../../../../../models";
 import { HandleComponent } from "../../handle";
 import { HandleConnectedOffPageNode } from "./helpers/HandleConnectedOffPageNode";
 import { HandleRequiredOffPageNode } from "./helpers/HandleRequiredOffPageNode";
-import { FilterTerminals } from "../helpers/FilterTerminals";
+import { FilterConnectors } from "../helpers/FilterConnectors";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { Size } from "../../../../../assets/size/Size";
 import { GetAspectColor } from "../../../../../helpers";
@@ -15,8 +15,9 @@ import { BlockNodeSize } from "../../../../../models/project";
 import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
-import { Terminals } from "../blockParentNode/BlockParentNode";
+import { Connectors } from "../blockParentNode/BlockParentNode";
 import { Node } from "@mimirorg/modelbuilder-types";
+import { IsPartOfRelation } from "../../../helpers/Connectors";
 
 /**
  * Component for a child Node in BlockView.
@@ -26,8 +27,8 @@ import { Node } from "@mimirorg/modelbuilder-types";
  */
 const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const initialTerminals = { inputs: [], outputs: [] } as Terminals;
-  const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
+  const initialConnectors = { inputs: [], outputs: [] } as Connectors;
+  const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const initialSize = { width: Size.NODE_WIDTH, height: Size.NODE_HEIGHT } as BlockNodeSize;
   const [size, setSize] = useState<BlockNodeSize>(initialSize);
   const project = useAppSelector(selectors.projectSelector);
@@ -41,15 +42,15 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
     HandleRequiredOffPageNode(data, project?.edges, size, dispatch);
   }, [secondaryNode]);
 
-  // Handle terminals
+  // Handle connectors
   useEffect(() => {
-    setTerminals(FilterTerminals(data?.connectors, selectedBlockNode, secondaryNode));
+    setConnectors(FilterConnectors(data?.connectors, selectedBlockNode, secondaryNode));
   }, [selectedBlockNode, secondaryNode, data?.connectors]);
 
-  // Update node size based on active terminals
+  // Update node size based on active connectors
   useEffect(() => {
-    setSize(SetChildNodeSize(terminals, isElectro));
-  }, [isElectro, terminals]);
+    setSize(SetChildNodeSize(connectors, isElectro));
+  }, [isElectro, connectors]);
 
   if (!data) return null;
 
@@ -58,7 +59,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        terminals={terminals.inputs}
+        connectors={connectors.inputs}
         isElectro={isElectro}
         dispatch={dispatch}
         isInput
@@ -67,11 +68,11 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
         node={data}
         colorMain={GetAspectColor(data, AspectColorType.Main)}
         colorSelected={GetAspectColor(data, AspectColorType.Selected)}
-        inputTerminals={terminals.inputs}
-        outputTerminals={terminals.outputs}
+        inputConnectors={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
+        outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
         onConnectorClick={(conn, isInput) => OnConnectorClick(conn, isInput, data.id, dispatch)}
       />
-      <HandleComponent node={data} project={project} terminals={terminals.outputs} isElectro={isElectro} dispatch={dispatch} />
+      <HandleComponent node={data} project={project} connectors={connectors.outputs} isElectro={isElectro} dispatch={dispatch} />
     </BoxWrapper>
   );
 };
