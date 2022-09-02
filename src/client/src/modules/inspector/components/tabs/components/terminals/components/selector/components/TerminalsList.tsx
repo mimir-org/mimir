@@ -27,10 +27,10 @@ export const TerminalsCategoryList = ({ filteredTerminals, terminalCategories, s
   return (
     <TerminalsCategoryListBox>
       {terminalCategories.map((category, i) => {
-        if (category.name === undefined || !category.terminals.length) return null;
+        if (!ShouldDisplayCategory(category, filteredTerminals)) return null;
 
         const categoryExpanded = isCategoryExpanded(category);
-        const terminalsAmount = category.terminals.length;
+        const terminalsAmount = category.terminals?.length;
         const sortedTerminals = filteredTerminals?.sort((a, b) => a.type - b.type);
         const icon = categoryExpanded ? CollapseAccordionIcon : ExpandAccordionIcon;
 
@@ -66,5 +66,13 @@ export const TerminalsCategoryList = ({ filteredTerminals, terminalCategories, s
     </TerminalsCategoryListBox>
   );
 };
+
+function ShouldDisplayCategory(category: CategoryObject, filteredTerminals: Terminal[]) {
+  return (
+    category.name != undefined &&
+    category.terminals?.length &&
+    filteredTerminals.some((t) => t.terminalCategory === category.name)
+  );
+}
 
 export default memo(TerminalsCategoryList);
