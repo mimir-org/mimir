@@ -57,6 +57,7 @@ namespace Mb.Models.Data
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return base.Equals(other) &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    Color == other.Color &&
                    TerminalCategory == other.TerminalCategory &&
                    TerminalTypeId == other.TerminalTypeId &&
