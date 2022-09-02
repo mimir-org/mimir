@@ -20,9 +20,9 @@ interface Props {
 }
 
 /**
- * Component for the terminals displayed on the nodes in BlockView.
+ * Component for the connectors displayed on the nodes in BlockView.
  * @param interface
- * @returns a Flow Handle element with an icon that corresponds with the terminal type.
+ * @returns a Flow Handle element with an icon that corresponds with the connector type.
  */
 export const HandleComponent = ({ node, project, connectors, isElectro, isOffPage, isInput, isParent, dispatch }: Props) => {
   const [visible, setVisible] = useState(!isOffPage);
