@@ -47,7 +47,7 @@ const BlockNode: FC<NodeProps<Node>> = ({ data }) => {
     setConnectors(FilterConnectors(data?.connectors, selectedBlockNode, secondaryNode));
   }, [selectedBlockNode, secondaryNode, data?.connectors]);
 
-  // Update node size based on active terminals
+  // Update node size based on active connectors
   useEffect(() => {
     setSize(SetChildNodeSize(connectors, isElectro));
   }, [isElectro, connectors]);

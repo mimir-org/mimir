@@ -54,8 +54,8 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <BlockParentComponent
         node={data}
         splitView={secondaryNode != null}
-        inputTerminals={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
-        outputTerminals={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
+        inputConnectors={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
+        outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
         isNavigationActive={data.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
