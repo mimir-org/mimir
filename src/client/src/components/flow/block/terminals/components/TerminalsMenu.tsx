@@ -9,7 +9,7 @@ import { Connector, Node } from "@mimirorg/modelbuilder-types";
 interface Props {
   node: Node;
   isInput?: boolean;
-  terminals: Connector[];
+  connectors: Connector[];
   hasActiveTerminals: boolean;
   isParent: boolean;
   onClick: (conn: Connector, isInput: boolean) => void;
@@ -21,7 +21,7 @@ interface Props {
  * @param interface
  * @returns a drop-down menu with a node's input or output terminals.
  */
-export const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
+export const TerminalsMenu = ({ node, isInput, connectors, hasActiveTerminals, isParent, onClick, onBlur }: Props) => {
   const isElectroViewEnabled = useAppSelector(electroSelector);
   const menuOffset = SetTerminalsMenuOffset(isElectroViewEnabled, hasActiveTerminals, isParent);
 
@@ -34,7 +34,7 @@ export const TerminalsMenu = ({ node, isInput, terminals, hasActiveTerminals, is
       isInput={isInput}
       menuOffset={menuOffset}
     >
-      {terminals.map((conn) => (
+      {connectors.map((conn) => (
         <TerminalsMenuElement key={conn.id} conn={conn} isInput={isInput} onClick={onClick} />
       ))}
     </TerminalsBox>

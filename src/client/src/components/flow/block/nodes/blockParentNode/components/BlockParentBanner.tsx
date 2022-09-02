@@ -9,8 +9,8 @@ import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 interface Props {
   node: Node;
   company: MimirorgCompanyCm;
-  inputTerminals: Connector[];
-  outputTerminals: Connector[];
+  inputConnectors: Connector[];
+  outputConnectors: Connector[];
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
@@ -24,8 +24,8 @@ interface Props {
 export const BlockParentBanner = ({
   node,
   company,
-  inputTerminals,
-  outputTerminals,
+  inputConnectors,
+  outputConnectors,
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
@@ -35,7 +35,7 @@ export const BlockParentBanner = ({
     <HeaderGroup gap={"10px"}>
       <TerminalsMenuComponent
         node={node}
-        terminals={inputTerminals}
+        connectors={inputConnectors}
         onClick={(c, isInput) => onConnectorClick(c, isInput)}
         isInput
         isParent
@@ -60,7 +60,7 @@ export const BlockParentBanner = ({
     </HeaderGroup>
     <TerminalsMenuComponent
       node={node}
-      terminals={outputTerminals}
+      connectors={outputConnectors}
       onClick={(c, isInput) => onConnectorClick(c, isInput)}
       isParent
     />

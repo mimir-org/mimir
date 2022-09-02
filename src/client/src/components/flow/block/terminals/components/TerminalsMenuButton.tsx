@@ -8,7 +8,7 @@ interface Props {
   isParent: boolean;
   isInput?: boolean;
   showMenuButton: boolean;
-  terminals: Connector[];
+  connectors: Connector[];
   onClick: () => void;
 }
 
@@ -17,10 +17,10 @@ interface Props {
  * @param interface
  * @returns a clickable button that toggles the display of the terminals menu.
  */
-export const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, terminals, onClick }: Props) => (
+export const TerminalsMenuButton = ({ node, isParent, isInput, showMenuButton, connectors, onClick }: Props) => (
   <TerminalsButtonBox
     id={`terminals-menu-button-${node.id}`}
-    visible={showMenuButton && !IsAspectNode(node) && !!terminals.length}
+    visible={showMenuButton && !IsAspectNode(node) && !!connectors.length}
     isInput={isInput}
     onClick={() => onClick()}
   >

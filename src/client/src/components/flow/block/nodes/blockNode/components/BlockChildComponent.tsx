@@ -10,8 +10,8 @@ interface Props {
   node: Node;
   colorMain: string;
   colorSelected: string;
-  inputTerminals: Connector[];
-  outputTerminals: Connector[];
+  inputConnectors: Connector[];
+  outputConnectors: Connector[];
   onConnectorClick: (conn: Connector, isInput: boolean) => void;
 }
 
@@ -23,8 +23,8 @@ export const BlockChildComponent = ({
   node,
   colorMain,
   colorSelected,
-  inputTerminals,
-  outputTerminals,
+  inputConnectors,
+  outputConnectors,
   onConnectorClick,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
@@ -41,8 +41,8 @@ export const BlockChildComponent = ({
     >
       <BlockChildHeader
         node={node}
-        inputTerminals={inputTerminals}
-        outputTerminals={outputTerminals}
+        inputConnectors={inputConnectors}
+        outputConnectors={outputConnectors}
         onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
         showMenuButton={showMenuButton}
       />

@@ -49,8 +49,8 @@ export const BlockParentComponent = ({
       <BlockParentBanner
         node={node}
         company={company}
-        inputTerminals={inputTerminals}
-        outputTerminals={outputTerminals}
+        inputConnectors={inputTerminals}
+        outputConnectors={outputTerminals}
         isNavigationActive={isNavigationActive}
         onNavigateUpClick={() => onNavigateUpClick()}
         onNavigateDownClick={() => onNavigateDownClick()}
