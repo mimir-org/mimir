@@ -5,6 +5,7 @@ import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
 import { ConvertAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 import { UpdateAttributesId } from "./ConvertTerminalToTransport";
+import { ConvertTypeReference } from "./ConvertTypeReference";
 
 /**
  * Component to convert a Terminal to the Interface data type.
@@ -45,7 +46,7 @@ const ConvertTerminalToInterface = (
     name: sourceTerminal.name,
     label: sourceTerminal.name,
     description: null,
-    semanticReference: null,
+    typeReferences: ConvertTypeReference(interfaceType.typeReferences),
     attributes: ConvertAttributeLibCmToAttribute(interfaceType.attributes, nodeId, nodeIri),
     inputTerminalId: inputTerminal.id,
     inputTerminal: inputTerminal,

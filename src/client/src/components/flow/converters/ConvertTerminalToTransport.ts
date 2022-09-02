@@ -4,6 +4,7 @@ import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
 import { ConvertAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
+import { ConvertTypeReference } from "./ConvertTypeReference";
 
 /**
  * Component to convert a Terminal to the Transport data type.
@@ -44,7 +45,7 @@ const ConvertTerminalToTransport = (
     name: sourceTerminal.name,
     label: sourceTerminal.name,
     description: null,
-    semanticReference: null,
+    typeReferences: ConvertTypeReference(transportType.typeReferences),
     inputTerminalId: inputTerminal.id,
     inputTerminal,
     outputTerminalId: outputTerminal.id,

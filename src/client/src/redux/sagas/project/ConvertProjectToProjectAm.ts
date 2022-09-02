@@ -58,7 +58,7 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
       version: node.version,
       label: node.label,
       rds: node.rds,
-      semanticReference: node.semanticReference,
+      typeReferences: node.typeReferences,
       description: node.description,
       positionX: node.positionX,
       positionY: node.positionY,
@@ -162,7 +162,7 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
     domain: terminal.domain,
     name: terminal.name,
     type: terminal.type,
-    semanticReference: "", // terminal.semanticReference, // TODO: fix
+    typeReferences: terminal.typeReferences,
     connectorVisibility: terminal.connectorVisibility,
     nodeId: terminal.nodeId,
     nodeIri: terminal.nodeIri,
@@ -210,6 +210,7 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
       isLocked: attr.isLocked,
       isLockedStatusBy: attr.isLockedStatusBy,
       isLockedStatusDate: attr.isLockedStatusDate,
+      typeReferences: attr.typeReferences,
     });
   });
 
@@ -245,7 +246,7 @@ function ConvertTransportToTransportAm(data: Transport) {
     label: data.label,
     description: data.description,
     statusId: data.statusId,
-    semanticReference: data.semanticReference,
+    typeReferences: data.typeReferences,
     attributes: ConvertAttributesToAttributesAm(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertTerminalToTerminalAm(data.inputTerminal),
@@ -270,7 +271,7 @@ function ConvertInterfaceToInterfaceAm(data: Interface) {
     label: data.label,
     description: data.description,
     statusId: data.statusId,
-    semanticReference: data.semanticReference,
+    typeReferences: data.typeReferences,
     attributes: ConvertAttributesToAttributesAm(data.attributes),
     inputTerminalId: data.inputTerminalId,
     inputTerminal: ConvertTerminalToTerminalAm(data.inputTerminal),

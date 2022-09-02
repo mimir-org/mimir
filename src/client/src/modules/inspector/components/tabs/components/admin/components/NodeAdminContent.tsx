@@ -39,10 +39,6 @@ export const NodeAdminContent = ({ node, project }: Props) => {
           <div>{TextResources.ADMIN_RDS}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsId(node) ?? ""} onChange={() => null} inputType="" />
         </div>
-        <div>
-          <div>{TextResources.ADMIN_SEMANTIC_ID}</div>
-          <Input fontSize={FontSize.STANDARD} readOnly value={node.semanticReference ?? ""} onChange={() => null} inputType="" />
-        </div>
       </TabColumn>
       <TabColumn width={250}>
         <div>

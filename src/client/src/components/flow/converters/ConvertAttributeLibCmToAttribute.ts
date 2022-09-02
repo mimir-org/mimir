@@ -3,6 +3,7 @@ import { AttributeLibCm, SimpleLibCm, TerminalLibCm } from "@mimirorg/typelibrar
 import { TextResources } from "../../../assets/text/TextResources";
 import { CreateId } from "../helpers";
 import { ConvertUnitLibCmToUnits } from "./";
+import { ConvertTypeReference } from "./ConvertTypeReference";
 
 /**
  * Component to convert AttributeLibCm to the type Attribute.
@@ -48,6 +49,7 @@ export const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], n
       simpleIri: null,
       terminalIri: null,
       transportIri: null,
+      typeReferences: ConvertTypeReference(a.typeReferences)
     } as Attribute;
   });
 };
