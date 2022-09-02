@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -14,6 +15,24 @@ namespace Mb.Models.Data
         public string TerminalTypeIri { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
         public string Discriminator => nameof(Terminal);
+
+        [NotMapped]
+        public virtual ICollection<TypeReference> TypeReferences
+        {
+            get
+            {
+                if (_typeReferences != null)
+                    return _typeReferences;
+
+                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
+            }
+
+            set => _typeReferences = value;
+        }
+
+        [JsonIgnore]
+        [TSExclude]
+        public string TypeReferenceString { get; set; }
 
         [JsonIgnore]
         [TSExclude]
@@ -38,6 +57,7 @@ namespace Mb.Models.Data
             if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return base.Equals(other) &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    Color == other.Color &&
                    TerminalCategory == other.TerminalCategory &&
                    TerminalTypeId == other.TerminalTypeId &&
@@ -53,9 +73,16 @@ namespace Mb.Models.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri);
+            return HashCode.Combine(base.GetHashCode(), Color, TerminalCategory, TerminalTypeId, TerminalTypeIri, TypeReferenceString);
         }
 
-        #endregion
+        #endregion IEquatable
+
+        #region Private members
+
+        [TSExclude]
+        private ICollection<TypeReference> _typeReferences;
+
+        #endregion Private members
     }
 }

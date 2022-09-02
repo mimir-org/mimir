@@ -74,6 +74,8 @@ namespace Mb.Models.Application
         [ValidIri]
         public string SimpleIri { get; set; }
 
+        public ICollection<TypeReference> TypeReferences { get; set; }
+
         public ICollection<string> SelectValues { get; set; }
 
         [EnumDataType(typeof(Select))]

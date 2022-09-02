@@ -58,7 +58,6 @@ namespace ModelBuilder.Unit.Tests.Models
                                 NodeIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                                 Name = "Connector A",
                                 Type = ConnectorDirection.Input,
-                                SemanticReference = null,
                                 RelationType = RelationType.PartOf
                             },
                             new RelationAm
@@ -72,7 +71,6 @@ namespace ModelBuilder.Unit.Tests.Models
                                 NodeIri = "https://rdf.runir.net/ID17de767c-3040-44a6-a8ad-f5bb300fc52e",
                                 Name = "Connector B",
                                 Type = ConnectorDirection.Output,
-                                SemanticReference = null,
                                 RelationType = RelationType.PartOf
                             }
                         },
@@ -92,7 +90,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         PositionY = 213.5715m,
                         Purpose = null,
                         Rds = "B0",
-                        SemanticReference = null,
+                        TypeReferences = null,
                         Simples = null,
                         StatusId = null,
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
@@ -125,7 +123,6 @@ namespace ModelBuilder.Unit.Tests.Models
                                 NodeIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                                 Name = "Connector A",
                                 Type = ConnectorDirection.Input,
-                                SemanticReference = null,
                                 RelationType = RelationType.PartOf
                             },
                             new RelationAm
@@ -139,7 +136,6 @@ namespace ModelBuilder.Unit.Tests.Models
                                 NodeIri = "https://rdf.runir.net/ID183EA07F-9696-467F-8F12-ACE65BA89670",
                                 Name = "Connector B",
                                 Type = ConnectorDirection.Output,
-                                SemanticReference = null,
                                 RelationType = RelationType.PartOf
                             }
                         },
@@ -159,7 +155,7 @@ namespace ModelBuilder.Unit.Tests.Models
                         PositionY = 213.5715m,
                         Purpose = null,
                         Rds = "B0",
-                        SemanticReference = null,
+                        TypeReferences = null,
                         Simples = null,
                         StatusId = null,
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"

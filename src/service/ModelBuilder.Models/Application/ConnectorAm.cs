@@ -24,8 +24,6 @@ namespace Mb.Models.Application
         [EnumDataType(typeof(ConnectorDirection))]
         public ConnectorDirection Type { get; set; }
 
-        public string SemanticReference { get; set; }
-
         [EnumDataType(typeof(ConnectorVisibility))]
         public ConnectorVisibility ConnectorVisibility { get; set; }
 

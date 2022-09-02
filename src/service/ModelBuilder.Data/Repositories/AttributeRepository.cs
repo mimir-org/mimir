@@ -40,6 +40,7 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.AttributeTypeIri)
                 .AddColumn(x => x.SelectedUnitId)
                 .AddColumn(x => x.UnitString)
+                .AddColumn(x => x.TypeReferenceString)
                 .AddColumn(x => x.Qualifier)
                 .AddColumn(x => x.Source)
                 .AddColumn(x => x.Condition)

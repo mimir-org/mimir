@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Mb.Models.Data;
 using Mimirorg.Common.Attributes;
 using Mb.Models.Extensions;
 using Mimirorg.TypeLibrary.Enums;
@@ -39,7 +40,7 @@ namespace Mb.Models.Application
 
         public string Rds { get; set; }
 
-        public string SemanticReference { get; set; }
+        public ICollection<TypeReference> TypeReferences { get; set; }
 
         public string Description { get; set; }
 
