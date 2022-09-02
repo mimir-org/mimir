@@ -2,7 +2,7 @@ import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponen
 import { NodeBoxHeader, BlockNodeNameBox } from "./BlockChildHeader.styled";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

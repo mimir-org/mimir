@@ -9,7 +9,7 @@ import { commonStateCompanySelector, useAppDispatch, useAppSelector } from "../.
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
-import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;

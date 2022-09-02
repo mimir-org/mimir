@@ -1,4 +1,4 @@
-import { ConnectorDirection, Terminal, Transport } from "@mimirorg/modelbuilder-types";
+import { Terminal, ConnectorDirection, Transport } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";

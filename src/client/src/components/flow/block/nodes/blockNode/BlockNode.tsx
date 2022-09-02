@@ -16,8 +16,8 @@ import { SetChildNodeSize } from "./helpers/SetChildNodeSize";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { BlockChildComponent } from "./components/BlockChildComponent";
 import { Connectors } from "../blockParentNode/BlockParentNode";
-import { Node } from "@mimirorg/modelbuilder-types";
 import { IsPartOfRelation } from "../../../helpers/Connectors";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component for a child Node in BlockView.
