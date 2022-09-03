@@ -15,7 +15,7 @@ import { ConvertTypeReference } from "./ConvertTypeReference";
  * @returns a list of Attributes.
  */
 export const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], nodeId: string, nodeIri: string) => {
-  if (!attributes.length) return [] as Attribute[];
+  if (!attributes || !attributes.length) return [] as Attribute[];
 
   return attributes.map((a) => {
     return {

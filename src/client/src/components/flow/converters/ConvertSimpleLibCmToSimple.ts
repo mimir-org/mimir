@@ -11,7 +11,7 @@ import { ConvertSimpleAttributeLibCmToAttribute } from "./ConvertAttributeLibCmT
  * @returns a list of Simple types.
  */
 const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[], nodeId: string, nodeIri: string) => {
-  if (!simples.length) return [] as Simple[];
+  if (!simples || !simples.length) return [] as Simple[];
 
   return simples.map((s) => {
     return {

@@ -7,7 +7,7 @@ import { TypeReferenceCm } from "@mimirorg/typelibrary-types";
  * @returns a list of TypeReference.
  */
 export const ConvertTypeReference = (typeReferences: TypeReferenceCm[]) => {
-  if (!typeReferences.length) return [] as TypeReference[];
+  if (!typeReferences || !typeReferences.length) return [] as TypeReference[];
 
   return typeReferences.map((t) => {
     return {

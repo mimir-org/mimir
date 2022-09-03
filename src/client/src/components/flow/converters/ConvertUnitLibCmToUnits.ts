@@ -2,6 +2,7 @@ import { UnitLibCm } from "@mimirorg/typelibrary-types";
 import { Unit } from "@mimirorg/modelbuilder-types";
 import { CreateId } from "../helpers";
 import { TextResources } from "../../../assets/text/TextResources";
+import { ConvertTypeReference } from "./ConvertTypeReference";
 
 /**
  * Component to convert units from the type UnitLibCm to Unit.
@@ -18,6 +19,7 @@ const ConvertUnitLibCmToUnits = (unitLibCms: UnitLibCm[]) => {
       description: u.description,
       symbol: u.symbol,
       kind: TextResources.KIND_UNIT,
+      typeReferences: ConvertTypeReference(u.typeReferences)
     } as Unit;
   });
 };
