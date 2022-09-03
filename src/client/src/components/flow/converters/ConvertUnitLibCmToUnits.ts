@@ -17,7 +17,7 @@ const ConvertUnitLibCmToUnits = (unitLibCms: UnitLibCm[]) => {
       name: u.name,
       description: u.description,
       symbol: u.symbol,
-      kind: TextResources.KIND_UNIT
+      kind: TextResources.KIND_UNIT,
     } as Unit;
   });
 };
