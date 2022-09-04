@@ -1,5 +1,5 @@
 import * as selectors from "./helpers/selectors";
-import { Node } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { BlockAspectComponent } from "./blockAspect/BlockAspectComponent";
 import { HasChildren, IsAncestorInSet } from "../../../helpers/ParentNode";

@@ -5,14 +5,15 @@ import { NodeProps } from "react-flow-renderer";
 import { HandleComponent } from "../../handle";
 import { OnConnectorClick } from "../handlers/OnConnectorClick";
 import { OnBlockParentClick, OnBlockChildClick } from "./handlers/OnClick";
-import { FilterTerminals } from "../helpers/FilterTerminals";
-import { Connector, Node } from "../../../../../models";
+import { FilterConnectors } from "../helpers/FilterConnectors";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { BlockParentComponent } from "./components/BlockParentComponent";
 import { BoxWrapper } from "../styled/BoxWrapper";
 import { InitParentSize } from "./helpers/InitParentSize";
+import { IsPartOfRelation } from "../../../helpers/Connectors";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
-export type Terminals = { inputs: Connector[]; outputs: Connector[] };
+export type Connectors = { inputs: Connector[]; outputs: Connector[] };
 
 /**
  * Component for a ParentNode in BlockView.
@@ -22,8 +23,8 @@ export type Terminals = { inputs: Connector[]; outputs: Connector[] };
  */
 const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   const dispatch = useAppDispatch();
-  const initialTerminals = { inputs: [], outputs: [] } as Terminals;
-  const [terminals, setTerminals] = useState<Terminals>(initialTerminals);
+  const initialConnectors = { inputs: [], outputs: [] } as Connectors;
+  const [connectors, setConnectors] = useState<Connectors>(initialConnectors);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
@@ -34,7 +35,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    setTerminals(FilterTerminals(data?.connectors, selectedBlockNode, secondaryNode));
+    setConnectors(FilterConnectors(data?.connectors, selectedBlockNode, secondaryNode));
   }, [data?.connectors, selectedBlockNode, secondaryNode]);
 
   if (!data) return null;
@@ -44,7 +45,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        terminals={terminals.inputs}
+        connectors={connectors.inputs}
         isElectro={isElectro}
         dispatch={dispatch}
         isInput
@@ -53,8 +54,8 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <BlockParentComponent
         node={data}
         splitView={secondaryNode != null}
-        inputTerminals={terminals.inputs}
-        outputTerminals={terminals.outputs}
+        inputConnectors={connectors.inputs.filter((c) => !IsPartOfRelation(c))}
+        outputConnectors={connectors.outputs.filter((c) => !IsPartOfRelation(c))}
         isNavigationActive={data.id !== secondaryNode?.id}
         onNavigateUpClick={() => OnBlockParentClick(dispatch, data)}
         onNavigateDownClick={() => OnBlockChildClick(dispatch, data.id)}
@@ -63,7 +64,7 @@ const BlockParentNode: FC<NodeProps<Node>> = ({ data }) => {
       <HandleComponent
         node={data}
         project={project}
-        terminals={terminals.outputs}
+        connectors={connectors.outputs}
         isElectro={isElectro}
         dispatch={dispatch}
         isParent

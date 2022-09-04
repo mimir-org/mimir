@@ -1,4 +1,4 @@
-import { FileFormat } from "./FileFormat";
+import { FileFormat } from "@mimirorg/modelbuilder-types";
 
 export interface ProjectFileAm {
   parserId: string;

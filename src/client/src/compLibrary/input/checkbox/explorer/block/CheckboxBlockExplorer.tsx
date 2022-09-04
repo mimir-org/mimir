@@ -1,5 +1,5 @@
 import { CheckboxWrapper } from "./CheckboxBlockExplorer.styled";
-import { Icon } from "../../../../icon";
+import { Icon } from "../../../../icon/Icon";
 import { Tooltip } from "../../../../tooltip/Tooltip";
 import { TextResources } from "../../../../../assets/text/TextResources";
 

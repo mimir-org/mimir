@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ActiveTerminalListWrapper = styled.div`
+export const TerminalsCategoryListBox = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;

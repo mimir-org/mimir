@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import * as selectors from "./helpers/selectors";
 import { Dispatch } from "redux";
 import { useEffect, useRef } from "react";
@@ -10,24 +9,21 @@ import { search } from "../../redux/store/project/actions";
 import { FlowModule } from "../flow/FlowModule";
 import { ErrorModule } from "../../modules/error";
 import { ValidationModule } from "../../modules/validation";
-import { fetchLibrary, fetchLibraryInterfaceTypes, fetchLibraryTransportTypes } from "../../redux/store/library/librarySlice";
-import { HeaderComponent } from "../header/HeaderComponent";
 import { ExplorerTreeModule, ExplorerBlockModule } from "../../modules/explorer/";
 import { fetchUser } from "../../redux/store/user/userSlice";
-import { changeActiveMenu } from "../menus/projectMenu/components/subMenus/redux/menuSlice";
-import { MENU_TYPE, VIEW_TYPE } from "../../models/project";
+import { VIEW_TYPE } from "../../models/project";
 import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
-import { fetchBlobData } from "../../typeEditor/redux/typeEditorSlice";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
-import { TypeEditorComponent } from "../../typeEditor";
+import { fetchCompanies, fetchCompany, fetchCombinedAttributeFilters, fetchParsers } from "../../redux/store/common/commonSlice";
+import { HeaderComponent } from "../header/HeaderComponent";
 import {
-  fetchCollaborationPartners,
-  fetchCombinedAttributeFilters,
-  fetchParsers,
-  fetchStatuses,
-} from "../../redux/store/common/commonSlice";
+  fetchLibrary,
+  fetchLibraryInterfaceTypes,
+  fetchLibraryTerminals,
+  fetchLibraryTransportTypes,
+} from "../../redux/store/library/librarySlice";
 
 interface Props {
   dispatch: Dispatch;
@@ -49,25 +45,17 @@ export const Home = ({ dispatch }: Props) => {
   const inspectorRef = useRef(null);
 
   useEffect(() => {
+    dispatch(fetchCompany());
     dispatch(fetchLibraryInterfaceTypes());
     dispatch(fetchLibraryTransportTypes());
+    dispatch(fetchLibraryTerminals());
     dispatch(search(""));
     dispatch(fetchLibrary());
-    dispatch(fetchCollaborationPartners());
+    dispatch(fetchCompanies());
     dispatch(fetchParsers());
-    dispatch(fetchStatuses());
     dispatch(fetchCombinedAttributeFilters());
-    dispatch(fetchBlobData());
     dispatch(fetchUser());
   }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(changeActiveMenu(null));
-    const timeout = setTimeout(() => {
-      if (isStartPage) dispatch(changeActiveMenu(MENU_TYPE.OPEN_PROJECT_MENU));
-    }, 2500);
-    return () => clearTimeout(timeout);
-  }, []);
 
   useEffect(() => {
     ToggleColorProfile(isDarkMode);
@@ -87,7 +75,6 @@ export const Home = ({ dispatch }: Props) => {
           <InspectorModule inspectorRef={inspectorRef} dispatch={dispatch} />
           <LibraryModule dispatch={dispatch} />
           {isFilterOpen && <VisualFilterComponent dispatch={dispatch} />}
-          <TypeEditorComponent />
           <ValidationModule />
         </>
       )}

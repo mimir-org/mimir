@@ -1,14 +1,14 @@
 import { Dispatch } from "redux";
-import { Button } from "../../../../../../../compLibrary/buttons";
+import { Button } from "../../../../../../../compLibrary/buttons/standard";
 import { Input } from "../../../../../../../compLibrary/input/text";
-import { LibItem } from "../../../../../../../models";
 import { CreateCollectionWrapper, CollectionNameInput } from "./CreateCollectionComponent.styled";
 import { OnCreateCollection } from "../handlers";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   collectionName: string;
   setCollectionName: (value: string) => void;
-  selectedTypes: LibItem[];
+  selectedTypes: NodeLibCm[];
   dispatch: Dispatch;
 }
 

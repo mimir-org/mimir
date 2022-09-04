@@ -7,7 +7,7 @@ interface SetLockInterfaceTerminalAttribute {
   interfaceId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: string;
+  isLockedStatusDate: Date;
 }
 
 export const setLockInterfaceTerminalAttribute = (lock: SetLockInterfaceTerminalAttribute, state: Types.ProjectState) => {

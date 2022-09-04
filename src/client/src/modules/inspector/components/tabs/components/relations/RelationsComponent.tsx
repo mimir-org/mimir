@@ -1,7 +1,7 @@
 import { RelationsContent } from "./components/RelationsContent";
 import { RelationsBody } from "./RelationsComponent.styled";
 import { TextResources } from "../../../../../../assets/text/TextResources";
-import { edgeSelector, useAppSelector } from "../../../../../../redux/store";
+import { edgesSelector, useAppSelector } from "../../../../../../redux/store";
 import { InspectorElement } from "../../../../types";
 import { IsEdge, IsNode } from "../../../../helpers/IsType";
 import { useMemo } from "react";
@@ -18,13 +18,12 @@ interface Props {
 }
 
 export const RelationsComponent = ({ element }: Props) => {
-  const edges = useAppSelector(edgeSelector);
+  const edges = useAppSelector(edgesSelector);
   const connectors = useMemo(() => GetConnectors(element), [element]);
   const [inputTerminals, outputTerminals] = useMemo(() => GetTerminals(connectors, edges), [connectors, edges]);
   const transports = useMemo(() => GetTransports(edges, element), [edges, element]);
   const setSelectedNodes = useStoreApi().getState().addSelectedNodes;
   const setSelectedEdges = useStoreApi().getState().addSelectedEdges;
-
   const hasConnectors = connectors.length > 0;
 
   return (

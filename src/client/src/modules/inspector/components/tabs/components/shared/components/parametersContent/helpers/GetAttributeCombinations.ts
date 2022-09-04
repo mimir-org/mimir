@@ -1,12 +1,13 @@
+import { Attribute } from "@mimirorg/modelbuilder-types";
 import { CombinedAttribute, CombinedAttributeFilter } from "../../../../../../../../../models";
-import { AttributeLikeItem, CombinedAttributeDict } from "../../../../../../../types";
+import { CombinedAttributeDict } from "../../../../../../../types";
 
 /**
  * Expects attributes not to be a mixed list of Attribute and AttributeType.
  */
 const GetAttributeCombinations = (
   attributeFilters: CombinedAttributeFilter[],
-  attributes: AttributeLikeItem[]
+  attributes: Attribute[]
 ): CombinedAttributeDict => {
   const combinations: CombinedAttributeDict = {};
 
@@ -19,7 +20,7 @@ const GetAttributeCombinations = (
   return combinations;
 };
 
-const DoesCombinationMatchAttribute = (combination: CombinedAttribute, attribute: AttributeLikeItem) =>
+const DoesCombinationMatchAttribute = (combination: CombinedAttribute, attribute: Attribute) =>
   combination.qualifier === attribute.qualifier &&
   combination.source === attribute.source &&
   combination.condition === attribute.condition;

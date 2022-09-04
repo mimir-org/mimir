@@ -1,4 +1,4 @@
-import { Attribute } from "../../../models";
+import { Attribute } from "@mimirorg/modelbuilder-types";
 
 const PixelCalculator = (attribute: Attribute): number => {
   const ratio = 150.0;

@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Color } from "../../../../compLibrary/colors/Color";
+import { Color } from "../../../../assets/color/Color";
 
 export const LockSpinner = styled.div`
   width: 20px;

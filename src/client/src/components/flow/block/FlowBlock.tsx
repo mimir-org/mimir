@@ -6,15 +6,13 @@ import { BuildFlowBlockNodes, BuildFlowBlockEdges } from "./builders";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { GetBlockEdgeTypes, GetBlockNodeTypes, SetInitialEdgeVisibility, SetInitialParentId } from "./helpers/";
 import { BlockConnectionLine } from "./edges/connectionLine/BlockConnectionLine";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
 import ReactFlow, {
   Node as FlowNode,
   Edge as FlowEdge,
   Connection,
-  useNodesState,
-  useEdgesState,
   useReactFlow,
   ReactFlowInstance,
   NodeChange,
@@ -33,28 +31,28 @@ interface Props {
  * The secondaryNode is the second ParentNode, displayed to the right of the parentNode.
  * The secondaryNode is only set if two parents are chosen from the Explorer, this state is called Split View.
  * @param interface
- * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
 export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   const { getViewport } = useReactFlow();
   const flowWrapper = useRef(null);
   const [instance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [flowNodes, setNodes] = useNodesState([]);
-  const [flowEdges, setEdges] = useEdgesState([]);
+  const [flowNodes, setNodes] = useState<FlowNode[]>([] as FlowNode[]);
+  const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const secondaryNodeRef = useAppSelector(selectors.secondaryNodeSelector);
-  const icons = useAppSelector(selectors.iconSelector);
-  const lib = useAppSelector(selectors.librarySelector);
   const user = useAppSelector(selectors.userStateSelector).user;
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  const terminals = useAppSelector(selectors.terminalsSelector);
   const mimirNodes = project?.nodes ?? [];
   const mimirEdges = project?.edges ?? [];
   const selectedNode = mimirNodes.find((n) => n.selected);
   const selectedBlockNode = mimirNodes.find((n) => n.blockSelected);
   const secondaryNode = mimirNodes.find((n) => n.id === secondaryNodeRef?.id);
   const selectedEdge = mimirEdges.find((e) => e.selected);
+  const library = useAppSelector(selectors.librarySelector);
 
   const OnInit = useCallback((_reactFlowInstance: ReactFlowInstance) => {
     return setFlowInstance(_reactFlowInstance);
@@ -69,7 +67,7 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   };
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnConnect({ connection, project, lib, animatedEdge, setEdges, dispatch });
+    return hooks.useOnBlockConnect({ connection, project, library, animatedEdge, setEdges, dispatch });
   };
 
   const OnDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -82,7 +80,17 @@ export const FlowBlock = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnDrop({ event, project, user, icons, lib, selectedNode, secondaryNode, instance, getViewport, dispatch });
+    return hooks.useOnBlockDrop({
+      event,
+      project,
+      user,
+      selectedNode,
+      secondaryNode,
+      instance,
+      getViewport,
+      dispatch,
+      terminals,
+    });
   };
 
   const OnNodesChange = useCallback(

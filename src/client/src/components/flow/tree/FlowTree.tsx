@@ -7,7 +7,7 @@ import { updatePosition } from "../../../redux/store/project/actions";
 import { useAppSelector } from "../../../redux/store/hooks";
 import { TreeConnectionLine } from "./edges/connectionLine/TreeConnectionLine";
 import { HandleTreeNodeSelection } from "./handlers";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { GetTreeEdgeTypes, GetTreeNodeTypes, SetInitialEdgeVisibility } from "./helpers/";
 import { Spinner, SpinnerWrapper } from "../../../compLibrary/spinner/";
 import { Dispatch } from "redux";
@@ -16,8 +16,6 @@ import ReactFlow, {
   Edge as FlowEdge,
   Connection,
   Node as FlowNode,
-  useNodesState,
-  useEdgesState,
   ReactFlowInstance,
   OnSelectionChangeParams,
   NodeChange,
@@ -32,20 +30,19 @@ interface Props {
 /**
  * Component for the Flow library in TreeView.
  * @param interface
- * @returns a canvas with Flow elements and Mimir nodes, transports and edges.
+ * @returns a canvas with Flow elements and Mimir nodes, edges and transports.
  */
 export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   const flowWrapper = useRef(null);
   const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(null);
-  const [flowNodes, setNodes] = useNodesState<FlowNode>([] as FlowNode[]);
-  const [flowEdges, setEdges] = useEdgesState<FlowEdge>([] as FlowEdge[]);
+  const [flowNodes, setNodes] = useState<FlowNode[]>([] as FlowNode[]);
+  const [flowEdges, setEdges] = useState<FlowEdge[]>([] as FlowEdge[]);
   const [hasRendered, setHasRendered] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const project = useAppSelector(selectors.projectSelector);
   const user = useAppSelector(selectors.userStateSelector)?.user;
-  const icons = useAppSelector(selectors.iconSelector);
-  const library = useAppSelector(selectors.librarySelector);
   const animatedEdge = useAppSelector(selectors.animatedEdgeSelector);
+  const terminals = useAppSelector(selectors.terminalsSelector);
   const mimirNodes = project?.nodes;
   const mimirEdges = project?.edges;
   const selectedNode = mimirNodes?.find((n) => n.selected);
@@ -65,11 +62,11 @@ export const FlowTree = ({ inspectorRef, dispatch }: Props) => {
   }, []);
 
   const OnConnect = (connection: FlowEdge | Connection) => {
-    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, library, animatedEdge });
+    return hooks.useOnTreeConnect({ connection, project, setEdges, dispatch, animatedEdge });
   };
 
   const OnDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    return hooks.useOnTreeDrop({ event, project, user, icons, library, flowInstance, flowWrapper, dispatch });
+    return hooks.useOnTreeDrop({ event, project, terminals, user, flowInstance, flowWrapper, dispatch });
   };
 
   const OnSelectionChange = (selectedItems: OnSelectionChangeParams) => {

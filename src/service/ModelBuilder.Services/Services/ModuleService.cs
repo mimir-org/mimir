@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Mb.Models.Abstract;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 
 namespace Mb.Services.Services
@@ -16,12 +16,12 @@ namespace Mb.Services.Services
     public class ModuleService : IModuleService
     {
         public List<Assembly> Assemblies { get; }
-        public List<Models.Application.Module> Modules { get; set; }
+        public List<Models.Common.Module> Modules { get; set; }
 
         public ModuleService()
         {
             Assemblies = new List<Assembly>();
-            Modules = new List<Models.Application.Module>();
+            Modules = new List<Models.Common.Module>();
             LoadAssemblies();
             Modules.AddRange(CreateModules<IModelBuilderPlugin>(ModuleType.Plugin));
             Modules.AddRange(CreateModules<IModelBuilderParser>(ModuleType.Parser));
@@ -48,10 +48,10 @@ namespace Mb.Services.Services
             throw new NotSupportedException("The type is not supported or empty");
         }
 
-        private IEnumerable<Models.Application.Module> CreateModules<T>(ModuleType moduleType)
+        private IEnumerable<Models.Common.Module> CreateModules<T>(ModuleType moduleType)
             where T : IModuleInterface
         {
-            var data = new List<Models.Application.Module>();
+            var data = new List<Models.Common.Module>();
 
             if (Assemblies == null || !Assemblies.Any())
                 return data;
@@ -66,10 +66,10 @@ namespace Mb.Services.Services
                 if (instance is not T obj)
                     continue;
 
-                data.Add(new Models.Application.Module
+                data.Add(new Models.Common.Module
                 {
                     ModuleDescription = obj.GetModuleDescription() ?? new ModuleDescription
-                    { Id = Guid.Empty, Name = "Missing description" },
+                    { Id = Guid.Empty.ToString(), Name = "Missing description" },
                     Instance = obj,
                     ModuleType = moduleType
                 });
@@ -113,9 +113,7 @@ namespace Mb.Services.Services
         {
             var sb = new StringBuilder();
             sb.AppendLine();
-            sb.AppendLine("#############################################################################");
             sb.AppendLine("############## Mimir services started. ######################################");
-            sb.AppendLine("#############################################################################");
 
             if (Modules != null && Modules.Any())
             {
@@ -124,7 +122,7 @@ namespace Mb.Services.Services
                     sb.AppendLine(m.ToString());
                 }
 
-                sb.AppendLine("#############################################################################");
+                sb.AppendLine("#########################################################################");
             }
 
             return sb.ToString();

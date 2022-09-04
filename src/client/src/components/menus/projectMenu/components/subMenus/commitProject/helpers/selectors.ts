@@ -1,5 +1,5 @@
 export {
-  commonStateCollaborationPartnersSelector,
+  commonStateCompaniesSelector,
   commonStateParsersSelector,
   isActiveMenuSelector,
   projectIdSelector,

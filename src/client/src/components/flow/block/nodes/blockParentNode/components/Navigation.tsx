@@ -1,6 +1,6 @@
 import { NavigationButton } from "./Navigation.styled";
 import { ArrowDownIcon, ArrowDownInactiveIcon, ArrowUpIcon, ArrowUpInactiveIcon } from "../../../../../../assets/icons/arrow";
-import { Node } from "../../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { HasChildren } from "./helpers/HasChildren";
 import { IsAspectNode } from "../../../../../../helpers/Aspects";
 

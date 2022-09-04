@@ -1,8 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Mb.Models.Application;
 using Mb.Models.Data.Hubs;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using Mb.Models.Application;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -46,7 +46,7 @@ namespace Mb.Core.Controllers.V1
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> CommitProject(CommitPackage package)
+        public async Task<IActionResult> CommitProject(CommitPackageAm package)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -56,7 +56,7 @@ namespace Mb.Core.Controllers.V1
                 await _projectService.CommitProject(package);
                 return NoContent();
             }
-            catch (ModelBuilderNotFoundException e)
+            catch (MimirorgNotFoundException e)
             {
                 ModelState.AddModelError("CommitProject", e.Message);
                 return BadRequest(ModelState);

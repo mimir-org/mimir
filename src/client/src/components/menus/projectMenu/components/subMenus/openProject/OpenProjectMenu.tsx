@@ -1,8 +1,8 @@
 import * as selectors from "./helpers/selectors";
-import { Button } from "../../../../../../compLibrary/buttons";
+import { Button } from "../../../../../../compLibrary/buttons/standard";
 import { ButtonBox } from "../shared/styled/ButtonBox";
 import { Modal } from "../../../../../../compLibrary/modal/Modal";
-import { ProjectDetails } from "./components/ProjectDetails";
+import { ProjectDetailsComponent } from "./components/ProjectDetailsComponent";
 import { RightArrowIcon } from "../../../../../../assets/icons/arrow";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { InfoModalContent } from "../../../../../../compLibrary/modal/variants/info/InfoModalContent";
@@ -28,7 +28,7 @@ export const OpenProjectMenu = () => {
   return (
     <Modal isBlurred isOpen onExit={onExit}>
       <InfoModalContent title={TextResources.PROJECT_OPEN_LABEL}>
-        <ProjectDetails projects={projectList} projectDescription={projectDescription} />
+        <ProjectDetailsComponent projects={projectList} projectDescription={projectDescription} />
         <ButtonBox>
           <Button onClick={onExit} text={TextResources.CANCEL} />
           <Button disabled={isActionDisabled} onClick={onAction} text={TextResources.OPEN} icon={RightArrowIcon} />

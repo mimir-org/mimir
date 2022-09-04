@@ -1,7 +1,8 @@
-import { Node } from "../../models";
+import { Attribute, Edge, Node, Project } from "@mimirorg/modelbuilder-types";
+import { ProjectItemCm } from "../../models";
 import { MODULE_TYPE } from "../../models/project";
-import { AttributeLikeItem } from "../../modules/inspector/types";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
+import { ProjectState } from "./project/types";
 
 export const isProjectStateFetchingSelector = createAppSelector(
   (state) => state.projectState.fetching,
@@ -28,26 +29,15 @@ export const isCommonStateFetchingSelector = createAppSelector(
   (fetching) => fetching
 );
 
-export const isTypeEditorFetchingSelector = createAppSelector(
-  (state) => state.typeEditor.fetching,
-  (fetching) => fetching
-);
-
 export const isFetchingSelector = combineAppSelectors(
-  [
-    isProjectStateFetchingSelector,
-    isLibraryStateFetchingSelector,
-    isUserStateFetchingSelector,
-    isCommonStateFetchingSelector,
-    isTypeEditorFetchingSelector,
-  ],
-  (isProjectStateFetching, isLibraryStateFetching, isUserStateFetching, isCommonStateFetching, isTypeEditorFetching) =>
-    isProjectStateFetching || isLibraryStateFetching || isUserStateFetching || isCommonStateFetching || isTypeEditorFetching
+  [isProjectStateFetchingSelector, isLibraryStateFetchingSelector, isUserStateFetchingSelector, isCommonStateFetchingSelector],
+  (isProjectStateFetching, isLibraryStateFetching, isUserStateFetching, isCommonStateFetching) =>
+    isProjectStateFetching || isLibraryStateFetching || isUserStateFetching || isCommonStateFetching
 );
 
 export const projectStateSelector = createAppSelector(
   (state) => state.projectState,
-  (projectState) => projectState
+  (projectState) => projectState as ProjectState
 );
 
 export const projectNameSelector = createAppSelector(
@@ -75,19 +65,24 @@ export const commonStateParsersSelector = createAppSelector(
   (parsers) => parsers
 );
 
-export const commonStateCollaborationPartnersSelector = createAppSelector(
-  (state) => state.commonState.collaborationPartners,
-  (collaborationPartners) => collaborationPartners
+export const commonStateCompaniesSelector = createAppSelector(
+  (state) => state.commonState.companies,
+  (companies) => companies
 );
 
-export const typeEditorStateSelector = createAppSelector(
-  (state) => state.typeEditor,
-  (typeEditor) => typeEditor
+export const commonStateCompanySelector = createAppSelector(
+  (state) => state.commonState.company,
+  (company) => company
 );
 
 export const librarySelector = createAppSelector(
   (state) => state.library,
   (library) => library
+);
+
+export const terminalsSelector = createAppSelector(
+  (state) => state.library.terminals,
+  (terminals) => terminals
 );
 
 export const statusSelector = createAppSelector(
@@ -204,7 +199,7 @@ export const location3DSelector = createAppSelector(
 
 export const projectSelector = createAppSelector(
   (state) => state.projectState.project,
-  (project) => project
+  (project) => project as Project
 );
 
 export const projectIdSelector = createAppSelector(
@@ -214,7 +209,7 @@ export const projectIdSelector = createAppSelector(
 
 export const projectListSelector = createAppSelector(
   (state) => state.projectState.projectList,
-  (projectList) => projectList
+  (projectList) => projectList as ProjectItemCm[]
 );
 
 export const projectIsSubProjectSelector = createAppSelector(
@@ -228,13 +223,8 @@ export const secondaryNodeSelector = createAppSelector(
 );
 
 export const selectedNodeSelector = createAppSelector(
-  (state) => state.projectState.project?.nodes?.find((n) => n.selected),
-  (node) => node
-);
-
-export const iconSelector = createAppSelector(
-  (state) => state.typeEditor.icons,
-  (icons) => icons
+  (state) => state.projectState.project?.nodes?.find((n: Node) => n.selected),
+  (node) => node as Node
 );
 
 export const electroSelector = createAppSelector(
@@ -242,56 +232,26 @@ export const electroSelector = createAppSelector(
   (visible) => visible
 );
 
-export const edgeSelector = createAppSelector(
-  (state) => state.projectState.project?.edges,
-  (edges) => edges ?? []
-);
-
-export const attributeTypeSelector = createAppSelector(
-  (state) => state.typeEditor.attributes,
-  (attributeTypes) => attributeTypes
-);
-
-export const terminalTypeSelector = createAppSelector(
-  (state) => state.typeEditor.terminals,
-  (terminals) => terminals ?? []
-);
-
-export const simpleTypeSelector = createAppSelector(
-  (state) => state.typeEditor.simpleTypes,
-  (simpleTypes) => simpleTypes ?? []
-);
-
-export const isTypeEditorInspectorOpen = createAppSelector(
-  (state) => state.typeEditor.inspector.visibility,
-  (visibility) => visibility
-);
-
-export const typeEditorInspectorActiveTabSelector = createAppSelector(
-  (state) => state.typeEditor.inspector.activeTabIndex,
-  (activeTabIndex) => activeTabIndex
-);
-
 export const nodesSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
-  (nodes) => nodes ?? []
+  (nodes) => (nodes as Node[]) ?? []
 );
 
 export const edgesSelector = createAppSelector(
   (state) => state.projectState?.project?.edges,
-  (edges) => edges ?? []
+  (edges) => (edges as Edge[]) ?? []
 );
 
 export const nodeSelector = createParametricAppSelector(
   (state) => state.projectState?.project?.nodes,
   (_, id: string) => id,
-  (nodes, id) => nodes.find((n) => n.id === id)
+  (nodes, id) => nodes.find((n: Node) => n.id === id)
 );
 
 export const makeFilterSelector = () =>
   createParametricAppSelector(
     (state) => state.commonState.filters,
-    (_, attributes: AttributeLikeItem[]) => attributes,
+    (_, attributes: Attribute[]) => attributes,
     (filters, attributes) => filters.filter((x) => attributes.find((att) => att.entity === x.name)) ?? []
   );
 

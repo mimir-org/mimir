@@ -1,6 +1,6 @@
 import { LegendBody, LegendColor, LegendElement } from "./LegendModule.styled";
 import { LegendComponent } from "./helpers/LegendComponent";
-import { Project } from "../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   project: Project;

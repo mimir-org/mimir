@@ -1,11 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Common;
-using Mb.Models.Data;
-using Mb.Models.Exceptions;
-using Mb.Models.Extensions;
+using Mimirorg.Common.Exceptions;
+using Mb.Models.Settings;
+using Microsoft.Extensions.Options;
+using Mimirorg.Common.Extensions;
+using StringExtensions = Mb.Models.Extensions.StringExtensions;
 
 namespace Mb.Data.Repositories
 {
@@ -13,9 +14,8 @@ namespace Mb.Data.Repositories
     {
         #region Private members
 
-        private readonly ICollaborationPartnerRepository _collaborationPartnerRepository;
-        private ICollection<CollaborationPartner> _collaborationPartners;
-        private CollaborationPartner _currentCollaborationPartner;
+        private readonly ICompanyRepository _companyRepository;
+        private readonly ApplicationSetting _applicationSetting;
 
         #endregion
 
@@ -25,10 +25,12 @@ namespace Mb.Data.Repositories
         /// Repository for common data and application settings.
         /// There must be registered minimum one local Collaboration Partner
         /// </summary>
-        /// <param name="collaborationPartnerRepository"></param>
-        public CommonRepository(ICollaborationPartnerRepository collaborationPartnerRepository)
+        /// <param name="companyRepository"></param>
+        /// <param name="applicationSetting"></param>
+        public CommonRepository(ICompanyRepository companyRepository, IOptions<ApplicationSetting> applicationSetting)
         {
-            _collaborationPartnerRepository = collaborationPartnerRepository;
+            _companyRepository = companyRepository;
+            _applicationSetting = applicationSetting?.Value;
         }
 
         #endregion
@@ -41,11 +43,16 @@ namespace Mb.Data.Repositories
         /// <returns>A new created id</returns>
         public string CreateId()
         {
-            Init();
-            if (_currentCollaborationPartner == null)
-                throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
+            var validate = _applicationSetting.ValidateObject();
+            if (!validate.IsValid)
+                throw new MimirorgConfigurationException("There are missing configuration for application settings");
 
-            return $"{_currentCollaborationPartner.Domain}_{Guid.NewGuid().ToString().ToLower()}";
+            var company = _companyRepository.GetCurrentCompany().Result;
+
+            if (company == null)
+                throw new MimirorgConfigurationException("The settings for company is not correct or missing registration in Tyle");
+
+            return $"{company.Domain}_{Guid.NewGuid().ToString().ToLower()}";
         }
 
         /// <summary>
@@ -54,11 +61,13 @@ namespace Mb.Data.Repositories
         /// <returns>Registered domain</returns>
         public string GetDomain()
         {
-            Init();
-            if (_currentCollaborationPartner == null)
-                throw new ModelBuilderNullReferenceException("There are missing application setting for current collaboration partner");
+            var validate = _applicationSetting.ValidateObject();
+            if (!validate.IsValid)
+                throw new MimirorgConfigurationException("There are missing configuration for application settings");
 
-            return _currentCollaborationPartner.Domain;
+            var company = _companyRepository.GetCurrentCompany().Result;
+
+            return company.Domain;
         }
 
         /// <summary>
@@ -171,25 +180,15 @@ namespace Mb.Data.Repositories
         #region Private members
 
         /// <summary>
-        /// Initial data import
-        /// </summary>
-        private void Init()
-        {
-            if (_collaborationPartners != null && _collaborationPartners.Any() && _currentCollaborationPartner != null)
-                return;
-
-            _collaborationPartners = _collaborationPartnerRepository?.GetAll()?.ToList();
-            _currentCollaborationPartner = _collaborationPartners?.FirstOrDefault(x => x.Current);
-        }
-
-        /// <summary>
         /// Resolve Id from Iri
         /// </summary>
         /// <param name="iri">The iri to resolve from</param>
         /// <returns>A valid id</returns>
         private string ResolveId(string iri)
         {
-            Init();
+            var validate = _applicationSetting.ValidateObject();
+            if (!validate.IsValid)
+                throw new MimirorgConfigurationException("There are missing configuration for application settings");
 
             if (string.IsNullOrEmpty(iri))
                 return null;
@@ -197,9 +196,14 @@ namespace Mb.Data.Repositories
             var iriParsed = new Uri(iri);
             var iriHost = iriParsed.Host;
 
-            var collaborationPartner = _collaborationPartners.FirstOrDefault(c => c.Iris.Any(i => i.Equals(iriHost, StringComparison.InvariantCultureIgnoreCase)));
+            var companies = _companyRepository.GetCompanies().Result?.ToList();
 
-            if (collaborationPartner == null)
+            if (companies == null || !companies.Any())
+                return null;
+
+            var company = companies.FirstOrDefault(c => c.Iris.Any(i => i.Equals(iriHost, StringComparison.InvariantCultureIgnoreCase)));
+
+            if (company == null)
                 return null;
 
             var idPart = string.IsNullOrEmpty(iriParsed.Fragment) ? iriParsed.Segments.Last() : iriParsed.Fragment[1..];
@@ -213,7 +217,7 @@ namespace Mb.Data.Repositories
             if (idPart.StartsWith("ID"))
                 idPart = idPart.Remove(0, 2);
 
-            return $"{collaborationPartner.Domain}_{idPart}";
+            return $"{company.Domain}_{idPart}";
         }
 
         /// <summary>
@@ -223,20 +227,20 @@ namespace Mb.Data.Repositories
         /// <returns>A valid id</returns>
         private string ResolveIri(string id)
         {
-            Init();
-
-            var domain = id.ResolveDomain();
+            var domain = StringExtensions.ResolveDomain(id);
 
             if (string.IsNullOrWhiteSpace(domain))
-                throw new ModelBuilderConfigurationException($"Missing domain from id {id}");
+                throw new MimirorgConfigurationException($"Missing domain from id {id}");
 
-            if (_collaborationPartners == null || !_collaborationPartners.Any() || _collaborationPartners.All(x => x.Domain != domain))
-                throw new ModelBuilderConfigurationException($"There are missing application settings for collaboration partners or domain {domain}");
+            var companies = _companyRepository.GetCompanies().Result?.ToList();
 
-            var iri = _collaborationPartners.FirstOrDefault(x => x.Domain == domain)?.Iris?.FirstOrDefault();
+            if (companies == null || !companies.Any() || companies.All(x => x.Domain != domain))
+                throw new MimirorgConfigurationException($"There are missing company settings in Tyle for domain {domain}");
+
+            var iri = companies.FirstOrDefault(x => x.Domain == domain)?.Iris?.FirstOrDefault();
 
             if (iri == null)
-                throw new ModelBuilderConfigurationException($"Collaboration partner for {domain} not found");
+                throw new MimirorgConfigurationException($"There are missing company settings in Tyle for domain {domain}");
 
             return iri.StartsWith("http")
                 ? $"{iri.TrimEnd('/')}/ID{SplitId(id)}"

@@ -22,11 +22,16 @@ namespace Mb.Api
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseKestrel(options =>
+                    {
+                        options.Limits.MaxRequestBodySize = int.MaxValue;
+                    });
                     webBuilder.UseStartup<Startup>()
                         .ConfigureAppConfiguration(configurationBuilder =>
                         {
                             configurationBuilder.AddJsonFile(
                                 $"{Directory.GetCurrentDirectory()}/appsettings.local.json", true);
+
                         });
                 });
     }

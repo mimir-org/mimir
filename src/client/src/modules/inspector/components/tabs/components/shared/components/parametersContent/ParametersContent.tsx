@@ -6,22 +6,18 @@ import { GetAttributes } from "./helpers/GetAttributes";
 import { ParameterButton } from "./styled/ParameterButton";
 import { Dropdown } from "./components/dropdown/Dropdown";
 import { ParameterRow } from "./components/row/ParameterRow";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { OnShowAllFilters } from "./handlers/OnShowAllFilters";
 import { OnChangeFilterChoice } from "./handlers/OnChangeFilterChoice";
 import { OnClearAllFilters } from "./handlers/OnClearAllFilters";
+import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../../../../types";
+import { Attribute } from "@mimirorg/modelbuilder-types";
 import {
   ParametersContentHeader,
   ParametersContentMenu,
   ParametersContentContainer,
   ParametersRowContainer,
 } from "./ParametersContent.styled";
-import {
-  AttributeLikeItem,
-  InspectorElement,
-  InspectorParametersElement,
-  InspectorTerminalsElement,
-} from "../../../../../../types";
 import {
   makeFilterSelector,
   makeSelectedFilterSelector,
@@ -35,26 +31,25 @@ interface Props {
   parametersElement: InspectorParametersElement;
   inspectorParentElement?: InspectorElement;
   terminalParentElement?: InspectorTerminalsElement;
-  attributeLikeItems?: AttributeLikeItem[];
+  attributeItems?: Attribute[];
 }
 
 export const ParametersContent = ({
   parametersElement,
   inspectorParentElement,
   terminalParentElement,
-  attributeLikeItems,
+  attributeItems,
 }: Props) => {
   const dispatch = useAppDispatch();
-
-  const attributes = attributeLikeItems ?? GetAttributes(parametersElement);
+  const attributes = attributeItems ?? GetAttributes(parametersElement);
   const username = useAppSelector(usernameSelector);
-
   const shouldShowDefaultEntities = useRef(true);
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
   const [colorMapping] = useState(new Map<string, [string, string]>());
+
   const attributeCombinations = useMemo(
     () => GetAttributeCombinations(attributeFilters, attributes),
     [attributeFilters, attributes]
@@ -65,11 +60,11 @@ export const ParametersContent = ({
     OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
   };
 
-  useEffect(() => {
-    if (shouldShowDefaultEntities.current) {
-      OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
-    }
-  }, [attributeCombinations, attributeFilters, dispatch, parametersElement.id, shouldShowDefaultEntities]);
+  // useEffect(() => {
+  //   if (shouldShowDefaultEntities.current) {
+  //     OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
+  //   }
+  // }, [attributeCombinations, attributeFilters, dispatch, parametersElement.id, shouldShowDefaultEntities]);
 
   return (
     <ParametersContentContainer>
@@ -91,11 +86,11 @@ export const ParametersContent = ({
           </ParameterButton>
         </ParametersContentMenu>
       </ParametersContentHeader>
+
       <ParametersRowContainer>
         {hasFilters &&
           Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
             if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
-
             const [headerColor, bodyColor] = colorMapping.get(filterName);
 
             return (
@@ -106,7 +101,7 @@ export const ParametersContent = ({
                 terminalParentElement={terminalParentElement}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
-                attributeLikeItems={attributeLikeItems}
+                attributeItems={attributes}
                 maxNumSelectedCombinations={maxNumSelectedCombinations}
                 username={username}
                 filterName={filterName}

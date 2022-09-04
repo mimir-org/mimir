@@ -1,8 +1,10 @@
-import { Color } from "../compLibrary/colors/Color";
-import { AspectColorType, LibItem, Node } from "../models";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import { Color } from "../assets/color/Color";
+import { AspectColorType } from "../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { IsFunction, IsLocation, IsProduct } from "./Aspects";
 
-type Item = Node | LibItem;
+type NodeItem = Node | NodeLibCm;
 
 /**
  * Component to get the color for a given item.
@@ -11,7 +13,7 @@ type Item = Node | LibItem;
  * @param isTransparent
  * @returns the color according to the chosen criteriums.
  */
-const GetAspectColor = (node: Item, colorType: AspectColorType, isTransparent?: boolean) => {
+const GetAspectColor = (node: NodeItem, colorType: AspectColorType, isTransparent?: boolean) => {
   if (isTransparent) return GetTransparentColor(node);
   if (colorType === AspectColorType.Main) return GetMainColor(node);
   if (colorType === AspectColorType.Selected) return GetSelectedColor(node);
@@ -19,31 +21,31 @@ const GetAspectColor = (node: Item, colorType: AspectColorType, isTransparent?: 
   if (colorType === AspectColorType.Tab) return GetTabColor(node);
 };
 
-function GetTransparentColor(node: Item) {
+function GetTransparentColor(node: NodeItem) {
   if (IsFunction(node)) return "rgba(251, 201, 19, 0.1)";
   if (IsProduct(node)) return "rgba(6, 144, 152, 0.1)";
   if (IsLocation(node)) return "rgba(163, 0, 167, 0.1)";
 }
 
-function GetMainColor(node: Item) {
+function GetMainColor(node: NodeItem) {
   if (IsFunction(node)) return Color.LEMON_YELLOW;
   if (IsProduct(node)) return Color.ELECTRIC_BLUE;
   if (IsLocation(node)) return Color.MAGENTA;
 }
 
-function GetSelectedColor(node: Item) {
+function GetSelectedColor(node: NodeItem) {
   if (IsFunction(node)) return Color.SUNGLOW;
   if (IsProduct(node)) return Color.VIRIDIAN_GREEN;
   if (IsLocation(node)) return Color.PURPLE_MUNSELL;
 }
 
-function GetHeaderColor(node: Item) {
+function GetHeaderColor(node: NodeItem) {
   if (IsFunction(node)) return Color.LEMON_YELLOW_CRAYOLA;
   if (IsProduct(node)) return Color.CELESTE;
   if (IsLocation(node)) return Color.PINK_LACE;
 }
 
-function GetTabColor(node: Item) {
+function GetTabColor(node: NodeItem) {
   if (IsFunction(node)) return Color.JASMINE;
   if (IsProduct(node)) return Color.DARK_TURQUOISE;
   if (IsLocation(node)) return Color.PINK;

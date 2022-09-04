@@ -1,5 +1,5 @@
 import { TextResources } from "../../../../../assets/text/TextResources";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { IsFunction, IsLocation, IsOffPage, IsProduct } from "../../../../../helpers/Aspects";
 
 const GetNodeTypeString = (node: Node) => {

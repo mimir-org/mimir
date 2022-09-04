@@ -1,8 +1,7 @@
 import { Dispatch } from "redux";
-import { EntityType } from "../../../../models/enums/EntityType";
-import { Node } from "../../../../models";
 import { lockEntity, setLockedNode } from "../../../../redux/store/project/actions";
 import { IsUnsaved } from "../../../../helpers";
+import { Node, EntityType } from "@mimirorg/modelbuilder-types";
 
 export const OnLockNode = (node: Node, isLockedBy: string, setLockingNode: (node: Node) => void, dispatch: Dispatch) => {
   setLockingNode(node);
@@ -14,7 +13,7 @@ export const OnLockNode = (node: Node, isLockedBy: string, setLockingNode: (node
         projectId: node.projectId,
         isLocked: !node.isLocked,
         isLockedStatusBy: isLockedBy,
-        isLockedStatusDate: new Date().toISOString(),
+        isLockedStatusDate: new Date(), //.toISOString(),
         type: EntityType.Node,
       })
     );

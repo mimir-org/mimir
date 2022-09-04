@@ -100,6 +100,7 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.TerminalTypeId)
                 .AddColumn(x => x.TerminalTypeIri)
                 .AddColumn(x => x.Discriminator)
+                .AddColumn(x => x.TypeReferenceString)
                 .BulkInsertOrUpdate()
                 .MatchTargetOn(x => x.Id)
                 .Commit(conn);

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Attributes;
+using Mimirorg.Common.Attributes;
 using Mb.Models.Extensions;
 
 namespace Mb.Models.Application
@@ -62,12 +62,14 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            var validations = new List<ValidationResult>();
+
             if (Transport != null)
             {
                 var transportValidationResult = Transport.Validate(validationContext);
                 foreach (var result in transportValidationResult)
                 {
-                    yield return result;
+                    validations.Add(result);
                 }
             }
 
@@ -76,9 +78,11 @@ namespace Mb.Models.Application
                 var interfaceValidationResult = Interface.Validate(validationContext);
                 foreach (var result in interfaceValidationResult)
                 {
-                    yield return result;
+                    validations.Add(result);
                 }
             }
+
+            return validations;
         }
     }
 }

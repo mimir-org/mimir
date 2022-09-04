@@ -2,7 +2,7 @@ import { useState } from "react";
 import { InstructionBoxComponent } from "./InstructionBoxComponent";
 import { Tooltip } from "../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../assets/text/TextResources";
-import { Icon } from "../../../compLibrary/icon";
+import { Icon } from "../../../compLibrary/icon/Icon";
 import { MENU_TYPE } from "../../../models/project";
 import { ProjectMenuComponent } from "../../menus/projectMenu";
 import { CollapseWhiteIcon, ExpandWhiteIcon } from "../../../assets/icons/chevron";

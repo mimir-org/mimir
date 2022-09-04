@@ -1,18 +1,26 @@
-import { CollaborationPartner, CombinedAttributeFilter, EnumBase, ModuleDescription } from "../../../models";
+import { ModuleDescription } from "@mimirorg/modelbuilder-types";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
+import { CombinedAttributeFilter, EnumBase } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 // State types
 export interface CommonState {
   fetching: boolean;
-  collaborationPartners: CollaborationPartner[] | null;
+  companies: MimirorgCompanyCm[] | null;
+  company: MimirorgCompanyCm | null;
   parsers: ModuleDescription[] | null;
   filters: CombinedAttributeFilter[] | null;
   statuses: EnumBase[] | null;
   apiError: ApiError[];
 }
 
-export interface FetchCollaboratorPartnersFinished {
-  collaborationPartners: CollaborationPartner[];
+export interface FetchCompaniesFinished {
+  companies: MimirorgCompanyCm[];
+  apiError: ApiError;
+}
+
+export interface FetchCompanyFinished {
+  company: MimirorgCompanyCm;
   apiError: ApiError;
 }
 

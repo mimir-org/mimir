@@ -4,26 +4,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialModuleState: ModulesState = {
   types: [
-    {
-      type: MODULE_TYPE.INSPECTOR,
-      visible: false,
-      animate: false,
-    },
-    {
-      type: MODULE_TYPE.LIBRARY,
-      visible: false,
-      animate: false,
-    },
-    {
-      type: MODULE_TYPE.EXPLORER,
-      visible: false,
-      animate: false,
-    },
-    {
-      type: MODULE_TYPE.LEGEND,
-      visible: false,
-      animate: false,
-    },
+    { type: MODULE_TYPE.INSPECTOR, visible: false, animate: false },
+    { type: MODULE_TYPE.LIBRARY, visible: false, animate: false },
+    { type: MODULE_TYPE.EXPLORER, visible: false, animate: false },
+    { type: MODULE_TYPE.LEGEND, visible: false, animate: false },
   ],
 };
 

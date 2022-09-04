@@ -1,25 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ATTRIBUTE_KIND,
-  CONNECTOR_KIND,
-  EDGE_KIND,
-  INTERFACE_KIND,
-  NODE_KIND,
-  SIMPLE_KIND,
-  TRANSPORT_KIND,
-  Attribute,
-  Connector,
-  Edge,
-  Interface,
-  Node,
-  Simple,
-  Transport,
-} from "../../../models";
+import { Attribute, Simple, Interface, Connector, Transport, Edge, Node } from "@mimirorg/modelbuilder-types";
+import { TextResources } from "../../../assets/text/TextResources";
 
-export const IsNode = (element: any): element is Node => element?.kind === NODE_KIND;
-export const IsEdge = (element: any): element is Edge => element?.kind === EDGE_KIND;
-export const IsTransport = (element: any): element is Transport => element?.kind === TRANSPORT_KIND;
-export const IsInterface = (element: any): element is Interface => element?.kind === INTERFACE_KIND;
-export const IsConnector = (element: any): element is Connector => element?.kind === CONNECTOR_KIND;
-export const IsSimple = (element: any): element is Simple => element?.kind === SIMPLE_KIND;
-export const IsAttribute = (element: any): element is Attribute => element?.kind === ATTRIBUTE_KIND;
+export const IsNode = (element: any): element is Node => element?.kind === TextResources.KIND_NODE;
+export const IsEdge = (element: any): element is Edge => element?.kind === TextResources.KIND_EDGE;
+export const IsTransport = (element: any): element is Transport => element?.kind === TextResources.KIND_TRANSPORT;
+export const IsInterface = (element: any): element is Interface => element?.kind === TextResources.KIND_INTERFACE;
+export const IsConnector = (element: any): element is Connector => element?.kind === TextResources.KIND_CONNECTOR;
+export const IsSimple = (element: any): element is Simple => element?.kind === TextResources.KIND_SIMPLE;
+export const IsAttribute = (element: any): element is Attribute => element?.kind === TextResources.KIND_ATTRIBUTE;

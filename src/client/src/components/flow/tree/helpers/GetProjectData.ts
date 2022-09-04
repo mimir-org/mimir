@@ -1,7 +1,8 @@
 import { CreateId } from "../../helpers";
 import { IsAspectNode } from "../../../../helpers/Aspects";
 import { IsFamily } from "../../../../helpers/Family";
-import { ConnectorType, Edge, Node, Project, RelationType } from "../../../../models";
+import { Project, Edge, Node } from "@mimirorg/modelbuilder-types";
+import { IsOutputConnector, IsPartOfRelation } from "../../helpers/Connectors";
 
 const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project, subProject: Project): [Node[], Edge[]] => {
   try {
@@ -14,9 +15,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
     const targetNode = project.nodes.find((x) => x.id === targetNodeId);
     if (!targetNode) return [[], []];
 
-    const targetnodeConnector = targetNode.connectors.find(
-      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
-    );
+    const targetnodeConnector = targetNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
 
     if (!targetnodeConnector) return [[], []];
 
@@ -25,9 +24,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
     const rootNode = subProject.nodes.find((x) => x.isRoot && IsFamily(x, targetNode));
 
     // Find the connector that should do a remap
-    const rootNodeConnector = rootNode.connectors.find(
-      (x) => x.relationType === RelationType.PartOf && x.type === ConnectorType.Output
-    );
+    const rootNodeConnector = rootNode.connectors.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
 
     // Find if project has any nodes from this project before
     const alreadyIncludedSome =
@@ -35,7 +32,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
 
     if (!alreadyIncludedSome) {
       // Find edges that should change parent
-      const edges = subProject.edges.filter((x) => x.fromConnectorId === rootNodeConnector.id);
+      const edges = subProject.edges.filter((e) => e.fromConnectorId === rootNodeConnector.id);
 
       // Remap edges
       edges.forEach((edge) => {
@@ -48,7 +45,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
       });
     } else {
       // Remove Edges that is connected to root nodes
-      subProject.edges = subProject.edges.filter((x) => x.fromConnectorId !== rootNodeConnector.id);
+      subProject.edges = subProject.edges.filter((e) => e.fromConnectorId !== rootNodeConnector.id);
     }
 
     const nodesToCreate = subProject.nodes.filter(
@@ -56,7 +53,7 @@ const GetProjectData = (event: React.DragEvent<HTMLDivElement>, project: Project
     );
 
     const edgesToCreate = subProject.edges.filter(
-      (x) => IsFamily(x.fromNode, targetNode) && !IsAspectNode(x.fromNode) && !project.edges.find((y) => y.id === x.id)
+      (e) => IsFamily(e.fromNode, targetNode) && !IsAspectNode(e.fromNode) && !project.edges.find((y) => y.id === e.id)
     );
 
     nodesToCreate.forEach((node) => {

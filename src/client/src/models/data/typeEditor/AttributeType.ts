@@ -1,6 +1,4 @@
-import { Aspect } from "../../enums/Aspect";
-import { SelectType } from "../../enums/SelectType";
-import { Discipline } from "../../enums/Discipline";
+import { Aspect, Discipline, Select } from "@mimirorg/modelbuilder-types";
 import { EnumBase } from "../../enums/EnumBase";
 
 export interface AttributeType {
@@ -19,6 +17,6 @@ export interface AttributeType {
   tags: Set<string>;
   description: string;
   selectValues: string[];
-  selectType: SelectType;
+  selectType: Select;
   discipline: Discipline;
 }

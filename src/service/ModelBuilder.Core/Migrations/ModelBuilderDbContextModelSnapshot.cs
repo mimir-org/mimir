@@ -17,7 +17,7 @@ namespace Mb.Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -136,6 +136,10 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TransportIri");
 
+                    b.Property<string>("TypeReferenceString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TypeReferenceString");
+
                     b.Property<string>("UnitString")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UnitString");
@@ -157,41 +161,6 @@ namespace Mb.Core.Migrations
                     b.HasIndex("TransportId");
 
                     b.ToTable("Attribute", (string)null);
-                });
-
-            modelBuilder.Entity("Mb.Models.Data.CollaborationPartner", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("Current")
-                        .HasColumnType("bit")
-                        .HasColumnName("Current");
-
-                    b.Property<string>("Domain")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Domain");
-
-                    b.Property<string>("Iris")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Iris");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Domain")
-                        .IsUnique();
-
-                    b.ToTable("CollaborationPartner", (string)null);
                 });
 
             modelBuilder.Entity("Mb.Models.Data.Connector", b =>
@@ -412,16 +381,16 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Rds");
 
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
                     b.Property<string>("StatusId")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
                         .HasColumnName("StatusId");
+
+                    b.Property<string>("TypeReferenceString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TypeReferenceString");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
@@ -565,10 +534,6 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Rds");
 
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
                     b.Property<string>("StatusId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -577,6 +542,10 @@ namespace Mb.Core.Migrations
                     b.Property<string>("Symbol")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Symbol");
+
+                    b.Property<string>("TypeReferenceString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TypeReferenceString");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
@@ -744,16 +713,16 @@ namespace Mb.Core.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Rds");
 
-                    b.Property<string>("SemanticReference")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("SemanticReference");
-
                     b.Property<string>("StatusId")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("4590637F39B6BA6F39C74293BE9138DF")
                         .HasColumnName("StatusId");
+
+                    b.Property<string>("TypeReferenceString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TypeReferenceString");
 
                     b.Property<DateTime?>("Updated")
                         .HasColumnType("datetime2")
@@ -857,6 +826,10 @@ namespace Mb.Core.Migrations
                     b.Property<string>("TerminalTypeIri")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("TerminalTypeIri");
+
+                    b.Property<string>("TypeReferenceString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TypeReferenceString");
 
                     b.HasDiscriminator().HasValue("Terminal");
                 });

@@ -1,7 +1,7 @@
 using Mb.Models.Application;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using ModelBuilder.Rdf.Models;
 using ModelBuilder.Rdf.Properties;
 using ModelBuilder.Rdf.Services;
@@ -46,7 +46,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="project">Extended project</param>
         /// <param name="ontologyService">Ontology service</param>
         /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
-        /// <exception cref="ModelBuilderBadRequestException">Throws if project or ontology service is null</exception>
+        /// <exception cref="MimirorgBadRequestException">Throws if project or ontology service is null</exception>
         public static void ResolveProjectInformation(this ProjectAm project, IOntologyService ontologyService)
         {
             if (project == null || ontologyService == null)
@@ -56,7 +56,7 @@ namespace ModelBuilder.Rdf.Extensions
                 ?.Select(t => t.Subject).SingleOrDefault();
 
             if (subject == null)
-                throw new ModelBuilderBadRequestException("Cannot find the project from rdf file.");
+                throw new MimirorgBadRequestException("Cannot find the project from rdf file.");
 
             project.Iri = subject.ToString();
             project.Name = ontologyService.GetValue(project.Iri, Resources.Label);
@@ -75,7 +75,7 @@ namespace ModelBuilder.Rdf.Extensions
         /// <param name="ontologyService">Ontology service</param>
         /// <param name="projectData">Existing project data, used to resolve missing RDF data</param>
         /// <exception cref="NullReferenceException">Throws if project or ontology service is null</exception>
-        /// <exception cref="ModelBuilderBadRequestException">Throws if missing root nodes in rdf file, or bad rdf declaration</exception>
+        /// <exception cref="MimirorgBadRequestException">Throws if missing root nodes in rdf file, or bad rdf declaration</exception>
         public static void ResolveNodes(this ProjectAm project, IOntologyService ontologyService, ProjectData projectData)
         {
             if (project == null || ontologyService == null)
@@ -87,7 +87,7 @@ namespace ModelBuilder.Rdf.Extensions
             var rootNodes = ontologyService.GetTriplesWithPredicate(Resources.IsAspectOf).Select(t => t.Subject).ToList();
 
             if (rootNodes == null || !rootNodes.Any())
-                throw new ModelBuilderBadRequestException("Cannot find the root nodes in rdf file.");
+                throw new MimirorgBadRequestException("Cannot find the root nodes in rdf file.");
 
             foreach (var n in rootNodes)
             {

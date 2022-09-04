@@ -1,26 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
-using Mb.Models.Data;
-using Mb.Models.Exceptions;
 using Mb.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
+using Mb.Models.Client;
+using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Services
 {
     public class CommonService : ICommonService
     {
-        private readonly ICollaborationPartnerRepository _collaborationPartnerRepository;
+        private readonly ICompanyRepository _companyRepository;
         private readonly IAttributeRepository _attributeRepository;
         private readonly ILibraryRepository _libraryRepository;
         private readonly IMapper _mapper;
 
-        public CommonService(ICollaborationPartnerRepository collaborationPartnerRepository, IAttributeRepository attributeRepository, IMapper mapper, ILibraryRepository libraryRepository)
+        public CommonService(ICompanyRepository companyRepository, IAttributeRepository attributeRepository, IMapper mapper, ILibraryRepository libraryRepository)
         {
-            _collaborationPartnerRepository = collaborationPartnerRepository;
+            _companyRepository = companyRepository;
             _attributeRepository = attributeRepository;
             _mapper = mapper;
             _libraryRepository = libraryRepository;
@@ -81,9 +80,20 @@ namespace Mb.Services.Services
         /// Get all collaboration partners
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<CollaborationPartner> GetAllCollaborationPartners()
+        public async Task<ICollection<MimirorgCompanyCm>> GetAllCompanies()
         {
-            return _collaborationPartnerRepository.GetAll().OrderBy(x => x.Name).ToList();
+            var companies = await _companyRepository.GetCompanies();
+            return companies.OrderBy(x => x.Name).ToList();
+        }
+
+        /// <summary>
+        /// Get current company
+        /// </summary>
+        /// <returns>The registered company</returns>
+        public async Task<MimirorgCompanyCm> GetCurrentCompany()
+        {
+            var company = await _companyRepository.GetCurrentCompany();
+            return company;
         }
 
         /// <summary>
@@ -91,66 +101,13 @@ namespace Mb.Services.Services
         /// </summary>
         /// <param name="domain"></param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public async Task<CollaborationPartner> GetCollaborationPartnerByDomain(string domain)
+        public async Task<MimirorgCompanyCm> GetCompanyByDomain(string domain)
         {
             if (string.IsNullOrEmpty(domain))
                 return null;
 
-            var cp = await _collaborationPartnerRepository.FindBy(x => x.Domain != null && x.Domain.ToLower() == domain.ToLower()).FirstOrDefaultAsync();
-            return cp;
-        }
-
-        /// <summary>
-        /// Create collaboration partners
-        /// </summary>
-        /// <param name="collaborationPartners"></param>
-        /// <returns></returns>
-        public async Task CreateCollaborationPartnersAsync(IEnumerable<CollaborationPartnerAm> collaborationPartners)
-        {
-            var existingTypes = _collaborationPartnerRepository.GetAll().ToList();
-            var notExistingTypes = collaborationPartners.Where(x => existingTypes.All(y => y.Name != x.Name && y.Domain != x.Domain)).ToList();
-
-            if (!notExistingTypes.Any())
-                throw new ModelBuilderDuplicateException("There is already registered a collaboration partners with names or domains");
-
-            foreach (var item in notExistingTypes)
-            {
-                var cp = _mapper.Map<CollaborationPartner>(item);
-                await _collaborationPartnerRepository.CreateAsync(cp);
-            }
-
-            await _collaborationPartnerRepository.SaveAsync();
-        }
-
-        /// <summary>
-        /// Create a collaboration partner
-        /// </summary>
-        /// <param name="collaborationPartner"></param>
-        /// <returns></returns>
-        /// <exception cref="ModelBuilderDuplicateException"></exception>
-        public async Task<CollaborationPartner> CreateCollaborationPartnerAsync(CollaborationPartnerAm collaborationPartner)
-        {
-            var existingType = await _collaborationPartnerRepository.FindBy(x => x.Name == collaborationPartner.Name || x.Domain == collaborationPartner.Domain).FirstOrDefaultAsync();
-            if (existingType != null)
-                throw new ModelBuilderDuplicateException("There is already registered a collaboration partner with name or domain");
-
-            var cp = _mapper.Map<CollaborationPartner>(collaborationPartner);
-            await _collaborationPartnerRepository.CreateAsync(cp);
-            await _collaborationPartnerRepository.SaveAsync();
-            return cp;
-        }
-
-        /// <summary>
-        /// Update a collaboration partner
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="collaborationPartner"></param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public Task<CollaborationPartner> UpdateCollaborationPartnerAsync(int id, CollaborationPartnerAm collaborationPartner)
-        {
-            throw new System.NotImplementedException();
+            var companies = await _companyRepository.GetCompanies();
+            return companies.FirstOrDefault(x => x.Domain != null && string.Equals(x.Domain, domain, StringComparison.CurrentCultureIgnoreCase));
         }
     }
 }

@@ -1,14 +1,14 @@
-import { TerminalCategory } from "../../../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
+import { CategoryObject } from "../helpers/PopulateTerminalCategories";
 
 export const OnCategoryClick = (
-  category: TerminalCategory,
+  category: CategoryObject,
   expanded: boolean,
-  selectedCategoriesIds: string[],
-  setSelectedCategoriesIds: (categoryIds: string[]) => void
+  selectedCategories: string[],
+  setSelectedCategories: (categoryIds: string[]) => void
 ) => {
   if (expanded) {
-    setSelectedCategoriesIds(selectedCategoriesIds.filter((id) => id !== category.id));
+    setSelectedCategories(selectedCategories.filter((name) => name !== category.name));
   } else {
-    setSelectedCategoriesIds([...selectedCategoriesIds, category.id]);
+    setSelectedCategories([...selectedCategories, category.name]);
   }
 };

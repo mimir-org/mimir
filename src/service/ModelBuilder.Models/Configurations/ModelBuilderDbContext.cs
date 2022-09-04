@@ -14,7 +14,6 @@ namespace Mb.Models.Configurations
         public virtual DbSet<Connector> Connectors { get; set; }
         public virtual DbSet<Relation> Relations { get; set; }
         public virtual DbSet<Terminal> Terminals { get; set; }
-        public virtual DbSet<CollaborationPartner> CollaborationPartners { get; set; }
         public virtual DbSet<Transport> Transports { get; set; }
         public virtual DbSet<Interface> Interfaces { get; set; }
         public virtual DbSet<Simple> Simples { get; set; }
@@ -34,7 +33,6 @@ namespace Mb.Models.Configurations
             modelBuilder.ApplyConfiguration(new EdgeConfiguration());
             modelBuilder.ApplyConfiguration(new AttributeConfiguration());
             modelBuilder.ApplyConfiguration(new ConnectorConfiguration());
-            modelBuilder.ApplyConfiguration(new CollaborationPartnerConfiguration());
             modelBuilder.ApplyConfiguration(new RelationConfiguration());
             modelBuilder.ApplyConfiguration(new TerminalConfiguration());
             modelBuilder.ApplyConfiguration(new TransportConfiguration());

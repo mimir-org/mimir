@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { Size } from "../../../../../compLibrary/size/Size";
+import { Size } from "../../../../../assets/size/Size";
 import { MODULE_TYPE } from "../../../../../models/project";
 import { useAppDispatch } from "../../../../../redux/store";
 import { setModuleVisibility } from "../../../../../redux/store/modules/modulesSlice";
@@ -9,7 +9,7 @@ import { InspectorTabBody, InspectorTabHeader, InspectorTabHeaderTitle } from ".
 import { MutableRefObject, PropsWithChildren, useCallback } from "react";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 import { GetInspectorText, GetInspectorTabsColor, GetTabId } from "../helpers";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   element?: InspectorElement;

@@ -4,12 +4,12 @@ import { FC, memo, useEffect } from "react";
 import { NodeProps } from "react-flow-renderer";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/store";
 import { HandleComponent } from "../../handle";
-import { IsInputTerminal, IsOutputTerminal, IsTransport } from "../../../helpers/Connectors";
+import { IsInputConnector, IsOutputConnector, IsTerminal } from "../../../helpers/Connectors";
 import { OffPageBox } from "./BlockOffPageNode.styled";
 import { GetOffPageIcon, UpdateOffPagePosition } from "./helpers";
-import { Connector, Node } from "../../../../../models";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../assets/color/Color";
 import { Tooltip } from "../../../../../compLibrary/tooltip/Tooltip";
+import { Node, Terminal } from "@mimirorg/modelbuilder-types";
 
 /**
  * Component for an OffPageNode in BlockView.
@@ -22,10 +22,10 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const secondaryNode = useAppSelector(selectors.secondaryNodeSelector);
   const isElectro = useAppSelector(selectors.electroSelector);
   const size = useAppSelector(selectors.nodeSizeSelector);
-  const edge = project?.edges?.find((x) => IsTransport(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
+  const edge = project?.edges?.find((x) => IsTerminal(x.fromConnector) && (x.toNodeId === data.id || x.fromNodeId === data.id));
 
-  const intputTerminal = data?.connectors.find((c: Connector) => IsInputTerminal(c) && IsTransport(c));
-  const outputTerminal = data?.connectors.find((c: Connector) => IsOutputTerminal(c) && IsTransport(c));
+  const intputTerminal = data?.connectors.find((c) => IsInputConnector(c) && IsTerminal(c)) as Terminal;
+  const outputTerminal = data?.connectors.find((c) => IsOutputConnector(c) && IsTerminal(c)) as Terminal;
 
   const isTarget = edge?.toNodeId === data.id;
   const offPageTerminal = isTarget ? intputTerminal : outputTerminal;
@@ -35,8 +35,8 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const offPageGrandParent = project.nodes.find((n) => n.id === offPageParent?.parentNodeId);
 
   const parentNodeTerminal = isTarget
-    ? offPageParent?.connectors.find((c: Connector) => c.id === edge?.fromConnectorId)
-    : offPageParent?.connectors.find((c: Connector) => c.id === edge?.toConnectorId);
+    ? offPageParent?.connectors.find((c) => c.id === edge?.fromConnectorId)
+    : offPageParent?.connectors.find((c) => c.id === edge?.toConnectorId);
 
   // Update position relative to ParentBlockNode
   useEffect(() => {
@@ -48,8 +48,8 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
   const iconColor = offPageTerminal?.color ?? Color.BLACK;
   const OffPageIcon = GetOffPageIcon(offPageTerminal, parentNodeTerminal);
 
-  const inputTerminals = data.connectors.filter((t: Connector) => IsInputTerminal(t));
-  const outputTerminals = data.connectors.filter((t: Connector) => IsOutputTerminal(t));
+  const inputConnectors = data.connectors.filter((c) => IsInputConnector(c));
+  const outputConnectors = data.connectors.filter((c) => IsOutputConnector(c));
 
   return (
     <Tooltip content={data.label} placement={"top"} offset={[0, 10]}>
@@ -57,7 +57,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
         <HandleComponent
           node={data}
           project={project}
-          terminals={inputTerminals}
+          connectors={inputConnectors}
           isElectro={isElectro}
           dispatch={dispatch}
           isOffPage
@@ -66,7 +66,7 @@ const BlockOffPageNode: FC<NodeProps<Node>> = ({ data }) => {
         <HandleComponent
           node={data}
           project={project}
-          terminals={outputTerminals}
+          connectors={outputConnectors}
           isElectro={isElectro}
           dispatch={dispatch}
           isOffPage

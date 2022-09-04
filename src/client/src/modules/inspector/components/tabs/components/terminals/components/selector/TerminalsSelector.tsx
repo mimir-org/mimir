@@ -1,51 +1,54 @@
 import { ChangeEvent, useMemo, useState } from "react";
-import { TerminalCategory } from "../../../../../../../../typeEditor/helpers/GetFilteredTerminalsList";
-import { ActiveTerminalsList } from "./components/ActiveTerminalsList";
-import { FilterBySearchString } from "./helpers/FilterBySearchString";
+import { TerminalsCategoryList } from "./components/TerminalsList";
 import { TerminalsColumn } from "../../../shared/styled/TerminalsColumn";
-import { SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../../../types";
-import { FontSize } from "../../../../../../../../compLibrary/font";
+import { FontSize, FontWeight } from "../../../../../../../../assets/font";
 import { TextResources } from "../../../../../../../../assets/text/TextResources";
 import { Input } from "../../../../../../../../compLibrary/input/text";
+import { Terminal } from "@mimirorg/modelbuilder-types";
+import { FilterBySearchString } from "../../helpers/FilterBySearchString";
+import { CategoryObject } from "./components/helpers/PopulateTerminalCategories";
 
 interface Props {
-  terminals: TerminalLikeItem[];
-  terminalCategories: TerminalCategory[];
-  selectedTerminal: TerminalLikeItem;
-  selectedTerminalIdentifier: SelectedTerminalIdentifier;
-  onSelectTerminal: (identifier: SelectedTerminalIdentifier) => void;
+  terminals: Terminal[];
+  terminalCategories: CategoryObject[];
+  selectedTerminalId: string;
+  onSelectTerminal: (id: string) => void;
 }
 
-export const TerminalsSelector = ({
-  terminals,
-  terminalCategories,
-  selectedTerminal,
-  selectedTerminalIdentifier,
-  onSelectTerminal,
-}: Props) => {
+/**
+ * Component for the terminals search in the Terminals tab in the Inspector
+ * @param props
+ * @returns an input field for search and a list of terminals.
+ */
+export const TerminalsSelector = ({ terminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) => {
   const [searchString, setSearchString] = useState("");
-  const filteredTerminals = useMemo(
+
+  const filteredBySearchTerminals = useMemo(
     () => FilterBySearchString(terminals, terminalCategories, searchString),
     [terminals, terminalCategories, searchString]
   );
+
+  const hasTerminals = filteredBySearchTerminals.length > 0;
+  const className = searchString.length < 1 ? "" : TextResources.INPUT_PLACEHOLDER;
 
   return (
     <TerminalsColumn>
       <Input
         fontSize={FontSize.STANDARD}
-        fontStyle={"italic"}
-        className={searchString.length > 0 ? "" : "input-placeholder"}
+        fontStyle={FontWeight.ITALIC}
+        className={className}
         value={searchString}
         placeholder={TextResources.TERMINALS_SEARCH}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchString(e.currentTarget.value)}
       />
-      <ActiveTerminalsList
-        terminals={filteredTerminals}
-        terminalCategories={terminalCategories}
-        selectedTerminal={selectedTerminal}
-        selectedTerminalIdentifier={selectedTerminalIdentifier}
-        onSelectTerminal={onSelectTerminal}
-      />
+      {hasTerminals && (
+        <TerminalsCategoryList
+          filteredTerminals={filteredBySearchTerminals}
+          terminalCategories={terminalCategories}
+          selectedTerminalId={selectedTerminalId}
+          onSelectTerminal={(id: string) => onSelectTerminal(id)}
+        />
+      )}
     </TerminalsColumn>
   );
 };

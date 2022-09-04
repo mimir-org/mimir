@@ -12,7 +12,6 @@ namespace Mb.Data.Contracts
         Task<List<AttributeFormatLibCm>> GetAttributeFormats();
         Task<List<AttributeConditionLibCm>> GetAttributeConditions();
         Task<List<PurposeLibCm>> GetPurposes();
-        Task<List<AttributeAspectLibCm>> GetAspectAttributes();
         Task<List<UnitLibCm>> GetUnits();
         Task<List<AttributeLibCm>> GetAttributes();
         Task<List<SymbolLibCm>> GetSymbols();

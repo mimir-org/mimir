@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mb.Models.Abstract;
 using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Models.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,8 @@ namespace DefaultParserModule
         {
             return new ModuleDescription
             {
-                Id = new Guid("5BA4A44C-8E06-49ED-8EE4-CD88FDB78C67"), Name = "Mimir JSON"
+                Id = new Guid("5BA4A44C-8E06-49ED-8EE4-CD88FDB78C67").ToString(),
+                Name = "Mimir JSON"
             };
         }
 

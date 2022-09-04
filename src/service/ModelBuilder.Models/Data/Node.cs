@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Mb.Models.Data.Enums;
-using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -21,7 +21,24 @@ namespace Mb.Models.Data
         public string Kind => nameof(Node);
         public string Rds { get; set; }
         public string Description { get; set; }
-        public string SemanticReference { get; set; }
+
+        [NotMapped]
+        public virtual ICollection<TypeReference> TypeReferences
+        {
+            get
+            {
+                if (_typeReferences != null)
+                    return _typeReferences;
+
+                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
+            }
+
+            set => _typeReferences = value;
+        }
+
+        [JsonIgnore]
+        [TSExclude]
+        public string TypeReferenceString { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -73,21 +90,6 @@ namespace Mb.Models.Data
         public string Symbol { get; set; }
         public string PurposeString { get; set; }
 
-        [NotMapped]
-        public virtual Purpose Purpose
-        {
-            get
-            {
-                if (_purpose != null)
-                    return _purpose;
-
-                return !string.IsNullOrWhiteSpace(PurposeString) ?
-                    JsonConvert.DeserializeObject<Purpose>(PurposeString) :
-                    null;
-            }
-            set => _purpose = value;
-        }
-
         public virtual ICollection<Connector> Connectors { get; set; }
         public virtual ICollection<Attribute> Attributes { get; set; }
         public virtual ICollection<Simple> Simples { get; set; }
@@ -95,25 +97,44 @@ namespace Mb.Models.Data
         public virtual string ProjectIri { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Project Project { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual ICollection<Edge> FromEdges { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual ICollection<Edge> ToEdges { get; set; }
 
         public int? Width { get; set; }
 
         public int? Height { get; set; }
 
-        #endregion
+        // Only for client
+        [NotMapped]
+        public string ParentNodeId { get; set; }
 
-        #region Members
+        [NotMapped]
+        public bool? Selected { get; set; }
 
-        private Purpose _purpose;
+        [NotMapped]
+        public bool? BlockSelected { get; set; }
 
-        #endregion
+        [NotMapped]
+        public bool? Hidden { get; set; }
+
+        [NotMapped]
+        public bool? BlockHidden { get; set; }
+
+        [NotMapped]
+        public bool? IsOffPageTarget { get; set; }
+
+        [NotMapped]
+        public bool? IsOffPageRequired { get; set; }
+
+        #endregion Properties
 
         #region Methods
 
@@ -139,7 +160,7 @@ namespace Mb.Models.Data
                    Iri == other.Iri &&
                    Rds == other.Rds &&
                    Description == other.Description &&
-                   SemanticReference == other.SemanticReference &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    Name == other.Name &&
                    Label == other.Label &&
                    PositionX == other.PositionX &&
@@ -182,7 +203,7 @@ namespace Mb.Models.Data
             hashCode.Add(Iri);
             hashCode.Add(Rds);
             hashCode.Add(Description);
-            hashCode.Add(SemanticReference);
+            hashCode.Add(TypeReferenceString);
             hashCode.Add(Name);
             hashCode.Add(Label);
             hashCode.Add(PositionX);
@@ -212,5 +233,12 @@ namespace Mb.Models.Data
         }
 
         #endregion
+
+        #region Private members
+
+        [TSExclude]
+        private ICollection<TypeReference> _typeReferences;
+
+        #endregion Private members
     }
 }

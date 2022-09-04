@@ -1,5 +1,5 @@
 import { MutableRefObject } from "react";
-import { Size } from "../../compLibrary/size/Size";
+import { Size } from "../../assets/size/Size";
 import { VisuallyHidden } from "../../compLibrary/util";
 import { CloseIcon, ExpandIcon } from "../../assets/icons/controls";
 import { TextResources } from "../../assets/text/TextResources";
@@ -29,7 +29,6 @@ export const FullScreenComponent = ({ inspectorRef }: Props) => {
   const isLibOpen = useAppSelector(libOpenSelector);
   const isInspectorOpen = useAppSelector(inspectorSelector);
   let height = useAppSelector(heightSelector);
-
   if (height === undefined) height = isInspectorOpen ? Size.MODULE_OPEN : Size.MODULE_CLOSED;
 
   return (

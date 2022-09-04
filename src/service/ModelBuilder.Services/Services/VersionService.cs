@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Mb.Data.Contracts;
-using Mb.Data.Extensions;
-using Mb.Models.Application;
 using Mb.Models.Const;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using Mimirorg.Common.Extensions;
 using Newtonsoft.Json;
 using Version = Mb.Models.Data.Version;
+using Mb.Models.Client;
 
 namespace Mb.Services.Services
 {
@@ -68,7 +68,7 @@ namespace Mb.Services.Services
             var data = await Task.Run(() => _versionRepository.FindBy(x => x.Id == id)?.First()?.Data);
 
             if (data == null)
-                throw new ModelBuilderInvalidOperationException("Version not found");
+                throw new MimirorgInvalidOperationException("Version not found");
 
             return JsonConvert.DeserializeObject<Project>(data);
         }
@@ -81,15 +81,15 @@ namespace Mb.Services.Services
         public async Task<VersionCm> CreateVersion(string projectId)
         {
             if (string.IsNullOrWhiteSpace(projectId))
-                throw new ModelBuilderInvalidOperationException("ProjectId can't be null or empty");
+                throw new MimirorgInvalidOperationException("ProjectId can't be null or empty");
 
             var project = await _projectService.GetProject(projectId, null);
 
             if (string.IsNullOrWhiteSpace(project?.Id))
-                throw new ModelBuilderInvalidOperationException("Project not found");
+                throw new MimirorgInvalidOperationException("Project not found");
 
             if (_versionRepository.GetAll().Any(x => x.TypeId == project.Id && x.Ver == project.Version))
-                throw new ModelBuilderInvalidOperationException($"Project with id {project.Id} and version {project.Version} already exist");
+                throw new MimirorgInvalidOperationException($"Project with id {project.Id} and version {project.Version} already exist");
 
             var version = new Version
             {

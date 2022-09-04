@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { SymbolImage } from "../../../../../../compLibrary/symbol/Symbol.styled";
-import { Color } from "../../../../../../compLibrary/colors/Color";
-import { Size } from "../../../../../../compLibrary/size/Size";
-import { Node } from "../../../../../../models";
+import { Color } from "../../../../../../assets/color/Color";
+import { Size } from "../../../../../../assets/size/Size";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { IsProduct } from "../../../../../../helpers/Aspects";
 
 interface NodeBoxProps {

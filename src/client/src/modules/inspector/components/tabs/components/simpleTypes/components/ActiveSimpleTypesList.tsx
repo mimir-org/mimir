@@ -1,12 +1,11 @@
-import { Color } from "../../../../../../../compLibrary/colors/Color";
-import { SimpleLikeItem } from "../../../../../types";
-import { TerminalsCategoryListElement } from "../../shared/styled/TerminalsCategoryListElement";
+import { Simple } from "@mimirorg/modelbuilder-types";
+import { TerminalsCategoryElement } from "../../shared/styled/TerminalsCategoryElement";
 import { TerminalsListElementWrapper } from "../../shared/styled/TerminalsListElementWrapper";
 
 interface Props {
-  simpleTypes: SimpleLikeItem[];
+  simpleTypes: Simple[];
   selectedSimpleTypeId: string;
-  onSelect: (item: SimpleLikeItem) => void;
+  onSelect: (item: Simple) => void;
 }
 
 export const ActiveSimpleTypesList = ({ simpleTypes, selectedSimpleTypeId, onSelect }: Props) => (
@@ -14,14 +13,14 @@ export const ActiveSimpleTypesList = ({ simpleTypes, selectedSimpleTypeId, onSel
     {simpleTypes.map((type, i) => {
       return (
         <TerminalsListElementWrapper key={type.id}>
-          <TerminalsCategoryListElement
+          <TerminalsCategoryElement
             radius={0}
             selected={selectedSimpleTypeId === type.id}
             onClick={() => onSelect(type)}
-            color={i % 2 ? undefined : Color.LAVANDER_WEB_LIST}
+            index={i}
           >
             {type.name}
-          </TerminalsCategoryListElement>
+          </TerminalsCategoryElement>
         </TerminalsListElementWrapper>
       );
     })}

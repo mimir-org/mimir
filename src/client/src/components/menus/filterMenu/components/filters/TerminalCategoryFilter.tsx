@@ -1,47 +1,47 @@
 import { Dispatch } from "redux";
-import { Connector, Edge } from "../../../../../models";
+import { Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { OnTerminalCategoryChange, OnTerminalTypeChange } from "./handlers";
 import { IsTerminalCategoryChecked, IsTerminalTypeChecked } from "./helpers";
-import { TerminalCategory } from "./TransportFilter";
+import { TerminalCategory } from "./TransportTerminalsFilter";
 import { FilterElement } from "../FilterElement";
 
 interface Props {
   category: TerminalCategory;
   edges: Edge[];
-  connectors: Connector[];
+  terminals: Terminal[];
   dispatch: Dispatch;
   visible: boolean;
 }
 
 /**
  * This component is used as a child component for the Transport Filter in the Visual Filter Module.
- * It has one parent - which is the terminal category element. It also has children - the different terminal types that derives
+ * It has one parent - which is the terminal category element. It also has children - the different terminal types that derive
  * from the terminal category.
  * @param interface
  * @returns a parent checkbox and a checkbox for each child.
  */
-export const TerminalCategoryFilter = ({ category, edges, connectors, dispatch, visible }: Props) => {
-  const isCategoryChecked = IsTerminalCategoryChecked(edges, category.id);
+export const TerminalCategoryFilter = ({ category, edges, terminals, dispatch, visible }: Props) => {
+  const isCategoryChecked = IsTerminalCategoryChecked(edges, category.name);
 
   return (
     visible && (
       <>
         <FilterElement
           label={category.name}
-          onChange={() => OnTerminalCategoryChange(edges, category.id, isCategoryChecked, dispatch)}
+          onChange={() => OnTerminalCategoryChange(edges, category.name, isCategoryChecked, dispatch)}
           isChecked={isCategoryChecked}
           visible={visible}
           indent={2}
           isSubHeader
         />
 
-        {connectors.map((conn) => {
-          const isChecked = IsTerminalTypeChecked(edges, category.id, conn.terminalTypeId);
+        {terminals.map((t) => {
+          const isChecked = IsTerminalTypeChecked(edges, t.terminalCategory, t.terminalTypeId);
           return (
             <FilterElement
-              key={conn.id}
-              label={conn.name}
-              onChange={() => OnTerminalTypeChange(edges, category.id, conn.terminalTypeId, isChecked, dispatch)}
+              key={t.id}
+              label={t.name}
+              onChange={() => OnTerminalTypeChange(edges, t.terminalCategory, t.terminalTypeId, isChecked, dispatch)}
               isChecked={isChecked}
               visible={visible}
               indent={3}

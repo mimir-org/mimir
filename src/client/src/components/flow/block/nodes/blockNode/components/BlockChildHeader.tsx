@@ -1,13 +1,13 @@
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { NodeBoxHeader, BlockNodeNameBox } from "./BlockChildHeader.styled";
-import { Connector, Node } from "../../../../../../models";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { useIsOverflowing } from "../../../../../../hooks/useIsOverflowing";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;
-  inputTerminals: Connector[];
-  outputTerminals: Connector[];
+  inputConnectors: Connector[];
+  outputConnectors: Connector[];
   onConnectorClick: (conn: Connector, isInput: boolean) => void;
   showMenuButton?: boolean;
 }
@@ -16,7 +16,7 @@ interface Props {
  * Component for the top banner menu on a ChildNode in BlockView.
  * @returns a banner with terminal menus and name.
  */
-export const BlockChildHeader = ({ node, inputTerminals, outputTerminals, onConnectorClick, showMenuButton }: Props) => {
+export const BlockChildHeader = ({ node, inputConnectors, outputConnectors, onConnectorClick, showMenuButton }: Props) => {
   const { overflowRef, isOverflowing } = useIsOverflowing<HTMLParagraphElement>();
   const name = node.label ?? node.name;
 
@@ -24,7 +24,7 @@ export const BlockChildHeader = ({ node, inputTerminals, outputTerminals, onConn
     <NodeBoxHeader>
       <TerminalsMenuComponent
         node={node}
-        terminals={inputTerminals}
+        connectors={inputConnectors}
         onClick={(c, isInput) => onConnectorClick(c, isInput)}
         showMenuButton={showMenuButton}
         isInput
@@ -36,7 +36,7 @@ export const BlockChildHeader = ({ node, inputTerminals, outputTerminals, onConn
       </Tooltip>
       <TerminalsMenuComponent
         node={node}
-        terminals={outputTerminals}
+        connectors={outputConnectors}
         onClick={(c, isInput) => onConnectorClick(c, isInput)}
         showMenuButton={showMenuButton}
       />

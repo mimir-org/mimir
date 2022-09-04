@@ -11,6 +11,7 @@ const config: MimirEnv = {
   APP_INSIGHTS_CONNECTION_STRING: assignValue("APP_INSIGHTS_CONNECTION_STRING"),
   COMPANY: assignValue("COMPANY"),
   MIMIR_VERSION: assignValue("MIMIR_VERSION"),
+  SILENT: assignValue("SILENT"),
 };
 
 export default config;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Size } from "../../compLibrary/size/Size";
-import { Color } from "../../compLibrary/colors/Color";
+import { Size } from "../../assets/size/Size";
+import { Color } from "../../assets/color/Color";
 
 export const HeaderBox = styled.div`
   display: flex;
@@ -25,7 +25,9 @@ export const LogoBox = styled.div`
 `;
 
 export const CompanyLogoBox = styled.div`
+  z-index: 10;
   flex-shrink: 0;
+  height: ${Size.TOPMENU_HEIGHT}px;
   display: flex;
   pointer-events: none;
 `;

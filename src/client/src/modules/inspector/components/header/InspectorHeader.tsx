@@ -1,22 +1,19 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { InspectorTabs } from "../tabs/InspectorTabs";
 import { MutableRefObject } from "react";
-import { Aspect, Project } from "../../../../models";
 import { GetInspectorColor } from "./helpers/GetInspectorColor";
 import { GetInspectorHeaderText } from "./helpers/GetInspectorHeaderText";
 import { InspectorHeaderContainer } from "./InspectorHeader.styled";
 import { InspectorButtonRow } from "./components/InspectorButtonRow";
 import { IsNode } from "../../helpers/IsType";
 import { Dispatch } from "redux";
+import { Aspect, Project, Terminal, Simple, Attribute } from "@mimirorg/modelbuilder-types";
 import {
-  AttributeLikeItem,
   ChangeInspectorHeightAction,
   ChangeInspectorTabAction,
   ChangeInspectorVisibilityAction,
   InspectorElement,
   OnToogleHandler,
-  SimpleLikeItem,
-  TerminalLikeItem,
 } from "../../types";
 
 interface Props {
@@ -33,9 +30,9 @@ interface Props {
   changeInspectorHeightAction: ChangeInspectorHeightAction;
   changeInspectorTabAction?: ChangeInspectorTabAction;
   onToggle?: OnToogleHandler;
-  attributeLikeItems?: AttributeLikeItem[];
-  terminalLikeItems?: TerminalLikeItem[];
-  simpleLikeItems?: SimpleLikeItem[];
+  attributes?: Attribute[];
+  terminals: Terminal[];
+  simpleItems?: Simple[];
   selectedFlowNodes: FlowNode[];
 }
 
@@ -52,9 +49,9 @@ export const InspectorHeader = ({
   changeInspectorVisibilityAction,
   changeInspectorHeightAction,
   changeInspectorTabAction,
-  attributeLikeItems,
-  terminalLikeItems,
-  simpleLikeItems,
+  attributes,
+  terminals,
+  simpleItems,
   selectedFlowNodes,
 }: Props) => {
   const tabsVisible = isBlockView ? true : selectedFlowNodes?.length < 2;
@@ -68,9 +65,9 @@ export const InspectorHeader = ({
             project={project}
             element={element}
             activeTabIndex={activeTabIndex}
-            attributeLikeItems={attributeLikeItems}
-            terminalLikeItems={terminalLikeItems}
-            simpleLikeItems={simpleLikeItems}
+            attributes={attributes}
+            terminals={terminals}
+            simpleItems={simpleItems}
             changeInspectorTabAction={changeInspectorTabAction}
             inspectorRef={inspectorRef}
             isInspectorOpen={isInspectorOpen}

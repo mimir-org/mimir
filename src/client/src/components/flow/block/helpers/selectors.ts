@@ -1,8 +1,8 @@
 export {
   secondaryNodeSelector,
-  iconSelector,
-  librarySelector,
   userStateSelector,
   animatedEdgeSelector,
   projectSelector,
+  librarySelector,
+  terminalsSelector,
 } from "../../../../redux/store/selectors";

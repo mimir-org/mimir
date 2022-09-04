@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, memo, useCallback, useEffect, useState } from "react";
 import { NodeProps } from "react-flow-renderer";
-import { AspectColorType, Connector, Node } from "../../../../../models";
+import { AspectColorType } from "../../../../../models";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
 import { TreeNodeBox } from "./TreeNode.styled";
 import { TreeLogoComponent } from "./components/TreeLogoComponent";
 import { GetAspectColor } from "../../../../../helpers";

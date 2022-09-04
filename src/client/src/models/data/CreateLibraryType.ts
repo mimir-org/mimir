@@ -1,9 +1,8 @@
-import { Aspect } from "../enums/Aspect";
 import { ObjectType } from "../enums/ObjectType";
-import { ConnectorType } from "../enums/ConnectorType";
 import { PredefinedAttribute } from "./PredefinedAttribute";
 import { TerminalTypeItem } from "./typeEditor/TerminalTypeItem";
 import { CreateId } from "../../components/flow/helpers";
+import { Aspect, ConnectorDirection } from "@mimirorg/modelbuilder-types";
 
 export const CREATE_LIBRARY_KIND = "CreateLibraryType";
 
@@ -57,12 +56,12 @@ function ensureValidState(newCreateLibraryType: CreateLibraryType) {
     const defaultTerminalTypeItem = {
       number: 1,
       terminalTypeId: createLibraryTypeState.terminalTypeId,
-      connectorType: ConnectorType.Input,
+      connectorType: ConnectorDirection.Input,
     } as TerminalTypeItem;
 
     createLibraryTypeState.terminalTypes = [
       defaultTerminalTypeItem,
-      { ...defaultTerminalTypeItem, connectorType: ConnectorType.Output },
+      { ...defaultTerminalTypeItem, connectorType: ConnectorDirection.Output },
     ];
   }
 

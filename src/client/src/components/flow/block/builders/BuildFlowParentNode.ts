@@ -1,6 +1,6 @@
+import { Node } from "@mimirorg/modelbuilder-types";
 import { Node as FlowNode } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text/TextResources";
-import { Node } from "../../../../models";
 
 /**
  * Component to create a parent node in BlockView.

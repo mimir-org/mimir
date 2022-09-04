@@ -6,7 +6,7 @@ interface SetLockTransportAttribute {
   transportId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: string;
+  isLockedStatusDate: Date;
 }
 
 export const setLockTransportAttribute = (lock: SetLockTransportAttribute, state: Types.ProjectState) => {

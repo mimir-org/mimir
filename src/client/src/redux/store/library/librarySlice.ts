@@ -1,16 +1,25 @@
-import { Collection, LibItem, ObjectType } from "../../../models";
+import { Collection } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { addToCollectionsTypes, DeleteLibraryItem, FetchLibrary, FetchLibraryItems, LibraryState } from "./types";
 import { ApiError } from "../../../models/webclient";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
+import {
+  AddToCollectionsTypes,
+  DeleteLibraryItem,
+  FetchInterfaceTypes,
+  FetchLibrary,
+  FetchTerminals,
+  FetchTransportTypes,
+  LibraryState,
+} from "./types";
 
 const initialLibraryState: LibraryState = {
   fetching: false,
-  nodeTypes: [],
+  libNodes: [],
   apiError: [],
+  collections: [],
   transportTypes: [],
   interfaceTypes: [],
-  subProjectTypes: [],
-  collections: [],
+  terminals: [],
 };
 
 export const librarySlice = createSlice({
@@ -19,17 +28,14 @@ export const librarySlice = createSlice({
   reducers: {
     fetchLibrary: (state) => {
       state.fetching = true;
-      state.nodeTypes = [];
-      state.transportTypes = [];
-      state.interfaceTypes = [];
-      state.apiError = state.apiError
-        ? state.apiError.filter((elem) => elem.key !== fetchLibrarySuccessOrError.type)
-        : state.apiError;
+      (state.libNodes = [] as NodeLibCm[]),
+        (state.apiError = state.apiError
+          ? state.apiError.filter((elem) => elem.key !== fetchLibrarySuccessOrError.type)
+          : state.apiError);
     },
     fetchLibrarySuccessOrError: (state, action: PayloadAction<FetchLibrary>) => {
       state.fetching = false;
-      const { nodeTypes, transportTypes, interfaceTypes, subProjectTypes } = action.payload;
-      Object.assign(state, { nodeTypes, transportTypes, interfaceTypes, subProjectTypes });
+      state.libNodes = action.payload.libNodes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     exportLibrary: (state, _action: PayloadAction<string>) => {
@@ -58,9 +64,22 @@ export const librarySlice = createSlice({
         ? state.apiError.filter((elem) => elem.key !== fetchLibraryTransportTypesSuccessOrError.type)
         : state.apiError;
     },
-    fetchLibraryTransportTypesSuccessOrError: (state, action: PayloadAction<FetchLibraryItems>) => {
+
+    fetchLibraryTransportTypesSuccessOrError: (state, action: PayloadAction<FetchTransportTypes>) => {
       state.fetching = false;
-      state.transportTypes = action.payload.libraryItems;
+      state.transportTypes = action.payload.transportTypes;
+      action.payload.apiError && state.apiError.push(action.payload.apiError);
+    },
+
+    fetchLibraryTerminals: (state) => {
+      state.fetching = true;
+      state.apiError = state.apiError
+        ? state.apiError.filter((elem) => elem.key !== fetchLibraryTerminalsSuccessOrError.type)
+        : state.apiError;
+    },
+    fetchLibraryTerminalsSuccessOrError: (state, action: PayloadAction<FetchTerminals>) => {
+      state.fetching = false;
+      state.terminals = action.payload.terminals;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
     fetchLibraryInterfaceTypes: (state) => {
@@ -69,15 +88,17 @@ export const librarySlice = createSlice({
         ? state.apiError.filter((elem) => elem.key !== fetchLibraryInterfaceTypesSuccessOrError.type)
         : state.apiError;
     },
-    fetchLibraryInterfaceTypesSuccessOrError: (state, action: PayloadAction<FetchLibraryItems>) => {
+    fetchLibraryInterfaceTypesSuccessOrError: (state, action: PayloadAction<FetchInterfaceTypes>) => {
       state.fetching = false;
-      state.transportTypes = action.payload.libraryItems;
+      state.interfaceTypes = action.payload.interfaceTypes;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
-    addLibraryItem: (state, action: PayloadAction<LibItem>) => {
-      action.payload.libraryType === ObjectType.Interface && state.interfaceTypes.push(action.payload);
-      action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
-      action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
+    addLibraryItem: (state, action: PayloadAction<NodeLibCm>) => {
+      // TODO: fix
+      // action.payload.libraryType === ObjectType.Interface && state.interfaceTypes.push(action.payload);
+      // action.payload.libraryType === ObjectType.ObjectBlock && state.nodeTypes.push(action.payload);
+      // action.payload.libraryType === ObjectType.Transport && state.transportTypes.push(action.payload);
+      state.libNodes.push(action.payload);
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     deleteLibraryItem: (state, action: PayloadAction<string>) => {
@@ -89,13 +110,13 @@ export const librarySlice = createSlice({
         state.apiError.push(apiError);
       } else {
         state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== id);
-        state.nodeTypes = state.nodeTypes.filter((x) => x.id !== id);
+        state.libNodes = state.libNodes.filter((x) => x.id !== id);
         state.transportTypes = state.transportTypes.filter((x) => x.id !== id);
       }
     },
     removeLibraryItem: (state, action: PayloadAction<string>) => {
       state.interfaceTypes = state.interfaceTypes.filter((x) => x.id !== action.payload);
-      state.nodeTypes = state.nodeTypes.filter((x) => x.id !== action.payload);
+      state.libNodes = state.libNodes.filter((x) => x.id !== action.payload);
       state.transportTypes = state.transportTypes.filter((x) => x.id !== action.payload);
     },
     deleteLibraryError: (state, action: PayloadAction<string>) => {
@@ -104,11 +125,11 @@ export const librarySlice = createSlice({
     addCollection: (state, action: PayloadAction<Collection>) => {
       state.collections?.push(action.payload);
     },
-    addToCollections: (state, action: PayloadAction<addToCollectionsTypes>) => {
+    addToCollections: (state, action: PayloadAction<AddToCollectionsTypes>) => {
       state.collections = state.collections.map((collection) => {
         if (action.payload.collectionIds.includes(collection.id)) {
-          action.payload.types.forEach((type) => {
-            return !collection.libItems.includes(type) ? collection.libItems.push(type) : null;
+          action.payload.libNodes.forEach((type) => {
+            return !collection.libNodes.includes(type) ? collection.libNodes.push(type) : null;
           });
         }
         return collection;
@@ -128,6 +149,8 @@ export const {
   fetchLibraryTransportTypesSuccessOrError,
   fetchLibraryInterfaceTypes,
   fetchLibraryInterfaceTypesSuccessOrError,
+  fetchLibraryTerminals,
+  fetchLibraryTerminalsSuccessOrError,
   addLibraryItem,
   removeLibraryItem,
   deleteLibraryError,

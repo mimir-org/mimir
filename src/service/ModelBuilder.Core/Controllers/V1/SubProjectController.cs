@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using Mb.Models.Application;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -60,7 +60,7 @@ namespace Mb.Core.Controllers.V1
                 var createdSubProject = await _projectService.CreateProject(subProjectAm);
                 return StatusCode(201, createdSubProject);
             }
-            catch (ModelBuilderBadRequestException e)
+            catch (MimirorgBadRequestException e)
             {
                 _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
 
@@ -106,7 +106,7 @@ namespace Mb.Core.Controllers.V1
 
                 return Ok(data);
             }
-            catch (ModelBuilderNotFoundException)
+            catch (MimirorgNotFoundException)
             {
                 return NoContent();
             }

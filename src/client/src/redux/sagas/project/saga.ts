@@ -1,10 +1,11 @@
 import { call, put } from "redux-saga/effects";
-import { Project, ProjectFileAm, WebSocket } from "../../../models";
-import { ConvertProject, MapProperties } from ".";
+import { ProjectFileAm, WebSocket } from "../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
+import { ConvertProjectToProjectAm, MapProjectProperties } from ".";
 import { saveAs } from "file-saver";
 import { IsBlockView } from "../../../helpers";
 import { search } from "../../store/project/actions";
-import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
+import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import Config from "../../../models/Config";
 import {
   ApiError,
@@ -60,11 +61,11 @@ export function* getProject(action: FetchingProjectAction) {
 
     const project = response.data as Project;
 
-    MapProperties(project, action.payload.project, {});
+    MapProjectProperties(project, action.payload.project, {});
 
     if (!IsBlockView()) {
       project?.edges.forEach((edge) => {
-        if (!IsPartOfTerminal(edge.fromConnector)) edge.hidden = true;
+        if (!IsPartOfRelation(edge.fromConnector)) edge.hidden = true;
       });
     }
 
@@ -197,7 +198,7 @@ export function* createSubProject(action: CreateSubProject) {
 export function* updateProject(action: SaveProjectAction) {
   try {
     const url = `${Config.API_BASE_URL}project/update/${action.payload.project.id}`;
-    const proj = ConvertProject(action.payload.project);
+    const proj = ConvertProjectToProjectAm(action.payload.project);
     const response = yield call(post, url, proj);
 
     if (response.status === 400) {
@@ -221,9 +222,7 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     if (response.status === 400) {
       yield put({
         type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-        payload: {
-          apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
-        },
+        payload: { apiError: GetApiErrorForBadRequest(response, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR) },
       });
       return;
     }
@@ -231,7 +230,9 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
     const data = response.data as ProjectFileAm;
     const blob = new Blob([data.fileContent], { type: data.fileFormat.contentType });
 
-    saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
+    // TODO: fix filname, does not exist in model
+    // saveAs(blob, action.payload.filename + "." + data.fileFormat.fileExtension);
+    saveAs(blob);
 
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
@@ -240,9 +241,7 @@ export function* exportProjectFile(action: ExportProjectFileAction) {
   } catch (error) {
     yield put({
       type: EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR,
-      payload: {
-        apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR),
-      },
+      payload: { apiError: GetApiErrorForException(error, EXPORT_PROJECT_TO_FILE_SUCCESS_OR_ERROR) },
     });
   }
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FontSize } from "../../../../../../../../../../../compLibrary/font";
+import { FontSize } from "../../../../../../../../../../../assets/font";
 
 interface ParameterHeaderProps {
   color: string;

@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useRef } from "react";
 import { Dispatch } from "redux";
-import { Size } from "../../../../../../../compLibrary/size/Size";
-import { Node } from "../../../../../../../models";
+import { Size } from "../../../../../../../assets/size/Size";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { updateBlockSize } from "../../../../../../../redux/store/project/actions";
 import { GetFlowNodeByDataId } from "../helpers/GetFlowNodeByDataId";
 

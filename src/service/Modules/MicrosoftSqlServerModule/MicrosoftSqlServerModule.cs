@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Mb.Models.Configurations;
 using Microsoft.EntityFrameworkCore;
@@ -25,16 +26,32 @@ namespace MicrosoftSqlServerModule
             var dbConfig = new DatabaseConfiguration();
             var databaseConfigSection = config.GetSection("DatabaseConfiguration");
             databaseConfigSection.Bind(dbConfig);
-
             services.AddSingleton(Options.Create(dbConfig));
 
-            services.AddDbContext<ModelBuilderDbContext>(options =>
+            if (dbConfig.ConnectionString == null)
             {
-                options.UseSqlServer(dbConfig.ConnectionString,
-                    sqlOptions => sqlOptions.MigrationsAssembly("ModelBuilder.Core"));
-                //options.EnableSensitiveDataLogging();
-                //options.ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning));
-            });
+                services.AddDbContext<ModelBuilderDbContext>(options => options.UseInMemoryDatabase("TestModelBuilderDB"));
+            }
+            else
+            {
+                services.AddDbContext<ModelBuilderDbContext>(options =>
+                {
+                    options.UseSqlServer(dbConfig.ConnectionString, sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly("ModelBuilder.Core");
+                        var retryCount = 1;
+                        var retryInterval = 10;
+
+                        if (dbConfig.ConnectRetryCount > 0)
+                            retryCount = dbConfig.ConnectRetryCount;
+
+                        if (dbConfig.ConnectRetryInterval is >= 1 and <= 60)
+                            retryInterval = dbConfig.ConnectRetryInterval;
+
+                        sqlOptions.EnableRetryOnFailure(retryCount, TimeSpan.FromSeconds(retryInterval), new List<int>());
+                    });
+                });
+            }
 
             return services;
         }

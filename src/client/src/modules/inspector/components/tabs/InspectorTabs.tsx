@@ -1,9 +1,9 @@
 import { MutableRefObject } from "react";
 import { Action } from "redux";
-import { Project } from "../../../../models";
+import { Attribute, Project, Simple, Terminal } from "@mimirorg/modelbuilder-types";
 import { changeInspectorTab } from "../../redux/inspectorSlice";
 import { ShouldShowTabs } from "./helpers";
-import { AttributeLikeItem, InspectorElement, SimpleLikeItem, TerminalLikeItem } from "../../types";
+import { InspectorElement } from "../../types";
 import {
   InspectorTabWrapper,
   AdminComponent,
@@ -17,9 +17,9 @@ interface Props {
   project: Project;
   element: InspectorElement;
   activeTabIndex: number;
-  attributeLikeItems?: AttributeLikeItem[];
-  terminalLikeItems?: TerminalLikeItem[];
-  simpleLikeItems?: SimpleLikeItem[];
+  attributes?: Attribute[];
+  terminals: Terminal[];
+  simpleItems?: Simple[];
   changeInspectorTabAction?: (index: number) => Action;
   inspectorRef: MutableRefObject<HTMLDivElement>;
   isInspectorOpen: boolean;
@@ -30,9 +30,9 @@ export const InspectorTabs = ({
   project,
   element,
   activeTabIndex,
-  attributeLikeItems,
-  terminalLikeItems,
-  simpleLikeItems,
+  attributes,
+  terminals,
+  simpleItems,
   changeInspectorTabAction = changeInspectorTab,
   inspectorRef,
   isInspectorOpen,
@@ -42,10 +42,10 @@ export const InspectorTabs = ({
 
   const tabs = [
     <AdminComponent key={0} element={element} project={project} />,
-    <ParametersComponent key={1} element={element} attributeLikeItems={attributeLikeItems} />,
-    <TerminalsComponent key={2} element={element} terminalLikeItems={terminalLikeItems} />,
+    <ParametersComponent key={1} element={element} attributes={attributes} />,
+    <TerminalsComponent key={2} element={element} terminals={terminals} />,
     <RelationsComponent key={3} element={element} />,
-    <SimpleTypesComponent key={4} element={element} simpleLikeItems={simpleLikeItems} />,
+    <SimpleTypesComponent key={4} element={element} simpleItems={simpleItems} />,
   ];
 
   return (

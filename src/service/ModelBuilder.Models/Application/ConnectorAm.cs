@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Mb.Models.Attributes;
+using Mimirorg.Common.Attributes;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Models.Application
 {
@@ -20,10 +21,8 @@ namespace Mb.Models.Application
         [Required]
         public string Name { get; set; }
 
-        [EnumDataType(typeof(ConnectorType))]
-        public ConnectorType Type { get; set; }
-
-        public string SemanticReference { get; set; }
+        [EnumDataType(typeof(ConnectorDirection))]
+        public ConnectorDirection Type { get; set; }
 
         [EnumDataType(typeof(ConnectorVisibility))]
         public ConnectorVisibility ConnectorVisibility { get; set; }
@@ -35,27 +34,11 @@ namespace Mb.Models.Application
 
         public bool IsRequired { get; set; }
 
-        // Relation
-        [EnumDataType(typeof(RelationType))]
-        public RelationType RelationType { get; set; }
-
-        // Terminal
-        public string Color { get; set; }
-        public string TerminalCategory { get; set; }
-        public string TerminalTypeId { get; set; }
-
-        [ValidIri]
-        public string TerminalTypeIri { get; set; }
-
-        public virtual ICollection<AttributeAm> Attributes { get; set; }
+        public ICollection<AttributeAm> Attributes { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (RelationType == RelationType.NotSet)
-            {
-                if (string.IsNullOrWhiteSpace(TerminalTypeId) && string.IsNullOrWhiteSpace(TerminalTypeIri))
-                    yield return new ValidationResult($"{nameof(TerminalTypeId)} or {nameof(TerminalTypeIri)} is required when object is terminal", new List<string> { nameof(TerminalTypeId), nameof(TerminalTypeIri) });
-            }
+            var validations = new List<ValidationResult>();
 
             if (Attributes != null)
             {
@@ -64,10 +47,12 @@ namespace Mb.Models.Application
                     var validationResults = attributeAm.Validate(validationContext);
                     foreach (var validationResult in validationResults)
                     {
-                        yield return validationResult;
+                        validations.Add(validationResult);
                     }
                 }
             }
+
+            return validations;
         }
     }
 }

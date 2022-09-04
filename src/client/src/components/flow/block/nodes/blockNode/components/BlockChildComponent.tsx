@@ -1,18 +1,17 @@
-import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
-import { Connector, Node } from "../../../../../../models";
 import { OnHover, OnMouseOut } from "./handlers";
 import { NodeBox, SymbolBox, LogoBox } from "./BlockChildComponent.styled";
 import { Symbol } from "../../../../../../compLibrary/symbol";
 import { useState } from "react";
 import { BlockChildHeader } from "./BlockChildHeader";
-import Config from "../../../../../../models/Config";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { commonStateCompanySelector, useAppSelector } from "../../../../../../redux/store";
 
 interface Props {
   node: Node;
   colorMain: string;
   colorSelected: string;
-  inputTerminals: Connector[];
-  outputTerminals: Connector[];
+  inputConnectors: Connector[];
+  outputConnectors: Connector[];
   onConnectorClick: (conn: Connector, isInput: boolean) => void;
 }
 
@@ -24,11 +23,12 @@ export const BlockChildComponent = ({
   node,
   colorMain,
   colorSelected,
-  inputTerminals,
-  outputTerminals,
+  inputConnectors,
+  outputConnectors,
   onConnectorClick,
 }: Props) => {
   const [showMenuButton, setShowMenuButton] = useState(false);
+  const company = useAppSelector(commonStateCompanySelector);
 
   return (
     <NodeBox
@@ -41,8 +41,8 @@ export const BlockChildComponent = ({
     >
       <BlockChildHeader
         node={node}
-        inputTerminals={inputTerminals}
-        outputTerminals={outputTerminals}
+        inputConnectors={inputConnectors}
+        outputConnectors={outputConnectors}
         onConnectorClick={(c, isInput) => onConnectorClick(c, isInput)}
         showMenuButton={showMenuButton}
       />
@@ -50,7 +50,7 @@ export const BlockChildComponent = ({
         <Symbol source={node.symbol} text={node.name} />
       </SymbolBox>
       <LogoBox>
-        <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
+        <img src={company.logo} alt={company.name} />
       </LogoBox>
     </NodeBox>
   );

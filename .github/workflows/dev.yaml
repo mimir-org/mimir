@@ -14,6 +14,39 @@ jobs:
       - name: Set short commit sha as output.
         id: vars
         run: echo "::set-output name=sha_short::$(echo ${GITHUB_SHA} | cut -c1-8)"
+  
+  create-prerelease:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag_version.outputs.new_tag }}
+      raw_tag: ${{ steps.tag_version.outputs.raw_tag  }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mimir-org/mimir-actions/generate-release-tag-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prefix: v
+          suffix: preview
+          target: major
+
+      - name: Release
+        if: ${{ steps.tag_version.outputs.new_tag != '' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag_version.outputs.raw_tag }}
+          name: Release  ${{ steps.tag_version.outputs.new_tag }}
+          generate_release_notes: true
+          prerelease: true
+
+      - name: Check Output Parameters
+        if: ${{ steps.tag_version.outputs.new_tag != '' }}
+        run: |
+          echo "Tag: ${{ steps.release.outputs.new_tag }}"
+          echo "Version: ${{ steps.release.outputs.new_version }}"
 
   build-client:
     needs: construct-sha-short
@@ -39,3 +72,35 @@ jobs:
       target: final
       hash_files_template: "**/*.csproj"
       push: false
+  
+  npm-modelbuilder:
+    runs-on: ubuntu-latest
+    needs: create-prerelease
+    if: needs.create-prerelease.outputs.raw_tag != ''
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Package typescript interfaces
+        run: dotnet run
+        working-directory: src/service/Mimirorg.Package
+
+      - name: Generate npm package
+        run: |
+
+          mkdir modelbuilder-types
+
+          cd modelbuilder-types
+
+          cp -a ../src/service/Mimirorg.Package/template/. ./
+
+          npx tsc index.ts --declaration
+
+          npm version ${{ needs.create-prerelease.outputs.raw_tag }}
+
+      - name: Publish npm package
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          npm publish --access public --ignore-scripts
+        working-directory: modelbuilder-types
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_MIMIRORG_AUTH }}

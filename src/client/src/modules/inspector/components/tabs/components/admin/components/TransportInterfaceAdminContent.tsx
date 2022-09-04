@@ -3,14 +3,15 @@ import moment from "moment/moment.js";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
-import { FontSize } from "../../../../../../../compLibrary/font";
-import { Edge, EnumBase, Interface, Project, Transport } from "../../../../../../../models";
+import { FontSize } from "../../../../../../../assets/font";
+import { EnumBase } from "../../../../../../../models";
 import { changeInterfaceValue, changeTransportValue } from "../../../../../../../redux/store/project/actions";
 import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../../../../helpers";
 import { GetReferenceDesignationEdge } from "../../../../../../../helpers/GetReferenceDesignation";
-import { DropDownItem } from "../../../../../../../compLibrary/dropdown/typeEditor/Dropdown";
+import { DropDownItem } from "../../../../../../../compLibrary/dropdown/inspector/InspectorDropdown";
+import { Edge, Project, Transport, Interface } from "@mimirorg/modelbuilder-types";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
 
@@ -39,16 +40,6 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
         <div>
           <div>{TextResources.ADMIN_RDS}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={GetRdsIdEdge(edge) ?? ""} onChange={() => null} inputType="" />
-        </div>
-        <div>
-          <div>{TextResources.ADMIN_SEMANTIC_ID}</div>
-          <Input
-            fontSize={FontSize.STANDARD}
-            readOnly
-            value={element.semanticReference ?? ""}
-            onChange={() => null}
-            inputType=""
-          />
         </div>
       </TabColumn>
       <TabColumn width={250}>

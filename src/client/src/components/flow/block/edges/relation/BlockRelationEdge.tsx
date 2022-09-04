@@ -1,7 +1,7 @@
 import { EdgeProps, getSimpleBezierPath } from "react-flow-renderer";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../assets/color/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { useAppSelector, electroSelector } from "../../../../../redux/store";
 import { GetBlockEdgeStyle } from "../helpers/GetBlockEdgeStyle";
 

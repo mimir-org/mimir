@@ -1,3 +1,4 @@
+import { IsTerminal } from "../../../../components/flow/helpers/Connectors";
 import * as Types from "../types";
 import { UpdateAttributeIsLocked } from "./index";
 
@@ -7,7 +8,7 @@ interface SetLockNodeTerminalAttribute {
   nodeId: string;
   isLocked: boolean;
   isLockedStatusBy: string;
-  isLockedStatusDate: string;
+  isLockedStatusDate: Date;
 }
 
 export const setLockNodeTerminalAttribute = (lock: SetLockNodeTerminalAttribute, state: Types.ProjectState) => {
@@ -22,7 +23,7 @@ export const setLockNodeTerminalAttribute = (lock: SetLockNodeTerminalAttribute,
           ? {
               ...n,
               connectors: n.connectors.map((conn) =>
-                conn.id === terminalId
+                conn.id === terminalId && IsTerminal(conn)
                   ? {
                       ...conn,
                       attributes: conn.attributes.map((attribute) =>

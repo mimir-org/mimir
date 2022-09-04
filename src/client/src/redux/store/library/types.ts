@@ -1,28 +1,41 @@
-import { Collection, LibItem, LibrarySubProjectItem } from "../../../models";
+import { InterfaceLibCm, NodeLibCm, TerminalLibCm, TransportLibCm } from "@mimirorg/typelibrary-types";
+import { Collection } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 // State types
 export interface LibraryState {
   fetching: boolean;
-  nodeTypes: LibItem[] | null;
+  libNodes: NodeLibCm[] | null;
+  transportTypes: TransportLibCm[] | null;
+  interfaceTypes: InterfaceLibCm[] | null;
+  terminals: TerminalLibCm[] | null;
   apiError: ApiError[];
-  transportTypes: LibItem[];
-  interfaceTypes: LibItem[];
-  subProjectTypes: LibrarySubProjectItem[];
   collections: Collection[];
 }
 
 // Action types
 export interface FetchLibrary {
-  nodeTypes: LibItem[];
-  transportTypes: LibItem[];
-  interfaceTypes: LibItem[];
-  subProjectTypes: LibrarySubProjectItem[];
+  libNodes: NodeLibCm[];
   apiError: ApiError;
 }
 
 export interface FetchLibraryItems {
-  libraryItems: LibItem[];
+  libNodes: NodeLibCm[];
+  apiError: ApiError;
+}
+
+export interface FetchTransportTypes {
+  transportTypes: TransportLibCm[];
+  apiError: ApiError;
+}
+
+export interface FetchTerminals {
+  terminals: TerminalLibCm[];
+  apiError: ApiError;
+}
+
+export interface FetchInterfaceTypes {
+  interfaceTypes: InterfaceLibCm[];
   apiError: ApiError;
 }
 
@@ -31,7 +44,7 @@ export interface DeleteLibraryItem {
   apiError: ApiError;
 }
 
-export interface addToCollectionsTypes {
-  types: LibItem[];
+export interface AddToCollectionsTypes {
+  libNodes: NodeLibCm[];
   collectionIds: string[];
 }

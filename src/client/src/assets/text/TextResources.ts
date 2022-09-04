@@ -24,7 +24,7 @@ export const TextResources = {
   SUBPROJECTS: "Subprojects",
   LOCK_OBJECT: "Lock object(s)",
   UNLOCK_OBJECT: "Unlock object(s)",
-  PARTOF_RELATIONSHIP: "Part of Relationship",
+  PARTOF_RELATIONSHIP: "PartOf",
   FAVORITES: "Favorites",
   CLOSE_WINDOW: "Close window",
 
@@ -137,6 +137,7 @@ export const TextResources = {
   EXPAND: "Expand inspector panel",
   CLOSE: "Close inspector panel",
   INACTIVE_PANEL: "Select an object to activate the inspector",
+  INPUT_PLACEHOLDER: "input-placeholder",
 
   // LibraryModule
   COLLECTIONS: "Collections",
@@ -154,10 +155,6 @@ export const TextResources = {
   SUBPROJECTS_INFO: "Subprojects created in Project menu appear listed here.",
   SUBPROJECTS_NONE: "There are currently no Subprojects for this Project.",
   TEMPLATES_NONE: "There are currently no Templates available for this Project.",
-  NEW_TYPE: "New Type",
-  EDIT_TYPE: "Edit Type",
-  DELETE_TYPE: "Delete Type",
-  DELETE_TYPE_CONFIRM: "Are you sure you want to delete ",
   TYPE_VERSION: "v",
   CREATE_COLLECTION: "Create or add to existing Library Collection",
   SELECT_COLLECTION: "Or select existing collection",
@@ -292,7 +289,20 @@ export const TextResources = {
   // Resize
   RESIZE_NODE: "Resize node",
 
+  // Kind
+  KIND_NODE: "Node",
+  KIND_EDGE: "Edge",
+  KIND_TRANSPORT: "Transport",
+  KIND_INTERFACE: "Interface",
+  KIND_SIMPLE: "Simple",
+  KIND_TERMINAL: "Terminal",
+  KIND_RELATION: "Relation",
+  KIND_CONNECTOR: "Connector",
+  KIND_ATTRIBUTE: "Attribute",
+  KIND_UNIT: "Unit",
+
   // Company names
   EQUINOR: "equinor.com",
   AIBEL: "aibel.com",
+  GABBI: "gabbi",
 };

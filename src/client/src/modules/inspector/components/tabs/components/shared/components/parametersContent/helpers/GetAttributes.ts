@@ -1,5 +1,6 @@
-import { AttributeLikeItem, InspectorParametersElement } from "../../../../../../../types";
+import { Attribute } from "@mimirorg/modelbuilder-types";
+import { InspectorParametersElement } from "../../../../../../../types";
 
-export const GetAttributes = (element: InspectorParametersElement): AttributeLikeItem[] => {
+export const GetAttributes = (element: InspectorParametersElement): Attribute[] => {
   return element.attributes;
 };

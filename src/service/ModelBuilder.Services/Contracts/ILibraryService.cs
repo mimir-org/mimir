@@ -1,48 +1,40 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mb.Models.Application;
-using Mb.Models.Application.TypeEditor;
-using Mb.Models.Data.Enums;
-using Mb.Models.Data.TypeEditor;
-using Mb.Models.Enums;
+using Mb.Models.Common;
+using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Contracts
 {
     public interface ILibraryService
     {
-        Task<Library> GetLibTypes(string searchString);
-        Task<List<LibraryNodeItem>> GetNodeTypes(string searchString);
-        Task<List<LibraryTransportItem>> GetTransportTypes(string searchString);
-        Task<List<LibraryInterfaceItem>> GetInterfaceTypes(string searchString);
-        Task<IEnumerable<LibrarySubProjectItem>> GetSubProjects(string searchString = null);
+        /// <summary>
+        /// Get all node types
+        /// </summary>
+        /// <returns></returns>
+        Task<List<NodeLibCm>> GetNodeTypes(string searchString);
 
-        // Type Editor
-        // TODO: Should be removed after type editor client is finished
-        Task<List<AttributeQualifier>> GetAttributeQualifiers();
-        Task<List<AttributeSource>> GetAttributeSources();
-        Task<List<AttributeFormat>> GetAttributeFormats();
-        Task<List<AttributeCondition>> GetAttributeConditions();
-        Task<List<Purpose>> GetPurposes();
-        Task<List<LocationTypeAm>> GetAspectAttributes();
-        Task<List<Unit>> GetUnits();
-        Task<List<AttributeType>> GetAttributeTypes(Aspect aspect);
-        Task<List<BlobDataAm>> GetSymbols();
-        Task<List<SimpleType>> GetSimpleTypes();
-        Task<List<PredefinedAttributeAm>> GetPredefinedAttributes();
-        Task<ICollection<Rds>> GetRds();
-        Task<List<TerminalType>> GetTerminals();
-        Dictionary<string, List<TerminalType>> GetTerminalsByCategory();
+        /// <summary>
+        /// Get all transport types
+        /// </summary>
+        /// <returns></returns>
+        Task<List<TransportLibCm>> GetTransportTypes(string searchString);
 
-        // Create, edit and delete
-        Task<LibraryNodeItem> CreateNodeType(CreateLibraryType createLibraryType);
-        Task<LibraryTransportItem> CreateTransportType(CreateLibraryType createLibraryType);
-        Task<LibraryInterfaceItem> CreateInterfaceType(CreateLibraryType createLibraryType);
+        /// <summary>
+        /// Get all interface types
+        /// </summary>
+        /// <returns></returns>
+        Task<List<InterfaceLibCm>> GetInterfaceTypes(string searchString);
 
-        Task<LibraryNodeItem> UpdateNodeItem(string id, CreateLibraryType createLibraryType);
-        Task<LibraryTransportItem> UpdateTransportItem(string id, CreateLibraryType createLibraryType);
-        Task<LibraryInterfaceItem> UpdateInterfaceItem(string id, CreateLibraryType createLibraryType);
+        /// <summary>
+        /// Get all terminal types
+        /// </summary>
+        /// <returns>A collection of all registered terminals</returns>
+        Task<List<TerminalLibCm>> GetTerminalTypes();
 
-        Task DeleteType(string id);
-        Task<CreateLibraryType> ConvertToCreateLibraryType(string id, LibraryFilter filter);
+        /// <summary>
+        /// Get all sub projects
+        /// </summary>
+        /// <returns></returns>
+        Task<List<LibrarySubProjectItem>> GetSubProjects(string searchString = null);
     }
 }

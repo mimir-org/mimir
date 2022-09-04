@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import { Size } from "../../../../../compLibrary/size/Size";
+import { Size } from "../../../../../assets/size/Size";
 import { SetPanelHeight } from "../../../helpers/SetPanelHeight";
 
 /**

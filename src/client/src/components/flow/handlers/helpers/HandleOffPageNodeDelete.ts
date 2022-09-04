@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { HandleRequiredOffPageDelete } from "./HandleRequiredOffPageDelete";
 import { HandleConnectedOffPageDelete } from "./HandleConnectedOffPageDelete";
 import { GetOffPageTransportEdge } from "./OffPageDeleteFunctions";

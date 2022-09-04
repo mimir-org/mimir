@@ -1,4 +1,4 @@
-import { Icon } from "../../../../compLibrary/icon";
+import { Icon } from "../../../../compLibrary/icon/Icon";
 import { MenuElementButton, MenuElementText } from "./MenuElement.styled";
 
 interface Props {

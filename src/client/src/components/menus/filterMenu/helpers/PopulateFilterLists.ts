@@ -1,22 +1,22 @@
-import { Connector, Edge, Node } from "../../../../models";
+import { Node, Edge, Relation, Terminal } from "@mimirorg/modelbuilder-types";
 import { IsOffPageEdge } from "../../../flow/block/helpers/IsOffPageEdge";
-import { IsLocationTerminal, IsPartOfTerminal, IsProductTerminal, IsTransport } from "../../../flow/helpers/Connectors";
-import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyRelationItem, VerifyTransportItem } from "../components/filters/helpers";
+import { IsLocationRelation, IsPartOfRelation, IsProductRelation, IsTerminal } from "../../../flow/helpers/Connectors";
+import { VerifyFulfilledByItem, VerifyPartOfItem, VerifyLocationItem, VerifyTransportItem } from "../components/filters/helpers";
 
 /**
  * Method to add content to the different categories in the Visual Filter.
  * @param edges
  * @param nodes
  * @param transportItems
- * @param relationItems
+ * @param productAndLocationRelations
  * @param partOfItems
  */
 const PopulateFilterLists = (
   edges: Edge[],
   nodes: Node[],
-  transportItems: Connector[],
-  relationItems: Connector[],
-  partOfItems: Connector[],
+  transportItems: Terminal[],
+  productAndLocationRelations: Relation[],
+  partOfItems: Relation[],
   isTreeView: boolean
 ) => {
   edges.forEach((edge) => {
@@ -24,10 +24,10 @@ const PopulateFilterLists = (
 
     const sourceConn = edge.fromConnector;
 
-    if (IsTransport(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
-    else if (IsLocationTerminal(sourceConn)) VerifyRelationItem(relationItems, sourceConn);
-    else if (IsProductTerminal(sourceConn)) VerifyFulfilledByItem(relationItems, sourceConn);
-    else if (IsPartOfTerminal(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn, nodes);
+    if (IsTerminal(sourceConn)) VerifyTransportItem(transportItems, sourceConn);
+    else if (IsLocationRelation(sourceConn)) VerifyLocationItem(productAndLocationRelations, sourceConn as Relation);
+    else if (IsProductRelation(sourceConn)) VerifyFulfilledByItem(productAndLocationRelations, sourceConn as Relation);
+    else if (IsPartOfRelation(sourceConn)) VerifyPartOfItem(partOfItems, sourceConn as Relation, nodes);
   });
 };
 

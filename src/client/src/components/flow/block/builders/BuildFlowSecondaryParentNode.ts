@@ -1,7 +1,7 @@
 import { Node as FlowNode } from "react-flow-renderer";
 import { TextResources } from "../../../../assets/text/TextResources";
-import { Size } from "../../../../compLibrary/size/Size";
-import { Node } from "../../../../models";
+import { Size } from "../../../../assets/size/Size";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { CreateId } from "../../helpers";
 
 /**

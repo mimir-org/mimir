@@ -1,8 +1,8 @@
-import { Connector, Edge, Node } from "../../../models";
 import { GetLegendInfo } from "./GetLegendInfo";
 import { IsBlockView } from "../../../helpers";
-import { IsPartOfTerminal } from "../../../components/flow/helpers/Connectors";
+import { IsPartOfRelation } from "../../../components/flow/helpers/Connectors";
 import { Legend } from "./types";
+import { Connector, Node, Edge } from "@mimirorg/modelbuilder-types";
 
 export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
   const IsActive = (conn: Connector) => {
@@ -13,7 +13,7 @@ export const AddLegend = (node: Node, edges: Edge[]): Legend[] => {
         found = true;
         return;
       }
-      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.hidden && !IsPartOfTerminal(conn)) found = true;
+      if (IsBlockView() && edge.fromConnectorId === conn.id && !edge.hidden && !IsPartOfRelation(conn)) found = true;
     });
     return found;
   };

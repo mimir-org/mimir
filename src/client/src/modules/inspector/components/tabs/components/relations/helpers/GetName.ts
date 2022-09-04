@@ -1,8 +1,8 @@
-import { Connector, Edge, Node } from "../../../../../../../models";
+import { Node, Edge, Connector } from "@mimirorg/modelbuilder-types";
 import { GetRelationName } from "../../shared/helpers/GetRelationName";
 
 export const GetNameRelation = (edge: Edge, node: Node): string => {
-  const name = GetRelationName(edge.fromConnector.relationType);
+  const name = GetRelationName(edge.fromConnector);
   const otherNode = GetOtherNodeFromEdgeViaNode(edge, node);
 
   return `${name}: ${otherNode.label}`;

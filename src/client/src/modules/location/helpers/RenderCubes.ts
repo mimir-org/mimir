@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { GetAttributeMap, GetPosition, GetSize } from ".";
-import { Node } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 const changeNode = (node: Node, cube: THREE.Object3D, isRoot: boolean) => {
   const map = GetAttributeMap(node);

@@ -2,17 +2,8 @@
 import { ApiError } from "../../../models/webclient";
 import { OffPageObject } from "../../../components/flow/block/nodes/blockNode/helpers/CreateOffPageObject";
 import { BlockNodeSize } from "../../../models/project";
-import {
-  CommitPackage,
-  ConnectorVisibility,
-  Edge,
-  Node,
-  Project,
-  ProjectConverterAm,
-  ProjectItemCm,
-  LockAm,
-  LockCm,
-} from "../../../models";
+import { CommitPackage, ProjectItemCm, LockCm } from "../../../models";
+import { Node, Edge, Project, ConnectorVisibility, LockAm, ProjectConverterAm } from "@mimirorg/modelbuilder-types";
 
 export const SAVE_PROJECT = "SAVE_PROJECT";
 export const CLOSE_PROJECT = "CLOSE_PROJECT";

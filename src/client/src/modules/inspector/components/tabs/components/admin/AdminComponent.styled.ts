@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../assets/color/Color";
 
 export const AdminLogo = styled.img`
-  padding: 20px;
   pointer-events: none;
+  max-width: 100px;
+  margin-top: 5px;
+  margin-left: 5px;
 `;
 
 export const AdminContentWrapper = styled.div`

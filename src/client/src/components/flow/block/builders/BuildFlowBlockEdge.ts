@@ -1,6 +1,6 @@
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EdgeType } from "../../../../models/project";
-import { ConvertEdgeToFlow } from "../../converters";
+import { ConvertEdgeToFlowEdge } from "../../converters";
 import { ValidateSplitViewEdge } from "./helpers";
 
 export const BuildFlowBlockEdge = (
@@ -29,7 +29,7 @@ export const BuildFlowBlockEdge = (
   }
 
   if (!isValid) return null;
-  return ConvertEdgeToFlow(edge, edgeType, sourceNode, targetNode, animated);
+  return ConvertEdgeToFlowEdge(edge, edgeType, sourceNode, targetNode, animated);
 };
 
 export default BuildFlowBlockEdge;

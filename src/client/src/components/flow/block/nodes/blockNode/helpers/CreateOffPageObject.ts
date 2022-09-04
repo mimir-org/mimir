@@ -1,19 +1,19 @@
-import { IsInputTerminal, IsOutputTerminal, IsOutputVisible, IsPartOfTerminal } from "../../../../helpers/Connectors";
+import { IsInputConnector, IsOutputConnector, IsOutputVisible, IsPartOfRelation } from "../../../../helpers/Connectors";
 import { CreateId } from "../../../../helpers";
 import { Position } from "../../../../../../models/project";
-import { Size } from "../../../../../../compLibrary/size/Size";
+import { Size } from "../../../../../../assets/size/Size";
+import { TextResources } from "../../../../../../assets/text/TextResources";
 import {
-  Aspect,
-  CONNECTOR_KIND,
   Connector,
-  ConnectorType,
-  EDGE_KIND,
   Edge,
   Node,
-  RelationType,
+  ConnectorDirection,
   ConnectorVisibility,
-  NODE_KIND,
-} from "../../../../../../models";
+  Aspect,
+  Terminal,
+  Relation,
+  RelationType,
+} from "@mimirorg/modelbuilder-types";
 
 export interface OffPageObject {
   offPageNode: Node;
@@ -23,7 +23,7 @@ export interface OffPageObject {
 
 export interface OffPageData {
   sourceNode: Node;
-  sourceConnector: Connector;
+  sourceConnector: Terminal;
   position: Position;
   isRequired: boolean;
 }
@@ -40,8 +40,8 @@ export const CreateOffPageObject = (data: OffPageData) => {
 
   if (!sourceConnector || !sourceNode) return null;
 
-  const sourcePartOfConn = sourceNode.connectors.find((c) => IsPartOfTerminal(c) && !IsInputTerminal(c));
-  const isTarget = IsOutputTerminal(sourceConnector) || IsOutputVisible(sourceConnector);
+  const sourcePartOfConn = sourceNode.connectors.find((c) => !IsInputConnector(c) && IsPartOfRelation(c));
+  const isTarget = IsOutputConnector(sourceConnector) || IsOutputVisible(sourceConnector);
 
   const offPageNode = {
     id: CreateId(),
@@ -57,7 +57,7 @@ export const CreateOffPageObject = (data: OffPageData) => {
     statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,
     parentNodeId: sourceNode.id,
-    kind: NODE_KIND,
+    kind: sourceNode.kind,
     isOffPageRequired: data.isRequired,
     isOffPageTarget: isTarget,
   } as Node;
@@ -65,40 +65,34 @@ export const CreateOffPageObject = (data: OffPageData) => {
   const inputConnector = {
     id: CreateId(),
     name: "OffPageInput",
-    type: ConnectorType.Input,
+    type: ConnectorDirection.Input,
     nodeId: offPageNode.id,
     terminalCategory: sourceConnector.terminalCategory,
     terminalTypeId: sourceConnector.terminalTypeId,
-    attributes: [],
-    semanticReference: "",
     connectorVisibility: ConnectorVisibility.InputVisible,
     color: sourceConnector.color,
-    kind: CONNECTOR_KIND,
-  } as Connector;
+    kind: TextResources.KIND_CONNECTOR,
+  } as Terminal;
 
   const outputConnector = {
     id: CreateId(),
     name: "OffPageOutput",
-    type: ConnectorType.Output,
+    type: ConnectorDirection.Output,
     nodeId: offPageNode.id,
     terminalCategory: sourceConnector.terminalCategory,
     terminalTypeId: sourceConnector.terminalTypeId,
-    attributes: [],
-    semanticReference: "",
     connectorVisibility: ConnectorVisibility.OutputVisible,
     color: sourceConnector.color,
-    kind: CONNECTOR_KIND,
-  } as Connector;
+    kind: TextResources.KIND_CONNECTOR,
+  } as Terminal;
 
   const partOfConnector = {
     id: CreateId(),
     name: "OffPagePartOf",
-    type: ConnectorType.Input,
+    type: ConnectorDirection.Input,
     relationType: RelationType.PartOf,
     nodeId: offPageNode.id,
-    attributes: [],
-    semanticReference: "",
-  } as Connector;
+  } as Relation;
 
   offPageNode.connectors.push(inputConnector);
   offPageNode.connectors.push(outputConnector);
@@ -108,29 +102,29 @@ export const CreateOffPageObject = (data: OffPageData) => {
     id: CreateId(),
     fromConnector: sourcePartOfConn,
     fromConnectorId: sourcePartOfConn?.id,
-    toConnector: partOfConnector,
+    toConnector: partOfConnector as Connector,
     toConnectorId: partOfConnector?.id,
     fromNode: sourceNode,
     fromNodeId: sourceNode.id,
     toNode: offPageNode,
     toNodeId: offPageNode.id,
     hidden: false,
-    kind: EDGE_KIND,
+    kind: TextResources.KIND_EDGE,
     projectId: sourceNode.projectId,
   } as Edge;
 
   const transportEdge = {
     id: CreateId(),
-    fromConnector: isTarget ? sourceConnector : outputConnector,
+    fromConnector: isTarget ? (sourceConnector as Connector) : outputConnector,
     fromConnectorId: isTarget ? sourceConnector.id : outputConnector.id,
-    toConnector: isTarget ? inputConnector : sourceConnector,
+    toConnector: isTarget ? (inputConnector as Connector) : sourceConnector,
     toConnectorId: isTarget ? inputConnector.id : sourceConnector.id,
     fromNode: isTarget ? sourceNode : offPageNode,
     fromNodeId: isTarget ? sourceNode.id : offPageNode.id,
     toNode: isTarget ? offPageNode : sourceNode,
     toNodeId: isTarget ? offPageNode.id : sourceNode.id,
     hidden: false,
-    kind: EDGE_KIND,
+    kind: TextResources.KIND_EDGE,
     projectId: sourceNode.projectId,
   } as Edge;
 

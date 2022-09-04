@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { FontType } from "./font";
+import { FontType } from "../assets/font";
 
 export const GlobalStyle = createGlobalStyle`
   // CSS RESET (https://www.joshwcomeau.com/css/custom-css-reset/)

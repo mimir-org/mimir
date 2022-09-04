@@ -12,17 +12,13 @@ import { useMemo, useState } from "react";
 import { GetAttributes } from "../../helpers/GetAttributes";
 import { DoesCombinationMatchAttribute } from "../../helpers/GetAttributeCombinations";
 import { OnChangeAttributeCombinationChoice } from "../../handlers/OnChangeAttributeCombinationChoice";
+import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../../../../../../types";
+import { Attribute } from "@mimirorg/modelbuilder-types";
 import {
   projectIdSelector,
   isProjectStateGloballyLockingSelector,
   useAppSelector,
 } from "../../../../../../../../../../redux/store";
-import {
-  AttributeLikeItem,
-  InspectorElement,
-  InspectorParametersElement,
-  InspectorTerminalsElement,
-} from "../../../../../../../../types";
 
 const FILTER_ENTITY_WIDTH = 191;
 
@@ -32,7 +28,7 @@ interface Props {
   terminalParentElement?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
-  attributeLikeItems?: AttributeLikeItem[];
+  attributeItems?: Attribute[];
   maxNumSelectedCombinations: number;
   username: string;
   filterName: string;
@@ -47,7 +43,7 @@ export const ParameterRow = ({
   terminalParentElement,
   combinations,
   selectedCombinations,
-  attributeLikeItems,
+  attributeItems,
   maxNumSelectedCombinations,
   username,
   filterName,
@@ -58,7 +54,8 @@ export const ParameterRow = ({
   const projectId = useAppSelector(projectIdSelector);
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
-  const attributes = attributeLikeItems ?? GetAttributes(element);
+  const attributes = attributeItems ?? GetAttributes(element);
+
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
     [maxNumSelectedCombinations]

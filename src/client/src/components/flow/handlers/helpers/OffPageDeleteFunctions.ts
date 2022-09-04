@@ -1,21 +1,21 @@
+import { Edge, Node } from "@mimirorg/modelbuilder-types";
 import { IsOffPage } from "../../../../helpers/Aspects";
-import { Edge, Node } from "../../../../models";
-import { IsPartOfTerminal, IsTransport } from "../../helpers/Connectors";
+import { IsPartOfRelation, IsTerminal } from "../../helpers/Connectors";
 import { IsEdgeConnectedToNode } from "../../helpers/IsEdgeConnectedToNode";
 
 export function GetOffPageTransportEdge(nodeId: string, parentNodeId: string, edges: Edge[]) {
   return edges.find(
     (e) =>
-      (e.fromConnector.nodeId === parentNodeId && IsTransport(e.fromConnector) && e.toConnector.nodeId === nodeId) ||
-      (e.toConnector.nodeId === parentNodeId && IsTransport(e.toConnector) && e.fromConnector.nodeId === nodeId)
+      (e.fromConnector.nodeId === parentNodeId && IsTerminal(e.fromConnector) && e.toConnector.nodeId === nodeId) ||
+      (e.toConnector.nodeId === parentNodeId && IsTerminal(e.toConnector) && e.fromConnector.nodeId === nodeId)
   );
 }
 
 export function GetPartOfEdge(nodeId: string, parentNodeId: string, edges: Edge[]) {
   return edges.find(
     (e) =>
-      (e.fromConnector.nodeId === parentNodeId && IsPartOfTerminal(e.fromConnector) && e.toConnector.nodeId === nodeId) ||
-      (e.toConnector.nodeId === parentNodeId && IsPartOfTerminal(e.toConnector) && e.fromConnector.nodeId === nodeId)
+      (e.fromConnector.nodeId === parentNodeId && IsPartOfRelation(e.fromConnector) && e.toConnector.nodeId === nodeId) ||
+      (e.toConnector.nodeId === parentNodeId && IsPartOfRelation(e.toConnector) && e.fromConnector.nodeId === nodeId)
   );
 }
 
@@ -40,7 +40,7 @@ export function GetRelatedTransportEdge(nodeId: string, edge: Edge, edges: Edge[
 }
 
 export function GetRelatedPartOfEdge(node: Node, edges: Edge[]) {
-  const partOfTerminal = node.connectors.find((c) => IsPartOfTerminal(c));
+  const partOfTerminal = node.connectors.find((c) => IsPartOfRelation(c));
   if (!partOfTerminal) return null;
   return edges.find((e) => IsOffPage(e.toNode) && e.toNodeId === node.id && e.toConnectorId === partOfTerminal.id);
 }

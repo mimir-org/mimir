@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../../../../compLibrary/colors/Color";
-import { FontWeight } from "../../../../../compLibrary/font";
+import { Color } from "../../../../../assets/color/Color";
+import { FontWeight } from "../../../../../assets/font";
 
 interface InspectorTabHeaderProps {
   active: boolean;

@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using System.Transactions;
 using AutoMapper;
 using Mb.Data.Contracts;
-using Mb.Models.Application;
 using Mb.Models.Configurations;
 using Mb.Models.Data;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Models.Extensions;
 using Mb.Services.Contracts;
 using Microsoft.Extensions.Options;
 using SqlBulkTools;
+using Mb.Models.Common;
+using Mb.Models.Application;
+using Mb.Models.Client;
 
 namespace Mb.Services.Services
 {
@@ -74,7 +76,7 @@ namespace Mb.Services.Services
         public async Task Lock(LockAm lockAm)
         {
             if (string.IsNullOrWhiteSpace(lockAm?.Id))
-                throw new ModelBuilderBadRequestException("LockAm Id can't be null.");
+                throw new MimirorgBadRequestException("LockAm Id can't be null.");
 
             var lockDms = new List<LockDm>();
             var objectIdentity = new List<ObjectIdentity>();
@@ -91,7 +93,7 @@ namespace Mb.Services.Services
                     objectIdentity = await _nodeRepository.GetNodeConnectedData(lockAm.Id);
                     break;
                 default:
-                    throw new ModelBuilderBadRequestException("EntityType not found.");
+                    throw new MimirorgBadRequestException("EntityType not found.");
             }
 
             var lockAms = objectIdentity.Select(item => new LockAm { Id = item.Id, ProjectId = lockAm.ProjectId, IsLocked = lockAm.IsLocked, Type = item.Type }).ToList();

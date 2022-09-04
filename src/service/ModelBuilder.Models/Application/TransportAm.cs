@@ -2,8 +2,8 @@ using Mb.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Mb.Models.Attributes;
+using Mb.Models.Data;
+using Mimirorg.Common.Attributes;
 
 namespace Mb.Models.Application
 {
@@ -32,7 +32,7 @@ namespace Mb.Models.Application
 
         public string StatusId { get; set; }
 
-        public string SemanticReference { get; set; }
+        public ICollection<TypeReference> TypeReferences { get; set; }
 
         [Required]
         public string InputTerminalId { get; set; }
@@ -59,29 +59,33 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            var validations = new List<ValidationResult>();
+
             if (InputTerminal != null)
             {
                 if (InputTerminal.Id != InputTerminalId)
-                    yield return new ValidationResult("InputTerminal.Id is different from InputTerminalId.", new List<string> { nameof(InputTerminalId), nameof(InputTerminal) });
+                    validations.Add(new ValidationResult("InputTerminal.Id is different from InputTerminalId.", new List<string> { nameof(InputTerminalId), nameof(InputTerminal) }));
             }
 
             if (OutputTerminal != null)
             {
                 if (OutputTerminal.Id != OutputTerminalId)
-                    yield return new ValidationResult("OutputTerminal.Id is different from OutputTerminalId.", new List<string> { nameof(OutputTerminalId), nameof(OutputTerminal) });
+                    validations.Add(new ValidationResult("OutputTerminal.Id is different from OutputTerminalId.", new List<string> { nameof(OutputTerminalId), nameof(OutputTerminal) }));
             }
 
-            if (Attributes != null && Attributes.Any())
+            if (Attributes != null)
             {
                 foreach (var attribute in Attributes)
                 {
                     var attributeResult = attribute.Validate(validationContext);
                     foreach (var result in attributeResult)
                     {
-                        yield return result;
+                        validations.Add(result);
                     }
                 }
             }
+
+            return validations;
         }
     }
 }

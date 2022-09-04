@@ -33,7 +33,10 @@ namespace Mb.Core.Profiles
                 .ForMember(dest => dest.MasterProjectId, opt => opt.MapFrom(src => src.MasterProjectId))
                 .ForMember(dest => dest.MasterProjectIri, opt => opt.MapFrom(src => src.MasterProjectIri))
                 .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
-                .ForMember(dest => dest.Project, opt => opt.Ignore());
+                .ForMember(dest => dest.Project, opt => opt.Ignore())
+                .ForMember(dest => dest.Selected, opt => opt.Ignore())
+                .ForMember(dest => dest.Hidden, opt => opt.Ignore())
+                .ForMember(dest => dest.BlockHidden, opt => opt.Ignore());
             CreateMap<Edge, EdgeAm>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Iri, opt => opt.MapFrom(src => src.Iri))

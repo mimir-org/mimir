@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mb.Models.Application;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
+using Mb.Models.Application;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -144,12 +144,12 @@ namespace Mb.Core.Controllers.V1
                 await _lockService.Lock(lockAm);
                 return NoContent();
             }
-            catch (ModelBuilderBadRequestException e)
+            catch (MimirorgBadRequestException e)
             {
                 ModelState.AddModelError("lock", e.Message);
                 return BadRequest(ModelState);
             }
-            catch (ModelBuilderUnauthorizedAccessException e)
+            catch (MimirorgUnauthorizedAccessException e)
             {
                 ModelState.AddModelError("lock", e.Message);
                 return Unauthorized(ModelState);

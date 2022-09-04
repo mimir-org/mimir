@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { IsDirectChild } from "../../../../helpers/Family";
-import { Node } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { setBlockNodeVisibility } from "../../../../redux/store/project/actions";
 
 /**

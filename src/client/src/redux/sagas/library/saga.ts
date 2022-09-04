@@ -1,5 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { saveAs } from "file-saver";
+import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { GetApiErrorForBadRequest, GetApiErrorForException, get, del, post, HeadersInitDefault } from "../../../models/webclient";
 import { PayloadAction } from "@reduxjs/toolkit";
 import Config from "../../../models/Config";
@@ -9,15 +10,16 @@ import {
   fetchLibrary,
   fetchLibraryInterfaceTypesSuccessOrError,
   fetchLibrarySuccessOrError,
+  fetchLibraryTerminalsSuccessOrError,
   fetchLibraryTransportTypesSuccessOrError,
   importLibrarySuccessOrError,
 } from "../../store/library/librarySlice";
 
 export function* searchLibrary() {
-  const emptyPayload = { nodeTypes: [], transportTypes: [], interfaceTypes: [], subProjectTypes: [] };
+  const emptyPayload = { libNodes: [] as NodeLibCm[] };
 
   try {
-    const url = `${Config.API_BASE_URL}library`;
+    const url = `${Config.API_BASE_URL}library/node`;
     const response = yield call(get, url);
 
     if (response.status === 400) {
@@ -26,12 +28,7 @@ export function* searchLibrary() {
       return;
     }
 
-    const payload = {
-      nodeTypes: response.data.objectBlocks,
-      transportTypes: response.data.transports,
-      interfaceTypes: response.data.interfaces,
-      subProjectTypes: response.data.subProjects,
-    };
+    const payload = { libNodes: response.data };
 
     yield put(fetchLibrarySuccessOrError({ ...payload, apiError: null }));
   } catch (error) {
@@ -91,14 +88,14 @@ export function* getTransportTypes() {
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, fetchLibraryTransportTypesSuccessOrError.type);
-      yield put(fetchLibraryTransportTypesSuccessOrError({ libraryItems: [], apiError }));
+      yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: [], apiError }));
       return;
     }
 
-    yield put(fetchLibraryTransportTypesSuccessOrError({ libraryItems: response.data, apiError: null }));
+    yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: response.data, apiError: null }));
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryTransportTypesSuccessOrError.type);
-    yield put(fetchLibraryTransportTypesSuccessOrError({ libraryItems: [], apiError }));
+    yield put(fetchLibraryTransportTypesSuccessOrError({ transportTypes: [], apiError }));
   }
 }
 
@@ -109,14 +106,32 @@ export function* getInterfaceTypes() {
 
     if (response.status === 400) {
       const apiError = GetApiErrorForBadRequest(response, fetchLibraryInterfaceTypesSuccessOrError.type);
-      yield put(fetchLibraryInterfaceTypesSuccessOrError({ libraryItems: [], apiError }));
+      yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: [], apiError }));
       return;
     }
 
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libraryItems: response.data, apiError: null }));
+    yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: response.data, apiError: null }));
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchLibraryInterfaceTypesSuccessOrError.type);
-    yield put(fetchLibraryInterfaceTypesSuccessOrError({ libraryItems: [], apiError }));
+    yield put(fetchLibraryInterfaceTypesSuccessOrError({ interfaceTypes: [], apiError }));
+  }
+}
+
+export function* getTerminals() {
+  try {
+    const url = `${Config.API_BASE_URL}library/terminal`;
+    const response = yield call(get, url);
+
+    if (response.status === 400) {
+      const apiError = GetApiErrorForBadRequest(response, fetchLibraryTerminalsSuccessOrError.type);
+      yield put(fetchLibraryTerminalsSuccessOrError({ terminals: [], apiError }));
+      return;
+    }
+
+    yield put(fetchLibraryTerminalsSuccessOrError({ terminals: response.data, apiError: null }));
+  } catch (error) {
+    const apiError = GetApiErrorForException(error, fetchLibraryTerminalsSuccessOrError.type);
+    yield put(fetchLibraryTerminalsSuccessOrError({ terminals: [], apiError }));
   }
 }
 

@@ -1,23 +1,21 @@
-import { TextResources } from "../../../../../../assets/text/TextResources";
-import { Connector } from "../../../../../../models";
-import { TerminalCategory } from "../TransportFilter";
+import { Terminal } from "@mimirorg/modelbuilder-types";
+import { TerminalCategory } from "../TransportTerminalsFilter";
 
 /**
  * Function to find all Terminal Categories on Mimir's Transport Edges.
- * @param transportConnectors
+ * @param transportTerminals
  * @returns a list of the type TerminalCategory, used by Visual Filter.
  */
-export const PopulateTerminalCategories = (transportConnectors: Connector[]) => {
+export const PopulateTerminalCategories = (transportTerminals: Terminal[]) => {
   const categories = [] as TerminalCategory[];
 
-  transportConnectors?.forEach((conn) => {
-    const id = conn.terminalCategory;
-    const name = conn.terminalCategory;
+  transportTerminals?.forEach((t) => {
+    const id = t.terminalTypeId;
+    const name = t.terminalCategory;
 
     if (categories.some((c) => c.id === id || c.name === name)) return;
 
-    const category = { id, name: name ?? TextResources.CATEGORY } as TerminalCategory;
-    categories.push(category);
+    categories.push({ id, name });
   });
 
   return categories;

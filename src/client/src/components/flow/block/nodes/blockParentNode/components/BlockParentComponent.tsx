@@ -1,21 +1,21 @@
-import { Connector, Node } from "../../../../../../models";
 import { IsLocation } from "../../../../../../helpers/Aspects";
 import { ParentBox, ResizeButton } from "./BlockParentComponent.styled";
 import { Background, BackgroundVariant } from "react-flow-renderer";
-import { Color } from "../../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../../assets/color/Color";
 import { BlockParentBanner } from "./BlockParentBanner";
 import { ResizeIcon } from "../../../../../../assets/icons/resize";
 import { useRef } from "react";
-import { useAppDispatch } from "../../../../../../redux/store";
+import { commonStateCompanySelector, useAppDispatch, useAppSelector } from "../../../../../../redux/store";
 import { Tooltip } from "../../../../../../compLibrary/tooltip/Tooltip";
 import { TextResources } from "../../../../../../assets/text/TextResources";
 import { useResizeParentNode } from "./hooks/useResizeParentNode";
+import { Connector, Node } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   node: Node;
   splitView: boolean;
-  inputTerminals: Connector[];
-  outputTerminals: Connector[];
+  inputConnectors: Connector[];
+  outputConnectors: Connector[];
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
@@ -31,8 +31,8 @@ interface Props {
 export const BlockParentComponent = ({
   node,
   splitView,
-  inputTerminals,
-  outputTerminals,
+  inputConnectors,
+  outputConnectors,
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
@@ -41,14 +41,16 @@ export const BlockParentComponent = ({
   const dispatch = useAppDispatch();
   const isLocation = IsLocation(node);
   const resizePanelRef = useRef(null);
+  const company = useAppSelector(commonStateCompanySelector);
   useResizeParentNode(node, resizePanelRef, dispatch);
 
   return (
     <ParentBox id={`parent-block-${node.id}`} selected={node.blockSelected} width={node.width} height={node.height}>
       <BlockParentBanner
         node={node}
-        inputTerminals={inputTerminals}
-        outputTerminals={outputTerminals}
+        company={company}
+        inputConnectors={inputConnectors}
+        outputConnectors={outputConnectors}
         isNavigationActive={isNavigationActive}
         onNavigateUpClick={() => onNavigateUpClick()}
         onNavigateDownClick={() => onNavigateDownClick()}

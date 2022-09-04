@@ -5,12 +5,11 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using AutoMapper;
+using AzureActiveDirectoryModule.Models;
 using Mb.Core.Profiles;
-using Mb.Core.Profiles.TypeLibrary;
 using Mb.Data.Contracts;
 using Mb.Data.Repositories;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Attributes;
 using Mb.Models.Configurations;
 using Mb.Models.Data.Hubs;
@@ -30,7 +29,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using Module = Mb.Models.Application.Module;
+using Module = Mb.Models.Common.Module;
 
 namespace Mb.Core.Extensions
 {
@@ -81,7 +80,7 @@ namespace Mb.Core.Extensions
             services.AddScoped<IEdgeRepository, EdgeRepository>();
             services.AddScoped<IConnectorRepository, ConnectorRepository>();
             services.AddScoped<IAttributeRepository, AttributeRepository>();
-            services.AddScoped<ICollaborationPartnerRepository, CollaborationPartnerRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ITransportRepository, TransportRepository>();
             services.AddScoped<IInterfaceRepository, InterfaceRepository>();
             services.AddScoped<ISimpleRepository, SimpleRepository>();
@@ -113,30 +112,22 @@ namespace Mb.Core.Extensions
 
             services.AddSingleton<IModuleService>(_ => moduleService);
             var modules = moduleService.Modules.Where(x =>
-                x.ModuleType == ModuleType.Plugin || x.ModuleType == ModuleType.SyncService ||
+                x.ModuleType == ModuleType.Plugin ||
+                x.ModuleType == ModuleType.SyncService ||
                 x.ModuleType == ModuleType.Parser).ToList();
 
             // Auto-mapper
             var cfg = new MapperConfigurationExpression();
-            cfg.AddProfile(new AttributeProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new AttributeProfile());
             cfg.AddProfile(new ConnectorProfile());
             cfg.AddProfile(new EdgeProfile());
             cfg.AddProfile(new NodeProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new LockProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new ProjectProfile(provider.GetService<IHttpContextAccessor>(), provider.GetService<ICommonRepository>()));
-            cfg.AddProfile<RdsProfile>();
-            cfg.AddProfile<CommonProfile>();
-            cfg.AddProfile<CollaborationPartnerProfile>();
-            cfg.AddProfile(new TerminalProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new LibraryTypeProfile(provider.GetService<ICommonRepository>()));
             cfg.AddProfile(new TransportProfile(provider.GetService<IHttpContextAccessor>()));
             cfg.AddProfile(new InterfaceProfile(provider.GetService<IHttpContextAccessor>()));
-            cfg.AddProfile(new SimpleProfile(provider.GetService<ICommonRepository>()));
+            cfg.AddProfile(new SimpleProfile());
             cfg.AddProfile(new VersionProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new NodeLibProfile(provider.GetService<ICommonRepository>()));
-            cfg.AddProfile(new AttributeLibProfile());
-            cfg.AddProfile(new GenericProfile());
-            cfg.AddProfile(new TerminalLibProfile());
 
             // Create profiles
             cfg.CreateProfiles(provider, modules);
@@ -161,8 +152,6 @@ namespace Mb.Core.Extensions
             var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<IModuleService>>();
 
             context.Database.Migrate();
-            serviceScope.CreateOrUpdateCurrentCollaborationPartner();
-
             var moduleReaderAwaiter = moduleService.InitialModules().ConfigureAwait(true).GetAwaiter();
 
             while (!moduleReaderAwaiter.IsCompleted)
@@ -179,39 +168,19 @@ namespace Mb.Core.Extensions
 
             logger.LogInformation(moduleService.ToString());
 
+            var applicationSetting = serviceScope.ServiceProvider.GetRequiredService<IOptions<ApplicationSetting>>();
+            logger.LogInformation(applicationSetting?.Value?.ToString());
+
+            var databaseConfiguration = serviceScope.ServiceProvider.GetRequiredService<IOptions<DatabaseConfiguration>>();
+            logger.LogInformation(databaseConfiguration?.Value?.ToString());
+
+            var azureActiveDirectoryConfiguration = serviceScope.ServiceProvider.GetRequiredService<IOptions<AzureActiveDirectoryConfiguration>>();
+            logger.LogInformation(azureActiveDirectoryConfiguration?.Value?.ToString());
+
             return app;
         }
 
         #region Private Methods
-
-        private static void CreateOrUpdateCurrentCollaborationPartner(this IServiceScope serviceScope)
-        {
-            // Define default collaboration settings
-            var appSettings = serviceScope.ServiceProvider.GetRequiredService<IOptions<ApplicationSetting>>()?.Value;
-            if (appSettings?.CollaborationPartner == null)
-                return;
-
-            var commonService = serviceScope.ServiceProvider.GetRequiredService<ICommonService>();
-            var currentCollaborationPartner = commonService
-                ?.GetCollaborationPartnerByDomain(appSettings.CollaborationPartner.Domain).Result;
-
-            if (currentCollaborationPartner != null)
-            {
-                appSettings.CollaborationPartner = currentCollaborationPartner;
-                return;
-            }
-
-            var cp = new CollaborationPartnerAm
-            {
-                Current = true,
-                Domain = appSettings.CollaborationPartner.Domain,
-                Iris = appSettings.CollaborationPartner.Iris,
-                Name = appSettings.CollaborationPartner.Name
-            };
-
-            currentCollaborationPartner = commonService?.CreateCollaborationPartnerAsync(cp).Result;
-            appSettings.CollaborationPartner = currentCollaborationPartner;
-        }
 
         private static void CreateModules(this IServiceCollection services, IServiceProvider provider,
             IConfiguration configuration, IEnumerable<Module> modules)

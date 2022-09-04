@@ -7,7 +7,6 @@
     A tool for building semantically supported facility data!
   </p>
 
-  
 <!-- Badges -->
 <p>
 <a href="https://github.com/mimir-org/mimir/actions/workflows/prod.yaml">
@@ -51,23 +50,26 @@
 <br />
 
 <!-- Table of Contents -->
+
 # :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#star2-about-the-project)
-  * [Tech Stack](#space_invader-tech-stack)
-  * [Environment Variables](#key-environment-variables)
+  - [Tech Stack](#space_invader-tech-stack)
+  - [Environment Variables](#key-environment-variables)
 - [Getting Started](#toolbox-getting-started)
-  * [Prerequisites](#bangbang-prerequisites)
-  * [Running Locally](#running-running)
+  - [Prerequisites](#bangbang-prerequisites)
+  - [Running Locally](#running-running)
 - [Contributing](#wave-contributing)
-  * [Code of Conduct](#scroll-code-of-conduct)
+  - [Code of Conduct](#scroll-code-of-conduct)
 - [License](#warning-license)
 - [Contact](#handshake-contact)
 
 <!-- About the Project -->
+
 ## :star2: About the Project
 
 <!-- TechStack -->
+
 ### :space_invader: Tech Stack
 
 <details>
@@ -118,6 +120,7 @@
 </details>
 
 <!-- Env Variables -->
+
 ### :key: Environment Variables
 
 <!-- Client environment variables -->
@@ -136,13 +139,14 @@ To set environment variables for client in development, edit the .env file. For 
 
 `REACT_APP_TENANT_ID` - Azure tenant
 
-`REACT_APP_COMPANY` - Company domain (should be removed)
-
 `REACT_APP_MIMIR_VERSION` - The Mimir version number
 
 `REACT_APP_APP_INSIGHTS_CONNECTION_STRING` - Application insight connection string
 
-If you are running the server locally then the values will most likely be  
+`REACT_APP_SILENT` - Turn off MSAL connection
+
+If you are running the server locally then the values will most likely be
+
 ```js
 // where x and y = api version
 REACT_APP_API_BASE_URL = http://localhost:5001/v{x}.{y}/
@@ -153,7 +157,9 @@ REACT_APP_TENANT_ID = xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 REACT_APP_COMPANY = company.com
 REACT_APP_MIMIR_VERSION = 2.0
 REACT_APP_APP_INSIGHTS_CONNECTION_STRING = InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;...
+REACT_APP_SILENT = false
 ```
+
 </details>
 
 <!-- Server environment variables -->
@@ -174,11 +180,13 @@ To set environment variables for server in development, edit the appsettings.jso
 
 `ApplicationSetting__TypeLibraryVersion` - The version used by Type Library
 
-`ApplicationSetting__TypeLibrarySecret` - he secret registered in Type Library. Used to identify and registered hooks
+`ApplicationSetting__TypeLibrarySecret` - The secret registered in Type Library. Used to identify and registered hooks
 
 `AzureActiveDirectoryConfiguration__TenantId` - Azure tenant
 
 `AzureActiveDirectoryConfiguration__ClientId` - Application id of Server application in Azure AD (app registration)
+
+`AzureActiveDirectoryConfiguration__Silent` - Set authentication and authorisation in silent demo mode
 
 `CorsConfiguration__ValidOrigins` - Comma separated string of valid origins for CORS. E.g. http://localhost:3000,https://mimirorg.com
 
@@ -195,58 +203,228 @@ To set environment variables for server in development, edit the appsettings.jso
 </details>
 
 <!-- Getting Started -->
-## 	:toolbox: Getting Started
+
+## :floppy_disk: Getting Started
 
 <!-- Prerequisites -->
-### :bangbang: Prerequisites
+
+### Prerequisites
 
 This project uses .NET 6 for the server and NPM as package manager for the client,
 make sure that you have these installed before continuing. Mimir has dependency on Type Library Service, so you also need to clone that project for development purposes.
 Clone that project as well if not running on external server. You also need a MSSQL database running on your machine. See docker-compose for running sql in docker.
 
-Start by cloning the project
-```git 
+### Git clone and Docker setup
+
+We recomend that you first create a folder 'Mimirorg' and move into that folder:
+
+```bash
+..\Mimirorg
+```
+
+Then you clone Mimir:
+
+```git
 git clone git@github.com:mimir-org/mimir.git
+```
+
+And then you clone typelibrary (Tyle):
+
+```git
 git clone git@github.com:mimir-org/typelibrary.git
 ```
 
-Navigate to the new directory
+You now have two new folders inside the 'Mimiorg' folder.
+
 ```bash
-cd ./mimir
+..\Mimirorg\mimir
+..\Mimirorg\typelibrary
+```
+
+In this setup we use docker and a docker-compose script. Create a new file at the root of the 'Mimirorg' folder and name it 'docker-compose.yaml'. Copy & paste this content into the file:
+
+```bash
+version: "3.8"
+
+services:
+
+   tyle-client:
+    build: ./typelibrary/src/client
+    hostname: 'tyleclient'
+    container_name: tyleclient
+    ports:
+      - "3001:80"
+    environment:
+      - TYPELIBRARY_ENV_API_BASE_URL=http://localhost:5001/v1.0/
+    networks:
+      - type_library_network
+
+   mimir-client:
+    build:
+     context: ./mimir/src/client
+     args:
+      - MIMIR_VERSION=2.5.0
+    hostname: 'mimirclient'
+    container_name: mimirclient
+    ports:
+     - "3000:80"
+    environment:
+     - MIMIR_ENV_API_BASE_URL=http://localhost:5000/v1.0/
+     - MIMIR_ENV_SOCKET_BASE_URL=http://localhost:5000/
+     - MIMIR_ENV_APP_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     - MIMIR_ENV_CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     - MIMIR_ENV_TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+     - MIMIR_ENV_APP_INSIGHTS_CONNECTION_STRING=InstrumentationKey=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx;IngestionEndpoint=https://xxxx.applicationinsights.azure.com/
+     - MIMIR_ENV_SILENT=false
+    networks:
+     - type_library_network
+
+   tyle-server:
+    build: ./typelibrary/src/server
+    hostname: 'tyleserver'
+    container_name: tyleserver
+    ports:
+      - "5001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DatabaseConfiguration__DataSource=mssql
+      - DatabaseConfiguration__Port=1433
+      - DatabaseConfiguration__InitialCatalog=TypeLibrary
+      - DatabaseConfiguration__DbUser=sa
+      - DatabaseConfiguration__Password=P4ssw0rd1
+      - MimirorgAuthSettings__DatabaseConfiguration__DataSource=mssql
+      - MimirorgAuthSettings__DatabaseConfiguration__Port=1433
+      - MimirorgAuthSettings__DatabaseConfiguration__InitialCatalog=MimirorgAuthentication
+      - MimirorgAuthSettings__DatabaseConfiguration__DbUser=sa
+      - MimirorgAuthSettings__DatabaseConfiguration__Password=P4ssw0rd1
+      - ApplicationSettings__ApplicationSemanticUrl=http://localhost:5001/v1/ont
+      - ApplicationSettings__ApplicationUrl=http://localhost:5001
+      - CorsConfiguration__ValidOrigins=http://localhost:3001
+    networks:
+      - type_library_network
+    depends_on:
+      - mssql
+
+   mimir-server:
+    build: ./mimir/src/service
+    hostname: 'mimirserver'
+    container_name: mimirserver
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DatabaseConfiguration__DataSource=mssql
+      - DatabaseConfiguration__Port=1433
+      - DatabaseConfiguration__InitialCatalog=ModelBuilder
+      - DatabaseConfiguration__DbUser=sa
+      - DatabaseConfiguration__Password=P4ssw0rd1
+      - AzureActiveDirectoryConfiguration__TenantId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - AzureActiveDirectoryConfiguration__ClientId=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      - AzureActiveDirectoryConfiguration__Silent=false
+      - CorsConfiguration__ValidOrigins=http://localhost:3000
+      - ApplicationSetting__TypeLibraryRootUri=http://tyleserver/
+      - ApplicationSetting__TypeLibraryVersion=v1
+      - ApplicationSetting__TypeLibrarySecret=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      - ApplicationSetting__TypeLibraryDomain=runir.net
+    networks:
+      - type_library_network
+    depends_on:
+      - mssql
+
+   mssql:
+    image: "mcr.microsoft.com/mssql/server:2017-CU8-ubuntu"
+    hostname: 'mssql'
+    container_name: mssql
+    ports:
+      - '127.0.0.1:1433:1433'
+    volumes:
+      - mssql:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=P4ssw0rd1
+      - MSSQL_PID=Standard
+    networks:
+      - type_library_network
+    restart: unless-stopped
+
+volumes:
+  mssql:
+    driver: local
+
+networks:
+  type_library_network:
+    driver: bridge
+
+```
+
+To keep it simple in this example we use db user: 'sa' and db passord: 'P4ssw0rd1'. You can change this to your liking. The 'Mimirorg' folder should now look like this:
+
+```bash
+..\Mimirorg\mimir
+..\Mimirorg\typelibrary
+..\Mimirorg\docker-compose.yaml
+```
+
+To spool up everything in docker use this command when standing in the 'Mimirorg' folder:
+
+```bash
+docker compose up -d --build
+```
+
+If you now run this command:
+
+```bash
+docker ps -a
+```
+
+You should see all your docker images:
+
+```bash
+CONTAINER ID   IMAGE                                            COMMAND                   CREATED         STATUS         PORTS                           NAMES
+b89d794be253   mimirorg_mimir-server                            "dotnet ModelBuilder…"    9 seconds ago   Up 7 seconds   443/tcp, 0.0.0.0:5000->80/tcp   mimirserver
+84e7600fdcf9   mimirorg_tyle-server                             "dotnet TypeLibrary.…"    9 seconds ago   Up 7 seconds   443/tcp, 0.0.0.0:5001->80/tcp   tyleserver
+ed558855c314   mimirorg_mimir-client                            "/bin/sh -c '\"./star…"   9 seconds ago   Up 7 seconds   0.0.0.0:3000->80/tcp            mimirclient
+42d843407f0d   mimirorg_tyle-client                             "/bin/sh -c '\"./star…"   9 seconds ago   Up 7 seconds   0.0.0.0:3001->80/tcp            tyleclient
+d914b6d4d538   mcr.microsoft.com/mssql/server:2017-CU8-ubuntu   "/opt/mssql/bin/sqls…"    9 seconds ago   Up 7 seconds   127.0.0.1:1433->1433/tcp        mssql
 ```
 
 <!-- Running Locally -->
+
 ### :running: Running Locally
-|                         | Client      | Server      |
-| ----------------------- | ----------- | ----------- |
-| :gear: Installation     | ```cd src/client``` <br /> ```npm install```   | ```cd src/server``` <br /> ```dotnet build```      |
-| :running: Run Locally   | ```cd src/client``` <br /> ```npm start``` | ```cd src/server/ModelBuilder.Api``` <br /> ```dotnet run```      |
 
-#### Docker
-
-```bash
-cd ./mimir
-docker-compose up -d
-```
+|                       | Client                               | Server                                               |
+| --------------------- | ------------------------------------ | ---------------------------------------------------- |
+| :gear: Installation   | `cd src/client` <br /> `npm install` | `cd src/server` <br /> `dotnet build`                |
+| :running: Run Locally | `cd src/client` <br /> `npm start`   | `cd src/server/ModelBuilder.Api` <br /> `dotnet run` |
 
 <!-- Contributing -->
+
 ## :wave: Contributing
+
 We welcome community pull requests for bug fixes, enhancements, and documentation. See [How to contribute](./Contribute.md) for more information.
 
+<!-- Architecture sketches overall -->
+
+## :department_store: Architecture
+
+Architecture sketches overall. See [Mimir overall](https://github.com/mimir-org/documents/blob/main/architecture/mimir_architecture_overall.pdf) for more information.
+
 <!-- Code of Conduct -->
+
 ### :scroll: Code of Conduct
+
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community. For more information, see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/about/code-of-conduct).
 
-
 <!-- License -->
+
 ## :warning: License
 
 Distributed under the MIT License. See [LICENSE](./LICENSE.txt) for more information.
 
 <!-- Contact -->
+
 ## :handshake: Contact
 
 Mimir-org - orgmimir@gmail.com
 
 Project Link: [https://github.com/mimir-org/mimir](https://github.com/mimir-org/mimir)
-

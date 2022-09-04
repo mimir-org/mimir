@@ -1,5 +1,5 @@
 import { GetRdsId } from ".";
-import { Edge, Node, Project } from "../models";
+import { Node, Edge, Project } from "@mimirorg/modelbuilder-types";
 import { IsAspectNode } from "./Aspects";
 import { FindParentEdge } from "./ParentNode";
 

@@ -1,15 +1,16 @@
 import { GetAspectColor, GetRdsPrefix } from "../../../../../../helpers";
-import { AspectColorType, Connector, Node } from "../../../../../../models";
+import { AspectColorType } from "../../../../../../models";
 import { HeaderContainer, HeaderGroup, HeaderTitle, LogoBox } from "./BlockParentBanner.styled";
 import { TerminalsMenuComponent } from "../../../terminals/TerminalsMenuComponent";
 import { Navigation } from "./Navigation";
-import { GetCompanyLogoForNode } from "../../../../../../helpers/GetCompanyLogo";
-import Config from "../../../../../../models/Config";
+import { Node, Connector } from "@mimirorg/modelbuilder-types";
+import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
 
 interface Props {
   node: Node;
-  inputTerminals: Connector[];
-  outputTerminals: Connector[];
+  company: MimirorgCompanyCm;
+  inputConnectors: Connector[];
+  outputConnectors: Connector[];
   isNavigationActive: boolean;
   onNavigateUpClick: () => void;
   onNavigateDownClick: () => void;
@@ -22,8 +23,9 @@ interface Props {
  */
 export const BlockParentBanner = ({
   node,
-  inputTerminals,
-  outputTerminals,
+  company,
+  inputConnectors,
+  outputConnectors,
   isNavigationActive,
   onNavigateUpClick,
   onNavigateDownClick,
@@ -33,14 +35,14 @@ export const BlockParentBanner = ({
     <HeaderGroup gap={"10px"}>
       <TerminalsMenuComponent
         node={node}
-        terminals={inputTerminals}
+        connectors={inputConnectors}
         onClick={(c, isInput) => onConnectorClick(c, isInput)}
         isInput
         isParent
       />
       {!node.isRoot && (
         <LogoBox>
-          <img src={GetCompanyLogoForNode(Config.COMPANY, node)} alt="logo" />
+          <img src={company.logo} alt={company.name} />
         </LogoBox>
       )}
     </HeaderGroup>
@@ -58,7 +60,7 @@ export const BlockParentBanner = ({
     </HeaderGroup>
     <TerminalsMenuComponent
       node={node}
-      terminals={outputTerminals}
+      connectors={outputConnectors}
       onClick={(c, isInput) => onConnectorClick(c, isInput)}
       isParent
     />

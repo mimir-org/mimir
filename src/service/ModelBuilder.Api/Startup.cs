@@ -3,6 +3,7 @@ using ApplicationInsightsLoggingModule;
 using AzureActiveDirectoryModule;
 using AzureActiveDirectoryModule.Models;
 using Mb.Core.Extensions;
+using Mb.Models.Converters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,8 +32,7 @@ namespace Mb.Api
             {
                 o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                //o.SerializerSettings.Converters.Add(new StringEnumConverter()); //
-                //o.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+                o.SerializerSettings.Converters.Add(new ConnectorConverter());
             });
 
             // Add Cors policy
@@ -63,8 +63,7 @@ namespace Mb.Api
             services.AddRouting(o => o.LowercaseUrls = true);
 
             // Add Azure Active Directory Module and Swagger Module
-            var (swaggerConfiguration, activeDirectoryConfiguration) =
-                services.AddAzureActiveDirectoryModule(Configuration);
+            var (swaggerConfiguration, activeDirectoryConfiguration) = services.AddAzureActiveDirectoryModule(Configuration);
             _activeDirectoryConfiguration = activeDirectoryConfiguration;
             _swaggerConfiguration = swaggerConfiguration;
 

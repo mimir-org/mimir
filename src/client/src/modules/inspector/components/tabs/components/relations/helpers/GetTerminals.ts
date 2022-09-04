@@ -1,5 +1,5 @@
-import { Connector, Edge } from "../../../../../../../models";
-import { IsInputTerminal, IsOutputTerminal } from "../../../../../../../components/flow/helpers/Connectors";
+import { Edge, Connector } from "@mimirorg/modelbuilder-types";
+import { IsInputConnector, IsOutputConnector } from "../../../../../../../components/flow/helpers/Connectors";
 import { InspectorElement } from "../../../../../types";
 import { IsEdge, IsNode } from "../../../../../helpers/IsType";
 
@@ -10,8 +10,8 @@ export const GetTransports = (edges: Edge[], element: InspectorElement): Edge[] 
 };
 
 export const GetTerminals = (connectors: Connector[], edges: Edge[]): [Connector[], Connector[]] => {
-  const inputTerminals = connectors.filter((x) => x.terminalTypeId && IsInputTerminal(x) && HasEdge(edges, x));
-  const outputTerminals = connectors.filter((x) => x.terminalTypeId && IsOutputTerminal(x) && HasEdge(edges, x));
+  const inputTerminals = connectors.filter((c) => IsInputConnector(c) && HasEdge(edges, c));
+  const outputTerminals = connectors.filter((c) => IsOutputConnector(c) && HasEdge(edges, c));
 
   return [inputTerminals, outputTerminals];
 };

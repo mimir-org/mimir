@@ -1,36 +1,36 @@
 import { CreateId } from "./";
-import { Connector, ConnectorVisibility, Node, Edge, Project } from "../../../models";
 import { IsAspectNode, IsLocation, IsProduct } from "../../../helpers/Aspects";
-import { LibraryState } from "../../../redux/store/library/types";
 import { Dispatch } from "redux";
-import { ConvertDataToEdge } from "../converters";
 import { SetSiblingIndexOnNodeDrop } from "./SetSiblingRDS";
 import { createEdge } from "../../../redux/store/project/actions";
-import { Size } from "../../../compLibrary/size/Size";
+import { Size } from "../../../assets/size/Size";
 import { Position } from "../../../models/project";
-import { IsProductTerminal, IsLocationTerminal, IsOutputTerminal, IsInputTerminal, IsPartOfTerminal } from "./Connectors";
+import { IsOutputConnector, IsInputConnector, IsPartOfRelation, IsLocationRelation, IsProductRelation } from "./Connectors";
+import { Node, Edge, ConnectorVisibility, Connector, Project } from "@mimirorg/modelbuilder-types";
+import { ConvertEdgeDataToMimirPartOfEdge } from "../converters";
 
 /**
- * Helper function to handle PartOfEdges when dropping a Node from the LibraryModule.
- * @param sourceNode
- * @param targetNode
+ * Helper function to handle PartOf edges when dropping a Node from the LibraryModule.
+ * @param parentNode
+ * @param childNode
  * @param project
- * @param library
  * @param dispatch
  */
-export function HandleCreatePartOfEdge(
-  sourceNode: Node,
-  targetNode: Node,
-  project: Project,
-  library: LibraryState,
-  dispatch: Dispatch
-) {
-  targetNode.level = sourceNode.level + 1;
-  const sourceConn = sourceNode.connectors?.find((c) => IsPartOfTerminal(c) && IsOutputTerminal(c));
-  const targetConn = targetNode.connectors?.find((c) => IsPartOfTerminal(c) && IsInputTerminal(c));
-  const partofEdge = ConvertDataToEdge(CreateId(), sourceConn, targetConn, sourceNode, targetNode, project.id, library);
+export function HandleCreatePartOfEdge(parentNode: Node, childNode: Node, project: Project, dispatch: Dispatch) {
+  childNode.level = parentNode.level + 1;
+  const parentConnector = parentNode.connectors?.find((c) => IsPartOfRelation(c) && IsOutputConnector(c));
+  const childConnector = childNode.connectors?.find((c) => IsPartOfRelation(c) && IsInputConnector(c));
 
-  SetSiblingIndexOnNodeDrop(targetNode, project.nodes, project.edges, sourceNode.id);
+  const partofEdge = ConvertEdgeDataToMimirPartOfEdge(
+    CreateId(),
+    parentConnector,
+    childConnector,
+    parentNode,
+    childNode,
+    project.id
+  );
+
+  SetSiblingIndexOnNodeDrop(childNode, project.nodes, project.edges, parentNode.id);
   dispatch(createEdge(partofEdge));
 }
 
@@ -41,12 +41,12 @@ export function HandleCreatePartOfEdge(
  * @returns the ConnectorVisibility status.
  */
 export function InitConnectorVisibility(connector: Connector, targetNode: Node) {
-  const isLocation = IsLocation(targetNode) && IsLocationTerminal(connector);
-  const isProduct = IsProduct(targetNode) && IsProductTerminal(connector);
+  const isLocation = IsLocation(targetNode) && IsLocationRelation(connector);
+  const isProduct = IsProduct(targetNode) && IsProductRelation(connector);
 
   if (!isLocation && !isProduct) return ConnectorVisibility.None;
-  if (IsInputTerminal(connector)) return ConnectorVisibility.InputVisible;
-  if (IsOutputTerminal(connector)) return ConnectorVisibility.OutputVisible;
+  if (IsInputConnector(connector)) return ConnectorVisibility.InputVisible;
+  if (IsOutputConnector(connector)) return ConnectorVisibility.OutputVisible;
 }
 
 /**
@@ -67,6 +67,7 @@ export function SetTreeNodePosition(parentNode: Node, nodes: Node[], edges: Edge
 /**
  * Function to position a node in the TreeView canvas when a node is dropped from the LibraryModule.
  * This function will position the node middle-out relative to existing sibling nodes.
+ * Note: This is a simple version of node positioning, and should be extended to a more viable solution.
  * @param parentNode
  * @param nodes
  * @param edges

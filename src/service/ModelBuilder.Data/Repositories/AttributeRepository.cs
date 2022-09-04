@@ -3,10 +3,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
+using Mb.Models.Common;
 using Mb.Models.Configurations;
 using Mb.Models.Enums;
-using Mb.Models.Exceptions;
+using Mimirorg.Common.Exceptions;
 using SqlBulkTools;
 using Attribute = Mb.Models.Data.Attribute;
 
@@ -40,6 +40,7 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.AttributeTypeIri)
                 .AddColumn(x => x.SelectedUnitId)
                 .AddColumn(x => x.UnitString)
+                .AddColumn(x => x.TypeReferenceString)
                 .AddColumn(x => x.Qualifier)
                 .AddColumn(x => x.Source)
                 .AddColumn(x => x.Condition)
@@ -144,7 +145,7 @@ namespace Mb.Data.Repositories
                 return;
 
             if (lockDms.Any(x => x.Type is not EntityType.Attribute))
-                throw new ModelBuilderBadRequestException("EntityType is not of type Attribute");
+                throw new MimirorgBadRequestException("EntityType is not of type Attribute");
 
             bulk.Setup<LockDm>()
                 .ForCollection(lockDms)

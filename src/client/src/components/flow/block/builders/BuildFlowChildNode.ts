@@ -1,5 +1,5 @@
 import { Node as FlowNode } from "react-flow-renderer";
-import { Node } from "../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { GetNodeTypeString, SetChildNodePos, SetOffPageNodePos } from "./helpers";
 import { IsOffPage } from "../../../../helpers/Aspects";
 

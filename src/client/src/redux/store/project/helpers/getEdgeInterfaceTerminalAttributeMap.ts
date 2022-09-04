@@ -1,4 +1,4 @@
-import { Edge } from "../../../../models";
+import { Edge } from "@mimirorg/modelbuilder-types";
 
 export const getEdgeInterfaceTerminalAttributeMap = (edges: Edge[]) => {
   const map: { [attributeId: string]: { interfaceId: string; terminalId: string } } = {};

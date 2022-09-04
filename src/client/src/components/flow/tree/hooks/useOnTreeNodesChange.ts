@@ -2,7 +2,7 @@ import { MutableRefObject } from "react";
 import { applyNodeChanges, NodeChange, Node as FlowNode, NodeRemoveChange } from "react-flow-renderer";
 import { Dispatch } from "redux";
 import { IsAspectNode } from "../../../../helpers/Aspects";
-import { Node, Edge } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { OnNodeDelete } from "../../handlers/";
 
 /**
@@ -10,7 +10,7 @@ import { OnNodeDelete } from "../../handlers/";
  * In the Flow Library a change is defined by the following types:
  * NodeDimensionChange | NodePositionChange | NodeSelectionChange | NodeRemoveChange | NodeAddChange | NodeResetChange
  * If a node is marked as removed, HandleRemove validates the changes and the component OnNodeDelete handles the removal.
- * The other types of changes are executed automatically.
+ * The other types of changes are executed automatically by the Flow Library.
  * @param nodes
  * @param edges
  * @param changes

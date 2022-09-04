@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { OnRender, OnWindowResize } from "./handlers";
 import { CreateCamera, CreateControls, CreateCubes, CreateLights, CreateRenderer, CreateScene } from "./creators";
 import { LocationModuleContainer } from "./LocationModule.styled";
-import { Node } from "../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { RenderCubes } from "./helpers";
 
 interface Props {
@@ -11,6 +11,12 @@ interface Props {
   nodes: Node[];
 }
 
+/**
+ * Component for 3D view of the Location Aspect.
+ * This functionality is currently not in use, but is planned for future development.
+ * @param interface
+ * @returns as JSX element with 3D functionality.
+ */
 const LocationModule = ({ visible, rootNode, nodes }: Props) => {
   const mountRef = useRef(null);
   const camera = useRef(null);
@@ -44,4 +50,5 @@ const LocationModule = ({ visible, rootNode, nodes }: Props) => {
     )
   );
 };
+
 export default LocationModule;

@@ -1,5 +1,5 @@
 import { Connection, Edge as FlowEdge } from "react-flow-renderer";
-import { Node, Edge } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 
 const GetExistingEdge = (edges: Edge[], connection: FlowEdge | Connection, sourceNode: Node, targetNode: Node) => {
   return edges.find(

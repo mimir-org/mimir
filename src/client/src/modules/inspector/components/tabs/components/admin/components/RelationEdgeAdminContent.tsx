@@ -1,7 +1,6 @@
 import { TabColumn } from "./styled/TabColumn";
 import { Input } from "../../../../../../../compLibrary/input/text";
-import { Edge } from "../../../../../../../models";
-import { GetRelationName } from "../../shared/helpers/GetRelationName";
+import { Edge } from "@mimirorg/modelbuilder-types";
 import { TextResources } from "../../../../../../../assets/text/TextResources";
 
 interface Props {
@@ -17,7 +16,7 @@ export const RelationEdgeAdminContent = ({ edge }: Props) => (
       </div>
       <div>
         <div>{TextResources.EDGEADMIN_RELATION}</div>
-        <Input readOnly value={GetRelationName(edge.fromConnector?.relationType)} onChange={() => null} inputType="" />
+        <Input readOnly value={null} onChange={() => null} inputType="" />
       </div>
       <div>
         <div>{TextResources.EDGEADMIN_TEMPLATE}</div>

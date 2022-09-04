@@ -1,7 +1,7 @@
 import { EdgeProps, getBezierPath } from "react-flow-renderer";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../assets/color/Color";
 import { IsFunction, IsLocation, IsProduct } from "../../../../../helpers/Aspects";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 import { GetTreeEdgeStyle } from "../helpers/GetTreeEdgeStyle";
 
 /**

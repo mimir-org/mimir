@@ -1,10 +1,10 @@
 import { BidirectionalIcon } from "../../../../../assets/icons/bidirectional";
-import { Color } from "../../../../../compLibrary/colors/Color";
+import { Color } from "../../../../../assets/color/Color";
 import { Checkbox } from "../../../../../compLibrary/input/checkbox/common/Checkbox";
-import { Connector } from "../../../../../models";
 import { IsBidirectionalTerminal, IsConnectorVisible } from "../../../helpers/Connectors";
-import { GetTerminalColor } from "../../helpers";
+import { GetConnectorColor } from "../../helpers";
 import { BidirectionalBox, ColorTag, TerminalsElementBox } from "./TerminalsMenuElement.styled";
+import { Connector } from "@mimirorg/modelbuilder-types";
 
 interface Props {
   conn: Connector;
@@ -27,11 +27,11 @@ export const TerminalsMenuElement = ({ conn, isInput, onClick }: Props) => (
     />
     {IsBidirectionalTerminal(conn) ? (
       <BidirectionalBox>
-        <BidirectionalIcon fill={GetTerminalColor(conn)} className="icon" />
+        <BidirectionalIcon fill={GetConnectorColor(conn)} className="icon" />
         {conn.name}
       </BidirectionalBox>
     ) : (
-      <ColorTag color={GetTerminalColor(conn)}>{conn.name}</ColorTag>
+      <ColorTag color={GetConnectorColor(conn)}>{conn.name}</ColorTag>
     )}
   </TerminalsElementBox>
 );

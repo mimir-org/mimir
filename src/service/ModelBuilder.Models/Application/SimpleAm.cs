@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Mb.Models.Attributes;
+using Mimirorg.Common.Attributes;
 
 namespace Mb.Models.Application
 {
@@ -26,17 +25,21 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Attributes != null && Attributes.Any())
+            var validations = new List<ValidationResult>();
+
+            if (Attributes != null)
             {
                 foreach (var attribute in Attributes)
                 {
                     var result = attribute.Validate(validationContext);
                     foreach (var validationResult in result)
                     {
-                        yield return validationResult;
+                        validations.Add(validationResult);
                     }
                 }
             }
+
+            return validations;
         }
     }
 }

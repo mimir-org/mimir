@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mb.Models.Extensions;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -24,7 +26,24 @@ namespace Mb.Models.Data
         [Required]
         public string StatusId { get; set; }
 
-        public string SemanticReference { get; set; }
+        [NotMapped]
+        public virtual ICollection<TypeReference> TypeReferences
+        {
+            get
+            {
+                if (_typeReferences != null)
+                    return _typeReferences;
+
+                return !string.IsNullOrWhiteSpace(TypeReferenceString) ? JsonConvert.DeserializeObject<ICollection<TypeReference>>(TypeReferenceString) : null;
+            }
+
+            set => _typeReferences = value;
+        }
+
+        [JsonIgnore]
+        [TSExclude]
+        public string TypeReferenceString { get; set; }
+
         public ICollection<Attribute> Attributes { get; set; }
         public string InputTerminalId { get; set; }
         public virtual Terminal InputTerminal { get; set; }
@@ -35,9 +54,9 @@ namespace Mb.Models.Data
         public DateTime? Created { get; set; }
         public string CreatedBy { get; set; }
         public string LibraryTypeId { get; set; }
-        //public BuildStatus Status { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public ICollection<Edge> Edges { get; set; }
 
         public void IncrementMinorVersion()
@@ -64,7 +83,7 @@ namespace Mb.Models.Data
                    Label == other.Label &&
                    Description == other.Description &&
                    StatusId == other.StatusId &&
-                   SemanticReference == other.SemanticReference &&
+                   TypeReferenceString == other.TypeReferenceString &&
                    InputTerminalId == other.InputTerminalId &&
                    OutputTerminalId == other.OutputTerminalId &&
                    UpdatedBy == other.UpdatedBy &&
@@ -92,7 +111,7 @@ namespace Mb.Models.Data
             hashCode.Add(Label);
             hashCode.Add(Description);
             hashCode.Add(StatusId);
-            hashCode.Add(SemanticReference);
+            hashCode.Add(TypeReferenceString);
             hashCode.Add(InputTerminalId);
             hashCode.Add(OutputTerminalId);
             hashCode.Add(UpdatedBy);
@@ -104,5 +123,12 @@ namespace Mb.Models.Data
         }
 
         #endregion
+
+        #region Private members
+
+        [TSExclude]
+        private ICollection<TypeReference> _typeReferences;
+
+        #endregion Private members
     }
 }

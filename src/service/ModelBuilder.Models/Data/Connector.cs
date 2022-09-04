@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Mb.Models.Enums;
 using Mb.Models.Extensions;
+using Mimirorg.TypeLibrary.Enums;
 using Newtonsoft.Json;
+using TypeScriptBuilder;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace Mb.Models.Data
@@ -16,19 +18,22 @@ namespace Mb.Models.Data
         public string Domain => Id.ResolveDomain();
         public string Kind => nameof(Connector);
         public string Name { get; set; }
-        public ConnectorType Type { get; set; }
+        public ConnectorDirection Type { get; set; }
         public ConnectorVisibility ConnectorVisibility { get; set; }
         public virtual string NodeId { get; set; }
         public virtual string NodeIri { get; set; }
         public bool IsRequired { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual Node Node { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual ICollection<Edge> FromEdges { get; set; }
 
         [JsonIgnore]
+        [TSExclude]
         public virtual ICollection<Edge> ToEdges { get; set; }
 
         #endregion

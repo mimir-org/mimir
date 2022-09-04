@@ -1,7 +1,8 @@
 import { changeActiveMenu } from "../../redux/menuSlice";
 import { commitProject } from "../../../../../../../redux/store/project/actions";
-import { CommitPackage, CommitStatus } from "../../../../../../../models";
+import { CommitPackage } from "../../../../../../../models";
 import { Dispatch } from "redux";
+import { CommitStatus } from "@mimirorg/modelbuilder-types";
 
 const OnCommitProjectClick = (dispatch: Dispatch, projectId: string, parserId: string, receiverDomain: string) => {
   const commitPackage = {

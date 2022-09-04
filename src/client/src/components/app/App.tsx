@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { IPublicClientApplication } from "@azure/msal-browser";
 import { msalInstance } from "../..";
 import { AuthenticatedTemplate, MsalProvider, UnauthenticatedTemplate } from "@azure/msal-react";
-import { Button } from "../../compLibrary/buttons";
+import { Button } from "../../compLibrary/buttons/standard";
 import { Spinner, SpinnerWrapper } from "../../compLibrary/spinner/";
 
 type AppProps = {
@@ -21,7 +21,7 @@ export const App = ({ pca }: AppProps) => {
   const isFetching = useAppSelector(isFetchingSelector);
   const projectState = useAppSelector(projectStateSelector);
 
-  const login = () => msalInstance.loginRedirect();
+  const login = () => msalInstance && msalInstance.loginRedirect();
 
   const websocket = new WebSocket();
   websocket.setDispatcher(dispatch);
@@ -29,19 +29,31 @@ export const App = ({ pca }: AppProps) => {
   websocket.start();
 
   return (
-    <MsalProvider instance={pca}>
-      <AuthenticatedTemplate>
-        <GlobalStyle />
-        <SpinnerWrapper fetching={isFetching}>
-          <Spinner variant="big" />
-        </SpinnerWrapper>
-        <Home dispatch={dispatch} />
-      </AuthenticatedTemplate>
-      <UnauthenticatedTemplate>
-        <LoginBox>
-          <Button text={TextResources.LOGIN} onClick={login} icon={LogoutIcon} />
-        </LoginBox>
-      </UnauthenticatedTemplate>
-    </MsalProvider>
+    <>
+      {pca ? (
+        <MsalProvider instance={pca}>
+          <AuthenticatedTemplate>
+            <GlobalStyle />
+            <SpinnerWrapper fetching={isFetching}>
+              <Spinner variant="big" />
+            </SpinnerWrapper>
+            <Home dispatch={dispatch} />
+          </AuthenticatedTemplate>
+          <UnauthenticatedTemplate>
+            <LoginBox>
+              <Button text={TextResources.LOGIN} onClick={login} icon={LogoutIcon} />
+            </LoginBox>
+          </UnauthenticatedTemplate>
+        </MsalProvider>
+      ) : (
+        <>
+          <GlobalStyle />
+          <SpinnerWrapper fetching={isFetching}>
+            <Spinner variant="big" />
+          </SpinnerWrapper>
+          <Home dispatch={dispatch} />
+        </>
+      )}
+    </>
   );
 };

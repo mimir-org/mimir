@@ -1,12 +1,12 @@
-import { Attribute, Connector } from "../../../../models";
+import { Attribute, Terminal } from "@mimirorg/modelbuilder-types";
 
 /**
  * "Union" interface for Transport and Interface.
  */
 interface HasInputOutputTerminals {
-  inputTerminal: Connector;
+  inputTerminal: Terminal;
   inputTerminalId: string;
-  outputTerminal: Connector;
+  outputTerminal: Terminal;
   outputTerminalId: string;
 }
 
@@ -42,7 +42,7 @@ export const GetUpdatedEdgeInnerWithTerminalAttributeIsLocked = <T extends HasIn
   attributeId: string,
   isLocked: boolean,
   isLockedBy: string,
-  isLockedStatusDate: string
+  isLockedStatusDate: Date
 ): T => {
   const UpdateAttribute = (attribute: Attribute) => UpdateAttributeIsLocked(attribute, isLocked, isLockedBy, isLockedStatusDate);
   if (element.inputTerminalId === terminalId) {
@@ -70,7 +70,7 @@ export const UpdateAttributeIsLocked = (
   attribute: Attribute,
   isLocked: boolean,
   isLockedStatusBy: string,
-  isLockedStatusDate: string
+  isLockedStatusDate: Date
 ): Attribute => ({
   ...attribute,
   isLocked,

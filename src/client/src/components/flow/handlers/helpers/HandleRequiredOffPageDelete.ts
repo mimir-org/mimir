@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { Edge, Node } from "../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { deleteEdge, deleteNode, setOffPageStatus } from "../../../../redux/store/project/actions";
 import { GetParentConnectorId, GetPartOfEdge } from "./OffPageDeleteFunctions";
 

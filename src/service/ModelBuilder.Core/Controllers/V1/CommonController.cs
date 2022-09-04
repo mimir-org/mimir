@@ -4,9 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mb.Data.Contracts;
 using Mb.Models.Abstract;
-using Mb.Models.Application;
 using Mb.Models.Data;
-using Mb.Models.Exceptions;
 using Mb.Models.Settings;
 using Mb.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -14,8 +12,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Mimirorg.Common.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using Mb.Models.Client;
+using Mimirorg.TypeLibrary.Models.Client;
+using Mimirorg.TypeLibrary.Models.Common;
 
 namespace Mb.Core.Controllers.V1
 {
@@ -46,19 +46,19 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Get all collaboration-partners
+        /// Get all companies
         /// </summary>
         /// <returns></returns>
-        [HttpGet("collaboration-partner")]
-        [ProducesResponseType(typeof(ICollection<CollaborationPartner>), StatusCodes.Status200OK)]
+        [HttpGet("company")]
+        [ProducesResponseType(typeof(ICollection<MimirorgCompanyCm>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Policy = "Read")]
-        public IActionResult GetCollaborationPartners()
+        public async Task<IActionResult> GetCompanies()
         {
             try
             {
-                var data = _commonService.GetAllCollaborationPartners().ToList();
+                var data = await _commonService.GetAllCompanies();
                 return Ok(data);
             }
             catch (Exception e)
@@ -69,25 +69,20 @@ namespace Mb.Core.Controllers.V1
         }
 
         /// <summary>
-        /// Create a collaboration partner
+        /// Get current company
         /// </summary>
         /// <returns></returns>
-        [HttpPost("collaboration-partner")]
-        [ProducesResponseType(typeof(CollaborationPartner), StatusCodes.Status201Created)]
+        [HttpGet("company/current")]
+        [ProducesResponseType(typeof(MimirorgCompanyCm), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Policy = "Admin")]
-        public IActionResult CreateCollaborationPartner(CollaborationPartnerAm collaborationPartner)
+        [Authorize(Policy = "Read")]
+        public async Task<IActionResult> GetCurrentCompany()
         {
             try
             {
-                var data = _commonService.CreateCollaborationPartnerAsync(collaborationPartner);
-                return StatusCode(StatusCodes.Status201Created, data);
-            }
-            catch (ModelBuilderDuplicateException e)
-            {
-                _logger.LogError(e, $"Internal Server Error: Error: {e.Message}");
-                return StatusCode(500, e.Message);
+                var data = await _commonService.GetCurrentCompany();
+                return Ok(data);
             }
             catch (Exception e)
             {

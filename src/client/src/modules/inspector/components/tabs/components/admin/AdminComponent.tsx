@@ -1,9 +1,7 @@
-import Config from "../../../../../../models/Config";
-import { Project } from "../../../../../../models";
+import { Project } from "@mimirorg/modelbuilder-types";
 import { AdminContentWrapper, AdminLogo } from "./AdminComponent.styled";
 import { InspectorElement } from "../../../../types";
-import { statusSelector, useAppSelector } from "../../../../../../redux/store";
-import { GetCompanyLogoForInspector } from "../../../../../../helpers/GetCompanyLogo";
+import { commonStateCompanySelector, statusSelector, useAppSelector } from "../../../../../../redux/store";
 import { GetAdminContent } from "./helpers/GetAdminContent";
 
 interface Props {
@@ -13,11 +11,11 @@ interface Props {
 
 export const AdminComponent = ({ element, project }: Props) => {
   const statuses = useAppSelector(statusSelector);
-  const company = Config.COMPANY;
+  const company = useAppSelector(commonStateCompanySelector);
 
   return (
     <>
-      <AdminLogo src={GetCompanyLogoForInspector(company, element)} alt="logo" />
+      <AdminLogo src={company.logo} alt={company.name} />
       {element && <AdminContentWrapper>{GetAdminContent(element, project, statuses)}</AdminContentWrapper>}
     </>
   );

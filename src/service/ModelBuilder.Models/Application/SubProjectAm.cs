@@ -1,6 +1,6 @@
+using Mimirorg.Common.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace Mb.Models.Application
 {
@@ -20,28 +20,26 @@ namespace Mb.Models.Application
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Nodes == null || !Nodes.Any())
+            var validateionResults = new List<ValidationResult>();
+
+            if (Nodes == null || Nodes.Count <= 0)
             {
-                yield return new ValidationResult("Number of nodes must be greater than 0", new List<string> { "Nodes" });
+                validateionResults.Add(new ValidationResult("Number of nodes must be greater than 0", new List<string> { "Nodes" }));
             }
 
-            if (Nodes != null && Nodes.Any())
-            {
-                if (Nodes.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                    yield return new ValidationResult("Duplicate node id's detected", new List<string> { "Nodes" });
+            if (Nodes.HasDuplicateValues())
+                validateionResults.Add(new ValidationResult("Duplicate node id's detected", new List<string> { "Nodes" }));
 
-                if (Nodes.Any(string.IsNullOrWhiteSpace))
-                    yield return new ValidationResult("Empty node id's detected", new List<string> { "Nodes" });
-            }
+            if (Nodes.HasEmptyValues())
+                validateionResults.Add(new ValidationResult("Empty node id's detected", new List<string> { "Nodes" }));
 
-            if (Edges != null && Edges.Any())
-            {
-                if (Edges.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList().Any())
-                    yield return new ValidationResult("Duplicate edge id's detected", new List<string> { "Edges" });
+            if (Edges.HasDuplicateValues())
+                validateionResults.Add(new ValidationResult("Duplicate edge id's detected", new List<string> { "Edges" }));
 
-                if (Edges.Any(string.IsNullOrWhiteSpace))
-                    yield return new ValidationResult("Empty node id's detected", new List<string> { "Edges" });
-            }
+            if (Edges.HasEmptyValues())
+                validateionResults.Add(new ValidationResult("Empty node id's detected", new List<string> { "Edges" }));
+
+            return validateionResults;
         }
     }
 }

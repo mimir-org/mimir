@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Mb.Models.Enums;
 using Mb.Models.Extensions;
 using Mb.Models.Records;
 using Mb.Services.Contracts;
+using Mimirorg.TypeLibrary.Enums;
 
 namespace Mb.Services.Services
 {
@@ -92,8 +94,6 @@ namespace Mb.Services.Services
         /// id is missing or legal.The function will also create iri for all objects.</remarks>
         public IDictionary<string, string> Remap(ProjectAm project)
         {
-            CastConnectors(project);
-
             var remap = new Dictionary<string, string>();
             var r = new ReplacementId { FromId = project.Id, FromIri = project.Iri };
             var replacement = _commonRepository.CreateOrUseIdAndIri(r);
@@ -179,11 +179,9 @@ namespace Mb.Services.Services
                 node.ProjectId = project.ToId;
                 node.ProjectIri = project.ToIri;
 
-                if (string.IsNullOrWhiteSpace(node.MasterProjectId))
-                    node.MasterProjectId = project.ToId;
-
-                if (string.IsNullOrEmpty(node.MasterProjectIri) || !node.MasterProjectIri.IsValidIri())
-                    node.MasterProjectIri = project.ToIri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, node.MasterProjectId, node.MasterProjectIri);
+                node.MasterProjectId = masterProject.Id;
+                node.MasterProjectIri = masterProject.Iri;
 
                 yield return node;
             }
@@ -239,11 +237,9 @@ namespace Mb.Services.Services
                 edge.ToNodeIri = toNodeReplacement.ToIri;
                 edge.FromNodeIri = fromNodeReplacement.ToIri;
 
-                if (string.IsNullOrWhiteSpace(edge.MasterProjectId))
-                    edge.MasterProjectId = project.ToId;
-
-                if (string.IsNullOrEmpty(edge.MasterProjectIri) || !edge.MasterProjectIri.IsValidIri())
-                    edge.MasterProjectIri = project.ToIri;
+                var masterProject = ResolveMasterProject(project.FromId, project.FromIri, project.ToId, project.ToIri, edge.MasterProjectId, edge.MasterProjectIri);
+                edge.MasterProjectId = masterProject.Id;
+                edge.MasterProjectIri = masterProject.Iri;
 
                 yield return edge;
             }
@@ -269,8 +265,49 @@ namespace Mb.Services.Services
                     continue;
 
                 edge.FromNodeId = rootNode.Id;
-                edge.FromConnectorId = rootNode.Connectors?.FirstOrDefault(x => x.Type == ConnectorType.Output && x.RelationType == RelationType.PartOf)?.Id;
+                edge.FromConnectorId = rootNode.Connectors?.OfType<RelationAm>().FirstOrDefault(x => x.Type == ConnectorDirection.Output && x.RelationType == RelationType.PartOf)?.Id;
             }
+        }
+
+        public MasterProject ResolveMasterProject(string oldProjectId, string oldProjectIri, string projectId, string projectIri, string masterProjectId, string masterProjectIri)
+        {
+            if (string.IsNullOrWhiteSpace(masterProjectId) && string.IsNullOrWhiteSpace(masterProjectIri))
+                return new MasterProject { Id = projectId, Iri = projectIri };
+
+            if (string.IsNullOrWhiteSpace(projectId) && string.IsNullOrWhiteSpace(projectIri) || string.IsNullOrWhiteSpace(oldProjectId) && string.IsNullOrWhiteSpace(oldProjectIri))
+                throw new NullReferenceException($"{nameof(oldProjectId)} or {nameof(oldProjectIri)} and {nameof(projectId)} or {nameof(projectIri)} must have value.");
+
+            var hasChangedId = (oldProjectId != projectId) || (oldProjectIri != projectIri);
+
+            var id = masterProjectId;
+            var iri = masterProjectIri;
+
+            var oldProjectIdReplacement = new ReplacementId { FromId = oldProjectId, FromIri = oldProjectIri };
+            oldProjectIdReplacement = _commonRepository.CreateOrUseIdAndIri(oldProjectIdReplacement);
+
+            var projectIdReplacement = new ReplacementId { FromId = projectId, FromIri = projectIri };
+            projectIdReplacement = _commonRepository.CreateOrUseIdAndIri(projectIdReplacement);
+
+            if (!string.IsNullOrWhiteSpace(id) && hasChangedId)
+            {
+                if (id.Contains(oldProjectIdReplacement.ToId))
+                    id = projectIdReplacement.ToId;
+            }
+
+            if (!string.IsNullOrWhiteSpace(iri) && hasChangedId)
+            {
+                if (iri.Contains(oldProjectIdReplacement.ToIri))
+                    iri = projectIdReplacement.ToIri;
+            }
+
+            var replacement = new ReplacementId
+            {
+                FromId = id,
+                FromIri = iri
+            };
+
+            replacement = _commonRepository.CreateOrUseIdAndIri(replacement);
+            return new MasterProject { Id = replacement.ToId, Iri = replacement.ToIri };
         }
 
         #endregion
@@ -350,16 +387,16 @@ namespace Mb.Services.Services
                     connector.NodeIri = replacement.ToIri;
                 }
 
-                if (!string.IsNullOrWhiteSpace(connector.TerminalTypeId) && string.IsNullOrWhiteSpace(connector.TerminalTypeIri))
+                if (connector is TerminalAm am && !string.IsNullOrWhiteSpace(am.TerminalTypeId) && string.IsNullOrWhiteSpace(am.TerminalTypeIri))
                 {
-                    connector.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + connector.TerminalTypeId;
+                    am.TerminalTypeIri = GlobalSettings.IriTerminalTypePrefix + am.TerminalTypeId;
                 }
-
 
                 yield return connector;
             }
         }
 
+        // Should there be a id remap
         private static bool ShouldReplace(string id, string fromId, string iri, string fromIri)
         {
             if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(iri))
@@ -530,32 +567,6 @@ namespace Mb.Services.Services
             }
 
             return terminal;
-        }
-
-        // Cast connectors to relations and terminals
-        private void CastConnectors(ProjectAm project)
-        {
-            foreach (var node in project.Nodes)
-            {
-                var connectors = new List<ConnectorAm>();
-                foreach (var connector in node.Connectors)
-                {
-                    if (connector.RelationType != RelationType.NotSet)
-                    {
-                        var relationAm = new RelationAm();
-                        _mapper.Map(connector, relationAm);
-                        connectors.Add(relationAm);
-                    }
-                    else
-                    {
-                        var terminalAm = new TerminalAm();
-                        _mapper.Map(connector, terminalAm);
-                        connectors.Add(terminalAm);
-                    }
-                }
-
-                node.Connectors = connectors;
-            }
         }
 
         #endregion

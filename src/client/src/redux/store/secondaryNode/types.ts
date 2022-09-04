@@ -1,4 +1,5 @@
-import { Node } from "../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
+
 export const SET_SECONDARY_NODE = "SET_SECONDARY_NODE";
 export const REMOVE_SECONDARY_NODE = "REMOVE_SECONDARY_NODE";
 

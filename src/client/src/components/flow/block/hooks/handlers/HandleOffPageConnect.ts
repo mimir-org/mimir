@@ -1,16 +1,16 @@
 import { addEdge } from "react-flow-renderer";
-import { Node, Edge } from "../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 import { EDGE_TYPE } from "../../../../../models/project";
 import { createEdge, deleteEdge, deleteNode, setOffPageStatus } from "../../../../../redux/store/project/actions";
-import { ConvertDataToEdge } from "../../../converters";
+import { ConvertEdgeDataToMimirEdge } from "../../../converters";
 import { CreateId } from "../../../helpers";
-import { IsTransport } from "../../../helpers/Connectors";
-import { Params } from "../useOnConnect";
+import { IsTerminal } from "../../../helpers/Connectors";
+import { OnBlockDropParameters } from "../useOnBlockConnect";
 import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
 
 /**
  * Component to handle a connection between two OffPageNodes.
- * When the connection is completed the OffPageNodes are deleted,
+ * The OffPageNodes only serves as placeholders, and when the connection is completed the OffPageNodes are deleted,
  * and one new transport edge is created between the parents of the OffPageNodes.
  * This component is called from the useOnConnect hook.
  * @param params
@@ -18,8 +18,8 @@ import { IsOffPageEdge } from "../../helpers/IsOffPageEdge";
  * @param targetNode
  * @returns a transport edge between the parents of the OffPageNodes.
  */
-export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNode: Node) => {
-  const { project, connection, lib, dispatch, setEdges } = params;
+export const HandleOffPageConnect = (params: OnBlockDropParameters, sourceNode: Node, targetNode: Node) => {
+  const { library, project, connection, dispatch, setEdges } = params;
   const id = CreateId();
   const sourceParent = project.nodes.find((n) => n.id === sourceNode?.parentNodeId);
   const targetParent = project.nodes.find((n) => n.id === targetNode?.parentNodeId);
@@ -28,7 +28,7 @@ export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNod
 
   if (!sourceTerminal || !targetTerminal) return null;
 
-  const edge = ConvertDataToEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, lib);
+  const edge = ConvertEdgeDataToMimirEdge(id, sourceTerminal, targetTerminal, sourceParent, targetParent, project.id, library);
   dispatch(createEdge(edge));
 
   project.edges.forEach((e) => {
@@ -36,6 +36,7 @@ export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNod
   });
 
   const isRequired = false;
+  // Remove OffPage nodes
   dispatch(deleteNode(sourceNode?.id));
   dispatch(deleteNode(targetNode?.id));
   dispatch(setOffPageStatus(sourceParent.id, sourceTerminal.id, isRequired));
@@ -51,12 +52,12 @@ export const HandleOffPageConnect = (params: Params, sourceNode: Node, targetNod
 
 function GetSourceTerminal(edges: Edge[], sourceParentId: string, sourceNodeId: string) {
   return edges.find(
-    (e) => e.fromConnector.nodeId === sourceParentId && IsTransport(e.fromConnector) && e.toConnector.nodeId === sourceNodeId
+    (e) => e.fromConnector.nodeId === sourceParentId && IsTerminal(e.fromConnector) && e.toConnector.nodeId === sourceNodeId
   ).fromConnector;
 }
 
 function GetTargetTerminal(edges: Edge[], targetParentId: string, targetNodeId: string) {
   return edges.find(
-    (e) => e.toConnector.nodeId === targetParentId && IsTransport(e.toConnector) && e.fromConnector.nodeId === targetNodeId
+    (e) => e.toConnector.nodeId === targetParentId && IsTerminal(e.toConnector) && e.fromConnector.nodeId === targetNodeId
   ).toConnector;
 }

@@ -4,5 +4,5 @@ export {
   nodeSelector,
   secondaryNodeSelector,
   selectedNodeSelector,
-  edgeSelector,
+  edgesSelector,
 } from "../../../../../../redux/store";

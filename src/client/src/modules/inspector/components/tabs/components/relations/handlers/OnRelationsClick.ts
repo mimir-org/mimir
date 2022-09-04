@@ -1,4 +1,4 @@
-import { Edge, Node } from "../../../../../../../models";
+import { Node, Edge } from "@mimirorg/modelbuilder-types";
 
 export const OnClickRelation = (node: Node, edge: Edge, setSelectedNodes: (nodeIds: string[]) => void) => {
   const toNode = edge.fromNode.id === node.id ? edge.toNode : edge.fromNode;

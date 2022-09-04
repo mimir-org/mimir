@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { Connector, ConnectorVisibility } from "../../../../../models";
 import { changeActiveConnector } from "../../../../../redux/store/project/actions";
 import { IsConnectorVisible } from "../../../helpers/Connectors";
+import { Connector, ConnectorVisibility } from "@mimirorg/modelbuilder-types";
 
 export const OnConnectorClick = (conn: Connector, isInput: boolean, nodeId: string, dispatch: Dispatch) => {
   const visible = IsConnectorVisible(conn);

@@ -1,49 +1,51 @@
 import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useMemo, useState } from "react";
 import { ParametersContent } from "../shared/components/parametersContent/ParametersContent";
-import { TerminalsWrapper, TerminalsParametersWrapper } from "./TerminalsComponent.styled";
-import { terminalTypeSelector, useAppSelector } from "../../../../../../redux/store";
-import { GetFilteredTerminalsList } from "../../../../../../typeEditor/helpers";
-import { InspectorElement, SelectedTerminalIdentifier, TerminalLikeItem } from "../../../../types";
+import { TerminalsBox, TerminalsParametersBox } from "./TerminalsComponent.styled";
+import { InspectorElement } from "../../../../types";
 import { GetTerminalParentElement } from "./helpers/GetTerminalParentElement";
-import { GetTerminals } from "./helpers/GetTerminals";
+import { Terminal } from "@mimirorg/modelbuilder-types";
+import { PopulateTerminalCategories } from "./components/selector/components/helpers/PopulateTerminalCategories";
 
 interface Props {
   element: InspectorElement;
-  terminalLikeItems?: TerminalLikeItem[];
+  terminals?: Terminal[];
 }
 
-export const TerminalsComponent = ({ element, terminalLikeItems }: Props) => {
+/**
+ * Component for the Terminals tab in the Inspector
+ * @param props
+ * @returns a search field for terminals, and a list over a Node's terminals sorted by category.
+ */
+export const TerminalsComponent = ({ element, terminals }: Props) => {
   const terminalParentElement = GetTerminalParentElement(element);
-  const categoryTypes = useAppSelector(terminalTypeSelector);
-  const [selectedTerminalIdentifier, setSelectedTerminalIdentifier] = useState<SelectedTerminalIdentifier>(null);
-  const terminals = terminalLikeItems ?? GetTerminals(element);
-  const terminalCategories = useMemo(() => GetFilteredTerminalsList(categoryTypes), [categoryTypes]);
+  const [selectedTerminalId, setSelectedTerminalId] = useState<string>(null);
 
   const selectedTerminal = useMemo(
-    () => terminals.find((terminal) => terminal.id === selectedTerminalIdentifier?.id),
-    [selectedTerminalIdentifier, terminals]
+    () => terminals?.find((terminal) => terminal.id === selectedTerminalId),
+    [selectedTerminalId, terminals]
   );
 
+  const terminalCategories = useMemo(() => PopulateTerminalCategories(terminals), [terminals]);
+
   return (
-    <TerminalsWrapper>
+    <TerminalsBox>
       <TerminalsSelector
         terminals={terminals}
         terminalCategories={terminalCategories}
-        selectedTerminal={selectedTerminal}
-        selectedTerminalIdentifier={selectedTerminalIdentifier}
-        onSelectTerminal={(identifier: SelectedTerminalIdentifier) => setSelectedTerminalIdentifier(identifier)}
+        selectedTerminalId={selectedTerminalId}
+        onSelectTerminal={(id: string) => setSelectedTerminalId(id)}
       />
       {selectedTerminal && (
-        <TerminalsParametersWrapper>
+        <TerminalsParametersBox>
           <ParametersContent
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}
-            attributeLikeItems={selectedTerminal.attributes}
+            attributeItems={selectedTerminal.attributes}
           />
-        </TerminalsParametersWrapper>
+        </TerminalsParametersBox>
       )}
-    </TerminalsWrapper>
+    </TerminalsBox>
   );
 };

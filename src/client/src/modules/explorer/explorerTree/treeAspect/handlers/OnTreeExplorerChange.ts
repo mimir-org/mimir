@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { setNodeVisibility } from "../../../../../redux/store/project/actions";
-import { Node } from "../../../../../models";
+import { Node } from "@mimirorg/modelbuilder-types";
 
 /**
  * Handler for changing visibility of a node in the TreeView's Explorer.
