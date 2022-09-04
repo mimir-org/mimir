@@ -49,7 +49,7 @@ export const ConvertAttributeLibCmToAttribute = (attributes: AttributeLibCm[], n
       simpleIri: null,
       terminalIri: null,
       transportIri: null,
-      typeReferences: ConvertTypeReference(a.typeReferences)
+      typeReferences: ConvertTypeReference(a.typeReferences),
     } as Attribute;
   });
 };
