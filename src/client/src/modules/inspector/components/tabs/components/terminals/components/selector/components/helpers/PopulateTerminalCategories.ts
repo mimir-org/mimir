@@ -14,7 +14,7 @@ export const PopulateTerminalCategories = (terminals: Terminal[]) => {
   const terminalsSortedByCategory = [{}] as [CategoryObject];
 
   // Extract terminalCategories from the terminals list and populate the new list
-  terminals.forEach((t) => {
+  terminals?.forEach((t) => {
     if (t.terminalCategory === "" || t.terminalCategory == undefined) return;
     if (terminalsSortedByCategory.some((x) => x.name === t.terminalCategory)) return;
 
