@@ -47,7 +47,6 @@ export default ConvertTerminalLibCmToConnectors;
  */
 function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri: string, allTerminals: TerminalLibCm[]) {
   const id = CreateId();
-  const connectorVisibility = SetConnectorVisibility(libTerminal.connectorDirection);
   const attributes = ConvertTerminalAttributeLibCmToAttribute(libTerminal.terminal, id);
   const terminalCategory = GetTerminalCategoryName(libTerminal.terminal, allTerminals);
 
@@ -59,7 +58,7 @@ function CreateTerminal(libTerminal: NodeTerminalLibCm, nodeId: string, nodeIri:
     type: libTerminal.connectorDirection,
     nodeId,
     nodeIri,
-    connectorVisibility,
+    connectorVisibility: ConnectorVisibility.None,
     isRequired: false,
     color: libTerminal.terminal.color,
     terminalCategory,
@@ -120,15 +119,4 @@ function CreateRelation(nodeId: string, nodeIri: string, relationType: RelationT
     connectorVisibility: ConnectorVisibility.None,
     iri: null,
   } as Relation;
-}
-
-/**
- * Helper function to initialize the correct visibility status for a Connector.
- * @param direction
- * @returns the ConnectorVisibility status.
- */
-function SetConnectorVisibility(direction: ConnectorDirection) {
-  if (direction === ConnectorDirection.Input) return ConnectorVisibility.InputVisible;
-  if (direction === ConnectorDirection.Output) return ConnectorVisibility.OutputVisible;
-  return ConnectorVisibility.None;
 }
