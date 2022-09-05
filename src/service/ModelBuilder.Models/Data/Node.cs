@@ -67,9 +67,6 @@ namespace Mb.Models.Data
         [Required]
         public int Order { get; set; }
 
-        [Required]
-        public string StatusId { get; set; }
-
         public string UpdatedBy { get; set; }
         public DateTime Updated { get; set; }
         public DateTime? Created { get; set; }
@@ -169,7 +166,6 @@ namespace Mb.Models.Data
                    PositionBlockY == other.PositionBlockY &&
                    Level == other.Level &&
                    Order == other.Order &&
-                   StatusId == other.StatusId &&
                    UpdatedBy == other.UpdatedBy &&
                    Updated.Equals(other.Updated) &&
                    Nullable.Equals(Created, other.Created) &&
@@ -212,7 +208,6 @@ namespace Mb.Models.Data
             hashCode.Add(PositionBlockY);
             hashCode.Add(Level);
             hashCode.Add(Order);
-            hashCode.Add(StatusId);
             hashCode.Add(UpdatedBy);
             hashCode.Add(Updated);
             hashCode.Add(Created);

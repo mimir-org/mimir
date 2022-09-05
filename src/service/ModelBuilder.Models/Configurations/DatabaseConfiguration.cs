@@ -1,5 +1,4 @@
 using System.Text;
-using Mimirorg.Common.Exceptions;
 
 namespace Mb.Models.Configurations
 {

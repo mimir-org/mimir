@@ -30,8 +30,6 @@ namespace Mb.Models.Application
 
         public string Description { get; set; }
 
-        public string StatusId { get; set; }
-
         public ICollection<TypeReference> TypeReferences { get; set; }
 
         [Required]

@@ -92,7 +92,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.Name)
                 .AddColumn(x => x.Label)
                 .AddColumn(x => x.Description)
-                .AddColumn(x => x.StatusId)
                 .AddColumn(x => x.TypeReferenceString)
                 .AddColumn(x => x.InputTerminalId)
                 .AddColumn(x => x.OutputTerminalId)

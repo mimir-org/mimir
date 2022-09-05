@@ -28,7 +28,6 @@ namespace Mb.Models.Configurations
             builder.Property(p => p.PositionBlockY).HasColumnName("PositionBlockY").HasColumnType("decimal(18,4)").IsRequired();
             builder.Property(p => p.Level).HasColumnName("Level").IsRequired();
             builder.Property(p => p.Order).HasColumnName("Order").IsRequired();
-            builder.Property(p => p.StatusId).HasColumnName("StatusId").IsRequired();
             builder.Property(p => p.UpdatedBy).HasColumnName("UpdatedBy").IsRequired();
             builder.Property(p => p.Updated).HasColumnName("Updated").IsRequired();
             builder.Property(p => p.CreatedBy).HasColumnName("CreatedBy").IsRequired();
