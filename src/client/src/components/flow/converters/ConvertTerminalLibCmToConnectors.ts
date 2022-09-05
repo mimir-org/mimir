@@ -116,7 +116,7 @@ function CreateRelation(nodeId: string, nodeIri: string, relationType: RelationT
     discriminator: TextResources.KIND_RELATION,
     name,
     isRequired: false,
-    connectorVisibility: ConnectorVisibility.None,
+    connectorVisibility: isInput ? ConnectorVisibility.InputVisible : ConnectorVisibility.OutputVisible,
     iri: null,
   } as Relation;
 }
