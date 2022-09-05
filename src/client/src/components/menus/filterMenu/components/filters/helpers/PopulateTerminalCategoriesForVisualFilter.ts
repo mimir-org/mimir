@@ -6,7 +6,7 @@ import { TerminalCategory } from "../TransportTerminalsFilter";
  * @param transportTerminals
  * @returns a list of the type TerminalCategory, used by Visual Filter.
  */
-export const PopulateTerminalCategories = (transportTerminals: Terminal[]) => {
+export const PopulateTerminalCategoriesForVisualFilter = (transportTerminals: Terminal[]) => {
   const categories = [] as TerminalCategory[];
 
   transportTerminals?.forEach((t) => {
