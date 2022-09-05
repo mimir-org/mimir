@@ -31,7 +31,7 @@ export const BlockProjectComponent = () => {
   const ancestorsCollapsed = (elem: Node) => IsAncestorInSet(elem, closedNodes, project?.edges);
 
   useEffect(() => {
-    if (lockingNode !== null && !projectState.isLocking) setLockingNode(null);
+    if (lockingNode != null && !projectState.isLocking) setLockingNode(null);
   }, [lockingNode, projectState.isLocking]);
 
   if (!project || !nodes) return null;

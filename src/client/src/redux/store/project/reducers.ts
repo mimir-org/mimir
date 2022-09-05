@@ -3,6 +3,7 @@ import { IsAspectNode } from "../../../helpers/Aspects";
 import { IsFamily } from "../../../helpers/Family";
 import { CreateEmptyProject } from "../../../models/data/Project";
 import { Edge, Node, Simple, Terminal } from "@mimirorg/modelbuilder-types";
+import { IsTerminal } from "../../../components/flow/helpers/Connectors";
 import {
   getEdgeInterfaceAttributeMap,
   getEdgeInterfaceTerminalAttributeMap,
@@ -23,7 +24,6 @@ import {
   setLockTransportTerminalAttribute,
   TraverseTree,
 } from "./helpers/";
-import { IsTerminal } from "../../../components/flow/helpers/Connectors";
 
 const initialState: Types.ProjectState = {
   fetching: false,

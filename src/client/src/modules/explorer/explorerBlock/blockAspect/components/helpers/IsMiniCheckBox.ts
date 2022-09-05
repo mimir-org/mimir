@@ -11,7 +11,7 @@ import { Node } from "@mimirorg/modelbuilder-types";
  * @returns a boolean value.
  */
 export const IsMiniCheckBox = (node: Node, secondaryNode: Node, selectedBlockNode: Node) => {
-  const noSelectedBlockNode = selectedBlockNode === undefined || selectedBlockNode === null;
+  const noSelectedBlockNode = selectedBlockNode == undefined || selectedBlockNode == null;
   if (noSelectedBlockNode || IsAspectNode(node)) return false;
 
   const isDirectChild = ValidateChild(node, selectedBlockNode, secondaryNode);

@@ -13,7 +13,7 @@ import {
 
 /**
  * Component to handle all clicks on checkboxes in the BlockView's Explorer Module.
- * The BlockExplorer has a different functionality than the TreeExplorer.
+ * The BlockExplorer has a different functionality than the TreeExplorer, and this one has to handle multiple cases.
  * The selectedNode is marked as chekced, and its children are marked with the mini checkmark.
  * SplitView is when two parentNodes are displayed - one selectedNode and one secondaryNode.
  * Two parentNodes of the same Aspect can be displayed, unless it is a direct parent/child relation.
@@ -33,6 +33,7 @@ export const OnBlockExplorerChange = (
   dispatch: Dispatch
 ) => {
   if (!node) return;
+  const splitView = secondaryNode != null && secondaryNode != undefined;
 
   // Set selectedBlockNode
   if (!selectedBlockNode) {
@@ -41,7 +42,7 @@ export const OnBlockExplorerChange = (
   }
 
   // Toggle selectedBlockNode off
-  if (node.id === selectedBlockNode.id && !secondaryNode) {
+  if (node.id === selectedBlockNode.id && !splitView) {
     RemoveSelectedBlockNode(node, dispatch);
     return;
   }
@@ -53,19 +54,19 @@ export const OnBlockExplorerChange = (
   }
 
   // Add secondaryNode
-  if (!secondaryNode) {
+  if (!splitView) {
     if (ValidateNewSecondaryNode(node, selectedBlockNode)) SetSecondaryNode(nodes, node, viewportData, dispatch);
     return;
   }
 
   // Remove secondaryNode
-  if (node.id === secondaryNode.id) {
+  if (splitView && node.id === secondaryNode.id) {
     RemoveSecondaryNode(viewportData, dispatch);
     return;
   }
 
   // Make secondaryNode the selectedBlockNode
-  if (node.id === selectedBlockNode.id && secondaryNode) {
+  if (node.id === selectedBlockNode.id && splitView) {
     RemoveSecondaryNode(viewportData, dispatch);
     SetSelectedBlockNode(nodes, secondaryNode, dispatch);
     return;
@@ -78,7 +79,7 @@ export const OnBlockExplorerChange = (
   }
 
   // Change secondaryNode
-  if (node.id !== secondaryNode.id) {
+  if (splitView && node.id !== secondaryNode.id) {
     if (ValidateChangeSecondaryNode(node, secondaryNode)) dispatch(setSecondaryNode(node));
   }
 };
@@ -102,7 +103,7 @@ function RemoveSelectedBlockNode(node: Node, dispatch: Dispatch) {
 }
 
 function SetSelectedBlockNode(nodes: Node[], node: Node, dispatch: Dispatch) {
-  dispatch(removeSelectedNode());
+  dispatch(removeSelectedBlockNode());
   dispatch(setSelectedBlockNode(node.id));
   dispatch(setBlockNodeVisibility(node, false));
   ShowChildren(nodes, node, dispatch);
