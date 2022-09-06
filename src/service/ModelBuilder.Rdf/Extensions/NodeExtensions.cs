@@ -177,7 +177,6 @@ namespace ModelBuilder.Rdf.Extensions
             node.PositionBlockY = ontologyService.GetDecimalValue(iri, Resources.HasPositionY, false);
             node.Width = ontologyService.GetIntValue(iri, Resources.HasWidth, false);
             node.Height = ontologyService.GetIntValue(iri, Resources.HasHeight, false);
-            node.StatusId = "4590637F39B6BA6F39C74293BE9138DF";
 
             var masterProjectIriNode = ontologyService.GetTriplesWithSubjectPredicate(iri, Resources.HasMasterProject).Select(x => x.Object).FirstOrDefault();
             node.MasterProjectIri = masterProjectIriNode?.ToString();

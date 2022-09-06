@@ -1,5 +1,4 @@
 using System.IO;
-using System.Reflection;
 using Newtonsoft.Json.Linq;
 using VDS.RDF;
 using VDS.RDF.JsonLd;

@@ -290,23 +290,11 @@ namespace Mb.Data.Repositories
             if (edge?.Transport?.Updated != null)
                 edge.Transport.Updated = dateTimeNow;
 
-            if (string.IsNullOrWhiteSpace(edge?.Transport?.StatusId))
-            {
-                if (edge?.Transport != null)
-                    edge.Transport.StatusId = ObjectType.NotSet.ToString();
-            }
-
             if (!string.IsNullOrWhiteSpace(edge?.Interface?.UpdatedBy))
                 edge.Interface.UpdatedBy = contextAccessorName;
 
             if (edge?.Interface?.Updated != null)
                 edge.Interface.Updated = dateTimeNow;
-
-            if (string.IsNullOrWhiteSpace(edge?.Interface?.StatusId))
-            {
-                if (edge?.Interface != null)
-                    edge.Interface.StatusId = ObjectType.NotSet.ToString();
-            }
 
             if (!isNewEdge)
                 return;

@@ -92,7 +92,6 @@ namespace ModelBuilder.Unit.Tests.Models
                         Rds = "B0",
                         TypeReferences = null,
                         Simples = null,
-                        StatusId = null,
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                     },
                     new NodeAm
@@ -157,7 +156,6 @@ namespace ModelBuilder.Unit.Tests.Models
                         Rds = "B0",
                         TypeReferences = null,
                         Simples = null,
-                        StatusId = null,
                         Symbol = "http://localhost:5001/symbol/FF75565357B8D6B347964F78509F1895.svg"
                     }
                 },

@@ -25,7 +25,6 @@ namespace ModelBuilder.Rdf.Extensions
 
             inter.Iri = iri;
             inter.Name = ontologyService.GetValue(iri, Resources.Name, false);
-            inter.StatusId = "4590637F39B6BA6F39C74293BE9138DF";
 
             inter.Version = ontologyService.GetValue(iri, Resources.Version, false);
             inter.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);

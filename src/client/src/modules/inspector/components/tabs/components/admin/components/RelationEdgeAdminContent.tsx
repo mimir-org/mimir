@@ -16,11 +16,11 @@ export const RelationEdgeAdminContent = ({ edge }: Props) => (
       </div>
       <div>
         <div>{TextResources.EDGEADMIN_RELATION}</div>
-        <Input readOnly value={null} onChange={() => null} inputType="" />
+        <Input readOnly value={""} onChange={() => null} inputType="" />
       </div>
       <div>
         <div>{TextResources.EDGEADMIN_TEMPLATE}</div>
-        <Input readOnly onChange={() => null} inputType="" />
+        <Input readOnly value={""} onChange={() => null} inputType="" />
       </div>
     </TabColumn>
     <TabColumn>

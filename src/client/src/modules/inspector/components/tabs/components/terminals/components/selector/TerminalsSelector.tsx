@@ -28,7 +28,7 @@ export const TerminalsSelector = ({ terminals, terminalCategories, selectedTermi
     [terminals, terminalCategories, searchString]
   );
 
-  const hasTerminals = filteredBySearchTerminals.length > 0;
+  const hasTerminals = filteredBySearchTerminals?.length > 0;
   const className = searchString.length < 1 ? "" : TextResources.INPUT_PLACEHOLDER;
 
   return (

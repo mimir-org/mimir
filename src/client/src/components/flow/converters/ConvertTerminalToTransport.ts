@@ -57,6 +57,8 @@ const ConvertTerminalToTransport = (
     created: transportType.created,
     libraryTypeId: transportType.id,
     kind: TextResources.KIND_TRANSPORT,
+    version: "1.0",
+    rds: transportType.rdsCode,
   } as Transport;
 };
 

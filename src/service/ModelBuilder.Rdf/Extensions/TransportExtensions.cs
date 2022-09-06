@@ -25,7 +25,6 @@ namespace ModelBuilder.Rdf.Extensions
 
             transport.Iri = iri;
             transport.Name = ontologyService.GetValue(iri, Resources.Name, false);
-            transport.StatusId = "4590637F39B6BA6F39C74293BE9138DF";
 
             transport.Version = ontologyService.GetValue(iri, Resources.Version, false);
             transport.Rds = ontologyService.GetValue(iri, Resources.MimirRds, false);

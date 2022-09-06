@@ -252,7 +252,7 @@ export const makeFilterSelector = () =>
   createParametricAppSelector(
     (state) => state.commonState.filters,
     (_, attributes: Attribute[]) => attributes,
-    (filters, attributes) => filters.filter((x) => attributes.find((att) => att.entity === x.name)) ?? []
+    (filters, attributes) => filters.filter((x) => attributes?.find((att) => att.entity === x.name)) ?? []
   );
 
 export const makeSelectedFilterSelector = () =>

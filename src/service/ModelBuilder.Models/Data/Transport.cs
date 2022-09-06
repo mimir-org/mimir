@@ -23,9 +23,6 @@ namespace Mb.Models.Data
         public string Label { get; set; }
         public string Description { get; set; }
 
-        [Required]
-        public string StatusId { get; set; }
-
         [NotMapped]
         public virtual ICollection<TypeReference> TypeReferences
         {
@@ -82,7 +79,6 @@ namespace Mb.Models.Data
                    Name == other.Name &&
                    Label == other.Label &&
                    Description == other.Description &&
-                   StatusId == other.StatusId &&
                    TypeReferenceString == other.TypeReferenceString &&
                    InputTerminalId == other.InputTerminalId &&
                    OutputTerminalId == other.OutputTerminalId &&
@@ -110,7 +106,6 @@ namespace Mb.Models.Data
             hashCode.Add(Name);
             hashCode.Add(Label);
             hashCode.Add(Description);
-            hashCode.Add(StatusId);
             hashCode.Add(TypeReferenceString);
             hashCode.Add(InputTerminalId);
             hashCode.Add(OutputTerminalId);

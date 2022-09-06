@@ -62,8 +62,6 @@ namespace Mb.Models.Application
 
         public DateTime? IsLockedStatusDate { get; set; }
 
-        public string StatusId { get; set; }
-
         [RequiredOne(nameof(MasterProjectIri))]
         public string MasterProjectId { get; set; }
 

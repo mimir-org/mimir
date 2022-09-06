@@ -159,7 +159,6 @@ namespace Mb.Data.Repositories
                 .AddColumn(x => x.PositionBlockY)
                 .AddColumn(x => x.Level)
                 .AddColumn(x => x.Order)
-                .AddColumn(x => x.StatusId)
                 .AddColumn(x => x.UpdatedBy)
                 .AddColumn(x => x.Updated)
                 .AddColumn(x => x.Created)
@@ -289,13 +288,6 @@ namespace Mb.Data.Repositories
 
             //Label
             if (originalNode.Label != node.Label)
-            {
-                node.Version = originalNode.Version.IncrementMinorVersion();
-                return;
-            }
-
-            //StatusId
-            if (originalNode.StatusId != node.StatusId)
             {
                 node.Version = originalNode.Version.IncrementMinorVersion();
                 return;

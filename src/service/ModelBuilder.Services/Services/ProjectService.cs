@@ -415,7 +415,6 @@ namespace Mb.Services.Services
                 Connectors = new List<Connector>(),
                 Version = version,
                 Rds = string.Empty,
-                StatusId = "4590637F39B6BA6F39C74293BE9138DF",
                 IsRoot = true,
                 MasterProjectId = projectId,
                 Aspect = aspect,

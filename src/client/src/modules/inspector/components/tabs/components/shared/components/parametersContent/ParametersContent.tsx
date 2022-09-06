@@ -45,7 +45,7 @@ export const ParametersContent = ({
   const username = useAppSelector(usernameSelector);
   const shouldShowDefaultEntities = useRef(true);
   const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
-  const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement.id);
+  const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement?.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
   const [colorMapping] = useState(new Map<string, [string, string]>());

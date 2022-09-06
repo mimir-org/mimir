@@ -3,7 +3,7 @@ import { TerminalCategoryFilter } from "./TerminalCategoryFilter";
 import { TextResources } from "../../../../../assets/text/TextResources";
 import { Edge, Terminal } from "@mimirorg/modelbuilder-types";
 import { OnAllTransportsChange } from "./handlers";
-import { PopulateTerminalCategories, AreAllTransportsChecked } from "./helpers";
+import { PopulateTerminalCategoriesForVisualFilter, AreAllTransportsChecked } from "./helpers";
 import { FilterElement } from "../FilterElement";
 import { memo } from "react";
 
@@ -26,7 +26,7 @@ interface Props {
  * @returns one parent checkbox, and one checkbox for each child.
  */
 const TransportFilter = ({ edges, terminals, dispatch, visible }: Props) => {
-  const categories = PopulateTerminalCategories(terminals);
+  const categories = PopulateTerminalCategoriesForVisualFilter(terminals);
 
   return (
     visible && (
