@@ -50,7 +50,6 @@ const ConvertLibNodeToNode = (
     attributes,
     simples,
     aspect: libNode.aspect,
-    statusId: "",
     version: libNode.version,
     masterProjectId: projectId,
     symbol: libNode.symbol,

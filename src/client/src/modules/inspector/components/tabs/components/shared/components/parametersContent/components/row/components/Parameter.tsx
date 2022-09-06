@@ -5,7 +5,7 @@ import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { ParameterButton, ParameterLockSpinner } from "../../../styled/ParameterButton";
 import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
 import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
-import { CombinedAttribute, EnumBase } from "../../../../../../../../../../../models";
+import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
@@ -13,7 +13,7 @@ import { FontSize } from "../../../../../../../../../../../assets/font";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
-import { Attribute } from "@mimirorg/modelbuilder-types";
+import { Attribute, Unit } from "@mimirorg/modelbuilder-types";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -92,7 +92,7 @@ export const Parameter = ({
           disabled={isLocked}
           keyProp="id"
           valueProp="value"
-          onChange={(_unit: EnumBase) => onChange(attribute.id, value, _unit.id)}
+          onChange={(_unit: Unit) => onChange(attribute.id, value, _unit.id)}
           borderRadius={2}
           borderColor={Color.BATTLESHIP_GREY}
           fontSize={FontSize.SMALL}

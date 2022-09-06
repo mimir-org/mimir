@@ -16,7 +16,6 @@ const initialCommonState: CommonState = {
   company: {} as MimirorgCompanyCm,
   parsers: [] as ModuleDescription[],
   filters: [] as CombinedAttributeFilter[],
-  statuses: [],
   apiError: [],
 };
 

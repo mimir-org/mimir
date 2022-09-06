@@ -88,7 +88,6 @@ export const TextResources = {
   ADMIN_VERSION: "Version",
   ADMIN_COST: "Cost: USD/NOK",
   ADMIN_KIND: "Kind",
-  ADMIN_STATUS: "Status",
   ADMIN_DESCRIPTION: "Description",
   ADMIN_LONG_DESCRIPTION: "Long Description",
   ADMIN_INTERFACE: "Interface",

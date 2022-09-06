@@ -1,4 +1,3 @@
-import { EnumBase } from "../../enums/EnumBase";
 import { AttributeType } from "./AttributeType";
 
 export interface TerminalType {
@@ -6,7 +5,6 @@ export interface TerminalType {
   name: string;
   color: string;
   terminalCategoryId: string;
-  terminalCategory: EnumBase;
   semanticReference: string;
   attributes: AttributeType[];
 }
