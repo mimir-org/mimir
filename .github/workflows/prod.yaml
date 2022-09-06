@@ -8,8 +8,8 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     outputs:
-      release_version: ${{ steps.tag_version.outputs.new_tag }}
-      tag: v${{ steps.tag_version.outputs.new_tag }}
+      tag: ${{ steps.tag_version.outputs.new_tag }}
+      raw_tag: ${{ steps.tag_version.outputs.raw_tag  }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -24,8 +24,8 @@ jobs:
         if: ${{ steps.tag_version.outputs.new_tag != '' }}
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.tag_version.outputs.new_tag }}
-          name: Release v${{ steps.tag_version.outputs.new_tag }}
+          tag_name: ${{ steps.tag_version.outputs.raw_tag }}
+          name: Release  ${{ steps.tag_version.outputs.new_tag }}
           generate_release_notes: true
 
       - name: Check Output Parameters
