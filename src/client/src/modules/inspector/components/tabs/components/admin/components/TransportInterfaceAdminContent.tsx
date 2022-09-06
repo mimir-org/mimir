@@ -4,13 +4,10 @@ import { TextResources } from "../../../../../../../assets/text/TextResources";
 import { TabColumn } from "./styled/TabColumn";
 import { Input, TextArea } from "../../../../../../../compLibrary/input/text";
 import { FontSize } from "../../../../../../../assets/font";
-import { EnumBase } from "../../../../../../../models";
 import { changeInterfaceValue, changeTransportValue } from "../../../../../../../redux/store/project/actions";
-import { Dropdown } from "../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { useAppDispatch } from "../../../../../../../redux/store";
 import { GetRdsIdEdge } from "../../../../../../../helpers";
 import { GetReferenceDesignationEdge } from "../../../../../../../helpers/GetReferenceDesignation";
-import { DropDownItem } from "../../../../../../../compLibrary/dropdown/inspector/InspectorDropdown";
 import { Edge, Project, Transport, Interface } from "@mimirorg/modelbuilder-types";
 
 type Event = React.ChangeEvent<HTMLInputElement>;
@@ -18,12 +15,11 @@ type Event = React.ChangeEvent<HTMLInputElement>;
 interface Props {
   edge: Edge;
   project: Project;
-  statuses: EnumBase[];
 }
 
 type Element = Transport | Interface;
 
-export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Props) => {
+export const TransportInterfaceAdminContent = ({ edge, project }: Props) => {
   const dispatch = useAppDispatch();
   const onChange = <K extends keyof Element>(key: K, value: Element[K]) =>
     edge.transport ? dispatch(changeTransportValue(edge.id, key, value)) : dispatch(changeInterfaceValue(edge.id, key, value));
@@ -95,20 +91,6 @@ export const TransportInterfaceAdminContent = ({ edge, project, statuses }: Prop
         </div>
       </TabColumn>
       <TabColumn width={125}>
-        <div className="statusDropdown">
-          <div>{TextResources.ADMIN_STATUS}</div>
-          <Dropdown
-            label=""
-            items={statuses}
-            keyProp={"id"}
-            defaultValue={element?.statusId}
-            valueProp={null}
-            onChange={(value: DropDownItem<EnumBase>) => onChange("statusId", value.id)}
-            listTop={31}
-            borderRadius={5}
-            disabled={edge.isLocked}
-          ></Dropdown>
-        </div>
         <div>
           <div>{TextResources.ADMIN_VERSION}</div>
           <Input fontSize={FontSize.STANDARD} readOnly value={element.version ?? ""} onChange={() => null} inputType="" />

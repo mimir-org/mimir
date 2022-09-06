@@ -85,11 +85,6 @@ export const terminalsSelector = createAppSelector(
   (terminals) => terminals
 );
 
-export const statusSelector = createAppSelector(
-  (state) => state.commonState.statuses,
-  (statuses) => statuses
-);
-
 export const isOpenSelector = createAppSelector(
   (state) => state.modules.types,
   (types) => !!types.find((m) => m.visible)

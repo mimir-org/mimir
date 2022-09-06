@@ -1,6 +1,6 @@
 import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
-import { CombinedAttributeFilter, EnumBase } from "../../../models";
+import { CombinedAttributeFilter } from "../../../models";
 import { ApiError } from "../../../models/webclient";
 
 // State types
@@ -10,7 +10,6 @@ export interface CommonState {
   company: MimirorgCompanyCm | null;
   parsers: ModuleDescription[] | null;
   filters: CombinedAttributeFilter[] | null;
-  statuses: EnumBase[] | null;
   apiError: ApiError[];
 }
 
@@ -25,7 +24,6 @@ export interface FetchCompanyFinished {
 }
 
 export interface FetchStatusesFinished {
-  statuses: EnumBase[];
   apiError: ApiError;
 }
 

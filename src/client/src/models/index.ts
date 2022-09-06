@@ -2,7 +2,6 @@ export { WebSocket } from "./client/WebSocket";
 export type { FileData } from "./client/FileData";
 export type { Collection } from "./client/Collection";
 
-export type { EnumBase } from "./enums/EnumBase";
 export { ObjectType } from "./enums/ObjectType";
 export { LibraryTab } from "./enums/LibraryTab";
 export { WorkerStatus } from "./enums/WorkerStatus";

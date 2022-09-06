@@ -54,7 +54,6 @@ export const CreateOffPageObject = (data: OffPageData) => {
     attributes: [],
     hidden: false,
     masterProjectId: sourceNode.masterProjectId,
-    statusId: sourceNode.statusId,
     projectId: sourceNode.projectId,
     parentNodeId: sourceNode.id,
     kind: sourceNode.kind,
