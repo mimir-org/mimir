@@ -12,12 +12,7 @@ import { OnClearAllFilters } from "../shared/components/parametersContent/handle
 import { ParameterButton } from "../shared/components/parametersContent/styled/ParameterButton";
 import { OnChangeFilterChoice } from "../shared/components/parametersContent/handlers/OnChangeFilterChoice";
 import { Dropdown } from "../shared/components/parametersContent/components/dropdown/Dropdown";
-import {
-  ParametersContentContainer,
-  ParametersContentHeader,
-  ParametersContentMenu,
-  ParametersRowContainer,
-} from "../shared/components/parametersContent/ParametersContent.styled";
+import { ParametersBox, ParametersHeader, ParametersMenu, ParametersRowBox } from "./ParametersComponent.styled";
 import {
   makeFilterSelector,
   makeSelectedFilterSelector,
@@ -35,10 +30,10 @@ interface Props {
 }
 
 /**
- * Component for the Paramters in the Inspector. This component is used in the Parameters tab,
+ * Component for the Parameters in the Inspector. This component is used in the Parameters tab,
  * but also under Terminals to display a Terminal's parameters, and under SimpleTypes for Product nodes.
- * @param param0
- * @returns data for qualifier, source, and condition, an input field and a drop-down menu for units.
+ * @param params
+ * @returns a drop-down menu to select parameters, and buttons for hiding/showing all entities.
  */
 export const ParametersComponent = ({
   parametersElement,
@@ -67,9 +62,9 @@ export const ParametersComponent = ({
   };
 
   return (
-    <ParametersContentContainer>
-      <ParametersContentHeader>
-        <ParametersContentMenu>
+    <ParametersBox>
+      <ParametersHeader>
+        <ParametersMenu>
           <Dropdown
             onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
               OnChangeFilterChoice(parametersElement.id, filter.name, selected, dispatch);
@@ -84,10 +79,10 @@ export const ParametersComponent = ({
           <ParameterButton className={`link`} onClick={OnShowAllEntites}>
             {TextResources.PARAMS_DEFAULT}
           </ParameterButton>
-        </ParametersContentMenu>
-      </ParametersContentHeader>
+        </ParametersMenu>
+      </ParametersHeader>
 
-      <ParametersRowContainer>
+      <ParametersRowBox>
         {hasFilters &&
           Object.entries(selectedFilters).map(([filterName, selectedCombinations], index) => {
             if (!colorMapping.has(filterName)) colorMapping.set(filterName, GetParametersColor(index));
@@ -111,7 +106,7 @@ export const ParametersComponent = ({
               />
             );
           })}
-      </ParametersRowContainer>
-    </ParametersContentContainer>
+      </ParametersRowBox>
+    </ParametersBox>
   );
 };

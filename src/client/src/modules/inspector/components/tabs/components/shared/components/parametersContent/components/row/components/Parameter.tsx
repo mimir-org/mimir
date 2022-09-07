@@ -28,8 +28,7 @@ interface Props {
 }
 
 /**
- * Component for the Parameters used in the Parameters tab in the Inspector.
- * This component is also used in the Terminals tab to display the Parameters for a Terminal.
+ * Component for a single Parameter used in the Inspector.
  * @param params
  * @returns a parameter with data for qualifier, source, condition, an input field and a dropdown for units.
  */

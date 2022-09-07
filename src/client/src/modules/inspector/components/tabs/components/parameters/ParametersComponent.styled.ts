@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import { Color } from "../../../../../../../../assets/color/Color";
-import { FontSize } from "../../../../../../../../assets/font";
+import { Color } from "../../../../../../assets/color/Color";
+import { FontSize } from "../../../../../../assets/font";
 
-export const ParametersContentContainer = styled.div`
+export const ParametersBox = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
   height: 100%;
 `;
 
-export const ParametersRowContainer = styled.div`
+export const ParametersRowBox = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -17,7 +17,7 @@ export const ParametersRowContainer = styled.div`
   margin-bottom: 50px;
 `;
 
-export const ParametersContentHeader = styled.div`
+export const ParametersHeader = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -30,7 +30,7 @@ export const ParametersContentHeader = styled.div`
   border-bottom: 1px solid ${Color.GAINSBORO};
 `;
 
-export const ParametersContentMenu = styled.div`
+export const ParametersMenu = styled.div`
   display: flex;
   gap: 15px;
   align-content: center;

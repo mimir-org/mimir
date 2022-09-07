@@ -1,9 +1,9 @@
-import { ParameterInputsWrapper } from "./Parameter.styled";
 import { Dropdown, DropdownItem } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { Attribute, Unit } from "@mimirorg/modelbuilder-types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
+import { ParameterInputBox } from "./ParameterInput.styled";
 
 interface Props {
   attribute: Attribute;
@@ -28,7 +28,7 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
   });
 
   return (
-    <ParameterInputsWrapper>
+    <ParameterInputBox>
       <input
         name="parameterInput"
         disabled={isLocked || !isAttribute}
@@ -51,6 +51,6 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
         listTop={27}
         defaultValue={unit}
       />
-    </ParameterInputsWrapper>
+    </ParameterInputBox>
   );
 };

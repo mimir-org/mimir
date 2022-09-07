@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Color } from "../../../assets/color/Color";
 import { FontWeight } from "../../../assets/font";
-import { ParameterInputsWrapper } from "../../../modules/inspector/components/tabs/components/shared/components/parametersContent/components/row/components/Parameter.styled";
+import { ParameterInputBox } from "../../../modules/inspector/components/tabs/components/shared/components/parametersContent/components/row/components/ParameterInput.styled";
 
 interface DropdownBoxProps {
   disabled: boolean;
@@ -19,7 +19,7 @@ export const DropdownBox = styled.div<DropdownBoxProps>`
   font-size: ${(props) => props.fontSize};
   color: ${Color.BLACK};
 
-  ${ParameterInputsWrapper} & {
+  ${ParameterInputBox} & {
     flex: 1;
   }
 `;
