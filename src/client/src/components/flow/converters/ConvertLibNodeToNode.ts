@@ -4,7 +4,7 @@ import { GetDateNowUtc } from "../../../helpers";
 import { Position } from "../../../models/project";
 import { NodeLibCm, TerminalLibCm } from "@mimirorg/typelibrary-types";
 import { CreateId } from "../helpers";
-import { ConvertSimpleLibCmToSimple, ConvertAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
+import { ConvertSimpleLibCmToSimple, ConvertNodeAttributeLibCmToAttribute, ConvertTerminalLibCmToConnectors } from "./";
 import { TextResources } from "../../../assets/text/TextResources";
 import { ConvertTypeReference } from "./ConvertTypeReference";
 import { Node } from "@mimirorg/modelbuilder-types";
@@ -33,8 +33,8 @@ const ConvertLibNodeToNode = (
   const id = CreateId();
   const now = GetDateNowUtc();
   const connectors = ConvertTerminalLibCmToConnectors(libNode.nodeTerminals, allTerminals, id, libNode.iri);
-  const attributes = ConvertAttributeLibCmToAttribute(libNode.attributes, id, libNode.iri);
-  const simples = ConvertSimpleLibCmToSimple(libNode.simples, id, libNode.iri);
+  const attributes = ConvertNodeAttributeLibCmToAttribute(libNode.attributes, id);
+  const simples = ConvertSimpleLibCmToSimple(libNode.simples, id);
 
   return {
     id,
