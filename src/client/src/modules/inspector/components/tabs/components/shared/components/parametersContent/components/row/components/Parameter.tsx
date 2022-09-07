@@ -59,7 +59,16 @@ export const Parameter = ({
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterHeader color={bodyColor}>
-        <span>{attribute?.entity}</span>
+        {attribute?.typeReferences && attribute?.typeReferences?.length > 0 ? (
+          <span>
+            <a href={attribute.typeReferences[0].iri} target="_blank" rel="noopener noreferrer">
+              {attribute.entity}
+            </a>
+          </span>
+        ) : (
+          <span>{attribute.entity}</span>
+        )}
+
         {isAttribute && (
           <>
             <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>

@@ -16,6 +16,12 @@ export const ParameterHeader = styled.div<ParameterComponentProps>`
     font-size: ${FontSize.MEDIUM};
     font-weight: 500;
     margin-right: auto;
+
+    a {
+      font-size: ${FontSize.MEDIUM};
+      text-decoration: underline;
+      color: #000;
+    }
   }
 
   .warningIcon {
