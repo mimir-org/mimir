@@ -8,11 +8,11 @@ export interface DropDownCategoryItem<T> {
   id: string;
   name: string;
   description: string;
-  items: DropDownItem<T>[];
+  items: InspectorDropDownItem<T>[];
   image: string;
 }
 
-export interface DropDownItem<T> {
+export interface InspectorDropDownItem<T> {
   id: string;
   name: string;
   image: string;
@@ -32,10 +32,10 @@ interface Props<T> {
 
 const InspectorDropdown = <T,>({ label, categories, onChange, defaultValue, disabled, hasCategory, placeholder }: Props<T>) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null as DropDownItem<T>);
+  const [selectedItem, setSelectedItem] = useState(null as InspectorDropDownItem<T>);
 
   const findSelectedItem = useCallback(() => {
-    let selected = null as DropDownItem<T>;
+    let selected = null as InspectorDropDownItem<T>;
 
     categories?.forEach((c) => {
       c.items?.forEach((i) => {
@@ -56,7 +56,7 @@ const InspectorDropdown = <T,>({ label, categories, onChange, defaultValue, disa
     }
   }, [defaultValue, findSelectedItem, categories]);
 
-  const handleChange = (item: DropDownItem<T>) => {
+  const handleChange = (item: InspectorDropDownItem<T>) => {
     setSelectedItem(item);
     setIsListOpen(!isListOpen);
     onChange(item.value);
@@ -70,7 +70,7 @@ const InspectorDropdown = <T,>({ label, categories, onChange, defaultValue, disa
     );
   };
 
-  const getItems = (items: DropDownItem<T>[]) => {
+  const getItems = (items: InspectorDropDownItem<T>[]) => {
     return items?.map((item) => {
       return (
         <div onClick={() => handleChange(item)} key={item.id}>

@@ -3,7 +3,7 @@ import { TextResources } from "../../../assets/text/TextResources";
 import { LibraryState } from "../../../redux/store/library/types";
 import { CreateId } from "../helpers";
 import { IsBidirectionalTerminal } from "../helpers/Connectors";
-import { ConvertAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
+import { ConvertInterfaceAttributeLibCmToAttribute } from "./ConvertAttributeLibCmToAttribute";
 import { UpdateAttributesId } from "./ConvertTerminalToTransport";
 import { ConvertTypeReference } from "./ConvertTypeReference";
 
@@ -17,13 +17,7 @@ import { ConvertTypeReference } from "./ConvertTypeReference";
  * @param nodeIri
  * @returns an Interface.
  */
-const ConvertTerminalToInterface = (
-  sourceTerminal: Terminal,
-  targetTerminal: Connector,
-  library: LibraryState,
-  nodeId: string,
-  nodeIri: string
-) => {
+const ConvertTerminalToInterface = (sourceTerminal: Terminal, targetTerminal: Connector, library: LibraryState) => {
   const interfaceType = library?.interfaceTypes.find((i) => i.terminalId === sourceTerminal.terminalTypeId); // TODO: check which id to use
   if (interfaceType == undefined) return null;
 
@@ -41,13 +35,15 @@ const ConvertTerminalToInterface = (
   UpdateAttributesId(inputTerminal);
   UpdateAttributesId(outputTerminal);
 
+  const id = CreateId();
+
   return {
-    id: CreateId(),
+    id: id,
     name: sourceTerminal.name,
     label: sourceTerminal.name,
     description: null,
     typeReferences: ConvertTypeReference(interfaceType.typeReferences),
-    attributes: ConvertAttributeLibCmToAttribute(interfaceType.attributes, nodeId, nodeIri),
+    attributes: ConvertInterfaceAttributeLibCmToAttribute(interfaceType.attributes, id),
     inputTerminalId: inputTerminal.id,
     inputTerminal: inputTerminal,
     outputTerminalId: outputTerminal.id,

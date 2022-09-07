@@ -1,11 +1,11 @@
 import { TerminalsSelector } from "./components/selector/TerminalsSelector";
 import { useMemo, useState } from "react";
-import { ParametersContent } from "../shared/components/parametersContent/ParametersContent";
 import { TerminalsBox, TerminalsParametersBox } from "./TerminalsComponent.styled";
 import { InspectorElement } from "../../../../types";
 import { GetTerminalParentElement } from "./helpers/GetTerminalParentElement";
 import { Terminal } from "@mimirorg/modelbuilder-types";
 import { PopulateTerminalCategories } from "./components/selector/components/helpers/PopulateTerminalCategories";
+import { ParametersComponent } from "../parameters/ParametersComponent";
 
 interface Props {
   element: InspectorElement;
@@ -38,7 +38,7 @@ export const TerminalsComponent = ({ element, terminals }: Props) => {
       />
       {selectedTerminal && (
         <TerminalsParametersBox>
-          <ParametersContent
+          <ParametersComponent
             parametersElement={selectedTerminal}
             inspectorParentElement={element}
             terminalParentElement={terminalParentElement}

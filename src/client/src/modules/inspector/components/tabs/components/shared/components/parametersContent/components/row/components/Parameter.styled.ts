@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 
-interface ParameterHeaderProps {
+interface ParameterComponentProps {
   color: string;
 }
 
-export const ParameterHeader = styled.div<ParameterHeaderProps>`
+export const ParameterHeader = styled.div<ParameterComponentProps>`
   display: flex;
   gap: 8px;
   height: 30px;
@@ -16,22 +16,15 @@ export const ParameterHeader = styled.div<ParameterHeaderProps>`
     font-size: ${FontSize.MEDIUM};
     font-weight: 500;
     margin-right: auto;
+
+    a {
+      font-size: ${FontSize.MEDIUM};
+      text-decoration: underline;
+      color: #000;
+    }
   }
 
   .warningIcon {
     margin-left: -10px;
-  }
-`;
-
-export const ParameterInputsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 16px;
-  padding: 10px 35px 0 20px;
-
-  input {
-    flex: 1;
-    height: 100%;
-    width: 0;
   }
 `;

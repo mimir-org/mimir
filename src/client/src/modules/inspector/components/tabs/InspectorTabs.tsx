@@ -4,6 +4,7 @@ import { Attribute, Project, Simple, Terminal } from "@mimirorg/modelbuilder-typ
 import { changeInspectorTab } from "../../redux/inspectorSlice";
 import { ShouldShowTabs } from "./helpers";
 import { InspectorElement } from "../../types";
+import { GetParametersElement } from "./components/parameters/helpers/GetParametersElement";
 import {
   InspectorTabWrapper,
   AdminComponent,
@@ -42,7 +43,12 @@ export const InspectorTabs = ({
 
   const tabs = [
     <AdminComponent key={0} element={element} project={project} />,
-    <ParametersComponent key={1} element={element} attributes={attributes} />,
+    <ParametersComponent
+      key={1}
+      parametersElement={GetParametersElement(element)}
+      inspectorParentElement={element}
+      attributeItems={attributes}
+    />,
     <TerminalsComponent key={2} element={element} terminals={terminals} />,
     <RelationsComponent key={3} element={element} />,
     <SimpleTypesComponent key={4} element={element} simpleItems={simpleItems} />,

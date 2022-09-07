@@ -22,20 +22,8 @@ export const ConvertEdgeDataToMimirEdge = (
   projectId: string,
   library: LibraryState
 ) => {
-  const convertedTransport = ConvertTerminalToTransport(
-    fromConnector as Terminal,
-    toConnector as Terminal,
-    library,
-    fromNode.id,
-    fromNode.iri
-  );
-  const convertedInterface = ConvertTerminalToInterface(
-    fromConnector as Terminal,
-    toConnector as Terminal,
-    library,
-    fromNode.id,
-    fromNode.iri
-  );
+  const convertedTransport = ConvertTerminalToTransport(fromConnector as Terminal, toConnector as Terminal, library);
+  const convertedInterface = ConvertTerminalToInterface(fromConnector as Terminal, toConnector as Terminal, library);
 
   return {
     id,

@@ -7,10 +7,9 @@ import { ConvertSimpleAttributeLibCmToAttribute } from "./ConvertAttributeLibCmT
  * This convertion is needed when a LibNode is dropped from the Library and converted to a Node.
  * @param simples
  * @param nodeId
- * @param nodeIri
  * @returns a list of Simple types.
  */
-const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[], nodeId: string, nodeIri: string) => {
+const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[], nodeId: string) => {
   if (!simples || !simples.length) return [] as Simple[];
 
   return simples.map((s) => {
@@ -18,10 +17,10 @@ const ConvertSimpleLibCmToSimple = (simples: SimpleLibCm[], nodeId: string, node
       id: s.id,
       name: s.name,
       iri: s.iri,
-      attributes: ConvertSimpleAttributeLibCmToAttribute(s, nodeId, nodeIri),
+      attributes: ConvertSimpleAttributeLibCmToAttribute(s),
       kind: s.kind,
       nodeId,
-      nodeIri,
+      nodeIri: null,
     };
   });
 };

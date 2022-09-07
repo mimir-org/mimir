@@ -1,8 +1,6 @@
 import { ObjectType } from "../enums/ObjectType";
 import { PredefinedAttribute } from "./PredefinedAttribute";
-import { TerminalTypeItem } from "./typeEditor/TerminalTypeItem";
-import { CreateId } from "../../components/flow/helpers";
-import { Aspect, ConnectorDirection } from "@mimirorg/modelbuilder-types";
+import { Aspect } from "@mimirorg/modelbuilder-types";
 
 export const CREATE_LIBRARY_KIND = "CreateLibraryType";
 
@@ -14,7 +12,7 @@ export interface CreateLibraryType {
   purpose: string;
   semanticReference: string;
   rdsId: string;
-  terminalTypes: TerminalTypeItem[];
+  terminalTypes: unknown[];
   attributeTypes: string[];
   locationType: string;
   predefinedAttributes: PredefinedAttribute[];
@@ -32,7 +30,7 @@ export const defaultCreateLibraryType: CreateLibraryType = {
   purpose: "",
   semanticReference: "",
   rdsId: "",
-  terminalTypes: [] as TerminalTypeItem[],
+  terminalTypes: [] as unknown[],
   attributeTypes: [] as string[],
   locationType: "",
   predefinedAttributes: [] as PredefinedAttribute[],
@@ -52,26 +50,28 @@ function ensureValidState(newCreateLibraryType: CreateLibraryType) {
   if (!createLibraryTypeState.attributeTypes) createLibraryTypeState.attributeTypes = [];
   if (!createLibraryTypeState.simpleTypes) createLibraryTypeState.simpleTypes = [];
 
-  if (!createLibraryTypeState.terminalTypes) {
-    const defaultTerminalTypeItem = {
-      number: 1,
-      terminalTypeId: createLibraryTypeState.terminalTypeId,
-      connectorType: ConnectorDirection.Input,
-    } as TerminalTypeItem;
+  // TODO: fix
 
-    createLibraryTypeState.terminalTypes = [
-      defaultTerminalTypeItem,
-      { ...defaultTerminalTypeItem, connectorType: ConnectorDirection.Output },
-    ];
-  }
+  // if (!createLibraryTypeState.terminalTypes) {
+  //   const defaultTerminalTypeItem = {
+  //     number: 1,
+  //     terminalTypeId: createLibraryTypeState.terminalTypeId,
+  //     connectorType: ConnectorDirection.Input,
+  //   } as unknown;
+
+  //   createLibraryTypeState.terminalTypes = [
+  //     defaultTerminalTypeItem,
+  //     { ...defaultTerminalTypeItem, connectorType: ConnectorDirection.Output },
+  //   ];
+  // }
 
   // Assign temporary-ids to items for handling CRUD in redux store
-  if (createLibraryTypeState.terminalTypes) {
-    createLibraryTypeState.terminalTypes = createLibraryTypeState.terminalTypes.map((terminalTypeItem) => ({
-      ...terminalTypeItem,
-      terminalId: CreateId(),
-    }));
-  }
+  // if (createLibraryTypeState.terminalTypes) {
+  //   createLibraryTypeState.terminalTypes = createLibraryTypeState.terminalTypes.map((terminalTypeItem) => ({
+  //     ...terminalTypeItem,
+  //     terminalId: CreateId(),
+  //   }));
+  // }
 
   return createLibraryTypeState;
 }

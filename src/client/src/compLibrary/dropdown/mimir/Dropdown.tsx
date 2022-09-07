@@ -19,6 +19,7 @@ interface Props {
   fontSize?: string;
   height?: number;
   listTop?: number;
+  isParameterDropdown?: boolean;
 }
 
 export interface DropdownItem {
@@ -45,6 +46,7 @@ export const Dropdown = ({
   fontSize = FontSize.STANDARD,
   height = 28,
   listTop = 33,
+  isParameterDropdown,
 }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -71,6 +73,7 @@ export const Dropdown = ({
     <DropdownBox
       disabled={disabled}
       tabIndex={0}
+      isParameterDropdown={isParameterDropdown}
       onBlur={() => {
         setIsListOpen(false);
       }}

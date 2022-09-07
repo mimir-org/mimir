@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import { ParameterDescriptor } from "./ParameterDescriptor";
 import { Entity } from "../styled/Entity";
-import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { ParameterButton, ParameterLockSpinner } from "../../../styled/ParameterButton";
-import { ParameterHeader, ParameterInputsWrapper } from "./Parameter.styled";
-import { Dropdown as CompDropdown } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
+import { ParameterHeader } from "./Parameter.styled";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
 import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
 import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
-import { FontSize } from "../../../../../../../../../../../assets/font";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
-import { Attribute, Unit } from "@mimirorg/modelbuilder-types";
+import { Attribute } from "@mimirorg/modelbuilder-types";
+import { ParameterInput } from "./ParameterInput";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -29,6 +27,11 @@ interface Props {
   onClose: (id: string) => void;
 }
 
+/**
+ * Component for a single Parameter used in the Inspector.
+ * @param params
+ * @returns a parameter with data for qualifier, source, condition, an input field and a dropdown for units.
+ */
 export const Parameter = ({
   attribute,
   combination,
@@ -44,8 +47,10 @@ export const Parameter = ({
   const isAttribute = IsAttribute(attribute);
   const attributeValue = isAttribute ? attribute.value ?? "" : "";
   const isLocked = isAttribute ? attribute.isLocked : false;
-  const unit = attribute.selectedUnitId ?? attribute.units?.[0]?.id; // TODO: check this line
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
+  const lockDescription = isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK;
+
+  const LockComponent = isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />;
 
   useEffect(() => {
     IsAttribute(attribute) && setValue(attributeValue);
@@ -54,19 +59,26 @@ export const Parameter = ({
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterHeader color={bodyColor}>
-        <span>{attribute?.entity}</span>
+        {attribute?.typeReferences && attribute?.typeReferences?.length > 0 ? (
+          <span>
+            <a href={attribute.typeReferences[0].iri} target="_blank" rel="noopener noreferrer">
+              {attribute.entity}
+            </a>
+          </span>
+        ) : (
+          <span>{attribute.entity}</span>
+        )}
+
         {isAttribute && (
           <>
             <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
-              <VisuallyHidden>{isLocked ? "Unlock parameter" : "Lock parameter"}</VisuallyHidden>
+              <VisuallyHidden>{lockDescription}</VisuallyHidden>
               {attributeIsLocking ? (
                 <ParameterLockSpinner>
                   <Spinner variant="small" />
                 </ParameterLockSpinner>
-              ) : isLocked ? (
-                <LockClosedParameterComponent fill={headerColor} />
               ) : (
-                <LockOpenComponent />
+                LockComponent
               )}
             </ParameterButton>
             <ParameterButton onClick={() => onClose(attribute.id)}>
@@ -77,30 +89,12 @@ export const Parameter = ({
         )}
       </ParameterHeader>
       <ParameterDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
-      <ParameterInputsWrapper>
-        <input
-          name="parameterInput"
-          disabled={isLocked || !isAttribute}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onBlur={() => onChange(attribute.id, value, unit)}
-        />
-
-        <CompDropdown
-          label="combinationDropdown"
-          items={attribute?.units ?? []}
-          disabled={isLocked}
-          keyProp="id"
-          valueProp="value"
-          onChange={(_unit: Unit) => onChange(attribute.id, value, _unit.id)}
-          borderRadius={2}
-          borderColor={Color.BATTLESHIP_GREY}
-          fontSize={FontSize.SMALL}
-          height={22}
-          listTop={27}
-          defaultValue={unit}
-        />
-      </ParameterInputsWrapper>
+      <ParameterInput
+        attribute={attribute}
+        value={value}
+        setValue={setValue}
+        onChange={(id, value, unitId) => onChange(id, value, unitId)}
+      />
     </Entity>
   );
 };

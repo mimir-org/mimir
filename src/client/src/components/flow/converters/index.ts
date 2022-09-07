@@ -12,7 +12,9 @@ export { default as ConvertTerminalToInterface } from "./ConvertTerminalToInterf
 export { default as ConvertUnitLibCmToUnits } from "./ConvertUnitLibCmToUnits";
 
 export {
-  ConvertAttributeLibCmToAttribute,
+  ConvertNodeAttributeLibCmToAttribute,
   ConvertTerminalAttributeLibCmToAttribute,
   ConvertSimpleAttributeLibCmToAttribute,
+  ConvertInterfaceAttributeLibCmToAttribute,
+  ConvertTransportAttributeLibCmToAttribute,
 } from "./ConvertAttributeLibCmToAttribute";
