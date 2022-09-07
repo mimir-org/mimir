@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Size } from "../../../assets/size/Size";
 import { Color } from "../../../assets/color/Color";
 
@@ -6,7 +6,6 @@ interface AnimatedInspectorContainerProps {
   isInspectorOpen: boolean;
   isLibraryOpen?: boolean;
   isExplorerOpen?: boolean;
-  isTypeEditor?: boolean;
   stop: number;
   zIndex: number;
 }
@@ -28,11 +27,4 @@ export const AnimatedInspectorContainer = styled.div<AnimatedInspectorContainerP
   overflow-x: auto;
   overflow-y: hidden;
   transition: left 0.2s ease-in-out, right 0.2s ease-in-out;
-  ${(props) =>
-    props.isTypeEditor &&
-    css`
-      height: 100%;
-      right: 0;
-      left: 0;
-    `}
 `;

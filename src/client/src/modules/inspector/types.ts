@@ -1,5 +1,5 @@
 import { Action, Dispatch } from "redux";
-import { CombinedAttribute, TerminalTypeExtended } from "../../models";
+import { CombinedAttribute } from "../../models";
 import { Node, Edge, Connector, Transport, Interface, Terminal, Simple } from "@mimirorg/modelbuilder-types";
 
 /**
@@ -19,7 +19,7 @@ export type InspectorTerminalsElement = Node | Transport | Interface;
  */
 export type InspectorParametersElement = InspectorTerminalsElement | Terminal | Simple;
 export type CombinedAttributeDict = { [name: string]: CombinedAttribute[] };
-export type TerminalLikeItem = Connector | Terminal | TerminalTypeExtended;
+export type TerminalLikeItem = Connector | Terminal;
 
 export type ChangeInspectorVisibilityAction = (visibility: boolean) => Action;
 export type ChangeInspectorHeightAction = (height: number) => Action;

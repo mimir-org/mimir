@@ -9,7 +9,6 @@ interface Props {
   library?: boolean;
   explorer?: boolean;
   inspectorOpen?: boolean;
-  isTypeEditor?: boolean;
   height: number;
   zIndex: number;
   forwardRef: React.MutableRefObject<HTMLDivElement>;

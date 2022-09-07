@@ -62,51 +62,49 @@ export const ParameterRow = ({
   );
 
   return (
-    <>
-      <Body width={bodyWidth}>
-        <Entity width={FILTER_ENTITY_WIDTH}>
-          <Box color={bodyColor} id="ParametersBox">
-            <div className={`icon`}>
-              <RemoveIconComponent
-                width={26}
-                height={26}
-                fill={headerColor}
-                stroke={headerColor}
-                onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
-              />
-            </div>
-            <div className="text">{filterName}</div>
-          </Box>
-          <CombinationDropdown
-            items={combinations}
-            selectedItems={selectedCombinations}
-            keyProp="combined"
-            onChange={(combination, selected) =>
-              OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
-            }
-            headerColor={headerColor}
-            bodyColor={bodyColor}
-          />
-        </Entity>
-        {selectedCombinations.map((combination) => (
-          <Parameter
-            key={combination.combined}
-            attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(combination, attr))}
-            combination={combination}
-            headerColor={headerColor}
-            bodyColor={bodyColor}
-            isGloballyLocking={isGlobalLocking}
-            lockingAttribute={lockingAttribute}
-            onChange={(id, value, unitId) =>
-              OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
-            }
-            onLock={(attribute, isLocked) =>
-              OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, setLockingAttribute, dispatch)
-            }
-            onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
-          />
-        ))}
-      </Body>
-    </>
+    <Body width={bodyWidth}>
+      <Entity width={FILTER_ENTITY_WIDTH}>
+        <Box color={bodyColor} id="ParametersBox">
+          <div className={`icon`}>
+            <RemoveIconComponent
+              width={26}
+              height={26}
+              fill={headerColor}
+              stroke={headerColor}
+              onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
+            />
+          </div>
+          <div className="text">{filterName}</div>
+        </Box>
+        <CombinationDropdown
+          items={combinations}
+          selectedItems={selectedCombinations}
+          keyProp="combined"
+          onChange={(combination, selected) =>
+            OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
+          }
+          headerColor={headerColor}
+          bodyColor={bodyColor}
+        />
+      </Entity>
+      {selectedCombinations.map((combination) => (
+        <Parameter
+          key={combination.combined}
+          attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(combination, attr))}
+          combination={combination}
+          headerColor={headerColor}
+          bodyColor={bodyColor}
+          isGloballyLocking={isGlobalLocking}
+          lockingAttribute={lockingAttribute}
+          onChange={(id, value, unitId) =>
+            OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
+          }
+          onLock={(attribute, isLocked) =>
+            OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, setLockingAttribute, dispatch)
+          }
+          onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
+        />
+      ))}
+    </Body>
   );
 };
