@@ -50,6 +50,7 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
         height={22}
         listTop={27}
         defaultValue={unit}
+        isParameterDropdown
       />
     </ParameterInputBox>
   );

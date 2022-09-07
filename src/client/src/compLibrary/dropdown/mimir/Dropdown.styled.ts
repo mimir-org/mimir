@@ -1,16 +1,17 @@
 import styled from "styled-components";
 import { Color } from "../../../assets/color/Color";
 import { FontWeight } from "../../../assets/font";
-import { ParameterInputBox } from "../../../modules/inspector/components/tabs/components/shared/components/parametersContent/components/row/components/ParameterInput.styled";
 
 interface DropdownBoxProps {
   disabled: boolean;
   fontSize?: string;
+  isParameterDropdown?: boolean;
 }
 
 export const DropdownBox = styled.div<DropdownBoxProps>`
   display: flex;
   flex-direction: column;
+  flex: ${(props) => props.isParameterDropdown && 1};
   position: relative;
   width: 100%;
   margin-bottom: 10px;
@@ -18,10 +19,6 @@ export const DropdownBox = styled.div<DropdownBoxProps>`
   opacity: ${(props) => (props.disabled ? 0.4 : 1)};
   font-size: ${(props) => props.fontSize};
   color: ${Color.BLACK};
-
-  ${ParameterInputBox} & {
-    flex: 1;
-  }
 `;
 
 interface DropdownHeaderBoxProps {
