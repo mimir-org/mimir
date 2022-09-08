@@ -3,4 +3,5 @@ export {
   isActiveViewSelector,
   projectListSelector,
   projectSelector,
+  flowViewSelector,
 } from "../../../../../../../redux/store/selectors";

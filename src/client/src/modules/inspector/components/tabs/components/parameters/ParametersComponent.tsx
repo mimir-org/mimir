@@ -1,7 +1,7 @@
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../../types";
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { GetAttributes } from "../shared/components/parametersContent/helpers/GetAttributes";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { OnShowAllFilters } from "../shared/components/parametersContent/handlers/OnShowAllFilters";
 import { GetAttributeCombinations } from "../shared/components/parametersContent/helpers/GetAttributeCombinations";
 import { CombinedAttributeFilter } from "../../../../../../models";
@@ -60,6 +60,11 @@ export const ParametersComponent = ({
     shouldShowDefaultEntities.current = true;
     OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
   };
+
+  useEffect(() => {
+    OnShowAllEntites();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ParametersBox>
