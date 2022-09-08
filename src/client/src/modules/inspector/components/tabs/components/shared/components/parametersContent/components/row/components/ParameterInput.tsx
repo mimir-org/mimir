@@ -16,11 +16,12 @@ interface Props {
  * @returns an input field for adding a value, and a drop-down list for units.
  */
 export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) => {
+  if (!attribute) return null;
+
   const isAttribute = IsAttribute(attribute);
   const isLocked = isAttribute ? attribute.isLocked : false;
-  const hasSelectedUnitId =
-    attribute?.selectedUnitId !== "" && attribute?.selectedUnitId != undefined && attribute?.selectedUnitId != null;
-  const defaultValueForDropDown = hasSelectedUnitId ? attribute?.selectedUnitId : attribute.units?.[0]?.id;
+  const hasSelectedUnitId = attribute.selectedUnitId !== "" && attribute.selectedUnitId != undefined;
+  const defaultValueForDropDown = hasSelectedUnitId ? attribute.selectedUnitId : attribute.units?.[0].id;
 
   return (
     <ParameterInputBox>
@@ -29,7 +30,7 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
         disabled={isLocked || !isAttribute}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        // onBlur={() => onChange(attribute.id, value, null)}
+        onBlur={() => onChange(attribute.id, value, null)}
       />
 
       <ParametersDropdown
