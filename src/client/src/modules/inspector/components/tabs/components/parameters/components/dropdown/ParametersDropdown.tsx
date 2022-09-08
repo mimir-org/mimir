@@ -7,8 +7,8 @@ import { ParametersDropdownList } from "./ParametersDropdownList";
 interface Props {
   label: string;
   units: Unit[];
-  onChange: (item: Unit) => void;
-  defaultValue: Unit;
+  onChange: (unitId: string) => void;
+  defaultUnitId: string;
   disabled?: boolean;
   isParameterDropdown?: boolean;
 }
@@ -18,23 +18,25 @@ interface Props {
  * @param interface
  * @returns a drop-down menu.
  */
-export const ParametersDropdown = ({ label, units, onChange, defaultValue, disabled, isParameterDropdown }: Props) => {
+export const ParametersDropdown = ({ label, units, onChange, defaultUnitId, disabled, isParameterDropdown }: Props) => {
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<Unit>(null);
+  const [selectedUnitId, setSelectedUnitId] = useState<string>(null);
+
+  const selectedUnit = units.find((u) => u.id === selectedUnitId);
 
   useEffect(() => {
     if (!units) {
-      setSelectedItem(null);
+      setSelectedUnitId(null);
       return;
     }
 
-    setSelectedItem(defaultValue);
-  }, [defaultValue, units]);
+    setSelectedUnitId(defaultUnitId);
+  }, [defaultUnitId, units]);
 
-  const handleChange = (value: Unit) => {
-    setSelectedItem(value);
+  const handleChange = (unit: Unit) => {
+    setSelectedUnitId(unit.id);
     setIsListOpen(!isListOpen);
-    onChange(value);
+    onChange(unit.id);
   };
 
   return units?.length ? (
@@ -51,7 +53,7 @@ export const ParametersDropdown = ({ label, units, onChange, defaultValue, disab
         disabled={disabled}
         isListOpen={isListOpen}
         setIsListOpen={setIsListOpen}
-        selectedItem={selectedItem}
+        selectedUnit={selectedUnit}
       />
       {isListOpen && <ParametersDropdownList units={units} handleChange={(item: Unit) => handleChange(item)} />}
     </DropdownBox>

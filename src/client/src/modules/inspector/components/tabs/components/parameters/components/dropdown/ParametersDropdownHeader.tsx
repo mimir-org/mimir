@@ -8,7 +8,7 @@ interface Props {
   disabled: boolean;
   isListOpen: boolean;
   setIsListOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedItem: Unit;
+  selectedUnit: Unit;
 }
 
 /**
@@ -16,7 +16,7 @@ interface Props {
  * @param interface
  * @returns a clickable header with a value and expand/collapse icon.
  */
-export const ParametersDropdownHeader = ({ disabled, isListOpen, setIsListOpen, selectedItem }: Props) => (
+export const ParametersDropdownHeader = ({ disabled, isListOpen, setIsListOpen, selectedUnit }: Props) => (
   <DropdownHeaderBox
     borderRadius={2}
     borderColor={Color.BATTLESHIP_GREY}
@@ -24,9 +24,9 @@ export const ParametersDropdownHeader = ({ disabled, isListOpen, setIsListOpen, 
     height={22}
     onClick={disabled ? null : () => setIsListOpen(!isListOpen)}
   >
-    {selectedItem && (
+    {selectedUnit && (
       <>
-        <p>{selectedItem.symbol}</p>
+        <p>{selectedUnit.symbol}</p>
         <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
       </>
     )}

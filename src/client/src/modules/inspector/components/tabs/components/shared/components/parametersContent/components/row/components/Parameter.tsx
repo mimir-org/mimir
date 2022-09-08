@@ -10,7 +10,7 @@ import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
 import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
 import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
-import { Attribute, Unit } from "@mimirorg/modelbuilder-types";
+import { Attribute } from "@mimirorg/modelbuilder-types";
 import { ParameterInput } from "./ParameterInput";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
@@ -22,7 +22,7 @@ interface Props {
   bodyColor: string;
   isGloballyLocking: boolean;
   lockingAttribute: Attribute;
-  onChange: (id: string, value: string, unit: Unit) => void;
+  onChange: (id: string, value: string, unitId: string) => void;
   onLock: (attribute: Attribute, isLocked: boolean) => void;
   onClose: (id: string) => void;
 }
@@ -93,7 +93,7 @@ export const Parameter = ({
         attribute={attribute}
         value={value}
         setValue={setValue}
-        onChange={(id, value, unit) => onChange(id, value, unit)}
+        onChange={(id, value, unitId) => onChange(id, value, unitId)}
       />
     </Entity>
   );

@@ -1,7 +1,6 @@
 import { Dispatch } from "redux";
 import { IsConnector, IsEdge, IsInterface, IsNode, IsSimple, IsTransport } from "../../../../../../../helpers/IsType";
 import { InspectorElement, InspectorParametersElement, InspectorTerminalsElement } from "../../../../../../../types";
-import { Unit } from "@mimirorg/modelbuilder-types";
 import {
   changeInterfaceAttributeValue,
   changeInterfaceTerminalAttributeValue,
@@ -18,22 +17,22 @@ export const OnChangeParameterValue = (
   terminalParentElement: InspectorTerminalsElement,
   attributeId: string,
   value: string,
-  unit: Unit,
+  unitId: string,
   dispatch: Dispatch
 ) => {
   if (IsNode(element)) {
-    dispatch(changeNodeAttributeValue(attributeId, element, value, unit.id));
+    dispatch(changeNodeAttributeValue(attributeId, element, value, unitId));
   } else if (IsTransport(element) && IsEdge(inspectorParentElement)) {
-    dispatch(changeTransportAttributeValue(attributeId, inspectorParentElement, value, unit.id));
+    dispatch(changeTransportAttributeValue(attributeId, inspectorParentElement, value, unitId));
   } else if (IsInterface(element) && IsEdge(inspectorParentElement)) {
-    dispatch(changeInterfaceAttributeValue(attributeId, inspectorParentElement, value, unit.id));
+    dispatch(changeInterfaceAttributeValue(attributeId, inspectorParentElement, value, unitId));
   } else if (IsConnector(element) && IsNode(terminalParentElement)) {
-    dispatch(changeNodeTerminalAttributeValue(attributeId, element, terminalParentElement, value, unit.id));
+    dispatch(changeNodeTerminalAttributeValue(attributeId, element, terminalParentElement, value, unitId));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsTransport(terminalParentElement)) {
-    dispatch(changeTransportTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unit.id));
+    dispatch(changeTransportTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsInterface(terminalParentElement)) {
-    dispatch(changeInterfaceTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unit.id));
+    dispatch(changeInterfaceTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   } else if (IsSimple(element) && IsNode(inspectorParentElement)) {
-    dispatch(changeSimpleAttributeValue(attributeId, element, inspectorParentElement, value, unit.id));
+    dispatch(changeSimpleAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   }
 };

@@ -96,8 +96,8 @@ export const ParameterRow = ({
           bodyColor={bodyColor}
           isGloballyLocking={isGlobalLocking}
           lockingAttribute={lockingAttribute}
-          onChange={(id, value, unit) =>
-            OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unit, dispatch)
+          onChange={(id, value, unitId) =>
+            OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
           }
           onLock={(attribute, isLocked) =>
             OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, setLockingAttribute, dispatch)
