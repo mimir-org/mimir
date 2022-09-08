@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { FontSize } from "../../../../../../../../../../../assets/font";
 
 interface ParameterComponentProps {
@@ -13,15 +14,25 @@ export const ParameterHeader = styled.div<ParameterComponentProps>`
   background-color: ${(props) => props.color};
 
   span {
+    display: flex;
+    align-items: center;
     font-size: ${FontSize.MEDIUM};
     font-weight: 500;
     margin-right: auto;
 
     a {
+      display: flex;
+      align-items: center;
       font-size: ${FontSize.MEDIUM};
       text-decoration: underline;
-      color: #000;
+      color: ${Color.BLACK};
     }
+  }
+
+  .linkIcon {
+    margin-left: 7px;
+    width: 13px;
+    height: 13px;
   }
 
   .warningIcon {
