@@ -3,7 +3,10 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 import { GetAttributes } from "../shared/components/parametersContent/helpers/GetAttributes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { OnShowAllFilters } from "../shared/components/parametersContent/handlers/OnShowAllFilters";
-import { GetAttributeCombinations } from "../shared/components/parametersContent/helpers/GetAttributeCombinations";
+import {
+  GetAttributeCombinations,
+  GetCombinedAttributeFilters,
+} from "../shared/components/parametersContent/helpers/GetAttributeCombinations";
 import { CombinedAttributeFilter } from "../../../../../../models";
 import { GetParametersColor } from "../shared/components/parametersContent/helpers/GetParametersColor";
 import { ParameterRow } from "../shared/components/parametersContent/components/row/ParameterRow";
@@ -14,7 +17,6 @@ import { OnChangeFilterChoice } from "../shared/components/parametersContent/han
 import { Dropdown } from "../shared/components/parametersContent/components/dropdown/Dropdown";
 import { ParametersBox, ParametersHeader, ParametersMenu, ParametersRowBox } from "./ParametersComponent.styled";
 import {
-  makeFilterSelector,
   makeSelectedFilterSelector,
   useAppDispatch,
   useAppSelector,
@@ -45,7 +47,7 @@ export const ParametersComponent = ({
   const attributes = attributeItems ?? GetAttributes(parametersElement);
   const username = useAppSelector(usernameSelector);
   const shouldShowDefaultEntities = useRef(true);
-  const attributeFilters = useUniqueParametricAppSelector(makeFilterSelector, attributes);
+  const attributeFilters = GetCombinedAttributeFilters(attributes);
   const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement?.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
