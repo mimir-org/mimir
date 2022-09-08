@@ -1,5 +1,3 @@
-import { FontSize } from "../../../../../../../../../../../assets/font";
-import { Color } from "../../../../../../../../../../../assets/color/Color";
 import { Attribute, Unit } from "@mimirorg/modelbuilder-types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { ParameterInputBox } from "./ParameterInput.styled";
@@ -37,11 +35,6 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
         units={attribute.units}
         disabled={isLocked}
         onChange={(_unit: Unit) => onChange(attribute.id, value, _unit)}
-        borderRadius={2}
-        borderColor={Color.BATTLESHIP_GREY}
-        fontSize={FontSize.SMALL}
-        height={22}
-        listTop={27}
         defaultValue={defaultValueForDropDown}
         isParameterDropdown
       />
