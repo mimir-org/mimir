@@ -7,6 +7,7 @@ using Mb.Models.Data;
 using Mb.Models.Data.Hubs;
 using Mb.Models.Enums;
 using Microsoft.AspNetCore.SignalR;
+using Mimirorg.TypeLibrary.Models.Client;
 using Newtonsoft.Json;
 
 namespace Mb.Data.Repositories
@@ -36,6 +37,11 @@ namespace Mb.Data.Repositories
         {
             var data = JsonConvert.SerializeObject(lockCms, DefaultSettings.SerializerSettings);
             await _hubContext.Clients.Group(projectId).SendAsync(WebSocketReceiver.ReceiveLockData, workerStatus, data);
+        }
+
+        public async Task SendNodeLibData(List<NodeLibCm> nodes)
+        {
+            await _hubContext.Clients.All.SendAsync(WebSocketReceiver.ReceiveNodeLibData);
         }
     }
 }

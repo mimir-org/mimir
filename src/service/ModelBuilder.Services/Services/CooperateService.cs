@@ -6,6 +6,7 @@ using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Records;
 using Mb.Services.Contracts;
+using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Services
 {
@@ -67,6 +68,11 @@ namespace Mb.Services.Services
             _webSocketRepository.SendLockData(lockCms, projectId, workerStatus);
 
             return Task.CompletedTask;
+        }
+
+        public async Task SendNodeLibs(List<NodeLibCm> nodes)
+        {
+            await _webSocketRepository.SendNodeLibData(nodes);
         }
 
         #endregion Public methods

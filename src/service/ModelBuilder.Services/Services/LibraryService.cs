@@ -14,13 +14,15 @@ namespace Mb.Services.Services
     {
         private readonly IProjectRepository _projectRepository;
         private readonly ILibraryRepository _libraryRepository;
+        private readonly ICooperateService _cooperateService;
         private readonly IMapper _mapper;
 
-        public LibraryService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository)
+        public LibraryService(IProjectRepository projectRepository, IMapper mapper, ILibraryRepository libraryRepository, ICooperateService cooperateService)
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
             _libraryRepository = libraryRepository;
+            _cooperateService = cooperateService;
         }
 
         /// <summary>
@@ -94,6 +96,16 @@ namespace Mb.Services.Services
             });
 
             return librarySubProjectItems;
+        }
+
+        /// <summary>
+        /// Get all node types and send types to connected clients
+        /// </summary>
+        /// <returns></returns>
+        public async Task SendClientNodeTypes()
+        {
+            var nodeTypes = await GetNodeTypes(null);
+            await _cooperateService.SendNodeLibs(nodeTypes);
         }
     }
 }
