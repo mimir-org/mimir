@@ -64,7 +64,7 @@ export const ParametersComponent = ({
   useEffect(() => {
     OnShowAllEntites();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [parametersElement]);
 
   return (
     <ParametersBox>
