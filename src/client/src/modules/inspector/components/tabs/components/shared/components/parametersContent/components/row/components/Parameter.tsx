@@ -12,6 +12,7 @@ import { TextResources } from "../../../../../../../../../../../assets/text/Text
 import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { ParameterInput } from "./ParameterInput";
+import { LinkIcon } from "../../../../../../../../../../../assets/icons/link";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -48,6 +49,7 @@ export const Parameter = ({
   const attributeValue = isAttribute ? attribute.value ?? "" : "";
   const isLocked = isAttribute ? attribute.isLocked : false;
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
+  const hasTypeReference = attribute?.typeReferences && attribute?.typeReferences?.length > 0;
   const lockDescription = isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK;
 
   const LockComponent = isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />;
@@ -59,10 +61,11 @@ export const Parameter = ({
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterHeader color={bodyColor}>
-        {attribute?.typeReferences && attribute?.typeReferences?.length > 0 ? (
+        {hasTypeReference ? (
           <span>
             <a href={attribute.typeReferences[0].iri} target="_blank" rel="noopener noreferrer">
               {attribute.entity}
+              <img src={LinkIcon} alt="link" className="linkIcon" />
             </a>
           </span>
         ) : (
