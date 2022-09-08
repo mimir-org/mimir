@@ -19,6 +19,7 @@ import {
   updateEdge,
   updateNode,
 } from "../../redux/store/project/actions";
+import { fetchLibrary } from "../../redux/store/library/librarySlice";
 
 let instance = null;
 
@@ -66,6 +67,7 @@ export class WebSocket {
           this._connection.on("ReceiveNodeData", this.handleReceivedNodeData);
           this._connection.on("ReceiveEdgeData", this.handleReceivedEdgeData);
           this._connection.on("ReceiveLockData", this.handleReceiveLockData);
+          this._connection.on("ReceiveNodeLibData", this.handleNodeLibData);
         })
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         .catch((_e: unknown) => {});
@@ -151,5 +153,9 @@ export class WebSocket {
       if (attributeLocks.length > 1) this._dispatch(setLockedAttributes(attributeLocks));
       else if (attributeLocks.length === 1) this._dispatch(setLockedAttribute(attributeLocks[0]));
     }
+  };
+
+  private handleNodeLibData = () => {
+    this._dispatch(fetchLibrary());
   };
 }

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Mimirorg.TypeLibrary.Enums;
 using Swashbuckle.AspNetCore.Annotations;
 using Mimirorg.TypeLibrary.Models.Client;
 using Mimirorg.TypeLibrary.Models.Common;
@@ -34,13 +35,15 @@ namespace Mb.Core.Controllers.V1
         private readonly IModuleService _moduleService;
         private readonly ICacheRepository _cacheRepository;
         private readonly ApplicationSetting _applicationSetting;
+        private readonly ILibraryService _libraryService;
 
-        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting)
+        public CommonController(ICommonService commonService, ILogger<CommonController> logger, IModuleService moduleService, ICacheRepository cacheRepository, IOptions<ApplicationSetting> applicationSetting, ILibraryService libraryService)
         {
             _commonService = commonService;
             _logger = logger;
             _moduleService = moduleService;
             _cacheRepository = cacheRepository;
+            _libraryService = libraryService;
             _applicationSetting = applicationSetting?.Value;
         }
 
@@ -140,6 +143,10 @@ namespace Mb.Core.Controllers.V1
                     return new ForbidResult();
 
                 await _cacheRepository.DeleteCacheAsync(cacheInvalidation.Key.ToString());
+
+                if (cacheInvalidation.Key == CacheKey.AspectNode)
+                    await _libraryService.SendClientNodeTypes();
+
                 return NoContent();
             }
             catch (Exception e)

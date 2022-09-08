@@ -4,6 +4,7 @@ using Mb.Models.Client;
 using Mb.Models.Data;
 using Mb.Models.Enums;
 using Mb.Models.Records;
+using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Services.Contracts
 {
@@ -13,5 +14,7 @@ namespace Mb.Services.Contracts
         Task SendNodeUpdates(IReadOnlyCollection<(Node node, WorkerStatus workerStatus)> nodeMap, string projectId);
         Task SendEdgeUpdates(IReadOnlyCollection<(Edge edge, WorkerStatus workerStatus)> edgeMap, string projectId);
         Task SendLockUpdates(List<LockCm> lockCms, WorkerStatus workerStatus, string projectId);
+
+        Task SendNodeLibs(List<NodeLibCm> nodes);
     }
 }

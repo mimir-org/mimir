@@ -36,5 +36,11 @@ namespace Mb.Services.Contracts
         /// </summary>
         /// <returns></returns>
         Task<List<LibrarySubProjectItem>> GetSubProjects(string searchString = null);
+
+        /// <summary>
+        /// Get all node types and send types to connected clients
+        /// </summary>
+        /// <returns></returns>
+        Task SendClientNodeTypes();
     }
 }

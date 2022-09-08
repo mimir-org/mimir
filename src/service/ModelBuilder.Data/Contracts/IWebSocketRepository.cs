@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Mb.Models.Client;
 using Mb.Models.Data;
 using Mb.Models.Enums;
+using Mimirorg.TypeLibrary.Models.Client;
 
 namespace Mb.Data.Contracts
 {
@@ -11,5 +12,7 @@ namespace Mb.Data.Contracts
         Task SendNodeData(Node node, string projectId, WorkerStatus workerStatus);
         Task SendEdgeData(Edge edge, string projectId, WorkerStatus workerStatus);
         Task SendLockData(List<LockCm> lockCms, string projectId, WorkerStatus workerStatus);
+
+        Task SendNodeLibData(List<NodeLibCm> nodes);
     }
 }
