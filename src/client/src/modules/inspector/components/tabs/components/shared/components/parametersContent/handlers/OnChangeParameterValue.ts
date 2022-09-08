@@ -17,22 +17,22 @@ export const OnChangeParameterValue = (
   terminalParentElement: InspectorTerminalsElement,
   attributeId: string,
   value: string,
-  unit: string,
+  unitId: string,
   dispatch: Dispatch
 ) => {
   if (IsNode(element)) {
-    dispatch(changeNodeAttributeValue(attributeId, element, value, unit));
+    dispatch(changeNodeAttributeValue(attributeId, element, value, unitId));
   } else if (IsTransport(element) && IsEdge(inspectorParentElement)) {
-    dispatch(changeTransportAttributeValue(attributeId, inspectorParentElement, value, unit));
+    dispatch(changeTransportAttributeValue(attributeId, inspectorParentElement, value, unitId));
   } else if (IsInterface(element) && IsEdge(inspectorParentElement)) {
-    dispatch(changeInterfaceAttributeValue(attributeId, inspectorParentElement, value, unit));
+    dispatch(changeInterfaceAttributeValue(attributeId, inspectorParentElement, value, unitId));
   } else if (IsConnector(element) && IsNode(terminalParentElement)) {
-    dispatch(changeNodeTerminalAttributeValue(attributeId, element, terminalParentElement, value, unit));
+    dispatch(changeNodeTerminalAttributeValue(attributeId, element, terminalParentElement, value, unitId));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsTransport(terminalParentElement)) {
-    dispatch(changeTransportTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unit));
+    dispatch(changeTransportTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   } else if (IsConnector(element) && IsEdge(inspectorParentElement) && IsInterface(terminalParentElement)) {
-    dispatch(changeInterfaceTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unit));
+    dispatch(changeInterfaceTerminalAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   } else if (IsSimple(element) && IsNode(inspectorParentElement)) {
-    dispatch(changeSimpleAttributeValue(attributeId, element, inspectorParentElement, value, unit));
+    dispatch(changeSimpleAttributeValue(attributeId, element, inspectorParentElement, value, unitId));
   }
 };

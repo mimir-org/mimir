@@ -2,13 +2,7 @@ import { CombinedAttributeFilter } from "../../../models";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ModuleDescription } from "@mimirorg/modelbuilder-types";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
-import {
-  CommonState,
-  FetchCompaniesFinished,
-  FetchCombinedAttributeFilterFinished,
-  FetchParsersFinished,
-  FetchCompanyFinished,
-} from "./types";
+import { CommonState, FetchCompaniesFinished, FetchParsersFinished, FetchCompanyFinished } from "./types";
 
 const initialCommonState: CommonState = {
   fetching: false,
@@ -47,18 +41,6 @@ export const commonSlice = createSlice({
       state.company = action.payload.company;
       action.payload.apiError && state.apiError.push(action.payload.apiError);
     },
-    fetchCombinedAttributeFilters: (state) => {
-      state.fetching = true;
-      state.filters = [];
-      state.apiError = state.apiError
-        ? state.apiError.filter((elem) => elem.key !== fetchCombinedAttributeFiltersSuccessOrError.type)
-        : state.apiError;
-    },
-    fetchCombinedAttributeFiltersSuccessOrError: (state, action: PayloadAction<FetchCombinedAttributeFilterFinished>) => {
-      state.fetching = false;
-      state.filters = action.payload.filters;
-      action.payload.apiError && state.apiError.push(action.payload.apiError);
-    },
     fetchParsers: (state) => {
       state.fetching = true;
       state.parsers = [];
@@ -82,8 +64,6 @@ export const {
   fetchCompanies,
   fetchCompaniesSuccessOrError,
   fetchCompanySuccessOrError,
-  fetchCombinedAttributeFilters,
-  fetchCombinedAttributeFiltersSuccessOrError,
   fetchParsers,
   fetchParsersSuccessOrError,
   deleteCommonError,

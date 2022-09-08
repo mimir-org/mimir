@@ -29,5 +29,7 @@ export const CompanyLogoBox = styled.div`
   flex-shrink: 0;
   height: ${Size.TOPMENU_HEIGHT}px;
   display: flex;
-  pointer-events: none;
+  a {
+    display: flex;
+  }
 `;

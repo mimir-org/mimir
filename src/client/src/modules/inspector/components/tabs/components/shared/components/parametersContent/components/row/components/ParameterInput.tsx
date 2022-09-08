@@ -1,9 +1,7 @@
-import { Dropdown, DropdownItem } from "../../../../../../../../../../../compLibrary/dropdown/mimir/Dropdown";
-import { FontSize } from "../../../../../../../../../../../assets/font";
-import { Color } from "../../../../../../../../../../../assets/color/Color";
-import { Attribute, Unit } from "@mimirorg/modelbuilder-types";
+import { Attribute } from "@mimirorg/modelbuilder-types";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
 import { ParameterInputBox } from "./ParameterInput.styled";
+import { ParametersDropdown } from "../../../../../../parameters/components/dropdown/ParametersDropdown";
 
 interface Props {
   attribute: Attribute;
@@ -18,14 +16,12 @@ interface Props {
  * @returns an input field for adding a value, and a drop-down list for units.
  */
 export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) => {
+  if (!attribute) return null;
+
   const isAttribute = IsAttribute(attribute);
   const isLocked = isAttribute ? attribute.isLocked : false;
-  const unit = attribute.selectedUnitId ?? attribute.units?.[0]?.id; // TODO: check this line
-  const units = [] as DropdownItem[];
-
-  attribute?.units.forEach((u) => {
-    units.push({ name: u.symbol, key: u.id });
-  });
+  const hasSelectedUnitId = attribute.selectedUnitId !== "" && attribute.selectedUnitId != undefined;
+  const defaultValueForDropDown = hasSelectedUnitId ? attribute.selectedUnitId : attribute.units?.[0].id;
 
   return (
     <ParameterInputBox>
@@ -34,22 +30,15 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
         disabled={isLocked || !isAttribute}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        onBlur={() => onChange(attribute.id, value, unit)}
+        onBlur={() => onChange(attribute.id, value, null)}
       />
 
-      <Dropdown
+      <ParametersDropdown
         label="combinationDropdown"
-        items={units}
+        units={attribute.units}
         disabled={isLocked}
-        keyProp="key"
-        valueProp="value"
-        onChange={(_unit: Unit) => onChange(attribute.id, value, _unit.id)}
-        borderRadius={2}
-        borderColor={Color.BATTLESHIP_GREY}
-        fontSize={FontSize.SMALL}
-        height={22}
-        listTop={27}
-        defaultValue={unit}
+        onChange={(_unitId: string) => onChange(attribute.id, value, _unitId)}
+        defaultUnitId={defaultValueForDropDown}
         isParameterDropdown
       />
     </ParameterInputBox>

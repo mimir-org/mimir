@@ -1,9 +1,9 @@
 import { Terminal } from "@mimirorg/modelbuilder-types";
-import { CategoryObject } from "../components/selector/components/helpers/PopulateTerminalCategories";
+import { TerminalCategoryObject } from "../../../../../../../models/project";
 
 export const FilterBySearchString = (
   terminals: Terminal[],
-  terminalCategories: CategoryObject[],
+  terminalCategories: TerminalCategoryObject[],
   searchString: string
 ): Terminal[] =>
   (searchString?.length > 0 &&

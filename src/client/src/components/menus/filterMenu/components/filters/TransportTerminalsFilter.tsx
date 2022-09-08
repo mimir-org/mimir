@@ -7,11 +7,6 @@ import { PopulateTerminalCategoriesForVisualFilter, AreAllTransportsChecked } fr
 import { FilterElement } from "../FilterElement";
 import { memo } from "react";
 
-export interface TerminalCategory {
-  id: string;
-  name: string;
-}
-
 interface Props {
   edges: Edge[];
   terminals: Terminal[];
@@ -42,10 +37,9 @@ const TransportFilter = ({ edges, terminals, dispatch, visible }: Props) => {
         {categories?.map((category) => {
           return (
             <TerminalCategoryFilter
-              key={category.id}
+              key={category.name}
               category={category}
               edges={edges}
-              terminals={terminals}
               dispatch={dispatch}
               visible={!!terminals.length}
             />

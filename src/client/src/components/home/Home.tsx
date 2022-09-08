@@ -16,7 +16,7 @@ import { ToggleColorProfile } from "../../helpers/ToggleColorProfile";
 import { isActiveViewSelector, useAppSelector, useParametricAppSelector } from "../../redux/store";
 import { VisualFilterComponent } from "../menus/filterMenu/VisualFilterComponent";
 import { ToolbarComponent } from "../toolbar/ToolbarComponent";
-import { fetchCompanies, fetchCompany, fetchCombinedAttributeFilters, fetchParsers } from "../../redux/store/common/commonSlice";
+import { fetchCompanies, fetchCompany, fetchParsers } from "../../redux/store/common/commonSlice";
 import { HeaderComponent } from "../header/HeaderComponent";
 import {
   fetchLibrary,
@@ -53,7 +53,6 @@ export const Home = ({ dispatch }: Props) => {
     dispatch(fetchLibrary());
     dispatch(fetchCompanies());
     dispatch(fetchParsers());
-    dispatch(fetchCombinedAttributeFilters());
     dispatch(fetchUser());
   }, [dispatch]);
 

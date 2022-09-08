@@ -1,9 +1,5 @@
 import { Terminal } from "@mimirorg/modelbuilder-types";
-
-export interface CategoryObject {
-  name: string;
-  terminals: Terminal[];
-}
+import { TerminalCategoryObject } from "../../../../../../../../../../models/project";
 
 /**
  * Component to sort terminals into terminalCategories
@@ -11,7 +7,7 @@ export interface CategoryObject {
  * @returns a list of the type CategoryObject.
  */
 export const PopulateTerminalCategories = (terminals: Terminal[]) => {
-  const terminalsSortedByCategory = [{}] as [CategoryObject];
+  const terminalsSortedByCategory = [{}] as [TerminalCategoryObject];
 
   // Extract terminalCategories from the terminals list and populate the new list
   terminals?.forEach((t) => {
@@ -21,7 +17,7 @@ export const PopulateTerminalCategories = (terminals: Terminal[]) => {
     const category = {
       name: t.terminalCategory,
       terminals: terminals.filter((tf) => tf.terminalCategory === t.terminalCategory),
-    } as CategoryObject;
+    } as TerminalCategoryObject;
 
     terminalsSortedByCategory.push(category);
   });

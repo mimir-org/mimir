@@ -1,3 +1,4 @@
+import { Terminal } from "@mimirorg/modelbuilder-types";
 import { NodeLibCm } from "@mimirorg/typelibrary-types";
 import { SetCenter, SetViewport } from "react-flow-renderer";
 
@@ -65,6 +66,11 @@ export interface Position {
 export interface BlockNodeSize {
   width: number;
   height: number;
+}
+
+export interface TerminalCategoryObject {
+  name: string;
+  terminals: Terminal[];
 }
 
 export interface ViewportData {

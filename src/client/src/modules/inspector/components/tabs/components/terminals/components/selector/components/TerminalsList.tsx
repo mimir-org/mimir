@@ -6,11 +6,11 @@ import { TerminalsCategoryElement } from "../../../../shared/styled/TerminalsCat
 import { TerminalsListElementWrapper } from "../../../../shared/styled/TerminalsListElementWrapper";
 import { TerminalsCategoryListBox } from "./ActiveTerminalsList.styled";
 import { Terminal } from "@mimirorg/modelbuilder-types";
-import { CategoryObject } from "./helpers/PopulateTerminalCategories";
+import { TerminalCategoryObject } from "../../../../../../../../../models/project";
 
 interface Props {
   filteredTerminals: Terminal[];
-  terminalCategories: CategoryObject[];
+  terminalCategories: TerminalCategoryObject[];
   selectedTerminalId: string;
   onSelectTerminal: (id: string) => void;
 }
@@ -22,7 +22,7 @@ interface Props {
  */
 export const TerminalsCategoryList = ({ filteredTerminals, terminalCategories, selectedTerminalId, onSelectTerminal }: Props) => {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-  const isCategoryExpanded = (category: CategoryObject) => expandedCategories?.includes(category.name);
+  const isCategoryExpanded = (category: TerminalCategoryObject) => expandedCategories?.includes(category.name);
 
   return (
     <TerminalsCategoryListBox>
@@ -67,7 +67,7 @@ export const TerminalsCategoryList = ({ filteredTerminals, terminalCategories, s
   );
 };
 
-function ShouldDisplayCategory(category: CategoryObject, filteredTerminals: Terminal[]) {
+function ShouldDisplayCategory(category: TerminalCategoryObject, filteredTerminals: Terminal[]) {
   return (
     category.name != undefined &&
     category.terminals?.length &&

@@ -1,16 +1,14 @@
 import { MimirLogo } from "../../assets/icons/mimir";
 import { AvatarComponent } from "./components/AvatarComponent";
+import { CompanyLogo } from "./components/CompanyLogo";
 import { ProjectMenuHeaderComponent } from "./components/ProjectMenuHeaderComponent";
-import { CompanyLogoBox, HeaderBox, LogoBox, HeaderRightSection } from "./HeaderComponent.styled";
-import { commonStateCompanySelector, useAppSelector } from "../../redux/store";
+import { HeaderBox, LogoBox, HeaderRightSection } from "./HeaderComponent.styled";
 
 /**
  * The top header in Mimir.
  * @returns a banner with the Mimir and company logo, and buttons for project/user menus.
  */
 export const HeaderComponent = () => {
-  const company = useAppSelector(commonStateCompanySelector);
-
   return (
     <HeaderBox id="Header">
       <LogoBox>
@@ -18,9 +16,7 @@ export const HeaderComponent = () => {
       </LogoBox>
       <HeaderRightSection>
         <ProjectMenuHeaderComponent />
-        <CompanyLogoBox>
-          <img src={company.logo} alt={company.displayName} />
-        </CompanyLogoBox>
+        <CompanyLogo />
         <AvatarComponent />
       </HeaderRightSection>
     </HeaderBox>

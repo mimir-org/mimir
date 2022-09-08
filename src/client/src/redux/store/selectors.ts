@@ -1,8 +1,6 @@
-import { Attribute, Edge, Node, Project } from "@mimirorg/modelbuilder-types";
-import { ProjectItemCm } from "../../models";
+import { Attribute, Node } from "@mimirorg/modelbuilder-types";
 import { MODULE_TYPE } from "../../models/project";
 import { combineAppSelectors, createAppSelector, createParametricAppSelector } from "./hooks";
-import { ProjectState } from "./project/types";
 
 export const isProjectStateFetchingSelector = createAppSelector(
   (state) => state.projectState.fetching,
@@ -37,7 +35,7 @@ export const isFetchingSelector = combineAppSelectors(
 
 export const projectStateSelector = createAppSelector(
   (state) => state.projectState,
-  (projectState) => projectState as ProjectState
+  (projectState) => projectState
 );
 
 export const projectNameSelector = createAppSelector(
@@ -194,7 +192,7 @@ export const location3DSelector = createAppSelector(
 
 export const projectSelector = createAppSelector(
   (state) => state.projectState.project,
-  (project) => project as Project
+  (project) => project
 );
 
 export const projectIdSelector = createAppSelector(
@@ -204,7 +202,7 @@ export const projectIdSelector = createAppSelector(
 
 export const projectListSelector = createAppSelector(
   (state) => state.projectState.projectList,
-  (projectList) => projectList as ProjectItemCm[]
+  (projectList) => projectList
 );
 
 export const projectIsSubProjectSelector = createAppSelector(
@@ -219,7 +217,7 @@ export const secondaryNodeSelector = createAppSelector(
 
 export const selectedNodeSelector = createAppSelector(
   (state) => state.projectState.project?.nodes?.find((n: Node) => n.selected),
-  (node) => node as Node
+  (node) => node
 );
 
 export const electroSelector = createAppSelector(
@@ -229,12 +227,12 @@ export const electroSelector = createAppSelector(
 
 export const nodesSelector = createAppSelector(
   (state) => state.projectState?.project?.nodes,
-  (nodes) => (nodes as Node[]) ?? []
+  (nodes) => nodes ?? []
 );
 
 export const edgesSelector = createAppSelector(
   (state) => state.projectState?.project?.edges,
-  (edges) => (edges as Edge[]) ?? []
+  (edges) => edges ?? []
 );
 
 export const nodeSelector = createParametricAppSelector(

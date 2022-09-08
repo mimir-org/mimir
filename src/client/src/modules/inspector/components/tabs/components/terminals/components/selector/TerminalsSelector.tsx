@@ -6,11 +6,11 @@ import { TextResources } from "../../../../../../../../assets/text/TextResources
 import { Input } from "../../../../../../../../compLibrary/input/text";
 import { Terminal } from "@mimirorg/modelbuilder-types";
 import { FilterBySearchString } from "../../helpers/FilterBySearchString";
-import { CategoryObject } from "./components/helpers/PopulateTerminalCategories";
+import { TerminalCategoryObject } from "../../../../../../../../models/project";
 
 interface Props {
   terminals: Terminal[];
-  terminalCategories: CategoryObject[];
+  terminalCategories: TerminalCategoryObject[];
   selectedTerminalId: string;
   onSelectTerminal: (id: string) => void;
 }

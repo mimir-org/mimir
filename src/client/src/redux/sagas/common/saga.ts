@@ -4,7 +4,6 @@ import { GetApiErrorForBadRequest, GetApiErrorForException, get } from "../../..
 import {
   fetchCompanySuccessOrError,
   fetchCompaniesSuccessOrError,
-  fetchCombinedAttributeFiltersSuccessOrError,
   fetchParsersSuccessOrError,
 } from "../../store/common/commonSlice";
 import { MimirorgCompanyCm } from "@mimirorg/typelibrary-types";
@@ -48,27 +47,6 @@ export function* getCompanies() {
   } catch (error) {
     const apiError = GetApiErrorForException(error, fetchCompaniesSuccessOrError.type);
     yield put(fetchCompaniesSuccessOrError({ companies: [], apiError }));
-  }
-}
-
-/**
- * Get all attribute filters
- */
-export function* getAttributeFilters() {
-  try {
-    const url = `${Config.API_BASE_URL}common/attribute-filter`;
-    const response = yield call(get, url);
-
-    if (response.status === 400) {
-      const apiError = GetApiErrorForBadRequest(response, fetchCombinedAttributeFiltersSuccessOrError.type);
-      yield put(fetchCombinedAttributeFiltersSuccessOrError({ filters: [], apiError }));
-      return;
-    }
-
-    yield put(fetchCombinedAttributeFiltersSuccessOrError({ filters: response.data, apiError: null }));
-  } catch (error) {
-    const apiError = GetApiErrorForException(error, fetchCombinedAttributeFiltersSuccessOrError.type);
-    yield put(fetchCombinedAttributeFiltersSuccessOrError({ filters: [], apiError }));
   }
 }
 
