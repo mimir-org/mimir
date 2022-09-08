@@ -9,11 +9,8 @@ import { ParametersDropdownList } from "./ParametersDropdownList";
 interface Props {
   label: string;
   units: Unit[];
-  keyProp: string;
-  valueProp: string;
   onChange: (item: Unit) => void;
   defaultValue?: Unit;
-  valueImageProp?: string;
   disabled?: boolean;
   borderRadius?: number;
   borderColor?: string;
@@ -31,11 +28,8 @@ interface Props {
 export const ParametersDropdown = ({
   label,
   units,
-  keyProp,
-  valueProp,
   onChange,
   defaultValue,
-  valueImageProp,
   disabled,
   borderRadius = 5,
   borderColor = Color.BLACK,
@@ -57,7 +51,7 @@ export const ParametersDropdown = ({
       return;
     }
     setSelectedItem(units[0]);
-  }, [defaultValue, units, keyProp]);
+  }, [defaultValue, units]);
 
   const handleChange = (value: Unit) => {
     setSelectedItem(value);
@@ -84,8 +78,6 @@ export const ParametersDropdown = ({
         isListOpen={isListOpen}
         setIsListOpen={setIsListOpen}
         selectedItem={selectedItem}
-        valueProp={valueProp}
-        valueImageProp={valueImageProp}
       />
       {isListOpen && (
         <ParametersDropdownList
@@ -95,9 +87,6 @@ export const ParametersDropdown = ({
           height={height}
           listTop={listTop}
           fontSize={fontSize}
-          valueProp={valueProp}
-          valueImageProp={valueImageProp}
-          keyProp={keyProp}
           handleChange={(item: Unit) => handleChange(item)}
         />
       )}

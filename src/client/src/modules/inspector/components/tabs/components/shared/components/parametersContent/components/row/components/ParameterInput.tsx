@@ -36,8 +36,6 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
         label="combinationDropdown"
         units={attribute.units}
         disabled={isLocked}
-        keyProp="key"
-        valueProp="symbol"
         onChange={(_unit: Unit) => onChange(attribute.id, value, _unit)}
         borderRadius={2}
         borderColor={Color.BATTLESHIP_GREY}

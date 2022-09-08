@@ -1,6 +1,5 @@
 import { Unit } from "@mimirorg/modelbuilder-types";
 import { DropdownListBox, DropdownListItem } from "../../../../../../../../compLibrary/dropdown/mimir/Dropdown.styled";
-import { Symbol } from "../../../../../../../../compLibrary/symbol";
 
 interface Props {
   units: Unit[];
@@ -9,9 +8,7 @@ interface Props {
   height: number;
   listTop: number;
   fontSize: string;
-  valueProp: string;
-  valueImageProp?: string;
-  keyProp: string;
+
   handleChange: (value: Unit) => void;
 }
 
@@ -27,9 +24,7 @@ export const ParametersDropdownList = ({
   height,
   listTop,
   fontSize,
-  valueProp,
-  valueImageProp,
-  keyProp,
+
   handleChange,
 }: Props) => (
   <DropdownListBox borderRadius={borderRadius} borderColor={borderColor} top={listTop}>
@@ -40,9 +35,8 @@ export const ParametersDropdownList = ({
           height={height}
           borderRadius={borderRadius}
           onClick={() => handleChange(unit)}
-          key={unit[keyProp]}
+          key={unit.id}
         >
-          {valueImageProp && <Symbol source={unit[valueImageProp]} text={unit[valueProp]} />}
           <p>{unit.symbol ?? ""}</p>
         </DropdownListItem>
       );

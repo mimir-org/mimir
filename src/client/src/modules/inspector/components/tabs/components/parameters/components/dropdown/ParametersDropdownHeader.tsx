@@ -1,7 +1,6 @@
 import { Unit } from "@mimirorg/modelbuilder-types";
 import { CollapseIcon, ExpandIcon } from "../../../../../../../../assets/icons/chevron";
 import { DropdownHeaderBox } from "../../../../../../../../compLibrary/dropdown/mimir/Dropdown.styled";
-import { Symbol } from "../../../../../../../../compLibrary/symbol";
 
 interface Props {
   borderRadius: number;
@@ -12,8 +11,6 @@ interface Props {
   isListOpen: boolean;
   setIsListOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedItem: Unit;
-  valueProp: string;
-  valueImageProp?: string;
 }
 
 /**
@@ -30,8 +27,6 @@ export const ParametersDropdownHeader = ({
   isListOpen,
   setIsListOpen,
   selectedItem,
-  valueProp,
-  valueImageProp,
 }: Props) => (
   <DropdownHeaderBox
     borderRadius={borderRadius}
@@ -42,7 +37,6 @@ export const ParametersDropdownHeader = ({
   >
     {selectedItem && (
       <>
-        {valueImageProp && <Symbol source={selectedItem[valueImageProp]} text={selectedItem[valueProp]} />}
         <p>{selectedItem.symbol}</p>
         <img src={isListOpen ? ExpandIcon : CollapseIcon} alt="expand-icon" />
       </>
