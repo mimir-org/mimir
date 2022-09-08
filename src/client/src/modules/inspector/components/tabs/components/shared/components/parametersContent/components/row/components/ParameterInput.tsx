@@ -21,7 +21,7 @@ export const ParameterInput = ({ attribute, value, setValue, onChange }: Props) 
   const isAttribute = IsAttribute(attribute);
   const isLocked = isAttribute ? attribute.isLocked : false;
   const hasSelectedUnitId = attribute.selectedUnitId !== "" && attribute.selectedUnitId != undefined;
-  const defaultValueForDropDown = hasSelectedUnitId ? attribute.selectedUnitId : attribute.units?.[0].id;
+  const defaultValueForDropDown = hasSelectedUnitId ? attribute.selectedUnitId : attribute.units?.[0]?.id;
 
   return (
     <ParameterInputBox>
