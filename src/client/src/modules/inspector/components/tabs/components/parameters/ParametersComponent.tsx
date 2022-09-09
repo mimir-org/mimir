@@ -3,10 +3,6 @@ import { Attribute } from "@mimirorg/modelbuilder-types";
 import { GetAttributes } from "../shared/components/parametersContent/helpers/GetAttributes";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { OnShowAllFilters } from "../shared/components/parametersContent/handlers/OnShowAllFilters";
-import {
-  GetAttributeCombinations,
-  GetCombinedAttributeFilters,
-} from "../shared/components/parametersContent/helpers/GetAttributeCombinations";
 import { CombinedAttributeFilter } from "../../../../../../models";
 import { GetParametersColor } from "../shared/components/parametersContent/helpers/GetParametersColor";
 import { ParameterRow } from "../shared/components/parametersContent/components/row/ParameterRow";
@@ -17,6 +13,10 @@ import { OnChangeFilterChoice } from "../shared/components/parametersContent/han
 import { Dropdown } from "../shared/components/parametersContent/components/dropdown/Dropdown";
 import { ParametersBox, ParametersHeader, ParametersMenu, ParametersRowBox } from "./ParametersComponent.styled";
 import {
+  GetAttributeCombinations,
+  GetCombinedAttributeFilters,
+} from "../shared/components/parametersContent/helpers/GetAttributeCombinations";
+import {
   makeSelectedFilterSelector,
   useAppDispatch,
   useAppSelector,
@@ -25,10 +25,10 @@ import {
 } from "../../../../../../redux/store";
 
 interface Props {
-  parametersElement: InspectorParametersElement;
-  inspectorParentElement: InspectorElement;
+  parametersElem: InspectorParametersElement;
+  inspectorParentElem: InspectorElement;
   attributeItems?: Attribute[];
-  terminalParentElement?: InspectorTerminalsElement;
+  terminalParentElem?: InspectorTerminalsElement;
 }
 
 /**
@@ -37,18 +37,13 @@ interface Props {
  * @param params
  * @returns a drop-down menu to select parameters, and buttons for hiding/showing all entities.
  */
-export const ParametersComponent = ({
-  parametersElement,
-  inspectorParentElement,
-  attributeItems,
-  terminalParentElement,
-}: Props) => {
+export const ParametersComponent = ({ parametersElem, inspectorParentElem, attributeItems, terminalParentElem }: Props) => {
   const dispatch = useAppDispatch();
-  const attributes = attributeItems ?? GetAttributes(parametersElement);
+  const attributes = attributeItems ?? GetAttributes(parametersElem);
   const username = useAppSelector(usernameSelector);
   const shouldShowDefaultEntities = useRef(true);
   const attributeFilters = GetCombinedAttributeFilters(attributes);
-  const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElement?.id);
+  const selectedFilters = useUniqueParametricAppSelector(makeSelectedFilterSelector, parametersElem?.id);
   const hasFilters = Object.keys(selectedFilters).length > 0;
   const maxNumSelectedCombinations = Math.max(...Object.values(selectedFilters).map((combinations) => combinations.length));
   const [colorMapping] = useState(new Map<string, [string, string]>());
@@ -60,13 +55,13 @@ export const ParametersComponent = ({
 
   const OnShowAllEntites = () => {
     shouldShowDefaultEntities.current = true;
-    OnShowAllFilters(parametersElement.id, attributeFilters, attributeCombinations, dispatch);
+    OnShowAllFilters(parametersElem.id, attributeFilters, attributeCombinations, dispatch);
   };
 
   useEffect(() => {
     OnShowAllEntites();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parametersElement]);
+  }, [parametersElem]);
 
   return (
     <ParametersBox>
@@ -74,13 +69,13 @@ export const ParametersComponent = ({
         <ParametersMenu>
           <Dropdown
             onChange={(filter: CombinedAttributeFilter, selected: boolean) => {
-              OnChangeFilterChoice(parametersElement.id, filter.name, selected, dispatch);
+              OnChangeFilterChoice(parametersElem.id, filter.name, selected, dispatch);
             }}
             items={attributeFilters}
             selectedItems={selectedFilters}
           />
 
-          <ParameterButton className={`link`} onClick={() => OnClearAllFilters(parametersElement.id, dispatch)}>
+          <ParameterButton className={`link`} onClick={() => OnClearAllFilters(parametersElem.id, dispatch)}>
             {TextResources.PARAMS_CLEAR_ALL}
           </ParameterButton>
           <ParameterButton className={`link`} onClick={OnShowAllEntites}>
@@ -98,9 +93,9 @@ export const ParametersComponent = ({
             return (
               <ParameterRow
                 key={filterName}
-                element={parametersElement}
-                inspectorParentElement={inspectorParentElement}
-                terminalParentElement={terminalParentElement}
+                element={parametersElem}
+                inspectorParentElem={inspectorParentElem}
+                terminalParentElem={terminalParentElem}
                 combinations={attributeCombinations[filterName]}
                 selectedCombinations={selectedCombinations}
                 attributeItems={attributes}

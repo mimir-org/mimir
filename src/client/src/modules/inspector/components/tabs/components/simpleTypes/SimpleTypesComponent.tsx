@@ -27,7 +27,7 @@ export const SimpleTypesComponent = ({ element, simpleItems }: Props) => {
       <SimpleTypesSelector simpleTypes={simpleTypes} selectedSimpleTypeId={selectedSimpleTypeId} onSelect={onSelect} />
       {selectedSimpleType && (
         <TerminalsParametersBox>
-          <ParametersComponent parametersElement={selectedSimpleType} inspectorParentElement={element} />
+          <ParametersComponent parametersElem={selectedSimpleType} inspectorParentElem={element} />
         </TerminalsParametersBox>
       )}
     </TerminalsBox>

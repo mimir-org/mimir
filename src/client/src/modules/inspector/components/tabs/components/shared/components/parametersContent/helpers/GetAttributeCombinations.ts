@@ -26,27 +26,27 @@ const GetCombinedAttributeFilters = (attributes: Attribute[]): CombinedAttribute
     return filters;
   }
 
-  for (let i = 0; i < attributes.length; i++) {
-    const attributeCombined =
-      "(" + attributes[i].qualifier + ")," + "(" + attributes[i].source + ")," + "(" + attributes[i].condition + ")";
-    const actualFilter = filters.filter((x) => x.name === attributes[i].entity)[0];
+  for (const element of attributes) {
+    const attributeCombined = "(" + element.qualifier + ")," + "(" + element.source + ")," + "(" + element.condition + ")";
+    const actualFilter = filters.filter((f) => f.name === element.entity)[0];
+
     if (actualFilter) {
       if (!actualFilter.combinedAttributes.some((x) => x.combined === attributeCombined)) {
         actualFilter.combinedAttributes.push({
-          qualifier: attributes[i].qualifier,
-          source: attributes[i].source,
-          condition: attributes[i].condition,
+          qualifier: element.qualifier,
+          source: element.source,
+          condition: element.condition,
           combined: attributeCombined,
         });
       }
     } else {
       const newFilter = {
-        name: attributes[i].entity,
+        name: element.entity,
         combinedAttributes: [
           {
-            qualifier: attributes[i].qualifier,
-            source: attributes[i].source,
-            condition: attributes[i].condition,
+            qualifier: element.qualifier,
+            source: element.source,
+            condition: element.condition,
             combined: attributeCombined,
           },
         ],

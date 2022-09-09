@@ -24,8 +24,8 @@ const FILTER_ENTITY_WIDTH = 191;
 
 interface Props {
   element: InspectorParametersElement;
-  inspectorParentElement?: InspectorElement;
-  terminalParentElement?: InspectorTerminalsElement;
+  inspectorParentElem?: InspectorElement;
+  terminalParentElem?: InspectorTerminalsElement;
   combinations: CombinedAttribute[];
   selectedCombinations: CombinedAttribute[];
   attributeItems?: Attribute[];
@@ -37,10 +37,15 @@ interface Props {
   dispatch: Dispatch;
 }
 
+/**
+ * Component for one row to display one Paramter horizontally with it's attributes.
+ * @param props
+ * @returns a row for an Parameter
+ */
 export const ParameterRow = ({
-  element,
-  inspectorParentElement,
-  terminalParentElement,
+  element: elem,
+  inspectorParentElem,
+  terminalParentElem,
   combinations,
   selectedCombinations,
   attributeItems,
@@ -54,7 +59,7 @@ export const ParameterRow = ({
   const projectId = useAppSelector(projectIdSelector);
   const isGlobalLocking = useAppSelector(isProjectStateGloballyLockingSelector);
   const [lockingAttribute, setLockingAttribute] = useState(null);
-  const attributes = attributeItems ?? GetAttributes(element);
+  const attributes = attributeItems ?? GetAttributes(elem);
 
   const bodyWidth = useMemo(
     () => maxNumSelectedCombinations * PARAMETER_ENTITY_WIDTH + FILTER_ENTITY_WIDTH,
@@ -71,7 +76,7 @@ export const ParameterRow = ({
               height={26}
               fill={headerColor}
               stroke={headerColor}
-              onClick={() => OnChangeFilterChoice(element.id, filterName, true, dispatch)}
+              onClick={() => OnChangeFilterChoice(elem.id, filterName, true, dispatch)}
             />
           </div>
           <div className="text">{filterName}</div>
@@ -80,29 +85,27 @@ export const ParameterRow = ({
           items={combinations}
           selectedItems={selectedCombinations}
           keyProp="combined"
-          onChange={(combination, selected) =>
-            OnChangeAttributeCombinationChoice(element.id, filterName, combination, selected, dispatch)
-          }
+          onChange={(comb, selected) => OnChangeAttributeCombinationChoice(elem.id, filterName, comb, selected, dispatch)}
           headerColor={headerColor}
           bodyColor={bodyColor}
         />
       </Entity>
-      {selectedCombinations.map((combination) => (
+      {selectedCombinations.map((comb) => (
         <Parameter
-          key={combination.combined}
-          attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(combination, attr))}
-          combination={combination}
+          key={comb.combined}
+          attribute={attributes.find((attr) => attr.entity === filterName && DoesCombinationMatchAttribute(comb, attr))}
+          combination={comb}
           headerColor={headerColor}
           bodyColor={bodyColor}
           isGloballyLocking={isGlobalLocking}
           lockingAttribute={lockingAttribute}
-          onChange={(id, value, unitId) =>
-            OnChangeParameterValue(element, inspectorParentElement, terminalParentElement, id, value, unitId, dispatch)
+          onChange={(id, val, unitId) =>
+            OnChangeParameterValue(elem, inspectorParentElem, terminalParentElem, id, val, unitId, dispatch)
           }
-          onLock={(attribute, isLocked) =>
-            OnLockParameter(inspectorParentElement, attribute, projectId, isLocked, username, setLockingAttribute, dispatch)
+          onLock={(attr, isLocked) =>
+            OnLockParameter(inspectorParentElem, attr, projectId, isLocked, username, setLockingAttribute, dispatch)
           }
-          onClose={() => OnChangeAttributeCombinationChoice(element.id, filterName, combination, true, dispatch)}
+          onClose={() => OnChangeAttributeCombinationChoice(elem.id, filterName, comb, true, dispatch)}
         />
       ))}
     </Body>

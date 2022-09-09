@@ -31,7 +31,6 @@ export const ParameterButtonsComponent = ({
   onClose,
 }: Props) => {
   if (!isAttribute) return null;
-
   const lockDescription = isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK;
   const LockComponent = isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />;
 

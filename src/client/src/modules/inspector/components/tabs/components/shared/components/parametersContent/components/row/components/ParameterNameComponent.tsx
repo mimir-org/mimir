@@ -9,7 +9,7 @@ interface Props {
 /**
  * Component to display a Parameter's name.
  * @param props
- * @returns the name of the Parameter, if the Paramater has a TypeReference a clickable link is visisble.
+ * @returns the name of the Parameter, a clickable link is visisble if the Parameter has a TypeReference.
  */
 export const ParameterNameComponent = ({ attribute, hasTypeReference }: Props) => {
   return hasTypeReference ? (

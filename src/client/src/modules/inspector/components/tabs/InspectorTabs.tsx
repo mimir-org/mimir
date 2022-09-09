@@ -45,8 +45,8 @@ export const InspectorTabs = ({
     <AdminComponent key={0} element={element} project={project} />,
     <ParametersComponent
       key={1}
-      parametersElement={GetParametersElement(element)}
-      inspectorParentElement={element}
+      parametersElem={GetParametersElement(element)}
+      inspectorParentElem={element}
       attributeItems={attributes}
     />,
     <TerminalsComponent key={2} element={element} terminals={terminals} />,

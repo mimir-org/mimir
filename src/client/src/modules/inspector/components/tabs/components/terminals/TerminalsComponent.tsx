@@ -39,9 +39,9 @@ export const TerminalsComponent = ({ element, terminals }: Props) => {
       {selectedTerminal && (
         <TerminalsParametersBox>
           <ParametersComponent
-            parametersElement={selectedTerminal}
-            inspectorParentElement={element}
-            terminalParentElement={terminalParentElement}
+            parametersElem={selectedTerminal}
+            inspectorParentElem={element}
+            terminalParentElem={terminalParentElement}
             attributeItems={selectedTerminal.attributes}
           />
         </TerminalsParametersBox>
