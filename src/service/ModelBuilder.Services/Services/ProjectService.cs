@@ -487,7 +487,9 @@ namespace Mb.Services.Services
                 throw new MimirorgInvalidOperationException(
                     "Project name must be minimum 2 characters");
 
-            if (_projectRepository.GetAll().Any(x => x.Name.ToLower() == createProject.Name.ToLower()))
+            var existingProject = _projectRepository.FindBy(x => x.Name.ToLower() == createProject.Name.ToLower()).FirstOrDefault();
+
+            if (existingProject != null)
                 throw new MimirorgInvalidOperationException(
                     "There already exist a project with the same name");
 
