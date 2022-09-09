@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { ParameterDescriptor } from "./ParameterDescriptor";
 import { Entity } from "../styled/Entity";
-import { ParameterButton, ParameterLockSpinner } from "../../../styled/ParameterButton";
 import { ParameterHeader } from "./Parameter.styled";
 import { CombinedAttribute } from "../../../../../../../../../../../models";
-import { LockClosedParameterComponent, LockOpenComponent } from "../../../../../../../../../../../assets/icons/lock";
-import { CloseIcon } from "../../../../../../../../../../../assets/icons/close";
 import { IsAttribute } from "../../../../../../../../../helpers/IsType";
-import { VisuallyHidden } from "../../../../../../../../../../../compLibrary/util";
-import { TextResources } from "../../../../../../../../../../../assets/text/TextResources";
-import { Spinner } from "../../../../../../../../../../../compLibrary/spinner";
 import { Attribute } from "@mimirorg/modelbuilder-types";
 import { ParameterInput } from "./ParameterInput";
-import { LinkIcon } from "../../../../../../../../../../../assets/icons/link";
+import { ParameterNameComponent } from "./ParameterNameComponent";
+import { ParameterButtonsComponent } from "./ParameterButtonsComponent";
 
 export const PARAMETER_ENTITY_WIDTH = 255;
 
@@ -50,9 +45,6 @@ export const Parameter = ({
   const isLocked = isAttribute ? attribute.isLocked : false;
   const attributeIsLocking = attribute === lockingAttribute && isGloballyLocking;
   const hasTypeReference = attribute?.typeReferences && attribute?.typeReferences?.length > 0;
-  const lockDescription = isLocked ? TextResources.PARAMS_UNLOCK : TextResources.PARAMS_LOCK;
-
-  const LockComponent = isLocked ? <LockClosedParameterComponent fill={headerColor} /> : <LockOpenComponent />;
 
   useEffect(() => {
     IsAttribute(attribute) && setValue(attributeValue);
@@ -61,35 +53,16 @@ export const Parameter = ({
   return (
     <Entity width={PARAMETER_ENTITY_WIDTH}>
       <ParameterHeader color={bodyColor}>
-        {hasTypeReference ? (
-          <span>
-            <a href={attribute.typeReferences[0].iri} target="_blank" rel="noopener noreferrer">
-              {attribute.entity}
-              <img src={LinkIcon} alt="link" className="linkIcon" />
-            </a>
-          </span>
-        ) : (
-          <span>{attribute.entity}</span>
-        )}
-
-        {isAttribute && (
-          <>
-            <ParameterButton onClick={() => isAttribute && onLock(attribute, !attribute.isLocked)}>
-              <VisuallyHidden>{lockDescription}</VisuallyHidden>
-              {attributeIsLocking ? (
-                <ParameterLockSpinner>
-                  <Spinner variant="small" />
-                </ParameterLockSpinner>
-              ) : (
-                LockComponent
-              )}
-            </ParameterButton>
-            <ParameterButton onClick={() => onClose(attribute.id)}>
-              <VisuallyHidden>{TextResources.PARAMS_CLOSE}</VisuallyHidden>
-              <img src={CloseIcon} alt="x mark" />
-            </ParameterButton>
-          </>
-        )}
+        <ParameterNameComponent attribute={attribute} hasTypeReference={hasTypeReference} />
+        <ParameterButtonsComponent
+          attribute={attribute}
+          headerColor={headerColor}
+          isAttribute={isAttribute}
+          attributeIsLocking={attributeIsLocking}
+          isLocked={isLocked}
+          onClose={(id: string) => onClose(id)}
+          onLock={(attribute: Attribute, isLocked: boolean) => onLock(attribute, isLocked)}
+        />
       </ParameterHeader>
       <ParameterDescriptor qualifier={combination.qualifier} source={combination.source} condition={combination.condition} />
       <ParameterInput
