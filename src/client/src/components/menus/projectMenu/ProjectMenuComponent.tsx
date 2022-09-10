@@ -54,7 +54,7 @@ const ProjectMenuComponent = ({ setIsUserMenuOpen }: Props) => {
       />
       <MenuElement
         text={TextResources.PROJECT_CLOSE}
-        icon={!hasActiveProject ? Icons.CloseInactiveProjectIcon : Icons.CloseProjectIcon}
+        icon={!hasActiveProject ? Icons.CloseProjectInactiveIcon : Icons.CloseProjectIcon}
         onClick={() => projectMenuAction(() => Click.OnCloseProjectClick(dispatch))}
         disabled={!hasActiveProject}
         bottomLine
