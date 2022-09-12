@@ -46,7 +46,7 @@ const ConvertProjectToProjectAm = (project: Project) => {
 
 function ConvertNodesToNodeAm(nodes: Node[]) {
   const convertedNodes = [] as NodeAm[];
-  if (!nodes.length) return convertedNodes;
+  if (!nodes?.length) return convertedNodes;
 
   nodes.forEach((node) => {
     const nodeAm = {
@@ -93,7 +93,7 @@ function ConvertNodesToNodeAm(nodes: Node[]) {
 
 function ConvertEdgesToEdgesAm(edges: Edge[]) {
   const convertedEdges = [] as EdgeAm[];
-  if (!edges.length) return convertedEdges;
+  if (!edges?.length) return convertedEdges;
 
   edges.forEach((edge) => {
     const edgeAm = {
@@ -176,7 +176,7 @@ function ConvertTerminalToTerminalAm(terminal: Terminal) {
 
 function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
   const convertedAttributes = [] as AttributeAm[];
-  if (!attributes.length) return convertedAttributes;
+  if (!attributes?.length) return convertedAttributes;
 
   attributes.forEach((attr) => {
     convertedAttributes.push({
@@ -218,7 +218,7 @@ function ConvertAttributesToAttributesAm(attributes: Attribute[]) {
 
 function ConvertSimplesToSimplesAm(simples: Simple[]) {
   const converted = [] as SimpleAm[];
-  if (!simples.length) return converted;
+  if (!simples?.length) return converted;
 
   simples.forEach((simple) => {
     converted.push({
